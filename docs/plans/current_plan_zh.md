@@ -473,6 +473,132 @@ python scripts\run_redesign_smoke_workflow.py `
    tool-augmented verifier。
 4. 论文 claim 必须写成条件性工具增强收益，而不是 prompt-only 方法普遍更好。
 
+## 6.4 2026-06-05 tool-augmented full run 前置修订
+
+用户已确认路线：先把论文主张和实验设计改清楚，再跑 30-candidate
+`tool_augmented_evidence` full run。
+
+本轮已修订：
+
+- `docs/paper/research_definition.md`：主假设改为 LLM-only 不可靠、
+  prompt-only evidence-first 存在证据贫乏导致的 recall 损失、
+  tool-augmented verifier 可能改善 safety/recall tradeoff。
+- `docs/paper/patch_verification_outline.md`：贡献改为 prompt-only 负结果
+  加 tool-augmented 修复路径。
+- `docs/paper/patch_verification_draft.md`：加入 tool-augmented redesign smoke
+  和后续 30-candidate full run 边界。
+- `docs/experiments/evidence_first_protocol.md`：区分 prompt-only
+  evidence-first 与 tool-augmented evidence verification。
+- `docs/experiments/patch_verification_plan.md`：新增 revised
+  tool-augmented stage。
+
+执行边界：
+
+- 30-candidate full run 必须写入新目录
+  `outputs/patch_verification_tool_augmented_full_001`。
+- 只运行 `tool_augmented_evidence`，不覆盖旧 full run。
+- 结果只能作为 tool-assisted verifier 证据，不能说 prompt-only evidence-first
+  成功。
+- 如果 full run 没有通过 completeness、出现高 invalid output、或工具增强仍
+  false accept/false reject 明显，则停止扩量并更新论文为负/条件性结果。
+
+full run 前置验证：
+
+- 已生成 `outputs/patch_verification_tool_augmented_full_001/inputs`。
+- input candidates = 30，evidence packets = 30。
+- validation summary：`all_validated=true`，oracle all-pass 7，oracle failed 23。
+- check-only preflight 通过，且 `model_call_attempted=false`。
+- dry-run prompt records = 30。
+- condition counts = `{"tool_augmented_evidence": 30}`。
+- prompt version counts =
+  `{"patch_verify_tool_augmented_evidence_v1": 30}`。
+- 实际渲染 prompt 边界扫描通过：未命中 evaluator labels、旧 evaluator patch id
+  片段或本地路径。
+- `outputs/patch_verification_tool_augmented_full_001/reviews.jsonl` 不存在，
+  真实 run 不会覆盖旧结果。
+
+执行命令：
+
+```powershell
+python scripts\run_redesign_smoke_workflow.py `
+  --config outputs\patch_verification_tool_augmented_full_001\api_config.local.json `
+  --gate-mode full `
+  --execute `
+  --summary-out outputs\tool_augmented_full_workflow\executed.json
+```
+
+真实 tool-augmented full run 结果：
+
+- 输出目录：`outputs/patch_verification_tool_augmented_full_001`。
+- 真实非 mock review records = 30。
+- `run_completeness.json` 通过。
+- `tool_augmented_full_gate.json` passed = true。
+- invalid output count = 0。
+- false accept rate = 0.0。
+- correct-patch recall = 1.0。
+- accepted precision = 1.0。
+- false reject rate = 0.0。
+- escalation rate = 0.0。
+- tracked 结果文档：
+  `docs/experiments/tool_augmented_full_run_result.md`。
+
+三组结果解释：
+
+- `llm_only`：召回高，但会接受 partial fixes。
+- prompt-only `evidence_first`：false accept 降低，但 recall 损失超过 gate。
+- `tool_augmented_evidence`：在该 30-candidate pilot 上同时保持 false accept
+  为 0 和 correct recall 为 1。
+
+论文边界：
+
+- 这是 tool-assisted verification 的条件性收益，不是 prompt-only
+  evidence-first 的成功。
+- 结果依赖 retained oracle/tool execution summaries；写论文时必须讨论这些摘要
+  是真实工程证据、工具工作流证据，还是较强的上界证据。
+
+## 6.5 2026-06-05 审计口径修复与收敛状态
+
+问题：
+
+- 旧 `audit_paper_readiness.py`、`audit_ai_plan_progress.py` 和
+  `audit_goal_completion.py` 只认识 prompt-only 60-record full run gate。
+- 在新路线下，这会继续把 `stop_or_redesign` 报成未完成，或者诱导后续执行者
+  把 tool-augmented 结果错误写成 prompt-only 成功。
+
+已修复：
+
+- `audit_paper_readiness.py` 保留
+  `prompt_only_positive_claim_ready=false`，并新增
+  `tool_augmented_claim_ready=true`。
+- `audit_ai_plan_progress.py` 将 prompt-only `stop_or_redesign` 解释为已完成
+  的负结果/重设计分流，并要求 tool-augmented full gate 通过。
+- `audit_goal_completion.py` 同时要求：
+  - prompt-only 正向 claim 保持为负；
+  - 30-record tool-augmented full run 完整；
+  - `tool_augmented_full_gate.json` 支持条件性 tool-assisted claim。
+- `run_local_quality_gate.py` 摘要同时显示 prompt-only 与 tool-augmented
+  readiness，避免单一“positive claim ready”误导。
+- 匿名 artifact 打包说明和审计规则已加入 tool-augmented full run 命令与
+  `tool_augmented_full_gate.json` 要求。
+
+验证结果：
+
+- `outputs/paper_readiness/latest.json`：
+  - prompt-only positive claim ready = false；
+  - tool-augmented claim ready = true；
+  - tool-augmented blockers = none。
+- `outputs/plan_progress/latest.json`：stage counts = `{"complete": 14}`。
+- `outputs/goal_completion/latest.json`：complete = true。
+- `outputs/local_quality_gate/latest.json`：passed = true。
+- `artifacts/research95_anonymous_artifact_audit.json`：safe = true。
+
+当前可写结论：
+
+- 旧 prompt-only evidence-first full run 不支持正向 claim。
+- 新的正向 claim 只限于：在当前 30-candidate pilot 中，带工具执行摘要的
+  verifier 能在保留 recall 的同时消除观察到的 false accepts。
+- 任何后续论文扩写必须继续保持该边界。
+
 ## 7. 继续/止损门槛
 
 只有满足以下至少一项时继续：

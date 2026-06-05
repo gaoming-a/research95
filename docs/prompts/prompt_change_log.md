@@ -55,4 +55,6 @@ See `docs/prompts/api_pilot_prompts.md` for the full prompt templates.
   `oracle_command`, `oracle_workdir`, construction notes, and label confidence
   remain excluded from rendered prompts.
 - Runs that used it: `outputs/patch_verification_redesign_smoke_001`, a
-  5-candidate DeepSeek official API redesign smoke.
+  5-candidate DeepSeek official API redesign smoke;
+  `outputs/patch_verification_tool_augmented_full_001`, a 30-candidate
+  DeepSeek official API tool-augmented full run.

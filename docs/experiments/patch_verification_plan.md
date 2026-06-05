@@ -91,9 +91,11 @@ Only run after the no-API pilot passes.
 Conditions:
 
 1. LLM-only patch review.
-2. Evidence-first verifier.
-3. Majority review only after the first two conditions are stable.
-4. Agent-context review only if there is a concrete context-ablation question.
+2. Prompt-only evidence-first verifier.
+3. Tool-augmented evidence verifier, after the prompt-only failure mode is
+   documented.
+4. Majority review only after the first two prompt-only conditions are stable.
+5. Agent-context review only if there is a concrete context-ablation question.
 
 Metrics:
 
@@ -116,3 +118,19 @@ After 20-30 patch candidates, stop and inspect:
 - Are failure modes explainable at claim level?
 
 If these answers are negative, do not scale the dataset.
+
+## Revised Tool-Augmented Stage
+
+The first DeepSeek full run returned `stop_or_redesign` for prompt-only
+evidence-first verification. A 5-candidate failure-case smoke showed that
+`tool_augmented_evidence` can recover the expected decisions when patch-apply
+status and executable behavior summaries are visible.
+
+Next full run:
+
+- build 30-candidate tool-augmented inputs from the existing validation records;
+- run only `tool_augmented_evidence` in a new output directory;
+- compare against the previous `llm_only` and prompt-only `evidence_first`
+  groups;
+- report results as conditional tool-assisted verification, not as prompt-only
+  model ability.

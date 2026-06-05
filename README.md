@@ -176,6 +176,10 @@ The following were intentionally not copied:
    `docs/experiments/tool_augmented_redesign_smoke_result.md`. This only
    justifies a larger tool-augmented experiment and does not change the original
    prompt-only full-run verdict.
+   The 30-candidate tool-augmented full run has also completed; see
+   `docs/experiments/tool_augmented_full_run_result.md`. It passed the
+   dedicated tool-assisted gate, but it must be reported as conditional
+   tool-visible evidence, not prompt-only model ability.
 7. Use `scripts/summarize_patch_verification_pilot.py` to regenerate the
    current Markdown pilot report from ignored outputs.
 8. After a real API or mock smoke run, use

@@ -56,14 +56,14 @@ The result supports a narrow diagnostic claim:
 > When the verifier sees explicit tool execution summaries on the known failure
 > cases, the same model makes the expected accept/reject decisions.
 
-This only justifies a larger tool-augmented experiment. It does not rescue the
-original prompt-only positive claim, and it does not yet prove general
-effectiveness on the full 30-candidate dataset.
+This justified the larger tool-augmented experiment. It does not rescue the
+original prompt-only positive claim.
 
 ## Next Step
 
-If continuing, build a full 30-candidate `tool_augmented_evidence` input set and
-run it as a separate condition. The analysis should compare:
+The next experiment has now been run as
+`outputs/patch_verification_tool_augmented_full_001`. The analysis should
+compare:
 
 - original `llm_only`;
 - original prompt-only `evidence_first`;

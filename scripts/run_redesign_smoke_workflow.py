@@ -11,6 +11,9 @@ from typing import Any
 EXPECTED_ACCEPT_IDS = {"candidate_0001", "candidate_0023"}
 EXPECTED_NOT_ACCEPT_IDS = {"candidate_0005", "candidate_0006", "candidate_0020"}
 EXPECTED_CONDITION = "tool_augmented_evidence"
+FULL_GATE_FALSE_ACCEPT_CEILING = 0.0
+FULL_GATE_RECALL_FLOOR = 1.0
+FULL_GATE_INVALID_CEILING = 0.0
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -102,6 +105,64 @@ def evaluate_smoke(reviews: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def find_tool_group(metrics: dict[str, Any]) -> dict[str, Any]:
+    groups = metrics.get("groups", {})
+    matches = [
+        value
+        for key, value in groups.items()
+        if str(key).startswith(f"{EXPECTED_CONDITION}::")
+    ]
+    if len(matches) != 1:
+        raise ValueError(f"expected one {EXPECTED_CONDITION} metrics group, got {len(matches)}")
+    return matches[0]
+
+
+def evaluate_full(reviews: list[dict[str, Any]], metrics: dict[str, Any]) -> dict[str, Any]:
+    group = find_tool_group(metrics)
+    invalid_count = sum(1 for record in reviews if record.get("decision") == "invalid_output")
+    mock_count = sum(1 for record in reviews if record.get("mock_run"))
+    condition_counts: dict[str, int] = {}
+    for record in reviews:
+        condition = str(record.get("condition"))
+        condition_counts[condition] = condition_counts.get(condition, 0) + 1
+    false_accept_rate = group.get("false_accept_rate")
+    correct_recall = group.get("correct_patch_recall")
+    invalid_rate = group.get("invalid_output_rate")
+    passed = (
+        mock_count == 0
+        and condition_counts == {EXPECTED_CONDITION: len(reviews)}
+        and false_accept_rate == FULL_GATE_FALSE_ACCEPT_CEILING
+        and correct_recall == FULL_GATE_RECALL_FLOOR
+        and invalid_rate == FULL_GATE_INVALID_CEILING
+    )
+    return {
+        "passed": passed,
+        "condition": EXPECTED_CONDITION,
+        "review_count": len(reviews),
+        "mock_review_count": mock_count,
+        "condition_counts": condition_counts,
+        "invalid_output_count": invalid_count,
+        "thresholds": {
+            "false_accept_rate_ceiling": FULL_GATE_FALSE_ACCEPT_CEILING,
+            "correct_patch_recall_floor": FULL_GATE_RECALL_FLOOR,
+            "invalid_output_rate_ceiling": FULL_GATE_INVALID_CEILING,
+        },
+        "metrics": {
+            "accepted_precision": group.get("accepted_precision"),
+            "correct_patch_recall": correct_recall,
+            "false_accept_rate": false_accept_rate,
+            "false_reject_rate": group.get("false_reject_rate"),
+            "escalation_rate": group.get("escalation_rate"),
+            "invalid_output_rate": invalid_rate,
+            "records": group.get("records"),
+        },
+        "interpretation": (
+            "This is a 30-candidate tool-augmented full-run gate. Passing it supports "
+            "a conditional tool-assisted verification claim, not a prompt-only evidence-first claim."
+        ),
+    }
+
+
 def write_smoke_report(path: Path, report: dict[str, Any]) -> None:
     lines = [
         "# Tool-Augmented Redesign Smoke Gate",
@@ -115,6 +176,38 @@ def write_smoke_report(path: Path, report: dict[str, Any]) -> None:
         f"- required accepts not accepted: `{report['rejected_or_escalated_required_accepts']}`",
         f"- false accepts: `{report['false_accept_ids']}`",
         f"- missing candidates: `{report['missing_candidate_ids']}`",
+        "",
+        "## Boundary",
+        "",
+        report["interpretation"],
+        "",
+    ]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("\n".join(lines), encoding="utf-8")
+
+
+def write_full_report(path: Path, report: dict[str, Any]) -> None:
+    metrics = report["metrics"]
+    lines = [
+        "# Tool-Augmented Full-Run Gate",
+        "",
+        f"- passed: `{report['passed']}`",
+        f"- condition: `{report['condition']}`",
+        f"- reviewer records: {report['review_count']}",
+        f"- mock reviewer records: {report['mock_review_count']}",
+        f"- condition counts: `{report['condition_counts']}`",
+        "",
+        "## Metrics",
+        "",
+        "| metric | value |",
+        "|---|---:|",
+        f"| accepted precision | {metrics['accepted_precision']} |",
+        f"| correct-patch recall | {metrics['correct_patch_recall']} |",
+        f"| false accept rate | {metrics['false_accept_rate']} |",
+        f"| false reject rate | {metrics['false_reject_rate']} |",
+        f"| escalation rate | {metrics['escalation_rate']} |",
+        f"| invalid output rate | {metrics['invalid_output_rate']} |",
+        f"| records | {metrics['records']} |",
         "",
         "## Boundary",
         "",
@@ -219,17 +312,30 @@ def workflow(args: argparse.Namespace) -> dict[str, Any]:
             str(run_dir / "failure_examples.md"),
         ]
     )
-    smoke_report = evaluate_smoke(read_jsonl(run_dir / "reviews.jsonl"))
-    write_json(run_dir / "redesign_smoke_gate.json", smoke_report)
-    write_smoke_report(run_dir / "redesign_smoke_gate.md", smoke_report)
+    reviews = read_jsonl(run_dir / "reviews.jsonl")
+    if args.gate_mode == "smoke":
+        gate_report = evaluate_smoke(reviews)
+        gate_json = run_dir / "redesign_smoke_gate.json"
+        gate_md = run_dir / "redesign_smoke_gate.md"
+        write_json(gate_json, gate_report)
+        write_smoke_report(gate_md, gate_report)
+    else:
+        gate_report = evaluate_full(reviews, read_json(run_dir / "metrics.json"))
+        gate_json = run_dir / "tool_augmented_full_gate.json"
+        gate_md = run_dir / "tool_augmented_full_gate.md"
+        write_json(gate_json, gate_report)
+        write_full_report(gate_md, gate_report)
     summary = {
         "mode": "executed",
+        "gate_mode": args.gate_mode,
         "config": config_path.as_posix(),
         "run_dir": run_dir.as_posix(),
         "expected_candidates": expected_candidates,
         "expected_records": expected_records,
         "model_call_attempted": True,
-        "redesign_smoke_gate": smoke_report,
+        "gate_report": gate_report,
+        "gate_json": gate_json.as_posix(),
+        "gate_md": gate_md.as_posix(),
     }
     if args.summary_out:
         write_json(Path(args.summary_out), summary)
@@ -242,6 +348,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--config", required=True)
     parser.add_argument("--run-dir")
     parser.add_argument("--summary-out")
+    parser.add_argument("--gate-mode", choices=["smoke", "full"], default="smoke")
     parser.add_argument("--check-only", action="store_true")
     parser.add_argument("--execute", action="store_true")
     parser.add_argument("--allow-existing-output", action="store_true")

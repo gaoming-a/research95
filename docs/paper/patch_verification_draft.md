@@ -1,13 +1,15 @@
 # Verifiable Review of AI-Generated Patches in Real Software Projects
 
-Draft status: full-run mixed-result draft, 2026-06-05.
+Draft status: tool-augmented full-run result draft, 2026-06-05.
 
 This draft reports the first full DeepSeek official API pilot. The current
 evidence supports dataset construction, executable label validation, no-API
 baselines, prompt-boundary checks, deterministic no-API reproducibility,
 model-selection boundary documentation, and a 60-record real API run. The result
-is mixed and does not support a positive evidence-first claim under the
-configured gate.
+is mixed and does not support a positive prompt-only evidence-first claim under
+the configured gate. A follow-up tool-augmented full run shows that making
+tool-execution evidence visible restores the safety/recall tradeoff on this
+pilot.
 
 ## Abstract
 
@@ -17,14 +19,17 @@ patch acceptance as a verification problem: given a real task and a candidate
 patch, decide whether the patch should be accepted, rejected, or escalated based
 on evidence. We construct a pilot patch-verification dataset from retained
 real-bug pairs, materialize source-level patch candidates, validate labels with
-executable oracles, and prepare two review conditions: LLM-only patch review and
-evidence-first verification. The current artifact contains 30 validated patch
+executable oracles, and prepare three review conditions: LLM-only patch review,
+prompt-only evidence-first verification, and tool-augmented evidence
+verification. The current artifact contains 30 validated patch
 candidates from 7 real-bug tasks across 2 projects, including 9 partial-fix
 candidates. No-API baselines show the expected merge-gate tradeoff:
 accept-everything has perfect correct-patch recall but false-accept rate 1.0,
 while reject-everything has false-accept rate 0.0 but correct-patch recall 0.0.
-The API pilot tests whether evidence-first verification reduces false accepts
-without collapsing correct-patch recall.
+The first API pilot tests whether prompt-only evidence-first verification
+reduces false accepts without collapsing correct-patch recall. It fails this
+gate. The revised tool-augmented run tests whether a verifier can recover the
+safety/recall tradeoff when executable evidence summaries are visible.
 
 ## 1. Introduction
 
@@ -48,14 +53,14 @@ gate without stronger evidence discipline.
 RQ1. How reliable is LLM-only review when deciding whether candidate patches
 should be accepted?
 
-RQ2. Can evidence-first verification reduce false accepts compared with
-LLM-only review?
+RQ2. Can prompt-only evidence-first verification reduce false accepts compared
+with LLM-only review?
 
 RQ3. Does evidence-first verification preserve useful correct-patch recall, or
 does it only reduce false accepts by rejecting or escalating too aggressively?
 
-RQ4. Which patch types expose the most useful failure modes: empty/no-op
-controls, unrelated changes, or partial fixes?
+RQ4. Does tool-augmented evidence verification recover the correct-patch recall
+lost by prompt-only evidence-first verification?
 
 ## 3. Dataset Construction
 
@@ -123,6 +128,14 @@ source metadata and visible test hints. It must tie every accept/reject decision
 to concrete visible evidence. If the visible evidence is insufficient, it should
 escalate.
 
+### Tool-Augmented Evidence Verification
+
+The reviewer sees the same task and patch context plus patch-apply status and
+executable behavior summaries derived from retained validation runs. It still
+does not see evaluator labels such as `expected_outcome`, `candidate_type`,
+construction notes, or oracle paths. This condition must be reported separately
+because it is tool-assisted verification, not prompt-only model ability.
+
 ### Oracle Upper Bound
 
 The evaluator can use hidden labels and oracle outcomes to produce an upper
@@ -185,7 +198,48 @@ fixes, while `evidence_first` did not accept them. However, `evidence_first`
 also rejected or escalated two correct reference patches. The current result
 therefore supports a safety/utility tradeoff claim, not a superiority claim.
 
-## 9. Reproducibility and Handoff Controls
+## 9. Tool-Augmented Redesign Smoke
+
+After the prompt-only full run returned `stop_or_redesign`, a targeted
+5-candidate redesign smoke tested a separate `tool_augmented_evidence`
+condition on the known failure cases. The condition exposed patch-apply status
+and executable behavior summaries to the verifier.
+
+| candidate | expected smoke behavior | decision |
+|---|---|---|
+| `candidate_0001` | accept reference fix | `accept` |
+| `candidate_0005` | do not accept partial fix | `reject` |
+| `candidate_0006` | do not accept partial fix | `reject` |
+| `candidate_0020` | do not accept partial fix | `reject` |
+| `candidate_0023` | accept reference fix | `accept` |
+
+The smoke passed with 5 non-mock reviews and 0 invalid outputs. This supports a
+narrow diagnostic claim: the prompt-only failure was plausibly caused by
+evidence poverty. It does not rescue the original prompt-only claim. It only
+justifies a separate 30-candidate tool-augmented full run.
+
+## 10. Tool-Augmented Full Run
+
+The tool-augmented full run evaluated the same 30 candidates under a separate
+`tool_augmented_evidence` condition. The verifier saw patch-apply status and
+executable behavior summaries. It did not see evaluator labels such as
+`expected_outcome`, `candidate_type`, construction notes, or oracle paths.
+
+| condition | false accept rate | accepted precision | correct recall | false reject rate | escalation rate | invalid output rate |
+|---|---:|---:|---:|---:|---:|---:|
+| `llm_only` | 0.0909 | 0.7143 | 1.0000 | 0.0000 | 0.0667 | 0.1000 |
+| `prompt_only_evidence_first` | 0.0000 | 1.0000 | 0.7143 | 0.1429 | 0.1333 | 0.0333 |
+| `tool_augmented_evidence` | 0.0000 | 1.0000 | 1.0000 | 0.0000 | 0.0000 | 0.0000 |
+
+The tool-augmented full-run gate passed with 30 non-mock reviews, 0 invalid
+outputs, false accept rate 0.0, and correct-patch recall 1.0.
+
+This result supports a conditional tool-assisted verification claim. It does
+not show that prompt-only evidence-first review is sufficient; instead, it
+shows that executable evidence summaries can be decisive for the known
+safety/recall tradeoff.
+
+## 11. Reproducibility and Handoff Controls
 
 The pre-API artifact includes deterministic reproduction checks for the local
 dataset construction pipeline. The original no-API pilot and a reproduced run
@@ -215,7 +269,7 @@ deterministic reproducibility. This is an engineering control: it prevents
 dry-run, mock, or local validation outputs from being mistaken for model
 results.
 
-## 10. Model Selection Boundary
+## 12. Model Selection Boundary
 
 The first real API pilot is a within-model comparison. The same model must be
 used for `llm_only` and `evidence_first`, so the first claim controls for base
@@ -235,7 +289,7 @@ The current run uses `deepseek-v4-pro` through DeepSeek official API. This
 controls for base-model capability within the two-condition comparison, but it
 does not establish cross-model generality.
 
-## 11. Threats to Validity
+## 13. Threats to Validity
 
 Dataset size is small. The current pilot is designed to validate the method and
 failure surfaces, not to make broad claims about all AI-generated patches.
@@ -254,16 +308,27 @@ record provider model id, API provider, date, prompt version, decoding settings,
 cost, raw response path, and invalid-output status.
 
 The first pilot uses a single model by design. This is appropriate for testing
-whether evidence-first prompting changes acceptance behavior within one model,
+whether verification condition changes acceptance behavior within one model,
 but it cannot support claims about all frontier models or all coding agents.
 
-## 12. Current Conclusion
+Tool-augmented evidence includes executable behavior summaries. This is closer
+to engineering verification than prompt-only review, but it should not be
+presented as pure LLM reasoning ability. If the summaries include direct
+pass/fail outcomes, the condition is an evidence-assisted verifier and should
+be interpreted as a tool workflow.
+
+## 14. Current Conclusion
 
 The current artifact establishes a validated patch-verification pilot and a
 completed single-model API pilot. The result does not establish that
-evidence-first verification improves over LLM-only review under the configured
-gate. Evidence-first reduced false accepts and improved accepted precision, but
-it also reduced correct-patch recall beyond the configured tolerance. The next
-paper version should report this as a mixed/negative result and motivate a
-redesign that gives evidence-first reviewers stronger visible evidence or tool
-outputs before asking for accept/reject decisions.
+prompt-only evidence-first verification improves over LLM-only review under the
+configured gate. Evidence-first reduced false accepts and improved accepted
+precision, but it also reduced correct-patch recall beyond the configured
+tolerance.
+
+The revised tool-augmented verifier passed the 30-candidate full-run gate by
+accepting all correct reference patches and rejecting all negative candidates.
+The paper should therefore report a three-stage finding: prompt-only review is
+not enough, evidence-poor verification is too conservative, and tool-visible
+execution evidence can support a stronger verifier under the current pilot
+conditions.

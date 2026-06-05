@@ -108,10 +108,15 @@ def build_records(args: argparse.Namespace) -> dict[str, Any]:
     evidence_by_id = index_by(evidence_packets, "candidate_id")
     validations_by_id = index_by(validations, "model_candidate_id")
 
+    candidate_ids = (
+        [str(candidate["model_candidate_id"]) for candidate in candidates]
+        if args.all_candidates
+        else (args.candidate_id or list(DEFAULT_CANDIDATE_IDS))
+    )
     selected_candidates: list[dict[str, Any]] = []
     selected_evidence: list[dict[str, Any]] = []
     missing: list[str] = []
-    for candidate_id in args.candidate_id:
+    for candidate_id in candidate_ids:
         candidate = candidates_by_id.get(candidate_id)
         evidence = evidence_by_id.get(candidate_id)
         validation = validations_by_id.get(candidate_id)
@@ -137,19 +142,23 @@ def build_records(args: argparse.Namespace) -> dict[str, Any]:
 
     summary = {
         "record_count": len(selected_candidates),
-        "candidate_ids": list(args.candidate_id),
+        "candidate_ids": list(candidate_ids),
         "conditions": ["tool_augmented_evidence"],
         "all_validated": all(
             validations_by_id[candidate_id].get("validation_status") == "validated"
-            for candidate_id in args.candidate_id
+            for candidate_id in candidate_ids
         ),
         "oracle_all_passed_count": sum(
-            1 for candidate_id in args.candidate_id if validations_by_id[candidate_id].get("oracle_passed")
+            1 for candidate_id in candidate_ids if validations_by_id[candidate_id].get("oracle_passed")
         ),
         "oracle_failed_count": sum(
-            1 for candidate_id in args.candidate_id if not validations_by_id[candidate_id].get("oracle_passed")
+            1 for candidate_id in candidate_ids if not validations_by_id[candidate_id].get("oracle_passed")
         ),
-        "boundary": "This is a failure-case-only tool-augmented redesign smoke input, not a replacement for the full run dataset.",
+        "boundary": (
+            "This is a 30-candidate tool-augmented full-run input set."
+            if args.all_candidates
+            else "This is a failure-case-only tool-augmented redesign smoke input, not a replacement for the full run dataset."
+        ),
     }
     return {
         "candidates": selected_candidates,
@@ -164,7 +173,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--evidence-packets", default="outputs/patch_verification_pilot_001/evidence_packets.jsonl")
     parser.add_argument("--validation", default="outputs/patch_verification_pilot_001/validation.jsonl")
     parser.add_argument("--out-dir", default="outputs/patch_verification_redesign_smoke_001/inputs")
-    parser.add_argument("--candidate-id", action="append", default=list(DEFAULT_CANDIDATE_IDS))
+    parser.add_argument("--candidate-id", action="append")
+    parser.add_argument(
+        "--all-candidates",
+        action="store_true",
+        help="Build tool-augmented evidence packets for every candidate in the input dataset.",
+    )
     return parser.parse_args()
 
 

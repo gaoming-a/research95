@@ -7,6 +7,7 @@ from typing import Any
 
 
 DEFAULT_FULL_RUN_DIR = Path("outputs") / "patch_verification_api_pilot_002"
+DEFAULT_TOOL_AUGMENTED_FULL_RUN_DIR = Path("outputs") / "patch_verification_tool_augmented_full_001"
 
 
 def read_json(path: Path) -> dict[str, Any] | None:
@@ -86,6 +87,37 @@ def gate_state(run_dir: Path) -> dict[str, Any]:
     }
 
 
+def tool_augmented_gate_state(run_dir: Path) -> dict[str, Any]:
+    gate = read_json(run_dir / "tool_augmented_full_gate.json")
+    if gate is None:
+        return {
+            "exists": False,
+            "passed": False,
+            "condition_counts": {},
+            "metrics": {},
+            "mock_review_count": None,
+            "usable_for_tool_augmented_claim": False,
+        }
+    metrics = gate.get("metrics", {}) if isinstance(gate.get("metrics"), dict) else {}
+    condition_counts = gate.get("condition_counts", {}) if isinstance(gate.get("condition_counts"), dict) else {}
+    usable = (
+        gate.get("passed") is True
+        and gate.get("mock_review_count") == 0
+        and condition_counts == {"tool_augmented_evidence": 30}
+        and metrics.get("false_accept_rate") == 0.0
+        and metrics.get("correct_patch_recall") == 1.0
+        and metrics.get("invalid_output_rate") == 0.0
+    )
+    return {
+        "exists": True,
+        "passed": gate.get("passed") is True,
+        "condition_counts": condition_counts,
+        "metrics": metrics,
+        "mock_review_count": gate.get("mock_review_count"),
+        "usable_for_tool_augmented_claim": usable,
+    }
+
+
 def completeness_state(run_dir: Path) -> dict[str, Any]:
     completeness = read_json(run_dir / "run_completeness.json")
     if completeness is None:
@@ -112,10 +144,40 @@ def completeness_state(run_dir: Path) -> dict[str, Any]:
     }
 
 
+def tool_augmented_completeness_state(run_dir: Path) -> dict[str, Any]:
+    completeness = read_json(run_dir / "run_completeness.json")
+    if completeness is None:
+        return {
+            "exists": False,
+            "passed": False,
+            "expected_records": None,
+            "review_count": None,
+            "mock_review_count": None,
+            "usable_tool_augmented_full_run": False,
+        }
+    return {
+        "exists": True,
+        "passed": completeness.get("passed") is True,
+        "expected_records": completeness.get("expected_records"),
+        "review_count": completeness.get("review_count"),
+        "mock_review_count": completeness.get("mock_review_count"),
+        "usable_tool_augmented_full_run": (
+            completeness.get("passed") is True
+            and completeness.get("expected_records") == 30
+            and completeness.get("review_count") == 30
+            and completeness.get("mock_review_count") == 0
+        ),
+    }
+
+
 def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     run_dir = Path(args.full_run_dir)
+    tool_augmented_run_dir = Path(args.tool_augmented_run_dir)
     required_docs = {
         "pilot_report": file_state(Path("docs") / "experiments" / "patch_verification_pilot_report.md"),
+        "tool_augmented_full_result": file_state(
+            Path("docs") / "experiments" / "tool_augmented_full_run_result.md"
+        ),
         "paper_draft": file_state(Path("docs") / "paper" / "patch_verification_draft.md"),
         "paper_outline": file_state(Path("docs") / "paper" / "patch_verification_outline.md"),
         "generated_tables_md": file_state(Path("docs") / "paper" / "generated_tables.md"),
@@ -139,11 +201,21 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     failures = failure_state(run_dir)
     gate = gate_state(run_dir)
     completeness = completeness_state(run_dir)
+    tool_reviews = review_state(tool_augmented_run_dir)
+    tool_completeness = tool_augmented_completeness_state(tool_augmented_run_dir)
+    tool_gate = tool_augmented_gate_state(tool_augmented_run_dir)
 
     minimum_inputs_ready = all(doc["exists"] for doc in required_docs.values()) and all(
         state["exists"] for state in run_files.values()
     ) and reviews["counts_match"] and completeness["usable_full_run"] and failures["usable_for_paper"] and gate["exists"]
     positive_claim_ready = bool(minimum_inputs_ready and gate["usable_for_positive_claim"])
+    tool_augmented_claim_ready = bool(
+        required_docs["tool_augmented_full_result"]["exists"]
+        and required_docs["paper_draft"]["exists"]
+        and tool_reviews["counts_match"]
+        and tool_completeness["usable_tool_augmented_full_run"]
+        and tool_gate["usable_for_tool_augmented_claim"]
+    )
     negative_or_methods_draft_ready = bool(
         all(state["exists"] for state in required_docs.values())
         and all(state["exists"] for state in pre_api_evidence.values())
@@ -163,10 +235,29 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     elif gate["verdict"] != "continue":
         blockers.append(f"Gate verdict is `{gate['verdict']}`, so positive claims are not ready.")
 
+    tool_augmented_blockers: list[str] = []
+    if not required_docs["tool_augmented_full_result"]["exists"]:
+        tool_augmented_blockers.append("Missing tracked tool-augmented full-run result document.")
+    if not tool_reviews["counts_match"]:
+        tool_augmented_blockers.append("Missing tool-augmented reviews/metrics or counts do not match.")
+    if not tool_completeness["usable_tool_augmented_full_run"]:
+        tool_augmented_blockers.append("Missing 30-record non-mock tool-augmented completeness evidence.")
+    if not tool_gate["exists"]:
+        tool_augmented_blockers.append("Missing tool-augmented full-run gate report.")
+    elif not tool_gate["usable_for_tool_augmented_claim"]:
+        tool_augmented_blockers.append("Tool-augmented gate is not usable for the conditional tool-assisted claim.")
+
     return {
         "full_run_dir": run_dir.as_posix(),
+        "tool_augmented_run_dir": tool_augmented_run_dir.as_posix(),
         "minimum_inputs_ready": minimum_inputs_ready,
         "positive_claim_ready": positive_claim_ready,
+        "prompt_only_positive_claim_ready": positive_claim_ready,
+        "tool_augmented_claim_ready": tool_augmented_claim_ready,
+        "claim_boundary": (
+            "Prompt-only evidence-first remains unsupported by the old full-run gate. "
+            "The new positive claim is limited to a conditional tool-assisted verifier."
+        ),
         "negative_or_methods_draft_ready": negative_or_methods_draft_ready,
         "required_docs": required_docs,
         "pre_api_evidence": pre_api_evidence,
@@ -175,7 +266,11 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "completeness": completeness,
         "failures": failures,
         "gate": gate,
+        "tool_augmented_reviews": tool_reviews,
+        "tool_augmented_completeness": tool_completeness,
+        "tool_augmented_gate": tool_gate,
         "blockers": blockers,
+        "tool_augmented_blockers": tool_augmented_blockers,
     }
 
 
@@ -190,9 +285,12 @@ def build_markdown(audit: dict[str, Any]) -> str:
         "## Summary",
         "",
         f"- full run dir: `{audit['full_run_dir']}`",
+        f"- tool-augmented run dir: `{audit['tool_augmented_run_dir']}`",
         f"- minimum inputs ready: {bool_mark(audit['minimum_inputs_ready'])}",
-        f"- positive claim ready: {bool_mark(audit['positive_claim_ready'])}",
+        f"- prompt-only positive claim ready: {bool_mark(audit['prompt_only_positive_claim_ready'])}",
+        f"- tool-augmented claim ready: {bool_mark(audit['tool_augmented_claim_ready'])}",
         f"- methods/negative draft ready: {bool_mark(audit['negative_or_methods_draft_ready'])}",
+        f"- claim boundary: {audit['claim_boundary']}",
         "",
         "## Required Docs",
         "",
@@ -223,6 +321,21 @@ def build_markdown(audit: dict[str, Any]) -> str:
             f"- mock review count: {audit['completeness']['mock_review_count']}",
             f"- usable full run: {bool_mark(audit['completeness']['usable_full_run'])}",
             "",
+            "## Tool-Augmented Full Run",
+            "",
+            f"- reviews count: {audit['tool_augmented_reviews']['reviews_count']}",
+            f"- metrics count: {audit['tool_augmented_reviews']['metrics_count']}",
+            f"- counts match: {bool_mark(audit['tool_augmented_reviews']['counts_match'])}",
+            f"- completeness exists: {bool_mark(audit['tool_augmented_completeness']['exists'])}",
+            f"- completeness passed: {bool_mark(audit['tool_augmented_completeness']['passed'])}",
+            f"- expected records: {audit['tool_augmented_completeness']['expected_records']}",
+            f"- review count: {audit['tool_augmented_completeness']['review_count']}",
+            f"- mock review count: {audit['tool_augmented_completeness']['mock_review_count']}",
+            f"- gate exists: {bool_mark(audit['tool_augmented_gate']['exists'])}",
+            f"- gate passed: {bool_mark(audit['tool_augmented_gate']['passed'])}",
+            f"- usable for tool-augmented claim: {bool_mark(audit['tool_augmented_gate']['usable_for_tool_augmented_claim'])}",
+            f"- metrics: `{audit['tool_augmented_gate']['metrics']}`",
+            "",
             "## Failure Examples",
             "",
             f"- exists: {bool_mark(audit['failures']['exists'])}",
@@ -244,6 +357,12 @@ def build_markdown(audit: dict[str, Any]) -> str:
             lines.append(f"- {blocker}")
     else:
         lines.append("- None.")
+    lines.extend(["", "## Tool-Augmented Blockers", ""])
+    if audit["tool_augmented_blockers"]:
+        for blocker in audit["tool_augmented_blockers"]:
+            lines.append(f"- {blocker}")
+    else:
+        lines.append("- None.")
     lines.append("")
     return "\n".join(lines)
 
@@ -251,6 +370,7 @@ def build_markdown(audit: dict[str, Any]) -> str:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Audit whether the paper draft can move beyond pre-API methods.")
     parser.add_argument("--full-run-dir", default=str(DEFAULT_FULL_RUN_DIR))
+    parser.add_argument("--tool-augmented-run-dir", default=str(DEFAULT_TOOL_AUGMENTED_FULL_RUN_DIR))
     parser.add_argument("--out-json", required=True)
     parser.add_argument("--out-md", required=True)
     return parser.parse_args()

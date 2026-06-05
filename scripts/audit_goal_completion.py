@@ -64,12 +64,17 @@ def build_audit() -> dict[str, Any]:
     fallback_full_dir = Path("outputs/patch_verification_api_pilot_001")
     if not (full_dir / "reviews.jsonl").exists() and (fallback_full_dir / "reviews.jsonl").exists():
         full_dir = fallback_full_dir
+    tool_augmented_dir = Path("outputs/patch_verification_tool_augmented_full_001")
 
     full_reviews = count_jsonl(full_dir / "reviews.jsonl")
     full_metrics = read_json(full_dir / "metrics.json")
     full_gate = read_json(full_dir / "gate_report.json")
     full_failures = read_json(full_dir / "failure_examples.json")
     full_completeness = read_json(full_dir / "run_completeness.json")
+    tool_reviews = count_jsonl(tool_augmented_dir / "reviews.jsonl")
+    tool_metrics = read_json(tool_augmented_dir / "metrics.json")
+    tool_completeness = read_json(tool_augmented_dir / "run_completeness.json")
+    tool_gate = read_json(tool_augmented_dir / "tool_augmented_full_gate.json")
     git = git_state()
     stage_counts = plan_progress.get("stage_counts", {}) if isinstance(plan_progress, dict) else {}
     ledger_records = run_records.get("records", []) if isinstance(run_records.get("records"), list) else []
@@ -112,7 +117,7 @@ def build_audit() -> dict[str, Any]:
             },
         ),
         check(
-            "real_full_api_reviews_present",
+            "prompt_only_full_api_reviews_present",
             full_reviews == 60
             and full_metrics is not None
             and full_metrics.get("mock_review_count", 0) == 0
@@ -126,6 +131,23 @@ def build_audit() -> dict[str, Any]:
                 "mock_review_count": full_metrics.get("mock_review_count") if full_metrics else None,
                 "run_completeness_passed": full_completeness.get("passed") if full_completeness else None,
                 "expected_records": full_completeness.get("expected_records") if full_completeness else None,
+            },
+        ),
+        check(
+            "tool_augmented_full_api_reviews_present",
+            tool_reviews == 30
+            and tool_metrics is not None
+            and tool_metrics.get("mock_review_count", 0) == 0
+            and tool_completeness is not None
+            and tool_completeness.get("passed") is True
+            and tool_completeness.get("expected_records") == 30
+            and tool_completeness.get("mock_review_count") == 0,
+            {
+                "run_dir": tool_augmented_dir.as_posix(),
+                "reviews_count": tool_reviews,
+                "mock_review_count": tool_metrics.get("mock_review_count") if tool_metrics else None,
+                "run_completeness_passed": tool_completeness.get("passed") if tool_completeness else None,
+                "expected_records": tool_completeness.get("expected_records") if tool_completeness else None,
             },
         ),
         check(
@@ -159,21 +181,51 @@ def build_audit() -> dict[str, Any]:
             },
         ),
         check(
-            "paper_positive_claim_ready",
-            paper.get("positive_claim_ready") is True,
+            "prompt_only_positive_claim_preserved_as_negative",
+            paper.get("prompt_only_positive_claim_ready") is False or paper.get("positive_claim_ready") is False,
             {
                 "source": "outputs/paper_readiness/latest.json",
+                "prompt_only_positive_claim_ready": paper.get("prompt_only_positive_claim_ready"),
                 "positive_claim_ready": paper.get("positive_claim_ready"),
                 "blockers": paper.get("blockers"),
             },
         ),
         check(
-            "gate_supports_continue",
-            bool(full_gate and full_gate.get("verdict") == "continue" and full_gate.get("mock_review_count", 0) == 0),
+            "tool_augmented_paper_claim_ready",
+            paper.get("tool_augmented_claim_ready") is True,
+            {
+                "source": "outputs/paper_readiness/latest.json",
+                "tool_augmented_claim_ready": paper.get("tool_augmented_claim_ready"),
+                "claim_boundary": paper.get("claim_boundary"),
+                "tool_augmented_blockers": paper.get("tool_augmented_blockers"),
+            },
+        ),
+        check(
+            "prompt_only_gate_preserved_as_redesign_signal",
+            bool(full_gate and full_gate.get("verdict") != "continue" and full_gate.get("mock_review_count", 0) == 0),
             {
                 "run_dir": full_dir.as_posix(),
                 "verdict": full_gate.get("verdict") if full_gate else None,
                 "mock_review_count": full_gate.get("mock_review_count") if full_gate else None,
+            },
+        ),
+        check(
+            "tool_augmented_gate_supports_conditional_claim",
+            bool(
+                tool_gate
+                and tool_gate.get("passed") is True
+                and tool_gate.get("mock_review_count", 0) == 0
+                and (tool_gate.get("condition_counts") or {}) == {"tool_augmented_evidence": 30}
+                and (tool_gate.get("metrics") or {}).get("false_accept_rate") == 0.0
+                and (tool_gate.get("metrics") or {}).get("correct_patch_recall") == 1.0
+                and (tool_gate.get("metrics") or {}).get("invalid_output_rate") == 0.0
+            ),
+            {
+                "run_dir": tool_augmented_dir.as_posix(),
+                "passed": tool_gate.get("passed") if tool_gate else None,
+                "mock_review_count": tool_gate.get("mock_review_count") if tool_gate else None,
+                "condition_counts": tool_gate.get("condition_counts") if tool_gate else None,
+                "metrics": tool_gate.get("metrics") if tool_gate else None,
             },
         ),
         check(

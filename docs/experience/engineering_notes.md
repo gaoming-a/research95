@@ -441,3 +441,37 @@ This file starts fresh for the patch-verification project.
 - Treat this as evidence that tool-visible execution summaries can repair the
   known failure cases. It is not evidence that the original prompt-only
   `evidence_first` condition succeeded.
+
+## 2026-06-05 tool-augmented full run
+
+- After the user confirmed the route, the paper framing was revised before the
+  full run: tool-augmented verification is a separate condition, not a rescue
+  of prompt-only evidence-first.
+- Built 30-candidate full-run inputs under
+  `outputs/patch_verification_tool_augmented_full_001/inputs` with
+  `--all-candidates`.
+- Dry-run produced exactly 30 `tool_augmented_evidence` prompts, and direct
+  rendered-prompt scanning found no evaluator labels, old evaluator patch ids,
+  or local paths.
+- Real DeepSeek full run completed with 30 non-mock records, completeness
+  passed, and `tool_augmented_full_gate.json` passed.
+- Metrics: false accept rate 0.0, accepted precision 1.0, correct-patch recall
+  1.0, false reject rate 0.0, escalation rate 0.0, invalid-output rate 0.0.
+- Interpret this as conditional tool-assisted verifier evidence. The result
+  depends on visible executable behavior summaries and must not be described as
+  prompt-only model-review ability.
+
+## 2026-06-05 dual-claim audit repair
+
+- After the tool-augmented full run passed, the old readiness scripts still
+  treated the original prompt-only `stop_or_redesign` gate as the only path to
+  a positive claim.
+- Root risk: future execution would either keep reporting the new direction as
+  blocked, or incorrectly rewrite the prompt-only negative result into a
+  success.
+- Fix: `scripts/audit_paper_readiness.py`, `scripts/audit_ai_plan_progress.py`,
+  and `scripts/audit_goal_completion.py` now report prompt-only readiness and
+  tool-augmented conditional readiness as separate checks.
+- Rule: never change the old `positive_claim_ready=false` into true unless the
+  prompt-only gate itself changes. The supported positive result is
+  `tool_augmented_claim_ready=true`, bounded to tool-assisted verification.

@@ -48,6 +48,10 @@
   5-candidate `tool_augmented_evidence` redesign smoke. The smoke passed, but
   it is a separate tool-augmented diagnostic result rather than a rescue of the
   original prompt-only evidence-first claim.
+- `experiments/tool_augmented_full_run_result.md`: tracked result for the
+  30-candidate `tool_augmented_evidence` full run. The run passed its dedicated
+  tool-assisted gate, with false accept rate 0 and correct-patch recall 1 on
+  the current pilot.
 - `experiments/patch_candidate_schema.md`: JSONL schema for candidate patches
   and verifier outputs.
 - `experiments/evidence_first_protocol.md`: comparison conditions and
@@ -108,13 +112,16 @@
   `docs/plans/ai_agent_experiment_execution_plan_zh.md`, reporting which
   stages are complete, partial, blocked, or pending. Stage 8 requires
   `run_completeness.json` to prove a 60-record non-mock full run before
-  postprocess is considered complete. Latest report:
+  postprocess is considered complete. Stage 9 now treats the prompt-only
+  `stop_or_redesign` verdict as an interpreted negative/redesign signal when
+  the separate tool-augmented full-run gate has passed. Latest report:
   `outputs/plan_progress/latest.md`.
 - `scripts/audit_goal_completion.py`: full-objective completion audit that
   prevents mistaking local readiness, no-API reproduction, or paper skeletons
   for completion of the whole plan. It also requires the experiment run-record
-  ledger to cover no-API, smoke API, full API, and quality-gate records. Latest
-  report:
+  ledger to cover no-API, smoke API, full API, and quality-gate records. It
+  preserves the prompt-only result as negative and checks the tool-augmented
+  conditional claim separately. Latest report:
   `outputs/goal_completion/latest.md`.
 - `scripts/write_human_input_packet.py`: writes an ignored handoff packet that
   lists missing human inputs, safe command order, and forbidden actions before
@@ -140,10 +147,12 @@
   `outputs/experiment_run_records/latest.md`.
 - `scripts/audit_paper_readiness.py`: Stage-E audit that prevents moving from
   the pre-API methods draft to positive claims until real API outputs, failure
-  examples, and the stop/continue gate are present. It also reports whether
-  pre-API methods evidence is complete: pilot report, paper draft/outline,
-  model-selection docs, reproducibility comparison, model catalog audit, and
-  pre-API handoff.
+  examples, and the relevant gate are present. It reports prompt-only positive
+  readiness and tool-augmented conditional readiness separately, so the
+  `tool_augmented_evidence` result cannot be mistaken for prompt-only model
+  ability. It also reports whether pre-API methods evidence is complete:
+  pilot report, paper draft/outline, model-selection docs, reproducibility
+  comparison, model catalog audit, and pre-API handoff.
 - `scripts/write_paper_tables.py`: generates Markdown and LaTeX pre-API paper
   tables from dataset summary, validation summary, metrics, and deterministic
   reproducibility comparison.
@@ -201,13 +210,17 @@
 - `configs/api_redesign_smoke.example.json`: template for the failure-case-only
   `tool_augmented_evidence` redesign smoke. It must be copied or materialized
   under ignored output/local config paths before use.
+- `configs/api_tool_augmented_full.example.json`: template for the
+  30-candidate tool-augmented full run.
 - `scripts/build_redesign_smoke_inputs.py`: builds the 5-candidate
-  tool-augmented redesign-smoke input set from existing candidates, evidence
-  packets, and validation records.
+  tool-augmented redesign-smoke input set, or the 30-candidate full-run input
+  set with `--all-candidates`, from existing candidates, evidence packets, and
+  validation records.
 - `scripts/run_redesign_smoke_workflow.py`: guarded workflow for the
-  tool-augmented redesign smoke. It performs preflight/check-only gating,
-  executes only the `tool_augmented_evidence` condition, and writes a dedicated
-  redesign-smoke gate report instead of reusing the original full-run gate.
+  tool-augmented redesign smoke and full run. It performs preflight/check-only
+  gating, executes only the `tool_augmented_evidence` condition, and writes a
+  dedicated smoke or full-run gate report instead of reusing the original
+  prompt-only full-run gate.
 - `scripts/run_api_pilot_workflow.py`: guarded API pilot workflow wrapper. It
   runs preflight, requires explicit `--execute` before any model call, runs the
   API pilot, records model-selection validation, and then runs postprocess.

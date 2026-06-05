@@ -290,13 +290,33 @@ def build_progress() -> dict[str, Any]:
 
     gate = read_json(full_run_dir / "gate_report.json")
     verdict = gate.get("verdict") if gate else None
+    tool_augmented_run_dir = Path("outputs") / "patch_verification_tool_augmented_full_001"
+    tool_augmented_gate = read_json(tool_augmented_run_dir / "tool_augmented_full_gate.json")
+    tool_augmented_gate_passed = bool(
+        tool_augmented_gate
+        and tool_augmented_gate.get("passed") is True
+        and tool_augmented_gate.get("mock_review_count") == 0
+        and (tool_augmented_gate.get("condition_counts") or {}) == {"tool_augmented_evidence": 30}
+    )
+    prompt_only_gate_interpreted = bool(gate and verdict == "stop_or_redesign" and gate.get("mock_review_count") == 0)
     stages.append(
         stage(
             "9",
-            "结果 gate 判定",
-            STATUS_COMPLETE if verdict == "continue" else STATUS_PENDING if gate else STATUS_BLOCKED,
-            [f"verdict={verdict}", f"mock_review_count={gate.get('mock_review_count') if gate else None}"],
-            None if verdict == "continue" else "Interpret gate_report.json; do not write positive claims unless verdict is continue.",
+            "结果 gate 判定与 redesign 分流",
+            STATUS_COMPLETE
+            if (verdict == "continue" or (prompt_only_gate_interpreted and tool_augmented_gate_passed))
+            else STATUS_PENDING
+            if gate
+            else STATUS_BLOCKED,
+            [
+                f"prompt_only_verdict={verdict}",
+                f"prompt_only_mock_review_count={gate.get('mock_review_count') if gate else None}",
+                f"tool_augmented_gate_passed={tool_augmented_gate_passed}",
+                f"tool_augmented_mock_review_count={tool_augmented_gate.get('mock_review_count') if tool_augmented_gate else None}",
+            ],
+            None
+            if (verdict == "continue" or (prompt_only_gate_interpreted and tool_augmented_gate_passed))
+            else "Interpret gate_report.json and tool_augmented_full_gate.json before writing claims.",
         )
     )
 
@@ -316,18 +336,23 @@ def build_progress() -> dict[str, Any]:
         )
     )
 
-    positive_ready = bool(paper.get("positive_claim_ready"))
+    prompt_only_positive_ready = bool(paper.get("prompt_only_positive_claim_ready", paper.get("positive_claim_ready")))
+    tool_augmented_positive_ready = bool(paper.get("tool_augmented_claim_ready"))
     methods_ready = bool(paper.get("negative_or_methods_draft_ready"))
     stages.append(
         stage(
             "11",
             "论文 readiness 与正文更新",
-            STATUS_COMPLETE if positive_ready else STATUS_PARTIAL if methods_ready else STATUS_INCOMPLETE,
+            STATUS_COMPLETE if tool_augmented_positive_ready and methods_ready else STATUS_PARTIAL if methods_ready else STATUS_INCOMPLETE,
             [
-                f"positive_claim_ready={paper.get('positive_claim_ready')}",
+                f"prompt_only_positive_claim_ready={prompt_only_positive_ready}",
+                f"tool_augmented_claim_ready={tool_augmented_positive_ready}",
                 f"methods_or_negative_draft_ready={paper.get('negative_or_methods_draft_ready')}",
+                f"claim_boundary={paper.get('claim_boundary')}",
             ],
-            None if positive_ready else "Keep paper at methods/negative-result boundary until real API gate supports a positive claim.",
+            None
+            if tool_augmented_positive_ready and methods_ready
+            else "Keep prompt-only as a negative result and only use the tool-augmented gate for the conditional tool-assisted claim.",
         )
     )
 
@@ -379,7 +404,9 @@ def build_progress() -> dict[str, Any]:
         "stages": stages,
         "next_actions": next_actions,
         "ready_for_real_api": bool(readiness.get("overall_ready_for_real_api")),
-        "positive_paper_claim_ready": positive_ready,
+        "prompt_only_positive_paper_claim_ready": prompt_only_positive_ready,
+        "tool_augmented_paper_claim_ready": tool_augmented_positive_ready,
+        "positive_paper_claim_ready": tool_augmented_positive_ready,
         "git_repo": bool(git_state(readiness)),
     }
 
@@ -397,7 +424,8 @@ def build_markdown(progress: dict[str, Any]) -> str:
         "",
         f"- plan: `{progress['plan']}`",
         f"- ready for real API: {bool_mark(progress['ready_for_real_api'])}",
-        f"- positive paper claim ready: {bool_mark(progress['positive_paper_claim_ready'])}",
+        f"- prompt-only positive paper claim ready: {bool_mark(progress['prompt_only_positive_paper_claim_ready'])}",
+        f"- tool-augmented paper claim ready: {bool_mark(progress['tool_augmented_paper_claim_ready'])}",
         f"- git repository: {bool_mark(progress['git_repo'])}",
         f"- stage counts: `{progress['stage_counts']}`",
         "",

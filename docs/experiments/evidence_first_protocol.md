@@ -2,8 +2,14 @@
 
 ## Purpose
 
-The evidence-first protocol is the main proposed workflow. It prevents a model
-from accepting or rejecting a patch purely because the patch looks plausible.
+The evidence-first protocol began as the main proposed workflow. The first full
+DeepSeek run showed that the prompt-only version is too evidence-poor: it
+removed observed false accepts but failed to preserve correct-patch recall.
+
+The revised workflow separates two conditions:
+
+- prompt-only evidence-first verification;
+- tool-augmented evidence verification.
 
 The verifier must connect each decision to concrete evidence:
 
@@ -60,12 +66,23 @@ debugging notes.
 
 Purpose: test whether richer context changes reliability.
 
-### Evidence-First Verification
+### Prompt-Only Evidence-First Verification
 
 The model sees task context, patch context, and an evidence packet. It must
 cite evidence for each accepted or rejected claim.
 
-Purpose: target method.
+Purpose: test whether stricter evidence discipline helps without tool outputs.
+The first full run returned `stop_or_redesign`, so this condition is no longer
+the positive target method.
+
+### Tool-Augmented Evidence Verification
+
+The model sees task context, patch context, patch-apply status, and executable
+behavior summaries. It must still avoid evaluator labels, but it may use the
+visible tool outcomes as evidence.
+
+Purpose: revised target workflow. It tests whether making executable evidence
+visible repairs the safety/recall tradeoff observed in the prompt-only run.
 
 ### Oracle Upper Bound
 
@@ -99,3 +116,6 @@ Escalation is required when:
 
 Report both raw model decisions and evidence-gated decisions. Never pool them
 without labeling the condition.
+
+Tool-augmented results must be reported separately from prompt-only results.
+They are evidence-assisted verifier behavior, not pure model-review ability.
