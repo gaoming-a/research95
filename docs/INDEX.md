@@ -1,5 +1,11 @@
 # Research95 Index
 
+## Project Execution Rules
+
+- `../AGENTS.md`: project-level requirements for the plan-execute-audit-revise
+  loop, including verification, diagnosis, documentation sync, and GitHub sync
+  rules for future agent runs.
+
 ## Active Plan
 
 - `plans/ai_agent_experiment_execution_plan_zh.md`: standalone execution
