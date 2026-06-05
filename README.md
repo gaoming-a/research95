@@ -165,6 +165,10 @@ The following were intentionally not copied:
    exhausted reasoning tokens on one candidate and produced empty final content;
    the valid smoke run is
    `outputs/patch_verification_api_pilot_001_tokens4096`.
+   The 30-candidate DeepSeek full run has completed in
+   `outputs/patch_verification_api_pilot_002`: 60 non-mock reviews, completeness
+   passed, and gate verdict `stop_or_redesign`. This is a mixed/negative result,
+   not a positive paper claim.
 7. Use `scripts/summarize_patch_verification_pilot.py` to regenerate the
    current Markdown pilot report from ignored outputs.
 8. After a real API or mock smoke run, use
@@ -186,15 +190,15 @@ The following were intentionally not copied:
    produce a stop/continue gate report. The paper should only claim positive
    evidence if the gate supports continuing and the qualitative examples are
    consistent with that interpretation.
-12. Before moving the paper beyond the pre-API methods draft, run
+12. Before moving the paper beyond the mixed/negative-result draft, run
    `scripts/audit_paper_readiness.py` to check that real API results, failure
    examples, and the gate report are present.
 13. Use `scripts/write_paper_tables.py` to regenerate pre-API Markdown and
    LaTeX tables after dataset, validation, metrics, or reproducibility outputs
    change.
-14. Use `scripts/write_ieee_latex_draft.py` to regenerate the IEEEtran pre-API
-   LaTeX draft after table or framing changes. It intentionally leaves real API
-   results pending.
+14. Use `scripts/write_ieee_latex_draft.py` only after updating its framing for
+   the full-run mixed result. The older pre-API LaTeX draft is no longer a final
+   paper draft.
 15. Use `scripts/prepare_anonymous_artifact.py` to build an anonymous
    supplemental package after checking that no credentials, raw outputs, or
    local benchmark checkouts are included. Use

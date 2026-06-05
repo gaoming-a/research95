@@ -1,12 +1,13 @@
 # Verifiable Review of AI-Generated Patches in Real Software Projects
 
-Draft status: pre-API methods draft, 2026-06-05.
+Draft status: full-run mixed-result draft, 2026-06-05.
 
-This draft intentionally does not report model-review results. The current
+This draft reports the first full DeepSeek official API pilot. The current
 evidence supports dataset construction, executable label validation, no-API
-baselines, prompt-boundary checks, deterministic no-API reproducibility, and
-model-selection boundary documentation. The main hypothesis requires the
-pending API pilot.
+baselines, prompt-boundary checks, deterministic no-API reproducibility,
+model-selection boundary documentation, and a 60-record real API run. The result
+is mixed and does not support a positive evidence-first claim under the
+configured gate.
 
 ## Abstract
 
@@ -22,8 +23,8 @@ candidates from 7 real-bug tasks across 2 projects, including 9 partial-fix
 candidates. No-API baselines show the expected merge-gate tradeoff:
 accept-everything has perfect correct-patch recall but false-accept rate 1.0,
 while reject-everything has false-accept rate 0.0 but correct-patch recall 0.0.
-The pending API pilot will test whether evidence-first verification reduces
-false accepts without collapsing correct-patch recall.
+The API pilot tests whether evidence-first verification reduces false accepts
+without collapsing correct-patch recall.
 
 ## 1. Introduction
 
@@ -157,24 +158,32 @@ Interpretation: the dataset and metrics expose the intended merge-gate tension.
 The no-API results do not test the research hypothesis because no real model
 reviewer decisions have been collected.
 
-## 8. API Pilot Plan
+## 8. API Pilot Result
 
-The first API pilot should run only two conditions on the validated 30
-candidates:
+The first API pilot ran two conditions on the validated 30 candidates:
 
 1. `llm_only`
 2. `evidence_first`
 
-Before running API calls, the executor must:
+Both conditions used `deepseek-v4-pro` through the DeepSeek official API. The
+run produced 60 non-mock review records and passed the completeness audit:
+30 candidates, 2 conditions, raw response hashes present, no missing raw
+responses, no `run_error.json`, and required review fields present.
 
-- create an untracked local API config from `configs/api_pilot.example.json`;
-- set a real OpenRouter model slug;
-- provide `.env` with `OPENROUTER_API_KEY`;
-- run `scripts/preflight_api_pilot.py`;
-- run a two-candidate smoke pilot before the full 30-candidate run.
+| condition | false accept rate | accepted precision | correct recall | escalation rate | invalid output rate |
+|---|---:|---:|---:|---:|---:|
+| `llm_only` | 0.0909 | 0.7143 | 1.0000 | 0.0667 | 0.1000 |
+| `evidence_first` | 0.0000 | 1.0000 | 0.7143 | 0.1333 | 0.0333 |
 
-The API runner writes `reviews.jsonl`, `metrics.json`, raw responses, and
-`run_summary.md`.
+The result is not a positive result. Evidence-first removed the observed false
+accepts and improved accepted precision, but correct-patch recall dropped by
+0.2857, exceeding the configured tolerance of 0.25. The stop/continue gate
+therefore returned `stop_or_redesign`.
+
+The most important failure pattern is that `llm_only` accepted two partial
+fixes, while `evidence_first` did not accept them. However, `evidence_first`
+also rejected or escalated two correct reference patches. The current result
+therefore supports a safety/utility tradeoff claim, not a superiority claim.
 
 ## 9. Reproducibility and Handoff Controls
 
@@ -201,7 +210,7 @@ tables are generated from JSON outputs rather than manually copied values.
 
 The execution plan also separates local pre-API checks from model experiments.
 The current handoff packet refreshes readiness, paper readiness, plan progress,
-human-required inputs, Git-sync state, OpenRouter catalog visibility, and
+human-required inputs, Git-sync state, model-selection visibility, and
 deterministic reproducibility. This is an engineering control: it prevents
 dry-run, mock, or local validation outputs from being mistaken for model
 results.
@@ -214,23 +223,17 @@ model capability but does not establish cross-model generality.
 
 Before any local model config is created, the executor must document:
 
-- concrete OpenRouter slug;
+- concrete provider model id;
+- API provider;
 - provider;
 - selection source and date;
 - capability source or capability band;
 - reason for selection;
 - known limitations.
 
-The current shortlist recommends `anthropic/claude-sonnet-4.6` as a
-conservative first pilot candidate because it is a concrete, non-`latest`,
-non-preview OpenRouter slug and is visible in the public model catalog. That is
-not an experiment decision by itself. The user must still confirm the slug and
-rationale before `configs/model_selection.local.json` and
-`configs/api_pilot.local.json` are generated.
-
-The local config helpers support a public OpenRouter catalog check before
-writing local config. This only verifies slug visibility; it does not prove API
-key access, pricing, provider routing, model quality, or paper suitability.
+The current run uses `deepseek-v4-pro` through DeepSeek official API. This
+controls for base-model capability within the two-condition comparison, but it
+does not establish cross-model generality.
 
 ## 11. Threats to Validity
 
@@ -247,8 +250,8 @@ engineering workflows. The protocol should distinguish visible context,
 evidence packets, and hidden evaluator oracles.
 
 Model behavior can drift over time and across providers. Every API run must
-record model slug, provider, date, prompt version, decoding settings, cost, raw
-response path, and invalid-output status.
+record provider model id, API provider, date, prompt version, decoding settings,
+cost, raw response path, and invalid-output status.
 
 The first pilot uses a single model by design. This is appropriate for testing
 whether evidence-first prompting changes acceptance behavior within one model,
@@ -257,7 +260,10 @@ but it cannot support claims about all frontier models or all coding agents.
 ## 12. Current Conclusion
 
 The current artifact establishes a validated patch-verification pilot and a
-ready-to-run API protocol. It does not yet establish that evidence-first
-verification improves over LLM-only review. That claim depends on the pending
-API pilot and must be evaluated using false accept rate, accepted precision,
-correct-patch recall, escalation rate, and invalid-output rate.
+completed single-model API pilot. The result does not establish that
+evidence-first verification improves over LLM-only review under the configured
+gate. Evidence-first reduced false accepts and improved accepted precision, but
+it also reduced correct-patch recall beyond the configured tolerance. The next
+paper version should report this as a mixed/negative result and motivate a
+redesign that gives evidence-first reviewers stronger visible evidence or tool
+outputs before asking for accept/reject decisions.

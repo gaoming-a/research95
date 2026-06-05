@@ -81,4 +81,7 @@ regenerates a pilot report without calling a model API.
 
 The current state validates dataset construction, executable labels, metrics, and prompt boundaries. It does not yet test the research hypothesis because no model reviewer decisions have been collected.
 
-The next required step is a two-candidate API smoke run after a real OpenRouter model slug and `.env` key are provided.
+Real DeepSeek API smoke and full runs have now been executed. The full-run
+result is summarized in `docs/experiments/deepseek_full_run_result.md`; the gate
+verdict is `stop_or_redesign`, so the result must be treated as mixed/negative
+rather than a positive evidence-first claim.

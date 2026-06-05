@@ -19,8 +19,8 @@
   non-goals.
 - `paper/patch_verification_outline.md`: target paper outline and contribution
   framing.
-- `paper/patch_verification_draft.md`: pre-API methods draft with no-API
-  validation results and pending API-result placeholders.
+- `paper/patch_verification_draft.md`: mixed-result draft with no-API
+  validation results and the first DeepSeek official API full-run outcome.
 - `paper/generated_tables.md`: generated Markdown paper tables from current
   no-API outputs.
 - `paper/generated_tables.tex`: generated LaTeX table snippets for the future
@@ -31,6 +31,9 @@
   patch-verification pilot.
 - `experiments/patch_verification_pilot_report.md`: tracked summary of the
   current no-API pilot, executable validation, metrics, and prompt dry-run.
+- `experiments/deepseek_full_run_result.md`: tracked summary of the first
+  DeepSeek official API full run. The run completed with 60 non-mock reviews
+  and passed completeness, but the gate verdict is `stop_or_redesign`.
 - `experiments/patch_candidate_schema.md`: JSONL schema for candidate patches
   and verifier outputs.
 - `experiments/evidence_first_protocol.md`: comparison conditions and
@@ -190,6 +193,8 @@
   Current valid DeepSeek smoke: `outputs/patch_verification_api_pilot_001_tokens4096`
   with `max_tokens=4096`, 4 non-mock reviews, run completeness passed, and
   invalid output rate 0.
+  Current full run: `outputs/patch_verification_api_pilot_002`, 60 non-mock
+  reviews, run completeness passed, gate verdict `stop_or_redesign`.
 - `scripts/audit_api_run_completeness.py`: validates that an API smoke/full run
   has the expected review count, condition counts, metrics count, non-mock
   boundary, raw response paths, raw response hashes, review schema fields, and

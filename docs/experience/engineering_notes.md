@@ -378,3 +378,21 @@ This file starts fresh for the patch-verification project.
 - `scripts/audit_credential_boundary.py` now filters `.env.example` out of the
   tracked-secret-file list while still validating that the template contains
   only placeholders.
+
+## 2026-06-05 DeepSeek full run result
+
+- Full run directory: `outputs/patch_verification_api_pilot_002`.
+- The run completed with 60 non-mock review records, 30 candidates, 2
+  conditions, no `run_error.json`, raw response hashes present, and
+  `run_completeness.json` passed.
+- Gate verdict: `stop_or_redesign`.
+- Evidence-first improved safety metrics: false accept rate 0.0000 versus
+  0.0909 for llm-only, and accepted precision 1.0000 versus 0.7143.
+- Evidence-first also reduced correct-patch recall: 0.7143 versus 1.0000 for
+  llm-only. The drop is 0.2857, exceeding the configured `max_recall_drop=0.25`.
+- This is a mixed/negative result. Do not write a positive claim that
+  evidence-first is better. The honest claim is that it removed observed false
+  accepts in this pilot but at too high a recall cost under the configured gate.
+- Next research step should inspect `failure_examples.md` and decide whether to
+  redesign the evidence packet/prompt or pivot the paper toward merge-gate
+  safety/utility tradeoffs.

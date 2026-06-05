@@ -290,6 +290,67 @@ python scripts\run_api_pilot_workflow.py `
   --summary-out outputs\api_workflow_full\latest.json
 ```
 
+## 6.2 2026-06-05 DeepSeek API full run 执行计划
+
+本轮执行 30-candidate full run。执行前检查结果：
+
+- Git 工作区干净，remote 为 `https://github.com/gaoming-a/research95.git`。
+- `configs/api_pilot.local.json` 使用 `api_provider=deepseek_official`、
+  `model=deepseek-v4-pro`、`max_tokens=4096`。
+- 有效 smoke 目录为 `outputs/patch_verification_api_pilot_001_tokens4096`：
+  4 条非 mock review，`run_completeness.json` 通过，invalid output rate 为 0。
+- `outputs/patch_verification_api_pilot_002` 不存在，full run 不会覆盖已有结果。
+- `python scripts\preflight_api_pilot.py --config configs\api_pilot.local.json`
+  已通过。
+
+执行命令：
+
+```powershell
+python scripts\run_api_pilot_workflow.py `
+  --config configs\api_pilot.local.json `
+  --run-dir outputs\patch_verification_api_pilot_002 `
+  --limit 0 `
+  --execute `
+  --summary-out outputs\api_workflow_full\latest.json
+```
+
+full run 验收条件：
+
+- `reviews.jsonl` 为 60 条，两个条件各 30 条。
+- `run_completeness.json` 通过，`mock_review_count=0`，无 `run_error.json`。
+- postprocess 生成 `api_pilot_report.md`、`failure_examples.json/md`、
+  `gate_report.json/md`、`paper_readiness.json/md` 和 `postprocess_summary.json`。
+- 只有当 full-run `gate_report.json` verdict 为 `continue` 且 failure analysis
+  支持解释时，才允许写正向论文结论。
+- 如果 verdict 为 `indeterminate`、`stop_or_redesign` 或 `not_evidence`，
+  只能写负结果/方法边界，不能声称 evidence-first 已被支持。
+
+full run 执行结果：
+
+- `outputs/patch_verification_api_pilot_002` 已生成。
+- 60 条非 mock review，两个条件各 30 条。
+- `run_completeness.json` 通过，raw responses 60/60 存在且 hash 匹配，
+  无 `run_error.json`。
+- `gate_report.json` verdict 为 `stop_or_redesign`。
+- `paper_readiness.json` 显示 `negative_or_methods_draft_ready=true`，
+  `positive_claim_ready=false`。
+
+核心指标：
+
+| condition | false accept rate | accepted precision | correct recall | escalation rate | invalid output rate |
+|---|---:|---:|---:|---:|---:|
+| `llm_only` | 0.0909 | 0.7143 | 1.0000 | 0.0667 | 0.1000 |
+| `evidence_first` | 0.0000 | 1.0000 | 0.7143 | 0.1333 | 0.0333 |
+
+客观结论：
+
+- evidence-first 降低 false accepts，并提高 accepted precision。
+- 但 correct-patch recall 下降 0.2857，超过预设 `max_recall_drop=0.25`。
+- 当前不能写正向论文结论；只能写 mixed/negative result，并说明安全性提升伴随
+  过度拒绝/升级正确 patch 的代价。
+- 下一步应人工检查 `failure_examples.md`，判断是否要重新设计 evidence-first
+  prompt/evidence packet，或将论文主旨改为“LLM merge gate 的安全/效用权衡”。
+
 ## 7. 继续/止损门槛
 
 只有满足以下至少一项时继续：
