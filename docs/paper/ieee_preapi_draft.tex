@@ -1,0 +1,268 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage{xspace}
+
+\newcommand{\toolname}{Evidence-First Patch Verification\xspace}
+
+\title{Verifiable Review of AI-Generated Patches in Real Software Projects}
+
+\author{
+\IEEEauthorblockN{Anonymous Authors}
+\IEEEauthorblockA{Anonymous Institution\\
+Email: anonymous@example.com}
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+AI coding agents increasingly produce patches for real software tasks, but a
+patch that looks plausible is not necessarily safe to merge. This paper studies
+patch acceptance as a verification problem: given a real task and a candidate
+patch, decide whether the patch should be accepted, rejected, or escalated
+based on evidence. We construct a pilot patch-verification dataset from
+retained real-bug pairs, materialize source-level patch candidates, validate
+labels with executable oracles, and prepare two review conditions: LLM-only
+patch review and evidence-first verification. The current pre-API artifact
+contains 30 validated patch candidates from 7 real-bug tasks across 2 projects,
+including 9 partial-fix candidates. The pending API pilot will test whether
+evidence-first verification reduces false accepts without collapsing
+correct-patch recall.
+\end{abstract}
+
+\section{Introduction}
+
+AI coding agents are increasingly used to generate patches for real codebases.
+The standard question, ``does the patch pass tests?'', is insufficient when
+tests are incomplete or generated changes are plausible but partial. Software
+teams need a merge-gate decision: accept, reject, or escalate.
+
+This work treats patch review as a verification problem rather than a generic
+bug-finding problem. The reviewer is asked to judge a candidate patch against a
+task summary and visible patch context. The evaluator uses executable or
+tool-backed evidence to determine whether the decision is correct.
+
+The motivating failure mode comes from earlier experiments in this project:
+LLM-only review produced useful signals but also over-reported defects on
+fixed/reference controls. That makes prompt-only review unsuitable as a merge
+gate without stronger evidence discipline.
+
+\section{Research Questions}
+
+\textbf{RQ1.} How reliable is LLM-only review when deciding whether candidate
+patches should be accepted?
+
+\textbf{RQ2.} Can evidence-first verification reduce false accepts compared
+with LLM-only review?
+
+\textbf{RQ3.} Does evidence-first verification preserve useful correct-patch
+recall, or does it only reduce false accepts by rejecting or escalating too
+aggressively?
+
+\textbf{RQ4.} Which patch types expose the most useful failure modes:
+empty/no-op controls, unrelated changes, or partial fixes?
+
+\section{Dataset Construction}
+
+The pilot dataset is built from retained BugsInPy-derived real-bug assets. Each
+source task has a buggy checkout, a fixed checkout, a task summary, touched
+files, visible test hints, and retained executable oracles.
+
+Each candidate record contains evaluator-facing fields, including patch
+identity, candidate type, expected outcome, and oracle metadata. Model-visible
+inputs use an anonymous candidate identifier and omit evaluator labels, oracle
+paths, oracle results, and construction notes.
+
+Patch materialization uses retained source artifacts: reference diffs between
+buggy and fixed checkouts, no-op controls, applicable unrelated source changes,
+and partial candidates derived from multi-hunk or multi-line reference fixes.
+
+\section{Executable Label Validation}
+
+Candidate labels are validated by applying each candidate patch to a copied
+buggy checkout and running retained executable oracles. This guards against
+purely prompt-based or manually asserted labels. Correct patches are expected
+to pass all retained oracles. Negative candidates are expected to fail at least
+one retained oracle.
+
+\section{Review Conditions}
+
+\subsection{LLM-Only Review}
+
+The reviewer sees the task summary, visible context, and candidate patch. It
+must output one JSON object with decision, confidence, claims, rationale, and
+uncertainty. It does not see hidden oracle paths or oracle results.
+
+\subsection{Evidence-First Verification}
+
+The reviewer sees the same task and patch context plus model-visible evidence
+source metadata and visible test hints. It must tie every accept/reject
+decision to concrete visible evidence. If the visible evidence is insufficient,
+it should escalate.
+
+\subsection{Oracle Upper Bound}
+
+The evaluator can use hidden labels and oracle outcomes to produce an upper
+bound. This is not model capability and must be reported separately.
+
+\section{Metrics}
+
+Primary metrics are patch-level: false accept rate, false reject rate, accepted
+precision, correct-patch recall, escalation rate, invalid-output rate, and cost.
+Escalation is neither accept nor reject. It should be reported separately
+because reducing false accepts by escalating everything is not a useful merge
+gate.
+
+\section{Current Pre-API Results}
+
+The current no-API baselines validate the metric implementation and expected
+tradeoffs. These baselines are not model-review results. They expose the
+merge-gate tension: accepting everything preserves correct-patch recall while
+accepting all wrong patches, and rejecting everything avoids false accepts
+while rejecting all correct patches.
+
+% Generated pre-API paper tables. Requires booktabs.
+
+\begin{table}[t]
+\centering
+\caption{Dataset by project.}
+\label{tab:dataset-projects}
+\begin{tabular}{lr}
+\toprule
+Project & Count \\
+\midrule
+httpie & 22 \\
+luigi & 8 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\begin{table}[t]
+\centering
+\caption{Candidate types.}
+\label{tab:candidate-types}
+\begin{tabular}{lr}
+\toprule
+Candidate type & Count \\
+\midrule
+buggy\_noop & 7 \\
+correct\_reference & 7 \\
+irrelevant\_patch & 7 \\
+partial\_fix & 9 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\begin{table}[t]
+\centering
+\caption{Executable validation summary.}
+\label{tab:validation-summary}
+\begin{tabular}{lr}
+\toprule
+Item & Value \\
+\midrule
+Records & 30 \\
+Patch applied & 30 \\
+Oracle ran & 30 \\
+Oracle all passed & 7 \\
+All validated & true \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\begin{table*}[t]
+\centering
+\caption{No-API baseline metrics. These baselines validate metric behavior but are not model-review results.}
+\label{tab:no-api-baselines}
+\begin{tabular}{lrrrrrr}
+\toprule
+Baseline & Accepted precision & False accept & Correct recall & False reject & Escalation & Invalid output \\
+\midrule
+accept-all & 0.2333 & 1.0000 & 1.0000 & 0.0000 & 0.0000 & 0.0000 \\
+oracle upper bound & 1.0000 & 0.0000 & 1.0000 & 0.0000 & 0.0000 & 0.0000 \\
+reject-all & -- & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 0.0000 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
+\begin{table}[t]
+\centering
+\caption{Deterministic no-API reproducibility check.}
+\label{tab:reproducibility}
+\begin{tabular}{lr}
+\toprule
+Item & Value \\
+\midrule
+Matched & true \\
+Checked files & 7 \\
+Mismatches & 0 \\
+Missing & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\section{API Pilot Plan}
+
+The first API pilot should run only two conditions on the validated candidates:
+LLM-only review and evidence-first verification. The same model must be used
+for both conditions. Before API calls, the executor must create ignored local
+configuration files, document the concrete OpenRouter model slug and selection
+rationale, run strict preflight, and complete a two-candidate smoke run before
+the full run.
+
+\textbf{Pending results.} This draft intentionally leaves the real API result
+section blank. It must not be filled until real \texttt{reviews.jsonl},
+\texttt{metrics.json}, failure examples, and a stop/continue gate report are
+available.
+
+\section{Reproducibility and Handoff Controls}
+
+The pre-API artifact includes deterministic reproduction checks for local
+dataset construction. The original no-API pilot and a reproduced run are
+compared by hashing deterministic output files. Runtime work directories, raw
+API responses, external checkouts, and environment-dependent files are not
+treated as deterministic reproducibility evidence.
+
+The execution plan also separates local pre-API checks from model experiments.
+The current handoff packet refreshes readiness, paper readiness, plan progress,
+human-required inputs, Git-sync state, OpenRouter catalog visibility, and
+deterministic reproducibility.
+
+\section{Model Selection Boundary}
+
+The first real API pilot is a within-model comparison. The current shortlist
+recommends a concrete OpenRouter-accessible model candidate, but this is not an
+experiment decision by itself. The user must confirm the slug and rationale
+before local configuration is generated. The first pilot controls for base
+model capability but cannot support cross-model generality.
+
+\section{Threats to Validity}
+
+Dataset size is small. The current pilot is designed to validate the method and
+failure surfaces, not to make broad claims about all AI-generated patches. The
+partial-fix candidates are source-backed and oracle-checkable, but they are
+constructed from retained reference diffs rather than generated by live coding
+agents. A later stage should add model-generated patches or SWE-bench-style
+tasks.
+
+Visible test hints may not represent the evidence actually available in all
+engineering workflows. Model behavior can drift over time and across providers.
+Every API run must record model slug, provider, date, prompt version, decoding
+settings, cost, raw response path, and invalid-output status.
+
+\section{Conclusion}
+
+The current artifact establishes a validated patch-verification pilot and a
+ready-to-run API protocol. It does not yet establish that evidence-first
+verification improves over LLM-only review. That claim depends on the pending
+API pilot and must be evaluated using false accept rate, accepted precision,
+correct-patch recall, escalation rate, and invalid-output rate.
+
+\end{document}

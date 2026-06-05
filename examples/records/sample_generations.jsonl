@@ -1,0 +1,4 @@
+{"generation_id":"sample_add_good","task_id":"sample_add","generator_model":"mock_good","code":"def add(a, b):\n    return a + b\n"}
+{"generation_id":"sample_add_buggy","task_id":"sample_add","generator_model":"mock_buggy","code":"def add(a, b):\n    return a - b\n"}
+{"generation_id":"sample_is_even_good","task_id":"sample_is_even","generator_model":"mock_good","code":"def is_even(n):\n    return n % 2 == 0\n"}
+{"generation_id":"sample_is_even_buggy","task_id":"sample_is_even","generator_model":"mock_buggy","code":"def is_even(n):\n    return n > 0 and n % 2 == 0\n"}

@@ -1,0 +1,12 @@
+[project]
+name = "research95-patch-verification"
+version = "0.1.0"
+description = "Experiment pipeline for evidence-first verification of AI-generated patches."
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+cross-review = "cross_review.cli:main"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

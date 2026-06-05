@@ -1,0 +1,26 @@
+{
+  "selection_date": "YYYY-MM-DD",
+  "selection_source": "Chatbot Arena, OpenRouter model catalog, provider docs, or another documented source",
+  "selection_source_url": "https://example.org/model-ranking-or-catalog",
+  "selection_policy": {
+    "primary_goal": "Use one concrete provider model id for the first within-model condition comparison.",
+    "matching_rule": "If expanding to multiple models, use models from a similar capability band and document the source score/date.",
+    "temperature": 0.0,
+    "max_tokens": 1200
+  },
+  "primary_pilot_model": {
+    "alias": "primary",
+    "model_id": "<concrete-provider-model-id>",
+    "api_provider": "deepseek_official",
+    "openrouter_slug": null,
+    "provider": "<provider>",
+    "capability_source": "<ranking-or-catalog-name>",
+    "capability_score": null,
+    "capability_band": "<near-peer-band-or-single-model-pilot>",
+    "reason_for_selection": "Chosen as the first single-model pilot reviewer after documenting capability source and API availability.",
+    "known_limitations": [
+      "The first pilot compares conditions within the same model; it does not support cross-model superiority claims."
+    ]
+  },
+  "optional_expansion_models": []
+}

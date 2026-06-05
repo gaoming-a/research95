@@ -1,0 +1,233 @@
+from __future__ import annotations
+
+import json
+import os
+import re
+import time
+import urllib.error
+import urllib.request
+from typing import Any
+
+from cross_review.env import is_placeholder_secret
+
+
+RETRYABLE_HTTP_STATUS = {429, 500, 502, 503, 504}
+DEFAULT_TIMEOUT_SECONDS = 120.0
+DEFAULT_MAX_RETRIES = 2
+DEFAULT_RETRY_BACKOFF_SECONDS = 2.0
+MAX_ERROR_DETAIL_CHARS = 1200
+
+
+def _env_float(name: str, default: float) -> float:
+    raw = os.environ.get(name)
+    if raw in (None, ""):
+        return default
+    try:
+        return float(raw)
+    except ValueError as exc:
+        raise RuntimeError(f"{name} must be a number") from exc
+
+
+def _env_int(name: str, default: int) -> int:
+    raw = os.environ.get(name)
+    if raw in (None, ""):
+        return default
+    try:
+        value = int(raw)
+    except ValueError as exc:
+        raise RuntimeError(f"{name} must be an integer") from exc
+    return max(0, value)
+
+
+def redact_sensitive_text(text: str, api_key: str | None = None) -> str:
+    redacted = text
+    if api_key:
+        redacted = redacted.replace(api_key, "<redacted-openrouter-key>")
+    key_prefix = "".join(["sk-", "or-v1-"])
+    redacted = re.sub(re.escape(key_prefix) + r"[A-Za-z0-9_-]+", "<redacted-openrouter-key>", redacted)
+    return redacted
+
+
+def safe_error_detail(text: str, api_key: str | None = None) -> str:
+    cleaned = redact_sensitive_text(text, api_key=api_key).replace("\r", "\\r").replace("\n", "\\n")
+    if len(cleaned) > MAX_ERROR_DETAIL_CHARS:
+        return cleaned[:MAX_ERROR_DETAIL_CHARS] + "...<truncated>"
+    return cleaned
+
+
+class OpenAICompatibleChatClient:
+    def __init__(
+        self,
+        api_key: str | None = None,
+        base_url: str = "https://openrouter.ai/api/v1",
+        api_key_env: str = "OPENROUTER_API_KEY",
+        base_url_env: str = "OPENROUTER_BASE_URL",
+        provider_name: str = "OpenRouter",
+        timeout_seconds: float | None = None,
+        max_retries: int | None = None,
+        retry_backoff_seconds: float | None = None,
+    ) -> None:
+        self.api_key_env = api_key_env
+        self.provider_name = provider_name
+        self.api_key = api_key or os.environ.get(api_key_env)
+        if is_placeholder_secret(self.api_key):
+            raise RuntimeError(f"{api_key_env} is not set. Set it in the shell or an untracked .env file.")
+        self.base_url = os.environ.get(base_url_env, base_url).rstrip("/")
+        self.timeout_seconds = (
+            timeout_seconds
+            if timeout_seconds is not None
+            else _env_float("OPENROUTER_TIMEOUT_SECONDS", DEFAULT_TIMEOUT_SECONDS)
+        )
+        self.max_retries = (
+            max_retries
+            if max_retries is not None
+            else _env_int("OPENROUTER_MAX_RETRIES", DEFAULT_MAX_RETRIES)
+        )
+        self.retry_backoff_seconds = (
+            retry_backoff_seconds
+            if retry_backoff_seconds is not None
+            else _env_float("OPENROUTER_RETRY_BACKOFF_SECONDS", DEFAULT_RETRY_BACKOFF_SECONDS)
+        )
+
+    def chat_completion(
+        self,
+        model: str,
+        prompt: str,
+        temperature: float = 0.2,
+        top_p: float = 1.0,
+        max_tokens: int = 4096,
+    ) -> dict[str, Any]:
+        return self.chat_completion_messages(
+            model=model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=temperature,
+            top_p=top_p,
+            max_tokens=max_tokens,
+        )
+
+    def chat_completion_messages(
+        self,
+        model: str,
+        messages: list[dict[str, str]],
+        temperature: float = 0.2,
+        top_p: float = 1.0,
+        max_tokens: int = 4096,
+    ) -> dict[str, Any]:
+        payload = {
+            "model": model,
+            "messages": messages,
+            "temperature": temperature,
+            "top_p": top_p,
+            "max_tokens": max_tokens,
+        }
+        body = json.dumps(payload).encode("utf-8")
+        request = urllib.request.Request(
+            f"{self.base_url}/chat/completions",
+            data=body,
+            method="POST",
+            headers={
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json",
+            },
+        )
+        start = time.perf_counter()
+        data, attempts = self._open_json_with_retries(request)
+        latency_ms = int((time.perf_counter() - start) * 1000)
+        data["latency_ms"] = latency_ms
+        data["request_attempts"] = attempts
+        return data
+
+    def _open_json_with_retries(self, request: urllib.request.Request) -> tuple[dict[str, Any], int]:
+        attempts_allowed = self.max_retries + 1
+        for attempt in range(1, attempts_allowed + 1):
+            try:
+                with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
+                    raw = response.read().decode("utf-8")
+                data = json.loads(raw)
+                if not isinstance(data, dict):
+                    raise RuntimeError("OpenRouter response JSON was not an object")
+                return data, attempt
+            except urllib.error.HTTPError as exc:
+                details = exc.read().decode("utf-8", errors="replace")
+                if exc.code in RETRYABLE_HTTP_STATUS and attempt < attempts_allowed:
+                    time.sleep(self.retry_backoff_seconds * attempt)
+                    continue
+                safe_details = safe_error_detail(details, api_key=self.api_key)
+                raise RuntimeError(f"{self.provider_name} HTTP {exc.code} after {attempt} attempt(s): {safe_details}") from exc
+            except urllib.error.URLError as exc:
+                if attempt < attempts_allowed:
+                    time.sleep(self.retry_backoff_seconds * attempt)
+                    continue
+                safe_reason = safe_error_detail(str(exc.reason), api_key=self.api_key)
+                raise RuntimeError(f"{self.provider_name} request failed after {attempt} attempt(s): {safe_reason}") from exc
+            except TimeoutError as exc:
+                if attempt < attempts_allowed:
+                    time.sleep(self.retry_backoff_seconds * attempt)
+                    continue
+                raise RuntimeError(f"{self.provider_name} request timed out after {attempt} attempt(s)") from exc
+            except json.JSONDecodeError as exc:
+                raise RuntimeError(f"{self.provider_name} response was not valid JSON: {exc}") from exc
+        raise RuntimeError(f"{self.provider_name} request failed without a captured exception")
+
+
+class OpenRouterClient(OpenAICompatibleChatClient):
+    def __init__(
+        self,
+        api_key: str | None = None,
+        base_url: str = "https://openrouter.ai/api/v1",
+        timeout_seconds: float | None = None,
+        max_retries: int | None = None,
+        retry_backoff_seconds: float | None = None,
+    ) -> None:
+        super().__init__(
+            api_key=api_key,
+            base_url=base_url,
+            api_key_env="OPENROUTER_API_KEY",
+            base_url_env="OPENROUTER_BASE_URL",
+            provider_name="OpenRouter",
+            timeout_seconds=timeout_seconds,
+            max_retries=max_retries,
+            retry_backoff_seconds=retry_backoff_seconds,
+        )
+
+
+class DeepSeekClient(OpenAICompatibleChatClient):
+    def __init__(
+        self,
+        api_key: str | None = None,
+        base_url: str = "https://api.deepseek.com",
+        timeout_seconds: float | None = None,
+        max_retries: int | None = None,
+        retry_backoff_seconds: float | None = None,
+    ) -> None:
+        super().__init__(
+            api_key=api_key,
+            base_url=base_url,
+            api_key_env="DEEPSEEK_API_KEY",
+            base_url_env="DEEPSEEK_BASE_URL",
+            provider_name="DeepSeek",
+            timeout_seconds=timeout_seconds,
+            max_retries=max_retries,
+            retry_backoff_seconds=retry_backoff_seconds,
+        )
+
+
+def list_openrouter_models(base_url: str = "https://openrouter.ai/api/v1") -> list[dict[str, Any]]:
+    request = urllib.request.Request(
+        f"{base_url.rstrip('/')}/models",
+        method="GET",
+        headers={"Accept": "application/json"},
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=60) as response:
+            raw = response.read().decode("utf-8")
+            data = json.loads(raw)
+    except urllib.error.HTTPError as exc:
+        details = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"OpenRouter models HTTP {exc.code}: {safe_error_detail(details)}") from exc
+    except json.JSONDecodeError as exc:
+        raise RuntimeError(f"OpenRouter models response was not valid JSON: {exc}") from exc
+    models = data.get("data", data)
+    if not isinstance(models, list):
+        raise RuntimeError("Unexpected OpenRouter models response shape")
+    return [model for model in models if isinstance(model, dict)]

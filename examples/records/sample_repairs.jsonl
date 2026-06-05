@@ -1,0 +1,2 @@
+{"repair_id":"r3__repair","review_id":"r3","generation_id":"sample_add_buggy","task_id":"sample_add","repair_model":"mock_cross","code":"def add(a, b):\n    return a + b\n"}
+{"repair_id":"r6__repair","review_id":"r6","generation_id":"sample_is_even_buggy","task_id":"sample_is_even","repair_model":"mock_cross","code":"def is_even(n):\n    return n % 2 == 0\n"}

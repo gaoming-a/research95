@@ -1,0 +1,54 @@
+# Anonymous Artifact Plan
+
+This artifact package is intended for supplemental review material after the
+paper direction stabilizes.
+
+## Package Command
+
+```powershell
+python scripts\prepare_anonymous_artifact.py `
+  --out artifacts\research95_anonymous_artifact.zip `
+  --manifest-out artifacts\research95_anonymous_artifact_manifest.json
+python scripts\audit_anonymous_artifact.py `
+  --artifact artifacts\research95_anonymous_artifact.zip `
+  --out-json artifacts\research95_anonymous_artifact_audit.json `
+  --out-md artifacts\research95_anonymous_artifact_audit.md
+```
+
+## Included
+
+- `README.md`, `pyproject.toml`, `.env.example`, and `.gitignore`.
+- `src/` reusable utilities.
+- `scripts/` dataset, validation, API, reporting, gate, readiness, and artifact
+  scripts, including the API run completeness audit required before paper
+  claims.
+- `configs/` example configuration files only.
+- `docs/` plans, schemas, metrics, prompt records, paper draft, and reports.
+- `examples/` small static examples.
+
+## Excluded
+
+- `.env`, API keys, local configs, key files, and PEM files.
+- `outputs/`, `data/`, `tmp/`, `runs/`, `artifacts/`, and benchmark checkouts.
+- Raw API responses and model-provider metadata that may contain private run
+  details.
+- Python caches, virtual environments, and local editor files.
+
+## Current Boundary
+
+The current artifact supports no-API reproduction and API-run preparation. It
+does not contain real API model-review results yet.
+
+## Current Audit
+
+The latest ZIP audit passed. It confirms:
+
+- required source, config template, documentation, and handoff scripts are
+  present;
+- embedded `ARTIFACT_README.md` includes no-API reproduction, local quality,
+  credential-boundary, bootstrap-safety, command-template, pre-API handoff, and
+  guarded real-API command templates, including full-run completeness
+  postprocessing;
+- `outputs/`, `data/`, `tmp/`, `artifacts/`, real `.env`, and
+  `configs/*.local.json` are absent;
+- the embedded `ARTIFACT_MANIFEST.json` matches the packaged file list.

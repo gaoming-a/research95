@@ -1,0 +1,14 @@
+{
+  "run_id": "dev_local_001",
+  "dataset_path": "examples/tasks/sample_tasks.jsonl",
+  "output_dir": "outputs/dev_local_001",
+  "prompt_versions": {
+    "generation": "generation_v1",
+    "review": "review_v1",
+    "repair": "repair_v1"
+  },
+  "models": ["gpt", "claude", "deepseek", "qwen"],
+  "execution": {
+    "timeout_seconds": 5
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "run_id": "patch_verification_api_pilot_001",
+  "api_provider": "deepseek_official",
+  "model": "<provider-model-id>",
+  "conditions": ["llm_only", "evidence_first"],
+  "temperature": 0.0,
+  "max_tokens": 4096,
+  "smoke_limit": 2,
+  "candidates": "outputs/patch_verification_pilot_001/candidates.jsonl",
+  "evidence_packets": "outputs/patch_verification_pilot_001/evidence_packets.jsonl",
+  "validation_summary": "outputs/patch_verification_pilot_001/validation_summary.json",
+  "model_selection": "configs/model_selection.local.json",
+  "out_dir": "outputs/patch_verification_api_pilot_001",
+  "env": ".env"
+}

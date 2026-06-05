@@ -1,0 +1,37 @@
+# Local credentials
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+configs/*.local.json
+
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Experiment outputs and temporary files
+data/
+outputs/
+runs/
+artifacts/
+tmp/
+temp/
+
+# LaTeX build intermediates
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.synctex.gz
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

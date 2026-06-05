@@ -1,0 +1,368 @@
+# Engineering Notes
+
+## 2026-06-05 AI execution handoff plan
+
+- Added `docs/plans/ai_agent_experiment_execution_plan_zh.md` as the clean
+  task book for another AI agent. It separates actionable experiment stages
+  from historical notes and explicitly lists commands, gates, forbidden
+  actions, paper-readiness rules, artifact rules, and human-required inputs.
+- Expanded the handoff plan into an executable contract: every stage now has
+  required evidence files, pass criteria, a run-record template, failure
+  handling rules, and a minimum human-input checklist. This is meant to prevent
+  a later AI agent from treating command logs, dry-runs, mock reviews, or
+  incomplete API runs as experimental evidence.
+- The handoff plan intentionally keeps real API execution blocked until `.env`,
+  `configs/model_selection.local.json`, `configs/api_pilot.local.json`, strict
+  preflight, and `--execute` are all present.
+- The plan distinguishes no-API reproduction, prompt dry-run, mock smoke, and
+  real API model results to prevent accidental overclaiming.
+
+## 2026-06-05 no-API reproducibility manifest
+
+- Added `scripts/write_reproducibility_manifest.py` to hash deterministic
+  no-API outputs and compare reproduced runs with the original pilot.
+- Current comparison:
+  `outputs/reproducibility/pilot_compare.json` reports `matched = true` for
+  seven deterministic files across `outputs/patch_verification_pilot_001` and
+  `outputs/patch_verification_pilot_repro_001`.
+- The script deliberately treats runtime workdirs, raw API responses, and
+  environment-dependent files as out of scope for deterministic reproducibility
+  evidence.
+
+## 2026-06-05 AI plan progress audit
+
+- Added `scripts/audit_ai_plan_progress.py` to turn the execution plan into a
+  stage-by-stage status report.
+- Latest report: `outputs/plan_progress/latest.md`.
+- Current stage counts are 4 complete, 2 partial, and 8 blocked. The blocked
+  stages are real-API dependent and require `.env`,
+  `configs/model_selection.local.json`, and `configs/api_pilot.local.json`.
+
+## 2026-06-05 human input packet
+
+- Added `scripts/write_human_input_packet.py` to generate an ignored handoff
+  packet before real API execution.
+- Latest output: `outputs/handoff/human_input_packet.md`.
+- The packet now prefers `scripts/bootstrap_api_prereqs.py --dry-run` followed
+  by the write/preflight/check-only/execute sequence, and keeps the older
+  separate model-selection/API-config commands only as a debugging fallback.
+- The packet reports missing required inputs without printing secrets:
+  OpenRouter API key presence, concrete model slug, model-selection rationale,
+  and local API config.
+- The script uses `<repo_root>` instead of local absolute paths so it can be
+  safely included in the anonymous artifact.
+
+## 2026-06-05 pre-API handoff
+
+- Added `scripts/write_pre_api_handoff.py` as a one-command local handoff.
+- It refreshes readiness, deterministic reproducibility, paper readiness, plan
+  progress, goal completion, and human-input reports without calling model APIs.
+- Latest report: `outputs/handoff/pre_api_handoff.md`.
+- Command display is normalized to `python ...` so the ignored handoff report
+  does not expose the local Python installation path.
+
+## 2026-06-05 Git sync packet
+
+- Added `scripts/write_git_sync_packet.py` to document Git sync state without
+  initializing or pushing.
+- Latest report: `outputs/handoff/git_sync_packet.md`.
+- Current state: `research95` is not a Git repository; the old repo remote is
+  `https://github.com/gaoming-a/review.git`; using that remote or a new remote
+  requires explicit user confirmation before any Git mutation.
+- The packet now includes a remote decision record template, staging allowlist,
+  ignore checks, cached-diff checks, post-sync acceptance criteria, and an
+  explicit ban on `git add .`. This keeps the Git handoff executable by a later
+  AI agent while still requiring human confirmation before mutation.
+- Added `scripts/audit_git_sync_packet.py` and wired it into
+  `scripts/run_local_quality_gate.py`, so Git handoff safety is checked even
+  while the workspace remains intentionally uninitialized.
+- `scripts/write_pre_api_handoff.py` now refreshes the Git sync packet audit
+  and includes it in the authoritative pre-API report list.
+
+## 2026-06-05 model selection shortlist
+
+- Added `docs/experiments/model_selection_shortlist.md` as a decision aid for
+  Stage 3.
+- The shortlist uses LMArena as the capability-band source and the OpenRouter
+  public model catalog API as the availability source.
+- It recommends `anthropic/claude-sonnet-4.6` as a conservative first
+  single-model pilot candidate, but does not create local config or replace
+  user confirmation.
+
+## 2026-06-05 OpenRouter model catalog audit
+
+- Added `scripts/audit_openrouter_model_catalog.py`.
+- It checks public OpenRouter catalog visibility for candidate slugs without an
+  API key and without creating local config.
+- Latest report: `outputs/model_selection/openrouter_catalog_audit.md`.
+- Current result: all six shortlist slugs are visible in the public catalog.
+- Added `--require-openrouter-catalog` to
+  `scripts/create_model_selection_local.py` and
+  `scripts/create_api_pilot_local_config.py`. The option is explicit so offline
+  dry-runs remain possible, but real local config creation should use it when
+  network access is available.
+
+## 2026-06-05 OpenRouter runtime failure handling
+
+- `src/cross_review/openrouter.py` now supports configurable request timeout,
+  retry count, and retry backoff through `OPENROUTER_TIMEOUT_SECONDS`,
+  `OPENROUTER_MAX_RETRIES`, and `OPENROUTER_RETRY_BACKOFF_SECONDS`.
+- OpenRouter HTTP/network errors are sanitized before surfacing so provider
+  keys are not copied into tracked outputs or terminal summaries.
+- `scripts/run_patch_verification_api_pilot.py` now writes a sanitized
+  `run_error.json` when a real API call fails mid-run. That file records the
+  candidate, condition, model, completed review count, and error type without
+  storing prompts or secrets.
+- `scripts/audit_api_run_completeness.py` now fails any run directory that
+  contains `run_error.json`; such runs must be rerun and cannot be used as
+  experiment results.
+- Added `scripts/audit_api_failure_handling.py` and wired it into
+  `scripts/run_local_quality_gate.py`. The audit uses a local refused
+  connection rather than OpenRouter, checks the sanitized `run_error.json`
+  shape, verifies stdout/stderr/error-file secret redaction, and confirms
+  completeness rejects the failed run. `SystemExit` writes its message to
+  stderr, so the audit intentionally accepts the failure notice from either
+  stdout or stderr.
+- Added `scripts/write_experiment_run_records.py` and wired it into the local
+  quality gate. The script turns existing JSON evidence into the run-record
+  format required by the execution plan, while explicitly marking no-API,
+  smoke, missing full runs, and quality gates as not eligible for positive
+  paper claims.
+- `scripts/write_pre_api_handoff.py` now refreshes the run ledger and lists it
+  as an authoritative report. `scripts/audit_goal_completion.py` now requires
+  the ledger to contain no-API, smoke API, full API, and quality-gate records,
+  so a final completion claim cannot omit the experiment record book.
+
+## 2026-06-05 paper draft readiness expansion
+
+- Updated `docs/paper/patch_verification_draft.md` with pre-API
+  reproducibility controls and model-selection boundaries.
+- Updated `scripts/audit_paper_readiness.py` so methods/negative draft
+  readiness requires the paper outline, model-selection docs, reproducibility
+  comparison, model catalog audit, and pre-API handoff in addition to the pilot
+  report and paper draft.
+- Positive paper claims still require real API reviews, metrics, failure
+  examples, and a stop/continue gate.
+
+## 2026-06-05 anonymous artifact audit
+
+- Refreshed `artifacts/research95_anonymous_artifact.zip`; current package has
+  95 project files plus embedded artifact metadata.
+- Added `scripts/audit_anonymous_artifact.py` to inspect the ZIP directly and
+  verify required files, manifest consistency, and exclusion rules.
+- Updated `scripts/run_local_quality_gate.py` to run the artifact ZIP audit
+  when the ZIP exists, while keeping artifact dry-run as the baseline check.
+
+## 2026-06-05 generated paper tables
+
+- Added `scripts/write_paper_tables.py` to generate pre-API Markdown and LaTeX
+  tables from current JSON outputs.
+- Generated `docs/paper/generated_tables.md` and
+  `docs/paper/generated_tables.tex`.
+- These tables include dataset composition, executable validation, no-API
+  baselines, and deterministic reproducibility. They intentionally exclude real
+  model-review results because those do not exist yet.
+
+## 2026-06-05 IEEE pre-API LaTeX draft
+
+- Added `scripts/write_ieee_latex_draft.py`.
+- Generated `docs/paper/ieee_preapi_draft.tex` using IEEEtran structure and
+  generated pre-API tables.
+- The draft explicitly marks real API results as pending and states that
+  current no-API baselines are not model-review results.
+
+This file starts fresh for the patch-verification project.
+
+## Rules
+
+- Record only issues that affect the new AI-generated patch-verification
+  workflow.
+- Do not copy long historical bug logs from the old cross-review project.
+- If old behavior matters, summarize it in one paragraph and link to
+  `docs/background/previous_findings_summary.md`.
+
+## Initial Notes
+
+- The clean workspace intentionally excludes raw `data/`, `outputs/`, `tmp/`,
+  local API keys, local model configs, and old artifact ZIPs.
+- Compile checks may create `__pycache__` files with local absolute paths; delete
+  them before packaging or scanning.
+- Evaluator-facing `patch_id` may encode construction type, so it must not
+  appear in model-visible evidence packets. Use anonymous `candidate_id` for
+  prompts.
+- Do not put words such as `reference_fix`, `buggy_noop`, `irrelevant_patch`,
+  `No-op`, or expected outcome labels in any model-visible context.
+- The first no-API pilot initially used neutral patch placeholders. The builder
+  now materializes unified diffs from retained buggy/fixed checkouts and
+  generates 30 validated candidates.
+- Cross-task real diffs did not reliably apply across retained BugsInPy
+  checkouts. For now, unrelated controls use applicable comment-only source
+  diffs; these are low-difficulty controls and must not be presented as the main
+  negative class.
+- Candidate labels should be treated as usable only after
+  `scripts/validate_patch_candidates.py` reports `all_validated = true`.
+- API dry-runs only validate prompt rendering and prompt-boundary checks. They
+  are not reviewer results and must not be reported as experimental evidence.
+- API mock runs only validate the local output and metrics pipeline. They are
+  not model results and must not be mixed with real API conditions.
+- `scripts/summarize_api_pilot_results.py` can summarize mock runs, but those
+  reports must stay under ignored `outputs/` and be treated as reporting-chain
+  smoke tests only.
+- `scripts/extract_api_failure_examples.py` can also run on mock outputs, but
+  mock examples only validate bucket extraction. Qualitative paper examples
+  require real API reviews and manual raw-response inspection.
+- Run `scripts/preflight_api_pilot.py` before any real OpenRouter call; it
+  catches missing `.env`, placeholder model slugs, missing validation summaries,
+  and candidate/evidence count mismatches.
+- `scripts/run_no_api_patch_pipeline.py` is the preferred fresh-environment
+  check. It intentionally creates an ignored dry-run config under the output
+  directory and never calls OpenRouter.
+- `scripts/create_api_pilot_local_config.py` should be used after model
+  selection to avoid hand-editing `configs/api_pilot.local.json`; it does not
+  validate credentials, so `scripts/preflight_api_pilot.py` remains mandatory.
+- `scripts/validate_model_selection.py` and
+  `configs/model_selection.local.json` are now part of the real API gate.
+  `preflight_api_pilot.py` fails if the model selection record is missing or
+  does not match the API config model.
+- `scripts/create_model_selection_local.py` can create the ignored model
+  selection record from command-line arguments, preventing malformed manual JSON.
+- `scripts/bootstrap_api_prereqs.py` now chains explicit model-selection inputs
+  into both ignored local config files, validates the model match, and runs
+  preflight. Use `--dry-run` first when handing the task to another agent; the
+  script intentionally does not create `.env` or choose a model.
+- The bootstrap script now checks `OPENROUTER_API_KEY` before writing local
+  config files unless `--allow-missing-credentials` is explicitly set. This
+  prevents a failed strict preflight from leaving half-created local config
+  files when `.env` is missing.
+- `.env.example` now contains only placeholder values and safety comments. It
+  is safe for the anonymous artifact; concrete provider keys must stay in the
+  ignored `.env` file and must not be copied into tracked docs or outputs.
+- `scripts/audit_credential_boundary.py` now checks `.gitignore`,
+  `.env.example`, and tracked secret-file state as structured evidence. The
+  local quality gate runs this audit in addition to broad sensitive-string
+  scanning, so a future real `.env` can exist locally while still remaining
+  outside tracked files and anonymous artifacts.
+- `scripts/audit_bootstrap_safety.py` now verifies the bootstrap guardrail:
+  dry-run must not create local config files, and strict execution without
+  `OPENROUTER_API_KEY` must fail before creating temporary local configs. This
+  keeps credential-preflight changes testable without real API calls.
+- `scripts/audit_workflow_guard.py` now verifies the guarded API workflow
+  itself: `--check-only` must report `model_call_attempted = false`, and a
+  strict missing-prerequisite run must stop before `reviews.jsonl` or raw
+  response files are created.
+- `scripts/audit_command_templates.py` now checks the human-input packet and
+  key docs for command-template drift. It enforces the intended order:
+  bootstrap dry-run with `--allow-missing-credentials`, strict bootstrap write,
+  preflight, check-only, then `--execute`.
+- Readiness and plan-progress next-action text now also points to the bootstrap
+  path instead of the older two-helper workflow. The command-template audit
+  checks these script-level prompts so future status reports do not drift away
+  from the safer handoff procedure.
+- `scripts/run_local_quality_gate.py` now refreshes plan-progress state as
+  part of the local report. Blocked or partial stages are reported as project
+  state rather than local quality failures, because real API and Git stages
+  still require human inputs.
+- `scripts/prepare_anonymous_artifact.py` now writes a richer embedded
+  `ARTIFACT_README.md` with no-API reproduction, quality gates, credential
+  checks, bootstrap checks, command-template checks, handoff, and guarded API
+  command templates. `scripts/audit_anonymous_artifact.py` validates that these
+  README snippets are present inside the ZIP.
+- `scripts/evaluate_api_pilot_gate.py` is the required post-run guardrail
+  before writing positive claims. A mock run must produce `not_evidence`, and a
+  real run with weak or collapsed metrics must be treated as stop/redesign.
+- `scripts/audit_execution_readiness.py` is the current-turn status entry
+  point. It reports no-API readiness, missing `.env` or local config, and the
+  fact that `research95` is not currently a Git repository.
+- `scripts/audit_paper_readiness.py` should be run before expanding the paper
+  beyond the pre-API methods draft. Current state should report missing real API
+  reviews, API report, failure examples, and gate report.
+- `scripts/prepare_anonymous_artifact.py` generated the current anonymous
+  package successfully after tightening validation to allow `.env.example`
+  placeholders while still rejecting concrete keys, local paths, local configs,
+  raw outputs, and benchmark checkouts.
+- `scripts/postprocess_api_pilot_run.py` is the preferred post-run entry point.
+  On the mock smoke output it regenerated all reports and returned
+  `gate_verdict = not_evidence` with `positive_claim_ready = false`, as
+  expected.
+- `scripts/run_api_pilot_workflow.py` is the guarded real API entry point. It
+  supports `--check-only` without API calls and requires explicit `--execute`
+  after strict preflight before any model call. It now records
+  `model_selection_validation.json`; missing model-selection files are reported
+  as structured failures rather than Python tracebacks.
+- `scripts/create_api_pilot_local_config.py` and
+  `scripts/bootstrap_api_prereqs.py` now emit guarded workflow next commands.
+  Direct `run_patch_verification_api_pilot.py` use should stay limited to
+  prompt dry-runs, mock checks, or workflow-internal execution.
+- The low-level runner now rejects direct real API execution unless
+  `run_api_pilot_workflow.py` supplies its internal `--allow-direct-api-run`
+  flag. `scripts/audit_workflow_guard.py` verifies this path without making API
+  calls.
+- The workflow now forwards `--run-dir` and `--limit` to the API runner.
+  Explicit `--limit 0` means a full 30-candidate run and is no longer replaced
+  by config `smoke_limit=2`. The workflow refuses to overwrite an existing
+  `reviews.jsonl` unless `--allow-existing-output` is passed intentionally.
+- Added `scripts/audit_api_run_completeness.py` and wired it into
+  `scripts/postprocess_api_pilot_run.py` and the guarded workflow. Smoke runs
+  should pass `--expected-candidates 2`; full runs should pass
+  `--expected-candidates 30`. Paper readiness now requires
+  `run_completeness.json` with 60 non-mock review records.
+- API review records now include `raw_response_sha256`. The completeness audit
+  verifies that each raw response path exists under the run directory, parses as
+  JSON, and matches the recorded hash, and that required review fields are
+  present.
+- Do not run `prepare_anonymous_artifact.py` and `audit_anonymous_artifact.py`
+  in parallel against the same ZIP path. The audit can observe a partially
+  written archive and raise `BadZipFile`. Generate the ZIP first, then audit it
+  as a separate step.
+- `scripts/write_human_input_packet.py` now includes both smoke and full
+  postprocess commands. `scripts/audit_command_templates.py` checks that smoke
+  uses `--expected-candidates 2` and full run uses `--expected-candidates 30`.
+- `scripts/audit_ai_plan_progress.py` now also requires this 60-record
+  non-mock run-completeness evidence before marking Stage 8 postprocess
+  complete.
+- `scripts/run_local_quality_gate.py` is the preferred end-of-turn local gate.
+  It passed after dynamic construction of sensitive-scan patterns so the scanner
+  no longer flags its own rule strings. Passing this gate does not mean real API
+  readiness; it reports API readiness separately.
+- `scripts/audit_goal_completion.py` is the whole-objective guardrail. It keeps
+  `complete = false` until no-API readiness, reproducibility, real full API
+  reviews, postprocess outputs, non-mock failure examples, a positive paper
+  gate, artifact safety, local quality, and Git repository/remote evidence are
+  all present.
+
+## 2026-06-05 DeepSeek official API switch
+
+- The current primary execution path is DeepSeek official API with
+  `api_provider = deepseek_official` and `model = deepseek-v4-pro`; OpenRouter
+  support remains only as an alternative provider path.
+- `scripts/bootstrap_api_prereqs.py`, `scripts/preflight_api_pilot.py`,
+  `scripts/run_patch_verification_api_pilot.py`, model-selection validation,
+  readiness audits, and command-template audits are now provider-aware.
+- A real-looking DeepSeek key was found in `.env.example` and removed. The
+  quality gate and artifact packager now scan for concrete `DEEPSEEK_API_KEY`
+  assignments in tracked/packageable text, not only OpenRouter keys.
+- The strict bootstrap safety audit uses an intentionally missing env file
+  under `outputs/bootstrap_safety/`, so it does not accidentally pass because
+  the developer's real `.env` exists.
+- Verified locally without model calls: compileall passed, credential boundary
+  passed, bootstrap safety passed, command templates passed, readiness reports
+  `overall_ready_for_real_api = true`, and guarded workflow check-only reported
+  `model_call_attempted = false`.
+
+## 2026-06-05 DeepSeek smoke result
+
+- First real DeepSeek smoke at `outputs/patch_verification_api_pilot_001`
+  generated 4 non-mock review records and passed run completeness, but 2/4
+  outputs were invalid. The invalid records had `finish_reason = length`,
+  empty final `content`, and all completion tokens spent in `reasoning_content`.
+- Root cause: `max_tokens = 1200` was too low for DeepSeek V4 reasoning on the
+  larger reference-fix candidate, so the final JSON never appeared.
+- Fixed `scripts/run_patch_verification_api_pilot.py` so config values for
+  `temperature` and `max_tokens` actually override runner defaults. Updated API
+  pilot config to `max_tokens = 4096`.
+- Second smoke at `outputs/patch_verification_api_pilot_001_tokens4096`
+  generated 4 non-mock review records, passed completeness, and had invalid
+  output rate 0. This validates the execution chain and schema stability.
+- The smoke gate is still `indeterminate`; it is too small for research claims.
+  It only justifies moving to the 30-candidate full run, not writing positive
+  paper results.
