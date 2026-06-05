@@ -62,7 +62,8 @@ def tracked_secret_files() -> list[str]:
     tracked = git_command(["ls-files", "--", ".env", ".env.*", "configs/*.local.json", "*.key", "*.pem"])
     if tracked.returncode != 0:
         return []
-    return [line for line in tracked.stdout.splitlines() if line.strip()]
+    allowed_templates = {".env.example"}
+    return [line for line in tracked.stdout.splitlines() if line.strip() and line.strip() not in allowed_templates]
 
 
 def check_gitignore() -> dict[str, Any]:

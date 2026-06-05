@@ -366,3 +366,15 @@ This file starts fresh for the patch-verification project.
 - The smoke gate is still `indeterminate`; it is too small for research claims.
   It only justifies moving to the 30-candidate full run, not writing positive
   paper results.
+
+## 2026-06-05 Git initialization boundary
+
+- After initializing `research95` as a Git repository, the credential-boundary
+  audit initially misclassified tracked `.env.example` as a secret file because
+  it matched the `.env.*` tracked-file pattern.
+- `.env.example` is the intentionally tracked template and must remain allowed;
+  concrete `.env`, `.env.*` variants other than `.env.example`, key files, and
+  `configs/*.local.json` must remain untracked.
+- `scripts/audit_credential_boundary.py` now filters `.env.example` out of the
+  tracked-secret-file list while still validating that the template contains
+  only placeholders.
