@@ -412,3 +412,32 @@ This file starts fresh for the patch-verification project.
   clearly named tool/evidence-augmented condition. If that smoke cannot recover
   recall on the known reference-fix failures, the honest paper direction is a
   negative/methods claim about prompt-only merge-gate limits.
+
+## 2026-06-05 redesign smoke config override bug
+
+- While preparing `tool_augmented_evidence`, dry-run unexpectedly rendered 10
+  prompts for `llm_only` and `evidence_first` instead of 5 prompts for the new
+  condition.
+- Root cause: `scripts/run_patch_verification_api_pilot.py` gave argparse a
+  non-`None` default for `--conditions`, so `apply_config()` treated conditions
+  as already set and did not load the config value.
+- Fix: `--conditions` now defaults to `None`, and `apply_defaults()` fills the
+  old two-condition default only after config values have been applied.
+- Rule: if a new condition is driven by config, dry-run must prove the rendered
+  manifest contains only that condition before any real API call.
+
+## 2026-06-05 tool-augmented redesign smoke
+
+- After fixing the config override bug, dry-run rendered exactly five
+  `tool_augmented_evidence` prompts for the five known failure cases.
+- The actual rendered prompt boundary scan found no evaluator labels, old
+  evaluator patch ids, or local paths.
+- Real DeepSeek smoke at `outputs/patch_verification_redesign_smoke_001`
+  completed with 5 non-mock records, completeness passed, and invalid output
+  count 0.
+- Decisions matched the smoke gate: reference fixes `candidate_0001` and
+  `candidate_0023` were accepted; partial fixes `candidate_0005`,
+  `candidate_0006`, and `candidate_0020` were rejected.
+- Treat this as evidence that tool-visible execution summaries can repair the
+  known failure cases. It is not evidence that the original prompt-only
+  `evidence_first` condition succeeded.

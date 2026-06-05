@@ -39,3 +39,20 @@ adapted for patch verification. Every new prompt entry must record:
 - Runs that used it: none yet.
 
 See `docs/prompts/api_pilot_prompts.md` for the full prompt templates.
+
+## `patch_verify_tool_augmented_evidence_v1`
+
+- Date: 2026-06-05
+- Purpose: failure-case redesign smoke after the DeepSeek full run produced a
+  `stop_or_redesign` gate.
+- Relationship to earlier prompts: this is not a replacement for
+  `patch_verify_evidence_first_v1`; it is a separate tool-augmented condition.
+- Added evidence: patch-apply status and retained oracle execution summaries.
+- Boundary: because the model sees tool execution outcomes, results from this
+  condition must be reported separately from prompt-only review conditions.
+- Label-leakage rule: evaluator fields such as `expected_outcome`,
+  `candidate_type`, `patch_materialization`, `hidden_oracles`,
+  `oracle_command`, `oracle_workdir`, construction notes, and label confidence
+  remain excluded from rendered prompts.
+- Runs that used it: `outputs/patch_verification_redesign_smoke_001`, a
+  5-candidate DeepSeek official API redesign smoke.

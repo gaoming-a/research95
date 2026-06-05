@@ -1,0 +1,15 @@
+{
+  "run_id": "patch_verification_redesign_smoke_001",
+  "api_provider": "deepseek_official",
+  "model": "<provider-model-id>",
+  "conditions": ["tool_augmented_evidence"],
+  "temperature": 0.0,
+  "max_tokens": 4096,
+  "smoke_limit": 0,
+  "candidates": "outputs/patch_verification_redesign_smoke_001/inputs/candidates.jsonl",
+  "evidence_packets": "outputs/patch_verification_redesign_smoke_001/inputs/evidence_packets.jsonl",
+  "validation_summary": "outputs/patch_verification_redesign_smoke_001/inputs/validation_summary.json",
+  "model_selection": "configs/model_selection.local.json",
+  "out_dir": "outputs/patch_verification_redesign_smoke_001",
+  "env": ".env"
+}

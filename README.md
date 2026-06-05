@@ -172,6 +172,10 @@ The following were intentionally not copied:
    `docs/experiments/deepseek_full_run_failure_analysis.md`; it concludes that
    `patch_verify_evidence_first_v1` should not be scaled as-is because the
    visible evidence packet is too weak to preserve correct-patch recall.
+   A separate 5-candidate tool-augmented redesign smoke has passed; see
+   `docs/experiments/tool_augmented_redesign_smoke_result.md`. This only
+   justifies a larger tool-augmented experiment and does not change the original
+   prompt-only full-run verdict.
 7. Use `scripts/summarize_patch_verification_pilot.py` to regenerate the
    current Markdown pilot report from ignored outputs.
 8. After a real API or mock smoke run, use

@@ -18,6 +18,11 @@ PROVIDER_CREDENTIALS = {
         "base_url_env": "DEEPSEEK_BASE_URL",
     },
 }
+ALLOWED_CONDITIONS = {
+    "llm_only",
+    "evidence_first",
+    "tool_augmented_evidence",
+}
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -177,11 +182,19 @@ def preflight(config_path: Path, allow_missing_credentials: bool) -> dict[str, A
         )
 
     conditions = config.get("conditions", [])
+    valid_conditions = (
+        isinstance(conditions, list)
+        and bool(conditions)
+        and all(isinstance(condition, str) and condition in ALLOWED_CONDITIONS for condition in conditions)
+    )
     checks.append(
         {
             "check": "conditions",
-            "passed": conditions == ["llm_only", "evidence_first"],
-            "detail": conditions,
+            "passed": valid_conditions,
+            "detail": {
+                "conditions": conditions,
+                "allowed_conditions": sorted(ALLOWED_CONDITIONS),
+            },
         }
     )
 

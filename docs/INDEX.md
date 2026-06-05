@@ -44,6 +44,10 @@
   analysis for the DeepSeek full run, including `llm_only` false accepts,
   evidence-first recall loss, invalid-output causes, and the next redesign
   gate.
+- `experiments/tool_augmented_redesign_smoke_result.md`: tracked result for the
+  5-candidate `tool_augmented_evidence` redesign smoke. The smoke passed, but
+  it is a separate tool-augmented diagnostic result rather than a rescue of the
+  original prompt-only evidence-first claim.
 - `experiments/patch_candidate_schema.md`: JSONL schema for candidate patches
   and verifier outputs.
 - `experiments/evidence_first_protocol.md`: comparison conditions and
@@ -194,6 +198,16 @@
   real calls should be made through `scripts/run_api_pilot_workflow.py`.
   Mid-run API failures write a sanitized `run_error.json`, which marks the run
   incomplete for downstream audits.
+- `configs/api_redesign_smoke.example.json`: template for the failure-case-only
+  `tool_augmented_evidence` redesign smoke. It must be copied or materialized
+  under ignored output/local config paths before use.
+- `scripts/build_redesign_smoke_inputs.py`: builds the 5-candidate
+  tool-augmented redesign-smoke input set from existing candidates, evidence
+  packets, and validation records.
+- `scripts/run_redesign_smoke_workflow.py`: guarded workflow for the
+  tool-augmented redesign smoke. It performs preflight/check-only gating,
+  executes only the `tool_augmented_evidence` condition, and writes a dedicated
+  redesign-smoke gate report instead of reusing the original full-run gate.
 - `scripts/run_api_pilot_workflow.py`: guarded API pilot workflow wrapper. It
   runs preflight, requires explicit `--execute` before any model call, runs the
   API pilot, records model-selection validation, and then runs postprocess.

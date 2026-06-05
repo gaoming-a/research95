@@ -26,6 +26,7 @@ import analyze_patch_verification as metrics_module  # noqa: E402
 PROMPT_VERSIONS = {
     "llm_only": "patch_verify_llm_only_v1",
     "evidence_first": "patch_verify_evidence_first_v1",
+    "tool_augmented_evidence": "patch_verify_tool_augmented_evidence_v1",
 }
 DEFAULT_TEMPERATURE = 0.0
 DEFAULT_MAX_TOKENS = 4096
@@ -89,6 +90,35 @@ def render_prompt(condition: str, evidence_packet: dict[str, Any]) -> str:
                 "",
                 "Available evidence sources:",
                 json.dumps(evidence_packet["available_evidence_sources"], ensure_ascii=False),
+                "",
+                "Visible tests or behavioral hints:",
+                json.dumps(evidence_packet["visible_tests"], ensure_ascii=False),
+            ]
+        )
+    if condition == "tool_augmented_evidence":
+        return "\n".join(
+            [
+                "You are performing tool-augmented verification of a proposed software patch.",
+                "",
+                "Decide whether the patch should be accepted, rejected, or escalated for human/tool verification.",
+                "",
+                "You may use only the visible task context, candidate patch, patch-apply status, and tool/oracle execution summary below.",
+                "Do not assume hidden labels or evaluator annotations.",
+                "Return exactly one JSON object with fields: decision, confidence, claims, rationale, uncertainty.",
+                "",
+                "Decision policy:",
+                "- Accept if the patch applies, relevant tool/oracle evidence supports the behavior, and no visible contradiction remains.",
+                "- Reject if the patch does not apply, tool/oracle evidence contradicts the behavior, the patch is unrelated, or required behavior is visibly missing.",
+                "- Escalate if tool evidence is incomplete, ambiguous, or insufficient to decide.",
+                "",
+                f"Task:\n{evidence_packet['task_summary']}",
+                "",
+                f"Visible context:\n{evidence_packet['visible_context']}",
+                "",
+                f"Candidate patch:\n{evidence_packet['patch_text']}",
+                "",
+                "Tool evidence:",
+                json.dumps(evidence_packet["tool_evidence_summary"], ensure_ascii=False, indent=2, sort_keys=True),
                 "",
                 "Visible tests or behavioral hints:",
                 json.dumps(evidence_packet["visible_tests"], ensure_ascii=False),
@@ -414,7 +444,7 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="API provider for real model calls.",
     )
-    parser.add_argument("--conditions", nargs="+", choices=sorted(PROMPT_VERSIONS), default=["llm_only", "evidence_first"])
+    parser.add_argument("--conditions", nargs="+", choices=sorted(PROMPT_VERSIONS), default=None)
     parser.add_argument("--temperature", type=float)
     parser.add_argument("--max-tokens", type=int)
     parser.add_argument("--limit", type=int, default=None, help="Optional candidate limit. Use 0 for a full run.")
@@ -443,6 +473,8 @@ def parse_args() -> argparse.Namespace:
 
 
 def apply_defaults(args: argparse.Namespace) -> None:
+    if args.conditions is None:
+        args.conditions = ["llm_only", "evidence_first"]
     if args.temperature is None:
         args.temperature = DEFAULT_TEMPERATURE
     if args.max_tokens is None:

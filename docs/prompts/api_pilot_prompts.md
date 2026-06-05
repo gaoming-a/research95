@@ -105,6 +105,43 @@ Visible tests or behavioral hints:
 {visible_tests}
 ```
 
+## Prompt: `patch_verify_tool_augmented_evidence_v1`
+
+Purpose: test whether the specific failure cases from the first DeepSeek full
+run are caused by evidence poverty rather than only model capability. This is a
+tool-augmented condition, not a prompt-only condition.
+
+Template:
+
+```text
+You are performing tool-augmented verification of a proposed software patch.
+
+Decide whether the patch should be accepted, rejected, or escalated for human/tool verification.
+
+You may use only the visible task context, candidate patch, patch-apply status, and tool/oracle execution summary below. Do not assume hidden labels or evaluator annotations.
+Return exactly one JSON object with fields: decision, confidence, claims, rationale, uncertainty.
+
+Decision policy:
+- Accept if the patch applies, relevant tool/oracle evidence supports the behavior, and no visible contradiction remains.
+- Reject if the patch does not apply, tool/oracle evidence contradicts the behavior, the patch is unrelated, or required behavior is visibly missing.
+- Escalate if tool evidence is incomplete, ambiguous, or insufficient to decide.
+
+Task:
+{task_summary}
+
+Visible context:
+{visible_context}
+
+Candidate patch:
+{patch_text}
+
+Tool evidence:
+{tool_evidence_summary}
+
+Visible tests or behavioral hints:
+{visible_tests}
+```
+
 ## Label-Leakage Check
 
 Before any run, confirm the rendered prompt does not contain:
@@ -138,3 +175,10 @@ Completed on 2026-06-05 without API calls:
 
 The dry-run validates prompt rendering and prompt-boundary checks only. It does
 not produce reviewer decisions.
+
+## Redesign Smoke Boundary
+
+After the first DeepSeek full run, `patch_verify_evidence_first_v1` should not
+be scaled as-is. The next smoke test uses
+`patch_verify_tool_augmented_evidence_v1` only on known failure cases and must
+be reported as a separate tool-augmented condition.

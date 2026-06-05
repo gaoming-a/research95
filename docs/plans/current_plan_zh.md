@@ -387,6 +387,92 @@ full run 执行结果：
 6. 如果失败样本 smoke 仍不能修复 recall 损失，则停止正向 evidence-first 论文，
    转为负结果/方法论文：prompt-only merge gate 的局限与 executable evidence 的必要性。
 
+本轮执行计划：
+
+- 新条件命名为 `tool_augmented_evidence`，prompt version 为
+  `patch_verify_tool_augmented_evidence_v1`。
+- 该条件允许模型看到 patch apply 结果和 retained oracle 执行摘要；因此它不是
+  prompt-only verifier，论文中必须单独报告。
+- 输入构造脚本只选择 5 个 failure-case candidates：
+  `candidate_0001`、`candidate_0005`、`candidate_0006`、
+  `candidate_0020`、`candidate_0023`。
+- 输出目录使用 `outputs/patch_verification_redesign_smoke_001`，不得覆盖
+  `outputs/patch_verification_api_pilot_002`。
+- 本轮 smoke 只运行新条件，不重新运行 `llm_only` 或旧 `evidence_first`。
+- 验收指标：
+  - 5 条真实非 mock review；
+  - invalid output rate 为 0；
+  - `candidate_0001` 和 `candidate_0023` 应被 accept，除非模型给出可由工具证据支持的升级理由；
+  - `candidate_0005`、`candidate_0006`、`candidate_0020` 不应被 accept；
+  - 如果这些条件不满足，不继续扩量，仍保持 negative/methods 方向。
+
+执行链路问题与修复：
+
+- 已发现 bug：`scripts/run_patch_verification_api_pilot.py` 的 argparse
+  默认 `conditions=["llm_only", "evidence_first"]` 导致 config 中的
+  `conditions=["tool_augmented_evidence"]` 无法覆盖默认值。
+- 该问题会让 redesign dry-run 错跑旧两个条件，生成 10 条 prompt manifest；
+  因此在修复前禁止真实 API 调用。
+- 修复方式：将 parser 默认 conditions 改为 `None`，在 config 应用之后再用
+  `apply_defaults()` 填充默认旧条件。这样显式 CLI 条件和 config 条件都能正确生效。
+- 修复验收：重跑 redesign dry-run，必须只生成 5 条
+  `tool_augmented_evidence` prompt records。
+
+dry-run 修复验证结果：
+
+- `outputs/patch_verification_redesign_smoke_001/dry_run/prompt_manifest.jsonl`
+  已重新生成。
+- prompt records = 5。
+- condition counts = `{"tool_augmented_evidence": 5}`。
+- prompt version counts =
+  `{"patch_verify_tool_augmented_evidence_v1": 5}`。
+- 实际渲染 prompt 边界扫描通过：未命中 evaluator labels、旧 evaluator patch id
+  片段或本地路径。
+
+下一步执行命令：
+
+```powershell
+python scripts\run_redesign_smoke_workflow.py `
+  --config outputs\patch_verification_redesign_smoke_001\api_config.local.json `
+  --execute `
+  --summary-out outputs\redesign_smoke_workflow\executed.json
+```
+
+该命令只允许生成 5 条 `tool_augmented_evidence` 真实 review。若出现
+`invalid_output`、错误 condition、缺失 raw response 或 smoke gate 未通过，
+必须停止扩量并记录为 redesign smoke failure。
+
+真实 redesign smoke 结果：
+
+- 输出目录：`outputs/patch_verification_redesign_smoke_001`。
+- 真实非 mock review records = 5。
+- `run_completeness.json` 通过。
+- invalid output count = 0。
+- decisions：
+  - `candidate_0001`: `accept`；
+  - `candidate_0005`: `reject`；
+  - `candidate_0006`: `reject`；
+  - `candidate_0020`: `reject`；
+  - `candidate_0023`: `accept`。
+- `redesign_smoke_gate.json` passed = true。
+- tracked 结果文档：
+  `docs/experiments/tool_augmented_redesign_smoke_result.md`。
+
+客观解释：
+
+- 该结果支持一个窄诊断：旧 evidence-first 的失败很可能与证据不足有关；
+  加入工具执行摘要后，已知失败样本上的 accept/reject 恢复到预期。
+- 该结果不支持把原 prompt-only evidence-first 写成成功，也不能替代
+  30-candidate full run。
+
+下一步：
+
+1. 构造 30-candidate 全量 `tool_augmented_evidence` input set。
+2. 运行独立 full run，不覆盖旧 `patch_verification_api_pilot_002`。
+3. 比较三组：旧 `llm_only`、旧 prompt-only `evidence_first`、新
+   tool-augmented verifier。
+4. 论文 claim 必须写成条件性工具增强收益，而不是 prompt-only 方法普遍更好。
+
 ## 7. 继续/止损门槛
 
 只有满足以下至少一项时继续：
