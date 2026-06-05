@@ -1,6 +1,7 @@
 \documentclass[conference]{IEEEtran}
 
 \usepackage{booktabs}
+\usepackage{graphicx}
 \usepackage{url}
 \usepackage{xspace}
 
@@ -42,6 +43,15 @@ AI coding agents are increasingly used to generate patches for real codebases.
 The standard question, ``does the patch pass tests?'', is insufficient when
 tests are incomplete or generated changes are plausible but partial. Software
 teams need a merge-gate decision: accept, reject, or escalate.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{docs/figures/fig1_framework.pdf}
+\caption{Patch-verification workflow. The reviewer first sees task and patch
+context; the redesigned verifier adds visible execution evidence before making
+accept, reject, or escalation decisions.}
+\label{fig:framework}
+\end{figure}
 
 This work treats patch review as a verification problem rather than a generic
 bug-finding problem. The reviewer is asked to judge a candidate patch against a
@@ -114,6 +124,15 @@ does not see evaluator labels, candidate types, construction notes, oracle
 paths, or hidden expected outcomes. This condition is reported separately
 because it is a tool-assisted workflow, not prompt-only model ability.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{docs/figures/fig2_evidence_visibility.pdf}
+\caption{Evidence visibility by condition. Hidden evaluator labels and oracle
+paths are not exposed; the tool-augmented condition is distinguished by
+patch-application and behavior summaries.}
+\label{fig:evidence-visibility}
+\end{figure}
+
 \subsection{Oracle Upper Bound}
 
 The evaluator can use hidden labels and oracle outcomes to produce an upper
@@ -134,6 +153,14 @@ tradeoffs. These baselines are not model-review results. They expose the
 merge-gate tension: accepting everything preserves correct-patch recall while
 accepting all wrong patches, and rejecting everything avoids false accepts
 while rejecting all correct patches.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{docs/figures/fig3_dataset_composition.pdf}
+\caption{Pilot dataset composition and executable validation. The dataset is
+small but intentionally includes difficult partial-fix candidates.}
+\label{fig:dataset}
+\end{figure}
 
 % Generated dataset and no-API paper tables. Requires booktabs.
 
@@ -264,6 +291,24 @@ Tool-augmented evidence & 0.0000 & 1.0000 & 1.0000 & 0.0000 & 0.0000 & 0.0000 \\
 This result supports a conditional tool-assisted verification claim. It does
 not reverse the prompt-only result. Instead, it shows that executable evidence
 summaries can be decisive when prompt-only evidence is too sparse.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.86\textwidth]{docs/figures/fig4_result_tradeoff.pdf}
+\caption{Safety/recall tradeoff across review conditions. Prompt-only
+evidence-first verification removes observed false accepts but loses recall;
+tool-augmented evidence restores recall under the current pilot.}
+\label{fig:result-tradeoff}
+\end{figure*}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{docs/figures/fig5_claim_boundary.pdf}
+\caption{Claim boundary supported by the current evidence. The positive claim
+is conditional on tool-visible execution evidence, not prompt-only model
+review.}
+\label{fig:claim-boundary}
+\end{figure}
 
 \section{Reproducibility and Handoff Controls}
 

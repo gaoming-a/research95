@@ -161,10 +161,16 @@
   dataset/no-API tables plus audited prompt-only and tool-augmented metrics.
   The old `docs/paper/ieee_preapi_draft.tex` is retained only as historical
   pre-API context.
+- `scripts/generate_paper_figures.py`: generates the publication figure set
+  under `docs/figures/` in PDF, SVG, and PNG formats. Figures cover the
+  workflow, evidence boundary, dataset composition, result tradeoff, and claim
+  boundary.
+- `figures/`: reproducible paper figure assets. The IEEE submission draft uses
+  the PDF versions, while PNG versions are for quick local inspection.
 - `paper/ieee_submission_draft.tex`: current anonymous IEEEtran submission
   draft. It includes the prompt-only mixed/negative result, the separate
-  tool-augmented full-run result, threats, and conclusion. The last local
-  compile check used `pdflatex` and wrote ignored build outputs under
+  tool-augmented full-run result, figures, threats, and conclusion. The last
+  local compile check used `pdflatex` and wrote ignored build outputs under
   `outputs/latex_build`.
 - `artifact/anonymous_artifact.md`: inclusion and exclusion policy for the
   anonymous supplemental package.

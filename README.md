@@ -215,12 +215,16 @@ The following were intentionally not copied:
    `docs/paper/ieee_preapi_draft.tex` is retained only as historical pre-API
    context. Compile-check the submission draft with `pdflatex`, writing PDF and
    auxiliary files under ignored `outputs/latex_build`.
-15. Use `scripts/prepare_anonymous_artifact.py` to build an anonymous
+15. Use `scripts/generate_paper_figures.py` to regenerate the publication
+   figures under `docs/figures/`. The script writes PDF, SVG, and PNG versions
+   for the framework, evidence boundary, dataset composition, result tradeoff,
+   and claim-boundary figures. The IEEE draft references the PDF versions.
+16. Use `scripts/prepare_anonymous_artifact.py` to build an anonymous
    supplemental package after checking that no credentials, raw outputs, or
    local benchmark checkouts are included. Use
    `scripts/audit_anonymous_artifact.py` to verify the generated ZIP structure
    and exclusion rules.
-16. Use `--mock-policy patch_surface` only to test the local
+17. Use `--mock-policy patch_surface` only to test the local
    `reviews.jsonl -> metrics.json -> run_summary.md` path. Mock outputs are not
    experiment results.
 

@@ -1,0 +1,30 @@
+{
+  "figure_count": 5,
+  "formats": [
+    "pdf",
+    "svg",
+    "png"
+  ],
+  "figures": [
+    {
+      "id": "fig1_framework",
+      "purpose": "overall workflow"
+    },
+    {
+      "id": "fig2_evidence_visibility",
+      "purpose": "condition evidence boundary"
+    },
+    {
+      "id": "fig3_dataset_composition",
+      "purpose": "dataset and validation"
+    },
+    {
+      "id": "fig4_result_tradeoff",
+      "purpose": "main API result metrics"
+    },
+    {
+      "id": "fig5_claim_boundary",
+      "purpose": "claim boundary and interpretation"
+    }
+  ]
+}

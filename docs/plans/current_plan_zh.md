@@ -642,6 +642,50 @@ python scripts\run_redesign_smoke_workflow.py `
   `outputs/latex_build/ieee_submission_draft.pdf`。
 - `latexmk` 未使用：本机 MiKTeX 缺少 Perl 脚本引擎。
 
+## 6.7 2026-06-06 论文配图生成
+
+本轮目标：
+
+- 为当前实验和 IEEE 投稿草稿生成多张 CCF-A 风格的论文配图。
+- 只可视化已有审计证据，不新增 API 实验，不改变论文 claim。
+- 图必须可复现生成，优先使用矢量 PDF/SVG，而不是不可复现的 AI 位图。
+
+计划图集：
+
+1. 整体 workflow/framework 图：从 candidate patch 到 prompt-only review、
+   tool-augmented verification、accept/reject/escalate gate。
+2. Evidence visibility 图：对比 LLM-only、prompt-only evidence-first、
+   tool-augmented evidence 三种条件可见的信息边界。
+3. Dataset composition 图：项目分布、candidate type 分布、oracle label
+   validation 摘要。
+4. Safety/recall tradeoff 结果图：false accept、accepted precision、
+   correct recall、invalid output 等核心指标。
+5. Finding boundary 图：prompt-only 负结果与 tool-assisted 条件性正结果的
+   论文主张边界。
+
+验收条件：
+
+- 新增脚本 `scripts/generate_paper_figures.py`。
+- 图输出到 `docs/figures/`，至少包含 SVG 与 PDF。
+- `docs/paper/ieee_submission_draft.tex` 引用核心图。
+- `docs/INDEX.md`、README、经验文档和匿名 artifact 规则同步更新。
+- `pdflatex` 编译通过，本地质量门通过，提交并同步 GitHub。
+
+执行结果：
+
+- 已新增 `scripts/generate_paper_figures.py`。
+- 已生成 5 张图，每张包含 PDF、SVG、PNG：
+  - `fig1_framework`；
+  - `fig2_evidence_visibility`；
+  - `fig3_dataset_composition`；
+  - `fig4_result_tradeoff`；
+  - `fig5_claim_boundary`。
+- 已新增 `docs/figures/README.md` 和 `docs/figures/figure_manifest.json`。
+- 初次视觉 QA 发现 `fig1_framework` 有文字重叠，已修复后重新生成。
+- `docs/paper/ieee_submission_draft.tex` 已引入 `graphicx` 并引用 5 张 PDF 图。
+- `pdflatex` 两遍编译通过，输出 5 页 PDF 到 ignored
+  `outputs/latex_build/ieee_submission_draft.pdf`。
+
 ## 7. 继续/止损门槛
 
 只有满足以下至少一项时继续：

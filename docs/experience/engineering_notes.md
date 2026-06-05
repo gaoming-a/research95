@@ -492,3 +492,17 @@ This file starts fresh for the patch-verification project.
 - Verification: direct `pdflatex` compilation succeeded and produced a 4-page
   PDF under ignored `outputs/latex_build`. `latexmk` is unavailable because the
   local MiKTeX installation lacks Perl.
+
+## 2026-06-06 publication figure generation
+
+- Generated a reproducible figure set with `scripts/generate_paper_figures.py`
+  instead of using non-reproducible bitmap generation.
+- Outputs are written under `docs/figures/` in PDF, SVG, and PNG formats.
+- Initial visual QA found overlap in `fig1_framework`: the execution-evidence
+  note collided with the decision boxes. The script was repaired by reducing
+  title size and moving the note below the verifier path.
+- The IEEE draft now imports `graphicx` and references five PDF figures:
+  framework, evidence visibility, dataset composition, result tradeoff, and
+  claim boundary.
+- Direct `pdflatex` compilation succeeded after figure insertion and produced a
+  5-page PDF under ignored `outputs/latex_build`.

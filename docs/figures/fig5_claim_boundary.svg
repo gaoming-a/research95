@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="614.393816pt" height="202.896pt" viewBox="0 0 614.393816 202.896" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-06-06T01:53:59.109097</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.9, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 202.896
+L 614.393816 202.896
+L 614.393816 -0
+L 0 -0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 29.2968 82.5984
+L 125.7192 82.5984
+Q 135.7632 82.5984 135.7632 77.886
+L 135.7632 45.84168
+Q 135.7632 41.12928 125.7192 41.12928
+L 29.2968 41.12928
+Q 19.2528 41.12928 19.2528 45.84168
+L 19.2528 77.886
+Q 19.2528 82.5984 29.2968 82.5984
+z
+" clip-path="url(#p8bbe63f3fb)" style="fill: #dbeafe; stroke: #2f5597; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 161.8776 82.5984
+L 258.3 82.5984
+Q 268.344 82.5984 268.344 77.886
+L 268.344 45.84168
+Q 268.344 41.12928 258.3 41.12928
+L 161.8776 41.12928
+Q 151.8336 41.12928 151.8336 45.84168
+L 151.8336 77.886
+Q 151.8336 82.5984 161.8776 82.5984
+z
+" clip-path="url(#p8bbe63f3fb)" style="fill: #fff3cd; stroke: #f4a261; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 290.4408 82.5984
+L 386.8632 82.5984
+Q 396.9072 82.5984 396.9072 77.886
+L 396.9072 45.84168
+Q 396.9072 41.12928 386.8632 41.12928
+L 290.4408 41.12928
+Q 280.3968 41.12928 280.3968 45.84168
+L 280.3968 77.886
+Q 280.3968 82.5984 290.4408 82.5984
+z
+" clip-path="url(#p8bbe63f3fb)" style="fill: #d8f3dc; stroke: #4c956c; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 129.72503 61.86384
+Q 143.797887 61.86384 156.529104 61.86384
+" clip-path="url(#p8bbe63f3fb)" style="fill: none; stroke: #5f6368; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 151.729104 59.46384
+L 156.529104 61.86384
+L 151.729104 64.26384
+z
+" clip-path="url(#p8bbe63f3fb)" style="fill: #5f6368; stroke: #5f6368; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 262.310244 61.86384
+Q 274.371467 61.86384 285.09105 61.86384
+" clip-path="url(#p8bbe63f3fb)" style="fill: none; stroke: #5f6368; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 280.29105 59.46384
+L 285.09105 61.86384
+L 280.29105 64.26384
+z
+" clip-path="url(#p8bbe63f3fb)" style="fill: #5f6368; stroke: #5f6368; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 29.2968 165.53664
+L 125.7192 165.53664
+Q 135.7632 165.53664 135.7632 160.82424
+L 135.7632 132.54984
+Q 135.7632 127.83744 125.7192 127.83744
+L 29.2968 127.83744
+Q 19.2528 127.83744 19.2528 132.54984
+L 19.2528 160.82424
+Q 19.2528 165.53664 29.2968 165.53664
+z
+" clip-path="url(#p8bbe63f3fb)" style="fill: #fde2e1; stroke: #c44536; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 161.8776 165.53664
+L 258.3 165.53664
+Q 268.344 165.53664 268.344 160.82424
+L 268.344 132.54984
+Q 268.344 127.83744 258.3 127.83744
+L 161.8776 127.83744
+Q 151.8336 127.83744 151.8336 132.54984
+L 151.8336 160.82424
+Q 151.8336 165.53664 161.8776 165.53664
+z
+" clip-path="url(#p8bbe63f3fb)" style="fill: #fff3cd; stroke: #f4a261; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 290.4408 165.53664
+L 386.8632 165.53664
+Q 396.9072 165.53664 396.9072 160.82424
+L 396.9072 132.54984
+Q 396.9072 127.83744 386.8632 127.83744
+L 290.4408 127.83744
+Q 280.3968 127.83744 280.3968 132.54984
+L 280.3968 160.82424
+Q 280.3968 165.53664 290.4408 165.53664
+z
+" clip-path="url(#p8bbe63f3fb)" style="fill: #d8f3dc; stroke: #4c956c; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #202124" x="15.2352" y="18.50976" transform="rotate(-0 15.2352 18.50976)">What the evidence supports</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans'; fill: #202124" transform="translate(57.1955 59.681684)">LLM-only</text>
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans'; fill: #202124" transform="translate(36.013 68.398496)">plausibility review</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans'; fill: #202124" transform="translate(182.2588 59.712934)">Prompt-only</text>
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans'; fill: #202124" transform="translate(178.85255 68.429746)">evidence-first</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans'; fill: #202124" transform="translate(302.298875 59.712934)">Tool-augmented</text>
+    <text style="font-weight: 700; font-size: 8px; font-family: 'DejaVu Sans'; fill: #202124" transform="translate(300.59825 68.429746)">evidence verifier</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #c44536" transform="translate(27.288 95.699779)">Evidence:</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #c44536" transform="translate(27.288 105.21792)">accepts partial fixes</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #e76f51" transform="translate(159.8688 86.181639)">Evidence:</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #e76f51" transform="translate(159.8688 95.699779)">zero observed false accepts</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #e76f51" transform="translate(159.8688 105.21792)">but recall drops</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #4c956c" transform="translate(288.432 86.181639)">Evidence:</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #4c956c" transform="translate(288.432 95.699779)">zero false accepts</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #4c956c" transform="translate(288.432 105.21792)">and full recall</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #202124" transform="translate(44.75675 144.567384)">Claim boundary:</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #202124" transform="translate(39.538625 153.221696)">unsafe merge gate</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #202124" transform="translate(177.33755 144.567384)">Claim boundary:</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #202124" transform="translate(166.410675 153.221696)">mixed/negative result</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #202124" transform="translate(305.90075 140.240227)">Claim boundary:</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #202124" transform="translate(289.923875 148.89454)">conditional tool-assisted</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #202124" transform="translate(316.23575 157.548852)">verification</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #5f6368" x="19.2528" y="184.38624" transform="rotate(-0 19.2528 184.38624)">Not supported: prompt-only evidence-first is generally better. Supported: executable evidence can repair this pilot's safety/recall tradeoff.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p8bbe63f3fb">
+   <rect x="7.2" y="7.2" width="401.76" height="188.496"/>
+  </clipPath>
+ </defs>
+</svg>
