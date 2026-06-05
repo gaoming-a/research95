@@ -183,6 +183,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "generated_tables_md": file_state(Path("docs") / "paper" / "generated_tables.md"),
         "generated_tables_tex": file_state(Path("docs") / "paper" / "generated_tables.tex"),
         "ieee_preapi_draft": file_state(Path("docs") / "paper" / "ieee_preapi_draft.tex"),
+        "ieee_submission_draft": file_state(Path("docs") / "paper" / "ieee_submission_draft.tex"),
         "model_selection_shortlist": file_state(Path("docs") / "experiments" / "model_selection_shortlist.md"),
         "model_selection_protocol": file_state(Path("docs") / "experiments" / "model_selection_protocol.md"),
     }

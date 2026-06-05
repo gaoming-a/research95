@@ -599,6 +599,49 @@ python scripts\run_redesign_smoke_workflow.py `
   verifier 能在保留 recall 的同时消除观察到的 false accepts。
 - 任何后续论文扩写必须继续保持该边界。
 
+## 6.6 2026-06-05 IEEE 投稿草稿推进
+
+本轮目标：
+
+- 不新增 API 实验。
+- 不改变上一轮审计结论。
+- 将已经通过审计的三条件结果写入可重复生成的 IEEE LaTeX 投稿草稿。
+
+边界：
+
+- 旧 `docs/paper/ieee_preapi_draft.tex` 保留为历史 pre-API 草稿。
+- 新投稿草稿输出到 `docs/paper/ieee_submission_draft.tex`。
+- LaTeX 结果表必须来自已审计的指标值，而不是临时手写到最终文件。
+- 论文表述必须继续区分：
+  - prompt-only `evidence_first`：负/混合结果；
+  - `tool_augmented_evidence`：条件性 tool-assisted verifier 结果。
+
+验收条件：
+
+- `scripts/write_ieee_latex_draft.py` 可重复生成投稿草稿。
+- `docs/paper/ieee_submission_draft.tex` 存在，并包含 API pilot result、
+  tool-augmented full run、threats、conclusion。
+- `docs/INDEX.md`、README、经验文档和匿名 artifact 规则同步更新。
+- 本地质量门通过后提交并同步 GitHub。
+
+执行结果：
+
+- 已更新 `scripts/write_ieee_latex_draft.py`，默认输出
+  `docs/paper/ieee_submission_draft.tex`。
+- 新草稿包含：
+  - no-API baseline；
+  - prompt-only `llm_only` vs `evidence_first` 真实 API mixed/negative result；
+  - `tool_augmented_evidence` full-run 条件性正结果；
+  - reproducibility、model-selection boundary、threats、conclusion。
+- 结果表从以下审计证据读取：
+  - `outputs/patch_verification_api_pilot_002/metrics.json`；
+  - `outputs/patch_verification_tool_augmented_full_001/tool_augmented_full_gate.json`。
+- 发现并修复一个生成脚本 bug：prompt-only metrics group key 实际为
+  `evidence_first::evidence_first__deepseek-v4-pro`，不能按裸 key 读取。
+- `pdflatex` 两遍编译通过，输出 4 页 PDF 到 ignored
+  `outputs/latex_build/ieee_submission_draft.pdf`。
+- `latexmk` 未使用：本机 MiKTeX 缺少 Perl 脚本引擎。
+
 ## 7. 继续/止损门槛
 
 只有满足以下至少一项时继续：

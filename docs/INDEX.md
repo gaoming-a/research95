@@ -156,8 +156,16 @@
 - `scripts/write_paper_tables.py`: generates Markdown and LaTeX pre-API paper
   tables from dataset summary, validation summary, metrics, and deterministic
   reproducibility comparison.
-- `scripts/write_ieee_latex_draft.py`: generates the IEEEtran pre-API LaTeX
-  draft from generated table snippets and current paper framing.
+- `scripts/write_ieee_latex_draft.py`: generates the current IEEEtran
+  submission draft at `docs/paper/ieee_submission_draft.tex` from generated
+  dataset/no-API tables plus audited prompt-only and tool-augmented metrics.
+  The old `docs/paper/ieee_preapi_draft.tex` is retained only as historical
+  pre-API context.
+- `paper/ieee_submission_draft.tex`: current anonymous IEEEtran submission
+  draft. It includes the prompt-only mixed/negative result, the separate
+  tool-augmented full-run result, threats, and conclusion. The last local
+  compile check used `pdflatex` and wrote ignored build outputs under
+  `outputs/latex_build`.
 - `artifact/anonymous_artifact.md`: inclusion and exclusion policy for the
   anonymous supplemental package.
 - `scripts/prepare_anonymous_artifact.py`: package builder for anonymous

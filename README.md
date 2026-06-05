@@ -210,9 +210,11 @@ The following were intentionally not copied:
 13. Use `scripts/write_paper_tables.py` to regenerate pre-API Markdown and
    LaTeX tables after dataset, validation, metrics, or reproducibility outputs
    change.
-14. Use `scripts/write_ieee_latex_draft.py` only after updating its framing for
-   the full-run mixed result. The older pre-API LaTeX draft is no longer a final
-   paper draft.
+14. Use `scripts/write_ieee_latex_draft.py` to regenerate the current IEEEtran
+   submission draft at `docs/paper/ieee_submission_draft.tex`. The older
+   `docs/paper/ieee_preapi_draft.tex` is retained only as historical pre-API
+   context. Compile-check the submission draft with `pdflatex`, writing PDF and
+   auxiliary files under ignored `outputs/latex_build`.
 15. Use `scripts/prepare_anonymous_artifact.py` to build an anonymous
    supplemental package after checking that no credentials, raw outputs, or
    local benchmark checkouts are included. Use

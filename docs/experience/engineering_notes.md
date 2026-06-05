@@ -475,3 +475,20 @@ This file starts fresh for the patch-verification project.
 - Rule: never change the old `positive_claim_ready=false` into true unless the
   prompt-only gate itself changes. The supported positive result is
   `tool_augmented_claim_ready=true`, bounded to tool-assisted verification.
+
+## 2026-06-05 IEEE submission draft generation
+
+- The Markdown paper draft already contained the real API and tool-augmented
+  full-run results, but `docs/paper/ieee_preapi_draft.tex` still described a
+  pending API pilot.
+- Fix: `scripts/write_ieee_latex_draft.py` now generates
+  `docs/paper/ieee_submission_draft.tex` as the current IEEEtran submission
+  draft and leaves the old pre-API file as historical context.
+- Initial generation bug: the prompt-only evidence-first result row was empty
+  because `metrics.json` stores condition groups with provider-qualified keys
+  such as `evidence_first::evidence_first__deepseek-v4-pro`.
+- Repair: the script now resolves condition groups by prefix and reads the
+  tool-augmented row from `tool_augmented_full_gate.json`.
+- Verification: direct `pdflatex` compilation succeeded and produced a 4-page
+  PDF under ignored `outputs/latex_build`. `latexmk` is unavailable because the
+  local MiKTeX installation lacks Perl.
