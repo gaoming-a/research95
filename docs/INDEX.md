@@ -34,6 +34,10 @@
 - `experiments/deepseek_full_run_result.md`: tracked summary of the first
   DeepSeek official API full run. The run completed with 60 non-mock reviews
   and passed completeness, but the gate verdict is `stop_or_redesign`.
+- `experiments/deepseek_full_run_failure_analysis.md`: qualitative failure
+  analysis for the DeepSeek full run, including `llm_only` false accepts,
+  evidence-first recall loss, invalid-output causes, and the next redesign
+  gate.
 - `experiments/patch_candidate_schema.md`: JSONL schema for candidate patches
   and verifier outputs.
 - `experiments/evidence_first_protocol.md`: comparison conditions and

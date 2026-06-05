@@ -396,3 +396,19 @@ This file starts fresh for the patch-verification project.
 - Next research step should inspect `failure_examples.md` and decide whether to
   redesign the evidence packet/prompt or pivot the paper toward merge-gate
   safety/utility tradeoffs.
+
+## 2026-06-05 DeepSeek failure-analysis lesson
+
+- The full-run failure analysis is now tracked in
+  `docs/experiments/deepseek_full_run_failure_analysis.md`.
+- The important failure is not simply model capability. `llm_only` accepted two
+  partial `httpie_1` patches because they looked behaviorally plausible, while
+  `evidence_first` refused or rejected two correct reference fixes because the
+  evidence packet did not include the test body, failing behavior, oracle
+  output, or claim-level trace needed to justify acceptance.
+- Do not scale `patch_verify_evidence_first_v1` as-is. It would mostly scale a
+  known evidence-poverty failure mode.
+- The next experiment should be a failure-case-only redesign smoke with a
+  clearly named tool/evidence-augmented condition. If that smoke cannot recover
+  recall on the known reference-fix failures, the honest paper direction is a
+  negative/methods claim about prompt-only merge-gate limits.

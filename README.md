@@ -168,7 +168,10 @@ The following were intentionally not copied:
    The 30-candidate DeepSeek full run has completed in
    `outputs/patch_verification_api_pilot_002`: 60 non-mock reviews, completeness
    passed, and gate verdict `stop_or_redesign`. This is a mixed/negative result,
-   not a positive paper claim.
+   not a positive paper claim. The tracked failure analysis is
+   `docs/experiments/deepseek_full_run_failure_analysis.md`; it concludes that
+   `patch_verify_evidence_first_v1` should not be scaled as-is because the
+   visible evidence packet is too weak to preserve correct-patch recall.
 7. Use `scripts/summarize_patch_verification_pilot.py` to regenerate the
    current Markdown pilot report from ignored outputs.
 8. After a real API or mock smoke run, use
@@ -190,6 +193,9 @@ The following were intentionally not copied:
    produce a stop/continue gate report. The paper should only claim positive
    evidence if the gate supports continuing and the qualitative examples are
    consistent with that interpretation.
+   Current gate result is `stop_or_redesign`; the next valid experiment is a
+   small redesign smoke on known failure cases, not a larger rerun with the
+   same evidence-first prompt.
 12. Before moving the paper beyond the mixed/negative-result draft, run
    `scripts/audit_paper_readiness.py` to check that real API results, failure
    examples, and the gate report are present.

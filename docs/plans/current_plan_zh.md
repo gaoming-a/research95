@@ -351,6 +351,42 @@ full run 执行结果：
 - 下一步应人工检查 `failure_examples.md`，判断是否要重新设计 evidence-first
   prompt/evidence packet，或将论文主旨改为“LLM merge gate 的安全/效用权衡”。
 
+## 6.3 2026-06-05 full run 失败分析后的修订计划
+
+已完成：
+
+- 已检查 `outputs/patch_verification_api_pilot_002/failure_examples.json`、
+  `reviews.jsonl` 和关键 raw responses。
+- 已新增
+  `docs/experiments/deepseek_full_run_failure_analysis.md`，记录定性失败模式。
+
+失败分析结论：
+
+- `llm_only` 的 2 个 false accepts 都来自 `bugsinpy_httpie_1` 的 partial
+  fixes：`candidate_0005` 和 `candidate_0006`。模型根据 patch 表面意图推断
+  其正确，因此接受了缺失必要变更的 partial patch。
+- `evidence_first` 未接受 2 个 correct reference patches：
+  `candidate_0001` 被 escalate，`candidate_0023` 被 reject。
+- 当前 evidence packet 对 evidence-first 来说证据不足：它主要包含 patch、
+  task summary 和测试名，没有测试体、失败行为、oracle 输出或 claim-level trace。
+- 因此当前结果只能支持“更保守、false accept 更少，但 recall 损失过大”的
+  safety/utility tradeoff，不能支持“evidence-first 更好”的正向主张。
+
+下一步最短路径：
+
+1. 不继续用 `patch_verify_evidence_first_v1` 直接扩量。
+2. 先设计一个小范围新条件，暂定
+   `evidence_with_oracle_summary_v1` 或 `tool_augmented_evidence_v1`。
+3. 新条件必须明确是否允许模型看到工具/测试执行摘要。如果允许，这就是
+   tool-augmented verifier，不再是 prompt-only verifier。
+4. 只在失败样本上做 redesign smoke：
+   `candidate_0001`、`candidate_0005`、`candidate_0006`、
+   `candidate_0023`、`candidate_0020`。
+5. 继续门槛：新条件必须保持 false accept 不上升，并把两个 correct reference
+   patches 至少从 reject/escalate 改善到 accept，或能给出可验证的升级理由。
+6. 如果失败样本 smoke 仍不能修复 recall 损失，则停止正向 evidence-first 论文，
+   转为负结果/方法论文：prompt-only merge gate 的局限与 executable evidence 的必要性。
+
 ## 7. 继续/止损门槛
 
 只有满足以下至少一项时继续：
