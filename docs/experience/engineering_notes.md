@@ -506,3 +506,14 @@ This file starts fresh for the patch-verification project.
   claim boundary.
 - Direct `pdflatex` compilation succeeded after figure insertion and produced a
   5-page PDF under ignored `outputs/latex_build`.
+
+## 2026-06-06 imagegen visual candidates
+
+- Generated four raster PNG candidates with the built-in `$imagegen` workflow:
+  framework, evidence-boundary, tradeoff, and claim-boundary panels.
+- Stored project copies under `docs/figures/imagegen/` and recorded exact
+  prompts in `docs/figures/imagegen/prompts.md`.
+- Rule: these imagegen outputs are conceptual visual assets for graphical
+  abstracts, presentations, or visual drafts. They must not replace exact
+  Matplotlib-generated vector figures when the figure is used as experimental
+  evidence.

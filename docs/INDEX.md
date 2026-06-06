@@ -167,6 +167,10 @@
   boundary.
 - `figures/`: reproducible paper figure assets. The IEEE submission draft uses
   the PDF versions, while PNG versions are for quick local inspection.
+- `figures/imagegen/`: generated raster visual candidates plus exact prompts
+  for graphical abstracts, presentations, and visual drafts. These PNGs are
+  conceptual assets and must not replace the reproducible numeric/vector
+  figures when supporting experimental claims.
 - `paper/ieee_submission_draft.tex`: current anonymous IEEEtran submission
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, figures, threats, and conclusion. The last

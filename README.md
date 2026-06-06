@@ -219,6 +219,9 @@ The following were intentionally not copied:
    figures under `docs/figures/`. The script writes PDF, SVG, and PNG versions
    for the framework, evidence boundary, dataset composition, result tradeoff,
    and claim-boundary figures. The IEEE draft references the PDF versions.
+   The `docs/figures/imagegen/` directory contains optional generated raster
+   candidates and exact prompts for graphical abstracts or slides. Do not use
+   those PNGs as replacements for exact numeric/vector evidence figures.
 16. Use `scripts/prepare_anonymous_artifact.py` to build an anonymous
    supplemental package after checking that no credentials, raw outputs, or
    local benchmark checkouts are included. Use

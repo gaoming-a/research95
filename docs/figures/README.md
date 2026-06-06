@@ -18,3 +18,10 @@ Each figure is emitted as PDF, SVG, and PNG:
 - `fig5_claim_boundary`: supported claim boundary.
 
 The IEEE submission draft references the PDF versions.
+
+## Raster Visual Candidates
+
+The `imagegen/` subdirectory contains four generated PNG candidates and their
+exact prompts. These assets are for graphical abstracts, presentations, and
+visual drafts only. Use the reproducible PDF/SVG/PNG figures above for exact
+experimental claims and numeric paper evidence.

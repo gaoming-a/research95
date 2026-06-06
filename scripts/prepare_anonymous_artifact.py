@@ -192,7 +192,7 @@ def artifact_readme(manifest: dict[str, Any]) -> str:
             "pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\\latex_build docs\\paper\\ieee_submission_draft.tex",
             "```",
             "",
-            "The generated `docs/paper/ieee_submission_draft.tex` is the current IEEEtran submission draft. It references PDF figures from `docs/figures/`. The old `docs/paper/ieee_preapi_draft.tex` is retained only as historical pre-API context.",
+            "The generated `docs/paper/ieee_submission_draft.tex` is the current IEEEtran submission draft. It references PDF figures from `docs/figures/`. The `docs/figures/imagegen/prompts.md` file records optional raster visual-candidate prompts for graphical abstracts or slides; those PNGs are not replacements for exact numeric/vector evidence figures. The old `docs/paper/ieee_preapi_draft.tex` is retained only as historical pre-API context.",
             "",
             "## Manifest Summary",
             "",

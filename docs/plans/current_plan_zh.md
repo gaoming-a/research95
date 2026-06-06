@@ -686,6 +686,34 @@ python scripts\run_redesign_smoke_workflow.py `
 - `pdflatex` 两遍编译通过，输出 5 页 PDF 到 ignored
   `outputs/latex_build/ieee_submission_draft.pdf`。
 
+## 6.8 2026-06-06 imagegen 位图候选图
+
+本轮目标：
+
+- 按用户要求使用 `$imagegen` 重新生成更适合论文/汇报视觉表达的配图候选。
+- 只生成视觉候选，不改变实验结论，不新增 API 实验。
+- 将 prompt、输出路径、用途边界写入仓库，避免后续执行把位图当成精确实验图。
+
+执行结果：
+
+- 已生成并纳入 `docs/figures/imagegen/`：
+  - `imagegen_framework.png`；
+  - `imagegen_evidence_boundary.png`；
+  - `imagegen_tradeoff.png`；
+  - `imagegen_claim_boundary.png`。
+- 已新增 `docs/figures/imagegen/prompts.md`，记录 4 张图的完整生成
+  prompt。
+- 已新增 `docs/figures/imagegen/README.md`，明确这些图只适合 graphical
+  abstract、汇报和视觉草稿。
+
+边界：
+
+- 这些 PNG 是不可完全复现的 AI 位图候选，不用于支撑精确实验数值。
+- IEEE 正文中的数值和方法图仍以 `scripts/generate_paper_figures.py`
+  生成的 PDF/SVG 为准。
+- 若投稿系统需要 graphical abstract，可从 `docs/figures/imagegen/`
+  选择候选并人工检查文字拼写、分辨率和版面。
+
 ## 7. 继续/止损门槛
 
 只有满足以下至少一项时继续：
