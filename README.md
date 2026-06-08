@@ -222,12 +222,23 @@ The following were intentionally not copied:
    The `docs/figures/imagegen/` directory contains optional generated raster
    candidates and exact prompts for graphical abstracts or slides. Do not use
    those PNGs as replacements for exact numeric/vector evidence figures.
-16. Use `scripts/prepare_anonymous_artifact.py` to build an anonymous
+16. Use `scripts/run_tool_only_baseline.py` to regenerate the current
+   deterministic tool-only baselines, then analyze them with
+   `scripts/analyze_patch_verification.py`. The current tracked summary is
+   `docs/experiments/tool_only_baseline_result.md`.
+17. Use `scripts/build_qualitative_case_report.py` to regenerate
+   `docs/experiments/qualitative_case_report.md` from existing prompt-only,
+   tool-only, and tool-augmented pilot outputs.
+18. Use `scripts/screen_bugsinpy_expansion.py` to refresh
+   `docs/experiments/bugsinpy_expansion_screening.md`. This only screens the
+   next 15 BugsInPy tasks; it does not create an expanded validated dataset
+   until new task-specific oracles and candidate validations are added.
+19. Use `scripts/prepare_anonymous_artifact.py` to build an anonymous
    supplemental package after checking that no credentials, raw outputs, or
    local benchmark checkouts are included. Use
    `scripts/audit_anonymous_artifact.py` to verify the generated ZIP structure
    and exclusion rules.
-17. Use `--mock-policy patch_surface` only to test the local
+20. Use `--mock-policy patch_surface` only to test the local
    `reviews.jsonl -> metrics.json -> run_summary.md` path. Mock outputs are not
    experiment results.
 

@@ -743,6 +743,66 @@ python scripts\run_redesign_smoke_workflow.py `
 - 只有当前 pipeline 稳定后，才进入 15-20 bugs 小扩展，再考虑 30-50 bugs
   硕士论文稳健版。
 
+## 6.10 2026-06-08 六步前置执行计划
+
+本轮目标：
+
+- 执行长期路线进入中期增强版前的六个前置步骤。
+- 不调用真实模型 API。
+- 不把扩展 task screening 误写成已经完成 patch candidate validation。
+
+六步范围：
+
+1. 补充统一 schema 文档，覆盖 TaskRecord、PatchRecord、EvidencePacket、
+   ValidationOutcome 和 VerifierDecision。
+2. 实现 tool-only baseline 脚本。
+3. 在当前 30-candidate pilot 上运行 tool-only baseline 并生成指标。
+4. 生成 qualitative case report，覆盖 LLM-only false accept、
+   evidence-first false reject/escalate、tool-only 和 tool-augmented 对照。
+5. 写 visible evidence / hidden evaluator leakage policy。
+6. 对 retained BugsInPy workspace 做 15-20 bugs 扩展筛选，生成可跟进的
+   candidate task registry；若缺少新 task 专用 oracle，只记录为 expansion
+   screening，不声明为已完成扩展实验。
+
+验收条件：
+
+- 新脚本可 `--help` 或实际运行通过。
+- 当前 30-candidate tool-only metrics 可由脚本复现。
+- qualitative report 不包含本地绝对路径或 API key。
+- leakage policy 明确 realistic setting 与 oracle-upper-bound setting。
+- expansion registry 至少列出 15 个候选 BugsInPy task，且标明后续还需
+  oracle migration/validation。
+- 更新 README、docs/INDEX、经验文档后跑本地质量门并同步 GitHub。
+
+执行结果：
+
+- 已新增 `docs/experiments/patch_evidence_bench_schema.md`，覆盖
+  TaskRecord、PatchRecord、EvidencePacket、ValidationOutcome 和
+  VerifierDecision。
+- 已新增 `scripts/run_tool_only_baseline.py`。
+- 已在当前 30-candidate pilot 上运行 tool-only：
+  - `tool_only_apply_only`：false accept rate 0.0，correct recall 0.0，
+    escalation rate 1.0；
+  - `tool_only_validation_summary`：false accept rate 0.0，correct recall
+    1.0，accepted precision 1.0。
+- 已新增 `docs/experiments/tool_only_baseline_result.md`，明确
+  validation-summary 条件是当前 pilot 的 tool-summary/oracle-style baseline，
+  不是最终 hidden-evaluator-free realistic baseline。
+- 已新增 `scripts/build_qualitative_case_report.py` 和
+  `docs/experiments/qualitative_case_report.md`，包含 4 个诊断案例。
+- 已新增 `docs/experiments/leakage_policy.md`。
+- 已新增 `scripts/screen_bugsinpy_expansion.py` 和
+  `docs/experiments/bugsinpy_expansion_screening.md`；筛选 retained BugsInPy
+  workspace 中 22 个 eligible tasks，并选择 15 个进入 expansion registry。
+
+边界：
+
+- 本轮没有调用真实模型 API。
+- 第 6 步完成的是 15-task expansion screening，不是已经完成 15-task
+  expanded candidate dataset。
+- 新 registry 里的 task 必须先补 task-specific oracle、candidate
+  materialization 和 `validate_patch_candidates.py` 验证，才能进入主实验。
+
 ## 7. 继续/止损门槛
 
 只有满足以下至少一项时继续：

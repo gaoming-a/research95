@@ -57,6 +57,19 @@
   30-candidate `tool_augmented_evidence` full run. The run passed its dedicated
   tool-assisted gate, with false accept rate 0 and correct-patch recall 1 on
   the current pilot.
+- `experiments/tool_only_baseline_result.md`: deterministic tool-only baseline
+  result on the current 30-candidate pilot. It separates patch-apply-only from
+  validation-summary tool evidence and keeps the oracle-style boundary explicit.
+- `experiments/qualitative_case_report.md`: four diagnostic cases comparing
+  LLM-only, evidence-first, tool-only, and tool-augmented decisions.
+- `experiments/bugsinpy_expansion_screening.md`: 15-task BugsInPy expansion
+  screening registry. It is not an expanded validated dataset until new
+  task-specific oracles and candidate validations are completed.
+- `experiments/patch_evidence_bench_schema.md`: long-term schema for
+  TaskRecord, PatchRecord, EvidencePacket, ValidationOutcome, and
+  VerifierDecision.
+- `experiments/leakage_policy.md`: visible-evidence and hidden-evaluator
+  separation policy for future expanded runs.
 - `experiments/patch_candidate_schema.md`: JSONL schema for candidate patches
   and verifier outputs.
 - `experiments/evidence_first_protocol.md`: comparison conditions and
@@ -239,6 +252,14 @@
   tool-augmented redesign-smoke input set, or the 30-candidate full-run input
   set with `--all-candidates`, from existing candidates, evidence packets, and
   validation records.
+- `scripts/run_tool_only_baseline.py`: builds deterministic tool-only
+  `apply_only` and `validation_summary` verifier records from current
+  candidates and validation outputs.
+- `scripts/build_qualitative_case_report.py`: generates the tracked
+  qualitative case report from existing prompt-only, tool-only, and
+  tool-augmented outputs.
+- `scripts/screen_bugsinpy_expansion.py`: screens retained BugsInPy checkouts
+  and writes the next 15-task expansion registry.
 - `scripts/run_redesign_smoke_workflow.py`: guarded workflow for the
   tool-augmented redesign smoke and full run. It performs preflight/check-only
   gating, executes only the `tool_augmented_evidence` condition, and writes a

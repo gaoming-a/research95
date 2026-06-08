@@ -238,9 +238,17 @@ Next:
    data expansion, tool-only baselines, hidden-evaluator separation, evidence
    ablation, generated tests, multi-model verification, and artifact goals. It
    is not the current minimum execution plan.
-25. Analyze whether evidence-first reduces false accepts without collapsing
+25. Treat the six-step prerequisite outputs as bounded preparation for the
+   middle-report expansion route: `scripts/run_tool_only_baseline.py`,
+   `docs/experiments/tool_only_baseline_result.md`,
+   `docs/experiments/qualitative_case_report.md`,
+   `docs/experiments/leakage_policy.md`, and
+   `docs/experiments/bugsinpy_expansion_screening.md`. The BugsInPy screening
+   registry is not an expanded validated dataset until task-specific oracles
+   and candidate validations are completed.
+26. Analyze whether evidence-first reduces false accepts without collapsing
    correct-patch recall or accepting only by rejecting/escalating everything.
-26. Update README, index, plan, and experiment records after every change.
+27. Update README, index, plan, and experiment records after every change.
 
 ## 7. Stop/Continue Gate
 

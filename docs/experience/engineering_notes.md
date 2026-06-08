@@ -529,3 +529,21 @@ This file starts fresh for the patch-verification project.
   current pilot with tool-only baselines and qualitative cases, then expand to
   15-20 bugs, and only enter larger data expansion after the pipeline remains
   stable.
+
+## 2026-06-08 six-step prerequisite execution
+
+- Added the long-term PatchEvidenceBench schema and leakage policy before
+  expanding data. This prevents hidden evaluator results from being mixed into
+  model-visible evidence.
+- Implemented `scripts/run_tool_only_baseline.py` with two conditions:
+  `tool_only_apply_only` and `tool_only_validation_summary`.
+- Current metrics show why the boundary matters: apply-only is safe but
+  unusable because it escalates all 30 candidates; validation-summary is perfect
+  on the pilot but uses retained executable validation and must be treated as a
+  tool-summary/oracle-style comparison.
+- Generated a qualitative case report covering LLM-only false accepts,
+  evidence-first recall loss, tool-only contrast, and tool-augmented repair.
+- Screened the retained BugsInPy workspace: 22 tasks were eligible at checkout
+  level and 15 were selected for the next registry. This is not yet an expanded
+  validated dataset; each new task still needs an oracle wrapper and candidate
+  validation.
