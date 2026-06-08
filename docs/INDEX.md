@@ -18,11 +18,11 @@
 - `plans/current_plan.md`: active English execution plan for AI-generated patch
   verification.
 - `plans/current_plan_zh.md`: Chinese version of the active execution plan.
-- `plans/final_paper_roadmap_zh.md`: long-term final-paper route for upgrading
-  the current pilot into an evidence-visibility empirical study with expanded
-  data, tool-only baselines, hidden-evaluator separation, multi-level evidence
-  ablation, and artifact goals. This is a roadmap, not the current execution
-  baseline.
+- `plans/final_paper_roadmap_zh.md`: canonical subsequent research target for
+  upgrading the current pilot into an evidence-visibility empirical study with
+  expanded data, tool-only baselines, hidden-evaluator separation, multi-level
+  evidence ablation, and artifact goals. Use it as the next-goal source, while
+  keeping `plans/current_plan_zh.md` as the per-turn execution log.
 
 ## New Paper Direction
 

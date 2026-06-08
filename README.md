@@ -248,9 +248,13 @@ For direct AI-agent execution, use:
 
 - `docs/plans/ai_agent_experiment_execution_plan_zh.md`
 
-For the long-term final-paper route, use:
+For the subsequent research target and long-term final-paper route, use:
 
 - `docs/plans/final_paper_roadmap_zh.md`
+
+Treat that file as the next-goal source. Continue recording each concrete
+execution round, boundary, and validation result in
+`docs/plans/current_plan_zh.md`.
 
 For current readiness, run:
 

@@ -1,8 +1,18 @@
 # 最终论文路线：Evidence Visibility for Candidate Patch Verification
 
-本文档保存长期最终论文路线。它不是当前必须立即执行的短期计划，也不替代
-`docs/plans/current_plan_zh.md`。当前 pilot、IEEE 草稿和中期报告可以继续作为
-保底路线；本文件定义的是后续把课题推进到更完整实证论文的路线。
+本文档保存长期最终论文路线，并从 2026-06-08 起被指定为本项目后续目标的
+规范入口。它不是当前必须立即执行的完整实验清单，也不替代
+`docs/plans/current_plan_zh.md` 的轮次执行记录。当前 pilot、IEEE 草稿和中期
+报告可以继续作为保底路线；后续研究推进应以本文件定义的 evidence visibility
+实证路线为主线。
+
+后续执行规则：
+
+- 以本文件作为后续目标和任务拆解来源。
+- 每轮具体执行仍必须先同步 `docs/plans/current_plan_zh.md`，记录本轮小目标、
+  边界、验收条件和执行结果。
+- 禁止直接跳到 80 bugs / 240 patches 的完整路线；必须先完成 Stage A/B，
+  再根据 pipeline 稳定性进入 15-20 bugs 和 30-50 bugs 扩展。
 
 ## 1. 论文主线
 

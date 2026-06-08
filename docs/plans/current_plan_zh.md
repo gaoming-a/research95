@@ -803,6 +803,28 @@ python scripts\run_redesign_smoke_workflow.py `
 - 新 registry 里的 task 必须先补 task-specific oracle、candidate
   materialization 和 `validate_patch_candidates.py` 验证，才能进入主实验。
 
+## 6.11 2026-06-08 后续目标指定
+
+本轮目标：
+
+- 按用户要求，将 `docs/plans/final_paper_roadmap_zh.md` 指定为本项目后续目标。
+- 不启动新的实验，不调用 API，不改变当前已有结果解释。
+
+执行结果：
+
+- `docs/plans/final_paper_roadmap_zh.md` 被标记为后续目标的规范入口。
+- 后续研究主线明确为：evidence visibility 如何影响 LLM candidate patch
+  verification 的 false accept、correct recall、escalation 和 merge-gate
+  决策，以及 LLM 相比 tool-only baseline 的真实贡献。
+- `docs/plans/current_plan_zh.md` 继续作为每轮执行记录；任何从最终路线拆出的
+  具体任务，仍必须在执行前写入本文件的轮次计划。
+
+边界：
+
+- 指定后续目标不等于已经开始执行完整 90+ 路线。
+- 下一步仍应从 `final_paper_roadmap_zh.md` 的 Stage A/B 开始，即继续完善当前
+  pilot、oracle/schema/pipeline 和 15-task expansion registry。
+
 ## 7. 继续/止损门槛
 
 只有满足以下至少一项时继续：

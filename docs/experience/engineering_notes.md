@@ -547,3 +547,14 @@ This file starts fresh for the patch-verification project.
   level and 15 were selected for the next registry. This is not yet an expanded
   validated dataset; each new task still needs an oracle wrapper and candidate
   validation.
+
+## 2026-06-08 subsequent target designation
+
+- `docs/plans/final_paper_roadmap_zh.md` is now the canonical subsequent
+  research target for this project.
+- Future work should use that roadmap as the source of next tasks, while still
+  updating `docs/plans/current_plan_zh.md` before each concrete execution
+  round.
+- Boundary: this designation does not start the full 90+ route automatically;
+  execution should proceed through Stage A/B and the existing 15-task expansion
+  registry first.
