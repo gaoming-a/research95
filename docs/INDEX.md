@@ -8,21 +8,23 @@
 
 ## Active Plan
 
-- `plans/ai_agent_experiment_execution_plan_zh.md`: standalone execution
-  task book for an AI agent, covering experiment order, commands, gates,
-  stage artifact contracts, experiment-run records, failure handling, result
-  interpretation, paper updates, artifact packaging, and human-required inputs.
-- `plans/agent_execution_plan_zh.md`: detailed execution plan intended for an
-  AI agent to follow step by step, including scripts, outputs, gates, and
-  validation commands.
-- `plans/current_plan.md`: active English execution plan for AI-generated patch
-  verification.
-- `plans/current_plan_zh.md`: Chinese version of the active execution plan.
-- `plans/final_paper_roadmap_zh.md`: canonical subsequent research target for
-  upgrading the current pilot into an evidence-visibility empirical study with
-  expanded data, tool-only baselines, hidden-evaluator separation, multi-level
-  evidence ablation, and artifact goals. Use it as the next-goal source, while
-  keeping `plans/current_plan_zh.md` as the per-turn execution log.
+- `plans/final_paper_roadmap_zh.md`: canonical final-paper route and subsequent
+  research target. It upgrades the current pilot into an evidence-visibility
+  empirical study with expanded data, tool-only baselines, hidden-evaluator
+  separation, multi-level evidence ablation, and artifact goals.
+- `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
+  update this file before concrete experiments, API calls, data changes, paper
+  edits, or Git sync work.
+- `plans/current_plan.md`: English companion plan. It is useful for bilingual
+  handoff context, but `plans/current_plan_zh.md` is the stricter execution log.
+
+## Historical Plan References
+
+- `plans/ai_agent_experiment_execution_plan_zh.md`: historical standalone task
+  book for the earlier API-pilot route. Retain for traceability and command
+  contracts, but do not let it override `plans/final_paper_roadmap_zh.md`.
+- `plans/agent_execution_plan_zh.md`: older detailed step-by-step execution
+  plan. Retain as reference only.
 
 ## New Paper Direction
 
@@ -34,10 +36,12 @@
   validation results and the first DeepSeek official API full-run outcome.
 - `paper/generated_tables.md`: generated Markdown paper tables from current
   no-API outputs.
-- `paper/generated_tables.tex`: generated LaTeX table snippets for the future
-  IEEE draft. These are pre-API tables and do not contain model-review results.
-- `paper/ieee_preapi_draft.tex`: generated IEEEtran pre-API LaTeX draft with
-  placeholders for real API results.
+- `paper/generated_tables.tex`: generated LaTeX table snippets used by the
+  current IEEE draft.
+- `paper/ieee_submission_draft.tex`: current anonymous IEEEtran submission
+  draft. It includes the prompt-only mixed/negative result, the separate
+  tool-augmented full-run result, figures, threats, and conclusion.
+- `paper/ieee_preapi_draft.tex`: historical IEEEtran pre-API LaTeX draft.
 - `experiments/patch_verification_plan.md`: experiment design for the first
   patch-verification pilot.
 - `experiments/patch_verification_pilot_report.md`: tracked summary of the
@@ -65,13 +69,14 @@
 - `experiments/bugsinpy_expansion_screening.md`: 15-task BugsInPy expansion
   screening registry. It is not an expanded validated dataset until new
   task-specific oracles and candidate validations are completed.
-- `experiments/patch_evidence_bench_schema.md`: long-term schema for
+- `experiments/patch_evidence_bench_schema.md`: long-term expanded benchmark
+  schema for
   TaskRecord, PatchRecord, EvidencePacket, ValidationOutcome, and
   VerifierDecision.
 - `experiments/leakage_policy.md`: visible-evidence and hidden-evaluator
   separation policy for future expanded runs.
-- `experiments/patch_candidate_schema.md`: JSONL schema for candidate patches
-  and verifier outputs.
+- `experiments/patch_candidate_schema.md`: current pilot JSONL schema for
+  candidate patches and verifier outputs.
 - `experiments/evidence_first_protocol.md`: comparison conditions and
   evidence-first verification workflow.
 - `experiments/patch_verification_metrics.md`: metric definitions and stop-gate
@@ -87,6 +92,13 @@
   cross-review direction failed and what should carry forward.
 - `background/reusable_bug_assets_summary.md`: concise map from old real-bug
   assets to patch-verification assets.
+
+## Literature
+
+- `literature/agent_topconf_2025_2026.md`: English literature notes for recent
+  agent and software-engineering papers.
+- `literature/agent_topconf_2025_2026_zh.md`: Chinese version of the recent
+  literature notes.
 
 ## Code Assets
 
@@ -189,11 +201,6 @@
   for graphical abstracts, presentations, and visual drafts. These PNGs are
   conceptual assets and must not replace the reproducible numeric/vector
   figures when supporting experimental claims.
-- `paper/ieee_submission_draft.tex`: current anonymous IEEEtran submission
-  draft. It includes the prompt-only mixed/negative result, the separate
-  tool-augmented full-run result, figures, threats, and conclusion. The last
-  local compile check used `pdflatex` and wrote ignored build outputs under
-  `outputs/latex_build`.
 - `artifact/anonymous_artifact.md`: inclusion and exclusion policy for the
   anonymous supplemental package.
 - `scripts/prepare_anonymous_artifact.py`: package builder for anonymous

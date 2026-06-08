@@ -56,205 +56,41 @@ The following were intentionally not copied:
 - anonymous artifact ZIPs from the old direction;
 - broad historical experiment logs that are not needed for patch verification.
 
-## Immediate Next Steps
+## Current Execution Target
 
-1. Treat `docs/plans/ai_agent_experiment_execution_plan_zh.md` as the
-   standalone handoff plan for any AI agent that continues the work. It is the
-   clearest task book for running the experiment end to end. It now includes an
-   explicit AI execution contract, stage artifact contract, experiment-run
-   record template, failure-handling rules, and the minimum human-input packet
-   required before real API execution. Keep
-   `docs/plans/agent_execution_plan_zh.md` as the more detailed historical
-   execution plan.
-   Use `scripts/audit_execution_readiness.py` at the start of a continuation
-   turn to produce a machine-readable and Markdown status report for no-API,
-   API, and Git readiness.
-   Use `scripts/audit_ai_plan_progress.py` to map the execution plan stages to
-   complete, partial, blocked, or pending states. Its full-run postprocess stage
-   requires `run_completeness.json` with 60 non-mock records.
-   Use `scripts/write_human_input_packet.py` to produce the exact missing human
-   inputs and command order before any real API execution, including smoke/full
-   postprocess commands with expected candidate counts.
-   The current primary model path is DeepSeek official API with
-   `deepseek-v4-pro`; OpenRouter shortlist/catalog files are retained only as
-   optional alternative-path documentation.
-   Use `scripts/write_git_sync_packet.py` to record the current Git state and
-   the required user decision before initializing or pushing this clean
-   workspace. The packet records a remote decision template, staging allowlist,
-   ignore checks, cached-diff checks, and post-sync acceptance criteria; it is
-   still a report only and does not mutate Git state.
-   Use `scripts/audit_git_sync_packet.py` to check that the Git handoff keeps
-   the human decision gate, avoids `git add .`, and validates ignored local
-   files before staging.
-   Use `scripts/audit_api_failure_handling.py` to verify, without external
-   model calls, that a mid-run API failure writes sanitized `run_error.json`
-   and is rejected by the completeness audit.
-   Use `scripts/write_experiment_run_records.py` to refresh the run ledger that
-   records no-API, smoke API, full API, and quality-gate status in the format
-   required by the AI execution plan.
-   Use `scripts/write_pre_api_handoff.py` as the one-command local handoff that
-   refreshes readiness, reproducibility, paper readiness, plan progress, goal
-   completion, experiment run records, human-input, Git-decision, and Git
-   handoff audit reports without calling model APIs.
-   Use `scripts/run_local_quality_gate.py` after code or plan changes to run
-   compile checks, cleanup, sensitive scanning, credential-boundary checks,
-   bootstrap safety checks, workflow-guard checks, API failure-handling checks,
-   command-template checks, experiment run-record generation, Git handoff
-   safety checks, readiness audits, paper readiness, plan progress, and
-   artifact dry-run in one command.
-   Use `scripts/audit_goal_completion.py` before claiming the plan is finished;
-   it requires real API results, postprocess reports, paper gate readiness,
-   artifact safety, experiment run records, local quality, and Git repository
-   evidence.
-   Use `.env.example` only as a template for an untracked `.env`; real provider
-   keys must not appear in tracked files, reports, or command output. The
-   current primary credential is `DEEPSEEK_API_KEY`; optional OpenRouter
-   timeout and retry knobs are still documented for the alternative provider.
-2. Use `scripts/build_patch_verification_dataset.py` to regenerate the current
-   no-API pilot: 7 retained real-bug tasks, 30 candidates, and 90 deterministic
-   baseline verifier outputs. Patch text is now materialized from retained
-   buggy/fixed checkout diffs when the external checkout root is available.
-   For a full local no-API reproduction, run
-   `scripts/run_no_api_patch_pipeline.py`; it chains dataset construction,
-   metrics, executable validation, API prompt dry-run, and report generation
-   without calling any model API.
-3. Use `scripts/write_reproducibility_manifest.py` to hash deterministic
-   no-API outputs and compare the original pilot with a reproduced run. The
-   latest comparison in `outputs/reproducibility/pilot_compare.json` matched all
-   checked deterministic files.
-4. Use `scripts/analyze_patch_verification.py` to recompute false accept, false
-   reject, accepted precision, recall, escalation, and invalid-output metrics.
-5. Use `scripts/validate_patch_candidates.py` to apply each candidate patch and
-   validate labels with retained executable oracles. The current pilot validates
-   30/30 candidates.
-6. Use `scripts/run_patch_verification_api_pilot.py` only for prompt dry-runs,
-   mock pipeline checks, or as the low-level runner invoked by the guarded
-   workflow. Real API calls should go through
-   `scripts/run_api_pilot_workflow.py`; direct real runs are rejected unless the
-   workflow supplies its internal guard flag. If a real API call fails mid-run,
-   the low-level runner writes a sanitized `run_error.json`; any run directory
-   containing that file is treated as incomplete by the completeness audit and
-   must not be used as experimental evidence. The current dry-run rendered 60
-   prompts for 30 candidates across `llm_only` and `evidence_first`, with
-   label-leakage checks passing. Use
-   `configs/api_pilot.example.json` as the config template and
-   `scripts/preflight_api_pilot.py` before any real API call.
-   First document the model choice in `configs/model_selection.local.json`
-   using `configs/model_selection.example.json`, then validate it with
-   `scripts/validate_model_selection.py`. Use
-   `scripts/create_model_selection_local.py` to create the local record without
-   hand-editing JSON. The current primary local config should use
-   `--api-provider deepseek_official --model deepseek-v4-pro`.
-   Use `scripts/create_api_pilot_local_config.py` to generate the ignored
-   `configs/api_pilot.local.json` after selecting a concrete provider model id;
-   it emits guarded workflow commands instead of low-level real-run commands.
-   Alternatively, use `scripts/bootstrap_api_prereqs.py` after the model id,
-   selection source, capability source, and rationale are explicitly chosen; it
-   writes both ignored local config files, validates their model match, and runs
-   preflight. The write mode requires `.env` to contain the provider key
-   (`DEEPSEEK_API_KEY` for the current path) before any local config files are
-   written; use `--allow-missing-credentials` only for dry-run/local validation.
-   For the guarded real API workflow, use
-   `scripts/run_api_pilot_workflow.py --config configs/api_pilot.local.json --execute`;
-   `--execute` is required before any model API call is made. The workflow also
-   records model-selection validation before preflight. After the 2-candidate
-   smoke run passes, use
-   `scripts/run_api_pilot_workflow.py --config configs/api_pilot.local.json --run-dir outputs/patch_verification_api_pilot_002 --limit 0 --execute`
-   for the 30-candidate full run so the smoke output is not overwritten.
-   For DeepSeek official API, keep `max_tokens=4096`. The 1200-token smoke
-   exhausted reasoning tokens on one candidate and produced empty final content;
-   the valid smoke run is
-   `outputs/patch_verification_api_pilot_001_tokens4096`.
-   The 30-candidate DeepSeek full run has completed in
-   `outputs/patch_verification_api_pilot_002`: 60 non-mock reviews, completeness
-   passed, and gate verdict `stop_or_redesign`. This is a mixed/negative result,
-   not a positive paper claim. The tracked failure analysis is
-   `docs/experiments/deepseek_full_run_failure_analysis.md`; it concludes that
-   `patch_verify_evidence_first_v1` should not be scaled as-is because the
-   visible evidence packet is too weak to preserve correct-patch recall.
-   A separate 5-candidate tool-augmented redesign smoke has passed; see
-   `docs/experiments/tool_augmented_redesign_smoke_result.md`. This only
-   justifies a larger tool-augmented experiment and does not change the original
-   prompt-only full-run verdict.
-   The 30-candidate tool-augmented full run has also completed; see
-   `docs/experiments/tool_augmented_full_run_result.md`. It passed the
-   dedicated tool-assisted gate, but it must be reported as conditional
-   tool-visible evidence, not prompt-only model ability.
-7. Use `scripts/summarize_patch_verification_pilot.py` to regenerate the
-   current Markdown pilot report from ignored outputs.
-8. After a real API or mock smoke run, use
-   `scripts/postprocess_api_pilot_run.py` to generate all post-run reports in
-   one step: API result report, failure examples, stop/continue gate, paper
-   readiness, run completeness, and postprocess summary. For the full run,
-   pass `--expected-candidates 30`; for the 2-candidate smoke run, pass
-   `--expected-candidates 2`. The completeness audit checks review counts,
-   raw response paths, raw response hashes, and required review schema fields.
-9. Alternatively, use
-   `scripts/summarize_api_pilot_results.py` to convert
-   `reviews.jsonl` and `metrics.json` into a Markdown result report. Mock
-   reports are pipeline checks only and must not be cited as experiment results.
-10. After a real full API run, use `scripts/extract_api_failure_examples.py` to
-   extract false accepts, correct patches not accepted, and evidence-first
-   reject/escalate examples for qualitative analysis. Mock extraction is only a
-   smoke test.
-11. After a real full API run, use `scripts/evaluate_api_pilot_gate.py` to
-   produce a stop/continue gate report. The paper should only claim positive
-   evidence if the gate supports continuing and the qualitative examples are
-   consistent with that interpretation.
-   Current gate result is `stop_or_redesign`; the next valid experiment is a
-   small redesign smoke on known failure cases, not a larger rerun with the
-   same evidence-first prompt.
-12. Before moving the paper beyond the mixed/negative-result draft, run
-   `scripts/audit_paper_readiness.py` to check that real API results, failure
-   examples, and the gate report are present.
-13. Use `scripts/write_paper_tables.py` to regenerate pre-API Markdown and
-   LaTeX tables after dataset, validation, metrics, or reproducibility outputs
-   change.
-14. Use `scripts/write_ieee_latex_draft.py` to regenerate the current IEEEtran
-   submission draft at `docs/paper/ieee_submission_draft.tex`. The older
-   `docs/paper/ieee_preapi_draft.tex` is retained only as historical pre-API
-   context. Compile-check the submission draft with `pdflatex`, writing PDF and
-   auxiliary files under ignored `outputs/latex_build`.
-15. Use `scripts/generate_paper_figures.py` to regenerate the publication
-   figures under `docs/figures/`. The script writes PDF, SVG, and PNG versions
-   for the framework, evidence boundary, dataset composition, result tradeoff,
-   and claim-boundary figures. The IEEE draft references the PDF versions.
-   The `docs/figures/imagegen/` directory contains optional generated raster
-   candidates and exact prompts for graphical abstracts or slides. Do not use
-   those PNGs as replacements for exact numeric/vector evidence figures.
-16. Use `scripts/run_tool_only_baseline.py` to regenerate the current
-   deterministic tool-only baselines, then analyze them with
-   `scripts/analyze_patch_verification.py`. The current tracked summary is
-   `docs/experiments/tool_only_baseline_result.md`.
-17. Use `scripts/build_qualitative_case_report.py` to regenerate
-   `docs/experiments/qualitative_case_report.md` from existing prompt-only,
-   tool-only, and tool-augmented pilot outputs.
-18. Use `scripts/screen_bugsinpy_expansion.py` to refresh
-   `docs/experiments/bugsinpy_expansion_screening.md`. This only screens the
-   next 15 BugsInPy tasks; it does not create an expanded validated dataset
-   until new task-specific oracles and candidate validations are added.
-19. Use `scripts/prepare_anonymous_artifact.py` to build an anonymous
-   supplemental package after checking that no credentials, raw outputs, or
-   local benchmark checkouts are included. Use
-   `scripts/audit_anonymous_artifact.py` to verify the generated ZIP structure
-   and exclusion rules.
-20. Use `--mock-policy patch_surface` only to test the local
-   `reviews.jsonl -> metrics.json -> run_summary.md` path. Mock outputs are not
-   experiment results.
-
-See `docs/INDEX.md` for the document map.
-
-For direct AI-agent execution, use:
-
-- `docs/plans/ai_agent_experiment_execution_plan_zh.md`
-
-For the subsequent research target and long-term final-paper route, use:
+The final-paper route is:
 
 - `docs/plans/final_paper_roadmap_zh.md`
 
-Treat that file as the next-goal source. Continue recording each concrete
-execution round, boundary, and validation result in
-`docs/plans/current_plan_zh.md`.
+Treat that file as the single source for the next research target. It upgrades
+the current pilot into an evidence-visibility empirical study with expanded
+real-bug tasks, hidden-evaluator separation, tool-only baselines, evidence
+ablation, and an anonymous artifact.
+
+Every concrete continuation round must first update:
+
+- `docs/plans/current_plan_zh.md`
+
+Historical execution plans are retained for traceability only:
+
+- `docs/plans/ai_agent_experiment_execution_plan_zh.md`
+- `docs/plans/agent_execution_plan_zh.md`
+
+They should not override `final_paper_roadmap_zh.md`.
+
+## Current Status
+
+- The prompt-only DeepSeek full run completed and produced a mixed/negative
+  `stop_or_redesign` result. It is not a positive paper claim.
+- The later tool-augmented full run passed its dedicated gate, but only supports
+  a conditional claim about tool-visible evidence.
+- The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
+- `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
+- The next work should start from Stage A/B in
+  `docs/plans/final_paper_roadmap_zh.md`: strengthen the pilot/oracle/schema
+  pipeline and migrate the screened BugsInPy tasks into validated candidates.
+
+## Core Commands
 
 For current readiness, run:
 
@@ -396,7 +232,7 @@ python scripts\write_reproducibility_manifest.py `
   --compare-md outputs\reproducibility\pilot_compare.md
 ```
 
-For generated pre-API paper tables, run:
+For generated paper tables, run:
 
 ```powershell
 python scripts\write_paper_tables.py `
@@ -404,12 +240,12 @@ python scripts\write_paper_tables.py `
   --out-tex docs\paper\generated_tables.tex
 ```
 
-For the IEEEtran pre-API LaTeX draft, run:
+For the current IEEEtran LaTeX submission draft, run:
 
 ```powershell
 python scripts\write_ieee_latex_draft.py `
   --tables-tex docs\paper\generated_tables.tex `
-  --out docs\paper\ieee_preapi_draft.tex
+  --out docs\paper\ieee_submission_draft.tex
 ```
 
 For a dry-run bootstrap of the current DeepSeek official API prerequisite

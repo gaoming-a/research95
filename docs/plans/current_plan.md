@@ -1,6 +1,6 @@
 # Current Plan: AI-Generated Patch Verification
 
-Last updated: 2026-06-05
+Last updated: 2026-06-08
 
 ## 1. Research Pivot
 
@@ -109,7 +109,19 @@ Completed:
    `outputs/reproducibility/pilot_compare.json` currently reports
    `matched = true`.
 
-Next:
+Current target:
+
+`docs/plans/final_paper_roadmap_zh.md` is the canonical subsequent research
+target and long-term final-paper route. It supersedes the older API-pilot
+handoff plans as the next-goal source. This file and
+`docs/plans/current_plan_zh.md` remain per-turn execution logs.
+
+Historical execution notes and current operational commands:
+
+Use `docs/plans/final_paper_roadmap_zh.md` as the current next-goal source.
+The following items preserve earlier API-pilot, quality-gate, artifact, and
+paper-generation context; completed prompt-only and tool-augmented smoke/full
+runs should not be restarted as the next step.
 
 1. At the start of a continuation turn, run
    `python scripts/audit_execution_readiness.py --out-json outputs/readiness_audit/latest.json --out-md outputs/readiness_audit/latest.md`
@@ -145,7 +157,10 @@ Next:
    outputs in `outputs/patch_verification_pilot_001` and
    `outputs/patch_verification_pilot_repro_001`. The current comparison is
    matched.
-8. Write and log the API pilot prompts for `llm_only` and `evidence_first`.
+8. Do not start a new prompt-only API pilot from this older checklist. The
+   prompt-only and tool-augmented pilot runs have already completed; use the
+   final roadmap Stage A/B work to strengthen the pilot/oracle/schema pipeline
+   and migrate screened BugsInPy tasks into validated candidates.
 9. The current primary model path is DeepSeek official API with
    `--api-provider deepseek_official --model deepseek-v4-pro`. The OpenRouter
    shortlist/catalog files are retained only as alternative-path or historical

@@ -85,14 +85,17 @@ The first generated pilot meets the schema and no-API metric gates:
 - 30/30 candidates validated by apply + retained executable oracles;
 - label-leakage check passed for model-visible evidence packets.
 
-The current generated pilot meets the no-API API-readiness gate for a small
+The generated pilot met the no-API API-readiness gate for the first small
 pilot: `api_readiness.ready = true` and `validation_summary.all_validated =
-true`. The next step is prompt/run preparation for `llm_only` and
-`evidence_first`; do not expand to majority or multi-model experiments yet.
+true`. The original prompt-only `llm_only` and `evidence_first` API runs have
+since completed and should be interpreted through
+`deepseek_full_run_result.md` and `deepseek_full_run_failure_analysis.md`.
+Future expansion should follow `docs/plans/final_paper_roadmap_zh.md` rather
+than restarting this first-pilot checklist.
 
 ## First API Conditions
 
-Run only the minimum useful set:
+Historical first-pilot conditions:
 
 1. one LLM-only reviewer;
 2. one evidence-first verifier;

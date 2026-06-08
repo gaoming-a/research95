@@ -1,6 +1,6 @@
 # 当前计划：AI 生成补丁的可验证审查
 
-最后更新：2026-06-05
+最后更新：2026-06-08
 
 ## 1. 研究转向
 
@@ -97,7 +97,11 @@ Verifier decision labels：
    生成 30 个 candidates、90 条 baseline outputs、30/30 executable
    validations、60 条 prompt dry-run records 和 pilot report。
 
-下一步：
+历史执行清单和当前操作说明：
+
+当前后续目标以 `docs/plans/final_paper_roadmap_zh.md` 为准。以下条目保留
+早期 API pilot、质量门、artifact 和论文生成命令的执行上下文；其中已完成的
+prompt-only、tool-augmented smoke/full run 不应被重新当作当前下一步。
 
 1. 若把任务交给新的 AI agent，优先使用
    `docs/plans/ai_agent_experiment_execution_plan_zh.md`。该文件是独立任务书，
@@ -199,11 +203,10 @@ Verifier decision labels：
    该审计要求真实 API 结果、postprocess 报告、论文 gate readiness、
    artifact safety、本地质量门和 Git 仓库证据全部成立。本地质量门现在包含
    no-API 的 API failure-handling audit 和 experiment run-record ledger 生成。
-23. 使用 `scripts/write_paper_tables.py` 重新生成 pre-API Markdown 与
-   LaTeX 表格；这些表格只记录数据集、验证、no-API baseline 和可复现性，
-   不包含真实模型审查结果。
-24. 使用 `scripts/write_ieee_latex_draft.py` 重新生成 IEEEtran pre-API
-   LaTeX 草稿；该草稿必须保留真实 API 结果待填边界，不能作为最终投稿版。
+23. 使用 `scripts/write_paper_tables.py` 重新生成 Markdown 与 LaTeX 表格。
+24. 使用 `scripts/write_ieee_latex_draft.py` 重新生成当前 IEEEtran 投稿草稿
+   `docs/paper/ieee_submission_draft.tex`；旧
+   `docs/paper/ieee_preapi_draft.tex` 只保留为历史 pre-API 草稿。
 25. 使用 `scripts/prepare_anonymous_artifact.py` 生成匿名 supplemental
    package。当前 package 只包含源码、文档、示例和配置模板；排除 outputs、
    data、credentials 和本地 checkouts。
@@ -372,7 +375,7 @@ full run 执行结果：
 - 因此当前结果只能支持“更保守、false accept 更少，但 recall 损失过大”的
   safety/utility tradeoff，不能支持“evidence-first 更好”的正向主张。
 
-下一步最短路径：
+当时下一步最短路径：
 
 1. 不继续用 `patch_verify_evidence_first_v1` 直接扩量。
 2. 先设计一个小范围新条件，暂定
@@ -429,7 +432,7 @@ dry-run 修复验证结果：
 - 实际渲染 prompt 边界扫描通过：未命中 evaluator labels、旧 evaluator patch id
   片段或本地路径。
 
-下一步执行命令：
+当时下一步执行命令：
 
 ```powershell
 python scripts\run_redesign_smoke_workflow.py `
@@ -465,7 +468,7 @@ python scripts\run_redesign_smoke_workflow.py `
 - 该结果不支持把原 prompt-only evidence-first 写成成功，也不能替代
   30-candidate full run。
 
-下一步：
+当时下一步（已在后续章节完成）：
 
 1. 构造 30-candidate 全量 `tool_augmented_evidence` input set。
 2. 运行独立 full run，不覆盖旧 `patch_verification_api_pilot_002`。
@@ -824,6 +827,42 @@ python scripts\run_redesign_smoke_workflow.py `
 - 指定后续目标不等于已经开始执行完整 90+ 路线。
 - 下一步仍应从 `final_paper_roadmap_zh.md` 的 Stage A/B 开始，即继续完善当前
   pilot、oracle/schema/pipeline 和 15-task expansion registry。
+
+## 6.12 2026-06-08 文档清理计划
+
+本轮目标：
+
+- 清理 README、docs/INDEX 和旧实验计划中的过期“下一步”描述。
+- 继续指定 `docs/plans/final_paper_roadmap_zh.md` 为最终论文路线和后续目标。
+- 不删除历史实验结果，不改变已有实验解释，不启动新实验，不调用模型 API。
+
+计划：
+
+1. 将 README 的执行入口从旧的 API/pre-API 命令清单改为当前目标入口：
+   `final_paper_roadmap_zh.md` 是最终路线，`current_plan_zh.md` 是每轮执行日志。
+2. 在 docs/INDEX 中明确计划文件层级，避免多个计划文件同时被理解为当前目标。
+3. 将已完成的 prompt-only、tool-augmented smoke/full run 相关旧“下一步”改为历史状态。
+4. 补齐 literature 文档索引。
+5. 运行本地质量门，检查文档清理没有破坏索引和安全边界。
+6. 提交并推送到 GitHub。
+
+验收条件：
+
+- 所有“当前下一步”都指向 `final_paper_roadmap_zh.md` 的 Stage A/B。
+- `ieee_submission_draft.tex` 是当前 IEEE 投稿草稿；`ieee_preapi_draft.tex` 只保留为历史草稿。
+- 旧执行计划保留为 historical/reference，不再作为最终目标。
+- 本轮文档清理同步 README、docs/INDEX、计划文档和经验文档。
+
+执行结果：
+
+- README 已改为 `Current Execution Target`，明确最终路线是
+  `docs/plans/final_paper_roadmap_zh.md`。
+- docs/INDEX 已拆分 Active Plan 与 Historical Plan References，并补齐
+  literature 文档索引。
+- `pilot_dataset_construction.md` 和 `patch_verification_plan.md` 中已完成的
+  API/tool-augmented “下一步”已改为历史状态。
+- `current_plan.md` 与本文件已更新日期和当前目标说明。
+- `docs/experience/engineering_notes.md` 已记录本次文档清理经验。
 
 ## 7. 继续/止损门槛
 

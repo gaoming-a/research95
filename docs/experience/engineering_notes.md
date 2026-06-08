@@ -558,3 +558,16 @@ This file starts fresh for the patch-verification project.
 - Boundary: this designation does not start the full 90+ route automatically;
   execution should proceed through Stage A/B and the existing 15-task expansion
   registry first.
+
+## 2026-06-08 documentation cleanup
+
+- Problem: README, current plans, and early experiment-plan files still mixed
+  old API/pre-API "next step" wording with the newer final-paper roadmap. This
+  could cause a future agent to restart completed prompt-only or
+  tool-augmented runs instead of following the final roadmap.
+- Fix: make `docs/plans/final_paper_roadmap_zh.md` the only final-paper route,
+  keep `docs/plans/current_plan_zh.md` as the per-turn execution log, and mark
+  older execution plans as historical/reference material.
+- Rule: when a document describes a completed experiment, keep the result and
+  command context, but rewrite any active "next step" language into completed
+  status plus a pointer to the current roadmap.
