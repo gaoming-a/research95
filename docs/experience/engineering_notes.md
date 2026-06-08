@@ -517,3 +517,15 @@ This file starts fresh for the patch-verification project.
   abstracts, presentations, or visual drafts. They must not replace exact
   Matplotlib-generated vector figures when the figure is used as experimental
   evidence.
+
+## 2026-06-08 final paper roadmap
+
+- Saved the evaluated 90+ final-paper route as
+  `docs/plans/final_paper_roadmap_zh.md`.
+- The roadmap deliberately remains separate from `current_plan_zh.md`: it is a
+  long-term route for an evidence-visibility empirical study, not the next
+  mandatory execution baseline.
+- Rule: do not jump directly to 80 bugs / 240 patches. First strengthen the
+  current pilot with tool-only baselines and qualitative cases, then expand to
+  15-20 bugs, and only enter larger data expansion after the pipeline remains
+  stable.

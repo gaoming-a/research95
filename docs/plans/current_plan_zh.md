@@ -714,6 +714,35 @@ python scripts\run_redesign_smoke_workflow.py `
 - 若投稿系统需要 graphical abstract，可从 `docs/figures/imagegen/`
   选择候选并人工检查文字拼写、分辨率和版面。
 
+## 6.9 2026-06-08 最终论文长期路线保存
+
+本轮目标：
+
+- 将用户提供并经评估后的 90+ 最终论文路线保存为后续计划。
+- 不覆盖当前执行计划，不启动扩数据，不调用 API。
+- 明确该路线是长期投稿/硕士论文增强路线，而不是当前 pilot 的最低完成要求。
+
+执行结果：
+
+- 新增 `docs/plans/final_paper_roadmap_zh.md`。
+- 路线核心从“三组条件比较”升级为：
+  evidence visibility 如何影响 LLM candidate patch verification 的 false
+  accept、correct recall、escalation 和 merge-gate 决策。
+- 文档包含：
+  - 5 个 RQ；
+  - BugsInPy/SWE-bench/构造型 patch 的数据扩展路线；
+  - visible evidence 与 hidden evaluator 分离规则；
+  - tool-only、accept-all、reject-all、test-only 等 baseline；
+  - 指标体系、failure taxonomy、generated tests、多模型和 artifact 目标；
+  - 双轨策略：当前 pilot/中期保底路线 + 长期最终论文路线。
+
+边界：
+
+- 当前不直接执行 80 bugs / 240 patches 的完整路线。
+- 下一步仍应优先补中期报告材料、tool-only baseline 和 qualitative cases。
+- 只有当前 pipeline 稳定后，才进入 15-20 bugs 小扩展，再考虑 30-50 bugs
+  硕士论文稳健版。
+
 ## 7. 继续/止损门槛
 
 只有满足以下至少一项时继续：
