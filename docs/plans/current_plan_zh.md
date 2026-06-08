@@ -864,6 +864,83 @@ python scripts\run_redesign_smoke_workflow.py `
 - `current_plan.md` 与本文件已更新日期和当前目标说明。
 - `docs/experience/engineering_notes.md` 已记录本次文档清理经验。
 
+## 6.13 2026-06-08 Stage A/B 首批 httpie 扩展计划
+
+本轮目标：
+
+- 按用户确认，从 expansion screening 中选择 5 个 `httpie` 任务作为首批
+  Stage A/B 小闭环。
+- 完成 task-specific oracle/candidate/evidence pipeline 的最小闭环验证。
+- 不直接启动 80 bugs / 240 patches 完整路线，不调用真实模型 API。
+
+首批任务：
+
+1. `bugsinpy_httpie_1`
+2. `bugsinpy_httpie_2`
+3. `bugsinpy_httpie_3`
+4. `bugsinpy_httpie_4`
+5. `bugsinpy_httpie_5`
+
+计划：
+
+1. 检查现有 `scripts/oracles/`、candidate builder、validation 和 leakage
+   check 的可复用接口。
+2. 若现有 oracle 已覆盖某些 httpie task，优先复用；若缺失，新增最小
+   task-specific oracle wrapper。
+3. 为首批任务生成 expanded candidate records，至少包含 reference/no-op/
+   irrelevant/partial 或其他可验证 difficult negative。
+4. 运行 candidate validation，确认每个 candidate 的 evaluator label 可由
+   apply + oracle/tool evidence 复核。
+5. 生成或更新 visible evidence / hidden evaluator 分离记录，确保 model-visible
+   packet 不包含 reference provenance、hidden evaluator result 或最终标签。
+6. 更新 README、docs/INDEX、实验记录和经验文档，运行本地质量门并同步 GitHub。
+
+需要停下确认的情况：
+
+- 某个 httpie task 缺少 retained checkout、reference diff 或可执行测试，且无法
+  用现有数据客观修复。
+- 需要改变首批任务范围、candidate 类型比例、是否允许人工构造 patch、是否调用
+  真实模型 API。
+- validation pipeline 只能通过泄漏 hidden evaluator summary 才能工作。
+
+执行结果：
+
+- 已为 `scripts/build_patch_verification_dataset.py` 增加 `--task-id` 和
+  `--run-id`，默认旧 pilot 行为保持不变。
+- 已生成独立 Stage A/B 输出目录 `outputs/httpie_stage_ab_001`。
+- 数据集包含 5 个 `httpie` tasks、22 个 candidates：
+  - `correct_reference`: 5；
+  - `buggy_noop`: 5；
+  - `irrelevant_patch`: 5；
+  - `partial_fix`: 7。
+- difficult negative ratio = 0.3182，满足当前最小 readiness 阈值。
+- `validate_patch_candidates.py` 验证 22/22 candidates 通过；所有 patch
+  apply 成功，oracle 全部运行，5 个 correct reference 通过 oracle，17 个负例按
+  预期未通过 oracle。
+- 已运行 no-API baseline metrics：
+  - `accept_all` false accept rate = 1.0，accepted precision = 0.2273；
+  - `reject_all` false accept rate = 0.0，correct recall = 0.0；
+  - `oracle_upper_bound` false accept rate = 0.0，correct recall = 1.0。
+- 已运行 tool-only baseline：
+  - `tool_only_apply_only` 全部 escalate；
+  - `tool_only_validation_summary` false accept rate = 0.0，correct recall = 1.0，
+    但该条件仍是 retained executable validation summary，不是
+    hidden-evaluator-free realistic merge gate。
+- 已运行 prompt dry-run：`llm_only` 22 条、`evidence_first` 22 条，共 44 条；
+  label-leakage check 全部 passed。
+- 已新增 `docs/experiments/httpie_stage_ab_result.md` 记录本轮 tracked 结果。
+- 本地质量门 `scripts/run_local_quality_gate.py` 已通过。
+
+边界：
+
+- 本轮没有调用真实模型 API。
+- `httpie_stage_ab_001` 是 Stage A/B preparation evidence，不是最终研究假设的
+  model-review evidence。
+- 当前仍未生成真实 AI-generated patches；候选仍主要来自 reference/no-op/
+  irrelevant/partial 构造。
+- 下一步必须二选一并在执行前确认：继续迁移另一个 project group，或先设计并实现
+  AI-generated candidate patch generation protocol。
+
 ## 7. 继续/止损门槛
 
 只有满足以下至少一项时继续：

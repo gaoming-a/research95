@@ -84,11 +84,15 @@ They should not override `final_paper_roadmap_zh.md`.
   `stop_or_redesign` result. It is not a positive paper claim.
 - The later tool-augmented full run passed its dedicated gate, but only supports
   a conditional claim about tool-visible evidence.
+- The first Stage A/B expansion slice, `httpie_stage_ab_001`, has completed
+  without model API calls: five `httpie` tasks, 22 candidates, 22/22 executable
+  validations, and 44 prompt-boundary dry-run checks.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in
-  `docs/plans/final_paper_roadmap_zh.md`: strengthen the pilot/oracle/schema
-  pipeline and migrate the screened BugsInPy tasks into validated candidates.
+  `docs/plans/final_paper_roadmap_zh.md`: either repeat the closed-loop
+  migration for another project group or add AI-generated candidate patches
+  under the final roadmap's generation protocol.
 
 ## Core Commands
 

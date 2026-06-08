@@ -67,8 +67,13 @@
 - `experiments/qualitative_case_report.md`: four diagnostic cases comparing
   LLM-only, evidence-first, tool-only, and tool-augmented decisions.
 - `experiments/bugsinpy_expansion_screening.md`: 15-task BugsInPy expansion
-  screening registry. It is not an expanded validated dataset until new
-  task-specific oracles and candidate validations are completed.
+  screening registry. The five `httpie` tasks have completed the first Stage
+  A/B closed loop; the remaining selected tasks still need task-specific
+  oracles and candidate validations.
+- `experiments/httpie_stage_ab_result.md`: tracked result for
+  `httpie_stage_ab_001`, the first Stage A/B validated dataset slice with five
+  `httpie` tasks, 22 candidates, executable validation, no-API baselines,
+  tool-only baselines, and prompt-boundary dry-run checks.
 - `experiments/patch_evidence_bench_schema.md`: long-term expanded benchmark
   schema for
   TaskRecord, PatchRecord, EvidencePacket, ValidationOutcome, and

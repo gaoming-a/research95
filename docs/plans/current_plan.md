@@ -263,9 +263,14 @@ runs should not be restarted as the next step.
    `docs/experiments/bugsinpy_expansion_screening.md`. The BugsInPy screening
    registry is not an expanded validated dataset until task-specific oracles
    and candidate validations are completed.
-26. Analyze whether evidence-first reduces false accepts without collapsing
+26. The first Stage A/B filtered dataset slice, `httpie_stage_ab_001`, is now
+   complete for five `httpie` tasks. It contains 22 candidates, 22/22
+   executable validations, deterministic no-API baselines, tool-only baselines,
+   and 44 prompt-boundary dry-run records. It is preparation evidence, not
+   model-review evidence.
+27. Analyze whether evidence-first reduces false accepts without collapsing
    correct-patch recall or accepting only by rejecting/escalating everything.
-27. Update README, index, plan, and experiment records after every change.
+28. Update README, index, plan, and experiment records after every change.
 
 ## 7. Stop/Continue Gate
 

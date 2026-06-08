@@ -473,6 +473,14 @@ PatchEvidenceBench/
 - tool-only baseline；
 - 中期报告材料。
 
+当前状态：
+
+- `httpie_stage_ab_001` 已完成首个 Stage A/B 小闭环：5 个 `httpie` tasks、
+  22 个 candidates、22/22 executable validations、no-API baselines、
+  tool-only baselines 和 44 条 prompt-boundary dry-run records。
+- 该结果是 preparation evidence，不是 model-review evidence；没有调用真实模型
+  API，也还没有生成真实 AI candidate patches。
+
 ### Stage B：重构 schema 和 pipeline
 
 目的：让扩展不是手工堆数据。
@@ -484,6 +492,12 @@ PatchEvidenceBench/
 - EvidencePacket；
 - ValidationOutcome；
 - VerifierDecision。
+
+当前状态：
+
+- 已有长期 schema 文档和 leakage policy；
+- 当前 builder 已支持按 `--task-id` 和 `--run-id` 生成独立 dataset slice；
+- 仍需把真实 AI-generated patch generation protocol 接入同一 schema。
 
 ### Stage C：扩 BugsInPy 到 30-50 bugs
 

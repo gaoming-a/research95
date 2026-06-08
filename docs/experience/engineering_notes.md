@@ -571,3 +571,19 @@ This file starts fresh for the patch-verification project.
 - Rule: when a document describes a completed experiment, keep the result and
   command context, but rewrite any active "next step" language into completed
   status plus a pointer to the current roadmap.
+
+## 2026-06-08 httpie Stage A/B slice
+
+- The five selected `httpie` expansion tasks already had task-specific oracle
+  files under `scripts/oracles/`. The missing piece was not oracle authoring but
+  producing a separately bounded Stage A/B run instead of reusing the old
+  seven-task pilot as if it were a new expansion result.
+- Added filtered build support to `scripts/build_patch_verification_dataset.py`
+  with `--task-id` and `--run-id`. Default behavior remains the original full
+  built-in pilot, so existing quality gates and reports are not disturbed.
+- `httpie_stage_ab_001` produced 22 candidates from five tasks, validated
+  22/22 with apply + oracle checks, rendered 44 dry-run prompts, and generated
+  tool-only baseline metrics.
+- Rule: when a screened task group is promoted from registry to dataset slice,
+  create a new run id and tracked result document; do not silently reinterpret
+  an older pilot as expansion evidence.

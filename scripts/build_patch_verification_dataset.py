@@ -283,9 +283,26 @@ def build_split_replace_partial_diffs(
     return records
 
 
-def build_reference_diffs(source_root: Path) -> dict[str, dict[str, Any]]:
+def select_source_bugs(task_ids: list[str] | None) -> list[dict[str, Any]]:
+    if not task_ids:
+        return list(SOURCE_BUGS)
+    known = {source_bug["task_id"]: source_bug for source_bug in SOURCE_BUGS}
+    missing = sorted(set(task_ids) - known.keys())
+    if missing:
+        raise ValueError(f"unknown task_id values: {missing}")
+    selected: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for task_id in task_ids:
+        if task_id in seen:
+            continue
+        selected.append(known[task_id])
+        seen.add(task_id)
+    return selected
+
+
+def build_reference_diffs(source_root: Path, source_bugs: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     reference_diffs: dict[str, dict[str, Any]] = {}
-    for source_bug in SOURCE_BUGS:
+    for source_bug in source_bugs:
         file_path = source_bug["touched_files"][0]
         diff_text = unified_diff(source_root, source_bug, file_path)
         reference_diffs[source_bug["task_id"]] = {
@@ -332,10 +349,10 @@ def build_candidate(
     }
 
 
-def build_candidates(source_root: Path) -> list[dict[str, Any]]:
-    reference_diffs = build_reference_diffs(source_root)
+def build_candidates(source_root: Path, source_bugs: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    reference_diffs = build_reference_diffs(source_root, source_bugs)
     candidates: list[dict[str, Any]] = []
-    for source_bug in SOURCE_BUGS:
+    for source_bug in source_bugs:
         reference = reference_diffs[source_bug["task_id"]]
         candidates.append(
             build_candidate(
@@ -508,14 +525,18 @@ def build_baseline_outputs(candidates: list[dict[str, Any]]) -> list[dict[str, A
     return records
 
 
-def build_summary(candidates: list[dict[str, Any]], verifier_outputs: list[dict[str, Any]]) -> dict[str, Any]:
+def build_summary(
+    candidates: list[dict[str, Any]],
+    verifier_outputs: list[dict[str, Any]],
+    run_id: str,
+) -> dict[str, Any]:
     difficult_negative_types = {"partial_fix", "overfitted_fix", "test_passing_wrong"}
     difficult_negative_count = sum(
         1 for candidate in candidates if candidate["candidate_type"] in difficult_negative_types
     )
     difficult_negative_ratio = difficult_negative_count / len(candidates) if candidates else 0.0
     return {
-        "run_id": "patch_verification_pilot_001",
+        "run_id": run_id,
         "candidate_count": len(candidates),
         "verifier_output_count": len(verifier_outputs),
         "project_counts": dict(sorted(Counter(candidate["project"] for candidate in candidates).items())),
@@ -565,6 +586,16 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Do not emit deterministic no-API verifier_outputs.jsonl baselines.",
     )
+    parser.add_argument(
+        "--run-id",
+        default="patch_verification_pilot_001",
+        help="Run identifier recorded in dataset_summary.json.",
+    )
+    parser.add_argument(
+        "--task-id",
+        action="append",
+        help="Task id to include. Repeat to build a filtered Stage A/B dataset. Defaults to all built-in tasks.",
+    )
     return parser.parse_args()
 
 
@@ -576,7 +607,8 @@ def main() -> None:
     if not source_root.exists():
         raise FileNotFoundError(f"source workspace root does not exist: {source_root}")
 
-    candidates = build_candidates(source_root)
+    source_bugs = select_source_bugs(args.task_id)
+    candidates = build_candidates(source_root, source_bugs)
     for index, candidate in enumerate(candidates, start=1):
         candidate["model_candidate_id"] = f"candidate_{index:04d}"
     for candidate in candidates:
@@ -584,7 +616,7 @@ def main() -> None:
 
     evidence_packets = [build_evidence_packet(candidate) for candidate in candidates]
     verifier_outputs = [] if args.no_baselines else build_baseline_outputs(candidates)
-    summary = build_summary(candidates, verifier_outputs)
+    summary = build_summary(candidates, verifier_outputs, args.run_id)
 
     write_jsonl(out_dir / "candidates.jsonl", candidates)
     write_jsonl(out_dir / "evidence_packets.jsonl", evidence_packets)

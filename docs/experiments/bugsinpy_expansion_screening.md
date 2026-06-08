@@ -2,7 +2,7 @@
 
 ## Boundary
 
-This is an expansion screening registry, not an expanded patch-verification dataset. Each selected task still needs a task-specific oracle and candidate validation before it can support experimental claims.
+This started as an expansion screening registry, not an expanded patch-verification dataset. The five `httpie` tasks have since completed the first Stage A/B closed loop in `httpie_stage_ab_001`; the remaining selected tasks still need task-specific oracle and candidate validation before they can support experimental claims.
 
 ## Summary
 
@@ -21,11 +21,11 @@ This is an expansion screening registry, not an expanded patch-verification data
 | `bugsinpy_cookiecutter_1` | `cookiecutter` | 1 | `not migrated` | write_or_migrate_patch_verification_oracle_before candidate generation |
 | `bugsinpy_cookiecutter_2` | `cookiecutter` | 1 | `not migrated` | write_or_migrate_patch_verification_oracle_before candidate generation |
 | `bugsinpy_cookiecutter_3` | `cookiecutter` | 1 | `not migrated` | write_or_migrate_patch_verification_oracle_before candidate generation |
-| `bugsinpy_httpie_1` | `httpie` | 2 | `pytest tests/test_downloads.py::TestDownloadUtils::test_unique_filename` | write_or_migrate_patch_verification_oracle_before candidate generation |
-| `bugsinpy_httpie_2` | `httpie` | 2 | `pytest tests/test_redirects.py::TestRedirects::test_max_redirects` | write_or_migrate_patch_verification_oracle_before candidate generation |
-| `bugsinpy_httpie_3` | `httpie` | 1 | `pytest tests/test_sessions.py::TestSession::test_download_in_session` | write_or_migrate_patch_verification_oracle_before candidate generation |
-| `bugsinpy_httpie_4` | `httpie` | 1 | `pytest tests/test_regressions.py::test_Host_header_overwrite` | write_or_migrate_patch_verification_oracle_before candidate generation |
-| `bugsinpy_httpie_5` | `httpie` | 1 | `pytest tests/tests.py::TestItemParsing::test_escape_longsep` | write_or_migrate_patch_verification_oracle_before candidate generation |
+| `bugsinpy_httpie_1` | `httpie` | 2 | `pytest tests/test_downloads.py::TestDownloadUtils::test_unique_filename` | stage_ab_001_validated |
+| `bugsinpy_httpie_2` | `httpie` | 2 | `pytest tests/test_redirects.py::TestRedirects::test_max_redirects` | stage_ab_001_validated |
+| `bugsinpy_httpie_3` | `httpie` | 1 | `pytest tests/test_sessions.py::TestSession::test_download_in_session` | stage_ab_001_validated |
+| `bugsinpy_httpie_4` | `httpie` | 1 | `pytest tests/test_regressions.py::test_Host_header_overwrite` | stage_ab_001_validated |
+| `bugsinpy_httpie_5` | `httpie` | 1 | `pytest tests/tests.py::TestItemParsing::test_escape_longsep` | stage_ab_001_validated |
 | `bugsinpy_luigi_3` | `luigi` | 1 | `pytest test/parameter_test.py::TestSerializeTupleParameter::testSerialize` | write_or_migrate_patch_verification_oracle_before candidate generation |
 | `bugsinpy_luigi_4` | `luigi` | 1 | `pytest test/contrib/redshift_test.py::TestS3CopyToTable::test_s3_copy_with_nonetype_columns` | write_or_migrate_patch_verification_oracle_before candidate generation |
 | `bugsinpy_tqdm_1` | `tqdm` | 2 | `python3 -m pytest tqdm/tests/tests_contrib.py::test_enumerate` | write_or_migrate_patch_verification_oracle_before candidate generation |
