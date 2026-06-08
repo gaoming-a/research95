@@ -87,6 +87,9 @@ They should not override `final_paper_roadmap_zh.md`.
 - The first Stage A/B expansion slice, `httpie_stage_ab_001`, has completed
   without model API calls: five `httpie` tasks, 22 candidates, 22/22 executable
   validations, and 44 prompt-boundary dry-run checks.
+- The first DeepSeek AI patch generation attempt produced 10 patches, but only
+  4 applied cleanly; it is diagnostic generator-pipeline evidence, not a clean
+  verifier dataset slice.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

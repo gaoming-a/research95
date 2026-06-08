@@ -74,6 +74,10 @@
   `httpie_stage_ab_001`, the first Stage A/B validated dataset slice with five
   `httpie` tasks, 22 candidates, executable validation, no-API baselines,
   tool-only baselines, and prompt-boundary dry-run checks.
+- `experiments/httpie_ai_patch_generation_attempt.md`: tracked result for the
+  first DeepSeek AI patch generation attempt on the five validated `httpie`
+  tasks. It generated 10 patches, but 6 failed to apply, so it is diagnostic
+  generator-pipeline evidence rather than a clean verifier dataset slice.
 - `experiments/patch_evidence_bench_schema.md`: long-term expanded benchmark
   schema for
   TaskRecord, PatchRecord, EvidencePacket, ValidationOutcome, and

@@ -941,6 +941,88 @@ python scripts\run_redesign_smoke_workflow.py `
 - 下一步必须二选一并在执行前确认：继续迁移另一个 project group，或先设计并实现
   AI-generated candidate patch generation protocol。
 
+## 6.14 2026-06-08 DeepSeek AI patch generation 计划
+
+用户已确认：
+
+- 允许调用 DeepSeek 官方 API；
+- 使用 5 个已验证的 `httpie` tasks；
+- 每个 task 生成 2 个 AI candidate patches；
+- 本轮只生成 patch 并本地验证，不调用 verifier/reviewer API。
+
+本轮目标：
+
+- 建立真实 AI-generated patch generation protocol。
+- 输出独立 run：`httpie_ai_patch_stage_ab_001`。
+- 将生成 patch 接入现有 apply + oracle validation pipeline。
+
+计划：
+
+1. 新增独立 generator 脚本，复用现有 DeepSeek client 和 `.env` 加载方式。
+2. generator 默认只 dry-run；真实 API 调用必须显式传入 `--execute`。
+3. prompt 只能包含 buggy checkout 中的目标文件片段、issue summary、touched files
+   和 visible test hint；禁止包含 reference diff、fixed checkout、hidden oracle
+   路径、oracle 结果和 expected outcome。
+4. 每个 task 生成 2 个 patch，输出 evaluator-facing candidates、generation
+   metadata、raw response hash 和 prompt manifest。
+5. 对生成 candidates 运行 `validate_patch_candidates.py`，按 oracle 结果把
+   outcome 分类为 `correct` 或 `incorrect`；不能 apply 的标记为
+   `environment_invalid`，不进入主实验 claims。
+6. 生成 tracked 实验报告，更新 README、docs/INDEX、final roadmap、经验文档。
+7. 运行本地质量门，提交并推送。
+
+需要停下确认的情况：
+
+- DeepSeek 返回非 diff patch 或大比例 patch 无法 apply，且需要决定是否调整 prompt
+  或重试生成。
+- 需要扩大 task 数、每 task patch 数、调用 verifier API，或改变模型。
+- 为了让 patch 通过验证必须暴露 reference/fixed/hidden evaluator 信息。
+
+执行中断：
+
+- 首次真实生成在 `bugsinpy_httpie_5` 的第 1 个 patch 停止。
+- DeepSeek response `finish_reason=length`，4096 completion tokens 全部消耗在
+  reasoning tokens，final content 为空，因此无法解析为 JSON/diff。
+- 前 8 个 raw responses 已保存，但旧 generator 只有全量成功后才写
+  `candidates.pending.jsonl`，导致可解析 raw 尚未落成候选记录。
+
+用户确认的修复策略：
+
+- 允许修改 generator 为增量保存；
+- 允许复用已保存 raw responses；
+- 允许缩短 source context；
+- 允许将 `max_tokens` 提高到 8192；
+- 继续完成当前 5 个 httpie tasks x 2 patches，不扩大任务范围，不调用 verifier API。
+
+执行结果：
+
+- 已新增 `scripts/generate_ai_patch_candidates.py`。
+- 已新增 `scripts/relabel_ai_patch_candidates.py`。
+- 已完成 5 个 `httpie` tasks x 2 patches 的 DeepSeek 生成，共 10 个 AI patches。
+- 首次生成在 `bugsinpy_httpie_5__ai_patch_01` 因空 final content 中断；修复后使用
+  增量保存、raw 复用、独立 retry raw 和短 source context 完成生成。
+- validation 结果：
+  - generated candidates = 10；
+  - patch applied = 4；
+  - oracle ran = 4；
+  - oracle passed = 3；
+  - patch apply failed = 6。
+- relabel 后 outcome：
+  - `correct`: 3；
+  - `incorrect`: 1；
+  - `environment_invalid`: 6。
+- 已新增 `docs/experiments/httpie_ai_patch_generation_attempt.md` 记录本轮
+  generator-pipeline 诊断结果。
+
+边界：
+
+- 6/10 patch apply failed，比例过高，不能直接进入 verifier API 实验。
+- 本轮证明 generator API、raw response 保存、candidate 转换和 validation 链路可运行；
+  但没有得到干净的 AI-generated patch dataset slice。
+- 下一步必须先确认 generation protocol 选择：更严格 diff-only prompt 重试、只保留
+  4 个 applicable patches 作为诊断样本，或改用 coding-agent-style checkout editing
+  workflow。
+
 ## 7. 继续/止损门槛
 
 只有满足以下至少一项时继续：

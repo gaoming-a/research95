@@ -587,3 +587,23 @@ This file starts fresh for the patch-verification project.
 - Rule: when a screened task group is promoted from registry to dataset slice,
   create a new run id and tracked result document; do not silently reinterpret
   an older pilot as expansion evidence.
+
+## 2026-06-08 AI patch generation attempt
+
+- Added `scripts/generate_ai_patch_candidates.py` for DeepSeek official API
+  patch generation and `scripts/relabel_ai_patch_candidates.py` for
+  post-validation outcome relabeling.
+- Initial generator behavior was too brittle: it wrote candidate files only
+  after the whole 10-patch run completed. When one response exhausted all
+  output tokens in reasoning and returned empty final content, previously
+  saved raw responses were not converted into candidates.
+- Repair: generator now writes prompt manifest and pending candidates
+  incrementally, reuses parseable raw responses, and stores retry attempts as
+  separate raw files.
+- Result: 10 AI patches were generated, but only 4 applied cleanly and 6 failed
+  `git apply`. This is diagnostic generator-pipeline evidence, not a usable
+  verifier experiment slice.
+- Rule: for AI-generated patch datasets, generation success must be measured by
+  apply + oracle validation, not by receiving a model response. If apply
+  failure is high, stop and redesign the generation protocol before verifier
+  API calls.
