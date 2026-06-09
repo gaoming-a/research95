@@ -1415,3 +1415,71 @@ Qwen 初次结果：
 - 它仍然是 hard-generation/stress case，不是 generator success case。
 - P2P-broad 是当前环境下最大稳定可运行子集，不等于原项目完整测试套件；必须在
   论文中报告 collected/excluded/stable counts。
+
+## 12. 2026-06-09 Luigi replacement task validation and P2P execution
+
+本轮目标：
+
+- 按最终 roadmap 的下一步，补充 1-2 个 validation-stable replacement tasks。
+- 优先选择已有 task-specific oracle 的任务，降低环境风险：
+  - `bugsinpy_luigi_3`；
+  - `bugsinpy_luigi_4`。
+- 对每个 task 执行与 `httpie_5` 相同的闭环：
+  1. 生成 task-specific candidate slice；
+  2. 重复运行 retained-oracle candidate validation；
+  3. 构建 P2P-broad stable subset；
+  4. 使用 retained oracle + P2P-broad 验证 candidates；
+  5. 生成 task-level accounting；
+  6. 写 tracked 报告并更新索引/经验/README/计划。
+
+执行边界：
+
+- 不调用模型 API。
+- 不继续围绕 `httpie_5` 调参或生成 patch。
+- P2P-broad 不盲跑全套后直接保留结果；必须记录 collected/excluded/stable
+  counts 和排除原因。
+- 若 Luigi 测试收集、依赖、运行时间或 P2P scope 定义不清楚，则停止向用户确认。
+
+执行结果：
+
+- 已生成 candidate slices：
+  - `bugsinpy_luigi_3`: 5 candidates，1 reference + 4 negative/control；
+  - `bugsinpy_luigi_4`: 3 candidates，1 reference + 2 negative/control。
+- retained-oracle validation 各运行两次：
+  - `luigi_3`: 两次均 5/5 validated，patch applied 5/5，oracle ran 5/5，
+    oracle passed 1/5；
+  - `luigi_4`: 两次均 3/3 validated，patch applied 3/3，oracle ran 3/3，
+    oracle passed 1/3。
+- P2P scope 构建中发现并处理的问题：
+  - Luigi 旧测试需要 Python 3.11 compatibility shim；
+  - `mock` 包缺失，已映射到标准库 `unittest.mock`；
+  - `psutil` 缺失，但只影响 import-time compatibility，已加入轻量 shim；
+  - per-test P2P 运行对 Luigi 3 过慢，已为
+    `scripts/build_pass_to_pass_scope.py` 增加 batch-first；
+  - 已为 `scripts/validate_candidates_with_p2p.py` 增加 chunked P2P
+    validation，并跳过 retained oracle 已失败候选的 P2P 执行。
+- P2P scope 结果：
+  - `luigi_3`: collected 137，excluded fail-to-pass oracle 1，excluded static
+    external dependency 1，P2P-broad 135；
+  - `luigi_4`: collected 14，excluded fail-to-pass oracle 1，P2P-broad 13。
+- retained oracle + P2P-broad labels：
+  - `luigi_3`: `correct_under_f2p_p2p` = 1，
+    `incorrect_issue_not_fixed` = 4；
+  - `luigi_4`: `correct_under_f2p_p2p` = 1，
+    `incorrect_issue_not_fixed` = 2。
+- task accounting：
+  - 两个任务均为 `task_role = main_balanced_task`；
+  - 两个任务均为 `generation_status = not_attempted`；
+  - 两个任务均为 `main_experiment_included = true`；
+  - 两个任务均为 `label_scope_current = f2p_plus_p2p_broad`。
+- 已新增 `docs/experiments/luigi_replacement_tasks_result.md`。
+
+边界/需确认：
+
+- 当前 Luigi P2P-broad 是 task-specific test file 内的最大稳定可运行子集：
+  - `luigi_3`: `test/parameter_test.py`；
+  - `luigi_4`: `test/contrib/redshift_test.py`。
+- 这不是整个 Luigi 项目的 project-wide stable test subset。
+- 若最终主实验严格要求 project-wide P2P-broad，则下一步需要重新定义并运行
+  project-level test discovery；否则可以将当前规则明确为 per-task-file
+  P2P-broad，并在论文中报告 scope 边界。

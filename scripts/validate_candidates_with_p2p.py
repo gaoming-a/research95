@@ -36,10 +36,10 @@ def resolve_path(path_text: str, repo_root: Path) -> Path:
     return path if path.is_absolute() else repo_root / path
 
 
-def run_p2p_test(
+def run_p2p_chunk(
     python: str,
     workdir: Path,
-    nodeid: str,
+    nodeids: list[str],
     timeout_seconds: int,
     pythonpath: Path | None,
 ) -> dict[str, Any]:
@@ -48,35 +48,61 @@ def run_p2p_test(
         existing = env.get("PYTHONPATH")
         env["PYTHONPATH"] = str(pythonpath.resolve()) if not existing else f"{pythonpath.resolve()}{os.pathsep}{existing}"
     started = time.monotonic()
+    process: subprocess.Popen[str] | None = None
     try:
-        completed = subprocess.run(
-            [python, "-m", "pytest", "-q", nodeid],
+        process = subprocess.Popen(
+            [python, "-m", "pytest", "-q", *nodeids],
             cwd=str(workdir),
             env=env,
             text=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            timeout=timeout_seconds,
+            creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0,
         )
+        stdout, stderr = process.communicate(timeout=timeout_seconds)
         return {
-            "nodeid": nodeid,
-            "exit_code": completed.returncode,
-            "passed": completed.returncode == 0,
+            "nodeids": nodeids,
+            "nodeid_count": len(nodeids),
+            "exit_code": process.returncode,
+            "passed": process.returncode == 0,
             "elapsed_seconds": round(time.monotonic() - started, 3),
             "timeout": False,
-            "stdout_tail": base_validator.tail(completed.stdout),
-            "stderr_tail": base_validator.tail(completed.stderr),
+            "stdout_tail": base_validator.tail(stdout),
+            "stderr_tail": base_validator.tail(stderr),
         }
     except subprocess.TimeoutExpired as exc:
+        if process is not None:
+            kill_process_tree(process.pid)
+            stdout, stderr = process.communicate()
+        else:
+            stdout = exc.stdout if isinstance(exc.stdout, str) else ""
+            stderr = exc.stderr if isinstance(exc.stderr, str) else ""
         return {
-            "nodeid": nodeid,
+            "nodeids": nodeids,
+            "nodeid_count": len(nodeids),
             "exit_code": None,
             "passed": False,
             "elapsed_seconds": timeout_seconds,
             "timeout": True,
-            "stdout_tail": base_validator.tail(exc.stdout if isinstance(exc.stdout, str) else ""),
-            "stderr_tail": base_validator.tail(exc.stderr if isinstance(exc.stderr, str) else ""),
+            "stdout_tail": base_validator.tail(stdout),
+            "stderr_tail": base_validator.tail(stderr),
         }
+
+
+def kill_process_tree(pid: int) -> None:
+    if os.name == "nt":
+        subprocess.run(
+            ["taskkill", "/PID", str(pid), "/T", "/F"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        return
+    subprocess.run(["pkill", "-TERM", "-P", str(pid)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+
+def chunks(values: list[str], chunk_size: int) -> list[list[str]]:
+    return [values[index : index + chunk_size] for index in range(0, len(values), chunk_size)]
 
 
 def final_label(patch_applied: bool, oracle_passed: bool, p2p_passed: bool) -> str:
@@ -99,6 +125,7 @@ def validate_candidate(
     p2p_timeout_seconds: int,
     python: str,
     pythonpath: Path | None,
+    p2p_batch_size: int,
 ) -> dict[str, Any]:
     workdir = workdir_root / candidate["model_candidate_id"]
     base_validator.copy_checkout(source_root, candidate, workdir)
@@ -109,10 +136,16 @@ def validate_candidate(
         else {"ran": False, "passed": False, "reason": "patch_not_applied"}
     )
     p2p_results = []
-    if patch_result.get("applied"):
-        for nodeid in scope.get("p2p_broad_tests", []):
-            p2p_results.append(run_p2p_test(python, workdir, nodeid, p2p_timeout_seconds, pythonpath))
+    if patch_result.get("applied") and oracle_result.get("passed"):
+        for nodeids in chunks(list(scope.get("p2p_broad_tests", [])), p2p_batch_size):
+            p2p_results.append(run_p2p_chunk(python, workdir, nodeids, p2p_timeout_seconds, pythonpath))
     p2p_passed = bool(p2p_results) and all(result["passed"] for result in p2p_results)
+    if not patch_result.get("applied"):
+        p2p_status = "skipped_patch_not_applied"
+    elif not oracle_result.get("passed"):
+        p2p_status = "skipped_issue_not_fixed"
+    else:
+        p2p_status = "passed" if p2p_passed else "failed"
     return {
         "patch_id": candidate["patch_id"],
         "model_candidate_id": candidate["model_candidate_id"],
@@ -124,9 +157,9 @@ def validate_candidate(
         "retained_oracle_ran": bool(oracle_result.get("ran")),
         "retained_oracle_passed": bool(oracle_result.get("passed")),
         "p2p_scope_id": scope.get("scope_id", scope.get("task_id")),
-        "p2p_broad_status": "passed" if p2p_passed else "failed",
+        "p2p_broad_status": p2p_status,
         "p2p_broad_test_count": len(scope.get("p2p_broad_tests", [])),
-        "p2p_broad_passed_count": sum(1 for result in p2p_results if result["passed"]),
+        "p2p_broad_passed_count": sum(result["nodeid_count"] for result in p2p_results if result["passed"]),
         "label_retained_oracle": "correct" if oracle_result.get("passed") else "incorrect",
         "label_with_p2p_broad": final_label(
             bool(patch_result.get("applied")),
@@ -168,6 +201,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--apply-timeout-seconds", type=int, default=30)
     parser.add_argument("--oracle-timeout-seconds", type=int, default=60)
     parser.add_argument("--p2p-timeout-seconds", type=int, default=20)
+    parser.add_argument("--p2p-batch-size", type=int, default=50)
     parser.add_argument("--python", default=sys.executable)
     return parser.parse_args()
 
@@ -190,6 +224,7 @@ def main() -> None:
             p2p_timeout_seconds=args.p2p_timeout_seconds,
             python=args.python,
             pythonpath=pythonpath,
+            p2p_batch_size=args.p2p_batch_size,
         )
         for candidate in candidates
     ]

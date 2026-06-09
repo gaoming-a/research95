@@ -107,6 +107,10 @@ They should not override `final_paper_roadmap_zh.md`.
   pass-to-pass regression stability is now tracked by a 3-test local
   P2P-broad subset after excluding the retained fail-to-pass oracle and
   external-network tests.
+- Luigi 3 and Luigi 4 now serve as replacement `main_balanced_task` examples:
+  both have retained-oracle validation, task-file P2P-broad scopes, and
+  `f2p_plus_p2p_broad` labels. Their current P2P scope is task-file based, not a
+  project-wide Luigi regression suite.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

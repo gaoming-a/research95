@@ -705,3 +705,21 @@ This file starts fresh for the patch-verification project.
 - Rule: P2P-broad is an environment-specific stable runnable subset. Always
   report collection counts and exclusion reasons; do not describe it as the
   original project's full test suite.
+
+## 2026-06-09 Luigi replacement tasks
+
+- Built retained-oracle candidate slices for `bugsinpy_luigi_3` and
+  `bugsinpy_luigi_4`; both repeated validations were stable.
+- Extended P2P compatibility handling for old Luigi tests: Python 3.11
+  `collections`/`inspect` compatibility, `mock` mapped to `unittest.mock`, and
+  a lightweight `psutil` shim for import-time compatibility.
+- Per-test P2P execution was too slow for Luigi 3. Added batch-first P2P scope
+  construction and chunked candidate P2P validation.
+- Luigi 3 result: 137 tests collected from `test/parameter_test.py`, 1 retained
+  fail-to-pass oracle excluded, 1 static external dependency excluded, 135
+  P2P-broad tests retained.
+- Luigi 4 result: 14 tests collected from `test/contrib/redshift_test.py`, 1
+  retained fail-to-pass oracle excluded, 13 P2P-broad tests retained.
+- Boundary: current Luigi P2P-broad scopes are task-file stable subsets, not a
+  project-wide Luigi regression suite. This needs a final design decision
+  before claiming project-wide P2P coverage.

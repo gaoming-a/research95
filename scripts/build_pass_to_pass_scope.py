@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import ast
 import json
+import os
 import subprocess
 import sys
 import time
@@ -43,6 +44,31 @@ def build_compat_shim(out_dir: Path) -> Path:
         "\n".join(
             [
                 "import builtins",
+                "import inspect",
+                "import collections",
+                "import collections.abc",
+                "import sys",
+                "import types",
+                "import unittest.mock as _unittest_mock",
+                "from collections import namedtuple",
+                "sys.modules.setdefault('mock', _unittest_mock)",
+                "if 'psutil' not in sys.modules:",
+                "    _psutil = types.ModuleType('psutil')",
+                "    class _Process:",
+                "        def children(self):",
+                "            return []",
+                "    _psutil.Process = _Process",
+                "    sys.modules['psutil'] = _psutil",
+                "for _name in dir(collections.abc):",
+                "    if not hasattr(collections, _name):",
+                "        setattr(collections, _name, getattr(collections.abc, _name))",
+                "if not hasattr(inspect, 'ArgSpec'):",
+                "    inspect.ArgSpec = namedtuple('ArgSpec', 'args varargs keywords defaults')",
+                "if not hasattr(inspect, 'getargspec'):",
+                "    def _getargspec(func):",
+                "        spec = inspect.getfullargspec(func)",
+                "        return inspect.ArgSpec(spec.args, spec.varargs, spec.varkw, spec.defaults)",
+                "    inspect.getargspec = _getargspec",
                 "try:",
                 "    import requests.compat",
                 "    if not hasattr(requests.compat, 'is_py26'):",
@@ -66,38 +92,56 @@ def run_command(
 ) -> dict[str, Any]:
     env = dict(**os_environ_with_pythonpath(pythonpath))
     started = time.monotonic()
+    process: subprocess.Popen[str] | None = None
     try:
-        completed = subprocess.run(
+        process = subprocess.Popen(
             command,
             cwd=str(cwd),
             env=env,
             text=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            timeout=timeout_seconds,
+            creationflags=subprocess.CREATE_NEW_PROCESS_GROUP if os.name == "nt" else 0,
         )
+        stdout, stderr = process.communicate(timeout=timeout_seconds)
         return {
             "command": command,
-            "exit_code": completed.returncode,
+            "exit_code": process.returncode,
             "elapsed_seconds": round(time.monotonic() - started, 3),
-            "stdout": completed.stdout,
-            "stderr": completed.stderr,
+            "stdout": stdout,
+            "stderr": stderr,
             "timeout": False,
         }
     except subprocess.TimeoutExpired as exc:
+        if process is not None:
+            kill_process_tree(process.pid)
+            stdout, stderr = process.communicate()
+        else:
+            stdout = exc.stdout if isinstance(exc.stdout, str) else ""
+            stderr = exc.stderr if isinstance(exc.stderr, str) else ""
         return {
             "command": command,
             "exit_code": None,
             "elapsed_seconds": timeout_seconds,
-            "stdout": exc.stdout if isinstance(exc.stdout, str) else "",
-            "stderr": exc.stderr if isinstance(exc.stderr, str) else "",
+            "stdout": stdout,
+            "stderr": stderr,
             "timeout": True,
         }
 
 
-def os_environ_with_pythonpath(pythonpath: Path) -> dict[str, str]:
-    import os
+def kill_process_tree(pid: int) -> None:
+    if os.name == "nt":
+        subprocess.run(
+            ["taskkill", "/PID", str(pid), "/T", "/F"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        return
+    subprocess.run(["pkill", "-TERM", "-P", str(pid)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
+
+def os_environ_with_pythonpath(pythonpath: Path) -> dict[str, str]:
     env = os.environ.copy()
     existing = env.get("PYTHONPATH")
     env["PYTHONPATH"] = str(pythonpath.resolve()) if not existing else f"{pythonpath.resolve()}{os.pathsep}{existing}"
@@ -132,17 +176,14 @@ def collect_tests(
         pythonpath=pythonpath,
     )
     tests = []
-    if result["exit_code"] == 0:
-        for line in result["stdout"].splitlines():
-            nodeid = normalize_nodeid(line, test_path)
-            if nodeid:
-                tests.append(nodeid)
+    for line in result["stdout"].splitlines():
+        nodeid = normalize_nodeid(line, test_path)
+        if nodeid:
+            tests.append(nodeid)
     return sorted(set(tests)), compact_result(result)
 
 
-def static_external_dependency_reasons(checkout: Path, test_path: str, nodeids: list[str], tokens: list[str]) -> dict[str, str]:
-    if not tokens:
-        return {}
+def static_source_segments(checkout: Path, test_path: str, nodeids: list[str]) -> dict[str, str]:
     test_file = checkout / test_path
     if not test_file.exists():
         return {}
@@ -154,12 +195,30 @@ def static_external_dependency_reasons(checkout: Path, test_path: str, nodeids: 
             if isinstance(child, ast.FunctionDef) and child.name.startswith("test_"):
                 segment = ast.get_source_segment(source, child) or ""
                 methods[f"{test_path}::{class_node.name}::{child.name}"] = segment
+    return {nodeid: methods.get(nodeid, "") for nodeid in nodeids}
+
+
+def static_external_dependency_reasons(segments: dict[str, str], tokens: list[str]) -> dict[str, str]:
+    if not tokens:
+        return {}
     reasons: dict[str, str] = {}
     lowered_tokens = [token.lower() for token in tokens]
-    for nodeid in nodeids:
-        segment = methods.get(nodeid, "").lower()
+    for nodeid, segment_text in segments.items():
+        segment = segment_text.lower()
         if any(token in segment for token in lowered_tokens):
             reasons[nodeid] = "excluded_static_external_dependency"
+    return reasons
+
+
+def static_include_reasons(segments: dict[str, str], tokens: list[str]) -> dict[str, str]:
+    if not tokens:
+        return {}
+    lowered_tokens = [token.lower() for token in tokens]
+    reasons: dict[str, str] = {}
+    for nodeid, segment_text in segments.items():
+        segment = segment_text.lower()
+        if not any(token in segment for token in lowered_tokens):
+            reasons[nodeid] = "excluded_static_include_filter"
     return reasons
 
 
@@ -197,6 +256,30 @@ def run_test_repeated(
         compact = compact_result(result)
         compact["run_index"] = run_index
         compact["passed"] = result["exit_code"] == 0
+        results.append(compact)
+    return results
+
+
+def run_batch_repeated(
+    python: str,
+    checkout: Path,
+    nodeids: list[str],
+    runs: int,
+    timeout_seconds: int,
+    pythonpath: Path,
+) -> list[dict[str, Any]]:
+    results = []
+    for run_index in range(1, runs + 1):
+        result = run_command(
+            [python, "-m", "pytest", "-q", *nodeids],
+            cwd=checkout,
+            timeout_seconds=timeout_seconds,
+            pythonpath=pythonpath,
+        )
+        compact = compact_result(result)
+        compact["run_index"] = run_index
+        compact["passed"] = result["exit_code"] == 0
+        compact["nodeid_count"] = len(nodeids)
         results.append(compact)
     return results
 
@@ -257,6 +340,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--core-pattern", action="append", default=[])
     parser.add_argument("--runs", type=int, default=2)
     parser.add_argument("--timeout-seconds", type=int, default=20)
+    parser.add_argument("--batch-timeout-seconds", type=int, default=120)
     parser.add_argument("--python", default=sys.executable)
     parser.add_argument("--out-dir", required=True)
     parser.add_argument(
@@ -264,6 +348,17 @@ def parse_args() -> argparse.Namespace:
         action="append",
         default=["httpbin", "http://", "https://"],
         help="Exclude test methods whose source contains this token before dynamic runs. Repeatable.",
+    )
+    parser.add_argument(
+        "--static-include-token",
+        action="append",
+        default=[],
+        help="If provided, only dynamically run test methods whose source contains at least one token. Repeatable.",
+    )
+    parser.add_argument(
+        "--batch-first",
+        action="store_true",
+        help="Validate candidate P2P tests in batches first; fall back to per-test runs only if the batch fails.",
     )
     return parser.parse_args()
 
@@ -288,10 +383,13 @@ def main() -> None:
     fixed_tests, fixed_collect = collect_tests(args.python, fixed, args.test_path, args.timeout_seconds, shim_dir)
     collected = sorted(set(buggy_tests) & set(fixed_tests))
     all_seen = sorted(set(buggy_tests) | set(fixed_tests))
-    static_exclusions = static_external_dependency_reasons(buggy, args.test_path, all_seen, args.static_exclude_token)
+    source_segments = static_source_segments(buggy, args.test_path, all_seen)
+    static_exclusions = static_external_dependency_reasons(source_segments, args.static_exclude_token)
+    static_include_exclusions = static_include_reasons(source_segments, args.static_include_token)
     records = []
     p2p_broad = []
     exclusions = []
+    pending_dynamic: list[dict[str, Any]] = []
 
     for nodeid in all_seen:
         record: dict[str, Any] = {
@@ -320,6 +418,31 @@ def main() -> None:
             records.append(record)
             exclusions.append({"nodeid": nodeid, "reason": reason})
             continue
+        if nodeid in static_include_exclusions:
+            reason = static_include_exclusions[nodeid]
+            record["exclusion_reason"] = reason
+            record["static_include_tokens"] = args.static_include_token
+            records.append(record)
+            exclusions.append({"nodeid": nodeid, "reason": reason})
+            continue
+        pending_dynamic.append(record)
+
+    batch_runs: dict[str, Any] | None = None
+    if args.batch_first and pending_dynamic:
+        batch_nodeids = [record["nodeid"] for record in pending_dynamic]
+        buggy_batch = run_batch_repeated(args.python, buggy, batch_nodeids, args.runs, args.batch_timeout_seconds, shim_dir)
+        fixed_batch = run_batch_repeated(args.python, fixed, batch_nodeids, args.runs, args.batch_timeout_seconds, shim_dir)
+        batch_runs = {"buggy_runs": buggy_batch, "reference_runs": fixed_batch}
+        if all(run["passed"] for run in buggy_batch + fixed_batch):
+            for record in pending_dynamic:
+                record["exclusion_reason"] = None
+                record["batch_validated"] = True
+                records.append(record)
+                p2p_broad.append(record["nodeid"])
+            pending_dynamic = []
+
+    for record in pending_dynamic:
+        nodeid = record["nodeid"]
         buggy_runs = run_test_repeated(args.python, buggy, nodeid, args.runs, args.timeout_seconds, shim_dir)
         fixed_runs = run_test_repeated(args.python, fixed, nodeid, args.runs, args.timeout_seconds, shim_dir)
         record["buggy_runs"] = buggy_runs
@@ -354,10 +477,12 @@ def main() -> None:
         "fail_to_pass_nodeids": sorted(fail_to_pass),
         "core_patterns": core_patterns,
         "static_exclude_tokens": args.static_exclude_token,
+        "static_include_tokens": args.static_include_token,
         "p2p_broad_tests": p2p_broad,
         "p2p_core_tests": p2p_core,
         "exclusions": exclusions,
         "records": records,
+        "batch_runs": batch_runs,
         "counts": {
             "collected_tests": len(all_seen),
             "common_collected_tests": len(collected),
