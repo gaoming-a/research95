@@ -104,7 +104,9 @@ They should not override `final_paper_roadmap_zh.md`.
   required generator-success task.
 - The `httpie_5` stability/accounting audit confirms retained-oracle label
   stability and classifies the task as `hard_generation_case`; broad
-  pass-to-pass regression stability is not yet separately measured.
+  pass-to-pass regression stability is now tracked by a 3-test local
+  P2P-broad subset after excluding the retained fail-to-pass oracle and
+  external-network tests.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

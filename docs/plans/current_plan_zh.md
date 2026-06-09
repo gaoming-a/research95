@@ -1339,3 +1339,79 @@ Qwen 初次结果：
 
 - 若下一步要把 `httpie_5` 从 retained-oracle stability 提升为完整
   validation-stable task，需要定义 pass-to-pass regression suite 的来源和范围。
+
+## 11. 2026-06-09 pass-to-pass scope design and httpie5 execution
+
+用户已确认：
+
+- 当前 `httpie_5` audit 报告保持第 3 种表述：只声称 retained-oracle
+  candidate-label stability，不声称完整 regression stability。
+- 最终主实验采用第 2 种：使用 entire runnable stable pass-to-pass subset。
+- 该 subset 不是盲跑项目全部测试，而是满足以下条件的最大稳定可运行集合：
+  1. 当前实验环境可收集；
+  2. 不属于 fail-to-pass oracle；
+  3. buggy baseline 上稳定通过；
+  4. reference-fixed version 上稳定通过；
+  5. 不依赖外部网络、缺失服务、随机环境或私有配置；
+  6. 在 timeout 内稳定完成。
+- 推荐双层设计：
+  - `P2P-core`：相关非失败测试，用于快速 smoke audit；
+  - `P2P-broad`：整个可运行且稳定通过的测试子集，用于最终主实验。
+
+本轮目标：
+
+1. 更新 roadmap、schema 和 `httpie5` 报告，使短期/长期结论一致。
+2. 新增 `scripts/build_pass_to_pass_scope.py`，先定义 scope，再验证 candidates。
+3. 对 `httpie_5` 尝试构建 P2P-broad stable subset。
+4. 若测试收集或运行环境不稳定，记录阻塞点并停止确认。
+
+执行边界：
+
+- 不调用模型 API。
+- 不把当前 retained-oracle audit 改写为 full regression stability。
+- 不盲目保留所有测试；必须记录排除原因。
+- 不因 pass-to-pass 未完成而删除 `httpie_5`。
+
+执行结果：
+
+- 首次直接运行 P2P scope 脚本超时。原因不是模型或数据问题，而是逐个 pytest
+  启动开销高，且测试集中包含外部网络测试。
+- 已新增 `scripts/build_pass_to_pass_scope.py`：
+  - 自动生成 legacy compatibility shim，补齐旧测试依赖的
+    `requests.compat.is_py26`；
+  - 收集 buggy/reference-fixed 两边的测试；
+  - 排除 fail-to-pass oracle；
+  - 静态排除包含 `httpbin`、`http://`、`https://` 的外部网络测试；
+  - 对剩余测试在 buggy baseline 和 reference-fixed 版本各运行两次；
+  - 输出 P2P-core / P2P-broad scope 和排除原因。
+- `httpie_5` P2P scope 结果：
+  - collected tests = 17；
+  - common collected tests = 17；
+  - excluded fail-to-pass oracle = 1；
+  - excluded static external dependency = 13；
+  - P2P-broad tests = 3；
+  - P2P-core tests = 3。
+- P2P-broad 测试为：
+  - `tests/tests.py::TestItemParsing::test_escape`；
+  - `tests/tests.py::TestItemParsing::test_invalid_items`；
+  - `tests/tests.py::TestItemParsing::test_valid_items`。
+- 已新增 `scripts/validate_candidates_with_p2p.py`。
+- 已对 6 个 `httpie_5` candidates 运行 retained oracle + P2P-broad validation：
+  - `correct_under_f2p_p2p` = 1；
+  - `incorrect_issue_not_fixed` = 5；
+  - `incorrect_regression` = 0。
+- 已重新生成 task accounting：
+  - `p2p_status = completed`；
+  - `label_scope_current = f2p_plus_p2p_broad`；
+  - `regression_scope_current = p2p_broad_stable_subset`；
+  - `p2p_scope_size = 3`；
+  - `p2p_core_size = 3`。
+- 已新增 `docs/experiments/httpie5_pass_to_pass_scope.md`。
+
+结论：
+
+- `httpie_5` 现在不仅有 retained-oracle candidate-label stability，也有当前
+  环境下的 P2P-broad stable subset。
+- 它仍然是 hard-generation/stress case，不是 generator success case。
+- P2P-broad 是当前环境下最大稳定可运行子集，不等于原项目完整测试套件；必须在
+  论文中报告 collected/excluded/stable counts。

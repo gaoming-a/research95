@@ -179,6 +179,11 @@ Required fields for expanded studies:
   "num_ai_patches_incorrect": 1,
   "generation_status": "unsolved",
   "task_role": "hard_generation_case",
+  "p2p_status": "completed",
+  "p2p_scope_size": 3,
+  "p2p_core_size": 3,
+  "label_scope_current": "f2p_plus_p2p_broad",
+  "regression_scope_current": "p2p_broad_stable_subset",
   "main_experiment_included": true,
   "exclusion_reason": null
 }
@@ -207,6 +212,10 @@ Rules:
   validation is stable and reference labels are reliable.
 - `pass_to_pass_stable` may be `null` in interim retained-oracle audits, but a
   final expanded study should define and run a pass-to-pass check set.
+- `p2p_status` should be `pending` until a task-level P2P-broad scope has been
+  collected and validated on buggy and reference-fixed versions.
+- `label_scope_current` should be `retained_oracle` before P2P completion and
+  `f2p_plus_p2p_broad` after P2P-broad is available.
 - A task should be excluded only when reproducible validation criteria fail.
 - Exclusion because a model failed to solve a task is not allowed.
 - Non-applicable generated patches may be retained as a failure type, but their

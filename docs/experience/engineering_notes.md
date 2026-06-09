@@ -686,3 +686,22 @@ This file starts fresh for the patch-verification project.
 - Boundary: broad pass-to-pass regression stability is not separately measured
   by the current retained-oracle audit. Do not describe `httpie_5` as fully
   regression-stability audited until a pass-to-pass suite is defined.
+
+## 2026-06-09 httpie5 P2P-broad scope
+
+- Implemented `scripts/build_pass_to_pass_scope.py` to define P2P scope before
+  using it for candidate labels. The script creates a compatibility shim for
+  legacy `requests.compat.is_py26` imports and records that shim in the output.
+- Direct per-test execution was initially too slow because each pytest process
+  has high startup overhead and the suite contains external-network tests.
+  Static exclusion of test methods containing `httpbin`, `http://`, or
+  `https://` made the scope construction tractable and auditable.
+- For `httpie_5`, 17 tests were collected, 1 retained fail-to-pass oracle was
+  excluded, 13 external-network tests were excluded, and 3 stable local
+  P2P-broad tests remained.
+- `scripts/validate_candidates_with_p2p.py` labeled the 6 current candidates:
+  one `correct_under_f2p_p2p` reference patch and five
+  `incorrect_issue_not_fixed` candidates.
+- Rule: P2P-broad is an environment-specific stable runnable subset. Always
+  report collection counts and exclusion reasons; do not describe it as the
+  original project's full test suite.

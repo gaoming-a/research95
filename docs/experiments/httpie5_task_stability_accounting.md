@@ -88,7 +88,7 @@ However, the task is useful for patch verification:
 - generator failure is precisely the kind of situation where a verifier should
   reject or escalate rather than assume the patch is correct.
 
-## Boundary
+## Original Boundary
 
 The current audit validates retained oracle behavior and candidate-label
 stability. It does not separately run a broad pass-to-pass regression suite.
@@ -103,6 +103,23 @@ Before claiming full production-grade task stability, the project still needs a
 defined pass-to-pass check set. Until then, `httpie_5` should be described as a
 validation-stable hard-generation case under the retained oracle, not as a fully
 audited regression-stability task.
+
+## P2P Follow-Up
+
+The pass-to-pass follow-up is now tracked separately in:
+
+```text
+docs/experiments/httpie5_pass_to_pass_scope.md
+```
+
+That follow-up defines a local P2P-broad stable subset with 3 tests and updates
+task accounting to:
+
+```text
+p2p_status = completed
+label_scope_current = f2p_plus_p2p_broad
+regression_scope_current = p2p_broad_stable_subset
+```
 
 ## Decision
 

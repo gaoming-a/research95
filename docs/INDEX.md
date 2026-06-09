@@ -85,8 +85,12 @@
   but exact `find` matching failed, so no candidate was admitted.
 - `experiments/httpie5_task_stability_accounting.md`: retained-oracle stability
   audit and task-level generation accounting for `bugsinpy_httpie_5`. It
-  classifies the task as `hard_generation_case` and marks broad pass-to-pass
-  regression stability as not yet measured.
+  classifies the task as `hard_generation_case` and points to the later P2P
+  follow-up for regression-scope completion.
+- `experiments/httpie5_pass_to_pass_scope.md`: P2P-core/P2P-broad scope report
+  for `bugsinpy_httpie_5`; it collected 17 tests, excluded the retained
+  fail-to-pass oracle and external-network tests, and retained 3 stable local
+  P2P-broad tests.
 - `experiments/patch_evidence_bench_schema.md`: long-term expanded benchmark
   schema for
   TaskRecord, PatchRecord, EvidencePacket, ValidationOutcome, and
@@ -265,6 +269,11 @@
 - `scripts/build_task_generation_accounting.py`: builds task-level generation
   accounting records from validation reports, relabeled generated candidates,
   and generation prompt manifests.
+- `scripts/build_pass_to_pass_scope.py`: collects project tests and builds
+  P2P-core/P2P-broad stable runnable subsets for a task.
+- `scripts/validate_candidates_with_p2p.py`: validates candidate patches with
+  retained oracle plus a P2P-broad scope and emits merged labels such as
+  `correct_under_f2p_p2p` and `incorrect_regression`.
 - `scripts/run_patch_verification_api_pilot.py`: provider-aware runner for the
   small `llm_only` versus `evidence_first` API pilot. The current primary
   provider is DeepSeek official API. It supports config-driven dry-runs and

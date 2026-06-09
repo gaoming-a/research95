@@ -61,6 +61,21 @@ def load_grouped(paths: list[str]) -> dict[str, list[dict[str, Any]]]:
     return grouped
 
 
+def load_p2p_scopes(paths: list[str]) -> dict[str, dict[str, Any]]:
+    scopes: dict[str, dict[str, Any]] = {}
+    for path_text in paths:
+        path = Path(path_text)
+        if not path.exists():
+            raise FileNotFoundError(f"missing P2P scope file: {path}")
+        value = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(value, dict):
+            raise ValueError(f"{path} must contain a JSON object")
+        task_id = value.get("task_id")
+        if isinstance(task_id, str) and task_id:
+            scopes[task_id] = value
+    return scopes
+
+
 def generation_status(attempts: int, generated: int, applicable: int, correct: int) -> str:
     if attempts == 0 and generated == 0:
         return "not_attempted"
@@ -90,6 +105,8 @@ def build_task_record(
     validation_records: list[dict[str, Any]],
     generated_records: list[dict[str, Any]],
     generation_attempts: int,
+    p2p_scope: dict[str, Any] | None,
+    p2p_records: list[dict[str, Any]],
 ) -> dict[str, Any]:
     projects = {str(record.get("project")) for record in validation_records if record.get("project")}
     project = sorted(projects)[0] if projects else None
@@ -127,6 +144,9 @@ def build_task_record(
     status = generation_status(generation_attempts, generated, applicable, correct)
     environment_stable = all_validated and all_applied and all_oracles_ran
 
+    p2p_broad_size = len(p2p_scope.get("p2p_broad_tests", [])) if p2p_scope else 0
+    p2p_core_size = len(p2p_scope.get("p2p_core_tests", [])) if p2p_scope else 0
+    p2p_completed = p2p_scope is not None and p2p_broad_size > 0
     return {
         "task_id": task_id,
         "project": project,
@@ -134,8 +154,18 @@ def build_task_record(
         "environment_stable": environment_stable,
         "reference_patch_valid": reference_patch_valid,
         "buggy_failure_reproducible": buggy_failure_reproducible,
-        "pass_to_pass_stable": None,
-        "pass_to_pass_stability_note": "not_measured_by_current_patch_verification_oracle",
+        "pass_to_pass_stable": True if p2p_completed else None,
+        "pass_to_pass_stability_note": (
+            "p2p_broad_stable_subset_completed"
+            if p2p_completed
+            else "not_measured_by_current_patch_verification_oracle"
+        ),
+        "p2p_status": "completed" if p2p_completed else "pending",
+        "p2p_scope_size": p2p_broad_size,
+        "p2p_core_size": p2p_core_size,
+        "p2p_label_counts": count_by(p2p_records, "label_with_p2p_broad") if p2p_records else {},
+        "label_scope_current": "f2p_plus_p2p_broad" if p2p_completed else "retained_oracle",
+        "regression_scope_current": "p2p_broad_stable_subset" if p2p_completed else "undefined",
         "validation_record_count": len(validation_records),
         "validation_status_counts": dict(sorted(validation_statuses.items())),
         "patch_apply_stable": all_applied,
@@ -169,6 +199,10 @@ def build_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def count_by(records: list[dict[str, Any]], field: str) -> dict[str, int]:
+    return dict(Counter(str(record.get(field)) for record in records))
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build task-level generation accounting records.")
     parser.add_argument("--validation", action="append", default=[], help="Validation JSONL path. Repeatable.")
@@ -184,6 +218,8 @@ def parse_args() -> argparse.Namespace:
         default=[],
         help="Prompt manifest JSONL path used to count fixed-budget attempts. Repeatable.",
     )
+    parser.add_argument("--p2p-scope", action="append", default=[], help="P2P scope JSON path. Repeatable.")
+    parser.add_argument("--p2p-validation", action="append", default=[], help="P2P validation JSONL path. Repeatable.")
     parser.add_argument("--task-id", action="append", default=[], help="Restrict output to a task id. Repeatable.")
     parser.add_argument("--out-jsonl", required=True)
     parser.add_argument("--summary-out", required=True)
@@ -195,13 +231,19 @@ def main() -> None:
     validations = load_grouped(args.validation)
     generated = load_grouped(args.generated_candidates)
     manifests = load_grouped(args.generation_manifest)
-    task_ids = sorted(set(args.task_id) or (set(validations) | set(generated) | set(manifests)))
+    p2p_scopes = load_p2p_scopes(args.p2p_scope)
+    p2p_validations = load_grouped(args.p2p_validation)
+    task_ids = sorted(
+        set(args.task_id) or (set(validations) | set(generated) | set(manifests) | set(p2p_scopes) | set(p2p_validations))
+    )
     records = [
         build_task_record(
             task_id=task_id,
             validation_records=validations.get(task_id, []),
             generated_records=generated.get(task_id, []),
             generation_attempts=len(manifests.get(task_id, [])),
+            p2p_scope=p2p_scopes.get(task_id),
+            p2p_records=p2p_validations.get(task_id, []),
         )
         for task_id in task_ids
     ]
