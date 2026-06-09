@@ -13,6 +13,12 @@
   边界、验收条件和执行结果。
 - 禁止直接跳到 80 bugs / 240 patches 的完整路线；必须先完成 Stage A/B，
   再根据 pipeline 稳定性进入 15-20 bugs 和 30-50 bugs 扩展。
+- 2026-06-09 起，研究主线明确不改为 patch generation。AI patch
+  generation 是 candidate 来源和 failure taxonomy 的一部分，不是主实验要证明
+  成功的对象。
+- 主实验任务集必须按 validation stability 和 dataset balance 重构；每个 bug
+  不要求都有 AI-generated correct patch，但每个纳入任务必须有可靠 ground
+  truth 和可复现 validation。
 
 ## 1. 论文主线
 
@@ -42,6 +48,16 @@
 
 但在真实 AI-generated patches 未成为主体前，标题中应使用
 `Candidate Patches`，不要过早写成 `AI-Generated Patches`。
+
+边界：
+
+- 本文研究问题是 **candidate patch verification**，不是 **patch
+  generation**。
+- AI-generated patches 可以是 correct、incorrect、partial、
+  non-applicable 或 generation failure；它们都应被记录和分类。
+- 不能把“某个 bug 没有生成出正确 AI patch”解释为课题失败。只有 ground
+  truth 不稳定、reference patch 无法验证、环境不可复现时，任务才应从主实验
+  排除。
 
 ## 2. 核心研究问题
 
@@ -168,22 +184,29 @@ visibility ablation。
 
 ### 3.3 Candidate patch 来源比例
 
-长期目标比例：
+长期目标比例应在数据集层面平衡，而不是要求每个 bug 都有完整正负样本。
+每个 validation-stable bug 最好至少有一个 reference correct patch；AI-generated
+correct patch 不是每个 bug 的硬性要求。
+
+长期目标候选组成：
 
 | Patch 类型 | 建议比例 |
 | --- | ---: |
-| reference fix | 15-20% |
-| constructed controls | 20-25% |
-| real LLM-generated patches | 45-55% |
-| real agent-generated patches | 10-20% |
+| reference correct patches | 20-30% |
+| AI-generated correct patches | 10-25% |
+| AI-generated incorrect / partial patches | 35-50% |
+| constructed controls | 15-25% |
+| non-applicable / syntactic-invalid patches | <= 10-15% |
 
 真实 AI-generated patch 生成协议必须固定：
 
 - Input: issue/bug description + allowed repository context；
 - Forbidden: reference patch、hidden evaluator tests、post-fix code；
 - Budget: 固定 token budget / attempts；
-- Output: unified diff；
-- Validation: 所有 patches 走同一 validation pipeline。
+- Output: unified diff 或 strict agent edit-plan 后由本地 `git diff`
+  materialize；
+- Validation: 所有 patches 走同一 validation pipeline；
+- Reporting: 必须报告 generator success rate，不只报告 verifier metrics。
 
 每个生成 patch 必须记录：
 
@@ -195,6 +218,55 @@ visibility ablation。
 - whether patch applies；
 - validation outcome；
 - failure logs。
+
+每个 task 必须记录 generator accounting：
+
+- `environment_stable`: true / false；
+- `reference_patch_valid`: true / false；
+- `generator_attempts`；
+- `num_ai_patches_generated`；
+- `num_ai_patches_applicable`；
+- `num_ai_patches_correct`；
+- `num_ai_patches_incorrect`；
+- `generation_status`: solved / partially_solved / unsolved /
+  non_applicable_only；
+- `main_experiment_included`: true / false；
+- `exclusion_reason`。
+
+这些字段用于区分 patch generation failure 与 patch verification
+performance，避免因为删除 generator-unsolved tasks 造成 cherry-picking。
+
+### 3.4 任务纳入、排除与 hard-generation case
+
+任务纳入主实验的必要条件：
+
+1. buggy version 能稳定复现目标 failure；
+2. reference patch 能稳定通过 fail-to-pass check；
+3. pass-to-pass regression checks 不 flaky；
+4. patch apply / revert 可复现；
+5. validation runtime 可控；
+6. hidden evaluator label 可靠。
+
+只有 validation 不稳定时才从主实验排除。排除理由应写成：
+
+> Excluded because the task did not satisfy reproducible validation criteria.
+
+不能写成：
+
+> Excluded because the model failed to solve it.
+
+`bugsinpy_httpie_5` 的当前角色：
+
+- 若 reference patch 和 retained oracle 稳定，则保留为
+  `generator_unsolved_hard_case`；
+- 不再要求它产出 AI-generated correct patch；
+- 可保留 1 个 reference correct patch、2-3 个 AI-generated incorrect patches、
+  1 个 constructed partial/control patch；
+- 不围绕它继续做单任务 prompt 调参；
+- 在论文或 appendix 中报告为 fixed generation budget 下的 failure/stress case。
+
+如果后续发现 `httpie_5` 的环境、reference patch 或 oracle 不稳定，则从主实验
+剔除，并进入 excluded tasks table。
 
 ## 4. Evidence 与 hidden evaluator 分离
 
@@ -440,7 +512,9 @@ PatchEvidenceBench/
    accept/reject/escalate merge-gate decision problem under varying evidence
    visibility。
 2. **数据集**：构建 real-bug-derived 与 AI-generated candidate patches 的
-   benchmark-style dataset。
+   benchmark-style dataset；AI-generated patches 不要求每个 task 都包含
+   correct generated repair，但必须记录 generator attempts、failure modes 和
+   validation outcomes。
 3. **证据可见性消融**：系统改变 evidence visibility，衡量 false accept、
    correct recall、escalation 和 explanation reliability。
 4. **LLM vs tool-only**：比较 LLM-based verification 与 rule-based
@@ -478,8 +552,11 @@ PatchEvidenceBench/
 - `httpie_stage_ab_001` 已完成首个 Stage A/B 小闭环：5 个 `httpie` tasks、
   22 个 candidates、22/22 executable validations、no-API baselines、
   tool-only baselines 和 44 条 prompt-boundary dry-run records。
-- 该结果是 preparation evidence，不是 model-review evidence；没有调用真实模型
-  API，也还没有生成真实 AI candidate patches。
+- 已补充 AI patch generation diagnostics：direct diff 生成 apply failure 高；
+  agent-style workflow 可稳定 materialize generated negative patches，但当前没有
+  稳定产出 correct repairs。
+- `bugsinpy_httpie_5` 当前不作为主成功案例；若 validation 继续稳定，则保留为
+  hard-generation/stress case。
 
 ### Stage B：重构 schema 和 pipeline
 
@@ -497,7 +574,8 @@ PatchEvidenceBench/
 
 - 已有长期 schema 文档和 leakage policy；
 - 当前 builder 已支持按 `--task-id` 和 `--run-id` 生成独立 dataset slice；
-- 仍需把真实 AI-generated patch generation protocol 接入同一 schema。
+- 仍需把 task-level generator accounting 接入同一 schema，区分
+  validation-stable hard case、generator failure 和真正 excluded task。
 
 ### Stage C：扩 BugsInPy 到 30-50 bugs
 
@@ -512,7 +590,27 @@ PatchEvidenceBench/
 
 ### Stage D：生成真实 AI candidate patches
 
-每个 task 用 2-3 种生成策略，每个 generator 最多保留 1-2 个 patch。
+每个 task 用 2-3 种生成策略，每个 generator 最多保留 1-2 个 admitted
+patch。生成预算固定，生成失败也必须记录。
+
+Stage D 的目标不是证明 generator 能修好每个 bug，而是构造真实候选补丁分布：
+
+- correct AI-generated patch；
+- incorrect AI-generated patch；
+- partial fix；
+- non-applicable diff；
+- syntactic/import failure；
+- generation timeout / empty output / exact edit failure。
+
+执行规则：
+
+- 不删除 generator-unsolved task，除非 validation 本身不稳定。
+- 不围绕单个 hard case 无限调 prompt。
+- 每发现 1 个 generator-unsolved hard case，应补充 1-2 个
+  validation-stable tasks 来维持数据集平衡。
+- non-applicable patches 可以保留为 failure type，但主实验占比控制在
+  10-15% 以内。
+- `httpie_5` 当前归类为 hard-generation/stress case，而不是主成功案例。
 
 ### Stage E：构建 evidence visibility ablation
 
@@ -547,8 +645,16 @@ PatchEvidenceBench/
 
 ### 风险 2：AI-generated patches 质量太差
 
-处理：保留 non-applicable patch 作为 failure type，但控制比例。允许每个 generator
-做一次 basic apply repair loop。
+处理：
+
+- 不改变研究主线；patch generation failure 是 verification motivation 的一部分。
+- 保留 validation-stable 的 generator-unsolved tasks，并报告 generator success
+  rate。
+- AI-generated patches 如果无法形成 balanced main source，则降级为
+  generated-negative / partial-fix extension。
+- 保留少量 non-applicable patch 作为 failure type，但控制在 10-15% 以内。
+- 允许每个 generator 做一次 basic apply repair loop，但不能针对单个 bug 反复
+  调参到过拟合。
 
 ### 风险 3：tool evidence 泄漏 hidden label
 
@@ -601,10 +707,15 @@ explanation 和 calibrated escalation。
 下一步不应直接启动 80 bugs / 240 patches 的完整路线。更稳妥的路线是：
 
 1. 保存本文件作为最终论文路线；
-2. 继续准备中期报告材料；
-3. 在当前 pilot 上补 tool-only baseline 和 qualitative cases；
-4. 再扩到 15-20 bugs；
-5. 最后根据环境稳定性决定是否进入 30-50 bugs 的硕士论文稳健版。
+2. 先重构主实验任务集规则：每个 task 先判断 validation stability，再决定
+   included / hard-generation case / excluded；
+3. 将 `httpie_5` 暂定为 hard-generation/stress case，限制其候选数量，并补充
+   1-2 个 validation-stable replacement tasks 来维持数据平衡；
+4. 再扩到 15-20 bugs，保证数据集层面有足够 reference correct、
+   AI-generated incorrect、constructed partial/control 和少量 non-applicable
+   patches；
+5. 继续准备中期报告材料；
+6. 最后根据环境稳定性决定是否进入 30-50 bugs 的硕士论文稳健版。
 
 本路线的最终定位：
 

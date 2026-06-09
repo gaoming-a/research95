@@ -652,3 +652,20 @@ This file starts fresh for the patch-verification project.
   source until the generator can produce both oracle-passing and oracle-failing
   patches. Use them as an extension for generated-negative or partial-fix
   verifier stress tests.
+
+## 2026-06-09 final roadmap task-set reconstruction
+
+- Do not change the research line from patch verification to patch generation.
+  The central question remains whether verifiers accept, reject, or escalate
+  candidate patches under different evidence visibility conditions.
+- A task can be valuable even if no generator solves it. If validation is stable,
+  keep it as a hard-generation or stress case and report generator success rate.
+- Exclude a task only when reproducible validation fails: unstable environment,
+  flaky tests, invalid reference patch, unreliable labels, or uncontrolled
+  runtime.
+- `httpie_5` should not be a main success case or a prompt-tuning target. If its
+  oracle and reference validation remain stable, keep it with capped weight:
+  one reference correct patch, a few generated incorrect patches, and at most
+  one constructed partial/control patch.
+- Rule: dataset balance is required at the dataset level, not per bug. Each bug
+  does not need an AI-generated correct repair.

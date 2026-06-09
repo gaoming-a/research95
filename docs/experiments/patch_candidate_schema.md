@@ -153,3 +153,58 @@ encoded in `patch_id`.
   date, and decoding settings in a companion metadata record.
 - Any candidate without executable or tool-backed evidence is not valid for the
   main experiment.
+
+## Task-Level Generation Accounting
+
+Each expanded task should also have a task metadata record. This record
+separates task validity from generator success.
+
+Required fields for expanded studies:
+
+```json
+{
+  "task_id": "bugsinpy_httpie_5",
+  "project": "httpie",
+  "bug_id": "5",
+  "environment_stable": true,
+  "reference_patch_valid": true,
+  "buggy_failure_reproducible": true,
+  "pass_to_pass_stable": true,
+  "validation_runtime_seconds": 12.4,
+  "generator_attempts": 4,
+  "num_ai_patches_generated": 3,
+  "num_ai_patches_applicable": 1,
+  "num_ai_patches_correct": 0,
+  "num_ai_patches_incorrect": 1,
+  "generation_status": "unsolved",
+  "task_role": "hard_generation_case",
+  "main_experiment_included": true,
+  "exclusion_reason": null
+}
+```
+
+Allowed `generation_status` values:
+
+- `solved`;
+- `partially_solved`;
+- `unsolved`;
+- `non_applicable_only`;
+- `not_attempted`;
+- `not_applicable`.
+
+Allowed `task_role` values:
+
+- `main_balanced_task`;
+- `hard_generation_case`;
+- `stress_case`;
+- `appendix_case`;
+- `excluded_unstable_validation`.
+
+Rules:
+
+- A task may remain in the main experiment when the generator fails, as long as
+  validation is stable and reference labels are reliable.
+- A task should be excluded only when reproducible validation criteria fail.
+- Exclusion because a model failed to solve a task is not allowed.
+- Non-applicable generated patches may be retained as a failure type, but their
+  share should be capped in the main experiment.

@@ -97,12 +97,17 @@ They should not override `final_paper_roadmap_zh.md`.
   all 8 failed the retained oracles. AI-generated patches should therefore be
   treated as a generated-negative extension for now, not the main balanced
   dataset source.
+- The final roadmap now keeps the research line unchanged: candidate patch
+  verification under evidence visibility. The main experiment task set should
+  be rebuilt around validation-stable real bugs; `httpie_5` is a
+  hard-generation/stress case if its reference validation remains stable, not a
+  required generator-success task.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in
-  `docs/plans/final_paper_roadmap_zh.md`: either repeat the closed-loop
-  migration for another project group or add AI-generated candidate patches
-  under the final roadmap's generation protocol.
+  `docs/plans/final_paper_roadmap_zh.md`: first classify task stability and
+  task roles, then expand validation-stable real-bug tasks before running more
+  verifier API experiments.
 
 ## Core Commands
 

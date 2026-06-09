@@ -1226,3 +1226,50 @@ Qwen 初次结果：
 - 主线仍应以真实 bug/reference patches 和可控 negative/partial variants 为核心；
   只有当未来生成协议能稳定产生 oracle-passing 与 oracle-failing 两类 patch 时，
   才能把 AI-generated patch 提升为主数据源。
+
+## 9. 2026-06-09 final roadmap task-set reconstruction update
+
+用户要求按新的判断修改最终计划：
+
+- 研究主线不换，仍是 candidate patch verification under evidence
+  visibility；
+- 主实验任务集需要重构；
+- `httpie_5` 不再承担“必须稳定产出正确 AI patch”的职责；
+- `httpie_5` 若 validation 稳定，则保留为 hard-generation / stress /
+  appendix case；
+- AI-generated patch generation failure 应作为 generator success rate 和
+  failure taxonomy 的一部分报告，而不是导致删除任务或更换课题。
+
+本轮修改边界：
+
+- 只修改计划和 schema 文档；
+- 不调用新的模型 API；
+- 不继续重试 `httpie_5`；
+- 不改变论文主线；
+- 不删除历史实验记录。
+
+已执行修改：
+
+- 更新 `docs/plans/final_paper_roadmap_zh.md`：
+  - 明确 patch generation 不是主研究问题；
+  - 新增 task inclusion / exclusion / hard-generation case 原则；
+  - 修改 candidate patch 来源比例，不再要求每个 bug 都有 AI-generated correct
+    patch；
+  - 将 Stage D 改为 fixed-budget generation accounting；
+  - 将 `httpie_5` 暂定为 hard-generation/stress case；
+  - 将风险 2 改为 generator failure reporting 与 generated-negative extension。
+- 更新 `docs/experiments/patch_candidate_schema.md`：
+  - 新增 task-level generation accounting 字段；
+  - 新增 `generation_status` 和 `task_role`；
+  - 明确不能因为模型未修好任务而排除该任务。
+
+后续执行规则：
+
+- 下一步应先检查 `httpie_5` validation stability，而不是继续生成 patch。
+- 若稳定，保留 `httpie_5`，但限制其候选数量：
+  - 1 个 reference correct patch；
+  - 2-3 个 AI-generated incorrect patches；
+  - 1 个 constructed partial/control patch。
+- 每出现 1 个 generator-unsolved hard case，应补充 1-2 个 validation-stable
+  replacement tasks，保证主实验数据集层面正负样本平衡。
+- non-applicable patches 主实验占比应控制在 10-15% 以内。

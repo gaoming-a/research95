@@ -11,7 +11,9 @@
 - `plans/final_paper_roadmap_zh.md`: canonical final-paper route and subsequent
   research target. It upgrades the current pilot into an evidence-visibility
   empirical study with expanded data, tool-only baselines, hidden-evaluator
-  separation, multi-level evidence ablation, and artifact goals.
+  separation, multi-level evidence ablation, artifact goals, and the rule that
+  generator-unsolved but validation-stable tasks such as `httpie_5` should be
+  treated as hard-generation/stress cases rather than deleted.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.
@@ -88,7 +90,8 @@
 - `experiments/leakage_policy.md`: visible-evidence and hidden-evaluator
   separation policy for future expanded runs.
 - `experiments/patch_candidate_schema.md`: current pilot JSONL schema for
-  candidate patches and verifier outputs.
+  candidate patches, verifier outputs, and task-level generator accounting
+  fields such as `generation_status` and `task_role`.
 - `experiments/evidence_first_protocol.md`: comparison conditions and
   evidence-first verification workflow.
 - `experiments/patch_verification_metrics.md`: metric definitions and stop-gate
