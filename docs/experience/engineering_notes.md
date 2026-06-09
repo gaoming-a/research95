@@ -607,3 +607,17 @@ This file starts fresh for the patch-verification project.
   apply + oracle validation, not by receiving a model response. If apply
   failure is high, stop and redesign the generation protocol before verifier
   API calls.
+
+## 2026-06-08 strict agent generation with Qwen
+
+- Added Qwen official API support through the OpenAI-compatible client using
+  `QWEN_API_KEY` and optional `QWEN_BASE_URL`.
+- Qwen solved the DeepSeek empty-final-content failure mode for
+  `bugsinpy_httpie_5`: it returned structured JSON and a plausible edit plan.
+- Under strict mode, the edit plan still failed because its `find` snippet did
+  not match the buggy source exactly. The user explicitly rejected fuzzy apply,
+  so the attempt was recorded as a strict generation failure.
+- Rule: exact edit-plan mode is clean but brittle. If it blocks too many
+  candidates, the project must either accept lower yield, allow controlled
+  fuzzy apply with explicit paper wording, or switch to a true tool-using agent
+  that can inspect and revise its edits before emitting the final diff.

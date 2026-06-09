@@ -1023,6 +1023,93 @@ python scripts\run_redesign_smoke_workflow.py `
   4 个 applicable patches 作为诊断样本，或改用 coding-agent-style checkout editing
   workflow。
 
+## 6.15 2026-06-08 coding-agent-style patch generation 计划
+
+用户已确认选择：
+
+- 不继续使用直接输出 unified diff 的 chat-style generation protocol；
+- 改用 coding-agent-style workflow。
+
+当前 Git 状态：
+
+- 上一提交 `98823e4 Add AI patch generation diagnostics` 已在本地完成；
+- GitHub push 多次失败，原因是连接 GitHub 443 reset/timeout；
+- 本轮继续本地执行，最终再次尝试 push。
+
+本轮目标：
+
+- 让模型输出结构化 edit plan，而不是直接输出 unified diff。
+- 脚本复制 buggy checkout 到 ignored workdir，在 copied checkout 中应用 edits。
+- 由本地 `git diff` 生成 patch candidate，从而避免模型手写 diff 导致大比例
+  `git apply` 失败。
+- 仍使用 5 个 `httpie` tasks，每个 task 2 个 agent-style patches。
+- 本轮只生成并验证 patches，不调用 verifier/reviewer API。
+
+计划：
+
+1. 新增 coding-agent-style generator 脚本。
+2. prompt 只包含 buggy source、issue summary、visible test hint 和 touched files；
+   禁止 reference patch、fixed checkout、hidden oracle path、oracle result 和 label。
+3. 模型返回 JSON edit plan：目标文件、find snippet、replacement snippet、rationale。
+4. 脚本在 copied buggy checkout 中执行 exact search/replace。
+5. 用 `git diff -- <touched files>` 生成 patch_text，并写出 candidates/evidence。
+6. 运行 apply + oracle validation；若 apply failure 仍高，停止并报告。
+7. 更新 tracked 结果报告、README、INDEX、经验文档和本计划。
+
+执行中断：
+
+- DeepSeek agent-style workflow 已成功生成前 8 个 `httpie` patches。
+- `bugsinpy_httpie_5__agent_patch_01` 两次失败，均为 `finish_reason=length`
+  且 final content 为空；第二次已将 prompt 缩短到约 935 tokens，并将
+  max tokens 提高到 8192，仍全部消耗在 reasoning tokens。
+
+用户新确认：
+
+- 使用 Qwen 试生成；`.env` 中已存在 `QWEN_API_KEY`。
+- 本轮只替换 generator model/provider，不改变 task 范围，不调用 verifier API。
+
+Qwen 执行计划：
+
+1. 新增 Qwen official OpenAI-compatible client，读取 `QWEN_API_KEY`，base URL
+   优先读取 `QWEN_BASE_URL`。
+2. 默认模型使用 `qwen3-coder-plus`，用于 coding-agent-style edit-plan
+   generation。
+3. 先尝试补齐缺失的 `bugsinpy_httpie_5` agent patches。
+4. 若 Qwen endpoint/model/base URL 不可用，停止并报告，不自动切换其他模型。
+
+Qwen 初次结果：
+
+- Qwen successfully returned JSON edit plan for `bugsinpy_httpie_5__agent_patch_01`；
+- failure reason: exact `find` snippet not found in `httpie/cli.py`；
+- 用户选择严格模式：不允许 fuzzy apply，不允许手动修补，只能让模型重新生成
+  exact-match edit plan。
+
+严格重试计划：
+
+1. 强化 prompt，要求 `find` 必须逐字复制 buggy source 中连续存在的原文片段。
+2. 若 exact find 仍然失败，则记录为 strict agent generation failure，不进入
+   verifier 实验。
+3. 不扩大任务范围，不调用 verifier API。
+
+执行结果：
+
+- 已新增 Qwen official OpenAI-compatible client，使用 `QWEN_API_KEY`，默认
+  base URL 为 `https://dashscope.aliyuncs.com/compatible-mode/v1`。
+- 已更新 `scripts/generate_agent_patch_candidates.py` 支持
+  `--api-provider qwen_official`。
+- Qwen strict dry-run 通过，2 条 `bugsinpy_httpie_5` prompt boundary checks
+  passed。
+- Qwen 真实调用成功返回 JSON edit plan，说明 key、endpoint 和模型路径可用。
+- 但 strict exact apply 失败：`find snippet not found in httpie/cli.py`。
+- 已新增 `docs/experiments/qwen_httpie5_strict_agent_attempt.md` 记录该结果。
+
+边界：
+
+- 本轮没有生成可进入 verifier 实验的 Qwen candidate。
+- 按用户选择，不启用 fuzzy apply，不手动修补 patch。
+- 当前最客观结论是：Qwen 比 DeepSeek 更稳定地给出结构化输出，但在严格
+  exact edit-plan 模式下仍未通过本地应用门槛。
+
 ## 7. 继续/止损门槛
 
 只有满足以下至少一项时继续：

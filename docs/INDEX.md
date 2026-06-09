@@ -78,6 +78,9 @@
   first DeepSeek AI patch generation attempt on the five validated `httpie`
   tasks. It generated 10 patches, but 6 failed to apply, so it is diagnostic
   generator-pipeline evidence rather than a clean verifier dataset slice.
+- `experiments/qwen_httpie5_strict_agent_attempt.md`: tracked result for the
+  Qwen strict-mode retry on `bugsinpy_httpie_5`. Qwen returned JSON edit plans,
+  but exact `find` matching failed, so no candidate was admitted.
 - `experiments/patch_evidence_bench_schema.md`: long-term expanded benchmark
   schema for
   TaskRecord, PatchRecord, EvidencePacket, ValidationOutcome, and

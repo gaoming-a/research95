@@ -212,6 +212,27 @@ class DeepSeekClient(OpenAICompatibleChatClient):
         )
 
 
+class QwenClient(OpenAICompatibleChatClient):
+    def __init__(
+        self,
+        api_key: str | None = None,
+        base_url: str = "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        timeout_seconds: float | None = None,
+        max_retries: int | None = None,
+        retry_backoff_seconds: float | None = None,
+    ) -> None:
+        super().__init__(
+            api_key=api_key,
+            base_url=base_url,
+            api_key_env="QWEN_API_KEY",
+            base_url_env="QWEN_BASE_URL",
+            provider_name="Qwen",
+            timeout_seconds=timeout_seconds,
+            max_retries=max_retries,
+            retry_backoff_seconds=retry_backoff_seconds,
+        )
+
+
 def list_openrouter_models(base_url: str = "https://openrouter.ai/api/v1") -> list[dict[str, Any]]:
     request = urllib.request.Request(
         f"{base_url.rstrip('/')}/models",
