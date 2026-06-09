@@ -279,6 +279,10 @@
   tool-augmented outputs.
 - `scripts/screen_bugsinpy_expansion.py`: screens retained BugsInPy checkouts
   and writes the next 15-task expansion registry.
+- `experiments/qwen37_httpie5_strict_agent_attempt.md`: records the
+  `qwen3.7-plus` strict agent retry on `bugsinpy_httpie_5`; it produced one
+  applicable but oracle-failing generated negative candidate and timed out on
+  the second candidate.
 - `scripts/run_redesign_smoke_workflow.py`: guarded workflow for the
   tool-augmented redesign smoke and full run. It performs preflight/check-only
   gating, executes only the `tool_augmented_evidence` condition, and writes a

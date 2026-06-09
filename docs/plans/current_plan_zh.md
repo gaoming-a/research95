@@ -1110,6 +1110,56 @@ Qwen 初次结果：
 - 当前最客观结论是：Qwen 比 DeepSeek 更稳定地给出结构化输出，但在严格
   exact edit-plan 模式下仍未通过本地应用门槛。
 
+## 6.16 2026-06-09 Qwen 3.7 Plus strict retry for `httpie_5`
+
+用户新要求：
+
+- 使用最新 Qwen 3.7 Plus 再次尝试 `bugsinpy_httpie_5`。
+
+模型确认：
+
+- 阿里云百炼 OpenAI-compatible 文档中对应模型 ID 为 `qwen3.7-plus`。
+- 本轮不使用旧的 `qwen3-coder-plus`，改用 `qwen3.7-plus`。
+
+执行边界：
+
+- 仍沿用 strict exact edit-plan protocol。
+- 不启用 fuzzy apply。
+- 不手动修补模型输出的 `find` snippet。
+- 不调用 verifier/reviewer API。
+- 若模型接口不可用或 strict exact apply 失败，记录失败原因后停止。
+
+执行计划：
+
+1. 使用 Qwen official client 与 `qwen3.7-plus` 运行 prompt dry-run。
+2. 对 `bugsinpy_httpie_5` 生成 2 个 agent-style candidate patches。
+3. 若候选 patch 成功生成，继续运行本地 apply/oracle validation。
+4. 更新实验记录、索引、经验文档和本计划。
+
+执行结果：
+
+- dry-run 通过，2 条 prompt boundary checks 正常。
+- `bugsinpy_httpie_5__agent_patch_01` 生成成功：
+  - strict exact `find`/`replace` 应用成功；
+  - 本地 `git diff` 成功 materialize patch；
+  - patch apply 成功；
+  - retained oracle 运行成功；
+  - oracle 未通过；
+  - relabel 后 outcome 为 `incorrect`。
+- `bugsinpy_httpie_5__agent_patch_02` 未生成成功：
+  - Qwen provider request 连续 3 次 read timeout；
+  - 没有候选进入 pending/relabeled dataset。
+- 已修正 `scripts/generate_agent_patch_candidates.py` 中 candidate `source`
+  字段硬编码为 DeepSeek 的问题，改为记录实际 `api_provider`。
+- 已新增 `docs/experiments/qwen37_httpie5_strict_agent_attempt.md`。
+
+边界：
+
+- 本轮得到 1 个可复现、可验证的 AI-generated negative patch。
+- 本轮没有证明 `qwen3.7-plus` 能修复 `httpie_5`，只说明它能在 strict
+  edit-plan protocol 下产出可应用 patch。
+- `patch_02` timeout 应被记录为 provider/run instability，不应作为语义失败证据。
+
 ## 7. 继续/止损门槛
 
 只有满足以下至少一项时继续：

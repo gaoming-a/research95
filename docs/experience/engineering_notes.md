@@ -621,3 +621,20 @@ This file starts fresh for the patch-verification project.
   candidates, the project must either accept lower yield, allow controlled
   fuzzy apply with explicit paper wording, or switch to a true tool-using agent
   that can inspect and revise its edits before emitting the final diff.
+
+## 2026-06-09 Qwen 3.7 Plus strict agent retry
+
+- `qwen3.7-plus` generated one strict exact-match edit plan for
+  `bugsinpy_httpie_5`; the script applied it in a copied checkout and exported a
+  real `git diff`.
+- The candidate applied cleanly and the retained oracle ran, but the oracle did
+  not pass. This makes it a validated generated negative candidate, not a
+  repair.
+- The second candidate timed out after 3 provider attempts. Treat this as
+  provider/run instability and do not infer semantic failure from the missing
+  candidate.
+- Fixed generator metadata so the candidate `source` field records the selected
+  API provider instead of always using `deepseek_official_agent_edit`.
+- Rule: successful materialization and semantic correctness must remain separate
+  gates. A generated patch can be valuable for the verifier dataset even when it
+  is incorrect, as long as apply + oracle validation is reproducible.

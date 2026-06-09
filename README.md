@@ -90,6 +90,9 @@ They should not override `final_paper_roadmap_zh.md`.
 - The first DeepSeek AI patch generation attempt produced 10 patches, but only
   4 applied cleanly; it is diagnostic generator-pipeline evidence, not a clean
   verifier dataset slice.
+- The latest Qwen 3.7 Plus strict agent retry on `bugsinpy_httpie_5` produced
+  one applicable, oracle-validated negative generated patch; the second
+  candidate timed out at the provider call and was not admitted.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in
