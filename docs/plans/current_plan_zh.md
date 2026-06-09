@@ -1169,3 +1169,60 @@ Qwen 初次结果：
 - claim-level evidence 能解释 LLM-only 决策为什么失败。
 
 如果新数据集无法产生真实感的错误 patch，或者 verifier 只是通过拒绝几乎所有 patch 来降低 false accepts，就应停止。
+
+## 8. 2026-06-09 DeepSeek agent-style 8-patch validation
+
+用户要求继续完成四点：
+
+1. 同步 GitHub；
+2. 验证此前 DeepSeek agent-style workflow 已生成的 8 个 patches；
+3. 根据验证结果判断是否扩大到更多 task；
+4. 若结果质量差，则将 AI-generated patch 降级为扩展实验，而不是主线。
+
+执行边界：
+
+- 不调用新的模型 API。
+- 不继续重试 `bugsinpy_httpie_5`。
+- 只使用已有
+  `outputs/httpie_agent_patch_stage_ab_001/candidates.pending.jsonl` 中的
+  8 个候选。
+- 使用本地 `validate_patch_candidates.py` 执行 patch apply + retained oracle
+  validation。
+- 使用 `relabel_ai_patch_candidates.py` 固化 outcome。
+
+计划：
+
+1. 先尝试 `git push`，若网络失败则记录为外部同步阻塞。
+2. 验证 8 个 pending candidates。
+3. relabel 并统计 correct / incorrect / environment_invalid。
+4. 写 tracked 实验报告并更新 README、INDEX、经验文档和本计划。
+5. 运行质量门，提交本地改动，最后再次尝试 push。
+
+执行结果：
+
+- `git push` 再次失败，错误为无法连接 `github.com:443`。同步属于外部网络
+  阻塞，不是本地提交、认证或代码问题。
+- 已验证
+  `outputs/httpie_agent_patch_stage_ab_001/candidates.pending.jsonl` 中 8 个
+  DeepSeek agent-style patches：
+  - patch applied = 8/8；
+  - oracle ran = 8/8；
+  - oracle passed = 0/8；
+  - validation status `validated` = 8/8。
+- 已 relabel：
+  - `incorrect` = 8；
+  - `correct` = 0；
+  - `environment_invalid` = 0。
+- 已新增
+  `docs/experiments/deepseek_agent_patch_validation_result.md`。
+
+决策：
+
+- agent-style workflow 的 patch materialization 可行：已有 8 个候选全部可应用、
+  可验证。
+- 但它当前没有产生正确修复，不能作为主实验的 balanced patch dataset source。
+- AI-generated patches 暂时降级为扩展实验，主要用于 generated-negative /
+  partial-fix verifier stress test。
+- 主线仍应以真实 bug/reference patches 和可控 negative/partial variants 为核心；
+  只有当未来生成协议能稳定产生 oracle-passing 与 oracle-failing 两类 patch 时，
+  才能把 AI-generated patch 提升为主数据源。

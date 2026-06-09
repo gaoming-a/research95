@@ -93,6 +93,10 @@ They should not override `final_paper_roadmap_zh.md`.
 - The latest Qwen 3.7 Plus strict agent retry on `bugsinpy_httpie_5` produced
   one applicable, oracle-validated negative generated patch; the second
   candidate timed out at the provider call and was not admitted.
+- The earlier 8 DeepSeek agent-style candidates all applied and ran oracles, but
+  all 8 failed the retained oracles. AI-generated patches should therefore be
+  treated as a generated-negative extension for now, not the main balanced
+  dataset source.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

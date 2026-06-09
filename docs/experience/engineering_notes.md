@@ -638,3 +638,17 @@ This file starts fresh for the patch-verification project.
 - Rule: successful materialization and semantic correctness must remain separate
   gates. A generated patch can be valuable for the verifier dataset even when it
   is incorrect, as long as apply + oracle validation is reproducible.
+
+## 2026-06-09 DeepSeek agent-style patch validation
+
+- Validated the 8 existing DeepSeek agent-style candidates from
+  `httpie_agent_patch_stage_ab_001`; no new API calls were made.
+- All 8 patches applied cleanly and all 8 retained oracles ran. This confirms
+  that agent-style edit plans plus local `git diff` are much more reproducible
+  than direct model-written unified diffs for this slice.
+- All 8 retained oracles failed, so every candidate relabeled as `incorrect`.
+  The protocol produced good generated negative samples, not correct repairs.
+- Decision rule: do not expand AI-generated patches as the main balanced dataset
+  source until the generator can produce both oracle-passing and oracle-failing
+  patches. Use them as an extension for generated-negative or partial-fix
+  verifier stress tests.

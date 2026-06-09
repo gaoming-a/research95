@@ -279,6 +279,9 @@
   tool-augmented outputs.
 - `scripts/screen_bugsinpy_expansion.py`: screens retained BugsInPy checkouts
   and writes the next 15-task expansion registry.
+- `experiments/deepseek_agent_patch_validation_result.md`: records validation
+  of the 8 existing DeepSeek agent-style `httpie_1`-`httpie_4` generated
+  patches; all applied and ran oracles, but all relabeled as `incorrect`.
 - `experiments/qwen37_httpie5_strict_agent_attempt.md`: records the
   `qwen3.7-plus` strict agent retry on `bugsinpy_httpie_5`; it produced one
   applicable but oracle-failing generated negative candidate and timed out on
