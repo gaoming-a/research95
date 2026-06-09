@@ -1397,7 +1397,7 @@ Qwen 初次结果：
   - `tests/tests.py::TestItemParsing::test_valid_items`。
 - 已新增 `scripts/validate_candidates_with_p2p.py`。
 - 已对 6 个 `httpie_5` candidates 运行 retained oracle + P2P-broad validation：
-  - `correct_under_f2p_p2p` = 1；
+  - `correct_under_f2p_and_p2p_broad` = 1；
   - `incorrect_issue_not_fixed` = 5；
   - `incorrect_regression` = 0。
 - 已重新生成 task accounting：
@@ -1463,9 +1463,9 @@ Qwen 初次结果：
     external dependency 1，P2P-broad 135；
   - `luigi_4`: collected 14，excluded fail-to-pass oracle 1，P2P-broad 13。
 - retained oracle + P2P-broad labels：
-  - `luigi_3`: `correct_under_f2p_p2p` = 1，
+  - `luigi_3`: `correct_under_f2p_and_p2p_broad` = 1，
     `incorrect_issue_not_fixed` = 4；
-  - `luigi_4`: `correct_under_f2p_p2p` = 1，
+  - `luigi_4`: `correct_under_f2p_and_p2p_broad` = 1，
     `incorrect_issue_not_fixed` = 2。
 - task accounting：
   - 两个任务均为 `task_role = main_balanced_task`；
@@ -1483,3 +1483,83 @@ Qwen 初次结果：
 - 若最终主实验严格要求 project-wide P2P-broad，则下一步需要重新定义并运行
   project-level test discovery；否则可以将当前规则明确为 per-task-file
   P2P-broad，并在论文中报告 scope 边界。
+
+## 13. 2026-06-10 Project-level P2P-broad rebuild
+
+本轮目标：
+
+- 将最终主实验标准确认并落实为 `project_level_p2p_broad`：
+  - 收集整个项目中当前环境可发现的测试；
+  - 排除 fail-to-pass oracle；
+  - 排除不可收集、外部依赖、超时、flaky 或在 buggy/reference 任一版本失败的测试；
+  - 保留在 buggy baseline 与 reference-fixed version 上都稳定通过的最大可运行子集。
+- 每个 task 输出 tracked-可引用的 manifest：
+  - `data/p2p_scopes/{task_id}_p2p_broad.json`。
+- 使用统一 label 规则：
+  - patch 不可应用：`non_applicable`；
+  - fail-to-pass oracle 失败：`incorrect_issue_not_fixed`；
+  - P2P-broad 失败：`incorrect_regression`；
+  - fail-to-pass 与 P2P-broad 均通过：`correct_under_f2p_and_p2p_broad`。
+
+执行边界：
+
+- 不调用模型 API。
+- 不继续生成或调参 `httpie_5` patch。
+- 不把 task-file P2P 结果当作最终主实验 project-level P2P 结果。
+- 若 project-level 测试收集、运行耗时、环境依赖或 scope 定义出现无法自动判断的问题，停止并向用户确认。
+- 稳定性运行次数优先采用 3 次；若项目级 scope 构造因成本或环境限制无法完成，记录阻塞原因后停止确认，而不是私自降级为 task-file scope。
+
+计划步骤：
+
+1. 扩展 `scripts/build_pass_to_pass_scope.py`，支持 project-level test collection 与 manifest 输出。
+2. 先对 `bugsinpy_httpie_5` 构造 project-level P2P-broad scope，验证脚本兼容性。
+3. 再对 `bugsinpy_luigi_3` 与 `bugsinpy_luigi_4` 构造 project-level P2P-broad scope。
+4. 对已有 candidates 使用 project-level P2P-broad 重新验证。
+5. 更新报告、索引、经验文档、README，并同步 GitHub。
+
+执行结果：
+
+- 已扩展 `scripts/build_pass_to_pass_scope.py`：
+  - 支持 `project_level_p2p_broad` / `task_file_p2p_broad` scope type；
+  - 支持 `--manifest-out` 输出 `data/p2p_scopes/{task_id}_p2p_broad.json`；
+  - 支持 project-level 显式测试文件发现，覆盖 `test*.py`、`*_test.py`、
+    `tests.py`；
+  - 修正 buggy/reference checkout 产生不同路径前缀时的 nodeid 规范化；
+  - 支持 Windows 下按 batch size 分块执行；
+  - 支持按测试文件分组 batch-first 验证，减少失败测试对其他文件的影响。
+- 已更新 `scripts/validate_candidates_with_p2p.py` 的最终正确标签：
+  - `correct_under_f2p_and_p2p_broad`。
+- `bugsinpy_httpie_5` project-level P2P-broad 已完成：
+  - collected tests = 17；
+  - common collected tests = 17；
+  - excluded fail-to-pass oracle = 1；
+  - excluded external dependency = 13；
+  - included P2P-broad tests = 3；
+  - stability runs = 3；
+  - manifest: `data/p2p_scopes/bugsinpy_httpie_5_p2p_broad.json`。
+- 已用 project-level P2P-broad 重新验证 `httpie_5` 的 6 个 candidates：
+  - `correct_under_f2p_and_p2p_broad` = 1；
+  - `incorrect_issue_not_fixed` = 5。
+- `bugsinpy_luigi_3` project-level P2P-broad 当前阻塞：
+  - project-level discovery 发现 113 个测试文件；
+  - collect-only 诊断收集到 904 个 nodeids，但同时出现 44 个 collection
+    errors，主要来自 contrib / 外部服务依赖类测试；
+  - 两次 project-level scope construction 分别在 15 分钟和 20 分钟上限内
+    未完成；
+  - 第二次已加入按文件分组 batch-first，但仍卡在长时间 pytest batch /
+    fallback 执行。
+- 本轮本地质量门通过：
+  - `python -m py_compile scripts\build_pass_to_pass_scope.py scripts\validate_candidates_with_p2p.py scripts\build_task_generation_accounting.py`；
+  - `git diff --check`；
+  - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\project_level_p2p_latest.json --out-md outputs\local_quality_gate\project_level_p2p_latest.md`。
+
+当前阻塞/需确认：
+
+- 是否继续投入工程时间为 Luigi 构造严格 project-level P2P-broad，可能需要：
+  - 先生成 collection-error 文件排除表；
+  - 对通过 collection 的测试按文件建立稳定性缓存；
+  - 对失败文件做 per-test fallback；
+  - 允许单个 task 运行数小时。
+- 或者将 Luigi 任务暂时标记为 `project_level_p2p_pending`，保留 task-file
+  P2P 结果作为 appendix/smoke evidence，并优先换用更小、更容易构造
+  project-level P2P-broad 的替代任务。

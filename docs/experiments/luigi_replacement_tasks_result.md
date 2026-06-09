@@ -40,9 +40,11 @@ P2P-broad was constructed within each task's relevant test file:
 The current scope is a per-task-file stable runnable subset, not the whole
 Luigi project test suite.
 
-## Candidate Labels With P2P
+## Candidate Labels With Task-file P2P
 
-| task | `correct_under_f2p_p2p` | `incorrect_issue_not_fixed` | `incorrect_regression` |
+These are task-file smoke labels, not final project-level P2P labels.
+
+| task | `correct_under_f2p_and_p2p_broad` | `incorrect_issue_not_fixed` | `incorrect_regression` |
 |---|---:|---:|---:|
 | `bugsinpy_luigi_3` | 1 | 4 | 0 |
 | `bugsinpy_luigi_4` | 1 | 2 | 0 |
@@ -72,12 +74,10 @@ The P2P scope for this run is intentionally limited to the task-specific test
 file associated with the retained oracle. This is stronger than retained-oracle
 only validation, but it is not a project-wide Luigi regression suite.
 
-Before a final large-scale paper claim, the project should either:
-
-- apply the same per-task-file P2P rule consistently across all BugsInPy tasks;
-  or
-- define a broader project-level stable test discovery process and report the
-  additional exclusions and runtime costs.
+For the final main experiment, the project now requires project-level
+P2P-broad manifests. The task-file results in this report should be treated as
+smoke or appendix evidence unless a separate project-level Luigi manifest is
+constructed.
 
 ## Decision
 

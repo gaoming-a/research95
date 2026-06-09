@@ -103,14 +103,16 @@ They should not override `final_paper_roadmap_zh.md`.
   hard-generation/stress case if its reference validation remains stable, not a
   required generator-success task.
 - The `httpie_5` stability/accounting audit confirms retained-oracle label
-  stability and classifies the task as `hard_generation_case`; broad
-  pass-to-pass regression stability is now tracked by a 3-test local
-  P2P-broad subset after excluding the retained fail-to-pass oracle and
+  stability and classifies the task as `hard_generation_case`; project-level
+  pass-to-pass regression stability is now tracked by
+  `data/p2p_scopes/bugsinpy_httpie_5_p2p_broad.json`, which retains 3 stable
+  P2P-broad tests after excluding the retained fail-to-pass oracle and
   external-network tests.
 - Luigi 3 and Luigi 4 now serve as replacement `main_balanced_task` examples:
   both have retained-oracle validation, task-file P2P-broad scopes, and
   `f2p_plus_p2p_broad` labels. Their current P2P scope is task-file based, not a
-  project-wide Luigi regression suite.
+  project-wide Luigi regression suite; they are not final project-level P2P
+  main-label evidence until the Luigi project-level scope blocker is resolved.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

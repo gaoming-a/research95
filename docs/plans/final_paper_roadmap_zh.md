@@ -296,12 +296,23 @@ elif retained oracle fails:
 elif p2p_broad fails:
     label = incorrect_regression
 else:
-    label = correct_under_f2p_p2p
+    label = correct_under_f2p_and_p2p_broad
 ```
 
-当前 `httpie_5` 已完成一个局部 P2P-broad scope：17 个 collected tests 中，
-排除 1 个 fail-to-pass oracle 和 13 个外部网络依赖测试，保留 3 个稳定本地
-P2P-broad tests。
+最终主实验的 `P2P-broad` scope type 必须记录为
+`project_level_p2p_broad`。任务相关测试文件内的 P2P scope 只能作为开发期
+smoke audit 或 appendix 边界结果，不能用于声称 project-level regression
+stability。
+
+当前执行状态：
+
+- `httpie_5` 已完成 project-level P2P-broad manifest：17 个 collected
+  tests 中，排除 1 个 fail-to-pass oracle 和 13 个外部网络依赖测试，保留
+  3 个稳定本地 P2P-broad tests。由于该项目当前只发现 1 个测试文件，
+  project-level 与早期局部 scope 结果一致。
+- `luigi_3` / `luigi_4` 的早期 P2P-broad 是 task-file scope，不是最终主
+  实验标准。Luigi project-level scope 当前需要单独解决全项目测试量、收集
+  错误和长运行时间问题后才能进入最终主实验标签。
 
 ## 4. Evidence 与 hidden evaluator 分离
 

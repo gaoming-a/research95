@@ -1,0 +1,477 @@
+{
+  "batch_runs": {
+    "buggy_runs": [
+      {
+        "command": [
+          "C:\\Python311\\python.exe",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/tests.py::TestItemParsing::test_escape",
+          "tests/tests.py::TestItemParsing::test_invalid_items",
+          "tests/tests.py::TestItemParsing::test_valid_items"
+        ],
+        "elapsed_seconds": 6.625,
+        "exit_code": 0,
+        "nodeid_count": 3,
+        "passed": true,
+        "run_index": 1,
+        "stderr_tail": "",
+        "stdout_tail": "...                                                                      [100%]\n3 passed in 0.11s\n",
+        "timeout": false
+      },
+      {
+        "command": [
+          "C:\\Python311\\python.exe",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/tests.py::TestItemParsing::test_escape",
+          "tests/tests.py::TestItemParsing::test_invalid_items",
+          "tests/tests.py::TestItemParsing::test_valid_items"
+        ],
+        "elapsed_seconds": 6.062,
+        "exit_code": 0,
+        "nodeid_count": 3,
+        "passed": true,
+        "run_index": 2,
+        "stderr_tail": "",
+        "stdout_tail": "...                                                                      [100%]\n3 passed in 0.11s\n",
+        "timeout": false
+      },
+      {
+        "command": [
+          "C:\\Python311\\python.exe",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/tests.py::TestItemParsing::test_escape",
+          "tests/tests.py::TestItemParsing::test_invalid_items",
+          "tests/tests.py::TestItemParsing::test_valid_items"
+        ],
+        "elapsed_seconds": 6.016,
+        "exit_code": 0,
+        "nodeid_count": 3,
+        "passed": true,
+        "run_index": 3,
+        "stderr_tail": "",
+        "stdout_tail": "...                                                                      [100%]\n3 passed in 0.09s\n",
+        "timeout": false
+      }
+    ],
+    "reference_runs": [
+      {
+        "command": [
+          "C:\\Python311\\python.exe",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/tests.py::TestItemParsing::test_escape",
+          "tests/tests.py::TestItemParsing::test_invalid_items",
+          "tests/tests.py::TestItemParsing::test_valid_items"
+        ],
+        "elapsed_seconds": 6.578,
+        "exit_code": 0,
+        "nodeid_count": 3,
+        "passed": true,
+        "run_index": 1,
+        "stderr_tail": "",
+        "stdout_tail": "...                                                                      [100%]\n3 passed in 0.11s\n",
+        "timeout": false
+      },
+      {
+        "command": [
+          "C:\\Python311\\python.exe",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/tests.py::TestItemParsing::test_escape",
+          "tests/tests.py::TestItemParsing::test_invalid_items",
+          "tests/tests.py::TestItemParsing::test_valid_items"
+        ],
+        "elapsed_seconds": 6.094,
+        "exit_code": 0,
+        "nodeid_count": 3,
+        "passed": true,
+        "run_index": 2,
+        "stderr_tail": "",
+        "stdout_tail": "...                                                                      [100%]\n3 passed in 0.09s\n",
+        "timeout": false
+      },
+      {
+        "command": [
+          "C:\\Python311\\python.exe",
+          "-m",
+          "pytest",
+          "-q",
+          "tests/tests.py::TestItemParsing::test_escape",
+          "tests/tests.py::TestItemParsing::test_invalid_items",
+          "tests/tests.py::TestItemParsing::test_valid_items"
+        ],
+        "elapsed_seconds": 6.234,
+        "exit_code": 0,
+        "nodeid_count": 3,
+        "passed": true,
+        "run_index": 3,
+        "stderr_tail": "",
+        "stdout_tail": "...                                                                      [100%]\n3 passed in 0.12s\n",
+        "timeout": false
+      }
+    ]
+  },
+  "buggy_baseline_pass_required": true,
+  "collection": {
+    "buggy": {
+      "command": [
+        "C:\\Python311\\python.exe",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "tests/tests.py"
+      ],
+      "elapsed_seconds": 7.047,
+      "exit_code": 0,
+      "stderr_tail": "",
+      "stdout_tail": "inpy_workspace/httpie_5/buggy/httpie/tests/tests.py::TestHTTPie::test_headers\ndata/real_bugs/bugsinpy_workspace/httpie_5/buggy/httpie/tests/tests.py::TestHTTPie::test_json\ndata/real_bugs/bugsinpy_workspace/httpie_5/buggy/httpie/tests/tests.py::TestHTTPie::test_verbose\ndata/real_bugs/bugsinpy_workspace/httpie_5/buggy/httpie/tests/tests.py::TestPrettyFlag::test_force_pretty\ndata/real_bugs/bugsinpy_workspace/httpie_5/buggy/httpie/tests/tests.py::TestPrettyFlag::test_force_ugly\ndata/real_bugs/bugsinpy_workspace/httpie_5/buggy/httpie/tests/tests.py::TestPrettyFlag::test_pretty_enabled_by_default\ndata/real_bugs/bugsinpy_workspace/httpie_5/buggy/httpie/tests/tests.py::TestPrettyFlag::test_pretty_enabled_by_default_unless_stdin_redirected\ndata/real_bugs/bugsinpy_workspace/httpie_5/buggy/httpie/tests/tests.py::TestFileUpload::test_non_existent_file_raises_parse_error\ndata/real_bugs/bugsinpy_workspace/httpie_5/buggy/httpie/tests/tests.py::TestFileUpload::test_upload_ok\ndata/real_bugs/bugsinpy_workspace/httpie_5/buggy/httpie/tests/tests.py::TestAuth::test_basic_auth\ndata/real_bugs/bugsinpy_workspace/httpie_5/buggy/httpie/tests/tests.py::TestAuth::test_digest_auth\n\n17 tests collected in 0.09s\n",
+      "timeout": false
+    },
+    "buggy_collected_count": 17,
+    "discovered_test_files": 1,
+    "reference": {
+      "command": [
+        "C:\\Python311\\python.exe",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "tests/tests.py"
+      ],
+      "elapsed_seconds": 5.89,
+      "exit_code": 0,
+      "stderr_tail": "",
+      "stdout_tail": "inpy_workspace/httpie_5/fixed/httpie/tests/tests.py::TestHTTPie::test_headers\ndata/real_bugs/bugsinpy_workspace/httpie_5/fixed/httpie/tests/tests.py::TestHTTPie::test_json\ndata/real_bugs/bugsinpy_workspace/httpie_5/fixed/httpie/tests/tests.py::TestHTTPie::test_verbose\ndata/real_bugs/bugsinpy_workspace/httpie_5/fixed/httpie/tests/tests.py::TestPrettyFlag::test_force_pretty\ndata/real_bugs/bugsinpy_workspace/httpie_5/fixed/httpie/tests/tests.py::TestPrettyFlag::test_force_ugly\ndata/real_bugs/bugsinpy_workspace/httpie_5/fixed/httpie/tests/tests.py::TestPrettyFlag::test_pretty_enabled_by_default\ndata/real_bugs/bugsinpy_workspace/httpie_5/fixed/httpie/tests/tests.py::TestPrettyFlag::test_pretty_enabled_by_default_unless_stdin_redirected\ndata/real_bugs/bugsinpy_workspace/httpie_5/fixed/httpie/tests/tests.py::TestFileUpload::test_non_existent_file_raises_parse_error\ndata/real_bugs/bugsinpy_workspace/httpie_5/fixed/httpie/tests/tests.py::TestFileUpload::test_upload_ok\ndata/real_bugs/bugsinpy_workspace/httpie_5/fixed/httpie/tests/tests.py::TestAuth::test_basic_auth\ndata/real_bugs/bugsinpy_workspace/httpie_5/fixed/httpie/tests/tests.py::TestAuth::test_digest_auth\n\n17 tests collected in 0.09s\n",
+      "timeout": false
+    },
+    "reference_collected_count": 17
+  },
+  "compat_shim": {
+    "enabled": true,
+    "path": "outputs\\httpie5_project_p2p_scope_003\\compat_shim",
+    "reason": "legacy tests import requests.compat.is_py26, absent in the current Python environment"
+  },
+  "core_patterns": [
+    "tests/tests.py::TestItemParsing::"
+  ],
+  "counts": {
+    "collected_tests": 17,
+    "common_collected_tests": 17,
+    "excluded_external_dependency": 13,
+    "excluded_fail_to_pass_oracle": 1,
+    "excluded_flaky": 0,
+    "excluded_timeout": 0,
+    "excluded_uncollectable": 0,
+    "exclusion_reason_counts": {
+      "excluded_fail_to_pass_oracle": 1,
+      "excluded_static_external_dependency": 13
+    },
+    "included_p2p_tests": 3,
+    "p2p_broad_tests": 3,
+    "p2p_core_tests": 3
+  },
+  "exclusions": [
+    {
+      "nodeid": "tests/tests.py::TestAuth::test_basic_auth",
+      "reason": "excluded_static_external_dependency"
+    },
+    {
+      "nodeid": "tests/tests.py::TestAuth::test_digest_auth",
+      "reason": "excluded_static_external_dependency"
+    },
+    {
+      "nodeid": "tests/tests.py::TestFileUpload::test_non_existent_file_raises_parse_error",
+      "reason": "excluded_static_external_dependency"
+    },
+    {
+      "nodeid": "tests/tests.py::TestFileUpload::test_upload_ok",
+      "reason": "excluded_static_external_dependency"
+    },
+    {
+      "nodeid": "tests/tests.py::TestHTTPie::test_form",
+      "reason": "excluded_static_external_dependency"
+    },
+    {
+      "nodeid": "tests/tests.py::TestHTTPie::test_get",
+      "reason": "excluded_static_external_dependency"
+    },
+    {
+      "nodeid": "tests/tests.py::TestHTTPie::test_headers",
+      "reason": "excluded_static_external_dependency"
+    },
+    {
+      "nodeid": "tests/tests.py::TestHTTPie::test_json",
+      "reason": "excluded_static_external_dependency"
+    },
+    {
+      "nodeid": "tests/tests.py::TestHTTPie::test_verbose",
+      "reason": "excluded_static_external_dependency"
+    },
+    {
+      "nodeid": "tests/tests.py::TestItemParsing::test_escape_longsep",
+      "reason": "excluded_fail_to_pass_oracle"
+    },
+    {
+      "nodeid": "tests/tests.py::TestPrettyFlag::test_force_pretty",
+      "reason": "excluded_static_external_dependency"
+    },
+    {
+      "nodeid": "tests/tests.py::TestPrettyFlag::test_force_ugly",
+      "reason": "excluded_static_external_dependency"
+    },
+    {
+      "nodeid": "tests/tests.py::TestPrettyFlag::test_pretty_enabled_by_default",
+      "reason": "excluded_static_external_dependency"
+    },
+    {
+      "nodeid": "tests/tests.py::TestPrettyFlag::test_pretty_enabled_by_default_unless_stdin_redirected",
+      "reason": "excluded_static_external_dependency"
+    }
+  ],
+  "fail_to_pass_nodeids": [
+    "tests/tests.py::TestItemParsing::test_escape_longsep"
+  ],
+  "p2p_broad_tests": [
+    "tests/tests.py::TestItemParsing::test_escape",
+    "tests/tests.py::TestItemParsing::test_invalid_items",
+    "tests/tests.py::TestItemParsing::test_valid_items"
+  ],
+  "p2p_core_tests": [
+    "tests/tests.py::TestItemParsing::test_escape",
+    "tests/tests.py::TestItemParsing::test_invalid_items",
+    "tests/tests.py::TestItemParsing::test_valid_items"
+  ],
+  "project": "httpie",
+  "records": [
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_static_external_dependency",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestAuth::test_basic_auth",
+      "static_exclude_tokens": [
+        "httpbin",
+        "http://",
+        "https://"
+      ]
+    },
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_static_external_dependency",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestAuth::test_digest_auth",
+      "static_exclude_tokens": [
+        "httpbin",
+        "http://",
+        "https://"
+      ]
+    },
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_static_external_dependency",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestFileUpload::test_non_existent_file_raises_parse_error",
+      "static_exclude_tokens": [
+        "httpbin",
+        "http://",
+        "https://"
+      ]
+    },
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_static_external_dependency",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestFileUpload::test_upload_ok",
+      "static_exclude_tokens": [
+        "httpbin",
+        "http://",
+        "https://"
+      ]
+    },
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_static_external_dependency",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestHTTPie::test_form",
+      "static_exclude_tokens": [
+        "httpbin",
+        "http://",
+        "https://"
+      ]
+    },
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_static_external_dependency",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestHTTPie::test_get",
+      "static_exclude_tokens": [
+        "httpbin",
+        "http://",
+        "https://"
+      ]
+    },
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_static_external_dependency",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestHTTPie::test_headers",
+      "static_exclude_tokens": [
+        "httpbin",
+        "http://",
+        "https://"
+      ]
+    },
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_static_external_dependency",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestHTTPie::test_json",
+      "static_exclude_tokens": [
+        "httpbin",
+        "http://",
+        "https://"
+      ]
+    },
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_static_external_dependency",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestHTTPie::test_verbose",
+      "static_exclude_tokens": [
+        "httpbin",
+        "http://",
+        "https://"
+      ]
+    },
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_fail_to_pass_oracle",
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": true,
+      "nodeid": "tests/tests.py::TestItemParsing::test_escape_longsep"
+    },
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_static_external_dependency",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestPrettyFlag::test_force_pretty",
+      "static_exclude_tokens": [
+        "httpbin",
+        "http://",
+        "https://"
+      ]
+    },
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_static_external_dependency",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestPrettyFlag::test_force_ugly",
+      "static_exclude_tokens": [
+        "httpbin",
+        "http://",
+        "https://"
+      ]
+    },
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_static_external_dependency",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestPrettyFlag::test_pretty_enabled_by_default",
+      "static_exclude_tokens": [
+        "httpbin",
+        "http://",
+        "https://"
+      ]
+    },
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_static_external_dependency",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestPrettyFlag::test_pretty_enabled_by_default_unless_stdin_redirected",
+      "static_exclude_tokens": [
+        "httpbin",
+        "http://",
+        "https://"
+      ]
+    },
+    {
+      "batch_validated": true,
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestItemParsing::test_escape"
+    },
+    {
+      "batch_validated": true,
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestItemParsing::test_invalid_items"
+    },
+    {
+      "batch_validated": true,
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/tests.py::TestItemParsing::test_valid_items"
+    }
+  ],
+  "reference_patch_pass_required": true,
+  "runs_per_version": 3,
+  "scope_id": "bugsinpy_httpie_5_project_level_p2p_broad",
+  "scope_type": "project_level_p2p_broad",
+  "stability_runs": 3,
+  "static_exclude_tokens": [
+    "httpbin",
+    "http://",
+    "https://"
+  ],
+  "static_include_tokens": [],
+  "task_id": "bugsinpy_httpie_5",
+  "test_path": ".",
+  "test_paths": [
+    "tests/tests.py"
+  ],
+  "timeout_seconds": 20
+}

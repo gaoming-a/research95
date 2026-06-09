@@ -15,6 +15,10 @@ env/
 
 # Experiment outputs and temporary files
 data/
+!data/
+data/*
+!data/p2p_scopes/
+!data/p2p_scopes/*.json
 outputs/
 runs/
 artifacts/

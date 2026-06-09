@@ -91,6 +91,11 @@
   for `bugsinpy_httpie_5`; it collected 17 tests, excluded the retained
   fail-to-pass oracle and external-network tests, and retained 3 stable local
   P2P-broad tests.
+- `experiments/project_level_p2p_scope_update.md`: transition report for the
+  final `project_level_p2p_broad` standard. It records the completed
+  `httpie_5` project-level manifest, the updated label name
+  `correct_under_f2p_and_p2p_broad`, and the current Luigi project-level P2P
+  blocker.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on
@@ -277,7 +282,7 @@
   P2P-core/P2P-broad stable runnable subsets for a task.
 - `scripts/validate_candidates_with_p2p.py`: validates candidate patches with
   retained oracle plus a P2P-broad scope and emits merged labels such as
-  `correct_under_f2p_p2p` and `incorrect_regression`.
+  `correct_under_f2p_and_p2p_broad` and `incorrect_regression`.
 - `scripts/run_patch_verification_api_pilot.py`: provider-aware runner for the
   small `llm_only` versus `evidence_first` API pilot. The current primary
   provider is DeepSeek official API. It supports config-driven dry-runs and

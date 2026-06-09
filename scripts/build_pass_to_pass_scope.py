@@ -21,6 +21,10 @@ DEFAULT_CORE_PATTERNS = {
 }
 
 
+def is_project_level_path(test_path: str) -> bool:
+    return test_path in {"", ".", "./"}
+
+
 def write_json(path: Path, record: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(record, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -34,6 +38,19 @@ def write_text(path: Path, text: str) -> None:
 def checkout_root(source_root: Path, task_id: str, version: str, project: str) -> Path:
     bug_dir = task_id.replace("bugsinpy_", "")
     return source_root / bug_dir / version / project
+
+
+def discover_test_paths(checkout: Path) -> list[str]:
+    ignored_parts = {".git", ".tox", "build", "dist", "__pycache__"}
+    paths: list[str] = []
+    for path in checkout.rglob("*.py"):
+        relative = path.relative_to(checkout)
+        if any(part in ignored_parts for part in relative.parts):
+            continue
+        name = path.name
+        if name.startswith("test") or name.endswith("_test.py") or name == "tests.py":
+            paths.append(relative.as_posix())
+    return sorted(set(paths))
 
 
 def build_compat_shim(out_dir: Path) -> Path:
@@ -153,6 +170,11 @@ def normalize_nodeid(line: str, test_path: str) -> str | None:
     if "::" not in stripped or ".py" not in stripped:
         return None
     normalized = stripped.replace("\\", "/")
+    if is_project_level_path(test_path):
+        prefix = normalized.split("::", 1)[0]
+        if prefix.endswith(".py"):
+            return normalized
+        return None
     test_path_normalized = test_path.replace("\\", "/")
     marker = f"{test_path_normalized}::"
     if marker in normalized:
@@ -162,39 +184,64 @@ def normalize_nodeid(line: str, test_path: str) -> str | None:
     return None
 
 
+def normalize_project_nodeid(line: str, test_paths: list[str]) -> str | None:
+    stripped = line.strip()
+    if "::" not in stripped or ".py" not in stripped:
+        return None
+    normalized = stripped.replace("\\", "/")
+    for test_path in sorted(test_paths, key=len, reverse=True):
+        marker = f"{test_path}::"
+        if marker in normalized:
+            return marker + normalized.split(marker, 1)[1]
+    return None
+
+
 def collect_tests(
     python: str,
     checkout: Path,
-    test_path: str,
+    test_paths: list[str],
     timeout_seconds: int,
     pythonpath: Path,
+    project_level: bool,
 ) -> tuple[list[str], dict[str, Any]]:
     result = run_command(
-        [python, "-m", "pytest", "--collect-only", "-q", test_path],
+        [python, "-m", "pytest", "--collect-only", "-q", *test_paths],
         cwd=checkout,
         timeout_seconds=timeout_seconds,
         pythonpath=pythonpath,
     )
     tests = []
     for line in result["stdout"].splitlines():
-        nodeid = normalize_nodeid(line, test_path)
+        nodeid = normalize_project_nodeid(line, test_paths) if project_level else normalize_nodeid(line, test_paths[0])
         if nodeid:
             tests.append(nodeid)
     return sorted(set(tests)), compact_result(result)
 
 
 def static_source_segments(checkout: Path, test_path: str, nodeids: list[str]) -> dict[str, str]:
-    test_file = checkout / test_path
-    if not test_file.exists():
-        return {}
-    source = test_file.read_text(encoding="utf-8", errors="replace")
-    tree = ast.parse(source)
     methods: dict[str, str] = {}
-    for class_node in [node for node in ast.walk(tree) if isinstance(node, ast.ClassDef)]:
-        for child in class_node.body:
+    file_paths = sorted({nodeid.split("::", 1)[0] for nodeid in nodeids if "::" in nodeid})
+    if not is_project_level_path(test_path):
+        file_paths = [test_path]
+
+    for relative_file in file_paths:
+        test_file = checkout / relative_file
+        if not test_file.exists():
+            continue
+        source = test_file.read_text(encoding="utf-8", errors="replace")
+        try:
+            tree = ast.parse(source)
+        except SyntaxError:
+            continue
+        for class_node in [node for node in ast.walk(tree) if isinstance(node, ast.ClassDef)]:
+            for child in class_node.body:
+                if isinstance(child, ast.FunctionDef) and child.name.startswith("test_"):
+                    segment = ast.get_source_segment(source, child) or ""
+                    methods[f"{relative_file}::{class_node.name}::{child.name}"] = segment
+        for child in tree.body:
             if isinstance(child, ast.FunctionDef) and child.name.startswith("test_"):
                 segment = ast.get_source_segment(source, child) or ""
-                methods[f"{test_path}::{class_node.name}::{child.name}"] = segment
+                methods[f"{relative_file}::{child.name}"] = segment
     return {nodeid: methods.get(nodeid, "") for nodeid in nodeids}
 
 
@@ -284,6 +331,25 @@ def run_batch_repeated(
     return results
 
 
+def chunks(values: list[Any], chunk_size: int) -> list[list[Any]]:
+    return [values[index : index + chunk_size] for index in range(0, len(values), chunk_size)]
+
+
+def batch_record_groups(records: list[dict[str, Any]], batch_size: int, group_by_file: bool) -> list[list[dict[str, Any]]]:
+    if not group_by_file:
+        return chunks(records, batch_size)
+
+    by_file: dict[str, list[dict[str, Any]]] = {}
+    for record in records:
+        file_path = str(record["nodeid"]).split("::", 1)[0]
+        by_file.setdefault(file_path, []).append(record)
+
+    groups: list[list[dict[str, Any]]] = []
+    for file_path in sorted(by_file):
+        groups.extend(chunks(by_file[file_path], batch_size))
+    return groups
+
+
 def classify_exclusion(nodeid: str, buggy_runs: list[dict[str, Any]], fixed_runs: list[dict[str, Any]]) -> str | None:
     all_runs = buggy_runs + fixed_runs
     if all(run["passed"] for run in all_runs):
@@ -308,6 +374,9 @@ def render_markdown(scope: dict[str, Any]) -> str:
         "## Summary",
         "",
         f"- collected tests: {scope['counts']['collected_tests']}",
+        f"- scope type: {scope['scope_type']}",
+        f"- test path: {scope['test_path']}",
+        f"- stability runs per version: {scope['runs_per_version']}",
         f"- excluded fail-to-pass oracle: {scope['counts']['excluded_fail_to_pass_oracle']}",
         f"- P2P broad tests: {scope['counts']['p2p_broad_tests']}",
         f"- P2P core tests: {scope['counts']['p2p_core_tests']}",
@@ -341,8 +410,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--runs", type=int, default=2)
     parser.add_argument("--timeout-seconds", type=int, default=20)
     parser.add_argument("--batch-timeout-seconds", type=int, default=120)
+    parser.add_argument("--batch-size", type=int, default=50)
+    parser.add_argument("--batch-group-by-file", action="store_true")
     parser.add_argument("--python", default=sys.executable)
     parser.add_argument("--out-dir", required=True)
+    parser.add_argument("--manifest-out")
+    parser.add_argument("--scope-type", choices=["project_level_p2p_broad", "task_file_p2p_broad"])
     parser.add_argument(
         "--static-exclude-token",
         action="append",
@@ -379,8 +452,35 @@ def main() -> None:
     fail_to_pass = set(args.fail_to_pass_nodeid or DEFAULT_FAIL_TO_PASS.get(args.task_id, []))
     core_patterns = args.core_pattern or DEFAULT_CORE_PATTERNS.get(args.task_id, [])
 
-    buggy_tests, buggy_collect = collect_tests(args.python, buggy, args.test_path, args.timeout_seconds, shim_dir)
-    fixed_tests, fixed_collect = collect_tests(args.python, fixed, args.test_path, args.timeout_seconds, shim_dir)
+    scope_type = args.scope_type
+    if scope_type is None:
+        scope_type = "project_level_p2p_broad" if is_project_level_path(args.test_path) else "task_file_p2p_broad"
+
+    if scope_type == "project_level_p2p_broad":
+        buggy_test_paths = discover_test_paths(buggy)
+        fixed_test_paths = discover_test_paths(fixed)
+        test_paths = sorted(set(buggy_test_paths) & set(fixed_test_paths))
+        if not test_paths:
+            raise ValueError(f"no common test files discovered for project-level scope: {args.task_id}")
+    else:
+        test_paths = [args.test_path]
+
+    buggy_tests, buggy_collect = collect_tests(
+        args.python,
+        buggy,
+        test_paths,
+        args.timeout_seconds,
+        shim_dir,
+        project_level=scope_type == "project_level_p2p_broad",
+    )
+    fixed_tests, fixed_collect = collect_tests(
+        args.python,
+        fixed,
+        test_paths,
+        args.timeout_seconds,
+        shim_dir,
+        project_level=scope_type == "project_level_p2p_broad",
+    )
     collected = sorted(set(buggy_tests) & set(fixed_tests))
     all_seen = sorted(set(buggy_tests) | set(fixed_tests))
     source_segments = static_source_segments(buggy, args.test_path, all_seen)
@@ -429,17 +529,42 @@ def main() -> None:
 
     batch_runs: dict[str, Any] | None = None
     if args.batch_first and pending_dynamic:
-        batch_nodeids = [record["nodeid"] for record in pending_dynamic]
-        buggy_batch = run_batch_repeated(args.python, buggy, batch_nodeids, args.runs, args.batch_timeout_seconds, shim_dir)
-        fixed_batch = run_batch_repeated(args.python, fixed, batch_nodeids, args.runs, args.batch_timeout_seconds, shim_dir)
-        batch_runs = {"buggy_runs": buggy_batch, "reference_runs": fixed_batch}
-        if all(run["passed"] for run in buggy_batch + fixed_batch):
-            for record in pending_dynamic:
+        still_pending: list[dict[str, Any]] = []
+        batch_runs = {"chunks": []}
+        for chunk_records in batch_record_groups(pending_dynamic, args.batch_size, args.batch_group_by_file):
+            batch_nodeids = [record["nodeid"] for record in chunk_records]
+            buggy_batch = run_batch_repeated(
+                args.python,
+                buggy,
+                batch_nodeids,
+                args.runs,
+                args.batch_timeout_seconds,
+                shim_dir,
+            )
+            fixed_batch = run_batch_repeated(
+                args.python,
+                fixed,
+                batch_nodeids,
+                args.runs,
+                args.batch_timeout_seconds,
+                shim_dir,
+            )
+            chunk_record = {
+                "nodeid_count": len(batch_nodeids),
+                "buggy_runs": buggy_batch,
+                "reference_runs": fixed_batch,
+                "passed": all(run["passed"] for run in buggy_batch + fixed_batch),
+            }
+            batch_runs["chunks"].append(chunk_record)
+            if not chunk_record["passed"]:
+                still_pending.extend(chunk_records)
+                continue
+            for record in chunk_records:
                 record["exclusion_reason"] = None
                 record["batch_validated"] = True
                 records.append(record)
                 p2p_broad.append(record["nodeid"])
-            pending_dynamic = []
+        pending_dynamic = still_pending
 
     for record in pending_dynamic:
         nodeid = record["nodeid"]
@@ -458,10 +583,16 @@ def main() -> None:
     p2p_core = [nodeid for nodeid in p2p_broad if any(pattern in nodeid for pattern in core_patterns)]
     exclusion_counts = Counter(item["reason"] for item in exclusions)
     scope = {
+        "scope_id": f"{args.task_id}_{scope_type}",
+        "scope_type": scope_type,
         "task_id": args.task_id,
         "project": args.project,
         "test_path": args.test_path,
+        "test_paths": test_paths,
         "runs_per_version": args.runs,
+        "stability_runs": args.runs,
+        "buggy_baseline_pass_required": True,
+        "reference_patch_pass_required": True,
         "timeout_seconds": args.timeout_seconds,
         "compat_shim": {
             "enabled": True,
@@ -471,6 +602,7 @@ def main() -> None:
         "collection": {
             "buggy": buggy_collect,
             "reference": fixed_collect,
+            "discovered_test_files": len(test_paths),
             "buggy_collected_count": len(buggy_tests),
             "reference_collected_count": len(fixed_tests),
         },
@@ -487,6 +619,15 @@ def main() -> None:
             "collected_tests": len(all_seen),
             "common_collected_tests": len(collected),
             "excluded_fail_to_pass_oracle": exclusion_counts.get("excluded_fail_to_pass_oracle", 0),
+            "excluded_uncollectable": exclusion_counts.get("excluded_collection_mismatch", 0),
+            "excluded_external_dependency": sum(
+                count
+                for reason, count in exclusion_counts.items()
+                if "external_dependency" in reason or "network" in reason
+            ),
+            "excluded_timeout": exclusion_counts.get("excluded_timeout", 0),
+            "excluded_flaky": exclusion_counts.get("excluded_unstable", 0),
+            "included_p2p_tests": len(p2p_broad),
             "p2p_broad_tests": len(p2p_broad),
             "p2p_core_tests": len(p2p_core),
             "exclusion_reason_counts": dict(sorted(exclusion_counts.items())),
@@ -494,6 +635,8 @@ def main() -> None:
     }
     write_json(out_dir / "p2p_scope.json", scope)
     write_text(out_dir / "p2p_scope.md", render_markdown(scope))
+    if args.manifest_out:
+        write_json(Path(args.manifest_out), scope)
     print(json.dumps(scope["counts"], ensure_ascii=False, indent=2, sort_keys=True))
 
 

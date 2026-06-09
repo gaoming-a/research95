@@ -700,7 +700,7 @@ This file starts fresh for the patch-verification project.
   excluded, 13 external-network tests were excluded, and 3 stable local
   P2P-broad tests remained.
 - `scripts/validate_candidates_with_p2p.py` labeled the 6 current candidates:
-  one `correct_under_f2p_p2p` reference patch and five
+  one `correct_under_f2p_and_p2p_broad` reference patch and five
   `incorrect_issue_not_fixed` candidates.
 - Rule: P2P-broad is an environment-specific stable runnable subset. Always
   report collection counts and exclusion reasons; do not describe it as the
@@ -723,3 +723,28 @@ This file starts fresh for the patch-verification project.
 - Boundary: current Luigi P2P-broad scopes are task-file stable subsets, not a
   project-wide Luigi regression suite. This needs a final design decision
   before claiming project-wide P2P coverage.
+
+## 2026-06-10 project-level P2P-broad rebuild
+
+- Final main labels should use `project_level_p2p_broad`, not task-file P2P
+  scopes. Task-file scopes remain useful for smoke checks and appendix
+  discussion only.
+- `scripts/build_pass_to_pass_scope.py` now supports project-level test-file
+  discovery, checkout-independent nodeid normalization, manifest output,
+  Windows-safe batch chunking, and file-grouped batch validation.
+- Legacy projects may not collect tests with `pytest .`. For `httpie_5`, the
+  script must explicitly discover `tests.py`; otherwise project-level collection
+  returns zero tests even though `tests/tests.py` is valid.
+- `httpie_5` project-level P2P-broad completed with 17 collected tests, 1
+  fail-to-pass oracle exclusion, 13 external-dependency exclusions, and 3
+  included P2P-broad tests over 3 stability runs per version.
+- `validate_candidates_with_p2p.py` now emits
+  `correct_under_f2p_and_p2p_broad` for the positive final label.
+- Luigi project-level P2P is not just a matter of using the task-file command on
+  a larger path. Luigi 3 discovers 113 test files and 904 nodeids, with 44
+  collection errors in external-service/contrib areas. Two construction attempts
+  exceeded local execution limits even after file-grouped batching.
+- Do not silently downgrade Luigi to task-file P2P for final labels. Either
+  build collection-error manifests plus stability caches for strict
+  project-level P2P, or mark Luigi as `project_level_p2p_pending` and use
+  smaller replacement tasks for final project-level main labels.

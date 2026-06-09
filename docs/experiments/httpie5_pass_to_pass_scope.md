@@ -57,7 +57,7 @@ P2P-broad:
 
 | label with P2P-broad | count |
 |---|---:|
-| `correct_under_f2p_p2p` | 1 |
+| `correct_under_f2p_and_p2p_broad` | 1 |
 | `incorrect_issue_not_fixed` | 5 |
 
 No candidate currently falls into `incorrect_regression`: the only candidate

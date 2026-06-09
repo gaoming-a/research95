@@ -112,7 +112,7 @@ def final_label(patch_applied: bool, oracle_passed: bool, p2p_passed: bool) -> s
         return "incorrect_issue_not_fixed"
     if not p2p_passed:
         return "incorrect_regression"
-    return "correct_under_f2p_p2p"
+    return "correct_under_f2p_and_p2p_broad"
 
 
 def validate_candidate(
