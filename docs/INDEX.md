@@ -83,6 +83,10 @@
 - `experiments/qwen_httpie5_strict_agent_attempt.md`: tracked result for the
   Qwen strict-mode retry on `bugsinpy_httpie_5`. Qwen returned JSON edit plans,
   but exact `find` matching failed, so no candidate was admitted.
+- `experiments/httpie5_task_stability_accounting.md`: retained-oracle stability
+  audit and task-level generation accounting for `bugsinpy_httpie_5`. It
+  classifies the task as `hard_generation_case` and marks broad pass-to-pass
+  regression stability as not yet measured.
 - `experiments/patch_evidence_bench_schema.md`: long-term expanded benchmark
   schema for
   TaskRecord, PatchRecord, EvidencePacket, ValidationOutcome, and
@@ -258,6 +262,9 @@
 - `scripts/validate_patch_candidates.py`: no-API executable validator that
   copies retained buggy checkouts, applies candidate patches, and runs retained
   oracles.
+- `scripts/build_task_generation_accounting.py`: builds task-level generation
+  accounting records from validation reports, relabeled generated candidates,
+  and generation prompt manifests.
 - `scripts/run_patch_verification_api_pilot.py`: provider-aware runner for the
   small `llm_only` versus `evidence_first` API pilot. The current primary
   provider is DeepSeek official API. It supports config-driven dry-runs and

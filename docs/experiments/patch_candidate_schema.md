@@ -169,7 +169,8 @@ Required fields for expanded studies:
   "environment_stable": true,
   "reference_patch_valid": true,
   "buggy_failure_reproducible": true,
-  "pass_to_pass_stable": true,
+  "pass_to_pass_stable": null,
+  "pass_to_pass_stability_note": "not_measured_by_current_patch_verification_oracle",
   "validation_runtime_seconds": 12.4,
   "generator_attempts": 4,
   "num_ai_patches_generated": 3,
@@ -204,6 +205,8 @@ Rules:
 
 - A task may remain in the main experiment when the generator fails, as long as
   validation is stable and reference labels are reliable.
+- `pass_to_pass_stable` may be `null` in interim retained-oracle audits, but a
+  final expanded study should define and run a pass-to-pass check set.
 - A task should be excluded only when reproducible validation criteria fail.
 - Exclusion because a model failed to solve a task is not allowed.
 - Non-applicable generated patches may be retained as a failure type, but their

@@ -669,3 +669,20 @@ This file starts fresh for the patch-verification project.
   one constructed partial/control patch.
 - Rule: dataset balance is required at the dataset level, not per bug. Each bug
   does not need an AI-generated correct repair.
+
+## 2026-06-09 httpie5 task accounting audit
+
+- Rebuilt a single-task `httpie_5` slice and validated it twice. Both runs
+  produced 6/6 validated labels: one reference patch passed the retained oracle,
+  and five negative/control candidates failed as expected.
+- Added `scripts/build_task_generation_accounting.py` to merge validation
+  records, relabeled generated candidates, and prompt manifests into task-level
+  accounting metadata.
+- Current `httpie_5` accounting: 7 generation attempts, 3 admitted generated
+  patches, 1 applicable incorrect patch, 2 environment-invalid patches, and 0
+  correct generated patches.
+- Decision: keep `httpie_5` as `hard_generation_case` with capped candidate
+  weight. Do not use it as a main generation success case.
+- Boundary: broad pass-to-pass regression stability is not separately measured
+  by the current retained-oracle audit. Do not describe `httpie_5` as fully
+  regression-stability audited until a pass-to-pass suite is defined.

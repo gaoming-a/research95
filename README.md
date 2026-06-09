@@ -102,6 +102,9 @@ They should not override `final_paper_roadmap_zh.md`.
   be rebuilt around validation-stable real bugs; `httpie_5` is a
   hard-generation/stress case if its reference validation remains stable, not a
   required generator-success task.
+- The `httpie_5` stability/accounting audit confirms retained-oracle label
+  stability and classifies the task as `hard_generation_case`; broad
+  pass-to-pass regression stability is not yet separately measured.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

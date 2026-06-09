@@ -1273,3 +1273,69 @@ Qwen 初次结果：
 - 每出现 1 个 generator-unsolved hard case，应补充 1-2 个 validation-stable
   replacement tasks，保证主实验数据集层面正负样本平衡。
 - non-applicable patches 主实验占比应控制在 10-15% 以内。
+
+## 10. 2026-06-09 task stability and accounting execution
+
+本轮目标：
+
+- 执行最终 roadmap 的下一步：先检查 `httpie_5` validation stability，而不是继续
+  生成 patch。
+- 将 task-level generation accounting 从文档规则落成可复用脚本和 tracked
+  报告。
+- 根据结果决定 `httpie_5` 的角色：included hard-generation case / excluded
+  unstable task。
+
+执行边界：
+
+- 不调用模型 API。
+- 不继续重试 `httpie_5` patch generation。
+- 不删除历史结果。
+- 不把 generator failure 当作 task exclusion reason。
+
+计划：
+
+1. 基于现有 `httpie_stage_ab_001` candidates，单独抽取并重复验证
+   `bugsinpy_httpie_5` candidates。
+2. 检查 reference candidate 是否通过 oracle，negative/control candidates 是否
+   按预期失败，所有候选是否 apply/oracle 可复现。
+3. 新增 task accounting 脚本，汇总 validation stability、reference validity、
+   generator attempts/applicable/correct/incorrect counts 和 task role。
+4. 写 tracked 报告，明确 `httpie_5` 是否保留为 hard-generation/stress case。
+5. 更新 README、INDEX、经验文档、本计划，运行质量门并同步 GitHub。
+
+执行结果：
+
+- 已生成 `outputs/httpie5_stability_audit_001` 单任务 dataset slice：
+  - candidates = 6；
+  - correct reference = 1；
+  - buggy/no-op = 1；
+  - irrelevant = 1；
+  - partial fix = 3。
+- 已运行两次 validation：
+  - run1: 6/6 validated，patch applied 6/6，oracle ran 6/6，oracle passed 1/6；
+  - run2: 6/6 validated，patch applied 6/6，oracle ran 6/6，oracle passed 1/6。
+- 已新增 `scripts/build_task_generation_accounting.py`。
+- 已生成 `outputs/task_generation_accounting/httpie5_task_accounting.jsonl`：
+  - `task_role = hard_generation_case`；
+  - `generation_status = unsolved`；
+  - `main_experiment_included = true`；
+  - `generator_attempts = 7`；
+  - `num_ai_patches_generated = 3`；
+  - `num_ai_patches_applicable = 1`；
+  - `num_ai_patches_correct = 0`；
+  - `num_ai_patches_incorrect = 1`；
+  - `num_ai_patches_environment_invalid = 2`。
+- 已新增 `docs/experiments/httpie5_task_stability_accounting.md`。
+
+结论：
+
+- `httpie_5` 在 retained-oracle candidate-label 层面稳定，可以保留在主实验中。
+- 它不应作为 generator success case，而应作为 capped hard-generation/stress
+  case。
+- 目前不能声称它已完成完整 pass-to-pass regression stability audit，因为当前
+  pipeline 没有单独定义 pass-to-pass check set。
+
+阻塞/需确认：
+
+- 若下一步要把 `httpie_5` 从 retained-oracle stability 提升为完整
+  validation-stable task，需要定义 pass-to-pass regression suite 的来源和范围。
