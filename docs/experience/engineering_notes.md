@@ -748,3 +748,47 @@ This file starts fresh for the patch-verification project.
   build collection-error manifests plus stability caches for strict
   project-level P2P, or mark Luigi as `project_level_p2p_pending` and use
   smaller replacement tasks for final project-level main labels.
+
+## 2026-06-10 Luigi freeze and cohort gating
+
+- Final decision: do not continue brute-force Luigi project-level P2P in the
+  current phase. Mark Luigi as `pending_blocked`, retain task-file P2P only as
+  appendix/smoke evidence, and prioritize smaller replacement tasks with
+  completed project-level P2P-broad manifests.
+- Added `data/cohorts/task_cohort_registry.json` as the tracked source of truth
+  for main-cohort inclusion. Current state: `bugsinpy_httpie_5` is
+  `p2p_broad_main`; `bugsinpy_luigi_3` and `bugsinpy_luigi_4` are
+  `blocked_or_pending` plus `p2p_local_smoke`.
+- Main metrics should include only tasks where
+  `project_level_p2p_status == completed` and `p2p_broad_main_included is
+  true`.
+- `scripts/analyze_patch_verification.py` now applies this filter by default
+  when the cohort registry exists. Use `--no-cohort-filter` only for appendix or
+  diagnostic runs.
+- `scripts/build_task_generation_accounting.py` now reads the same cohort
+  registry and overrides `main_experiment_included` for blocked tasks, so Luigi
+  task-file labels do not leak into final main accounting.
+
+## 2026-06-10 bounded replacement sweep
+
+- Tried `bugsinpy_httpie_1` through `bugsinpy_httpie_4` as quick replacement
+  candidates because they already existed in the Stage A/B validated `httpie`
+  slice.
+- Updated test discovery to ignore bundled virtual environments (`env`, `venv`,
+  `.venv`) after `httpie_1` initially exposed hundreds of dependency package
+  tests from `env/Lib/site-packages`.
+- Updated project-level collection to run per test file. A single collection
+  error should not erase all otherwise collectable nodeids for a project.
+- `httpie_1` remains blocked because its tests require the real
+  `pytest_httpbin` plugin from `tests/conftest.py`. Do not fake this fixture for
+  main labels; it changes the test environment semantics.
+- `httpie_4` needed additional old `requests.compat` fields such as
+  `is_windows`, `is_py3`, and `bytes`. This compatibility shim is acceptable
+  because it restores removed compatibility constants, but the project-level
+  scope still exceeded the bounded sweep runtime.
+- `httpie_2` and `httpie_3` also exceeded the bounded project-level P2P runtime.
+  They are recorded as `pending_blocked`, not silently removed.
+- Current lesson: replacement-task screening should happen before candidate
+  expansion. Prefer projects with no required service fixtures, no bundled
+  virtualenv inside the checkout, and project-level collection that finishes
+  within the predefined budget.

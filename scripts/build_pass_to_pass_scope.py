@@ -41,7 +41,16 @@ def checkout_root(source_root: Path, task_id: str, version: str, project: str) -
 
 
 def discover_test_paths(checkout: Path) -> list[str]:
-    ignored_parts = {".git", ".tox", "build", "dist", "__pycache__"}
+    ignored_parts = {
+        ".git",
+        ".tox",
+        ".venv",
+        "build",
+        "dist",
+        "__pycache__",
+        "env",
+        "venv",
+    }
     paths: list[str] = []
     for path in checkout.rglob("*.py"):
         relative = path.relative_to(checkout)
@@ -90,8 +99,14 @@ def build_compat_shim(out_dir: Path) -> Path:
                 "    import requests.compat",
                 "    if not hasattr(requests.compat, 'is_py26'):",
                 "        requests.compat.is_py26 = False",
+                "    if not hasattr(requests.compat, 'is_py3'):",
+                "        requests.compat.is_py3 = True",
+                "    if not hasattr(requests.compat, 'is_windows'):",
+                "        requests.compat.is_windows = sys.platform.startswith('win')",
                 "    if not hasattr(requests.compat, 'str'):",
                 "        requests.compat.str = builtins.str",
+                "    if not hasattr(requests.compat, 'bytes'):",
+                "        requests.compat.bytes = builtins.bytes",
                 "except Exception:",
                 "    pass",
                 "",
@@ -216,6 +231,51 @@ def collect_tests(
         if nodeid:
             tests.append(nodeid)
     return sorted(set(tests)), compact_result(result)
+
+
+def collect_tests_by_file(
+    python: str,
+    checkout: Path,
+    test_paths: list[str],
+    timeout_seconds: int,
+    pythonpath: Path,
+) -> tuple[list[str], dict[str, Any]]:
+    tests: list[str] = []
+    files: list[dict[str, Any]] = []
+    for test_path in test_paths:
+        result = run_command(
+            [python, "-m", "pytest", "--collect-only", "-q", test_path],
+            cwd=checkout,
+            timeout_seconds=timeout_seconds,
+            pythonpath=pythonpath,
+        )
+        nodeids = []
+        for line in result["stdout"].splitlines():
+            nodeid = normalize_project_nodeid(line, [test_path])
+            if nodeid:
+                nodeids.append(nodeid)
+        compact = compact_result(result)
+        compact["test_path"] = test_path
+        compact["collected_count"] = len(nodeids)
+        compact["collection_error"] = result["exit_code"] not in {0, 5}
+        files.append(compact)
+        tests.extend(nodeids)
+    summary = {
+        "command": [python, "-m", "pytest", "--collect-only", "-q", "<per-file>"],
+        "exit_code": 0 if all(not item["collection_error"] for item in files) else 2,
+        "elapsed_seconds": round(sum(float(item.get("elapsed_seconds") or 0.0) for item in files), 3),
+        "timeout": any(bool(item.get("timeout")) for item in files),
+        "stdout_tail": "",
+        "stderr_tail": "",
+        "collection_mode": "per_file",
+        "test_file_count": len(test_paths),
+        "collection_error_files": [
+            item["test_path"] for item in files if item["collection_error"]
+        ],
+        "collection_error_count": sum(1 for item in files if item["collection_error"]),
+        "files": files,
+    }
+    return sorted(set(tests)), summary
 
 
 def static_source_segments(checkout: Path, test_path: str, nodeids: list[str]) -> dict[str, str]:
@@ -465,22 +525,38 @@ def main() -> None:
     else:
         test_paths = [args.test_path]
 
-    buggy_tests, buggy_collect = collect_tests(
-        args.python,
-        buggy,
-        test_paths,
-        args.timeout_seconds,
-        shim_dir,
-        project_level=scope_type == "project_level_p2p_broad",
-    )
-    fixed_tests, fixed_collect = collect_tests(
-        args.python,
-        fixed,
-        test_paths,
-        args.timeout_seconds,
-        shim_dir,
-        project_level=scope_type == "project_level_p2p_broad",
-    )
+    if scope_type == "project_level_p2p_broad":
+        buggy_tests, buggy_collect = collect_tests_by_file(
+            args.python,
+            buggy,
+            test_paths,
+            args.timeout_seconds,
+            shim_dir,
+        )
+        fixed_tests, fixed_collect = collect_tests_by_file(
+            args.python,
+            fixed,
+            test_paths,
+            args.timeout_seconds,
+            shim_dir,
+        )
+    else:
+        buggy_tests, buggy_collect = collect_tests(
+            args.python,
+            buggy,
+            test_paths,
+            args.timeout_seconds,
+            shim_dir,
+            project_level=False,
+        )
+        fixed_tests, fixed_collect = collect_tests(
+            args.python,
+            fixed,
+            test_paths,
+            args.timeout_seconds,
+            shim_dir,
+            project_level=False,
+        )
     collected = sorted(set(buggy_tests) & set(fixed_tests))
     all_seen = sorted(set(buggy_tests) | set(fixed_tests))
     source_segments = static_source_segments(buggy, args.test_path, all_seen)
@@ -620,6 +696,10 @@ def main() -> None:
             "common_collected_tests": len(collected),
             "excluded_fail_to_pass_oracle": exclusion_counts.get("excluded_fail_to_pass_oracle", 0),
             "excluded_uncollectable": exclusion_counts.get("excluded_collection_mismatch", 0),
+            "collection_error_files": max(
+                int(buggy_collect.get("collection_error_count") or 0),
+                int(fixed_collect.get("collection_error_count") or 0),
+            ),
             "excluded_external_dependency": sum(
                 count
                 for reason, count in exclusion_counts.items()

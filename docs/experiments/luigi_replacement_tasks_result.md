@@ -81,6 +81,20 @@ constructed.
 
 ## Decision
 
-`bugsinpy_luigi_3` and `bugsinpy_luigi_4` are suitable replacement tasks for the
-main experiment set. They help balance `httpie_5`, which remains a
-hard-generation/stress case.
+`bugsinpy_luigi_3` and `bugsinpy_luigi_4` are suitable appendix/smoke examples,
+but they are not part of the final `p2p_broad_main` cohort.
+
+After the project-level P2P standard was adopted, `bugsinpy_luigi_3` exposed a
+large-suite blocker: 113 test files, 904 collected nodeids, 44 collection
+errors, and two bounded project-level scope attempts that did not complete.
+Therefore Luigi is recorded as `pending_blocked` rather than silently removed or
+misreported as project-level complete.
+
+The tracked cohort registry is:
+
+```text
+data/cohorts/task_cohort_registry.json
+```
+
+Main regression-aware metrics must exclude these Luigi task-file labels unless
+a future project-level P2P-broad manifest is completed.

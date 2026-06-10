@@ -19,6 +19,10 @@
   edits, or Git sync work.
 - `plans/current_plan.md`: English companion plan. It is useful for bilingual
   handoff context, but `plans/current_plan_zh.md` is the stricter execution log.
+- `../data/cohorts/task_cohort_registry.json`: tracked cohort registry for the
+  final project-level P2P main metrics. Only tasks with completed
+  `project_level_p2p_broad` and `p2p_broad_main_included = true` enter the
+  default `p2p_broad_main` metrics.
 
 ## Historical Plan References
 
@@ -96,6 +100,10 @@
   `httpie_5` project-level manifest, the updated label name
   `correct_under_f2p_and_p2p_broad`, and the current Luigi project-level P2P
   blocker.
+- `experiments/p2p_feasibility_sweep_update.md`: bounded replacement-task
+  feasibility sweep after freezing Luigi. It records that `httpie_1` to
+  `httpie_4` did not become new `p2p_broad_main` tasks under the current
+  project-level P2P budget and why they are retained as blocked accounting.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on
@@ -271,13 +279,16 @@
   experiment run-record generation, Git handoff safety, readiness audits, paper
   readiness, and anonymous artifact dry-run.
 - `scripts/analyze_patch_verification.py`: patch-verification metrics analyzer
-  for verifier outputs.
+  for verifier outputs. By default, it reads
+  `data/cohorts/task_cohort_registry.json` and filters metrics to the
+  `p2p_broad_main` task cohort; use `--no-cohort-filter` only for diagnostic or
+  appendix analyses.
 - `scripts/validate_patch_candidates.py`: no-API executable validator that
   copies retained buggy checkouts, applies candidate patches, and runs retained
   oracles.
 - `scripts/build_task_generation_accounting.py`: builds task-level generation
   accounting records from validation reports, relabeled generated candidates,
-  and generation prompt manifests.
+  generation prompt manifests, and the tracked task cohort registry.
 - `scripts/build_pass_to_pass_scope.py`: collects project tests and builds
   P2P-core/P2P-broad stable runnable subsets for a task.
 - `scripts/validate_candidates_with_p2p.py`: validates candidate patches with

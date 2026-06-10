@@ -1,0 +1,222 @@
+{
+  "cohort_definitions": {
+    "blocked_or_pending": "Tasks whose project-level P2P-broad construction is pending or blocked; excluded from main regression-aware metrics.",
+    "p2p_broad_main": "Tasks with completed project-level P2P-broad manifests and main-metric inclusion enabled.",
+    "p2p_local_smoke": "Tasks with task-file or local P2P evidence only; appendix or smoke evidence, not final main labels.",
+    "retained_oracle_only": "Tasks with stable retained fail-to-pass oracle labels but no completed project-level P2P-broad scope."
+  },
+  "default_main_filter": {
+    "project_level_p2p_status": "completed",
+    "p2p_broad_main_included": true
+  },
+  "tasks": [
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "available",
+        "task_file_level_p2p": "available"
+      },
+      "blocked_reason": [],
+      "cohorts": [
+        "p2p_broad_main"
+      ],
+      "label_scope": {
+        "appendix": null,
+        "main": "project_level_p2p_broad"
+      },
+      "notes": "Project-level P2P-broad contains three stable tests after excluding the retained F2P oracle and external-network tests; do not claim comprehensive regression coverage.",
+      "p2p_broad_main_included": true,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_httpie_5_p2p_broad.json",
+      "project": "httpie",
+      "project_level_p2p_status": "completed",
+      "task_id": "bugsinpy_httpie_5"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "missing_pytest_httpbin_dependency",
+        "project_level_collection_errors"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": 19,
+        "nodeids": 0,
+        "test_files": 19
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Project-level collection fails because tests/conftest.py imports pytest_httpbin; do not fabricate this fixture for main labels.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "httpie",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_httpie_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "project_level_scope_timeout"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "test_files": null
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Project-level P2P construction exceeded the bounded sweep timeout and was stopped.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "httpie",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_httpie_2"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "project_level_scope_timeout"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "test_files": null
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Project-level P2P construction exceeded the bounded sweep timeout and was stopped.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "httpie",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_httpie_3"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "legacy_requests_compatibility",
+        "project_level_scope_timeout"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": 15,
+        "nodeids": 0,
+        "test_files": 15
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Initial collection failed on missing requests.compat.is_windows; after compatibility shim update, project-level construction still exceeded the bounded sweep timeout.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "httpie",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_httpie_4"
+    },
+    {
+      "appendix_smoke_included": true,
+      "attempts": [
+        {
+          "attempt_id": 1,
+          "completed": false,
+          "elapsed_minutes": 15
+        },
+        {
+          "attempt_id": 2,
+          "completed": false,
+          "elapsed_minutes": 20
+        }
+      ],
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "available"
+      },
+      "blocked_reason": [
+        "large_project_test_suite",
+        "collection_errors",
+        "project_level_scope_timeout"
+      ],
+      "cohorts": [
+        "blocked_or_pending",
+        "p2p_local_smoke"
+      ],
+      "collection_summary": {
+        "collection_errors": 44,
+        "nodeids": 904,
+        "test_files": 113
+      },
+      "label_scope": {
+        "appendix": "task_file_smoke_only",
+        "main": "not_included"
+      },
+      "notes": "Task-file P2P evidence is retained only as appendix/smoke evidence; this task must not enter regression-aware main metrics until project-level P2P-broad completes.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "luigi",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_luigi_3"
+    },
+    {
+      "appendix_smoke_included": true,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "available"
+      },
+      "blocked_reason": [
+        "project_level_scope_not_attempted_after_luigi_3_blocker",
+        "shared_large_project_test_suite"
+      ],
+      "cohorts": [
+        "blocked_or_pending",
+        "p2p_local_smoke"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "test_files": 113
+      },
+      "label_scope": {
+        "appendix": "task_file_smoke_only",
+        "main": "not_included"
+      },
+      "notes": "Task-file P2P evidence is retained only as appendix/smoke evidence; project-level P2P was not continued after the shared Luigi project-level blocker was confirmed.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "luigi",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_luigi_4"
+    }
+  ]
+}

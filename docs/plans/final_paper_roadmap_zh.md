@@ -314,6 +314,21 @@ stability。
   实验标准。Luigi project-level scope 当前需要单独解决全项目测试量、收集
   错误和长运行时间问题后才能进入最终主实验标签。
 
+当前 cohort 决策：
+
+- 主实验只使用 `p2p_broad_main` cohort：
+  - `project_level_p2p_status == completed`；
+  - `p2p_broad_main_included == true`。
+- `bugsinpy_httpie_5` 当前进入 `p2p_broad_main`。
+- `bugsinpy_luigi_3` / `bugsinpy_luigi_4` 当前标记为
+  `pending_blocked`，task-file P2P 结果只保留为 appendix/smoke evidence，
+  不参与最终 regression-aware 主指标。
+- `bugsinpy_httpie_1` 到 `bugsinpy_httpie_4` 已经过 bounded feasibility
+  sweep，但当前未进入 `p2p_broad_main`：阻塞原因包括缺少真实
+  `pytest_httpbin` 测试依赖、legacy compatibility 和 project-level scope
+  timeout。
+- cohort registry 为 `data/cohorts/task_cohort_registry.json`。
+
 ## 4. Evidence 与 hidden evaluator 分离
 
 这是论文科学性的底线。

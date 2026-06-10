@@ -1563,3 +1563,93 @@ Qwen 初次结果：
 - 或者将 Luigi 任务暂时标记为 `project_level_p2p_pending`，保留 task-file
   P2P 结果作为 appendix/smoke evidence，并优先换用更小、更容易构造
   project-level P2P-broad 的替代任务。
+
+## 14. 2026-06-10 Luigi freeze and main-cohort filtering
+
+本轮目标：
+
+- 执行最终决策：不继续死磕 Luigi project-level P2P。
+- 将 Luigi 标记为：
+  - `project_level_p2p_status = pending_blocked`；
+  - `p2p_broad_main_included = false`；
+  - `appendix_smoke_included = true`；
+  - task-file P2P 仅作为 appendix/smoke evidence。
+- 建立主实验 cohort 过滤规则：
+  - 只有 `project_level_p2p_status == completed` 且
+    `p2p_broad_main_included == true` 的任务进入主指标。
+- 确保 metrics 脚本默认不把 Luigi 的 incomplete project-level P2P 状态混入
+  `p2p_broad_main`。
+
+执行边界：
+
+- 不再运行 Luigi project-level P2P。
+- 不删除 Luigi；必须保留 blocked accounting，避免隐性 cherry-picking。
+- 不把 task-file P2P 结果重命名成 project-level P2P 结果。
+- 不调用模型 API。
+
+计划步骤：
+
+1. 新增 tracked task cohort registry。
+2. 修改 metrics filter，默认只统计 `p2p_broad_main` cohort。
+3. 更新报告、README、索引、经验文档和最终路线。
+4. 运行本地检查后提交并推送。
+
+追加执行：
+
+- 按替代任务筛选原则，优先尝试已有 Stage A/B 验证闭环的
+  `bugsinpy_httpie_1` 到 `bugsinpy_httpie_4`。
+- 理由：
+  - 同属已验证 `httpie_stage_ab_001`；
+  - 已有 retained fail-to-pass oracle / candidates / validation records；
+  - 项目测试规模相对 Luigi 小；
+  - 有机会快速补足 3-5 个 `project_level_p2p_broad` 成功任务。
+- 对每个任务执行：
+  1. 构造 project-level P2P-broad manifest；
+  2. 若 scope 完成且 P2P-broad size >= 3，则加入 cohort registry；
+  3. 用对应 manifest 重新验证该 task 的 candidates；
+  4. 若 scope 阻塞，则记录为 `pending_blocked`，不进入主指标。
+
+执行结果：
+
+- 已新增 `data/cohorts/task_cohort_registry.json`：
+  - `bugsinpy_httpie_5` 进入 `p2p_broad_main`；
+  - `bugsinpy_luigi_3` / `bugsinpy_luigi_4` 进入
+    `blocked_or_pending` + `p2p_local_smoke`；
+  - `bugsinpy_httpie_1` 到 `bugsinpy_httpie_4` 均记录为
+    `pending_blocked`。
+- 已修改 `scripts/analyze_patch_verification.py`：
+  - 默认读取 `data/cohorts/task_cohort_registry.json`；
+  - 默认只统计满足 `project_level_p2p_status == completed` 且
+    `p2p_broad_main_included == true` 的任务；
+  - `--no-cohort-filter` 仅用于 appendix/diagnostic。
+- 已修改 `scripts/build_task_generation_accounting.py`：
+  - 读取同一份 cohort registry；
+  - blocked 任务覆盖为 `task_role = blocked_or_pending`；
+  - blocked 任务不再进入 `main_experiment_included`。
+- 已对 accounting 做本地验证：
+  - `task_count = 3`；
+  - `main_experiment_included_count = 1`；
+  - `task_role_counts = {"main_balanced_task": 1, "blocked_or_pending": 2}`。
+- 替代任务 sweep 结果：
+  - `httpie_1`: 19 个测试文件全部 collection error，原因是缺少真实
+    `pytest_httpbin` 测试依赖；
+  - `httpie_2`: project-level scope 构造超过限定预算，被终止；
+  - `httpie_3`: project-level scope 构造超过限定预算，被终止；
+  - `httpie_4`: 初始缺旧版 `requests.compat.is_windows`；补兼容 shim 后仍超过
+    限定预算，被终止。
+- 已新增 `docs/experiments/p2p_feasibility_sweep_update.md`。
+
+当前结论：
+
+- 当前 `p2p_broad_main` cohort 仍只有 `bugsinpy_httpie_5`。
+- 不应降低 project-level P2P 标准。
+- 下一步应换项目进行 bounded feasibility sweep，优先选择没有重型 pytest
+  fixture、没有外部服务依赖、collection 能在 5-8 分钟内完成的任务。
+
+本轮检查：
+
+- `python -m json.tool data\cohorts\task_cohort_registry.json` 通过；
+- `python -m json.tool data\p2p_scopes\bugsinpy_httpie_5_p2p_broad.json` 通过；
+- `python -m py_compile` 覆盖相关脚本通过；
+- `git diff --check` 通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\cohort_gating_latest.json --out-md outputs\local_quality_gate\cohort_gating_latest.md` 通过。

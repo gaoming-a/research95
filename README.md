@@ -113,6 +113,15 @@ They should not override `final_paper_roadmap_zh.md`.
   `f2p_plus_p2p_broad` labels. Their current P2P scope is task-file based, not a
   project-wide Luigi regression suite; they are not final project-level P2P
   main-label evidence until the Luigi project-level scope blocker is resolved.
+- Main regression-aware metrics are now cohort-gated by
+  `data/cohorts/task_cohort_registry.json`. The current `p2p_broad_main` cohort
+  includes `bugsinpy_httpie_5`; Luigi tasks are `pending_blocked` and retained
+  only as appendix/smoke evidence.
+- A bounded replacement sweep tried `bugsinpy_httpie_1` through
+  `bugsinpy_httpie_4`; none entered `p2p_broad_main` under the current
+  project-level P2P budget because of missing `pytest_httpbin`, legacy
+  compatibility, or scope timeout blockers. These are recorded in the cohort
+  registry instead of being silently discarded.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

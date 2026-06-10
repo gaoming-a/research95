@@ -17,6 +17,8 @@ env/
 data/
 !data/
 data/*
+!data/cohorts/
+!data/cohorts/*.json
 !data/p2p_scopes/
 !data/p2p_scopes/*.json
 outputs/

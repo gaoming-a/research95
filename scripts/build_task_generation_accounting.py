@@ -7,6 +7,9 @@ from pathlib import Path
 from typing import Any
 
 
+DEFAULT_TASK_COHORTS = Path("data/cohorts/task_cohort_registry.json")
+
+
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
     for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
@@ -76,6 +79,25 @@ def load_p2p_scopes(paths: list[str]) -> dict[str, dict[str, Any]]:
     return scopes
 
 
+def load_task_cohorts(path_text: str | None) -> dict[str, dict[str, Any]]:
+    if not path_text:
+        return {}
+    path = Path(path_text)
+    if not path.exists():
+        return {}
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must contain a JSON object")
+    tasks = value.get("tasks", [])
+    if not isinstance(tasks, list):
+        raise ValueError(f"{path} tasks must be a list")
+    records: dict[str, dict[str, Any]] = {}
+    for task in tasks:
+        if isinstance(task, dict) and isinstance(task.get("task_id"), str):
+            records[task["task_id"]] = task
+    return records
+
+
 def generation_status(attempts: int, generated: int, applicable: int, correct: int) -> str:
     if attempts == 0 and generated == 0:
         return "not_attempted"
@@ -107,6 +129,7 @@ def build_task_record(
     generation_attempts: int,
     p2p_scope: dict[str, Any] | None,
     p2p_records: list[dict[str, Any]],
+    cohort_record: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     projects = {str(record.get("project")) for record in validation_records if record.get("project")}
     project = sorted(projects)[0] if projects else None
@@ -147,7 +170,8 @@ def build_task_record(
     p2p_broad_size = len(p2p_scope.get("p2p_broad_tests", [])) if p2p_scope else 0
     p2p_core_size = len(p2p_scope.get("p2p_core_tests", [])) if p2p_scope else 0
     p2p_completed = p2p_scope is not None and p2p_broad_size > 0
-    return {
+    default_main_included = environment_stable and reference_patch_valid
+    record = {
         "task_id": task_id,
         "project": project,
         "bug_id": task_id.replace("bugsinpy_", "").rsplit("_", 1)[-1],
@@ -183,9 +207,32 @@ def build_task_record(
         "num_ai_patches_environment_invalid": environment_invalid,
         "generation_status": status,
         "task_role": task_role(environment_stable, reference_patch_valid, status),
-        "main_experiment_included": environment_stable and reference_patch_valid,
-        "exclusion_reason": None if environment_stable and reference_patch_valid else "unstable_validation",
+        "main_experiment_included": default_main_included,
+        "exclusion_reason": None if default_main_included else "unstable_validation",
     }
+    if cohort_record:
+        p2p_main_included = bool(cohort_record.get("p2p_broad_main_included"))
+        project_level_status = cohort_record.get("project_level_p2p_status")
+        record.update(
+            {
+                "cohorts": cohort_record.get("cohorts", []),
+                "project_level_p2p_status": project_level_status,
+                "p2p_broad_main_included": p2p_main_included,
+                "appendix_smoke_included": bool(cohort_record.get("appendix_smoke_included")),
+                "blocked_reason": cohort_record.get("blocked_reason", []),
+                "label_scope": cohort_record.get("label_scope", {}),
+                "main_experiment_included": project_level_status == "completed" and p2p_main_included,
+            }
+        )
+        if not record["main_experiment_included"]:
+            if project_level_status == "pending_blocked":
+                record["task_role"] = "blocked_or_pending"
+            record["exclusion_reason"] = (
+                "project_level_p2p_pending_or_not_main"
+                if default_main_included
+                else "unstable_validation"
+            )
+    return record
 
 
 def build_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
@@ -220,6 +267,11 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--p2p-scope", action="append", default=[], help="P2P scope JSON path. Repeatable.")
     parser.add_argument("--p2p-validation", action="append", default=[], help="P2P validation JSONL path. Repeatable.")
+    parser.add_argument(
+        "--task-cohorts",
+        default=str(DEFAULT_TASK_COHORTS),
+        help="Task cohort registry JSON. Defaults to data/cohorts/task_cohort_registry.json when present.",
+    )
     parser.add_argument("--task-id", action="append", default=[], help="Restrict output to a task id. Repeatable.")
     parser.add_argument("--out-jsonl", required=True)
     parser.add_argument("--summary-out", required=True)
@@ -233,6 +285,7 @@ def main() -> None:
     manifests = load_grouped(args.generation_manifest)
     p2p_scopes = load_p2p_scopes(args.p2p_scope)
     p2p_validations = load_grouped(args.p2p_validation)
+    cohort_records = load_task_cohorts(args.task_cohorts)
     task_ids = sorted(
         set(args.task_id) or (set(validations) | set(generated) | set(manifests) | set(p2p_scopes) | set(p2p_validations))
     )
@@ -244,6 +297,7 @@ def main() -> None:
             generation_attempts=len(manifests.get(task_id, [])),
             p2p_scope=p2p_scopes.get(task_id),
             p2p_records=p2p_validations.get(task_id, []),
+            cohort_record=cohort_records.get(task_id),
         )
         for task_id in task_ids
     ]

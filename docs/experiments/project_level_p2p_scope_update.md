@@ -98,13 +98,42 @@ appendix evidence, but they should not be treated as final project-level P2P
 labels until a separate Luigi project-level scope construction strategy is
 approved.
 
-## Blocking Decision
+## Decision
 
-The next step requires a methodological and resource decision:
+Luigi is frozen as a pending large-suite stress case for the current main
+experiment phase.
 
-- continue strict Luigi project-level P2P construction, accepting longer
-  per-task runtime and additional engineering for collection-error manifests and
-  stability caches; or
-- mark Luigi tasks as `project_level_p2p_pending`, keep their task-file results
-  outside the final main labels, and prioritize smaller replacement tasks whose
-  project-level P2P-broad scope is tractable.
+`bugsinpy_luigi_3` and `bugsinpy_luigi_4` are not included in the
+`p2p_broad_main` cohort. Their task-file P2P results are retained only as
+appendix/smoke evidence.
+
+The tracked cohort registry records this status:
+
+```text
+data/cohorts/task_cohort_registry.json
+```
+
+Main metrics must include only tasks satisfying:
+
+```text
+project_level_p2p_status == completed
+and p2p_broad_main_included is true
+```
+
+For the current registry, `bugsinpy_httpie_5` is in `p2p_broad_main`; Luigi
+tasks are in `blocked_or_pending` and `p2p_local_smoke`.
+
+## Next Task Selection Rule
+
+The next replacement tasks should be selected through a bounded P2P feasibility
+sweep rather than by repeatedly debugging Luigi. Initial screening thresholds:
+
+| criterion | threshold |
+|---|---:|
+| collection time | <= 5-8 minutes |
+| collection errors | <= 10, or clearly attributable to unavailable external dependencies |
+| P2P-broad size | >= 3 |
+| stability runs | 3 |
+
+Tasks that exceed the budget should be marked `pending_blocked` and retained in
+blocked-task accounting rather than silently removed.

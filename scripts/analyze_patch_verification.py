@@ -12,6 +12,7 @@ NEGATIVE_OUTCOMES = {"incorrect", "partial", "overfitted", "irrelevant_or_noop"}
 EXCLUDED_OUTCOMES = {"environment_invalid"}
 VALID_OUTCOMES = CORRECT_OUTCOMES | NEGATIVE_OUTCOMES | EXCLUDED_OUTCOMES
 VALID_DECISIONS = {"accept", "reject", "escalate", "invalid_output"}
+DEFAULT_TASK_COHORTS = Path("data/cohorts/task_cohort_registry.json")
 
 REQUIRED_CANDIDATE_FIELDS = {
     "patch_id",
@@ -45,6 +46,13 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
 def write_json(path: Path, record: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(record, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def read_json(path: Path) -> dict[str, Any]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must contain a JSON object")
+    return value
 
 
 def require_fields(record: dict[str, Any], required: set[str], label: str) -> None:
@@ -173,8 +181,49 @@ def validate_verifier_outputs(
         seen.add(key)
 
 
+def task_ids_for_main_cohort(cohort_registry: dict[str, Any]) -> set[str]:
+    task_ids = set()
+    for task in cohort_registry.get("tasks", []):
+        if not isinstance(task, dict):
+            continue
+        if (
+            task.get("project_level_p2p_status") == "completed"
+            and task.get("p2p_broad_main_included") is True
+        ):
+            task_id = task.get("task_id")
+            if isinstance(task_id, str):
+                task_ids.add(task_id)
+    return task_ids
+
+
+def filter_to_task_ids(
+    candidates: list[dict[str, Any]],
+    verifier_outputs: list[dict[str, Any]],
+    task_ids: set[str],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+    filtered_candidates = [candidate for candidate in candidates if candidate.get("task_id") in task_ids]
+    retained_patch_ids = {candidate["patch_id"] for candidate in filtered_candidates}
+    filtered_outputs = [
+        output for output in verifier_outputs if output.get("patch_id") in retained_patch_ids
+    ]
+    return (
+        filtered_candidates,
+        filtered_outputs,
+        {
+            "enabled": True,
+            "included_task_ids": sorted(task_ids),
+            "candidate_count_before": len(candidates),
+            "candidate_count_after": len(filtered_candidates),
+            "verifier_output_count_before": len(verifier_outputs),
+            "verifier_output_count_after": len(filtered_outputs),
+        },
+    )
+
+
 def analyze(
-    candidates: list[dict[str, Any]], verifier_outputs: list[dict[str, Any]]
+    candidates: list[dict[str, Any]],
+    verifier_outputs: list[dict[str, Any]],
+    cohort_filter: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     candidates_by_id = validate_candidates(candidates)
     validate_verifier_outputs(verifier_outputs, candidates_by_id)
@@ -206,6 +255,7 @@ def analyze(
         }
 
     return {
+        "cohort_filter": cohort_filter or {"enabled": False},
         "candidate_count": len(candidates),
         "verifier_output_count": len(verifier_outputs),
         "candidate_type_counts": dict(sorted(Counter(c["candidate_type"] for c in candidates).items())),
@@ -223,6 +273,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--candidates", required=True, help="Patch candidate JSONL.")
     parser.add_argument("--verifier-outputs", required=True, help="Verifier output JSONL.")
     parser.add_argument("--out", required=True, help="Metrics JSON output.")
+    parser.add_argument(
+        "--task-cohorts",
+        default=str(DEFAULT_TASK_COHORTS),
+        help="Task cohort registry JSON. Defaults to data/cohorts/task_cohort_registry.json.",
+    )
+    parser.add_argument(
+        "--no-cohort-filter",
+        action="store_true",
+        help="Disable the default p2p_broad_main task filter.",
+    )
     return parser.parse_args()
 
 
@@ -230,7 +290,22 @@ def main() -> None:
     args = parse_args()
     candidates = read_jsonl(Path(args.candidates))
     verifier_outputs = read_jsonl(Path(args.verifier_outputs))
-    metrics = analyze(candidates, verifier_outputs)
+    cohort_filter: dict[str, Any] | None = None
+    if not args.no_cohort_filter:
+        registry_path = Path(args.task_cohorts)
+        if registry_path.exists():
+            task_ids = task_ids_for_main_cohort(read_json(registry_path))
+            candidates, verifier_outputs, cohort_filter = filter_to_task_ids(
+                candidates,
+                verifier_outputs,
+                task_ids,
+            )
+        else:
+            cohort_filter = {
+                "enabled": False,
+                "reason": f"missing task cohort registry: {registry_path}",
+            }
+    metrics = analyze(candidates, verifier_outputs, cohort_filter=cohort_filter)
     write_json(Path(args.out), metrics)
     print(json.dumps(metrics, ensure_ascii=False, indent=2, sort_keys=True))
 
