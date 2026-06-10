@@ -30,6 +30,8 @@ Tasks that fail the bounded sweep are retained in task-level accounting as
 | `bugsinpy_httpie_4` | httpie | pending_blocked | 15 files / 0 nodeids initially | legacy requests compatibility; later bounded scope timeout | no |
 | `bugsinpy_tqdm_1` | tqdm | completed_insufficient_p2p_broad | 10 files / 1 nodeid | missing `nose`; P2P-broad size 1 < 3 | no |
 | `bugsinpy_tqdm_2` | tqdm | completed_insufficient_p2p_broad | 6 files / 1 nodeid | missing `nose`; P2P-broad size 1 < 3 | no |
+| `bugsinpy_black_1` | black | pending_blocked | unittest / 0 nodeids | missing `typed_ast`; unittest collection error | no |
+| `bugsinpy_black_3` | black | pending_blocked | unittest / 0 nodeids | missing `typed_ast`; unittest collection error | no |
 
 ## Interpretation
 
@@ -68,3 +70,32 @@ tqdm/tests/tests_version.py::test_version
 Because the predefined main threshold is `p2p_broad_size >= 3`, both tasks are
 excluded from `p2p_broad_main`. Installing or emulating `nose` would be a
 separate environment decision and was not done silently during this sweep.
+
+## `black` Notes
+
+The P2P scope builder now has a bounded `unittest` adapter. The adapter supports
+standard-library unittest discovery and runner execution while preserving the
+same project-level P2P-broad threshold.
+
+Both selected `black` tasks were screened through the adapter:
+
+- `bugsinpy_black_1`
+- `bugsinpy_black_3`
+
+Both tasks failed project-level unittest collection because importing
+`tests/test_black.py` imports `black`, which requires the missing dependency
+`typed_ast`. This dependency is present in the task requirements but was not
+installed silently during the sweep.
+
+Tracked manifests:
+
+```text
+data/p2p_scopes/bugsinpy_black_1_p2p_broad.json
+data/p2p_scopes/bugsinpy_black_1_p2p_broad_collection_errors.json
+data/p2p_scopes/bugsinpy_black_3_p2p_broad.json
+data/p2p_scopes/bugsinpy_black_3_p2p_broad_collection_errors.json
+```
+
+The `black` tasks remain excluded from `p2p_broad_main` until the environment
+dependency decision is handled explicitly and project-level P2P-broad can be
+constructed with at least three stable tests.

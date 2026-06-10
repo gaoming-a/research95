@@ -805,3 +805,21 @@ This file starts fresh for the patch-verification project.
 - Do not silently install or emulate `nose` for main labels. Treat dependency
   installation as a separate environment decision because it changes the
   reproducibility contract.
+
+## 2026-06-10 unittest adapter and black sweep
+
+- Added a bounded `unittest` adapter to `scripts/build_pass_to_pass_scope.py`.
+  The adapter uses standard-library discovery and runner execution and emits
+  the same P2P manifest shape as pytest scopes.
+- `_FailedTest` entries from unittest discovery must be recorded as collection
+  errors, not as runnable tests. Otherwise a failed module import can be
+  mistaken for one collected test.
+- When `--manifest-out` is used and collection errors exist, the script now
+  writes a tracked sibling collection-error manifest under `data/p2p_scopes/`.
+- `bugsinpy_black_1` and `bugsinpy_black_3` both failed project-level unittest
+  collection because importing `black` requires `typed_ast`. The dependency is
+  listed in the BugsInPy requirements, but it was not installed silently during
+  this sweep.
+- Result: both black tasks are `pending_blocked`, not unsupported-framework
+  failures. The framework adapter works enough to expose the real environment
+  dependency blocker.

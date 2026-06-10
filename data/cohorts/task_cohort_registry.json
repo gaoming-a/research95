@@ -206,6 +206,66 @@
       "task_id": "bugsinpy_tqdm_2"
     },
     {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "missing_typed_ast_dependency",
+        "unittest_collection_error"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": 1,
+        "nodeids": 0,
+        "p2p_broad_size": 0,
+        "test_framework": "unittest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Unittest adapter ran, but project-level discovery produced a failed import because black requires typed_ast; dependency installation was not done silently.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_black_1_p2p_broad.json",
+      "project": "black",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_black_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "missing_typed_ast_dependency",
+        "unittest_collection_error"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": 1,
+        "nodeids": 0,
+        "p2p_broad_size": 0,
+        "test_framework": "unittest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Unittest adapter ran, but project-level discovery produced a failed import because black requires typed_ast; dependency installation was not done silently.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_black_3_p2p_broad.json",
+      "project": "black",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_black_3"
+    },
+    {
       "appendix_smoke_included": true,
       "attempts": [
         {

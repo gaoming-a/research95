@@ -102,9 +102,9 @@
   blocker.
 - `experiments/p2p_feasibility_sweep_update.md`: bounded replacement-task
   feasibility sweep after freezing Luigi. It records that `httpie_1` to
-  `httpie_4` and `tqdm_1` to `tqdm_2` did not become new `p2p_broad_main`
-  tasks under the current project-level P2P budget and why they are retained as
-  blocked or insufficient accounting.
+  `httpie_4`, `tqdm_1` to `tqdm_2`, and `black_1` / `black_3` did not become
+  new `p2p_broad_main` tasks under the current project-level P2P budget and why
+  they are retained as blocked or insufficient accounting.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on
@@ -291,7 +291,8 @@
   accounting records from validation reports, relabeled generated candidates,
   generation prompt manifests, and the tracked task cohort registry.
 - `scripts/build_pass_to_pass_scope.py`: collects project tests and builds
-  P2P-core/P2P-broad stable runnable subsets for a task.
+  P2P-core/P2P-broad stable runnable subsets for a task. It supports pytest and
+  bounded unittest discovery/runner adapters.
 - `scripts/validate_candidates_with_p2p.py`: validates candidate patches with
   retained oracle plus a P2P-broad scope and emits merged labels such as
   `correct_under_f2p_and_p2p_broad` and `incorrect_regression`.

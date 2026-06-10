@@ -126,6 +126,10 @@ They should not override `final_paper_roadmap_zh.md`.
   completed project-level scope construction but retained only one stable
   P2P-broad test because most test files require the legacy `nose` dependency;
   they are recorded as `completed_insufficient_p2p_broad`, not main tasks.
+- The scope builder now has a bounded `unittest` adapter. `bugsinpy_black_1`
+  and `bugsinpy_black_3` were screened through it, but both are
+  `pending_blocked` because the current environment lacks the required
+  `typed_ast` dependency.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

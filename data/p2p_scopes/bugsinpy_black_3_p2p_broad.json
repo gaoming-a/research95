@@ -1,0 +1,133 @@
+{
+  "batch_runs": null,
+  "buggy_baseline_pass_required": true,
+  "collection": {
+    "buggy": {
+      "collected_count": 0,
+      "collection_error_count": 1,
+      "collection_error_files": [
+        "unittest.loader._FailedTest.test_black"
+      ],
+      "collection_mode": "unittest_discovery",
+      "command": [
+        "C:\\Python311\\python.exe",
+        "-c",
+        "\nimport argparse\nimport json\nimport os\nimport sys\nimport traceback\nimport unittest\nfrom pathlib import Path\n\n\ndef flatten(suite):\n    for item in suite:\n        if isinstance(item, unittest.TestSuite):\n            yield from flatten(item)\n        else:\n            yield item\n\n\ndef main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument(\"--start-dir\", required=True)\n    parser.add_argument(\"--pattern\", required=True)\n    parser.add_argument(\"--top-level-dir\", default=\"\")\n    args = parser.parse_args()\n    loader = unittest.TestLoader()\n    try:\n        kwargs = {\"start_dir\": args.start_dir, \"pattern\": args.pattern}\n        if args.top_level_dir:\n            kwargs[\"top_level_dir\"] = args.top_level_dir\n        suite = loader.discover(**kwargs)\n        tests = []\n        errors = []\n        for test_case in flatten(suite):\n            test = test_case.id()\n            if test.startswith(\"unittest.loader._FailedTest\"):\n                exception = getattr(test_case, \"_exception\", None)\n                traceback_excerpt = (\n                    \"\".join(traceback.format_exception(exception))[-2000:]\n                    if exception is not None\n                    else test\n                )\n                errors.append(\n                    {\n                        \"module_or_path\": test,\n                        \"error_type\": type(exception).__name__ if exception is not None else \"UnittestFailedImport\",\n                        \"message\": str(exception) if exception is not None else \"unittest discovery produced _FailedTest\",\n                        \"traceback_excerpt\": traceback_excerpt,\n                    }\n                )\n            else:\n                tests.append(test)\n        print(json.dumps({\"tests\": sorted(set(tests)), \"errors\": errors}, sort_keys=True))\n    except Exception as exc:\n        print(\n            json.dumps(\n                {\n                    \"tests\": [],\n                    \"errors\": [\n                        {\n                            \"module_or_path\": args.start_dir,\n                            \"error_type\": type(exc).__name__,\n                            \"message\": str(exc),\n                            \"traceback_excerpt\": traceback.format_exc()[-2000:],\n                        }\n                    ],\n                },\n                sort_keys=True,\n            )\n        )\n        sys.exit(2)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+        "--start-dir",
+        "tests",
+        "--pattern",
+        "test*.py",
+        "--top-level-dir",
+        ""
+      ],
+      "elapsed_seconds": 1.266,
+      "errors": [
+        {
+          "error_type": "ImportError",
+          "message": "Failed to import test module: test_black\nTraceback (most recent call last):\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 419, in _find_test_path\n    module = self._get_module_from_name(name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 362, in _get_module_from_name\n    __import__(name)\n  File \"D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\black_3\\buggy\\black\\tests\\test_black.py\", line 20, in <module>\n    import black\n  File \"D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\black_3\\buggy\\black\\black.py\", line 47, in <module>\n    from typed_ast import ast3, ast27\nModuleNotFoundError: No module named 'typed_ast'\n",
+          "module_or_path": "unittest.loader._FailedTest.test_black",
+          "traceback_excerpt": "ImportError: Failed to import test module: test_black\nTraceback (most recent call last):\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 419, in _find_test_path\n    module = self._get_module_from_name(name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 362, in _get_module_from_name\n    __import__(name)\n  File \"D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\black_3\\buggy\\black\\tests\\test_black.py\", line 20, in <module>\n    import black\n  File \"D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\black_3\\buggy\\black\\black.py\", line 47, in <module>\n    from typed_ast import ast3, ast27\nModuleNotFoundError: No module named 'typed_ast'\n\n"
+        }
+      ],
+      "exit_code": 0,
+      "pattern": "test*.py",
+      "start_dir": "tests",
+      "stderr_tail": "",
+      "stdout_tail": "ata\\\\real_bugs\\\\bugsinpy_workspace\\\\black_3\\\\buggy\\\\black\\\\tests\\\\test_black.py\\\", line 20, in <module>\\n    import black\\n  File \\\"D:\\\\mgao\\\\code\\\\research\\\\data\\\\real_bugs\\\\bugsinpy_workspace\\\\black_3\\\\buggy\\\\black\\\\black.py\\\", line 47, in <module>\\n    from typed_ast import ast3, ast27\\nModuleNotFoundError: No module named 'typed_ast'\\n\", \"module_or_path\": \"unittest.loader._FailedTest.test_black\", \"traceback_excerpt\": \"ImportError: Failed to import test module: test_black\\nTraceback (most recent call last):\\n  File \\\"C:\\\\Python311\\\\Lib\\\\unittest\\\\loader.py\\\", line 419, in _find_test_path\\n    module = self._get_module_from_name(name)\\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"C:\\\\Python311\\\\Lib\\\\unittest\\\\loader.py\\\", line 362, in _get_module_from_name\\n    __import__(name)\\n  File \\\"D:\\\\mgao\\\\code\\\\research\\\\data\\\\real_bugs\\\\bugsinpy_workspace\\\\black_3\\\\buggy\\\\black\\\\tests\\\\test_black.py\\\", line 20, in <module>\\n    import black\\n  File \\\"D:\\\\mgao\\\\code\\\\research\\\\data\\\\real_bugs\\\\bugsinpy_workspace\\\\black_3\\\\buggy\\\\black\\\\black.py\\\", line 47, in <module>\\n    from typed_ast import ast3, ast27\\nModuleNotFoundError: No module named 'typed_ast'\\n\\n\"}], \"tests\": []}\n",
+      "timeout": false,
+      "top_level_dir": ""
+    },
+    "buggy_collected_count": 0,
+    "discovered_test_files": 1,
+    "reference": {
+      "collected_count": 0,
+      "collection_error_count": 1,
+      "collection_error_files": [
+        "unittest.loader._FailedTest.test_black"
+      ],
+      "collection_mode": "unittest_discovery",
+      "command": [
+        "C:\\Python311\\python.exe",
+        "-c",
+        "\nimport argparse\nimport json\nimport os\nimport sys\nimport traceback\nimport unittest\nfrom pathlib import Path\n\n\ndef flatten(suite):\n    for item in suite:\n        if isinstance(item, unittest.TestSuite):\n            yield from flatten(item)\n        else:\n            yield item\n\n\ndef main():\n    parser = argparse.ArgumentParser()\n    parser.add_argument(\"--start-dir\", required=True)\n    parser.add_argument(\"--pattern\", required=True)\n    parser.add_argument(\"--top-level-dir\", default=\"\")\n    args = parser.parse_args()\n    loader = unittest.TestLoader()\n    try:\n        kwargs = {\"start_dir\": args.start_dir, \"pattern\": args.pattern}\n        if args.top_level_dir:\n            kwargs[\"top_level_dir\"] = args.top_level_dir\n        suite = loader.discover(**kwargs)\n        tests = []\n        errors = []\n        for test_case in flatten(suite):\n            test = test_case.id()\n            if test.startswith(\"unittest.loader._FailedTest\"):\n                exception = getattr(test_case, \"_exception\", None)\n                traceback_excerpt = (\n                    \"\".join(traceback.format_exception(exception))[-2000:]\n                    if exception is not None\n                    else test\n                )\n                errors.append(\n                    {\n                        \"module_or_path\": test,\n                        \"error_type\": type(exception).__name__ if exception is not None else \"UnittestFailedImport\",\n                        \"message\": str(exception) if exception is not None else \"unittest discovery produced _FailedTest\",\n                        \"traceback_excerpt\": traceback_excerpt,\n                    }\n                )\n            else:\n                tests.append(test)\n        print(json.dumps({\"tests\": sorted(set(tests)), \"errors\": errors}, sort_keys=True))\n    except Exception as exc:\n        print(\n            json.dumps(\n                {\n                    \"tests\": [],\n                    \"errors\": [\n                        {\n                            \"module_or_path\": args.start_dir,\n                            \"error_type\": type(exc).__name__,\n                            \"message\": str(exc),\n                            \"traceback_excerpt\": traceback.format_exc()[-2000:],\n                        }\n                    ],\n                },\n                sort_keys=True,\n            )\n        )\n        sys.exit(2)\n\n\nif __name__ == \"__main__\":\n    main()\n",
+        "--start-dir",
+        "tests",
+        "--pattern",
+        "test*.py",
+        "--top-level-dir",
+        ""
+      ],
+      "elapsed_seconds": 1.172,
+      "errors": [
+        {
+          "error_type": "ImportError",
+          "message": "Failed to import test module: test_black\nTraceback (most recent call last):\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 419, in _find_test_path\n    module = self._get_module_from_name(name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 362, in _get_module_from_name\n    __import__(name)\n  File \"D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\black_3\\fixed\\black\\tests\\test_black.py\", line 20, in <module>\n    import black\n  File \"D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\black_3\\fixed\\black\\black.py\", line 47, in <module>\n    from typed_ast import ast3, ast27\nModuleNotFoundError: No module named 'typed_ast'\n",
+          "module_or_path": "unittest.loader._FailedTest.test_black",
+          "traceback_excerpt": "ImportError: Failed to import test module: test_black\nTraceback (most recent call last):\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 419, in _find_test_path\n    module = self._get_module_from_name(name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 362, in _get_module_from_name\n    __import__(name)\n  File \"D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\black_3\\fixed\\black\\tests\\test_black.py\", line 20, in <module>\n    import black\n  File \"D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\black_3\\fixed\\black\\black.py\", line 47, in <module>\n    from typed_ast import ast3, ast27\nModuleNotFoundError: No module named 'typed_ast'\n\n"
+        }
+      ],
+      "exit_code": 0,
+      "pattern": "test*.py",
+      "start_dir": "tests",
+      "stderr_tail": "",
+      "stdout_tail": "ata\\\\real_bugs\\\\bugsinpy_workspace\\\\black_3\\\\fixed\\\\black\\\\tests\\\\test_black.py\\\", line 20, in <module>\\n    import black\\n  File \\\"D:\\\\mgao\\\\code\\\\research\\\\data\\\\real_bugs\\\\bugsinpy_workspace\\\\black_3\\\\fixed\\\\black\\\\black.py\\\", line 47, in <module>\\n    from typed_ast import ast3, ast27\\nModuleNotFoundError: No module named 'typed_ast'\\n\", \"module_or_path\": \"unittest.loader._FailedTest.test_black\", \"traceback_excerpt\": \"ImportError: Failed to import test module: test_black\\nTraceback (most recent call last):\\n  File \\\"C:\\\\Python311\\\\Lib\\\\unittest\\\\loader.py\\\", line 419, in _find_test_path\\n    module = self._get_module_from_name(name)\\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\\"C:\\\\Python311\\\\Lib\\\\unittest\\\\loader.py\\\", line 362, in _get_module_from_name\\n    __import__(name)\\n  File \\\"D:\\\\mgao\\\\code\\\\research\\\\data\\\\real_bugs\\\\bugsinpy_workspace\\\\black_3\\\\fixed\\\\black\\\\tests\\\\test_black.py\\\", line 20, in <module>\\n    import black\\n  File \\\"D:\\\\mgao\\\\code\\\\research\\\\data\\\\real_bugs\\\\bugsinpy_workspace\\\\black_3\\\\fixed\\\\black\\\\black.py\\\", line 47, in <module>\\n    from typed_ast import ast3, ast27\\nModuleNotFoundError: No module named 'typed_ast'\\n\\n\"}], \"tests\": []}\n",
+      "timeout": false,
+      "top_level_dir": ""
+    },
+    "reference_collected_count": 0
+  },
+  "collection_error_manifest": "data\\p2p_scopes\\bugsinpy_black_3_p2p_broad_collection_errors.json",
+  "compat_shim": {
+    "enabled": true,
+    "path": "outputs\\black3_unittest_p2p_scope_004\\compat_shim",
+    "reason": "legacy tests import requests.compat.is_py26, absent in the current Python environment"
+  },
+  "core_patterns": [
+    "test_black.BlackTestCase."
+  ],
+  "counts": {
+    "collected_tests": 0,
+    "collection_error_files": 1,
+    "common_collected_tests": 0,
+    "excluded_external_dependency": 0,
+    "excluded_fail_to_pass_oracle": 0,
+    "excluded_flaky": 0,
+    "excluded_timeout": 0,
+    "excluded_uncollectable": 0,
+    "exclusion_reason_counts": {},
+    "included_p2p_tests": 0,
+    "p2p_broad_tests": 0,
+    "p2p_core_tests": 0
+  },
+  "exclusions": [],
+  "fail_to_pass_nodeids": [
+    "test_black.BlackTestCase.test_invalid_config_return_code"
+  ],
+  "p2p_broad_tests": [],
+  "p2p_core_tests": [],
+  "project": "black",
+  "records": [],
+  "reference_patch_pass_required": true,
+  "runs_per_version": 3,
+  "scope_id": "bugsinpy_black_3_project_level_p2p_broad",
+  "scope_type": "project_level_p2p_broad",
+  "stability_runs": 3,
+  "static_exclude_tokens": [
+    "httpbin",
+    "http://",
+    "https://"
+  ],
+  "static_include_tokens": [],
+  "task_id": "bugsinpy_black_3",
+  "test_framework": "unittest",
+  "test_path": "tests/tests.py",
+  "test_paths": [
+    "tests"
+  ],
+  "timeout_seconds": 30,
+  "unittest_discovery": {
+    "pattern": "test*.py",
+    "start_dir": "tests",
+    "top_level_dir": ""
+  }
+}

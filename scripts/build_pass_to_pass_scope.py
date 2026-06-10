@@ -278,6 +278,151 @@ def collect_tests_by_file(
     return sorted(set(tests)), summary
 
 
+UNITTEST_DISCOVERY_SNIPPET = r"""
+import argparse
+import json
+import os
+import sys
+import traceback
+import unittest
+from pathlib import Path
+
+
+def flatten(suite):
+    for item in suite:
+        if isinstance(item, unittest.TestSuite):
+            yield from flatten(item)
+        else:
+            yield item
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--start-dir", required=True)
+    parser.add_argument("--pattern", required=True)
+    parser.add_argument("--top-level-dir", default="")
+    args = parser.parse_args()
+    loader = unittest.TestLoader()
+    try:
+        kwargs = {"start_dir": args.start_dir, "pattern": args.pattern}
+        if args.top_level_dir:
+            kwargs["top_level_dir"] = args.top_level_dir
+        suite = loader.discover(**kwargs)
+        tests = []
+        errors = []
+        for test_case in flatten(suite):
+            test = test_case.id()
+            if test.startswith("unittest.loader._FailedTest"):
+                exception = getattr(test_case, "_exception", None)
+                traceback_excerpt = (
+                    "".join(traceback.format_exception(exception))[-2000:]
+                    if exception is not None
+                    else test
+                )
+                errors.append(
+                    {
+                        "module_or_path": test,
+                        "error_type": type(exception).__name__ if exception is not None else "UnittestFailedImport",
+                        "message": str(exception) if exception is not None else "unittest discovery produced _FailedTest",
+                        "traceback_excerpt": traceback_excerpt,
+                    }
+                )
+            else:
+                tests.append(test)
+        print(json.dumps({"tests": sorted(set(tests)), "errors": errors}, sort_keys=True))
+    except Exception as exc:
+        print(
+            json.dumps(
+                {
+                    "tests": [],
+                    "errors": [
+                        {
+                            "module_or_path": args.start_dir,
+                            "error_type": type(exc).__name__,
+                            "message": str(exc),
+                            "traceback_excerpt": traceback.format_exc()[-2000:],
+                        }
+                    ],
+                },
+                sort_keys=True,
+            )
+        )
+        sys.exit(2)
+
+
+if __name__ == "__main__":
+    main()
+"""
+
+
+def collect_unittest_tests(
+    python: str,
+    checkout: Path,
+    start_dir: str,
+    pattern: str,
+    top_level_dir: str,
+    timeout_seconds: int,
+    pythonpath: Path,
+) -> tuple[list[str], dict[str, Any]]:
+    result = run_command(
+        [
+            python,
+            "-c",
+            UNITTEST_DISCOVERY_SNIPPET,
+            "--start-dir",
+            start_dir,
+            "--pattern",
+            pattern,
+            "--top-level-dir",
+            top_level_dir,
+        ],
+        cwd=checkout,
+        timeout_seconds=timeout_seconds,
+        pythonpath=pythonpath,
+    )
+    tests: list[str] = []
+    errors: list[dict[str, Any]] = []
+    if result["stdout"].strip():
+        last_line = result["stdout"].strip().splitlines()[-1]
+        try:
+            payload = json.loads(last_line)
+            if isinstance(payload, dict):
+                tests = sorted(str(test) for test in payload.get("tests", []) if isinstance(test, str))
+                errors = [error for error in payload.get("errors", []) if isinstance(error, dict)]
+        except json.JSONDecodeError:
+            errors = [
+                {
+                    "module_or_path": start_dir,
+                    "error_type": "DiscoveryOutputParseError",
+                    "message": "unittest discovery did not emit JSON",
+                    "traceback_excerpt": tail(result["stdout"] + "\n" + result["stderr"]),
+                }
+            ]
+    elif result["exit_code"] != 0:
+        errors = [
+            {
+                "module_or_path": start_dir,
+                "error_type": "DiscoveryProcessError",
+                "message": f"unittest discovery exited with {result['exit_code']}",
+                "traceback_excerpt": tail(result["stdout"] + "\n" + result["stderr"]),
+            }
+        ]
+    summary = compact_result(result)
+    summary.update(
+        {
+            "collection_mode": "unittest_discovery",
+            "start_dir": start_dir,
+            "pattern": pattern,
+            "top_level_dir": top_level_dir,
+            "collection_error_count": len(errors),
+            "collection_error_files": [str(error.get("module_or_path")) for error in errors],
+            "errors": errors,
+            "collected_count": len(tests),
+        }
+    )
+    return tests, summary
+
+
 def static_source_segments(checkout: Path, test_path: str, nodeids: list[str]) -> dict[str, str]:
     methods: dict[str, str] = {}
     file_paths = sorted({nodeid.split("::", 1)[0] for nodeid in nodeids if "::" in nodeid})
@@ -351,11 +496,13 @@ def run_test_repeated(
     runs: int,
     timeout_seconds: int,
     pythonpath: Path,
+    test_framework: str = "pytest",
 ) -> list[dict[str, Any]]:
     results = []
     for run_index in range(1, runs + 1):
+        command = [python, "-m", "unittest", nodeid] if test_framework == "unittest" else [python, "-m", "pytest", "-q", nodeid]
         result = run_command(
-            [python, "-m", "pytest", "-q", nodeid],
+            command,
             cwd=checkout,
             timeout_seconds=timeout_seconds,
             pythonpath=pythonpath,
@@ -374,11 +521,17 @@ def run_batch_repeated(
     runs: int,
     timeout_seconds: int,
     pythonpath: Path,
+    test_framework: str = "pytest",
 ) -> list[dict[str, Any]]:
     results = []
     for run_index in range(1, runs + 1):
+        command = (
+            [python, "-m", "unittest", *nodeids]
+            if test_framework == "unittest"
+            else [python, "-m", "pytest", "-q", *nodeids]
+        )
         result = run_command(
-            [python, "-m", "pytest", "-q", *nodeids],
+            command,
             cwd=checkout,
             timeout_seconds=timeout_seconds,
             pythonpath=pythonpath,
@@ -401,7 +554,8 @@ def batch_record_groups(records: list[dict[str, Any]], batch_size: int, group_by
 
     by_file: dict[str, list[dict[str, Any]]] = {}
     for record in records:
-        file_path = str(record["nodeid"]).split("::", 1)[0]
+        nodeid = str(record["nodeid"])
+        file_path = nodeid.split("::", 1)[0] if "::" in nodeid else ".".join(nodeid.split(".")[:2])
         by_file.setdefault(file_path, []).append(record)
 
     groups: list[list[dict[str, Any]]] = []
@@ -459,11 +613,47 @@ def render_markdown(scope: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def build_collection_error_manifest(scope: dict[str, Any]) -> dict[str, Any]:
+    errors = []
+    for side in ["buggy", "reference"]:
+        collection = scope.get("collection", {}).get(side, {})
+        for error in collection.get("errors", []):
+            if isinstance(error, dict):
+                item = dict(error)
+                item["version"] = side
+                errors.append(item)
+        for file_record in collection.get("files", []):
+            if isinstance(file_record, dict) and file_record.get("collection_error"):
+                errors.append(
+                    {
+                        "version": side,
+                        "module_or_path": file_record.get("test_path"),
+                        "error_type": "CollectionError",
+                        "message": f"collection exited with {file_record.get('exit_code')}",
+                        "traceback_excerpt": str(file_record.get("stdout_tail", ""))
+                        + "\n"
+                        + str(file_record.get("stderr_tail", "")),
+                    }
+                )
+    return {
+        "task_id": scope["task_id"],
+        "project": scope["project"],
+        "scope_type": scope["scope_type"],
+        "test_framework": scope.get("test_framework"),
+        "error_count": len(errors),
+        "errors": errors,
+    }
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build pass-to-pass stable test scopes for a BugsInPy task.")
     parser.add_argument("--task-id", required=True)
     parser.add_argument("--project", required=True)
     parser.add_argument("--test-path", default="tests/tests.py")
+    parser.add_argument("--test-framework", choices=["pytest", "unittest"], default="pytest")
+    parser.add_argument("--unittest-start-dir", default="tests")
+    parser.add_argument("--unittest-pattern", default="test*.py")
+    parser.add_argument("--unittest-top-level-dir", default=".")
     parser.add_argument("--source-workspace-root", default=str(DEFAULT_SOURCE_ROOT))
     parser.add_argument("--fail-to-pass-nodeid", action="append", default=[])
     parser.add_argument("--core-pattern", action="append", default=[])
@@ -516,16 +706,37 @@ def main() -> None:
     if scope_type is None:
         scope_type = "project_level_p2p_broad" if is_project_level_path(args.test_path) else "task_file_p2p_broad"
 
-    if scope_type == "project_level_p2p_broad":
+    if scope_type == "project_level_p2p_broad" and args.test_framework == "pytest":
         buggy_test_paths = discover_test_paths(buggy)
         fixed_test_paths = discover_test_paths(fixed)
         test_paths = sorted(set(buggy_test_paths) & set(fixed_test_paths))
         if not test_paths:
             raise ValueError(f"no common test files discovered for project-level scope: {args.task_id}")
+    elif scope_type == "project_level_p2p_broad":
+        test_paths = [args.unittest_start_dir]
     else:
         test_paths = [args.test_path]
 
-    if scope_type == "project_level_p2p_broad":
+    if args.test_framework == "unittest":
+        buggy_tests, buggy_collect = collect_unittest_tests(
+            args.python,
+            buggy,
+            args.unittest_start_dir,
+            args.unittest_pattern,
+            args.unittest_top_level_dir,
+            args.timeout_seconds,
+            shim_dir,
+        )
+        fixed_tests, fixed_collect = collect_unittest_tests(
+            args.python,
+            fixed,
+            args.unittest_start_dir,
+            args.unittest_pattern,
+            args.unittest_top_level_dir,
+            args.timeout_seconds,
+            shim_dir,
+        )
+    elif scope_type == "project_level_p2p_broad":
         buggy_tests, buggy_collect = collect_tests_by_file(
             args.python,
             buggy,
@@ -616,6 +827,7 @@ def main() -> None:
                 args.runs,
                 args.batch_timeout_seconds,
                 shim_dir,
+                test_framework=args.test_framework,
             )
             fixed_batch = run_batch_repeated(
                 args.python,
@@ -624,6 +836,7 @@ def main() -> None:
                 args.runs,
                 args.batch_timeout_seconds,
                 shim_dir,
+                test_framework=args.test_framework,
             )
             chunk_record = {
                 "nodeid_count": len(batch_nodeids),
@@ -644,8 +857,24 @@ def main() -> None:
 
     for record in pending_dynamic:
         nodeid = record["nodeid"]
-        buggy_runs = run_test_repeated(args.python, buggy, nodeid, args.runs, args.timeout_seconds, shim_dir)
-        fixed_runs = run_test_repeated(args.python, fixed, nodeid, args.runs, args.timeout_seconds, shim_dir)
+        buggy_runs = run_test_repeated(
+            args.python,
+            buggy,
+            nodeid,
+            args.runs,
+            args.timeout_seconds,
+            shim_dir,
+            test_framework=args.test_framework,
+        )
+        fixed_runs = run_test_repeated(
+            args.python,
+            fixed,
+            nodeid,
+            args.runs,
+            args.timeout_seconds,
+            shim_dir,
+            test_framework=args.test_framework,
+        )
         record["buggy_runs"] = buggy_runs
         record["reference_runs"] = fixed_runs
         reason = classify_exclusion(nodeid, buggy_runs, fixed_runs)
@@ -661,10 +890,18 @@ def main() -> None:
     scope = {
         "scope_id": f"{args.task_id}_{scope_type}",
         "scope_type": scope_type,
+        "test_framework": args.test_framework,
         "task_id": args.task_id,
         "project": args.project,
         "test_path": args.test_path,
         "test_paths": test_paths,
+        "unittest_discovery": {
+            "start_dir": args.unittest_start_dir,
+            "pattern": args.unittest_pattern,
+            "top_level_dir": args.unittest_top_level_dir,
+        }
+        if args.test_framework == "unittest"
+        else None,
         "runs_per_version": args.runs,
         "stability_runs": args.runs,
         "buggy_baseline_pass_required": True,
@@ -715,6 +952,18 @@ def main() -> None:
     }
     write_json(out_dir / "p2p_scope.json", scope)
     write_text(out_dir / "p2p_scope.md", render_markdown(scope))
+    collection_error_manifest = build_collection_error_manifest(scope)
+    if collection_error_manifest["error_count"]:
+        collection_error_path = (
+            Path(args.manifest_out).with_name(f"{Path(args.manifest_out).stem}_collection_errors.json")
+            if args.manifest_out
+            else out_dir / "collection_error_manifest.json"
+        )
+        write_json(collection_error_path, collection_error_manifest)
+        scope["collection_error_manifest"] = str(collection_error_path)
+        write_json(out_dir / "p2p_scope.json", scope)
+        if args.manifest_out:
+            write_json(Path(args.manifest_out), scope)
     if args.manifest_out:
         write_json(Path(args.manifest_out), scope)
     print(json.dumps(scope["counts"], ensure_ascii=False, indent=2, sort_keys=True))

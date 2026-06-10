@@ -1715,3 +1715,86 @@ Qwen 初次结果：
 - cohort filter 检查确认 `included_task_ids = ["bugsinpy_httpie_5"]`；
 - `git diff --check` 通过；
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\tqdm_sweep_latest.json --out-md outputs\local_quality_gate\tqdm_sweep_latest.md` 通过。
+
+## 16. 2026-06-10 `unittest` adapter and `black` feasibility sweep
+
+本轮目标：
+
+- 执行用户确认的决策：扩展 project-level P2P scope builder，增加
+  `unittest` adapter。
+- 该扩展用于支持 `bugsinpy_black_1` / `bugsinpy_black_3` 等 unittest
+  任务，但不改变 P2P-broad 定义，也不降低主实验门槛。
+
+执行边界：
+
+- 支持 `unittest` discovery / runner，用于 project-level P2P-broad scope
+  construction。
+- 不支持任意 custom test harness。
+- 不支持 nose legacy runner。
+- 不为 black 写硬编码路径；只允许通过 CLI 参数指定 unittest discovery
+  配置。
+- 不把 task-file unittest smoke 结果混进主指标。
+- 只有当任务满足：
+  - project-level P2P-broad construction completed；
+  - `p2p_broad_size >= 3`；
+  - stability runs = 3；
+  - 后续 candidate revalidation under F2P + P2P-broad；
+  才能进入 `p2p_broad_main`。
+
+计划步骤：
+
+1. 为 `scripts/build_pass_to_pass_scope.py` 增加 `--test-framework
+   pytest|unittest`。
+2. 实现 unittest discovery：`start_dir`、`pattern`、`top_level_dir` 可配置。
+3. 实现 unittest 单测重复运行，输出与 pytest scope 一致的 manifest 字段。
+4. 先运行 `bugsinpy_black_1` feasibility sweep。
+5. 若 adapter 通用且未遇到结构性阻塞，再运行 `bugsinpy_black_3`。
+6. 更新 cohort registry / feasibility report / README / index / experience
+   notes，运行检查后提交并同步 GitHub。
+
+执行结果：
+
+- 已为 `scripts/build_pass_to_pass_scope.py` 增加 `unittest` adapter：
+  - 新增 `--test-framework pytest|unittest`；
+  - 新增 `--unittest-start-dir`、`--unittest-pattern`、
+    `--unittest-top-level-dir`；
+  - 支持 standard-library unittest discovery；
+  - 支持 `python -m unittest <test_id>` 重复运行；
+  - `_FailedTest` 不再被误当作 runnable test，而是记录为 collection
+    error；
+  - 若存在 collection errors，且使用 `--manifest-out`，则在
+    `data/p2p_scopes/` 生成 tracked collection-error manifest。
+- `bugsinpy_black_1` feasibility sweep：
+  - test framework = `unittest`；
+  - collected/common nodeids = 0；
+  - collection errors = 1；
+  - P2P-broad size = 0；
+  - 阻塞原因：导入 `black` 时缺少真实依赖 `typed_ast`；
+  - 状态：`pending_blocked`。
+- `bugsinpy_black_3` feasibility sweep：
+  - test framework = `unittest`；
+  - collected/common nodeids = 0；
+  - collection errors = 1；
+  - P2P-broad size = 0；
+  - 阻塞原因：导入 `black` 时缺少真实依赖 `typed_ast`；
+  - 状态：`pending_blocked`。
+- 已更新：
+  - `data/cohorts/task_cohort_registry.json`；
+  - `docs/experiments/p2p_feasibility_sweep_update.md`；
+  - README / INDEX / experience notes / final roadmap。
+
+当前结论：
+
+- `unittest` 框架支持已完成到 bounded feasibility 所需程度。
+- `black_1` / `black_3` 没有进入 `p2p_broad_main`，原因不是框架不支持，
+  而是当前环境缺少 `typed_ast`。
+- 不应静默安装 `typed_ast`；是否允许安装/隔离依赖环境需要单独确认。
+
+本轮检查：
+
+- `python -m json.tool` 覆盖 cohort registry、black P2P manifests 和 black
+  collection-error manifests；
+- `python -m py_compile` 覆盖相关脚本；
+- cohort filter 检查确认 `included_task_ids = ["bugsinpy_httpie_5"]`；
+- `git diff --check` 通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\unittest_black_latest.json --out-md outputs\local_quality_gate\unittest_black_latest.md` 通过。
