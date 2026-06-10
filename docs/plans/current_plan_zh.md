@@ -1857,3 +1857,58 @@ Qwen 初次结果：
 2. 提供/安装 Python 3.8 或 3.9，再用更接近 BugsInPy 时代的解释器重建隔离环境；
 3. 明确允许尝试较新 `typed-ast` 版本，但这会偏离 declared requirement，需要作为环境偏差记录；
 4. 暂停 black，继续筛选其他不需要编译型 legacy dependency 的任务。
+
+## 18. 2026-06-10 `cookiecutter` project-level P2P feasibility sweep
+
+本轮目标：
+
+- 在 `black` 被本机 C++ build tools / legacy `typed-ast` 阻塞后，执行最短路径的替代任务筛选。
+- 对 `bugsinpy_cookiecutter_1` / `bugsinpy_cookiecutter_2` /
+  `bugsinpy_cookiecutter_3` 尝试构造 project-level P2P-broad scope。
+- 目标是判断这些任务是否可能补充 `p2p_broad_main`，不是迁移完整 oracle，也不是生成新的 candidate patch。
+
+执行边界：
+
+- 不调用模型 API。
+- 不安装或升级依赖。
+- 不使用 `tox` 作为隐式环境构造器；本轮只在当前 Python 环境下用已有
+  `build_pass_to_pass_scope.py` 做 bounded feasibility。
+- 不降低主实验门槛：只有 project-level P2P-broad construction completed、
+  `p2p_broad_size >= 3`、stability runs = 3，且后续 candidate revalidation
+  完成后，任务才可能进入 `p2p_broad_main`。
+- 若 collection/import/runtime 因缺依赖、外部服务或超时失败，记录为 blocked/pending，
+  不把 task-file/local smoke 证据混入主指标。
+
+计划步骤：
+
+1. 读取三个 `cookiecutter` retained checkout 中的 `bugsinpy_run_test.sh`，提取
+   fail-to-pass nodeid 作为 P2P 排除项。
+2. 分别运行 project-level P2P-broad scope builder，使用 3 次 stability runs 和 bounded timeout。
+3. 将生成的 manifest 复制到 `data/p2p_scopes/`，并按结果更新 cohort registry。
+4. 更新 feasibility sweep report、README、INDEX、经验文档和本计划。
+5. 运行本地检查，提交并同步 GitHub。
+
+执行结果：
+
+- 已运行 `bugsinpy_cookiecutter_1` project-level P2P-broad scope builder：
+  - discovered test files = 45；
+  - collected/common nodeids = 0；
+  - collection error files = 45；
+  - included P2P-broad tests = 0；
+  - blocker = retained checkout `setup.cfg` 注入 `--cov-report` 与
+    `--cov=cookiecutter`，当前环境缺少 pytest-cov 或明确的 addopts override。
+- 已生成 tracked manifests：
+  - `data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad.json`；
+  - `data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad_collection_errors.json`。
+- `bugsinpy_cookiecutter_2` / `bugsinpy_cookiecutter_3` 未继续重复运行；它们在
+  cohort registry 中记录为 shared cookiecutter pytest-cov addopts blocker。
+- 已更新 cohort registry、feasibility report、README、INDEX 和经验文档。
+
+当前阻塞/需确认：
+
+- 若继续 `cookiecutter`，需要明确选择：
+  1. 在隔离环境中安装 pytest-cov，并把它作为 declared test dependency 记录；
+  2. 或允许 `build_pass_to_pass_scope.py` 增加受审计的 pytest `-o addopts=`
+     override，用于移除 coverage-only addopts。
+- 在确认前，`cookiecutter_1` / `cookiecutter_2` / `cookiecutter_3` 均不能进入
+  `p2p_broad_main`。

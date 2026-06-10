@@ -131,6 +131,12 @@ They should not override `final_paper_roadmap_zh.md`.
   `pending_blocked` because the current environment lacks the required
   `typed_ast` dependency. An isolated `typed-ast==1.4.0` install attempt on
   Python 3.11 failed because the package needs local MSVC build tools.
+- The next replacement sweep tried `bugsinpy_cookiecutter_1` and exposed a
+  shared project-level pytest-cov addopts blocker: the retained checkout's
+  `setup.cfg` injects coverage arguments, while the current environment lacks
+  pytest-cov or an explicit addopts override. `cookiecutter_2` and
+  `cookiecutter_3` are therefore recorded as pending under the same blocker
+  rather than run as duplicate failures.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

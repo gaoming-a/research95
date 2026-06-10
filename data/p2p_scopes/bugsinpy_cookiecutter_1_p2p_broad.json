@@ -1,0 +1,1855 @@
+{
+  "batch_runs": null,
+  "buggy_baseline_pass_required": true,
+  "collection": {
+    "buggy": {
+      "collection_error_count": 45,
+      "collection_error_files": [
+        "tests/replay/test_dump.py",
+        "tests/replay/test_load.py",
+        "tests/replay/test_replay.py",
+        "tests/repository/test_abbreviation_expansion.py",
+        "tests/repository/test_determine_repo_dir_clones_repo.py",
+        "tests/repository/test_determine_repo_dir_finds_existing_cookiecutter.py",
+        "tests/repository/test_determine_repo_dir_finds_subdirectories.py",
+        "tests/repository/test_determine_repository_should_use_local_repo.py",
+        "tests/repository/test_is_repo_url.py",
+        "tests/repository/test_repository_has_cookiecutter_json.py",
+        "tests/test_abort_generate_on_hook_error.py",
+        "tests/test_cli.py",
+        "tests/test_cookiecutter_invocation.py",
+        "tests/test_cookiecutter_local_no_input.py",
+        "tests/test_cookiecutter_local_with_input.py",
+        "tests/test_custom_extensions_in_hooks.py",
+        "tests/test_default_extensions.py",
+        "tests/test_environment.py",
+        "tests/test_exceptions.py",
+        "tests/test_find.py",
+        "tests/test_generate_context.py",
+        "tests/test_generate_copy_without_render.py",
+        "tests/test_generate_file.py",
+        "tests/test_generate_files.py",
+        "tests/test_generate_hooks.py",
+        "tests/test_get_config.py",
+        "tests/test_get_user_config.py",
+        "tests/test_hooks.py",
+        "tests/test_log.py",
+        "tests/test_main.py",
+        "tests/test_output_folder.py",
+        "tests/test_preferred_encoding.py",
+        "tests/test_prompt.py",
+        "tests/test_read_repo_password.py",
+        "tests/test_read_user_choice.py",
+        "tests/test_read_user_dict.py",
+        "tests/test_read_user_variable.py",
+        "tests/test_read_user_yes_no.py",
+        "tests/test_repo_not_found.py",
+        "tests/test_specify_output_dir.py",
+        "tests/test_utils.py",
+        "tests/vcs/test_clone.py",
+        "tests/vcs/test_identify_repo.py",
+        "tests/vcs/test_is_vcs_installed.py",
+        "tests/zipfile/test_unzip.py"
+      ],
+      "collection_mode": "per_file",
+      "command": [
+        "C:\\Python311\\python.exe",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "<per-file>"
+      ],
+      "elapsed_seconds": 258.484,
+      "exit_code": 2,
+      "files": [
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/replay/test_dump.py"
+          ],
+          "elapsed_seconds": 8.562,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/replay/test_dump.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/replay/test_dump.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/replay/test_load.py"
+          ],
+          "elapsed_seconds": 4.953,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/replay/test_load.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/replay/test_load.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/replay/test_replay.py"
+          ],
+          "elapsed_seconds": 6.531,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/replay/test_replay.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/replay/test_replay.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/repository/test_abbreviation_expansion.py"
+          ],
+          "elapsed_seconds": 3.469,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/repository/test_abbreviation_expansion.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/repository/test_abbreviation_expansion.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/repository/test_determine_repo_dir_clones_repo.py"
+          ],
+          "elapsed_seconds": 6.203,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/repository/test_determine_repo_dir_clones_repo.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/repository/test_determine_repo_dir_clones_repo.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/repository/test_determine_repo_dir_finds_existing_cookiecutter.py"
+          ],
+          "elapsed_seconds": 5.047,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/repository/test_determine_repo_dir_finds_existing_cookiecutter.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/repository/test_determine_repo_dir_finds_existing_cookiecutter.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/repository/test_determine_repo_dir_finds_subdirectories.py"
+          ],
+          "elapsed_seconds": 5.547,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/repository/test_determine_repo_dir_finds_subdirectories.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/repository/test_determine_repo_dir_finds_subdirectories.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/repository/test_determine_repository_should_use_local_repo.py"
+          ],
+          "elapsed_seconds": 5.765,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/repository/test_determine_repository_should_use_local_repo.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/repository/test_determine_repository_should_use_local_repo.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/repository/test_is_repo_url.py"
+          ],
+          "elapsed_seconds": 5.0,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/repository/test_is_repo_url.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/repository/test_is_repo_url.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/repository/test_repository_has_cookiecutter_json.py"
+          ],
+          "elapsed_seconds": 5.5,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/repository/test_repository_has_cookiecutter_json.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/repository/test_repository_has_cookiecutter_json.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_abort_generate_on_hook_error.py"
+          ],
+          "elapsed_seconds": 5.641,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_abort_generate_on_hook_error.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_abort_generate_on_hook_error.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_cli.py"
+          ],
+          "elapsed_seconds": 6.047,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_cli.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_cli.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_cookiecutter_invocation.py"
+          ],
+          "elapsed_seconds": 7.0,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_cookiecutter_invocation.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_cookiecutter_invocation.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_cookiecutter_local_no_input.py"
+          ],
+          "elapsed_seconds": 5.813,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_cookiecutter_local_no_input.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_cookiecutter_local_no_input.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_cookiecutter_local_with_input.py"
+          ],
+          "elapsed_seconds": 7.359,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_cookiecutter_local_with_input.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_cookiecutter_local_with_input.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_custom_extensions_in_hooks.py"
+          ],
+          "elapsed_seconds": 5.36,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_custom_extensions_in_hooks.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_custom_extensions_in_hooks.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_default_extensions.py"
+          ],
+          "elapsed_seconds": 5.718,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_default_extensions.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_default_extensions.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_environment.py"
+          ],
+          "elapsed_seconds": 7.469,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_environment.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_environment.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_exceptions.py"
+          ],
+          "elapsed_seconds": 4.891,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_exceptions.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_exceptions.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_find.py"
+          ],
+          "elapsed_seconds": 4.593,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_find.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_find.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_generate_context.py"
+          ],
+          "elapsed_seconds": 4.532,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_generate_context.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_generate_context.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_generate_copy_without_render.py"
+          ],
+          "elapsed_seconds": 5.968,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_generate_copy_without_render.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_generate_copy_without_render.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_generate_file.py"
+          ],
+          "elapsed_seconds": 4.141,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_generate_file.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_generate_file.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_generate_files.py"
+          ],
+          "elapsed_seconds": 5.781,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_generate_files.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_generate_files.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_generate_hooks.py"
+          ],
+          "elapsed_seconds": 5.562,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_generate_hooks.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_generate_hooks.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_get_config.py"
+          ],
+          "elapsed_seconds": 6.422,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_get_config.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_get_config.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_get_user_config.py"
+          ],
+          "elapsed_seconds": 5.36,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_get_user_config.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_get_user_config.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_hooks.py"
+          ],
+          "elapsed_seconds": 7.406,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_hooks.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_hooks.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_log.py"
+          ],
+          "elapsed_seconds": 4.141,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_log.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_log.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_main.py"
+          ],
+          "elapsed_seconds": 7.015,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_main.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_main.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_output_folder.py"
+          ],
+          "elapsed_seconds": 5.719,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_output_folder.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_output_folder.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_preferred_encoding.py"
+          ],
+          "elapsed_seconds": 5.984,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_preferred_encoding.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_preferred_encoding.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_prompt.py"
+          ],
+          "elapsed_seconds": 5.672,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_prompt.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_prompt.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_read_repo_password.py"
+          ],
+          "elapsed_seconds": 5.266,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_read_repo_password.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_read_repo_password.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_read_user_choice.py"
+          ],
+          "elapsed_seconds": 5.328,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_read_user_choice.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_read_user_choice.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_read_user_dict.py"
+          ],
+          "elapsed_seconds": 5.953,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_read_user_dict.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_read_user_dict.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_read_user_variable.py"
+          ],
+          "elapsed_seconds": 5.672,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_read_user_variable.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_read_user_variable.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_read_user_yes_no.py"
+          ],
+          "elapsed_seconds": 5.969,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_read_user_yes_no.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_read_user_yes_no.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_repo_not_found.py"
+          ],
+          "elapsed_seconds": 5.406,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_repo_not_found.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_repo_not_found.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_specify_output_dir.py"
+          ],
+          "elapsed_seconds": 6.297,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_specify_output_dir.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_specify_output_dir.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_utils.py"
+          ],
+          "elapsed_seconds": 5.156,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_utils.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_utils.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/vcs/test_clone.py"
+          ],
+          "elapsed_seconds": 6.0,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/vcs/test_clone.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/vcs/test_clone.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/vcs/test_identify_repo.py"
+          ],
+          "elapsed_seconds": 5.594,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/vcs/test_identify_repo.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/vcs/test_identify_repo.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/vcs/test_is_vcs_installed.py"
+          ],
+          "elapsed_seconds": 5.984,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/vcs/test_is_vcs_installed.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/vcs/test_is_vcs_installed.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/zipfile/test_unzip.py"
+          ],
+          "elapsed_seconds": 5.688,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/zipfile/test_unzip.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\buggy\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/zipfile/test_unzip.py",
+          "timeout": false
+        }
+      ],
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "test_file_count": 45,
+      "timeout": false
+    },
+    "buggy_collected_count": 0,
+    "discovered_test_files": 45,
+    "reference": {
+      "collection_error_count": 45,
+      "collection_error_files": [
+        "tests/replay/test_dump.py",
+        "tests/replay/test_load.py",
+        "tests/replay/test_replay.py",
+        "tests/repository/test_abbreviation_expansion.py",
+        "tests/repository/test_determine_repo_dir_clones_repo.py",
+        "tests/repository/test_determine_repo_dir_finds_existing_cookiecutter.py",
+        "tests/repository/test_determine_repo_dir_finds_subdirectories.py",
+        "tests/repository/test_determine_repository_should_use_local_repo.py",
+        "tests/repository/test_is_repo_url.py",
+        "tests/repository/test_repository_has_cookiecutter_json.py",
+        "tests/test_abort_generate_on_hook_error.py",
+        "tests/test_cli.py",
+        "tests/test_cookiecutter_invocation.py",
+        "tests/test_cookiecutter_local_no_input.py",
+        "tests/test_cookiecutter_local_with_input.py",
+        "tests/test_custom_extensions_in_hooks.py",
+        "tests/test_default_extensions.py",
+        "tests/test_environment.py",
+        "tests/test_exceptions.py",
+        "tests/test_find.py",
+        "tests/test_generate_context.py",
+        "tests/test_generate_copy_without_render.py",
+        "tests/test_generate_file.py",
+        "tests/test_generate_files.py",
+        "tests/test_generate_hooks.py",
+        "tests/test_get_config.py",
+        "tests/test_get_user_config.py",
+        "tests/test_hooks.py",
+        "tests/test_log.py",
+        "tests/test_main.py",
+        "tests/test_output_folder.py",
+        "tests/test_preferred_encoding.py",
+        "tests/test_prompt.py",
+        "tests/test_read_repo_password.py",
+        "tests/test_read_user_choice.py",
+        "tests/test_read_user_dict.py",
+        "tests/test_read_user_variable.py",
+        "tests/test_read_user_yes_no.py",
+        "tests/test_repo_not_found.py",
+        "tests/test_specify_output_dir.py",
+        "tests/test_utils.py",
+        "tests/vcs/test_clone.py",
+        "tests/vcs/test_identify_repo.py",
+        "tests/vcs/test_is_vcs_installed.py",
+        "tests/zipfile/test_unzip.py"
+      ],
+      "collection_mode": "per_file",
+      "command": [
+        "C:\\Python311\\python.exe",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "<per-file>"
+      ],
+      "elapsed_seconds": 275.579,
+      "exit_code": 2,
+      "files": [
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/replay/test_dump.py"
+          ],
+          "elapsed_seconds": 6.593,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/replay/test_dump.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/replay/test_dump.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/replay/test_load.py"
+          ],
+          "elapsed_seconds": 5.375,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/replay/test_load.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/replay/test_load.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/replay/test_replay.py"
+          ],
+          "elapsed_seconds": 6.094,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/replay/test_replay.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/replay/test_replay.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/repository/test_abbreviation_expansion.py"
+          ],
+          "elapsed_seconds": 7.031,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/repository/test_abbreviation_expansion.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/repository/test_abbreviation_expansion.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/repository/test_determine_repo_dir_clones_repo.py"
+          ],
+          "elapsed_seconds": 4.313,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/repository/test_determine_repo_dir_clones_repo.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/repository/test_determine_repo_dir_clones_repo.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/repository/test_determine_repo_dir_finds_existing_cookiecutter.py"
+          ],
+          "elapsed_seconds": 3.953,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/repository/test_determine_repo_dir_finds_existing_cookiecutter.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/repository/test_determine_repo_dir_finds_existing_cookiecutter.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/repository/test_determine_repo_dir_finds_subdirectories.py"
+          ],
+          "elapsed_seconds": 5.906,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/repository/test_determine_repo_dir_finds_subdirectories.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/repository/test_determine_repo_dir_finds_subdirectories.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/repository/test_determine_repository_should_use_local_repo.py"
+          ],
+          "elapsed_seconds": 8.547,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/repository/test_determine_repository_should_use_local_repo.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/repository/test_determine_repository_should_use_local_repo.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/repository/test_is_repo_url.py"
+          ],
+          "elapsed_seconds": 6.438,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/repository/test_is_repo_url.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/repository/test_is_repo_url.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/repository/test_repository_has_cookiecutter_json.py"
+          ],
+          "elapsed_seconds": 5.515,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/repository/test_repository_has_cookiecutter_json.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/repository/test_repository_has_cookiecutter_json.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_abort_generate_on_hook_error.py"
+          ],
+          "elapsed_seconds": 5.516,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_abort_generate_on_hook_error.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_abort_generate_on_hook_error.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_cli.py"
+          ],
+          "elapsed_seconds": 5.813,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_cli.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_cli.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_cookiecutter_invocation.py"
+          ],
+          "elapsed_seconds": 6.25,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_cookiecutter_invocation.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_cookiecutter_invocation.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_cookiecutter_local_no_input.py"
+          ],
+          "elapsed_seconds": 6.047,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_cookiecutter_local_no_input.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_cookiecutter_local_no_input.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_cookiecutter_local_with_input.py"
+          ],
+          "elapsed_seconds": 5.812,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_cookiecutter_local_with_input.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_cookiecutter_local_with_input.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_custom_extensions_in_hooks.py"
+          ],
+          "elapsed_seconds": 5.766,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_custom_extensions_in_hooks.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_custom_extensions_in_hooks.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_default_extensions.py"
+          ],
+          "elapsed_seconds": 6.313,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_default_extensions.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_default_extensions.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_environment.py"
+          ],
+          "elapsed_seconds": 5.812,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_environment.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_environment.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_exceptions.py"
+          ],
+          "elapsed_seconds": 6.141,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_exceptions.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_exceptions.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_find.py"
+          ],
+          "elapsed_seconds": 6.734,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_find.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_find.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_generate_context.py"
+          ],
+          "elapsed_seconds": 6.313,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_generate_context.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_generate_context.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_generate_copy_without_render.py"
+          ],
+          "elapsed_seconds": 6.39,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_generate_copy_without_render.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_generate_copy_without_render.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_generate_file.py"
+          ],
+          "elapsed_seconds": 8.86,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_generate_file.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_generate_file.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_generate_files.py"
+          ],
+          "elapsed_seconds": 5.015,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_generate_files.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_generate_files.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_generate_hooks.py"
+          ],
+          "elapsed_seconds": 7.188,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_generate_hooks.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_generate_hooks.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_get_config.py"
+          ],
+          "elapsed_seconds": 5.859,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_get_config.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_get_config.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_get_user_config.py"
+          ],
+          "elapsed_seconds": 6.25,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_get_user_config.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_get_user_config.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_hooks.py"
+          ],
+          "elapsed_seconds": 5.985,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_hooks.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_hooks.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_log.py"
+          ],
+          "elapsed_seconds": 6.781,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_log.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_log.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_main.py"
+          ],
+          "elapsed_seconds": 6.297,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_main.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_main.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_output_folder.py"
+          ],
+          "elapsed_seconds": 7.329,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_output_folder.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_output_folder.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_preferred_encoding.py"
+          ],
+          "elapsed_seconds": 5.593,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_preferred_encoding.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_preferred_encoding.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_prompt.py"
+          ],
+          "elapsed_seconds": 6.235,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_prompt.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_prompt.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_read_repo_password.py"
+          ],
+          "elapsed_seconds": 6.328,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_read_repo_password.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_read_repo_password.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_read_user_choice.py"
+          ],
+          "elapsed_seconds": 5.234,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_read_user_choice.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_read_user_choice.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_read_user_dict.py"
+          ],
+          "elapsed_seconds": 5.828,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_read_user_dict.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_read_user_dict.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_read_user_variable.py"
+          ],
+          "elapsed_seconds": 6.0,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_read_user_variable.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_read_user_variable.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_read_user_yes_no.py"
+          ],
+          "elapsed_seconds": 5.875,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_read_user_yes_no.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_read_user_yes_no.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_repo_not_found.py"
+          ],
+          "elapsed_seconds": 6.641,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_repo_not_found.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_repo_not_found.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_specify_output_dir.py"
+          ],
+          "elapsed_seconds": 5.406,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_specify_output_dir.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_specify_output_dir.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_utils.py"
+          ],
+          "elapsed_seconds": 6.203,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/test_utils.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/test_utils.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/vcs/test_clone.py"
+          ],
+          "elapsed_seconds": 5.906,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/vcs/test_clone.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/vcs/test_clone.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/vcs/test_identify_repo.py"
+          ],
+          "elapsed_seconds": 5.844,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/vcs/test_identify_repo.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/vcs/test_identify_repo.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/vcs/test_is_vcs_installed.py"
+          ],
+          "elapsed_seconds": 5.687,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/vcs/test_is_vcs_installed.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/vcs/test_is_vcs_installed.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 0,
+          "collection_error": true,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/zipfile/test_unzip.py"
+          ],
+          "elapsed_seconds": 6.563,
+          "exit_code": 4,
+          "stderr_tail": "ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]\n__main__.py: error: unrecognized arguments: --cov-report --cov=cookiecutter tests/zipfile/test_unzip.py\n  inifile: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\\setup.cfg\n  rootdir: D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\cookiecutter_1\\fixed\\cookiecutter\n\n",
+          "stdout_tail": "",
+          "test_path": "tests/zipfile/test_unzip.py",
+          "timeout": false
+        }
+      ],
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "test_file_count": 45,
+      "timeout": false
+    },
+    "reference_collected_count": 0
+  },
+  "collection_error_manifest": "data\\p2p_scopes\\bugsinpy_cookiecutter_1_p2p_broad_collection_errors.json",
+  "compat_shim": {
+    "enabled": true,
+    "path": "outputs\\cookiecutter1_project_p2p_scope_001\\compat_shim",
+    "reason": "legacy tests import requests.compat.is_py26, absent in the current Python environment"
+  },
+  "core_patterns": [],
+  "counts": {
+    "collected_tests": 0,
+    "collection_error_files": 45,
+    "common_collected_tests": 0,
+    "excluded_external_dependency": 0,
+    "excluded_fail_to_pass_oracle": 0,
+    "excluded_flaky": 0,
+    "excluded_timeout": 0,
+    "excluded_uncollectable": 0,
+    "exclusion_reason_counts": {},
+    "included_p2p_tests": 0,
+    "p2p_broad_tests": 0,
+    "p2p_core_tests": 0
+  },
+  "exclusions": [],
+  "fail_to_pass_nodeids": [
+    "tests/test_generate_context.py::test_generate_context_decodes_non_ascii_chars"
+  ],
+  "p2p_broad_tests": [],
+  "p2p_core_tests": [],
+  "project": "cookiecutter",
+  "records": [],
+  "reference_patch_pass_required": true,
+  "runs_per_version": 3,
+  "scope_id": "bugsinpy_cookiecutter_1_project_level_p2p_broad",
+  "scope_type": "project_level_p2p_broad",
+  "stability_runs": 3,
+  "static_exclude_tokens": [
+    "httpbin",
+    "http://",
+    "https://"
+  ],
+  "static_include_tokens": [],
+  "task_id": "bugsinpy_cookiecutter_1",
+  "test_framework": "pytest",
+  "test_path": "tests/tests.py",
+  "test_paths": [
+    "tests/replay/test_dump.py",
+    "tests/replay/test_load.py",
+    "tests/replay/test_replay.py",
+    "tests/repository/test_abbreviation_expansion.py",
+    "tests/repository/test_determine_repo_dir_clones_repo.py",
+    "tests/repository/test_determine_repo_dir_finds_existing_cookiecutter.py",
+    "tests/repository/test_determine_repo_dir_finds_subdirectories.py",
+    "tests/repository/test_determine_repository_should_use_local_repo.py",
+    "tests/repository/test_is_repo_url.py",
+    "tests/repository/test_repository_has_cookiecutter_json.py",
+    "tests/test_abort_generate_on_hook_error.py",
+    "tests/test_cli.py",
+    "tests/test_cookiecutter_invocation.py",
+    "tests/test_cookiecutter_local_no_input.py",
+    "tests/test_cookiecutter_local_with_input.py",
+    "tests/test_custom_extensions_in_hooks.py",
+    "tests/test_default_extensions.py",
+    "tests/test_environment.py",
+    "tests/test_exceptions.py",
+    "tests/test_find.py",
+    "tests/test_generate_context.py",
+    "tests/test_generate_copy_without_render.py",
+    "tests/test_generate_file.py",
+    "tests/test_generate_files.py",
+    "tests/test_generate_hooks.py",
+    "tests/test_get_config.py",
+    "tests/test_get_user_config.py",
+    "tests/test_hooks.py",
+    "tests/test_log.py",
+    "tests/test_main.py",
+    "tests/test_output_folder.py",
+    "tests/test_preferred_encoding.py",
+    "tests/test_prompt.py",
+    "tests/test_read_repo_password.py",
+    "tests/test_read_user_choice.py",
+    "tests/test_read_user_dict.py",
+    "tests/test_read_user_variable.py",
+    "tests/test_read_user_yes_no.py",
+    "tests/test_repo_not_found.py",
+    "tests/test_specify_output_dir.py",
+    "tests/test_utils.py",
+    "tests/vcs/test_clone.py",
+    "tests/vcs/test_identify_repo.py",
+    "tests/vcs/test_is_vcs_installed.py",
+    "tests/zipfile/test_unzip.py"
+  ],
+  "timeout_seconds": 20,
+  "unittest_discovery": null
+}

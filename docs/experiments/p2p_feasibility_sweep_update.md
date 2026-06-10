@@ -32,6 +32,9 @@ Tasks that fail the bounded sweep are retained in task-level accounting as
 | `bugsinpy_tqdm_2` | tqdm | completed_insufficient_p2p_broad | 6 files / 1 nodeid | missing `nose`; P2P-broad size 1 < 3 | no |
 | `bugsinpy_black_1` | black | pending_blocked | unittest / 0 nodeids | missing `typed_ast`; unittest collection error | no |
 | `bugsinpy_black_3` | black | pending_blocked | unittest / 0 nodeids | missing `typed_ast`; unittest collection error | no |
+| `bugsinpy_cookiecutter_1` | cookiecutter | pending_blocked | 45 files / 0 nodeids | pytest-cov addopts blocker; all files collection-error | no |
+| `bugsinpy_cookiecutter_2` | cookiecutter | pending_blocked | not attempted | shared cookiecutter pytest-cov addopts blocker | no |
+| `bugsinpy_cookiecutter_3` | cookiecutter | pending_blocked | not attempted | shared cookiecutter pytest-cov addopts blocker | no |
 
 ## Interpretation
 
@@ -121,3 +124,31 @@ This keeps the black tasks blocked pending an explicit environment decision:
   deviation;
 - or continue with other tasks that do not require compiled legacy
   dependencies.
+
+## `cookiecutter` Notes
+
+After the `black` dependency blocker, `bugsinpy_cookiecutter_1` was screened as
+the next non-compiled-dependency candidate. Its project-level pytest collection
+found 45 test files but collected 0 nodeids. Every file failed collection
+because the retained checkout's `setup.cfg` injects:
+
+```text
+--cov-report --cov=cookiecutter
+```
+
+The current environment does not provide the pytest-cov plugin, so pytest exits
+before test collection. This produced the tracked manifests:
+
+```text
+data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad.json
+data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad_collection_errors.json
+```
+
+`bugsinpy_cookiecutter_2` and `bugsinpy_cookiecutter_3` were not run after this
+shared project-level blocker was identified. They remain in the cohort registry
+as `pending_blocked`, not silently removed.
+
+The next decision is explicit: either install the declared pytest-cov test
+plugin in an isolated environment, or add an audited pytest option override
+that neutralizes coverage-only addopts for P2P collection. Until one of those
+is confirmed, no `cookiecutter` task enters `p2p_broad_main`.

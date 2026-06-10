@@ -828,3 +828,18 @@ This file starts fresh for the patch-verification project.
   lacks Microsoft Visual C++ 14.0+ Build Tools. The failed venv was removed.
   Do not retry the same Python 3.11 installation path without changing one of:
   system build tools, Python version, or the allowed dependency version.
+
+## 2026-06-10 cookiecutter feasibility sweep
+
+- `bugsinpy_cookiecutter_1` reached project-level pytest discovery but collected
+  zero nodeids because every test file failed before collection.
+- The common error is not a semantic test failure: the retained checkout's
+  `setup.cfg` supplies coverage arguments (`--cov-report` and
+  `--cov=cookiecutter`), while the current environment does not provide
+  pytest-cov.
+- Because this is a shared project configuration issue, `cookiecutter_2` and
+  `cookiecutter_3` were not run as duplicate failures. They are recorded as
+  pending/blocked until an explicit environment decision is made.
+- Do not silently install pytest-cov or strip pytest addopts. Either action is
+  reasonable only if it is documented as part of the P2P reproducibility
+  contract.
