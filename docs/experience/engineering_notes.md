@@ -832,14 +832,16 @@ This file starts fresh for the patch-verification project.
 ## 2026-06-10 cookiecutter feasibility sweep
 
 - `bugsinpy_cookiecutter_1` reached project-level pytest discovery but collected
-  zero nodeids because every test file failed before collection.
-- The common error is not a semantic test failure: the retained checkout's
-  `setup.cfg` supplies coverage arguments (`--cov-report` and
-  `--cov=cookiecutter`), while the current environment does not provide
-  pytest-cov.
-- Because this is a shared project configuration issue, `cookiecutter_2` and
-  `cookiecutter_3` were not run as duplicate failures. They are recorded as
-  pending/blocked until an explicit environment decision is made.
-- Do not silently install pytest-cov or strip pytest addopts. Either action is
-  reasonable only if it is documented as part of the P2P reproducibility
-  contract.
+  zero nodeids because collection failed before executable test selection.
+- First blocker: the retained checkout's `setup.cfg` supplied pytest-cov
+  arguments. The repair was not to install pytest-cov, but to implement an
+  audited sanitizer that removes only coverage options and preserves the rest
+  of `addopts`.
+- The sanitizer correctly transformed
+  `-vvv --cov-report term-missing --cov=cookiecutter` into `-vvv`, but the
+  retry then exposed real missing dependencies: `poyo`, `binaryornot`, and
+  `freezegun`.
+- Because the second blocker is a runtime/test dependency issue, not a
+  coverage-only instrumentation issue, do not auto-install dependencies or
+  continue with `cookiecutter_2` / `cookiecutter_3` without an explicit
+  dependency-environment decision.

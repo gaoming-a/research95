@@ -105,7 +105,8 @@
   `httpie_4`, `tqdm_1` to `tqdm_2`, `black_1` / `black_3`, and
   `cookiecutter_1` to `cookiecutter_3` did not become new `p2p_broad_main`
   tasks under the current project-level P2P budget and why they are retained
-  as blocked or insufficient accounting.
+  as blocked or insufficient accounting. It also records the audited
+  coverage-only pytest addopts override used for the `cookiecutter_1` retry.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

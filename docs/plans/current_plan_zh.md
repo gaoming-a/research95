@@ -1912,3 +1912,67 @@ Qwen 初次结果：
      override，用于移除 coverage-only addopts。
 - 在确认前，`cookiecutter_1` / `cookiecutter_2` / `cookiecutter_3` 均不能进入
   `p2p_broad_main`。
+
+## 19. 2026-06-10 audited coverage-only pytest addopts override
+
+用户确认的决策：
+
+- 针对 `cookiecutter` 的 P2P scope 构造，允许在
+  `scripts/build_pass_to_pass_scope.py` 中加入受审计的 pytest addopts override。
+- override 只移除 coverage-only 的 pytest-cov 参数，例如 `--cov`、
+  `--cov=...`、`--cov-report`、`--cov-report=...`、`--cov-config`、
+  `--cov-append`、`--cov-branch`、`--cov-context`、`--cov-fail-under`、
+  `--cov-reset`。
+- 不优先安装 pytest-cov；安装 pytest-cov 只保留为后续 fallback。
+- 不能无条件清空所有 addopts；必须读取原始 addopts、只移除 coverage 相关 token、
+  保留非 coverage token，并把原始/移除/保留/sanitized 内容写入 audit manifest。
+
+执行计划：
+
+1. 扩展 `build_pass_to_pass_scope.py`，新增显式开关
+   `--sanitize-coverage-addopts`，默认不开启。
+2. 读取 `setup.cfg` / `pytest.ini` / `tox.ini` 中的 pytest `addopts`。
+3. 当且仅当 sanitizer 可安全移除 coverage-only token 时，用
+   `pytest -o addopts="<sanitized_addopts>"` 执行 collection 和 P2P 稳定性运行。
+4. 将 audit 信息写入 scope manifest，并在 `data/p2p_scopes/` 写 sibling
+   `*_addopts_override_audit.json`。
+5. 用 `bugsinpy_cookiecutter_1` 重跑 project-level P2P feasibility；根据结果更新
+   registry、报告、README、INDEX、经验文档和本计划。
+6. 运行检查、提交；GitHub push 若仍受网络阻塞，保留 ahead 状态并记录。
+
+执行结果：
+
+- 已为 `build_pass_to_pass_scope.py` 增加显式
+  `--sanitize-coverage-addopts` 开关，默认不开启。
+- sanitizer 已接入 pytest collection、单测重复运行和 batch P2P 稳定性运行。
+- `bugsinpy_cookiecutter_1` retry 中记录的 audit：
+  - original addopts = `-vvv --cov-report term-missing --cov=cookiecutter`；
+  - removed tokens = `--cov-report`, `term-missing`, `--cov=cookiecutter`；
+  - retained tokens = `-vvv`；
+  - sanitized addopts = `-vvv`。
+- retry 结果：
+  - coverage-only blocker 已移除；
+  - discovered test files = 45；
+  - collected/common nodeids = 0；
+  - collection error files = 20；
+  - missing modules = `poyo`、`binaryornot`、`freezegun`。
+- 已写入 tracked audit：
+  - `data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad_addopts_override_audit.json`。
+
+当前阻塞/需确认：
+
+- `cookiecutter` 当前已不是 coverage-only blocker，而是缺少 declared runtime/test
+  dependencies 的环境问题。
+- 按安全规则，不继续自动安装依赖、不继续运行 `cookiecutter_2` /
+  `cookiecutter_3`，直到用户确认是否建立隔离 Cookiecutter dependency environment。
+
+本轮检查：
+
+- `python -m json.tool` 覆盖 cohort registry、`cookiecutter_1` P2P manifest、
+  collection-error manifest 和 addopts override audit；
+- `python -m py_compile` 覆盖 P2P scope builder 与相关分析脚本；
+- cohort filter 检查确认 `included_task_ids = ["bugsinpy_httpie_5"]`；
+- `git diff --check` 通过；
+- `python scripts\run_local_quality_gate.py --out-json
+  outputs\local_quality_gate\cookiecutter_addopts_override_latest.json --out-md
+  outputs\local_quality_gate\cookiecutter_addopts_override_latest.md` 通过。

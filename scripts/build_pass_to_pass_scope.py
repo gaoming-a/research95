@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import argparse
 import ast
+import configparser
 import json
 import os
+import shlex
 import subprocess
 import sys
 import time
@@ -18,6 +20,18 @@ DEFAULT_FAIL_TO_PASS = {
 }
 DEFAULT_CORE_PATTERNS = {
     "bugsinpy_httpie_5": ["tests/tests.py::TestItemParsing::"],
+}
+COVERAGE_ADDOPTS = {
+    "--cov",
+    "--cov-report",
+    "--cov-config",
+    "--cov-context",
+    "--cov-fail-under",
+}
+COVERAGE_FLAG_ADDOPTS = {
+    "--cov-append",
+    "--cov-branch",
+    "--cov-reset",
 }
 
 
@@ -60,6 +74,98 @@ def discover_test_paths(checkout: Path) -> list[str]:
         if name.startswith("test") or name.endswith("_test.py") or name == "tests.py":
             paths.append(relative.as_posix())
     return sorted(set(paths))
+
+
+def read_pytest_addopts(checkout: Path) -> dict[str, str]:
+    candidates = [
+        ("setup.cfg", "tool:pytest"),
+        ("pytest.ini", "pytest"),
+        ("tox.ini", "pytest"),
+    ]
+    for file_name, section in candidates:
+        path = checkout / file_name
+        if not path.exists():
+            continue
+        parser = configparser.ConfigParser()
+        parser.read(path, encoding="utf-8")
+        if parser.has_option(section, "addopts"):
+            return {
+                "config_source": file_name,
+                "config_section": section,
+                "original_addopts": parser.get(section, "addopts"),
+            }
+    return {"config_source": "", "config_section": "", "original_addopts": ""}
+
+
+def sanitize_coverage_addopts(original_addopts: str) -> dict[str, Any]:
+    tokens = shlex.split(original_addopts, posix=False)
+    retained: list[str] = []
+    removed: list[str] = []
+    index = 0
+    while index < len(tokens):
+        token = tokens[index]
+        option = token.split("=", 1)[0]
+        if option in COVERAGE_FLAG_ADDOPTS or any(token.startswith(f"{item}=") for item in COVERAGE_ADDOPTS):
+            removed.append(token)
+            index += 1
+            continue
+        if option in COVERAGE_ADDOPTS:
+            removed.append(token)
+            if index + 1 < len(tokens) and not tokens[index + 1].startswith("-"):
+                removed.append(tokens[index + 1])
+                index += 2
+            else:
+                index += 1
+            continue
+        retained.append(token)
+        index += 1
+    return {
+        "removed_tokens": removed,
+        "retained_tokens": retained,
+        "sanitized_addopts": " ".join(shlex.quote(token) for token in retained),
+    }
+
+
+def build_addopts_override_audit(task_id: str, project: str, buggy: Path, fixed: Path, enabled: bool) -> dict[str, Any]:
+    buggy_config = read_pytest_addopts(buggy)
+    fixed_config = read_pytest_addopts(fixed)
+    original_addopts = buggy_config["original_addopts"]
+    if fixed_config["original_addopts"] and fixed_config["original_addopts"] != original_addopts:
+        return {
+            "enabled": enabled,
+            "task_id": task_id,
+            "project": project,
+            "override_type": "coverage_only_addopts_sanitization",
+            "allowed": False,
+            "reason": "buggy and reference pytest addopts differ; refusing automatic sanitizer",
+            "buggy": buggy_config,
+            "reference": fixed_config,
+        }
+    sanitized = sanitize_coverage_addopts(original_addopts)
+    return {
+        "enabled": enabled,
+        "task_id": task_id,
+        "project": project,
+        "override_type": "coverage_only_addopts_sanitization",
+        "allowed": enabled and bool(sanitized["removed_tokens"]),
+        "config_source": buggy_config["config_source"],
+        "config_section": buggy_config["config_section"],
+        "original_addopts": original_addopts,
+        "removed_tokens": sanitized["removed_tokens"],
+        "retained_tokens": sanitized["retained_tokens"],
+        "sanitized_addopts": sanitized["sanitized_addopts"],
+        "reason": "coverage-only pytest-cov options blocked collection before P2P scope construction",
+        "pytest_cov_installed": False,
+        "main_experiment_allowed": True,
+    }
+
+
+def pytest_command(python: str, pytest_args: list[str], addopts_override: str | None) -> list[str]:
+    command = [python, "-m", "pytest"]
+    if addopts_override is not None:
+        command.extend(["-o", f"addopts={addopts_override}"])
+    command.extend(pytest_args)
+    return command
 
 
 def build_compat_shim(out_dir: Path) -> Path:
@@ -218,9 +324,10 @@ def collect_tests(
     timeout_seconds: int,
     pythonpath: Path,
     project_level: bool,
+    addopts_override: str | None = None,
 ) -> tuple[list[str], dict[str, Any]]:
     result = run_command(
-        [python, "-m", "pytest", "--collect-only", "-q", *test_paths],
+        pytest_command(python, ["--collect-only", "-q", *test_paths], addopts_override),
         cwd=checkout,
         timeout_seconds=timeout_seconds,
         pythonpath=pythonpath,
@@ -239,12 +346,13 @@ def collect_tests_by_file(
     test_paths: list[str],
     timeout_seconds: int,
     pythonpath: Path,
+    addopts_override: str | None = None,
 ) -> tuple[list[str], dict[str, Any]]:
     tests: list[str] = []
     files: list[dict[str, Any]] = []
     for test_path in test_paths:
         result = run_command(
-            [python, "-m", "pytest", "--collect-only", "-q", test_path],
+            pytest_command(python, ["--collect-only", "-q", test_path], addopts_override),
             cwd=checkout,
             timeout_seconds=timeout_seconds,
             pythonpath=pythonpath,
@@ -261,7 +369,7 @@ def collect_tests_by_file(
         files.append(compact)
         tests.extend(nodeids)
     summary = {
-        "command": [python, "-m", "pytest", "--collect-only", "-q", "<per-file>"],
+        "command": pytest_command(python, ["--collect-only", "-q", "<per-file>"], addopts_override),
         "exit_code": 0 if all(not item["collection_error"] for item in files) else 2,
         "elapsed_seconds": round(sum(float(item.get("elapsed_seconds") or 0.0) for item in files), 3),
         "timeout": any(bool(item.get("timeout")) for item in files),
@@ -497,10 +605,15 @@ def run_test_repeated(
     timeout_seconds: int,
     pythonpath: Path,
     test_framework: str = "pytest",
+    addopts_override: str | None = None,
 ) -> list[dict[str, Any]]:
     results = []
     for run_index in range(1, runs + 1):
-        command = [python, "-m", "unittest", nodeid] if test_framework == "unittest" else [python, "-m", "pytest", "-q", nodeid]
+        command = (
+            [python, "-m", "unittest", nodeid]
+            if test_framework == "unittest"
+            else pytest_command(python, ["-q", nodeid], addopts_override)
+        )
         result = run_command(
             command,
             cwd=checkout,
@@ -522,13 +635,14 @@ def run_batch_repeated(
     timeout_seconds: int,
     pythonpath: Path,
     test_framework: str = "pytest",
+    addopts_override: str | None = None,
 ) -> list[dict[str, Any]]:
     results = []
     for run_index in range(1, runs + 1):
         command = (
             [python, "-m", "unittest", *nodeids]
             if test_framework == "unittest"
-            else [python, "-m", "pytest", "-q", *nodeids]
+            else pytest_command(python, ["-q", *nodeids], addopts_override)
         )
         result = run_command(
             command,
@@ -683,6 +797,14 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Validate candidate P2P tests in batches first; fall back to per-test runs only if the batch fails.",
     )
+    parser.add_argument(
+        "--sanitize-coverage-addopts",
+        action="store_true",
+        help=(
+            "Override pytest addopts after removing coverage-only pytest-cov options. "
+            "Writes the original, removed, retained, and sanitized tokens into the scope manifest."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -698,6 +820,19 @@ def main() -> None:
         raise FileNotFoundError(f"missing buggy checkout: {buggy}")
     if not fixed.exists():
         raise FileNotFoundError(f"missing fixed checkout: {fixed}")
+
+    addopts_audit = build_addopts_override_audit(
+        task_id=args.task_id,
+        project=args.project,
+        buggy=buggy,
+        fixed=fixed,
+        enabled=args.sanitize_coverage_addopts,
+    )
+    if args.sanitize_coverage_addopts and not addopts_audit.get("allowed"):
+        raise ValueError(f"coverage addopts sanitizer is not allowed: {addopts_audit}")
+    addopts_override = (
+        str(addopts_audit["sanitized_addopts"]) if args.sanitize_coverage_addopts and addopts_audit.get("allowed") else None
+    )
 
     fail_to_pass = set(args.fail_to_pass_nodeid or DEFAULT_FAIL_TO_PASS.get(args.task_id, []))
     core_patterns = args.core_pattern or DEFAULT_CORE_PATTERNS.get(args.task_id, [])
@@ -743,6 +878,7 @@ def main() -> None:
             test_paths,
             args.timeout_seconds,
             shim_dir,
+            addopts_override=addopts_override,
         )
         fixed_tests, fixed_collect = collect_tests_by_file(
             args.python,
@@ -750,6 +886,7 @@ def main() -> None:
             test_paths,
             args.timeout_seconds,
             shim_dir,
+            addopts_override=addopts_override,
         )
     else:
         buggy_tests, buggy_collect = collect_tests(
@@ -759,6 +896,7 @@ def main() -> None:
             args.timeout_seconds,
             shim_dir,
             project_level=False,
+            addopts_override=addopts_override,
         )
         fixed_tests, fixed_collect = collect_tests(
             args.python,
@@ -767,6 +905,7 @@ def main() -> None:
             args.timeout_seconds,
             shim_dir,
             project_level=False,
+            addopts_override=addopts_override,
         )
     collected = sorted(set(buggy_tests) & set(fixed_tests))
     all_seen = sorted(set(buggy_tests) | set(fixed_tests))
@@ -828,6 +967,7 @@ def main() -> None:
                 args.batch_timeout_seconds,
                 shim_dir,
                 test_framework=args.test_framework,
+                addopts_override=addopts_override,
             )
             fixed_batch = run_batch_repeated(
                 args.python,
@@ -837,6 +977,7 @@ def main() -> None:
                 args.batch_timeout_seconds,
                 shim_dir,
                 test_framework=args.test_framework,
+                addopts_override=addopts_override,
             )
             chunk_record = {
                 "nodeid_count": len(batch_nodeids),
@@ -865,6 +1006,7 @@ def main() -> None:
             args.timeout_seconds,
             shim_dir,
             test_framework=args.test_framework,
+            addopts_override=addopts_override,
         )
         fixed_runs = run_test_repeated(
             args.python,
@@ -874,6 +1016,7 @@ def main() -> None:
             args.timeout_seconds,
             shim_dir,
             test_framework=args.test_framework,
+            addopts_override=addopts_override,
         )
         record["buggy_runs"] = buggy_runs
         record["reference_runs"] = fixed_runs
@@ -912,6 +1055,7 @@ def main() -> None:
             "path": str(shim_dir),
             "reason": "legacy tests import requests.compat.is_py26, absent in the current Python environment",
         },
+        "pytest_addopts_override": addopts_audit,
         "collection": {
             "buggy": buggy_collect,
             "reference": fixed_collect,
@@ -961,6 +1105,17 @@ def main() -> None:
         )
         write_json(collection_error_path, collection_error_manifest)
         scope["collection_error_manifest"] = str(collection_error_path)
+        write_json(out_dir / "p2p_scope.json", scope)
+        if args.manifest_out:
+            write_json(Path(args.manifest_out), scope)
+    if addopts_audit.get("enabled"):
+        addopts_audit_path = (
+            Path(args.manifest_out).with_name(f"{Path(args.manifest_out).stem}_addopts_override_audit.json")
+            if args.manifest_out
+            else out_dir / "addopts_override_audit.json"
+        )
+        write_json(addopts_audit_path, addopts_audit)
+        scope["pytest_addopts_override"]["audit_manifest"] = str(addopts_audit_path)
         write_json(out_dir / "p2p_scope.json", scope)
         if args.manifest_out:
             write_json(Path(args.manifest_out), scope)

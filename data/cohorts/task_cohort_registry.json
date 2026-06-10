@@ -272,14 +272,15 @@
         "task_file_level_p2p": "not_recorded"
       },
       "blocked_reason": [
-        "missing_pytest_cov_plugin_or_coverage_addopts_handling",
-        "project_level_collection_errors"
+        "coverage_addopts_sanitized_successfully",
+        "missing_cookiecutter_runtime_test_dependencies",
+        "project_level_collection_errors_after_override"
       ],
       "cohorts": [
         "blocked_or_pending"
       ],
       "collection_summary": {
-        "collection_errors": 45,
+        "collection_errors": 20,
         "nodeids": 0,
         "p2p_broad_size": 0,
         "test_files": 45,
@@ -289,11 +290,11 @@
         "appendix": null,
         "main": "not_included"
       },
-      "notes": "Project-level pytest collection failed for every test file because setup.cfg injects --cov-report and --cov=cookiecutter while the current environment lacks pytest-cov or an explicit addopts override. No P2P-broad tests were collected.",
+      "notes": "An audited coverage-only addopts override removed --cov-report term-missing and --cov=cookiecutter while retaining -vvv. Collection then exposed missing runtime/test dependencies poyo, binaryornot, and freezegun; no P2P-broad tests were collected.",
       "p2p_broad_main_included": false,
       "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad.json",
       "project": "cookiecutter",
-      "project_level_p2p_status": "pending_blocked",
+      "project_level_p2p_status": "pending_blocked_after_override",
       "task_id": "bugsinpy_cookiecutter_1"
     },
     {
@@ -303,8 +304,8 @@
         "task_file_level_p2p": "not_recorded"
       },
       "blocked_reason": [
-        "shared_cookiecutter_pytest_cov_addopts_blocker",
-        "not_attempted_after_cookiecutter_1_blocker"
+        "shared_cookiecutter_dependency_blocker_after_addopts_override",
+        "not_attempted_after_cookiecutter_1_retry"
       ],
       "cohorts": [
         "blocked_or_pending"
@@ -320,7 +321,7 @@
         "appendix": null,
         "main": "not_included"
       },
-      "notes": "Not run after cookiecutter_1 exposed a shared project-level pytest-cov addopts blocker. Requires an explicit decision to install pytest-cov or add an audited pytest addopts override before continuing.",
+      "notes": "Not run after cookiecutter_1 addopts retry exposed missing cookiecutter runtime/test dependencies. Requires an explicit dependency-environment decision before continuing.",
       "p2p_broad_main_included": false,
       "p2p_broad_manifest": null,
       "project": "cookiecutter",
@@ -334,8 +335,8 @@
         "task_file_level_p2p": "not_recorded"
       },
       "blocked_reason": [
-        "shared_cookiecutter_pytest_cov_addopts_blocker",
-        "not_attempted_after_cookiecutter_1_blocker"
+        "shared_cookiecutter_dependency_blocker_after_addopts_override",
+        "not_attempted_after_cookiecutter_1_retry"
       ],
       "cohorts": [
         "blocked_or_pending"
@@ -351,7 +352,7 @@
         "appendix": null,
         "main": "not_included"
       },
-      "notes": "Not run after cookiecutter_1 exposed a shared project-level pytest-cov addopts blocker. Requires an explicit decision to install pytest-cov or add an audited pytest addopts override before continuing.",
+      "notes": "Not run after cookiecutter_1 addopts retry exposed missing cookiecutter runtime/test dependencies. Requires an explicit dependency-environment decision before continuing.",
       "p2p_broad_main_included": false,
       "p2p_broad_manifest": null,
       "project": "cookiecutter",
