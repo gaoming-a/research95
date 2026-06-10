@@ -317,6 +317,33 @@ def normalize_project_nodeid(line: str, test_paths: list[str]) -> str | None:
     return None
 
 
+def parse_pytest_collect_tree(stdout: str, test_path: str) -> list[str]:
+    nodeids: list[str] = []
+    class_stack: list[tuple[int, str]] = []
+    for line in stdout.splitlines():
+        stripped = line.strip()
+        indent = len(line) - len(line.lstrip(" "))
+        if stripped.startswith("<Class ") and stripped.endswith(">"):
+            class_name = stripped.removeprefix("<Class ").removesuffix(">")
+            class_stack = [(level, value) for level, value in class_stack if level < indent]
+            class_stack.append((indent, class_name))
+            continue
+        if stripped.startswith("<Module ") or stripped.startswith("<Package ") or stripped.startswith("<Dir "):
+            if stripped.startswith("<Module "):
+                class_stack = []
+            continue
+        if not stripped.startswith("<Function ") or not stripped.endswith(">"):
+            continue
+        function_name = stripped.removeprefix("<Function ").removesuffix(">")
+        class_parts = [value for _, value in class_stack if value]
+        nodeids.append("::".join([test_path, *class_parts, function_name]))
+    return nodeids
+
+
+def normalize_parametrized_nodeid(nodeid: str) -> str:
+    return "::".join(part.split("[", 1)[0] for part in nodeid.split("::"))
+
+
 def collect_tests(
     python: str,
     checkout: Path,
@@ -337,6 +364,8 @@ def collect_tests(
         nodeid = normalize_project_nodeid(line, test_paths) if project_level else normalize_nodeid(line, test_paths[0])
         if nodeid:
             tests.append(nodeid)
+    if not tests and len(test_paths) == 1:
+        tests = parse_pytest_collect_tree(result["stdout"], test_paths[0])
     return sorted(set(tests)), compact_result(result)
 
 
@@ -362,6 +391,8 @@ def collect_tests_by_file(
             nodeid = normalize_project_nodeid(line, [test_path])
             if nodeid:
                 nodeids.append(nodeid)
+        if not nodeids:
+            nodeids = parse_pytest_collect_tree(result["stdout"], test_path)
         compact = compact_result(result)
         compact["test_path"] = test_path
         compact["collected_count"] = len(nodeids)
@@ -555,7 +586,7 @@ def static_source_segments(checkout: Path, test_path: str, nodeids: list[str]) -
             if isinstance(child, ast.FunctionDef) and child.name.startswith("test_"):
                 segment = ast.get_source_segment(source, child) or ""
                 methods[f"{relative_file}::{child.name}"] = segment
-    return {nodeid: methods.get(nodeid, "") for nodeid in nodeids}
+    return {nodeid: methods.get(nodeid, methods.get(normalize_parametrized_nodeid(nodeid), "")) for nodeid in nodeids}
 
 
 def static_external_dependency_reasons(segments: dict[str, str], tokens: list[str]) -> dict[str, str]:
@@ -1097,12 +1128,12 @@ def main() -> None:
     write_json(out_dir / "p2p_scope.json", scope)
     write_text(out_dir / "p2p_scope.md", render_markdown(scope))
     collection_error_manifest = build_collection_error_manifest(scope)
-    if collection_error_manifest["error_count"]:
-        collection_error_path = (
-            Path(args.manifest_out).with_name(f"{Path(args.manifest_out).stem}_collection_errors.json")
-            if args.manifest_out
-            else out_dir / "collection_error_manifest.json"
-        )
+    collection_error_path = (
+        Path(args.manifest_out).with_name(f"{Path(args.manifest_out).stem}_collection_errors.json")
+        if args.manifest_out
+        else out_dir / "collection_error_manifest.json"
+    )
+    if collection_error_manifest["error_count"] or collection_error_path.exists():
         write_json(collection_error_path, collection_error_manifest)
         scope["collection_error_manifest"] = str(collection_error_path)
         write_json(out_dir / "p2p_scope.json", scope)

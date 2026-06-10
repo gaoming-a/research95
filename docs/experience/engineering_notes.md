@@ -841,7 +841,15 @@ This file starts fresh for the patch-verification project.
   `-vvv --cov-report term-missing --cov=cookiecutter` into `-vvv`, but the
   retry then exposed real missing dependencies: `poyo`, `binaryornot`, and
   `freezegun`.
-- Because the second blocker is a runtime/test dependency issue, not a
-  coverage-only instrumentation issue, do not auto-install dependencies or
-  continue with `cookiecutter_2` / `cookiecutter_3` without an explicit
-  dependency-environment decision.
+- After explicit approval, an isolated Python 3.11 venv under ignored
+  `outputs/envs/` installed the Cookiecutter runtime/test dependencies needed
+  for P2P while still excluding pytest-cov. Passing the venv Python explicitly
+  as both the script runner and `--python` test interpreter mattered; a prior
+  relative-path run left mixed system/venv Python processes and had to be
+  terminated manually.
+- Pytest 9 plus retained `-vvv` addopts emits tree-form `--collect-only` output
+  instead of nodeid lines. The scope builder now parses tree output and maps
+  parametrized nodeids back to their source segments for static exclusions.
+- Result: `cookiecutter_1` now has 296 common nodeids and 290 P2P-broad tests
+  over 3 stability runs per version. It remains outside main metrics until a
+  fail-to-pass oracle and candidate validation are migrated.

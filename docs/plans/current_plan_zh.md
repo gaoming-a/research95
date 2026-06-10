@@ -1976,3 +1976,79 @@ Qwen 初次结果：
 - `python scripts\run_local_quality_gate.py --out-json
   outputs\local_quality_gate\cookiecutter_addopts_override_latest.json --out-md
   outputs\local_quality_gate\cookiecutter_addopts_override_latest.md` 通过。
+
+## 20. 2026-06-10 isolated `cookiecutter` dependency environment
+
+用户确认：
+
+- 允许为 `cookiecutter` 建立隔离依赖环境，安装 declared runtime/test dependencies，
+  然后继续 P2P feasibility sweep。
+
+执行边界：
+
+- 只在 ignored `outputs/envs/` 下创建 venv，不污染全局 Python。
+- 不安装 `pytest-cov` 作为优先修复；继续使用第 19 节实现的 coverage-only
+  addopts sanitizer。
+- 依赖来源以 retained checkout 的 `setup.py` runtime requirements 与
+  `test_requirements.txt` 为准；`bugsinpy_requirements.txt` 中的 editable Git
+  checkout 和 `pkg-resources==0.0.0` 不直接作为 Windows 当前环境安装输入。
+- 若出现需要编译型依赖、Python 版本不兼容、或新的非声明依赖，记录后停止确认。
+- 若 `cookiecutter_1` 在隔离环境下完成 project-level P2P-broad，则再判断是否继续
+  `cookiecutter_2` / `cookiecutter_3`；不提前把它们加入主实验。
+
+计划步骤：
+
+1. 创建 `outputs/envs/cookiecutter_p2p_py311`。
+2. 安装 `setup.py` 中声明的 runtime deps 与 `test_requirements.txt` 中的 test deps，
+   但不依赖 pytest-cov 来解决 coverage addopts。
+3. 使用该 venv Python、`--sanitize-coverage-addopts` 重跑 `bugsinpy_cookiecutter_1`
+   project-level P2P feasibility。
+4. 根据结果更新 cohort registry、P2P manifest、实验报告、README、INDEX、经验文档和本计划。
+5. 运行检查、提交；若 GitHub 仍因网络失败，记录本地 ahead 状态。
+
+执行结果：
+
+- 已创建 ignored venv：`outputs/envs/cookiecutter_p2p_py311`。
+- 已安装 Cookiecutter runtime/test dependencies 所需包；未安装 pytest-cov，继续使用
+  audited coverage-only addopts sanitizer。
+- 首次使用相对 venv Python 路径的动态 P2P run 超过 15 分钟并留下混合
+  system/venv Python 子进程；已仅终止该 P2P run 相关进程，保留 app server 进程。
+- 诊断发现 retained `-vvv` addopts 会让 pytest 9 的 `--collect-only` 输出变成树形结构；
+  已修复 `build_pass_to_pass_scope.py`：
+  - 支持解析 pytest collect tree；
+  - 参数化 nodeid 可映射回非参数化源码片段；
+  - 当 error_count 归零时刷新 sibling collection-error manifest，避免 stale evidence。
+- 使用绝对 venv Python 同时作为脚本 runner 和 `--python` test interpreter 后，
+  `bugsinpy_cookiecutter_1` project-level P2P-broad 构造完成：
+  - discovered test files = 45；
+  - collected/common nodeids = 296；
+  - excluded fail-to-pass oracle = 1；
+  - excluded failed on buggy baseline = 5；
+  - included P2P-broad tests = 290；
+  - stability runs = 3 per version。
+- 已新增依赖环境审计：
+  - `data/p2p_scopes/bugsinpy_cookiecutter_1_dependency_environment_audit.json`。
+- 已刷新：
+  - `data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad.json`；
+  - `data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad_collection_errors.json`
+    现在 `error_count = 0`；
+  - `data/cohorts/task_cohort_registry.json`。
+
+当前结论：
+
+- `bugsinpy_cookiecutter_1` 是 P2P scope ready，但仍不能进入 `p2p_broad_main`。
+- 原因：还没有 Cookiecutter fail-to-pass oracle 和 candidate validation under F2P +
+  P2P-broad。
+- 下一步应迁移 `cookiecutter_1` 的 fail-to-pass oracle，并构造/reference/no-op/partial
+  candidate 后再进行 validation；不要仅凭 P2P scope ready 就加入主指标。
+
+本轮检查：
+
+- `python -m json.tool` 覆盖 cohort registry、`cookiecutter_1` P2P manifest、
+  collection-error manifest、addopts override audit 和 dependency environment audit；
+- `python -m py_compile` 覆盖 P2P scope builder 与相关分析脚本；
+- cohort filter 检查确认 `included_task_ids = ["bugsinpy_httpie_5"]`；
+- `git diff --check` 通过；
+- `python scripts\run_local_quality_gate.py --out-json
+  outputs\local_quality_gate\cookiecutter_scope_ready_latest.json --out-md
+  outputs\local_quality_gate\cookiecutter_scope_ready_latest.md` 通过。

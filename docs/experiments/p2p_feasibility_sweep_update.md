@@ -32,9 +32,9 @@ Tasks that fail the bounded sweep are retained in task-level accounting as
 | `bugsinpy_tqdm_2` | tqdm | completed_insufficient_p2p_broad | 6 files / 1 nodeid | missing `nose`; P2P-broad size 1 < 3 | no |
 | `bugsinpy_black_1` | black | pending_blocked | unittest / 0 nodeids | missing `typed_ast`; unittest collection error | no |
 | `bugsinpy_black_3` | black | pending_blocked | unittest / 0 nodeids | missing `typed_ast`; unittest collection error | no |
-| `bugsinpy_cookiecutter_1` | cookiecutter | pending_blocked_after_override | 45 files / 0 nodeids | coverage addopts sanitized; then missing `poyo`, `binaryornot`, `freezegun` | no |
-| `bugsinpy_cookiecutter_2` | cookiecutter | pending_blocked | not attempted | shared cookiecutter dependency blocker after addopts retry | no |
-| `bugsinpy_cookiecutter_3` | cookiecutter | pending_blocked | not attempted | shared cookiecutter dependency blocker after addopts retry | no |
+| `bugsinpy_cookiecutter_1` | cookiecutter | completed_pending_candidate_validation | 45 files / 296 nodeids | P2P-broad ready with 290 tests; oracle/candidates pending | no |
+| `bugsinpy_cookiecutter_2` | cookiecutter | pending_blocked | not attempted | await oracle/candidate migration after cookiecutter_1 scope success | no |
+| `bugsinpy_cookiecutter_3` | cookiecutter | pending_blocked | not attempted | await oracle/candidate migration after cookiecutter_1 scope success | no |
 
 ## Interpretation
 
@@ -148,14 +148,28 @@ retained_tokens: -vvv
 sanitized_addopts: -vvv
 ```
 
-This successfully removed the coverage instrumentation blocker, but collection
-still produced 0 common nodeids because it then exposed missing runtime/test
-dependencies:
+This successfully removed the coverage instrumentation blocker. The immediate
+retry then exposed missing runtime/test dependencies:
 
 ```text
 poyo: 24 collection errors
 binaryornot: 14 collection errors
 freezegun: 2 collection errors
+```
+
+After user approval, an isolated Python 3.11 venv was created under ignored
+`outputs/envs/cookiecutter_p2p_py311` and populated with Cookiecutter runtime
+dependencies plus test dependencies needed for P2P, excluding pytest-cov because
+coverage instrumentation is handled by the audited addopts sanitizer. With the
+venv Python passed explicitly as both runner and test interpreter,
+`bugsinpy_cookiecutter_1` completed project-level P2P-broad construction:
+
+```text
+collected/common nodeids: 296
+excluded fail-to-pass oracle: 1
+excluded failed on buggy baseline: 5
+included P2P-broad tests: 290
+stability runs: 3 per version
 ```
 
 This produced the tracked manifests:
@@ -164,13 +178,14 @@ This produced the tracked manifests:
 data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad.json
 data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad_collection_errors.json
 data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad_addopts_override_audit.json
+data/p2p_scopes/bugsinpy_cookiecutter_1_dependency_environment_audit.json
 ```
 
-`bugsinpy_cookiecutter_2` and `bugsinpy_cookiecutter_3` were not run after this
-shared project-level dependency blocker was identified. They remain in the
-cohort registry as `pending_blocked`, not silently removed.
+`bugsinpy_cookiecutter_2` and `bugsinpy_cookiecutter_3` were not run as
+duplicates after `cookiecutter_1` established the required environment and
+scope-builder path. They remain in the cohort registry as `pending_blocked`
+until oracle and candidate migration is planned.
 
-The next decision is explicit: whether to build an isolated Cookiecutter
-dependency environment containing its declared runtime/test dependencies. Until
-that is confirmed and project-level P2P-broad succeeds, no `cookiecutter` task
-enters `p2p_broad_main`.
+`bugsinpy_cookiecutter_1` does not enter `p2p_broad_main` yet. The P2P scope is
+ready, but main inclusion still requires a migrated fail-to-pass oracle and
+candidate validation under F2P plus P2P-broad.

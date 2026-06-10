@@ -268,21 +268,21 @@
     {
       "appendix_smoke_included": false,
       "available_evidence": {
-        "project_level_p2p_broad": "not_available",
+        "project_level_p2p_broad": "available_pending_candidate_validation",
         "task_file_level_p2p": "not_recorded"
       },
       "blocked_reason": [
-        "coverage_addopts_sanitized_successfully",
-        "missing_cookiecutter_runtime_test_dependencies",
-        "project_level_collection_errors_after_override"
+        "missing_cookiecutter_oracle_and_candidate_validation"
       ],
       "cohorts": [
         "blocked_or_pending"
       ],
       "collection_summary": {
-        "collection_errors": 20,
-        "nodeids": 0,
-        "p2p_broad_size": 0,
+        "collection_errors": 0,
+        "excluded_fail_to_pass_oracle": 1,
+        "excluded_failed_on_buggy_baseline": 5,
+        "nodeids": 296,
+        "p2p_broad_size": 290,
         "test_files": 45,
         "test_framework": "pytest"
       },
@@ -290,11 +290,11 @@
         "appendix": null,
         "main": "not_included"
       },
-      "notes": "An audited coverage-only addopts override removed --cov-report term-missing and --cov=cookiecutter while retaining -vvv. Collection then exposed missing runtime/test dependencies poyo, binaryornot, and freezegun; no P2P-broad tests were collected.",
+      "notes": "An isolated Cookiecutter dependency venv plus audited coverage-only addopts override produced a completed project-level P2P-broad scope with 290 stable tests. The task is not in main metrics yet because it still lacks a migrated fail-to-pass oracle and candidate validation under F2P plus P2P.",
       "p2p_broad_main_included": false,
       "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad.json",
       "project": "cookiecutter",
-      "project_level_p2p_status": "pending_blocked_after_override",
+      "project_level_p2p_status": "completed_pending_candidate_validation",
       "task_id": "bugsinpy_cookiecutter_1"
     },
     {
@@ -304,8 +304,8 @@
         "task_file_level_p2p": "not_recorded"
       },
       "blocked_reason": [
-        "shared_cookiecutter_dependency_blocker_after_addopts_override",
-        "not_attempted_after_cookiecutter_1_retry"
+        "not_attempted_after_cookiecutter_1_scope_completed",
+        "missing_cookiecutter_oracle_and_candidate_validation"
       ],
       "cohorts": [
         "blocked_or_pending"
@@ -321,7 +321,7 @@
         "appendix": null,
         "main": "not_included"
       },
-      "notes": "Not run after cookiecutter_1 addopts retry exposed missing cookiecutter runtime/test dependencies. Requires an explicit dependency-environment decision before continuing.",
+      "notes": "Not run after cookiecutter_1 established that an isolated dependency environment plus audited addopts sanitizer can build project-level P2P. Requires oracle/candidate migration before main inclusion.",
       "p2p_broad_main_included": false,
       "p2p_broad_manifest": null,
       "project": "cookiecutter",
@@ -335,8 +335,8 @@
         "task_file_level_p2p": "not_recorded"
       },
       "blocked_reason": [
-        "shared_cookiecutter_dependency_blocker_after_addopts_override",
-        "not_attempted_after_cookiecutter_1_retry"
+        "not_attempted_after_cookiecutter_1_scope_completed",
+        "missing_cookiecutter_oracle_and_candidate_validation"
       ],
       "cohorts": [
         "blocked_or_pending"
@@ -352,7 +352,7 @@
         "appendix": null,
         "main": "not_included"
       },
-      "notes": "Not run after cookiecutter_1 addopts retry exposed missing cookiecutter runtime/test dependencies. Requires an explicit dependency-environment decision before continuing.",
+      "notes": "Not run after cookiecutter_1 established that an isolated dependency environment plus audited addopts sanitizer can build project-level P2P. Requires oracle/candidate migration before main inclusion.",
       "p2p_broad_main_included": false,
       "p2p_broad_manifest": null,
       "project": "cookiecutter",

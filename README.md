@@ -132,11 +132,10 @@ They should not override `final_paper_roadmap_zh.md`.
   `typed_ast` dependency. An isolated `typed-ast==1.4.0` install attempt on
   Python 3.11 failed because the package needs local MSVC build tools.
 - The next replacement sweep tried `bugsinpy_cookiecutter_1`. An audited
-  coverage-only addopts override removed the pytest-cov instrumentation
-  blocker while preserving non-coverage addopts, but collection then exposed
-  missing Cookiecutter runtime/test dependencies (`poyo`, `binaryornot`, and
-  `freezegun`). `cookiecutter_2` and `cookiecutter_3` remain pending under the
-  shared dependency blocker rather than run as duplicate failures.
+  coverage-only addopts override plus an isolated Cookiecutter dependency venv
+  produced a completed project-level P2P-broad scope: 296 common nodeids and
+  290 included P2P-broad tests. It is still excluded from main metrics until a
+  fail-to-pass oracle and candidate validation are migrated for Cookiecutter.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in
