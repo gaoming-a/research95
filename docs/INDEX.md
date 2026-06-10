@@ -102,8 +102,9 @@
   blocker.
 - `experiments/p2p_feasibility_sweep_update.md`: bounded replacement-task
   feasibility sweep after freezing Luigi. It records that `httpie_1` to
-  `httpie_4` did not become new `p2p_broad_main` tasks under the current
-  project-level P2P budget and why they are retained as blocked accounting.
+  `httpie_4` and `tqdm_1` to `tqdm_2` did not become new `p2p_broad_main`
+  tasks under the current project-level P2P budget and why they are retained as
+  blocked or insufficient accounting.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

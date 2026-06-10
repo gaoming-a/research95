@@ -327,6 +327,9 @@ stability。
   sweep，但当前未进入 `p2p_broad_main`：阻塞原因包括缺少真实
   `pytest_httpbin` 测试依赖、legacy compatibility 和 project-level scope
   timeout。
+- `bugsinpy_tqdm_1` / `bugsinpy_tqdm_2` 已经过 bounded feasibility sweep；
+  两者均只保留 1 个 stable P2P-broad test，低于 `p2p_broad_size >= 3`
+  门槛，因此不进入主指标。
 - cohort registry 为 `data/cohorts/task_cohort_registry.json`。
 
 ## 4. Evidence 与 hidden evaluator 分离

@@ -122,6 +122,10 @@ They should not override `final_paper_roadmap_zh.md`.
   project-level P2P budget because of missing `pytest_httpbin`, legacy
   compatibility, or scope timeout blockers. These are recorded in the cohort
   registry instead of being silently discarded.
+- The next bounded sweep tried `bugsinpy_tqdm_1` and `bugsinpy_tqdm_2`. Both
+  completed project-level scope construction but retained only one stable
+  P2P-broad test because most test files require the legacy `nose` dependency;
+  they are recorded as `completed_insufficient_p2p_broad`, not main tasks.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

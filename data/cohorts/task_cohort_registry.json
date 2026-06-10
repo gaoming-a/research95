@@ -147,6 +147,66 @@
     },
     {
       "appendix_smoke_included": true,
+      "available_evidence": {
+        "project_level_p2p_broad": "available_but_insufficient",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "missing_nose_dependency",
+        "insufficient_p2p_broad_size"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": 9,
+        "nodeids": 1,
+        "p2p_broad_size": 1,
+        "test_files": 10
+      },
+      "label_scope": {
+        "appendix": "project_level_insufficient_p2p_only",
+        "main": "not_included"
+      },
+      "notes": "Project-level scope completed but retained only one stable test because most test files require nose; below the >=3 P2P-broad main threshold.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_tqdm_1_p2p_broad.json",
+      "project": "tqdm",
+      "project_level_p2p_status": "completed_insufficient_p2p_broad",
+      "task_id": "bugsinpy_tqdm_1"
+    },
+    {
+      "appendix_smoke_included": true,
+      "available_evidence": {
+        "project_level_p2p_broad": "available_but_insufficient",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "missing_nose_dependency",
+        "insufficient_p2p_broad_size"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": 5,
+        "nodeids": 1,
+        "p2p_broad_size": 1,
+        "test_files": 6
+      },
+      "label_scope": {
+        "appendix": "project_level_insufficient_p2p_only",
+        "main": "not_included"
+      },
+      "notes": "Project-level scope completed but retained only one stable test because most test files require nose; below the >=3 P2P-broad main threshold.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_tqdm_2_p2p_broad.json",
+      "project": "tqdm",
+      "project_level_p2p_status": "completed_insufficient_p2p_broad",
+      "task_id": "bugsinpy_tqdm_2"
+    },
+    {
+      "appendix_smoke_included": true,
       "attempts": [
         {
           "attempt_id": 1,

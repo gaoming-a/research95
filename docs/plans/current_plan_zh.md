@@ -1653,3 +1653,65 @@ Qwen 初次结果：
 - `python -m py_compile` 覆盖相关脚本通过；
 - `git diff --check` 通过；
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\cohort_gating_latest.json --out-md outputs\local_quality_gate\cohort_gating_latest.md` 通过。
+
+## 15. 2026-06-10 `tqdm` replacement feasibility sweep
+
+本轮目标：
+
+- 执行用户确认的下一步：筛选 `bugsinpy_tqdm_1` 与 `bugsinpy_tqdm_2`。
+- 目标不是降低标准凑样本，而是在 bounded feasibility 规则下寻找新的
+  `p2p_broad_main` 任务。
+
+执行边界：
+
+- 不调用模型 API。
+- 不生成新 candidate patch。
+- 不继续运行 Luigi project-level P2P。
+- 若 `tqdm` 任务无法在限定预算内完成 project-level P2P-broad，则记录为
+  `pending_blocked`，不进入主指标。
+
+计划步骤：
+
+1. 对 `bugsinpy_tqdm_1` 构造 project-level P2P-broad scope。
+2. 对 `bugsinpy_tqdm_2` 构造 project-level P2P-broad scope。
+3. 若 scope 完成且 P2P-broad size >= 3，则写入 manifest 并更新 cohort
+   registry。
+4. 若 scope 阻塞，则更新 feasibility sweep report 和 cohort registry。
+5. 运行检查、提交并同步 GitHub。
+
+执行结果：
+
+- `bugsinpy_tqdm_1` project-level P2P-broad scope 完成，但不达主实验门槛：
+  - discovered test files = 10；
+  - collected/common nodeids = 1；
+  - collection error files = 9；
+  - included P2P-broad tests = 1；
+  - retained test = `tqdm/tests/tests_version.py::test_version`；
+  - 主要阻塞原因：缺少 legacy `nose` 依赖。
+- `bugsinpy_tqdm_2` project-level P2P-broad scope 完成，但不达主实验门槛：
+  - discovered test files = 6；
+  - collected/common nodeids = 1；
+  - collection error files = 5；
+  - included P2P-broad tests = 1；
+  - retained test = `tqdm/tests/tests_version.py::test_version`；
+  - 主要阻塞原因：缺少 legacy `nose` 依赖。
+- 两个任务均已写入 cohort registry：
+  - `project_level_p2p_status = completed_insufficient_p2p_broad`；
+  - `p2p_broad_main_included = false`；
+  - `appendix_smoke_included = true`。
+- 已更新 `docs/experiments/p2p_feasibility_sweep_update.md`。
+
+当前结论：
+
+- `tqdm_1` / `tqdm_2` 不能进入 `p2p_broad_main`。
+- 当前 `p2p_broad_main` cohort 仍只有 `bugsinpy_httpie_5`。
+- 下一步若继续 `black_1` / `black_3`，需要注意它们 prior visible test
+  使用 `unittest`，而当前 P2P scope builder 主要面向 pytest nodeid。
+
+本轮检查：
+
+- `python -m json.tool` 覆盖 cohort registry 与两个 `tqdm` P2P manifests；
+- `python -m py_compile` 覆盖相关脚本；
+- cohort filter 检查确认 `included_task_ids = ["bugsinpy_httpie_5"]`；
+- `git diff --check` 通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\tqdm_sweep_latest.json --out-md outputs\local_quality_gate\tqdm_sweep_latest.md` 通过。

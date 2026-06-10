@@ -792,3 +792,16 @@ This file starts fresh for the patch-verification project.
   expansion. Prefer projects with no required service fixtures, no bundled
   virtualenv inside the checkout, and project-level collection that finishes
   within the predefined budget.
+
+## 2026-06-10 tqdm feasibility sweep
+
+- `bugsinpy_tqdm_1` and `bugsinpy_tqdm_2` have much smaller test-file counts
+  than Luigi, but most test files require the legacy `nose` dependency.
+- Both tasks completed bounded project-level scope construction, but each
+  retained only one stable P2P-broad test:
+  `tqdm/tests/tests_version.py::test_version`.
+- Because the main threshold is `p2p_broad_size >= 3`, both tasks are recorded
+  as `completed_insufficient_p2p_broad` and excluded from `p2p_broad_main`.
+- Do not silently install or emulate `nose` for main labels. Treat dependency
+  installation as a separate environment decision because it changes the
+  reproducibility contract.

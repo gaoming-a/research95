@@ -28,10 +28,12 @@ Tasks that fail the bounded sweep are retained in task-level accounting as
 | `bugsinpy_httpie_2` | httpie | pending_blocked | not completed | bounded project-level scope timeout | no |
 | `bugsinpy_httpie_3` | httpie | pending_blocked | not completed | bounded project-level scope timeout | no |
 | `bugsinpy_httpie_4` | httpie | pending_blocked | 15 files / 0 nodeids initially | legacy requests compatibility; later bounded scope timeout | no |
+| `bugsinpy_tqdm_1` | tqdm | completed_insufficient_p2p_broad | 10 files / 1 nodeid | missing `nose`; P2P-broad size 1 < 3 | no |
+| `bugsinpy_tqdm_2` | tqdm | completed_insufficient_p2p_broad | 6 files / 1 nodeid | missing `nose`; P2P-broad size 1 < 3 | no |
 
 ## Interpretation
 
-The first replacement sweep did not yet add new `p2p_broad_main` tasks beyond
+The first replacement sweeps did not yet add new `p2p_broad_main` tasks beyond
 `httpie_5`.
 
 This is not a reason to lower the main standard. It shows that project-level
@@ -51,3 +53,18 @@ The next sweep should prioritize projects with:
 
 Candidate projects from the existing screening registry should be evaluated
 with this feasibility gate before any verifier API expansion.
+
+## `tqdm` Notes
+
+Both selected `tqdm` tasks completed bounded project-level scope construction,
+but most test files failed collection because the current environment lacks the
+legacy `nose` dependency. Each task retained only one stable project-level
+P2P-broad test:
+
+```text
+tqdm/tests/tests_version.py::test_version
+```
+
+Because the predefined main threshold is `p2p_broad_size >= 3`, both tasks are
+excluded from `p2p_broad_main`. Installing or emulating `nose` would be a
+separate environment decision and was not done silently during this sweep.
