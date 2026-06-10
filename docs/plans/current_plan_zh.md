@@ -1798,3 +1798,62 @@ Qwen 初次结果：
 - cohort filter 检查确认 `included_task_ids = ["bugsinpy_httpie_5"]`；
 - `git diff --check` 通过；
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\unittest_black_latest.json --out-md outputs\local_quality_gate\unittest_black_latest.md` 通过。
+
+## 17. 2026-06-10 isolated `black` dependency environment
+
+本轮目标：
+
+- 执行用户确认的许可：为 `black` 任务建立隔离依赖环境，并尝试安装
+  `typed-ast==1.4.0`。
+- 目的：判断 `bugsinpy_black_1` / `bugsinpy_black_3` 的阻塞是否只是缺少
+  declared dependency；若依赖补齐后可构造 project-level P2P-broad，则继续按
+  原门槛筛选。
+
+执行边界：
+
+- 不安装到全局 Python。
+- 不提交虚拟环境、pip cache 或运行 outputs。
+- 不安装超出当前阻塞所需的依赖，除非新的 import error 明确显示仍是
+  black declared dependency，且需要再次记录。
+- 不降低主实验门槛：`p2p_broad_size >= 3`、stability runs = 3。
+- 若 `typed-ast==1.4.0` 与当前 Python 版本不兼容，记录为环境阻塞后停止确认，
+  不私自改装其他版本。
+
+计划步骤：
+
+1. 检查本机可用 Python 版本。
+2. 在 ignored `outputs/envs/` 下创建 black 专用隔离环境。
+3. 在隔离环境安装 `typed-ast==1.4.0`。
+4. 使用隔离环境重跑 `black_1` / `black_3` unittest project-level P2P
+   feasibility sweep。
+5. 根据结果更新 cohort registry、feasibility report、README、index、经验和
+   当前计划。
+
+执行结果：
+
+- 本机仅发现 Python 3.11：
+  - `C:\Python311\python.exe`。
+- 已在 ignored `outputs/envs/black_typed_ast_py311` 下创建隔离 venv，并尝试：
+  - `pip install typed-ast==1.4.0`。
+- 安装失败：
+  - pip 下载源码包并尝试 build wheel；
+  - 构建 `_ast27` 扩展时失败；
+  - 明确错误为缺少 `Microsoft Visual C++ 14.0 or greater` build tools。
+- 已删除失败的隔离 venv，避免留下无效环境。
+
+当前阻塞：
+
+- `typed-ast==1.4.0` 在当前机器的 Python 3.11 环境下没有直接可用 wheel，
+  且需要本机 C++ build tools 编译。
+- 按本轮边界，不私自：
+  - 安装系统级 MSVC Build Tools；
+  - 改装其他 `typed-ast` 版本；
+  - 使用未确认的 Python 版本或替代依赖。
+- 因此 `black_1` / `black_3` 仍保持 `pending_blocked`。
+
+后续需要用户确认的选项：
+
+1. 安装系统级 Microsoft C++ Build Tools 后重试 `typed-ast==1.4.0`；
+2. 提供/安装 Python 3.8 或 3.9，再用更接近 BugsInPy 时代的解释器重建隔离环境；
+3. 明确允许尝试较新 `typed-ast` 版本，但这会偏离 declared requirement，需要作为环境偏差记录；
+4. 暂停 black，继续筛选其他不需要编译型 legacy dependency 的任务。

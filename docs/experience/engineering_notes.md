@@ -823,3 +823,8 @@ This file starts fresh for the patch-verification project.
 - Result: both black tasks are `pending_blocked`, not unsupported-framework
   failures. The framework adapter works enough to expose the real environment
   dependency blocker.
+- A confirmed attempt to install `typed-ast==1.4.0` in an isolated Python 3.11
+  venv failed because pip had to build the extension from source and the machine
+  lacks Microsoft Visual C++ 14.0+ Build Tools. The failed venv was removed.
+  Do not retry the same Python 3.11 installation path without changing one of:
+  system build tools, Python version, or the allowed dependency version.

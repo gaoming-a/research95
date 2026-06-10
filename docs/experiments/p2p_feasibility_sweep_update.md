@@ -99,3 +99,25 @@ data/p2p_scopes/bugsinpy_black_3_p2p_broad_collection_errors.json
 The `black` tasks remain excluded from `p2p_broad_main` until the environment
 dependency decision is handled explicitly and project-level P2P-broad can be
 constructed with at least three stable tests.
+
+### Isolated Dependency Attempt
+
+After user approval, an isolated Python 3.11 virtual environment was created
+under ignored `outputs/envs/` and used to try:
+
+```text
+pip install typed-ast==1.4.0
+```
+
+The installation failed because pip attempted to build the extension from source
+and the machine lacks Microsoft Visual C++ 14.0+ Build Tools. The failed virtual
+environment was removed.
+
+This keeps the black tasks blocked pending an explicit environment decision:
+
+- install system C++ build tools and retry the declared dependency;
+- use an older Python interpreter compatible with available wheels;
+- explicitly allow a newer `typed-ast` version and record the environment
+  deviation;
+- or continue with other tasks that do not require compiled legacy
+  dependencies.

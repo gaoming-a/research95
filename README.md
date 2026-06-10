@@ -129,7 +129,8 @@ They should not override `final_paper_roadmap_zh.md`.
 - The scope builder now has a bounded `unittest` adapter. `bugsinpy_black_1`
   and `bugsinpy_black_3` were screened through it, but both are
   `pending_blocked` because the current environment lacks the required
-  `typed_ast` dependency.
+  `typed_ast` dependency. An isolated `typed-ast==1.4.0` install attempt on
+  Python 3.11 failed because the package needs local MSVC build tools.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in
