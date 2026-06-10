@@ -850,6 +850,28 @@ This file starts fresh for the patch-verification project.
 - Pytest 9 plus retained `-vvv` addopts emits tree-form `--collect-only` output
   instead of nodeid lines. The scope builder now parses tree output and maps
   parametrized nodeids back to their source segments for static exclusions.
-- Result: `cookiecutter_1` now has 296 common nodeids and 290 P2P-broad tests
-  over 3 stability runs per version. It remains outside main metrics until a
-  fail-to-pass oracle and candidate validation are migrated.
+- Result at this stage: `cookiecutter_1` had 296 common nodeids and 290
+  P2P-broad tests over 3 stability runs per version. It still needed
+  fail-to-pass oracle and candidate validation before main inclusion; that
+  follow-up is recorded in the next note.
+
+## 2026-06-10 cookiecutter candidate validation
+
+- The `cookiecutter_1` retained buggy checkout lacks the original
+  `non_ascii.json` test fixture while the fixed checkout contains it. The
+  migrated oracle should create its own temporary UTF-8 JSON file and assert
+  behavior directly; otherwise the label can conflate source behavior with test
+  fixture presence.
+- On this Windows environment, the Cookiecutter checkout contains `docs/*.md`
+  reparse point/junction entries. `shutil.copytree` fails on them when building
+  candidate workdirs. Candidate validation now skips symlink/reparse-point
+  entries during checkout copying; these documentation links are not inputs to
+  the retained oracle, patch diff, or P2P scope.
+- Candidate-level P2P validation must reuse the P2P scope manifest's audited
+  pytest addopts override. Without `-o addopts=-vvv`, pytest reads the original
+  coverage options from `setup.cfg`, fails because `pytest-cov` is intentionally
+  absent, and can falsely mark the reference patch as a regression.
+- `cookiecutter_1` now has one reference candidate labeled
+  `correct_under_f2p_and_p2p_broad` and three negative/control candidates
+  labeled `incorrect_issue_not_fixed` over 290 P2P-broad tests. It is admitted
+  to `p2p_broad_main`, but this does not make the final dataset large enough.

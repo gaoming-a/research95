@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import shutil
+import stat
 import subprocess
 import sys
 import time
@@ -49,17 +51,33 @@ def copy_checkout(source_root: Path, candidate: dict[str, Any], workdir: Path) -
         raise FileNotFoundError(f"missing buggy checkout: {source}")
     if workdir.exists():
         shutil.rmtree(workdir)
+
+    def ignore_checkout_entries(directory: str, names: list[str]) -> set[str]:
+        ignored = set(
+            shutil.ignore_patterns(
+                "env",
+                ".git",
+                ".tox",
+                ".pytest_cache",
+                "__pycache__",
+                "*.pyc",
+            )(directory, names)
+        )
+        for name in names:
+            path = Path(directory) / name
+            try:
+                attributes = getattr(os.lstat(path), "st_file_attributes", 0)
+            except OSError:
+                continue
+            reparse_point = getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400)
+            if path.is_symlink() or attributes & reparse_point:
+                ignored.add(name)
+        return ignored
+
     shutil.copytree(
         source,
         workdir,
-        ignore=shutil.ignore_patterns(
-            "env",
-            ".git",
-            ".tox",
-            ".pytest_cache",
-            "__pycache__",
-            "*.pyc",
-        ),
+        ignore=ignore_checkout_entries,
     )
 
 

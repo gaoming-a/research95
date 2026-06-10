@@ -77,6 +77,15 @@ SOURCE_BUGS = [
         "hidden_oracles": ["scripts/oracles/luigi_4_redshift_none_columns.py"],
         "oracle_command": "python scripts/oracles/luigi_4_redshift_none_columns.py",
     },
+    {
+        "task_id": "bugsinpy_cookiecutter_1",
+        "project": "cookiecutter",
+        "touched_files": ["cookiecutter/generate.py"],
+        "issue_summary": "JSON context files containing non-ASCII characters should be decoded as UTF-8",
+        "visible_tests": ["tests/test_generate_context.py::test_generate_context_decodes_non_ascii_chars"],
+        "hidden_oracles": ["scripts/oracles/cookiecutter_1_utf8_context.py"],
+        "oracle_command": "python scripts/oracles/cookiecutter_1_utf8_context.py",
+    },
 ]
 
 
@@ -283,6 +292,39 @@ def build_split_replace_partial_diffs(
     return records
 
 
+def build_task_specific_negative_diffs(
+    source_root: Path,
+    source_bug: dict[str, Any],
+    file_path: str,
+) -> list[dict[str, str]]:
+    if source_bug["task_id"] != "bugsinpy_cookiecutter_1":
+        return []
+
+    buggy_lines, _ = read_buggy_fixed_lines(source_root, source_bug, file_path)
+    target = "        with open(context_file) as file_handle:\n"
+    replacement = "        with open(context_file, encoding='ascii') as file_handle:\n"
+    if target not in buggy_lines:
+        raise ValueError(f"expected Cookiecutter context-open line not found in {file_path}")
+
+    candidate_lines = [replacement if line == target else line for line in buggy_lines]
+    return [
+        {
+            "suffix": "wrong_ascii_encoding",
+            "patch_text": unified_diff_from_lines(
+                file_path,
+                buggy_lines,
+                candidate_lines,
+                source_bug["task_id"],
+            ),
+            "materialization": "task_specific_wrong_encoding_diff",
+            "notes": (
+                "Difficult negative for the single-line Cookiecutter UTF-8 bug: the candidate "
+                "adds an explicit encoding argument but chooses ASCII rather than UTF-8."
+            ),
+        }
+    ]
+
+
 def select_source_bugs(task_ids: list[str] | None) -> list[dict[str, Any]]:
     if not task_ids:
         return list(SOURCE_BUGS)
@@ -414,6 +456,7 @@ def build_candidates(source_root: Path, source_bugs: list[dict[str, Any]]) -> li
         for partial_record in (
             build_partial_missing_change_diffs(source_root, source_bug, reference["touched_files"][0])
             + build_split_replace_partial_diffs(source_root, source_bug, reference["touched_files"][0])
+            + build_task_specific_negative_diffs(source_root, source_bug, reference["touched_files"][0])
         ):
             if partial_record["patch_text"] in partial_texts:
                 continue

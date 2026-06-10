@@ -42,6 +42,7 @@ def run_p2p_chunk(
     nodeids: list[str],
     timeout_seconds: int,
     pythonpath: Path | None,
+    addopts_override: str | None,
 ) -> dict[str, Any]:
     env = os.environ.copy()
     if pythonpath is not None:
@@ -51,7 +52,7 @@ def run_p2p_chunk(
     process: subprocess.Popen[str] | None = None
     try:
         process = subprocess.Popen(
-            [python, "-m", "pytest", "-q", *nodeids],
+            pytest_command(python, ["-q", *nodeids], addopts_override),
             cwd=str(workdir),
             env=env,
             text=True,
@@ -87,6 +88,14 @@ def run_p2p_chunk(
             "stdout_tail": base_validator.tail(stdout),
             "stderr_tail": base_validator.tail(stderr),
         }
+
+
+def pytest_command(python: str, pytest_args: list[str], addopts_override: str | None) -> list[str]:
+    command = [python, "-m", "pytest"]
+    if addopts_override is not None:
+        command.extend(["-o", f"addopts={addopts_override}"])
+    command.extend(pytest_args)
+    return command
 
 
 def kill_process_tree(pid: int) -> None:
@@ -125,6 +134,7 @@ def validate_candidate(
     p2p_timeout_seconds: int,
     python: str,
     pythonpath: Path | None,
+    addopts_override: str | None,
     p2p_batch_size: int,
 ) -> dict[str, Any]:
     workdir = workdir_root / candidate["model_candidate_id"]
@@ -138,7 +148,16 @@ def validate_candidate(
     p2p_results = []
     if patch_result.get("applied") and oracle_result.get("passed"):
         for nodeids in chunks(list(scope.get("p2p_broad_tests", [])), p2p_batch_size):
-            p2p_results.append(run_p2p_chunk(python, workdir, nodeids, p2p_timeout_seconds, pythonpath))
+            p2p_results.append(
+                run_p2p_chunk(
+                    python,
+                    workdir,
+                    nodeids,
+                    p2p_timeout_seconds,
+                    pythonpath,
+                    addopts_override,
+                )
+            )
     p2p_passed = bool(p2p_results) and all(result["passed"] for result in p2p_results)
     if not patch_result.get("applied"):
         p2p_status = "skipped_patch_not_applied"
@@ -160,6 +179,7 @@ def validate_candidate(
         "p2p_broad_status": p2p_status,
         "p2p_broad_test_count": len(scope.get("p2p_broad_tests", [])),
         "p2p_broad_passed_count": sum(result["nodeid_count"] for result in p2p_results if result["passed"]),
+        "pytest_addopts_override": addopts_override,
         "label_retained_oracle": "correct" if oracle_result.get("passed") else "incorrect",
         "label_with_p2p_broad": final_label(
             bool(patch_result.get("applied")),
@@ -213,6 +233,12 @@ def main() -> None:
     scope = read_json(Path(args.p2p_scope))
     compat = scope.get("compat_shim", {})
     pythonpath = resolve_path(compat["path"], repo_root) if compat.get("enabled") and compat.get("path") else None
+    addopts_audit = scope.get("pytest_addopts_override", {})
+    addopts_override = (
+        str(addopts_audit["sanitized_addopts"])
+        if addopts_audit.get("allowed") and addopts_audit.get("sanitized_addopts") is not None
+        else None
+    )
     records = [
         validate_candidate(
             candidate=candidate,
@@ -224,6 +250,7 @@ def main() -> None:
             p2p_timeout_seconds=args.p2p_timeout_seconds,
             python=args.python,
             pythonpath=pythonpath,
+            addopts_override=addopts_override,
             p2p_batch_size=args.p2p_batch_size,
         )
         for candidate in candidates

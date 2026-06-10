@@ -186,6 +186,21 @@ duplicates after `cookiecutter_1` established the required environment and
 scope-builder path. They remain in the cohort registry as `pending_blocked`
 until oracle and candidate migration is planned.
 
-`bugsinpy_cookiecutter_1` does not enter `p2p_broad_main` yet. The P2P scope is
-ready, but main inclusion still requires a migrated fail-to-pass oracle and
-candidate validation under F2P plus P2P-broad.
+The follow-up oracle and candidate validation have now been completed for
+`bugsinpy_cookiecutter_1`. A migrated UTF-8 context oracle distinguishes the
+buggy and fixed checkouts, and four candidates were validated under F2P plus
+P2P-broad:
+
+```text
+correct_under_f2p_and_p2p_broad: 1
+incorrect_issue_not_fixed: 3
+```
+
+The tracked follow-up report is:
+
+```text
+docs/experiments/cookiecutter1_candidate_validation.md
+```
+
+`bugsinpy_cookiecutter_1` now enters `p2p_broad_main`. This is a task-level
+cohort admission, not a claim that the full final-paper dataset is complete.

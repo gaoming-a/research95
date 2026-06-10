@@ -134,8 +134,10 @@ They should not override `final_paper_roadmap_zh.md`.
 - The next replacement sweep tried `bugsinpy_cookiecutter_1`. An audited
   coverage-only addopts override plus an isolated Cookiecutter dependency venv
   produced a completed project-level P2P-broad scope: 296 common nodeids and
-  290 included P2P-broad tests. It is still excluded from main metrics until a
-  fail-to-pass oracle and candidate validation are migrated for Cookiecutter.
+  290 included P2P-broad tests. A migrated UTF-8 context oracle and four
+  candidate patches now validate under F2P plus P2P-broad, so
+  `bugsinpy_cookiecutter_1` enters `p2p_broad_main` as the second completed
+  project-level main task.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

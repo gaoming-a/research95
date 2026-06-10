@@ -2052,3 +2052,77 @@ Qwen 初次结果：
 - `python scripts\run_local_quality_gate.py --out-json
   outputs\local_quality_gate\cookiecutter_scope_ready_latest.json --out-md
   outputs\local_quality_gate\cookiecutter_scope_ready_latest.md` 通过。
+
+## 21. 2026-06-10 `cookiecutter_1` oracle and candidate validation
+
+本轮目标：
+
+- 继续执行 `cookiecutter_1` 的下一步：迁移 fail-to-pass oracle，并构造可验证
+  candidates。
+- 将 `cookiecutter_1` 从 P2P scope ready 推进到 candidate validation ready。
+- 仍不把它加入 `p2p_broad_main`，除非 reference/no-op/partial candidates 已完成
+  F2P + P2P-broad validation。
+
+已确认事实：
+
+- BugsInPy 原始测试命令：`tox tests/test_generate_context.py::test_generate_context_decodes_non_ascii_chars`。
+- bug 修复点：`cookiecutter/generate.py` 中 `open(context_file)` 改为
+  `open(context_file, encoding='utf-8')`。
+
+执行边界：
+
+- 使用已有 isolated venv `outputs/envs/cookiecutter_p2p_py311` 运行 oracle 和 P2P；
+  不安装新的依赖，除非出现新的 declared dependency blocker 并先记录。
+- 新 oracle 只验证 UTF-8 JSON context decoding，不扩大为全项目测试。
+- candidate 构造先走最小集：reference correct、buggy no-op、partial/negative control。
+- 所有主标签仍必须通过 F2P oracle + project-level P2P-broad；P2P scope ready 本身不等于
+  main inclusion。
+
+计划步骤：
+
+1. 新增 `scripts/oracles/cookiecutter_1_utf8_context.py`。
+2. 在 buggy/fixed retained checkout 上分别运行 oracle，确认 buggy fail / fixed pass。
+3. 构造 `cookiecutter_1` candidate slice，至少包含 reference、no-op、partial/negative。
+4. 用 `validate_patch_candidates.py` 或必要扩展执行 apply + oracle validation。
+5. 用 `validate_candidates_with_p2p.py` 合并 F2P + P2P-broad label。
+6. 更新 cohort registry、实验报告、README、INDEX、经验文档和本计划，运行检查并提交。
+
+执行中新增约束：
+
+- `cookiecutter_1` checkout 中存在 Windows reparse point/junction 形式的
+  `docs/*.md` 条目，`shutil.copytree` 不能按普通文件复制它们。它们不属于当前
+  `cookiecutter/generate.py` oracle、candidate patch 或 P2P scope 的语义输入；
+  因此本轮只允许在 candidate validation 的 checkout 复制阶段跳过 reparse point，
+  并必须在经验文档中记录该环境兼容问题。
+- `cookiecutter_1` P2P scope construction 使用了 audited coverage-only
+  addopts sanitizer；candidate-level P2P validation 必须复用 scope manifest 中的
+  `pytest_addopts_override.sanitized_addopts`，否则未安装 `pytest-cov` 的隔离 venv
+  会把 reference candidate 误标为 pytest invocation failure。
+
+执行结果：
+
+- 已新增 `scripts/oracles/cookiecutter_1_utf8_context.py`。
+- oracle 直接检查结果：buggy checkout fail，fixed checkout pass。
+- 已将 `bugsinpy_cookiecutter_1` 加入 candidate builder，并为单行 UTF-8 bug 新增
+  `task_specific_wrong_encoding_diff` 负例。
+- retained-oracle validation：
+  - candidates = 4；
+  - patch_applied = 4；
+  - oracle_ran = 4；
+  - oracle_all_passed = 1；
+  - validation_status_counts = `validated: 4`。
+- F2P + P2P-broad validation：
+  - p2p_broad_test_count = 290；
+  - `correct_under_f2p_and_p2p_broad: 1`；
+  - `incorrect_issue_not_fixed: 3`。
+- 已更新 `data/cohorts/task_cohort_registry.json`：
+  - `bugsinpy_cookiecutter_1.project_level_p2p_status = completed`；
+  - `bugsinpy_cookiecutter_1.p2p_broad_main_included = true`；
+  - `bugsinpy_cookiecutter_1.cohorts = ["p2p_broad_main"]`。
+
+当前结论：
+
+- `bugsinpy_cookiecutter_1` 已从 P2P scope ready 推进到 project-level
+  `p2p_broad_main` 任务。
+- 这是第二个完成 project-level P2P-broad 主任务；但该任务只有 4 个候选，不能被表述为
+  最终论文规模已经足够。
