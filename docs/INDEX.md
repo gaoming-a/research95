@@ -137,6 +137,12 @@
   declared test dependency environment, six curated candidate patches, F2P
   validation, P2P-broad validation over 24 stable tests, and admission as the
   sixth project-level main task.
+- `experiments/pysnooper3_candidate_validation.md`: tracked validation report
+  for `bugsinpy_PySnooper_3`. It records the file-output oracle, isolated
+  declared dependency environment, four candidate patches, F2P validation,
+  P2P-broad validation over four stable tests, and admission as the seventh
+  project-level main task. `bugsinpy_PySnooper_2` remains a blocked
+  experimental-boundary case.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

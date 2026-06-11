@@ -126,6 +126,15 @@ SOURCE_BUGS = [
         "hidden_oracles": ["scripts/oracles/pysnooper_1_utf8_log.py"],
         "oracle_command": "python scripts/oracles/pysnooper_1_utf8_log.py",
     },
+    {
+        "task_id": "bugsinpy_PySnooper_3",
+        "project": "PySnooper",
+        "touched_files": ["pysnooper/pysnooper.py"],
+        "issue_summary": "snoop file output should append trace lines to the user-provided file path",
+        "visible_tests": ["tests/test_pysnooper.py::test_file_output"],
+        "hidden_oracles": ["scripts/oracles/pysnooper_3_file_output.py"],
+        "oracle_command": "python scripts/oracles/pysnooper_3_file_output.py",
+    },
 ]
 
 TASK_PARTIAL_ALLOWLIST = {
@@ -402,6 +411,30 @@ def build_task_specific_negative_diffs(
                 "notes": (
                     "Difficult negative for the single-line Cookiecutter prompt bug: the candidate "
                     "touches the relevant Click prompt argument but explicitly keeps choice rendering enabled."
+                ),
+            }
+        ]
+    if source_bug["task_id"] == "bugsinpy_PySnooper_3":
+        buggy_lines, _ = read_buggy_fixed_lines(source_root, source_bug, file_path)
+        target = "            with open(output_path, 'a') as output_file:\n"
+        replacement = "            with open(output_path, 'w') as output_file:\n"
+        if target not in buggy_lines:
+            raise ValueError(f"expected PySnooper file-output line not found in {file_path}")
+
+        candidate_lines = [replacement if line == target else line for line in buggy_lines]
+        return [
+            {
+                "suffix": "wrong_mode_keeps_undefined_path",
+                "patch_text": unified_diff_from_lines(
+                    file_path,
+                    buggy_lines,
+                    candidate_lines,
+                    source_bug["task_id"],
+                ),
+                "materialization": "task_specific_wrong_file_output_diff",
+                "notes": (
+                    "Difficult negative for the single-line PySnooper file-output bug: the candidate "
+                    "touches the relevant open call but leaves the undefined output_path variable in place."
                 ),
             }
         ]

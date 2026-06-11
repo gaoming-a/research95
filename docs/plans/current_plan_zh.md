@@ -2692,3 +2692,102 @@ project-level P2P-broad construction under the existing audited pipeline.
    家族新增 compatibility/test-fixture shim 先例。
 4. 如果 `bugsinpy_PySnooper_3` 也出现同类 boundary/shim 需求，立即 block。
 5. 随后转向 `bugsinpy_fastapi_1`。
+
+`bugsinpy_PySnooper_3` probe 启动：
+
+- 目标：在不新增 compatibility/test-fixture shim 的前提下判断是否能进入
+  project-level P2P-broad 主实验候选。
+- 允许复用：
+  - 现有 PySnooper ignored venv；
+  - 已审计的 Python 3.11 `collections.abc` compatibility shim；
+  - 现有 `build_pass_to_pass_scope.py` / validation scripts。
+- 不允许：
+  - 补 `tests/mini_toolbox.py`；
+  - 给 source tree 注入 `pycompat.PY2`；
+  - 修改原始 test fixture 或测试语义；
+  - 为 PySnooper 家族新增 task-specific shim。
+
+初步 F2P probe：
+
+- buggy/fixed checkout 已成功创建到：
+  `D:/mgao/code/research/data/real_bugs/bugsinpy_workspace/PySnooper_3`。
+- `bugs/3/run_test.sh` 指定：
+  `pytest -q -s tests/test_pysnooper.py::test_file_output`。
+- 直接使用 `PySnooper_1` venv 运行时，buggy/fixed 均在 collection 阶段失败：
+  `ModuleNotFoundError: No module named 'future'`。
+- `future>=0.17.1` 是 `PySnooper_3` retained checkout 的
+  `requirements.txt` 中声明的依赖，不属于 compatibility/test-fixture shim。
+
+执行决定：
+
+- 不污染 `PySnooper_1` 的审计 venv；
+- 为 `bugsinpy_PySnooper_3` 建立独立 ignored venv：
+  `outputs/envs/pysnooper3_p2p_py311`；
+- 只安装项目声明依赖和 pytest runner；
+- 后续若仍出现 test-fixture/compatibility shim 需求，则立即 block。
+
+执行结果：
+
+- 已安装 declared runtime/test dependencies 到 ignored isolated venv：
+  `decorator`、`future`、`six`、`python_toolbox`、`pytest`。
+- 已新增 dependency environment audit：
+  `data/p2p_scopes/bugsinpy_PySnooper_3_dependency_environment_audit.json`。
+- F2P probe：
+  - buggy checkout：`test_file_output` 因 `NameError: output_path is not defined`
+    失败；
+  - fixed checkout：`test_file_output` 通过。
+- 已构造 project-level P2P-broad scope：
+  - collected/common nodeids = 5；
+  - excluded fail-to-pass oracle = 1；
+  - excluded failed on buggy baseline = 0；
+  - included P2P-broad tests = 4；
+  - collection error files = 0；
+  - stability runs = 3 per version。
+- 已新增 retained oracle：
+  `scripts/oracles/pysnooper_3_file_output.py`。
+- direct oracle check：
+  - buggy checkout：`NameError: output_path is not defined`；
+  - fixed checkout：`oracle_passed`。
+- 已将 `bugsinpy_PySnooper_3` 加入候选构造脚本。
+- reference patch 是单行修复，默认 generic candidates 只有 3 个且没有
+  difficult negative；已新增 task-specific negative：
+  `wrong_mode_keeps_undefined_path`，它触及相关 `open(...)` 调用但仍保留
+  未定义的 `output_path`。
+- candidate validation：
+  - candidate_count = 4；
+  - correct_reference = 1；
+  - buggy_noop = 1；
+  - irrelevant_patch = 1；
+  - partial_fix = 1；
+  - retained oracle validation 全部通过标签校验。
+- F2P + P2P-broad validation：
+  - record_count = 4；
+  - p2p_broad_test_count = 4；
+  - patch_applied_count = 4；
+  - retained_oracle_passed_count = 1；
+  - `correct_under_f2p_and_p2p_broad` = 1；
+  - `incorrect_issue_not_fixed` = 3。
+- 已新增实验报告：
+  `docs/experiments/pysnooper3_candidate_validation.md`。
+
+当前结论：
+
+- `bugsinpy_PySnooper_3` 满足当前主实验纳入标准：
+  - `project_level_p2p_status = completed`；
+  - `p2p_broad_main_included = true`；
+  - `p2p_broad_size = 4 >= 3`；
+  - `stability_runs = 3`；
+  - reference patch 通过 F2P + P2P-broad；
+  - candidate labels 可在 F2P + P2P-broad 下重新验证。
+- `p2p_broad_main` 从 6 个任务扩展到 7 个任务。
+- 下一候选任务转向 broader pool 中的 `bugsinpy_fastapi_1`。
+
+一致性检查：
+
+- Python 编译通过；
+- JSON 解析通过；
+- cohort 主任务计数 = 7；
+- `bugsinpy_PySnooper_2` registry 状态确认为
+  `blocked_feasibility_case` / `p2p_broad_main_included = false` /
+  `shim_allowed_now = false`；
+- `git diff --check` 无空白错误，仅有 Windows 换行提示。

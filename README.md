@@ -117,7 +117,8 @@ They should not override `final_paper_roadmap_zh.md`.
   `data/cohorts/task_cohort_registry.json`. The current `p2p_broad_main` cohort
   includes `bugsinpy_httpie_5`, `bugsinpy_cookiecutter_1`,
   `bugsinpy_cookiecutter_2`, `bugsinpy_cookiecutter_3`, and
-  `bugsinpy_tqdm_9`, and `bugsinpy_PySnooper_1`; Luigi tasks are
+  `bugsinpy_tqdm_9`, `bugsinpy_PySnooper_1`, and `bugsinpy_PySnooper_3`;
+  Luigi tasks are
   `pending_blocked` and retained only as appendix/smoke evidence.
 - A bounded replacement sweep tried `bugsinpy_httpie_1` through
   `bugsinpy_httpie_4`; none entered `p2p_broad_main` under the current
@@ -168,6 +169,13 @@ They should not override `final_paper_roadmap_zh.md`.
   P2P-broad scope with 24 stable tests. The PySnooper dependency environment is
   isolated under ignored `outputs/envs/`, and the dependency audit is tracked in
   `data/p2p_scopes/bugsinpy_PySnooper_1_dependency_environment_audit.json`.
+- `bugsinpy_PySnooper_2` is blocked as an unclear experimental-boundary case:
+  it would require compatibility/test-fixture shims, which are not allowed for
+  main-cohort admission at this stage.
+- `bugsinpy_PySnooper_3` now enters `p2p_broad_main`: its file-output oracle
+  validates four candidate patches under F2P plus a project-level P2P-broad
+  scope with four stable tests. It uses only declared dependencies in an ignored
+  isolated venv and does not introduce a task-specific fixture shim.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

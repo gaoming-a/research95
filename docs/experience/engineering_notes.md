@@ -1011,3 +1011,26 @@ This file starts fresh for the patch-verification project.
 - `bugsinpy_PySnooper_2` is therefore recorded as a blocked feasibility case
   with `p2p_broad_main_included = false`; next try `bugsinpy_PySnooper_3`, and
   if it needs the same class of shim, block it and move to `bugsinpy_fastapi_1`.
+
+## 2026-06-12 PySnooper_3 candidate validation
+
+- `bugsinpy_PySnooper_3` targets the older `pysnooper/pysnooper.py` file-output
+  bug: the buggy code opens `output_path`, which is undefined, instead of the
+  user-provided `output` path.
+- Initial collection failed on missing `future`, then `python_toolbox`. Both are
+  declared in the retained checkout through `requirements.txt` and
+  `test_requirements.txt`, so installing them into a separate ignored venv is
+  acceptable and should be audited.
+- Do not reuse and mutate the `PySnooper_1` venv for this older checkout. Use a
+  separate ignored environment, `outputs/envs/pysnooper3_p2p_py311`, so each
+  task's dependency audit remains accurate.
+- Unlike `PySnooper_2`, this task does not require a fixture shim or source-tree
+  compatibility injection. Declared dependency installation is not the same as
+  changing test fixtures.
+- The reference patch is a single-line fix, so generic partial construction
+  produces too few difficult negatives. A task-specific negative that changes
+  the file mode but keeps the undefined `output_path` gives a relevant
+  issue-not-fixed candidate.
+- `bugsinpy_PySnooper_3` contributes four validated candidates over four stable
+  P2P-broad tests and is admitted to `p2p_broad_main` as the seventh completed
+  project-level main task.
