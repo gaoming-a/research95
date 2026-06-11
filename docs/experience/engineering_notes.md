@@ -1034,3 +1034,18 @@ This file starts fresh for the patch-verification project.
 - `bugsinpy_PySnooper_3` contributes four validated candidates over four stable
   P2P-broad tests and is admitted to `p2p_broad_main` as the seventh completed
   project-level main task.
+
+## 2026-06-12 FastAPI_1 scope timeout boundary
+
+- `bugsinpy_fastapi_1` has a clear F2P oracle:
+  `tests/test_jsonable_encoder.py::test_encode_model_with_default` fails on the
+  buggy checkout with an unexpected `exclude_defaults` keyword argument and
+  passes on the fixed checkout.
+- Its isolated environment uses only declared project/runtime test dependencies
+  installed under ignored `outputs/envs/fastapi1_p2p_py311`.
+- Full-repo project-level P2P-broad construction timed out twice and produced no
+  `data/p2p_scopes/bugsinpy_fastapi_1_p2p_broad.json` manifest, even after an
+  expanded execution window.
+- This is a scope-policy boundary, not a candidate-label result. Do not mark the
+  task as `p2p_broad_main` without an explicit decision on whether FastAPI's
+  project-level P2P scope may be defined as the main `tests/` directory.

@@ -2834,3 +2834,56 @@ project-level P2P-broad construction under the existing audited pipeline.
 - 若长时重试仍无法完成，再记录为 project-level scope construction feasibility
   风险，并判断是否需要向用户确认 FastAPI 的 project-level test-suite scope 是否应
   限定为项目主测试目录 `tests/`。
+
+`bugsinpy_fastapi_1` 长时 P2P-broad 重试结果：
+
+- 在保持同一边界的情况下再次执行完整 repo test discovery / project-level
+  P2P-broad construction。
+- 第二次执行窗口扩大到约 30 分钟，仍未完成并未生成
+  `data/p2p_scopes/bugsinpy_fastapi_1_p2p_broad.json`。
+- 输出目录仅留下 `compat_shim` 辅助目录，没有可用于主实验的 P2P manifest。
+- 因此，`bugsinpy_fastapi_1` 目前不能被标记为 `p2p_broad_main_included = true`。
+
+当前需要确认的边界问题：
+
+- FastAPI 项目存在大量可发现 Python 测试/示例测试文件；完整 repo discovery
+  在当前 pipeline 下两次超时。
+- 若把 project-level P2P-broad scope 定义为 FastAPI 主测试目录 `tests/`，可以继续
+  尝试构造 `bugsinpy_fastapi_1` 的主实验范围，但这需要明确写入 scope policy，
+  防止被理解为事后缩小测试范围。
+- 若不允许该 scope policy，则应将 `bugsinpy_fastapi_1` 标记为
+  `blocked_feasibility_case` 或 `project_level_scope_timeout`，并转向下一个候选任务。
+
+## 28. 2026-06-12 current-turn progress sync
+
+本轮 Inspect：
+
+- Git 状态：`main...origin/main`，仅
+  `docs/plans/current_plan_zh.md` 存在未提交进度记录。
+- 已读取当前计划、README、`docs/INDEX.md`、工程经验文档和最近 outputs。
+- 已确认当前计划的下一步停在 `bugsinpy_fastapi_1` scope policy 确认门。
+
+本轮无 API 审计：
+
+- 已运行
+  `python scripts/audit_execution_readiness.py --out-json outputs/readiness_audit/latest.json --out-md outputs/readiness_audit/latest.md`。
+- 结果：no-API ready = yes；local API config/model selection ready = yes；
+  overall_ready_for_real_api = yes。
+- 已运行
+  `python scripts/audit_ai_plan_progress.py --out-json outputs/plan_progress/latest.json --out-md outputs/plan_progress/latest.md`。
+- 结果：14 个历史执行阶段均为 complete；prompt-only positive claim 仍为 no；
+  tool-augmented paper claim 为 yes。
+
+当前阻塞：
+
+- `bugsinpy_fastapi_1` 的 F2P oracle 清楚，但 full-repo project-level
+  P2P-broad construction 两次超时，未生成 manifest。
+- 是否允许将 FastAPI 的 project-level P2P scope 定义为项目主测试目录 `tests/`
+  是实验边界决策，不能由执行代理私自决定。
+
+需要用户确认：
+
+1. 允许为 FastAPI 写入明确 scope policy：project-level P2P-broad 仅限定到
+   FastAPI 主测试目录 `tests/`，然后继续尝试 `bugsinpy_fastapi_1`；
+2. 或将 `bugsinpy_fastapi_1` 记录为 `project_level_scope_timeout` /
+   `blocked_feasibility_case`，并转向下一个候选任务。
