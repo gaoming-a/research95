@@ -2303,3 +2303,9 @@ Qwen 初次结果：
 
 - `bugsinpy_cookiecutter_3` 已成为第四个 project-level `p2p_broad_main` 任务。
 - 当前主 cohort 任务数从 3 增至 4；仍未达到中期增强版 15-20 bugs 的目标规模。
+- 已本地提交：`b2c1532 Admit cookiecutter 3 P2P validation`。
+- GitHub push 两次失败：
+  - 默认 HTTPS：`Recv failure: Connection was reset`；
+  - HTTP/1.1 retry：无法连接 `github.com:443`。
+- 当前远端同步未完成；后续继续大规模实验前应优先重试 push，避免本地 ahead
+  积累过多。
