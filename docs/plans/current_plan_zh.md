@@ -2791,3 +2791,46 @@ project-level P2P-broad construction under the existing audited pipeline.
   `blocked_feasibility_case` / `p2p_broad_main_included = false` /
   `shim_allowed_now = false`；
 - `git diff --check` 无空白错误，仅有 Windows 换行提示。
+
+`bugsinpy_fastapi_1` probe 启动：
+
+- 目标：从 broader BugsInPy pool 中继续扩展第 8 个 project-level
+  P2P-broad 主实验候选。
+- 元数据：
+  - `buggy_commit_id = 766157bfb4e7dfccba09ab398e8ec444d14e947c`；
+  - `fixed_commit_id = 3397d4d69a9c2d64c1219fcbf291ea5697a4abb8`；
+  - `test_file = tests/test_jsonable_encoder.py`；
+  - `run_test.sh = pytest tests/test_jsonable_encoder.py::test_encode_model_with_default`。
+- 执行边界：
+  - 只允许安装 `requirements.txt` 或项目声明的依赖到 ignored isolated venv；
+  - 不修改 FastAPI source/test fixture；
+  - 不为单个 task 增加 compatibility/test-fixture shim；
+  - 若 F2P 行为、dependency boundary 或 project-level P2P scope 需要不清楚的
+    shim，则停止并记录 blocked。
+
+`bugsinpy_fastapi_1` 当前 probe 状态：
+
+- 已通过 BugsInPy checkout 准备 buggy/fixed workspace。
+- 已创建 ignored isolated venv：
+  `outputs/envs/fastapi1_p2p_py311`。
+- 已安装最小项目声明 runtime/test dependencies：
+  `pytest`、`starlette==0.13.2`、`pydantic>=1.5.1,<2.0.0`、`requests`。
+- F2P probe 结果：
+  - buggy checkout：
+    `tests/test_jsonable_encoder.py::test_encode_model_with_default`
+    因 `TypeError: jsonable_encoder() got an unexpected keyword argument
+    'exclude_defaults'` 失败；
+  - fixed checkout：同一 oracle 通过。
+- 第一次 project-level P2P-broad scope construction 使用完整 repo test discovery
+  运行超时，未生成 manifest；已终止残留 Python/pytest 进程。
+- 超时后的局部排查显示，最后观察到的 `tests/test_dependency_contextmanager.py`
+  单文件收集可快速完成；当前风险更像是 FastAPI 项目可发现测试文件数量较大
+  导致的执行时间问题，而不是单个测试文件卡死。
+
+下一步：
+
+- 在不改变实验边界、不引入 task-specific shim、不降级为 task-file scope 的前提下，
+  先用更长执行窗口重试同一 project-level P2P-broad construction。
+- 若长时重试仍无法完成，再记录为 project-level scope construction feasibility
+  风险，并判断是否需要向用户确认 FastAPI 的 project-level test-suite scope 是否应
+  限定为项目主测试目录 `tests/`。
