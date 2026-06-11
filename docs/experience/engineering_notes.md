@@ -949,3 +949,17 @@ This file starts fresh for the patch-verification project.
 - Rule: do not downgrade these tasks to main cohort entries with a one-test
   P2P-broad scope. The next expansion needs an explicit environment decision
   for legacy dependencies or a broader BugsInPy project import.
+
+## 2026-06-11 broader BugsInPy candidate pool
+
+- The user confirmed the broader-project route: do not spend the next phase on
+  legacy `nose` or Black `typed_ast` / MSVC repair.
+- The local BugsInPy source archive is available at
+  `D:/mgao/code/research/tmp/bugsinpy_archive/BugsInPy-master`; no network
+  download is needed for metadata screening.
+- `scripts/screen_bugsinpy_candidate_pool.py` performs metadata-only screening
+  before checkout. The first run found 501 BugsInPy tasks, 479 new tasks not in
+  the current registry, and 195 promising metadata-level candidates.
+- Top low-friction candidates are `PySnooper_1-3`, followed by several
+  `fastapi` and `sanic` pytest tasks. Heavy/native projects such as
+  `keras`, `pandas`, and `spacy` are deprioritized by metadata blockers.

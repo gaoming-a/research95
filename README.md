@@ -140,6 +140,10 @@ They should not override `final_paper_roadmap_zh.md`.
   Python 3.11 failed because the package needs local MSVC build tools.
 - `bugsinpy_black_2` was also screened as a possible sixth task and shares the
   same `typed_ast` import blocker, so it is recorded as `pending_blocked`.
+- The next phase will not prioritize repairing the legacy `nose` or Black
+  `typed_ast` / MSVC blockers. Those tasks remain blocked feasibility cases;
+  expansion now moves to a broader BugsInPy candidate pool under the same
+  project-level P2P-broad admission criteria.
 - The next replacement sweep tried `bugsinpy_cookiecutter_1`. An audited
   coverage-only addopts override plus an isolated Cookiecutter dependency venv
   produced a completed project-level P2P-broad scope: 296 common nodeids and

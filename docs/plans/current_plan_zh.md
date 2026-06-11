@@ -2449,3 +2449,49 @@ Qwen 初次结果：
   - 是否建立 controlled legacy `nose` environment；
   - 是否处理 Black 的 `typed_ast`/MSVC blocker；
   - 或者是否引入更多 BugsInPy 项目作为新候选池。
+
+## 26. 2026-06-11 expand BugsInPy candidate pool decision
+
+用户确认：
+
+- 选择第 3 个方向。
+- 不再优先修复 legacy `nose` blocker，也不优先处理 Black 的
+  `typed_ast`/MSVC native dependency blocker。
+- 下一阶段直接引入更多 BugsInPy 项目作为新候选池，目标是扩大真实任务规模。
+
+决策文本：
+
+```text
+Decision:
+Do not spend the next phase repairing legacy dependency blockers.
+Expand the BugsInPy candidate pool and prioritize tasks that can complete
+project-level P2P-broad construction under the existing audited pipeline.
+```
+
+执行边界：
+
+- `tqdm_3-8` 保留为 `pending_blocked` / legacy dependency cases。
+- `black_1/2/3` 保留为 `pending_blocked` / native dependency cases。
+- 不降低主实验纳入标准：
+  - `project_level_p2p_status = completed`；
+  - `p2p_broad_main_included = true`；
+  - `p2p_broad_size >= 3`；
+  - `stability_runs = 3`；
+  - reference patch 必须通过 F2P 和 P2P-broad；
+  - candidate labels 必须能在 F2P + P2P-broad 下重新验证。
+- 新候选优先级：
+  - pytest 或标准 unittest；
+  - 不依赖 `nose`；
+  - 不依赖本地编译型 legacy package；
+  - 不依赖外部网络、数据库、浏览器、服务端；
+  - collection 能在限定时间内完成；
+  - F2P oracle 清楚；
+  - reference patch 稳定；
+  - project-level P2P-broad size >= 3。
+
+下一步：
+
+1. 定位本地 BugsInPy 源仓库或项目元数据。
+2. 生成新的 candidate-pool feasibility sweep 输入。
+3. 先做 lightweight screening，不直接进入完整 candidate validation。
+4. 对所有失败任务记录 blocker，不静默删除。

@@ -352,6 +352,10 @@ stability。
 - `bugsinpy_black_2` 已经过 follow-up screening，也因相同 `typed_ast`
   import blocker 而标记为 `pending_blocked`。
 - cohort registry 为 `data/cohorts/task_cohort_registry.json`。
+- 2026-06-11 决策：下一阶段不优先修复 legacy `nose` blocker 或 Black
+  `typed_ast`/MSVC blocker；这些任务保留为 blocked feasibility cases。
+  主线转向引入更多 BugsInPy 项目作为新候选池，并继续使用相同
+  project-level P2P-broad 纳入标准。
 
 ## 4. Evidence 与 hidden evaluator 分离
 

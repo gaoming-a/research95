@@ -76,6 +76,11 @@
   screening registry. The five `httpie` tasks have completed the first Stage
   A/B closed loop; the remaining selected tasks still need task-specific
   oracles and candidate validations.
+- `experiments/bugsinpy_candidate_pool_screening.md`: broader BugsInPy
+  metadata-level candidate-pool screening after the decision to stop
+  prioritizing legacy `nose` and Black `typed_ast` repair. It identifies
+  promising new projects such as `PySnooper`, `fastapi`, and `sanic` before any
+  checkout or P2P construction.
 - `experiments/httpie_stage_ab_result.md`: tracked result for
   `httpie_stage_ab_001`, the first Stage A/B validated dataset slice with five
   `httpie` tasks, 22 candidates, executable validation, no-API baselines,
@@ -344,6 +349,10 @@
   tool-augmented outputs.
 - `scripts/screen_bugsinpy_expansion.py`: screens retained BugsInPy checkouts
   and writes the next 15-task expansion registry.
+- `scripts/screen_bugsinpy_candidate_pool.py`: metadata-level BugsInPy
+  candidate-pool screener. It reads the BugsInPy source archive, current cohort
+  registry, `bug.info`, `run_test.sh`, and requirements files, then emits a
+  broader project/task screening report before checkout.
 - `experiments/deepseek_agent_patch_validation_result.md`: records validation
   of the 8 existing DeepSeek agent-style `httpie_1`-`httpie_4` generated
   patches; all applied and ran oracles, but all relabeled as `incorrect`.
