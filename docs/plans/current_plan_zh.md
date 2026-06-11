@@ -2402,3 +2402,50 @@ Qwen 初次结果：
 
 - `bugsinpy_tqdm_9` 已成为第五个 project-level `p2p_broad_main` 任务。
 - 当前主 cohort 任务数从 4 增至 5；仍未达到中期增强版 15-20 bugs 的目标规模。
+
+## 25. 2026-06-11 sixth project-level P2P task screening boundary
+
+本轮目标：
+
+- 在 `bugsinpy_tqdm_9` 成为第五个主任务后，继续从 retained BugsInPy
+  workspace 中寻找第 6 个不需要新环境决策的 project-level P2P 任务。
+
+筛选对象：
+
+- `bugsinpy_black_2`；
+- `bugsinpy_tqdm_3`；
+- `bugsinpy_tqdm_4`；
+- `bugsinpy_tqdm_5`；
+- `bugsinpy_tqdm_6`；
+- `bugsinpy_tqdm_7`；
+- `bugsinpy_tqdm_8`。
+
+筛选结果：
+
+- `bugsinpy_black_2`：
+  - bug diff 指向 `black.py` 的 `fmt: on/off` 处理，并新增
+    `tests/data/fmtonoff4.py`；
+  - `tests/test_black.py` 中存在 `test_fmtonoff4`；
+  - 但当前环境中 `import black` 直接失败：
+    `ModuleNotFoundError: No module named 'typed_ast'`；
+  - 这与 `black_1/3` 的 blocker 同类，不能静默安装或模拟 `typed_ast`。
+- `bugsinpy_tqdm_3` 到 `bugsinpy_tqdm_8`：
+  - 在不安装新依赖的情况下逐文件 pytest collect；
+  - 每个任务只收集到 `tqdm/tests/tests_version.py::test_version`；
+  - 行为相关测试文件仍通过 legacy `nose` 路径 collection error；
+  - 低于主实验 P2P-broad 标准，不能作为第 6 个主任务。
+
+已更新：
+
+- `data/cohorts/task_cohort_registry.json` 中新增/更新上述任务为
+  `blocked_or_pending`；
+- `project_level_p2p_status = pending_blocked`；
+- `p2p_broad_main_included = false`。
+
+当前阻碍：
+
+- retained selected subset 中，除已完成的 5 个 main tasks 外，剩余候选都需要
+  新的环境决策：
+  - 是否建立 controlled legacy `nose` environment；
+  - 是否处理 Black 的 `typed_ast`/MSVC blocker；
+  - 或者是否引入更多 BugsInPy 项目作为新候选池。

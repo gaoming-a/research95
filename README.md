@@ -128,11 +128,18 @@ They should not override `final_paper_roadmap_zh.md`.
   completed project-level scope construction but retained only one stable
   P2P-broad test because most test files require the legacy `nose` dependency;
   they are recorded as `completed_insufficient_p2p_broad`, not main tasks.
+- A follow-up sixth-task screening checked `bugsinpy_tqdm_3` through
+  `bugsinpy_tqdm_8`. Without a new dependency decision, each collected only
+  `tqdm/tests/tests_version.py::test_version`; behavior-relevant test files
+  remain blocked by the legacy `nose` path, so they are recorded as
+  `pending_blocked`.
 - The scope builder now has a bounded `unittest` adapter. `bugsinpy_black_1`
   and `bugsinpy_black_3` were screened through it, but both are
   `pending_blocked` because the current environment lacks the required
   `typed_ast` dependency. An isolated `typed-ast==1.4.0` install attempt on
   Python 3.11 failed because the package needs local MSVC build tools.
+- `bugsinpy_black_2` was also screened as a possible sixth task and shares the
+  same `typed_ast` import blocker, so it is recorded as `pending_blocked`.
 - The next replacement sweep tried `bugsinpy_cookiecutter_1`. An audited
   coverage-only addopts override plus an isolated Cookiecutter dependency venv
   produced a completed project-level P2P-broad scope: 296 common nodeids and

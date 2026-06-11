@@ -102,10 +102,10 @@
   blocker.
 - `experiments/p2p_feasibility_sweep_update.md`: bounded replacement-task
   feasibility sweep after freezing Luigi. It records that `httpie_1` to
-  `httpie_4`, `tqdm_1` to `tqdm_2`, `black_1` / `black_3`, and
-  earlier unvalidated Cookiecutter tasks were screened under the current
-  project-level P2P budget and why blocked or insufficient tasks are retained
-  in accounting. It also records the audited
+  `httpie_4`, `tqdm_1` to `tqdm_8`, `black_1` to `black_3`, and earlier
+  unvalidated Cookiecutter tasks were screened under the current project-level
+  P2P budget and why blocked or insufficient tasks are retained in accounting.
+  It also records the audited
   coverage-only pytest addopts override and isolated dependency environment
   used for the Cookiecutter P2P retries, plus the later notes admitting
   `cookiecutter_1`, `cookiecutter_2`, `cookiecutter_3`, and `tqdm_9` after

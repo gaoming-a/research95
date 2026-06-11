@@ -342,9 +342,15 @@ stability。
 - `bugsinpy_tqdm_1` / `bugsinpy_tqdm_2` 已经过 bounded feasibility sweep；
   两者均只保留 1 个 stable P2P-broad test，低于 `p2p_broad_size >= 3`
   门槛，因此不进入主指标。
+- `bugsinpy_tqdm_3` 到 `bugsinpy_tqdm_8` 已经过 follow-up screening；
+  在不安装新依赖的情况下只收集到
+  `tqdm/tests/tests_version.py::test_version`，行为相关测试文件仍受 legacy
+  `nose` 路径阻塞，因此当前不进入主指标。
 - `unittest` adapter 已加入 P2P scope builder，用于避免因测试框架限制
   排除任务；`bugsinpy_black_1` / `bugsinpy_black_3` 已通过该 adapter
   筛选，但当前因缺少真实 `typed_ast` 依赖而标记为 `pending_blocked`。
+- `bugsinpy_black_2` 已经过 follow-up screening，也因相同 `typed_ast`
+  import blocker 而标记为 `pending_blocked`。
 - cohort registry 为 `data/cohorts/task_cohort_registry.json`。
 
 ## 4. Evidence 与 hidden evaluator 分离

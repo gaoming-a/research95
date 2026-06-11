@@ -13,27 +13,6 @@
     {
       "appendix_smoke_included": false,
       "available_evidence": {
-        "project_level_p2p_broad": "available",
-        "task_file_level_p2p": "available"
-      },
-      "blocked_reason": [],
-      "cohorts": [
-        "p2p_broad_main"
-      ],
-      "label_scope": {
-        "appendix": null,
-        "main": "project_level_p2p_broad"
-      },
-      "notes": "Project-level P2P-broad contains three stable tests after excluding the retained F2P oracle and external-network tests; do not claim comprehensive regression coverage.",
-      "p2p_broad_main_included": true,
-      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_httpie_5_p2p_broad.json",
-      "project": "httpie",
-      "project_level_p2p_status": "completed",
-      "task_id": "bugsinpy_httpie_5"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
         "project_level_p2p_broad": "not_available",
         "task_file_level_p2p": "not_recorded"
       },
@@ -146,6 +125,27 @@
       "task_id": "bugsinpy_httpie_4"
     },
     {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "available",
+        "task_file_level_p2p": "available"
+      },
+      "blocked_reason": [],
+      "cohorts": [
+        "p2p_broad_main"
+      ],
+      "label_scope": {
+        "appendix": null,
+        "main": "project_level_p2p_broad"
+      },
+      "notes": "Project-level P2P-broad contains three stable tests after excluding the retained F2P oracle and external-network tests; do not claim comprehensive regression coverage.",
+      "p2p_broad_main_included": true,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_httpie_5_p2p_broad.json",
+      "project": "httpie",
+      "project_level_p2p_status": "completed",
+      "task_id": "bugsinpy_httpie_5"
+    },
+    {
       "appendix_smoke_included": true,
       "available_evidence": {
         "project_level_p2p_broad": "available_but_insufficient",
@@ -212,6 +212,221 @@
         "task_file_level_p2p": "not_recorded"
       },
       "blocked_reason": [
+        "missing_nose_dependency",
+        "project_level_collection_errors",
+        "insufficient_collectable_p2p_without_dependency_decision"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": 1,
+        "test_files": null
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Screened as a possible sixth project-level P2P task. Per-file pytest collection without new dependencies collected only tqdm/tests/tests_version.py::test_version; behavior-relevant test files fail collection through the legacy nose dependency path. Visible test hint: tqdm/tests/tests_tqdm.py::test_bool. Installing or emulating nose is a separate environment decision and was not done silently.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "tqdm",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_tqdm_3"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "missing_nose_dependency",
+        "project_level_collection_errors",
+        "insufficient_collectable_p2p_without_dependency_decision"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": 1,
+        "test_files": null
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Screened as a possible sixth project-level P2P task. Per-file pytest collection without new dependencies collected only tqdm/tests/tests_version.py::test_version; behavior-relevant test files fail collection through the legacy nose dependency path. Visible test hint: tqdm/tests/tests_tqdm.py::test_nototal. Installing or emulating nose is a separate environment decision and was not done silently.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "tqdm",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_tqdm_4"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "missing_nose_dependency",
+        "project_level_collection_errors",
+        "insufficient_collectable_p2p_without_dependency_decision"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": 1,
+        "test_files": null
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Screened as a possible sixth project-level P2P task. Per-file pytest collection without new dependencies collected only tqdm/tests/tests_version.py::test_version; behavior-relevant test files fail collection through the legacy nose dependency path. Visible test hint: tqdm/tests/tests_tqdm.py::test_bool. Installing or emulating nose is a separate environment decision and was not done silently.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "tqdm",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_tqdm_5"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "missing_nose_dependency",
+        "project_level_collection_errors",
+        "insufficient_collectable_p2p_without_dependency_decision"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": 1,
+        "test_files": null
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Screened as a possible sixth project-level P2P task. Per-file pytest collection without new dependencies collected only tqdm/tests/tests_version.py::test_version; behavior-relevant test files fail collection through the legacy nose dependency path. Visible test hint: tqdm/tests/tests_synchronisation.py::test_imap. Installing or emulating nose is a separate environment decision and was not done silently.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "tqdm",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_tqdm_6"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "missing_nose_dependency",
+        "project_level_collection_errors",
+        "insufficient_collectable_p2p_without_dependency_decision"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": 1,
+        "test_files": null
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Screened as a possible sixth project-level P2P task. Per-file pytest collection without new dependencies collected only tqdm/tests/tests_version.py::test_version; behavior-relevant test files fail collection through the legacy nose dependency path. Visible test hint: not migrated. Installing or emulating nose is a separate environment decision and was not done silently.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "tqdm",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_tqdm_7"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "missing_nose_dependency",
+        "project_level_collection_errors",
+        "insufficient_collectable_p2p_without_dependency_decision"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": 1,
+        "test_files": null
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Screened as a possible sixth project-level P2P task. Per-file pytest collection without new dependencies collected only tqdm/tests/tests_version.py::test_version; behavior-relevant test files fail collection through the legacy nose dependency path. Visible test hint: tqdm/tests/tests_tqdm.py::test_format_meter. Installing or emulating nose is a separate environment decision and was not done silently.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "tqdm",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_tqdm_8"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [],
+      "cohorts": [
+        "p2p_broad_main"
+      ],
+      "collection_summary": {
+        "collection_errors": 0,
+        "candidate_count": 7,
+        "candidate_label_counts": {
+          "correct_under_f2p_and_p2p_broad": 1,
+          "incorrect_issue_not_fixed": 6
+        },
+        "excluded_fail_to_pass_oracle": 2,
+        "excluded_failed_on_buggy_baseline": 0,
+        "nodeids": 14,
+        "p2p_broad_size": 12,
+        "test_files": 1,
+        "test_framework": "pytest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "project_level_p2p_broad"
+      },
+      "notes": "A migrated SI-format/len oracle and seven curated candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains 12 stable tests after excluding two retained F2P oracle nodeids; generic partial candidates that still passed the oracle were filtered out as label-invalid.",
+      "p2p_broad_main_included": true,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_tqdm_9_p2p_broad.json",
+      "project": "tqdm",
+      "project_level_p2p_status": "completed",
+      "task_id": "bugsinpy_tqdm_9"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
         "missing_typed_ast_dependency",
         "unittest_collection_error"
       ],
@@ -234,6 +449,35 @@
       "project": "black",
       "project_level_p2p_status": "pending_blocked",
       "task_id": "bugsinpy_black_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "missing_typed_ast_dependency",
+        "project_level_import_blocked"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "test_files": null
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Screened as a possible sixth project-level P2P task. The checkout declares typed-ast>=1.4.0 and importing black fails with ModuleNotFoundError: typed_ast in the current Python 3.11 environment; prior typed-ast install attempts require local MSVC build tools. Do not silently install or emulate typed_ast.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "black",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_black_2"
     },
     {
       "appendix_smoke_included": false,
@@ -369,41 +613,6 @@
       "project": "cookiecutter",
       "project_level_p2p_status": "completed",
       "task_id": "bugsinpy_cookiecutter_3"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
-        "project_level_p2p_broad": "available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [],
-      "cohorts": [
-        "p2p_broad_main"
-      ],
-      "collection_summary": {
-        "collection_errors": 0,
-        "candidate_count": 7,
-        "candidate_label_counts": {
-          "correct_under_f2p_and_p2p_broad": 1,
-          "incorrect_issue_not_fixed": 6
-        },
-        "excluded_fail_to_pass_oracle": 2,
-        "excluded_failed_on_buggy_baseline": 0,
-        "nodeids": 14,
-        "p2p_broad_size": 12,
-        "test_files": 1,
-        "test_framework": "pytest"
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "project_level_p2p_broad"
-      },
-      "notes": "A migrated SI-format/len oracle and seven curated candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains 12 stable tests after excluding two retained F2P oracle nodeids; generic partial candidates that still passed the oracle were filtered out as label-invalid.",
-      "p2p_broad_main_included": true,
-      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_tqdm_9_p2p_broad.json",
-      "project": "tqdm",
-      "project_level_p2p_status": "completed",
-      "task_id": "bugsinpy_tqdm_9"
     },
     {
       "appendix_smoke_included": true,

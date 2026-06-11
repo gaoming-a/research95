@@ -319,3 +319,38 @@ docs/experiments/tqdm9_candidate_validation.md
 project-level main task. Its candidate-construction audit also records that
 generic partial diffs can be label-invalid when the reference patch contains
 style-only changes.
+
+### Sixth-Task Screening Boundary
+
+After admitting `bugsinpy_tqdm_9`, the remaining retained selected candidates
+were screened for a sixth project-level P2P task:
+
+```text
+bugsinpy_black_2
+bugsinpy_tqdm_3
+bugsinpy_tqdm_4
+bugsinpy_tqdm_5
+bugsinpy_tqdm_6
+bugsinpy_tqdm_7
+bugsinpy_tqdm_8
+```
+
+`bugsinpy_black_2` shares the same real dependency blocker as the earlier Black
+tasks: importing `black` fails because `typed_ast` is absent, while the previous
+isolated `typed-ast==1.4.0` install attempt on Python 3.11 required local MSVC
+build tools.
+
+For `bugsinpy_tqdm_3` through `bugsinpy_tqdm_8`, per-file pytest collection
+without installing new dependencies collected only:
+
+```text
+tqdm/tests/tests_version.py::test_version
+```
+
+The behavior-relevant files still fail collection through the legacy `nose`
+dependency path. These tasks are therefore recorded as `pending_blocked` rather
+than silently admitted with an insufficient P2P-broad scope.
+
+The next expansion decision is now explicit: either approve a controlled legacy
+dependency environment for `nose`/Black's `typed_ast`, or bring in additional
+BugsInPy projects instead of continuing to mine this exhausted retained subset.

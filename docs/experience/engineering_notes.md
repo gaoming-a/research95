@@ -934,3 +934,18 @@ This file starts fresh for the patch-verification project.
   reference diff hunk creates a behaviorally incorrect patch.
 - `bugsinpy_tqdm_9` now contributes seven validated candidates over 12 stable
   P2P-broad tests and is admitted to `p2p_broad_main`.
+
+## 2026-06-11 sixth-task screening boundary
+
+- After `tqdm_9`, the remaining retained selected candidates were
+  `black_2` and `tqdm_3` through `tqdm_8`.
+- `black_2` has a clear `fmtonoff4` behavior test in `tests/test_black.py`, but
+  importing `black` fails before test execution because `typed_ast` is absent.
+  This is the same dependency class as `black_1/3`; do not silently install or
+  emulate it.
+- `tqdm_3` through `tqdm_8` collect only
+  `tqdm/tests/tests_version.py::test_version` without new dependencies. The
+  behavior-relevant test files still fail through the legacy `nose` path.
+- Rule: do not downgrade these tasks to main cohort entries with a one-test
+  P2P-broad scope. The next expansion needs an explicit environment decision
+  for legacy dependencies or a broader BugsInPy project import.
