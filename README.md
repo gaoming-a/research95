@@ -141,6 +141,9 @@ They should not override `final_paper_roadmap_zh.md`.
 - `bugsinpy_cookiecutter_2` now also enters `p2p_broad_main`: its multiple-hook
   oracle validates 11 candidates under F2P plus a separate project-level
   P2P-broad scope with 278 stable tests.
+- `bugsinpy_cookiecutter_3` now enters `p2p_broad_main`: its prompt choice
+  oracle validates four candidates under F2P plus a separate project-level
+  P2P-broad scope with 255 stable tests.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

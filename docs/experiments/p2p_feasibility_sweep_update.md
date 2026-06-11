@@ -32,14 +32,15 @@ Tasks that fail the bounded sweep are retained in task-level accounting as
 | `bugsinpy_tqdm_2` | tqdm | completed_insufficient_p2p_broad | 6 files / 1 nodeid | missing `nose`; P2P-broad size 1 < 3 | no |
 | `bugsinpy_black_1` | black | pending_blocked | unittest / 0 nodeids | missing `typed_ast`; unittest collection error | no |
 | `bugsinpy_black_3` | black | pending_blocked | unittest / 0 nodeids | missing `typed_ast`; unittest collection error | no |
-| `bugsinpy_cookiecutter_1` | cookiecutter | completed_pending_candidate_validation | 45 files / 296 nodeids | P2P-broad ready with 290 tests; oracle/candidates pending | no |
-| `bugsinpy_cookiecutter_2` | cookiecutter | pending_blocked | not attempted | await oracle/candidate migration after cookiecutter_1 scope success | no |
-| `bugsinpy_cookiecutter_3` | cookiecutter | pending_blocked | not attempted | await oracle/candidate migration after cookiecutter_1 scope success | no |
+| `bugsinpy_cookiecutter_1` | cookiecutter | completed | 45 files / 296 nodeids | none after oracle/candidate validation | yes |
+| `bugsinpy_cookiecutter_2` | cookiecutter | completed | 45 files / 286 nodeids | none after oracle/candidate validation | yes |
+| `bugsinpy_cookiecutter_3` | cookiecutter | completed | 45 files / 262 nodeids | none after declared dependency installs and oracle/candidate validation | yes |
 
 ## Interpretation
 
-The first replacement sweeps did not yet add new `p2p_broad_main` tasks beyond
-`httpie_5`.
+The first replacement sweeps initially did not add new `p2p_broad_main` tasks
+beyond `httpie_5`, but the later Cookiecutter follow-ups admitted
+`cookiecutter_1`, `cookiecutter_2`, and `cookiecutter_3`.
 
 This is not a reason to lower the main standard. It shows that project-level
 P2P-broad construction is a real feasibility constraint and must be reported
@@ -181,10 +182,10 @@ data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad_addopts_override_audit.json
 data/p2p_scopes/bugsinpy_cookiecutter_1_dependency_environment_audit.json
 ```
 
-`bugsinpy_cookiecutter_2` and `bugsinpy_cookiecutter_3` were not run as
-duplicates after `cookiecutter_1` established the required environment and
-scope-builder path. They remain in the cohort registry as `pending_blocked`
-until oracle and candidate migration is planned.
+`bugsinpy_cookiecutter_2` and `bugsinpy_cookiecutter_3` were initially deferred
+after `cookiecutter_1` established the required environment and scope-builder
+path. Later follow-ups migrated their oracles and candidate validations, so they
+no longer remain `pending_blocked`.
 
 The follow-up oracle and candidate validation have now been completed for
 `bugsinpy_cookiecutter_1`. A migrated UTF-8 context oracle distinguishes the
@@ -237,4 +238,45 @@ docs/experiments/cookiecutter2_candidate_validation.md
 ```
 
 `bugsinpy_cookiecutter_2` now enters `p2p_broad_main` as the third completed
+project-level main task.
+
+### `cookiecutter_3` Follow-up
+
+`bugsinpy_cookiecutter_3` was migrated next. Its retained metadata points to:
+
+```text
+tests/test_read_user_choice.py::test_click_invocation
+```
+
+The target behavior is that Cookiecutter's custom choice prompt already renders
+the available choices, so the call to `click.prompt` must use
+`show_choices=False` to avoid duplicated Click-rendered choices.
+
+Two additional declared dependencies were needed in the isolated Cookiecutter
+venv:
+
+```text
+future==0.18.3
+whichcraft==0.6.1
+```
+
+After installing these declared dependencies, project-level collection errors
+dropped to zero. The final P2P-broad scope retained 255 stable tests after
+excluding four parameterized F2P nodeids and three tests that already fail on
+the buggy baseline.
+
+Candidate validation produced:
+
+```text
+correct_under_f2p_and_p2p_broad: 1
+incorrect_issue_not_fixed: 3
+```
+
+The tracked follow-up report is:
+
+```text
+docs/experiments/cookiecutter3_candidate_validation.md
+```
+
+`bugsinpy_cookiecutter_3` now enters `p2p_broad_main` as the fourth completed
 project-level main task.

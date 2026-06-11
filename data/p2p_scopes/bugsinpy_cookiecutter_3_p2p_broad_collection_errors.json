@@ -1,0 +1,8 @@
+{
+  "error_count": 0,
+  "errors": [],
+  "project": "cookiecutter",
+  "scope_type": "project_level_p2p_broad",
+  "task_id": "bugsinpy_cookiecutter_3",
+  "test_framework": "pytest"
+}

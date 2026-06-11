@@ -103,12 +103,13 @@
 - `experiments/p2p_feasibility_sweep_update.md`: bounded replacement-task
   feasibility sweep after freezing Luigi. It records that `httpie_1` to
   `httpie_4`, `tqdm_1` to `tqdm_2`, `black_1` / `black_3`, and
-  `cookiecutter_3` did not become new `p2p_broad_main`
-  tasks under the current project-level P2P budget and why they are retained
-  as blocked or insufficient accounting. It also records the audited
+  earlier unvalidated Cookiecutter tasks were screened under the current
+  project-level P2P budget and why blocked or insufficient tasks are retained
+  in accounting. It also records the audited
   coverage-only pytest addopts override and isolated dependency environment
-  used for the `cookiecutter_1` P2P scope retry, plus the later note that
-  `cookiecutter_1` was admitted after oracle and candidate validation.
+  used for the Cookiecutter P2P retries, plus the later notes admitting
+  `cookiecutter_1`, `cookiecutter_2`, and `cookiecutter_3` after oracle and
+  candidate validation.
 - `experiments/cookiecutter1_candidate_validation.md`: tracked validation
   report for `bugsinpy_cookiecutter_1`. It records the migrated UTF-8 context
   oracle, four candidate patches, F2P validation, P2P-broad validation over 290
@@ -117,6 +118,11 @@
   report for `bugsinpy_cookiecutter_2`. It records the multiple-hook oracle,
   11 candidate patches, F2P validation, P2P-broad validation over 278 stable
   tests, and admission as the third project-level main task.
+- `experiments/cookiecutter3_candidate_validation.md`: tracked validation
+  report for `bugsinpy_cookiecutter_3`. It records the prompt-choice
+  `show_choices=False` oracle, four candidate patches, F2P validation,
+  P2P-broad validation over 255 stable tests, and admission as the fourth
+  project-level main task.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

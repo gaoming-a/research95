@@ -95,6 +95,15 @@ SOURCE_BUGS = [
         "hidden_oracles": ["scripts/oracles/cookiecutter_2_multiple_hooks.py"],
         "oracle_command": "python scripts/oracles/cookiecutter_2_multiple_hooks.py",
     },
+    {
+        "task_id": "bugsinpy_cookiecutter_3",
+        "project": "cookiecutter",
+        "touched_files": ["cookiecutter/prompt.py"],
+        "issue_summary": "choice prompts should not let Click duplicate the choices already rendered in Cookiecutter's custom prompt text",
+        "visible_tests": ["tests/test_read_user_choice.py::test_click_invocation"],
+        "hidden_oracles": ["scripts/oracles/cookiecutter_3_prompt_show_choices.py"],
+        "oracle_command": "python scripts/oracles/cookiecutter_3_prompt_show_choices.py",
+    },
 ]
 
 
@@ -306,32 +315,55 @@ def build_task_specific_negative_diffs(
     source_bug: dict[str, Any],
     file_path: str,
 ) -> list[dict[str, str]]:
-    if source_bug["task_id"] != "bugsinpy_cookiecutter_1":
-        return []
+    if source_bug["task_id"] == "bugsinpy_cookiecutter_1":
+        buggy_lines, _ = read_buggy_fixed_lines(source_root, source_bug, file_path)
+        target = "        with open(context_file) as file_handle:\n"
+        replacement = "        with open(context_file, encoding='ascii') as file_handle:\n"
+        if target not in buggy_lines:
+            raise ValueError(f"expected Cookiecutter context-open line not found in {file_path}")
 
-    buggy_lines, _ = read_buggy_fixed_lines(source_root, source_bug, file_path)
-    target = "        with open(context_file) as file_handle:\n"
-    replacement = "        with open(context_file, encoding='ascii') as file_handle:\n"
-    if target not in buggy_lines:
-        raise ValueError(f"expected Cookiecutter context-open line not found in {file_path}")
+        candidate_lines = [replacement if line == target else line for line in buggy_lines]
+        return [
+            {
+                "suffix": "wrong_ascii_encoding",
+                "patch_text": unified_diff_from_lines(
+                    file_path,
+                    buggy_lines,
+                    candidate_lines,
+                    source_bug["task_id"],
+                ),
+                "materialization": "task_specific_wrong_encoding_diff",
+                "notes": (
+                    "Difficult negative for the single-line Cookiecutter UTF-8 bug: the candidate "
+                    "adds an explicit encoding argument but chooses ASCII rather than UTF-8."
+                ),
+            }
+        ]
+    if source_bug["task_id"] == "bugsinpy_cookiecutter_3":
+        buggy_lines, _ = read_buggy_fixed_lines(source_root, source_bug, file_path)
+        target = "        prompt, type=click.Choice(choices), default=default\n"
+        replacement = "        prompt, type=click.Choice(choices), default=default, show_choices=True\n"
+        if target not in buggy_lines:
+            raise ValueError(f"expected Cookiecutter click.prompt line not found in {file_path}")
 
-    candidate_lines = [replacement if line == target else line for line in buggy_lines]
-    return [
-        {
-            "suffix": "wrong_ascii_encoding",
-            "patch_text": unified_diff_from_lines(
-                file_path,
-                buggy_lines,
-                candidate_lines,
-                source_bug["task_id"],
-            ),
-            "materialization": "task_specific_wrong_encoding_diff",
-            "notes": (
-                "Difficult negative for the single-line Cookiecutter UTF-8 bug: the candidate "
-                "adds an explicit encoding argument but chooses ASCII rather than UTF-8."
-            ),
-        }
-    ]
+        candidate_lines = [replacement if line == target else line for line in buggy_lines]
+        return [
+            {
+                "suffix": "wrong_show_choices_true",
+                "patch_text": unified_diff_from_lines(
+                    file_path,
+                    buggy_lines,
+                    candidate_lines,
+                    source_bug["task_id"],
+                ),
+                "materialization": "task_specific_wrong_prompt_visibility_diff",
+                "notes": (
+                    "Difficult negative for the single-line Cookiecutter prompt bug: the candidate "
+                    "touches the relevant Click prompt argument but explicitly keeps choice rendering enabled."
+                ),
+            }
+        ]
+    return []
 
 
 def select_source_bugs(task_ids: list[str] | None) -> list[dict[str, Any]]:

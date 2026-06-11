@@ -895,3 +895,24 @@ This file starts fresh for the patch-verification project.
   correct patch, one no-op, one irrelevant patch, and eight partial fixes. Its
   project-level P2P-broad scope retains 278 tests, so it is admitted to
   `p2p_broad_main`.
+
+## 2026-06-11 cookiecutter_3 candidate validation
+
+- `cookiecutter_3` has complete BugsInPy metadata, and its original F2P command
+  targets `tests/test_read_user_choice.py::test_click_invocation`.
+- The first direct F2P run exposed a missing declared dependency:
+  `future>=0.15.2`, required for `past.builtins`. Installing pinned
+  `future==0.18.3` in the ignored Cookiecutter venv restored this import.
+- The first project-level P2P scope still had 18 collection-error files due to
+  missing `whichcraft`, also declared in `setup.py`. Installing pinned
+  `whichcraft==0.6.1` in the same ignored venv reduced collection errors to
+  zero.
+- Parameterized F2P tests should be passed as explicit parameterized nodeids to
+  the P2P scope builder. Passing only the parent nodeid excluded them as buggy
+  baseline failures, which was semantically safe but produced unclear
+  accounting.
+- A task-specific negative for this single-line prompt bug can set
+  `show_choices=True`: it edits the relevant argument but preserves the
+  duplicated-choice behavior.
+- `cookiecutter_3` now contributes four validated candidates over 255 stable
+  P2P-broad tests and is admitted to `p2p_broad_main`.

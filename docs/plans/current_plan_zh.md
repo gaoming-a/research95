@@ -2204,3 +2204,102 @@ Qwen 初次结果：
 
 - `bugsinpy_cookiecutter_2` 已成为第三个 project-level `p2p_broad_main` 任务。
 - 当前主 cohort 任务数从 2 增至 3，但距离中期增强版 15-20 bugs 仍明显不足。
+- 已本地提交：`420030c Admit cookiecutter 2 P2P validation`。
+- GitHub push 失败，错误为 HTTPS `Recv failure: Connection was reset`；后续提交后需要重试
+  push，不能认为远端已经同步。
+
+## 23. 2026-06-11 `cookiecutter_3` project-level P2P and candidate validation attempt
+
+本轮目标：
+
+- 继续按最短路径扩展第四个 project-level P2P 主任务。
+- 优先尝试 `bugsinpy_cookiecutter_3`，因为 Cookiecutter 的隔离依赖环境、
+  coverage-only addopts sanitizer、Windows reparse point 处理、candidate-level P2P
+  runner 已经在 `cookiecutter_1/2` 中打通。
+- 若 `cookiecutter_3` 缺少可稳定定义的 F2P oracle、reference patch 或 P2P-broad
+  scope，记录 blocker 并停止该任务，不用降级标准凑数量。
+
+执行边界：
+
+- 使用已有 `outputs/envs/cookiecutter_p2p_py311`，不安装新依赖，除非出现新的明确
+  blocker 并先记录。
+- 仍采用 project-level P2P-broad，不能复用 `cookiecutter_1/2` 的 manifest。
+- 先从 buggy/fixed diff、测试文件和可运行节点确认 bug 行为；如果没有
+  BugsInPy metadata，需要明确写成 inference。
+- candidate 最小集为 reference、no-op、irrelevant/comment-only、以及能从 bug 语义
+  合理生成的 partial/negative；不能伪造难负例。
+
+计划步骤：
+
+1. 检查 `cookiecutter_3` checkout、metadata、buggy/fixed diff 和相关测试。
+2. 确认可稳定运行的 F2P 节点或构造 standalone oracle，并验证 buggy fail / fixed pass。
+3. 构造 `cookiecutter_3` project-level P2P-broad scope。
+4. 注册 candidate builder，构造候选并运行 retained-oracle validation。
+5. 运行 F2P + P2P-broad candidate validation。
+6. 更新 registry、实验报告、README、INDEX、经验文档和本计划，运行检查，提交并重试 push。
+
+执行中新增约束：
+
+- `cookiecutter_3` 的 `setup.py` 声明 `future>=0.15.2`，但当前
+  `outputs/envs/cookiecutter_p2p_py311` 中缺失该包，导致
+  `ModuleNotFoundError: No module named 'past'`。这是 declared dependency
+  blocker。本轮允许仅在 ignored isolated venv 中安装 pinned `future==0.18.3`，
+  并必须生成/更新 dependency environment audit；不得安装全局依赖。
+- 首次 project-level P2P scope 构造后仍有 18 个 collection-error files，原因是
+  缺少 `whichcraft`；`cookiecutter_3` 的 `setup.py` 声明 `whichcraft>=0.4.0`。
+  本轮允许仅在同一 ignored isolated venv 中安装 pinned `whichcraft==0.6.1`，然后
+  重建 `cookiecutter_3` scope；不得把含缺失声明依赖的 18 个 collection errors
+  当作最终主实验 scope。
+
+执行结果：
+
+- metadata 存在，原始 F2P 命令为：
+  `tox tests/test_read_user_choice.py::test_click_invocation`。
+- source diff 集中在 `cookiecutter/prompt.py`：
+  `click.prompt(..., default=default)` 改为
+  `click.prompt(..., default=default, show_choices=False)`。
+- 已安装 declared dependencies 到 ignored isolated venv：
+  - `future==0.18.3`；
+  - `whichcraft==0.6.1`。
+- 已生成 dependency environment audit：
+  `data/p2p_scopes/bugsinpy_cookiecutter_3_dependency_environment_audit.json`。
+- 已确认 F2P 参数化节点：
+  - `tests/test_read_user_choice.py::test_click_invocation[1-hello]`；
+  - `tests/test_read_user_choice.py::test_click_invocation[2-world]`；
+  - `tests/test_read_user_choice.py::test_click_invocation[3-foo]`；
+  - `tests/test_read_user_choice.py::test_click_invocation[4-bar]`。
+- 已构造 project-level P2P-broad scope：
+  - common nodeids = 262；
+  - excluded fail-to-pass oracle = 4；
+  - excluded failed on buggy baseline = 3；
+  - collection errors = 0；
+  - included P2P-broad tests = 255；
+  - stability runs = 3 per version。
+- 已新增 `scripts/oracles/cookiecutter_3_prompt_show_choices.py`：
+  - direct oracle check: buggy fail / fixed pass。
+- 已将 `bugsinpy_cookiecutter_3` 加入 candidate builder，并新增
+  `task_specific_wrong_prompt_visibility_diff` 负例。
+- candidate slice：
+  - candidates = 4；
+  - correct_reference = 1；
+  - buggy_noop = 1；
+  - irrelevant_patch = 1；
+  - partial_fix = 1。
+- retained-oracle validation：
+  - patch_applied = 4；
+  - oracle_ran = 4；
+  - oracle_all_passed = 1；
+  - validation_status_counts = `validated: 4`。
+- F2P + P2P-broad validation：
+  - p2p_broad_test_count = 255；
+  - `correct_under_f2p_and_p2p_broad: 1`；
+  - `incorrect_issue_not_fixed: 3`。
+- 已更新 `data/cohorts/task_cohort_registry.json`：
+  - `bugsinpy_cookiecutter_3.project_level_p2p_status = completed`；
+  - `bugsinpy_cookiecutter_3.p2p_broad_main_included = true`；
+  - `bugsinpy_cookiecutter_3.cohorts = ["p2p_broad_main"]`。
+
+当前结论：
+
+- `bugsinpy_cookiecutter_3` 已成为第四个 project-level `p2p_broad_main` 任务。
+- 当前主 cohort 任务数从 3 增至 4；仍未达到中期增强版 15-20 bugs 的目标规模。
