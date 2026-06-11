@@ -132,6 +132,11 @@
   `bugsinpy_tqdm_9`. It records the SI-format and `len(tqdm(total=...))`
   oracle, seven curated candidate patches, F2P validation, P2P-broad validation
   over 12 stable tests, and admission as the fifth project-level main task.
+- `experiments/pysnooper1_candidate_validation.md`: tracked validation report
+  for `bugsinpy_PySnooper_1`. It records the UTF-8 snoop-log oracle, isolated
+  declared test dependency environment, six curated candidate patches, F2P
+  validation, P2P-broad validation over 24 stable tests, and admission as the
+  sixth project-level main task.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

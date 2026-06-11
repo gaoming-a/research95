@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import difflib
 import json
+import re
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -116,6 +117,15 @@ SOURCE_BUGS = [
         "hidden_oracles": ["scripts/oracles/tqdm_9_si_len.py"],
         "oracle_command": "python scripts/oracles/tqdm_9_si_len.py",
     },
+    {
+        "task_id": "bugsinpy_PySnooper_1",
+        "project": "PySnooper",
+        "touched_files": ["pysnooper/tracer.py", "pysnooper/pycompat.py"],
+        "issue_summary": "Snooper log files and decoded source lines should preserve non-ASCII text as UTF-8",
+        "visible_tests": ["tests/test_chinese.py::test_chinese"],
+        "hidden_oracles": ["scripts/oracles/pysnooper_1_utf8_log.py"],
+        "oracle_command": "python scripts/oracles/pysnooper_1_utf8_log.py",
+    },
 ]
 
 TASK_PARTIAL_ALLOWLIST = {
@@ -124,6 +134,11 @@ TASK_PARTIAL_ALLOWLIST = {
         "missing_change_1",
         "missing_change_4",
         "split_replace_1_3",
+    },
+    "bugsinpy_PySnooper_1": {
+        "first_hunk_only",
+        "missing_change_2",
+        "missing_change_3",
     },
 }
 
@@ -161,6 +176,12 @@ def write_jsonl(path: Path, records: list[dict[str, Any]]) -> None:
 
 def write_json(path: Path, record: dict[str, Any]) -> None:
     path.write_text(json.dumps(record, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def contains_label_token(text: str, token: str) -> bool:
+    escaped = re.escape(token)
+    pattern = rf"(?<![A-Za-z0-9_]){escaped}(?![A-Za-z0-9_])"
+    return re.search(pattern, text) is not None
 
 
 def build_visible_context(source_bug: dict[str, Any], touched_files: list[str]) -> str:
@@ -407,11 +428,10 @@ def select_source_bugs(task_ids: list[str] | None) -> list[dict[str, Any]]:
 def build_reference_diffs(source_root: Path, source_bugs: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     reference_diffs: dict[str, dict[str, Any]] = {}
     for source_bug in source_bugs:
-        file_path = source_bug["touched_files"][0]
-        diff_text = unified_diff(source_root, source_bug, file_path)
+        diff_text = "".join(unified_diff(source_root, source_bug, file_path) for file_path in source_bug["touched_files"])
         reference_diffs[source_bug["task_id"]] = {
             "patch_text": diff_text,
-            "touched_files": [file_path],
+            "touched_files": list(source_bug["touched_files"]),
             "hunk_count": diff_text.count("\n@@"),
         }
     return reference_diffs
@@ -571,7 +591,7 @@ def validate_candidate(candidate: dict[str, Any]) -> None:
         "hidden oracle fails",
     ]
     for token in forbidden:
-        if token and token in visible:
+        if token and contains_label_token(visible, token):
             raise ValueError(f"{candidate['patch_id']} leaks label token in visible context: {token}")
 
 

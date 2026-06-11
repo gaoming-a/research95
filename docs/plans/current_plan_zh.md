@@ -2495,3 +2495,100 @@ project-level P2P-broad construction under the existing audited pipeline.
 2. 生成新的 candidate-pool feasibility sweep 输入。
 3. 先做 lightweight screening，不直接进入完整 candidate validation。
 4. 对所有失败任务记录 blocker，不静默删除。
+
+执行进展：
+
+- 本地 BugsInPy 源仓库已定位：
+  `D:/mgao/code/research/tmp/bugsinpy_archive/BugsInPy-master`。
+- 已新增 metadata-level screening 脚本：
+  `scripts/screen_bugsinpy_candidate_pool.py`。
+- 首次筛选结果：
+  - total BugsInPy tasks = 501；
+  - new candidate tasks = 479；
+  - promising metadata-level candidates = 195；
+  - top candidates = `bugsinpy_PySnooper_1/2/3`、`fastapi_1/2` 等。
+- 已生成 tracked report：
+  `docs/experiments/bugsinpy_candidate_pool_screening.md`。
+
+`bugsinpy_PySnooper_1` probe：
+
+- buggy/fixed checkout 已成功创建到外部 retained workspace：
+  `D:/mgao/code/research/data/real_bugs/bugsinpy_workspace/PySnooper_1`。
+- 直接使用系统 Python 3.11 运行 F2P 时，buggy/fixed 均先遇到
+  `ImportError: cannot import name 'Mapping' from 'collections'`。
+  这是 Python 3.11 兼容 shim 范围，和现有 P2P builder 的
+  `collections.abc` shim 一致。
+- 加入兼容 shim 后，buggy/fixed 均遇到
+  `ModuleNotFoundError: No module named 'python_toolbox'`。
+- `python-toolbox` 是 `setup.py` 的 `extras_require['tests']` 中声明的测试
+  依赖。本轮允许仅在 ignored isolated venv 中安装 declared test
+  dependencies，并生成 dependency environment audit；不得安装全局依赖。
+
+执行结果：
+
+- 已建立 ignored isolated venv：
+  `outputs/envs/pysnooper_p2p_py311`。
+- 已跟踪依赖环境审计：
+  `data/p2p_scopes/bugsinpy_PySnooper_1_dependency_environment_audit.json`。
+- 已新增 retained oracle：
+  `scripts/oracles/pysnooper_1_utf8_log.py`。
+- direct oracle check：
+  - buggy checkout：读取 UTF-8 log 时触发 `UnicodeDecodeError`；
+  - fixed checkout：`oracle_passed`。
+- 已构造 project-level P2P-broad scope：
+  - collected/common nodeids = 29；
+  - excluded fail-to-pass oracle = 1；
+  - excluded failed on buggy baseline = 4；
+  - included P2P-broad tests = 24；
+  - collection error files = 0；
+  - stability runs = 3 per version。
+- 已修复候选构造脚本两个问题：
+  - reference diff 支持多 touched files；
+  - label-leakage guard 改为完整 token 匹配，避免 `noop` 误命中
+    `PySnooper`。
+- 已生成并验证 6 个 candidate patches：
+  - correct_reference = 1；
+  - buggy_noop = 1；
+  - irrelevant_patch = 1；
+  - partial_fix = 3。
+- `missing_change_1` 在 Python 3.11 retained oracle 下实际通过，因为它保留
+  UTF-8 解码和 UTF-8 写日志，只省略 Python 2 compatibility hunk；因此已从
+  PySnooper partial negative allowlist 中排除。
+- retained oracle validation：
+  - record_count = 6；
+  - patch_applied_count = 6；
+  - oracle_ran_count = 6；
+  - oracle_all_passed_count = 1；
+  - validation_status_counts.validated = 6。
+- F2P + P2P-broad validation：
+  - record_count = 6；
+  - p2p_broad_test_count = 24；
+  - patch_applied_count = 6；
+  - retained_oracle_passed_count = 1；
+  - `correct_under_f2p_and_p2p_broad` = 1；
+  - `incorrect_issue_not_fixed` = 5。
+- 已新增实验报告：
+  `docs/experiments/pysnooper1_candidate_validation.md`。
+- 已将 `bugsinpy_PySnooper_1` 加入 `p2p_broad_main` cohort。
+
+当前结论：
+
+- `p2p_broad_main` 从 5 个任务扩展到 6 个任务。
+- `bugsinpy_PySnooper_1` 满足当前主实验纳入标准：
+  - `project_level_p2p_status = completed`；
+  - `p2p_broad_main_included = true`；
+  - `p2p_broad_size = 24 >= 3`；
+  - `stability_runs = 3`；
+  - reference patch 通过 F2P + P2P-broad；
+  - candidate labels 可在 F2P + P2P-broad 下重新验证。
+
+下一步：
+
+1. 最终一致性检查已通过：
+   - Python 编译通过；
+   - JSON 解析通过；
+   - cohort 主任务计数 = 6；
+   - `git diff --check` 无空白错误，仅有 Windows 换行提示。
+2. 下一步提交并 push 本轮更新。
+3. 随后继续从 broader BugsInPy pool 中筛选下一个低摩擦 candidate task，
+   优先 `PySnooper_2/3`、`fastapi_1/2` 或同等 pytest/unittest 任务。

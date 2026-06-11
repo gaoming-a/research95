@@ -814,3 +814,24 @@ explanation 和 calibrated escalation。
 > generated tests 和 tool-visible summaries 能改变 safety/recall/escalation
 > tradeoff；但 tool-only baseline 已能解决一部分明确案例，LLM 的主要价值在于
 > 证据综合、解释和不确定场景下的升级判断。
+
+## 17. 当前 Stage B/C 执行状态（2026-06-11）
+
+当前 `p2p_broad_main` 已扩展到 6 个完成 project-level P2P-broad 的真实任务：
+
+- `bugsinpy_httpie_5`
+- `bugsinpy_cookiecutter_1`
+- `bugsinpy_cookiecutter_2`
+- `bugsinpy_cookiecutter_3`
+- `bugsinpy_tqdm_9`
+- `bugsinpy_PySnooper_1`
+
+最新加入的 `bugsinpy_PySnooper_1` 使用独立 UTF-8 snoop-log oracle，包含 24 个
+稳定 P2P-broad 测试和 6 个已验证 candidate patches。它确认了当前路线的关键
+执行规则：新增任务可以来自 broader BugsInPy pool，但必须经过同一套
+project-level P2P-broad 构造、retained oracle validation、F2P + P2P-broad
+candidate revalidation 后才能进入主 cohort。
+
+下一阶段仍然不是修复 legacy `nose` 或 Black `typed_ast` / MSVC blocker，而是继续
+筛选更多低摩擦 BugsInPy 项目，将主 cohort 扩展到 15-20 个 validation-stable
+真实 bugs。

@@ -423,6 +423,41 @@
     {
       "appendix_smoke_included": false,
       "available_evidence": {
+        "project_level_p2p_broad": "available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [],
+      "cohorts": [
+        "p2p_broad_main"
+      ],
+      "collection_summary": {
+        "candidate_count": 6,
+        "candidate_label_counts": {
+          "correct_under_f2p_and_p2p_broad": 1,
+          "incorrect_issue_not_fixed": 5
+        },
+        "collection_errors": 0,
+        "excluded_fail_to_pass_oracle": 1,
+        "excluded_failed_on_buggy_baseline": 4,
+        "nodeids": 29,
+        "p2p_broad_size": 24,
+        "test_files": 2,
+        "test_framework": "pytest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "project_level_p2p_broad"
+      },
+      "notes": "A migrated UTF-8 log oracle and six curated candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains 24 stable tests after excluding the F2P oracle and four buggy-baseline failures. Dependencies were installed only in an ignored isolated PySnooper venv from declared test extras.",
+      "p2p_broad_main_included": true,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_PySnooper_1_p2p_broad.json",
+      "project": "PySnooper",
+      "project_level_p2p_status": "completed",
+      "task_id": "bugsinpy_PySnooper_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
         "project_level_p2p_broad": "not_available",
         "task_file_level_p2p": "not_recorded"
       },

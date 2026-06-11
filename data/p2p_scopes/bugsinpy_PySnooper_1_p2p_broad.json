@@ -1,0 +1,3548 @@
+{
+  "batch_runs": {
+    "chunks": [
+      {
+        "buggy_runs": [
+          {
+            "command": [
+              "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_pysnooper.py::test_callable",
+              "tests/test_pysnooper.py::test_cellvars",
+              "tests/test_pysnooper.py::test_confusing_decorator_lines",
+              "tests/test_pysnooper.py::test_depth",
+              "tests/test_pysnooper.py::test_error_in_overwrite_argument",
+              "tests/test_pysnooper.py::test_exception",
+              "tests/test_pysnooper.py::test_file_output",
+              "tests/test_pysnooper.py::test_generator",
+              "tests/test_pysnooper.py::test_indentation",
+              "tests/test_pysnooper.py::test_lambda",
+              "tests/test_pysnooper.py::test_long_variable",
+              "tests/test_pysnooper.py::test_method_and_prefix",
+              "tests/test_pysnooper.py::test_multi_thread_info",
+              "tests/test_pysnooper.py::test_needs_parentheses",
+              "tests/test_pysnooper.py::test_no_overwrite_by_default",
+              "tests/test_pysnooper.py::test_overwrite",
+              "tests/test_pysnooper.py::test_repr_exception",
+              "tests/test_pysnooper.py::test_single_watch_no_comma",
+              "tests/test_pysnooper.py::test_string_io",
+              "tests/test_pysnooper.py::test_thread_info",
+              "tests/test_pysnooper.py::test_truncate",
+              "tests/test_pysnooper.py::test_unavailable_source",
+              "tests/test_pysnooper.py::test_var_order",
+              "tests/test_pysnooper.py::test_variables_classes",
+              "tests/test_pysnooper.py::test_watch",
+              "tests/test_pysnooper.py::test_watch_explode",
+              "tests/test_pysnooper.py::test_with_block",
+              "tests/test_pysnooper.py::test_with_block_depth"
+            ],
+            "elapsed_seconds": 3.25,
+            "exit_code": 1,
+            "nodeid_count": 28,
+            "passed": false,
+            "run_index": 1,
+            "stderr_tail": "",
+            "stdout_tail": "'')  \nE           New var:....... result1 = 20                                                                    <===\nE           23:28:45.901686 line       889         with pysnooper.snoop(string_io, depth=3):                <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n============================== warnings summary ===============================\ntests/test_pysnooper.py: 20 warnings\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\buggy\\PySnooper\\pysnooper\\tracer.py:333: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_cellvars - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_var_order - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_with_block - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_with_block_depth - tests.utils.OutputFai...\n4 failed, 24 passed, 20 warnings in 0.57s\n",
+            "timeout": false
+          },
+          {
+            "command": [
+              "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_pysnooper.py::test_callable",
+              "tests/test_pysnooper.py::test_cellvars",
+              "tests/test_pysnooper.py::test_confusing_decorator_lines",
+              "tests/test_pysnooper.py::test_depth",
+              "tests/test_pysnooper.py::test_error_in_overwrite_argument",
+              "tests/test_pysnooper.py::test_exception",
+              "tests/test_pysnooper.py::test_file_output",
+              "tests/test_pysnooper.py::test_generator",
+              "tests/test_pysnooper.py::test_indentation",
+              "tests/test_pysnooper.py::test_lambda",
+              "tests/test_pysnooper.py::test_long_variable",
+              "tests/test_pysnooper.py::test_method_and_prefix",
+              "tests/test_pysnooper.py::test_multi_thread_info",
+              "tests/test_pysnooper.py::test_needs_parentheses",
+              "tests/test_pysnooper.py::test_no_overwrite_by_default",
+              "tests/test_pysnooper.py::test_overwrite",
+              "tests/test_pysnooper.py::test_repr_exception",
+              "tests/test_pysnooper.py::test_single_watch_no_comma",
+              "tests/test_pysnooper.py::test_string_io",
+              "tests/test_pysnooper.py::test_thread_info",
+              "tests/test_pysnooper.py::test_truncate",
+              "tests/test_pysnooper.py::test_unavailable_source",
+              "tests/test_pysnooper.py::test_var_order",
+              "tests/test_pysnooper.py::test_variables_classes",
+              "tests/test_pysnooper.py::test_watch",
+              "tests/test_pysnooper.py::test_watch_explode",
+              "tests/test_pysnooper.py::test_with_block",
+              "tests/test_pysnooper.py::test_with_block_depth"
+            ],
+            "elapsed_seconds": 2.953,
+            "exit_code": 1,
+            "nodeid_count": 28,
+            "passed": false,
+            "run_index": 2,
+            "stderr_tail": "",
+            "stdout_tail": "'')  \nE           New var:....... result1 = 20                                                                    <===\nE           23:28:48.871791 line       889         with pysnooper.snoop(string_io, depth=3):                <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n============================== warnings summary ===============================\ntests/test_pysnooper.py: 20 warnings\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\buggy\\PySnooper\\pysnooper\\tracer.py:333: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_cellvars - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_var_order - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_with_block - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_with_block_depth - tests.utils.OutputFai...\n4 failed, 24 passed, 20 warnings in 0.50s\n",
+            "timeout": false
+          },
+          {
+            "command": [
+              "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_pysnooper.py::test_callable",
+              "tests/test_pysnooper.py::test_cellvars",
+              "tests/test_pysnooper.py::test_confusing_decorator_lines",
+              "tests/test_pysnooper.py::test_depth",
+              "tests/test_pysnooper.py::test_error_in_overwrite_argument",
+              "tests/test_pysnooper.py::test_exception",
+              "tests/test_pysnooper.py::test_file_output",
+              "tests/test_pysnooper.py::test_generator",
+              "tests/test_pysnooper.py::test_indentation",
+              "tests/test_pysnooper.py::test_lambda",
+              "tests/test_pysnooper.py::test_long_variable",
+              "tests/test_pysnooper.py::test_method_and_prefix",
+              "tests/test_pysnooper.py::test_multi_thread_info",
+              "tests/test_pysnooper.py::test_needs_parentheses",
+              "tests/test_pysnooper.py::test_no_overwrite_by_default",
+              "tests/test_pysnooper.py::test_overwrite",
+              "tests/test_pysnooper.py::test_repr_exception",
+              "tests/test_pysnooper.py::test_single_watch_no_comma",
+              "tests/test_pysnooper.py::test_string_io",
+              "tests/test_pysnooper.py::test_thread_info",
+              "tests/test_pysnooper.py::test_truncate",
+              "tests/test_pysnooper.py::test_unavailable_source",
+              "tests/test_pysnooper.py::test_var_order",
+              "tests/test_pysnooper.py::test_variables_classes",
+              "tests/test_pysnooper.py::test_watch",
+              "tests/test_pysnooper.py::test_watch_explode",
+              "tests/test_pysnooper.py::test_with_block",
+              "tests/test_pysnooper.py::test_with_block_depth"
+            ],
+            "elapsed_seconds": 2.937,
+            "exit_code": 1,
+            "nodeid_count": 28,
+            "passed": false,
+            "run_index": 3,
+            "stderr_tail": "",
+            "stdout_tail": "'')  \nE           New var:....... result1 = 20                                                                    <===\nE           23:28:51.808059 line       889         with pysnooper.snoop(string_io, depth=3):                <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n============================== warnings summary ===============================\ntests/test_pysnooper.py: 20 warnings\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\buggy\\PySnooper\\pysnooper\\tracer.py:333: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_cellvars - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_var_order - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_with_block - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_with_block_depth - tests.utils.OutputFai...\n4 failed, 24 passed, 20 warnings in 0.61s\n",
+            "timeout": false
+          }
+        ],
+        "nodeid_count": 28,
+        "passed": false,
+        "reference_runs": [
+          {
+            "command": [
+              "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_pysnooper.py::test_callable",
+              "tests/test_pysnooper.py::test_cellvars",
+              "tests/test_pysnooper.py::test_confusing_decorator_lines",
+              "tests/test_pysnooper.py::test_depth",
+              "tests/test_pysnooper.py::test_error_in_overwrite_argument",
+              "tests/test_pysnooper.py::test_exception",
+              "tests/test_pysnooper.py::test_file_output",
+              "tests/test_pysnooper.py::test_generator",
+              "tests/test_pysnooper.py::test_indentation",
+              "tests/test_pysnooper.py::test_lambda",
+              "tests/test_pysnooper.py::test_long_variable",
+              "tests/test_pysnooper.py::test_method_and_prefix",
+              "tests/test_pysnooper.py::test_multi_thread_info",
+              "tests/test_pysnooper.py::test_needs_parentheses",
+              "tests/test_pysnooper.py::test_no_overwrite_by_default",
+              "tests/test_pysnooper.py::test_overwrite",
+              "tests/test_pysnooper.py::test_repr_exception",
+              "tests/test_pysnooper.py::test_single_watch_no_comma",
+              "tests/test_pysnooper.py::test_string_io",
+              "tests/test_pysnooper.py::test_thread_info",
+              "tests/test_pysnooper.py::test_truncate",
+              "tests/test_pysnooper.py::test_unavailable_source",
+              "tests/test_pysnooper.py::test_var_order",
+              "tests/test_pysnooper.py::test_variables_classes",
+              "tests/test_pysnooper.py::test_watch",
+              "tests/test_pysnooper.py::test_watch_explode",
+              "tests/test_pysnooper.py::test_with_block",
+              "tests/test_pysnooper.py::test_with_block_depth"
+            ],
+            "elapsed_seconds": 2.829,
+            "exit_code": 1,
+            "nodeid_count": 28,
+            "passed": false,
+            "run_index": 1,
+            "stderr_tail": "",
+            "stdout_tail": "'')  \nE           New var:....... result1 = 20                                                                    <===\nE           23:28:54.651974 line       889         with pysnooper.snoop(string_io, depth=3):                <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n============================== warnings summary ===============================\ntests/test_pysnooper.py: 20 warnings\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\fixed\\PySnooper\\pysnooper\\tracer.py:336: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_cellvars - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_var_order - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_with_block - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_with_block_depth - tests.utils.OutputFai...\n4 failed, 24 passed, 20 warnings in 0.58s\n",
+            "timeout": false
+          },
+          {
+            "command": [
+              "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_pysnooper.py::test_callable",
+              "tests/test_pysnooper.py::test_cellvars",
+              "tests/test_pysnooper.py::test_confusing_decorator_lines",
+              "tests/test_pysnooper.py::test_depth",
+              "tests/test_pysnooper.py::test_error_in_overwrite_argument",
+              "tests/test_pysnooper.py::test_exception",
+              "tests/test_pysnooper.py::test_file_output",
+              "tests/test_pysnooper.py::test_generator",
+              "tests/test_pysnooper.py::test_indentation",
+              "tests/test_pysnooper.py::test_lambda",
+              "tests/test_pysnooper.py::test_long_variable",
+              "tests/test_pysnooper.py::test_method_and_prefix",
+              "tests/test_pysnooper.py::test_multi_thread_info",
+              "tests/test_pysnooper.py::test_needs_parentheses",
+              "tests/test_pysnooper.py::test_no_overwrite_by_default",
+              "tests/test_pysnooper.py::test_overwrite",
+              "tests/test_pysnooper.py::test_repr_exception",
+              "tests/test_pysnooper.py::test_single_watch_no_comma",
+              "tests/test_pysnooper.py::test_string_io",
+              "tests/test_pysnooper.py::test_thread_info",
+              "tests/test_pysnooper.py::test_truncate",
+              "tests/test_pysnooper.py::test_unavailable_source",
+              "tests/test_pysnooper.py::test_var_order",
+              "tests/test_pysnooper.py::test_variables_classes",
+              "tests/test_pysnooper.py::test_watch",
+              "tests/test_pysnooper.py::test_watch_explode",
+              "tests/test_pysnooper.py::test_with_block",
+              "tests/test_pysnooper.py::test_with_block_depth"
+            ],
+            "elapsed_seconds": 2.828,
+            "exit_code": 1,
+            "nodeid_count": 28,
+            "passed": false,
+            "run_index": 2,
+            "stderr_tail": "",
+            "stdout_tail": "'')  \nE           New var:....... result1 = 20                                                                    <===\nE           23:28:57.441567 line       889         with pysnooper.snoop(string_io, depth=3):                <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n============================== warnings summary ===============================\ntests/test_pysnooper.py: 20 warnings\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\fixed\\PySnooper\\pysnooper\\tracer.py:336: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_cellvars - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_var_order - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_with_block - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_with_block_depth - tests.utils.OutputFai...\n4 failed, 24 passed, 20 warnings in 0.53s\n",
+            "timeout": false
+          },
+          {
+            "command": [
+              "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_pysnooper.py::test_callable",
+              "tests/test_pysnooper.py::test_cellvars",
+              "tests/test_pysnooper.py::test_confusing_decorator_lines",
+              "tests/test_pysnooper.py::test_depth",
+              "tests/test_pysnooper.py::test_error_in_overwrite_argument",
+              "tests/test_pysnooper.py::test_exception",
+              "tests/test_pysnooper.py::test_file_output",
+              "tests/test_pysnooper.py::test_generator",
+              "tests/test_pysnooper.py::test_indentation",
+              "tests/test_pysnooper.py::test_lambda",
+              "tests/test_pysnooper.py::test_long_variable",
+              "tests/test_pysnooper.py::test_method_and_prefix",
+              "tests/test_pysnooper.py::test_multi_thread_info",
+              "tests/test_pysnooper.py::test_needs_parentheses",
+              "tests/test_pysnooper.py::test_no_overwrite_by_default",
+              "tests/test_pysnooper.py::test_overwrite",
+              "tests/test_pysnooper.py::test_repr_exception",
+              "tests/test_pysnooper.py::test_single_watch_no_comma",
+              "tests/test_pysnooper.py::test_string_io",
+              "tests/test_pysnooper.py::test_thread_info",
+              "tests/test_pysnooper.py::test_truncate",
+              "tests/test_pysnooper.py::test_unavailable_source",
+              "tests/test_pysnooper.py::test_var_order",
+              "tests/test_pysnooper.py::test_variables_classes",
+              "tests/test_pysnooper.py::test_watch",
+              "tests/test_pysnooper.py::test_watch_explode",
+              "tests/test_pysnooper.py::test_with_block",
+              "tests/test_pysnooper.py::test_with_block_depth"
+            ],
+            "elapsed_seconds": 2.937,
+            "exit_code": 1,
+            "nodeid_count": 28,
+            "passed": false,
+            "run_index": 3,
+            "stderr_tail": "",
+            "stdout_tail": "'')  \nE           New var:....... result1 = 20                                                                    <===\nE           23:29:00.377134 line       889         with pysnooper.snoop(string_io, depth=3):                <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n============================== warnings summary ===============================\ntests/test_pysnooper.py: 20 warnings\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\fixed\\PySnooper\\pysnooper\\tracer.py:336: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_cellvars - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_var_order - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_with_block - tests.utils.OutputFailure: \nFAILED tests/test_pysnooper.py::test_with_block_depth - tests.utils.OutputFai...\n4 failed, 24 passed, 20 warnings in 0.59s\n",
+            "timeout": false
+          }
+        ]
+      }
+    ]
+  },
+  "buggy_baseline_pass_required": true,
+  "collection": {
+    "buggy": {
+      "collection_error_count": 0,
+      "collection_error_files": [],
+      "collection_mode": "per_file",
+      "command": [
+        "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "<per-file>"
+      ],
+      "elapsed_seconds": 4.266,
+      "exit_code": 0,
+      "files": [
+        {
+          "collected_count": 1,
+          "collection_error": false,
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_chinese.py"
+          ],
+          "elapsed_seconds": 1.797,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "stdout_tail": "tests/test_chinese.py::test_chinese\n\n1 test collected in 0.11s\n",
+          "test_path": "tests/test_chinese.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 28,
+          "collection_error": false,
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_pysnooper.py"
+          ],
+          "elapsed_seconds": 2.469,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "stdout_tail": "::test_thread_info\ntests/test_pysnooper.py::test_multi_thread_info\ntests/test_pysnooper.py::test_callable\ntests/test_pysnooper.py::test_watch\ntests/test_pysnooper.py::test_watch_explode\ntests/test_pysnooper.py::test_variables_classes\ntests/test_pysnooper.py::test_single_watch_no_comma\ntests/test_pysnooper.py::test_long_variable\ntests/test_pysnooper.py::test_repr_exception\ntests/test_pysnooper.py::test_depth\ntests/test_pysnooper.py::test_method_and_prefix\ntests/test_pysnooper.py::test_file_output\ntests/test_pysnooper.py::test_confusing_decorator_lines\ntests/test_pysnooper.py::test_lambda\ntests/test_pysnooper.py::test_unavailable_source\ntests/test_pysnooper.py::test_no_overwrite_by_default\ntests/test_pysnooper.py::test_overwrite\ntests/test_pysnooper.py::test_error_in_overwrite_argument\ntests/test_pysnooper.py::test_needs_parentheses\ntests/test_pysnooper.py::test_with_block\ntests/test_pysnooper.py::test_with_block_depth\ntests/test_pysnooper.py::test_cellvars\ntests/test_pysnooper.py::test_var_order\ntests/test_pysnooper.py::test_truncate\ntests/test_pysnooper.py::test_indentation\ntests/test_pysnooper.py::test_exception\ntests/test_pysnooper.py::test_generator\n\n28 tests collected in 0.11s\n",
+          "test_path": "tests/test_pysnooper.py",
+          "timeout": false
+        }
+      ],
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "test_file_count": 2,
+      "timeout": false
+    },
+    "buggy_collected_count": 29,
+    "discovered_test_files": 2,
+    "reference": {
+      "collection_error_count": 0,
+      "collection_error_files": [],
+      "collection_mode": "per_file",
+      "command": [
+        "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "<per-file>"
+      ],
+      "elapsed_seconds": 4.75,
+      "exit_code": 0,
+      "files": [
+        {
+          "collected_count": 1,
+          "collection_error": false,
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_chinese.py"
+          ],
+          "elapsed_seconds": 2.25,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "stdout_tail": "tests/test_chinese.py::test_chinese\n\n1 test collected in 0.09s\n",
+          "test_path": "tests/test_chinese.py",
+          "timeout": false
+        },
+        {
+          "collected_count": 28,
+          "collection_error": false,
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tests/test_pysnooper.py"
+          ],
+          "elapsed_seconds": 2.5,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "stdout_tail": "::test_thread_info\ntests/test_pysnooper.py::test_multi_thread_info\ntests/test_pysnooper.py::test_callable\ntests/test_pysnooper.py::test_watch\ntests/test_pysnooper.py::test_watch_explode\ntests/test_pysnooper.py::test_variables_classes\ntests/test_pysnooper.py::test_single_watch_no_comma\ntests/test_pysnooper.py::test_long_variable\ntests/test_pysnooper.py::test_repr_exception\ntests/test_pysnooper.py::test_depth\ntests/test_pysnooper.py::test_method_and_prefix\ntests/test_pysnooper.py::test_file_output\ntests/test_pysnooper.py::test_confusing_decorator_lines\ntests/test_pysnooper.py::test_lambda\ntests/test_pysnooper.py::test_unavailable_source\ntests/test_pysnooper.py::test_no_overwrite_by_default\ntests/test_pysnooper.py::test_overwrite\ntests/test_pysnooper.py::test_error_in_overwrite_argument\ntests/test_pysnooper.py::test_needs_parentheses\ntests/test_pysnooper.py::test_with_block\ntests/test_pysnooper.py::test_with_block_depth\ntests/test_pysnooper.py::test_cellvars\ntests/test_pysnooper.py::test_var_order\ntests/test_pysnooper.py::test_truncate\ntests/test_pysnooper.py::test_indentation\ntests/test_pysnooper.py::test_exception\ntests/test_pysnooper.py::test_generator\n\n28 tests collected in 0.11s\n",
+          "test_path": "tests/test_pysnooper.py",
+          "timeout": false
+        }
+      ],
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "test_file_count": 2,
+      "timeout": false
+    },
+    "reference_collected_count": 29
+  },
+  "compat_shim": {
+    "enabled": true,
+    "path": "outputs\\pysnooper1_project_p2p_scope_001\\compat_shim",
+    "reason": "legacy tests import requests.compat.is_py26, absent in the current Python environment"
+  },
+  "core_patterns": [
+    "tests/test_chinese.py::"
+  ],
+  "counts": {
+    "collected_tests": 29,
+    "collection_error_files": 0,
+    "common_collected_tests": 29,
+    "excluded_external_dependency": 0,
+    "excluded_fail_to_pass_oracle": 1,
+    "excluded_flaky": 0,
+    "excluded_timeout": 0,
+    "excluded_uncollectable": 0,
+    "exclusion_reason_counts": {
+      "excluded_fail_to_pass_oracle": 1,
+      "excluded_failed_on_buggy_baseline": 4
+    },
+    "included_p2p_tests": 24,
+    "p2p_broad_tests": 24,
+    "p2p_core_tests": 0
+  },
+  "exclusions": [
+    {
+      "nodeid": "tests/test_chinese.py::test_chinese",
+      "reason": "excluded_fail_to_pass_oracle"
+    },
+    {
+      "nodeid": "tests/test_pysnooper.py::test_cellvars",
+      "reason": "excluded_failed_on_buggy_baseline"
+    },
+    {
+      "nodeid": "tests/test_pysnooper.py::test_var_order",
+      "reason": "excluded_failed_on_buggy_baseline"
+    },
+    {
+      "nodeid": "tests/test_pysnooper.py::test_with_block",
+      "reason": "excluded_failed_on_buggy_baseline"
+    },
+    {
+      "nodeid": "tests/test_pysnooper.py::test_with_block_depth",
+      "reason": "excluded_failed_on_buggy_baseline"
+    }
+  ],
+  "fail_to_pass_nodeids": [
+    "tests/test_chinese.py::test_chinese"
+  ],
+  "p2p_broad_tests": [
+    "tests/test_pysnooper.py::test_callable",
+    "tests/test_pysnooper.py::test_confusing_decorator_lines",
+    "tests/test_pysnooper.py::test_depth",
+    "tests/test_pysnooper.py::test_error_in_overwrite_argument",
+    "tests/test_pysnooper.py::test_exception",
+    "tests/test_pysnooper.py::test_file_output",
+    "tests/test_pysnooper.py::test_generator",
+    "tests/test_pysnooper.py::test_indentation",
+    "tests/test_pysnooper.py::test_lambda",
+    "tests/test_pysnooper.py::test_long_variable",
+    "tests/test_pysnooper.py::test_method_and_prefix",
+    "tests/test_pysnooper.py::test_multi_thread_info",
+    "tests/test_pysnooper.py::test_needs_parentheses",
+    "tests/test_pysnooper.py::test_no_overwrite_by_default",
+    "tests/test_pysnooper.py::test_overwrite",
+    "tests/test_pysnooper.py::test_repr_exception",
+    "tests/test_pysnooper.py::test_single_watch_no_comma",
+    "tests/test_pysnooper.py::test_string_io",
+    "tests/test_pysnooper.py::test_thread_info",
+    "tests/test_pysnooper.py::test_truncate",
+    "tests/test_pysnooper.py::test_unavailable_source",
+    "tests/test_pysnooper.py::test_variables_classes",
+    "tests/test_pysnooper.py::test_watch",
+    "tests/test_pysnooper.py::test_watch_explode"
+  ],
+  "p2p_core_tests": [],
+  "project": "PySnooper",
+  "pytest_addopts_override": {
+    "allowed": false,
+    "config_section": "pytest",
+    "config_source": "tox.ini",
+    "enabled": false,
+    "main_experiment_allowed": true,
+    "original_addopts": "--strict",
+    "override_type": "coverage_only_addopts_sanitization",
+    "project": "PySnooper",
+    "pytest_cov_installed": false,
+    "reason": "coverage-only pytest-cov options blocked collection before P2P scope construction",
+    "removed_tokens": [],
+    "retained_tokens": [
+      "--strict"
+    ],
+    "sanitized_addopts": "--strict",
+    "task_id": "bugsinpy_PySnooper_1"
+  },
+  "records": [
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_fail_to_pass_oracle",
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": true,
+      "nodeid": "tests/test_chinese.py::test_chinese"
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_callable"
+          ],
+          "elapsed_seconds": 2.641,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.12s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_callable"
+          ],
+          "elapsed_seconds": 2.422,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_callable"
+          ],
+          "elapsed_seconds": 2.468,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.14s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_callable",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_callable"
+          ],
+          "elapsed_seconds": 2.532,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.14s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_callable"
+          ],
+          "elapsed_seconds": 2.343,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_callable"
+          ],
+          "elapsed_seconds": 2.344,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_cellvars"
+          ],
+          "elapsed_seconds": 2.406,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": "                                              ReturnValueEntry(prefix='')  \nE               23:29:17.477233 return     936             return f4(a)                                                   ReturnEntry(prefix='')  \nE               Return value:.. 42                                                                                        ReturnValueEntry(prefix='')  \nE           23:29:17.477233 return     937         return f3(a)                                                           ReturnEntry(prefix='')  \nE           Return value:.. 42                                                                                            ReturnValueEntry(prefix='')  \nE           New var:....... result1 = 42                                                                                    <===\nE           23:29:17.477233 line       940         with pysnooper.snoop(string_io, depth=4):                                <===\nE           Output has 32 lines, while we expect 30 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_cellvars - tests.utils.OutputFailure: \n1 failed in 0.23s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_cellvars"
+          ],
+          "elapsed_seconds": 2.657,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": "                                              ReturnValueEntry(prefix='')  \nE               23:29:20.056594 return     936             return f4(a)                                                   ReturnEntry(prefix='')  \nE               Return value:.. 42                                                                                        ReturnValueEntry(prefix='')  \nE           23:29:20.056594 return     937         return f3(a)                                                           ReturnEntry(prefix='')  \nE           Return value:.. 42                                                                                            ReturnValueEntry(prefix='')  \nE           New var:....... result1 = 42                                                                                    <===\nE           23:29:20.056594 line       940         with pysnooper.snoop(string_io, depth=4):                                <===\nE           Output has 32 lines, while we expect 30 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_cellvars - tests.utils.OutputFailure: \n1 failed in 0.28s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_cellvars"
+          ],
+          "elapsed_seconds": 2.578,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": "                                              ReturnValueEntry(prefix='')  \nE               23:29:22.599081 return     936             return f4(a)                                                   ReturnEntry(prefix='')  \nE               Return value:.. 42                                                                                        ReturnValueEntry(prefix='')  \nE           23:29:22.599081 return     937         return f3(a)                                                           ReturnEntry(prefix='')  \nE           Return value:.. 42                                                                                            ReturnValueEntry(prefix='')  \nE           New var:....... result1 = 42                                                                                    <===\nE           23:29:22.599081 line       940         with pysnooper.snoop(string_io, depth=4):                                <===\nE           Output has 32 lines, while we expect 30 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_cellvars - tests.utils.OutputFailure: \n1 failed in 0.30s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_failed_on_buggy_baseline",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_cellvars",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_cellvars"
+          ],
+          "elapsed_seconds": 2.5,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": "                                              ReturnValueEntry(prefix='')  \nE               23:29:25.200633 return     936             return f4(a)                                                   ReturnEntry(prefix='')  \nE               Return value:.. 42                                                                                        ReturnValueEntry(prefix='')  \nE           23:29:25.200633 return     937         return f3(a)                                                           ReturnEntry(prefix='')  \nE           Return value:.. 42                                                                                            ReturnValueEntry(prefix='')  \nE           New var:....... result1 = 42                                                                                    <===\nE           23:29:25.200633 line       940         with pysnooper.snoop(string_io, depth=4):                                <===\nE           Output has 32 lines, while we expect 30 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_cellvars - tests.utils.OutputFailure: \n1 failed in 0.24s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_cellvars"
+          ],
+          "elapsed_seconds": 2.625,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": "                                              ReturnValueEntry(prefix='')  \nE               23:29:27.774720 return     936             return f4(a)                                                   ReturnEntry(prefix='')  \nE               Return value:.. 42                                                                                        ReturnValueEntry(prefix='')  \nE           23:29:27.774720 return     937         return f3(a)                                                           ReturnEntry(prefix='')  \nE           Return value:.. 42                                                                                            ReturnValueEntry(prefix='')  \nE           New var:....... result1 = 42                                                                                    <===\nE           23:29:27.774720 line       940         with pysnooper.snoop(string_io, depth=4):                                <===\nE           Output has 32 lines, while we expect 30 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_cellvars - tests.utils.OutputFailure: \n1 failed in 0.27s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_cellvars"
+          ],
+          "elapsed_seconds": 2.594,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": "                                              ReturnValueEntry(prefix='')  \nE               23:29:30.315769 return     936             return f4(a)                                                   ReturnEntry(prefix='')  \nE               Return value:.. 42                                                                                        ReturnValueEntry(prefix='')  \nE           23:29:30.315769 return     937         return f3(a)                                                           ReturnEntry(prefix='')  \nE           Return value:.. 42                                                                                            ReturnValueEntry(prefix='')  \nE           New var:....... result1 = 42                                                                                    <===\nE           23:29:30.315769 line       940         with pysnooper.snoop(string_io, depth=4):                                <===\nE           Output has 32 lines, while we expect 30 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_cellvars - tests.utils.OutputFailure: \n1 failed in 0.30s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_confusing_decorator_lines"
+          ],
+          "elapsed_seconds": 2.422,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.13s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_confusing_decorator_lines"
+          ],
+          "elapsed_seconds": 2.469,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.13s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_confusing_decorator_lines"
+          ],
+          "elapsed_seconds": 2.453,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_confusing_decorator_lines",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_confusing_decorator_lines"
+          ],
+          "elapsed_seconds": 2.422,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_confusing_decorator_lines"
+          ],
+          "elapsed_seconds": 2.297,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_confusing_decorator_lines"
+          ],
+          "elapsed_seconds": 2.422,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_depth"
+          ],
+          "elapsed_seconds": 2.484,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.12s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_depth"
+          ],
+          "elapsed_seconds": 2.562,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_depth"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_depth",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_depth"
+          ],
+          "elapsed_seconds": 2.407,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_depth"
+          ],
+          "elapsed_seconds": 2.25,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_depth"
+          ],
+          "elapsed_seconds": 2.531,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_error_in_overwrite_argument"
+          ],
+          "elapsed_seconds": 2.453,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.12s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_error_in_overwrite_argument"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_error_in_overwrite_argument"
+          ],
+          "elapsed_seconds": 2.265,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_error_in_overwrite_argument",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_error_in_overwrite_argument"
+          ],
+          "elapsed_seconds": 2.407,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_error_in_overwrite_argument"
+          ],
+          "elapsed_seconds": 2.328,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_error_in_overwrite_argument"
+          ],
+          "elapsed_seconds": 2.359,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.12s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_exception"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_exception"
+          ],
+          "elapsed_seconds": 2.281,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_exception"
+          ],
+          "elapsed_seconds": 2.437,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_exception",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_exception"
+          ],
+          "elapsed_seconds": 2.235,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_exception"
+          ],
+          "elapsed_seconds": 2.906,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_exception"
+          ],
+          "elapsed_seconds": 1.672,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_file_output"
+          ],
+          "elapsed_seconds": 2.937,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.12s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_file_output"
+          ],
+          "elapsed_seconds": 1.641,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_file_output"
+          ],
+          "elapsed_seconds": 2.766,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.13s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_file_output",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_file_output"
+          ],
+          "elapsed_seconds": 2.312,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.12s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_file_output"
+          ],
+          "elapsed_seconds": 2.485,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.13s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_file_output"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_generator"
+          ],
+          "elapsed_seconds": 2.437,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_generator"
+          ],
+          "elapsed_seconds": 2.328,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.08s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_generator"
+          ],
+          "elapsed_seconds": 2.391,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_generator",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_generator"
+          ],
+          "elapsed_seconds": 2.406,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_generator"
+          ],
+          "elapsed_seconds": 2.453,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_generator"
+          ],
+          "elapsed_seconds": 2.312,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.08s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_indentation"
+          ],
+          "elapsed_seconds": 2.485,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_indentation"
+          ],
+          "elapsed_seconds": 2.297,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.08s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_indentation"
+          ],
+          "elapsed_seconds": 2.546,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.14s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_indentation",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_indentation"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_indentation"
+          ],
+          "elapsed_seconds": 2.594,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.14s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_indentation"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_lambda"
+          ],
+          "elapsed_seconds": 2.578,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.13s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_lambda"
+          ],
+          "elapsed_seconds": 2.391,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_lambda"
+          ],
+          "elapsed_seconds": 2.468,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.12s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_lambda",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_lambda"
+          ],
+          "elapsed_seconds": 2.282,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_lambda"
+          ],
+          "elapsed_seconds": 2.828,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_lambda"
+          ],
+          "elapsed_seconds": 2.765,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.12s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_long_variable"
+          ],
+          "elapsed_seconds": 2.344,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_long_variable"
+          ],
+          "elapsed_seconds": 2.297,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.08s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_long_variable"
+          ],
+          "elapsed_seconds": 2.281,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.08s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_long_variable",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_long_variable"
+          ],
+          "elapsed_seconds": 2.36,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_long_variable"
+          ],
+          "elapsed_seconds": 2.328,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_long_variable"
+          ],
+          "elapsed_seconds": 2.343,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_method_and_prefix"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_method_and_prefix"
+          ],
+          "elapsed_seconds": 2.266,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_method_and_prefix"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_method_and_prefix",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_method_and_prefix"
+          ],
+          "elapsed_seconds": 2.297,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_method_and_prefix"
+          ],
+          "elapsed_seconds": 2.437,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_method_and_prefix"
+          ],
+          "elapsed_seconds": 2.328,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_multi_thread_info"
+          ],
+          "elapsed_seconds": 2.391,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n============================== warnings summary ===============================\ntests/test_pysnooper.py: 15 warnings\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\buggy\\PySnooper\\pysnooper\\tracer.py:333: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n1 passed, 15 warnings in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_multi_thread_info"
+          ],
+          "elapsed_seconds": 2.265,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n============================== warnings summary ===============================\ntests/test_pysnooper.py: 15 warnings\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\buggy\\PySnooper\\pysnooper\\tracer.py:333: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n1 passed, 15 warnings in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_multi_thread_info"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n============================== warnings summary ===============================\ntests/test_pysnooper.py: 15 warnings\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\buggy\\PySnooper\\pysnooper\\tracer.py:333: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n1 passed, 15 warnings in 0.10s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_multi_thread_info",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_multi_thread_info"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n============================== warnings summary ===============================\ntests/test_pysnooper.py: 15 warnings\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\fixed\\PySnooper\\pysnooper\\tracer.py:336: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n1 passed, 15 warnings in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_multi_thread_info"
+          ],
+          "elapsed_seconds": 2.485,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n============================== warnings summary ===============================\ntests/test_pysnooper.py: 15 warnings\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\fixed\\PySnooper\\pysnooper\\tracer.py:336: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n1 passed, 15 warnings in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_multi_thread_info"
+          ],
+          "elapsed_seconds": 2.281,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n============================== warnings summary ===============================\ntests/test_pysnooper.py: 15 warnings\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\fixed\\PySnooper\\pysnooper\\tracer.py:336: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n1 passed, 15 warnings in 0.10s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_needs_parentheses"
+          ],
+          "elapsed_seconds": 2.406,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_needs_parentheses"
+          ],
+          "elapsed_seconds": 2.282,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_needs_parentheses"
+          ],
+          "elapsed_seconds": 2.453,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_needs_parentheses",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_needs_parentheses"
+          ],
+          "elapsed_seconds": 2.484,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_needs_parentheses"
+          ],
+          "elapsed_seconds": 2.391,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_needs_parentheses"
+          ],
+          "elapsed_seconds": 2.359,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_no_overwrite_by_default"
+          ],
+          "elapsed_seconds": 2.359,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_no_overwrite_by_default"
+          ],
+          "elapsed_seconds": 2.36,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.12s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_no_overwrite_by_default"
+          ],
+          "elapsed_seconds": 2.39,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.14s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_no_overwrite_by_default",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_no_overwrite_by_default"
+          ],
+          "elapsed_seconds": 2.344,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_no_overwrite_by_default"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.13s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_no_overwrite_by_default"
+          ],
+          "elapsed_seconds": 2.453,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_overwrite"
+          ],
+          "elapsed_seconds": 2.359,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.12s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_overwrite"
+          ],
+          "elapsed_seconds": 2.36,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_overwrite"
+          ],
+          "elapsed_seconds": 2.39,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_overwrite",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_overwrite"
+          ],
+          "elapsed_seconds": 2.36,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.14s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_overwrite"
+          ],
+          "elapsed_seconds": 2.359,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.12s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_overwrite"
+          ],
+          "elapsed_seconds": 2.438,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.14s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_repr_exception"
+          ],
+          "elapsed_seconds": 2.328,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.08s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_repr_exception"
+          ],
+          "elapsed_seconds": 2.437,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.12s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_repr_exception"
+          ],
+          "elapsed_seconds": 2.297,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_repr_exception",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_repr_exception"
+          ],
+          "elapsed_seconds": 2.422,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_repr_exception"
+          ],
+          "elapsed_seconds": 2.328,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_repr_exception"
+          ],
+          "elapsed_seconds": 2.453,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_single_watch_no_comma"
+          ],
+          "elapsed_seconds": 2.313,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_single_watch_no_comma"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_single_watch_no_comma"
+          ],
+          "elapsed_seconds": 2.281,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_single_watch_no_comma",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_single_watch_no_comma"
+          ],
+          "elapsed_seconds": 2.516,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.13s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_single_watch_no_comma"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_single_watch_no_comma"
+          ],
+          "elapsed_seconds": 2.437,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.12s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_string_io"
+          ],
+          "elapsed_seconds": 2.391,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.12s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_string_io"
+          ],
+          "elapsed_seconds": 2.343,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_string_io"
+          ],
+          "elapsed_seconds": 2.297,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_string_io",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_string_io"
+          ],
+          "elapsed_seconds": 2.453,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_string_io"
+          ],
+          "elapsed_seconds": 2.36,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_string_io"
+          ],
+          "elapsed_seconds": 2.437,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_thread_info"
+          ],
+          "elapsed_seconds": 2.422,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n============================== warnings summary ===============================\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\buggy\\PySnooper\\pysnooper\\tracer.py:333: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n1 passed, 5 warnings in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_thread_info"
+          ],
+          "elapsed_seconds": 2.391,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n============================== warnings summary ===============================\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\buggy\\PySnooper\\pysnooper\\tracer.py:333: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n1 passed, 5 warnings in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_thread_info"
+          ],
+          "elapsed_seconds": 2.297,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n============================== warnings summary ===============================\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\buggy\\PySnooper\\pysnooper\\tracer.py:333: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n1 passed, 5 warnings in 0.09s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_thread_info",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_thread_info"
+          ],
+          "elapsed_seconds": 2.422,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n============================== warnings summary ===============================\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\fixed\\PySnooper\\pysnooper\\tracer.py:336: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n1 passed, 5 warnings in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_thread_info"
+          ],
+          "elapsed_seconds": 2.312,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n============================== warnings summary ===============================\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\fixed\\PySnooper\\pysnooper\\tracer.py:336: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n1 passed, 5 warnings in 0.08s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_thread_info"
+          ],
+          "elapsed_seconds": 2.422,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n============================== warnings summary ===============================\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\ntests/test_pysnooper.py::test_thread_info\n  D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\PySnooper_1\\fixed\\PySnooper\\pysnooper\\tracer.py:336: DeprecationWarning: getName() is deprecated, get the name attribute instead\n    ident=current_thread.ident, name=current_thread.getName())\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n1 passed, 5 warnings in 0.10s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_truncate"
+          ],
+          "elapsed_seconds": 2.328,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_truncate"
+          ],
+          "elapsed_seconds": 2.344,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_truncate"
+          ],
+          "elapsed_seconds": 2.313,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.08s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_truncate",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_truncate"
+          ],
+          "elapsed_seconds": 2.391,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_truncate"
+          ],
+          "elapsed_seconds": 2.359,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_truncate"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_unavailable_source"
+          ],
+          "elapsed_seconds": 2.359,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_unavailable_source"
+          ],
+          "elapsed_seconds": 2.485,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_unavailable_source"
+          ],
+          "elapsed_seconds": 2.328,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_unavailable_source",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_unavailable_source"
+          ],
+          "elapsed_seconds": 2.453,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_unavailable_source"
+          ],
+          "elapsed_seconds": 2.234,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_unavailable_source"
+          ],
+          "elapsed_seconds": 2.407,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_var_order"
+          ],
+          "elapsed_seconds": 2.437,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": "ix, seven = 5, 6, 7                LineEntry(prefix='')  \nE           Modified var:.. five = 5                                                         VariableEntry(name='five', value='5', prefix='')  \nE           Modified var:.. six = 6                                                          VariableEntry(name='six', value='6', prefix='')  \nE           Modified var:.. seven = 7                                                        VariableEntry(name='seven', value='7', prefix='')  \nE           23:34:19.627571 return     995         five, six, seven = 5, 6, 7                ReturnEntry(prefix='')  \nE           Return value:.. None                                                             ReturnValueEntry(prefix='')  \nE           New var:....... result = None                                                      <===\nE           23:34:19.627571 line       997     with pysnooper.snoop(string_io, depth=2):       <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_var_order - tests.utils.OutputFailure: \n1 failed in 0.24s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_var_order"
+          ],
+          "elapsed_seconds": 2.547,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": "ix, seven = 5, 6, 7                LineEntry(prefix='')  \nE           Modified var:.. five = 5                                                         VariableEntry(name='five', value='5', prefix='')  \nE           Modified var:.. six = 6                                                          VariableEntry(name='six', value='6', prefix='')  \nE           Modified var:.. seven = 7                                                        VariableEntry(name='seven', value='7', prefix='')  \nE           23:34:22.178731 return     995         five, six, seven = 5, 6, 7                ReturnEntry(prefix='')  \nE           Return value:.. None                                                             ReturnValueEntry(prefix='')  \nE           New var:....... result = None                                                      <===\nE           23:34:22.178731 line       997     with pysnooper.snoop(string_io, depth=2):       <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_var_order - tests.utils.OutputFailure: \n1 failed in 0.25s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_var_order"
+          ],
+          "elapsed_seconds": 2.516,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": "ix, seven = 5, 6, 7                LineEntry(prefix='')  \nE           Modified var:.. five = 5                                                         VariableEntry(name='five', value='5', prefix='')  \nE           Modified var:.. six = 6                                                          VariableEntry(name='six', value='6', prefix='')  \nE           Modified var:.. seven = 7                                                        VariableEntry(name='seven', value='7', prefix='')  \nE           23:34:24.632657 return     995         five, six, seven = 5, 6, 7                ReturnEntry(prefix='')  \nE           Return value:.. None                                                             ReturnValueEntry(prefix='')  \nE           New var:....... result = None                                                      <===\nE           23:34:24.632657 line       997     with pysnooper.snoop(string_io, depth=2):       <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_var_order - tests.utils.OutputFailure: \n1 failed in 0.22s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_failed_on_buggy_baseline",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_var_order",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_var_order"
+          ],
+          "elapsed_seconds": 2.515,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": "ix, seven = 5, 6, 7                LineEntry(prefix='')  \nE           Modified var:.. five = 5                                                         VariableEntry(name='five', value='5', prefix='')  \nE           Modified var:.. six = 6                                                          VariableEntry(name='six', value='6', prefix='')  \nE           Modified var:.. seven = 7                                                        VariableEntry(name='seven', value='7', prefix='')  \nE           23:34:27.198322 return     995         five, six, seven = 5, 6, 7                ReturnEntry(prefix='')  \nE           Return value:.. None                                                             ReturnValueEntry(prefix='')  \nE           New var:....... result = None                                                      <===\nE           23:34:27.198322 line       997     with pysnooper.snoop(string_io, depth=2):       <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_var_order - tests.utils.OutputFailure: \n1 failed in 0.25s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_var_order"
+          ],
+          "elapsed_seconds": 2.547,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": "ix, seven = 5, 6, 7                LineEntry(prefix='')  \nE           Modified var:.. five = 5                                                         VariableEntry(name='five', value='5', prefix='')  \nE           Modified var:.. six = 6                                                          VariableEntry(name='six', value='6', prefix='')  \nE           Modified var:.. seven = 7                                                        VariableEntry(name='seven', value='7', prefix='')  \nE           23:34:29.679988 return     995         five, six, seven = 5, 6, 7                ReturnEntry(prefix='')  \nE           Return value:.. None                                                             ReturnValueEntry(prefix='')  \nE           New var:....... result = None                                                      <===\nE           23:34:29.679988 line       997     with pysnooper.snoop(string_io, depth=2):       <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_var_order - tests.utils.OutputFailure: \n1 failed in 0.29s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_var_order"
+          ],
+          "elapsed_seconds": 2.438,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": "ix, seven = 5, 6, 7                LineEntry(prefix='')  \nE           Modified var:.. five = 5                                                         VariableEntry(name='five', value='5', prefix='')  \nE           Modified var:.. six = 6                                                          VariableEntry(name='six', value='6', prefix='')  \nE           Modified var:.. seven = 7                                                        VariableEntry(name='seven', value='7', prefix='')  \nE           23:34:32.202791 return     995         five, six, seven = 5, 6, 7                ReturnEntry(prefix='')  \nE           Return value:.. None                                                             ReturnValueEntry(prefix='')  \nE           New var:....... result = None                                                      <===\nE           23:34:32.202791 line       997     with pysnooper.snoop(string_io, depth=2):       <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_var_order - tests.utils.OutputFailure: \n1 failed in 0.23s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_variables_classes"
+          ],
+          "elapsed_seconds": 2.437,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_variables_classes"
+          ],
+          "elapsed_seconds": 2.359,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_variables_classes"
+          ],
+          "elapsed_seconds": 2.329,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_variables_classes",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_variables_classes"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_variables_classes"
+          ],
+          "elapsed_seconds": 2.296,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_variables_classes"
+          ],
+          "elapsed_seconds": 2.469,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_watch"
+          ],
+          "elapsed_seconds": 2.328,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_watch"
+          ],
+          "elapsed_seconds": 2.5,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_watch"
+          ],
+          "elapsed_seconds": 2.313,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_watch",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_watch"
+          ],
+          "elapsed_seconds": 2.484,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_watch"
+          ],
+          "elapsed_seconds": 2.313,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.08s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_watch"
+          ],
+          "elapsed_seconds": 2.453,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_watch_explode"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_watch_explode"
+          ],
+          "elapsed_seconds": 2.375,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_watch_explode"
+          ],
+          "elapsed_seconds": 2.328,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_watch_explode",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_watch_explode"
+          ],
+          "elapsed_seconds": 2.437,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.10s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_watch_explode"
+          ],
+          "elapsed_seconds": 2.313,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.09s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_watch_explode"
+          ],
+          "elapsed_seconds": 2.453,
+          "exit_code": 0,
+          "passed": true,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ".                                                                        [100%]\n1 passed in 0.11s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_with_block"
+          ],
+          "elapsed_seconds": 2.406,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ":35:17.548322 line       760         with snoop:                                      VariableEntry(name='qux', prefix='')  <===\nE           Starting var:.. _x = 9                                                                  CallEntry(source='def bar3(_x):', prefix='')  <===\nE           Starting var:.. qux = <function test_with_block.<locals>.qux at 0x000001EDF7173A60>     LineEntry(source='qux()', prefix='')  <===\nE           23:35:17.548322 call       780     def bar3(_x):                                        ReturnEntry(source='qux()', prefix='')  <===\nE           23:35:17.548322 line       781         qux()                                            ReturnValueEntry(value='None', prefix='')  <===\nE           23:35:17.548322 return     781         qux()                                              <===\nE           Return value:.. None                                                                      <===\nE           Output has 52 lines, while we expect 50 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_with_block - tests.utils.OutputFailure: \n1 failed in 0.23s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_with_block"
+          ],
+          "elapsed_seconds": 2.547,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ":35:20.094006 line       760         with snoop:                                      VariableEntry(name='qux', prefix='')  <===\nE           Starting var:.. _x = 9                                                                  CallEntry(source='def bar3(_x):', prefix='')  <===\nE           Starting var:.. qux = <function test_with_block.<locals>.qux at 0x0000021B20473A60>     LineEntry(source='qux()', prefix='')  <===\nE           23:35:20.094006 call       780     def bar3(_x):                                        ReturnEntry(source='qux()', prefix='')  <===\nE           23:35:20.094006 line       781         qux()                                            ReturnValueEntry(value='None', prefix='')  <===\nE           23:35:20.094006 return     781         qux()                                              <===\nE           Return value:.. None                                                                      <===\nE           Output has 52 lines, while we expect 50 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_with_block - tests.utils.OutputFailure: \n1 failed in 0.25s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_with_block"
+          ],
+          "elapsed_seconds": 2.469,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ":35:22.553762 line       760         with snoop:                                      VariableEntry(name='qux', prefix='')  <===\nE           Starting var:.. _x = 9                                                                  CallEntry(source='def bar3(_x):', prefix='')  <===\nE           Starting var:.. qux = <function test_with_block.<locals>.qux at 0x000002EADA2F3A60>     LineEntry(source='qux()', prefix='')  <===\nE           23:35:22.553762 call       780     def bar3(_x):                                        ReturnEntry(source='qux()', prefix='')  <===\nE           23:35:22.553762 line       781         qux()                                            ReturnValueEntry(value='None', prefix='')  <===\nE           23:35:22.553762 return     781         qux()                                              <===\nE           Return value:.. None                                                                      <===\nE           Output has 52 lines, while we expect 50 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_with_block - tests.utils.OutputFailure: \n1 failed in 0.22s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_failed_on_buggy_baseline",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_with_block",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_with_block"
+          ],
+          "elapsed_seconds": 2.578,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": ":35:25.084193 line       760         with snoop:                                      VariableEntry(name='qux', prefix='')  <===\nE           Starting var:.. _x = 9                                                                  CallEntry(source='def bar3(_x):', prefix='')  <===\nE           Starting var:.. qux = <function test_with_block.<locals>.qux at 0x0000029D727F3A60>     LineEntry(source='qux()', prefix='')  <===\nE           23:35:25.084193 call       780     def bar3(_x):                                        ReturnEntry(source='qux()', prefix='')  <===\nE           23:35:25.084193 line       781         qux()                                            ReturnValueEntry(value='None', prefix='')  <===\nE           23:35:25.084193 return     781         qux()                                              <===\nE           Return value:.. None                                                                      <===\nE           Output has 52 lines, while we expect 50 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_with_block - tests.utils.OutputFailure: \n1 failed in 0.24s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_with_block"
+          ],
+          "elapsed_seconds": 2.625,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": ":35:27.639087 line       760         with snoop:                                      VariableEntry(name='qux', prefix='')  <===\nE           Starting var:.. _x = 9                                                                  CallEntry(source='def bar3(_x):', prefix='')  <===\nE           Starting var:.. qux = <function test_with_block.<locals>.qux at 0x0000023E9C86FA60>     LineEntry(source='qux()', prefix='')  <===\nE           23:35:27.639087 call       780     def bar3(_x):                                        ReturnEntry(source='qux()', prefix='')  <===\nE           23:35:27.639087 line       781         qux()                                            ReturnValueEntry(value='None', prefix='')  <===\nE           23:35:27.639087 return     781         qux()                                              <===\nE           Return value:.. None                                                                      <===\nE           Output has 52 lines, while we expect 50 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_with_block - tests.utils.OutputFailure: \n1 failed in 0.29s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_with_block"
+          ],
+          "elapsed_seconds": 2.515,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": ":35:30.239083 line       760         with snoop:                                      VariableEntry(name='qux', prefix='')  <===\nE           Starting var:.. _x = 9                                                                  CallEntry(source='def bar3(_x):', prefix='')  <===\nE           Starting var:.. qux = <function test_with_block.<locals>.qux at 0x000001503DD63A60>     LineEntry(source='qux()', prefix='')  <===\nE           23:35:30.239083 call       780     def bar3(_x):                                        ReturnEntry(source='qux()', prefix='')  <===\nE           23:35:30.239083 line       781         qux()                                            ReturnValueEntry(value='None', prefix='')  <===\nE           23:35:30.239083 return     781         qux()                                              <===\nE           Return value:.. None                                                                      <===\nE           Output has 52 lines, while we expect 50 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_with_block - tests.utils.OutputFailure: \n1 failed in 0.24s\n",
+          "timeout": false
+        }
+      ]
+    },
+    {
+      "buggy_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_with_block_depth"
+          ],
+          "elapsed_seconds": 2.625,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": "refix='')  \nE               Return value:.. 20                                                                        ReturnValueEntry(value='20', prefix='')  \nE           New var:....... result2 = 20                                                                  VariableEntry(prefix='')  \nE           23:35:32.864370 line       885         return result2                                         LineEntry(prefix='')  \nE           23:35:32.864370 return     885         return result2                                         ReturnEntry(prefix='')  \nE           Return value:.. 20                                                                            ReturnValueEntry(value='20', prefix='')  \nE           New var:....... result1 = 20                                                                    <===\nE           23:35:32.864370 line       889         with pysnooper.snoop(string_io, depth=3):                <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_with_block_depth - tests.utils.OutputFai...\n1 failed in 0.26s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_with_block_depth"
+          ],
+          "elapsed_seconds": 2.547,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": "refix='')  \nE               Return value:.. 20                                                                        ReturnValueEntry(value='20', prefix='')  \nE           New var:....... result2 = 20                                                                  VariableEntry(prefix='')  \nE           23:35:35.369321 line       885         return result2                                         LineEntry(prefix='')  \nE           23:35:35.369321 return     885         return result2                                         ReturnEntry(prefix='')  \nE           Return value:.. 20                                                                            ReturnValueEntry(value='20', prefix='')  \nE           New var:....... result1 = 20                                                                    <===\nE           23:35:35.369321 line       889         with pysnooper.snoop(string_io, depth=3):                <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_with_block_depth - tests.utils.OutputFai...\n1 failed in 0.26s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_with_block_depth"
+          ],
+          "elapsed_seconds": 2.531,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": "refix='')  \nE               Return value:.. 20                                                                        ReturnValueEntry(value='20', prefix='')  \nE           New var:....... result2 = 20                                                                  VariableEntry(prefix='')  \nE           23:35:37.954319 line       885         return result2                                         LineEntry(prefix='')  \nE           23:35:37.954319 return     885         return result2                                         ReturnEntry(prefix='')  \nE           Return value:.. 20                                                                            ReturnValueEntry(value='20', prefix='')  \nE           New var:....... result1 = 20                                                                    <===\nE           23:35:37.954319 line       889         with pysnooper.snoop(string_io, depth=3):                <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_with_block_depth - tests.utils.OutputFai...\n1 failed in 0.23s\n",
+          "timeout": false
+        }
+      ],
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_failed_on_buggy_baseline",
+      "is_core_candidate": false,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tests/test_pysnooper.py::test_with_block_depth",
+      "reference_runs": [
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_with_block_depth"
+          ],
+          "elapsed_seconds": 2.5,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 1,
+          "stderr_tail": "",
+          "stdout_tail": "refix='')  \nE               Return value:.. 20                                                                        ReturnValueEntry(value='20', prefix='')  \nE           New var:....... result2 = 20                                                                  VariableEntry(prefix='')  \nE           23:35:40.453963 line       885         return result2                                         LineEntry(prefix='')  \nE           23:35:40.453963 return     885         return result2                                         ReturnEntry(prefix='')  \nE           Return value:.. 20                                                                            ReturnValueEntry(value='20', prefix='')  \nE           New var:....... result1 = 20                                                                    <===\nE           23:35:40.453963 line       889         with pysnooper.snoop(string_io, depth=3):                <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_with_block_depth - tests.utils.OutputFai...\n1 failed in 0.25s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_with_block_depth"
+          ],
+          "elapsed_seconds": 2.579,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 2,
+          "stderr_tail": "",
+          "stdout_tail": "refix='')  \nE               Return value:.. 20                                                                        ReturnValueEntry(value='20', prefix='')  \nE           New var:....... result2 = 20                                                                  VariableEntry(prefix='')  \nE           23:35:43.005473 line       885         return result2                                         LineEntry(prefix='')  \nE           23:35:43.005473 return     885         return result2                                         ReturnEntry(prefix='')  \nE           Return value:.. 20                                                                            ReturnValueEntry(value='20', prefix='')  \nE           New var:....... result1 = 20                                                                    <===\nE           23:35:43.005473 line       889         with pysnooper.snoop(string_io, depth=3):                <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_with_block_depth - tests.utils.OutputFai...\n1 failed in 0.26s\n",
+          "timeout": false
+        },
+        {
+          "command": [
+            "D:\\mgao\\code\\research95\\outputs\\envs\\pysnooper_p2p_py311\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "tests/test_pysnooper.py::test_with_block_depth"
+          ],
+          "elapsed_seconds": 2.453,
+          "exit_code": 1,
+          "passed": false,
+          "run_index": 3,
+          "stderr_tail": "",
+          "stdout_tail": "refix='')  \nE               Return value:.. 20                                                                        ReturnValueEntry(value='20', prefix='')  \nE           New var:....... result2 = 20                                                                  VariableEntry(prefix='')  \nE           23:35:45.450429 line       885         return result2                                         LineEntry(prefix='')  \nE           23:35:45.450429 return     885         return result2                                         ReturnEntry(prefix='')  \nE           Return value:.. 20                                                                            ReturnValueEntry(value='20', prefix='')  \nE           New var:....... result1 = 20                                                                    <===\nE           23:35:45.450429 line       889         with pysnooper.snoop(string_io, depth=3):                <===\nE           Output has 22 lines, while we expect 20 lines.\n\ntests\\utils.py:269: OutputFailure\n=========================== short test summary info ===========================\nFAILED tests/test_pysnooper.py::test_with_block_depth - tests.utils.OutputFai...\n1 failed in 0.23s\n",
+          "timeout": false
+        }
+      ]
+    }
+  ],
+  "reference_patch_pass_required": true,
+  "runs_per_version": 3,
+  "scope_id": "bugsinpy_PySnooper_1_project_level_p2p_broad",
+  "scope_type": "project_level_p2p_broad",
+  "stability_runs": 3,
+  "static_exclude_tokens": [
+    "httpbin",
+    "http://",
+    "https://"
+  ],
+  "static_include_tokens": [],
+  "task_id": "bugsinpy_PySnooper_1",
+  "test_framework": "pytest",
+  "test_path": ".",
+  "test_paths": [
+    "tests/test_chinese.py",
+    "tests/test_pysnooper.py"
+  ],
+  "timeout_seconds": 20,
+  "unittest_discovery": null
+}

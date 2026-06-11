@@ -963,3 +963,33 @@ This file starts fresh for the patch-verification project.
 - Top low-friction candidates are `PySnooper_1-3`, followed by several
   `fastapi` and `sanic` pytest tasks. Heavy/native projects such as
   `keras`, `pandas`, and `spacy` are deprioritized by metadata blockers.
+
+## 2026-06-11 PySnooper_1 candidate validation
+
+- PySnooper's retained checkout needs the existing Python 3.11
+  `collections.abc` compatibility shim before either buggy or fixed F2P can run.
+  This is a runtime-compatibility shim, not a behavior patch.
+- After the shim, the test suite requires `python-toolbox`, which is declared in
+  `setup.py` under `extras_require['tests']`. Install such dependencies only in
+  ignored isolated venvs and track a dependency audit; do not install them
+  globally.
+- The stable F2P behavior is `tests/test_chinese.py::test_chinese`: buggy fails
+  with a UTF-8 log read error, fixed passes. A standalone oracle should create
+  its own temporary snoop log and assert non-ASCII text preservation directly.
+- Project-level P2P-broad for PySnooper retains 24 stable tests out of 29
+  collected/common nodeids. Four tests fail on both buggy and reference
+  checkouts under the retained Python 3.11 environment and must be excluded as
+  buggy-baseline failures.
+- The reference patch touches both `pysnooper/tracer.py` and
+  `pysnooper/pycompat.py`. Candidate construction must support multi-file
+  reference diffs; otherwise the reference patch can be incomplete.
+- Label-leakage guards should match full tokens, not arbitrary substrings:
+  `noop` is a substring of `PySnooper` and `pysnooper`, so substring matching
+  falsely blocks legitimate candidates.
+- `missing_change_1` is not a valid negative under the current Python 3.11
+  oracle because it keeps the UTF-8 decode and UTF-8 log write behavior while
+  omitting only Python 2 compatibility. Partial negative allowlists must be
+  validated against the retained oracle before final dataset admission.
+- `bugsinpy_PySnooper_1` now contributes six validated candidates over 24 stable
+  P2P-broad tests and is admitted to `p2p_broad_main` as the sixth completed
+  project-level main task.
