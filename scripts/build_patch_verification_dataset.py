@@ -86,6 +86,15 @@ SOURCE_BUGS = [
         "hidden_oracles": ["scripts/oracles/cookiecutter_1_utf8_context.py"],
         "oracle_command": "python scripts/oracles/cookiecutter_1_utf8_context.py",
     },
+    {
+        "task_id": "bugsinpy_cookiecutter_2",
+        "project": "cookiecutter",
+        "touched_files": ["cookiecutter/hooks.py"],
+        "issue_summary": "all matching pre- or post-generation hook scripts should be executed, not only the first match",
+        "visible_tests": ["tests/test_hooks.py::TestExternalHooks::test_run_hook"],
+        "hidden_oracles": ["scripts/oracles/cookiecutter_2_multiple_hooks.py"],
+        "oracle_command": "python scripts/oracles/cookiecutter_2_multiple_hooks.py",
+    },
 ]
 
 

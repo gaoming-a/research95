@@ -103,7 +103,7 @@
 - `experiments/p2p_feasibility_sweep_update.md`: bounded replacement-task
   feasibility sweep after freezing Luigi. It records that `httpie_1` to
   `httpie_4`, `tqdm_1` to `tqdm_2`, `black_1` / `black_3`, and
-  `cookiecutter_2` to `cookiecutter_3` did not become new `p2p_broad_main`
+  `cookiecutter_3` did not become new `p2p_broad_main`
   tasks under the current project-level P2P budget and why they are retained
   as blocked or insufficient accounting. It also records the audited
   coverage-only pytest addopts override and isolated dependency environment
@@ -113,6 +113,10 @@
   report for `bugsinpy_cookiecutter_1`. It records the migrated UTF-8 context
   oracle, four candidate patches, F2P validation, P2P-broad validation over 290
   stable tests, and the cohort admission boundary.
+- `experiments/cookiecutter2_candidate_validation.md`: tracked validation
+  report for `bugsinpy_cookiecutter_2`. It records the multiple-hook oracle,
+  11 candidate patches, F2P validation, P2P-broad validation over 278 stable
+  tests, and admission as the third project-level main task.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

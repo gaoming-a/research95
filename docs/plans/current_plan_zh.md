@@ -2126,3 +2126,81 @@ Qwen 初次结果：
   `p2p_broad_main` 任务。
 - 这是第二个完成 project-level P2P-broad 主任务；但该任务只有 4 个候选，不能被表述为
   最终论文规模已经足够。
+
+## 22. 2026-06-10 `cookiecutter_2` project-level P2P and candidate validation attempt
+
+本轮目标：
+
+- 在不改变最终研究主线的前提下，争取补齐第三个 project-level P2P 主任务。
+- 优先尝试 `bugsinpy_cookiecutter_2`，因为 `cookiecutter_1` 已证明同项目的隔离
+  dependency venv、coverage-only addopts sanitizer、compat shim 和 candidate-level
+  P2P runner 路径可行。
+- 若 `cookiecutter_2` 的原始 oracle、reference patch 或 P2P scope 不能稳定定义，
+  立即记录 blocker，不把它硬纳入主指标。
+
+执行边界：
+
+- 继续使用已有 isolated venv `outputs/envs/cookiecutter_p2p_py311`；不安装新依赖，
+  除非出现明确的 declared dependency blocker 并先记录。
+- 继续使用 project-level P2P-broad 标准；不能降级为 task-file P2P 来凑主指标。
+- candidate 最小集仍为 reference correct、buggy no-op、irrelevant/comment-only、以及
+  与 bug 语义相关的 constructed negative。若 constructed negative 无法从 bug 语义
+  合理生成，则只记录 reference/no-op/irrelevant，不伪造困难负例。
+- 所有最终标签仍必须来自 F2P oracle + P2P-broad。
+
+计划步骤：
+
+1. 检查 `cookiecutter_2` 的 BugsInPy metadata、原始测试命令、buggy/fixed diff。
+2. 构造或迁移最小 fail-to-pass oracle，并在 buggy/fixed checkout 上验证
+   buggy fail / fixed pass。
+3. 构造 project-level P2P-broad scope；若 scope 已因同项目条件可复用，只能复用
+   方法和环境，不能直接复用 `cookiecutter_1` 的 manifest。
+4. 将 `cookiecutter_2` 加入 candidate builder，构造候选切片并运行 retained-oracle
+   validation。
+5. 运行 F2P + P2P-broad candidate validation。
+6. 根据结果更新 cohort registry、实验报告、README、INDEX、经验文档和本计划，运行检查，
+   提交并 push。
+
+执行结果：
+
+- `cookiecutter_2` retained workspace 缺少 `bugsinpy_bug.info` 与
+  `bugsinpy_run_test.sh`，因此本轮从 buggy/fixed diff 和测试文件推断行为边界。
+- source diff 集中在 `cookiecutter/hooks.py`：`find_hook` 由返回单个脚本改为返回
+  所有匹配脚本列表，`run_hook` 逐个执行。
+- 已确认 F2P 节点：
+  `tests/test_hooks.py::TestExternalHooks::test_run_hook`：
+  - buggy fail；
+  - fixed pass。
+- 已构造 project-level P2P-broad scope：
+  - common nodeids = 286；
+  - excluded fail-to-pass oracle = 1；
+  - excluded failed on buggy baseline = 7；
+  - included P2P-broad tests = 278；
+  - stability runs = 3 per version。
+- 已新增 `scripts/oracles/cookiecutter_2_multiple_hooks.py`：
+  - direct oracle check: buggy fail / fixed pass。
+- 已将 `bugsinpy_cookiecutter_2` 加入 candidate builder。
+- candidate slice：
+  - candidates = 11；
+  - correct_reference = 1；
+  - buggy_noop = 1；
+  - irrelevant_patch = 1；
+  - partial_fix = 8。
+- retained-oracle validation：
+  - patch_applied = 11；
+  - oracle_ran = 11；
+  - oracle_all_passed = 1；
+  - validation_status_counts = `validated: 11`。
+- F2P + P2P-broad validation：
+  - p2p_broad_test_count = 278；
+  - `correct_under_f2p_and_p2p_broad: 1`；
+  - `incorrect_issue_not_fixed: 10`。
+- 已更新 `data/cohorts/task_cohort_registry.json`：
+  - `bugsinpy_cookiecutter_2.project_level_p2p_status = completed`；
+  - `bugsinpy_cookiecutter_2.p2p_broad_main_included = true`；
+  - `bugsinpy_cookiecutter_2.cohorts = ["p2p_broad_main"]`。
+
+当前结论：
+
+- `bugsinpy_cookiecutter_2` 已成为第三个 project-level `p2p_broad_main` 任务。
+- 当前主 cohort 任务数从 2 增至 3，但距离中期增强版 15-20 bugs 仍明显不足。

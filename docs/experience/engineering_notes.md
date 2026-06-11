@@ -875,3 +875,23 @@ This file starts fresh for the patch-verification project.
   `correct_under_f2p_and_p2p_broad` and three negative/control candidates
   labeled `incorrect_issue_not_fixed` over 290 P2P-broad tests. It is admitted
   to `p2p_broad_main`, but this does not make the final dataset large enough.
+
+## 2026-06-10 cookiecutter_2 candidate validation
+
+- The retained workspace for `cookiecutter_2` lacks BugsInPy metadata files
+  such as `bugsinpy_bug.info` and `bugsinpy_run_test.sh`; derive the behavior
+  from buggy/fixed source diff and tests, and document that inference rather
+  than pretending original metadata exists.
+- `tests/test_hooks.py::TestFindHooks::test_find_hook` is not a stable retained
+  oracle in the retained checkout because `tests/test-hooks` already exists and
+  setup fails with `FileExistsError`. Use direct behavior validation instead.
+- The stable F2P node is
+  `tests/test_hooks.py::TestExternalHooks::test_run_hook`: buggy fails because
+  only one matching hook runs; fixed passes because all matching hooks run.
+- A standalone oracle should create its own temporary template repository with
+  two matching `pre_gen_project` hooks and assert that both marker files are
+  produced. This avoids relying on mutable in-repo test fixture directories.
+- `cookiecutter_2` now contributes 11 validated candidates: one reference
+  correct patch, one no-op, one irrelevant patch, and eight partial fixes. Its
+  project-level P2P-broad scope retains 278 tests, so it is admitted to
+  `p2p_broad_main`.

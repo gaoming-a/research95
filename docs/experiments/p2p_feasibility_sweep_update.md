@@ -204,3 +204,37 @@ docs/experiments/cookiecutter1_candidate_validation.md
 
 `bugsinpy_cookiecutter_1` now enters `p2p_broad_main`. This is a task-level
 cohort admission, not a claim that the full final-paper dataset is complete.
+
+### `cookiecutter_2` Follow-up
+
+`bugsinpy_cookiecutter_2` was then migrated using the same isolated dependency
+environment and audited addopts sanitizer, but with a separate project-level
+P2P-broad manifest:
+
+```text
+data/p2p_scopes/bugsinpy_cookiecutter_2_p2p_broad.json
+```
+
+The retained fail-to-pass behavior is multiple hook execution:
+
+```text
+tests/test_hooks.py::TestExternalHooks::test_run_hook
+```
+
+The P2P-broad scope retained 278 stable tests after excluding the F2P oracle and
+seven tests that already fail on the buggy baseline. Candidate validation
+produced:
+
+```text
+correct_under_f2p_and_p2p_broad: 1
+incorrect_issue_not_fixed: 10
+```
+
+The tracked follow-up report is:
+
+```text
+docs/experiments/cookiecutter2_candidate_validation.md
+```
+
+`bugsinpy_cookiecutter_2` now enters `p2p_broad_main` as the third completed
+project-level main task.

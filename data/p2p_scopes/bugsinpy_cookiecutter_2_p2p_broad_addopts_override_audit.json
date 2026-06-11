@@ -1,0 +1,22 @@
+{
+  "allowed": true,
+  "config_section": "tool:pytest",
+  "config_source": "setup.cfg",
+  "enabled": true,
+  "main_experiment_allowed": true,
+  "original_addopts": "-vvv --cov-report term-missing --cov=cookiecutter",
+  "override_type": "coverage_only_addopts_sanitization",
+  "project": "cookiecutter",
+  "pytest_cov_installed": false,
+  "reason": "coverage-only pytest-cov options blocked collection before P2P scope construction",
+  "removed_tokens": [
+    "--cov-report",
+    "term-missing",
+    "--cov=cookiecutter"
+  ],
+  "retained_tokens": [
+    "-vvv"
+  ],
+  "sanitized_addopts": "-vvv",
+  "task_id": "bugsinpy_cookiecutter_2"
+}
