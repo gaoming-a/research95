@@ -2309,3 +2309,32 @@ Qwen 初次结果：
   - HTTP/1.1 retry：无法连接 `github.com:443`。
 - 当前远端同步未完成；后续继续大规模实验前应优先重试 push，避免本地 ahead
   积累过多。
+
+## 24. 2026-06-11 fifth project-level P2P task selection
+
+本轮目标：
+
+- 先恢复远端同步，再继续扩展第 5 个 project-level `p2p_broad_main` 任务。
+- 当前 `p2p_broad_main` 已有 4 个任务：
+  - `bugsinpy_httpie_5`；
+  - `bugsinpy_cookiecutter_1`；
+  - `bugsinpy_cookiecutter_2`；
+  - `bugsinpy_cookiecutter_3`。
+- 本轮选择策略：优先从已有 BugsInPy workspace 中寻找依赖可控、F2P oracle 清楚、
+  project-level P2P-broad 可构造的任务；不降低 project-level P2P 标准。
+
+已完成前置同步：
+
+- `Test-NetConnection github.com -Port 443` 恢复为 `TcpTestSucceeded: True`。
+- `git push origin main` 成功，将本地 3 个提交同步到远端：
+  - `420030c Admit cookiecutter 2 P2P validation`；
+  - `b2c1532 Admit cookiecutter 3 P2P validation`；
+  - `155ceea Record GitHub push blocker`。
+
+执行边界：
+
+- 先检查候选任务 metadata、buggy/fixed diff、F2P 节点和依赖；遇到新的依赖 blocker
+  必须记录后再处理。
+- 不复用其他任务的 P2P manifest；每个任务必须独立构造 project-level P2P-broad。
+- 若某候选任务无法稳定证明 buggy fail / fixed pass 或 reference patch under P2P，
+  记录为 blocked，不硬纳入主 cohort。
