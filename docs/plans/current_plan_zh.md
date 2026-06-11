@@ -2592,3 +2592,76 @@ project-level P2P-broad construction under the existing audited pipeline.
 2. 下一步提交并 push 本轮更新。
 3. 随后继续从 broader BugsInPy pool 中筛选下一个低摩擦 candidate task，
    优先 `PySnooper_2/3`、`fastapi_1/2` 或同等 pytest/unittest 任务。
+
+## 27. 2026-06-12 seventh project-level P2P candidate
+
+同步恢复：
+
+- 上轮 `bugsinpy_PySnooper_1` 提交 `8e5613d` 一直未能通过直连 GitHub
+  push，因为 `github.com:443` 直连失败。
+- 本轮发现本机 `127.0.0.1:7890` 代理可用，使用临时 Git 代理配置完成 push：
+  `git -c http.proxy=http://127.0.0.1:7890 -c https.proxy=http://127.0.0.1:7890 push origin main`。
+- 注意：没有写入永久 Git config，只是本次命令级代理。
+
+第 7 个候选任务选择：
+
+- 优先尝试 `bugsinpy_PySnooper_2`。
+- 理由：
+  - broader BugsInPy screening 中 `PySnooper_1/2/3` 排名靠前；
+  - `PySnooper_1` 已证明该项目可以在当前 Python 3.11 + compatibility shim +
+    declared test dependency venv 下完成 project-level P2P-broad；
+  - 同项目后续任务更可能复用已审计环境边界，能更快扩大主 cohort。
+
+执行边界：
+
+- 不因为同项目复用就跳过 validation-stability gate。
+- `bugsinpy_PySnooper_2` 必须独立完成：
+  - buggy/fixed checkout；
+  - F2P oracle：buggy fail、fixed pass；
+  - project-level P2P-broad，`p2p_broad_size >= 3`；
+  - 3 runs stability；
+  - reference patch 通过 F2P + P2P-broad；
+  - candidate labels 可重新验证。
+- 如果 F2P 行为、oracle 构造或 task role 不清楚，停止并向用户确认。
+
+初步审计结果：
+
+- buggy/fixed checkout 已成功创建到：
+  `D:/mgao/code/research/data/real_bugs/bugsinpy_workspace/PySnooper_2`。
+- `bugs/2/run_test.sh` 指定：
+  `pytest -q -s tests/test_pysnooper.py::test_custom_repr_single`。
+- 元数据存在不一致：
+  - `bugs/2/run_test.sh` 指向 `test_custom_repr_single`；
+  - `PySnooper-pass.txt` 中 bug 2 行指向
+    `test_snooping_on_class_does_not_cause_base_class_to_be_snooped`；
+  - 但 `bug_patch.txt` 的核心 source patch 明确是 `custom_repr` 支持，因此当前
+    以 `run_test.sh` 和实际 F2P probe 为准。
+- F2P probe 未能进入目标断言：
+  - buggy checkout：`tests/test_pysnooper.py` collection 失败，因为 copied test
+    imports `.mini_toolbox`，但 checkout 的 `tests/` 目录中没有
+    `mini_toolbox.py`；
+  - fixed checkout：import `pysnooper` 时失败，因为 fixed `tracer.py` 引用
+    `pycompat.PY2`，但 fixed `pycompat.py` 没有定义 `PY2`。
+- 这两个问题都不是 `custom_repr` 目标行为本身：
+  - `mini_toolbox.py` 是 test fixture/helper 缺失；
+  - `pycompat.PY2` 是 reference checkout import-compatibility 缺口。
+
+当前不能私自继续：
+
+- 若直接给 source tree 补 `pycompat.PY2` 或补 `tests/mini_toolbox.py`，会改变
+  retained checkout 的可执行环境边界；
+- 若完全绕开原始 test 写 standalone oracle，也仍需要决定是否允许
+  `pycompat.PY2` compatibility shim，否则 reference patch 无法 import；
+- 因此 `bugsinpy_PySnooper_2` 暂停在 user-confirmation gate。
+
+需要用户确认的下一步：
+
+1. 将 `bugsinpy_PySnooper_2` 标记为 blocked feasibility case，然后尝试
+   `bugsinpy_PySnooper_3` 或 `fastapi_1`；
+2. 或者允许为 `bugsinpy_PySnooper_2` 使用明确记录的 compatibility/test-fixture
+   shim：
+   - external shim 定义 `pycompat.PY2 = not pycompat.PY3`；
+   - 从可信来源补齐缺失的 `tests/mini_toolbox.py`，或绕过原始 pytest fixture
+     使用 standalone oracle；
+   - 所有 shim 必须记录到 dependency/environment audit，且不得混入 patch
+     candidate 本身。
