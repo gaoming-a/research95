@@ -462,6 +462,38 @@
         "task_file_level_p2p": "not_recorded"
       },
       "blocked_reason": [
+        "unclear_experimental_boundary",
+        "test_fixture_shim_required",
+        "reference_import_compatibility_gap"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": 2,
+        "nodeids": 0,
+        "p2p_broad_size": 0,
+        "test_framework": "pytest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Blocked after checkout and F2P probe. The run_test target is test_custom_repr_single, but buggy collection requires a missing tests/mini_toolbox.py fixture and the reference checkout imports pycompat.PY2 without defining it in pycompat.py. The user confirmed that compatibility/test-fixture shims are not allowed for main-cohort admission at this stage.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "PySnooper",
+      "project_level_p2p_status": "blocked_feasibility_case",
+      "shim_allowed_now": false,
+      "task_id": "bugsinpy_PySnooper_2"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
         "missing_typed_ast_dependency",
         "unittest_collection_error"
       ],

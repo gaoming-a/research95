@@ -993,3 +993,21 @@ This file starts fresh for the patch-verification project.
 - `bugsinpy_PySnooper_1` now contributes six validated candidates over 24 stable
   P2P-broad tests and is admitted to `p2p_broad_main` as the sixth completed
   project-level main task.
+
+## 2026-06-12 PySnooper_2 boundary decision
+
+- `bugsinpy_PySnooper_2` checks out, but its original F2P path does not reach
+  the target `custom_repr` assertion under the retained pipeline.
+- The buggy checkout's copied `tests/test_pysnooper.py` imports
+  `.mini_toolbox`, but `tests/mini_toolbox.py` is absent from the retained
+  checkout.
+- The reference checkout imports `pycompat.PY2` from `pysnooper/tracer.py`, but
+  `pysnooper/pycompat.py` does not define `PY2` in the retained checkout.
+- This is an unclear experimental-boundary problem, not a simple declared
+  dependency or coverage-instrumentation blocker. A fixture shim could change
+  test preconditions or output-capture behavior.
+- User-confirmed rule: do not introduce task-specific
+  compatibility/test-fixture shims for main-cohort admission at this stage.
+- `bugsinpy_PySnooper_2` is therefore recorded as a blocked feasibility case
+  with `p2p_broad_main_included = false`; next try `bugsinpy_PySnooper_3`, and
+  if it needs the same class of shim, block it and move to `bugsinpy_fastapi_1`.

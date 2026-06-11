@@ -2665,3 +2665,30 @@ project-level P2P-broad construction under the existing audited pipeline.
      使用 standalone oracle；
    - 所有 shim 必须记录到 dependency/environment audit，且不得混入 patch
      candidate 本身。
+
+最终决策：
+
+- `bugsinpy_PySnooper_2` 标记为 `blocked_feasibility_case`。
+- `main_experiment_included = false`。
+- `p2p_broad_main_included = false`。
+- `blocked_reason = unclear_experimental_boundary`。
+- `shim_allowed_now = false`。
+
+决策理由：
+
+- `bugsinpy_PySnooper_2` 的问题不是单纯缺依赖或 coverage 参数阻塞，而是实验
+  边界不清楚；
+- 当前阶段不允许为了让该任务进入主实验而做 compatibility/test-fixture shim；
+- test-fixture shim 可能改变测试前置条件、fixture 行为、输出捕获或环境语义，
+  比 `pytest -o addopts` coverage-only override 更敏感；
+- 为保持主 cohort 标签可信度，`bugsinpy_PySnooper_2` 只保留在 blocked task
+  accounting 中。
+
+下一步执行：
+
+1. 冻结 `bugsinpy_PySnooper_2`，不做 shim。
+2. 尝试 `bugsinpy_PySnooper_3`。
+3. `bugsinpy_PySnooper_3` 只能使用现有受审计 pipeline，不允许为 PySnooper
+   家族新增 compatibility/test-fixture shim 先例。
+4. 如果 `bugsinpy_PySnooper_3` 也出现同类 boundary/shim 需求，立即 block。
+5. 随后转向 `bugsinpy_fastapi_1`。
