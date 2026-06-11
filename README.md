@@ -115,8 +115,10 @@ They should not override `final_paper_roadmap_zh.md`.
   main-label evidence until the Luigi project-level scope blocker is resolved.
 - Main regression-aware metrics are now cohort-gated by
   `data/cohorts/task_cohort_registry.json`. The current `p2p_broad_main` cohort
-  includes `bugsinpy_httpie_5`; Luigi tasks are `pending_blocked` and retained
-  only as appendix/smoke evidence.
+  includes `bugsinpy_httpie_5`, `bugsinpy_cookiecutter_1`,
+  `bugsinpy_cookiecutter_2`, `bugsinpy_cookiecutter_3`, and
+  `bugsinpy_tqdm_9`; Luigi tasks are `pending_blocked` and retained only as
+  appendix/smoke evidence.
 - A bounded replacement sweep tried `bugsinpy_httpie_1` through
   `bugsinpy_httpie_4`; none entered `p2p_broad_main` under the current
   project-level P2P budget because of missing `pytest_httpbin`, legacy
@@ -144,6 +146,12 @@ They should not override `final_paper_roadmap_zh.md`.
 - `bugsinpy_cookiecutter_3` now enters `p2p_broad_main`: its prompt choice
   oracle validates four candidates under F2P plus a separate project-level
   P2P-broad scope with 255 stable tests.
+- `bugsinpy_tqdm_9` now enters `p2p_broad_main`: its SI-format and
+  `len(tqdm(total=...))` oracle validates seven curated candidates under F2P
+  plus a project-level P2P-broad scope with 12 stable tests. The first generic
+  partial-candidate pass overproduced six label-invalid negatives because the
+  reference diff contains style-only changes; these were filtered before final
+  validation.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

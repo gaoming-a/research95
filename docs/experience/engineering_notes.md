@@ -916,3 +916,21 @@ This file starts fresh for the patch-verification project.
   duplicated-choice behavior.
 - `cookiecutter_3` now contributes four validated candidates over 255 stable
   P2P-broad tests and is admitted to `p2p_broad_main`.
+
+## 2026-06-11 tqdm_9 candidate validation
+
+- `bugsinpy_tqdm_9` avoided the `tqdm_1/2` `nose` blocker because its retained
+  checkout has a compact `tqdm/tests/tests_tqdm.py` suite that collected 14
+  pytest nodeids without collection errors.
+- Its retained oracle must cover both visible failures:
+  `test_si_format` and `test_update`. A single SI-format check would miss the
+  `__len__` behavior fixed in the same reference patch.
+- Generic partial-diff generation is unsafe when the reference patch mixes bug
+  fixes and style-only edits. The first `tqdm_9` candidate pass produced six
+  `partial_fix` records that still passed the retained oracle. These records
+  were filtered out with a task-level partial allowlist before final validation.
+- Rule: every generated partial negative must be validated under the retained
+  oracle before it can enter the dataset. Do not assume that omitting any
+  reference diff hunk creates a behaviorally incorrect patch.
+- `bugsinpy_tqdm_9` now contributes seven validated candidates over 12 stable
+  P2P-broad tests and is admitted to `p2p_broad_main`.

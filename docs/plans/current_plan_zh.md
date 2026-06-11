@@ -2338,3 +2338,67 @@ Qwen 初次结果：
 - 不复用其他任务的 P2P manifest；每个任务必须独立构造 project-level P2P-broad。
 - 若某候选任务无法稳定证明 buggy fail / fixed pass 或 reference patch under P2P，
   记录为 blocked，不硬纳入主 cohort。
+
+候选筛选结果：
+
+- `bugsinpy_black_2` 暂不优先：没有已迁移 visible test，且 black 同系列已经暴露
+  `typed_ast` project-level collection blocker。
+- `bugsinpy_tqdm_3` 到 `bugsinpy_tqdm_8` 暂不优先：测试体系仍显著依赖
+  `nose`，与 `tqdm_1/2` 的 blocker 同类；安装或模拟 `nose` 属于新的环境
+  决策，不在本轮静默执行。
+- `bugsinpy_tqdm_9` 作为第 5 个候选任务：
+  - changed file: `tqdm/_tqdm.py`；
+  - retained F2P nodes:
+    - `tqdm/tests/tests_tqdm.py::test_si_format`；
+    - `tqdm/tests/tests_tqdm.py::test_update`；
+  - buggy checkout: 两个 F2P 节点失败；
+  - fixed checkout: `tqdm/tests/tests_tqdm.py` 共 14 个测试全部通过；
+  - 当前未触发 `nose` collection blocker。
+
+下一步执行：
+
+1. 新增 `scripts/oracles/tqdm_9_si_len.py`，直接覆盖 SI rounding 与
+   `len(tqdm(total=2))` 两个行为。
+2. 将 `bugsinpy_tqdm_9` 注册进 candidate builder。
+3. 构造 `bugsinpy_tqdm_9` 的 project-level P2P-broad scope，排除两个 F2P
+   oracle 节点。
+4. 生成并验证 candidate patches。
+5. 更新 cohort registry、实验报告、README、INDEX、经验文档，提交并 push。
+
+执行结果：
+
+- 已新增 oracle：`scripts/oracles/tqdm_9_si_len.py`。
+- direct oracle check：
+  - buggy checkout: fail；
+  - fixed checkout: pass。
+- 已构造 project-level P2P-broad scope：
+  - collected/common nodeids = 14；
+  - excluded fail-to-pass oracle = 2；
+  - collection error files = 0；
+  - included P2P-broad tests = 12；
+  - stability runs = 3 per version。
+- 初始 candidate generation 产生 13 个候选，但 6 个 generic partial negatives
+  仍通过 retained oracle。原因是 reference diff 混入 style-only changes 或
+  不影响两个目标行为的 threshold-line variants；这些不能作为负例。
+- 已在 candidate builder 中为 `bugsinpy_tqdm_9` 增加任务级 partial allowlist，
+  最终 candidate slice 为 7 个：
+  - correct_reference = 1；
+  - buggy_noop = 1；
+  - irrelevant_patch = 1；
+  - partial_fix = 4。
+- retained-oracle validation：
+  - patch_applied = 7；
+  - oracle_ran = 7；
+  - validation_status_counts = `validated: 7`。
+- F2P + P2P-broad validation：
+  - `correct_under_f2p_and_p2p_broad: 1`；
+  - `incorrect_issue_not_fixed: 6`。
+- 已更新 `data/cohorts/task_cohort_registry.json`：
+  - `bugsinpy_tqdm_9.project_level_p2p_status = completed`；
+  - `bugsinpy_tqdm_9.p2p_broad_main_included = true`；
+  - `bugsinpy_tqdm_9.cohorts = ["p2p_broad_main"]`。
+
+当前结论：
+
+- `bugsinpy_tqdm_9` 已成为第五个 project-level `p2p_broad_main` 任务。
+- 当前主 cohort 任务数从 4 增至 5；仍未达到中期增强版 15-20 bugs 的目标规模。

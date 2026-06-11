@@ -1,0 +1,494 @@
+{
+  "batch_runs": {
+    "chunks": [
+      {
+        "buggy_runs": [
+          {
+            "command": [
+              "C:\\Python311\\python.exe",
+              "-m",
+              "pytest",
+              "-q",
+              "tqdm/tests/tests_tqdm.py::test_all_defaults",
+              "tqdm/tests/tests_tqdm.py::test_close",
+              "tqdm/tests/tests_tqdm.py::test_disable",
+              "tqdm/tests/tests_tqdm.py::test_file_output",
+              "tqdm/tests/tests_tqdm.py::test_format_interval",
+              "tqdm/tests/tests_tqdm.py::test_format_meter",
+              "tqdm/tests/tests_tqdm.py::test_iterate_over_csv_rows",
+              "tqdm/tests/tests_tqdm.py::test_leave_option",
+              "tqdm/tests/tests_tqdm.py::test_min_interval",
+              "tqdm/tests/tests_tqdm.py::test_min_iters",
+              "tqdm/tests/tests_tqdm.py::test_trange",
+              "tqdm/tests/tests_tqdm.py::test_unit"
+            ],
+            "elapsed_seconds": 3.5,
+            "exit_code": 0,
+            "nodeid_count": 12,
+            "passed": true,
+            "run_index": 1,
+            "stderr_tail": "",
+            "stdout_tail": "............                                                             [100%]\n12 passed in 0.14s\n",
+            "timeout": false
+          },
+          {
+            "command": [
+              "C:\\Python311\\python.exe",
+              "-m",
+              "pytest",
+              "-q",
+              "tqdm/tests/tests_tqdm.py::test_all_defaults",
+              "tqdm/tests/tests_tqdm.py::test_close",
+              "tqdm/tests/tests_tqdm.py::test_disable",
+              "tqdm/tests/tests_tqdm.py::test_file_output",
+              "tqdm/tests/tests_tqdm.py::test_format_interval",
+              "tqdm/tests/tests_tqdm.py::test_format_meter",
+              "tqdm/tests/tests_tqdm.py::test_iterate_over_csv_rows",
+              "tqdm/tests/tests_tqdm.py::test_leave_option",
+              "tqdm/tests/tests_tqdm.py::test_min_interval",
+              "tqdm/tests/tests_tqdm.py::test_min_iters",
+              "tqdm/tests/tests_tqdm.py::test_trange",
+              "tqdm/tests/tests_tqdm.py::test_unit"
+            ],
+            "elapsed_seconds": 3.719,
+            "exit_code": 0,
+            "nodeid_count": 12,
+            "passed": true,
+            "run_index": 2,
+            "stderr_tail": "",
+            "stdout_tail": "............                                                             [100%]\n12 passed in 0.13s\n",
+            "timeout": false
+          },
+          {
+            "command": [
+              "C:\\Python311\\python.exe",
+              "-m",
+              "pytest",
+              "-q",
+              "tqdm/tests/tests_tqdm.py::test_all_defaults",
+              "tqdm/tests/tests_tqdm.py::test_close",
+              "tqdm/tests/tests_tqdm.py::test_disable",
+              "tqdm/tests/tests_tqdm.py::test_file_output",
+              "tqdm/tests/tests_tqdm.py::test_format_interval",
+              "tqdm/tests/tests_tqdm.py::test_format_meter",
+              "tqdm/tests/tests_tqdm.py::test_iterate_over_csv_rows",
+              "tqdm/tests/tests_tqdm.py::test_leave_option",
+              "tqdm/tests/tests_tqdm.py::test_min_interval",
+              "tqdm/tests/tests_tqdm.py::test_min_iters",
+              "tqdm/tests/tests_tqdm.py::test_trange",
+              "tqdm/tests/tests_tqdm.py::test_unit"
+            ],
+            "elapsed_seconds": 3.578,
+            "exit_code": 0,
+            "nodeid_count": 12,
+            "passed": true,
+            "run_index": 3,
+            "stderr_tail": "",
+            "stdout_tail": "............                                                             [100%]\n12 passed in 0.13s\n",
+            "timeout": false
+          }
+        ],
+        "nodeid_count": 12,
+        "passed": true,
+        "reference_runs": [
+          {
+            "command": [
+              "C:\\Python311\\python.exe",
+              "-m",
+              "pytest",
+              "-q",
+              "tqdm/tests/tests_tqdm.py::test_all_defaults",
+              "tqdm/tests/tests_tqdm.py::test_close",
+              "tqdm/tests/tests_tqdm.py::test_disable",
+              "tqdm/tests/tests_tqdm.py::test_file_output",
+              "tqdm/tests/tests_tqdm.py::test_format_interval",
+              "tqdm/tests/tests_tqdm.py::test_format_meter",
+              "tqdm/tests/tests_tqdm.py::test_iterate_over_csv_rows",
+              "tqdm/tests/tests_tqdm.py::test_leave_option",
+              "tqdm/tests/tests_tqdm.py::test_min_interval",
+              "tqdm/tests/tests_tqdm.py::test_min_iters",
+              "tqdm/tests/tests_tqdm.py::test_trange",
+              "tqdm/tests/tests_tqdm.py::test_unit"
+            ],
+            "elapsed_seconds": 3.719,
+            "exit_code": 0,
+            "nodeid_count": 12,
+            "passed": true,
+            "run_index": 1,
+            "stderr_tail": "",
+            "stdout_tail": "............                                                             [100%]\n12 passed in 0.14s\n",
+            "timeout": false
+          },
+          {
+            "command": [
+              "C:\\Python311\\python.exe",
+              "-m",
+              "pytest",
+              "-q",
+              "tqdm/tests/tests_tqdm.py::test_all_defaults",
+              "tqdm/tests/tests_tqdm.py::test_close",
+              "tqdm/tests/tests_tqdm.py::test_disable",
+              "tqdm/tests/tests_tqdm.py::test_file_output",
+              "tqdm/tests/tests_tqdm.py::test_format_interval",
+              "tqdm/tests/tests_tqdm.py::test_format_meter",
+              "tqdm/tests/tests_tqdm.py::test_iterate_over_csv_rows",
+              "tqdm/tests/tests_tqdm.py::test_leave_option",
+              "tqdm/tests/tests_tqdm.py::test_min_interval",
+              "tqdm/tests/tests_tqdm.py::test_min_iters",
+              "tqdm/tests/tests_tqdm.py::test_trange",
+              "tqdm/tests/tests_tqdm.py::test_unit"
+            ],
+            "elapsed_seconds": 3.578,
+            "exit_code": 0,
+            "nodeid_count": 12,
+            "passed": true,
+            "run_index": 2,
+            "stderr_tail": "",
+            "stdout_tail": "............                                                             [100%]\n12 passed in 0.15s\n",
+            "timeout": false
+          },
+          {
+            "command": [
+              "C:\\Python311\\python.exe",
+              "-m",
+              "pytest",
+              "-q",
+              "tqdm/tests/tests_tqdm.py::test_all_defaults",
+              "tqdm/tests/tests_tqdm.py::test_close",
+              "tqdm/tests/tests_tqdm.py::test_disable",
+              "tqdm/tests/tests_tqdm.py::test_file_output",
+              "tqdm/tests/tests_tqdm.py::test_format_interval",
+              "tqdm/tests/tests_tqdm.py::test_format_meter",
+              "tqdm/tests/tests_tqdm.py::test_iterate_over_csv_rows",
+              "tqdm/tests/tests_tqdm.py::test_leave_option",
+              "tqdm/tests/tests_tqdm.py::test_min_interval",
+              "tqdm/tests/tests_tqdm.py::test_min_iters",
+              "tqdm/tests/tests_tqdm.py::test_trange",
+              "tqdm/tests/tests_tqdm.py::test_unit"
+            ],
+            "elapsed_seconds": 3.828,
+            "exit_code": 0,
+            "nodeid_count": 12,
+            "passed": true,
+            "run_index": 3,
+            "stderr_tail": "",
+            "stdout_tail": "............                                                             [100%]\n12 passed in 0.19s\n",
+            "timeout": false
+          }
+        ]
+      }
+    ]
+  },
+  "buggy_baseline_pass_required": true,
+  "collection": {
+    "buggy": {
+      "collection_error_count": 0,
+      "collection_error_files": [],
+      "collection_mode": "per_file",
+      "command": [
+        "C:\\Python311\\python.exe",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "<per-file>"
+      ],
+      "elapsed_seconds": 3.734,
+      "exit_code": 0,
+      "files": [
+        {
+          "collected_count": 14,
+          "collection_error": false,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tqdm/tests/tests_tqdm.py"
+          ],
+          "elapsed_seconds": 3.734,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "stdout_tail": "tqdm/tqdm/tests/tests_tqdm.py::test_format_meter\ndata/real_bugs/bugsinpy_workspace/tqdm_9/buggy/tqdm/tqdm/tests/tests_tqdm.py::test_si_format\ndata/real_bugs/bugsinpy_workspace/tqdm_9/buggy/tqdm/tqdm/tests/tests_tqdm.py::test_all_defaults\ndata/real_bugs/bugsinpy_workspace/tqdm_9/buggy/tqdm/tqdm/tests/tests_tqdm.py::test_iterate_over_csv_rows\ndata/real_bugs/bugsinpy_workspace/tqdm_9/buggy/tqdm/tqdm/tests/tests_tqdm.py::test_file_output\ndata/real_bugs/bugsinpy_workspace/tqdm_9/buggy/tqdm/tqdm/tests/tests_tqdm.py::test_leave_option\ndata/real_bugs/bugsinpy_workspace/tqdm_9/buggy/tqdm/tqdm/tests/tests_tqdm.py::test_trange\ndata/real_bugs/bugsinpy_workspace/tqdm_9/buggy/tqdm/tqdm/tests/tests_tqdm.py::test_min_interval\ndata/real_bugs/bugsinpy_workspace/tqdm_9/buggy/tqdm/tqdm/tests/tests_tqdm.py::test_min_iters\ndata/real_bugs/bugsinpy_workspace/tqdm_9/buggy/tqdm/tqdm/tests/tests_tqdm.py::test_disable\ndata/real_bugs/bugsinpy_workspace/tqdm_9/buggy/tqdm/tqdm/tests/tests_tqdm.py::test_unit\ndata/real_bugs/bugsinpy_workspace/tqdm_9/buggy/tqdm/tqdm/tests/tests_tqdm.py::test_update\ndata/real_bugs/bugsinpy_workspace/tqdm_9/buggy/tqdm/tqdm/tests/tests_tqdm.py::test_close\n\n14 tests collected in 0.06s\n",
+          "test_path": "tqdm/tests/tests_tqdm.py",
+          "timeout": false
+        }
+      ],
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "test_file_count": 1,
+      "timeout": false
+    },
+    "buggy_collected_count": 14,
+    "discovered_test_files": 1,
+    "reference": {
+      "collection_error_count": 0,
+      "collection_error_files": [],
+      "collection_mode": "per_file",
+      "command": [
+        "C:\\Python311\\python.exe",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "<per-file>"
+      ],
+      "elapsed_seconds": 3.781,
+      "exit_code": 0,
+      "files": [
+        {
+          "collected_count": 14,
+          "collection_error": false,
+          "command": [
+            "C:\\Python311\\python.exe",
+            "-m",
+            "pytest",
+            "--collect-only",
+            "-q",
+            "tqdm/tests/tests_tqdm.py"
+          ],
+          "elapsed_seconds": 3.781,
+          "exit_code": 0,
+          "stderr_tail": "",
+          "stdout_tail": "tqdm/tqdm/tests/tests_tqdm.py::test_format_meter\ndata/real_bugs/bugsinpy_workspace/tqdm_9/fixed/tqdm/tqdm/tests/tests_tqdm.py::test_si_format\ndata/real_bugs/bugsinpy_workspace/tqdm_9/fixed/tqdm/tqdm/tests/tests_tqdm.py::test_all_defaults\ndata/real_bugs/bugsinpy_workspace/tqdm_9/fixed/tqdm/tqdm/tests/tests_tqdm.py::test_iterate_over_csv_rows\ndata/real_bugs/bugsinpy_workspace/tqdm_9/fixed/tqdm/tqdm/tests/tests_tqdm.py::test_file_output\ndata/real_bugs/bugsinpy_workspace/tqdm_9/fixed/tqdm/tqdm/tests/tests_tqdm.py::test_leave_option\ndata/real_bugs/bugsinpy_workspace/tqdm_9/fixed/tqdm/tqdm/tests/tests_tqdm.py::test_trange\ndata/real_bugs/bugsinpy_workspace/tqdm_9/fixed/tqdm/tqdm/tests/tests_tqdm.py::test_min_interval\ndata/real_bugs/bugsinpy_workspace/tqdm_9/fixed/tqdm/tqdm/tests/tests_tqdm.py::test_min_iters\ndata/real_bugs/bugsinpy_workspace/tqdm_9/fixed/tqdm/tqdm/tests/tests_tqdm.py::test_disable\ndata/real_bugs/bugsinpy_workspace/tqdm_9/fixed/tqdm/tqdm/tests/tests_tqdm.py::test_unit\ndata/real_bugs/bugsinpy_workspace/tqdm_9/fixed/tqdm/tqdm/tests/tests_tqdm.py::test_update\ndata/real_bugs/bugsinpy_workspace/tqdm_9/fixed/tqdm/tqdm/tests/tests_tqdm.py::test_close\n\n14 tests collected in 0.05s\n",
+          "test_path": "tqdm/tests/tests_tqdm.py",
+          "timeout": false
+        }
+      ],
+      "stderr_tail": "",
+      "stdout_tail": "",
+      "test_file_count": 1,
+      "timeout": false
+    },
+    "reference_collected_count": 14
+  },
+  "compat_shim": {
+    "enabled": true,
+    "path": "outputs\\tqdm9_project_p2p_scope_001\\compat_shim",
+    "reason": "legacy tests import requests.compat.is_py26, absent in the current Python environment"
+  },
+  "core_patterns": [
+    "tqdm/tests/tests_tqdm.py::"
+  ],
+  "counts": {
+    "collected_tests": 14,
+    "collection_error_files": 0,
+    "common_collected_tests": 14,
+    "excluded_external_dependency": 0,
+    "excluded_fail_to_pass_oracle": 2,
+    "excluded_flaky": 0,
+    "excluded_timeout": 0,
+    "excluded_uncollectable": 0,
+    "exclusion_reason_counts": {
+      "excluded_fail_to_pass_oracle": 2
+    },
+    "included_p2p_tests": 12,
+    "p2p_broad_tests": 12,
+    "p2p_core_tests": 12
+  },
+  "exclusions": [
+    {
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_si_format",
+      "reason": "excluded_fail_to_pass_oracle"
+    },
+    {
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_update",
+      "reason": "excluded_fail_to_pass_oracle"
+    }
+  ],
+  "fail_to_pass_nodeids": [
+    "tqdm/tests/tests_tqdm.py::test_si_format",
+    "tqdm/tests/tests_tqdm.py::test_update"
+  ],
+  "p2p_broad_tests": [
+    "tqdm/tests/tests_tqdm.py::test_all_defaults",
+    "tqdm/tests/tests_tqdm.py::test_close",
+    "tqdm/tests/tests_tqdm.py::test_disable",
+    "tqdm/tests/tests_tqdm.py::test_file_output",
+    "tqdm/tests/tests_tqdm.py::test_format_interval",
+    "tqdm/tests/tests_tqdm.py::test_format_meter",
+    "tqdm/tests/tests_tqdm.py::test_iterate_over_csv_rows",
+    "tqdm/tests/tests_tqdm.py::test_leave_option",
+    "tqdm/tests/tests_tqdm.py::test_min_interval",
+    "tqdm/tests/tests_tqdm.py::test_min_iters",
+    "tqdm/tests/tests_tqdm.py::test_trange",
+    "tqdm/tests/tests_tqdm.py::test_unit"
+  ],
+  "p2p_core_tests": [
+    "tqdm/tests/tests_tqdm.py::test_all_defaults",
+    "tqdm/tests/tests_tqdm.py::test_close",
+    "tqdm/tests/tests_tqdm.py::test_disable",
+    "tqdm/tests/tests_tqdm.py::test_file_output",
+    "tqdm/tests/tests_tqdm.py::test_format_interval",
+    "tqdm/tests/tests_tqdm.py::test_format_meter",
+    "tqdm/tests/tests_tqdm.py::test_iterate_over_csv_rows",
+    "tqdm/tests/tests_tqdm.py::test_leave_option",
+    "tqdm/tests/tests_tqdm.py::test_min_interval",
+    "tqdm/tests/tests_tqdm.py::test_min_iters",
+    "tqdm/tests/tests_tqdm.py::test_trange",
+    "tqdm/tests/tests_tqdm.py::test_unit"
+  ],
+  "project": "tqdm",
+  "pytest_addopts_override": {
+    "allowed": false,
+    "config_section": "",
+    "config_source": "",
+    "enabled": false,
+    "main_experiment_allowed": true,
+    "original_addopts": "",
+    "override_type": "coverage_only_addopts_sanitization",
+    "project": "tqdm",
+    "pytest_cov_installed": false,
+    "reason": "coverage-only pytest-cov options blocked collection before P2P scope construction",
+    "removed_tokens": [],
+    "retained_tokens": [],
+    "sanitized_addopts": "",
+    "task_id": "bugsinpy_tqdm_9"
+  },
+  "records": [
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_fail_to_pass_oracle",
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": true,
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_si_format"
+    },
+    {
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": "excluded_fail_to_pass_oracle",
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": true,
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_update"
+    },
+    {
+      "batch_validated": true,
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_all_defaults"
+    },
+    {
+      "batch_validated": true,
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_close"
+    },
+    {
+      "batch_validated": true,
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_disable"
+    },
+    {
+      "batch_validated": true,
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_file_output"
+    },
+    {
+      "batch_validated": true,
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_format_interval"
+    },
+    {
+      "batch_validated": true,
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_format_meter"
+    },
+    {
+      "batch_validated": true,
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_iterate_over_csv_rows"
+    },
+    {
+      "batch_validated": true,
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_leave_option"
+    },
+    {
+      "batch_validated": true,
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_min_interval"
+    },
+    {
+      "batch_validated": true,
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_min_iters"
+    },
+    {
+      "batch_validated": true,
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_trange"
+    },
+    {
+      "batch_validated": true,
+      "collected_on_buggy": true,
+      "collected_on_reference": true,
+      "exclusion_reason": null,
+      "is_core_candidate": true,
+      "is_fail_to_pass_oracle": false,
+      "nodeid": "tqdm/tests/tests_tqdm.py::test_unit"
+    }
+  ],
+  "reference_patch_pass_required": true,
+  "runs_per_version": 3,
+  "scope_id": "bugsinpy_tqdm_9_project_level_p2p_broad",
+  "scope_type": "project_level_p2p_broad",
+  "stability_runs": 3,
+  "static_exclude_tokens": [
+    "httpbin",
+    "http://",
+    "https://"
+  ],
+  "static_include_tokens": [],
+  "task_id": "bugsinpy_tqdm_9",
+  "test_framework": "pytest",
+  "test_path": ".",
+  "test_paths": [
+    "tqdm/tests/tests_tqdm.py"
+  ],
+  "timeout_seconds": 20,
+  "unittest_discovery": null
+}

@@ -280,3 +280,42 @@ docs/experiments/cookiecutter3_candidate_validation.md
 
 `bugsinpy_cookiecutter_3` now enters `p2p_broad_main` as the fourth completed
 project-level main task.
+
+### `tqdm_9` Follow-up
+
+After the `tqdm_1` and `tqdm_2` insufficient-scope result, `bugsinpy_tqdm_9`
+was selected from the retained BugsInPy workspace because its compact test file
+does not trigger the earlier `nose` collection blocker.
+
+The retained fail-to-pass behavior is:
+
+```text
+tqdm/tests/tests_tqdm.py::test_si_format
+tqdm/tests/tests_tqdm.py::test_update
+```
+
+The project-level P2P-broad scope collected 14 common nodeids, excluded the two
+F2P oracle nodeids, and retained 12 stable P2P tests with zero collection
+errors:
+
+```text
+data/p2p_scopes/bugsinpy_tqdm_9_p2p_broad.json
+```
+
+Candidate validation produced:
+
+```text
+correct_under_f2p_and_p2p_broad: 1
+incorrect_issue_not_fixed: 6
+```
+
+The tracked follow-up report is:
+
+```text
+docs/experiments/tqdm9_candidate_validation.md
+```
+
+`bugsinpy_tqdm_9` now enters `p2p_broad_main` as the fifth completed
+project-level main task. Its candidate-construction audit also records that
+generic partial diffs can be label-invalid when the reference patch contains
+style-only changes.

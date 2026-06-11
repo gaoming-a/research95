@@ -310,6 +310,13 @@ stability。
   tests 中，排除 1 个 fail-to-pass oracle 和 13 个外部网络依赖测试，保留
   3 个稳定本地 P2P-broad tests。由于该项目当前只发现 1 个测试文件，
   project-level 与早期局部 scope 结果一致。
+- `cookiecutter_1` / `cookiecutter_2` / `cookiecutter_3` 已完成独立的
+  project-level P2P-broad manifest，并通过 retained oracle 与 P2P-broad
+  candidate validation。
+- `tqdm_9` 已完成 project-level P2P-broad manifest：14 个 collected tests
+  中，排除 2 个 fail-to-pass oracle，保留 12 个稳定 P2P-broad tests。
+  该任务也记录了 partial-candidate curation 规则：reference diff 中的
+  style-only changes 不能自动构成错误负例。
 - `luigi_3` / `luigi_4` 的早期 P2P-broad 是 task-file scope，不是最终主
   实验标准。Luigi project-level scope 当前需要单独解决全项目测试量、收集
   错误和长运行时间问题后才能进入最终主实验标签。
@@ -319,7 +326,12 @@ stability。
 - 主实验只使用 `p2p_broad_main` cohort：
   - `project_level_p2p_status == completed`；
   - `p2p_broad_main_included == true`。
-- `bugsinpy_httpie_5` 当前进入 `p2p_broad_main`。
+- 当前进入 `p2p_broad_main` 的任务为：
+  - `bugsinpy_httpie_5`；
+  - `bugsinpy_cookiecutter_1`；
+  - `bugsinpy_cookiecutter_2`；
+  - `bugsinpy_cookiecutter_3`；
+  - `bugsinpy_tqdm_9`。
 - `bugsinpy_luigi_3` / `bugsinpy_luigi_4` 当前标记为
   `pending_blocked`，task-file P2P 结果只保留为 appendix/smoke evidence，
   不参与最终 regression-aware 主指标。

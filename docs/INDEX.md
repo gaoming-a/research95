@@ -108,8 +108,8 @@
   in accounting. It also records the audited
   coverage-only pytest addopts override and isolated dependency environment
   used for the Cookiecutter P2P retries, plus the later notes admitting
-  `cookiecutter_1`, `cookiecutter_2`, and `cookiecutter_3` after oracle and
-  candidate validation.
+  `cookiecutter_1`, `cookiecutter_2`, `cookiecutter_3`, and `tqdm_9` after
+  oracle and candidate validation.
 - `experiments/cookiecutter1_candidate_validation.md`: tracked validation
   report for `bugsinpy_cookiecutter_1`. It records the migrated UTF-8 context
   oracle, four candidate patches, F2P validation, P2P-broad validation over 290
@@ -123,6 +123,10 @@
   `show_choices=False` oracle, four candidate patches, F2P validation,
   P2P-broad validation over 255 stable tests, and admission as the fourth
   project-level main task.
+- `experiments/tqdm9_candidate_validation.md`: tracked validation report for
+  `bugsinpy_tqdm_9`. It records the SI-format and `len(tqdm(total=...))`
+  oracle, seven curated candidate patches, F2P validation, P2P-broad validation
+  over 12 stable tests, and admission as the fifth project-level main task.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on
@@ -284,7 +288,9 @@
 - `scripts/build_patch_verification_dataset.py`: current no-API pilot dataset
   builder. It emits evaluator-facing candidates and model-visible anonymous
   evidence packets. It materializes patch text from an external retained
-  buggy/fixed checkout root via `--source-workspace-root`.
+  buggy/fixed checkout root via `--source-workspace-root`. It also supports
+  task-level partial-candidate allowlists for cases where generic partial diffs
+  are label-invalid after oracle validation.
 - `scripts/run_no_api_patch_pipeline.py`: one-command no-API reproduction
   wrapper for dataset construction, baseline metrics, executable validation,
   API prompt dry-run, and pilot report generation.
@@ -383,7 +389,8 @@
 - `scripts/postprocess_api_pilot_run.py`: one-command wrapper for API result
   report generation, failure example extraction, stop/continue gate evaluation,
   run completeness audit, paper readiness audit, and postprocess summary.
-- `scripts/oracles/`: executable real-bug oracles.
+- `scripts/oracles/`: executable real-bug oracles, including the retained
+  `tqdm_9` SI-format and total-length oracle.
 - `scripts/validate_real_bug_dataset.py`: real-bug metadata and oracle
   validation.
 - `scripts/build_real_bug_review_dataset.py`: source-context builder to adapt.

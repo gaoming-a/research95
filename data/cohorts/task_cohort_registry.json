@@ -265,111 +265,146 @@
       "project_level_p2p_status": "pending_blocked",
       "task_id": "bugsinpy_black_3"
     },
-        {
-            "appendix_smoke_included": false,
-            "available_evidence": {
-                "project_level_p2p_broad": "available",
-                "task_file_level_p2p": "not_recorded"
-            },
-            "blocked_reason": [],
-            "cohorts": [
-                "p2p_broad_main"
-            ],
-            "collection_summary": {
-                "collection_errors": 0,
-                "candidate_count": 4,
-                "candidate_label_counts": {
-                    "correct_under_f2p_and_p2p_broad": 1,
-                    "incorrect_issue_not_fixed": 3
-                },
-                "excluded_fail_to_pass_oracle": 1,
-                "excluded_failed_on_buggy_baseline": 5,
-                "nodeids": 296,
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [],
+      "cohorts": [
+        "p2p_broad_main"
+      ],
+      "collection_summary": {
+        "collection_errors": 0,
+        "candidate_count": 4,
+        "candidate_label_counts": {
+          "correct_under_f2p_and_p2p_broad": 1,
+          "incorrect_issue_not_fixed": 3
+        },
+        "excluded_fail_to_pass_oracle": 1,
+        "excluded_failed_on_buggy_baseline": 5,
+        "nodeids": 296,
         "p2p_broad_size": 290,
         "test_files": 45,
         "test_framework": "pytest"
-            },
-            "label_scope": {
-                "appendix": null,
-                "main": "project_level_p2p_broad"
-            },
-            "notes": "An isolated Cookiecutter dependency venv plus audited coverage-only addopts override produced a completed project-level P2P-broad scope with 290 stable tests. A migrated UTF-8 context oracle and four candidate patches validated under F2P plus P2P-broad: one reference correct patch and three issue-not-fixed negatives.",
-            "p2p_broad_main_included": true,
-            "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad.json",
-            "project": "cookiecutter",
-            "project_level_p2p_status": "completed",
-            "task_id": "bugsinpy_cookiecutter_1"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "project_level_p2p_broad"
+      },
+      "notes": "An isolated Cookiecutter dependency venv plus audited coverage-only addopts override produced a completed project-level P2P-broad scope with 290 stable tests. A migrated UTF-8 context oracle and four candidate patches validated under F2P plus P2P-broad: one reference correct patch and three issue-not-fixed negatives.",
+      "p2p_broad_main_included": true,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad.json",
+      "project": "cookiecutter",
+      "project_level_p2p_status": "completed",
+      "task_id": "bugsinpy_cookiecutter_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [],
+      "cohorts": [
+        "p2p_broad_main"
+      ],
+      "collection_summary": {
+        "collection_errors": 0,
+        "candidate_count": 11,
+        "candidate_label_counts": {
+          "correct_under_f2p_and_p2p_broad": 1,
+          "incorrect_issue_not_fixed": 10
         },
-        {
-            "appendix_smoke_included": false,
-            "available_evidence": {
-                "project_level_p2p_broad": "available",
-                "task_file_level_p2p": "not_recorded"
-            },
-            "blocked_reason": [],
-            "cohorts": [
-                "p2p_broad_main"
-            ],
-            "collection_summary": {
-                "collection_errors": 0,
-                "candidate_count": 11,
-                "candidate_label_counts": {
-                    "correct_under_f2p_and_p2p_broad": 1,
-                    "incorrect_issue_not_fixed": 10
-                },
-                "excluded_fail_to_pass_oracle": 1,
-                "excluded_failed_on_buggy_baseline": 7,
-                "nodeids": 286,
-                "p2p_broad_size": 278,
-                "test_files": 45,
-                "test_framework": "pytest"
-            },
-            "label_scope": {
-                "appendix": null,
-                "main": "project_level_p2p_broad"
-            },
-            "notes": "A migrated multiple-hook oracle and 11 candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains 278 stable tests after excluding the F2P oracle and seven buggy-baseline failures.",
-            "p2p_broad_main_included": true,
-            "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_2_p2p_broad.json",
-            "project": "cookiecutter",
-            "project_level_p2p_status": "completed",
-            "task_id": "bugsinpy_cookiecutter_2"
+        "excluded_fail_to_pass_oracle": 1,
+        "excluded_failed_on_buggy_baseline": 7,
+        "nodeids": 286,
+        "p2p_broad_size": 278,
+        "test_files": 45,
+        "test_framework": "pytest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "project_level_p2p_broad"
+      },
+      "notes": "A migrated multiple-hook oracle and 11 candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains 278 stable tests after excluding the F2P oracle and seven buggy-baseline failures.",
+      "p2p_broad_main_included": true,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_2_p2p_broad.json",
+      "project": "cookiecutter",
+      "project_level_p2p_status": "completed",
+      "task_id": "bugsinpy_cookiecutter_2"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [],
+      "cohorts": [
+        "p2p_broad_main"
+      ],
+      "collection_summary": {
+        "collection_errors": 0,
+        "candidate_count": 4,
+        "candidate_label_counts": {
+          "correct_under_f2p_and_p2p_broad": 1,
+          "incorrect_issue_not_fixed": 3
         },
-        {
-            "appendix_smoke_included": false,
-            "available_evidence": {
-                "project_level_p2p_broad": "available",
-                "task_file_level_p2p": "not_recorded"
-            },
-            "blocked_reason": [],
-            "cohorts": [
-                "p2p_broad_main"
-            ],
-            "collection_summary": {
-                "collection_errors": 0,
-                "candidate_count": 4,
-                "candidate_label_counts": {
-                    "correct_under_f2p_and_p2p_broad": 1,
-                    "incorrect_issue_not_fixed": 3
-                },
-                "excluded_fail_to_pass_oracle": 4,
-                "excluded_failed_on_buggy_baseline": 3,
-                "nodeids": 262,
-                "p2p_broad_size": 255,
-                "test_files": 45,
-                "test_framework": "pytest"
-            },
-            "label_scope": {
-                "appendix": null,
-                "main": "project_level_p2p_broad"
-            },
-            "notes": "A migrated prompt choice oracle and four candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains 255 stable tests after excluding four parameterized F2P oracle nodeids and three buggy-baseline failures.",
-            "p2p_broad_main_included": true,
-            "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_3_p2p_broad.json",
-            "project": "cookiecutter",
-            "project_level_p2p_status": "completed",
-            "task_id": "bugsinpy_cookiecutter_3"
+        "excluded_fail_to_pass_oracle": 4,
+        "excluded_failed_on_buggy_baseline": 3,
+        "nodeids": 262,
+        "p2p_broad_size": 255,
+        "test_files": 45,
+        "test_framework": "pytest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "project_level_p2p_broad"
+      },
+      "notes": "A migrated prompt choice oracle and four candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains 255 stable tests after excluding four parameterized F2P oracle nodeids and three buggy-baseline failures.",
+      "p2p_broad_main_included": true,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_3_p2p_broad.json",
+      "project": "cookiecutter",
+      "project_level_p2p_status": "completed",
+      "task_id": "bugsinpy_cookiecutter_3"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [],
+      "cohorts": [
+        "p2p_broad_main"
+      ],
+      "collection_summary": {
+        "collection_errors": 0,
+        "candidate_count": 7,
+        "candidate_label_counts": {
+          "correct_under_f2p_and_p2p_broad": 1,
+          "incorrect_issue_not_fixed": 6
         },
+        "excluded_fail_to_pass_oracle": 2,
+        "excluded_failed_on_buggy_baseline": 0,
+        "nodeids": 14,
+        "p2p_broad_size": 12,
+        "test_files": 1,
+        "test_framework": "pytest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "project_level_p2p_broad"
+      },
+      "notes": "A migrated SI-format/len oracle and seven curated candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains 12 stable tests after excluding two retained F2P oracle nodeids; generic partial candidates that still passed the oracle were filtered out as label-invalid.",
+      "p2p_broad_main_included": true,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_tqdm_9_p2p_broad.json",
+      "project": "tqdm",
+      "project_level_p2p_status": "completed",
+      "task_id": "bugsinpy_tqdm_9"
+    },
     {
       "appendix_smoke_included": true,
       "attempts": [

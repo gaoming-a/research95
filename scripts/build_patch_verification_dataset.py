@@ -104,7 +104,28 @@ SOURCE_BUGS = [
         "hidden_oracles": ["scripts/oracles/cookiecutter_3_prompt_show_choices.py"],
         "oracle_command": "python scripts/oracles/cookiecutter_3_prompt_show_choices.py",
     },
+    {
+        "task_id": "bugsinpy_tqdm_9",
+        "project": "tqdm",
+        "touched_files": ["tqdm/_tqdm.py"],
+        "issue_summary": "SI-scaled meter totals should round at display precision boundaries and manual tqdm instances should report total length",
+        "visible_tests": [
+            "tqdm/tests/tests_tqdm.py::test_si_format",
+            "tqdm/tests/tests_tqdm.py::test_update",
+        ],
+        "hidden_oracles": ["scripts/oracles/tqdm_9_si_len.py"],
+        "oracle_command": "python scripts/oracles/tqdm_9_si_len.py",
+    },
 ]
+
+TASK_PARTIAL_ALLOWLIST = {
+    "bugsinpy_tqdm_9": {
+        "first_hunk_only",
+        "missing_change_1",
+        "missing_change_4",
+        "split_replace_1_3",
+    },
+}
 
 
 REQUIRED_CANDIDATE_FIELDS = {
@@ -477,7 +498,8 @@ def build_candidates(source_root: Path, source_bugs: list[dict[str, Any]]) -> li
 
         partial_text = first_hunk_only(reference["patch_text"])
         partial_texts: set[str] = set()
-        if partial_text:
+        allowlist = TASK_PARTIAL_ALLOWLIST.get(source_bug["task_id"])
+        if partial_text and (allowlist is None or "first_hunk_only" in allowlist):
             partial_texts.add(partial_text)
             candidates.append(
                 build_candidate(
@@ -499,6 +521,8 @@ def build_candidates(source_root: Path, source_bugs: list[dict[str, Any]]) -> li
             + build_split_replace_partial_diffs(source_root, source_bug, reference["touched_files"][0])
             + build_task_specific_negative_diffs(source_root, source_bug, reference["touched_files"][0])
         ):
+            if allowlist is not None and partial_record["suffix"] not in allowlist:
+                continue
             if partial_record["patch_text"] in partial_texts:
                 continue
             partial_texts.add(partial_record["patch_text"])
