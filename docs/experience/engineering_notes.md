@@ -1108,3 +1108,16 @@ This file starts fresh for the patch-verification project.
 - Do not convert this clear F2P result into main evidence by downgrading to
   `test_utils.py` task-file P2P. Record the project-level discovery timeout and
   move to the next candidate.
+
+## 2026-06-12 Tornado local-server tests on Windows
+
+- Tornado websocket/http tests that use local sockets fail under Python 3.11 on
+  Windows with the default Proactor event loop because `add_reader` is not
+  implemented.
+- Setting `asyncio.WindowsSelectorEventLoopPolicy()` before importing/running
+  Tornado tests restores the local test-server execution path and exposes the
+  actual `bugsinpy_tornado_1` oracle: buggy `set_nodelay` asserts on
+  `self.stream`, fixed passes.
+- Keep this as a shared runtime compatibility shim for Windows local-server
+  tests. It is not a Tornado source edit, test fixture edit, or external network
+  dependency.

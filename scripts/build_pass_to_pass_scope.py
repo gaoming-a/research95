@@ -191,6 +191,8 @@ def build_compat_shim(out_dir: Path) -> Path:
                 "import types",
                 "import unittest.mock as _unittest_mock",
                 "from collections import namedtuple",
+                "if sys.platform.startswith('win') and hasattr(asyncio, 'WindowsSelectorEventLoopPolicy'):",
+                "    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())",
                 "if not hasattr(asyncio, 'coroutine'):",
                 "    asyncio.coroutine = types.coroutine",
                 "for _asyncio_name in ['Event', 'Lock', 'Condition', 'Semaphore', 'BoundedSemaphore', 'Queue']:",

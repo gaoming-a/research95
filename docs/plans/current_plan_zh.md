@@ -3273,6 +3273,26 @@ FastAPI 决策：
 - 下一步：并行准备 Tornado fixed checkout 与 Tornado 后续候选元数据/F2P队列；
   但先同步本计划更新到 GitHub。
 
+执行进展：
+
+- `bugsinpy_tornado_1` fixed checkout 已创建成功。
+- 直接运行 buggy F2P 时先失败在 Windows/Python 3.11 默认 Proactor event loop
+  的 `add_reader` 未实现；这不是目标 bug oracle。
+- 使用 Windows selector event loop policy 后，F2P oracle 明确：
+  - buggy checkout: `WebSocketHandler.set_nodelay` 访问 `self.stream`，
+    触发 `AssertionError`，测试最终得到 `None != "hello"`；
+  - fixed checkout: 同一测试通过。
+- 该兼容层属于 Windows 下 Tornado 本地测试服务器运行时 policy，不修改 Tornado
+  source/test fixture，也不接入外部网络服务。
+- 已将该 policy 加入 `scripts/build_pass_to_pass_scope.py` 的通用 compat shim，
+  使后续 project-level unittest P2P-broad 与 F2P probe 使用同一运行边界。
+
+下一步：
+
+- 先验证并同步 compat shim 修改。
+- 然后对 `bugsinpy_tornado_1` 启动单任务 project-level unittest
+  P2P-broad construction。
+
 执行结果：
 
 - buggy/fixed checkout 已成功创建到外部 retained workspace：
