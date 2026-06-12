@@ -5566,3 +5566,20 @@ full run 决策：
   - `recommended_buggy_checkout_exists`；
   - `recommended_fixed_checkout_exists`；
   - `command_packet_requires_approval`。
+
+## 70. 2026-06-13 youtube-dl P2P command full-flag audit
+
+本轮小目标：
+
+- 增强 `scripts/audit_youtubedl_p2p_decision.py`，解析决策包中的 PowerShell
+  command template；
+- 将文档命令参数与 generated approval-gated command packet 的 expected flags
+  完整比对；
+- 不执行 P2P、不创建 P2P manifest。
+
+新增检查：
+
+- `decision_packet_command_flags_match_expected`；
+- 覆盖 `task-id`、project、framework、unittest discovery 参数、F2P nodeid、
+  scope type、runs、timeouts、batch size、`--batch-first`、static exclude
+  tokens、out-dir 和 manifest-out。

@@ -1482,3 +1482,7 @@ This file starts fresh for the patch-verification project.
   with `approval_required = true`. This makes the next action copyable after
   confirmation while still preventing accidental P2P execution during
   unattended preparation.
+- The youtube-dl decision audit should parse the documented PowerShell command
+  and compare all expected flags against the generated approval-gated command
+  packet. Partial checks on task id and oracle nodeid are not enough once the
+  command becomes the handoff artifact.

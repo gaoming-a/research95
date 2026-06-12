@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import shlex
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
@@ -57,16 +58,53 @@ def checkout_root(source_workspace_root: str, task_id: str, version: str) -> Pat
 def parse_decision_packet(path: Path) -> dict[str, Any]:
     text = path.read_text(encoding="utf-8")
     recommended_match = re.search(r"Recommended first representative:\s*`([^`]+)`", text)
-    command_task_match = re.search(r"--task-id\s+([^\s`]+)", text)
-    fail_to_pass_match = re.search(r"--fail-to-pass-nodeid\s+\"?([^\"`\r\n]+)\"?", text)
-    manifest_match = re.search(r"--manifest-out\s+([^\s`]+)", text)
+    command_match = re.search(r"```powershell\s*(.*?)```", text, flags=re.DOTALL)
+    command = command_match.group(1).strip() if command_match else ""
+    command_flags = parse_powershell_command_flags(command)
     return {
         "path": path.as_posix(),
         "recommended_task_id": recommended_match.group(1) if recommended_match else None,
-        "command_task_id": command_task_match.group(1) if command_task_match else None,
-        "command_fail_to_pass_nodeid": fail_to_pass_match.group(1).strip() if fail_to_pass_match else None,
-        "manifest_out": manifest_match.group(1) if manifest_match else None,
+        "command": command,
+        "command_flags": command_flags,
+        "command_task_id": single_flag_value(command_flags, "task-id"),
+        "command_fail_to_pass_nodeid": single_flag_value(command_flags, "fail-to-pass-nodeid"),
+        "manifest_out": single_flag_value(command_flags, "manifest-out"),
     }
+
+
+def parse_powershell_command_flags(command: str) -> dict[str, Any]:
+    normalized = command.replace("`", " ")
+    tokens = shlex.split(normalized, posix=False)
+    flags: dict[str, Any] = {}
+    index = 0
+    while index < len(tokens):
+        token = tokens[index]
+        if not token.startswith("--"):
+            index += 1
+            continue
+        name = token[2:]
+        if index + 1 >= len(tokens) or tokens[index + 1].startswith("--"):
+            value: Any = True
+            index += 1
+        else:
+            value = tokens[index + 1].strip("\"'")
+            index += 2
+        if name in flags:
+            if not isinstance(flags[name], list):
+                flags[name] = [flags[name]]
+            flags[name].append(value)
+        else:
+            flags[name] = value
+    return flags
+
+
+def single_flag_value(flags: dict[str, Any], name: str) -> str | None:
+    value = flags.get(name)
+    if isinstance(value, list):
+        return str(value[-1]) if value else None
+    if value is True or value is None:
+        return None
+    return str(value)
 
 
 def expected_fail_to_pass_nodeid(candidate: dict[str, Any] | None) -> str | None:
@@ -141,9 +179,37 @@ def p2p_command_packet(
         "approval_required": True,
         "command": "\n".join(command_lines),
         "argv": argv,
+        "expected_flags": {
+            "task-id": task_id,
+            "project": "youtube-dl",
+            "test-framework": "unittest",
+            "unittest-start-dir": "test",
+            "unittest-pattern": "test_*.py",
+            "fail-to-pass-nodeid": fail_to_pass_nodeid,
+            "scope-type": "project_level_p2p_broad",
+            "runs": "3",
+            "timeout-seconds": "30",
+            "batch-timeout-seconds": "1800",
+            "batch-size": "50",
+            "batch-first": True,
+            "static-exclude-token": static_exclude_tokens,
+            "out-dir": out_dir,
+            "manifest-out": manifest,
+        },
         "out_dir": out_dir,
         "manifest_out": manifest,
     }
+
+
+def flags_match_expected(actual: dict[str, Any], expected: dict[str, Any]) -> bool:
+    for name, expected_value in expected.items():
+        actual_value = actual.get(name)
+        if isinstance(expected_value, list):
+            if actual_value != expected_value:
+                return False
+        elif actual_value != expected_value:
+            return False
+    return True
 
 
 def build_audit(args: argparse.Namespace) -> dict[str, Any]:
@@ -182,6 +248,10 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "recommended_matches_lowest_static_cost": bool(lowest and recommended == lowest["task_id"]),
         "command_task_matches_recommended": bool(recommended and command_task == recommended),
         "command_fail_to_pass_matches_probe": bool(expected_f2p_nodeid and packet["command_fail_to_pass_nodeid"] == expected_f2p_nodeid),
+        "decision_packet_command_flags_match_expected": flags_match_expected(
+            packet["command_flags"],
+            command_packet["expected_flags"],
+        ),
         "recommended_buggy_checkout_exists": bool(buggy_checkout and buggy_checkout.exists()),
         "recommended_fixed_checkout_exists": bool(fixed_checkout and fixed_checkout.exists()),
         "recommended_manifest_not_already_tracked": not manifest_exists,
