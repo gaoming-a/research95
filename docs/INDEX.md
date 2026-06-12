@@ -309,7 +309,8 @@
 - `experiments/evp7_youtubedl_p2p_decision_packet_20260613.md`: decision
   packet for whether to run one bounded project-level P2P-broad attempt for the
   current seven clean-F2P `youtube-dl` candidates. It now includes a no-run
-  static preflight for `youtube-dl_6`.
+  static preflight sweep that selects `youtube-dl_7` as the lowest-static-cost
+  representative.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

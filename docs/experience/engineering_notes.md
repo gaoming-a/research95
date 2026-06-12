@@ -1464,3 +1464,8 @@ This file starts fresh for the patch-verification project.
   rather than one-off inline snippets. The script is intentionally static-only:
   it must not be used as admission evidence or as a substitute for
   project-level P2P-broad validation.
+- When static preflight evidence changes the cheapest representative task,
+  update the decision packet before running P2P. For the current youtube-dl
+  family, `youtube-dl_7` has the smallest remaining method set under the current
+  exclusions, so it should be the first bounded representative attempt if P2P is
+  approved.

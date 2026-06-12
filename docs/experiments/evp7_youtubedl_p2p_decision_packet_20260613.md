@@ -36,12 +36,12 @@ test edits, fixture shims, or task-file P2P downgrade.
 Approve or reject one bounded project-level P2P-broad attempt for the
 `youtube-dl` family.
 
-Recommended first representative: `bugsinpy_youtube-dl_6`.
+Recommended first representative: `bugsinpy_youtube-dl_7`.
 
 Reason: it is a pure utility unittest with a clear buggy fail and fixed pass,
-and it is less likely than downloader/network tests to depend on external
-services. This is an inference from the recorded target command; it is not yet
-P2P evidence.
+and the family-level static preflight shows the smallest remaining static P2P
+candidate set among the seven current `youtube-dl` F2P candidates. This is an
+inference from static source inspection; it is not yet P2P evidence.
 
 ## Proposed Boundary If Approved
 
@@ -59,12 +59,12 @@ Command template:
 
 ```powershell
 python scripts\build_pass_to_pass_scope.py `
-  --task-id bugsinpy_youtube-dl_6 `
+  --task-id bugsinpy_youtube-dl_7 `
   --project youtube-dl `
   --test-framework unittest `
   --unittest-start-dir test `
   --unittest-pattern "test_*.py" `
-  --fail-to-pass-nodeid "test.test_utils.TestUtil.test_parse_dfxp_time_expr" `
+  --fail-to-pass-nodeid "test.test_utils.TestUtil.test_js_to_json_realworld" `
   --scope-type project_level_p2p_broad `
   --runs 3 `
   --timeout-seconds 30 `
@@ -76,8 +76,8 @@ python scripts\build_pass_to_pass_scope.py `
   --static-exclude-token "urlopen" `
   --static-exclude-token "http://" `
   --static-exclude-token "https://" `
-  --out-dir outputs\p2p_scope_builds\bugsinpy_youtube-dl_6 `
-  --manifest-out data\p2p_scopes\bugsinpy_youtube-dl_6_p2p_broad.json
+  --out-dir outputs\p2p_scope_builds\bugsinpy_youtube-dl_7 `
+  --manifest-out data\p2p_scopes\bugsinpy_youtube-dl_7_p2p_broad.json
 ```
 
 ## Static Preflight
@@ -100,6 +100,22 @@ The remaining method set is identical across buggy and fixed checkouts:
 
 This preflight supports a bounded representative attempt, but it does not prove
 that dynamic project-level P2P will finish within budget.
+
+The same static preflight was then run across all seven clean-F2P `youtube-dl`
+candidates:
+
+| Task | Static methods per side | Remaining methods per side | Buggy/fixed remaining diff |
+| --- | ---: | ---: | ---: |
+| `bugsinpy_youtube-dl_2` | 212 | 151 | 0 |
+| `bugsinpy_youtube-dl_3` | 211 | 151 | 0 |
+| `bugsinpy_youtube-dl_4` | 196 | 141 | 0 |
+| `bugsinpy_youtube-dl_5` | 191 | 137 | 0 |
+| `bugsinpy_youtube-dl_6` | 154 | 111 | 0 |
+| `bugsinpy_youtube-dl_7` | 149 | 108 | 0 |
+| `bugsinpy_youtube-dl_11` | 232 | 167 | 0 |
+
+This makes `bugsinpy_youtube-dl_7` the lowest static-cost representative under
+the current token exclusions.
 
 ## Success Gate
 

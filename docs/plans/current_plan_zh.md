@@ -5442,3 +5442,37 @@ full run 决策：
   - 静态排除后各剩余 111 个；
   - buggy/fixed 剩余集合差异为 0；
 - README、INDEX 和经验文档补充脚本入口。
+
+执行结果：
+
+- 已新增 `scripts/static_unittest_p2p_preflight.py`；
+- 已用该脚本复现 `youtube-dl_6` 静态预检结果；
+- 已补充 README、INDEX 和经验文档入口。
+
+## 66. 2026-06-13 youtube-dl family static preflight sweep
+
+本轮小目标：
+
+- 使用可复用静态预检脚本检查全部 7 个 clean-F2P `youtube-dl` 候选；
+- 找出如果后续批准 P2P，哪个代表任务静态成本最低；
+- 不执行 P2P、不创建 P2P manifest、不修改实验标签。
+
+执行结果：
+
+| Task | Static methods per side | Remaining methods per side | Buggy/fixed remaining diff |
+| --- | ---: | ---: | ---: |
+| `bugsinpy_youtube-dl_2` | 212 | 151 | 0 |
+| `bugsinpy_youtube-dl_3` | 211 | 151 | 0 |
+| `bugsinpy_youtube-dl_4` | 196 | 141 | 0 |
+| `bugsinpy_youtube-dl_5` | 191 | 137 | 0 |
+| `bugsinpy_youtube-dl_6` | 154 | 111 | 0 |
+| `bugsinpy_youtube-dl_7` | 149 | 108 | 0 |
+| `bugsinpy_youtube-dl_11` | 232 | 167 | 0 |
+
+当前结论：
+
+- 全部 7 个候选的 buggy/fixed 静态剩余集合差异均为 0；
+- `bugsinpy_youtube-dl_7` 静态剩余方法数最少，为 108；
+- 因此将 P2P 决策包中的推荐代表任务从 `youtube-dl_6` 修订为
+  `youtube-dl_7`；
+- 这仍只是静态效率证据，不允许据此 admission。
