@@ -1245,7 +1245,13 @@ This file starts fresh for the patch-verification project.
   dependency import errors under Python 3.11. These are runner/environment
   boundaries, not candidate-patch failures. Do not classify pytest exit codes
   other than 0 and 1 as visible test failed; record them as `error`.
-- Current visible outcome source completes 30/42 candidates. Deterministic E6
-  visible tool summaries also complete 30/42 by summarizing already
-  model-visible patch-apply/static/test evidence. G1 remains blocked by the 12
-  E4/E6 runner errors.
+- Reusing tracked P2P manifest compat shims in the visible runner is an
+  environment-consistency repair, not a new task-specific shim. The runner must
+  not create or modify shims; it may only use `compat_shim.enabled=true` paths
+  already recorded in tracked P2P manifests.
+- After adding tracked compat-shim reuse, current visible outcome source
+  completes 42/42 candidates. Three outcomes remain `error`, but they are
+  candidate-induced import failures after the runner environment is aligned,
+  so they count as complete visible runtime evidence. Deterministic E6 visible
+  tool summaries also complete 42/42 by summarizing already model-visible
+  patch-apply/static/test evidence.

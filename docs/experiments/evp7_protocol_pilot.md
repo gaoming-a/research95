@@ -158,30 +158,27 @@ Current status:
 
 - E0 complete for 42 candidates;
 - E2 complete for 42 candidates, using patch-apply evidence only;
-- E4 complete for 30 candidates after independently rerunning predeclared
-  visible tests in candidate workdirs;
-- E4 remains incomplete for 12 candidates because the runner hit
-  environment/import errors: 6 from `bugsinpy_PySnooper_1` and 6 from
-  `bugsinpy_httpie_5`;
-- E6 complete for the same 30 candidates after deterministic visible tool
-  summaries were generated from model-visible static and visible-test evidence;
-- E6 remains incomplete for the same 12 candidates because their visible-test
-  outcome source is still error;
+- E4 complete for 42 candidates after independently rerunning predeclared
+  visible tests in candidate workdirs with tracked P2P compat-shim reuse;
+- visible test outcomes include 7 passed checks, 39 failed checks, and 3 error
+  checks; the 3 errors are candidate-induced import errors and are retained as
+  visible runtime outcomes;
+- E6 complete for 42 candidates after deterministic visible tool summaries were
+  generated from model-visible static and visible-test evidence;
 - automated leakage audit passes with zero findings.
 
 ## Current Limitation
 
-This round generates model-visible packet records and an independent visible
-test outcome source, but G1 packet completeness is not yet passed because E4 is
-incomplete for 12 candidates; E6 follows the same 30/42 complete boundary.
+This round generates model-visible packet records, an independent visible test
+outcome source, and deterministic visible tool summaries. G1 and G2 now pass.
 
 Reason:
 
 - candidate labels and failure taxonomy are tracked for evaluator use only;
 - retained-oracle and hidden P2P validation outcomes cannot be reused as
   model-visible E4/E6 evidence;
-- PySnooper_1 and httpie_5 visible-test errors are environment/import boundaries
-  under the current no-compat-layer rule.
+- remaining visible `error` outcomes are candidate-induced import failures, not
+  missing evidence.
 
 The task manifest marks missing task metadata such as commits, issue summaries,
 and touched files as `metadata_backfill_required` instead of fabricating values
@@ -192,8 +189,8 @@ from local checkouts.
 The next executable step is:
 
 ```text
-Resolve or explicitly bound the 12 E4/E6 visible-test runner errors, then rerun
-leakage audit before any LLM API calls.
+Run tool-only baselines and merge-gate schema dry-runs before any real LLM API
+calls.
 ```
 
 No new BugsInPy expansion, native build work, external benchmark migration, or

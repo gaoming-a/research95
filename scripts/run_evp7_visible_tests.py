@@ -83,13 +83,18 @@ def _terminate(process: subprocess.Popen[str]) -> None:
         process.terminate()
 
 
-def _run(command: list[str], cwd: Path, timeout: int) -> dict[str, Any]:
+def _run(command: list[str], cwd: Path, timeout: int, pythonpath: Path | None) -> dict[str, Any]:
     start = time.monotonic()
     process: subprocess.Popen[str] | None = None
+    env = os.environ.copy()
+    if pythonpath is not None:
+        existing = env.get("PYTHONPATH")
+        env["PYTHONPATH"] = str(pythonpath) if not existing else str(pythonpath) + os.pathsep + existing
     try:
         process = subprocess.Popen(
             command,
             cwd=cwd,
+            env=env,
             text=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -123,6 +128,28 @@ def _tail(text: str, limit: int = 600) -> str:
     return text[-limit:]
 
 
+def _scope_compat_shim(candidate: dict[str, Any]) -> tuple[Path | None, dict[str, Any]]:
+    manifest_rel = candidate.get("source_files", {}).get("p2p_manifest")
+    if not manifest_rel:
+        return None, {"enabled": False, "reason": "missing_p2p_manifest"}
+    manifest_path = REPO_ROOT / manifest_rel
+    if not manifest_path.exists():
+        return None, {"enabled": False, "p2p_manifest": manifest_rel, "reason": "missing_p2p_manifest_file"}
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    compat = manifest.get("compat_shim", {})
+    if not compat.get("enabled") or not compat.get("path"):
+        return None, {"enabled": False, "p2p_manifest": manifest_rel, "reason": "compat_shim_not_enabled"}
+    compat_path = REPO_ROOT / compat["path"]
+    if not compat_path.exists():
+        return None, {"enabled": False, "p2p_manifest": manifest_rel, "reason": "missing_compat_shim_path"}
+    return compat_path, {
+        "enabled": True,
+        "p2p_manifest": manifest_rel,
+        "compat_shim_path": compat["path"],
+        "source": "tracked_p2p_scope_manifest",
+    }
+
+
 def _outcome_record(
     candidate: dict[str, Any],
     validation: dict[str, Any],
@@ -139,6 +166,7 @@ def _outcome_record(
         blockers.append("missing_candidate_workdir")
     if not python_executable:
         blockers.append("missing_python_executable")
+    compat_path, compat_record = _scope_compat_shim(candidate)
 
     base_record: dict[str, Any] = {
         "cohort_id": "EVP-7",
@@ -154,6 +182,7 @@ def _outcome_record(
             "candidate_workdir_kind": workdir_kind,
             "python_source": "validation_oracle_command_python",
             "pytest_addopts_override": validation.get("pytest_addopts_override"),
+            "compat_shim": compat_record,
         },
     }
     if blockers:
@@ -181,7 +210,7 @@ def _outcome_record(
             ],
         }
 
-    result = _run(command, workdir, timeout)
+    result = _run(command, workdir, timeout, compat_path)
     if result["timeout"]:
         outcome = "timeout"
         run_status = "timeout"
@@ -237,7 +266,7 @@ def build_outcomes(candidates_path: Path, dry_run: bool, timeout: int) -> tuple[
         ),
         "blocked_count": sum(1 for record in records if record["run_status"] == "blocked"),
         "complete_visible_outcome_count": sum(
-            1 for record in records if record["run_status"] in {"completed", "timeout"}
+            1 for record in records if record["run_status"] in {"completed", "error", "timeout"}
         ),
         "leakage_policy": "records contain visible test names and outcomes only; evaluator labels are not read or emitted",
     }

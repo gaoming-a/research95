@@ -4,8 +4,8 @@
   "complete_packet_counts_by_level": {
     "E0": 42,
     "E2": 42,
-    "E4": 30,
-    "E6": 30
+    "E4": 42,
+    "E6": 42
   },
   "evidence_levels": [
     "E0",
@@ -13,11 +13,11 @@
     "E4",
     "E6"
   ],
-  "g1_blocker": "E4/E6 remain incomplete for candidates with visible-test runner errors; evaluator validation labels remain hidden.",
-  "g1_packet_completeness": "not_passed",
+  "g1_blocker": null,
+  "g1_packet_completeness": "passed",
   "g2_leakage_audit": "passed",
   "leakage_findings_count": 0,
-  "next_step": "Resolve or explicitly bound remaining E4/E6 incomplete candidates before LLM API calls.",
+  "next_step": "Run tool-only baselines and merge-gate schema dry-run before any real LLM API calls.",
   "packet_count": 168,
   "packet_counts_by_level": {
     "E0": 42,
@@ -27,12 +27,11 @@
   },
   "visible_outcome_source": "data\\evidence\\evp7_visible_test_outcomes.jsonl",
   "visible_outcome_status_counts": {
-    "completed": 30,
-    "error": 12
+    "completed": 39,
+    "error": 3
   },
   "visible_tool_summary_source": "data\\evidence\\evp7_visible_tool_summaries.jsonl",
   "visible_tool_summary_status_counts": {
-    "complete": 30,
-    "incomplete": 12
+    "complete": 42
   }
 }

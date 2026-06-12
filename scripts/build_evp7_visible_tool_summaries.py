@@ -75,7 +75,7 @@ def _summary_record(candidate_id: str, packets: dict[str, dict[str, Any]], outco
     test_results = outcome.get("test_results", []) if outcome else []
     test_counts = _counts(result.get("outcome") for result in test_results)
     run_status = outcome.get("run_status") if outcome else "missing"
-    summary_status = "complete" if run_status in {"completed", "timeout"} else "incomplete"
+    summary_status = "complete" if run_status in {"completed", "error", "timeout"} else "incomplete"
     return {
         "cohort_id": "EVP-7",
         "candidate_id": candidate_id,
@@ -130,8 +130,8 @@ def _check(records: list[dict[str, Any]], summary: dict[str, Any]) -> None:
         raise SystemExit(f"tool summary count changed: {summary['record_count']} != 42")
     if summary["leakage_audit"] != "passed":
         raise SystemExit("visible tool summary leakage audit failed")
-    if summary["summary_status_counts"].get("complete") != 30:
-        raise SystemExit("expected 30 complete visible tool summaries")
+    if summary["summary_status_counts"].get("complete") != 42:
+        raise SystemExit("expected 42 complete visible tool summaries")
 
 
 def main() -> int:

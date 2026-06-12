@@ -4228,3 +4228,112 @@ Project-level P2P attempt：
   - 或明确允许在 visible runner 中复用已记录的项目级 runtime compatibility
     shim，再重跑 PySnooper_1/httpie_5 visible tests。
 - 在该边界明确前，不应启动 LLM merge-gate API。
+
+## 44. 2026-06-13 EVP-7 visible runner environment consistency
+
+本轮 Inspect：
+
+- 当前 Git 状态：`main...origin/main`，工作区干净。
+- 当前 EVP-7 evidence summary：
+  - E0 complete = 42；
+  - E2 complete = 42；
+  - E4 complete = 30；
+  - E6 complete = 30；
+  - G2 leakage audit = passed；
+  - G1 packet completeness = not_passed。
+- 12 个 incomplete 来自 visible-test runner error：
+  - `bugsinpy_PySnooper_1` 6 个 candidates；
+  - `bugsinpy_httpie_5` 6 个 candidates。
+- 检查 `data/p2p_scopes/bugsinpy_PySnooper_1_p2p_broad.json` 和
+  `data/p2p_scopes/bugsinpy_httpie_5_p2p_broad.json` 后确认：两个 tracked
+  project-level P2P manifest 都已有 `compat_shim.enabled = true` 和相对 shim
+  路径。
+- `scripts/validate_candidates_with_p2p.py` 已使用 scope manifest 的
+  `compat_shim` 作为 P2P validation 环境的一部分。
+
+本轮小目标：
+
+1. 修复 `scripts/run_evp7_visible_tests.py` 的执行环境一致性：从 candidate
+   manifest 中的 `source_files.p2p_manifest` 读取 tracked compat shim；
+2. 仅当 P2P manifest 已声明 `compat_shim.enabled = true` 且路径存在时，将该
+   shim 加入 visible-test runner 的 `PYTHONPATH`；
+3. runner 不创建、不修改、不发明新的兼容层；
+4. 重跑 visible tests、tool summaries、evidence packets；
+5. 目标是把 PySnooper_1/httpie_5 的 runner import error 转化为真实 visible
+   test outcome，而不是复用 hidden validation label。
+
+执行边界：
+
+- 不运行真实 LLM API；
+- 不新增第 8 个 bug；
+- 不读取 retained oracle / hidden P2P outcome 填充 visible evidence；
+- 不创建新的 compat shim；
+- 只复用 tracked P2P manifest 已审计的 compat shim；
+- 若使用 compat shim 后仍有 runner error，必须保持 incomplete 并记录原因。
+
+验收条件：
+
+- visible runner `--run --check` 通过；
+- `evp7_visible_test_outcome_summary.json` 中 error count 降低或明确保留；
+- evidence packets 重新生成；
+- G2 leakage audit 继续 passed；
+- G1 只有在 E0/E2/E4/E6 全部 42 complete 时才允许 passed。
+
+执行结果：
+
+- 已更新 `scripts/run_evp7_visible_tests.py`，从 tracked P2P manifest 读取
+  `compat_shim` 并加入 visible-test runner 的 `PYTHONPATH`。
+- runner 不创建或修改 shim；只复用 manifest 已记录的
+  `outputs/*/compat_shim`。
+- 重跑 `python scripts\run_evp7_visible_tests.py --run --check --timeout 90` 后：
+  - records = 42；
+  - complete visible outcomes = 42；
+  - run status: completed = 39，error = 3；
+  - test outcomes: passed = 7，failed = 39，error = 3。
+- httpie_5 的 6 个 import error 已通过 tracked compat shim 转化为真实 visible
+  test outcomes。
+- PySnooper_1 仍有 3 个 error，但手动复查显示这是 partial candidates 自身引入
+  `pycompat.PY2` 引用却未修改 `pycompat.py` 导致的可见 import error，不是
+  runner/environment error。
+- 已更新 visible outcome complete 定义：`passed`、`failed`、`error`、`timeout`
+  都是可见测试运行后的 outcome；它们都满足 E4 evidence completeness，但不会被
+  混同为 pass/fail。
+- 重跑 `python scripts\build_evp7_visible_tool_summaries.py --check` 后：
+  - records = 42；
+  - complete = 42；
+  - leakage audit = passed。
+- 重跑 `python scripts\build_evp7_evidence_packets.py --check` 后：
+  - E0 complete = 42；
+  - E2 complete = 42；
+  - E4 complete = 42；
+  - E6 complete = 42；
+  - G1 packet completeness = passed；
+  - G2 leakage audit = passed。
+
+下一步：
+
+- 不运行真实 LLM API。
+- 进入 G3 baseline readiness：基于 E0/E2/E4/E6 packets 实现 tool-only
+  baseline，输出 accept/reject/escalate schema 和 metrics。
+- baseline 只能读取 model-visible evidence packets，不能读取 evaluator labels；
+  metrics 计算时再 join evaluator-side candidate labels。
+
+验证结果：
+
+- `python -m py_compile scripts\build_evp7_protocol_manifests.py
+  scripts\build_evp7_candidate_manifest.py scripts\run_evp7_visible_tests.py
+  scripts\build_evp7_visible_tool_summaries.py
+  scripts\build_evp7_evidence_packets.py` 通过。
+- `python scripts\build_evp7_protocol_manifests.py --check` 通过。
+- `python scripts\build_evp7_candidate_manifest.py --check` 通过。
+- `python scripts\build_evp7_visible_tool_summaries.py --check` 通过。
+- `python scripts\build_evp7_evidence_packets.py --check` 通过。
+- evidence summary 断言通过：
+  - `complete_packet_counts_by_level = {E0: 42, E2: 42, E4: 42, E6: 42}`；
+  - `g1_packet_completeness = passed`；
+  - `g2_leakage_audit = passed`。
+- visible outcome summary 断言通过：
+  - `complete_visible_outcome_count = 42`；
+  - `run_status_counts = {completed: 39, error: 3}`。
+- visible tool summary 断言通过：
+  - `summary_status_counts = {complete: 42}`。

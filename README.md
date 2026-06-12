@@ -214,11 +214,12 @@ They should not override `final_paper_roadmap_zh.md`.
   `EVP-7 Protocol Pilot`. The tracked candidate manifest now contains 42
   promoted candidates across those 7 tasks. The tracked evidence packet
   manifest now contains 168 E0/E2/E4/E6 packet records. E0/E2 are complete;
-  E4 and E6 are complete for 30/42 candidates after an independent visible-test
-  runner and deterministic visible tool summaries, with 12 environment/import
-  errors still incomplete. The next work is not to find an eighth bug, but to
-  resolve or explicitly bound those visible evidence errors, add realistic
-  tool-only baselines, and run merge-gate schema checks.
+  E4 and E6 are complete for 42/42 candidates after an independent visible-test
+  runner, tracked P2P compat-shim reuse, and deterministic visible tool
+  summaries. Three visible-test outcomes are `error` because partial candidates
+  break import; they remain valid visible outcomes, not missing evidence. The
+  next work is not to find an eighth bug, but to add realistic tool-only
+  baselines and run merge-gate schema checks.
   Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and
