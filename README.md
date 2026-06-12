@@ -241,7 +241,9 @@ They should not override `final_paper_roadmap_zh.md`.
   `bugsinpy_youtube-dl_2` as the first new clean F2P signal in that batch.
   A follow-up youtube-dl F2P-only continuation also established clean F2P for
   `bugsinpy_youtube-dl_3`, `bugsinpy_youtube-dl_4`, and
-  `bugsinpy_youtube-dl_5`; none are admitted until project-level P2P-broad and
+  `bugsinpy_youtube-dl_5`. A second pure-utils continuation established
+  `bugsinpy_youtube-dl_6`, `bugsinpy_youtube-dl_7`, and
+  `bugsinpy_youtube-dl_11`; none are admitted until project-level P2P-broad and
   candidate revalidation pass. The remaining readiness lanes are blocked by environment or historical
   probe constraints: Scrapy lacks Twisted, Ansible reaches Windows `fcntl`,
   Luigi lacks Tornado after existing Python 3.11 compatibility, and

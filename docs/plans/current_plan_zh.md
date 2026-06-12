@@ -5293,3 +5293,57 @@ full run 决策：
 - 这些仍不是 main cohort tasks；
 - 下一步若要进入 admission 路径，必须先决定是否对 youtube-dl family
   启动 bounded project-level P2P-broad construction。
+
+## 62. 2026-06-13 youtube-dl pure-utils F2P-only continuation
+
+本轮小目标：
+
+- 继续做不依赖 P2P 决策的 F2P-only triage；
+- 优先选择 `youtube-dl` 中更轻的 pure-utils unittest；
+- 不启动 project-level P2P-broad construction。
+
+候选 lane：
+
+- `bugsinpy_youtube-dl_6`：
+  `python -m unittest -q test.test_utils.TestUtil.test_parse_dfxp_time_expr`；
+- `bugsinpy_youtube-dl_7`：
+  `python -m unittest -q test.test_utils.TestUtil.test_js_to_json_realworld`；
+- `bugsinpy_youtube-dl_11`：
+  `python -m unittest -q test.test_utils.TestUtil.test_str_to_int`。
+
+执行边界：
+
+- 每个 task 内 buggy/fixed checkout 串行；
+- 独立 task lane 可以并行推进；
+- 不安装依赖，不编辑 checkout；
+- 若 F2P 成立，只记录为 P2P 候选，不直接 admission；
+- 若 F2P 不成立或两端行为相同，记录为 non-admitted probe result。
+
+执行结果：
+
+- `bugsinpy_youtube-dl_6`：
+  - buggy/fixed checkout 均完成；
+  - target unittest 结果为 buggy fail、fixed pass；
+  - 判定为 `f2p_established_p2p_not_attempted`。
+- `bugsinpy_youtube-dl_7`：
+  - buggy/fixed checkout 均完成；
+  - target unittest 结果为 buggy fail、fixed pass；
+  - 判定为 `f2p_established_p2p_not_attempted`。
+- `bugsinpy_youtube-dl_11`：
+  - buggy/fixed checkout 均完成；
+  - target unittest 结果为 buggy error、fixed pass；
+  - 判定为 `f2p_established_p2p_not_attempted`。
+
+产物：
+
+- `data/tasks/evp7_controlled_probe_results.json` 追加
+  `youtube-dl_6`、`youtube-dl_7`、`youtube-dl_11`；
+- 新增 `docs/experiments/evp7_youtubedl_pure_utils_f2p_20260613.md`。
+
+当前结论：
+
+- 当前新增 clean F2P 候选为
+  `youtube-dl_2/3/4/5/6/7/11`；
+- 它们仍不是 main cohort tasks；
+- 下一步必须在 youtube-dl family P2P-broad 预算与 timeout 风险之间做显式
+  决策，不能把 F2P 数量直接当作论文主样本扩容。

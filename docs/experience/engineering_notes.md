@@ -1448,3 +1448,6 @@ This file starts fresh for the patch-verification project.
   additional same-family F2P-only probes can be efficient as long as they do
   not bypass the project-level P2P-broad admission gate. The youtube-dl 3-5
   continuation added three F2P candidates without changing main-cohort status.
+- Prefer the pure utility tests inside youtube-dl for additional F2P-only
+  screening before attempting expensive project-level P2P. They run quickly and
+  make the later P2P decision more evidence-based.
