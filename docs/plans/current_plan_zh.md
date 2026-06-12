@@ -3248,6 +3248,31 @@ FastAPI 决策：
 - `p2p_broad_size >= 3`；
 - registry 中只在上述条件满足后才允许 `p2p_broad_main_included = true`。
 
+并行执行策略更新：
+
+- 用户要求加入并行操作后，本轮允许并行执行：
+  - metadata-level candidate inspect；
+  - 2-3 个候选的 checkout；
+  - 2-3 个候选的最小 F2P probe。
+- 仍必须串行执行：
+  - 每次只允许 1 个候选进入 project-level P2P-broad construction；
+  - registry / README / INDEX / experience / current plan 更新；
+  - commit 和 push。
+- 原因：F2P 和 checkout 的等待时间可以压缩，但 project-level P2P-broad 是主证据，
+  并行运行会让 timeout、资源竞争和残留进程归因不干净。
+
+当前 Inspect：
+
+- `bugsinpy_tornado_1` buggy checkout 已在用户中断前创建到
+  `D:/mgao/code/research/data/real_bugs/bugsinpy_workspace/tornado_1/buggy`。
+- fixed checkout 尚未创建。
+- buggy checkout 内部 Git dirty 状态来自 BugsInPy 注入测试/元数据文件，不属于
+  research95 repo 修改。
+- 候选池重筛已生成 ignored outputs：
+  `outputs/candidate_pool_rescreen/parallel_latest.*`。
+- 下一步：并行准备 Tornado fixed checkout 与 Tornado 后续候选元数据/F2P队列；
+  但先同步本计划更新到 GitHub。
+
 执行结果：
 
 - buggy/fixed checkout 已成功创建到外部 retained workspace：
