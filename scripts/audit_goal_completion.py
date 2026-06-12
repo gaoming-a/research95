@@ -80,7 +80,7 @@ def build_audit() -> dict[str, Any]:
     stage_counts = plan_progress.get("stage_counts", {}) if isinstance(plan_progress, dict) else {}
     ledger_records = run_records.get("records", []) if isinstance(run_records.get("records"), list) else []
     ledger_run_types = sorted({str(record.get("run_type")) for record in ledger_records if isinstance(record, dict)})
-    required_ledger_types = ["full_api", "no_api_repro", "quality_gate", "smoke_api"]
+    required_ledger_types = ["full_api", "no_api_repro", "quality_gate", "smoke_api", "tool_augmented_full_api"]
 
     requirements = [
         check(

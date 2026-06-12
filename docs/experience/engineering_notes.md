@@ -1510,3 +1510,12 @@ This file starts fresh for the patch-verification project.
   `youtube_dl_p2p_decision` input and include the approval-gated command packet
   plus dry-run checks, so execution does not proceed without explicit approval
   or an explicit reject/stop decision.
+- Readiness Markdown must render the same next-action state as the JSON audit.
+  Do not hard-code stale fallback commands when `next_actions` is empty; report
+  `None.` so the human handoff does not waste time rerunning completed API
+  smoke/preflight steps.
+- Experiment run ledgers must include the positive-claim run, not only the
+  negative prompt-only full run. For the current project, the ledger should
+  contain a separate `tool_augmented_full_api` record for
+  `outputs/patch_verification_tool_augmented_full_001` and mark it as supporting
+  only the conditional tool-assisted claim.

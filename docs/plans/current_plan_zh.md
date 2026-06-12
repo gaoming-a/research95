@@ -5708,3 +5708,40 @@ full run 决策：
 - forbidden actions 明确禁止未批准时运行 `youtube-dl_7` P2P；
 - 后续 readiness/goal completion audit 继续报告当前目标未完成，直到该决策被
   明确批准并完成 manifest，或被明确拒绝并修订计划。
+
+## 76. 2026-06-13 readiness Markdown next-action consistency
+
+本轮小目标：
+
+- 修复 `outputs/readiness_audit/latest.md` 中 next actions 与 JSON
+  `next_actions` 不一致的问题；
+- 不执行真实 API、不执行 `youtube-dl_7` P2P、不创建新的 P2P manifest；
+- 只修本地审计报告表达，避免后续快速交接时误以为仍需要重新跑 API smoke。
+
+执行边界：
+
+- `scripts/audit_execution_readiness.py` 的 JSON 逻辑已经能正确返回空
+  `next_actions`；
+- 本轮只修 Markdown fallback：当无 next action 时报告 `None.`；
+- 验证后刷新 readiness/goal completion/handoff 报告，确认唯一硬缺口仍是
+  `youtube_dl_p2p_decision_resolved`。
+
+## 77. 2026-06-13 run-record ledger covers tool-augmented full run
+
+本轮小目标：
+
+- 将已有 `outputs/patch_verification_tool_augmented_full_001` 纳入
+  experiment run-record ledger；
+- 让 `scripts/audit_goal_completion.py` 要求 ledger 覆盖
+  `tool_augmented_full_api`；
+- 保持 prompt-only evidence-first 的负结论不变，只把
+  `tool_augmented_evidence` 记录为条件性 tool-assisted claim 的证据。
+
+执行边界：
+
+- 不调用真实 API；
+- 不重跑 full run；
+- 只读取已有 `reviews.jsonl`、`metrics.json`、`run_completeness.json` 和
+  `tool_augmented_full_gate.json`；
+- ledger summary 需要区分 prompt-only positive claim 与 tool-augmented
+  conditional claim。

@@ -423,9 +423,9 @@
   `outputs/handoff/pre_api_handoff.md`.
 - `scripts/write_experiment_run_records.py`: writes the experiment run ledger
   required by the AI execution plan. It summarizes no-API reproduction, smoke
-  API, full API, and local quality-gate records using existing JSON evidence
-  and marks whether any run is allowed to support a paper claim. Latest report:
-  `outputs/experiment_run_records/latest.md`.
+  API, prompt-only full API, tool-augmented full API, and local quality-gate
+  records using existing JSON evidence and marks whether any run is allowed to
+  support a paper claim. Latest report: `outputs/experiment_run_records/latest.md`.
 - `scripts/audit_paper_readiness.py`: Stage-E audit that prevents moving from
   the pre-API methods draft to positive claims until real API outputs, failure
   examples, and the relevant gate are present. It reports prompt-only positive

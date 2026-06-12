@@ -460,7 +460,8 @@ python scripts\audit_command_templates.py `
   --out-md outputs\command_templates\latest.md
 ```
 
-For experiment run-record generation only, run:
+For experiment run-record generation only, including the prompt-only full run
+and the conditional tool-augmented full run, run:
 
 ```powershell
 python scripts\write_experiment_run_records.py `

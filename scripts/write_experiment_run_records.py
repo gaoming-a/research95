@@ -10,6 +10,7 @@ from typing import Any
 NO_API_REPRO_DIR = Path("outputs") / "patch_verification_pilot_repro_001"
 SMOKE_API_DIR = Path("outputs") / "patch_verification_api_pilot_001_tokens4096"
 FULL_API_DIR = Path("outputs") / "patch_verification_api_pilot_002"
+TOOL_AUGMENTED_FULL_DIR = Path("outputs") / "patch_verification_tool_augmented_full_001"
 
 
 def read_json(path: Path) -> dict[str, Any] | None:
@@ -183,6 +184,71 @@ def quality_record() -> dict[str, Any]:
     }
 
 
+def tool_augmented_record() -> dict[str, Any]:
+    run_dir = TOOL_AUGMENTED_FULL_DIR
+    reviews = read_jsonl(run_dir / "reviews.jsonl")
+    metrics = read_json(run_dir / "metrics.json") or {}
+    completeness = read_json(run_dir / "run_completeness.json") or {}
+    gate = read_json(run_dir / "tool_augmented_full_gate.json") or {}
+    run_error_exists = (run_dir / "run_error.json").exists()
+    mock_count = completeness.get("mock_review_count")
+    if mock_count is None:
+        mock_count = metrics.get("mock_review_count")
+    positive_allowed = bool(
+        reviews
+        and not run_error_exists
+        and completeness.get("passed") is True
+        and completeness.get("expected_records") == 30
+        and completeness.get("unique_reviewed_candidates") == 30
+        and mock_count == 0
+        and gate.get("passed") is True
+    )
+    return {
+        "run_id": "patch_verification_tool_augmented_full_001",
+        "run_dir": run_dir.as_posix(),
+        "run_type": "tool_augmented_full_api",
+        "date": modified_or_now(run_dir),
+        "model_slug": first_model(reviews),
+        "conditions": sorted({str(record.get("condition")) for record in reviews if record.get("condition")}),
+        "candidate_count": completeness.get("unique_reviewed_candidates"),
+        "review_record_count": len(reviews) if reviews else None,
+        "mock_review_count": mock_count,
+        "command": (
+            "python scripts\\run_redesign_smoke_workflow.py "
+            "--config outputs\\patch_verification_tool_augmented_full_001\\api_config.local.json "
+            "--run-dir outputs\\patch_verification_tool_augmented_full_001 "
+            "--gate-mode full --execute"
+        ),
+        "key_outputs": existing_outputs(
+            run_dir,
+            [
+                "reviews.jsonl",
+                "metrics.json",
+                "run_summary.md",
+                "run_completeness.json",
+                "api_pilot_report.md",
+                "failure_examples.json",
+                "tool_augmented_full_gate.json",
+            ],
+        ),
+        "gate_verdict": "passed" if gate.get("passed") is True else "failed_or_missing",
+        "paper_claim_allowed": paper_claim_allowed(positive_allowed),
+        "notes": {
+            "expected_candidates": 30,
+            "expected_records": 30,
+            "run_error_exists": run_error_exists,
+            "completeness_passed": completeness.get("passed"),
+            "tool_augmented_gate_passed": gate.get("passed"),
+            "boundary": (
+                "Full non-mock tool-augmented run; eligible only for the conditional "
+                "tool-assisted verification claim, not for the prompt-only evidence-first claim."
+            )
+            if positive_allowed
+            else "Tool-augmented full run is not currently eligible for a positive conditional claim.",
+        },
+    }
+
+
 def api_command(run_type: str) -> str:
     if run_type == "smoke_api":
         return (
@@ -223,6 +289,7 @@ def build_ledger() -> dict[str, Any]:
         no_api_record(),
         api_record(SMOKE_API_DIR, "patch_verification_api_pilot_001_tokens4096", "smoke_api", 2),
         api_record(FULL_API_DIR, "patch_verification_api_pilot_002", "full_api", 30),
+        tool_augmented_record(),
         quality_record(),
     ]
     readiness = read_json(Path("outputs/readiness_audit/latest.json")) or {}
@@ -233,7 +300,8 @@ def build_ledger() -> dict[str, Any]:
         "summary": {
             "record_count": len(records),
             "real_api_ready": readiness.get("overall_ready_for_real_api"),
-            "positive_paper_claim_ready": paper.get("positive_claim_ready"),
+            "prompt_only_positive_paper_claim_ready": paper.get("positive_claim_ready"),
+            "tool_augmented_claim_ready": paper.get("tool_augmented_claim_ready"),
             "records_allowing_paper_claim": [
                 record["run_id"] for record in records if record.get("paper_claim_allowed") == "yes"
             ],
@@ -250,7 +318,8 @@ def build_markdown(ledger: dict[str, Any]) -> str:
         f"- generated at UTC: `{ledger['generated_at_utc']}`",
         f"- record count: {ledger['summary']['record_count']}",
         f"- real API ready: {bool_mark(ledger['summary'].get('real_api_ready'))}",
-        f"- positive paper claim ready: {bool_mark(ledger['summary'].get('positive_paper_claim_ready'))}",
+        f"- prompt-only positive paper claim ready: {bool_mark(ledger['summary'].get('prompt_only_positive_paper_claim_ready'))}",
+        f"- tool-augmented claim ready: {bool_mark(ledger['summary'].get('tool_augmented_claim_ready'))}",
         f"- records allowing paper claim: `{ledger['summary']['records_allowing_paper_claim']}`",
         "",
         "## Records",

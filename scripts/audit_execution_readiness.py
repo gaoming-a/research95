@@ -351,7 +351,7 @@ def build_markdown(audit: dict[str, Any]) -> str:
         for action in audit["next_actions"]:
             lines.append(f"- {action}")
     else:
-        lines.append("- Run the real API preflight and smoke pilot.")
+        lines.append("- None.")
     lines.append("")
     return "\n".join(lines)
 
