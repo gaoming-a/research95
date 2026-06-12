@@ -1126,3 +1126,15 @@ This file starts fresh for the patch-verification project.
   minutes with only the compat shim written, and cleanup observed an SSL
   iostream test active. Record the task as a project-level scope timeout rather
   than downgrading websocket_test.py to main evidence.
+
+## 2026-06-12 BugsInPy checkout parallelism boundary
+
+- Do not run buggy and fixed checkout for the same BugsInPy task in parallel.
+  The `bugsinpy-checkout` script uses the shared
+  `projects/<project>/bugs/<id>/` directory as temporary storage for copied
+  test and changed files, then removes those temporary directories.
+- Parallel same-task checkout can race and leave one checkout with incomplete
+  injected tests, as observed for `bugsinpy_tornado_9` fixed checkout missing
+  `test_url_concat_none_params`.
+- Safe parallelism is across different task ids, or after checkout has already
+  completed. Same-task buggy/fixed checkout should stay serial.

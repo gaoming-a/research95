@@ -3376,6 +3376,25 @@ Project-level P2P attempt：
 - `p2p_broad_size >= 3`；
 - registry 中只在上述条件满足后才允许 `p2p_broad_main_included = true`。
 
+执行进展：
+
+- 初次并行创建 `bugsinpy_tornado_9` buggy/fixed checkout 时，fixed checkout
+  返回 `mv: cannot stat ...httputil_test.py`。
+- 原因诊断：BugsInPy checkout 脚本会在 `projects/<project>/bugs/<id>/`
+  下临时复制、移动并删除测试/补丁文件；同一 task 的 buggy/fixed checkout
+  并行会争用同一临时资源。
+- 已删除不完整的 fixed checkout，并串行重建 fixed checkout；重建后目标测试方法存在。
+- 更新并行边界：不同 task 的 metadata / checkout 可并行；同一 task 的 buggy/fixed
+  checkout 必须串行。
+- 在通用 compat shim 下，F2P oracle 明确：
+  - buggy checkout: `url_concat(..., None)` 抛出 `TypeError`；
+  - fixed checkout: 同一测试通过。
+
+下一步：
+
+- 对 `bugsinpy_tornado_9` 启动单任务 project-level unittest P2P-broad
+  construction。
+
 执行结果：
 
 - buggy/fixed checkout 已成功创建到外部 retained workspace：
