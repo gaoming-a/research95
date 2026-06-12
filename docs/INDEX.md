@@ -500,6 +500,9 @@
 - `scripts/build_pass_to_pass_scope.py`: collects project tests and builds
   P2P-core/P2P-broad stable runnable subsets for a task. It supports pytest and
   bounded unittest discovery/runner adapters.
+- `scripts/static_unittest_p2p_preflight.py`: no-run AST preflight for unittest
+  P2P candidates. It estimates static test-method counts, token exclusions, and
+  buggy/fixed remaining-set differences before expensive dynamic P2P runs.
 - `scripts/validate_candidates_with_p2p.py`: validates candidate patches with
   retained oracle plus a P2P-broad scope and emits merged labels such as
   `correct_under_f2p_and_p2p_broad` and `incorrect_regression`.

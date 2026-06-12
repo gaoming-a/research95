@@ -277,6 +277,19 @@ For EVP-7 controlled-expansion readiness, run:
 python scripts\summarize_evp7_expansion_readiness.py
 ```
 
+For no-run static unittest P2P preflight, run:
+
+```powershell
+python scripts\static_unittest_p2p_preflight.py `
+  --task-id bugsinpy_youtube-dl_6 `
+  --project youtube-dl `
+  --static-exclude-token "YoutubeDL(" `
+  --static-exclude-token "download(" `
+  --static-exclude-token "urlopen" `
+  --static-exclude-token "http://" `
+  --static-exclude-token "https://"
+```
+
 For stage-by-stage plan progress, run:
 
 ```powershell

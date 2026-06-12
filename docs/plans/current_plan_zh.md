@@ -5414,3 +5414,31 @@ full run 决策：
   范围仍有 111 个候选方法，存在重复 `youtube-dl_1` timeout 的风险；
 - 该证据支持“若确认 P2P，则只先跑一个代表任务”的边界；
 - 该预检不等于 P2P 结果，不允许据此 admission。
+
+## 65. 2026-06-13 reusable static unittest P2P preflight
+
+本轮小目标：
+
+- 将第 64 节的一次性 inline 静态预检固化为可复用脚本；
+- 后续遇到 unittest 项目时，可先用 no-run AST 统计估算 P2P 动态规模；
+- 继续不执行真实 P2P、不创建 P2P manifest。
+
+执行边界：
+
+- 新增脚本只读取 buggy/fixed checkout 源文件；
+- 只统计 `test*.py` 中类方法名以 `test` 开头的 unittest methods；
+- 只做静态 token 排除和 buggy/fixed 剩余集合比较；
+- 不执行测试、不安装依赖、不修改 checkout、不改变实验标签。
+
+产物：
+
+- 新增 `scripts/static_unittest_p2p_preflight.py`。
+
+验收条件：
+
+- `python -m py_compile scripts\static_unittest_p2p_preflight.py` 通过；
+- 使用该脚本复现 `youtube-dl_6` 的静态结果：
+  - buggy/fixed 各 154 个静态 unittest methods；
+  - 静态排除后各剩余 111 个；
+  - buggy/fixed 剩余集合差异为 0；
+- README、INDEX 和经验文档补充脚本入口。

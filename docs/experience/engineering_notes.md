@@ -1460,3 +1460,7 @@ This file starts fresh for the patch-verification project.
   `test/`, 111 remain after current static exclusions, and the remaining method
   sets are identical. This supports one bounded representative attempt but does
   not prove dynamic P2P feasibility.
+- Keep this preflight reproducible with `scripts/static_unittest_p2p_preflight.py`
+  rather than one-off inline snippets. The script is intentionally static-only:
+  it must not be used as admission evidence or as a substitute for
+  project-level P2P-broad validation.
