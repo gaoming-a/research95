@@ -53,6 +53,8 @@ def _candidate_labels(path: Path) -> dict[str, str]:
 
 
 def build_metrics(reviews_path: Path, candidates_path: Path) -> dict[str, Any]:
+    reviews_path = _abs(reviews_path)
+    candidates_path = _abs(candidates_path)
     reviews = _read_jsonl(reviews_path)
     labels = _candidate_labels(candidates_path)
     groups = {
@@ -222,8 +224,13 @@ def _delta(value: float | None, baseline: float | None) -> float | None:
 
 
 def leakage_audit_reviews(reviews_path: Path) -> list[str]:
+    reviews_path = _abs(reviews_path)
     serialized = reviews_path.read_text(encoding="utf-8")
     return [marker for marker in EVALUATOR_MARKERS if marker in serialized]
+
+
+def _abs(path: Path) -> Path:
+    return path if path.is_absolute() else REPO_ROOT / path
 
 
 def _check(metrics: dict[str, Any], reviews_path: Path) -> None:

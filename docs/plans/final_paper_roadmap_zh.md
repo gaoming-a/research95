@@ -969,6 +969,10 @@ BugsInPy 扩量，必须先解决当前候选池边界：
 - `data/reviews/evp7_g5_llm_run_readiness.json`；
 - `data/reviews/evp7_g5_llm_preflight_example.json`；
 - `data/reviews/evp7_g5_llm_preflight_strict_example.json`；
+- `data/reviews/evp7_g5_workflow_check_only_example.json`；
+- `data/reviews/evp7_g5_workflow_mock_reviews.jsonl`；
+- `data/reviews/evp7_g5_workflow_mock_metrics.json`；
+- `data/reviews/evp7_g5_workflow_mock_summary.json`；
 - `docs/experiments/evp7_g5_metric_scaffold.md`；
 - `docs/experiments/evp7_g5_llm_run_readiness.md`；
 - `data/exclusions/blocked_bugsinpy_projects.jsonl`；
@@ -1004,7 +1008,10 @@ Phase A 已补齐 EVP-7 candidate-level schema：
 12. G5 API example config 和 preflight 当前通过结构检查，但 strict API
    readiness 保持 false，因为 provider/model/cost/smoke/full-run permission
    仍未确认；
-13. 下一步必须由用户确认真实 G5 的 provider、model、最大总成本、smoke
+13. G5 guarded workflow 当前支持 check-only 和 mock validation；mock records
+   只验证 parser/metrics pipeline，`g5_signal_claim_status` 仍要求真实 LLM
+   verifier outputs；
+14. 下一步必须由用户确认真实 G5 的 provider、model、最大总成本、smoke
    scope 和 full-run permission；
-14. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
+15. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
    expansion。

@@ -1,0 +1,220 @@
+{
+  "api_call_attempted": false,
+  "api_ready": false,
+  "config": "configs\\evp7_g5_llm.example.json",
+  "mode": "check_only",
+  "model_call_attempted": false,
+  "next_required_user_confirmation": [
+    "api_provider",
+    "model",
+    "max_total_cost_usd",
+    "smoke_scope",
+    "full_run_permission"
+  ],
+  "preflight": {
+    "api_call_attempted": false,
+    "api_ready": false,
+    "checks": [
+      {
+        "category": "structural",
+        "check": "evidence_packets_exists",
+        "detail": "exists",
+        "passed": true,
+        "path": "data\\evidence\\evp7_evidence_packets.jsonl"
+      },
+      {
+        "category": "structural",
+        "check": "prompt_manifest_exists",
+        "detail": "exists",
+        "passed": true,
+        "path": "data\\reviews\\evp7_g5_llm_prompt_manifest.jsonl"
+      },
+      {
+        "category": "structural",
+        "check": "run_readiness_exists",
+        "detail": "exists",
+        "passed": true,
+        "path": "data\\reviews\\evp7_g5_llm_run_readiness.json"
+      },
+      {
+        "category": "structural",
+        "check": "metrics_scaffold_exists",
+        "detail": "exists",
+        "passed": true,
+        "path": "data\\reviews\\evp7_schema_dry_run_metrics.json"
+      },
+      {
+        "category": "structural",
+        "check": "candidates_exists",
+        "detail": "exists",
+        "passed": true,
+        "path": "data\\patches\\evp7_candidates.jsonl"
+      },
+      {
+        "category": "structural",
+        "check": "prompt_id",
+        "detail": "patch_verify_evidence_visibility_merge_gate_v1",
+        "passed": true
+      },
+      {
+        "category": "structural",
+        "check": "conditions",
+        "detail": {
+          "allowed_conditions": [
+            "evidence_visibility_merge_gate"
+          ],
+          "conditions": [
+            "evidence_visibility_merge_gate"
+          ]
+        },
+        "passed": true
+      },
+      {
+        "category": "structural",
+        "check": "decoding_temperature",
+        "detail": 0.0,
+        "passed": true
+      },
+      {
+        "category": "structural",
+        "check": "decoding_max_tokens",
+        "detail": 1024,
+        "passed": true
+      },
+      {
+        "category": "user_confirmation",
+        "check": "api_provider_confirmed",
+        "detail": "<user-confirmed-provider>",
+        "passed": false
+      },
+      {
+        "category": "user_confirmation",
+        "check": "model_confirmed",
+        "detail": "<user-confirmed-model>",
+        "passed": false
+      },
+      {
+        "category": "user_confirmation",
+        "check": "max_total_cost_usd_confirmed",
+        "detail": "<user-confirmed-cost-ceiling>",
+        "passed": false
+      },
+      {
+        "category": "user_confirmation",
+        "check": "smoke_scope_confirmed",
+        "detail": "<user-confirmed-smoke-scope>",
+        "passed": false
+      },
+      {
+        "category": "user_confirmation",
+        "check": "full_run_permission_confirmed",
+        "detail": false,
+        "passed": false
+      },
+      {
+        "category": "structural",
+        "check": "prompt_manifest_record_count",
+        "detail": 168,
+        "passed": true
+      },
+      {
+        "category": "structural",
+        "check": "prompt_manifest_level_counts",
+        "detail": {
+          "E0": 42,
+          "E2": 42,
+          "E4": 42,
+          "E6": 42
+        },
+        "passed": true
+      },
+      {
+        "category": "structural",
+        "check": "prompt_manifest_prompt_id",
+        "detail": [
+          "patch_verify_evidence_visibility_merge_gate_v1"
+        ],
+        "passed": true
+      },
+      {
+        "category": "structural",
+        "check": "prompt_manifest_leakage",
+        "detail": {
+          "failed": 0
+        },
+        "passed": true
+      },
+      {
+        "category": "structural",
+        "check": "prompt_text_not_stored",
+        "detail": {
+          "prompt_text_stored_any": false
+        },
+        "passed": true
+      },
+      {
+        "category": "structural",
+        "check": "run_readiness_status",
+        "detail": "passed_without_api",
+        "passed": true
+      },
+      {
+        "category": "structural",
+        "check": "run_readiness_api_not_attempted",
+        "detail": false,
+        "passed": true
+      },
+      {
+        "category": "structural",
+        "check": "run_readiness_prompt_count",
+        "detail": 168,
+        "passed": true
+      },
+      {
+        "category": "structural",
+        "check": "run_readiness_level_counts",
+        "detail": {
+          "E0": 42,
+          "E2": 42,
+          "E4": 42,
+          "E6": 42
+        },
+        "passed": true
+      },
+      {
+        "category": "structural",
+        "check": "metric_scaffold_status",
+        "detail": "passed",
+        "passed": true
+      },
+      {
+        "category": "structural",
+        "check": "metric_signal_boundary",
+        "detail": "requires_real_llm_verifier_outputs",
+        "passed": true
+      },
+      {
+        "category": "structural",
+        "check": "evidence_packet_count",
+        "detail": 168,
+        "passed": true
+      },
+      {
+        "category": "structural",
+        "check": "candidate_count",
+        "detail": 42,
+        "passed": true
+      }
+    ],
+    "config": "configs\\evp7_g5_llm.example.json",
+    "next_required_user_confirmation": [
+      "api_provider",
+      "model",
+      "max_total_cost_usd",
+      "smoke_scope",
+      "full_run_permission"
+    ],
+    "structural_ready": true
+  },
+  "structural_ready": true
+}

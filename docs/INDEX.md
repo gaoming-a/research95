@@ -89,6 +89,17 @@
   preflight result proving the example config is blocked from real API
   execution until provider, model, cost, smoke scope, and full-run permission
   are confirmed.
+- `../data/reviews/evp7_g5_workflow_check_only_example.json`: guarded G5
+  workflow check-only summary. It proves the workflow reaches structural
+  readiness without attempting model/API calls.
+- `../data/reviews/evp7_g5_workflow_mock_reviews.jsonl`: mock G5 workflow
+  review records for all 168 packets. These are pipeline-validation records,
+  not model results.
+- `../data/reviews/evp7_g5_workflow_mock_metrics.json`: metrics over the mock
+  workflow records. It keeps `g5_signal_claim_status` as requiring real LLM
+  verifier outputs.
+- `../data/reviews/evp7_g5_workflow_mock_summary.json`: summary of the mock
+  G5 workflow run.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 
@@ -551,6 +562,10 @@
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict
   readiness checker for the future G5 LLM run config.
+- `../scripts/run_evp7_g5_llm_workflow.py`: guarded future G5 workflow. It
+  supports check-only and mock validation without API calls, and refuses real
+  execution unless strict preflight passes with an ignored local config and
+  explicit `--execute`.
 - `scripts/analyze_tool_gated_reviews.py`: oracle-gated analysis reference.
 - `experience/engineering_notes.md`: fresh operational notes for this new
   workspace.

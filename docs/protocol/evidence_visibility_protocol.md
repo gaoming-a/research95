@@ -185,6 +185,9 @@ Current gate status after the first packet builder:
   `scripts/preflight_evp7_g5_llm_run.py` now prove structural readiness without
   API calls. Strict API readiness intentionally remains false until those user
   confirmations are supplied in an ignored local config.
+- The guarded workflow `scripts/run_evp7_g5_llm_workflow.py` now supports
+  check-only and mock validation. Mock records validate parser and metrics
+  plumbing only; G5 signal existence still requires genuine LLM outputs.
 
 ## Post-A Expansion
 

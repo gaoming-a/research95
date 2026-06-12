@@ -1,0 +1,15 @@
+{
+  "api_call_attempted": false,
+  "config": "configs\\evp7_g5_llm.example.json",
+  "g5_metric_scaffold": "passed",
+  "g5_signal_claim_status": "requires_real_llm_verifier_outputs",
+  "metrics_out": "data\\reviews\\evp7_g5_workflow_mock_metrics.json",
+  "mock_policy": "schema_visible_rule",
+  "mock_run": true,
+  "mode": "mock",
+  "model_call_attempted": false,
+  "preflight_api_ready": false,
+  "preflight_structural_ready": true,
+  "review_count": 168,
+  "reviews_out": "data\\reviews\\evp7_g5_workflow_mock_reviews.jsonl"
+}

@@ -229,7 +229,9 @@ They should not override `final_paper_roadmap_zh.md`.
   preflight now prove structural readiness while keeping strict API readiness
   false until user confirmation. The next work is not to find an eighth bug,
   but to get explicit user confirmation for the real G5 API provider, model,
-  cost ceiling, smoke scope, and full-run permission.
+  cost ceiling, smoke scope, and full-run permission. A guarded G5 workflow now
+  supports check-only and mock validation; the tracked example config remains
+  blocked from real execution.
   Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and
@@ -271,6 +273,9 @@ python scripts\build_evp7_g5_llm_prompt_manifest.py --check
 python scripts\preflight_evp7_g5_llm_run.py `
   --config configs\evp7_g5_llm.example.json `
   --out data\reviews\evp7_g5_llm_preflight_example.json
+python scripts\run_evp7_g5_llm_workflow.py `
+  --check-only `
+  --summary-out data\reviews\evp7_g5_workflow_check_only_example.json
 ```
 
 For full-goal completion evidence, run:

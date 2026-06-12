@@ -313,6 +313,16 @@ G5 config/preflight status:
   - `data/reviews/evp7_g5_llm_preflight_example.json`;
   - `data/reviews/evp7_g5_llm_preflight_strict_example.json`.
 
+G5 guarded workflow status:
+
+- workflow script = `scripts/run_evp7_g5_llm_workflow.py`;
+- check-only summary = `data/reviews/evp7_g5_workflow_check_only_example.json`;
+- mock reviews = `data/reviews/evp7_g5_workflow_mock_reviews.jsonl`;
+- mock metrics = `data/reviews/evp7_g5_workflow_mock_metrics.json`;
+- mock summary = `data/reviews/evp7_g5_workflow_mock_summary.json`;
+- check-only and mock modes attempted no model/API calls;
+- the example config remains blocked from real execution.
+
 ## Current Next Step
 
 No new BugsInPy expansion, native build work, external benchmark migration, or

@@ -4677,3 +4677,81 @@ Project-level P2P attempt：
   - max_total_cost_usd；
   - smoke_scope；
   - full_run_permission。
+
+## 50. 2026-06-13 EVP-7 G5 guarded workflow without API
+
+同步状态：
+
+- 上一轮提交 `1f8f936 chore: add evp7 g5 preflight` 已成功 push 到 GitHub。
+- 当前 Git 状态为 `main...origin/main`，工作区干净。
+- G5 example config 的 structural readiness 已通过；strict API readiness
+  仍因用户确认项缺失而失败。
+
+本轮小目标：
+
+1. 新增 G5 guarded workflow；
+2. 支持 `--check-only`：只运行 preflight，不调用 API；
+3. 支持 `--mock-policy`：用本地 mock response 验证 output schema、
+   review JSONL 和 metrics pipeline；
+4. 支持未来 `--execute` 路径，但必须要求 strict API preflight 通过且显式
+   `--execute`；
+5. 生成 tracked check-only/mock summary，证明 workflow guard 能阻止未确认的
+   example config 真实执行。
+
+执行边界：
+
+- 不运行真实 LLM API；
+- 不读取 `.env`；
+- 不创建 local config；
+- mock 输出只能作为 pipeline validation，不能作为 LLM 结果或 G5 signal；
+- 真实 execute 路径不得在 example config 上通过。
+
+验收条件：
+
+- check-only summary 显示 `model_call_attempted = false`；
+- mock run summary 显示 `mock_run = true`、`api_call_attempted = false`；
+- mock review records 能被 G5 metrics scaffold 解析；
+- strict execute guard 对 example config 保持 blocked；
+- 文档明确真实 G5 仍需用户确认。
+
+执行结果：
+
+- 新增 `scripts/run_evp7_g5_llm_workflow.py`。
+- 已生成：
+  - `data/reviews/evp7_g5_workflow_check_only_example.json`；
+  - `data/reviews/evp7_g5_workflow_mock_reviews.jsonl`；
+  - `data/reviews/evp7_g5_workflow_mock_metrics.json`；
+  - `data/reviews/evp7_g5_workflow_mock_summary.json`。
+- `python scripts\run_evp7_g5_llm_workflow.py --check-only --summary-out
+  data\reviews\evp7_g5_workflow_check_only_example.json` 通过：
+  - mode = check_only；
+  - structural_ready = true；
+  - api_ready = false；
+  - model_call_attempted = false；
+  - api_call_attempted = false。
+- `python scripts\run_evp7_g5_llm_workflow.py --mock-policy
+  schema_visible_rule ...` 通过：
+  - mock_run = true；
+  - review_count = 168；
+  - model_call_attempted = false；
+  - api_call_attempted = false；
+  - G5 metric scaffold = passed；
+  - G5 signal claim status = `requires_real_llm_verifier_outputs`。
+- `python scripts\run_evp7_g5_llm_workflow.py --execute ...` 在 example config
+  上按预期失败，且在 API 调用前停止，原因是 strict API readiness 仍为 false。
+
+诊断与修复：
+
+- 初次 mock workflow 失败，因为 workflow 把相对 `reviews_out` 传给
+  metrics scaffold，而 metrics scaffold 对相对路径调用
+  `relative_to(REPO_ROOT)`。已在 workflow 中统一转为绝对路径。
+- 单独调用 metrics scaffold 并传相对 `--reviews-in` 时也会失败；已修复
+  `scripts/analyze_evp7_schema_dry_run_metrics.py`，在读取和 leakage audit 前
+  统一解析相对路径。
+
+下一步：
+
+- 真实 G5 执行仍需要用户明确确认 provider、model、max_total_cost_usd、
+  smoke_scope 和 full_run_permission。
+- 若用户确认后，必须先用 ignored local config 跑 strict preflight 和
+  check-only workflow，再执行 smoke；不能直接 full run。

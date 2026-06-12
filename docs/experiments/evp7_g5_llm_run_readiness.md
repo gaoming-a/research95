@@ -130,3 +130,48 @@ python scripts\preflight_evp7_g5_llm_run.py `
 The strict check correctly fails while provider, model, cost ceiling, smoke
 scope, and full-run permission are still placeholders. This is intentional:
 the example config proves structure, not permission to spend API budget.
+
+## Guarded Workflow
+
+Workflow script:
+
+```text
+scripts/run_evp7_g5_llm_workflow.py
+```
+
+Check-only command:
+
+```powershell
+python scripts\run_evp7_g5_llm_workflow.py `
+  --check-only `
+  --summary-out data\reviews\evp7_g5_workflow_check_only_example.json
+```
+
+Current check-only result:
+
+- structural readiness = true;
+- API readiness = false;
+- model call attempted = false;
+- API call attempted = false.
+
+Mock command:
+
+```powershell
+python scripts\run_evp7_g5_llm_workflow.py `
+  --mock-policy schema_visible_rule `
+  --reviews-out data\reviews\evp7_g5_workflow_mock_reviews.jsonl `
+  --metrics-out data\reviews\evp7_g5_workflow_mock_metrics.json `
+  --summary-out data\reviews\evp7_g5_workflow_mock_summary.json
+```
+
+Current mock result:
+
+- mock run = true;
+- review records = 168;
+- model call attempted = false;
+- API call attempted = false;
+- G5 metric scaffold = passed;
+- G5 signal claim status = `requires_real_llm_verifier_outputs`.
+
+The mock run validates the output and metric pipeline only. It does not support
+any model-effect claim.

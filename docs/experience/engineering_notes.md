@@ -1332,3 +1332,21 @@ This file starts fresh for the patch-verification project.
   as a scope violation unless the user explicitly asked to record those values
   in tracked files. Real provider/model/cost decisions should be local or
   documented as non-secret policy, not mixed with credentials.
+
+## 2026-06-13 EVP-7 G5 guarded workflow boundary
+
+- A guarded workflow should offer check-only and mock modes before real API
+  execution. The check-only mode must report `model_call_attempted = false` and
+  `api_call_attempted = false`.
+- Mock G5 workflow records are useful only for validating parser, schema, and
+  metrics plumbing. Keep `g5_signal_claim_status =
+  requires_real_llm_verifier_outputs`; do not relabel mock variation as
+  evidence-visibility signal.
+- The initial workflow implementation exposed a relative-path bug: passing a
+  relative `reviews_out` into `analyze_evp7_schema_dry_run_metrics.py` caused
+  `Path.relative_to(REPO_ROOT)` to fail. Fix both caller and analyzer by
+  resolving paths against `REPO_ROOT` before reading or reporting paths.
+- The real execute path must reject the tracked example config and stop before
+  API calls unless strict preflight passes on an ignored local config and the
+  user has explicitly confirmed provider, model, cost ceiling, smoke scope, and
+  full-run permission.
