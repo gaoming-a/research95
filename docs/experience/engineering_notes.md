@@ -1388,6 +1388,19 @@ This file starts fresh for the patch-verification project.
 - Raising G5 `max_tokens` to 4096 matched the earlier DeepSeek smoke lesson and
   repaired the same 4-packet smoke to 4/4 parse-valid outputs.
 
+## 2026-06-13 EVP-7 G5 parallel full-run efficiency boundary
+
+- If a long sequential G5 run is interrupted but the Python process continues in
+  the background, inspect `Win32_Process.CommandLine` before starting another
+  run. Stop only the obsolete non-concurrent process to avoid duplicate API
+  spend.
+- Use bounded concurrency for real G5 full runs after smoke passes. The first
+  successful full run used `--concurrency 4`, completed 168 records, preserved
+  original packet order, and wrote outputs once after all workers completed.
+- Do not silently repair schema-invalid LLM outputs after a full run. The
+  single invalid E0 record is a real output-quality boundary and should be
+  reported in summaries instead of overwritten by a targeted retry.
+
 ## 2026-06-13 EVP-7 G5 bounded concurrency boundary
 
 - Keep G5 execution sequential by default. `--concurrency` should be an explicit

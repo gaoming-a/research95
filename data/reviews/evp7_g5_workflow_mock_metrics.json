@@ -1,8 +1,9 @@
 {
+  "analysis_boundary": "Mock workflow metrics validate parser, ordering, and aggregate metric plumbing only. They are not model-effect evidence.",
   "analysis_input": "data\\reviews\\evp7_g5_workflow_mock_reviews.jsonl",
+  "api_call_attempted": false,
   "candidate_count": 42,
   "cohort_id": "EVP-7",
-  "dry_run_boundary": "Deterministic schema dry-run metrics validate the analysis path only; they are not model-effect evidence.",
   "evidence_levels": [
     "E0",
     "E2",
@@ -154,7 +155,10 @@
       }
     }
   },
+  "mock_run": true,
+  "model_call_attempted": false,
   "review_record_count": 168,
+  "run_kind": "mock_workflow",
   "signal_preview": {
     "evidence_gain_vs_e0": {
       "E2": 0.0,
@@ -162,7 +166,7 @@
       "E6": 15.5
     },
     "has_metric_variation": true,
-    "interpretation_boundary": "Variation in deterministic dry-run metrics proves metric-path sensitivity, not LLM signal existence.",
+    "interpretation_boundary": "Interpret this preview according to run_kind and analysis_boundary.",
     "metric_deltas_vs_e0": {
       "correct_recall": {
         "E2": 0.0,

@@ -1002,20 +1002,29 @@ Phase A 已补齐 EVP-7 candidate-level schema：
 9. 这些 G4 records 是 no-API parser/schema dry-run，不是 LLM verifier
    结果，不能支持模型效果结论；
 10. G5 metric scaffold 当前通过：FAR、accepted precision、correct recall、
-   escalation、FACR 和 Evidence Gain 的计算链路可复现，但
-   `g5_signal_claim_status = requires_real_llm_verifier_outputs`；
+   escalation、FACR 和 Evidence Gain 的计算链路可复现；schema dry-run 和
+   mock workflow 仍标记为 `requires_real_llm_verifier_outputs`；
 11. 真实 LLM verifier 的 G5 prompt manifest 和 readiness summary 当前通过
    no-API 检查：168 条 prompts、四层各 42 条、leakage failed count = 0、
    prompt text 不写入 tracked manifest；
-12. G5 API example config 和 preflight 当前通过结构检查，但 strict API
-   readiness 保持 false，因为 provider/model/cost/smoke/full-run permission
-   仍未确认；
-13. G5 guarded workflow 当前支持 check-only 和 mock validation；mock records
-   只验证 parser/metrics pipeline，`g5_signal_claim_status` 仍要求真实 LLM
-   verifier outputs；
-14. G5 local-config helper 当前只生成 dry-run confirmation packet；不会写入
-   ignored local config，直到用户显式提供全部执行参数；
-15. 下一步必须由用户确认真实 G5 的 provider、model、最大总成本、smoke
-   scope 和 full-run permission；
-16. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
-   expansion。
+12. G5 API example config 和 preflight 当前通过结构检查；tracked example
+   仍保持 strict API readiness false，只允许 ignored local config 执行真实
+   API；
+13. G5 guarded workflow 当前支持 check-only、mock validation 和 bounded
+   concurrency；mock records 只验证 parser/metrics pipeline；
+14. 用户确认 DeepSeek V4 后，已完成真实 DeepSeek official G5 full run：
+   168 条 E0/E2/E4/E6 review，concurrency = 4；
+15. full run 质量审计：167/168 parse-valid，1 条 E0 输出缺少
+   `primary_reason`，invalid-output rate = 0.005952；原始响应保留在
+   ignored `outputs/`，tracked summary 不包含 raw model responses；
+16. EVP-7 pilot-level signal 已观察到：
+   `g5_signal_claim_status = real_llm_verifier_signal_observed_on_evp7`；
+   E4/E6 相对 E0 的 Evidence Gain 分别为 4.5 和 5.0，false accept rate
+   均为 0；
+17. 该结果支持 EVP-7 pilot signal claims，不支持直接 scale-generalized
+   paper claims；下一步进入 15-20 bugs controlled expansion，同时保留
+   invalid-output 和成本字段缺失的质量边界。
+18. 已生成 controlled expansion readiness summary：
+   `docs/experiments/evp7_expansion_readiness.md` 和
+   `data/tasks/evp7_expansion_readiness.json`；下一步应按 project-diverse
+   bounded probe 推进，不做盲目 BugsInPy 批量扩展。

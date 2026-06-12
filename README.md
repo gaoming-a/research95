@@ -222,18 +222,18 @@ They should not override `final_paper_roadmap_zh.md`.
   and visible-tool-summary conditions. The merge-gate schema dry-run now
   generates 168 parse-valid accept/reject/escalate records with zero leakage
   findings. The G5 metric scaffold now computes FAR, recall, escalation, FACR,
-  and Evidence Gain over schema-stable dry-run records, while explicitly
-  marking real signal existence as requiring genuine LLM verifier outputs. The
-  G5 LLM prompt manifest now covers all 168 E0/E2/E4/E6 packets with zero
-  leakage findings and no stored prompt text. A tracked G5 example config and
-  preflight now prove structural readiness while keeping strict API readiness
-  false until user confirmation. The next work is not to find an eighth bug,
-  but to get explicit user confirmation for the real G5 API provider, model,
-  cost ceiling, smoke scope, and full-run permission. A guarded G5 workflow now
-  supports check-only and mock validation; the tracked example config remains
-  blocked from real execution. A local-config helper now produces a dry-run
-  confirmation packet and refuses to write `configs/evp7_g5_llm.local.json`
-  until all user-confirmed execution parameters are provided.
+  and Evidence Gain over schema-stable dry-run records. The G5 LLM prompt
+  manifest now covers all 168 E0/E2/E4/E6 packets with zero leakage findings
+  and no stored prompt text. A tracked G5 example config and preflight prove
+  structural readiness while keeping the tracked example blocked from real
+  execution. The real DeepSeek official G5 full run has now completed on all
+  168 packets with explicit bounded parallelism (`--concurrency 4`). It
+  produced 167 parse-valid outputs and one schema-invalid output, with
+  pilot-level evidence-visibility metric variation observed on EVP-7. This
+  supports EVP-7 pilot signal claims after quality audit, not scale-generalized
+  paper claims. A controlled-expansion readiness report now summarizes the
+  broader BugsInPy rescreen and defines project-diverse bounded probe lanes for
+  the next 15-20 bug expansion step.
   Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and
@@ -284,9 +284,15 @@ python scripts\create_evp7_g5_llm_local_config.py `
   --packet-md docs\experiments\evp7_g5_execution_confirmation_packet.md
 ```
 
-After a real G5 smoke passes, the guarded workflow can run the full 168-packet
-execution with explicit bounded parallelism, for example `--concurrency 4` or
-`--concurrency 6`. The default remains sequential.
+After a real G5 full run, regenerate the tracked raw-output-free summary with:
+
+```powershell
+python scripts\summarize_evp7_g5_llm_full_run.py
+```
+
+The guarded workflow can run the full 168-packet execution with explicit
+bounded parallelism, for example `--concurrency 4` or `--concurrency 6`. The
+default remains sequential.
 
 For full-goal completion evidence, run:
 

@@ -4945,3 +4945,84 @@ full run 决策：
 - `--check-only` 仍不调用模型；
 - mock workflow 在 `--concurrency` 参数存在时仍可运行并保持 no-API；
 - staged diff 不含 credentials 或 raw outputs。
+
+## 55. 2026-06-13 EVP-7 G5 parallel full run result
+
+执行结果：
+
+- 旧的 sequential full run 被中断后仍在后台运行；为节省时间，已确认其命令未带
+  `--concurrency`，并停止该旧进程，避免重复 API 消耗。
+- 使用 bounded parallel path 执行：
+  `python scripts\run_evp7_g5_llm_workflow.py --config
+  configs\evp7_g5_llm.local.json --execute --limit 0 --concurrency 4 ...`。
+- full run 完成：
+  - review_count = 168；
+  - evidence level counts = E0/E2/E4/E6 各 42；
+  - review ids 唯一数 = 168；
+  - 输出顺序与 evidence packet 顺序一致；
+  - parse valid = 167；
+  - invalid = 1。
+
+质量审计：
+
+- 唯一 invalid 记录为 `evp7_candidate_0012__E0`，原因是
+  `missing_keys:primary_reason`；模型返回了 `reason` 字段但未返回
+  protocol 要求的 `primary_reason`。
+- invalid-output rate = 1/168 = 0.005952。
+- DeepSeek response 未在已保存 usage 字段中暴露可直接计费的 cost；runner
+  `total_cost_usd = 0.0` 不能当作账单估计。
+- 原始模型响应仍只保留在 ignored `outputs/`，tracked summary 不复制 raw
+  responses。
+
+指标结论：
+
+- `g5_metric_scaffold = passed`；
+- `run_kind = real_llm`；
+- `g5_signal_claim_status =
+  real_llm_verifier_signal_observed_on_evp7`；
+- E0：escalate 23、reject 18、invalid 1，false accept rate = 0；
+- E2：escalate 24、reject 18，false accept rate = 0；
+- E4：accept 1、escalate 5、reject 36，accepted precision = 1.0，
+  correct recall = 0.142857，Evidence Gain vs E0 = 4.5；
+- E6：accept 2、escalate 7、reject 33，accepted precision = 1.0，
+  correct recall = 0.285714，Evidence Gain vs E0 = 5.0。
+
+下一步：
+
+- 不重跑 full run；保留 1 条 invalid 作为真实模型输出质量边界。
+- 进入 15-20 bugs controlled expansion 的准备：优先补可复用的 summary、
+  analysis 和 expansion planning，避免在无关阻塞点上串行等待。
+
+## 56. 2026-06-13 EVP-7 expansion readiness without new checkout
+
+本轮小目标：
+
+- 在不启动新 checkout、不运行新 API 的情况下，整理 EVP-7 后 controlled
+  expansion 的输入边界；
+- 复用现有 `outputs/candidate_pool_rescreen/parallel_latest.json` 和
+  `data/cohorts/task_cohort_registry.json`；
+- 生成 tracked readiness summary，避免后续重复人工翻阅大文件。
+
+执行结果：
+
+- 新增 `scripts/summarize_evp7_expansion_readiness.py`。
+- 生成：
+  - `data/tasks/evp7_expansion_readiness.json`；
+  - `docs/experiments/evp7_expansion_readiness.md`。
+- 当前 EVP-7 main task count = 7；
+- 当前 main projects = PySnooper 2、cookiecutter 3、httpie 1、tqdm 1；
+- registry blocked/pending tasks = 27；
+- broader BugsInPy pool：
+  - total tasks = 501；
+  - already registered = 30；
+  - new candidate tasks = 471；
+  - metadata-promising candidates = 187。
+
+效率边界：
+
+- 下一步不应批量启动 187 个候选或盲扫 BugsInPy；
+- 应按 project-diverse lane 做 bounded probe；
+- 每个高风险项目一次最多推进一个 task；
+- buggy/fixed checkout for same task 不并行；
+- 只有 F2P、project-level P2P-broad、candidate construction 和 candidate
+  revalidation 全部通过后，才允许进入 `p2p_broad_main`。

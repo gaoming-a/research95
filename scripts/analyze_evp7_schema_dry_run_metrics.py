@@ -1,9 +1,9 @@
-"""Analyze EVP-7 schema dry-run decisions with G5 metric scaffolding.
+"""Analyze EVP-7 merge-gate review decisions with G5 metrics.
 
-This script computes aggregate metrics for the deterministic schema dry-run.
-It is a no-API analysis scaffold: labels are joined only after dry-run review
-records already exist, and the output must not be treated as LLM verifier
-evidence.
+The default input remains the deterministic schema dry-run. The same metric
+path is also used for mock workflow records and real G5 LLM verifier outputs,
+so this module explicitly labels the review source before stating what the
+metrics can support.
 """
 
 from __future__ import annotations
@@ -57,6 +57,7 @@ def build_metrics(reviews_path: Path, candidates_path: Path) -> dict[str, Any]:
     candidates_path = _abs(candidates_path)
     reviews = _read_jsonl(reviews_path)
     labels = _candidate_labels(candidates_path)
+    run_kind = _run_kind(reviews)
     groups = {
         level: _metrics_for_level(reviews, labels, level)
         for level in EVIDENCE_LEVELS
@@ -67,9 +68,13 @@ def build_metrics(reviews_path: Path, candidates_path: Path) -> dict[str, Any]:
         group["facr"] = _facr(group)
 
     signal_preview = _signal_preview(groups)
-    return {
+    metrics = {
         "cohort_id": "EVP-7",
         "analysis_input": str(reviews_path.relative_to(REPO_ROOT)),
+        "run_kind": run_kind,
+        "api_call_attempted": any(record.get("api_call_attempted") is True for record in reviews),
+        "model_call_attempted": any(record.get("api_call_attempted") is True for record in reviews),
+        "mock_run": any(record.get("mock_run") is True for record in reviews),
         "candidate_count": len(labels),
         "review_record_count": len(reviews),
         "evidence_levels": list(EVIDENCE_LEVELS),
@@ -78,10 +83,16 @@ def build_metrics(reviews_path: Path, candidates_path: Path) -> dict[str, Any]:
         "facr_thresholds": list(FACR_THRESHOLDS),
         "signal_preview": signal_preview,
         "g5_metric_scaffold": "passed" if _scaffold_passed(reviews, groups) else "not_passed",
-        "g5_signal_claim_status": "requires_real_llm_verifier_outputs",
-        "dry_run_boundary": "Deterministic schema dry-run metrics validate the analysis path only; they are not model-effect evidence.",
+        "g5_signal_claim_status": _signal_claim_status(run_kind, reviews, groups, signal_preview),
+        "analysis_boundary": _analysis_boundary(run_kind),
         "label_join_boundary": "Evaluator labels are joined only for aggregate metrics, never copied into dry-run review records.",
     }
+    if run_kind == "schema_dry_run":
+        metrics["dry_run_boundary"] = (
+            "Deterministic schema dry-run metrics validate the analysis path only; "
+            "they are not model-effect evidence."
+        )
+    return metrics
 
 
 def _metrics_for_level(reviews: list[dict[str, Any]], labels: dict[str, str], level: str) -> dict[str, Any]:
@@ -187,7 +198,7 @@ def _signal_preview(groups: dict[str, dict[str, Any]]) -> dict[str, Any]:
         or any(value != 0.0 for value in utility_deltas.values()),
         "metric_deltas_vs_e0": deltas,
         "evidence_gain_vs_e0": utility_deltas,
-        "interpretation_boundary": "Variation in deterministic dry-run metrics proves metric-path sensitivity, not LLM signal existence.",
+        "interpretation_boundary": "Interpret this preview according to run_kind and analysis_boundary.",
     }
 
 
@@ -195,6 +206,54 @@ def _scaffold_passed(reviews: list[dict[str, Any]], groups: dict[str, dict[str, 
     if len(reviews) != 168:
         return False
     return all(groups[level]["record_count"] == 42 for level in EVIDENCE_LEVELS)
+
+
+def _run_kind(reviews: list[dict[str, Any]]) -> str:
+    if not reviews:
+        return "empty"
+    if any(record.get("dry_run") is True or record.get("schema_dry_run_id") for record in reviews):
+        return "schema_dry_run"
+    if any(record.get("mock_run") is True for record in reviews):
+        return "mock_workflow"
+    if any(record.get("api_call_attempted") is True and record.get("mock_run") is False for record in reviews):
+        return "real_llm"
+    return "unknown"
+
+
+def _signal_claim_status(
+    run_kind: str,
+    reviews: list[dict[str, Any]],
+    groups: dict[str, dict[str, Any]],
+    signal_preview: dict[str, Any],
+) -> str:
+    scaffold_passed = _scaffold_passed(reviews, groups)
+    if run_kind != "real_llm":
+        return "requires_real_llm_verifier_outputs"
+    if not scaffold_passed:
+        return "real_llm_verifier_outputs_incomplete"
+    if signal_preview["has_metric_variation"]:
+        return "real_llm_verifier_signal_observed_on_evp7"
+    return "real_llm_verifier_outputs_available_no_metric_variation"
+
+
+def _analysis_boundary(run_kind: str) -> str:
+    if run_kind == "real_llm":
+        return (
+            "These metrics come from real LLM verifier outputs on the EVP-7 pilot. "
+            "They can support EVP-7 pilot signal claims after quality audit, but "
+            "not scale-generalized paper claims without controlled expansion."
+        )
+    if run_kind == "mock_workflow":
+        return (
+            "Mock workflow metrics validate parser, ordering, and aggregate metric "
+            "plumbing only. They are not model-effect evidence."
+        )
+    if run_kind == "schema_dry_run":
+        return (
+            "Deterministic schema dry-run metrics validate the analysis path only. "
+            "They are not model-effect evidence."
+        )
+    return "Unknown review source; do not use for model-effect claims without inspection."
 
 
 def _counts(values: Any) -> dict[str, int]:
@@ -236,8 +295,8 @@ def _abs(path: Path) -> Path:
 def _check(metrics: dict[str, Any], reviews_path: Path) -> None:
     if metrics["g5_metric_scaffold"] != "passed":
         raise SystemExit(f"G5 metric scaffold did not pass: {metrics['g5_metric_scaffold']}")
-    if metrics["g5_signal_claim_status"] != "requires_real_llm_verifier_outputs":
-        raise SystemExit("dry-run metrics must not mark G5 signal as passed")
+    if metrics["run_kind"] != "real_llm" and metrics["g5_signal_claim_status"] != "requires_real_llm_verifier_outputs":
+        raise SystemExit("non-real metrics must not mark G5 signal as observed")
     findings = leakage_audit_reviews(reviews_path)
     if findings:
         raise SystemExit(f"evaluator marker leaked into dry-run review records: {findings}")

@@ -331,9 +331,24 @@ G5 local-config helper status:
 - dry-run writes no local config and attempts no API call;
 - non-dry-run write is blocked until all five user confirmations are supplied.
 
+G5 real full-run status:
+
+- user-confirmed provider/model = DeepSeek official API, `deepseek-v4-pro`;
+- workflow used explicit bounded concurrency: `--concurrency 4`;
+- raw outputs remain ignored under `outputs/evp7_g5_llm_001/`;
+- tracked summary = `docs/experiments/evp7_g5_llm_full_run_result.md`;
+- tracked JSON summary = `data/reviews/evp7_g5_llm_full_run_summary.json`;
+- review count = 168;
+- parse valid = 167/168;
+- invalid output count = 1;
+- invalid output rate = 0.005952;
+- G5 metric scaffold = passed;
+- G5 signal claim status = `real_llm_verifier_signal_observed_on_evp7`.
+
 ## Current Next Step
 
-No new BugsInPy expansion, native build work, external benchmark migration, or
-real API calls should occur before using the schema-stable EVP-7 protocol to
-request user confirmation of the real G5 provider, model, cost ceiling, smoke
-scope, and full-run permission.
+EVP-7 now supports pilot-level signal claims after quality audit. The next
+research step is 15-20 bugs controlled expansion, not a repeat of the same
+EVP-7 full run. Expansion should preserve the same hidden-evaluator boundary,
+tool-only baselines, E0/E2/E4/E6 evidence levels, and raw-output-free tracked
+summaries.

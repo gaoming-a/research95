@@ -1,0 +1,216 @@
+{
+  "cohort_id": "EVP-7",
+  "metrics": {
+    "analysis_boundary": "These metrics come from real LLM verifier outputs on the EVP-7 pilot. They can support EVP-7 pilot signal claims after quality audit, but not scale-generalized paper claims without controlled expansion.",
+    "g5_metric_scaffold": "passed",
+    "g5_signal_claim_status": "real_llm_verifier_signal_observed_on_evp7",
+    "metric_groups": {
+      "E0": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 7,
+          "escalated_incorrect": 16,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 1,
+          "true_accept": 0,
+          "true_reject": 18
+        },
+        "correct_recall": 0.0,
+        "decision_counts": {
+          "escalate": 23,
+          "invalid_output": 1,
+          "reject": 18
+        },
+        "escalation_rate": 0.547619,
+        "evidence_gain_vs_e0": 0.0,
+        "facr": {
+          "far_le_0": 0.0,
+          "far_le_0.01": 0.0,
+          "far_le_0.05": 0.0,
+          "far_le_0.1": 0.0
+        },
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.02381,
+        "record_count": 42,
+        "utility": {
+          "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
+          "score": -5.75,
+          "score_per_candidate": -0.136905
+        }
+      },
+      "E2": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 7,
+          "escalated_incorrect": 17,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 18
+        },
+        "correct_recall": 0.0,
+        "decision_counts": {
+          "escalate": 24,
+          "reject": 18
+        },
+        "escalation_rate": 0.571429,
+        "evidence_gain_vs_e0": -0.25,
+        "facr": {
+          "far_le_0": 0.0,
+          "far_le_0.01": 0.0,
+          "far_le_0.05": 0.0,
+          "far_le_0.1": 0.0
+        },
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 42,
+        "utility": {
+          "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
+          "score": -6.0,
+          "score_per_candidate": -0.142857
+        }
+      },
+      "E4": {
+        "accepted_precision": 1.0,
+        "confusion_counts": {
+          "escalated_correct": 5,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 1,
+          "invalid_output": 0,
+          "true_accept": 1,
+          "true_reject": 35
+        },
+        "correct_recall": 0.142857,
+        "decision_counts": {
+          "accept": 1,
+          "escalate": 5,
+          "reject": 36
+        },
+        "escalation_rate": 0.119048,
+        "evidence_gain_vs_e0": 4.5,
+        "facr": {
+          "far_le_0": 0.142857,
+          "far_le_0.01": 0.142857,
+          "far_le_0.05": 0.142857,
+          "far_le_0.1": 0.142857
+        },
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.142857,
+        "invalid_output_rate": 0.0,
+        "record_count": 42,
+        "utility": {
+          "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
+          "score": -1.25,
+          "score_per_candidate": -0.029762
+        }
+      },
+      "E6": {
+        "accepted_precision": 1.0,
+        "confusion_counts": {
+          "escalated_correct": 4,
+          "escalated_incorrect": 3,
+          "false_accept": 0,
+          "false_reject": 1,
+          "invalid_output": 0,
+          "true_accept": 2,
+          "true_reject": 32
+        },
+        "correct_recall": 0.285714,
+        "decision_counts": {
+          "accept": 2,
+          "escalate": 7,
+          "reject": 33
+        },
+        "escalation_rate": 0.166667,
+        "evidence_gain_vs_e0": 5.0,
+        "facr": {
+          "far_le_0": 0.285714,
+          "far_le_0.01": 0.285714,
+          "far_le_0.05": 0.285714,
+          "far_le_0.1": 0.285714
+        },
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.142857,
+        "invalid_output_rate": 0.0,
+        "record_count": 42,
+        "utility": {
+          "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
+          "score": -0.75,
+          "score_per_candidate": -0.017857
+        }
+      }
+    },
+    "run_kind": "real_llm",
+    "signal_preview": {
+      "evidence_gain_vs_e0": {
+        "E2": -0.25,
+        "E4": 4.5,
+        "E6": 5.0
+      },
+      "has_metric_variation": true,
+      "interpretation_boundary": "Interpret this preview according to run_kind and analysis_boundary.",
+      "metric_deltas_vs_e0": {
+        "correct_recall": {
+          "E2": 0.0,
+          "E4": 0.142857,
+          "E6": 0.285714
+        },
+        "escalation_rate": {
+          "E2": 0.02381,
+          "E4": -0.428571,
+          "E6": -0.380952
+        },
+        "false_accept_rate": {
+          "E2": 0.0,
+          "E4": 0.0,
+          "E6": 0.0
+        }
+      }
+    }
+  },
+  "model": "deepseek-v4-pro",
+  "prompt_id": "patch_verify_evidence_visibility_merge_gate_v1",
+  "provider": "deepseek_official",
+  "quality": {
+    "decision_counts": {
+      "accept": 3,
+      "escalate": 59,
+      "invalid_output": 1,
+      "reject": 105
+    },
+    "invalid_output_count": 1,
+    "invalid_output_rate": 0.005952,
+    "invalid_records": [
+      {
+        "candidate_id": "evp7_candidate_0012",
+        "evidence_level": "E0",
+        "evidence_packet_id": "evp7_candidate_0012__E0",
+        "invalid_reason": "missing_keys:primary_reason",
+        "prompt_chars": 1943,
+        "raw_response_chars": 395
+      }
+    ],
+    "parse_counts": {
+      "invalid": 1,
+      "valid": 167
+    },
+    "raw_outputs_tracked": false,
+    "review_count": 168,
+    "unique_review_ids": 168
+  },
+  "run_name": "evp7_g5_llm_full_run",
+  "workflow": {
+    "api_call_attempted": true,
+    "concurrency": 4,
+    "cost_note": "DeepSeek response did not expose billable cost in the stored usage field; runner total is not a billing estimate.",
+    "mode": "executed",
+    "model_call_attempted": true,
+    "review_count": 168,
+    "total_cost_usd_reported_by_runner": 0.0
+  }
+}

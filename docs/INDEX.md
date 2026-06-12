@@ -37,6 +37,10 @@
   protocol pilot: 7 main tasks and 4 projects. It reports a 36-candidate
   registry-known lower bound because `httpie_5` lacks candidate count fields in
   the registry.
+- `../data/tasks/evp7_expansion_readiness.json`: post-G5 controlled-expansion
+  readiness summary. It combines the current EVP-7 registry with the broader
+  BugsInPy candidate-pool rescreen and lists project-diverse probe lanes that
+  are metadata-only, not admitted tasks.
 - `../data/patches/evp7_candidates.jsonl`: tracked candidate manifest promoted
   from validated EVP-7 candidate outputs. It contains 42 candidates with global
   anonymous `evp7_candidate_id` values and evaluator-only labels kept explicit.
@@ -75,6 +79,10 @@
   scaffold over schema dry-run records. It computes FAR, accepted precision,
   recall, escalation, FACR, and Evidence Gain, but marks G5 signal claims as
   requiring genuine LLM verifier outputs.
+- `../data/reviews/evp7_g5_llm_full_run_summary.json`: tracked raw-output-free
+  summary of the real DeepSeek official EVP-7 G5 full run. It records 168
+  reviews, 167 parse-valid outputs, one schema-invalid output, and
+  `real_llm_verifier_signal_observed_on_evp7`.
 - `../data/reviews/evp7_g5_llm_prompt_manifest.jsonl`: no-API prompt manifest
   for the future real G5 evidence-visibility LLM run. It stores prompt hashes,
   lengths, prompt id, evidence level, and leakage-check status, not full prompt
@@ -271,6 +279,12 @@
 - `experiments/evp7_g5_execution_confirmation_packet.md`: human-facing
   confirmation packet for the future real G5 run. It records safe command
   order and forbidden actions before local config creation and API execution.
+- `experiments/evp7_g5_llm_full_run_result.md`: tracked summary of the real
+  DeepSeek official EVP-7 G5 full run. Raw model responses remain ignored under
+  `outputs/`.
+- `experiments/evp7_expansion_readiness.md`: controlled-expansion readiness
+  report after EVP-7 G5. It records current main tasks, blocked-risk counts,
+  broader BugsInPy metadata candidates, and bounded project-lane probe rules.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on
@@ -558,9 +572,10 @@
 - `../scripts/run_evp7_merge_gate_schema_dry_run.py`: generates no-API
   accept/reject/escalate schema dry-run records from model-visible EVP-7
   packets and validates parser stability before any real LLM API call.
-- `../scripts/analyze_evp7_schema_dry_run_metrics.py`: computes no-API G5
-  metric scaffolding over schema dry-run records, joining evaluator labels only
-  for aggregate metrics.
+- `../scripts/analyze_evp7_schema_dry_run_metrics.py`: computes G5 aggregate
+  metrics over schema dry-run, mock workflow, or real LLM review records,
+  joining evaluator labels only for aggregate metrics and labeling the review
+  source before stating signal status.
 - `../scripts/build_evp7_g5_llm_prompt_manifest.py`: renders the future G5
   evidence-visibility LLM prompt in memory, writes prompt hashes/lengths and
   readiness metadata, and verifies prompt-boundary leakage without API calls.
@@ -576,6 +591,12 @@
 - `../scripts/create_evp7_g5_llm_local_config.py`: dry-run/write helper for
   ignored `configs/evp7_g5_llm.local.json`. Write mode requires explicit
   provider, model, cost ceiling, smoke scope, and full-run permission.
+- `../scripts/summarize_evp7_g5_llm_full_run.py`: converts ignored real G5
+  outputs into tracked JSON/Markdown summaries without copying raw model
+  responses.
+- `../scripts/summarize_evp7_expansion_readiness.py`: summarizes current
+  registry state and broader BugsInPy rescreen outputs into tracked expansion
+  readiness artifacts.
 - `scripts/analyze_tool_gated_reviews.py`: oracle-gated analysis reference.
 - `experience/engineering_notes.md`: fresh operational notes for this new
   workspace.

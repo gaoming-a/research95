@@ -1,0 +1,248 @@
+{
+  "candidate_pool": {
+    "already_registered_tasks": 30,
+    "framework_counts": {
+      "other": 1,
+      "pytest": 353,
+      "unittest": 117
+    },
+    "metadata_blocker_counts": {
+      "external_service_dependency": 5,
+      "heavy_ml_dependency": 45,
+      "native_build_dependency": 179,
+      "network_reference_in_metadata": 102
+    },
+    "new_candidate_tasks": 471,
+    "promising_candidate_tasks": 187,
+    "source": "outputs\\candidate_pool_rescreen\\parallel_latest.json",
+    "total_tasks": 501
+  },
+  "cohort_id": "EVP-7",
+  "current_main_projects": {
+    "PySnooper": 2,
+    "cookiecutter": 3,
+    "httpie": 1,
+    "tqdm": 1
+  },
+  "current_main_task_count": 7,
+  "current_main_tasks": [
+    "bugsinpy_httpie_5",
+    "bugsinpy_tqdm_9",
+    "bugsinpy_PySnooper_1",
+    "bugsinpy_PySnooper_3",
+    "bugsinpy_cookiecutter_1",
+    "bugsinpy_cookiecutter_2",
+    "bugsinpy_cookiecutter_3"
+  ],
+  "next_execution_boundary": [
+    "Run at most one bounded checkout/F2P/P2P probe per risky project lane at a time.",
+    "Parallelize across independent projects only; do not run buggy and fixed checkout for the same task concurrently.",
+    "Do not admit a task to p2p_broad_main until F2P, project-level P2P-broad, candidate construction, and candidate revalidation all pass.",
+    "Avoid repeating known blockers unless the probe explicitly tests a new bounded policy."
+  ],
+  "readiness_decision": "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled project-diverse probes, not blind BugsInPy sweeping or bulk admission.",
+  "registry_blocked_or_pending_count": 27,
+  "registry_blocked_reason_counts": {
+    "checkout_timeout": 1,
+    "collection_errors": 1,
+    "f2p_not_established": 1,
+    "full_repo_project_level_discovery_timeout": 1,
+    "insufficient_collectable_p2p_without_dependency_decision": 6,
+    "insufficient_p2p_broad_size": 2,
+    "large_project_test_suite": 1,
+    "legacy_requests_compatibility": 1,
+    "local_msvc_build_tools_unavailable": 1,
+    "missing_nose_dependency": 8,
+    "missing_pytest_httpbin_dependency": 1,
+    "missing_typed_ast_dependency": 3,
+    "native_extension_import_blocker": 1,
+    "official_test_root_scope_timeout": 1,
+    "project_level_collection_errors": 7,
+    "project_level_import_blocked": 1,
+    "project_level_scope_not_attempted_after_luigi_3_blocker": 1,
+    "project_level_scope_timeout": 5,
+    "project_level_unittest_discovery_timeout": 1,
+    "project_level_unittest_scope_timeout": 1,
+    "reference_import_compatibility_gap": 1,
+    "shared_fastapi_official_test_root_timeout_risk": 1,
+    "shared_large_project_test_suite": 1,
+    "shared_tornado_project_level_unittest_scope_timeout": 1,
+    "test_fixture_shim_required": 1,
+    "twisted_20_3_0_native_build_failed": 1,
+    "unclear_experimental_boundary": 1,
+    "unittest_collection_error": 2
+  },
+  "top_probe_lanes": [
+    {
+      "framework": "pytest",
+      "known_project_risk": {
+        "blocked_reasons": {
+          "full_repo_project_level_discovery_timeout": 1,
+          "official_test_root_scope_timeout": 1,
+          "shared_fastapi_official_test_root_timeout_risk": 1
+        },
+        "registered_blocked_tasks": 2,
+        "statuses": {
+          "pending_blocked_official_test_root_timeout": 1,
+          "pending_blocked_shared_scope_risk": 1
+        }
+      },
+      "probe_status": "metadata_only_not_admitted",
+      "project": "fastapi",
+      "run_commands": [
+        "pytest tests/test_param_in_path_and_dependency.py::test_reused_param"
+      ],
+      "screening_score": 8,
+      "task_id": "bugsinpy_fastapi_4",
+      "test_file": "tests/test_param_in_path_and_dependency.py"
+    },
+    {
+      "framework": "pytest",
+      "known_project_risk": {
+        "blocked_reasons": {
+          "project_level_scope_timeout": 1
+        },
+        "registered_blocked_tasks": 1,
+        "statuses": {
+          "pending_blocked_project_level_scope_timeout": 1
+        }
+      },
+      "probe_status": "metadata_only_not_admitted",
+      "project": "sanic",
+      "run_commands": [
+        "pytest tests/test_app.py::test_asyncio_server_start_serving"
+      ],
+      "screening_score": 8,
+      "task_id": "bugsinpy_sanic_2",
+      "test_file": "tests/test_app.py"
+    },
+    {
+      "framework": "unittest",
+      "known_project_risk": {
+        "blocked_reasons": {
+          "local_msvc_build_tools_unavailable": 1,
+          "twisted_20_3_0_native_build_failed": 1
+        },
+        "registered_blocked_tasks": 1,
+        "statuses": {
+          "blocked_dependency_native_build": 1
+        }
+      },
+      "probe_status": "metadata_only_not_admitted",
+      "project": "scrapy",
+      "run_commands": [
+        "python -m unittest -q tests.test_utils_datatypes.LocalCacheTest.test_cache_without_limit"
+      ],
+      "screening_score": 7,
+      "task_id": "bugsinpy_scrapy_2",
+      "test_file": "tests/test_utils_datatypes.py"
+    },
+    {
+      "framework": "unittest",
+      "known_project_risk": {
+        "blocked_reasons": {
+          "project_level_unittest_scope_timeout": 1,
+          "shared_tornado_project_level_unittest_scope_timeout": 1
+        },
+        "registered_blocked_tasks": 2,
+        "statuses": {
+          "pending_blocked_project_level_unittest_scope_timeout": 1,
+          "pending_blocked_shared_project_level_unittest_scope_timeout": 1
+        }
+      },
+      "probe_status": "metadata_only_not_admitted",
+      "project": "tornado",
+      "run_commands": [
+        "python -m unittest -q tornado.test.websocket_test.WebSocketTest.test_nodelay"
+      ],
+      "screening_score": 7,
+      "task_id": "bugsinpy_tornado_1",
+      "test_file": "tornado/test/websocket_test.py"
+    },
+    {
+      "framework": "unittest",
+      "known_project_risk": {
+        "blocked_reasons": {
+          "project_level_unittest_discovery_timeout": 1
+        },
+        "registered_blocked_tasks": 1,
+        "statuses": {
+          "pending_blocked_project_level_unittest_discovery_timeout": 1
+        }
+      },
+      "probe_status": "metadata_only_not_admitted",
+      "project": "youtube-dl",
+      "run_commands": [
+        "python -m unittest -q test.test_InfoExtractor.TestInfoExtractor.test_parse_mpd_formats"
+      ],
+      "screening_score": 7,
+      "task_id": "bugsinpy_youtube-dl_2",
+      "test_file": "test/test_InfoExtractor.py"
+    },
+    {
+      "framework": "pytest",
+      "known_project_risk": {
+        "blocked_reasons": {
+          "checkout_timeout": 1
+        },
+        "registered_blocked_tasks": 1,
+        "statuses": {
+          "pending_blocked_checkout_timeout": 1
+        }
+      },
+      "probe_status": "metadata_only_not_admitted",
+      "project": "ansible",
+      "run_commands": [
+        "pytest test/units/galaxy/test_collection.py::test_verify_collections_no_version"
+      ],
+      "screening_score": 5,
+      "task_id": "bugsinpy_ansible_1",
+      "test_file": "test/units/galaxy/test_collection.py"
+    },
+    {
+      "framework": "pytest",
+      "known_project_risk": {
+        "blocked_reasons": {
+          "collection_errors": 1,
+          "large_project_test_suite": 1,
+          "project_level_scope_not_attempted_after_luigi_3_blocker": 1,
+          "project_level_scope_timeout": 1,
+          "shared_large_project_test_suite": 1
+        },
+        "registered_blocked_tasks": 2,
+        "statuses": {
+          "pending_blocked": 2
+        }
+      },
+      "probe_status": "metadata_only_not_admitted",
+      "project": "luigi",
+      "run_commands": [
+        "pytest test/server_test.py::MetricsHandlerTest::test_get"
+      ],
+      "screening_score": 5,
+      "task_id": "bugsinpy_luigi_1",
+      "test_file": "test/server_test.py"
+    },
+    {
+      "framework": "pytest",
+      "known_project_risk": {
+        "blocked_reasons": {
+          "f2p_not_established": 1,
+          "native_extension_import_blocker": 1
+        },
+        "registered_blocked_tasks": 1,
+        "statuses": {
+          "blocked_native_extension_import": 1
+        }
+      },
+      "probe_status": "metadata_only_not_admitted",
+      "project": "matplotlib",
+      "run_commands": [
+        "pytest lib/matplotlib/tests/test_bbox_tight.py::test_noop_tight_bbox"
+      ],
+      "screening_score": 5,
+      "task_id": "bugsinpy_matplotlib_1",
+      "test_file": "lib/matplotlib/tests/test_bbox_tight.py"
+    }
+  ]
+}
