@@ -1143,3 +1143,13 @@ This file starts fresh for the patch-verification project.
   serial checkout repair, but project-level `tornado/test` scope construction
   still failed to produce a manifest. Treat this as shared Tornado
   project-level scope risk and avoid repeated long Tornado sweeps.
+
+## 2026-06-12 Ansible checkout cost
+
+- `bugsinpy_ansible_2` looked attractive at metadata level because its target is
+  pure version-comparison logic, but the large Ansible checkout did not complete
+  inside the bounded feasibility window.
+- If a BugsInPy checkout does not write the metadata marker files such as
+  `bugsinpy_run_test.sh`, do not run F2P against that partial checkout. Stop the
+  checkout process, remove the incomplete retained workspace, and record a
+  checkout feasibility blocker.

@@ -802,6 +802,44 @@
         "task_file_level_p2p": "not_recorded"
       },
       "blocked_reason": [
+        "checkout_timeout"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "p2p_broad_size": null,
+        "test_framework": "pytest"
+      },
+      "f2p_oracle": {
+        "buggy": "not_run: buggy checkout timed out before BugsInPy marker files were written",
+        "fixed": "not_run",
+        "nodeids": [
+          "test/units/utils/test_version.py::test_alpha",
+          "test/units/utils/test_version.py::test_numeric"
+        ]
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Metadata-level target looked like pure version-comparison logic, but the large Ansible buggy checkout exceeded the bounded feasibility window and did not write bugsinpy_run_test.sh. The partial retained workspace was removed; no F2P or P2P scope was attempted.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_ansible_2_checkout_timeout.json",
+      "project": "ansible",
+      "project_level_p2p_status": "pending_blocked_checkout_timeout",
+      "task_id": "bugsinpy_ansible_2"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
         "missing_typed_ast_dependency",
         "unittest_collection_error"
       ],

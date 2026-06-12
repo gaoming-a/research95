@@ -199,6 +199,9 @@ They should not override `final_paper_roadmap_zh.md`.
 - `bugsinpy_tornado_9` has a clear pure-function F2P oracle, but the Tornado
   project-level unittest P2P-broad path again failed to produce a manifest. It
   is recorded as shared Tornado project-level scope risk.
+- `bugsinpy_ansible_2` was blocked before F2P because the large repository
+  checkout exceeded the bounded feasibility window and did not write BugsInPy
+  marker files.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

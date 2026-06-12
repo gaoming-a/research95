@@ -1,0 +1,27 @@
+{
+  "task_id": "bugsinpy_ansible_2",
+  "project": "ansible",
+  "status": "pending_blocked_checkout_timeout",
+  "p2p_broad_main_included": false,
+  "buggy_commit_id": "de59b17c7f69d5cfb72479b71776cc8b97e29a6b",
+  "fixed_commit_id": "5b9418c06ca6d51507468124250bb58046886be6",
+  "f2p_commands": [
+    "pytest test/units/utils/test_version.py::test_alpha",
+    "pytest test/units/utils/test_version.py::test_numeric"
+  ],
+  "checkout_attempt": {
+    "version": "buggy",
+    "work_dir": "data/real_bugs/bugsinpy_workspace/ansible_2/buggy",
+    "completed": false,
+    "elapsed_minutes": 13,
+    "marker_file_written": false,
+    "marker_file": "bugsinpy_run_test.sh",
+    "cleanup": "Terminated the hanging checkout process and removed the incomplete ansible_2 retained workspace."
+  },
+  "decision": {
+    "reason": "The buggy checkout did not complete within the bounded feasibility window for this large repository, so no retained F2P oracle or project-level P2P scope was attempted.",
+    "no_task_file_downgrade": true,
+    "no_source_or_test_fixture_edit": true,
+    "no_global_dependency_install": true
+  }
+}

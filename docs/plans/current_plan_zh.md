@@ -3376,6 +3376,31 @@ Project-level P2P attempt：
 - `p2p_broad_size >= 3`；
 - registry 中只在上述条件满足后才允许 `p2p_broad_main_included = true`。
 
+执行结果：
+
+- 已串行启动 `bugsinpy_ansible_2` buggy checkout。
+- checkout 运行超过 13 分钟仍未完成，且 retained checkout 中未写出
+  `bugsinpy_run_test.sh` marker。
+- 已终止 hanging checkout 进程，并删除本轮产生的不完整
+  `D:/mgao/code/research/data/real_bugs/bugsinpy_workspace/ansible_2`
+  retained workspace。
+- 因 checkout 未完成，未执行 fixed checkout、F2P probe 或 project-level P2P。
+
+最终状态：
+
+- `bugsinpy_ansible_2` 记录为 `pending_blocked_checkout_timeout`。
+- 新增结构化 timeout 记录：
+  `data/p2p_scopes/bugsinpy_ansible_2_checkout_timeout.json`。
+- 新增实验记录：
+  `docs/experiments/ansible2_feasibility.md`。
+- `bugsinpy_ansible_2` 不进入 `p2p_broad_main`。
+
+下一步：
+
+- 不继续优先尝试 Ansible 大仓库 checkout。
+- 候选筛选转向更小项目或已知 checkout 成本低的项目；仍允许并行做 metadata
+  inspect，但同一 task 的 buggy/fixed checkout 保持串行。
+
 执行进展：
 
 - 初次并行创建 `bugsinpy_tornado_9` buggy/fixed checkout 时，fixed checkout
