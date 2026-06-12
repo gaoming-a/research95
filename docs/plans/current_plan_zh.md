@@ -3401,6 +3401,60 @@ Project-level P2P attempt：
 - 候选筛选转向更小项目或已知 checkout 成本低的项目；仍允许并行做 metadata
   inspect，但同一 task 的 buggy/fixed checkout 保持串行。
 
+## 36. 2026-06-12 next candidate feasibility: matplotlib_1
+
+同步状态：
+
+- `bugsinpy_ansible_2` checkout timeout 已提交并 push 到 GitHub：
+  `9505155 docs: record ansible checkout timeout`。
+- 当前 Git 状态：`main...origin/main`，工作区干净。
+
+候选选择：
+
+- 转向 `bugsinpy_matplotlib_1`。
+- 理由：
+  - 当前 broader candidate pool 在排除 FastAPI/Sanic/Scrapy/youtube-dl/Tornado、
+    Luigi 和 Ansible 后，剩余候选集中在 Matplotlib；
+  - F2P 目标明确为 `lib/matplotlib/tests/test_bbox_tight.py::test_noop_tight_bbox`；
+  - patch 涉及 tight-bbox renderer draw no-op 逻辑。
+
+元数据：
+
+- project = `matplotlib`；
+- buggy commit = `c404d1f716e8aaefd4d7371ff49673e9c1f7f07c`；
+- fixed commit = `5324adaec6a7fd3d78dea7b28451d5f6e95392a6`；
+- F2P command:
+  - `pytest lib/matplotlib/tests/test_bbox_tight.py::test_noop_tight_bbox`。
+- `setup.sh` 包含：
+  - `pip install Cython`；
+  - `python -mpip install -ve .`。
+
+本轮小目标：
+
+1. 串行准备 `bugsinpy_matplotlib_1` buggy/fixed checkout。
+2. 尝试最小 F2P import/probe。
+3. 如果需要依赖，只允许在 ignored isolated venv 中安装目标 F2P 所需的
+   declared dependency subset。
+4. 如果 editable install 或 import 明确需要 native build/toolchain，记录 blocker，
+   不替换依赖、不改 source/test fixture。
+
+执行边界：
+
+- 不安装全局依赖；
+- 不执行全局 `setup.sh`；
+- 不调用真实 API；
+- 不修改 Matplotlib source/test fixture；
+- 不把 task-file P2P 降级成 main evidence；
+- 不把本机已安装的 unrelated Matplotlib package 当作 checkout evidence；
+- 若本地 native build、GUI/backend、font/data asset 或外部 toolchain 边界不清楚，
+  先记录 blocker。
+
+验收条件：
+
+- F2P probe 明确 buggy fail / fixed pass；
+- 或明确记录 dependency/native build/import blocker；
+- 只有在 F2P 清楚后才考虑 project-level P2P-broad。
+
 执行进展：
 
 - 初次并行创建 `bugsinpy_tornado_9` buggy/fixed checkout 时，fixed checkout
