@@ -3247,3 +3247,40 @@ FastAPI 决策：
 - project-level P2P-broad manifest 生成并记录 scope；
 - `p2p_broad_size >= 3`；
 - registry 中只在上述条件满足后才允许 `p2p_broad_main_included = true`。
+
+执行结果：
+
+- buggy/fixed checkout 已成功创建到外部 retained workspace：
+  `D:/mgao/code/research/data/real_bugs/bugsinpy_workspace/youtube-dl_1`。
+- F2P probe 明确：
+  - buggy checkout:
+    `test.test_utils.TestUtil.test_match_str` 失败，
+    `match_str('is_live', {'is_live': False})` 返回 `True`；
+  - fixed checkout: 同一测试通过。
+- 已尝试 project-level unittest P2P-broad construction：
+  - discovery root = `test/`；
+  - pattern = `test_*.py`；
+  - fail-to-pass oracle = `test.test_utils.TestUtil.test_match_str`；
+  - 静态排除明显 network/external execution token；
+  - batch-first dynamic stability run。
+- 该运行达到 30 分钟预算仍未完成，未生成
+  `data/p2p_scopes/bugsinpy_youtube-dl_1_p2p_broad.json`。
+- 输出目录仅包含 `compat_shim`，说明未到达可用 manifest/test-record 阶段。
+- 已确认无 `bugsinpy_youtube-dl_1` 相关残留 Python 进程。
+
+最终状态：
+
+- `bugsinpy_youtube-dl_1` 记录为
+  `pending_blocked_project_level_unittest_discovery_timeout`。
+- 新增结构化 timeout 记录：
+  `data/p2p_scopes/bugsinpy_youtube-dl_1_project_level_timeout.json`。
+- 新增实验记录：
+  `docs/experiments/youtubedl1_feasibility.md`。
+- `bugsinpy_youtube-dl_1` 不进入 `p2p_broad_main`。
+
+下一步：
+
+- 转向 broader pool 中下一个非 FastAPI、非 Sanic、非 Scrapy、非
+  youtube-dl 的候选任务。
+- 优先检查 `bugsinpy_tornado_1`，但其 websocket 测试可能涉及本地网络；
+  开始前必须先 Inspect 其 patch、test 和 dependency 边界。

@@ -159,6 +159,10 @@
   records `bugsinpy_scrapy_1` as blocked because declared `Twisted==20.3.0`
   requires unavailable local native build tools before the retained F2P oracle
   can run.
+- `experiments/youtubedl1_feasibility.md`: youtube-dl 1 feasibility probe. It
+  records a clear retained F2P oracle but blocks main-cohort admission because
+  project-level unittest P2P-broad construction timed out before producing a
+  manifest.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

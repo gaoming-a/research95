@@ -1097,3 +1097,14 @@ This file starts fresh for the patch-verification project.
   dependency, or edit Scrapy fixtures for main-cohort admission. Record the task
   as `blocked_dependency_native_build` and skip Scrapy-family candidates unless
   the dependency/toolchain boundary is explicitly revisited.
+
+## 2026-06-12 youtube-dl_1 project-level discovery timeout
+
+- `bugsinpy_youtube-dl_1` has a clean retained F2P oracle: the buggy checkout
+  treats `is_live=False` as a match, while the fixed checkout passes.
+- Full project-level unittest scope construction can still be infeasible even
+  for a low-dependency utility bug. The `test/` discovery/P2P run reached 30
+  minutes and produced only the compat shim directory, with no manifest.
+- Do not convert this clear F2P result into main evidence by downgrading to
+  `test_utils.py` task-file P2P. Record the project-level discovery timeout and
+  move to the next candidate.

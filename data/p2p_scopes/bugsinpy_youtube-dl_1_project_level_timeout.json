@@ -1,0 +1,46 @@
+{
+  "task_id": "bugsinpy_youtube-dl_1",
+  "project": "youtube-dl",
+  "status": "pending_blocked_project_level_unittest_discovery_timeout",
+  "p2p_broad_main_included": false,
+  "buggy_commit_id": "99036a1298089068dcf80c0985bfcc3f8c24f281",
+  "fixed_commit_id": "1cc47c667419e0eadc0a6989256ab7b276852adf",
+  "f2p_oracle": {
+    "nodeid": "test.test_utils.TestUtil.test_match_str",
+    "buggy": "failed: AssertionError True is not false for match_str('is_live', {'is_live': False})",
+    "fixed": "passed"
+  },
+  "project_level_p2p_attempt": {
+    "scope_type": "project_level_p2p_broad",
+    "test_framework": "unittest",
+    "unittest_start_dir": "test",
+    "unittest_pattern": "test_*.py",
+    "unittest_top_level_dir": ".",
+    "runs": 3,
+    "timeout_seconds": 15,
+    "batch_timeout_seconds": 120,
+    "batch_size": 20,
+    "batch_first": true,
+    "static_exclude_tokens": [
+      "socket",
+      "compat_http_server",
+      "compat_urlretrieve",
+      "urlretrieve",
+      "urlopen",
+      "ydl.download",
+      ".download("
+    ],
+    "elapsed_minutes": 30,
+    "completed": false,
+    "manifest_generated": false,
+    "output_dir": "outputs/youtubedl1_project_p2p_scope_001",
+    "observed_output": "Only the compat_shim helper directory was written; no scope manifest or test records were generated before timeout.",
+    "residual_processes_after_cleanup": 0
+  },
+  "decision": {
+    "reason": "The retained F2P oracle is clear, but project-level unittest discovery/scope construction exceeded the bounded runtime before producing a manifest.",
+    "no_task_file_downgrade": true,
+    "no_source_or_test_fixture_edit": true,
+    "no_network_tests_as_main_evidence": true
+  }
+}

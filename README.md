@@ -189,6 +189,10 @@ They should not override `final_paper_roadmap_zh.md`.
   install attempts to build a native extension and fails without MSVC build
   tools. No dependency substitution, fixture edit, or task-file P2P downgrade
   was used.
+- `bugsinpy_youtube-dl_1` has a clear F2P oracle, but project-level unittest
+  P2P-broad construction reached the bounded runtime without producing a
+  manifest, so it is recorded as
+  `pending_blocked_project_level_unittest_discovery_timeout`.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in
