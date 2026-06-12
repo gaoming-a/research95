@@ -1316,3 +1316,19 @@ This file starts fresh for the patch-verification project.
 - A future real G5 run should stop on prompt-boundary failure, high smoke
   invalid-output rate, API/preflight failure, cost growth beyond the
   user-confirmed budget, or `run_error.json`.
+
+## 2026-06-13 EVP-7 G5 preflight boundary
+
+- Keep `configs/evp7_g5_llm.example.json` as a template only. Placeholder
+  provider/model/cost/smoke/full-run fields must keep `api_ready = false`.
+- `scripts/preflight_evp7_g5_llm_run.py` intentionally separates
+  `structural_ready` from `api_ready`. Structural readiness can pass with the
+  example config; strict API readiness must fail until the user supplies an
+  ignored local config with concrete confirmations.
+- The G5 preflight does not read `.env`, does not create local configs, and
+  does not call any API. Credential checks belong to the final guarded runner
+  after user confirmation.
+- If a future agent changes the example config to concrete values, treat that
+  as a scope violation unless the user explicitly asked to record those values
+  in tracked files. Real provider/model/cost decisions should be local or
+  documented as non-secret policy, not mixed with credentials.

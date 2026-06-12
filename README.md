@@ -225,9 +225,11 @@ They should not override `final_paper_roadmap_zh.md`.
   and Evidence Gain over schema-stable dry-run records, while explicitly
   marking real signal existence as requiring genuine LLM verifier outputs. The
   G5 LLM prompt manifest now covers all 168 E0/E2/E4/E6 packets with zero
-  leakage findings and no stored prompt text. The next work is not to find an
-  eighth bug, but to get explicit user confirmation for the real G5 API
-  provider, model, cost ceiling, smoke scope, and full-run permission.
+  leakage findings and no stored prompt text. A tracked G5 example config and
+  preflight now prove structural readiness while keeping strict API readiness
+  false until user confirmation. The next work is not to find an eighth bug,
+  but to get explicit user confirmation for the real G5 API provider, model,
+  cost ceiling, smoke scope, and full-run permission.
   Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and
@@ -266,6 +268,9 @@ python scripts\run_evp7_tool_only_baselines.py --check
 python scripts\run_evp7_merge_gate_schema_dry_run.py --check
 python scripts\analyze_evp7_schema_dry_run_metrics.py --check
 python scripts\build_evp7_g5_llm_prompt_manifest.py --check
+python scripts\preflight_evp7_g5_llm_run.py `
+  --config configs\evp7_g5_llm.example.json `
+  --out data\reviews\evp7_g5_llm_preflight_example.json
 ```
 
 For full-goal completion evidence, run:

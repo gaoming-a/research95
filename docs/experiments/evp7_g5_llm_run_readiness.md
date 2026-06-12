@@ -95,3 +95,38 @@ Before any real G5 API call, the user must confirm:
 
 This readiness artifact is not model-result evidence and does not pass G5 by
 itself.
+
+## Config And Preflight
+
+Tracked example config:
+
+```text
+configs/evp7_g5_llm.example.json
+```
+
+No-API structural preflight:
+
+```powershell
+python scripts\preflight_evp7_g5_llm_run.py `
+  --config configs\evp7_g5_llm.example.json `
+  --out data\reviews\evp7_g5_llm_preflight_example.json
+```
+
+Current result:
+
+- structural readiness = true;
+- API readiness = false;
+- API call attempted = false.
+
+Strict preflight:
+
+```powershell
+python scripts\preflight_evp7_g5_llm_run.py `
+  --config configs\evp7_g5_llm.example.json `
+  --strict-api-ready `
+  --out data\reviews\evp7_g5_llm_preflight_strict_example.json
+```
+
+The strict check correctly fails while provider, model, cost ceiling, smoke
+scope, and full-run permission are still placeholders. This is intentional:
+the example config proves structure, not permission to spend API budget.

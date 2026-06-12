@@ -82,6 +82,13 @@
 - `../data/reviews/evp7_g5_llm_run_readiness.json`: G5 LLM run readiness
   summary. It records 168 prompt records, zero leakage failures, estimated
   prompt scale, stop conditions, and required user confirmations.
+- `../data/reviews/evp7_g5_llm_preflight_example.json`: no-API preflight
+  result for the tracked G5 example config. Structural readiness passes while
+  strict API readiness remains false because user confirmations are pending.
+- `../data/reviews/evp7_g5_llm_preflight_strict_example.json`: strict-mode
+  preflight result proving the example config is blocked from real API
+  execution until provider, model, cost, smoke scope, and full-run permission
+  are confirmed.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 
@@ -540,6 +547,10 @@
 - `../scripts/build_evp7_g5_llm_prompt_manifest.py`: renders the future G5
   evidence-visibility LLM prompt in memory, writes prompt hashes/lengths and
   readiness metadata, and verifies prompt-boundary leakage without API calls.
+- `../configs/evp7_g5_llm.example.json`: tracked template for the future G5 LLM
+  run. It intentionally contains placeholders and is not API-ready.
+- `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict
+  readiness checker for the future G5 LLM run config.
 - `scripts/analyze_tool_gated_reviews.py`: oracle-gated analysis reference.
 - `experience/engineering_notes.md`: fresh operational notes for this new
   workspace.

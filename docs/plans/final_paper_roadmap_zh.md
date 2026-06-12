@@ -967,6 +967,8 @@ BugsInPy 扩量，必须先解决当前候选池边界：
 - `data/reviews/evp7_schema_dry_run_metrics.json`；
 - `data/reviews/evp7_g5_llm_prompt_manifest.jsonl`；
 - `data/reviews/evp7_g5_llm_run_readiness.json`；
+- `data/reviews/evp7_g5_llm_preflight_example.json`；
+- `data/reviews/evp7_g5_llm_preflight_strict_example.json`；
 - `docs/experiments/evp7_g5_metric_scaffold.md`；
 - `docs/experiments/evp7_g5_llm_run_readiness.md`；
 - `data/exclusions/blocked_bugsinpy_projects.jsonl`；
@@ -999,7 +1001,10 @@ Phase A 已补齐 EVP-7 candidate-level schema：
 11. 真实 LLM verifier 的 G5 prompt manifest 和 readiness summary 当前通过
    no-API 检查：168 条 prompts、四层各 42 条、leakage failed count = 0、
    prompt text 不写入 tracked manifest；
-12. 下一步必须由用户确认真实 G5 的 provider、model、最大总成本、smoke
+12. G5 API example config 和 preflight 当前通过结构检查，但 strict API
+   readiness 保持 false，因为 provider/model/cost/smoke/full-run permission
+   仍未确认；
+13. 下一步必须由用户确认真实 G5 的 provider、model、最大总成本、smoke
    scope 和 full-run permission；
-13. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
+14. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
    expansion。

@@ -181,6 +181,10 @@ Current gate status after the first packet builder:
   covers all 168 E0/E2/E4/E6 packet prompts with zero leakage failures and no
   tracked full prompt text. Real execution still requires user confirmation of
   provider, model, cost ceiling, smoke scope, and full-run permission.
+- The tracked `configs/evp7_g5_llm.example.json` and
+  `scripts/preflight_evp7_g5_llm_run.py` now prove structural readiness without
+  API calls. Strict API readiness intentionally remains false until those user
+  confirmations are supplied in an ignored local config.
 
 ## Post-A Expansion
 

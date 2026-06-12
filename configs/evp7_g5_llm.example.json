@@ -1,0 +1,19 @@
+{
+  "run_id": "evp7_g5_llm_001",
+  "api_provider": "<user-confirmed-provider>",
+  "model": "<user-confirmed-model>",
+  "prompt_id": "patch_verify_evidence_visibility_merge_gate_v1",
+  "conditions": ["evidence_visibility_merge_gate"],
+  "temperature": 0.0,
+  "max_tokens": 1024,
+  "smoke_scope": "<user-confirmed-smoke-scope>",
+  "max_total_cost_usd": "<user-confirmed-cost-ceiling>",
+  "full_run_permission": false,
+  "evidence_packets": "data/evidence/evp7_evidence_packets.jsonl",
+  "prompt_manifest": "data/reviews/evp7_g5_llm_prompt_manifest.jsonl",
+  "run_readiness": "data/reviews/evp7_g5_llm_run_readiness.json",
+  "metrics_scaffold": "data/reviews/evp7_schema_dry_run_metrics.json",
+  "candidates": "data/patches/evp7_candidates.jsonl",
+  "out_dir": "outputs/evp7_g5_llm_001",
+  "env": ".env"
+}

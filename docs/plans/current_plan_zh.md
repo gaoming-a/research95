@@ -4608,3 +4608,72 @@ Project-level P2P attempt：
 - 真实 G5 API 执行仍需用户确认 provider、model、最大总成本、smoke scope 和
   full-run permission。
 - 在确认前，不运行真实 API。
+
+## 49. 2026-06-13 EVP-7 G5 API config and preflight without API
+
+同步状态：
+
+- 上一轮提交 `2bac37f data: prepare evp7 g5 llm readiness` 已成功 push 到
+  GitHub。
+- 当前 Git 状态为 `main...origin/main`，工作区干净。
+- G5 LLM prompt readiness 已通过 no-API 检查，但真实 G5 API 执行仍未获用户
+  确认。
+
+本轮小目标：
+
+1. 新增 tracked G5 API example config；
+2. 新增 G5 preflight/check-only 脚本；
+3. preflight 验证 prompt manifest、readiness summary、evidence packet 和
+   metric scaffold 的结构一致性；
+4. 在用户确认项未填写时，允许 structural readiness 通过，但 strict API
+   readiness 必须保持 false；
+5. 不读取 `.env`，不调用真实 API。
+
+执行边界：
+
+- 不运行真实 LLM API；
+- 不创建或修改 `configs/*.local.json`；
+- 不读取 `.env` 或任何 credential；
+- example config 只能包含 placeholder，不包含真实 provider/model/cost 决策；
+- preflight 不得把 pending user confirmation 误判为 API-ready。
+
+验收条件：
+
+- example config 可由 preflight 解析；
+- structural readiness = passed；
+- api_ready = false，原因是 provider/model/cost/smoke/full-run permission
+  仍需用户确认；
+- prompt manifest 仍为 168 条，四层各 42 条；
+- 最小验证和敏感信息扫描通过。
+
+执行结果：
+
+- 新增 `configs/evp7_g5_llm.example.json`。
+- 新增 `scripts/preflight_evp7_g5_llm_run.py`。
+- 已生成：
+  - `data/reviews/evp7_g5_llm_preflight_example.json`；
+  - `data/reviews/evp7_g5_llm_preflight_strict_example.json`。
+- `python scripts\preflight_evp7_g5_llm_run.py --out
+  data\reviews\evp7_g5_llm_preflight_example.json` 通过：
+  - structural_ready = true；
+  - api_ready = false；
+  - api_call_attempted = false。
+- strict 检查按预期失败并被 wrapper 验证：
+  - `python scripts\preflight_evp7_g5_llm_run.py --strict-api-ready --out
+    data\reviews\evp7_g5_llm_preflight_strict_example.json`；
+  - 失败原因是 provider/model/cost/smoke/full-run permission 仍未由用户确认。
+
+诊断：
+
+- 当前本地结构已经足以让未来 local config 做真实 G5 前检查；
+- example config 仍然不能执行真实 API，这符合边界；
+- 没有读取 `.env`，没有创建 local config，没有调用 API。
+
+下一步：
+
+- 真实 G5 执行仍需要用户明确提供或确认：
+  - API provider；
+  - model；
+  - max_total_cost_usd；
+  - smoke_scope；
+  - full_run_permission。

@@ -303,6 +303,16 @@ Current readiness status:
 
 This prepares the real G5 run boundary but does not execute it.
 
+G5 config/preflight status:
+
+- example config = `configs/evp7_g5_llm.example.json`;
+- preflight script = `scripts/preflight_evp7_g5_llm_run.py`;
+- structural readiness = true;
+- strict API readiness = false until user confirmations are supplied;
+- tracked preflight reports:
+  - `data/reviews/evp7_g5_llm_preflight_example.json`;
+  - `data/reviews/evp7_g5_llm_preflight_strict_example.json`.
+
 ## Current Next Step
 
 No new BugsInPy expansion, native build work, external benchmark migration, or
