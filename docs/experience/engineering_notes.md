@@ -1231,3 +1231,21 @@ This file starts fresh for the patch-verification project.
 - The leakage audit should scan both keys and values for evaluator-only terms.
   It is a gate for accidental label/provenance leakage, not proof that G1/G5
   signal exists.
+
+## 2026-06-12 EVP-7 visible-test runner boundary
+
+- Visible E4 outcomes must be regenerated as a separate model-visible evidence
+  source. Do not reuse retained-oracle or hidden P2P validation outcomes from
+  evaluator validation JSONL.
+- Empty-string `pytest_addopts_override` is meaningful: it clears project
+  default addopts. Treating it as false caused cookiecutter_3 visible tests to
+  fail with pytest exit code 4 until the runner switched to
+  `addopts_override is not None`.
+- PySnooper_1 and httpie_5 visible-test attempts currently hit environment or
+  dependency import errors under Python 3.11. These are runner/environment
+  boundaries, not candidate-patch failures. Do not classify pytest exit codes
+  other than 0 and 1 as visible test failed; record them as `error`.
+- Current visible outcome source completes 30/42 candidates. Deterministic E6
+  visible tool summaries also complete 30/42 by summarizing already
+  model-visible patch-apply/static/test evidence. G1 remains blocked by the 12
+  E4/E6 runner errors.

@@ -60,10 +60,13 @@ data/evidence/evp7_evidence_packets.jsonl
 ```
 
 It contains E0/E2/E4/E6 records for all 42 candidates. E0/E2 are complete.
-E4/E6 records exist for schema and leakage auditing, but are marked incomplete
-until independent visible test outcomes and realistic visible tool summaries
-are generated. Retained-oracle and hidden P2P validation results must not be
-used to fill those visible evidence fields.
+E4 is complete for 30 candidates after rerunning predeclared visible tests in
+candidate workdirs. E4 remains incomplete for 12 candidates because the visible
+test runner hit environment/import errors. E6 is complete for the same 30
+candidates after deterministic visible tool summaries were generated from
+already model-visible static and visible-test evidence. Retained-oracle and
+hidden P2P validation results must not be used to fill those visible evidence
+fields.
 
 ## Phase A Scope
 
@@ -157,7 +160,8 @@ If G5 fails, the protocol should be redesigned before adding bugs.
 
 Current gate status after the first packet builder:
 
-- G1 is not passed: E4/E6 lack independent visible outcomes/tool summaries;
+- G1 is not passed: E4/E6 have 12 incomplete candidates due to visible-test
+  runner environment/import errors;
 - G2 passes for the generated packet records: automated leakage audit found no
   evaluator labels, oracle outcomes, hidden tests, reference provenance, or
   failure taxonomy in model-visible packets.

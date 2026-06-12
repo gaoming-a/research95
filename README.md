@@ -214,10 +214,12 @@ They should not override `final_paper_roadmap_zh.md`.
   `EVP-7 Protocol Pilot`. The tracked candidate manifest now contains 42
   promoted candidates across those 7 tasks. The tracked evidence packet
   manifest now contains 168 E0/E2/E4/E6 packet records. E0/E2 are complete;
-  E4/E6 are intentionally marked incomplete until independent visible test
-  outcomes and realistic tool summaries are generated. The next work is not to
-  find an eighth bug, but to complete those visible evidence sources, realistic
-  tool-only baselines, and merge-gate schema checks. Start from
+  E4 and E6 are complete for 30/42 candidates after an independent visible-test
+  runner and deterministic visible tool summaries, with 12 environment/import
+  errors still incomplete. The next work is not to find an eighth bug, but to
+  resolve or explicitly bound those visible evidence errors, add realistic
+  tool-only baselines, and run merge-gate schema checks.
+  Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and
   `data/evidence/evp7_evidence_packets.jsonl`.
@@ -248,6 +250,8 @@ For the frozen EVP-7 manifests, run:
 ```powershell
 python scripts\build_evp7_protocol_manifests.py --check
 python scripts\build_evp7_candidate_manifest.py --check
+python scripts\run_evp7_visible_tests.py --run --check --timeout 90
+python scripts\build_evp7_visible_tool_summaries.py --check
 python scripts\build_evp7_evidence_packets.py --check
 ```
 

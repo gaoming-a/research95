@@ -975,9 +975,12 @@ Phase A 已补齐 EVP-7 candidate-level schema：
 3. registry 中候选计数仍只能作为 36 条的下界，因为 `httpie_5` 缺少
    candidate count 字段；
 4. 已生成 leakage-audited E0/E2/E4/E6 evidence packet records，共 168 条；
-5. G2 leakage audit 当前通过；G1 尚未通过，因为 E4/E6 缺少独立可见 test
-   outcomes 和 realistic visible tool summaries；
-6. 下一步是补齐 E4/E6 可见证据源，再运行 tool-only baselines 和 LLM
+5. 已新增 independent visible-test outcome source 和 deterministic visible
+   tool summary source；E4/E6 当前均为 30/42 complete，12 条因
+   PySnooper_1/httpie_5 环境/import error 仍 incomplete；
+6. G2 leakage audit 当前通过；G1 尚未通过，因为 E4 仍有 12 条 runner error，
+   E6 继承同一 incomplete 边界；
+7. 下一步是解决或显式界定 E4/E6 runner error，再运行 tool-only baselines 和 LLM
    merge-gate schema dry-run；
-7. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
+8. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
    expansion。

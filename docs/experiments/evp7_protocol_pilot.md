@@ -158,23 +158,30 @@ Current status:
 
 - E0 complete for 42 candidates;
 - E2 complete for 42 candidates, using patch-apply evidence only;
-- E4 records exist but are incomplete because independent visible test outcomes
-  have not yet been generated;
-- E6 records exist but are incomplete because realistic visible tool summaries
-  have not yet been generated;
+- E4 complete for 30 candidates after independently rerunning predeclared
+  visible tests in candidate workdirs;
+- E4 remains incomplete for 12 candidates because the runner hit
+  environment/import errors: 6 from `bugsinpy_PySnooper_1` and 6 from
+  `bugsinpy_httpie_5`;
+- E6 complete for the same 30 candidates after deterministic visible tool
+  summaries were generated from model-visible static and visible-test evidence;
+- E6 remains incomplete for the same 12 candidates because their visible-test
+  outcome source is still error;
 - automated leakage audit passes with zero findings.
 
 ## Current Limitation
 
-This round generates model-visible packet records, but G1 packet completeness is
-not yet passed because E4/E6 lack independent visible outcome/tool evidence.
+This round generates model-visible packet records and an independent visible
+test outcome source, but G1 packet completeness is not yet passed because E4 is
+incomplete for 12 candidates; E6 follows the same 30/42 complete boundary.
 
 Reason:
 
 - candidate labels and failure taxonomy are tracked for evaluator use only;
 - retained-oracle and hidden P2P validation outcomes cannot be reused as
   model-visible E4/E6 evidence;
-- E6 needs a separate realistic visible tool-summary generation step.
+- PySnooper_1 and httpie_5 visible-test errors are environment/import boundaries
+  under the current no-compat-layer rule.
 
 The task manifest marks missing task metadata such as commits, issue summaries,
 and touched files as `metadata_backfill_required` instead of fabricating values
@@ -185,8 +192,8 @@ from local checkouts.
 The next executable step is:
 
 ```text
-Generate independent visible test outcomes and realistic visible tool
-summaries for E4/E6, then rerun leakage audit before any LLM API calls.
+Resolve or explicitly bound the 12 E4/E6 visible-test runner errors, then rerun
+leakage audit before any LLM API calls.
 ```
 
 No new BugsInPy expansion, native build work, external benchmark migration, or

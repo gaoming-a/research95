@@ -4051,3 +4051,180 @@ Project-level P2P attempt：
 - 补齐独立可见 test outcome source 和 realistic visible tool summary source；
 - 重新运行 `scripts/build_evp7_evidence_packets.py --check` 和 leakage audit；
 - G1/G2 都通过后，再进入 tool-only baselines 和 merge-gate schema dry-run。
+
+## 42. 2026-06-12 EVP-7 independent visible test outcome source
+
+同步状态：
+
+- 本地提交 `04eef23 data: build evp7 evidence packets` 已完成。
+- `git push origin main` 因 GitHub HTTPS 443 不可达失败；当前本地
+  `main...origin/main [ahead 1]`。
+- 工作区在本轮开始时干净。
+
+本轮小目标：
+
+1. 先恢复 GitHub 同步；若网络仍失败，记录为外部同步阻塞但继续推进本地可验证
+   artifact。
+2. 新增 independent visible test outcome source，不复用 validation JSONL 中的
+   retained oracle / hidden P2P outcome。
+3. 新增 runner 从 `data/patches/evp7_candidates.jsonl` 读取每个 candidate 的
+   `visible_tests`，在已有 candidate workdir 上重新执行这些预先标记为 visible
+   的测试，只记录 visible test name、pass/fail/error/timeout 和相对来源。
+4. 输出 tracked summary/manifest；如果 runner 只能完成部分任务，必须显式记录
+   incomplete，不得把 G1 写成通过。
+5. 重新生成 evidence packets，让 E4 使用新的 visible outcome source；E6 仍需
+   realistic visible tool summary source，不能自动标 complete。
+
+执行边界：
+
+- 不运行真实 LLM API；
+- 不使用 retained oracle outcome、`label_with_p2p_broad`、candidate
+  construction taxonomy 或 hidden P2P results 填充 visible evidence；
+- 不新增第 8 个 bug；
+- 不重新构造 P2P-broad scope；
+- 允许只在已有 ignored candidate workdirs 上执行预先声明的 `visible_tests`；
+- 如果缺少 workdir、env 或测试命令边界不明，必须记录 incomplete 并停止该任务，
+  不做临时兼容层。
+
+验收条件：
+
+- runner 有 dry-run/check 模式，能列出 42 个 candidate 的 visible-test 运行计划；
+- 实际运行只产生 model-visible outcome source，不写入 evaluator-only label；
+- evidence packet builder 的 leakage audit 仍通过；
+- 文档明确 E4 是否达到 complete；E6 在 tool summary source 缺失前仍 incomplete。
+
+执行结果：
+
+- 新增 `scripts/run_evp7_visible_tests.py`。
+- dry-run `python scripts\run_evp7_visible_tests.py --check` 通过：
+  - 42 个 candidates；
+  - 49 个 planned visible test entries；
+  - blocked = 0。
+- 实际运行 `python scripts\run_evp7_visible_tests.py --run --check --timeout 90`
+  完成：
+  - 42 个 outcome records；
+  - completed = 30；
+  - error = 12；
+  - test outcomes: passed = 5，failed = 32，error = 12。
+- 已生成：
+  - `data/evidence/evp7_visible_test_outcomes.jsonl`；
+  - `data/evidence/evp7_visible_test_outcome_summary.json`。
+- 已更新 `scripts/build_evp7_evidence_packets.py`，使 E4 从 visible outcome
+  source 读取 test outcomes。
+- 重跑 `python scripts\build_evp7_evidence_packets.py --check` 后：
+  - E0 complete = 42；
+  - E2 complete = 42；
+  - E4 complete = 30；
+  - E6 complete = 0；
+  - G2 leakage audit = passed；
+  - G1 packet completeness = not_passed。
+
+诊断与修复：
+
+- 第一次 visible runner 把 pytest exit code 4 误归类为 `failed`。已修复：
+  - exit code 0 -> `passed`；
+  - exit code 1 -> `failed`；
+  - 其他非零 exit code -> `error`。
+- `bugsinpy_cookiecutter_3` 初始出现 pytest exit code 4，原因是
+  `pytest_addopts_override` 是空字符串，语义为清空 addopts；runner 误把空字符串
+  当作 false，导致项目默认 addopts 参与运行。已改为
+  `addopts_override is not None`，cookiecutter_3 四个 candidates 恢复 completed。
+- 剩余 12 个 error 不是 candidate patch 失败：
+  - `bugsinpy_PySnooper_1` 6 个 candidates：visible pytest import 阶段触发
+    Python 3.11 `collections.Mapping` import error；
+  - `bugsinpy_httpie_5` 6 个 candidates：visible pytest import 阶段触发当前
+    requests 版本缺少 `requests.compat.is_py26`。
+- 按当前边界，不引入临时兼容层，不把这些 error 写成 visible test failed。
+
+下一步：
+
+- 先继续尝试同步 GitHub，因为本地已有未推送提交。
+- 如继续推进本地实验，下一步不是 LLM API，而是决定如何处理 12 个 E4 runner
+  error 与 E6 realistic visible tool summary source：
+  - 若保持 no-compat-layer，则 E4 只能报告 30/42 complete，G1 不通过；
+  - 若允许已有项目级 runtime compatibility shim 作为 visible runner 环境的一部分，
+    需要先明确记录 scope policy，再重跑 PySnooper_1/httpie_5 visible tests；
+  - E6 仍需单独生成 realistic visible tool summaries。
+
+## 43. 2026-06-12 EVP-7 visible tool summary source
+
+本轮小目标：
+
+1. 新增 deterministic visible tool summary builder；
+2. 输入只允许使用 `data/evidence/evp7_evidence_packets.jsonl` 和
+   `data/evidence/evp7_visible_test_outcomes.jsonl` 中已经 model-visible 的
+   patch apply/static/test runner evidence；
+3. 输出 `data/evidence/evp7_visible_tool_summaries.jsonl` 和 summary；
+4. 更新 evidence packet builder，让 E6 读取 tool summary source；
+5. E6 对 E4 complete 且 tool summary 存在的 candidates 标 complete；对 12 个
+   E4 error candidates 仍保持 incomplete；
+6. leakage audit 必须继续通过。
+
+执行边界：
+
+- 不读取 evaluator-only label；
+- 不读取 retained oracle / hidden P2P outcome；
+- 不运行真实 LLM API；
+- 不把 tool summary 写成结论标签；只能描述 visible evidence：patch apply、
+  static not_run、visible test pass/fail/error/timeout。
+
+验收条件：
+
+- tool summary records = 42；
+- E6 complete count 与 E4 complete count 一致，当前预期为 30；
+- G1 仍 not_passed，直到 12 个 E4 error 被解决或明确排除；
+- G2 leakage audit 继续 passed。
+
+执行结果：
+
+- 新增 `scripts/build_evp7_visible_tool_summaries.py`。
+- 已生成：
+  - `data/evidence/evp7_visible_tool_summaries.jsonl`；
+  - `data/evidence/evp7_visible_tool_summary_summary.json`。
+- `python scripts\build_evp7_visible_tool_summaries.py --check` 通过：
+  - records = 42；
+  - complete = 30；
+  - incomplete = 12；
+  - leakage audit = passed。
+- 已更新 `scripts/build_evp7_evidence_packets.py` 读取 tool summary source。
+- 重跑 `python scripts\build_evp7_evidence_packets.py --check` 后：
+  - E0 complete = 42；
+  - E2 complete = 42；
+  - E4 complete = 30；
+  - E6 complete = 30；
+  - G2 leakage audit = passed；
+  - G1 packet completeness = not_passed；
+  - blocker 变为 12 个 E4/E6 visible-test runner environment/import errors。
+
+验证结果：
+
+- `python -m py_compile scripts\build_evp7_protocol_manifests.py
+  scripts\build_evp7_candidate_manifest.py scripts\run_evp7_visible_tests.py
+  scripts\build_evp7_visible_tool_summaries.py
+  scripts\build_evp7_evidence_packets.py` 通过。
+- `python scripts\build_evp7_protocol_manifests.py --check` 通过。
+- `python scripts\build_evp7_candidate_manifest.py --check` 通过。
+- `python scripts\build_evp7_visible_tool_summaries.py --check` 通过。
+- `python scripts\build_evp7_evidence_packets.py --check` 通过。
+- JSONL 解析复查通过：
+  - `data/evidence/evp7_visible_test_outcomes.jsonl = 42`；
+  - `data/evidence/evp7_visible_tool_summaries.jsonl = 42`；
+  - `data/evidence/evp7_evidence_packets.jsonl = 168`。
+- evidence summary 断言通过：
+  - `complete_packet_counts_by_level = {E0: 42, E2: 42, E4: 30, E6: 30}`；
+  - `g2_leakage_audit = passed`；
+  - `g1_packet_completeness = not_passed`。
+- `git diff --check` 通过；仅出现 Windows CRLF 工作区提示。
+- 本轮 diff 严格敏感信息扫描无命中。
+
+下一步：
+
+- 不运行真实 LLM API。
+- 不继续扩第 8 个 bug。
+- 当前真正的决策点是如何处理 12 个 E4/E6 incomplete：
+  - 保持 no-compat-layer：把 EVP-7 protocol pilot 写成 30/42 evidence-complete
+    子集，并将 PySnooper_1/httpie_5 的 visible runner error 作为 Phase A
+    blocker；
+  - 或明确允许在 visible runner 中复用已记录的项目级 runtime compatibility
+    shim，再重跑 PySnooper_1/httpie_5 visible tests。
+- 在该边界明确前，不应启动 LLM merge-gate API。

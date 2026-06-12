@@ -15,6 +15,8 @@ from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CANDIDATES_IN = REPO_ROOT / "data" / "patches" / "evp7_candidates.jsonl"
+VISIBLE_OUTCOMES_IN = REPO_ROOT / "data" / "evidence" / "evp7_visible_test_outcomes.jsonl"
+TOOL_SUMMARIES_IN = REPO_ROOT / "data" / "evidence" / "evp7_visible_tool_summaries.jsonl"
 PACKETS_OUT = REPO_ROOT / "data" / "evidence" / "evp7_evidence_packets.jsonl"
 SUMMARY_OUT = REPO_ROOT / "data" / "evidence" / "evp7_evidence_packet_summary.json"
 
@@ -98,16 +100,34 @@ def _visible_tests(candidate: dict[str, Any]) -> list[dict[str, str]]:
     ]
 
 
-def _completeness(level: str, candidate: dict[str, Any]) -> dict[str, Any]:
+def _has_visible_outcomes(visible_outcome: dict[str, Any] | None) -> bool:
+    if not visible_outcome:
+        return False
+    if visible_outcome.get("run_status") not in {"completed", "timeout"}:
+        return False
+    outcomes = [result.get("outcome") for result in visible_outcome.get("test_results", [])]
+    return bool(outcomes) and all(outcome not in {"planned", "not_run_blocked"} for outcome in outcomes)
+
+
+def _has_tool_summary(tool_summary: dict[str, Any] | None) -> bool:
+    return bool(tool_summary) and tool_summary.get("summary_status") == "complete"
+
+
+def _completeness(
+    level: str,
+    candidate: dict[str, Any],
+    visible_outcome: dict[str, Any] | None,
+    tool_summary: dict[str, Any] | None,
+) -> dict[str, Any]:
     seed = _candidate_seed(candidate)
     missing = []
     if not seed["issue_summary"]:
         missing.append("issue_summary")
     if not seed["patch_diff"]:
         missing.append("patch_diff")
-    if level in {"E4", "E6"}:
+    if level in {"E4", "E6"} and not _has_visible_outcomes(visible_outcome):
         missing.append("independent_visible_test_outcomes")
-    if level == "E6":
+    if level == "E6" and not _has_tool_summary(tool_summary):
         missing.append("realistic_visible_tool_summary")
     return {
         "status": "complete" if not missing else "incomplete",
@@ -115,7 +135,43 @@ def _completeness(level: str, candidate: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _packet(candidate: dict[str, Any], level: str) -> dict[str, Any]:
+def _visible_test_evidence(candidate: dict[str, Any], visible_outcome: dict[str, Any] | None) -> dict[str, Any]:
+    if not _has_visible_outcomes(visible_outcome):
+        return {
+            "status": "incomplete_missing_independent_visible_outcomes",
+            "test_results": _visible_tests(candidate),
+        }
+    return {
+        "status": "complete",
+        "run_status": visible_outcome.get("run_status"),
+        "test_results": [
+            {
+                "test_name": result.get("test_name"),
+                "outcome": result.get("outcome"),
+            }
+            for result in visible_outcome.get("test_results", [])
+        ],
+    }
+
+
+def _tool_evidence(tool_summary: dict[str, Any] | None) -> dict[str, Any]:
+    if not _has_tool_summary(tool_summary):
+        return {
+            "status": "not_generated_or_incomplete",
+            "summary": None,
+        }
+    return {
+        "status": "complete",
+        "summary": tool_summary.get("visible_tool_summary"),
+    }
+
+
+def _packet(
+    candidate: dict[str, Any],
+    level: str,
+    visible_outcome: dict[str, Any] | None,
+    tool_summary: dict[str, Any] | None,
+) -> dict[str, Any]:
     seed = _candidate_seed(candidate)
     packet: dict[str, Any] = {
         "evidence_packet_id": f"{candidate['evp7_candidate_id']}__{level}",
@@ -123,7 +179,7 @@ def _packet(candidate: dict[str, Any], level: str) -> dict[str, Any]:
         "evidence_level": level,
         "evidence_level_name": EVIDENCE_LEVEL_NAMES[level],
         "model_visible": seed,
-        "packet_completeness": _completeness(level, candidate),
+        "packet_completeness": _completeness(level, candidate, visible_outcome, tool_summary),
         "label_leakage_guard": (
             "no evaluator labels, retained-oracle outcome, hidden tests, "
             "reference provenance, or failure taxonomy included"
@@ -132,22 +188,49 @@ def _packet(candidate: dict[str, Any], level: str) -> dict[str, Any]:
     if level in {"E2", "E4", "E6"}:
         packet["visible_static_evidence"] = _static_evidence(candidate)
     if level in {"E4", "E6"}:
-        packet["visible_test_evidence"] = {
-            "status": "incomplete_missing_independent_visible_outcomes",
-            "test_results": _visible_tests(candidate),
-        }
+        packet["visible_test_evidence"] = _visible_test_evidence(candidate, visible_outcome)
     if level == "E6":
-        packet["visible_tool_evidence"] = {
-            "status": "not_generated",
-            "summary": None,
-        }
+        packet["visible_tool_evidence"] = _tool_evidence(tool_summary)
     return packet
 
 
-def build_packets(candidates_path: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+def _visible_outcomes_by_candidate(path: Path) -> dict[str, dict[str, Any]]:
+    if not path.exists():
+        return {}
+    return {record["candidate_id"]: record for record in _read_jsonl(path)}
+
+
+def _tool_summaries_by_candidate(path: Path) -> dict[str, dict[str, Any]]:
+    if not path.exists():
+        return {}
+    return {record["candidate_id"]: record for record in _read_jsonl(path)}
+
+
+def _counts(values: Any) -> dict[str, int]:
+    result: dict[str, int] = {}
+    for value in values:
+        key = str(value)
+        result[key] = result.get(key, 0) + 1
+    return dict(sorted(result.items()))
+
+
+def build_packets(
+    candidates_path: Path,
+    visible_outcomes_path: Path,
+    tool_summaries_path: Path,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     candidates = _read_jsonl(candidates_path)
+    visible_outcomes = _visible_outcomes_by_candidate(visible_outcomes_path)
+    tool_summaries = _tool_summaries_by_candidate(tool_summaries_path)
+    visible_outcome_status_counts = _counts(record.get("run_status", "missing") for record in visible_outcomes.values())
+    tool_summary_status_counts = _counts(record.get("summary_status", "missing") for record in tool_summaries.values())
     packets = [
-        _packet(candidate, level)
+        _packet(
+            candidate,
+            level,
+            visible_outcomes.get(candidate["evp7_candidate_id"]),
+            tool_summaries.get(candidate["evp7_candidate_id"]),
+        )
         for candidate in candidates
         for level in EVIDENCE_LEVELS
     ]
@@ -170,12 +253,13 @@ def build_packets(candidates_path: Path) -> tuple[list[dict[str, Any]], dict[str
             for level in EVIDENCE_LEVELS
         },
         "g1_packet_completeness": "not_passed",
-        "g1_blocker": (
-            "E4/E6 packets need independent visible test outcomes and E6 tool "
-            "summaries; evaluator validation labels remain hidden."
-        ),
+        "g1_blocker": "E4/E6 remain incomplete for candidates with visible-test runner errors; evaluator validation labels remain hidden.",
         "g2_leakage_audit": "pending",
-        "next_step": "Generate independent visible outcomes/tool summaries, then rerun leakage audit before LLM API calls.",
+        "visible_outcome_source": str(visible_outcomes_path.relative_to(REPO_ROOT)) if visible_outcomes else None,
+        "visible_outcome_status_counts": visible_outcome_status_counts,
+        "visible_tool_summary_source": str(tool_summaries_path.relative_to(REPO_ROOT)) if tool_summaries else None,
+        "visible_tool_summary_status_counts": tool_summary_status_counts,
+        "next_step": "Resolve or explicitly bound remaining E4/E6 incomplete candidates before LLM API calls.",
     }
     leakage_findings = leakage_audit(packets)
     summary["g2_leakage_audit"] = "passed" if not leakage_findings else "failed"
@@ -244,19 +328,26 @@ def _check_packets(packets: list[dict[str, Any]], summary: dict[str, Any]) -> No
         raise SystemExit(f"leakage audit failed: {findings[:5]}")
     if summary["complete_packet_counts_by_level"]["E0"] != 42:
         raise SystemExit("E0 packet completeness should cover all 42 candidates")
-    if summary["complete_packet_counts_by_level"]["E4"] != 0:
-        raise SystemExit("E4 must remain incomplete until independent visible outcomes exist")
+    expected_e4_complete = summary.get("visible_outcome_status_counts", {}).get("completed", 0)
+    expected_e4_complete += summary.get("visible_outcome_status_counts", {}).get("timeout", 0)
+    if summary["complete_packet_counts_by_level"]["E4"] != expected_e4_complete:
+        raise SystemExit("E4 packet completeness must match complete visible outcome count")
+    expected_e6_complete = summary.get("visible_tool_summary_status_counts", {}).get("complete", 0)
+    if summary["complete_packet_counts_by_level"]["E6"] != expected_e6_complete:
+        raise SystemExit("E6 packet completeness must match complete visible tool summary count")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--candidates-in", type=Path, default=CANDIDATES_IN)
+    parser.add_argument("--visible-outcomes-in", type=Path, default=VISIBLE_OUTCOMES_IN)
+    parser.add_argument("--tool-summaries-in", type=Path, default=TOOL_SUMMARIES_IN)
     parser.add_argument("--packets-out", type=Path, default=PACKETS_OUT)
     parser.add_argument("--summary-out", type=Path, default=SUMMARY_OUT)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
 
-    packets, summary = build_packets(args.candidates_in)
+    packets, summary = build_packets(args.candidates_in, args.visible_outcomes_in, args.tool_summaries_in)
     _write_jsonl(args.packets_out, packets)
     args.summary_out.parent.mkdir(parents=True, exist_ok=True)
     args.summary_out.write_text(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
