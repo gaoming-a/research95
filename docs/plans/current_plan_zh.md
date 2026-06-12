@@ -4402,3 +4402,71 @@ Project-level P2P attempt：
   - `run_status_counts = {completed: 39, error: 3}`。
 - visible tool summary 断言通过：
   - `summary_status_counts = {complete: 42}`。
+
+## 46. 2026-06-13 EVP-7 merge-gate schema stability dry-run
+
+同步状态：
+
+- 上一轮提交 `337c670 data: add evp7 tool-only baselines` 已成功 push 到
+  GitHub。
+- 当前 EVP-7 已满足：
+  - G1 packet completeness = passed；
+  - G2 leakage audit = passed；
+  - G3 baseline readiness = passed。
+
+本轮小目标：
+
+1. 新增 EVP-7 merge-gate schema dry-run runner；
+2. 输入只读取 `data/evidence/evp7_evidence_packets.jsonl`；
+3. 为 42 个 candidates 的 E0/E2/E4/E6 packets 生成 deterministic
+   schema-valid dry-run outputs；
+4. 输出 `data/reviews/evp7_merge_gate_schema_dry_run.jsonl` 和 summary；
+5. 验证 accept/reject/escalate JSON schema 可稳定解析，并记录 G4 status。
+
+执行边界：
+
+- 不运行真实 LLM API；
+- 不把 dry-run 决策当作模型实验结果；
+- 不读取 evaluator-only labels、candidate construction taxonomy、retained
+  oracle、hidden P2P outcome 或 reference provenance；
+- dry-run 输出不得包含 `label_with_p2p_broad`、`candidate_type`、
+  `failure_type_label`、`expected_outcome`、`hidden_oracles`、`patch_id` 等
+  evaluator-only 字段；
+- 如果 schema 校验失败，先修 runner 或 schema，不进入真实 API。
+
+验收条件：
+
+- 生成 168 条 dry-run records；
+- 每个 evidence level 42 条；
+- 每条 record 的 parsed schema 都包含 `decision`、`confidence`、
+  `primary_reason`、`evidence_used`、`risk_flags`、
+  `suspected_failure_type`、`human_review_needed`；
+- `decision` 只能是 `accept`、`reject`、`escalate`；
+- `confidence` 在 `[0, 1]`；
+- leakage audit 通过；
+- summary 中 `g4_schema_stability = passed`。
+
+执行结果：
+
+- 新增 `scripts/run_evp7_merge_gate_schema_dry_run.py`。
+- 已生成：
+  - `data/reviews/evp7_merge_gate_schema_dry_run.jsonl`；
+  - `data/reviews/evp7_merge_gate_schema_dry_run_summary.json`。
+- `python scripts\run_evp7_merge_gate_schema_dry_run.py --check` 通过：
+  - record_count = 168；
+  - level_counts = `{E0: 42, E2: 42, E4: 42, E6: 42}`；
+  - valid_parse_count = 168；
+  - invalid_parse_count = 0；
+  - leakage_findings_count = 0；
+  - G4 schema stability = passed。
+- dry-run policy 是 deterministic `schema_only_visible_rule`，只验证 parser
+  和 fixed JSON schema，不是 LLM verifier 结果。
+
+下一步：
+
+- 不运行真实 LLM API。
+- 进入 G5 signal existence 的 no-API 准备：基于 schema-stable
+  E0/E2/E4/E6 records 先定义 metrics/utility/FACR 计算口径，确认是否能证明
+  evidence level 改变 FAR、recall、escalation 或 utility。
+- 如果 G5 口径需要真实 LLM 输出而不是 deterministic dry-run，应先写明 API
+  输入、成本、模型和停止条件，再由用户确认后执行。

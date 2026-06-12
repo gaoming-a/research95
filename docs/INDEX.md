@@ -64,6 +64,13 @@
   model-visible packets only.
 - `../data/baselines/evp7_tool_only_metrics.json`: aggregate EVP-7 tool-only
   baseline metrics. G3 currently passes.
+- `../data/reviews/evp7_merge_gate_schema_dry_run.jsonl`: deterministic
+  no-API merge-gate schema dry-run records for all 168 EVP-7 E0/E2/E4/E6
+  evidence packets. These records validate parser/schema stability only; they
+  are not LLM verifier results.
+- `../data/reviews/evp7_merge_gate_schema_dry_run_summary.json`: summary for
+  the merge-gate schema dry-run. G4 currently passes with 168 valid parses and
+  zero leakage findings.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 
@@ -507,6 +514,9 @@
   visible tool summaries from already model-visible evidence.
 - `../scripts/run_evp7_tool_only_baselines.py`: builds deterministic EVP-7
   tool-only baseline decisions and aggregate metrics.
+- `../scripts/run_evp7_merge_gate_schema_dry_run.py`: generates no-API
+  accept/reject/escalate schema dry-run records from model-visible EVP-7
+  packets and validates parser stability before any real LLM API call.
 - `scripts/analyze_tool_gated_reviews.py`: oracle-gated analysis reference.
 - `experience/engineering_notes.md`: fresh operational notes for this new
   workspace.

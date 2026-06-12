@@ -962,6 +962,8 @@ BugsInPy 扩量，必须先解决当前候选池边界：
 - `data/patches/evp7_candidate_summary.json`；
 - `data/evidence/evp7_evidence_packets.jsonl`；
 - `data/evidence/evp7_evidence_packet_summary.json`；
+- `data/reviews/evp7_merge_gate_schema_dry_run.jsonl`；
+- `data/reviews/evp7_merge_gate_schema_dry_run_summary.json`；
 - `data/exclusions/blocked_bugsinpy_projects.jsonl`；
 - `scripts/build_evp7_protocol_manifests.py`；
 - `scripts/build_evp7_candidate_manifest.py`；
@@ -981,7 +983,12 @@ Phase A 已补齐 EVP-7 candidate-level schema：
    `error` outcome 是 candidate-induced import failure，不是缺失证据；
 7. G3 tool-only baseline readiness 当前通过：apply-only、visible-tests、
    visible-tool-summary 三组 baseline 均生成 42 条 schema-valid decisions；
-8. 下一步是运行 LLM
-   merge-gate schema dry-run；
-9. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
+8. G4 merge-gate schema stability 当前通过：168 条 E0/E2/E4/E6 dry-run
+   outputs 全部可解析为 accept/reject/escalate JSON schema，invalid parse
+   count = 0，leakage findings = 0；
+9. 这些 G4 records 是 no-API parser/schema dry-run，不是 LLM verifier
+   结果，不能支持模型效果结论；
+10. 下一步是验证 G5 signal existence：在 schema-stable 协议下确认
+   E0/E2/E4/E6 是否产生可解释的 FAR、recall、escalation 或 utility 变化；
+11. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
    expansion。

@@ -1266,3 +1266,19 @@ This file starts fresh for the patch-verification project.
 - Visible-tests and visible-tool-summary baselines currently have false accept
   rate 0.0, accepted precision 1.0, and correct recall 0.857143. They reject
   one correct patch, so they are strong safety baselines but not an oracle.
+
+## 2026-06-13 EVP-7 merge-gate schema dry-run boundary
+
+- G4 schema stability should be checked before any real verifier API call. The
+  dry-run runner renders deterministic accept/reject/escalate JSON objects from
+  model-visible EVP-7 packets and then parses them through the fixed schema.
+- The dry-run records are not model outputs. They can prove parser/schema
+  stability, evidence-level coverage, and leakage-boundary hygiene, but they
+  cannot support claims about LLM merge-gate behavior.
+- Keep `raw_response_text` and `parsed_output` in the dry-run records aligned:
+  future API runners should be able to replace the deterministic raw response
+  with a provider response while preserving the same parsed schema fields.
+- Leakage scans for schema dry-run outputs should include evaluator markers
+  such as final labels, construction taxonomy, hidden oracle terms, and
+  candidate provenance. A parse-valid record is still invalid if it carries one
+  of those markers.

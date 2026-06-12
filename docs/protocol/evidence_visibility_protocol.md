@@ -168,6 +168,10 @@ Current gate status after the first packet builder:
 - G3 passes for deterministic tool-only baselines: apply-only, visible-tests,
   and visible-tool-summary conditions each produce 42 schema-valid decisions
   and aggregate metrics.
+- G4 passes for the no-API merge-gate schema dry-run: all 168 E0/E2/E4/E6
+  packet-level outputs parse into the fixed accept/reject/escalate JSON schema
+  with zero leakage findings. These records are parser/schema evidence only,
+  not LLM verifier results.
 
 ## Post-A Expansion
 

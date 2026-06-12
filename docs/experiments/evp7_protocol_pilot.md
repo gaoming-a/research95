@@ -173,7 +173,7 @@ Current status:
 
 This round generates model-visible packet records, an independent visible test
 outcome source, deterministic visible tool summaries, and deterministic
-tool-only baselines. G1, G2, and G3 now pass.
+tool-only baselines. G1, G2, G3, and G4 now pass.
 
 Reason:
 
@@ -193,6 +193,7 @@ The next executable step is:
 
 ```text
 Run merge-gate schema dry-runs before any real LLM API calls.
+```
 
 ## Tool-Only Baseline Summary
 
@@ -219,7 +220,36 @@ Current metrics:
 
 The visible-tests and visible-tool-summary baselines reject one correct patch,
 so they are strong safety baselines but not perfect recall baselines.
+
+## Merge-Gate Schema Dry-Run Summary
+
+Command:
+
+```powershell
+python scripts\run_evp7_merge_gate_schema_dry_run.py --check
 ```
 
+Tracked outputs:
+
+```text
+data/reviews/evp7_merge_gate_schema_dry_run.jsonl
+data/reviews/evp7_merge_gate_schema_dry_run_summary.json
+```
+
+Current dry-run status:
+
+- records = 168;
+- E0/E2/E4/E6 level counts = 42 each;
+- parsed schema-valid outputs = 168;
+- invalid parse count = 0;
+- leakage findings = 0;
+- G4 schema stability = passed.
+
+These records validate parser and schema stability only. They are deterministic
+no-API outputs generated from model-visible packets, not LLM verifier results.
+
+## Current Next Step
+
 No new BugsInPy expansion, native build work, external benchmark migration, or
-real API calls should occur before the visible-evidence completion step passes.
+real API calls should occur before using the schema-stable EVP-7 protocol to
+test whether E0/E2/E4/E6 changes merge-gate signal in an explainable way.

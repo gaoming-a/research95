@@ -219,8 +219,11 @@ They should not override `final_paper_roadmap_zh.md`.
   summaries. Three visible-test outcomes are `error` because partial candidates
   break import; they remain valid visible outcomes, not missing evidence. The
   realistic tool-only baselines are now generated for apply-only, visible-tests,
-  and visible-tool-summary conditions. The next work is not to find an eighth
-  bug, but to run merge-gate schema checks before any real LLM API calls.
+  and visible-tool-summary conditions. The merge-gate schema dry-run now
+  generates 168 parse-valid accept/reject/escalate records with zero leakage
+  findings. The next work is not to find an eighth bug or run API calls, but to
+  use the EVP-7 packets and schema-stable runner to test whether E0/E2/E4/E6
+  produce an explainable signal.
   Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and
@@ -256,6 +259,7 @@ python scripts\run_evp7_visible_tests.py --run --check --timeout 90
 python scripts\build_evp7_visible_tool_summaries.py --check
 python scripts\build_evp7_evidence_packets.py --check
 python scripts\run_evp7_tool_only_baselines.py --check
+python scripts\run_evp7_merge_gate_schema_dry_run.py --check
 ```
 
 For full-goal completion evidence, run:
