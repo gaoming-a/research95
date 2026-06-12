@@ -1363,3 +1363,16 @@ This file starts fresh for the patch-verification project.
 - The safe order after user confirmation is: create ignored local config, run
   strict preflight, run check-only workflow, execute smoke, inspect smoke
   invalid-output/cost, then decide whether full run is allowed.
+
+## 2026-06-13 GitHub sync retry after transient network failure
+
+- A failed `git push` with `Failed to connect to github.com port 443` or
+  `Recv failure: Connection was reset` should be treated as a transport issue,
+  not as a repository-state issue, after `git status --short --branch` shows a
+  clean tree ahead of origin.
+- Re-run a connection check or retry `git push origin main` before changing
+  repository state. In this case the retry succeeded and synchronized
+  `37e1b7f` to `origin/main`.
+- Do not create extra commits only to compensate for a failed push; first
+  verify whether the local commit is already clean and simply awaiting network
+  recovery.

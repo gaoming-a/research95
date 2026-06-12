@@ -4811,3 +4811,29 @@ Project-level P2P attempt：
   smoke_scope 和 full_run_permission。
 - 用户确认后，必须先用 helper 写入 ignored local config，再跑 strict preflight
   和 check-only workflow；smoke 通过后才允许考虑 full run。
+
+## 52. 2026-06-13 EVP-7 G5 sync audit and confirmation gate
+
+同步状态：
+
+- 本地提交 `37e1b7f chore: add evp7 g5 local config helper` 已成功 push 到
+  GitHub `origin/main`。
+- 当前 Git 状态为 `main...origin/main`，工作区干净。
+- `docs/experiments/evp7_g5_execution_confirmation_packet.md` 是当前真实
+  G5 执行前的确认入口。
+
+本轮审计结论：
+
+- EVP-7 G5 的 no-API 前置链路已经补到 local config helper、strict
+  preflight、check-only workflow 和 mock parser/metrics validation。
+- 这些产物只能证明执行链路和指标链路可运行，不能作为 LLM verifier signal。
+- 旧计划中的模型选择记录不能替代当前 EVP-7 G5 execution packet，因为当前
+  仍缺少完整的 provider、model、max_total_cost_usd、smoke_scope 和
+  full_run_permission 确认。
+
+当前门禁：
+
+- 不得继续运行真实 API；
+- 不得自行写入 `configs/evp7_g5_llm.local.json`；
+- 不得把 dry-run/mock outputs 写成论文级 G5 signal；
+- 必须等待用户明确给出全部 5 个真实执行参数。
