@@ -58,6 +58,7 @@ def build_audit() -> dict[str, Any]:
     paper = read_json(Path("outputs/paper_readiness/latest.json")) or {}
     local_quality = read_json(Path("outputs/local_quality_gate/latest.json")) or {}
     run_records = read_json(Path("outputs/experiment_run_records/latest.json")) or {}
+    youtubedl_decision = read_json(Path("outputs/youtubedl_p2p_decision_audit/latest.json")) or {}
     artifact_audit = read_json(Path("artifacts/research95_anonymous_artifact_audit.json")) or {}
     repro = read_json(Path("outputs/reproducibility/pilot_compare.json")) or {}
     full_dir = Path("outputs/patch_verification_api_pilot_002")
@@ -275,6 +276,23 @@ def build_audit() -> dict[str, Any]:
                 "is_repo": git["is_repo"],
                 "remote_exists": git["remote_exists"],
                 "status_error": git["status_error"],
+            },
+        ),
+        check(
+            "youtube_dl_p2p_decision_resolved",
+            bool(
+                youtubedl_decision
+                and youtubedl_decision.get("passed") is True
+                and (youtubedl_decision.get("command_packet") or {}).get("approval_required") is False
+                and file_exists("data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json")
+            ),
+            {
+                "source": "outputs/youtubedl_p2p_decision_audit/latest.json",
+                "decision_audit_passed": youtubedl_decision.get("passed"),
+                "approval_required": (youtubedl_decision.get("command_packet") or {}).get("approval_required"),
+                "proposed_manifest_exists": file_exists("data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json"),
+                "recommended_task": (youtubedl_decision.get("decision_packet") or {}).get("recommended_task_id"),
+                "boundary": "Goal remains incomplete until the user approves or rejects the youtube-dl_7 bounded P2P attempt and the result is recorded.",
             },
         ),
     ]

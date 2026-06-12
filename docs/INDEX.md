@@ -400,7 +400,8 @@
   for completion of the whole plan. It also requires the experiment run-record
   ledger to cover no-API, smoke API, full API, and quality-gate records. It
   preserves the prompt-only result as negative and checks the tool-augmented
-  conditional claim separately. Latest report:
+  conditional claim separately. It now also treats unresolved `youtube-dl_7`
+  P2P admission as a required completion blocker. Latest report:
   `outputs/goal_completion/latest.md`.
 - `scripts/write_human_input_packet.py`: writes an ignored handoff packet that
   lists missing human inputs, safe command order, and forbidden actions before

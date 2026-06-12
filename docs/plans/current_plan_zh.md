@@ -5658,3 +5658,25 @@ full run 决策：
   `outputs/api_pilot_preflight/latest.json`，如果该报告对应当前
   `configs/api_pilot.local.json` 且 `api_ready/dry_run_ready` 均为 true，则不再
   反复提示运行 preflight。
+
+## 74. 2026-06-13 goal completion audit covers youtube-dl P2P decision
+
+本轮小目标：
+
+- 修复 `scripts/audit_goal_completion.py` 对当前 controlled expansion 状态的
+  覆盖缺口；
+- 防止旧 API/paper/artifact 主流程已 complete 时，将仍待确认的
+  `youtube-dl_7` P2P admission 决策误判为完成；
+- 不执行 P2P、不创建 P2P manifest。
+
+执行结果：
+
+- `scripts/audit_goal_completion.py` 新增 required check：
+  `youtube_dl_p2p_decision_resolved`；
+- 该 check 要求：
+  - youtube-dl decision audit passed；
+  - `command_packet.approval_required = false`；
+  - `data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json` 存在；
+- 当前 audit 正确报告：
+  - `complete = false`；
+  - `missing_required = ["youtube_dl_p2p_decision_resolved"]`。

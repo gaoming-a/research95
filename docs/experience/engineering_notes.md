@@ -1500,3 +1500,7 @@ This file starts fresh for the patch-verification project.
 - `audit_execution_readiness.py` should consume the latest ignored API preflight
   report so it does not repeatedly ask for a preflight that already passed for
   the current local config.
+- Goal completion audits must track the current research frontier, not only the
+  older API/paper/artifact workflow. If `youtube-dl_7` P2P remains approval
+  gated and no manifest exists, `audit_goal_completion.py` should report the
+  goal incomplete.
