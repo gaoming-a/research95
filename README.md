@@ -406,6 +406,9 @@ python scripts\audit_git_sync_packet.py `
 
 For a one-command local pre-API handoff, run:
 
+The handoff summary separates the unsupported prompt-only positive claim from
+the supported conditional tool-augmented claim.
+
 ```powershell
 python scripts\write_pre_api_handoff.py `
   --out-json outputs\handoff\pre_api_handoff.json `

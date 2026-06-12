@@ -419,7 +419,8 @@
 - `scripts/write_pre_api_handoff.py`: one-command local handoff that refreshes
   readiness, reproducibility, paper readiness, plan progress, goal completion,
   experiment run records, human-input, Git-decision, and Git handoff audit
-  reports without calling model APIs. Latest report:
+  reports without calling model APIs. Its summary separates prompt-only positive
+  claim readiness from the tool-augmented conditional claim. Latest report:
   `outputs/handoff/pre_api_handoff.md`.
 - `scripts/write_experiment_run_records.py`: writes the experiment run ledger
   required by the AI execution plan. It summarizes no-API reproduction, smoke

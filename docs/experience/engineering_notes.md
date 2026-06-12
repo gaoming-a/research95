@@ -1519,3 +1519,7 @@ This file starts fresh for the patch-verification project.
   contain a separate `tool_augmented_full_api` record for
   `outputs/patch_verification_tool_augmented_full_001` and mark it as supporting
   only the conditional tool-assisted claim.
+- Handoff summaries must not collapse prompt-only and tool-augmented claim
+  readiness into one "positive paper claim" line. Keep the legacy prompt-only
+  field for compatibility, but display prompt-only readiness and
+  tool-augmented conditional readiness separately.

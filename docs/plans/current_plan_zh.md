@@ -5745,3 +5745,20 @@ full run 决策：
   `tool_augmented_full_gate.json`；
 - ledger summary 需要区分 prompt-only positive claim 与 tool-augmented
   conditional claim。
+
+## 78. 2026-06-13 handoff summary separates prompt-only and tool-augmented claims
+
+本轮小目标：
+
+- 修复 `outputs/handoff/pre_api_handoff.md` 的摘要歧义；
+- 保持原 JSON 字段 `positive_paper_claim_ready` 作为 prompt-only 历史兼容字段；
+- 新增并显示：
+  - `prompt_only_positive_paper_claim_ready`；
+  - `tool_augmented_claim_ready`。
+
+执行边界：
+
+- 不调用真实 API；
+- 不运行 P2P；
+- 不改变论文 claim，只让 handoff 摘要与 paper readiness、local quality gate
+  的 claim 边界一致。
