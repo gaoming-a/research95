@@ -571,7 +571,8 @@
 - `../scripts/run_evp7_g5_llm_workflow.py`: guarded future G5 workflow. It
   supports check-only and mock validation without API calls, and refuses real
   execution unless strict preflight passes with an ignored local config and
-  explicit `--execute`.
+  explicit `--execute`. Real execution also supports explicit bounded
+  `--concurrency` while preserving ordered JSONL output.
 - `../scripts/create_evp7_g5_llm_local_config.py`: dry-run/write helper for
   ignored `configs/evp7_g5_llm.local.json`. Write mode requires explicit
   provider, model, cost ceiling, smoke scope, and full-run permission.

@@ -13,6 +13,7 @@ import hashlib
 import json
 import re
 import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -227,33 +228,16 @@ def run_execute(args: argparse.Namespace) -> dict[str, Any]:
         raise SystemExit("Strict preflight passed, but --execute is required before model calls.")
     if args.config.name.endswith(".example.json"):
         raise SystemExit("Refusing to execute with tracked example config. Use an ignored local config.")
+    if args.concurrency < 1:
+        raise SystemExit("--concurrency must be >= 1")
 
     load_env_file(str(config.get("env", ".env")))
-    client = _client(str(config["api_provider"]))
-    records = []
+    packets = packets_for_run(config, args.limit)
+    _validate_prompt_boundaries(packets)
+    records = _execute_packets(packets, config, args.concurrency)
     max_total_cost = float(config["max_total_cost_usd"])
-    for packet in packets_for_run(config, args.limit):
-        prompt = prompt_module.render_prompt(packet)
-        findings = prompt_module.boundary_findings(prompt)
-        if findings:
-            raise SystemExit(f"prompt boundary failed for {packet['evidence_packet_id']}: {findings}")
-        response = client.chat_completion(
-            model=str(config["model"]),
-            prompt=prompt,
-            temperature=float(config.get("temperature", 0.0)),
-            max_tokens=int(config.get("max_tokens", 1024)),
-        )
-        record = review_record(
-            packet=packet,
-            prompt=prompt,
-            response=response,
-            model=str(config["model"]),
-            api_provider=str(config["api_provider"]),
-            mock_run=False,
-        )
-        records.append(record)
-        if sum(float(item.get("cost_usd") or 0.0) for item in records) > max_total_cost:
-            raise SystemExit("G5 workflow stopped because observed cost exceeded max_total_cost_usd.")
+    if sum(float(item.get("cost_usd") or 0.0) for item in records) > max_total_cost:
+        raise SystemExit("G5 workflow stopped because observed cost exceeded max_total_cost_usd.")
 
     reviews_out = _abs(args.reviews_out or Path(config["out_dir"]) / "reviews.jsonl")
     metrics_out = _abs(args.metrics_out or Path(config["out_dir"]) / "metrics.json")
@@ -269,11 +253,55 @@ def run_execute(args: argparse.Namespace) -> dict[str, Any]:
         "metrics_out": _display_path(metrics_out),
         "api_call_attempted": True,
         "model_call_attempted": True,
+        "concurrency": args.concurrency,
         "total_cost_usd": round(sum(float(item.get("cost_usd") or 0.0) for item in records), 6),
         "g5_signal_claim_status": metrics["g5_signal_claim_status"],
     }
     write_json(summary_out, summary)
     return summary
+
+
+def _validate_prompt_boundaries(packets: list[dict[str, Any]]) -> None:
+    for packet in packets:
+        prompt = prompt_module.render_prompt(packet)
+        findings = prompt_module.boundary_findings(prompt)
+        if findings:
+            raise SystemExit(f"prompt boundary failed for {packet['evidence_packet_id']}: {findings}")
+
+
+def _execute_packets(packets: list[dict[str, Any]], config: dict[str, Any], concurrency: int) -> list[dict[str, Any]]:
+    if concurrency == 1:
+        return [_execute_one_packet(packet, config) for packet in packets]
+
+    ordered_records: list[dict[str, Any] | None] = [None] * len(packets)
+    with ThreadPoolExecutor(max_workers=concurrency) as executor:
+        futures = {
+            executor.submit(_execute_one_packet, packet, config): index
+            for index, packet in enumerate(packets)
+        }
+        for future in as_completed(futures):
+            index = futures[future]
+            ordered_records[index] = future.result()
+    return [record for record in ordered_records if record is not None]
+
+
+def _execute_one_packet(packet: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
+    prompt = prompt_module.render_prompt(packet)
+    client = _client(str(config["api_provider"]))
+    response = client.chat_completion(
+        model=str(config["model"]),
+        prompt=prompt,
+        temperature=float(config.get("temperature", 0.0)),
+        max_tokens=int(config.get("max_tokens", 1024)),
+    )
+    return review_record(
+        packet=packet,
+        prompt=prompt,
+        response=response,
+        model=str(config["model"]),
+        api_provider=str(config["api_provider"]),
+        mock_run=False,
+    )
 
 
 def _client(api_provider: str) -> OpenRouterClient | DeepSeekClient:
@@ -306,6 +334,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--reviews-out", type=Path)
     parser.add_argument("--metrics-out", type=Path)
     parser.add_argument("--summary-out", type=Path)
+    parser.add_argument("--concurrency", type=int, default=1, help="Execute model calls with this bounded concurrency. Default: 1.")
     return parser.parse_args()
 
 

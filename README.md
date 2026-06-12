@@ -284,6 +284,10 @@ python scripts\create_evp7_g5_llm_local_config.py `
   --packet-md docs\experiments\evp7_g5_execution_confirmation_packet.md
 ```
 
+After a real G5 smoke passes, the guarded workflow can run the full 168-packet
+execution with explicit bounded parallelism, for example `--concurrency 4` or
+`--concurrency 6`. The default remains sequential.
+
 For full-goal completion evidence, run:
 
 ```powershell

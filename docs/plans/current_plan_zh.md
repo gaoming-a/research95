@@ -4837,3 +4837,111 @@ Project-level P2P attempt：
 - 不得自行写入 `configs/evp7_g5_llm.local.json`；
 - 不得把 dry-run/mock outputs 写成论文级 G5 signal；
 - 必须等待用户明确给出全部 5 个真实执行参数。
+
+## 53. 2026-06-13 EVP-7 G5 DeepSeek V4 smoke execution plan
+
+用户确认：
+
+- 用户指令：使用 `deepseekv4`，其余不作限制。
+- 本项目已有一致模型记录为 DeepSeek official API 的 `deepseek-v4-pro`，因此
+  本轮将 `deepseekv4` 落地为：
+  - `api_provider = deepseek_official`；
+  - `model = deepseek-v4-pro`。
+- “其余不作限制”解释为：
+  - 不再额外限制 smoke 后 full run permission；
+  - `max_total_cost_usd` 使用高额安全上限，仅作为脚本所需的异常保护；
+  - 仍必须按既定协议先跑 smoke，不直接 full run。
+
+本轮小目标：
+
+1. 写入 ignored `configs/evp7_g5_llm.local.json`；
+2. 运行 strict preflight；
+3. 运行 check-only workflow；
+4. 先执行 4-packet smoke，覆盖同一 candidate 的 E0/E2/E4/E6 四层；
+5. 审计 smoke 的 parse status、invalid-output rate、成本和 summary；
+6. 只有 smoke 通过后，才考虑 full run。
+
+执行边界：
+
+- 可以读取 `.env` 中的 `DEEPSEEK_API_KEY`，但不得输出或提交 key；
+- 不提交 ignored local config 或 `outputs/` 原始结果；
+- smoke/mock/dry-run 结论必须和 real full-run 结论分开记录；
+- 若 DeepSeek API、模型 id、JSON parse、成本或 prompt boundary 出错，先诊断并记录，
+  不得直接继续 full run。
+
+初次 smoke 结果：
+
+- 命令：`python scripts\run_evp7_g5_llm_workflow.py --config
+  configs\evp7_g5_llm.local.json --execute --limit 4 ...`。
+- 真实 API 已调用，生成 4 条 non-mock review。
+- E0/E2 parse valid，均为 `escalate`。
+- E4/E6 parse invalid，`raw_response_text` 为空，invalid reason 为
+  `invalid_json:No JSON object found in model response`。
+- smoke invalid-output rate = 2/4，不能进入 full run。
+
+诊断：
+
+- 失败类型：执行链路输出格式问题，不是论文结论问题。
+- 当前 G5 config 使用 `max_tokens = 1024`。
+- 项目已有 DeepSeek V4 经验表明过低 `max_tokens` 会导致 reasoning 消耗完
+  completion budget，final `content` 为空。
+
+修复计划：
+
+1. 将 G5 example/local config 的 `max_tokens` 提升到 4096；
+2. 重新生成 ignored local config；
+3. 重新运行 strict preflight 和 check-only；
+4. 重新执行同一 4-packet smoke；
+5. 若 invalid-output rate 仍不为 0，继续诊断，不进入 full run。
+
+修复后 smoke 结果：
+
+- 已将 `configs/evp7_g5_llm.example.json` 的 `max_tokens` 提升到 4096，并重新
+  生成 ignored local config。
+- strict preflight 通过：`api_ready = true`。
+- check-only workflow 通过：`model_call_attempted = false`，
+  `api_call_attempted = false`。
+- 第二次 4-packet smoke 通过：
+  - review_count = 4；
+  - parse valid = 4/4；
+  - invalid-output rate = 0；
+  - E0/E2/E6 = `escalate`；
+  - E4 = `accept`。
+- smoke metrics scaffold 仍为 `not_passed`，原因是 smoke 只有 4 条记录，不是
+  168 条完整 G5 结果；这不阻止进入 full run，但不能写成论文级结论。
+
+full run 决策：
+
+- 用户已给出“其余不作限制”，local config 中
+  `full_run_permission = true`。
+- smoke parse gate 已通过。
+- 下一步执行 168-packet full run，输出仅写入 ignored `outputs/`，完成后再生成
+  tracked summary 和文档结论。
+
+## 54. 2026-06-13 EVP-7 G5 bounded parallel execution acceleration
+
+用户确认：
+
+- 用户明确允许将 G5 full run 改为并行加速执行。
+
+本轮小目标：
+
+1. 给 `scripts/run_evp7_g5_llm_workflow.py` 增加显式 `--concurrency` 参数；
+2. 默认保持 `--concurrency 1`，不改变既有 smoke/check-only/mock 行为；
+3. 并发执行只在 `--execute` 路径生效；
+4. 并发时先完成 prompt-boundary 检查，再发起 bounded model calls；
+5. 所有结果按原 packet 顺序一次性写入 JSONL，避免多线程竞争写文件。
+
+执行边界：
+
+- 本轮只改执行器和文档，不启动真实 full run；
+- 不提交 ignored local config 或 `outputs/` 原始结果；
+- 如果后续使用并行 full run，建议从 `--concurrency 4` 或 `--concurrency 6`
+  开始；遇到 rate limit 或 invalid output 上升必须暂停诊断。
+
+验收条件：
+
+- `python -m py_compile scripts\run_evp7_g5_llm_workflow.py` 通过；
+- `--check-only` 仍不调用模型；
+- mock workflow 在 `--concurrency` 参数存在时仍可运行并保持 no-API；
+- staged diff 不含 credentials 或 raw outputs。

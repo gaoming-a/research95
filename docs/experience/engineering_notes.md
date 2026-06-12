@@ -1376,3 +1376,27 @@ This file starts fresh for the patch-verification project.
 - Do not create extra commits only to compensate for a failed push; first
   verify whether the local commit is already clean and simply awaiting network
   recovery.
+
+## 2026-06-13 EVP-7 G5 DeepSeek max-token smoke repair
+
+- DeepSeek V4 can return an empty final `content` when the completion budget is
+  too low, even when the prompt is valid. In EVP-7 G5, `max_tokens = 1024`
+  produced valid E0/E2 outputs but empty E4/E6 outputs in the first 4-packet
+  smoke.
+- Treat this as an execution-chain output-format failure, not as model signal.
+  Do not continue to full run until a repaired smoke has invalid-output rate 0.
+- Raising G5 `max_tokens` to 4096 matched the earlier DeepSeek smoke lesson and
+  repaired the same 4-packet smoke to 4/4 parse-valid outputs.
+
+## 2026-06-13 EVP-7 G5 bounded concurrency boundary
+
+- Keep G5 execution sequential by default. `--concurrency` should be an explicit
+  full-run speed knob, not an implicit behavior change.
+- Validate all prompt boundaries before submitting parallel model calls. This
+  keeps leakage or prompt-shape failures from becoming partially executed API
+  runs.
+- Parallel workers should return in any order, but the runner must write review
+  JSONL in the original packet order. Do not let multiple workers append to the
+  same JSONL file.
+- Start bounded full runs at concurrency 4 or 6. If rate limits, timeouts, or
+  invalid outputs rise, stop and diagnose instead of raising concurrency.

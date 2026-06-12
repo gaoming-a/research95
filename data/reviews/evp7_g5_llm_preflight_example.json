@@ -65,7 +65,7 @@
     {
       "category": "structural",
       "check": "decoding_max_tokens",
-      "detail": 1024,
+      "detail": 4096,
       "passed": true
     },
     {
