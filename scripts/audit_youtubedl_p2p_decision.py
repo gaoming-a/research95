@@ -53,13 +53,24 @@ def parse_decision_packet(path: Path) -> dict[str, Any]:
     text = path.read_text(encoding="utf-8")
     recommended_match = re.search(r"Recommended first representative:\s*`([^`]+)`", text)
     command_task_match = re.search(r"--task-id\s+([^\s`]+)", text)
+    fail_to_pass_match = re.search(r"--fail-to-pass-nodeid\s+\"?([^\"`\r\n]+)\"?", text)
     manifest_match = re.search(r"--manifest-out\s+([^\s`]+)", text)
     return {
         "path": path.as_posix(),
         "recommended_task_id": recommended_match.group(1) if recommended_match else None,
         "command_task_id": command_task_match.group(1) if command_task_match else None,
+        "command_fail_to_pass_nodeid": fail_to_pass_match.group(1).strip() if fail_to_pass_match else None,
         "manifest_out": manifest_match.group(1) if manifest_match else None,
     }
+
+
+def expected_fail_to_pass_nodeid(candidate: dict[str, Any] | None) -> str | None:
+    if not candidate:
+        return None
+    run_command = str(candidate.get("run_command") or "").strip()
+    if not run_command:
+        return None
+    return run_command.split()[-1]
 
 
 def build_audit(args: argparse.Namespace) -> dict[str, Any]:
@@ -87,11 +98,14 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     command_task = packet["command_task_id"]
     manifest_out = packet["manifest_out"]
     manifest_exists = Path(manifest_out).exists() if manifest_out else False
+    recommended_candidate = next((candidate for candidate in candidates if candidate.get("task_id") == recommended), None)
+    expected_f2p_nodeid = expected_fail_to_pass_nodeid(recommended_candidate)
 
     checks = {
         "has_candidates": bool(static_rows),
         "recommended_matches_lowest_static_cost": bool(lowest and recommended == lowest["task_id"]),
         "command_task_matches_recommended": bool(recommended and command_task == recommended),
+        "command_fail_to_pass_matches_probe": bool(expected_f2p_nodeid and packet["command_fail_to_pass_nodeid"] == expected_f2p_nodeid),
         "recommended_manifest_not_already_tracked": not manifest_exists,
         "all_buggy_fixed_remaining_sets_match": all(row["buggy_only"] == 0 and row["fixed_only"] == 0 for row in static_rows),
     }
@@ -105,6 +119,8 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "candidate_count": len(static_rows),
         "static_rows": static_rows,
         "lowest_static_cost_candidate": lowest,
+        "recommended_probe": recommended_candidate,
+        "expected_fail_to_pass_nodeid": expected_f2p_nodeid,
         "checks": checks,
         "passed": all(checks.values()),
     }
@@ -120,6 +136,8 @@ def markdown(audit: dict[str, Any]) -> str:
         f"- passed: `{audit['passed']}`",
         f"- recommended task: `{audit['decision_packet']['recommended_task_id']}`",
         f"- command task: `{audit['decision_packet']['command_task_id']}`",
+        f"- command fail-to-pass nodeid: `{audit['decision_packet']['command_fail_to_pass_nodeid']}`",
+        f"- expected fail-to-pass nodeid: `{audit['expected_fail_to_pass_nodeid']}`",
         f"- lowest static-cost task: `{(audit['lowest_static_cost_candidate'] or {}).get('task_id')}`",
         "",
         "## Checks",

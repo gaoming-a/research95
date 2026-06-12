@@ -5527,9 +5527,16 @@ full run 决策：
 - 只读取 `data/tasks/evp7_controlled_probe_results.json`、决策包和现有
   buggy/fixed checkout 源文件；
 - 复用 `scripts/static_unittest_p2p_preflight.py` 的静态 AST 逻辑；
-- 若推荐任务不是最低静态成本候选，或命令模板 task-id 与推荐不一致，则审计失败。
+- 若推荐任务不是最低静态成本候选、命令模板 task-id 与推荐不一致，或命令模板
+  `--fail-to-pass-nodeid` 与 controlled probe 中已建立的 F2P unittest 目标不一致，
+  则审计失败。
 
 产物：
 
 - 新增 `scripts/audit_youtubedl_p2p_decision.py`；
 - 默认输出到 ignored `outputs/youtubedl_p2p_decision_audit/latest.json/md`。
+
+修订：
+
+- 审计增加 `command_fail_to_pass_matches_probe` 检查，防止 P2P 命令模板使用
+  与 retained F2P probe 不一致的 oracle nodeid。

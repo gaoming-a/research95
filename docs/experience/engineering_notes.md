@@ -1475,3 +1475,6 @@ This file starts fresh for the patch-verification project.
 - Use `scripts/audit_youtubedl_p2p_decision.py` before any future youtube-dl
   P2P attempt. It catches drift between the controlled probe data, the static
   preflight sweep, the decision packet recommendation, and the command template.
+- The decision audit should also compare `--fail-to-pass-nodeid` against the
+  controlled probe's retained unittest target; a correct representative task is
+  not enough if the oracle nodeid in the P2P command drifts.
