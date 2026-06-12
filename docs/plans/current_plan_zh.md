@@ -3284,3 +3284,54 @@ FastAPI 决策：
   youtube-dl 的候选任务。
 - 优先检查 `bugsinpy_tornado_1`，但其 websocket 测试可能涉及本地网络；
   开始前必须先 Inspect 其 patch、test 和 dependency 边界。
+
+## 33. 2026-06-12 next candidate feasibility: tornado_1
+
+同步状态：
+
+- `bugsinpy_youtube-dl_1` project-level unittest discovery timeout 已提交并
+  push 到 GitHub：`2e2b876 docs: record youtube-dl feasibility timeout`。
+- 当前 Git 状态：`main...origin/main`，工作区干净。
+
+候选选择：
+
+- 转向 broader pool 中的 `bugsinpy_tornado_1`。
+- 理由：
+  - 非 FastAPI、非 Sanic、非 Scrapy、非 youtube-dl；
+  - metadata-level screening 中为 unittest 候选；
+  - F2P 目标明确为 Tornado websocket no-delay 行为；
+  - bug patch 只涉及 `tornado/websocket.py` 中 no-delay 调用路径和协议抽象。
+
+元数据：
+
+- project = `tornado`；
+- buggy commit = `6a5a0bfa370b6c0d3dbbf9589a560a98202d2baa`；
+- fixed commit = `4677c54cc18bbfbdf0f4dadf11610fab6203fd63`；
+- F2P command:
+  - `python -m unittest -q tornado.test.websocket_test.WebSocketTest.test_nodelay`。
+
+本轮小目标：
+
+1. 准备 `bugsinpy_tornado_1` retained buggy/fixed checkout。
+2. 运行最小 F2P probe。
+3. 如果 F2P 清楚，再尝试 project-level unittest P2P-broad construction。
+4. 若 project-level scope 完成且 `p2p_broad_size >= 3`，再进入 reference
+   patch 与 candidate label 验证；否则记录 blocker 或 insufficient scope。
+
+执行边界：
+
+- 不安装全局依赖；
+- 不执行 `setup.sh` 中的全局 pip 命令；
+- 不调用真实 API；
+- 不修改 Tornado source/test fixture；
+- 允许 Tornado 测试框架内部启动本地 loop/server 进行 websocket/http 测试；
+  不允许依赖外部网络服务；
+- 如果 dependency、Python 版本兼容、或 unittest discovery 边界不清楚，先记录
+  blocker，不做 task-file P2P main downgrade。
+
+验收条件：
+
+- F2P probe 明确 buggy fail / fixed pass；
+- project-level P2P-broad manifest 生成并记录 scope；
+- `p2p_broad_size >= 3`；
+- registry 中只在上述条件满足后才允许 `p2p_broad_main_included = true`。
