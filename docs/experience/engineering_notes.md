@@ -1085,3 +1085,15 @@ This file starts fresh for the patch-verification project.
   running timeout-related tests and produced no manifest. Record it as
   `pending_blocked_project_level_scope_timeout`; do not downgrade to task-file
   P2P for main evidence.
+
+## 2026-06-12 Scrapy_1 dependency blocker
+
+- `bugsinpy_scrapy_1` checkouts succeed, but the target unittest F2P commands
+  require Twisted before any oracle behavior can be observed.
+- Installing the declared Scrapy dependency `Twisted==20.3.0` in the isolated
+  probe venv fails on Windows/Python 3.11 because the package builds a native
+  extension and local Microsoft Visual C++ 14.0+ build tools are unavailable.
+- Do not silently replace Twisted with a newer wheel-bearing version, stub the
+  dependency, or edit Scrapy fixtures for main-cohort admission. Record the task
+  as `blocked_dependency_native_build` and skip Scrapy-family candidates unless
+  the dependency/toolchain boundary is explicitly revisited.

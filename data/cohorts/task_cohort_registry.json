@@ -658,6 +658,45 @@
         "task_file_level_p2p": "not_recorded"
       },
       "blocked_reason": [
+        "twisted_20_3_0_native_build_failed",
+        "local_msvc_build_tools_unavailable"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "p2p_broad_size": null,
+        "test_framework": "unittest"
+      },
+      "dependency_environment_audit": "data/p2p_scopes/bugsinpy_scrapy_1_dependency_blocker.json",
+      "f2p_oracle": {
+        "buggy": "not_established: missing Twisted before dependency install; Twisted==20.3.0 native build failed in isolated venv",
+        "fixed": "not_established: missing Twisted before dependency install; Twisted==20.3.0 native build failed in isolated venv",
+        "nodeids": [
+          "tests.test_spidermiddleware_offsite.TestOffsiteMiddleware4._get_spiderargs",
+          "tests.test_spidermiddleware_offsite.TestOffsiteMiddleware4.test_process_spider_output"
+        ]
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Checkout succeeded, but the retained unittest F2P targets require Twisted. Installing the declared Twisted==20.3.0 dependency in an isolated venv failed because the package builds a native extension and local MSVC build tools are unavailable. No dependency substitution, fixture edit, or task-file P2P downgrade was used.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "scrapy",
+      "project_level_p2p_status": "blocked_dependency_native_build",
+      "task_id": "bugsinpy_scrapy_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
         "missing_typed_ast_dependency",
         "unittest_collection_error"
       ],

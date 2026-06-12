@@ -2792,6 +2792,80 @@ project-level P2P-broad construction under the existing audited pipeline.
   `shim_allowed_now = false`；
 - `git diff --check` 无空白错误，仅有 Windows 换行提示。
 
+## 31. 2026-06-12 next candidate feasibility: scrapy_1
+
+同步状态：
+
+- 上一轮 `bugsinpy_fastapi_2` 与 `bugsinpy_sanic_1` 结果已提交并 push 到
+  GitHub：`ea53435 docs: record fastapi2 sanic1 feasibility`。
+- 当前 Git 状态：`main...origin/main`，工作区干净。
+
+候选选择：
+
+- 转向 broader pool 中的 `bugsinpy_scrapy_1`。
+- 理由：
+  - 非 FastAPI、非 Sanic；
+  - metadata-level screening 中为 unittest 候选；
+  - 目标测试聚焦 `tests/test_spidermiddleware_offsite.py`；
+  - bug patch 只涉及 `scrapy/spidermiddlewares/offsite.py` 的
+    `allowed_domains` URL/None 过滤逻辑。
+
+元数据：
+
+- project = `scrapy`；
+- buggy commit = `c57512fa669e6f6b1b766a7639206a380f0d10ce`；
+- fixed commit = `9d9dea0d69709ef0f7aef67ddba1bd7bda25d273`；
+- F2P commands:
+  - `python -m unittest -q tests.test_spidermiddleware_offsite.TestOffsiteMiddleware4._get_spiderargs`；
+  - `python -m unittest -q tests.test_spidermiddleware_offsite.TestOffsiteMiddleware4.test_process_spider_output`。
+
+本轮小目标：
+
+1. 准备 `bugsinpy_scrapy_1` retained buggy/fixed checkout。
+2. 尝试最小 F2P probe。
+3. 如果缺依赖，只安装目标 F2P 所需的 declared dependency subset 到 ignored
+   isolated venv，并记录 dependency audit。
+4. 如果 F2P 清楚，再判断是否进入 project-level P2P-broad construction。
+
+执行边界：
+
+- 不安装全局依赖；
+- 不全量安装 requirements，除非最小 probe 证明必须且依赖边界清晰；
+- 不修改 Scrapy source/test fixture；
+- 若遇到 native build、外部服务、网络、或 unclear compatibility shim 需求，先记录 blocker；
+- unittest task 不能降级成单个 task-file P2P main evidence。
+
+执行结果：
+
+- buggy/fixed checkout 已成功创建到外部 retained workspace：
+  `D:/mgao/code/research/data/real_bugs/bugsinpy_workspace/scrapy_1`。
+- 初始 F2P probe 在 buggy/fixed 上均因缺少 `twisted` 失败：
+  `ModuleNotFoundError: No module named 'twisted'`。
+- 已创建 ignored isolated venv：
+  `outputs/envs/scrapy1_p2p_py311`。
+- 尝试只安装目标 F2P 所需的声明依赖子集时，
+  `Twisted==20.3.0` 构建失败；失败点是 `twisted.test.raiser` C extension，
+  当前环境缺少 Microsoft Visual C++ 14.0+ build tools。
+- 这属于依赖/native build 阻塞。未替换 Twisted 版本，未 stub Twisted，
+  未修改 Scrapy source/test fixture，也未降级到 task-file P2P。
+
+最终状态：
+
+- `bugsinpy_scrapy_1` 记录为 `blocked_dependency_native_build`。
+- 新增结构化记录：
+  `data/p2p_scopes/bugsinpy_scrapy_1_dependency_blocker.json`。
+- 新增实验记录：
+  `docs/experiments/scrapy1_feasibility.md`。
+- `bugsinpy_scrapy_1` 不进入 `p2p_broad_main`。
+
+下一步：
+
+- 暂停 Scrapy 系列候选，避免重复撞到同一 Twisted 20.3.0 native build
+  blocker。
+- 转向 broader pool 中非 FastAPI、非 Sanic、非 Scrapy 的低摩擦候选。
+  优先检查 `bugsinpy_youtube-dl_1` 这类 utility unittest 任务；
+  开始前必须先同步本轮 GitHub 记录，并在计划中写明下一轮边界。
+
 ## 30. 2026-06-12 next candidate feasibility: fastapi_2 first
 
 本轮 Inspect：

@@ -155,6 +155,10 @@
   It records `bugsinpy_fastapi_2` as a clear-F2P shared FastAPI scope-risk case
   and `bugsinpy_sanic_1` as a clear-F2P task whose project-level P2P-broad
   construction timed out without a manifest.
+- `experiments/scrapy1_feasibility.md`: Scrapy 1 dependency-boundary probe. It
+  records `bugsinpy_scrapy_1` as blocked because declared `Twisted==20.3.0`
+  requires unavailable local native build tools before the retained F2P oracle
+  can run.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

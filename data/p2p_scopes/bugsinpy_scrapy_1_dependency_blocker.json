@@ -1,0 +1,53 @@
+{
+  "task_id": "bugsinpy_scrapy_1",
+  "project": "scrapy",
+  "status": "blocked_dependency_native_build",
+  "p2p_broad_main_included": false,
+  "buggy_commit_id": "c57512fa669e6f6b1b766a7639206a380f0d10ce",
+  "fixed_commit_id": "9d9dea0d69709ef0f7aef67ddba1bd7bda25d273",
+  "f2p_commands": [
+    "python -m unittest -q tests.test_spidermiddleware_offsite.TestOffsiteMiddleware4._get_spiderargs",
+    "python -m unittest -q tests.test_spidermiddleware_offsite.TestOffsiteMiddleware4.test_process_spider_output"
+  ],
+  "checkout": {
+    "buggy": "data/real_bugs/bugsinpy_workspace/scrapy_1/buggy",
+    "fixed": "data/real_bugs/bugsinpy_workspace/scrapy_1/fixed",
+    "completed": true
+  },
+  "initial_probe": {
+    "runner": "python -m unittest",
+    "buggy_status": "failed_import",
+    "fixed_status": "failed_import",
+    "error": "ModuleNotFoundError: No module named 'twisted'"
+  },
+  "dependency_attempt": {
+    "venv": "outputs/envs/scrapy1_p2p_py311",
+    "scope": "declared_dependency_subset_for_f2p_probe",
+    "packages": [
+      "Twisted==20.3.0",
+      "w3lib==1.22.0",
+      "queuelib==1.5.0",
+      "parsel==1.6.0",
+      "PyDispatcher==2.0.5",
+      "lxml",
+      "cssselect",
+      "Protego",
+      "service-identity",
+      "pyOpenSSL",
+      "zope.interface",
+      "six",
+      "testfixtures"
+    ],
+    "status": "failed",
+    "failure_type": "native_build_toolchain_missing",
+    "failing_package": "Twisted==20.3.0",
+    "error_summary": "Building Twisted 20.3.0 failed while compiling the twisted.test.raiser extension because local Microsoft Visual C++ 14.0 or greater build tools are unavailable."
+  },
+  "decision": {
+    "project_level_p2p_broad": "not_attempted",
+    "reason": "The retained F2P probe cannot run under the declared Twisted dependency on the current Windows/Python 3.11 environment without a native build toolchain or an unapproved dependency substitution.",
+    "no_task_file_downgrade": true,
+    "no_source_or_test_fixture_edit": true,
+    "no_dependency_substitution": true
+  }
+}

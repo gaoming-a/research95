@@ -184,6 +184,11 @@ They should not override `final_paper_roadmap_zh.md`.
   FastAPI official-root timeout-risk case. `bugsinpy_sanic_1` also has a clear
   F2P oracle, but its project-level P2P-broad construction reached the bounded
   runtime without producing a manifest.
+- `bugsinpy_scrapy_1` is excluded as `blocked_dependency_native_build`: the
+  retained F2P unittest targets require declared `Twisted==20.3.0`, whose local
+  install attempts to build a native extension and fails without MSVC build
+  tools. No dependency substitution, fixture edit, or task-file P2P downgrade
+  was used.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in
