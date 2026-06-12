@@ -49,6 +49,11 @@ def static_summary(task_id: str, source_workspace_root: str, tokens: list[str]) 
     return build_summary(args)
 
 
+def checkout_root(source_workspace_root: str, task_id: str, version: str) -> Path:
+    bug_dir = task_id.replace("bugsinpy_", "")
+    return Path(source_workspace_root) / bug_dir / version / "youtube-dl"
+
+
 def parse_decision_packet(path: Path) -> dict[str, Any]:
     text = path.read_text(encoding="utf-8")
     recommended_match = re.search(r"Recommended first representative:\s*`([^`]+)`", text)
@@ -71,6 +76,74 @@ def expected_fail_to_pass_nodeid(candidate: dict[str, Any] | None) -> str | None
     if not run_command:
         return None
     return run_command.split()[-1]
+
+
+def p2p_command_packet(
+    task_id: str | None,
+    fail_to_pass_nodeid: str | None,
+    static_exclude_tokens: list[str],
+    manifest_out: str | None,
+) -> dict[str, Any]:
+    if not task_id or not fail_to_pass_nodeid:
+        return {"approval_required": True, "command": None, "argv": []}
+    out_dir = f"outputs\\p2p_scope_builds\\{task_id}"
+    manifest = manifest_out or f"data\\p2p_scopes\\{task_id}_p2p_broad.json"
+    argv = [
+        "python",
+        "scripts\\build_pass_to_pass_scope.py",
+        "--task-id",
+        task_id,
+        "--project",
+        "youtube-dl",
+        "--test-framework",
+        "unittest",
+        "--unittest-start-dir",
+        "test",
+        "--unittest-pattern",
+        "test_*.py",
+        "--fail-to-pass-nodeid",
+        fail_to_pass_nodeid,
+        "--scope-type",
+        "project_level_p2p_broad",
+        "--runs",
+        "3",
+        "--timeout-seconds",
+        "30",
+        "--batch-timeout-seconds",
+        "1800",
+        "--batch-size",
+        "50",
+        "--batch-first",
+    ]
+    for token in static_exclude_tokens:
+        argv.extend(["--static-exclude-token", token])
+    argv.extend(["--out-dir", out_dir, "--manifest-out", manifest])
+    command_lines = [
+        "python scripts\\build_pass_to_pass_scope.py `",
+        f"  --task-id {task_id} `",
+        "  --project youtube-dl `",
+        "  --test-framework unittest `",
+        "  --unittest-start-dir test `",
+        '  --unittest-pattern "test_*.py" `',
+        f'  --fail-to-pass-nodeid "{fail_to_pass_nodeid}" `',
+        "  --scope-type project_level_p2p_broad `",
+        "  --runs 3 `",
+        "  --timeout-seconds 30 `",
+        "  --batch-timeout-seconds 1800 `",
+        "  --batch-size 50 `",
+        "  --batch-first `",
+    ]
+    for index, token in enumerate(static_exclude_tokens):
+        suffix = " `" if index < len(static_exclude_tokens) - 1 else " `"
+        command_lines.append(f'  --static-exclude-token "{token}"{suffix}')
+    command_lines.extend([f"  --out-dir {out_dir} `", f"  --manifest-out {manifest}"])
+    return {
+        "approval_required": True,
+        "command": "\n".join(command_lines),
+        "argv": argv,
+        "out_dir": out_dir,
+        "manifest_out": manifest,
+    }
 
 
 def build_audit(args: argparse.Namespace) -> dict[str, Any]:
@@ -100,13 +173,19 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     manifest_exists = Path(manifest_out).exists() if manifest_out else False
     recommended_candidate = next((candidate for candidate in candidates if candidate.get("task_id") == recommended), None)
     expected_f2p_nodeid = expected_fail_to_pass_nodeid(recommended_candidate)
+    command_packet = p2p_command_packet(recommended, expected_f2p_nodeid, args.static_exclude_token, manifest_out)
+    buggy_checkout = checkout_root(args.source_workspace_root, recommended, "buggy") if recommended else None
+    fixed_checkout = checkout_root(args.source_workspace_root, recommended, "fixed") if recommended else None
 
     checks = {
         "has_candidates": bool(static_rows),
         "recommended_matches_lowest_static_cost": bool(lowest and recommended == lowest["task_id"]),
         "command_task_matches_recommended": bool(recommended and command_task == recommended),
         "command_fail_to_pass_matches_probe": bool(expected_f2p_nodeid and packet["command_fail_to_pass_nodeid"] == expected_f2p_nodeid),
+        "recommended_buggy_checkout_exists": bool(buggy_checkout and buggy_checkout.exists()),
+        "recommended_fixed_checkout_exists": bool(fixed_checkout and fixed_checkout.exists()),
         "recommended_manifest_not_already_tracked": not manifest_exists,
+        "command_packet_requires_approval": bool(command_packet["approval_required"]),
         "all_buggy_fixed_remaining_sets_match": all(row["buggy_only"] == 0 and row["fixed_only"] == 0 for row in static_rows),
     }
     return {
@@ -121,6 +200,11 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "lowest_static_cost_candidate": lowest,
         "recommended_probe": recommended_candidate,
         "expected_fail_to_pass_nodeid": expected_f2p_nodeid,
+        "recommended_checkouts": {
+            "buggy": str(buggy_checkout) if buggy_checkout else None,
+            "fixed": str(fixed_checkout) if fixed_checkout else None,
+        },
+        "command_packet": command_packet,
         "checks": checks,
         "passed": all(checks.values()),
     }
@@ -139,12 +223,14 @@ def markdown(audit: dict[str, Any]) -> str:
         f"- command fail-to-pass nodeid: `{audit['decision_packet']['command_fail_to_pass_nodeid']}`",
         f"- expected fail-to-pass nodeid: `{audit['expected_fail_to_pass_nodeid']}`",
         f"- lowest static-cost task: `{(audit['lowest_static_cost_candidate'] or {}).get('task_id')}`",
+        f"- approval required before execution: `{audit['command_packet']['approval_required']}`",
         "",
         "## Checks",
         "",
     ]
     for key, value in audit["checks"].items():
         lines.append(f"- `{key}`: `{value}`")
+    lines.extend(["", "## Command Packet", "", "```powershell", audit["command_packet"]["command"] or "", "```"])
     lines.extend(["", "## Static Rows", "", "| Task | Methods | Remaining | Diff |", "| --- | ---: | ---: | ---: |"])
     for row in audit["static_rows"]:
         diff = row["buggy_only"] + row["fixed_only"]

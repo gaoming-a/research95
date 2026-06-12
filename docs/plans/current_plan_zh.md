@@ -5540,3 +5540,29 @@ full run 决策：
 
 - 审计增加 `command_fail_to_pass_matches_probe` 检查，防止 P2P 命令模板使用
   与 retained F2P probe 不一致的 oracle nodeid。
+
+## 69. 2026-06-13 youtube-dl P2P command packet no-run audit
+
+本轮小目标：
+
+- 在不执行 P2P 的前提下，把获批后要运行的 `youtube-dl_7` P2P 命令固化到
+  决策审计输出；
+- 检查推荐任务的 buggy/fixed checkout 是否存在；
+- 检查输出 manifest 尚未存在；
+- 明确记录该命令包仍需用户批准后才能执行。
+
+执行边界：
+
+- 只修改 `scripts/audit_youtubedl_p2p_decision.py` 和文档；
+- 不执行 `scripts/build_pass_to_pass_scope.py`；
+- 不创建 `data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json`；
+- 不修改实验标签或 main cohort。
+
+验收条件：
+
+- 决策审计通过；
+- 审计 JSON/Markdown 中包含 `command_packet.approval_required = true`；
+- 审计 checks 包含并通过：
+  - `recommended_buggy_checkout_exists`；
+  - `recommended_fixed_checkout_exists`；
+  - `command_packet_requires_approval`。

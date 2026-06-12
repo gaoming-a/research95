@@ -298,6 +298,9 @@ python scripts\audit_youtubedl_p2p_decision.py `
   --out-md outputs\youtubedl_p2p_decision_audit\latest.md
 ```
 
+This audit writes an approval-required command packet for the proposed
+`youtube-dl_7` P2P run. It does not execute P2P or create a tracked manifest.
+
 For stage-by-stage plan progress, run:
 
 ```powershell

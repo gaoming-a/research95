@@ -1478,3 +1478,7 @@ This file starts fresh for the patch-verification project.
 - The decision audit should also compare `--fail-to-pass-nodeid` against the
   controlled probe's retained unittest target; a correct representative task is
   not enough if the oracle nodeid in the P2P command drifts.
+- Keep the proposed youtube-dl P2P command in the no-run decision audit output
+  with `approval_required = true`. This makes the next action copyable after
+  confirmation while still preventing accidental P2P execution during
+  unattended preparation.
