@@ -1,0 +1,46 @@
+{
+  "task_id": "bugsinpy_tornado_1",
+  "project": "tornado",
+  "status": "pending_blocked_project_level_unittest_scope_timeout",
+  "p2p_broad_main_included": false,
+  "buggy_commit_id": "6a5a0bfa370b6c0d3dbbf9589a560a98202d2baa",
+  "fixed_commit_id": "4677c54cc18bbfbdf0f4dadf11610fab6203fd63",
+  "f2p_oracle": {
+    "nodeid": "tornado.test.websocket_test.WebSocketTest.test_nodelay",
+    "buggy": "failed after Windows selector event loop policy: WebSocketHandler.set_nodelay asserted on self.stream and the test observed None != 'hello'",
+    "fixed": "passed after Windows selector event loop policy"
+  },
+  "compatibility_boundary": {
+    "type": "windows_asyncio_event_loop_policy",
+    "policy": "asyncio.WindowsSelectorEventLoopPolicy",
+    "reason": "Tornado local socket tests require add_reader support on Windows.",
+    "source_or_fixture_edit": false,
+    "external_network_dependency": false
+  },
+  "project_level_p2p_attempt": {
+    "scope_type": "project_level_p2p_broad",
+    "test_framework": "unittest",
+    "unittest_start_dir": "tornado/test",
+    "unittest_pattern": "*_test.py",
+    "unittest_top_level_dir": ".",
+    "runs": 3,
+    "timeout_seconds": 20,
+    "batch_timeout_seconds": 180,
+    "batch_size": 20,
+    "batch_first": true,
+    "elapsed_minutes": 40,
+    "completed": false,
+    "manifest_generated": false,
+    "output_dir": "outputs/tornado1_project_p2p_scope_001",
+    "observed_output": "Only the compat_shim helper directory was written; no scope manifest or test records were generated before timeout.",
+    "observed_stuck_test": "tornado.test.iostream_test.TestIOStreamSSLContext.test_future_interface",
+    "residual_processes_after_cleanup": 0
+  },
+  "decision": {
+    "reason": "The retained F2P oracle is clear, but project-level unittest P2P-broad construction exceeded the bounded runtime before producing a manifest.",
+    "no_task_file_downgrade": true,
+    "no_source_or_test_fixture_edit": true,
+    "local_server_tests_allowed": true,
+    "external_network_tests_allowed": false
+  }
+}

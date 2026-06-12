@@ -732,6 +732,41 @@
         "task_file_level_p2p": "not_recorded"
       },
       "blocked_reason": [
+        "project_level_unittest_scope_timeout"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "p2p_broad_size": null,
+        "test_framework": "unittest"
+      },
+      "f2p_oracle": {
+        "buggy": "failed after Windows selector event loop policy: WebSocketHandler.set_nodelay asserted on self.stream and the test observed None != 'hello'",
+        "fixed": "passed after Windows selector event loop policy",
+        "nodeid": "tornado.test.websocket_test.WebSocketTest.test_nodelay"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "F2P oracle is clear after the documented Windows selector event loop policy, but project-level unittest P2P-broad construction over tornado/test reached the 40 minute budget without producing a manifest. No source/test fixture edit, external network admission, or task-file P2P downgrade was used.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_tornado_1_project_level_timeout.json",
+      "project": "tornado",
+      "project_level_p2p_status": "pending_blocked_project_level_unittest_scope_timeout",
+      "task_id": "bugsinpy_tornado_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
         "missing_typed_ast_dependency",
         "unittest_collection_error"
       ],

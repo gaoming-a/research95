@@ -163,6 +163,10 @@
   records a clear retained F2P oracle but blocks main-cohort admission because
   project-level unittest P2P-broad construction timed out before producing a
   manifest.
+- `experiments/tornado1_feasibility.md`: Tornado 1 feasibility probe. It
+  records the Windows selector event loop compatibility boundary, a clear
+  retained websocket F2P oracle, and a project-level unittest P2P construction
+  timeout.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

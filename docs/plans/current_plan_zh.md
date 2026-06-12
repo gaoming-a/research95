@@ -3293,6 +3293,39 @@ FastAPI 决策：
 - 然后对 `bugsinpy_tornado_1` 启动单任务 project-level unittest
   P2P-broad construction。
 
+Project-level P2P attempt：
+
+- 已运行 `bugsinpy_tornado_1` project-level unittest P2P-broad construction：
+  - discovery root = `tornado/test`；
+  - pattern = `*_test.py`；
+  - fail-to-pass oracle =
+    `tornado.test.websocket_test.WebSocketTest.test_nodelay`；
+  - runs = 3；
+  - batch-first dynamic stability run。
+- 该运行达到 40 分钟预算仍未完成，未生成
+  `data/p2p_scopes/bugsinpy_tornado_1_p2p_broad.json`。
+- 输出目录仅包含 `compat_shim`，说明未到达可用 manifest/test-record 阶段。
+- 清理时观察到子进程停在
+  `tornado.test.iostream_test.TestIOStreamSSLContext.test_future_interface`。
+- 已终止本轮 Tornado P2P 构造残留进程，并确认无相关 Python 进程残留。
+
+最终状态：
+
+- `bugsinpy_tornado_1` 记录为
+  `pending_blocked_project_level_unittest_scope_timeout`。
+- 新增结构化 timeout 记录：
+  `data/p2p_scopes/bugsinpy_tornado_1_project_level_timeout.json`。
+- 新增实验记录：
+  `docs/experiments/tornado1_feasibility.md`。
+- `bugsinpy_tornado_1` 不进入 `p2p_broad_main`。
+
+下一步：
+
+- 继续并行筛选候选，但不再对 Tornado websocket/iostream-heavy 项目级 scope
+  做长时间重复尝试。
+- 优先选择已有 metadata 中更偏纯函数/短测试的候选，例如
+  `bugsinpy_tornado_9` 的 `httputil.url_concat`。
+
 执行结果：
 
 - buggy/fixed checkout 已成功创建到外部 retained workspace：

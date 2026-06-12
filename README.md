@@ -193,6 +193,9 @@ They should not override `final_paper_roadmap_zh.md`.
   P2P-broad construction reached the bounded runtime without producing a
   manifest, so it is recorded as
   `pending_blocked_project_level_unittest_discovery_timeout`.
+- `bugsinpy_tornado_1` has a clear websocket F2P oracle after the documented
+  Windows selector event loop policy, but project-level unittest P2P-broad
+  construction timed out before producing a manifest.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

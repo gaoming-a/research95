@@ -1121,3 +1121,8 @@ This file starts fresh for the patch-verification project.
 - Keep this as a shared runtime compatibility shim for Windows local-server
   tests. It is not a Tornado source edit, test fixture edit, or external network
   dependency.
+- `bugsinpy_tornado_1` still did not complete project-level unittest
+  P2P-broad construction after the selector policy fix. The run reached 40
+  minutes with only the compat shim written, and cleanup observed an SSL
+  iostream test active. Record the task as a project-level scope timeout rather
+  than downgrading websocket_test.py to main evidence.
