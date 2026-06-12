@@ -1299,3 +1299,20 @@ This file starts fresh for the patch-verification project.
   `g5_signal_claim_status = requires_real_llm_verifier_outputs`. Do not change
   that to passed unless genuine LLM verifier outputs have been produced under
   an approved API/model/cost boundary and analyzed through the same path.
+
+## 2026-06-13 EVP-7 G5 prompt manifest boundary
+
+- The G5 prompt manifest should store hashes and lengths, not full prompt text,
+  so tracked artifacts can prove prompt coverage and leakage checks without
+  duplicating all prompt payloads.
+- `patch_verify_evidence_visibility_merge_gate_v1` is a new EVP-7 protocol
+  prompt. It is not a scale-up of the stopped
+  `patch_verify_evidence_first_v1` condition and does not reuse the
+  retained-oracle/tool-summary boundary of
+  `patch_verify_tool_augmented_evidence_v1`.
+- Generic schema enum values such as `partial_fix` can appear in the prompt as
+  possible verifier output categories. They are not leakage unless attached to
+  a specific candidate as evaluator-side truth.
+- A future real G5 run should stop on prompt-boundary failure, high smoke
+  invalid-output rate, API/preflight failure, cost growth beyond the
+  user-confirmed budget, or `run_error.json`.

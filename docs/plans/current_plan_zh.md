@@ -4538,3 +4538,73 @@ Project-level P2P attempt：
 - 在不调用 API 的前提下，可继续准备真实 LLM G5 的输入 manifest、成本上限、
   prompt/version 和停止条件。
 - 如果要真正执行 G5，需要先得到用户对 API 调用的明确确认。
+
+## 48. 2026-06-13 EVP-7 G5 LLM run readiness without API
+
+同步状态：
+
+- 上一轮提交 `5a01fdd data: add evp7 g5 metric scaffold` 已成功 push 到
+  GitHub。
+- 当前 Git 状态为 `main...origin/main`，工作区干净。
+- G5 metric scaffold 已通过，但真实 G5 signal existence 仍未证明。
+
+本轮小目标：
+
+1. 新增 G5 LLM prompt-manifest builder；
+2. 输入只读取 `data/evidence/evp7_evidence_packets.jsonl`；
+3. 为 168 个 E0/E2/E4/E6 packet 生成 prompt hash/长度/版本 manifest；
+4. 固定 G5 verifier prompt id 和输出 schema；
+5. 生成真实 API 前的 readiness summary：运行范围、预计 prompt 规模、默认
+   decoding、停止条件和必须由用户确认的项。
+
+执行边界：
+
+- 不运行真实 LLM API；
+- 不创建 local API config，不读取 `.env`；
+- prompt manifest 不保存完整 prompt text，只保存 hash、长度和边界检查结果；
+- prompt 输入不得包含 evaluator-only labels、candidate construction
+  taxonomy、retained oracle outcome、hidden P2P outcome 或 reference
+  provenance；
+- 通用 output schema 枚举可以包含 `partial_fix` 等风险类型名称，但不能包含任何
+  candidate-specific evaluator label。
+
+验收条件：
+
+- 生成 168 条 prompt manifest records；
+- 每个 evidence level 42 条；
+- leakage/boundary check 通过；
+- prompt 文档和 prompt change log 明确该 prompt 与旧
+  `patch_verify_evidence_first_v1`、`patch_verify_tool_augmented_evidence_v1`
+  不冲突、不替代；
+- readiness summary 明确真实 API 仍需用户确认。
+
+执行结果：
+
+- 新增 `scripts/build_evp7_g5_llm_prompt_manifest.py`。
+- 已生成：
+  - `data/reviews/evp7_g5_llm_prompt_manifest.jsonl`；
+  - `data/reviews/evp7_g5_llm_run_readiness.json`；
+  - `docs/experiments/evp7_g5_llm_run_readiness.md`。
+- `python scripts\build_evp7_g5_llm_prompt_manifest.py --check` 通过：
+  - prompt_record_count = 168；
+  - level_counts = `{E0: 42, E2: 42, E4: 42, E6: 42}`；
+  - label_leakage_failed_count = 0；
+  - prompt_char_min = 1880；
+  - prompt_char_max = 4938；
+  - estimated_prompt_tokens_char_div_4 = 121619；
+  - G5 LLM run readiness = `passed_without_api`；
+  - api_call_attempted = false。
+- 新 prompt id：
+  `patch_verify_evidence_visibility_merge_gate_v1`。
+- 已更新 `docs/prompts/api_pilot_prompts.md` 和
+  `docs/prompts/prompt_change_log.md`：
+  - 不替代旧 `patch_verify_evidence_first_v1`；
+  - 不复用 `patch_verify_tool_augmented_evidence_v1` 的 retained-oracle/tool
+    summary 边界；
+  - 通用 schema enum 不等于 candidate-specific label 泄漏。
+
+下一步：
+
+- 真实 G5 API 执行仍需用户确认 provider、model、最大总成本、smoke scope 和
+  full-run permission。
+- 在确认前，不运行真实 API。

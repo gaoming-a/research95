@@ -1,0 +1,97 @@
+# EVP-7 G5 LLM Run Readiness
+
+Date: 2026-06-13
+
+## Purpose
+
+This document records the no-API readiness package for a future real LLM G5
+signal-existence run.
+
+The goal of G5 is to test whether E0/E2/E4/E6 evidence visibility changes LLM
+merge-gate decisions in an explainable way. This readiness step prepares the
+prompt manifest, prompt version, leakage checks, run scope, and stop conditions
+without calling any model API.
+
+## Command
+
+```powershell
+python scripts\build_evp7_g5_llm_prompt_manifest.py --check
+```
+
+## Inputs
+
+```text
+data/evidence/evp7_evidence_packets.jsonl
+```
+
+## Outputs
+
+```text
+data/reviews/evp7_g5_llm_prompt_manifest.jsonl
+data/reviews/evp7_g5_llm_run_readiness.json
+```
+
+The prompt manifest stores prompt hashes and lengths only. Full prompt text is
+not stored in the tracked artifact.
+
+## Prompt
+
+Prompt id:
+
+```text
+patch_verify_evidence_visibility_merge_gate_v1
+```
+
+This is a new EVP-7 evidence-visibility prompt. It does not replace
+`patch_verify_evidence_first_v1` or `patch_verify_tool_augmented_evidence_v1`.
+It uses the fixed merge-gate schema from the EVP-7 protocol:
+
+```json
+{
+  "decision": "accept | reject | escalate",
+  "confidence": 0.0,
+  "primary_reason": "...",
+  "evidence_used": ["..."],
+  "risk_flags": ["..."],
+  "suspected_failure_type": "none | partial_fix | under_fix | regression | irrelevant | non_applicable | unknown",
+  "human_review_needed": true
+}
+```
+
+Generic schema enum values such as `partial_fix` are allowed because they are
+not candidate-specific labels. Candidate-specific evaluator labels and
+construction taxonomy remain forbidden in the rendered prompt payload.
+
+## Readiness Result
+
+- prompt records = 168;
+- E0/E2/E4/E6 records = 42 each;
+- prompt char range = 1880 to 4938;
+- prompt char total = 486475;
+- rough prompt-token estimate by chars/4 = 121619;
+- leakage failed count = 0;
+- G5 LLM run readiness = `passed_without_api`;
+- API call attempted = false.
+
+## Stop Conditions For Real Execution
+
+Do not continue a real G5 run if any of the following occur:
+
+- prompt boundary or leakage check fails;
+- invalid output rate exceeds 0.2 in the initial smoke slice;
+- API authentication, model selection, or preflight fails;
+- observed cost growth exceeds the user-confirmed budget;
+- `run_error.json` is produced.
+
+## Required User Confirmation
+
+Before any real G5 API call, the user must confirm:
+
+- API provider;
+- model;
+- maximum total cost in USD;
+- smoke scope;
+- permission for the full 168-record run after smoke.
+
+This readiness artifact is not model-result evidence and does not pass G5 by
+itself.

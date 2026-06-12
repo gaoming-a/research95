@@ -58,3 +58,31 @@ See `docs/prompts/api_pilot_prompts.md` for the full prompt templates.
   5-candidate DeepSeek official API redesign smoke;
   `outputs/patch_verification_tool_augmented_full_001`, a 30-candidate
   DeepSeek official API tool-augmented full run.
+
+## `patch_verify_evidence_visibility_merge_gate_v1`
+
+- Date: 2026-06-13
+- Purpose: EVP-7 G5 evidence-visibility merge-gate verifier prompt for
+  E0/E2/E4/E6 packet-level ablation.
+- Previous version: none for EVP-7. This is not a replacement for
+  `patch_verify_evidence_first_v1` and does not reuse
+  `patch_verify_tool_augmented_evidence_v1`.
+- Contradiction check: consistent with the EVP-7 protocol because it uses only
+  model-visible evidence packets, the fixed accept/reject/escalate schema, and
+  no retained-oracle or hidden P2P outcome. It also preserves the earlier
+  `patch_verify_evidence_first_v1` stop/redesign boundary by treating this as a
+  new evidence-visibility protocol prompt rather than a scale-up of the failed
+  prompt-only condition.
+- Label-leakage check: prompt manifest generation produced 168 records with
+  zero boundary findings. Candidate-specific evaluator fields such as
+  `label_with_p2p_broad`, `candidate_type`, `expected_outcome`,
+  `failure_type_label`, retained-oracle outcome, hidden P2P outcome, and
+  reference provenance remain excluded. Generic schema enum values such as
+  `partial_fix` are allowed only as possible verifier output categories, not as
+  candidate labels.
+- Expected experimental impact: enables the real G5 test of whether increasing
+  evidence visibility changes false accept rate, correct recall, escalation,
+  FACR, or Evidence Gain in genuine LLM verifier outputs.
+- Runs that used it: no real API runs yet. No-API readiness only:
+  `data/reviews/evp7_g5_llm_prompt_manifest.jsonl` and
+  `data/reviews/evp7_g5_llm_run_readiness.json`.

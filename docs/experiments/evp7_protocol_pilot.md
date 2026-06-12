@@ -275,8 +275,37 @@ false reject rate, escalation rate, invalid output rate, FACR, and Evidence
 Gain. It validates the analysis path only; it does not prove LLM signal
 existence.
 
+## G5 LLM Run Readiness
+
+Command:
+
+```powershell
+python scripts\build_evp7_g5_llm_prompt_manifest.py --check
+```
+
+Tracked outputs:
+
+```text
+data/reviews/evp7_g5_llm_prompt_manifest.jsonl
+data/reviews/evp7_g5_llm_run_readiness.json
+docs/experiments/evp7_g5_llm_run_readiness.md
+```
+
+Current readiness status:
+
+- prompt id = `patch_verify_evidence_visibility_merge_gate_v1`;
+- prompt records = 168;
+- E0/E2/E4/E6 level counts = 42 each;
+- prompt text stored = false;
+- label leakage failed count = 0;
+- G5 LLM run readiness = `passed_without_api`;
+- API call attempted = false.
+
+This prepares the real G5 run boundary but does not execute it.
+
 ## Current Next Step
 
 No new BugsInPy expansion, native build work, external benchmark migration, or
 real API calls should occur before using the schema-stable EVP-7 protocol to
-prepare the real G5 verifier run boundary for user confirmation.
+request user confirmation of the real G5 provider, model, cost ceiling, smoke
+scope, and full-run permission.

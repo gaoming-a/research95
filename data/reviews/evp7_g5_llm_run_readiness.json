@@ -1,0 +1,49 @@
+{
+  "api_call_attempted": false,
+  "claim_boundary": "This readiness artifact prepares a future LLM G5 run; it is not model-result evidence.",
+  "cohort_id": "EVP-7",
+  "default_api_provider": "user_confirmed_provider_required",
+  "default_max_tokens": 1024,
+  "default_model": "user_confirmed_model_required",
+  "default_temperature": 0.0,
+  "estimated_prompt_tokens_char_div_4": 121619,
+  "expected_prompt_record_count": 168,
+  "g5_llm_run_readiness": "passed_without_api",
+  "label_leakage_failed_count": 0,
+  "level_counts": {
+    "E0": 42,
+    "E2": 42,
+    "E4": 42,
+    "E6": 42
+  },
+  "planned_conditions": [
+    "evidence_visibility_merge_gate"
+  ],
+  "planned_evidence_levels": [
+    "E0",
+    "E2",
+    "E4",
+    "E6"
+  ],
+  "planned_output_records": 168,
+  "prompt_char_max": 4938,
+  "prompt_char_min": 1880,
+  "prompt_char_total": 486475,
+  "prompt_id": "patch_verify_evidence_visibility_merge_gate_v1",
+  "prompt_record_count": 168,
+  "prompt_text_stored": false,
+  "requires_user_confirmation": [
+    "api_provider",
+    "model",
+    "max_total_cost_usd",
+    "smoke_scope",
+    "full_run_permission"
+  ],
+  "stop_conditions": [
+    "any prompt boundary/leakage check fails",
+    "invalid output rate exceeds 0.2 in an initial smoke slice",
+    "API authentication/model/preflight fails",
+    "unexpected cost growth exceeds user-confirmed budget",
+    "run_error.json is produced"
+  ]
+}

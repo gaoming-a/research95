@@ -182,3 +182,67 @@ After the first DeepSeek full run, `patch_verify_evidence_first_v1` should not
 be scaled as-is. The next smoke test uses
 `patch_verify_tool_augmented_evidence_v1` only on known failure cases and must
 be reported as a separate tool-augmented condition.
+
+## EVP-7 G5 Prompt: `patch_verify_evidence_visibility_merge_gate_v1`
+
+Purpose: test evidence-visibility effects over the frozen EVP-7 protocol
+packets using the fixed merge-gate schema from
+`docs/protocol/evidence_visibility_protocol.md`.
+
+Relationship to earlier prompts:
+
+- It does not replace `patch_verify_evidence_first_v1`.
+- It does not reuse the retained-oracle summary boundary from
+  `patch_verify_tool_augmented_evidence_v1`.
+- It is the first EVP-7 prompt designed for E0/E2/E4/E6 evidence-level
+  ablation.
+
+Template:
+
+```text
+You are a software merge-gate verifier for candidate patches.
+
+Use only the visible evidence packet below. Do not infer hidden labels, hidden tests, oracle outcomes, reference-patch provenance, or evaluator notes.
+Decide whether the candidate patch should be accepted, rejected, or escalated for human or tool review.
+
+Return exactly one JSON object with this schema:
+{
+  "decision": "accept | reject | escalate",
+  "confidence": 0.0,
+  "primary_reason": "one concise reason grounded in visible evidence",
+  "evidence_used": ["names of visible evidence fields used"],
+  "risk_flags": ["partial_fix | under_fix | regression_risk | test_overfitting | insufficient_evidence"],
+  "suspected_failure_type": "none | partial_fix | under_fix | regression | irrelevant | non_applicable | unknown",
+  "human_review_needed": true
+}
+
+Decision policy:
+- Accept only when visible evidence directly supports the patch and no visible contradiction remains.
+- Reject when visible evidence contradicts the required behavior, the patch does not apply, visible tests fail/error/timeout, or the patch visibly fails to address the issue.
+- Escalate when visible evidence is incomplete, ambiguous, or insufficient for a safe merge decision.
+- If the evidence level is sparse, prefer escalation over unsupported acceptance.
+
+Visible evidence packet:
+{visible_evidence_packet_json}
+```
+
+Label-leakage boundary:
+
+- The prompt payload is built only from `data/evidence/evp7_evidence_packets.jsonl`.
+- It must not include candidate-specific evaluator fields such as
+  `label_with_p2p_broad`, `candidate_type`, `expected_outcome`,
+  `failure_type_label`, retained-oracle outcome, hidden P2P outcome, or
+  reference provenance.
+- Generic schema enum values such as `partial_fix` are allowed because they
+  describe possible verifier risk flags and do not reveal any candidate's
+  hidden label.
+
+Dry-run readiness status:
+
+- command:
+  `python scripts\build_evp7_g5_llm_prompt_manifest.py --check`;
+- prompt manifest records: 168;
+- E0/E2/E4/E6 records: 42 each;
+- label leakage failed count: 0;
+- prompt text stored in tracked manifest: false;
+- API call attempted: false.

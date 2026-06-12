@@ -75,6 +75,13 @@
   scaffold over schema dry-run records. It computes FAR, accepted precision,
   recall, escalation, FACR, and Evidence Gain, but marks G5 signal claims as
   requiring genuine LLM verifier outputs.
+- `../data/reviews/evp7_g5_llm_prompt_manifest.jsonl`: no-API prompt manifest
+  for the future real G5 evidence-visibility LLM run. It stores prompt hashes,
+  lengths, prompt id, evidence level, and leakage-check status, not full prompt
+  text.
+- `../data/reviews/evp7_g5_llm_run_readiness.json`: G5 LLM run readiness
+  summary. It records 168 prompt records, zero leakage failures, estimated
+  prompt scale, stop conditions, and required user confirmations.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 
@@ -237,6 +244,9 @@
 - `experiments/evp7_g5_metric_scaffold.md`: no-API G5 metric scaffold report.
   It documents the FACR/Evidence Gain computation and the boundary that dry-run
   metric variation is not LLM signal evidence.
+- `experiments/evp7_g5_llm_run_readiness.md`: no-API readiness report for the
+  future real G5 LLM verifier run, including prompt id, prompt scope, stop
+  conditions, and required user confirmations.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on
@@ -527,6 +537,9 @@
 - `../scripts/analyze_evp7_schema_dry_run_metrics.py`: computes no-API G5
   metric scaffolding over schema dry-run records, joining evaluator labels only
   for aggregate metrics.
+- `../scripts/build_evp7_g5_llm_prompt_manifest.py`: renders the future G5
+  evidence-visibility LLM prompt in memory, writes prompt hashes/lengths and
+  readiness metadata, and verifies prompt-boundary leakage without API calls.
 - `scripts/analyze_tool_gated_reviews.py`: oracle-gated analysis reference.
 - `experience/engineering_notes.md`: fresh operational notes for this new
   workspace.

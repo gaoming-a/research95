@@ -176,6 +176,11 @@ Current gate status after the first packet builder:
   precision, recall, escalation, FACR, and Evidence Gain over schema-stable
   records, but real signal existence still requires genuine LLM verifier
   outputs under an approved API/model/cost boundary.
+- The future G5 LLM prompt is
+  `patch_verify_evidence_visibility_merge_gate_v1`. Its no-API prompt manifest
+  covers all 168 E0/E2/E4/E6 packet prompts with zero leakage failures and no
+  tracked full prompt text. Real execution still requires user confirmation of
+  provider, model, cost ceiling, smoke scope, and full-run permission.
 
 ## Post-A Expansion
 
