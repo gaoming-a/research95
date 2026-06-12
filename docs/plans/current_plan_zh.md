@@ -5347,3 +5347,40 @@ full run 决策：
 - 它们仍不是 main cohort tasks；
 - 下一步必须在 youtube-dl family P2P-broad 预算与 timeout 风险之间做显式
   决策，不能把 F2P 数量直接当作论文主样本扩容。
+
+## 63. 2026-06-13 youtube-dl family P2P-broad decision packet
+
+本轮小目标：
+
+- 不继续盲目补第 8 个 F2P；
+- 将 `youtube-dl` family 是否进入 bounded project-level P2P-broad 的决策
+  背景、候选集、预算和 gate 单独成文；
+- 在用户确认前不启动真实 P2P-broad construction。
+
+背景：
+
+- controlled expansion 目前已有 7 个 clean F2P `youtube-dl` 候选：
+  `youtube-dl_2/3/4/5/6/7/11`；
+- `bugsinpy_youtube-dl_1` 已有 clean F2P，但 project-level unittest
+  discovery/P2P-broad construction 曾达到 bounded runtime 且未生成 manifest；
+- 因此当前风险不是 F2P 数量不足，而是尚未证明 `youtube-dl` family 能在最终
+  project-level P2P-broad 协议下形成可入主样本证据。
+
+执行边界：
+
+- 只整理决策包，不执行 P2P；
+- 不安装依赖、不编辑 checkout、不修改实验标签；
+- 若后续用户确认 P2P，先只对一个代表性 `youtube-dl` task 运行 bounded
+  project-level P2P-broad，不并行启动多个长 P2P。
+
+产物：
+
+- 新增 `docs/experiments/evp7_youtubedl_p2p_decision_packet_20260613.md`。
+
+当前结论：
+
+- 推荐首个代表任务为 `bugsinpy_youtube-dl_6`，因为它是 pure utility
+  unittest 且 F2P 清楚；
+- 这是执行效率最高的下一步决策：若该代表任务仍重复 `youtube-dl_1` timeout
+  pattern，应停止 youtube-dl P2P 扩展，而不是继续批量补 F2P；
+- 在获得明确确认前，真实 P2P-broad 仍保持未执行状态。

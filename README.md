@@ -244,7 +244,10 @@ They should not override `final_paper_roadmap_zh.md`.
   `bugsinpy_youtube-dl_5`. A second pure-utils continuation established
   `bugsinpy_youtube-dl_6`, `bugsinpy_youtube-dl_7`, and
   `bugsinpy_youtube-dl_11`; none are admitted until project-level P2P-broad and
-  candidate revalidation pass. The remaining readiness lanes are blocked by environment or historical
+  candidate revalidation pass. The next efficient decision is one bounded
+  representative youtube-dl project-level P2P attempt, documented in
+  `docs/experiments/evp7_youtubedl_p2p_decision_packet_20260613.md`, rather than
+  bulk-adding more F2P-only probes. The remaining readiness lanes are blocked by environment or historical
   probe constraints: Scrapy lacks Twisted, Ansible reaches Windows `fcntl`,
   Luigi lacks Tornado after existing Python 3.11 compatibility, and
   Matplotlib remains an incomplete/native-extension blocker.

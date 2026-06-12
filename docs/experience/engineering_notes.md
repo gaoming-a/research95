@@ -1451,3 +1451,7 @@ This file starts fresh for the patch-verification project.
 - Prefer the pure utility tests inside youtube-dl for additional F2P-only
   screening before attempting expensive project-level P2P. They run quickly and
   make the later P2P decision more evidence-based.
+- After seven clean `youtube-dl` F2P probes, additional F2P-only screening has
+  diminishing value. The next efficient gate is a single bounded representative
+  project-level P2P attempt; do not run multiple long youtube-dl P2P attempts in
+  parallel unless the first representative manifest succeeds.
