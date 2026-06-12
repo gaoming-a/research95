@@ -271,6 +271,15 @@ python scripts\audit_execution_readiness.py `
   --out-md outputs\readiness_audit\latest.md
 ```
 
+For API pilot preflight without making API calls, run:
+
+```powershell
+python scripts\preflight_api_pilot.py `
+  --config configs\api_pilot.local.json `
+  --out-json outputs\api_pilot_preflight\latest.json `
+  --out-md outputs\api_pilot_preflight\latest.md
+```
+
 For EVP-7 controlled-expansion readiness, run:
 
 ```powershell

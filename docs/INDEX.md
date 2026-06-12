@@ -365,7 +365,8 @@
   `deepseek-v4-pro`.
 - `scripts/audit_execution_readiness.py`: overall continuation audit for
   no-API outputs, API credentials/config readiness, and Git repository status,
-  including working-tree cleanliness plus upstream ahead/behind visibility.
+  including working-tree cleanliness, upstream ahead/behind visibility, and
+  latest API preflight report state.
 - `scripts/audit_credential_boundary.py`: structural credential-boundary audit
   for `.gitignore`, `.env.example`, and tracked secret-file state. Latest
   report: `outputs/credential_boundary/latest.md`.
@@ -572,7 +573,7 @@
   paper claims require a 60-record non-mock full-run completeness report.
 - `scripts/preflight_api_pilot.py`: readiness checker for data files,
   validation summary, provider model id, API provider, and provider key
-  presence.
+  presence. It can write JSON/Markdown reports under ignored `outputs/`.
 - `scripts/summarize_patch_verification_pilot.py`: Markdown report generator
   for the current no-API pilot and API prompt dry-run outputs.
 - `scripts/summarize_api_pilot_results.py`: Markdown report generator for

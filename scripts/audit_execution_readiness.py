@@ -11,6 +11,7 @@ from typing import Any
 DEFAULT_PILOT_DIR = Path("outputs") / "patch_verification_pilot_001"
 DEFAULT_LOCAL_CONFIG = Path("configs") / "api_pilot.local.json"
 DEFAULT_MODEL_SELECTION = Path("configs") / "model_selection.local.json"
+DEFAULT_API_PREFLIGHT_REPORT = Path("outputs") / "api_pilot_preflight" / "latest.json"
 
 
 def read_json(path: Path) -> dict[str, Any] | None:
@@ -191,7 +192,19 @@ def no_api_state(pilot_dir: Path) -> dict[str, Any]:
     }
 
 
-def determine_next_actions(no_api: dict[str, Any], api: dict[str, Any], git: dict[str, Any]) -> list[str]:
+def api_preflight_ready(report: dict[str, Any] | None, config_path: Path) -> bool:
+    if not report:
+        return False
+    return bool(report.get("api_ready") and report.get("dry_run_ready") and Path(str(report.get("config"))) == config_path)
+
+
+def determine_next_actions(
+    no_api: dict[str, Any],
+    api: dict[str, Any],
+    git: dict[str, Any],
+    api_preflight: dict[str, Any] | None,
+    config_path: Path,
+) -> list[str]:
     actions: list[str] = []
     if not no_api["ready"]:
         actions.append("Run `python scripts/run_no_api_patch_pipeline.py --out-dir outputs/patch_verification_pilot_001` and fix any failed gate.")
@@ -205,7 +218,12 @@ def determine_next_actions(no_api: dict[str, Any], api: dict[str, Any], git: dic
         actions.append("After `.env` exists and bootstrap dry-run is correct, run strict `python scripts/bootstrap_api_prereqs.py ...` to write both ignored local configs.")
     elif not api["local_config"]["model_set"]:
         actions.append("Set a concrete model id in `configs/api_pilot.local.json`.")
-    if api["env_has_api_key"] and api["local_config"]["exists"] and api["local_config"]["model_set"]:
+    if (
+        api["env_has_api_key"]
+        and api["local_config"]["exists"]
+        and api["local_config"]["model_set"]
+        and not api_preflight_ready(api_preflight, config_path)
+    ):
         actions.append("Run `python scripts/preflight_api_pilot.py --config configs/api_pilot.local.json`.")
     if not git["is_git_repo"]:
         actions.append("Decide whether `research95` should become its own Git repository before claiming GitHub sync.")
@@ -223,8 +241,10 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     env_path = Path(args.env)
     config_path = Path(args.local_config)
     model_selection_path = Path(args.model_selection)
+    api_preflight_path = Path(args.api_preflight_report)
     no_api = no_api_state(pilot_dir)
     git = git_status()
+    api_preflight = read_json(api_preflight_path)
     local_config = local_config_state(config_path)
     if local_config.get("api_provider"):
         api_provider = str(local_config["api_provider"])
@@ -243,7 +263,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "local_config": local_config,
         "model_selection": model_selection_state(model_selection_path, local_config),
     }
-    next_actions = determine_next_actions(no_api, api, git)
+    next_actions = determine_next_actions(no_api, api, git, api_preflight, config_path)
     return {
         "overall_ready_for_real_api": bool(
             no_api["ready"]
@@ -254,6 +274,12 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         ),
         "no_api": no_api,
         "api": api,
+        "api_preflight": {
+            "path": api_preflight_path.as_posix(),
+            "exists": api_preflight is not None,
+            "ready": api_preflight_ready(api_preflight, config_path),
+            "report": api_preflight,
+        },
         "git": git,
         "next_actions": next_actions,
     }
@@ -266,6 +292,7 @@ def bool_mark(value: Any) -> str:
 def build_markdown(audit: dict[str, Any]) -> str:
     no_api = audit["no_api"]
     api = audit["api"]
+    api_preflight = audit["api_preflight"]
     git = audit["git"]
     lines = [
         "# Research95 Execution Readiness Audit",
@@ -279,6 +306,7 @@ def build_markdown(audit: dict[str, Any]) -> str:
         f"- local API config exists: {bool_mark(api['local_config']['exists'])}",
         f"- local API model set: {bool_mark(api['local_config']['model_set'])}",
         f"- model selection ready: {bool_mark(api['model_selection']['ready'])}",
+        f"- latest API preflight ready: {bool_mark(api_preflight['ready'])}",
         f"- git repository: {bool_mark(git['is_git_repo'])}",
         f"- git clean: {bool_mark(git.get('clean'))}",
         f"- git synced with upstream: {bool_mark(git.get('synced_with_upstream'))}",
@@ -297,6 +325,12 @@ def build_markdown(audit: dict[str, Any]) -> str:
         f"- env exists: {bool_mark(api['env_exists'])}",
         f"- local config: `{api['local_config']}`",
         f"- model selection: `{api['model_selection']}`",
+        "",
+        "## API Preflight",
+        "",
+        f"- report path: `{api_preflight['path']}`",
+        f"- report exists: {bool_mark(api_preflight['exists'])}",
+        f"- ready: {bool_mark(api_preflight['ready'])}",
         "",
         "## Git State",
         "",
@@ -328,6 +362,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--env", default=".env")
     parser.add_argument("--local-config", default=str(DEFAULT_LOCAL_CONFIG))
     parser.add_argument("--model-selection", default=str(DEFAULT_MODEL_SELECTION))
+    parser.add_argument("--api-preflight-report", default=str(DEFAULT_API_PREFLIGHT_REPORT))
     parser.add_argument("--out-json", required=True)
     parser.add_argument("--out-md", required=True)
     return parser.parse_args()

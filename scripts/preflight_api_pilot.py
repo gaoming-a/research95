@@ -212,6 +212,34 @@ def preflight(config_path: Path, allow_missing_credentials: bool) -> dict[str, A
     }
 
 
+def write_json(path: Path, value: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def bool_mark(value: Any) -> str:
+    return "yes" if bool(value) else "no"
+
+
+def render_markdown(result: dict[str, Any]) -> str:
+    lines = [
+        "# API Pilot Preflight",
+        "",
+        f"- config: `{result['config']}`",
+        f"- api ready: {bool_mark(result['api_ready'])}",
+        f"- dry-run ready: {bool_mark(result['dry_run_ready'])}",
+        "",
+        "## Checks",
+        "",
+        "| Check | Passed | Detail |",
+        "| --- | --- | --- |",
+    ]
+    for check in result["checks"]:
+        lines.append(f"| `{check['check']}` | {bool_mark(check['passed'])} | `{check.get('detail')}` |")
+    lines.append("")
+    return "\n".join(lines)
+
+
 def selected_model_id(primary: dict[str, Any]) -> Any:
     return primary.get("model_id") or primary.get("openrouter_slug")
 
@@ -224,12 +252,20 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Allow missing API key for dry-run readiness checks.",
     )
+    parser.add_argument("--out-json", help="Optional path for a JSON preflight report.")
+    parser.add_argument("--out-md", help="Optional path for a Markdown preflight report.")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
     result = preflight(Path(args.config), args.allow_missing_credentials)
+    if args.out_json:
+        write_json(Path(args.out_json), result)
+    if args.out_md:
+        out_md = Path(args.out_md)
+        out_md.parent.mkdir(parents=True, exist_ok=True)
+        out_md.write_text(render_markdown(result), encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     if not result["api_ready"] and not args.allow_missing_credentials:
         raise SystemExit(1)

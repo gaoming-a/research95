@@ -5627,3 +5627,34 @@ full run 决策：
 - `builder_dry_run_no_output_dir_creation`；
 - `builder_dry_run_manifest_absent`；
 - `builder_dry_run_scope_matches_expected`。
+
+## 73. 2026-06-13 API pilot preflight report output
+
+本轮小目标：
+
+- 执行 readiness audit 建议的 strict local API preflight；
+- 确认 `configs/api_pilot.local.json` 在 DeepSeek official /
+  `deepseek-v4-pro` 下结构就绪；
+- 为 `scripts/preflight_api_pilot.py` 增加可审计输出，避免只有终端结果。
+
+执行边界：
+
+- 不调用真实 API；
+- 不执行新的 LLM run；
+- 不修改 ignored local config 或 `.env`；
+- 输出写入 ignored `outputs/api_pilot_preflight/latest.json/md`。
+
+执行结果：
+
+- strict preflight 通过：
+  - `api_ready = true`；
+  - `dry_run_ready = true`；
+  - provider = `deepseek_official`；
+  - model = `deepseek-v4-pro`；
+  - candidates/evidence packets = 30/30；
+  - conditions = `llm_only`、`evidence_first`。
+- `scripts/preflight_api_pilot.py` 新增 `--out-json` 和 `--out-md`。
+- `scripts/audit_execution_readiness.py` 现在读取
+  `outputs/api_pilot_preflight/latest.json`，如果该报告对应当前
+  `configs/api_pilot.local.json` 且 `api_ready/dry_run_ready` 均为 true，则不再
+  反复提示运行 preflight。

@@ -1493,3 +1493,10 @@ This file starts fresh for the patch-verification project.
 - The youtube-dl decision audit should call the builder dry-run directly. This
   closes the handoff gap between a correct command packet and the actual scope
   builder accepting the command without side effects.
+- API pilot preflight should be recorded as an ignored JSON/Markdown artifact,
+  not only terminal output. `scripts/preflight_api_pilot.py --out-json --out-md`
+  preserves no-API readiness evidence without changing local configs or calling
+  the provider.
+- `audit_execution_readiness.py` should consume the latest ignored API preflight
+  report so it does not repeatedly ask for a preflight that already passed for
+  the current local config.
