@@ -1,0 +1,47 @@
+{
+  "task_id": "bugsinpy_matplotlib_1",
+  "project": "matplotlib",
+  "status": "blocked_native_extension_import",
+  "p2p_broad_main_included": false,
+  "buggy_commit_id": "c404d1f716e8aaefd4d7371ff49673e9c1f7f07c",
+  "fixed_commit_id": "5324adaec6a7fd3d78dea7b28451d5f6e95392a6",
+  "f2p_command": "pytest lib/matplotlib/tests/test_bbox_tight.py::test_noop_tight_bbox",
+  "checkout": {
+    "buggy": {
+      "work_dir": "data/real_bugs/bugsinpy_workspace/matplotlib_1/buggy",
+      "marker_file_written": true,
+      "target_test_file_found": false,
+      "status": "checkout_layout_or_injection_incomplete_for_target_test"
+    },
+    "fixed": {
+      "work_dir": "data/real_bugs/bugsinpy_workspace/matplotlib_1/fixed",
+      "marker_file_written": true,
+      "target_test_file_found": true,
+      "status": "checkout_completed"
+    }
+  },
+  "probe": {
+    "environment": {
+      "PYTHONPATH": "checkout/lib",
+      "MPLBACKEND": "Agg",
+      "editable_install_attempted": false,
+      "global_dependency_install_attempted": false
+    },
+    "buggy": {
+      "status": "not_established",
+      "error_summary": "pytest could not find lib/matplotlib/tests/test_bbox_tight.py in the buggy retained checkout"
+    },
+    "fixed": {
+      "status": "failed_import",
+      "error_type": "ImportError",
+      "error_summary": "Importing matplotlib from the checkout failed because compiled extension ft2font is unavailable"
+    }
+  },
+  "decision": {
+    "reason": "The retained F2P oracle cannot be established without a valid checkout layout and Matplotlib compiled extensions. The setup path requires editable install/native build, which is outside the current no-global-install boundary.",
+    "project_level_p2p_broad": "not_attempted",
+    "no_task_file_downgrade": true,
+    "no_source_or_test_fixture_edit": true,
+    "no_dependency_substitution": true
+  }
+}

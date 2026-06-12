@@ -173,6 +173,9 @@
 - `experiments/ansible2_feasibility.md`: Ansible 2 feasibility probe. It
   records a checkout timeout before F2P, with the incomplete retained workspace
   removed and no task-file downgrade.
+- `experiments/matplotlib1_feasibility.md`: Matplotlib 1 feasibility probe. It
+  records an unestablished F2P oracle due to checkout/test-layout issues and
+  missing compiled `ft2font` extension.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

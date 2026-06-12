@@ -1153,3 +1153,14 @@ This file starts fresh for the patch-verification project.
   `bugsinpy_run_test.sh`, do not run F2P against that partial checkout. Stop the
   checkout process, remove the incomplete retained workspace, and record a
   checkout feasibility blocker.
+
+## 2026-06-12 Matplotlib native extension boundary
+
+- Matplotlib checkout is expensive, and target tests can require compiled
+  extensions such as `ft2font` even for apparently narrow rendering/tight-bbox
+  behavior.
+- Running from `PYTHONPATH=checkout/lib` is not enough for these tasks. Do not
+  treat an unrelated installed Matplotlib package as checkout evidence, and do
+  not silently run editable/native builds for main-cohort admission.
+- `bugsinpy_matplotlib_1` should be recorded as a native/import blocker unless
+  the build boundary is explicitly revisited.

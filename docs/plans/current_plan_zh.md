@@ -3455,6 +3455,34 @@ Project-level P2P attempt：
 - 或明确记录 dependency/native build/import blocker；
 - 只有在 F2P 清楚后才考虑 project-level P2P-broad。
 
+执行结果：
+
+- `bugsinpy_matplotlib_1` buggy/fixed checkout 均完成到 BugsInPy marker 文件写出，
+  但 checkout 成本较高。
+- 使用 `PYTHONPATH=checkout/lib` 和 `MPLBACKEND=Agg` 做最小 F2P probe。
+- buggy checkout 中未找到预期路径
+  `lib/matplotlib/tests/test_bbox_tight.py`，因此 buggy oracle 未建立。
+- fixed checkout 中目标测试文件存在，但导入 checkout 内 Matplotlib 时失败：
+  `ImportError: cannot import name 'ft2font'`。
+- 该失败说明目标测试需要 Matplotlib compiled extension；`setup.sh` 的
+  editable install/Cython 路径属于本轮未批准的 native/build 边界。
+
+最终状态：
+
+- `bugsinpy_matplotlib_1` 记录为 `blocked_native_extension_import`。
+- 新增结构化 blocker：
+  `data/p2p_scopes/bugsinpy_matplotlib_1_import_blocker.json`。
+- 新增实验记录：
+  `docs/experiments/matplotlib1_feasibility.md`。
+- 因 F2P 未建立，未尝试 project-level P2P-broad。
+
+下一步：
+
+- 当前 metadata pool 中剩余候选主要仍是 Matplotlib 系列；在未确认 native build
+  / editable install 边界前，不继续重复 Matplotlib 候选。
+- 需要重新扩大候选池或调整项目选择策略；若下一轮继续，应先 rerun broader
+  screening 并明确跳过已确认项目级风险的项目。
+
 执行进展：
 
 - 初次并行创建 `bugsinpy_tornado_9` buggy/fixed checkout 时，fixed checkout

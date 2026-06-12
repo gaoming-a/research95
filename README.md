@@ -202,6 +202,9 @@ They should not override `final_paper_roadmap_zh.md`.
 - `bugsinpy_ansible_2` was blocked before F2P because the large repository
   checkout exceeded the bounded feasibility window and did not write BugsInPy
   marker files.
+- `bugsinpy_matplotlib_1` was blocked before F2P/P2P because the checkout probe
+  required Matplotlib compiled extensions such as `ft2font`; editable/native
+  builds were not run silently.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in
