@@ -290,6 +290,14 @@ python scripts\static_unittest_p2p_preflight.py `
   --static-exclude-token "https://"
 ```
 
+For the no-run youtube-dl P2P decision audit, run:
+
+```powershell
+python scripts\audit_youtubedl_p2p_decision.py `
+  --out-json outputs\youtubedl_p2p_decision_audit\latest.json `
+  --out-md outputs\youtubedl_p2p_decision_audit\latest.md
+```
+
 For stage-by-stage plan progress, run:
 
 ```powershell

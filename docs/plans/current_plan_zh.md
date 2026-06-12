@@ -5512,3 +5512,24 @@ full run 决策：
   - 非 branch header 的 `status_short` entries；
 - 当前 dirty 状态验证中，audit 正确报告 `ahead = 1`、
   `clean = false`、`synced_with_upstream = false`。
+
+## 68. 2026-06-13 youtube-dl P2P decision consistency audit
+
+本轮小目标：
+
+- 将 `youtube-dl` P2P 决策包的一致性检查自动化；
+- 审计 controlled probe 中的 clean-F2P `youtube-dl` 候选、静态最低成本代表、
+  决策包推荐任务和命令模板是否一致；
+- 不执行 P2P、不创建 P2P manifest、不修改实验标签。
+
+执行边界：
+
+- 只读取 `data/tasks/evp7_controlled_probe_results.json`、决策包和现有
+  buggy/fixed checkout 源文件；
+- 复用 `scripts/static_unittest_p2p_preflight.py` 的静态 AST 逻辑；
+- 若推荐任务不是最低静态成本候选，或命令模板 task-id 与推荐不一致，则审计失败。
+
+产物：
+
+- 新增 `scripts/audit_youtubedl_p2p_decision.py`；
+- 默认输出到 ignored `outputs/youtubedl_p2p_decision_audit/latest.json/md`。

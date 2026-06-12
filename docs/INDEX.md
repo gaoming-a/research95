@@ -505,6 +505,9 @@
 - `scripts/static_unittest_p2p_preflight.py`: no-run AST preflight for unittest
   P2P candidates. It estimates static test-method counts, token exclusions, and
   buggy/fixed remaining-set differences before expensive dynamic P2P runs.
+- `scripts/audit_youtubedl_p2p_decision.py`: no-run consistency audit for the
+  youtube-dl P2P decision packet. It verifies the recommended representative,
+  command task, and lowest static-cost candidate match.
 - `scripts/validate_candidates_with_p2p.py`: validates candidate patches with
   retained oracle plus a P2P-broad scope and emits merged labels such as
   `correct_under_f2p_and_p2p_broad` and `incorrect_regression`.

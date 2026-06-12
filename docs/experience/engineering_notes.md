@@ -1472,3 +1472,6 @@ This file starts fresh for the patch-verification project.
   family, `youtube-dl_7` has the smallest remaining method set under the current
   exclusions, so it should be the first bounded representative attempt if P2P is
   approved.
+- Use `scripts/audit_youtubedl_p2p_decision.py` before any future youtube-dl
+  P2P attempt. It catches drift between the controlled probe data, the static
+  preflight sweep, the decision packet recommendation, and the command template.
