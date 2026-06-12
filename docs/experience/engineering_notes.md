@@ -1444,3 +1444,7 @@ This file starts fresh for the patch-verification project.
 - Existing runtime compatibility shims can be reused when already documented
   for the project family, as with Luigi `inspect.ArgSpec/getargspec`; once the
   next missing dependency appears, stop rather than silently installing it.
+- When one project family establishes clean F2P under the no-install boundary,
+  additional same-family F2P-only probes can be efficient as long as they do
+  not bypass the project-level P2P-broad admission gate. The youtube-dl 3-5
+  continuation added three F2P candidates without changing main-cohort status.

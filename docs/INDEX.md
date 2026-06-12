@@ -300,6 +300,9 @@
 - `experiments/evp7_remaining_f2p_triage_20260613.md`: remaining F2P-only
   triage for `ansible_1`, `luigi_1`, and `matplotlib_1`; all remain blocked
   under the no-install/no-edit boundary.
+- `experiments/evp7_youtubedl_f2p_continuation_20260613.md`: youtube-dl
+  F2P-only continuation for `youtube-dl_3`, `youtube-dl_4`, and
+  `youtube-dl_5`; all three established clean F2P and remain P2P candidates.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

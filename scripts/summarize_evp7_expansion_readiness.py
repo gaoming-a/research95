@@ -63,6 +63,14 @@ def summarize(registry_path: Path, pool_path: Path, probe_results_path: Path | N
         "controlled_probe_results": {
             "source": _display(probe_results_path) if probe_results_path and probe_results_path.exists() else None,
             "recorded_tasks": sorted(probe_results),
+            "probe_status_counts": dict(
+                sorted(Counter(str(record.get("probe_status")) for record in probe_results.values()).items())
+            ),
+            "p2p_candidate_tasks": sorted(
+                task_id
+                for task_id, record in probe_results.items()
+                if record.get("probe_status") == "f2p_established_p2p_not_attempted"
+            ),
         },
         "readiness_decision": (
             "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled "
@@ -181,6 +189,8 @@ def render_markdown(summary: dict[str, Any]) -> str:
         f"- Fresh-project promising candidates: {pool['fresh_project_promising_candidates']}",
         f"- Controlled probe result source: `{summary['controlled_probe_results']['source']}`",
         f"- Controlled probe recorded tasks: `{json.dumps(summary['controlled_probe_results']['recorded_tasks'])}`",
+        f"- Controlled probe status counts: `{json.dumps(summary['controlled_probe_results']['probe_status_counts'], sort_keys=True)}`",
+        f"- F2P-established P2P candidates: `{json.dumps(summary['controlled_probe_results']['p2p_candidate_tasks'])}`",
         "",
         "## Probe Lanes",
         "",

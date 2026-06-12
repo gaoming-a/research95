@@ -238,9 +238,11 @@ They should not override `final_paper_roadmap_zh.md`.
   Pydantic v2 environment and is not admitted. `bugsinpy_sanic_2` also
   completed checkout but is F2P-blocked by the missing current-environment
   Sanic dependency `aiofiles`. A parallel F2P-only triage then found
-  `bugsinpy_youtube-dl_2` as the only new clean F2P signal in that batch;
-  it is not admitted until project-level P2P-broad and candidate revalidation
-  pass. The remaining readiness lanes are blocked by environment or historical
+  `bugsinpy_youtube-dl_2` as the first new clean F2P signal in that batch.
+  A follow-up youtube-dl F2P-only continuation also established clean F2P for
+  `bugsinpy_youtube-dl_3`, `bugsinpy_youtube-dl_4`, and
+  `bugsinpy_youtube-dl_5`; none are admitted until project-level P2P-broad and
+  candidate revalidation pass. The remaining readiness lanes are blocked by environment or historical
   probe constraints: Scrapy lacks Twisted, Ansible reaches Windows `fcntl`,
   Luigi lacks Tornado after existing Python 3.11 compatibility, and
   Matplotlib remains an incomplete/native-extension blocker.

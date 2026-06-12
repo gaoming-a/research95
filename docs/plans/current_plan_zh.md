@@ -5050,6 +5050,56 @@ full run 决策：
 
 - buggy checkout 完成；
 - fixed checkout 完成；
+- buggy 与 fixed 均在 pytest collection 阶段失败，未到达目标断言；
+- 失败原因是当前环境的 Pydantic v2 与该 legacy FastAPI checkout 的
+  OpenAPI model import 不兼容；
+- 未安装依赖、未修改 checkout 源码、测试或 fixture。
+
+产物：
+
+- 新增 `data/tasks/evp7_controlled_probe_results.json`；
+- 新增 `docs/experiments/evp7_fastapi4_f2p_probe.md`；
+- `scripts/summarize_evp7_expansion_readiness.py` 现在会读取 tracked
+  controlled probe status；
+- `docs/experiments/evp7_expansion_readiness.md` 与
+  `data/tasks/evp7_expansion_readiness.json` 已显示
+  `bugsinpy_fastapi_4 = f2p_blocked_dependency_environment`。
+
+判定：
+
+- `bugsinpy_fastapi_4` 不进入 `p2p_broad_main`；
+- 它只保留为 dependency-environment blocker；
+- 不在本轮修 FastAPI 依赖隔离，避免把扩展任务变成环境工程任务。
+
+## 58. 2026-06-13 controlled expansion probe: sanic_2 F2P only
+
+本轮小目标：
+
+- 继续 controlled expansion，但切换到独立项目 lane；
+- 只验证 `bugsinpy_sanic_2` 的 F2P feasibility；
+- 不启动 project-level P2P-broad construction。
+
+选择理由：
+
+- `bugsinpy_sanic_2` 是 readiness top lane 中另一个 metadata score = 8
+  的 pytest 候选；
+- run command 为
+  `pytest tests/test_app.py::test_asyncio_server_start_serving`；
+- Sanic 已有 `sanic_1` 的 project-level P2P timeout 记录，因此本轮同样只做
+  F2P feasibility，避免先进入长 P2P。
+
+执行边界：
+
+- buggy/fixed checkout 串行执行，不并行同一 task；
+- 不修改 checkout 源码、测试或 fixture；
+- 不安装新依赖，除非后续有明确依赖审计；
+- 若 checkout、collection、F2P 行为或 run command 边界不清，记录 blocker；
+- 本轮结果只能作为 expansion probe，不得作为 main cohort admission。
+
+执行结果：
+
+- buggy checkout 完成；
+- fixed checkout 完成；
 - buggy 与 fixed 均在 `tests/conftest.py` import 阶段失败，未到达目标测试；
 - 失败原因是当前环境缺少 Sanic runtime dependency `aiofiles`；
 - 未安装依赖、未修改 checkout 源码、测试或 fixture。
@@ -5060,7 +5110,7 @@ full run 决策：
   `bugsinpy_sanic_2 = f2p_blocked_dependency_environment`；
 - 新增 `docs/experiments/evp7_sanic2_f2p_probe.md`；
 - `docs/experiments/evp7_expansion_readiness.md` 与
-  `data/tasks/evp7_expansion_readiness.json` 需要重新生成以反映 probe status。
+  `data/tasks/evp7_expansion_readiness.json` 已重新生成以反映 probe status。
 
 判定：
 
@@ -5181,52 +5231,65 @@ full run 决策：
   P2P-broad construction，尽管 `youtube-dl_1` 已有 project-level discovery
   timeout 风险。
 
-执行结果：
-
-- buggy checkout 完成；
-- fixed checkout 完成；
-- buggy 与 fixed 均在 pytest collection 阶段失败，未到达目标断言；
-- 失败原因是当前环境的 Pydantic v2 与该 legacy FastAPI checkout 的
-  OpenAPI model import 不兼容；
-- 未安装依赖、未修改 checkout 源码、测试或 fixture。
-
-产物：
-
-- 新增 `data/tasks/evp7_controlled_probe_results.json`；
-- 新增 `docs/experiments/evp7_fastapi4_f2p_probe.md`；
-- `scripts/summarize_evp7_expansion_readiness.py` 现在会读取 tracked
-  controlled probe status；
-- `docs/experiments/evp7_expansion_readiness.md` 与
-  `data/tasks/evp7_expansion_readiness.json` 已显示
-  `bugsinpy_fastapi_4 = f2p_blocked_dependency_environment`。
-
-判定：
-
-- `bugsinpy_fastapi_4` 不进入 `p2p_broad_main`；
-- 它只保留为 dependency-environment blocker；
-- 不在本轮修 FastAPI 依赖隔离，避免把扩展任务变成环境工程任务。
-
-## 58. 2026-06-13 controlled expansion probe: sanic_2 F2P only
+## 61. 2026-06-13 youtube-dl family F2P-only continuation
 
 本轮小目标：
 
-- 继续 controlled expansion，但切换到独立项目 lane；
-- 只验证 `bugsinpy_sanic_2` 的 F2P feasibility；
-- 不启动 project-level P2P-broad construction。
+- 不启动 `youtube-dl_2` 的 project-level P2P-broad construction；
+- 继续做不依赖该决策的 F2P-only triage；
+- 优先选择同项目中短命令、无新增依赖安装需求的 `youtube-dl` 候选。
+
+候选 lane：
+
+- `bugsinpy_youtube-dl_3`：
+  `python -m unittest -q test.test_utils.TestUtil.test_unescape_html`；
+- `bugsinpy_youtube-dl_4`：
+  `python -m unittest -q test.test_jsinterp.TestJSInterpreter.test_call`；
+- `bugsinpy_youtube-dl_5`：
+  `python -m unittest -q test.test_utils.TestUtil.test_unified_timestamps`。
 
 选择理由：
 
-- `bugsinpy_sanic_2` 是 readiness top lane 中另一个 metadata score = 8
-  的 pytest 候选；
-- run command 为
-  `pytest tests/test_app.py::test_asyncio_server_start_serving`；
-- Sanic 已有 `sanic_1` 的 project-level P2P timeout 记录，因此本轮同样只做
-  F2P feasibility，避免先进入长 P2P。
+- `youtube-dl_2` 已在 no-install/no-edit 边界下建立 clean F2P；
+- `youtube-dl` 候选多为纯 unittest，环境风险低于 FastAPI/Sanic/Scrapy/
+  Ansible/Luigi/Matplotlib；
+- 这一步只增加 F2P 可行性证据，不改变 main cohort，也不绕过 P2P-broad
+  admission gate。
 
 执行边界：
 
-- buggy/fixed checkout 串行执行，不并行同一 task；
-- 不修改 checkout 源码、测试或 fixture；
-- 不安装新依赖，除非后续有明确依赖审计；
-- 若 checkout、collection、F2P 行为或 run command 边界不清，记录 blocker；
-- 本轮结果只能作为 expansion probe，不得作为 main cohort admission。
+- 每个 task 内 buggy/fixed checkout 串行；
+- 独立 task lane 可以并行推进；
+- 不安装依赖，不编辑 checkout；
+- 不启动任何 project-level P2P-broad construction；
+- 若 F2P 成立，只记录为 P2P 候选，不直接 admission。
+
+执行结果：
+
+- `bugsinpy_youtube-dl_3`：
+  - buggy/fixed checkout 均完成；
+  - target unittest 结果为 buggy fail、fixed pass；
+  - 判定为 `f2p_established_p2p_not_attempted`。
+- `bugsinpy_youtube-dl_4`：
+  - buggy/fixed checkout 均完成；
+  - target unittest 结果为 buggy error、fixed pass；
+  - 判定为 `f2p_established_p2p_not_attempted`。
+- `bugsinpy_youtube-dl_5`：
+  - buggy/fixed checkout 均完成；
+  - target unittest 结果为 buggy error、fixed pass；
+  - 判定为 `f2p_established_p2p_not_attempted`。
+
+产物：
+
+- `data/tasks/evp7_controlled_probe_results.json` 追加
+  `youtube-dl_3`、`youtube-dl_4`、`youtube-dl_5`；
+- 新增 `docs/experiments/evp7_youtubedl_f2p_continuation_20260613.md`；
+- `scripts/summarize_evp7_expansion_readiness.py` 增加 controlled probe
+  status counts 与 F2P-established P2P candidate list。
+
+当前结论：
+
+- 当前新增 clean F2P 候选为 `youtube-dl_2/3/4/5`；
+- 这些仍不是 main cohort tasks；
+- 下一步若要进入 admission 路径，必须先决定是否对 youtube-dl family
+  启动 bounded project-level P2P-broad construction。

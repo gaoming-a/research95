@@ -140,6 +140,84 @@
       }
     },
     {
+      "blocked_reason": [],
+      "bug_id": "3",
+      "date": "2026-06-13",
+      "decision": "f2p_established_hold_for_p2p_decision",
+      "fixed_result": "pass",
+      "notes": "Both checkouts completed and the target unittest produced the expected buggy fail and fixed pass. Project-level P2P-broad construction and candidate validation were not attempted in this F2P-only continuation batch.",
+      "probe_status": "f2p_established_p2p_not_attempted",
+      "project": "youtube-dl",
+      "run_command": "python -m unittest -q test.test_utils.TestUtil.test_unescape_html",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_youtube-dl_3",
+      "test_file": "test/test_utils.py",
+      "versions": {
+        "buggy": {
+          "checkout": "completed",
+          "git_head": "f5469da9e",
+          "result": "fail"
+        },
+        "fixed": {
+          "checkout": "completed",
+          "git_head": "f5469da9e",
+          "result": "pass"
+        }
+      }
+    },
+    {
+      "blocked_reason": [],
+      "bug_id": "4",
+      "date": "2026-06-13",
+      "decision": "f2p_established_hold_for_p2p_decision",
+      "fixed_result": "pass",
+      "notes": "Both checkouts completed and the target unittest produced the expected buggy error and fixed pass. Project-level P2P-broad construction and candidate validation were not attempted in this F2P-only continuation batch.",
+      "probe_status": "f2p_established_p2p_not_attempted",
+      "project": "youtube-dl",
+      "run_command": "python -m unittest -q test.test_jsinterp.TestJSInterpreter.test_call",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_youtube-dl_4",
+      "test_file": "test/test_jsinterp.py",
+      "versions": {
+        "buggy": {
+          "checkout": "completed",
+          "git_head": "bc40b3a5b",
+          "result": "fail"
+        },
+        "fixed": {
+          "checkout": "completed",
+          "git_head": "bc40b3a5b",
+          "result": "pass"
+        }
+      }
+    },
+    {
+      "blocked_reason": [],
+      "bug_id": "5",
+      "date": "2026-06-13",
+      "decision": "f2p_established_hold_for_p2p_decision",
+      "fixed_result": "pass",
+      "notes": "Both checkouts completed and the target unittest produced the expected buggy error and fixed pass. Project-level P2P-broad construction and candidate validation were not attempted in this F2P-only continuation batch.",
+      "probe_status": "f2p_established_p2p_not_attempted",
+      "project": "youtube-dl",
+      "run_command": "python -m unittest -q test.test_utils.TestUtil.test_unified_timestamps",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_youtube-dl_5",
+      "test_file": "test/test_utils.py",
+      "versions": {
+        "buggy": {
+          "checkout": "completed",
+          "git_head": "b02b960c6",
+          "result": "fail"
+        },
+        "fixed": {
+          "checkout": "completed",
+          "git_head": "b02b960c6",
+          "result": "pass"
+        }
+      }
+    },
+    {
       "blocked_reason": [
         "windows_missing_fcntl"
       ],
