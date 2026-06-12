@@ -53,6 +53,18 @@ It contains 42 promoted candidates from the validated EVP-7 candidate outputs.
 Its labels and failure taxonomy are evaluator-only inputs for metrics and must
 not be copied into model-visible evidence packets.
 
+The current evidence packet manifest is:
+
+```text
+data/evidence/evp7_evidence_packets.jsonl
+```
+
+It contains E0/E2/E4/E6 records for all 42 candidates. E0/E2 are complete.
+E4/E6 records exist for schema and leakage auditing, but are marked incomplete
+until independent visible test outcomes and realistic visible tool summaries
+are generated. Retained-oracle and hidden P2P validation results must not be
+used to fill those visible evidence fields.
+
 ## Phase A Scope
 
 The next protocol step is not a new bug search. It is to show that the frozen
@@ -142,6 +154,13 @@ Before further expansion, five gates must pass:
 | G5 signal existence | E0 to E6 changes FAR, recall, escalation, or utility in an explainable way |
 
 If G5 fails, the protocol should be redesigned before adding bugs.
+
+Current gate status after the first packet builder:
+
+- G1 is not passed: E4/E6 lack independent visible outcomes/tool summaries;
+- G2 passes for the generated packet records: automated leakage audit found no
+  evaluator labels, oracle outcomes, hidden tests, reference provenance, or
+  failure taxonomy in model-visible packets.
 
 ## Post-A Expansion
 

@@ -3937,6 +3937,10 @@ Project-level P2P attempt：
   缺口。
 - candidate builder 的验收改为：candidate 总数必须不低于 registry 下界，且
   当前 EVP-7 promoted candidate count 固定为 42。
+- 2026-06-12 后续 evidence packet builder 完成后，candidate summary 中的
+  `evidence_packet_status` 不再写成 `not_generated`，而是改为
+  `managed_by_separate_builder`，避免 candidate builder 越权描述 packet
+  生成状态。
 
 验证结果：
 
@@ -3961,3 +3965,89 @@ Project-level P2P attempt：
 - 基于 `data/patches/evp7_candidates.jsonl` 生成 E0/E2/E4/E6 evidence
   packets，先做 E0/E4 completeness 和 leakage audit。
 - 在 packet builder 通过泄漏审计前，不运行真实 LLM API。
+
+## 41. 2026-06-12 EVP-7 evidence packet builder and leakage audit
+
+同步状态：
+
+- 上一轮提交 `97e5137 docs: promote evp7 candidate manifest` 已成功 push 到
+  GitHub。
+- 当前 Git 状态为 `main...origin/main`，工作区干净。
+- 已存在 tracked candidate manifest：
+  - `data/patches/evp7_candidates.jsonl`：42 条；
+  - `data/patches/evp7_candidate_summary.json`：42 candidates / 7 tasks /
+    4 projects。
+
+本轮小目标：
+
+1. 新增可复现 builder，从 `data/patches/evp7_candidates.jsonl` 生成
+   E0/E2/E4/E6 evidence packet records；
+2. 输出 `data/evidence/evp7_evidence_packets.jsonl` 和
+   `data/evidence/evp7_evidence_packet_summary.json`；
+3. 自动检查 packet 不包含 evaluator-only 字段、final labels、retained oracle
+   status、hidden oracle、P2P-broad label 或 construction taxonomy；
+4. E0/E2 可完成可见 packet；E4/E6 如果缺少独立可见 test/tool outcome source，
+   必须显式标记 incomplete，不得用 hidden/evaluator validation 结果填充；
+5. 更新 protocol/experiment/index/readme/engineering notes；
+6. 运行最小验证，提交并同步 GitHub。
+
+执行边界：
+
+- 不运行真实 API；
+- 不重新执行 candidate validation、F2P、P2P 或 tool runners；
+- 不读取 ignored retained checkout 中的源文件；
+- 不把 `candidate_type`、`expected_outcome`、`failure_type_label`、
+  `label_with_p2p_broad`、`label_retained_oracle`、`hidden_oracles`、
+  `validation_summary.retained_oracle_passed` 写入 evidence packets；
+- 不把 E4/E6 incomplete 误写成 G1/G5 已通过。
+
+验收条件：
+
+- 正好生成 42 * 4 = 168 条 evidence packet records；
+- 每个 `evp7_candidate_id` 都有 E0/E2/E4/E6 四个 records；
+- automated leakage audit 通过；
+- summary 明确 G1 packet completeness 尚未通过，原因是 E4/E6 缺少独立可见
+  outcome/tool evidence source；
+- JSONL 解析和 builder `--check` 通过。
+
+执行结果：
+
+- 新增 `scripts/build_evp7_evidence_packets.py`。
+- 已生成：
+  - `data/evidence/evp7_evidence_packets.jsonl`：168 条；
+  - `data/evidence/evp7_evidence_packet_summary.json`。
+- evidence level 分布：
+  - E0：42 条，complete 42；
+  - E2：42 条，complete 42；
+  - E4：42 条，complete 0；
+  - E6：42 条，complete 0。
+- G2 leakage audit 自动检查通过，`leakage_findings_count = 0`。
+- G1 packet completeness 明确为 `not_passed`，blocker 是缺少独立可见 test
+  outcomes 和 E6 realistic visible tool summaries。
+- 发现并修正 candidate summary 的语义问题：`evidence_packet_status` 不能继续
+  写 `not_generated`，因为 packet builder 已独立生成 evidence artifacts；已改为
+  `managed_by_separate_builder` 并指向
+  `data/evidence/evp7_evidence_packets.jsonl`。
+
+验证结果：
+
+- `python -m py_compile scripts\build_evp7_protocol_manifests.py
+  scripts\build_evp7_candidate_manifest.py
+  scripts\build_evp7_evidence_packets.py` 通过。
+- `python scripts\build_evp7_protocol_manifests.py --check` 通过。
+- `python scripts\build_evp7_candidate_manifest.py --check` 通过，candidate
+  summary 现在记录 `evidence_packet_status = managed_by_separate_builder`。
+- `python scripts\build_evp7_evidence_packets.py --check` 通过，summary 为
+  168 packets，G2 passed，G1 not_passed。
+- JSONL 解析复查通过：
+  - `data/patches/evp7_candidates.jsonl = 42`；
+  - `data/evidence/evp7_evidence_packets.jsonl = 168`；
+  - E0/E2 complete counts = 42/42；
+  - E4/E6 complete counts = 0/0。
+
+下一步：
+
+- 不运行真实 LLM API。
+- 补齐独立可见 test outcome source 和 realistic visible tool summary source；
+- 重新运行 `scripts/build_evp7_evidence_packets.py --check` 和 leakage audit；
+- G1/G2 都通过后，再进入 tool-only baselines 和 merge-gate schema dry-run。

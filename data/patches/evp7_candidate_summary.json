@@ -7,7 +7,8 @@
     "partial_fix": 21
   },
   "cohort_id": "EVP-7",
-  "evidence_packet_status": "not_generated",
+  "evidence_packet_artifact": "data/evidence/evp7_evidence_packets.jsonl",
+  "evidence_packet_status": "managed_by_separate_builder",
   "failure_type_counts": {
     "irrelevant_edit": 7,
     "no_op_patch": 7,
@@ -18,7 +19,7 @@
     "correct_under_f2p_and_p2p_broad": 7,
     "incorrect_issue_not_fixed": 35
   },
-  "next_step": "Generate E0/E2/E4/E6 evidence packets from evp7_candidates.jsonl after leakage checks.",
+  "next_step": "Use scripts/build_evp7_evidence_packets.py to regenerate model-visible evidence packets and leakage-audit summary.",
   "project_count": 4,
   "task_candidate_counts": {
     "bugsinpy_PySnooper_1": 6,

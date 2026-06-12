@@ -212,12 +212,15 @@ They should not override `final_paper_roadmap_zh.md`.
   builds were not run silently.
 - The 2026-06-12 decision freezes the current 7-task main cohort as
   `EVP-7 Protocol Pilot`. The tracked candidate manifest now contains 42
-  promoted candidates across those 7 tasks. The next work is not to find an
-  eighth bug, but to build leakage-audited E0/E2/E4/E6 evidence packets,
-  realistic tool-only baselines, and merge-gate schema checks. Start from
+  promoted candidates across those 7 tasks. The tracked evidence packet
+  manifest now contains 168 E0/E2/E4/E6 packet records. E0/E2 are complete;
+  E4/E6 are intentionally marked incomplete until independent visible test
+  outcomes and realistic tool summaries are generated. The next work is not to
+  find an eighth bug, but to complete those visible evidence sources, realistic
+  tool-only baselines, and merge-gate schema checks. Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and
-  `data/patches/evp7_candidates.jsonl`.
+  `data/evidence/evp7_evidence_packets.jsonl`.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - Further expansion to 15-20 bugs is deferred until EVP-7 protocol gates pass.
@@ -238,6 +241,14 @@ For stage-by-stage plan progress, run:
 python scripts\audit_ai_plan_progress.py `
   --out-json outputs\plan_progress\latest.json `
   --out-md outputs\plan_progress\latest.md
+```
+
+For the frozen EVP-7 manifests, run:
+
+```powershell
+python scripts\build_evp7_protocol_manifests.py --check
+python scripts\build_evp7_candidate_manifest.py --check
+python scripts\build_evp7_evidence_packets.py --check
 ```
 
 For full-goal completion evidence, run:

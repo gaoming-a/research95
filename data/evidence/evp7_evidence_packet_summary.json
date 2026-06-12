@@ -1,0 +1,28 @@
+{
+  "candidate_count": 42,
+  "cohort_id": "EVP-7",
+  "complete_packet_counts_by_level": {
+    "E0": 42,
+    "E2": 42,
+    "E4": 0,
+    "E6": 0
+  },
+  "evidence_levels": [
+    "E0",
+    "E2",
+    "E4",
+    "E6"
+  ],
+  "g1_blocker": "E4/E6 packets need independent visible test outcomes and E6 tool summaries; evaluator validation labels remain hidden.",
+  "g1_packet_completeness": "not_passed",
+  "g2_leakage_audit": "passed",
+  "leakage_findings_count": 0,
+  "next_step": "Generate independent visible outcomes/tool summaries, then rerun leakage audit before LLM API calls.",
+  "packet_count": 168,
+  "packet_counts_by_level": {
+    "E0": 42,
+    "E2": 42,
+    "E4": 42,
+    "E6": 42
+  }
+}

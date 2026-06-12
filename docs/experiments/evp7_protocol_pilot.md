@@ -131,18 +131,50 @@ The promoted manifest contains 42 candidates across the 7 EVP-7 tasks:
 These evaluator-only fields must remain hidden from model-visible evidence
 packets.
 
+## Evidence Packet Manifest
+
+The evidence-packet builder is:
+
+```text
+scripts/build_evp7_evidence_packets.py
+```
+
+Command:
+
+```powershell
+python scripts\build_evp7_evidence_packets.py --check
+```
+
+Tracked outputs:
+
+```text
+data/evidence/evp7_evidence_packets.jsonl
+data/evidence/evp7_evidence_packet_summary.json
+```
+
+The builder emits 168 packet records: 42 candidates times E0/E2/E4/E6.
+
+Current status:
+
+- E0 complete for 42 candidates;
+- E2 complete for 42 candidates, using patch-apply evidence only;
+- E4 records exist but are incomplete because independent visible test outcomes
+  have not yet been generated;
+- E6 records exist but are incomplete because realistic visible tool summaries
+  have not yet been generated;
+- automated leakage audit passes with zero findings.
+
 ## Current Limitation
 
-This round promotes candidate-level patch records only. It does not yet
-generate E0/E2/E4/E6 evidence packets.
+This round generates model-visible packet records, but G1 packet completeness is
+not yet passed because E4/E6 lack independent visible outcome/tool evidence.
 
 Reason:
 
-- candidate labels and failure taxonomy are tracked for evaluator use, not for
-  model-visible prompts;
-- E0/E2/E4/E6 packets need a separate leakage-audited builder that strips
-  evaluator-only labels and oracle provenance;
-- static/tool evidence for E2/E6 has not yet been generated.
+- candidate labels and failure taxonomy are tracked for evaluator use only;
+- retained-oracle and hidden P2P validation outcomes cannot be reused as
+  model-visible E4/E6 evidence;
+- E6 needs a separate realistic visible tool-summary generation step.
 
 The task manifest marks missing task metadata such as commits, issue summaries,
 and touched files as `metadata_backfill_required` instead of fabricating values
@@ -153,9 +185,9 @@ from local checkouts.
 The next executable step is:
 
 ```text
-Build leakage-audited E0/E2/E4/E6 evidence packet builders from
-data/patches/evp7_candidates.jsonl, starting with E0/E4 completeness checks.
+Generate independent visible test outcomes and realistic visible tool
+summaries for E4/E6, then rerun leakage audit before any LLM API calls.
 ```
 
 No new BugsInPy expansion, native build work, external benchmark migration, or
-real API calls should occur before that packet-builder and leakage-audit step.
+real API calls should occur before the visible-evidence completion step passes.

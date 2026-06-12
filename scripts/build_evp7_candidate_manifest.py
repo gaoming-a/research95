@@ -217,8 +217,9 @@ def build_candidates(task_manifest: Path) -> tuple[list[dict[str, Any]], dict[st
         "label_with_p2p_broad_counts": _counts(record["label_with_p2p_broad"] for record in records),
         "candidate_type_counts": _counts(record["candidate_type"] for record in records),
         "failure_type_counts": _counts(record["failure_type_label"] for record in records),
-        "evidence_packet_status": "not_generated",
-        "next_step": "Generate E0/E2/E4/E6 evidence packets from evp7_candidates.jsonl after leakage checks.",
+        "evidence_packet_status": "managed_by_separate_builder",
+        "evidence_packet_artifact": "data/evidence/evp7_evidence_packets.jsonl",
+        "next_step": "Use scripts/build_evp7_evidence_packets.py to regenerate model-visible evidence packets and leakage-audit summary.",
     }
     return records, summary
 

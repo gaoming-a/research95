@@ -43,6 +43,13 @@
 - `../data/patches/evp7_candidate_summary.json`: summary of the promoted EVP-7
   candidate records: 42 candidates, 7 correct reference patches, and 35
   issue-not-fixed candidates.
+- `../data/evidence/evp7_evidence_packets.jsonl`: tracked EVP-7 model-visible
+  evidence packet records. It contains 168 E0/E2/E4/E6 records; E0/E2 are
+  complete, while E4/E6 are present but marked incomplete until independent
+  visible test outcomes and tool summaries exist.
+- `../data/evidence/evp7_evidence_packet_summary.json`: summary and leakage
+  audit result for the EVP-7 evidence packets. G2 currently passes; G1 remains
+  not passed because E4/E6 visible outcome/tool evidence is missing.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 
@@ -474,6 +481,12 @@
   validation.
 - `scripts/build_real_bug_review_dataset.py`: source-context builder to adapt.
 - `scripts/build_claim_evidence_packets.py`: evidence packet builder to adapt.
+- `../scripts/build_evp7_protocol_manifests.py`: reproducible EVP-7 task and
+  blocker manifest builder.
+- `../scripts/build_evp7_candidate_manifest.py`: promotes validated EVP-7
+  candidate outputs into tracked candidate records.
+- `../scripts/build_evp7_evidence_packets.py`: builds model-visible E0/E2/E4/E6
+  evidence packet records and runs the leakage audit.
 - `scripts/analyze_tool_gated_reviews.py`: oracle-gated analysis reference.
 - `experience/engineering_notes.md`: fresh operational notes for this new
   workspace.

@@ -1215,3 +1215,19 @@ This file starts fresh for the patch-verification project.
   before changing inclusion policy. Here the task registry was incomplete for
   one admitted task; the candidate output files were the correct source for
   candidate-level cardinality.
+
+## 2026-06-12 EVP-7 evidence packet leakage boundary
+
+- Evidence packet records can be generated before every evidence level is
+  complete, but they must explicitly mark missing visible evidence. Do not fill
+  E4/E6 by copying retained-oracle or hidden P2P validation outcomes from the
+  evaluator-side candidate manifest.
+- E0/E2 are currently complete for all 42 EVP-7 candidates. E2 only exposes
+  patch-apply evidence from validation; syntax/import/static analysis remains
+  `not_run` until a visible static runner is added.
+- E4/E6 records are useful for schema and leakage auditing, but G1 is still not
+  passed because independent visible test outcomes and realistic visible tool
+  summaries do not exist yet.
+- The leakage audit should scan both keys and values for evaluator-only terms.
+  It is a gate for accidental label/provenance leakage, not proof that G1/G5
+  signal exists.
