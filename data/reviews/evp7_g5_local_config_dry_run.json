@@ -1,0 +1,36 @@
+{
+  "api_call_attempted": false,
+  "example_config": "configs\\evp7_g5_llm.example.json",
+  "forbidden_actions": [
+    "do not edit tracked example config with real provider/model/cost decisions",
+    "do not run --execute with configs/evp7_g5_llm.example.json",
+    "do not skip strict preflight and check-only workflow",
+    "do not treat mock or dry-run outputs as LLM signal evidence"
+  ],
+  "local_config_write_attempted": false,
+  "missing_or_unconfirmed": [
+    "api_provider",
+    "model",
+    "max_total_cost_usd",
+    "smoke_scope",
+    "full_run_permission"
+  ],
+  "mode": "dry_run",
+  "provided_values": {
+    "api_provider": "<user-confirmed-provider>",
+    "full_run_permission": false,
+    "max_total_cost_usd": "<user-confirmed-cost-ceiling>",
+    "model": "<user-confirmed-model>",
+    "smoke_scope": "<user-confirmed-smoke-scope>"
+  },
+  "ready_to_write_local_config": false,
+  "safe_command_order_after_user_confirmation": [
+    "python scripts\\create_evp7_g5_llm_local_config.py --api-provider <provider> --model <model> --max-total-cost-usd <usd> --smoke-scope <scope> --full-run-permission",
+    "python scripts\\preflight_evp7_g5_llm_run.py --config configs\\evp7_g5_llm.local.json --strict-api-ready",
+    "python scripts\\run_evp7_g5_llm_workflow.py --config configs\\evp7_g5_llm.local.json --check-only",
+    "python scripts\\run_evp7_g5_llm_workflow.py --config configs\\evp7_g5_llm.local.json --execute --limit <smoke-packet-count>",
+    "inspect smoke invalid-output rate, cost, and run summary before any full run",
+    "python scripts\\run_evp7_g5_llm_workflow.py --config configs\\evp7_g5_llm.local.json --execute --limit 0"
+  ],
+  "target_local_config": "configs\\evp7_g5_llm.local.json"
+}

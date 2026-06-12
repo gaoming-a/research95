@@ -188,6 +188,10 @@ Current gate status after the first packet builder:
 - The guarded workflow `scripts/run_evp7_g5_llm_workflow.py` now supports
   check-only and mock validation. Mock records validate parser and metrics
   plumbing only; G5 signal existence still requires genuine LLM outputs.
+- The local-config helper `scripts/create_evp7_g5_llm_local_config.py` now
+  provides a dry-run confirmation packet. It must not write the ignored local
+  config until provider, model, cost ceiling, smoke scope, and full-run
+  permission are explicitly supplied.
 
 ## Post-A Expansion
 

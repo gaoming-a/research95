@@ -4755,3 +4755,59 @@ Project-level P2P attempt：
   smoke_scope 和 full_run_permission。
 - 若用户确认后，必须先用 ignored local config 跑 strict preflight 和
   check-only workflow，再执行 smoke；不能直接 full run。
+
+## 51. 2026-06-13 EVP-7 G5 local config helper without API
+
+同步状态：
+
+- 上一轮提交 `e4b02ee chore: add evp7 g5 guarded workflow` 已成功 push 到
+  GitHub。
+- 当前 Git 状态为 `main...origin/main`，工作区干净。
+- G5 guarded workflow 已可 check-only/mock；真实执行仍等待用户确认。
+
+本轮小目标：
+
+1. 新增 G5 local config 生成器；
+2. 支持 `--dry-run`，只打印/写入 tracked dry-run plan，不创建 local config；
+3. 支持未来写入 ignored `configs/evp7_g5_llm.local.json`，但必须要求显式
+   provider/model/cost/smoke/full-run 参数；
+4. 生成 G5 execution confirmation packet，列出用户必须确认的值和安全命令顺序；
+5. 不读取 `.env`，不调用真实 API。
+
+执行边界：
+
+- 不私自选择 provider、model、cost 或 smoke scope；
+- 不创建真实 local config，除非未来命令显式提供全部参数且不使用 `--dry-run`；
+- 不读取 credential；
+- helper 输出不得包含密钥或本机绝对路径；
+- tracked dry-run artifacts 必须保持“待用户确认”状态。
+
+验收条件：
+
+- dry-run helper 通过；
+- dry-run 不创建 `configs/evp7_g5_llm.local.json`；
+- execution packet 明确真实 API 前的命令顺序：
+  local config -> strict preflight -> check-only workflow -> smoke execute ->
+  post-smoke decision -> full run；
+- 最小验证和敏感信息扫描通过。
+
+执行结果：
+
+- 新增 `scripts/create_evp7_g5_llm_local_config.py`。
+- 已生成：
+  - `data/reviews/evp7_g5_local_config_dry_run.json`；
+  - `docs/experiments/evp7_g5_execution_confirmation_packet.md`。
+- `python scripts\create_evp7_g5_llm_local_config.py --dry-run ...` 通过：
+  - local_config_write_attempted = false；
+  - api_call_attempted = false；
+  - ready_to_write_local_config = false；
+  - missing_or_unconfirmed = provider/model/cost/smoke/full-run permission。
+- 验证 `configs/evp7_g5_llm.local.json` 未被创建。
+- 非 dry-run 空参数写入检查按预期失败，且仍未创建 local config。
+
+下一步：
+
+- 真实 G5 执行仍需要用户提供 provider、model、max_total_cost_usd、
+  smoke_scope 和 full_run_permission。
+- 用户确认后，必须先用 helper 写入 ignored local config，再跑 strict preflight
+  和 check-only workflow；smoke 通过后才允许考虑 full run。

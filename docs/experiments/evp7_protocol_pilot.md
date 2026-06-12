@@ -323,6 +323,14 @@ G5 guarded workflow status:
 - check-only and mock modes attempted no model/API calls;
 - the example config remains blocked from real execution.
 
+G5 local-config helper status:
+
+- helper script = `scripts/create_evp7_g5_llm_local_config.py`;
+- dry-run packet = `data/reviews/evp7_g5_local_config_dry_run.json`;
+- confirmation packet = `docs/experiments/evp7_g5_execution_confirmation_packet.md`;
+- dry-run writes no local config and attempts no API call;
+- non-dry-run write is blocked until all five user confirmations are supplied.
+
 ## Current Next Step
 
 No new BugsInPy expansion, native build work, external benchmark migration, or

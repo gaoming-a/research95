@@ -973,8 +973,10 @@ BugsInPy 扩量，必须先解决当前候选池边界：
 - `data/reviews/evp7_g5_workflow_mock_reviews.jsonl`；
 - `data/reviews/evp7_g5_workflow_mock_metrics.json`；
 - `data/reviews/evp7_g5_workflow_mock_summary.json`；
+- `data/reviews/evp7_g5_local_config_dry_run.json`；
 - `docs/experiments/evp7_g5_metric_scaffold.md`；
 - `docs/experiments/evp7_g5_llm_run_readiness.md`；
+- `docs/experiments/evp7_g5_execution_confirmation_packet.md`；
 - `data/exclusions/blocked_bugsinpy_projects.jsonl`；
 - `scripts/build_evp7_protocol_manifests.py`；
 - `scripts/build_evp7_candidate_manifest.py`；
@@ -1011,7 +1013,9 @@ Phase A 已补齐 EVP-7 candidate-level schema：
 13. G5 guarded workflow 当前支持 check-only 和 mock validation；mock records
    只验证 parser/metrics pipeline，`g5_signal_claim_status` 仍要求真实 LLM
    verifier outputs；
-14. 下一步必须由用户确认真实 G5 的 provider、model、最大总成本、smoke
+14. G5 local-config helper 当前只生成 dry-run confirmation packet；不会写入
+   ignored local config，直到用户显式提供全部执行参数；
+15. 下一步必须由用户确认真实 G5 的 provider、model、最大总成本、smoke
    scope 和 full-run permission；
-15. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
+16. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
    expansion。

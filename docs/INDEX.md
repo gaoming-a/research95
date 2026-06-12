@@ -100,6 +100,9 @@
   verifier outputs.
 - `../data/reviews/evp7_g5_workflow_mock_summary.json`: summary of the mock
   G5 workflow run.
+- `../data/reviews/evp7_g5_local_config_dry_run.json`: dry-run packet for the
+  future ignored G5 local config. It records that local config writing and API
+  calls were not attempted, and lists the still-missing user confirmations.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 
@@ -265,6 +268,9 @@
 - `experiments/evp7_g5_llm_run_readiness.md`: no-API readiness report for the
   future real G5 LLM verifier run, including prompt id, prompt scope, stop
   conditions, and required user confirmations.
+- `experiments/evp7_g5_execution_confirmation_packet.md`: human-facing
+  confirmation packet for the future real G5 run. It records safe command
+  order and forbidden actions before local config creation and API execution.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on
@@ -566,6 +572,9 @@
   supports check-only and mock validation without API calls, and refuses real
   execution unless strict preflight passes with an ignored local config and
   explicit `--execute`.
+- `../scripts/create_evp7_g5_llm_local_config.py`: dry-run/write helper for
+  ignored `configs/evp7_g5_llm.local.json`. Write mode requires explicit
+  provider, model, cost ceiling, smoke scope, and full-run permission.
 - `scripts/analyze_tool_gated_reviews.py`: oracle-gated analysis reference.
 - `experience/engineering_notes.md`: fresh operational notes for this new
   workspace.

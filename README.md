@@ -231,7 +231,9 @@ They should not override `final_paper_roadmap_zh.md`.
   but to get explicit user confirmation for the real G5 API provider, model,
   cost ceiling, smoke scope, and full-run permission. A guarded G5 workflow now
   supports check-only and mock validation; the tracked example config remains
-  blocked from real execution.
+  blocked from real execution. A local-config helper now produces a dry-run
+  confirmation packet and refuses to write `configs/evp7_g5_llm.local.json`
+  until all user-confirmed execution parameters are provided.
   Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and
@@ -276,6 +278,10 @@ python scripts\preflight_evp7_g5_llm_run.py `
 python scripts\run_evp7_g5_llm_workflow.py `
   --check-only `
   --summary-out data\reviews\evp7_g5_workflow_check_only_example.json
+python scripts\create_evp7_g5_llm_local_config.py `
+  --dry-run `
+  --dry-run-out data\reviews\evp7_g5_local_config_dry_run.json `
+  --packet-md docs\experiments\evp7_g5_execution_confirmation_packet.md
 ```
 
 For full-goal completion evidence, run:

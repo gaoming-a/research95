@@ -1350,3 +1350,16 @@ This file starts fresh for the patch-verification project.
   API calls unless strict preflight passes on an ignored local config and the
   user has explicitly confirmed provider, model, cost ceiling, smoke scope, and
   full-run permission.
+
+## 2026-06-13 EVP-7 G5 local config helper boundary
+
+- The helper for `configs/evp7_g5_llm.local.json` must default to dry-run and
+  must not choose provider, model, budget, smoke scope, or full-run permission.
+- Dry-run artifacts are allowed in tracked docs/data because they contain only
+  placeholders and the required confirmation checklist. They must record
+  `local_config_write_attempted = false` and `api_call_attempted = false`.
+- Non-dry-run config creation must fail if any confirmation is missing. A
+  failed write must leave `configs/evp7_g5_llm.local.json` absent.
+- The safe order after user confirmation is: create ignored local config, run
+  strict preflight, run check-only workflow, execute smoke, inspect smoke
+  invalid-output/cost, then decide whether full run is allowed.

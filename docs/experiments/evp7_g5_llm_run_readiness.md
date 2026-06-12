@@ -175,3 +175,32 @@ Current mock result:
 
 The mock run validates the output and metric pipeline only. It does not support
 any model-effect claim.
+
+## Local Config Helper
+
+Helper script:
+
+```text
+scripts/create_evp7_g5_llm_local_config.py
+```
+
+Dry-run command:
+
+```powershell
+python scripts\create_evp7_g5_llm_local_config.py `
+  --dry-run `
+  --dry-run-out data\reviews\evp7_g5_local_config_dry_run.json `
+  --packet-md docs\experiments\evp7_g5_execution_confirmation_packet.md
+```
+
+Current dry-run result:
+
+- local config write attempted = false;
+- API call attempted = false;
+- ready to write local config = false;
+- missing confirmations = provider, model, cost ceiling, smoke scope, and
+  full-run permission.
+
+The helper refuses to write `configs/evp7_g5_llm.local.json` until all required
+parameters are provided explicitly. The local config is ignored by Git and must
+be checked with strict preflight before any API execution.
