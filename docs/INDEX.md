@@ -143,6 +143,14 @@
   P2P-broad validation over four stable tests, and admission as the seventh
   project-level main task. `bugsinpy_PySnooper_2` remains a blocked
   experimental-boundary case.
+- `experiments/p2p_scope_policy.md`: official-test-root P2P policy. It allows
+  project-level P2P-broad construction from a project's official test roots
+  when full-repository discovery repeatedly times out, while still forbidding
+  task-file-level scope and preserving the `p2p_broad_size >= 3` gate.
+- `experiments/fastapi1_scope_probe.md`: FastAPI 1 probe result. It records the
+  clear F2P oracle, two full-repo discovery timeouts, the approved `tests/`
+  official-root attempt, and the final
+  `pending_blocked_official_test_root_timeout` status.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

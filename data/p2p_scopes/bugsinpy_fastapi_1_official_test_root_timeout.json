@@ -1,0 +1,39 @@
+{
+  "task_id": "bugsinpy_fastapi_1",
+  "project": "fastapi",
+  "p2p_scope_type": "project_level_official_test_root",
+  "p2p_scope_roots": [
+    "tests/"
+  ],
+  "full_repo_discovery": {
+    "attempted": true,
+    "attempts": 2,
+    "status": "timeout",
+    "manifest_generated": false
+  },
+  "official_test_root_discovery": {
+    "attempted": true,
+    "attempts": 1,
+    "status": "timeout",
+    "elapsed_minutes": 60,
+    "manifest_generated": false
+  },
+  "scope_policy": {
+    "policy_name": "official_test_root_scope",
+    "reason": "full_repo_project_level_discovery_timeout",
+    "is_task_file_level": false,
+    "is_project_official_test_root": true
+  },
+  "main_experiment_eligibility": {
+    "requires_p2p_broad_size_at_least": 3,
+    "requires_stability_runs": 3,
+    "no_test_fixture_shim": true,
+    "eligible": false,
+    "blocking_reason": "official_test_root_scope_timeout"
+  },
+  "result": {
+    "project_level_p2p_status": "pending_blocked_official_test_root_timeout",
+    "p2p_broad_main_included": false,
+    "p2p_broad_manifest": null
+  }
+}

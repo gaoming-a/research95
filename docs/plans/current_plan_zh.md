@@ -2887,3 +2887,105 @@ project-level P2P-broad construction under the existing audited pipeline.
    FastAPI 主测试目录 `tests/`，然后继续尝试 `bugsinpy_fastapi_1`；
 2. 或将 `bugsinpy_fastapi_1` 记录为 `project_level_scope_timeout` /
    `blocked_feasibility_case`，并转向下一个候选任务。
+
+## 29. 2026-06-12 official-test-root scope policy decision
+
+用户确认：
+
+- 选择第 1 个方向。
+- 允许 `bugsinpy_fastapi_1` 继续使用 official-test-root project-level
+  P2P-broad scope。
+- 对 FastAPI，scope root 为项目主测试目录 `tests/`。
+
+通用 policy：
+
+- 这不是 FastAPI 特判，也不是因为 FastAPI 太慢而随意缩小测试范围。
+- 当 full-repo discovery 因仓库根目录范围过大连续超时，且项目存在明确的官方测试根目录时，
+  允许将 project-level P2P-broad scope 定义为该项目的官方测试根目录集合。
+- 对 Python 项目，官方测试根目录通常是项目主 `tests/` 目录，或项目配置中声明的测试根目录。
+- 该 policy 不能降级为 task-file-level P2P；不能只选择当前 bug 相关测试文件。
+
+FastAPI 决策：
+
+- `bugsinpy_fastapi_1` 的 full-repo discovery 已两次超时，且未生成 manifest。
+- 允许继续从 `tests/` 构造 official-test-root project-level P2P-broad。
+- manifest 必须记录：
+  - `p2p_scope_type = project_level_official_test_root`；
+  - `p2p_scope_roots = ["tests/"]`；
+  - full-repo discovery attempted = true；
+  - full-repo attempts = 2；
+  - full-repo status = timeout；
+  - policy reason = `full_repo_project_level_discovery_timeout`；
+  - `is_task_file_level = false`；
+  - `is_project_official_test_root = true`。
+
+本轮执行边界：
+
+- 不允许 test-fixture shim；
+- 不允许 task-file-level 降级；
+- 不改 FastAPI source 或 tests；
+- official test-root collection budget 为 10-15 分钟量级；
+- scope construction 总预算为 45-60 分钟量级；
+- 稳定性运行次数仍为 3；
+- main cohort 门槛仍为 `p2p_broad_size >= 3`。
+
+验收条件：
+
+- `data/p2p_scopes/bugsinpy_fastapi_1_p2p_broad.json` 生成；
+- manifest 记录 official-test-root policy；
+- `p2p_broad_size >= 3`；
+- reference patch 通过 F2P 和 P2P-broad；
+- candidate labels 能在 F2P + P2P-broad 下重新验证；
+- cohort registry 中标注 `p2p_scope_type = project_level_official_test_root`。
+
+失败处理：
+
+- 如果 `tests/` scope 仍 collection timeout，记录
+  `pending_blocked_official_test_root_timeout`。
+- 如果 scope 完成但 `p2p_broad_size < 3`，记录
+  `completed_insufficient_p2p_broad`。
+- 如果 reference patch 不能通过 P2P-broad，记录对应 validation failure。
+- 任何失败都不继续无限重试，转向下一个候选任务。
+
+执行结果：
+
+- 已新增通用 policy 文档：
+  `docs/experiments/p2p_scope_policy.md`。
+- 已扩展 `scripts/build_pass_to_pass_scope.py`：
+  - `--scope-type` 支持 `project_level_official_test_root`；
+  - manifest 支持记录 `p2p_scope_roots`、`full_repo_discovery`、
+    `scope_policy` 和 `main_experiment_eligibility`。
+- 第一次 official-root 构造暴露执行链路 bug：
+  `static_source_segments` 在 `--test-path tests` 时仍尝试读取目录本身，
+  触发 `PermissionError`。
+- 已修复该执行链路 bug：当 `test_path` 是目录时，按已收集 nodeid 的测试文件读取源码片段。
+- 修复后重跑 FastAPI `tests/` official-root scope 构造；该运行达到 60 分钟预算仍未完成，
+  未生成 `data/p2p_scopes/bugsinpy_fastapi_1_p2p_broad.json`。
+- 已终止本轮 FastAPI scope 构造残留进程；未触碰其他项目进程。
+
+最终状态：
+
+- `bugsinpy_fastapi_1` 记录为
+  `pending_blocked_official_test_root_timeout`。
+- 新增结构化 timeout 记录：
+  `data/p2p_scopes/bugsinpy_fastapi_1_official_test_root_timeout.json`。
+- 新增实验记录：
+  `docs/experiments/fastapi1_scope_probe.md`。
+- `bugsinpy_fastapi_1` 不进入 `p2p_broad_main`。
+- 原因：official-test-root scope 未生成 manifest，无法证明
+  `p2p_broad_size >= 3`，也无法做 F2P + P2P-broad candidate revalidation。
+
+下一步：
+
+- 转向下一个 broader BugsInPy 候选任务。
+- 优先选择 metadata-level screening 中的低摩擦 pytest/unittest 任务，例如
+  `bugsinpy_fastapi_2` 或 `bugsinpy_sanic_*`，但开始前仍需先执行 Inspect 和记录本轮边界。
+
+本轮最小验证：
+
+- `python -m py_compile scripts\build_pass_to_pass_scope.py` 通过。
+- `data/cohorts/task_cohort_registry.json` JSON 解析通过。
+- `data/p2p_scopes/bugsinpy_fastapi_1_official_test_root_timeout.json` JSON 解析通过。
+- registry 中 `bugsinpy_fastapi_1` 唯一，状态为
+  `pending_blocked_official_test_root_timeout`，`p2p_broad_main_included = false`。
+- `git diff --check` 无空白错误，仅有 Windows 换行提示。

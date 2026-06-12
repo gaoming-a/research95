@@ -1049,3 +1049,14 @@ This file starts fresh for the patch-verification project.
 - This is a scope-policy boundary, not a candidate-label result. Do not mark the
   task as `p2p_broad_main` without an explicit decision on whether FastAPI's
   project-level P2P scope may be defined as the main `tests/` directory.
+- User confirmed a general official-test-root policy: project-level P2P-broad
+  may use a project's official test roots after repeated full-repo discovery
+  timeouts, but not task-local test files.
+- The scope builder needed a small execution-chain repair for directory roots:
+  `static_source_segments` must read source files from collected nodeids when
+  `--test-path` is a directory. Reading the directory path itself raises
+  `PermissionError`.
+- After that repair, the FastAPI `tests/` official-root attempt still exceeded
+  the 60 minute construction budget and produced no P2P manifest. Record
+  `bugsinpy_fastapi_1` as `pending_blocked_official_test_root_timeout`; do not
+  keep retrying or downgrade to a task-file scope.

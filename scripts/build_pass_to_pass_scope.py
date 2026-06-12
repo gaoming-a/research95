@@ -35,8 +35,15 @@ COVERAGE_FLAG_ADDOPTS = {
 }
 
 
+PROJECT_LEVEL_SCOPE_TYPES = {"project_level_p2p_broad", "project_level_official_test_root"}
+
+
 def is_project_level_path(test_path: str) -> bool:
     return test_path in {"", ".", "./"}
+
+
+def is_project_level_scope(scope_type: str) -> bool:
+    return scope_type in PROJECT_LEVEL_SCOPE_TYPES
 
 
 def write_json(path: Path, record: dict[str, Any]) -> None:
@@ -565,7 +572,7 @@ def collect_unittest_tests(
 def static_source_segments(checkout: Path, test_path: str, nodeids: list[str]) -> dict[str, str]:
     methods: dict[str, str] = {}
     file_paths = sorted({nodeid.split("::", 1)[0] for nodeid in nodeids if "::" in nodeid})
-    if not is_project_level_path(test_path):
+    if not is_project_level_path(test_path) and not (checkout / test_path).is_dir():
         file_paths = [test_path]
 
     for relative_file in file_paths:
@@ -810,7 +817,31 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--python", default=sys.executable)
     parser.add_argument("--out-dir", required=True)
     parser.add_argument("--manifest-out")
-    parser.add_argument("--scope-type", choices=["project_level_p2p_broad", "task_file_p2p_broad"])
+    parser.add_argument(
+        "--scope-type",
+        choices=["project_level_p2p_broad", "project_level_official_test_root", "task_file_p2p_broad"],
+    )
+    parser.add_argument(
+        "--scope-policy-name",
+        default="",
+        help="Optional policy identifier recorded in the manifest for scoped project-level discovery.",
+    )
+    parser.add_argument(
+        "--scope-policy-reason",
+        default="",
+        help="Optional policy reason recorded in the manifest for scoped project-level discovery.",
+    )
+    parser.add_argument(
+        "--full-repo-discovery-attempts",
+        type=int,
+        default=0,
+        help="Number of prior full-repository discovery attempts to record in the manifest.",
+    )
+    parser.add_argument(
+        "--full-repo-discovery-status",
+        default="",
+        help="Prior full-repository discovery status to record in the manifest.",
+    )
     parser.add_argument(
         "--static-exclude-token",
         action="append",
@@ -872,13 +903,19 @@ def main() -> None:
     if scope_type is None:
         scope_type = "project_level_p2p_broad" if is_project_level_path(args.test_path) else "task_file_p2p_broad"
 
-    if scope_type == "project_level_p2p_broad" and args.test_framework == "pytest":
+    if is_project_level_scope(scope_type) and args.test_framework == "pytest":
         buggy_test_paths = discover_test_paths(buggy)
         fixed_test_paths = discover_test_paths(fixed)
-        test_paths = sorted(set(buggy_test_paths) & set(fixed_test_paths))
+        common_test_paths = sorted(set(buggy_test_paths) & set(fixed_test_paths))
+        if scope_type == "project_level_official_test_root":
+            root = args.test_path.strip("/\\")
+            prefix = f"{root}/" if root else ""
+            test_paths = [path for path in common_test_paths if path == root or path.startswith(prefix)]
+        else:
+            test_paths = common_test_paths
         if not test_paths:
             raise ValueError(f"no common test files discovered for project-level scope: {args.task_id}")
-    elif scope_type == "project_level_p2p_broad":
+    elif is_project_level_scope(scope_type):
         test_paths = [args.unittest_start_dir]
     else:
         test_paths = [args.test_path]
@@ -902,7 +939,7 @@ def main() -> None:
             args.timeout_seconds,
             shim_dir,
         )
-    elif scope_type == "project_level_p2p_broad":
+    elif is_project_level_scope(scope_type):
         buggy_tests, buggy_collect = collect_tests_by_file(
             args.python,
             buggy,
@@ -1064,6 +1101,27 @@ def main() -> None:
     scope = {
         "scope_id": f"{args.task_id}_{scope_type}",
         "scope_type": scope_type,
+        "p2p_scope_type": scope_type,
+        "p2p_scope_roots": [args.test_path.rstrip("/\\") + "/"]
+        if scope_type == "project_level_official_test_root"
+        else [],
+        "full_repo_discovery": {
+            "attempted": args.full_repo_discovery_attempts > 0 or bool(args.full_repo_discovery_status),
+            "attempts": args.full_repo_discovery_attempts,
+            "status": args.full_repo_discovery_status,
+            "manifest_generated": False if args.full_repo_discovery_status == "timeout" else None,
+        },
+        "scope_policy": {
+            "policy_name": args.scope_policy_name,
+            "reason": args.scope_policy_reason,
+            "is_task_file_level": False if is_project_level_scope(scope_type) else True,
+            "is_project_official_test_root": scope_type == "project_level_official_test_root",
+        },
+        "main_experiment_eligibility": {
+            "requires_p2p_broad_size_at_least": 3,
+            "requires_stability_runs": 3,
+            "no_test_fixture_shim": True,
+        },
         "test_framework": args.test_framework,
         "task_id": args.task_id,
         "project": args.project,

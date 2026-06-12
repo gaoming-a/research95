@@ -176,11 +176,10 @@ They should not override `final_paper_roadmap_zh.md`.
   validates four candidate patches under F2P plus a project-level P2P-broad
   scope with four stable tests. It uses only declared dependencies in an ignored
   isolated venv and does not introduce a task-specific fixture shim.
-- `bugsinpy_fastapi_1` is currently paused at a scope-policy confirmation gate:
-  the F2P oracle is clear, but full-repo project-level P2P-broad construction
-  timed out twice without producing a manifest. Continuing requires deciding
-  whether FastAPI's project-level scope may be limited to the main `tests/`
-  directory, or whether the task should be recorded as blocked and skipped.
+- `bugsinpy_fastapi_1` has a clear F2P oracle, but it is now recorded as
+  `pending_blocked_official_test_root_timeout`: full-repo discovery timed out
+  twice, and the user-approved official-test-root `tests/` scope also exceeded
+  the bounded construction budget without producing a manifest.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

@@ -524,6 +524,65 @@
     },
     {
       "appendix_smoke_included": false,
+      "attempts": [
+        {
+          "attempt_id": "full_repo_1",
+          "completed": false,
+          "scope_type": "project_level_p2p_broad",
+          "status": "timeout"
+        },
+        {
+          "attempt_id": "full_repo_2",
+          "completed": false,
+          "scope_type": "project_level_p2p_broad",
+          "status": "timeout"
+        },
+        {
+          "attempt_id": "official_test_root_1",
+          "completed": false,
+          "elapsed_minutes": 60,
+          "scope_roots": [
+            "tests/"
+          ],
+          "scope_type": "project_level_official_test_root",
+          "status": "timeout"
+        }
+      ],
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "full_repo_project_level_discovery_timeout",
+        "official_test_root_scope_timeout"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "p2p_broad_size": null,
+        "test_framework": "pytest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "F2P oracle is clear, but full-repo discovery timed out twice. After user-approved official-test-root policy, the FastAPI tests/ scope also exceeded the 60 minute construction budget without a manifest. No task-file-level downgrade or test-fixture shim was used.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_fastapi_1_official_test_root_timeout.json",
+      "p2p_scope_roots": [
+        "tests/"
+      ],
+      "p2p_scope_type": "project_level_official_test_root",
+      "project": "fastapi",
+      "project_level_p2p_status": "pending_blocked_official_test_root_timeout",
+      "task_id": "bugsinpy_fastapi_1"
+    },
+    {
+      "appendix_smoke_included": false,
       "available_evidence": {
         "project_level_p2p_broad": "not_available",
         "task_file_level_p2p": "not_recorded"
