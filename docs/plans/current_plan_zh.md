@@ -3197,3 +3197,53 @@ FastAPI 决策：
 - registry 中 `bugsinpy_fastapi_1` 唯一，状态为
   `pending_blocked_official_test_root_timeout`，`p2p_broad_main_included = false`。
 - `git diff --check` 无空白错误，仅有 Windows 换行提示。
+
+## 32. 2026-06-12 next candidate feasibility: youtube-dl_1
+
+同步状态：
+
+- `bugsinpy_scrapy_1` dependency/native build blocker 已提交并 push 到 GitHub：
+  `90475d0 docs: record scrapy dependency blocker`。
+- 当前 Git 状态：`main...origin/main`，工作区干净。
+
+候选选择：
+
+- 转向 broader pool 中的 `bugsinpy_youtube-dl_1`。
+- 理由：
+  - 非 FastAPI、非 Sanic、非 Scrapy；
+  - metadata-level screening 中为 unittest 候选；
+  - 目标测试为 utility 逻辑测试，低外部服务/网络风险；
+  - bug patch 只涉及 `youtube_dl/utils.py` 中 `_match_one` 对布尔值的
+    unary operator 语义。
+
+元数据：
+
+- project = `youtube-dl`；
+- buggy commit = `99036a1298089068dcf80c0985bfcc3f8c24f281`；
+- fixed commit = `1cc47c667419e0eadc0a6989256ab7b276852adf`；
+- F2P command:
+  - `python -m unittest -q test.test_utils.TestUtil.test_match_str`。
+
+本轮小目标：
+
+1. 准备 `bugsinpy_youtube-dl_1` retained buggy/fixed checkout。
+2. 运行最小 F2P probe。
+3. 如果 F2P 清楚，再尝试 project-level unittest P2P-broad construction。
+4. 若 project-level scope 完成且 `p2p_broad_size >= 3`，再进入 reference
+   patch 与 candidate label 验证；否则记录 blocker 或 insufficient scope。
+
+执行边界：
+
+- 不安装全局依赖；
+- 不调用真实 API；
+- 不修改 youtube-dl source/test fixture；
+- 不使用网络测试或外部服务作为 P2P 主证据；
+- 如果 dependency、Python 版本兼容、或 unittest discovery 边界不清楚，先记录
+  blocker，不做 task-file P2P main downgrade。
+
+验收条件：
+
+- F2P probe 明确 buggy fail / fixed pass；
+- project-level P2P-broad manifest 生成并记录 scope；
+- `p2p_broad_size >= 3`；
+- registry 中只在上述条件满足后才允许 `p2p_broad_main_included = true`。
