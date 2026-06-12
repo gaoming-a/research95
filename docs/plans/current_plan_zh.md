@@ -3326,6 +3326,56 @@ Project-level P2P attempt：
 - 优先选择已有 metadata 中更偏纯函数/短测试的候选，例如
   `bugsinpy_tornado_9` 的 `httputil.url_concat`。
 
+## 34. 2026-06-12 next candidate feasibility: tornado_9
+
+同步状态：
+
+- `bugsinpy_tornado_1` project-level unittest scope timeout 已提交并 push 到
+  GitHub：`bbfd234 docs: record tornado feasibility timeout`。
+- 当前 Git 状态：`main...origin/main`，工作区干净。
+
+候选选择：
+
+- 转向 `bugsinpy_tornado_9`。
+- 理由：
+  - 非 websocket/iostream-heavy F2P；
+  - F2P 目标为 `httputil.url_concat` 纯函数行为；
+  - bug patch 只是在 `args is None` 时直接返回原 URL；
+  - 相比 `tornado_1`，目标 oracle 对本地 socket/server 依赖更低。
+
+元数据：
+
+- project = `tornado`；
+- buggy commit = `c9d2a3fa573987629ad576e991c2f3b65f4daab4`；
+- fixed commit = `86cc31f52992fb9d11f92de6fd5496842fea2265`；
+- F2P command:
+  - `python -m unittest -q tornado.test.httputil_test.TestUrlConcat.test_url_concat_none_params`。
+
+本轮小目标：
+
+1. 并行准备 `bugsinpy_tornado_9` buggy/fixed checkout。
+2. 运行最小 F2P probe。
+3. 如果 F2P 清楚，优先尝试 project-level unittest P2P-broad construction。
+4. 如果完整 Tornado project-level scope 再次停在 socket/SSL/iostream-heavy
+   区域，记录共享 scope 风险，不降级成 task-file main evidence。
+
+执行边界：
+
+- 不安装全局依赖；
+- 不执行 `setup.sh`；
+- 不调用真实 API；
+- 不修改 Tornado source/test fixture；
+- 允许通用 Windows selector event loop policy；
+- 允许 Tornado 本地 loop/server 测试，但不允许外部网络服务；
+- project-level P2P 一次只跑 `tornado_9` 一个候选。
+
+验收条件：
+
+- F2P probe 明确 buggy fail / fixed pass；
+- project-level P2P-broad manifest 生成；
+- `p2p_broad_size >= 3`；
+- registry 中只在上述条件满足后才允许 `p2p_broad_main_included = true`。
+
 执行结果：
 
 - buggy/fixed checkout 已成功创建到外部 retained workspace：
