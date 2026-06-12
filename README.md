@@ -233,14 +233,26 @@ They should not override `final_paper_roadmap_zh.md`.
   supports EVP-7 pilot signal claims after quality audit, not scale-generalized
   paper claims. A controlled-expansion readiness report now summarizes the
   broader BugsInPy rescreen and defines project-diverse bounded probe lanes for
-  the next 15-20 bug expansion step.
+  the next 15-20 bug expansion step. The first post-G5 lane,
+  `bugsinpy_fastapi_4`, completed checkout but is F2P-blocked by the current
+  Pydantic v2 environment and is not admitted. `bugsinpy_sanic_2` also
+  completed checkout but is F2P-blocked by the missing current-environment
+  Sanic dependency `aiofiles`. A parallel F2P-only triage then found
+  `bugsinpy_youtube-dl_2` as the only new clean F2P signal in that batch;
+  it is not admitted until project-level P2P-broad and candidate revalidation
+  pass. The remaining readiness lanes are blocked by environment or historical
+  probe constraints: Scrapy lacks Twisted, Ansible reaches Windows `fcntl`,
+  Luigi lacks Tornado after existing Python 3.11 compatibility, and
+  Matplotlib remains an incomplete/native-extension blocker.
   Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and
   `data/evidence/evp7_evidence_packets.jsonl`.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
-- Further expansion to 15-20 bugs is deferred until EVP-7 protocol gates pass.
+- Further expansion to 15-20 bugs is now gated by controlled-probe outcomes and
+  the next project-level P2P-broad decision, not by adding metadata candidates
+  directly.
 
 ## Core Commands
 
@@ -250,6 +262,12 @@ For current readiness, run:
 python scripts\audit_execution_readiness.py `
   --out-json outputs\readiness_audit\latest.json `
   --out-md outputs\readiness_audit\latest.md
+```
+
+For EVP-7 controlled-expansion readiness, run:
+
+```powershell
+python scripts\summarize_evp7_expansion_readiness.py
 ```
 
 For stage-by-stage plan progress, run:

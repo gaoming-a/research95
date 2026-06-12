@@ -17,23 +17,26 @@ This report is a planning artifact. It does not admit new bugs into the main coh
 - Metadata-promising candidates: 187
 - Framework counts: `{"other": 1, "pytest": 353, "unittest": 117}`
 - Metadata blocker counts: `{"external_service_dependency": 5, "heavy_ml_dependency": 45, "native_build_dependency": 179, "network_reference_in_metadata": 102}`
+- Fresh-project promising candidates: 0
+- Controlled probe result source: `data\tasks\evp7_controlled_probe_results.json`
+- Controlled probe recorded tasks: `["bugsinpy_ansible_1", "bugsinpy_fastapi_4", "bugsinpy_luigi_1", "bugsinpy_matplotlib_1", "bugsinpy_sanic_2", "bugsinpy_scrapy_2", "bugsinpy_tornado_1", "bugsinpy_youtube-dl_2"]`
 
 ## Probe Lanes
 
 | Task | Project | Framework | Score | Known blocked tasks | Probe status |
 | --- | --- | --- | ---: | ---: | --- |
-| `bugsinpy_fastapi_4` | `fastapi` | `pytest` | 8 | 2 | `metadata_only_not_admitted` |
-| `bugsinpy_sanic_2` | `sanic` | `pytest` | 8 | 1 | `metadata_only_not_admitted` |
-| `bugsinpy_scrapy_2` | `scrapy` | `unittest` | 7 | 1 | `metadata_only_not_admitted` |
-| `bugsinpy_tornado_1` | `tornado` | `unittest` | 7 | 2 | `metadata_only_not_admitted` |
-| `bugsinpy_youtube-dl_2` | `youtube-dl` | `unittest` | 7 | 1 | `metadata_only_not_admitted` |
-| `bugsinpy_ansible_1` | `ansible` | `pytest` | 5 | 1 | `metadata_only_not_admitted` |
-| `bugsinpy_luigi_1` | `luigi` | `pytest` | 5 | 2 | `metadata_only_not_admitted` |
-| `bugsinpy_matplotlib_1` | `matplotlib` | `pytest` | 5 | 1 | `metadata_only_not_admitted` |
+| `bugsinpy_fastapi_4` | `fastapi` | `pytest` | 8 | 2 | `f2p_blocked_dependency_environment` |
+| `bugsinpy_sanic_2` | `sanic` | `pytest` | 8 | 1 | `f2p_blocked_dependency_environment` |
+| `bugsinpy_scrapy_2` | `scrapy` | `unittest` | 7 | 1 | `f2p_blocked_dependency_environment` |
+| `bugsinpy_tornado_1` | `tornado` | `unittest` | 7 | 2 | `f2p_established_existing_p2p_timeout` |
+| `bugsinpy_youtube-dl_2` | `youtube-dl` | `unittest` | 7 | 1 | `f2p_established_p2p_not_attempted` |
+| `bugsinpy_ansible_1` | `ansible` | `pytest` | 5 | 1 | `f2p_blocked_windows_posix_import` |
+| `bugsinpy_luigi_1` | `luigi` | `pytest` | 5 | 2 | `f2p_blocked_dependency_environment` |
+| `bugsinpy_matplotlib_1` | `matplotlib` | `pytest` | 5 | 1 | `f2p_blocked_existing_incomplete_native_probe` |
 
 ## Decision
 
-EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled project-diverse probes, not blind BugsInPy sweeping or bulk admission.
+EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled project-diverse probes, not blind BugsInPy sweeping or bulk admission. The current metadata-promising pool has no fresh-project candidates outside already-main or already-risky projects.
 
 ## Execution Boundary
 

@@ -1,0 +1,229 @@
+{
+  "cohort_id": "EVP-7",
+  "results": [
+    {
+      "blocked_reason": [
+        "pydantic_v2_import_incompatibility"
+      ],
+      "bug_id": "4",
+      "date": "2026-06-13",
+      "decision": "do_not_admit_environment_blocked",
+      "fixed_result": "collection_error_before_target_test",
+      "notes": "Both buggy and fixed checkouts completed, but the target pytest command failed during collection because this legacy FastAPI version imports under the current Pydantic v2 environment. No dependency install or checkout edit was performed.",
+      "probe_status": "f2p_blocked_dependency_environment",
+      "project": "fastapi",
+      "run_command": "python -m pytest tests/test_param_in_path_and_dependency.py::test_reused_param",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_fastapi_4",
+      "test_file": "tests/test_param_in_path_and_dependency.py",
+      "versions": {
+        "buggy": {
+          "checkout": "completed",
+          "git_head": "7ccd81f70",
+          "result": "collection_error_before_target_test"
+        },
+        "fixed": {
+          "checkout": "completed",
+          "git_head": "7ccd81f70",
+          "result": "collection_error_before_target_test"
+        }
+      }
+    },
+    {
+      "blocked_reason": [
+        "missing_aiofiles_dependency"
+      ],
+      "bug_id": "2",
+      "date": "2026-06-13",
+      "decision": "do_not_admit_environment_blocked",
+      "fixed_result": "import_error_before_target_test",
+      "notes": "Both buggy and fixed checkouts completed, but the target pytest command failed while loading tests/conftest.py because aiofiles is not installed in the current environment. No dependency install or checkout edit was performed.",
+      "probe_status": "f2p_blocked_dependency_environment",
+      "project": "sanic",
+      "run_command": "python -m pytest tests/test_app.py::test_asyncio_server_start_serving",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_sanic_2",
+      "test_file": "tests/test_app.py",
+      "versions": {
+        "buggy": {
+          "checkout": "completed",
+          "git_head": "ba9b4329",
+          "result": "import_error_before_target_test"
+        },
+        "fixed": {
+          "checkout": "completed",
+          "git_head": "ba9b4329",
+          "result": "import_error_before_target_test"
+        }
+      }
+    },
+    {
+      "blocked_reason": [
+        "missing_twisted_dependency"
+      ],
+      "bug_id": "2",
+      "date": "2026-06-13",
+      "decision": "do_not_admit_environment_blocked",
+      "fixed_result": "import_error_before_target_test",
+      "notes": "Both buggy and fixed checkouts completed, but the target unittest command failed while importing Scrapy because twisted is not installed in the current environment. No dependency install or checkout edit was performed.",
+      "probe_status": "f2p_blocked_dependency_environment",
+      "project": "scrapy",
+      "run_command": "python -m unittest -q tests.test_utils_datatypes.LocalCacheTest.test_cache_without_limit",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_scrapy_2",
+      "test_file": "tests/test_utils_datatypes.py",
+      "versions": {
+        "buggy": {
+          "checkout": "completed",
+          "git_head": "f02c3d1dc",
+          "result": "import_error_before_target_test"
+        },
+        "fixed": {
+          "checkout": "completed",
+          "git_head": "f02c3d1dc",
+          "result": "import_error_before_target_test"
+        }
+      }
+    },
+    {
+      "blocked_reason": [
+        "existing_project_level_p2p_timeout"
+      ],
+      "bug_id": "1",
+      "date": "2026-06-13",
+      "decision": "f2p_established_but_not_admitted",
+      "fixed_result": "pass",
+      "notes": "Reused existing checkout and reran the target unittest with the documented Windows selector event loop policy. Buggy fails and fixed passes, but the task already has a project-level P2P-broad timeout blocker and is not admitted.",
+      "probe_status": "f2p_established_existing_p2p_timeout",
+      "project": "tornado",
+      "run_command": "python -c \"import asyncio, runpy, sys; asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy()); sys.argv=['python -m unittest','-q','tornado.test.websocket_test.WebSocketTest.test_nodelay']; runpy.run_module('unittest', run_name='__main__')\"",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_tornado_1",
+      "test_file": "tornado/test/websocket_test.py",
+      "versions": {
+        "buggy": {
+          "checkout": "reused_existing",
+          "git_head": "6a5a0bfa",
+          "result": "fail"
+        },
+        "fixed": {
+          "checkout": "reused_existing",
+          "git_head": "6a5a0bfa",
+          "result": "pass"
+        }
+      }
+    },
+    {
+      "blocked_reason": [],
+      "bug_id": "2",
+      "date": "2026-06-13",
+      "decision": "f2p_established_hold_for_p2p_decision",
+      "fixed_result": "pass",
+      "notes": "Both checkouts completed and the target unittest produced the expected buggy fail and fixed pass. Project-level P2P-broad construction and candidate validation were not attempted in this F2P-only triage batch.",
+      "probe_status": "f2p_established_p2p_not_attempted",
+      "project": "youtube-dl",
+      "run_command": "python -m unittest -q test.test_InfoExtractor.TestInfoExtractor.test_parse_mpd_formats",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_youtube-dl_2",
+      "test_file": "test/test_InfoExtractor.py",
+      "versions": {
+        "buggy": {
+          "checkout": "completed",
+          "git_head": "84f085d4b",
+          "result": "fail"
+        },
+        "fixed": {
+          "checkout": "completed",
+          "git_head": "84f085d4b",
+          "result": "pass"
+        }
+      }
+    },
+    {
+      "blocked_reason": [
+        "windows_missing_fcntl"
+      ],
+      "bug_id": "1",
+      "date": "2026-06-13",
+      "decision": "do_not_admit_environment_blocked",
+      "fixed_result": "import_error_before_target_test",
+      "notes": "Both checkouts completed. The initial run missed PYTHONPATH=lib; rerunning with PYTHONPATH=lib reached a Windows-only blocker because Ansible imports fcntl. No compatibility shim, dependency install, or checkout edit was performed.",
+      "probe_status": "f2p_blocked_windows_posix_import",
+      "project": "ansible",
+      "run_command": "PYTHONPATH=lib python -m pytest test/units/galaxy/test_collection.py::test_verify_collections_no_version",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_ansible_1",
+      "test_file": "test/units/galaxy/test_collection.py",
+      "versions": {
+        "buggy": {
+          "checkout": "completed",
+          "git_head": "25c5388fde",
+          "result": "import_error_before_target_test"
+        },
+        "fixed": {
+          "checkout": "completed",
+          "git_head": "25c5388fde",
+          "result": "import_error_before_target_test"
+        }
+      }
+    },
+    {
+      "blocked_reason": [
+        "missing_tornado_dependency"
+      ],
+      "bug_id": "1",
+      "date": "2026-06-13",
+      "decision": "do_not_admit_environment_blocked",
+      "fixed_result": "import_error_before_target_test",
+      "notes": "Both checkouts completed. Existing inspect.ArgSpec/getargspec runtime compatibility passed the Python 3.11 import gap, but both versions then failed because tornado is not installed in the current environment. No dependency install or checkout edit was performed.",
+      "probe_status": "f2p_blocked_dependency_environment",
+      "project": "luigi",
+      "run_command": "python -m pytest test/server_test.py::MetricsHandlerTest::test_get with existing inspect runtime compatibility",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_luigi_1",
+      "test_file": "test/server_test.py",
+      "versions": {
+        "buggy": {
+          "checkout": "completed",
+          "git_head": "1164eb6b",
+          "result": "import_error_before_target_test"
+        },
+        "fixed": {
+          "checkout": "completed",
+          "git_head": "1164eb6b",
+          "result": "import_error_before_target_test"
+        }
+      }
+    },
+    {
+      "blocked_reason": [
+        "existing_incomplete_checkout",
+        "native_extension_import_blocker"
+      ],
+      "bug_id": "1",
+      "date": "2026-06-13",
+      "decision": "do_not_admit_existing_blocker",
+      "fixed_result": "not_rerun",
+      "notes": "Historical matplotlib_1 workspace exists but the buggy checkout lacks the target test file; this task already has a native-extension import blocker and was not rebuilt in this F2P-only batch.",
+      "probe_status": "f2p_blocked_existing_incomplete_native_probe",
+      "project": "matplotlib",
+      "run_command": "python -m pytest lib/matplotlib/tests/test_bbox_tight.py::test_noop_tight_bbox",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_matplotlib_1",
+      "test_file": "lib/matplotlib/tests/test_bbox_tight.py",
+      "versions": {
+        "buggy": {
+          "checkout": "existing_incomplete",
+          "git_head": null,
+          "result": "target_test_file_missing"
+        },
+        "fixed": {
+          "checkout": "reused_existing",
+          "git_head": "c404d1f716",
+          "result": "not_rerun"
+        }
+      }
+    }
+  ],
+  "schema": "controlled_probe_results.v1"
+}

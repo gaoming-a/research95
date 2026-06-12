@@ -6,6 +6,7 @@
       "pytest": 353,
       "unittest": 117
     },
+    "fresh_project_promising_candidates": 0,
     "metadata_blocker_counts": {
       "external_service_dependency": 5,
       "heavy_ml_dependency": 45,
@@ -18,6 +19,19 @@
     "total_tasks": 501
   },
   "cohort_id": "EVP-7",
+  "controlled_probe_results": {
+    "recorded_tasks": [
+      "bugsinpy_ansible_1",
+      "bugsinpy_fastapi_4",
+      "bugsinpy_luigi_1",
+      "bugsinpy_matplotlib_1",
+      "bugsinpy_sanic_2",
+      "bugsinpy_scrapy_2",
+      "bugsinpy_tornado_1",
+      "bugsinpy_youtube-dl_2"
+    ],
+    "source": "data\\tasks\\evp7_controlled_probe_results.json"
+  },
   "current_main_projects": {
     "PySnooper": 2,
     "cookiecutter": 3,
@@ -40,7 +54,7 @@
     "Do not admit a task to p2p_broad_main until F2P, project-level P2P-broad, candidate construction, and candidate revalidation all pass.",
     "Avoid repeating known blockers unless the probe explicitly tests a new bounded policy."
   ],
-  "readiness_decision": "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled project-diverse probes, not blind BugsInPy sweeping or bulk admission.",
+  "readiness_decision": "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled project-diverse probes, not blind BugsInPy sweeping or bulk admission. The current metadata-promising pool has no fresh-project candidates outside already-main or already-risky projects.",
   "registry_blocked_or_pending_count": 27,
   "registry_blocked_reason_counts": {
     "checkout_timeout": 1,
@@ -87,7 +101,15 @@
           "pending_blocked_shared_scope_risk": 1
         }
       },
-      "probe_status": "metadata_only_not_admitted",
+      "latest_probe": {
+        "blocked_reason": [
+          "pydantic_v2_import_incompatibility"
+        ],
+        "date": "2026-06-13",
+        "decision": "do_not_admit_environment_blocked",
+        "notes": "Both buggy and fixed checkouts completed, but the target pytest command failed during collection because this legacy FastAPI version imports under the current Pydantic v2 environment. No dependency install or checkout edit was performed."
+      },
+      "probe_status": "f2p_blocked_dependency_environment",
       "project": "fastapi",
       "run_commands": [
         "pytest tests/test_param_in_path_and_dependency.py::test_reused_param"
@@ -107,7 +129,15 @@
           "pending_blocked_project_level_scope_timeout": 1
         }
       },
-      "probe_status": "metadata_only_not_admitted",
+      "latest_probe": {
+        "blocked_reason": [
+          "missing_aiofiles_dependency"
+        ],
+        "date": "2026-06-13",
+        "decision": "do_not_admit_environment_blocked",
+        "notes": "Both buggy and fixed checkouts completed, but the target pytest command failed while loading tests/conftest.py because aiofiles is not installed in the current environment. No dependency install or checkout edit was performed."
+      },
+      "probe_status": "f2p_blocked_dependency_environment",
       "project": "sanic",
       "run_commands": [
         "pytest tests/test_app.py::test_asyncio_server_start_serving"
@@ -128,7 +158,15 @@
           "blocked_dependency_native_build": 1
         }
       },
-      "probe_status": "metadata_only_not_admitted",
+      "latest_probe": {
+        "blocked_reason": [
+          "missing_twisted_dependency"
+        ],
+        "date": "2026-06-13",
+        "decision": "do_not_admit_environment_blocked",
+        "notes": "Both buggy and fixed checkouts completed, but the target unittest command failed while importing Scrapy because twisted is not installed in the current environment. No dependency install or checkout edit was performed."
+      },
+      "probe_status": "f2p_blocked_dependency_environment",
       "project": "scrapy",
       "run_commands": [
         "python -m unittest -q tests.test_utils_datatypes.LocalCacheTest.test_cache_without_limit"
@@ -150,7 +188,15 @@
           "pending_blocked_shared_project_level_unittest_scope_timeout": 1
         }
       },
-      "probe_status": "metadata_only_not_admitted",
+      "latest_probe": {
+        "blocked_reason": [
+          "existing_project_level_p2p_timeout"
+        ],
+        "date": "2026-06-13",
+        "decision": "f2p_established_but_not_admitted",
+        "notes": "Reused existing checkout and reran the target unittest with the documented Windows selector event loop policy. Buggy fails and fixed passes, but the task already has a project-level P2P-broad timeout blocker and is not admitted."
+      },
+      "probe_status": "f2p_established_existing_p2p_timeout",
       "project": "tornado",
       "run_commands": [
         "python -m unittest -q tornado.test.websocket_test.WebSocketTest.test_nodelay"
@@ -170,7 +216,13 @@
           "pending_blocked_project_level_unittest_discovery_timeout": 1
         }
       },
-      "probe_status": "metadata_only_not_admitted",
+      "latest_probe": {
+        "blocked_reason": [],
+        "date": "2026-06-13",
+        "decision": "f2p_established_hold_for_p2p_decision",
+        "notes": "Both checkouts completed and the target unittest produced the expected buggy fail and fixed pass. Project-level P2P-broad construction and candidate validation were not attempted in this F2P-only triage batch."
+      },
+      "probe_status": "f2p_established_p2p_not_attempted",
       "project": "youtube-dl",
       "run_commands": [
         "python -m unittest -q test.test_InfoExtractor.TestInfoExtractor.test_parse_mpd_formats"
@@ -190,7 +242,15 @@
           "pending_blocked_checkout_timeout": 1
         }
       },
-      "probe_status": "metadata_only_not_admitted",
+      "latest_probe": {
+        "blocked_reason": [
+          "windows_missing_fcntl"
+        ],
+        "date": "2026-06-13",
+        "decision": "do_not_admit_environment_blocked",
+        "notes": "Both checkouts completed. The initial run missed PYTHONPATH=lib; rerunning with PYTHONPATH=lib reached a Windows-only blocker because Ansible imports fcntl. No compatibility shim, dependency install, or checkout edit was performed."
+      },
+      "probe_status": "f2p_blocked_windows_posix_import",
       "project": "ansible",
       "run_commands": [
         "pytest test/units/galaxy/test_collection.py::test_verify_collections_no_version"
@@ -214,7 +274,15 @@
           "pending_blocked": 2
         }
       },
-      "probe_status": "metadata_only_not_admitted",
+      "latest_probe": {
+        "blocked_reason": [
+          "missing_tornado_dependency"
+        ],
+        "date": "2026-06-13",
+        "decision": "do_not_admit_environment_blocked",
+        "notes": "Both checkouts completed. Existing inspect.ArgSpec/getargspec runtime compatibility passed the Python 3.11 import gap, but both versions then failed because tornado is not installed in the current environment. No dependency install or checkout edit was performed."
+      },
+      "probe_status": "f2p_blocked_dependency_environment",
       "project": "luigi",
       "run_commands": [
         "pytest test/server_test.py::MetricsHandlerTest::test_get"
@@ -235,7 +303,16 @@
           "blocked_native_extension_import": 1
         }
       },
-      "probe_status": "metadata_only_not_admitted",
+      "latest_probe": {
+        "blocked_reason": [
+          "existing_incomplete_checkout",
+          "native_extension_import_blocker"
+        ],
+        "date": "2026-06-13",
+        "decision": "do_not_admit_existing_blocker",
+        "notes": "Historical matplotlib_1 workspace exists but the buggy checkout lacks the target test file; this task already has a native-extension import blocker and was not rebuilt in this F2P-only batch."
+      },
+      "probe_status": "f2p_blocked_existing_incomplete_native_probe",
       "project": "matplotlib",
       "run_commands": [
         "pytest lib/matplotlib/tests/test_bbox_tight.py::test_noop_tight_bbox"

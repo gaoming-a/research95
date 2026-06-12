@@ -1413,3 +1413,34 @@ This file starts fresh for the patch-verification project.
   same JSONL file.
 - Start bounded full runs at concurrency 4 or 6. If rate limits, timeouts, or
   invalid outputs rise, stop and diagnose instead of raising concurrency.
+
+## 2026-06-13 EVP-7 controlled expansion probe status boundary
+
+- Expansion readiness should distinguish metadata candidates from attempted
+  probes. Keep attempted probe outcomes in
+  `data/tasks/evp7_controlled_probe_results.json` and let the readiness
+  summarizer overlay those statuses, rather than editing generated Markdown by
+  hand.
+- `bugsinpy_fastapi_4` checkouts completed, but both buggy and fixed versions
+  failed during pytest collection under the current Pydantic v2 environment.
+  Treat this as a dependency-environment blocker, not as F2P evidence.
+- `bugsinpy_sanic_2` checkouts completed quickly, but both versions failed
+  before the target test because `aiofiles` is absent. Treat missing declared
+  runtime dependencies the same way: record the blocker and do not install
+  silently inside a F2P-only probe.
+- Do not silently install or substitute dependencies after a collection-level
+  environment blocker. Move to another independent lane unless a later plan
+  explicitly authorizes dependency isolation.
+- In parallel F2P-only triage, keep each task's buggy/fixed checkout serial,
+  but run independent project lanes concurrently. This saved time while still
+  keeping each F2P result interpretable.
+- `bugsinpy_youtube-dl_2` established clean F2P under the no-install boundary.
+  It is not admission evidence until project-level P2P-broad and candidate
+  revalidation are explicitly run.
+- In F2P-only screening, distinguish path setup from dependency installation:
+  `ansible_1` needed `PYTHONPATH=lib` to reach the package, but then hit the
+  Windows `fcntl` blocker. That final blocker should be recorded rather than
+  hidden behind the first path error.
+- Existing runtime compatibility shims can be reused when already documented
+  for the project family, as with Luigi `inspect.ArgSpec/getargspec`; once the
+  next missing dependency appears, stop rather than silently installing it.

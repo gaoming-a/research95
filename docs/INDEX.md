@@ -41,6 +41,9 @@
   readiness summary. It combines the current EVP-7 registry with the broader
   BugsInPy candidate-pool rescreen and lists project-diverse probe lanes that
   are metadata-only, not admitted tasks.
+- `../data/tasks/evp7_controlled_probe_results.json`: tracked status records
+  for controlled expansion probes that have been attempted but are not main
+  cohort admissions.
 - `../data/patches/evp7_candidates.jsonl`: tracked candidate manifest promoted
   from validated EVP-7 candidate outputs. It contains 42 candidates with global
   anonymous `evp7_candidate_id` values and evaluator-only labels kept explicit.
@@ -285,6 +288,18 @@
 - `experiments/evp7_expansion_readiness.md`: controlled-expansion readiness
   report after EVP-7 G5. It records current main tasks, blocked-risk counts,
   broader BugsInPy metadata candidates, and bounded project-lane probe rules.
+- `experiments/evp7_fastapi4_f2p_probe.md`: F2P-only controlled probe for
+  `bugsinpy_fastapi_4`, currently blocked by current-environment Pydantic v2
+  import incompatibility before target-test execution.
+- `experiments/evp7_sanic2_f2p_probe.md`: F2P-only controlled probe for
+  `bugsinpy_sanic_2`, currently blocked by missing `aiofiles` before
+  target-test execution.
+- `experiments/evp7_parallel_f2p_triage_20260613.md`: parallel F2P-only triage
+  for `scrapy_2`, `tornado_1`, and `youtube-dl_2`; only `youtube-dl_2` produced
+  a new clean F2P signal in this batch.
+- `experiments/evp7_remaining_f2p_triage_20260613.md`: remaining F2P-only
+  triage for `ansible_1`, `luigi_1`, and `matplotlib_1`; all remain blocked
+  under the no-install/no-edit boundary.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on
@@ -595,8 +610,8 @@
   outputs into tracked JSON/Markdown summaries without copying raw model
   responses.
 - `../scripts/summarize_evp7_expansion_readiness.py`: summarizes current
-  registry state and broader BugsInPy rescreen outputs into tracked expansion
-  readiness artifacts.
+  registry state, broader BugsInPy rescreen outputs, and tracked controlled
+  probe statuses into expansion readiness artifacts.
 - `scripts/analyze_tool_gated_reviews.py`: oracle-gated analysis reference.
 - `experience/engineering_notes.md`: fresh operational notes for this new
   workspace.

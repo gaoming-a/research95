@@ -12,6 +12,7 @@ from typing import Any
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REGISTRY = REPO_ROOT / "data" / "cohorts" / "task_cohort_registry.json"
 DEFAULT_POOL = REPO_ROOT / "outputs" / "candidate_pool_rescreen" / "parallel_latest.json"
+DEFAULT_PROBE_RESULTS = REPO_ROOT / "data" / "tasks" / "evp7_controlled_probe_results.json"
 DEFAULT_JSON_OUT = REPO_ROOT / "data" / "tasks" / "evp7_expansion_readiness.json"
 DEFAULT_MD_OUT = REPO_ROOT / "docs" / "experiments" / "evp7_expansion_readiness.md"
 
@@ -23,15 +24,24 @@ def read_json(path: Path) -> dict[str, Any]:
     return value
 
 
-def summarize(registry_path: Path, pool_path: Path) -> dict[str, Any]:
+def summarize(registry_path: Path, pool_path: Path, probe_results_path: Path | None) -> dict[str, Any]:
     registry = read_json(registry_path)
     pool = read_json(pool_path)
+    probe_results = _read_probe_results(probe_results_path)
     tasks = registry.get("tasks", [])
     main_tasks = [task for task in tasks if task.get("p2p_broad_main_included") is True]
     blocked_tasks = [task for task in tasks if task.get("p2p_broad_main_included") is not True]
     project_risks = _project_risks(blocked_tasks)
     promising = pool.get("promising_candidates", [])
-    top_by_project = _top_by_project(promising, project_risks)
+    main_projects = {str(task.get("project")) for task in main_tasks}
+    risky_projects = set(project_risks)
+    fresh_promising = [
+        record
+        for record in promising
+        if str(record.get("project")) not in main_projects
+        and str(record.get("project")) not in risky_projects
+    ]
+    top_by_project = _top_by_project(promising, project_risks, probe_results)
     return {
         "cohort_id": "EVP-7",
         "current_main_task_count": len(main_tasks),
@@ -47,11 +57,18 @@ def summarize(registry_path: Path, pool_path: Path) -> dict[str, Any]:
             "promising_candidate_tasks": pool.get("promising_candidate_tasks"),
             "framework_counts": pool.get("framework_counts"),
             "metadata_blocker_counts": pool.get("blocker_counts"),
+            "fresh_project_promising_candidates": len(fresh_promising),
         },
         "top_probe_lanes": top_by_project,
+        "controlled_probe_results": {
+            "source": _display(probe_results_path) if probe_results_path and probe_results_path.exists() else None,
+            "recorded_tasks": sorted(probe_results),
+        },
         "readiness_decision": (
             "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled "
-            "project-diverse probes, not blind BugsInPy sweeping or bulk admission."
+            "project-diverse probes, not blind BugsInPy sweeping or bulk admission. "
+            "The current metadata-promising pool has no fresh-project candidates outside "
+            "already-main or already-risky projects."
         ),
         "next_execution_boundary": [
             "Run at most one bounded checkout/F2P/P2P probe per risky project lane at a time.",
@@ -84,7 +101,29 @@ def _blocked_reason_counts(tasks: list[dict[str, Any]]) -> Counter[str]:
     return counts
 
 
-def _top_by_project(promising: list[dict[str, Any]], project_risks: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+def _read_probe_results(path: Path | None) -> dict[str, dict[str, Any]]:
+    if path is None or not path.exists():
+        return {}
+    value = read_json(path)
+    records = value.get("results", [])
+    if not isinstance(records, list):
+        raise ValueError(f"{path} results must be a list")
+    by_task: dict[str, dict[str, Any]] = {}
+    for record in records:
+        if not isinstance(record, dict):
+            raise ValueError(f"{path} results entries must be objects")
+        task_id = record.get("task_id")
+        if not task_id:
+            raise ValueError(f"{path} results entries require task_id")
+        by_task[str(task_id)] = record
+    return by_task
+
+
+def _top_by_project(
+    promising: list[dict[str, Any]],
+    project_risks: dict[str, dict[str, Any]],
+    probe_results: dict[str, dict[str, Any]],
+) -> list[dict[str, Any]]:
     selected: list[dict[str, Any]] = []
     seen: set[str] = set()
     for record in promising:
@@ -92,18 +131,26 @@ def _top_by_project(promising: list[dict[str, Any]], project_risks: dict[str, di
         if project in seen:
             continue
         seen.add(project)
-        selected.append(
-            {
-                "task_id": record.get("task_id"),
-                "project": project,
-                "framework": record.get("test_framework_hint"),
-                "screening_score": record.get("screening_score"),
-                "test_file": record.get("test_file"),
-                "run_commands": record.get("run_test_commands") or [],
-                "known_project_risk": project_risks.get(project, {"registered_blocked_tasks": 0}),
-                "probe_status": "metadata_only_not_admitted",
+        task_id = record.get("task_id")
+        probe_result = probe_results.get(str(task_id), {})
+        lane = {
+            "task_id": task_id,
+            "project": project,
+            "framework": record.get("test_framework_hint"),
+            "screening_score": record.get("screening_score"),
+            "test_file": record.get("test_file"),
+            "run_commands": record.get("run_test_commands") or [],
+            "known_project_risk": project_risks.get(project, {"registered_blocked_tasks": 0}),
+            "probe_status": probe_result.get("probe_status", "metadata_only_not_admitted"),
+        }
+        if probe_result:
+            lane["latest_probe"] = {
+                "date": probe_result.get("date"),
+                "decision": probe_result.get("decision"),
+                "blocked_reason": probe_result.get("blocked_reason"),
+                "notes": probe_result.get("notes"),
             }
-        )
+        selected.append(lane)
         if len(selected) >= 8:
             break
     return selected
@@ -131,6 +178,9 @@ def render_markdown(summary: dict[str, Any]) -> str:
         f"- Metadata-promising candidates: {pool['promising_candidate_tasks']}",
         f"- Framework counts: `{json.dumps(pool['framework_counts'], sort_keys=True)}`",
         f"- Metadata blocker counts: `{json.dumps(pool['metadata_blocker_counts'], sort_keys=True)}`",
+        f"- Fresh-project promising candidates: {pool['fresh_project_promising_candidates']}",
+        f"- Controlled probe result source: `{summary['controlled_probe_results']['source']}`",
+        f"- Controlled probe recorded tasks: `{json.dumps(summary['controlled_probe_results']['recorded_tasks'])}`",
         "",
         "## Probe Lanes",
         "",
@@ -183,11 +233,12 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--registry", type=Path, default=DEFAULT_REGISTRY)
     parser.add_argument("--pool", type=Path, default=DEFAULT_POOL)
+    parser.add_argument("--probe-results", type=Path, default=DEFAULT_PROBE_RESULTS)
     parser.add_argument("--json-out", type=Path, default=DEFAULT_JSON_OUT)
     parser.add_argument("--md-out", type=Path, default=DEFAULT_MD_OUT)
     args = parser.parse_args()
 
-    summary = summarize(args.registry, args.pool)
+    summary = summarize(args.registry, args.pool, args.probe_results)
     write_json(args.json_out, summary)
     write_text(args.md_out, render_markdown(summary))
     print(json.dumps(summary, ensure_ascii=False, sort_keys=True))
