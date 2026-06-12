@@ -221,9 +221,11 @@ They should not override `final_paper_roadmap_zh.md`.
   realistic tool-only baselines are now generated for apply-only, visible-tests,
   and visible-tool-summary conditions. The merge-gate schema dry-run now
   generates 168 parse-valid accept/reject/escalate records with zero leakage
-  findings. The next work is not to find an eighth bug or run API calls, but to
-  use the EVP-7 packets and schema-stable runner to test whether E0/E2/E4/E6
-  produce an explainable signal.
+  findings. The G5 metric scaffold now computes FAR, recall, escalation, FACR,
+  and Evidence Gain over schema-stable dry-run records, while explicitly
+  marking real signal existence as requiring genuine LLM verifier outputs. The
+  next work is not to find an eighth bug or run API calls, but to prepare the
+  real G5 verifier run boundary for user confirmation.
   Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and
@@ -260,6 +262,7 @@ python scripts\build_evp7_visible_tool_summaries.py --check
 python scripts\build_evp7_evidence_packets.py --check
 python scripts\run_evp7_tool_only_baselines.py --check
 python scripts\run_evp7_merge_gate_schema_dry_run.py --check
+python scripts\analyze_evp7_schema_dry_run_metrics.py --check
 ```
 
 For full-goal completion evidence, run:

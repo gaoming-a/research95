@@ -1282,3 +1282,20 @@ This file starts fresh for the patch-verification project.
   such as final labels, construction taxonomy, hidden oracle terms, and
   candidate provenance. A parse-valid record is still invalid if it carries one
   of those markers.
+
+## 2026-06-13 EVP-7 G5 metric scaffold boundary
+
+- G5 needs two separate claims: metric-path readiness and real signal
+  existence. Deterministic dry-run records can establish the former, but not
+  the latter.
+- FACR and Evidence Gain should be computed from the same aggregate confusion
+  counts as FAR, accepted precision, recall, rejection, and escalation. This
+  keeps the added paper-friendly metrics auditable rather than ornamental.
+- Utility weights are currently a scaffold:
+  `accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct`.
+  Before paper claims, run sensitivity analysis or document why these weights
+  match the merge-gate risk model.
+- The dry-run metric scaffold intentionally sets
+  `g5_signal_claim_status = requires_real_llm_verifier_outputs`. Do not change
+  that to passed unless genuine LLM verifier outputs have been produced under
+  an approved API/model/cost boundary and analyzed through the same path.

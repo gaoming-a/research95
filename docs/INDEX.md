@@ -71,6 +71,10 @@
 - `../data/reviews/evp7_merge_gate_schema_dry_run_summary.json`: summary for
   the merge-gate schema dry-run. G4 currently passes with 168 valid parses and
   zero leakage findings.
+- `../data/reviews/evp7_schema_dry_run_metrics.json`: no-API G5 metric
+  scaffold over schema dry-run records. It computes FAR, accepted precision,
+  recall, escalation, FACR, and Evidence Gain, but marks G5 signal claims as
+  requiring genuine LLM verifier outputs.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 
@@ -230,6 +234,9 @@
   the EVP-7 freeze, generated manifests, blocker registry, and why candidate
   records/evidence packets are the next step instead of further BugsInPy
   expansion.
+- `experiments/evp7_g5_metric_scaffold.md`: no-API G5 metric scaffold report.
+  It documents the FACR/Evidence Gain computation and the boundary that dry-run
+  metric variation is not LLM signal evidence.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on
@@ -517,6 +524,9 @@
 - `../scripts/run_evp7_merge_gate_schema_dry_run.py`: generates no-API
   accept/reject/escalate schema dry-run records from model-visible EVP-7
   packets and validates parser stability before any real LLM API call.
+- `../scripts/analyze_evp7_schema_dry_run_metrics.py`: computes no-API G5
+  metric scaffolding over schema dry-run records, joining evaluator labels only
+  for aggregate metrics.
 - `scripts/analyze_tool_gated_reviews.py`: oracle-gated analysis reference.
 - `experience/engineering_notes.md`: fresh operational notes for this new
   workspace.

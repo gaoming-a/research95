@@ -1,0 +1,190 @@
+{
+  "analysis_input": "data\\reviews\\evp7_merge_gate_schema_dry_run.jsonl",
+  "candidate_count": 42,
+  "cohort_id": "EVP-7",
+  "dry_run_boundary": "Deterministic schema dry-run metrics validate the analysis path only; they are not model-effect evidence.",
+  "evidence_levels": [
+    "E0",
+    "E2",
+    "E4",
+    "E6"
+  ],
+  "facr_thresholds": [
+    0.0,
+    0.01,
+    0.05,
+    0.1
+  ],
+  "g5_metric_scaffold": "passed",
+  "g5_signal_claim_status": "requires_real_llm_verifier_outputs",
+  "label_join_boundary": "Evaluator labels are joined only for aggregate metrics, never copied into dry-run review records.",
+  "metric_groups": {
+    "E0": {
+      "accepted_precision": null,
+      "confusion_counts": {
+        "escalated_correct": 7,
+        "escalated_incorrect": 35,
+        "false_accept": 0,
+        "false_reject": 0,
+        "invalid_output": 0,
+        "true_accept": 0,
+        "true_reject": 0
+      },
+      "correct_recall": 0.0,
+      "decision_counts": {
+        "escalate": 42
+      },
+      "escalation_rate": 1.0,
+      "evidence_gain_vs_e0": 0.0,
+      "facr": {
+        "far_le_0": 0.0,
+        "far_le_0.01": 0.0,
+        "far_le_0.05": 0.0,
+        "far_le_0.1": 0.0
+      },
+      "false_accept_rate": 0.0,
+      "false_reject_rate": 0.0,
+      "invalid_output_rate": 0.0,
+      "record_count": 42,
+      "utility": {
+        "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
+        "score": -10.5,
+        "score_per_candidate": -0.25
+      }
+    },
+    "E2": {
+      "accepted_precision": null,
+      "confusion_counts": {
+        "escalated_correct": 7,
+        "escalated_incorrect": 35,
+        "false_accept": 0,
+        "false_reject": 0,
+        "invalid_output": 0,
+        "true_accept": 0,
+        "true_reject": 0
+      },
+      "correct_recall": 0.0,
+      "decision_counts": {
+        "escalate": 42
+      },
+      "escalation_rate": 1.0,
+      "evidence_gain_vs_e0": 0.0,
+      "facr": {
+        "far_le_0": 0.0,
+        "far_le_0.01": 0.0,
+        "far_le_0.05": 0.0,
+        "far_le_0.1": 0.0
+      },
+      "false_accept_rate": 0.0,
+      "false_reject_rate": 0.0,
+      "invalid_output_rate": 0.0,
+      "record_count": 42,
+      "utility": {
+        "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
+        "score": -10.5,
+        "score_per_candidate": -0.25
+      }
+    },
+    "E4": {
+      "accepted_precision": 1.0,
+      "confusion_counts": {
+        "escalated_correct": 0,
+        "escalated_incorrect": 0,
+        "false_accept": 0,
+        "false_reject": 1,
+        "invalid_output": 0,
+        "true_accept": 6,
+        "true_reject": 35
+      },
+      "correct_recall": 0.857143,
+      "decision_counts": {
+        "accept": 6,
+        "reject": 36
+      },
+      "escalation_rate": 0.0,
+      "evidence_gain_vs_e0": 15.5,
+      "facr": {
+        "far_le_0": 0.857143,
+        "far_le_0.01": 0.857143,
+        "far_le_0.05": 0.857143,
+        "far_le_0.1": 0.857143
+      },
+      "false_accept_rate": 0.0,
+      "false_reject_rate": 0.142857,
+      "invalid_output_rate": 0.0,
+      "record_count": 42,
+      "utility": {
+        "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
+        "score": 5.0,
+        "score_per_candidate": 0.119048
+      }
+    },
+    "E6": {
+      "accepted_precision": 1.0,
+      "confusion_counts": {
+        "escalated_correct": 0,
+        "escalated_incorrect": 0,
+        "false_accept": 0,
+        "false_reject": 1,
+        "invalid_output": 0,
+        "true_accept": 6,
+        "true_reject": 35
+      },
+      "correct_recall": 0.857143,
+      "decision_counts": {
+        "accept": 6,
+        "reject": 36
+      },
+      "escalation_rate": 0.0,
+      "evidence_gain_vs_e0": 15.5,
+      "facr": {
+        "far_le_0": 0.857143,
+        "far_le_0.01": 0.857143,
+        "far_le_0.05": 0.857143,
+        "far_le_0.1": 0.857143
+      },
+      "false_accept_rate": 0.0,
+      "false_reject_rate": 0.142857,
+      "invalid_output_rate": 0.0,
+      "record_count": 42,
+      "utility": {
+        "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
+        "score": 5.0,
+        "score_per_candidate": 0.119048
+      }
+    }
+  },
+  "review_record_count": 168,
+  "signal_preview": {
+    "evidence_gain_vs_e0": {
+      "E2": 0.0,
+      "E4": 15.5,
+      "E6": 15.5
+    },
+    "has_metric_variation": true,
+    "interpretation_boundary": "Variation in deterministic dry-run metrics proves metric-path sensitivity, not LLM signal existence.",
+    "metric_deltas_vs_e0": {
+      "correct_recall": {
+        "E2": 0.0,
+        "E4": 0.857143,
+        "E6": 0.857143
+      },
+      "escalation_rate": {
+        "E2": 0.0,
+        "E4": -1.0,
+        "E6": -1.0
+      },
+      "false_accept_rate": {
+        "E2": 0.0,
+        "E4": 0.0,
+        "E6": 0.0
+      }
+    }
+  },
+  "utility_weights": {
+    "accept_correct": 1.0,
+    "accept_wrong": -5.0,
+    "escalate": -0.25,
+    "reject_correct": -1.0
+  }
+}

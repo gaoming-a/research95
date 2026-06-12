@@ -248,8 +248,35 @@ Current dry-run status:
 These records validate parser and schema stability only. They are deterministic
 no-API outputs generated from model-visible packets, not LLM verifier results.
 
+## G5 Metric Scaffold
+
+Command:
+
+```powershell
+python scripts\analyze_evp7_schema_dry_run_metrics.py --check
+```
+
+Tracked output:
+
+```text
+data/reviews/evp7_schema_dry_run_metrics.json
+docs/experiments/evp7_g5_metric_scaffold.md
+```
+
+Current scaffold status:
+
+- review records = 168;
+- E0/E2/E4/E6 level counts = 42 each;
+- G5 metric scaffold = passed;
+- G5 signal claim status = `requires_real_llm_verifier_outputs`.
+
+The scaffold computes false accept rate, accepted precision, correct recall,
+false reject rate, escalation rate, invalid output rate, FACR, and Evidence
+Gain. It validates the analysis path only; it does not prove LLM signal
+existence.
+
 ## Current Next Step
 
 No new BugsInPy expansion, native build work, external benchmark migration, or
 real API calls should occur before using the schema-stable EVP-7 protocol to
-test whether E0/E2/E4/E6 changes merge-gate signal in an explainable way.
+prepare the real G5 verifier run boundary for user confirmation.

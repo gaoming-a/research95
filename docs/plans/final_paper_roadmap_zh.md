@@ -964,6 +964,8 @@ BugsInPy 扩量，必须先解决当前候选池边界：
 - `data/evidence/evp7_evidence_packet_summary.json`；
 - `data/reviews/evp7_merge_gate_schema_dry_run.jsonl`；
 - `data/reviews/evp7_merge_gate_schema_dry_run_summary.json`；
+- `data/reviews/evp7_schema_dry_run_metrics.json`；
+- `docs/experiments/evp7_g5_metric_scaffold.md`；
 - `data/exclusions/blocked_bugsinpy_projects.jsonl`；
 - `scripts/build_evp7_protocol_manifests.py`；
 - `scripts/build_evp7_candidate_manifest.py`；
@@ -988,7 +990,10 @@ Phase A 已补齐 EVP-7 candidate-level schema：
    count = 0，leakage findings = 0；
 9. 这些 G4 records 是 no-API parser/schema dry-run，不是 LLM verifier
    结果，不能支持模型效果结论；
-10. 下一步是验证 G5 signal existence：在 schema-stable 协议下确认
-   E0/E2/E4/E6 是否产生可解释的 FAR、recall、escalation 或 utility 变化；
-11. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
+10. G5 metric scaffold 当前通过：FAR、accepted precision、correct recall、
+   escalation、FACR 和 Evidence Gain 的计算链路可复现，但
+   `g5_signal_claim_status = requires_real_llm_verifier_outputs`；
+11. 下一步是准备真实 LLM verifier 的 G5 执行边界：输入 manifest、prompt
+   version、模型、成本上限、停止条件和 postprocess gate；
+12. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
    expansion。

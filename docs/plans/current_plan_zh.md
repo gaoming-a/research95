@@ -4470,3 +4470,71 @@ Project-level P2P attempt：
   evidence level 改变 FAR、recall、escalation 或 utility。
 - 如果 G5 口径需要真实 LLM 输出而不是 deterministic dry-run，应先写明 API
   输入、成本、模型和停止条件，再由用户确认后执行。
+
+## 47. 2026-06-13 EVP-7 G5 metric scaffold without API
+
+同步状态：
+
+- 上一轮提交 `fc7ebf8 data: add evp7 schema dry run` 已成功 push 到
+  GitHub。
+- 当前 Git 状态为 `main...origin/main`，工作区干净。
+- G1/G2/G3/G4 已通过；G5 仍未证明。
+
+本轮小目标：
+
+1. 新增 G5 metric scaffold 脚本；
+2. 输入读取 `data/reviews/evp7_merge_gate_schema_dry_run.jsonl` 和
+   `data/patches/evp7_candidates.jsonl`；
+3. 按 E0/E2/E4/E6 计算 false accept rate、accepted precision、correct
+   recall、false reject rate、escalation rate、invalid output rate；
+4. 计算 FACR 和 Evidence Gain 的可复现口径；
+5. 明确区分 deterministic dry-run signal preview 与真实 LLM verifier signal。
+
+执行边界：
+
+- 不运行真实 LLM API；
+- 不把 dry-run metrics 写成模型效果结论；
+- dry-run review records 不得追加 evaluator-only labels；
+- evaluator labels 只能在 metrics 阶段 join，并且只输出聚合统计；
+- 如果 metric scaffold 发现 schema 或 label join 不稳定，先修本地分析链路，
+  不进入 API。
+
+验收条件：
+
+- 输出 tracked metrics summary；
+- 每个 evidence level 都有 42 条 records；
+- metric schema 覆盖主指标、FACR 和 Evidence Gain；
+- summary 明确 `g5_signal_claim_status` 不是 passed，而是需要真实 LLM
+  verifier 输出或用户确认 API 执行边界；
+- 最小验证和泄漏检查通过。
+
+执行结果：
+
+- 新增 `scripts/analyze_evp7_schema_dry_run_metrics.py`。
+- 已生成：
+  - `data/reviews/evp7_schema_dry_run_metrics.json`；
+  - `docs/experiments/evp7_g5_metric_scaffold.md`。
+- `python scripts\analyze_evp7_schema_dry_run_metrics.py --check` 通过：
+  - review_record_count = 168；
+  - candidate_count = 42；
+  - E0/E2/E4/E6 record_count = 42 each；
+  - G5 metric scaffold = passed；
+  - G5 signal claim status = `requires_real_llm_verifier_outputs`。
+- dry-run preview metrics：
+  - E0/E2：全部 escalate，correct recall = 0.0，escalation rate = 1.0；
+  - E4/E6：accept = 6，reject = 36，false accept rate = 0.0，
+    correct recall = 0.857143，escalation rate = 0.0；
+  - Evidence Gain vs E0：E4/E6 = 15.5。
+
+诊断：
+
+- 这些变化来自 deterministic schema dry-run rule，只能证明 metrics path 对
+  evidence level 敏感，不能证明 LLM signal existence。
+- G5 不应标记为 passed；真实 G5 仍需要 genuine LLM verifier outputs，或用户
+  明确确认 API/model/cost 边界后执行。
+
+下一步：
+
+- 在不调用 API 的前提下，可继续准备真实 LLM G5 的输入 manifest、成本上限、
+  prompt/version 和停止条件。
+- 如果要真正执行 G5，需要先得到用户对 API 调用的明确确认。

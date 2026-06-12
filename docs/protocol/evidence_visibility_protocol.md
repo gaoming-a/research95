@@ -172,6 +172,10 @@ Current gate status after the first packet builder:
   packet-level outputs parse into the fixed accept/reject/escalate JSON schema
   with zero leakage findings. These records are parser/schema evidence only,
   not LLM verifier results.
+- G5 is not yet passed. The no-API metric scaffold can compute FAR, accepted
+  precision, recall, escalation, FACR, and Evidence Gain over schema-stable
+  records, but real signal existence still requires genuine LLM verifier
+  outputs under an approved API/model/cost boundary.
 
 ## Post-A Expansion
 
