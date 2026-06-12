@@ -151,6 +151,10 @@
   clear F2P oracle, two full-repo discovery timeouts, the approved `tests/`
   official-root attempt, and the final
   `pending_blocked_official_test_root_timeout` status.
+- `experiments/fastapi2_sanic1_feasibility.md`: follow-up broader-pool probe.
+  It records `bugsinpy_fastapi_2` as a clear-F2P shared FastAPI scope-risk case
+  and `bugsinpy_sanic_1` as a clear-F2P task whose project-level P2P-broad
+  construction timed out without a manifest.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

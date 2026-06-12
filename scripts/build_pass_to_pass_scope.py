@@ -184,12 +184,22 @@ def build_compat_shim(out_dir: Path) -> Path:
             [
                 "import builtins",
                 "import inspect",
+                "import asyncio",
                 "import collections",
                 "import collections.abc",
                 "import sys",
                 "import types",
                 "import unittest.mock as _unittest_mock",
                 "from collections import namedtuple",
+                "if not hasattr(asyncio, 'coroutine'):",
+                "    asyncio.coroutine = types.coroutine",
+                "for _asyncio_name in ['Event', 'Lock', 'Condition', 'Semaphore', 'BoundedSemaphore', 'Queue']:",
+                "    if hasattr(asyncio, _asyncio_name):",
+                "        _asyncio_original = getattr(asyncio, _asyncio_name)",
+                "        def _drop_loop_arg(*args, __original=_asyncio_original, **kwargs):",
+                "            kwargs.pop('loop', None)",
+                "            return __original(*args, **kwargs)",
+                "        setattr(asyncio, _asyncio_name, _drop_loop_arg)",
                 "sys.modules.setdefault('mock', _unittest_mock)",
                 "if 'psutil' not in sys.modules:",
                 "    _psutil = types.ModuleType('psutil')",
@@ -1142,7 +1152,11 @@ def main() -> None:
         "compat_shim": {
             "enabled": True,
             "path": str(shim_dir),
-            "reason": "legacy tests import requests.compat.is_py26, absent in the current Python environment",
+            "reason": (
+                "restore legacy Python APIs removed in the current Python environment, "
+                "including collections aliases, inspect.getargspec, requests.compat constants, "
+                "and asyncio loop/coroutine compatibility"
+            ),
         },
         "pytest_addopts_override": addopts_audit,
         "collection": {

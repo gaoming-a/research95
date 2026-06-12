@@ -1060,3 +1060,28 @@ This file starts fresh for the patch-verification project.
   the 60 minute construction budget and produced no P2P manifest. Record
   `bugsinpy_fastapi_1` as `pending_blocked_official_test_root_timeout`; do not
   keep retrying or downgrade to a task-file scope.
+
+## 2026-06-12 FastAPI_2 and Sanic_1 feasibility
+
+- `bugsinpy_fastapi_2` has a clear F2P oracle under the existing FastAPI venv:
+  buggy receives `Socket Dependency`, fixed receives `Override`. It should not
+  trigger another long FastAPI official-root P2P attempt because `fastapi_1`
+  already exhausted that project-level scope path.
+- `bugsinpy_sanic_1` requires a separate ignored dependency environment. Do not
+  install the full requirements file: it contains broad unrelated dependencies
+  and platform-hostile packages. Install only the declared runtime/test subset
+  needed for the F2P and P2P probe.
+- `multidict==4.7.6` can be installed with `MULTIDICT_NO_EXTENSIONS=1` to avoid
+  the local MSVC build-tool blocker while preserving the package API needed by
+  this probe.
+- Old Sanic/aiofiles under Python 3.11 needs external runtime compatibility for
+  `asyncio.coroutine` and legacy `loop=` keyword arguments on asyncio
+  primitives. Keep this in the shared compat shim and record it as a runtime
+  compatibility boundary, not a source or test-fixture edit.
+- `bugsinpy_sanic_1` has a clear F2P oracle after that compatibility layer:
+  buggy middleware order is `[1, 2, 3, 6, 5, 4]`, fixed passes with
+  `[1, 2, 3, 4, 5, 6]`.
+- Sanic project-level P2P-broad construction reached the 60 minute budget while
+  running timeout-related tests and produced no manifest. Record it as
+  `pending_blocked_project_level_scope_timeout`; do not downgrade to task-file
+  P2P for main evidence.

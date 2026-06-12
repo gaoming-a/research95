@@ -2792,6 +2792,140 @@ project-level P2P-broad construction under the existing audited pipeline.
   `shim_allowed_now = false`；
 - `git diff --check` 无空白错误，仅有 Windows 换行提示。
 
+## 30. 2026-06-12 next candidate feasibility: fastapi_2 first
+
+本轮 Inspect：
+
+- Git 状态：`main...origin/main`，工作区干净。
+- `bugsinpy_fastapi_1` 已按 official-test-root timeout 记录，不进入
+  `p2p_broad_main`。
+- broader candidate pool 中下一高分候选为 `bugsinpy_fastapi_2`，其元数据为：
+  - project = `fastapi`；
+  - buggy commit = `210af1fd3dc0f612a08fa02a0cb3f5adb81e5bfb`；
+  - fixed commit = `02441ff0313d5b471b662293244c53e712f1243f`；
+  - F2P test = `tests/test_ws_router.py::test_router_ws_depends_with_override`。
+
+本轮小目标：
+
+1. 准备 `bugsinpy_fastapi_2` retained buggy/fixed checkout。
+2. 在现有 FastAPI isolated venv 或同等 declared-dependency venv 下运行 F2P probe。
+3. 如果 F2P oracle 不清楚、需要 test-fixture shim、或明显继承 FastAPI official-root
+   scope timeout 风险，则记录 blocker 并转向下一个候选。
+
+执行边界：
+
+- 本轮先做 checkout 和 F2P feasibility，不做 45-60 分钟 P2P construction。
+- 不安装全局依赖；如需新增依赖，只能进入 ignored isolated venv 并记录依赖审计。
+- 不改 FastAPI source/test fixture。
+- 不降级到 task-file-level P2P 作为 main evidence。
+- 如果 FastAPI 同项目 official-root scope 风险仍不可控，优先转向 `bugsinpy_sanic_1`
+  或其他低摩擦 pytest/unittest 项目，而不是继续多个 FastAPI 任务重复超时。
+
+验收条件：
+
+- checkout 成功；
+- F2P probe 明确 buggy fail / fixed pass；
+- 或者明确记录 blocker 与下一候选。
+
+`bugsinpy_fastapi_2` 执行结果：
+
+- buggy/fixed checkout 已成功创建到外部 retained workspace：
+  `D:/mgao/code/research/data/real_bugs/bugsinpy_workspace/fastapi_2`。
+- 使用现有 FastAPI isolated venv
+  `outputs/envs/fastapi1_p2p_py311` 运行目标 F2P：
+  - buggy checkout：
+    `tests/test_ws_router.py::test_router_ws_depends_with_override` 失败，
+    断言 `"Socket Dependency" == "Override"`；
+  - fixed checkout：同一测试通过。
+- 因此 `bugsinpy_fastapi_2` 的 F2P oracle 清楚。
+
+本轮决策：
+
+- 不继续对 `bugsinpy_fastapi_2` 执行 official-root P2P construction。
+- 原因：`bugsinpy_fastapi_1` 已证明 FastAPI 项目级 official-root `tests/` scope
+  在当前 pipeline 下超过 60 分钟仍无法生成 manifest；`fastapi_2` 共享同一项目测试根目录和
+  scope 风险。
+- `bugsinpy_fastapi_2` 应记录为 shared FastAPI official-root scope risk case，
+  不进入 `p2p_broad_main`。
+
+下一候选：
+
+- 转向 `bugsinpy_sanic_1`。
+- F2P metadata：
+  - project = `sanic`；
+  - buggy commit = `e7001b00747b659f7042b0534802b936ee8a53e0`；
+  - fixed commit = `44973125c15304b4262c51c78b5a86bd1daafa86`；
+  - F2P test = `tests/test_blueprints.py::test_bp_middleware_order`；
+  - patch changes response middleware insertion from `append` to `appendleft`。
+- Sanic requirements 较重，且包含不适合当前 Windows 环境的依赖；本轮不得全量安装
+  requirements，只允许按 F2P probe 的最小缺失依赖进入 ignored isolated venv 并记录。
+
+`bugsinpy_sanic_1` 执行结果：
+
+- buggy/fixed checkout 已成功创建到外部 retained workspace：
+  `D:/mgao/code/research/data/real_bugs/bugsinpy_workspace/sanic_1`。
+- 初始 F2P probe 在 buggy/fixed 上均因缺少 `aiofiles` 失败。
+- 已创建 ignored isolated venv：
+  `outputs/envs/sanic1_p2p_py311`。
+- 只安装目标 F2P/P2P probe 所需的声明 runtime/test 依赖子集；未安装全量
+  requirements。
+- `multidict==4.7.6` 初次安装因 MSVC C extension 构建失败；使用
+  `MULTIDICT_NO_EXTENSIONS=1` 安装纯 Python fallback 成功。
+- Python 3.11 下还需要外部 runtime compatibility shim：
+  - 恢复 `asyncio.coroutine = types.coroutine`；
+  - 对 legacy asyncio primitives 忽略已移除的 `loop=` keyword。
+- 该 shim 已同步到 `scripts/build_pass_to_pass_scope.py` 的通用 compat shim；
+  不修改 Sanic source/test fixture。
+
+F2P probe：
+
+- buggy checkout：
+  `tests/test_blueprints.py::test_bp_middleware_order` 失败，middleware order 为
+  `[1, 2, 3, 6, 5, 4]`，预期 `[1, 2, 3, 4, 5, 6]`。
+- fixed checkout：同一测试通过。
+- 因此 `bugsinpy_sanic_1` 的 F2P oracle 清楚。
+
+Project-level P2P attempt：
+
+- 已尝试运行
+  `scripts/build_pass_to_pass_scope.py --task-id bugsinpy_sanic_1 --project sanic --test-path . --scope-type project_level_p2p_broad ...`。
+- 该运行达到 60 分钟预算仍未完成，未生成
+  `data/p2p_scopes/bugsinpy_sanic_1_p2p_broad.json`。
+- 观察到残留进程停在 `tests/test_response_timeout.py` 相关 batch；已终止本轮 Sanic
+  scope 构造进程。
+
+最终状态：
+
+- `bugsinpy_fastapi_2` 记录为 `pending_blocked_shared_scope_risk`。
+- `bugsinpy_sanic_1` 记录为
+  `pending_blocked_project_level_scope_timeout`。
+- 新增依赖环境审计：
+  `data/p2p_scopes/bugsinpy_sanic_1_dependency_environment_audit.json`。
+- 新增 Sanic timeout 记录：
+  `data/p2p_scopes/bugsinpy_sanic_1_project_level_timeout.json`。
+- 新增实验记录：
+  `docs/experiments/fastapi2_sanic1_feasibility.md`。
+- 两个任务均不进入 `p2p_broad_main`。
+
+下一步：
+
+- 转向 broader pool 中非 FastAPI、非 Sanic 的下一个低摩擦候选。
+- 优先考虑 `bugsinpy_scrapy_1` 等 unittest 候选，但开始前必须先 Inspect
+  其 dependencies 是否含外部服务、native build 或网络边界。
+
+本轮最小验证：
+
+- `python -m py_compile scripts\build_pass_to_pass_scope.py` 通过。
+- `data/cohorts/task_cohort_registry.json` JSON 解析通过。
+- `data/p2p_scopes/bugsinpy_sanic_1_dependency_environment_audit.json` JSON 解析通过。
+- `data/p2p_scopes/bugsinpy_sanic_1_project_level_timeout.json` JSON 解析通过。
+- registry 中 `bugsinpy_fastapi_2` 唯一，状态为
+  `pending_blocked_shared_scope_risk`，`p2p_broad_main_included = false`。
+- registry 中 `bugsinpy_sanic_1` 唯一，状态为
+  `pending_blocked_project_level_scope_timeout`，`p2p_broad_main_included = false`。
+- 已确认无 `bugsinpy_sanic_1` / `bugsinpy_fastapi_2` 相关残留 Python 进程。
+- `git diff --check` 无空白错误，仅有 Windows 换行提示。
+
 `bugsinpy_fastapi_1` probe 启动：
 
 - 目标：从 broader BugsInPy pool 中继续扩展第 8 个 project-level

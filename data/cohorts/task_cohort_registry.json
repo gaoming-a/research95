@@ -588,6 +588,76 @@
         "task_file_level_p2p": "not_recorded"
       },
       "blocked_reason": [
+        "shared_fastapi_official_test_root_timeout_risk"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "p2p_broad_size": null,
+        "test_framework": "pytest"
+      },
+      "f2p_oracle": {
+        "buggy": "failed: websocket received Socket Dependency instead of Override",
+        "fixed": "passed",
+        "nodeid": "tests/test_ws_router.py::test_router_ws_depends_with_override"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "F2P oracle is clear, but the task shares FastAPI's official test root with fastapi_1, whose full-repo and tests/ official-root P2P construction timed out without a manifest. The task was not advanced to another long P2P construction attempt.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "fastapi",
+      "project_level_p2p_status": "pending_blocked_shared_scope_risk",
+      "task_id": "bugsinpy_fastapi_2"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "project_level_scope_timeout"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "p2p_broad_size": null,
+        "test_framework": "pytest"
+      },
+      "dependency_environment_audit": "data/p2p_scopes/bugsinpy_sanic_1_dependency_environment_audit.json",
+      "f2p_oracle": {
+        "buggy": "failed: middleware order [1, 2, 3, 6, 5, 4] != [1, 2, 3, 4, 5, 6]",
+        "fixed": "passed",
+        "nodeid": "tests/test_blueprints.py::test_bp_middleware_order"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "F2P oracle is clear after declared dependency installation and Python 3.11 compatibility shim, but project-level P2P-broad construction reached the 60 minute budget without a manifest. No task-file-level scope was used.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_sanic_1_project_level_timeout.json",
+      "project": "sanic",
+      "project_level_p2p_status": "pending_blocked_project_level_scope_timeout",
+      "task_id": "bugsinpy_sanic_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
         "missing_typed_ast_dependency",
         "unittest_collection_error"
       ],

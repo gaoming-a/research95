@@ -180,6 +180,10 @@ They should not override `final_paper_roadmap_zh.md`.
   `pending_blocked_official_test_root_timeout`: full-repo discovery timed out
   twice, and the user-approved official-test-root `tests/` scope also exceeded
   the bounded construction budget without producing a manifest.
+- `bugsinpy_fastapi_2` has a clear F2P oracle but is excluded as a shared
+  FastAPI official-root timeout-risk case. `bugsinpy_sanic_1` also has a clear
+  F2P oracle, but its project-level P2P-broad construction reached the bounded
+  runtime without producing a manifest.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

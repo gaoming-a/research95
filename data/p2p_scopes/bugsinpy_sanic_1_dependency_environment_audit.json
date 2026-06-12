@@ -1,0 +1,47 @@
+{
+  "task_id": "bugsinpy_sanic_1",
+  "project": "sanic",
+  "environment": {
+    "path": "outputs/envs/sanic1_p2p_py311",
+    "python": "Python 3.11",
+    "ignored": true
+  },
+  "dependency_source": {
+    "runtime": "retained checkout setup.py install_requires",
+    "test": "retained checkout setup.py tests_require",
+    "requirements_file": "projects/sanic/bugs/1/requirements.txt"
+  },
+  "installed_subset": [
+    "pytest",
+    "aiofiles==0.5.0",
+    "websockets==8.1",
+    "multidict==4.7.6",
+    "httpx==0.11.1",
+    "httptools",
+    "ujson",
+    "pytest-sanic",
+    "pytest-benchmark",
+    "pytest-sugar",
+    "beautifulsoup4",
+    "gunicorn",
+    "httpcore==0.3.0"
+  ],
+  "excluded_or_modified": [
+    {
+      "package": "uvloop",
+      "reason": "not available for Windows; Sanic setup.py supports SANIC_NO_UVLOOP"
+    },
+    {
+      "package": "multidict==4.7.6",
+      "change": "installed with MULTIDICT_NO_EXTENSIONS=1",
+      "reason": "C extension build requires MSVC on Python 3.11; pure-Python fallback preserves package API for this probe"
+    }
+  ],
+  "compat_shim": {
+    "path": "outputs/sanic1_f2p_probe/compat_shim",
+    "tracked_in_builder": true,
+    "reason": "restore Python APIs removed by Python 3.11 for legacy Sanic/aiofiles execution: asyncio.coroutine and legacy loop keyword arguments"
+  },
+  "scope": "F2P probe and attempted project-level P2P-broad construction",
+  "global_install": false
+}

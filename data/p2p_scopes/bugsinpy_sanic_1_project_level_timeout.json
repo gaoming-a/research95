@@ -1,0 +1,25 @@
+{
+  "task_id": "bugsinpy_sanic_1",
+  "project": "sanic",
+  "p2p_scope_type": "project_level_p2p_broad",
+  "scope_roots": [
+    "."
+  ],
+  "project_level_discovery": {
+    "attempted": true,
+    "attempts": 1,
+    "status": "timeout",
+    "elapsed_minutes": 60,
+    "manifest_generated": false
+  },
+  "f2p_oracle": {
+    "nodeid": "tests/test_blueprints.py::test_bp_middleware_order",
+    "buggy": "failed: response middleware order [1, 2, 3, 6, 5, 4] != [1, 2, 3, 4, 5, 6]",
+    "fixed": "passed"
+  },
+  "result": {
+    "project_level_p2p_status": "pending_blocked_project_level_scope_timeout",
+    "p2p_broad_main_included": false,
+    "p2p_broad_manifest": null
+  }
+}
