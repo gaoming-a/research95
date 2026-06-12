@@ -979,7 +979,9 @@ Phase A 已补齐 EVP-7 candidate-level schema：
    tool summary source；E4/E6 当前均为 42/42 complete；
 6. G1 packet completeness 和 G2 leakage audit 当前均通过；3 条 visible
    `error` outcome 是 candidate-induced import failure，不是缺失证据；
-7. 下一步是运行 tool-only baselines 和 LLM
+7. G3 tool-only baseline readiness 当前通过：apply-only、visible-tests、
+   visible-tool-summary 三组 baseline 均生成 42 条 schema-valid decisions；
+8. 下一步是运行 LLM
    merge-gate schema dry-run；
-8. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
+9. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
    expansion。

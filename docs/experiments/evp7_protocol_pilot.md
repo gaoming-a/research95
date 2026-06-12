@@ -166,11 +166,14 @@ Current status:
 - E6 complete for 42 candidates after deterministic visible tool summaries were
   generated from model-visible static and visible-test evidence;
 - automated leakage audit passes with zero findings.
+- deterministic tool-only baselines are generated for 42 candidates under three
+  conditions: apply-only, visible-tests, and visible-tool-summary.
 
 ## Current Limitation
 
 This round generates model-visible packet records, an independent visible test
-outcome source, and deterministic visible tool summaries. G1 and G2 now pass.
+outcome source, deterministic visible tool summaries, and deterministic
+tool-only baselines. G1, G2, and G3 now pass.
 
 Reason:
 
@@ -189,8 +192,33 @@ from local checkouts.
 The next executable step is:
 
 ```text
-Run tool-only baselines and merge-gate schema dry-runs before any real LLM API
-calls.
+Run merge-gate schema dry-runs before any real LLM API calls.
+
+## Tool-Only Baseline Summary
+
+Command:
+
+```powershell
+python scripts\run_evp7_tool_only_baselines.py --check
+```
+
+Tracked outputs:
+
+```text
+data/baselines/evp7_tool_only_decisions.jsonl
+data/baselines/evp7_tool_only_metrics.json
+```
+
+Current metrics:
+
+| condition | accepted precision | false accept rate | correct recall | escalation rate |
+| --- | ---: | ---: | ---: | ---: |
+| `tool_only_apply_only` | n/a | 0.0 | 0.0 | 1.0 |
+| `tool_only_visible_tests` | 1.0 | 0.0 | 0.857143 | 0.0 |
+| `tool_only_visible_tool_summary` | 1.0 | 0.0 | 0.857143 | 0.0 |
+
+The visible-tests and visible-tool-summary baselines reject one correct patch,
+so they are strong safety baselines but not perfect recall baselines.
 ```
 
 No new BugsInPy expansion, native build work, external benchmark migration, or

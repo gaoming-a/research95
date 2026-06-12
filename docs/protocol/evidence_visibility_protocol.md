@@ -165,6 +165,9 @@ Current gate status after the first packet builder:
 - G2 passes for the generated packet records: automated leakage audit found no
   evaluator labels, oracle outcomes, hidden tests, reference provenance, or
   failure taxonomy in model-visible packets.
+- G3 passes for deterministic tool-only baselines: apply-only, visible-tests,
+  and visible-tool-summary conditions each produce 42 schema-valid decisions
+  and aggregate metrics.
 
 ## Post-A Expansion
 

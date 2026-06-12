@@ -4318,6 +4318,71 @@ Project-level P2P attempt：
 - baseline 只能读取 model-visible evidence packets，不能读取 evaluator labels；
   metrics 计算时再 join evaluator-side candidate labels。
 
+## 45. 2026-06-13 EVP-7 tool-only baseline readiness
+
+本轮小目标：
+
+1. 新增 EVP-7 专用 tool-only baseline runner；
+2. 决策生成阶段只读取 `data/evidence/evp7_evidence_packets.jsonl`；
+3. 评估阶段再 join `data/patches/evp7_candidates.jsonl` 的 evaluator labels
+   计算 metrics；
+4. 输出 deterministic baseline decisions 和 metrics；
+5. baseline 输出遵守 accept/reject/escalate schema，不运行真实 LLM API。
+
+执行边界：
+
+- baseline decision records 不得包含 `label_with_p2p_broad`、
+  `candidate_type`、`failure_type_label`、`expected_outcome`、`patch_id` 等
+  evaluator-only 字段；
+- metrics 可以使用 evaluator labels，但只输出聚合指标；
+- 不启动 LLM API；
+- 不新增 bug，不修改 candidate labels。
+
+验收条件：
+
+- 每个 condition 对 42 个 candidates 都生成一条 decision；
+- 至少包含 apply-only、visible-tests、visible-tool-summary 三个 tool-only
+  conditions；
+- metrics 包含 accepted precision、false accept rate、correct recall、
+  false reject rate、escalation rate、invalid output rate；
+- G3 baseline readiness 可由 summary 证明。
+
+执行结果：
+
+- 新增 `scripts/run_evp7_tool_only_baselines.py`。
+- 已生成：
+  - `data/baselines/evp7_tool_only_decisions.jsonl`；
+  - `data/baselines/evp7_tool_only_metrics.json`。
+- `python scripts\run_evp7_tool_only_baselines.py --check` 通过：
+  - decision_count = 126；
+  - candidate_count = 42；
+  - conditions = `tool_only_apply_only`、`tool_only_visible_tests`、
+    `tool_only_visible_tool_summary`；
+  - G3 baseline readiness = passed。
+- metrics：
+  - `tool_only_apply_only`：全部 escalate，false accept rate = 0.0，
+    correct recall = 0.0，escalation rate = 1.0；
+  - `tool_only_visible_tests`：accept = 6，reject = 36，accepted precision =
+    1.0，false accept rate = 0.0，correct recall = 0.857143；
+  - `tool_only_visible_tool_summary`：accept = 6，reject = 36，accepted
+    precision = 1.0，false accept rate = 0.0，correct recall = 0.857143。
+- visible-tests / visible-tool-summary baseline 都 reject 了 1 个 correct
+  candidate，因此当前 tool-only 不是 oracle upper bound；它是 strong safety
+  baseline。
+
+验证结果：
+
+- baseline decision records 的严格敏感/label marker 检查通过；
+- decision records 不包含 `label_with_p2p_broad`、`candidate_type`、
+  `failure_type_label`、`expected_outcome`、`hidden_oracles`、`patch_id`；
+- metrics 的 label join 仅用于 aggregate summary。
+
+下一步：
+
+- 不运行真实 LLM API。
+- 进入 G4 schema stability：生成 merge-gate schema dry-run inputs/outputs，
+  确认 accept/reject/escalate JSON schema 可被稳定解析。
+
 验证结果：
 
 - `python -m py_compile scripts\build_evp7_protocol_manifests.py

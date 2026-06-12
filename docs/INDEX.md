@@ -58,6 +58,12 @@
   tool summaries built only from model-visible static and visible-test evidence.
 - `../data/evidence/evp7_visible_tool_summary_summary.json`: summary of visible
   tool summaries: 42 complete records.
+- `../data/baselines/evp7_tool_only_decisions.jsonl`: deterministic tool-only
+  accept/reject/escalate decisions for apply-only, visible-tests, and
+  visible-tool-summary conditions. Decision records are generated from
+  model-visible packets only.
+- `../data/baselines/evp7_tool_only_metrics.json`: aggregate EVP-7 tool-only
+  baseline metrics. G3 currently passes.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 
@@ -499,6 +505,8 @@
   candidate workdirs to generate independent E4 visible outcome evidence.
 - `../scripts/build_evp7_visible_tool_summaries.py`: builds deterministic E6
   visible tool summaries from already model-visible evidence.
+- `../scripts/run_evp7_tool_only_baselines.py`: builds deterministic EVP-7
+  tool-only baseline decisions and aggregate metrics.
 - `scripts/analyze_tool_gated_reviews.py`: oracle-gated analysis reference.
 - `experience/engineering_notes.md`: fresh operational notes for this new
   workspace.

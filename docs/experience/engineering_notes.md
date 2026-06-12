@@ -1255,3 +1255,14 @@ This file starts fresh for the patch-verification project.
   so they count as complete visible runtime evidence. Deterministic E6 visible
   tool summaries also complete 42/42 by summarizing already model-visible
   patch-apply/static/test evidence.
+
+## 2026-06-13 EVP-7 tool-only baseline boundary
+
+- Tool-only decision records must be generated from model-visible evidence
+  packets only. Evaluator labels may be joined only after decisions exist, and
+  only for aggregate metrics.
+- Apply-only is a safe but unusable baseline for EVP-7: it escalates all 42
+  candidates, yielding false accept rate 0.0 and correct recall 0.0.
+- Visible-tests and visible-tool-summary baselines currently have false accept
+  rate 0.0, accepted precision 1.0, and correct recall 0.857143. They reject
+  one correct patch, so they are strong safety baselines but not an oracle.
