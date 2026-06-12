@@ -5583,3 +5583,26 @@ full run 决策：
 - 覆盖 `task-id`、project、framework、unittest discovery 参数、F2P nodeid、
   scope type、runs、timeouts、batch size、`--batch-first`、static exclude
   tokens、out-dir 和 manifest-out。
+
+## 71. 2026-06-13 P2P scope builder dry-run mode
+
+本轮小目标：
+
+- 为 `scripts/build_pass_to_pass_scope.py` 增加 `--dry-run`；
+- 获批前可验证 `youtube-dl_7` command packet 的参数、checkout、scope type、
+  test paths 和 manifest 目标；
+- dry-run 不执行 collection、不运行测试、不创建 compat shim、不写 manifest。
+
+执行边界：
+
+- `--dry-run` 只能打印 JSON plan；
+- 不创建 `outputs/p2p_scope_builds/...`；
+- 不创建 `data/p2p_scopes/...`；
+- 不改变实验标签或 cohort。
+
+验收条件：
+
+- `python -m py_compile scripts\build_pass_to_pass_scope.py` 通过；
+- 对 `bugsinpy_youtube-dl_7` 运行 command packet 加 `--dry-run`，输出
+  `will_execute_tests=false`、`will_write_manifest=false`、
+  `manifest_out_exists=false`。

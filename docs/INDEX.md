@@ -501,7 +501,8 @@
   generation prompt manifests, and the tracked task cohort registry.
 - `scripts/build_pass_to_pass_scope.py`: collects project tests and builds
   P2P-core/P2P-broad stable runnable subsets for a task. It supports pytest and
-  bounded unittest discovery/runner adapters.
+  bounded unittest discovery/runner adapters, plus `--dry-run` input validation
+  that prints a no-run plan without creating output directories or manifests.
 - `scripts/static_unittest_p2p_preflight.py`: no-run AST preflight for unittest
   P2P candidates. It estimates static test-method counts, token exclusions, and
   buggy/fixed remaining-set differences before expensive dynamic P2P runs.

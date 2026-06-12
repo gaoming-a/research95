@@ -879,14 +879,17 @@ def parse_args() -> argparse.Namespace:
             "Writes the original, removed, retained, and sanitized tokens into the scope manifest."
         ),
     )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Validate inputs and print a no-run plan without creating output directories, shims, or manifests.",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
     out_dir = Path(args.out_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
-    shim_dir = build_compat_shim(out_dir)
     source_root = Path(args.source_workspace_root)
     buggy = checkout_root(source_root, args.task_id, "buggy", args.project)
     fixed = checkout_root(source_root, args.task_id, "fixed", args.project)
@@ -931,6 +934,44 @@ def main() -> None:
         test_paths = [args.unittest_start_dir]
     else:
         test_paths = [args.test_path]
+
+    if args.dry_run:
+        dry_run_record = {
+            "mode": "p2p_scope_builder_dry_run",
+            "task_id": args.task_id,
+            "project": args.project,
+            "scope_type": scope_type,
+            "test_framework": args.test_framework,
+            "source_workspace_root": str(source_root),
+            "buggy_checkout": str(buggy),
+            "fixed_checkout": str(fixed),
+            "buggy_checkout_exists": buggy.exists(),
+            "fixed_checkout_exists": fixed.exists(),
+            "test_paths": test_paths,
+            "fail_to_pass_nodeids": sorted(fail_to_pass),
+            "core_patterns": core_patterns,
+            "runs": args.runs,
+            "timeout_seconds": args.timeout_seconds,
+            "batch_timeout_seconds": args.batch_timeout_seconds,
+            "batch_size": args.batch_size,
+            "batch_first": args.batch_first,
+            "static_exclude_tokens": args.static_exclude_token,
+            "static_include_tokens": args.static_include_token,
+            "out_dir": str(out_dir),
+            "out_dir_exists": out_dir.exists(),
+            "manifest_out": args.manifest_out,
+            "manifest_out_exists": Path(args.manifest_out).exists() if args.manifest_out else False,
+            "will_execute_tests": False,
+            "will_create_output_dir": False,
+            "will_create_compat_shim": False,
+            "will_write_manifest": False,
+            "pytest_addopts_override": addopts_audit,
+        }
+        print(json.dumps(dry_run_record, ensure_ascii=False, indent=2, sort_keys=True))
+        return
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    shim_dir = build_compat_shim(out_dir)
 
     if args.test_framework == "unittest":
         buggy_tests, buggy_collect = collect_unittest_tests(

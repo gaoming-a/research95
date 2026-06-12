@@ -1486,3 +1486,7 @@ This file starts fresh for the patch-verification project.
   and compare all expected flags against the generated approval-gated command
   packet. Partial checks on task id and oracle nodeid are not enough once the
   command becomes the handoff artifact.
+- `build_pass_to_pass_scope.py --dry-run` must remain side-effect free: it
+  validates inputs and prints a JSON plan, but does not create output
+  directories, compat shims, or manifests. Use it before any approval-gated P2P
+  execution.
