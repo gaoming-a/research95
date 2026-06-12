@@ -167,6 +167,9 @@
   records the Windows selector event loop compatibility boundary, a clear
   retained websocket F2P oracle, and a project-level unittest P2P construction
   timeout.
+- `experiments/tornado9_feasibility.md`: Tornado 9 feasibility probe. It
+  records the same-task checkout parallelism boundary, a clear `url_concat`
+  F2P oracle, and a shared Tornado project-level unittest P2P timeout.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

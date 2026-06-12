@@ -1138,3 +1138,8 @@ This file starts fresh for the patch-verification project.
   `test_url_concat_none_params`.
 - Safe parallelism is across different task ids, or after checkout has already
   completed. Same-task buggy/fixed checkout should stay serial.
+- `bugsinpy_tornado_9` confirms that a pure-function F2P target does not by
+  itself make Tornado project-level P2P feasible. The F2P oracle is clear after
+  serial checkout repair, but project-level `tornado/test` scope construction
+  still failed to produce a manifest. Treat this as shared Tornado
+  project-level scope risk and avoid repeated long Tornado sweeps.

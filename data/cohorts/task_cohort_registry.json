@@ -767,6 +767,41 @@
         "task_file_level_p2p": "not_recorded"
       },
       "blocked_reason": [
+        "shared_tornado_project_level_unittest_scope_timeout"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "p2p_broad_size": null,
+        "test_framework": "unittest"
+      },
+      "f2p_oracle": {
+        "buggy": "failed under shared compat shim: url_concat(..., None) raised TypeError",
+        "fixed": "passed under shared compat shim",
+        "nodeid": "tornado.test.httputil_test.TestUrlConcat.test_url_concat_none_params"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "F2P oracle is clear after serial checkout repair, but Tornado project-level unittest P2P-broad construction again failed to produce a manifest. No source/test fixture edit or task-file P2P downgrade was used.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_tornado_9_project_level_timeout.json",
+      "project": "tornado",
+      "project_level_p2p_status": "pending_blocked_shared_project_level_unittest_scope_timeout",
+      "task_id": "bugsinpy_tornado_9"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
         "missing_typed_ast_dependency",
         "unittest_collection_error"
       ],

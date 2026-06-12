@@ -196,6 +196,9 @@ They should not override `final_paper_roadmap_zh.md`.
 - `bugsinpy_tornado_1` has a clear websocket F2P oracle after the documented
   Windows selector event loop policy, but project-level unittest P2P-broad
   construction timed out before producing a manifest.
+- `bugsinpy_tornado_9` has a clear pure-function F2P oracle, but the Tornado
+  project-level unittest P2P-broad path again failed to produce a manifest. It
+  is recorded as shared Tornado project-level scope risk.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - The next work should start from Stage A/B in

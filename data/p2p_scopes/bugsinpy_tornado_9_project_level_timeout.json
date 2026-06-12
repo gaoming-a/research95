@@ -1,0 +1,44 @@
+{
+  "task_id": "bugsinpy_tornado_9",
+  "project": "tornado",
+  "status": "pending_blocked_shared_project_level_unittest_scope_timeout",
+  "p2p_broad_main_included": false,
+  "buggy_commit_id": "c9d2a3fa573987629ad576e991c2f3b65f4daab4",
+  "fixed_commit_id": "86cc31f52992fb9d11f92de6fd5496842fea2265",
+  "f2p_oracle": {
+    "nodeid": "tornado.test.httputil_test.TestUrlConcat.test_url_concat_none_params",
+    "buggy": "failed under shared compat shim: url_concat(..., None) raised TypeError",
+    "fixed": "passed under shared compat shim"
+  },
+  "checkout_boundary": {
+    "initial_parallel_checkout_failed": true,
+    "failure_summary": "Parallel same-task buggy/fixed checkout raced through BugsInPy's shared bug temporary directory and left the fixed checkout without the injected test method.",
+    "repair": "Deleted only the incomplete fixed checkout under the tornado_9 retained workspace and rebuilt it serially.",
+    "same_task_parallel_checkout_allowed": false
+  },
+  "project_level_p2p_attempt": {
+    "scope_type": "project_level_p2p_broad",
+    "test_framework": "unittest",
+    "unittest_start_dir": "tornado/test",
+    "unittest_pattern": "*_test.py",
+    "unittest_top_level_dir": ".",
+    "runs": 3,
+    "timeout_seconds": 8,
+    "batch_first": false,
+    "completed": false,
+    "manifest_generated": false,
+    "output_dir": "outputs/tornado9_project_p2p_scope_001",
+    "observed_output": "Only the compat_shim helper directory was written; no scope manifest or test records were generated before timeout/cleanup.",
+    "observed_active_tests": [
+      "tornado.test.gen_test.GenCoroutineTest.test_sync_return",
+      "tornado.test.gen_test.GenEngineTest.test_moment"
+    ],
+    "residual_processes_after_cleanup": 0
+  },
+  "decision": {
+    "reason": "The retained F2P oracle is clear, but Tornado project-level unittest P2P-broad construction shares the previously observed Tornado scope timeout risk and did not produce a manifest.",
+    "no_task_file_downgrade": true,
+    "no_source_or_test_fixture_edit": true,
+    "external_network_tests_allowed": false
+  }
+}

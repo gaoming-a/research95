@@ -3395,6 +3395,40 @@ Project-level P2P attempt：
 - 对 `bugsinpy_tornado_9` 启动单任务 project-level unittest P2P-broad
   construction。
 
+Project-level P2P attempt：
+
+- 已运行 `bugsinpy_tornado_9` project-level unittest P2P-broad construction：
+  - discovery root = `tornado/test`；
+  - pattern = `*_test.py`；
+  - fail-to-pass oracle =
+    `tornado.test.httputil_test.TestUrlConcat.test_url_concat_none_params`；
+  - runs = 3；
+  - per-test timeout = 8 秒；
+  - 未启用 batch-first，避免 batch 子进程长时间遮蔽单测 timeout。
+- 该运行在用户中断后仍在后台继续运行；后续观察确认父进程运行时间远超本轮预算，
+  且未生成 `data/p2p_scopes/bugsinpy_tornado_9_p2p_broad.json`。
+- 输出目录仅包含 `compat_shim`，说明未到达可用 manifest/test-record 阶段。
+- 观察到 active tests 包括：
+  - `tornado.test.gen_test.GenCoroutineTest.test_sync_return`；
+  - `tornado.test.gen_test.GenEngineTest.test_moment`。
+- 已终止本轮 Tornado_9 P2P 构造残留进程，并确认无相关 Python 进程残留。
+
+最终状态：
+
+- `bugsinpy_tornado_9` 记录为
+  `pending_blocked_shared_project_level_unittest_scope_timeout`。
+- 新增结构化 timeout 记录：
+  `data/p2p_scopes/bugsinpy_tornado_9_project_level_timeout.json`。
+- 新增实验记录：
+  `docs/experiments/tornado9_feasibility.md`。
+- `bugsinpy_tornado_9` 不进入 `p2p_broad_main`。
+
+下一步：
+
+- 不继续对 Tornado 项目级 unittest scope 做长时间重复尝试。
+- 并行筛选应转向非 FastAPI、非 Sanic、非 Scrapy、非 youtube-dl、非 Tornado
+  的候选项目，或只做 metadata/F2P 层面的短探针。
+
 执行结果：
 
 - buggy/fixed checkout 已成功创建到外部 retained workspace：
