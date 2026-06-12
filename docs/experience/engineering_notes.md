@@ -1490,3 +1490,6 @@ This file starts fresh for the patch-verification project.
   validates inputs and prints a JSON plan, but does not create output
   directories, compat shims, or manifests. Use it before any approval-gated P2P
   execution.
+- The youtube-dl decision audit should call the builder dry-run directly. This
+  closes the handoff gap between a correct command packet and the actual scope
+  builder accepting the command without side effects.

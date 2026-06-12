@@ -5606,3 +5606,24 @@ full run 决策：
 - 对 `bugsinpy_youtube-dl_7` 运行 command packet 加 `--dry-run`，输出
   `will_execute_tests=false`、`will_write_manifest=false`、
   `manifest_out_exists=false`。
+
+## 72. 2026-06-13 youtube-dl decision audit invokes builder dry-run
+
+本轮小目标：
+
+- 将 `scripts/build_pass_to_pass_scope.py --dry-run` 纳入
+  `scripts/audit_youtubedl_p2p_decision.py`；
+- 使一个 no-run decision audit 同时验证：
+  - 决策包推荐与命令模板一致；
+  - generated approval-gated command packet 一致；
+  - 实际 P2P builder 接受该命令的 dry-run 参数；
+  - dry-run 不执行测试、不写 manifest、不创建 output dir。
+
+新增检查：
+
+- `builder_dry_run_completed`；
+- `builder_dry_run_no_test_execution`；
+- `builder_dry_run_no_manifest_write`；
+- `builder_dry_run_no_output_dir_creation`；
+- `builder_dry_run_manifest_absent`；
+- `builder_dry_run_scope_matches_expected`。

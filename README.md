@@ -300,6 +300,8 @@ python scripts\audit_youtubedl_p2p_decision.py `
 
 This audit writes an approval-required command packet for the proposed
 `youtube-dl_7` P2P run. It does not execute P2P or create a tracked manifest.
+It also invokes the P2P scope builder with `--dry-run` to verify that the
+generated command is accepted without executing tests.
 
 To validate the proposed P2P command without executing tests, append `--dry-run`
 to the command packet emitted by that audit.

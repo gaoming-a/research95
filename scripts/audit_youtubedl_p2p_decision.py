@@ -4,6 +4,8 @@ import argparse
 import json
 import re
 import shlex
+import subprocess
+import sys
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
@@ -212,6 +214,35 @@ def flags_match_expected(actual: dict[str, Any], expected: dict[str, Any]) -> bo
     return True
 
 
+def run_builder_dry_run(command_packet: dict[str, Any]) -> dict[str, Any]:
+    argv = command_packet.get("argv") or []
+    if not argv:
+        return {"returncode": None, "parsed": None, "error": "missing command argv"}
+    command = [sys.executable, *argv[1:], "--dry-run"]
+    completed = subprocess.run(
+        command,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        timeout=60,
+    )
+    parsed = None
+    parse_error = None
+    if completed.stdout.strip():
+        try:
+            parsed = json.loads(completed.stdout)
+        except json.JSONDecodeError as exc:
+            parse_error = str(exc)
+    return {
+        "command": command,
+        "returncode": completed.returncode,
+        "stdout": completed.stdout,
+        "stderr": completed.stderr,
+        "parsed": parsed,
+        "parse_error": parse_error,
+    }
+
+
 def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     candidates = youtube_dl_candidates(Path(args.probe_results))
     static_rows = []
@@ -240,6 +271,8 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     recommended_candidate = next((candidate for candidate in candidates if candidate.get("task_id") == recommended), None)
     expected_f2p_nodeid = expected_fail_to_pass_nodeid(recommended_candidate)
     command_packet = p2p_command_packet(recommended, expected_f2p_nodeid, args.static_exclude_token, manifest_out)
+    builder_dry_run = run_builder_dry_run(command_packet)
+    builder_dry_run_parsed = builder_dry_run.get("parsed") or {}
     buggy_checkout = checkout_root(args.source_workspace_root, recommended, "buggy") if recommended else None
     fixed_checkout = checkout_root(args.source_workspace_root, recommended, "fixed") if recommended else None
 
@@ -256,6 +289,14 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "recommended_fixed_checkout_exists": bool(fixed_checkout and fixed_checkout.exists()),
         "recommended_manifest_not_already_tracked": not manifest_exists,
         "command_packet_requires_approval": bool(command_packet["approval_required"]),
+        "builder_dry_run_completed": builder_dry_run["returncode"] == 0 and isinstance(builder_dry_run.get("parsed"), dict),
+        "builder_dry_run_no_test_execution": builder_dry_run_parsed.get("will_execute_tests") is False,
+        "builder_dry_run_no_manifest_write": builder_dry_run_parsed.get("will_write_manifest") is False,
+        "builder_dry_run_no_output_dir_creation": builder_dry_run_parsed.get("will_create_output_dir") is False,
+        "builder_dry_run_manifest_absent": builder_dry_run_parsed.get("manifest_out_exists") is False
+        and not Path(str(command_packet.get("manifest_out"))).exists(),
+        "builder_dry_run_scope_matches_expected": builder_dry_run_parsed.get("test_paths") == ["test"]
+        and builder_dry_run_parsed.get("fail_to_pass_nodeids") == [expected_f2p_nodeid],
         "all_buggy_fixed_remaining_sets_match": all(row["buggy_only"] == 0 and row["fixed_only"] == 0 for row in static_rows),
     }
     return {
@@ -275,6 +316,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
             "fixed": str(fixed_checkout) if fixed_checkout else None,
         },
         "command_packet": command_packet,
+        "builder_dry_run": builder_dry_run,
         "checks": checks,
         "passed": all(checks.values()),
     }
@@ -294,6 +336,7 @@ def markdown(audit: dict[str, Any]) -> str:
         f"- expected fail-to-pass nodeid: `{audit['expected_fail_to_pass_nodeid']}`",
         f"- lowest static-cost task: `{(audit['lowest_static_cost_candidate'] or {}).get('task_id')}`",
         f"- approval required before execution: `{audit['command_packet']['approval_required']}`",
+        f"- builder dry-run returncode: `{audit['builder_dry_run']['returncode']}`",
         "",
         "## Checks",
         "",
