@@ -210,12 +210,16 @@ They should not override `final_paper_roadmap_zh.md`.
 - `bugsinpy_matplotlib_1` was blocked before F2P/P2P because the checkout probe
   required Matplotlib compiled extensions such as `ft2font`; editable/native
   builds were not run silently.
+- The 2026-06-12 decision freezes the current 7-task main cohort as
+  `EVP-7 Protocol Pilot`. The next work is not to find an eighth bug, but to
+  build tracked EVP-7 candidate records, E0/E2/E4/E6 evidence packets, leakage
+  audits, realistic tool-only baselines, and merge-gate schema checks. Start
+  from `docs/protocol/evidence_visibility_protocol.md`,
+  `docs/experiments/evp7_protocol_pilot.md`, and
+  `data/tasks/evp7_tasks.jsonl`.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
-- The next work should start from Stage A/B in
-  `docs/plans/final_paper_roadmap_zh.md`: first classify task stability and
-  task roles, then expand validation-stable real-bug tasks before running more
-  verifier API experiments.
+- Further expansion to 15-20 bugs is deferred until EVP-7 protocol gates pass.
 
 ## Core Commands
 

@@ -1,0 +1,28 @@
+{
+  "blocked_projects": [
+    "PySnooper",
+    "ansible",
+    "black",
+    "fastapi",
+    "httpie",
+    "luigi",
+    "matplotlib",
+    "sanic",
+    "scrapy",
+    "tornado",
+    "tqdm",
+    "youtube-dl"
+  ],
+  "blocked_task_count": 27,
+  "candidate_count_known": 36,
+  "candidate_records_status": "candidate-level tracked EVP-7 JSONL not generated yet; existing candidate JSONL inputs remain under ignored outputs and must be promoted in a later step.",
+  "cohort_id": "EVP-7",
+  "expansion_decision": "Option A approved: freeze EVP-7 and stop blind BugsInPy expansion until protocol gates pass.",
+  "main_projects": [
+    "PySnooper",
+    "cookiecutter",
+    "httpie",
+    "tqdm"
+  ],
+  "main_task_count": 7
+}

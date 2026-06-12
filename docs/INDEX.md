@@ -27,6 +27,16 @@
   final project-level P2P main metrics. Only tasks with completed
   `project_level_p2p_broad` and `p2p_broad_main_included = true` enter the
   default `p2p_broad_main` metrics.
+- `protocol/evidence_visibility_protocol.md`: Phase A protocol after the
+  2026-06-12 Option A decision. It freezes the current 7-task cohort as
+  `EVP-7 Protocol Pilot`, defines E0/E2/E4/E6 first, keeps E7 as oracle-only,
+  and sets G1-G5 gates before expansion.
+- `../data/tasks/evp7_tasks.jsonl`: tracked task manifest for the frozen
+  EVP-7 protocol pilot, generated from the cohort registry and P2P manifests.
+- `../data/tasks/evp7_manifest_summary.json`: summary of the frozen protocol
+  pilot: 7 main tasks, 4 projects, 36 known candidates from registry counts.
+- `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
+  registry for tasks excluded from the EVP-7 core cohort.
 
 ## Historical Plan References
 
@@ -180,6 +190,10 @@
 - `experiments/matplotlib1_feasibility.md`: Matplotlib 1 feasibility probe. It
   records an unestablished F2P oracle due to checkout/test-layout issues and
   missing compiled `ft2font` extension.
+- `experiments/evp7_protocol_pilot.md`: Option A execution record. It documents
+  the EVP-7 freeze, generated manifests, blocker registry, and why candidate
+  records/evidence packets are the next step instead of further BugsInPy
+  expansion.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

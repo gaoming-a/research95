@@ -3763,3 +3763,96 @@ Project-level P2P attempt：
 - `docs/experience/engineering_notes.md` 已记录本轮去重原则和未来避免
   oracle-style summary 误用的经验。
 - `git diff --check` 通过；当前 diff 只包含上述 5 个文档文件。
+
+## 39. 2026-06-12 EVP-7 protocol pilot freeze
+
+用户决策：
+
+- 现在选择 A：冻结当前 7 个主任务，停止继续盲扫 BugsInPy。
+- 不批准 B 作为当前主路线；native/editable build 只能在 A 完成后作为小范围
+  targeted probe。
+- 不立刻进入 C；外部 benchmark/source 必须等 protocol schema、runner、
+  hidden-evaluator 规范、metrics 和 LLM output schema 冻结后再接入。
+
+本轮 Inspect：
+
+- Git 状态：`main...origin/main`，工作区干净。
+- 当前 `p2p_broad_main` 仍为 7 个任务 / 4 个项目：
+  `httpie_5`、`cookiecutter_1`、`cookiecutter_2`、`cookiecutter_3`、
+  `tqdm_9`、`PySnooper_1`、`PySnooper_3`。
+- `docs/experiments/patch_evidence_bench_schema.md` 和
+  `docs/experiments/leakage_policy.md` 已有长期 schema 与可见/隐藏边界。
+- 当前 tracked `data/` 中稳定存在 cohort registry 和 P2P scope manifests；
+  候选 patch JSONL 主要仍记录在 ignored `outputs/` 路径和实验报告中，不能直接
+  当作最终 tracked EVP-7 candidate schema。
+
+本轮小目标：
+
+1. 正式命名当前冻结集合为 `EVP-7 Protocol Pilot`；
+2. 新增可复现 builder，从 tracked registry/P2P manifests 生成：
+   - `data/tasks/evp7_tasks.jsonl`；
+   - `data/exclusions/blocked_bugsinpy_projects.jsonl`；
+3. 新增 `docs/protocol/evidence_visibility_protocol.md`，固化 A 阶段执行边界、
+   E0/E2/E4/E6 pilot 范围、G1-G5 gate 和后置扩量规则；
+4. 新增 `docs/experiments/evp7_protocol_pilot.md`，记录本轮冻结结果和下一步
+   candidate/evidence packet 前置缺口；
+5. 更新 `docs/INDEX.md`、README、`engineering_notes.md`；
+6. 运行最小验证，确认 manifest 与 registry 一致、JSONL 可解析、无敏感信息；
+7. 提交并同步 GitHub。
+
+执行边界：
+
+- 不新增第 8 个 bug；
+- 不运行真实 API；
+- 不执行新的 checkout、F2P 或 P2P 构造；
+- 不生成 E0/E2/E4/E6 packets，直到候选 patch 记录被提升为稳定 tracked
+  `evp7_candidates.jsonl`；
+- 不从 ignored workdirs 或本地 retained checkout 读取并固化绝对路径；
+- 不把 blocked tasks 删除；必须进入 blocker registry。
+
+验收条件：
+
+- `evp7_tasks.jsonl` 中正好 7 条，全部来自 `p2p_broad_main`；
+- `blocked_bugsinpy_projects.jsonl` 至少覆盖当前 registry 中所有
+  `p2p_broad_main_included=false` 的 blocked/pending/insufficient 任务；
+- builder 可重复运行且输出稳定；
+- JSONL 解析通过；
+- 文档明确：A 阶段是 protocol pilot，不是最终泛化结论。
+
+执行结果：
+
+- 新增 `scripts/build_evp7_protocol_manifests.py`，从 tracked
+  `data/cohorts/task_cohort_registry.json` 和 P2P manifests 生成 EVP-7
+  task/blocker manifests。
+- 已生成：
+  - `data/tasks/evp7_tasks.jsonl`：7 条；
+  - `data/tasks/evp7_manifest_summary.json`：7 个主任务、4 个项目、registry
+    已知 36 个 candidates；
+  - `data/exclusions/blocked_bugsinpy_projects.jsonl`：27 条 blocked/pending/
+    insufficient/appendix-only records。
+- 新增 `docs/protocol/evidence_visibility_protocol.md`，定义 Option A、
+  E0/E2/E4/E6 pilot、visible/hidden 边界、merge-gate schema 和 G1-G5 gates。
+- 新增 `docs/experiments/evp7_protocol_pilot.md`，记录本轮冻结 cohort、
+  blocker registry 和 candidate-level schema 前置缺口。
+- 已同步更新 README、`docs/INDEX.md`、`docs/plans/final_paper_roadmap_zh.md`
+  和 `docs/experience/engineering_notes.md`。
+
+验证结果：
+
+- `python -m py_compile scripts\build_evp7_protocol_manifests.py` 通过。
+- `python scripts\build_evp7_protocol_manifests.py --check` 通过。
+- JSONL 解析复查通过：
+  - `evp7_tasks.jsonl = 7`；
+  - `blocked_bugsinpy_projects.jsonl = 27`；
+  - summary `candidate_count_known = 36`。
+- 第一次内联 JSONL 解析命令因 PowerShell 换行转义写法报 `SyntaxError`；
+  已用 here-string 方式重跑通过，不是数据或脚本问题。
+- 当前 `data/tasks` 与 `data/exclusions` 受 ignore 规则影响；提交时必须只对
+  本轮 3 个 manifest 文件使用显式 `git add -f`。
+
+下一步：
+
+- 不继续找第 8 个 bug。
+- 转入 candidate-level schema：从已有 validated candidate outputs 和实验报告
+  生成 tracked `data/patches/evp7_candidates.jsonl`，再判断 E0/E2/E4/E6 是否
+  可构造。

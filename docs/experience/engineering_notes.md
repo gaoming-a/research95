@@ -1182,3 +1182,20 @@ This file starts fresh for the patch-verification project.
 - Any current result based on retained validation summaries or oracle-style
   summaries must stay labeled diagnostic, upper-bound-style, or non-realistic
   for hidden-evaluator-free merge-gate claims.
+
+## 2026-06-12 EVP-7 protocol freeze
+
+- User decision: choose Option A now. Freeze the current 7 completed
+  project-level P2P tasks as `EVP-7 Protocol Pilot`; do not keep chasing an
+  eighth BugsInPy task under the same low-friction screening boundary.
+- The first protocol artifact should be task-level only:
+  `data/tasks/evp7_tasks.jsonl` and
+  `data/exclusions/blocked_bugsinpy_projects.jsonl`. Candidate-level EVP-7
+  records must be generated in a separate step because current candidate JSONL
+  files are referenced under ignored `outputs/` paths.
+- When building protocol manifests, read only tracked registry and P2P scope
+  files. Do not copy local retained checkout paths or infer commits from
+  untracked workdirs; record missing commit/issue/touched-file fields as
+  `metadata_backfill_required`.
+- Blocked tasks are evidence of the sampling boundary, not noise. Preserve them
+  in the blocker registry to avoid hidden cherry-picking.

@@ -937,3 +937,36 @@ BugsInPy 扩量，必须先解决当前候选池边界：
 - 或接受较小但 visible/hidden、baseline 和统计设计更干净的数据规模。
 
 这些选择会改变实验边界，不能由执行代理私自决定。
+
+## 19. 2026-06-12 EVP-7 protocol pilot 决策
+
+已确认选择 Option A：
+
+- 冻结当前 BugsInPy low-friction cohort：7 bugs / 4 projects；
+- 停止继续以“第 8 个 bug”为目标盲扫 BugsInPy；
+- 立即转入 `EVP-7 Protocol Pilot`，先验证现有 7 个样本能否在最终
+  evidence-visibility protocol 下产生论文级信号。
+
+当前不批准：
+
+- 将 native/editable build 作为主扩量路线；
+- 为凑主实验数量降级到 task-file P2P；
+- 在 protocol 未冻结前直接迁移到外部 benchmark/source。
+
+新增 tracked protocol 入口：
+
+- `docs/protocol/evidence_visibility_protocol.md`；
+- `docs/experiments/evp7_protocol_pilot.md`；
+- `data/tasks/evp7_tasks.jsonl`；
+- `data/exclusions/blocked_bugsinpy_projects.jsonl`；
+- `scripts/build_evp7_protocol_manifests.py`。
+
+Phase A 的下一步不是扩 bug，而是补齐 EVP-7 candidate-level schema：
+
+1. 从已有 validated candidate outputs 和实验报告生成
+   `data/patches/evp7_candidates.jsonl`；
+2. 审计每个 candidate 是否有足够字段构造 E0/E2/E4/E6；
+3. 通过 leakage audit 后再生成 evidence packets；
+4. 运行 tool-only baselines 和 LLM merge-gate schema dry-run；
+5. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
+   expansion。
