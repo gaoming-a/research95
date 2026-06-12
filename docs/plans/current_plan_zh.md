@@ -5680,3 +5680,31 @@ full run 决策：
 - 当前 audit 正确报告：
   - `complete = false`；
   - `missing_required = ["youtube_dl_p2p_decision_resolved"]`。
+
+## 75. 2026-06-13 human input packet covers youtube-dl P2P decision
+
+本轮小目标：
+
+- 将 `scripts/write_human_input_packet.py` 与 goal completion frontier 对齐；
+- 在交接包中显式暴露当前唯一未解决的人类决策：
+  `youtube_dl_p2p_decision`；
+- 不执行 P2P、不创建 P2P manifest、不调用真实 API。
+
+执行边界：
+
+- 只读取 ignored 决策审计输出
+  `outputs/youtubedl_p2p_decision_audit/latest.json`；
+- 交接包只记录 recommended task、approval gate、builder dry-run checks 和
+  approval-gated command packet；
+- 如果用户批准，只允许按决策包执行一次 bounded project-level P2P-broad
+  attempt for `bugsinpy_youtube-dl_7`；
+- 如果用户拒绝或要求停止，需要在计划中记录 stop/reject 决策，并停止
+  youtube-dl expansion path。
+
+验收条件：
+
+- `outputs/handoff/human_input_packet.json/md` 的 missing required inputs 包含
+  `youtube_dl_p2p_decision`；
+- forbidden actions 明确禁止未批准时运行 `youtube-dl_7` P2P；
+- 后续 readiness/goal completion audit 继续报告当前目标未完成，直到该决策被
+  明确批准并完成 manifest，或被明确拒绝并修订计划。

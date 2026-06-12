@@ -365,7 +365,8 @@ python scripts\audit_goal_completion.py `
   --out-md outputs\goal_completion\latest.md
 ```
 
-For the human-input packet required before real API execution, run:
+For the human-input packet required before real API execution or the
+`youtube-dl_7` P2P approve/reject decision, run:
 
 ```powershell
 python scripts\write_human_input_packet.py `

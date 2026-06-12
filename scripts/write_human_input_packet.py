@@ -11,6 +11,7 @@ MODEL_SELECTION_PATH = Path("configs") / "model_selection.local.json"
 API_CONFIG_PATH = Path("configs") / "api_pilot.local.json"
 READINESS_PATH = Path("outputs") / "readiness_audit" / "latest.json"
 PLAN_PROGRESS_PATH = Path("outputs") / "plan_progress" / "latest.json"
+YOUTUBEDL_DECISION_PATH = Path("outputs") / "youtubedl_p2p_decision_audit" / "latest.json"
 
 
 BOOTSTRAP_DRY_RUN_COMMAND = (
@@ -69,6 +70,7 @@ def bool_mark(value: Any) -> str:
 def build_packet() -> dict[str, Any]:
     readiness = read_json(READINESS_PATH) or {}
     progress = read_json(PLAN_PROGRESS_PATH) or {}
+    youtubedl_decision = read_json(YOUTUBEDL_DECISION_PATH) or {}
     api = readiness.get("api", {}) if isinstance(readiness, dict) else {}
     local_config = api.get("local_config", {}) if isinstance(api, dict) else {}
     model_selection = api.get("model_selection", {}) if isinstance(api, dict) else {}
@@ -105,6 +107,20 @@ def build_packet() -> dict[str, Any]:
             "instruction": "Generate local API config from the selected model id and keep smoke_limit=2 for the first real run.",
         },
         {
+            "id": "youtube_dl_p2p_decision",
+            "required": True,
+            "present": bool(
+                youtubedl_decision
+                and youtubedl_decision.get("passed") is True
+                and (youtubedl_decision.get("command_packet") or {}).get("approval_required") is False
+            ),
+            "target": "docs/experiments/evp7_youtubedl_p2p_decision_packet_20260613.md",
+            "instruction": (
+                "Approve one bounded project-level P2P-broad attempt for bugsinpy_youtube-dl_7, "
+                "or explicitly reject/stop the youtube-dl expansion path and record that decision in the plan."
+            ),
+        },
+        {
             "id": "github_repository_decision",
             "required": False,
             "present": bool((readiness.get("git") or {}).get("is_git_repo")) if isinstance(readiness, dict) else False,
@@ -121,6 +137,18 @@ def build_packet() -> dict[str, Any]:
         "stage_counts": progress.get("stage_counts", {}),
         "required_inputs": required_inputs,
         "missing_required_input_ids": [item["id"] for item in missing],
+        "youtube_dl_p2p_decision": {
+            "audit_path": YOUTUBEDL_DECISION_PATH.as_posix(),
+            "audit_passed": youtubedl_decision.get("passed"),
+            "approval_required": (youtubedl_decision.get("command_packet") or {}).get("approval_required"),
+            "recommended_task": (youtubedl_decision.get("decision_packet") or {}).get("recommended_task_id"),
+            "command_packet": youtubedl_decision.get("command_packet"),
+            "builder_dry_run_checks": {
+                key: value
+                for key, value in (youtubedl_decision.get("checks") or {}).items()
+                if str(key).startswith("builder_dry_run")
+            },
+        },
         "preferred_command_order": [
             BOOTSTRAP_DRY_RUN_COMMAND,
             BOOTSTRAP_WRITE_COMMAND,
@@ -156,10 +184,13 @@ def build_packet() -> dict[str, Any]:
             "Do not print the API key in logs, reports, or tracked docs.",
             "Do not run --execute before strict preflight and check-only pass.",
             "Do not treat mock or dry-run outputs as model experiment results.",
+            "Do not run youtube-dl_7 P2P unless youtube_dl_p2p_decision is explicitly approved.",
         ],
         "decision_aids": [
             "docs/experiments/model_selection_shortlist.md",
             "docs/experiments/model_selection_protocol.md",
+            "docs/experiments/evp7_youtubedl_p2p_decision_packet_20260613.md",
+            "outputs/youtubedl_p2p_decision_audit/latest.md",
         ],
     }
 
@@ -191,6 +222,33 @@ def build_markdown(packet: dict[str, Any]) -> str:
             lines.append(f"- `{item_id}`")
     else:
         lines.append("- None.")
+    youtubedl_decision = packet["youtube_dl_p2p_decision"]
+    lines.extend(
+        [
+            "",
+            "## youtube-dl P2P Decision",
+            "",
+            f"- audit path: `{youtubedl_decision['audit_path']}`",
+            f"- audit passed: {bool_mark(youtubedl_decision['audit_passed'])}",
+            f"- approval required: {bool_mark(youtubedl_decision['approval_required'])}",
+            f"- recommended task: `{youtubedl_decision['recommended_task']}`",
+            f"- builder dry-run checks: `{youtubedl_decision['builder_dry_run_checks']}`",
+            "",
+        ]
+    )
+    command_packet = youtubedl_decision.get("command_packet") or {}
+    full_command = command_packet.get("full_command") or command_packet.get("command")
+    if full_command:
+        lines.extend(
+            [
+                "Approval-gated command packet:",
+                "",
+                "```powershell",
+                full_command,
+                "```",
+                "",
+            ]
+        )
     lines.extend(["", "## Preferred Command Order After Inputs Are Available", ""])
     for command in packet["preferred_command_order"]:
         lines.extend(["```powershell", command, "```", ""])

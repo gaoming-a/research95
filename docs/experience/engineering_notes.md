@@ -1504,3 +1504,9 @@ This file starts fresh for the patch-verification project.
   older API/paper/artifact workflow. If `youtube-dl_7` P2P remains approval
   gated and no manifest exists, `audit_goal_completion.py` should report the
   goal incomplete.
+- Human-input handoff packets must track the same frontier as goal completion.
+  When the only missing required check is `youtube_dl_p2p_decision_resolved`,
+  `write_human_input_packet.py` should surface a required
+  `youtube_dl_p2p_decision` input and include the approval-gated command packet
+  plus dry-run checks, so execution does not proceed without explicit approval
+  or an explicit reject/stop decision.
