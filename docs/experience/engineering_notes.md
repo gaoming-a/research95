@@ -1455,3 +1455,8 @@ This file starts fresh for the patch-verification project.
   diminishing value. The next efficient gate is a single bounded representative
   project-level P2P attempt; do not run multiple long youtube-dl P2P attempts in
   parallel unless the first representative manifest succeeds.
+- Static no-run preflight is useful before an expensive P2P decision. For
+  `youtube-dl_6`, buggy/fixed both expose 154 static unittest methods under
+  `test/`, 111 remain after current static exclusions, and the remaining method
+  sets are identical. This supports one bounded representative attempt but does
+  not prove dynamic P2P feasibility.

@@ -80,6 +80,27 @@ python scripts\build_pass_to_pass_scope.py `
   --manifest-out data\p2p_scopes\bugsinpy_youtube-dl_6_p2p_broad.json
 ```
 
+## Static Preflight
+
+A no-run static preflight over the existing `bugsinpy_youtube-dl_6`
+buggy/fixed checkouts inspected unittest method definitions only. It did not
+execute F2P or P2P tests and did not create a P2P manifest.
+
+| Version | Test files | Test methods | Excluded by static tokens | Remaining methods |
+| --- | ---: | ---: | ---: | ---: |
+| buggy | 20 | 154 | 43 | 111 |
+| fixed | 20 | 154 | 43 | 111 |
+
+The remaining method set is identical across buggy and fixed checkouts:
+
+- common remaining methods: 111;
+- buggy-only remaining methods: 0;
+- fixed-only remaining methods: 0;
+- `test/test_utils.py` remaining methods: 46 on both sides.
+
+This preflight supports a bounded representative attempt, but it does not prove
+that dynamic project-level P2P will finish within budget.
+
 ## Success Gate
 
 A `youtube-dl` task can move toward admission only if all of the following are

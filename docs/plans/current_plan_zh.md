@@ -5384,3 +5384,33 @@ full run 决策：
 - 这是执行效率最高的下一步决策：若该代表任务仍重复 `youtube-dl_1` timeout
   pattern，应停止 youtube-dl P2P 扩展，而不是继续批量补 F2P；
 - 在获得明确确认前，真实 P2P-broad 仍保持未执行状态。
+
+## 64. 2026-06-13 youtube-dl_6 no-run static P2P preflight
+
+本轮小目标：
+
+- 在不执行 P2P、不创建 manifest 的前提下，评估 `youtube-dl_6` 代表性 P2P
+  尝试的静态规模；
+- 检查 buggy/fixed 两端 `test/` 下 unittest 方法集合是否一致；
+- 为后续是否批准 bounded P2P 提供效率证据。
+
+执行边界：
+
+- 只读取现有 checkout 文件；
+- 不执行 unittest、pytest 或 P2P；
+- 不安装依赖、不编辑 checkout、不修改实验标签。
+
+静态预检结果：
+
+- buggy/fixed 两端均有 20 个 `test*.py` 文件；
+- buggy/fixed 两端均有 154 个静态 unittest test methods；
+- 使用当前决策包中的静态排除 token 后，两端均排除 43 个方法；
+- 两端剩余方法数均为 111，且剩余集合完全一致；
+- `test/test_utils.py` 两端均剩余 46 个方法。
+
+当前结论：
+
+- `youtube-dl_6` 的 project-level P2P 代表尝试不是无边界全仓库扫描，但动态
+  范围仍有 111 个候选方法，存在重复 `youtube-dl_1` timeout 的风险；
+- 该证据支持“若确认 P2P，则只先跑一个代表任务”的边界；
+- 该预检不等于 P2P 结果，不允许据此 admission。
