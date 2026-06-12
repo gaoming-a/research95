@@ -3483,6 +3483,45 @@ Project-level P2P attempt：
 - 需要重新扩大候选池或调整项目选择策略；若下一轮继续，应先 rerun broader
   screening 并明确跳过已确认项目级风险的项目。
 
+## 37. 2026-06-12 candidate pool boundary after parallel sweep
+
+同步状态：
+
+- `bugsinpy_matplotlib_1` native/import blocker 已提交并 push 到 GitHub：
+  `48413f7 docs: record matplotlib import blocker`。
+- 当前 Git 状态：`main...origin/main`，工作区干净。
+
+本轮 Inspect：
+
+- 已检查 `outputs/candidate_pool_rescreen/parallel_latest.json`。
+- 在排除已确认项目级风险或已处理项目后，`promising_candidates` 中没有新的项目：
+  - FastAPI：official-root scope timeout；
+  - Sanic：project-level scope timeout；
+  - Scrapy：Twisted native build blocker；
+  - youtube-dl：project-level unittest discovery timeout；
+  - Tornado：shared project-level unittest scope timeout；
+  - Luigi：shared large project-level suite blocker；
+  - Ansible：checkout timeout；
+  - Matplotlib：native extension import blocker；
+  - httpie/tqdm/PySnooper/Black/Cookiecutter：已处理或已有明确 blocker/main status。
+- `all_candidates` 中剩余可见项目主要为：
+  - Keras：metadata blocker = `heavy_ml_dependency`；
+  - Pandas：metadata blocker = `native_build_dependency`，部分还含
+    `network_reference_in_metadata`。
+
+当前边界问题：
+
+- 如果继续，需要改变候选策略或实验边界：
+  1. 放宽 metadata filter，尝试 Keras/Pandas 这类 heavy/native 候选；
+  2. 允许 isolated native/editable build，用于 Matplotlib/Pandas 等项目；
+  3. 停止继续补 BugsInPy 主任务，转向整理当前 7 个主任务与 blocked audit；
+  4. 寻找 BugsInPy 之外的新 benchmark/source。
+- 这些都不是当前计划内的“继续执行”细节，而是实验边界决策，不能由执行代理私自决定。
+
+需要用户确认：
+
+- 下一步采用哪一种候选/构建边界。
+
 执行进展：
 
 - 初次并行创建 `bugsinpy_tornado_9` buggy/fixed checkout 时，fixed checkout
