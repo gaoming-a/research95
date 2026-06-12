@@ -3429,6 +3429,60 @@ Project-level P2P attempt：
 - 并行筛选应转向非 FastAPI、非 Sanic、非 Scrapy、非 youtube-dl、非 Tornado
   的候选项目，或只做 metadata/F2P 层面的短探针。
 
+## 35. 2026-06-12 next candidate feasibility: ansible_2
+
+同步状态：
+
+- `bugsinpy_tornado_9` shared Tornado project-level scope timeout 已提交并
+  push 到 GitHub：`c9516f0 docs: record tornado9 feasibility timeout`。
+- 当前 Git 状态：`main...origin/main`，工作区干净。
+
+候选选择：
+
+- 转向 `bugsinpy_ansible_2`。
+- 理由：
+  - 非 FastAPI、非 Sanic、非 Scrapy、非 youtube-dl、非 Tornado；
+  - F2P 目标为 `test/units/utils/test_version.py` 的版本比较 unit tests；
+  - patch 只涉及 `lib/ansible/utils/version.py` 中 `_Alpha` 和 `_Numeric`
+    的比较运算语义；
+  - 相比 Ansible 其他候选，目标更偏纯函数/短测试。
+
+元数据：
+
+- project = `ansible`；
+- buggy commit = `de59b17c7f69d5cfb72479b71776cc8b97e29a6b`；
+- fixed commit = `5b9418c06ca6d51507468124250bb58046886be6`；
+- BugsInPy pythonpath = `ansible/build/lib/`；
+- F2P commands:
+  - `pytest test/units/utils/test_version.py::test_alpha`；
+  - `pytest test/units/utils/test_version.py::test_numeric`。
+
+本轮小目标：
+
+1. 串行准备 `bugsinpy_ansible_2` buggy/fixed checkout。不得并行同一 task 的
+   buggy/fixed checkout。
+2. 使用 checkout 声明的 `PYTHONPATH` 运行最小 F2P probe。
+3. 如果缺依赖，只安装目标 F2P 所需的 declared dependency subset 到 ignored
+   isolated venv，并记录 dependency audit。
+4. 如果 F2P 清楚，再判断 project-level pytest P2P-broad construction 是否可行。
+
+执行边界：
+
+- 不安装全局依赖；
+- 不执行 `setup.sh` 中的 `python setup.py install` 或全局 pip；
+- 不调用真实 API；
+- 不修改 Ansible source/test fixture；
+- 不把 task-file P2P 降级成 main evidence；
+- 如果 Ansible project-level scope 明显进入重依赖、外部服务或不可控长时测试，
+  先记录 blocker。
+
+验收条件：
+
+- F2P probe 明确 buggy fail / fixed pass；
+- project-level P2P-broad manifest 生成；
+- `p2p_broad_size >= 3`；
+- registry 中只在上述条件满足后才允许 `p2p_broad_main_included = true`。
+
 执行结果：
 
 - buggy/fixed checkout 已成功创建到外部 retained workspace：
