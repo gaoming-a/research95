@@ -1523,3 +1523,7 @@ This file starts fresh for the patch-verification project.
   readiness into one "positive paper claim" line. Keep the legacy prompt-only
   field for compatibility, but display prompt-only readiness and
   tool-augmented conditional readiness separately.
+- Human-input packets need the same claim-boundary split as the pre-API
+  handoff. A single "positive paper claim ready" line is ambiguous after the
+  tool-augmented full run passed while prompt-only evidence-first remains a
+  negative/redesign result.

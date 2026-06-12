@@ -132,7 +132,11 @@ def build_packet() -> dict[str, Any]:
     missing = [item for item in required_inputs if item["required"] and not item["present"]]
     return {
         "ready_for_real_api": bool(readiness.get("overall_ready_for_real_api")),
-        "positive_paper_claim_ready": bool(progress.get("positive_paper_claim_ready")),
+        "positive_paper_claim_ready": bool(progress.get("prompt_only_positive_paper_claim_ready")),
+        "prompt_only_positive_paper_claim_ready": bool(progress.get("prompt_only_positive_paper_claim_ready")),
+        "tool_augmented_paper_claim_ready": bool(
+            progress.get("tool_augmented_paper_claim_ready", progress.get("positive_paper_claim_ready"))
+        ),
         "git_repo": bool(progress.get("git_repo")),
         "stage_counts": progress.get("stage_counts", {}),
         "required_inputs": required_inputs,
@@ -202,7 +206,8 @@ def build_markdown(packet: dict[str, Any]) -> str:
         "## Status",
         "",
         f"- ready for real API: {bool_mark(packet['ready_for_real_api'])}",
-        f"- positive paper claim ready: {bool_mark(packet['positive_paper_claim_ready'])}",
+        f"- prompt-only positive paper claim ready: {bool_mark(packet['prompt_only_positive_paper_claim_ready'])}",
+        f"- tool-augmented conditional claim ready: {bool_mark(packet['tool_augmented_paper_claim_ready'])}",
         f"- git repository: {bool_mark(packet['git_repo'])}",
         f"- stage counts: `{packet['stage_counts']}`",
         "",

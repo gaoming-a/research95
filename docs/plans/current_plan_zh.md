@@ -5762,3 +5762,22 @@ full run 决策：
 - 不运行 P2P；
 - 不改变论文 claim，只让 handoff 摘要与 paper readiness、local quality gate
   的 claim 边界一致。
+
+## 79. 2026-06-13 human input packet separates claim readiness
+
+本轮小目标：
+
+- 修复 `outputs/handoff/human_input_packet.md` 的摘要歧义；
+- 保留 `positive_paper_claim_ready` 字段作为旧兼容字段，但其语义必须是
+  prompt-only positive claim；
+- 新增并显示：
+  - `prompt_only_positive_paper_claim_ready`；
+  - `tool_augmented_paper_claim_ready`。
+
+执行边界：
+
+- 不调用真实 API；
+- 不运行 P2P；
+- 不改变论文 claim；
+- 只让 human-input packet 与 pre-API handoff、paper readiness、local quality
+  gate 的 claim 边界一致。

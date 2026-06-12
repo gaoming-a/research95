@@ -366,7 +366,9 @@ python scripts\audit_goal_completion.py `
 ```
 
 For the human-input packet required before real API execution or the
-`youtube-dl_7` P2P approve/reject decision, run:
+`youtube-dl_7` P2P approve/reject decision, run. The status section separates
+the unsupported prompt-only positive claim from the conditional tool-augmented
+claim:
 
 ```powershell
 python scripts\write_human_input_packet.py `

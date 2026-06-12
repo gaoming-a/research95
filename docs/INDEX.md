@@ -406,7 +406,8 @@
 - `scripts/write_human_input_packet.py`: writes an ignored handoff packet that
   lists missing human inputs, safe command order, and forbidden actions before
   real API execution. It includes smoke/full postprocess commands with expected
-  candidate counts and the required `youtube-dl_7` P2P approve/reject decision.
+  candidate counts, separate prompt-only/tool-augmented claim readiness, and the
+  required `youtube-dl_7` P2P approve/reject decision.
   Latest report: `outputs/handoff/human_input_packet.md`.
 - `scripts/write_git_sync_packet.py`: writes an ignored Git sync decision
   packet with current Git state, old remote context, required remote decision,
