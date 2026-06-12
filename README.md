@@ -211,12 +211,13 @@ They should not override `final_paper_roadmap_zh.md`.
   required Matplotlib compiled extensions such as `ft2font`; editable/native
   builds were not run silently.
 - The 2026-06-12 decision freezes the current 7-task main cohort as
-  `EVP-7 Protocol Pilot`. The next work is not to find an eighth bug, but to
-  build tracked EVP-7 candidate records, E0/E2/E4/E6 evidence packets, leakage
-  audits, realistic tool-only baselines, and merge-gate schema checks. Start
-  from `docs/protocol/evidence_visibility_protocol.md`,
+  `EVP-7 Protocol Pilot`. The tracked candidate manifest now contains 42
+  promoted candidates across those 7 tasks. The next work is not to find an
+  eighth bug, but to build leakage-audited E0/E2/E4/E6 evidence packets,
+  realistic tool-only baselines, and merge-gate schema checks. Start from
+  `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and
-  `data/tasks/evp7_tasks.jsonl`.
+  `data/patches/evp7_candidates.jsonl`.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - Further expansion to 15-20 bugs is deferred until EVP-7 protocol gates pass.

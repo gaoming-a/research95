@@ -958,15 +958,21 @@ BugsInPy 扩量，必须先解决当前候选池边界：
 - `docs/protocol/evidence_visibility_protocol.md`；
 - `docs/experiments/evp7_protocol_pilot.md`；
 - `data/tasks/evp7_tasks.jsonl`；
+- `data/patches/evp7_candidates.jsonl`；
+- `data/patches/evp7_candidate_summary.json`；
 - `data/exclusions/blocked_bugsinpy_projects.jsonl`；
-- `scripts/build_evp7_protocol_manifests.py`。
+- `scripts/build_evp7_protocol_manifests.py`；
+- `scripts/build_evp7_candidate_manifest.py`。
 
-Phase A 的下一步不是扩 bug，而是补齐 EVP-7 candidate-level schema：
+Phase A 已补齐 EVP-7 candidate-level schema：
 
-1. 从已有 validated candidate outputs 和实验报告生成
-   `data/patches/evp7_candidates.jsonl`；
-2. 审计每个 candidate 是否有足够字段构造 E0/E2/E4/E6；
-3. 通过 leakage audit 后再生成 evidence packets；
-4. 运行 tool-only baselines 和 LLM merge-gate schema dry-run；
-5. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
+1. 已从已有 validated candidate outputs 生成
+   `data/patches/evp7_candidates.jsonl`，共 42 条候选；
+2. 其中 7 条为 `correct_reference`，35 条为 issue-not-fixed negatives；
+3. registry 中候选计数仍只能作为 36 条的下界，因为 `httpie_5` 缺少
+   candidate count 字段；
+4. 下一步是生成 leakage-audited E0/E2/E4/E6 evidence packets，并审计
+   evaluator-only labels 是否完全不进入 model-visible evidence；
+5. 运行 tool-only baselines 和 LLM merge-gate schema dry-run；
+6. 只有 G1-G5 protocol gates 通过后，再进入 15-20 bugs controlled
    expansion。

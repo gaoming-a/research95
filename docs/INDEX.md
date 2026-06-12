@@ -33,8 +33,16 @@
   and sets G1-G5 gates before expansion.
 - `../data/tasks/evp7_tasks.jsonl`: tracked task manifest for the frozen
   EVP-7 protocol pilot, generated from the cohort registry and P2P manifests.
-- `../data/tasks/evp7_manifest_summary.json`: summary of the frozen protocol
-  pilot: 7 main tasks, 4 projects, 36 known candidates from registry counts.
+- `../data/tasks/evp7_manifest_summary.json`: task-level summary of the frozen
+  protocol pilot: 7 main tasks and 4 projects. It reports a 36-candidate
+  registry-known lower bound because `httpie_5` lacks candidate count fields in
+  the registry.
+- `../data/patches/evp7_candidates.jsonl`: tracked candidate manifest promoted
+  from validated EVP-7 candidate outputs. It contains 42 candidates with global
+  anonymous `evp7_candidate_id` values and evaluator-only labels kept explicit.
+- `../data/patches/evp7_candidate_summary.json`: summary of the promoted EVP-7
+  candidate records: 42 candidates, 7 correct reference patches, and 35
+  issue-not-fixed candidates.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 

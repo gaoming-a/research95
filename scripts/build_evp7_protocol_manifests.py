@@ -62,6 +62,15 @@ def _scope_summary(manifest_path: str | None) -> dict[str, Any]:
     }
 
 
+def _candidate_count(collection: dict[str, Any]) -> int | None:
+    if collection.get("candidate_count") is not None:
+        return collection.get("candidate_count")
+    label_counts = collection.get("candidate_label_counts")
+    if isinstance(label_counts, dict) and label_counts:
+        return sum(int(value) for value in label_counts.values())
+    return None
+
+
 def build_manifests(registry_path: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     registry = _load_json(registry_path)
     tasks = registry.get("tasks", [])
@@ -83,6 +92,7 @@ def build_manifests(registry_path: Path) -> tuple[list[dict[str, Any]], list[dic
     evp7_records: list[dict[str, Any]] = []
     for task in sorted(main_tasks, key=lambda item: item["task_id"]):
         collection = task.get("collection_summary", {})
+        candidate_count = _candidate_count(collection)
         evp7_records.append(
             {
                 "task_id": task["task_id"],
@@ -96,7 +106,7 @@ def build_manifests(registry_path: Path) -> tuple[list[dict[str, Any]], list[dic
                 "project_level_p2p_status": task.get("project_level_p2p_status"),
                 "p2p_scope": task.get("label_scope", {}).get("main"),
                 "p2p_broad_manifest": task.get("p2p_broad_manifest"),
-                "candidate_count": collection.get("candidate_count"),
+                "candidate_count": candidate_count,
                 "candidate_label_counts": collection.get("candidate_label_counts", {}),
                 "p2p_scope_summary": _scope_summary(task.get("p2p_broad_manifest")),
                 "inclusion_reason": "Completed project-level P2P-broad and marked p2p_broad_main_included=true in the tracked cohort registry.",
@@ -132,14 +142,23 @@ def build_manifests(registry_path: Path) -> tuple[list[dict[str, Any]], list[dic
             }
         )
 
+    records_with_candidate_count = [
+        record for record in evp7_records if record.get("candidate_count") is not None
+    ]
+    records_missing_candidate_count = [
+        record["task_id"] for record in evp7_records if record.get("candidate_count") is None
+    ]
     summary = {
         "cohort_id": "EVP-7",
         "main_task_count": len(evp7_records),
         "main_projects": sorted({record["project"] for record in evp7_records}),
         "blocked_task_count": len(blocker_records),
         "blocked_projects": sorted({record["project"] for record in blocker_records if record.get("project")}),
-        "candidate_count_known": sum(record.get("candidate_count") or 0 for record in evp7_records),
-        "candidate_records_status": "candidate-level tracked EVP-7 JSONL not generated yet; existing candidate JSONL inputs remain under ignored outputs and must be promoted in a later step.",
+        "candidate_count_known_from_registry": sum(
+            record.get("candidate_count") or 0 for record in records_with_candidate_count
+        ),
+        "candidate_count_missing_in_registry_tasks": records_missing_candidate_count,
+        "candidate_records_status": "task-level manifest only; candidate-level EVP-7 records are managed by scripts/build_evp7_candidate_manifest.py.",
         "expansion_decision": "Option A approved: freeze EVP-7 and stop blind BugsInPy expansion until protocol gates pass.",
     }
     return evp7_records, blocker_records, summary
@@ -169,6 +188,8 @@ def main() -> int:
             raise SystemExit("EVP-7 must contain exactly 7 main tasks")
         if "cookiecutter" not in summary["main_projects"] or "PySnooper" not in summary["main_projects"]:
             raise SystemExit("EVP-7 project summary is incomplete")
+        if "bugsinpy_httpie_5" not in summary["candidate_count_missing_in_registry_tasks"]:
+            raise SystemExit("Expected httpie_5 candidate count to be missing from registry")
 
     print(json.dumps(summary, ensure_ascii=False, sort_keys=True))
     return 0

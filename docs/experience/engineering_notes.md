@@ -1199,3 +1199,19 @@ This file starts fresh for the patch-verification project.
   `metadata_backfill_required`.
 - Blocked tasks are evidence of the sampling boundary, not noise. Preserve them
   in the blocker registry to avoid hidden cherry-picking.
+
+## 2026-06-12 EVP-7 candidate manifest count boundary
+
+- The task-level registry reported 36 known candidates because
+  `bugsinpy_httpie_5` lacked `collection_summary.candidate_count` and label
+  counts. Treat this number as a registry-known lower bound, not the final
+  EVP-7 candidate count.
+- The validated candidate JSONL plus P2P validation files promote to 42 tracked
+  candidates: 7 correct reference patches and 35 issue-not-fixed negatives.
+- Candidate manifests may carry evaluator-only fields for metrics, but evidence
+  packet builders must strip labels, retained-oracle status, provenance, and
+  failure taxonomy from model-visible prompts.
+- When summary counts disagree, first diagnose source-of-truth granularity
+  before changing inclusion policy. Here the task registry was incomplete for
+  one admitted task; the candidate output files were the correct source for
+  candidate-level cardinality.

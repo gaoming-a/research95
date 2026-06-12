@@ -43,6 +43,16 @@ data/exclusions/blocked_bugsinpy_projects.jsonl
 Blocked, pending, insufficient, and appendix-only tasks remain part of the
 audit trail. They must not be deleted to make the cohort look cleaner.
 
+The candidate manifest is:
+
+```text
+data/patches/evp7_candidates.jsonl
+```
+
+It contains 42 promoted candidates from the validated EVP-7 candidate outputs.
+Its labels and failure taxonomy are evaluator-only inputs for metrics and must
+not be copied into model-visible evidence packets.
+
 ## Phase A Scope
 
 The next protocol step is not a new bug search. It is to show that the frozen

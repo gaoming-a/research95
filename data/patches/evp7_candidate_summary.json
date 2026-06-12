@@ -1,0 +1,33 @@
+{
+  "candidate_count": 42,
+  "candidate_type_counts": {
+    "buggy_noop": 7,
+    "correct_reference": 7,
+    "irrelevant_patch": 7,
+    "partial_fix": 21
+  },
+  "cohort_id": "EVP-7",
+  "evidence_packet_status": "not_generated",
+  "failure_type_counts": {
+    "irrelevant_edit": 7,
+    "no_op_patch": 7,
+    "none": 7,
+    "partial_fix": 21
+  },
+  "label_with_p2p_broad_counts": {
+    "correct_under_f2p_and_p2p_broad": 7,
+    "incorrect_issue_not_fixed": 35
+  },
+  "next_step": "Generate E0/E2/E4/E6 evidence packets from evp7_candidates.jsonl after leakage checks.",
+  "project_count": 4,
+  "task_candidate_counts": {
+    "bugsinpy_PySnooper_1": 6,
+    "bugsinpy_PySnooper_3": 4,
+    "bugsinpy_cookiecutter_1": 4,
+    "bugsinpy_cookiecutter_2": 11,
+    "bugsinpy_cookiecutter_3": 4,
+    "bugsinpy_httpie_5": 6,
+    "bugsinpy_tqdm_9": 7
+  },
+  "task_count": 7
+}

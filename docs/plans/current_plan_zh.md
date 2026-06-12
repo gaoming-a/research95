@@ -3827,7 +3827,7 @@ Project-level P2P attempt：
 - 已生成：
   - `data/tasks/evp7_tasks.jsonl`：7 条；
   - `data/tasks/evp7_manifest_summary.json`：7 个主任务、4 个项目、registry
-    已知 36 个 candidates；
+    已知 candidate 下界 36；`httpie_5` 缺少 registry candidate count 字段；
   - `data/exclusions/blocked_bugsinpy_projects.jsonl`：27 条 blocked/pending/
     insufficient/appendix-only records。
 - 新增 `docs/protocol/evidence_visibility_protocol.md`，定义 Option A、
@@ -3844,7 +3844,8 @@ Project-level P2P attempt：
 - JSONL 解析复查通过：
   - `evp7_tasks.jsonl = 7`；
   - `blocked_bugsinpy_projects.jsonl = 27`；
-  - summary `candidate_count_known = 36`。
+  - summary `candidate_count_known_from_registry = 36`，且
+    `candidate_count_missing_in_registry_tasks = [bugsinpy_httpie_5]`。
 - 第一次内联 JSONL 解析命令因 PowerShell 换行转义写法报 `SyntaxError`；
   已用 here-string 方式重跑通过，不是数据或脚本问题。
 - 当前 `data/tasks` 与 `data/exclusions` 受 ignore 规则影响；提交时必须只对
@@ -3856,3 +3857,107 @@ Project-level P2P attempt：
 - 转入 candidate-level schema：从已有 validated candidate outputs 和实验报告
   生成 tracked `data/patches/evp7_candidates.jsonl`，再判断 E0/E2/E4/E6 是否
   可构造。
+
+## 40. 2026-06-12 EVP-7 candidate schema promotion
+
+同步状态：
+
+- 最新提交 `6d421a2 docs: freeze evp7 protocol pilot` 已 push。
+- 当前 Git 状态为 `main...origin/main`，工作区干净。
+- 已确认 7 个 EVP-7 任务对应的 candidate JSONL 和 P2P validation JSONL 存在于
+  ignored `outputs/` 下：
+  - `outputs/httpie5_stability_audit_001/candidates.jsonl`；
+  - `outputs/cookiecutter1_candidate_validation_001/candidates.jsonl`；
+  - `outputs/cookiecutter2_candidate_validation_001/candidates.jsonl`；
+  - `outputs/cookiecutter3_candidate_validation_001/candidates.jsonl`；
+  - `outputs/tqdm9_candidate_validation_001/candidates.jsonl`；
+  - `outputs/pysnooper1_candidate_validation_001/candidates.jsonl`；
+  - `outputs/pysnooper3_candidate_validation_001/candidates.jsonl`。
+
+本轮小目标：
+
+1. 新增可复现 builder，将已有 validated candidate outputs 提升为 tracked
+   `data/patches/evp7_candidates.jsonl`；
+2. 同步生成 `data/patches/evp7_candidate_summary.json`；
+3. 生成只含可见性准备状态的 schema，不生成 E0/E2/E4/E6 evidence packets；
+4. 验证 candidate 总数不低于 `evp7_manifest_summary.json` 的 registry 已知
+   下界，并固定当前 EVP-7 promoted candidate count；
+5. 更新 protocol/experiment/index/readme/engineering notes；
+6. 提交并同步 GitHub。
+
+执行边界：
+
+- 不运行真实 API；
+- 不重新执行 candidate validation；
+- 不读取 raw workdirs 中的源文件；
+- 不把本地绝对 workdir、venv command、stdout/stderr 细节写入 tracked
+  candidate schema；
+- `candidate_type`、`expected_outcome`、`label_with_p2p_broad`、
+  `failure_type_label` 等仍属于 evaluator-only，不得进入后续 model-visible
+  evidence packets；
+- 为避免跨任务 `candidate_0001` 冲突，必须生成全局匿名
+  `evp7_candidate_id`。
+
+验收条件：
+
+- `evp7_candidates.jsonl` 正好 42 条；
+- 7 个 task 都有 candidate records；
+- 每条 record 有全局唯一 `evp7_candidate_id`；
+- 每条 record 能关联到 P2P validation label；
+- JSONL 解析和 builder `--check` 通过。
+
+执行结果：
+
+- 新增 `scripts/build_evp7_candidate_manifest.py`，从 7 个已验证 candidate
+  JSONL 和对应 P2P validation JSONL 生成 tracked candidate manifest。
+- 已生成：
+  - `data/patches/evp7_candidates.jsonl`：42 条；
+  - `data/patches/evp7_candidate_summary.json`：7 个任务、4 个项目、42 个
+    candidates。
+- 候选分布：
+  - `correct_reference = 7`；
+  - `partial_fix = 21`；
+  - `irrelevant_patch = 7`；
+  - `buggy_noop = 7`。
+- P2P-broad label 分布：
+  - `correct_under_f2p_and_p2p_broad = 7`；
+  - `incorrect_issue_not_fixed = 35`。
+
+诊断与修复：
+
+- 第一次运行 candidate builder `--check` 失败，原因是
+  `evp7_manifest_summary.json` 原字段把 registry 已知 36 个 candidates
+  当成最终候选总数。
+- 定位后确认不是 candidate outputs 过宽，而是 `bugsinpy_httpie_5` 在
+  `data/cohorts/task_cohort_registry.json` 中缺少
+  `collection_summary.candidate_count` 和 label counts。
+- 已修复 `scripts/build_evp7_protocol_manifests.py` 的 summary 语义：
+  `candidate_count_known_from_registry = 36` 只作为下界，
+  `candidate_count_missing_in_registry_tasks = [bugsinpy_httpie_5]` 明确记录
+  缺口。
+- candidate builder 的验收改为：candidate 总数必须不低于 registry 下界，且
+  当前 EVP-7 promoted candidate count 固定为 42。
+
+验证结果：
+
+- `python -m py_compile scripts\build_evp7_protocol_manifests.py
+  scripts\build_evp7_candidate_manifest.py` 通过。
+- `python scripts\build_evp7_protocol_manifests.py --check` 通过，summary
+  保留 `candidate_count_known_from_registry = 36` 和
+  `candidate_count_missing_in_registry_tasks = [bugsinpy_httpie_5]`。
+- `python scripts\build_evp7_candidate_manifest.py --check` 通过，summary
+  为 42 candidates / 7 tasks / 4 projects。
+- JSONL 解析复查通过：
+  - `data/tasks/evp7_tasks.jsonl = 7`；
+  - `data/exclusions/blocked_bugsinpy_projects.jsonl = 27`；
+  - `data/patches/evp7_candidates.jsonl = 42`。
+- `git diff --check` 通过；仅出现 Windows CRLF 工作区提示。
+- 本轮 diff 的严格敏感信息扫描无命中；第一次宽松 `sk-` 扫描误命中
+  `task-level`，已用 `sk-[0-9A-Za-z]{20,}` 规则复查。
+
+下一步：
+
+- 不继续找第 8 个 bug。
+- 基于 `data/patches/evp7_candidates.jsonl` 生成 E0/E2/E4/E6 evidence
+  packets，先做 E0/E4 completeness 和 leakage audit。
+- 在 packet builder 通过泄漏审计前，不运行真实 LLM API。
