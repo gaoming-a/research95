@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -34,14 +35,35 @@ def write_json(path: Path, value: dict[str, Any]) -> None:
 
 def git_status() -> dict[str, Any]:
     completed = subprocess.run(
-        ["git", "status", "--short"],
+        ["git", "status", "--short", "--branch"],
         text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
+    lines = completed.stdout.strip().splitlines() if completed.returncode == 0 else []
+    branch_header = lines[0] if lines and lines[0].startswith("## ") else ""
+    status_short = lines[1:] if branch_header else lines
+    ahead = 0
+    behind = 0
+    upstream = None
+    if branch_header:
+        relation = branch_header[3:].split(" ", 1)[0]
+        if "..." in relation:
+            _, upstream = relation.split("...", 1)
+        ahead_match = re.search(r"ahead (\d+)", branch_header)
+        behind_match = re.search(r"behind (\d+)", branch_header)
+        ahead = int(ahead_match.group(1)) if ahead_match else 0
+        behind = int(behind_match.group(1)) if behind_match else 0
+    clean = completed.returncode == 0 and not status_short
     return {
         "is_git_repo": completed.returncode == 0,
-        "status_short": completed.stdout.strip().splitlines() if completed.returncode == 0 else [],
+        "branch_header": branch_header,
+        "upstream": upstream,
+        "ahead": ahead,
+        "behind": behind,
+        "status_short": status_short,
+        "clean": clean,
+        "synced_with_upstream": bool(clean and upstream and ahead == 0 and behind == 0),
         "error": completed.stderr.strip() if completed.returncode != 0 else None,
     }
 
@@ -187,6 +209,12 @@ def determine_next_actions(no_api: dict[str, Any], api: dict[str, Any], git: dic
         actions.append("Run `python scripts/preflight_api_pilot.py --config configs/api_pilot.local.json`.")
     if not git["is_git_repo"]:
         actions.append("Decide whether `research95` should become its own Git repository before claiming GitHub sync.")
+    elif not git["clean"]:
+        actions.append("Review and commit or intentionally leave current working tree changes before claiming GitHub sync.")
+    elif git["ahead"]:
+        actions.append(f"Push {git['ahead']} local commit(s) to `{git['upstream']}` before claiming GitHub sync.")
+    elif git["behind"]:
+        actions.append(f"Pull or inspect {git['behind']} upstream commit(s) from `{git['upstream']}` before continuing sync-sensitive work.")
     return actions
 
 
@@ -252,6 +280,8 @@ def build_markdown(audit: dict[str, Any]) -> str:
         f"- local API model set: {bool_mark(api['local_config']['model_set'])}",
         f"- model selection ready: {bool_mark(api['model_selection']['ready'])}",
         f"- git repository: {bool_mark(git['is_git_repo'])}",
+        f"- git clean: {bool_mark(git.get('clean'))}",
+        f"- git synced with upstream: {bool_mark(git.get('synced_with_upstream'))}",
         "",
         "## No-API State",
         "",
@@ -271,6 +301,13 @@ def build_markdown(audit: dict[str, Any]) -> str:
         "## Git State",
         "",
         f"- is git repo: {bool_mark(git['is_git_repo'])}",
+        f"- branch: `{git.get('branch_header')}`",
+        f"- upstream: `{git.get('upstream')}`",
+        f"- ahead: `{git.get('ahead')}`",
+        f"- behind: `{git.get('behind')}`",
+        f"- clean: {bool_mark(git.get('clean'))}",
+        f"- synced with upstream: {bool_mark(git.get('synced_with_upstream'))}",
+        f"- status entries: `{git.get('status_short')}`",
         f"- error: `{git['error']}`",
         "",
         "## Next Actions",

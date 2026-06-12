@@ -364,7 +364,8 @@
   boundaries. The current primary model path is DeepSeek official API with
   `deepseek-v4-pro`.
 - `scripts/audit_execution_readiness.py`: overall continuation audit for
-  no-API outputs, API credentials/config readiness, and Git repository status.
+  no-API outputs, API credentials/config readiness, and Git repository status,
+  including working-tree cleanliness plus upstream ahead/behind visibility.
 - `scripts/audit_credential_boundary.py`: structural credential-boundary audit
   for `.gitignore`, `.env.example`, and tracked secret-file state. Latest
   report: `outputs/credential_boundary/latest.md`.

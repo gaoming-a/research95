@@ -5379,8 +5379,8 @@ full run 决策：
 
 当前结论：
 
-- 推荐首个代表任务为 `bugsinpy_youtube-dl_6`，因为它是 pure utility
-  unittest 且 F2P 清楚；
+- 推荐首个代表任务已根据第 66 节静态 sweep 从 `bugsinpy_youtube-dl_6`
+  修订为 `bugsinpy_youtube-dl_7`；
 - 这是执行效率最高的下一步决策：若该代表任务仍重复 `youtube-dl_1` timeout
   pattern，应停止 youtube-dl P2P 扩展，而不是继续批量补 F2P；
 - 在获得明确确认前，真实 P2P-broad 仍保持未执行状态。
@@ -5476,3 +5476,39 @@ full run 决策：
 - 因此将 P2P 决策包中的推荐代表任务从 `youtube-dl_6` 修订为
   `youtube-dl_7`；
 - 这仍只是静态效率证据，不允许据此 admission。
+
+## 67. 2026-06-13 Git readiness upstream visibility repair
+
+本轮小目标：
+
+- 修复 `scripts/audit_execution_readiness.py` 只读取 `git status --short` 的
+  可见性缺口；
+- 让 readiness audit 能区分 working tree clean、local ahead、upstream
+  behind 和 fully synced；
+- 不执行 P2P，不改变实验标签。
+
+背景：
+
+- 当前本地 `main` 因 GitHub 连接重置曾出现 `ahead 1`；
+- 旧 audit 的 `git.status_short` 在工作区干净时为空，无法提示“本地提交未推送”；
+- 这会降低无人值守执行时的同步可见性。
+
+执行边界：
+
+- 只修改 readiness 审计脚本和对应文档；
+- 不把 Git sync 状态混入模型/API readiness 结论；
+- 若 push 因网络失败，记录为网络问题而不是仓库状态问题。
+
+执行结果：
+
+- `scripts/audit_execution_readiness.py` 改为读取
+  `git status --short --branch`；
+- audit JSON/Markdown 现在记录：
+  - `branch_header`；
+  - `upstream`；
+  - `ahead` / `behind`；
+  - `clean`；
+  - `synced_with_upstream`；
+  - 非 branch header 的 `status_short` entries；
+- 当前 dirty 状态验证中，audit 正确报告 `ahead = 1`、
+  `clean = false`、`synced_with_upstream = false`。

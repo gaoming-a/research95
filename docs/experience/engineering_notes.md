@@ -1376,6 +1376,9 @@ This file starts fresh for the patch-verification project.
 - Do not create extra commits only to compensate for a failed push; first
   verify whether the local commit is already clean and simply awaiting network
   recovery.
+- `audit_execution_readiness.py` must use `git status --short --branch`, not
+  plain `git status --short`, so a clean working tree that is still ahead of
+  upstream remains visible in readiness reports.
 
 ## 2026-06-13 EVP-7 G5 DeepSeek max-token smoke repair
 
