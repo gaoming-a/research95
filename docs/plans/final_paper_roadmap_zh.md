@@ -842,3 +842,98 @@ patches。
 下一阶段仍然不是修复 legacy `nose` 或 Black `typed_ast` / MSVC blocker，而是继续
 筛选更多低摩擦 BugsInPy 项目，将主 cohort 扩展到 15-20 个 validation-stable
 真实 bugs。
+
+## 18. 2026-06-12 外部建议提取后的增量修订
+
+本节只记录相对既有路线图的增量约束。以下内容不得重复替代前文已经定义的
+E0-E7 evidence levels、visible/hidden 分离、tool-only baseline、Candidate
+Patches 标题和规模分档。
+
+### 18.1 先修正文档一致性，再继续扩量
+
+后续论文草稿、README、计划和 cohort registry 必须统一为当前主线：
+
+- 研究对象是 `candidate patch verification under evidence visibility`；
+- 当前主 cohort 是完成 `project_level_p2p_broad` 的任务集合，不再使用旧的
+  “7 tasks / 2 projects” 表述；
+- Luigi 的 task-file P2P 结果只能作为 appendix/smoke evidence，不能写入最终
+  project-level 主指标；
+- 当前 retained validation summary / oracle-style summary 只能作为诊断或上界
+  风格证据，不能冒充 hidden-evaluator-free 的真实 merge-gate 设置。
+
+在这些口径统一前，不应继续把旧 IEEE 草稿当作当前论文结论来源。
+
+### 18.2 Evidence Visibility Curve 作为核心图形
+
+最终论文应把 E0-E6 的主结果组织为一条
+`Evidence Visibility Curve`，而不是只报告若干条件表格。核心曲线至少包含：
+
+- false accept rate；
+- correct recall；
+- accepted precision；
+- escalation rate；
+- safety/utility trade-off。
+
+E7 只作为 oracle upper bound 单独报告，不进入真实可见证据曲线。曲线的结论不
+要求单调变好；如果证据增加带来 recall 下降或 escalation 上升，应解释为
+safety/utility trade-off，而不是强行写成正向改进。
+
+### 18.3 新指标只能作为校准指标，不能替代主指标
+
+可以在主指标之外引入两个论文友好的派生指标，但必须做敏感性说明，不能用任意
+权重制造结论。
+
+`False-Accept Controlled Recall (FACR)`：
+
+> 在 false accept rate 不超过预设安全阈值时，系统还能接受多少正确 patch。
+
+`Evidence Gain (EG)`：
+
+> `EG(Ek) = Utility(Ek) - Utility(E0)`。
+
+Utility 可以采用如下保守形式：
+
+```text
+Utility = AcceptCorrect - lambda * AcceptWrong - mu * Escalate - nu * RejectCorrect
+```
+
+其中 `lambda` 必须显著高于 `mu` 和 `nu`，因为 merge gate 中错误接受 wrong
+patch 的代价高于升级人工和错误拒绝正确 patch。正式论文中必须报告参数选择
+理由，并至少做一组敏感性分析。
+
+### 18.4 分阶段消融，避免一次性全因子爆炸
+
+如果成本或数据规模不足，优先采用分阶段设计：
+
+1. 全量任务先跑核心 evidence levels：`E0`、`E2`、`E4`、`E6`；
+2. 只有当核心曲线稳定后，再补齐 `E1`、`E3`、`E5`；
+3. 多模型稳健性优先跑关键层级：`E0`、`E4`、`E6`；
+4. generated tests 仍是增强项，不能在 Stage A-F 未稳定前成为主线依赖。
+
+这样可以保留 evidence-visibility 研究问题，同时避免把实验推进变成无法复现的
+全量矩阵。
+
+### 18.5 LLM 增量价值的判定边界
+
+最终论文必须正面回答 LLM 是否超过 realistic tool-only baseline。允许出现三种
+结论：
+
+- LLM 明显优于 tool-only：报告其真实增量；
+- LLM 与 tool-only 接近：写成 executable evidence dominates binary decisions；
+- LLM 不如 tool-only：写成 LLM 不适合作为自动 merge gate，只适合 explanation
+  或 calibrated escalation。
+
+不能因为结果不漂亮而弱化 tool-only baseline。本文的创新在于隔离 evidence
+visibility 对 merge-gate 决策的影响，而不是保证 LLM 总能超过工具规则。
+
+### 18.6 扩量边界更新
+
+30-50 bugs / 100-180 patches 是硕士论文稳健版目标，不是无条件硬门槛。若继续
+BugsInPy 扩量，必须先解决当前候选池边界：
+
+- 继续找低摩擦 BugsInPy 项目；
+- 明确允许 isolated native/editable build；
+- 引入 BugsInPy 之外的新 benchmark/source；
+- 或接受较小但 visible/hidden、baseline 和统计设计更干净的数据规模。
+
+这些选择会改变实验边界，不能由执行代理私自决定。

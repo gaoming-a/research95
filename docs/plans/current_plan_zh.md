@@ -3716,3 +3716,50 @@ Project-level P2P attempt：
 - project-level P2P-broad manifest 生成并记录 scope；
 - `p2p_broad_size >= 3`；
 - registry 中只在上述条件满足后才允许 `p2p_broad_main_included = true`。
+
+## 38. 2026-06-12 final roadmap advice extraction
+
+同步状态：
+
+- 当前 Git 状态为 `main...origin/main`，工作区在本轮修改前干净。
+- 本轮只处理用户提供的研究路线建议，不运行真实 API，不新增实验数据，不修改
+  candidate labels。
+
+本轮小目标：
+
+1. 对照附件建议、`docs/plans/final_paper_roadmap_zh.md`、当前 cohort 和论文草稿；
+2. 只提取与现有最终路线不冲突、不重复的增量内容；
+3. 同步最终路线图、当前计划、索引、README 和工程经验记录；
+4. 审查 diff，确认没有引入新的实验 claim 或错误 cohort 口径；
+5. 提交并 push 到 GitHub。
+
+执行边界：
+
+- 不重写既有 E0-E7 设计；
+- 不重复添加已有 visible/hidden、tool-only baseline、Candidate Patches 标题和
+  规模分档；
+- 不把 “30-50 bugs / 100-180 patches” 写成无条件硬门槛；
+- 不把当前 retained validation summary 写成 realistic hidden-evaluator-free
+  主结果；
+- 不继续 BugsInPy 扩量，除非先解决候选池/构建边界决策。
+
+验收条件：
+
+- `final_paper_roadmap_zh.md` 新增内容明确标注为增量修订；
+- README 和 `docs/INDEX.md` 指向更新后的最终路线；
+- `engineering_notes.md` 记录本轮避免冲突和重复的处理原则；
+- Git diff 只包含本轮文档更新；
+- 成功 commit 并同步远端。
+
+执行结果：
+
+- `docs/plans/final_paper_roadmap_zh.md` 新增第 18 节，只记录非重复增量：
+  Evidence Visibility Curve、FACR/Evidence Gain、分阶段 evidence ablation、
+  realistic tool-only 边界、扩量边界和旧论文/cohort 口径修正。
+- README 已把项目入口标题和主研究方向同步为
+  `Evidence Visibility for Candidate Patch Verification`，并弱化
+  AI-generated correct patch 的硬目标地位。
+- `docs/INDEX.md` 已索引第 18 节增量内容。
+- `docs/experience/engineering_notes.md` 已记录本轮去重原则和未来避免
+  oracle-style summary 误用的经验。
+- `git diff --check` 通过；当前 diff 只包含上述 5 个文档文件。

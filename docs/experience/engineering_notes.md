@@ -1164,3 +1164,21 @@ This file starts fresh for the patch-verification project.
   not silently run editable/native builds for main-cohort admission.
 - `bugsinpy_matplotlib_1` should be recorded as a native/import blocker unless
   the build boundary is explicitly revisited.
+
+## 2026-06-12 final-roadmap advice extraction
+
+- The external advice was broadly aligned with the existing final roadmap, so
+  the safe update was to add only deltas: Evidence Visibility Curve framing,
+  FACR/Evidence Gain as secondary calibrated metrics, staged E0/E2/E4/E6-first
+  ablation, realistic tool-only boundaries, and stale paper/cohort wording
+  cleanup.
+- Do not duplicate the already established E0-E7 ladder, visible/hidden
+  separation, tool-only baseline list, Candidate Patches title, or scale
+  tiers. Repetition makes later agents think these are competing plans.
+- Treat “30-50 bugs / 100-180 patches” as the robust-thesis target, not an
+  unconditional next-step gate. The latest BugsInPy sweep found real candidate
+  pool and build-boundary blockers, so changing the scaling route requires a
+  user decision.
+- Any current result based on retained validation summaries or oracle-style
+  summaries must stay labeled diagnostic, upper-bound-style, or non-realistic
+  for hidden-evaluator-free merge-gate claims.

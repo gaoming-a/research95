@@ -13,7 +13,11 @@
   empirical study with expanded data, tool-only baselines, hidden-evaluator
   separation, multi-level evidence ablation, artifact goals, and the rule that
   generator-unsolved but validation-stable tasks such as `httpie_5` should be
-  treated as hard-generation/stress cases rather than deleted.
+  treated as hard-generation/stress cases rather than deleted. The 2026-06-12
+  update extracts only non-duplicative external advice: the Evidence Visibility
+  Curve framing, FACR/Evidence Gain as calibrated secondary metrics, staged
+  E0/E2/E4/E6-first ablation, realistic tool-only boundaries, and the need to
+  resolve stale paper/cohort wording before further scaling claims.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.
