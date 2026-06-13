@@ -10,9 +10,9 @@ from typing import Any
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_REVIEWS = REPO_ROOT / "outputs" / "evp7_g5_llm_001" / "reviews.jsonl"
-DEFAULT_METRICS = REPO_ROOT / "outputs" / "evp7_g5_llm_001" / "metrics.json"
-DEFAULT_WORKFLOW = REPO_ROOT / "outputs" / "evp7_g5_llm_001" / "workflow_summary.json"
+DEFAULT_REVIEWS = REPO_ROOT / "outputs" / "evp7_g5_llm_002" / "reviews.jsonl"
+DEFAULT_METRICS = REPO_ROOT / "outputs" / "evp7_g5_llm_002" / "metrics.json"
+DEFAULT_WORKFLOW = REPO_ROOT / "outputs" / "evp7_g5_llm_002" / "workflow_summary.json"
 DEFAULT_JSON_OUT = REPO_ROOT / "data" / "reviews" / "evp7_g5_llm_full_run_summary.json"
 DEFAULT_MD_OUT = REPO_ROOT / "docs" / "experiments" / "evp7_g5_llm_full_run_result.md"
 

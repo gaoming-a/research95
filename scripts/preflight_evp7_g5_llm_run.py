@@ -1,6 +1,6 @@
 """Preflight the EVP-7 G5 LLM run configuration without API calls.
 
-This checker validates structural readiness for the future G5 LLM verifier run.
+This checker validates structural readiness for the G5 LLM verifier run.
 It does not read credentials, does not load .env, and never calls a model API.
 Strict API readiness remains false until the user fills provider/model/cost,
 smoke scope, and full-run permission in an ignored local config.

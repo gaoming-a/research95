@@ -6015,13 +6015,132 @@ full run 决策：
 
 当前边界：
 
-- 旧 DeepSeek official G5 full run 覆盖的是 admission 前 168 packets；
-- 当前 8-task / 184-packet cohort 只完成 structural/no-API readiness；
-- 不能把旧 168-run 的 model-result claim 写成覆盖当前 8-task cohort。
+- 本节结束时的边界曾是：旧 DeepSeek official G5 full run 只覆盖
+  admission 前 168 packets，当前 8-task / 184-packet cohort 只完成
+  structural/no-API readiness；
+- 第 84 节已经补跑 fresh 184-packet DeepSeek V4 full run，因此当前
+  8-task cohort 已有 real LLM result；旧 168-run 只保留为历史记录。
 
 下一步：
 
 1. 先完成文档、索引、经验记录和质量门同步；
 2. 如果质量门通过，提交本轮 admission 变更；
-3. 随后最短路径是对当前 184 packets 做 fresh DeepSeek V4 real LLM run，
-   再决定是否进入 15-20 bugs controlled expansion。
+3. 第 84 节 fresh run 完成后，下一步转向质量审计与 15-20 bugs controlled
+   expansion 决策。
+
+## 84. 2026-06-13 fresh 184-packet DeepSeek V4 G5 run
+
+本轮小目标：
+
+- 在 `bugsinpy_youtube-dl_7` admission 后，对当前 8-task / 46-candidate /
+  184-packet EVP-7 cohort 执行 fresh real LLM G5 run；
+- 先做 strict preflight，再做 4-packet smoke；
+- smoke 通过后才执行 full 184-packet run；
+- 原始模型响应只写入 ignored `outputs/evp7_g5_llm_002/`，不覆盖旧
+  `outputs/evp7_g5_llm_001/`。
+
+当前事实：
+
+- `configs/evp7_g5_llm.local.json` 已存在且被 `.gitignore` 忽略；
+- local config 已确认：
+  - provider = `deepseek_official`；
+  - model = `deepseek-v4-pro`；
+  - full_run_permission = true；
+  - evidence packets = `data/evidence/evp7_evidence_packets.jsonl`；
+  - prompt manifest = `data/reviews/evp7_g5_llm_prompt_manifest.jsonl`；
+- `.env` 中存在 DeepSeek API 相关变量名；
+- 当前 no-API artifacts 已通过：
+  - candidate_count = 46；
+  - prompt_record_count = 184；
+  - level_counts = E0/E2/E4/E6 各 46；
+  - leakage failed count = 0。
+
+执行边界：
+
+- 不修改 prompt id；
+- 不改变 evidence packet 内容；
+- 不把 raw model responses 写入 tracked data；
+- smoke 不通过时不得继续 full run；
+- full run 后只生成 raw-output-free tracked summary 与必要的 plan/doc
+  更新。
+
+验收条件：
+
+- strict preflight `api_ready=true`；
+- smoke run 写入 `outputs/evp7_g5_llm_002/smoke_reviews.jsonl`、
+  `smoke_metrics.json`、`smoke_summary.json`；
+- smoke parse invalid rate 不超过 0.2；
+- full run 写入 `outputs/evp7_g5_llm_002/reviews.jsonl`、`metrics.json`、
+  `workflow_summary.json`；
+- full run 后运行 summary/postprocess 生成 tracked raw-output-free summary；
+- 同步 README/INDEX/plan/experience/prompt log 中 184-run 的真实结果边界；
+- 运行 local quality gate 和 goal completion audit；
+- 提交本轮 tracked 结果，GitHub push 仍按用户之前指示暂时不处理。
+
+中间结果：
+
+- strict preflight 已通过：
+  - config = `configs/evp7_g5_llm.local.json`；
+  - structural_ready = true；
+  - api_ready = true；
+  - prompt_manifest_record_count = 184；
+  - candidate_count = 46；
+- 4-packet smoke 已完成：
+  - output dir = `outputs/evp7_g5_llm_002/`；
+  - review_count = 4；
+  - parse_status = `{"valid": 4}`；
+  - invalid_rate = 0.0；
+  - decisions = `{"escalate": 4}`；
+  - stop condition 未触发，可以进入 full 184-packet run。
+
+执行结果：
+
+- full 184-packet run 已完成：
+  - command = `scripts/run_evp7_g5_llm_workflow.py --execute --concurrency 6`；
+  - reviews = `outputs/evp7_g5_llm_002/reviews.jsonl`；
+  - metrics = `outputs/evp7_g5_llm_002/metrics.json`；
+  - workflow summary = `outputs/evp7_g5_llm_002/workflow_summary.json`；
+  - review_count = 184；
+  - unique_review_ids = 184；
+  - parse_status = `{"valid": 183, "invalid": 1}`；
+  - invalid_output_rate = 0.005435；
+  - invalid record = `evp7_candidate_0004__E2`，原因是空响应导致
+    `invalid_json:No JSON object found in model response`；
+  - decision_counts =
+    `{"accept": 6, "escalate": 64, "invalid_output": 1, "reject": 113}`；
+  - G5 signal claim status =
+    `real_llm_verifier_signal_observed_on_evp7`。
+
+核心指标：
+
+- E0：FAR = 0.0，correct recall = 0.0，escalation rate = 0.565217；
+- E2：FAR = 0.0，correct recall = 0.0，escalation rate = 0.608696，
+  invalid_output_rate = 0.021739；
+- E4：FAR = 0.0，accepted precision = 1.0，correct recall = 0.375，
+  escalation rate = 0.086957，Evidence Gain vs E0 = 7.5；
+- E6：FAR = 0.0，accepted precision = 1.0，correct recall = 0.375，
+  escalation rate = 0.130435，Evidence Gain vs E0 = 7.0。
+
+已生成 tracked raw-output-free summary：
+
+- `data/reviews/evp7_g5_llm_full_run_summary.json`；
+- `docs/experiments/evp7_g5_llm_full_run_result.md`。
+
+当前下一步：
+
+1. 同步 README、INDEX、protocol、roadmap、prompt log、experience；
+2. 运行 local quality gate 和 goal completion audit；
+3. 提交 tracked summary/doc updates；
+4. 然后进入 15-20 bugs controlled expansion 的下一项决策，不再重复跑同一
+   184-packet full run。
+
+验证结果：
+
+- `python -m py_compile` 覆盖 G5 preflight、workflow、summary 脚本，通过；
+- strict preflight after full run 通过：
+  - structural_ready = true；
+  - api_ready = true；
+- `scripts/summarize_evp7_g5_llm_full_run.py` 默认输入已改为
+  `outputs/evp7_g5_llm_002/`，无参运行确认仍生成 184-run summary；
+- local quality gate 通过；
+- goal completion audit 通过。

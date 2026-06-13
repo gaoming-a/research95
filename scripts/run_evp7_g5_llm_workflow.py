@@ -1,6 +1,6 @@
 """Guarded EVP-7 G5 LLM workflow.
 
-This workflow provides check-only and mock validation for the future G5 LLM
+This workflow provides check-only and mock validation for the G5 LLM
 run. Real API execution is supported only behind strict preflight and an
 explicit --execute flag; the tracked example config is intentionally not
 API-ready.

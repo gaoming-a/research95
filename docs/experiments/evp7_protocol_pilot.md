@@ -342,25 +342,26 @@ G5 local-config helper status:
 G5 real full-run status:
 
 - user-confirmed provider/model = DeepSeek official API, `deepseek-v4-pro`;
-- workflow used explicit bounded concurrency: `--concurrency 4`;
-- raw outputs remain ignored under `outputs/evp7_g5_llm_001/`;
+- workflow used explicit bounded concurrency: `--concurrency 6`;
+- raw outputs remain ignored under `outputs/evp7_g5_llm_002/`;
 - tracked summary = `docs/experiments/evp7_g5_llm_full_run_result.md`;
 - tracked JSON summary = `data/reviews/evp7_g5_llm_full_run_summary.json`;
-- review count = 168;
-- parse valid = 167/168;
+- review count = 184;
+- parse valid = 183/184;
 - invalid output count = 1;
-- invalid output rate = 0.005952;
+- invalid output rate = 0.005435;
 - G5 metric scaffold = passed;
 - G5 signal claim status = `real_llm_verifier_signal_observed_on_evp7`;
-- scope boundary = pre-`youtube-dl_7` admission, 7-task/42-candidate/168-packet
-  cohort only. The current 8-task/46-candidate/184-packet cohort has no fresh
-  real LLM full-run result yet.
+- scope boundary = current 8-task/46-candidate/184-packet EVP-7 cohort;
+- E4/E6 false accept rate = 0.0;
+- E4/E6 accepted precision = 1.0;
+- E4/E6 correct recall = 0.375;
+- E4/E6 Evidence Gain vs E0 = 7.5 / 7.0.
 
 ## Current Next Step
 
-EVP-7 now supports structural no-API readiness for 8 tasks and has historical
-pilot-level LLM signal on the pre-admission 7-task cohort. The next executable
-research step is a bounded fresh real LLM run over the current 184 packets, then
-15-20 bugs controlled expansion if the 8-task quality audit remains clean.
-Expansion should preserve the same hidden-evaluator boundary, tool-only
-baselines, E0/E2/E4/E6 evidence levels, and raw-output-free tracked summaries.
+EVP-7 now supports pilot-level LLM signal on the current 8-task cohort. The next
+executable research step is quality audit, then 15-20 bugs controlled expansion
+if the 8-task quality audit remains clean. Expansion should preserve the same
+hidden-evaluator boundary, tool-only baselines, E0/E2/E4/E6 evidence levels,
+and raw-output-free tracked summaries.

@@ -83,8 +83,11 @@ See `docs/prompts/api_pilot_prompts.md` for the full prompt templates.
 - Expected experimental impact: enables the real G5 test of whether increasing
   evidence visibility changes false accept rate, correct recall, escalation,
   FACR, or Evidence Gain in genuine LLM verifier outputs.
-- Runs that used it: DeepSeek official full run covered the pre-`youtube-dl_7`
-  admission 168-record cohort. The current no-API prompt manifest/readiness
-  artifacts cover 184 records after `youtube-dl_7` admission:
+- Runs that used it: DeepSeek official full run now covers the current
+  8-task/46-candidate/184-record cohort after `youtube-dl_7` admission. The
+  run used `deepseek-v4-pro`, concurrency 6, produced 183/184 parse-valid
+  outputs, and preserved zero false accepts at E4/E6 in the aggregate metrics.
+  Current prompt manifest/readiness artifacts:
   `data/reviews/evp7_g5_llm_prompt_manifest.jsonl` and
-  `data/reviews/evp7_g5_llm_run_readiness.json`.
+  `data/reviews/evp7_g5_llm_run_readiness.json`. Raw responses remain only in
+  ignored `outputs/evp7_g5_llm_002/`.

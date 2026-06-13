@@ -227,12 +227,14 @@ They should not override `final_paper_roadmap_zh.md`.
   leakage findings. The G5 metric scaffold computes FAR, recall, escalation,
   FACR, and Evidence Gain over schema-stable dry-run records. The G5 LLM prompt
   manifest covers all 184 current E0/E2/E4/E6 packets with zero leakage findings
-  and no stored prompt text. The previous real DeepSeek official G5 full run
-  covered the pre-admission 168-packet cohort; after `youtube-dl_7` admission,
-  the 8-task/184-packet cohort is structurally ready but still needs a fresh
-  real LLM run before making 8-task model-result claims. A controlled-expansion
-  readiness report summarizes the broader BugsInPy rescreen and defines
-  project-diverse bounded probe lanes for the next 15-20 bug expansion step. The
+  and no stored prompt text. The fresh real DeepSeek official G5 full run now
+  covers the current 8-task/46-candidate/184-packet cohort with explicit bounded
+  parallelism (`--concurrency 6`). It produced 183 parse-valid outputs and one
+  schema-invalid output, with E4/E6 false accept rate 0.0, accepted precision
+  1.0, correct recall 0.375, and positive Evidence Gain over E0. A
+  controlled-expansion readiness report summarizes the broader BugsInPy rescreen
+  and defines project-diverse bounded probe lanes for the next 15-20 bug
+  expansion step. The
   first post-G5 lane, `bugsinpy_fastapi_4`, completed checkout but is
   F2P-blocked by the current Pydantic v2 environment and is not admitted.
   `bugsinpy_sanic_2` also completed checkout but is F2P-blocked by the missing
@@ -358,8 +360,8 @@ python scripts\summarize_evp7_g5_llm_full_run.py
 
 The guarded workflow can run the full current 184-packet execution with explicit
 bounded parallelism, for example `--concurrency 4` or `--concurrency 6`. The
-default remains sequential. The older tracked DeepSeek full-run summary remains
-valid only for the pre-admission 168-packet cohort.
+default remains sequential. The latest tracked DeepSeek full-run summary covers
+the current 184-packet cohort.
 
 For full-goal completion evidence, run:
 

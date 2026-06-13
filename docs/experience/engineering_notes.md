@@ -1313,7 +1313,7 @@ This file starts fresh for the patch-verification project.
 - Generic schema enum values such as `partial_fix` can appear in the prompt as
   possible verifier output categories. They are not leakage unless attached to
   a specific candidate as evaluator-side truth.
-- A future real G5 run should stop on prompt-boundary failure, high smoke
+- Real G5 runs should stop on prompt-boundary failure, high smoke
   invalid-output rate, API/preflight failure, cost growth beyond the
   user-confirmed budget, or `run_error.json`.
 
@@ -1568,3 +1568,9 @@ This file starts fresh for the patch-verification project.
   the current structural counts from 7 tasks / 42 candidates / 168 packets to
   8 tasks / 46 candidates / 184 packets. Old real LLM summaries should remain
   scoped to the cohort they actually ran on.
+- The fresh 184-packet DeepSeek V4 G5 run produced one schema-invalid record:
+  `evp7_candidate_0004__E2` had an empty raw response, so parsing failed with
+  `invalid_json:No JSON object found in model response`. Treat this as an
+  API/model-output quality issue, not a prompt-boundary or evidence-leakage
+  failure. The tracked summary should report the invalid rate and keep raw
+  responses only in ignored `outputs/evp7_g5_llm_002/`.

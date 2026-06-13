@@ -110,6 +110,6 @@ Current EVP-7 tracked artifact counts after rebuild:
 - E0/E2/E4/E6 evidence packets: 184;
 - G5 prompt manifest records: 184.
 
-The previous real DeepSeek G5 full run covered the older 168-packet cohort.
-The 8-task/184-packet cohort is structurally ready but still requires a fresh
-real LLM run before making model-result claims over the admitted cohort.
+The later fresh DeepSeek G5 full run now covers the admitted
+8-task/184-packet cohort. The older 168-packet run remains historical
+pre-admission evidence only.

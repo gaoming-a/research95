@@ -847,8 +847,8 @@ patches。
 2026-06-13 更新：`bugsinpy_youtube-dl_7` 已在 retained oracle、4 个候选、
 retained-oracle validation 和 108-test project-level P2P-broad validation
 通过后正式纳入主 cohort。当前 EVP-7 tracked artifacts 为 8 tasks / 5 projects /
-46 candidates / 184 E0-E6 packets。旧 168-packet DeepSeek full run 只覆盖
-admission 前 cohort，不能直接作为 8-task model-result claim。
+46 candidates / 184 E0-E6 packets。随后已完成 fresh DeepSeek V4 full run，
+覆盖当前 184 packets；旧 168-packet run 只保留为 admission 前历史记录。
 
 ## 18. 2026-06-12 外部建议提取后的增量修订
 
@@ -1024,19 +1024,18 @@ Phase A 已补齐 EVP-7 candidate-level schema：
    API；
 13. G5 guarded workflow 当前支持 check-only、mock validation 和 bounded
    concurrency；mock records 只验证 parser/metrics pipeline；
-14. 用户确认 DeepSeek V4 后，已完成 admission 前真实 DeepSeek official G5 full run：
-   168 条 E0/E2/E4/E6 review，concurrency = 4；
-15. full run 质量审计：167/168 parse-valid，1 条 E0 输出缺少
-   `primary_reason`，invalid-output rate = 0.005952；原始响应保留在
+14. 用户确认 DeepSeek V4 后，已完成当前 184-packet 真实 DeepSeek official
+   G5 full run：184 条 E0/E2/E4/E6 review，concurrency = 6；
+15. full run 质量审计：183/184 parse-valid，1 条 E2 输出为空响应导致
+   invalid JSON，invalid-output rate = 0.005435；原始响应保留在
    ignored `outputs/`，tracked summary 不包含 raw model responses；
 16. EVP-7 pilot-level signal 已观察到：
    `g5_signal_claim_status = real_llm_verifier_signal_observed_on_evp7`；
-   E4/E6 相对 E0 的 Evidence Gain 分别为 4.5 和 5.0，false accept rate
-   均为 0；
+   E4/E6 相对 E0 的 Evidence Gain 分别为 7.5 和 7.0，false accept rate
+   均为 0，accepted precision 均为 1.0，correct recall 均为 0.375；
 17. 该结果支持 EVP-7 pilot signal claims，不支持直接 scale-generalized
-   paper claims，也不覆盖 `youtube-dl_7` admission 后的 184-packet cohort；
-   下一步应先对当前 184 packets 做 fresh real LLM run，再进入 15-20 bugs
-   controlled expansion，同时保留 invalid-output 和成本字段缺失的质量边界。
+   paper claims；下一步应进入质量审计和 15-20 bugs controlled expansion，
+   同时保留 invalid-output 和成本字段缺失的质量边界。
 18. 已生成 controlled expansion readiness summary：
    `docs/experiments/evp7_expansion_readiness.md` 和
    `data/tasks/evp7_expansion_readiness.json`；下一步应按 project-diverse

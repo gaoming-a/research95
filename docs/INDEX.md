@@ -84,11 +84,12 @@
   recall, escalation, FACR, and Evidence Gain, but marks G5 signal claims as
   requiring genuine LLM verifier outputs.
 - `../data/reviews/evp7_g5_llm_full_run_summary.json`: tracked raw-output-free
-  summary of the real DeepSeek official EVP-7 G5 full run on the pre-admission
-  168-packet cohort. It records 168 reviews, 167 parse-valid outputs, one
-  schema-invalid output, and `real_llm_verifier_signal_observed_on_evp7`.
+  summary of the real DeepSeek official EVP-7 G5 full run on the current
+  8-task/46-candidate/184-packet cohort. It records 184 reviews, 183
+  parse-valid outputs, one schema-invalid output, and
+  `real_llm_verifier_signal_observed_on_evp7`.
 - `../data/reviews/evp7_g5_llm_prompt_manifest.jsonl`: no-API prompt manifest
-  for the future real G5 evidence-visibility LLM run. It stores prompt hashes,
+  for the G5 evidence-visibility LLM run. It stores prompt hashes,
   lengths, prompt id, evidence level, and leakage-check status, not full prompt
   text.
 - `../data/reviews/evp7_g5_llm_run_readiness.json`: G5 LLM run readiness
@@ -279,10 +280,10 @@
   It documents the FACR/Evidence Gain computation and the boundary that dry-run
   metric variation is not LLM signal evidence.
 - `experiments/evp7_g5_llm_run_readiness.md`: no-API readiness report for the
-  future real G5 LLM verifier run, including prompt id, prompt scope, stop
-  conditions, and required user confirmations.
+  G5 LLM verifier run, including prompt id, prompt scope, stop conditions, and
+  required user confirmations.
 - `experiments/evp7_g5_execution_confirmation_packet.md`: human-facing
-  confirmation packet for the future real G5 run. It records safe command
+  confirmation packet for the G5 run. It records safe command
   order and forbidden actions before local config creation and API execution.
 - `experiments/evp7_g5_llm_full_run_result.md`: tracked summary of the real
   DeepSeek official EVP-7 G5 full run. Raw model responses remain ignored under
@@ -637,14 +638,14 @@
   metrics over schema dry-run, mock workflow, or real LLM review records,
   joining evaluator labels only for aggregate metrics and labeling the review
   source before stating signal status.
-- `../scripts/build_evp7_g5_llm_prompt_manifest.py`: renders the future G5
+- `../scripts/build_evp7_g5_llm_prompt_manifest.py`: renders the G5
   evidence-visibility LLM prompt in memory, writes prompt hashes/lengths and
   readiness metadata, and verifies prompt-boundary leakage without API calls.
-- `../configs/evp7_g5_llm.example.json`: tracked template for the future G5 LLM
+- `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict
-  readiness checker for the future G5 LLM run config.
-- `../scripts/run_evp7_g5_llm_workflow.py`: guarded future G5 workflow. It
+  readiness checker for the G5 LLM run config.
+- `../scripts/run_evp7_g5_llm_workflow.py`: guarded G5 workflow. It
   supports check-only and mock validation without API calls, and refuses real
   execution unless strict preflight passes with an ignored local config and
   explicit `--execute`. Real execution also supports explicit bounded

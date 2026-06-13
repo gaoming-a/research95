@@ -4,8 +4,10 @@ Date: 2026-06-13
 
 ## Purpose
 
-This document records the no-API readiness package for a future real LLM G5
-signal-existence run.
+This document records the no-API readiness package for the real LLM G5
+signal-existence run. The package was later consumed by the fresh 184-record
+DeepSeek official run summarized in
+`docs/experiments/evp7_g5_llm_full_run_result.md`.
 
 The goal of G5 is to test whether E0/E2/E4/E6 evidence visibility changes LLM
 merge-gate decisions in an explainable way. This readiness step prepares the
@@ -94,7 +96,8 @@ Before any real G5 API call, the user must confirm:
 - permission for the full 184-record run after smoke.
 
 This readiness artifact is not model-result evidence and does not pass G5 by
-itself.
+itself; the later 184-record DeepSeek run provides the current model-result
+evidence.
 
 ## Config And Preflight
 
