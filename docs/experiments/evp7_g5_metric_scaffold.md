@@ -38,9 +38,9 @@ data/reviews/evp7_schema_dry_run_metrics.json
 
 ## Current Status
 
-- review records = 168;
-- candidates = 42;
-- E0/E2/E4/E6 record counts = 42 each;
+- review records = 184;
+- candidates = 46;
+- E0/E2/E4/E6 record counts = 46 each;
 - G5 metric scaffold = passed;
 - G5 signal claim status = `requires_real_llm_verifier_outputs`.
 
@@ -50,8 +50,8 @@ data/reviews/evp7_schema_dry_run_metrics.json
 | --- | ---: | ---: | ---: | ---: | ---: |
 | E0 | 0.0 | n/a | 0.0 | 1.0 | 0.0 |
 | E2 | 0.0 | n/a | 0.0 | 1.0 | 0.0 |
-| E4 | 0.0 | 1.0 | 0.857143 | 0.0 | 15.5 |
-| E6 | 0.0 | 1.0 | 0.857143 | 0.0 | 15.5 |
+| E4 | 0.0 | 1.0 | 0.875 | 0.0 | 17.5 |
+| E6 | 0.0 | 1.0 | 0.875 | 0.0 | 17.5 |
 
 The variation above is produced by deterministic schema dry-run rules, not by
 an LLM. It validates metric-path sensitivity only.

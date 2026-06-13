@@ -140,13 +140,16 @@ def _summary(records: list[dict[str, Any]]) -> dict[str, Any]:
     leakage_count = sum(1 for record in records if record["label_leakage_check"] != "passed")
     level_counts = _counts(record["evidence_level"] for record in records)
     prompt_count = len(records)
+    expected_level_count = prompt_count // len(EVIDENCE_LEVELS) if records else 0
+    expected_level_counts = {level: expected_level_count for level in EVIDENCE_LEVELS}
+    expected_prompt_count = expected_level_count * len(EVIDENCE_LEVELS)
     estimated_prompt_tokens = round(sum(char_lengths) / 4) if char_lengths else 0
-    readiness_passed = prompt_count == 168 and level_counts == {level: 42 for level in EVIDENCE_LEVELS} and leakage_count == 0
+    readiness_passed = prompt_count == expected_prompt_count and level_counts == expected_level_counts and leakage_count == 0
     return {
         "cohort_id": "EVP-7",
         "prompt_id": PROMPT_ID,
         "prompt_record_count": prompt_count,
-        "expected_prompt_record_count": 168,
+        "expected_prompt_record_count": expected_prompt_count,
         "level_counts": level_counts,
         "prompt_char_min": min(char_lengths) if char_lengths else None,
         "prompt_char_max": max(char_lengths) if char_lengths else None,
@@ -158,7 +161,7 @@ def _summary(records: list[dict[str, Any]]) -> dict[str, Any]:
         "default_model": DEFAULT_MODEL_PLACEHOLDER,
         "default_temperature": DEFAULT_TEMPERATURE,
         "default_max_tokens": DEFAULT_MAX_TOKENS,
-        "planned_output_records": 168,
+        "planned_output_records": expected_prompt_count,
         "planned_conditions": ["evidence_visibility_merge_gate"],
         "planned_evidence_levels": list(EVIDENCE_LEVELS),
         "stop_conditions": [

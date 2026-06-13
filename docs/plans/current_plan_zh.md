@@ -5929,3 +5929,99 @@ full run 决策：
 - packet 中 youtube-dl decision 显示 approval required = no；
 - packet 不再包含未带 nodeid exclusion 的旧 approval command；
 - goal completion 仍为 `complete=true`。
+
+## 83. 2026-06-13 youtube-dl_7 formal admission and candidate validation
+
+本轮小目标：
+
+- 将已完成 project-level P2P-broad manifest 的 `bugsinpy_youtube-dl_7` 走完
+  formal admission 链路；
+- 先补 retained oracle 和最小候选集，再做 retained-oracle + P2P-broad
+  validation；
+- 只有 candidate validation 通过后，才更新 cohort registry、EVP-7 task
+  manifest、candidate manifest 和 evidence artifacts。
+
+当前事实：
+
+- `data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json` 已存在；
+- manifest 保留 108 个 P2P-broad tests；
+- 当前 `data/cohorts/task_cohort_registry.json` 的 `p2p_broad_main` 仍是 7
+  个 task，尚不包含 `bugsinpy_youtube-dl_7`；
+- 因此当前正式主样本 bug 数仍是 7，不是 8。
+
+执行边界：
+
+- 不再重跑 P2P scope construction；
+- 不新增别的 youtube-dl task；
+- 不调用模型 API；
+- 候选集先采用最小 admission slice：reference correct、empty/no-op negative、
+  partial/incorrect negative、irrelevant negative；
+- 如果 reference patch 或 oracle 无法稳定验证，停止诊断，不更新 cohort。
+
+验收条件：
+
+- 新增 `scripts/oracles/youtubedl_7_js_to_json.py`，能在 buggy checkout 失败、
+  fixed checkout 通过；
+- 生成 `outputs/youtubedl7_candidate_validation_001/candidates.jsonl`；
+- retained-oracle validation 全部符合预期；
+- P2P-broad validation 输出存在且 correct reference 通过 108 个 P2P-broad
+  tests，negative candidates 不被误标为 correct；
+- 通过后再把 `bugsinpy_youtube-dl_7` 纳入 registry，并重建 EVP-7 task、
+  candidate、evidence artifacts，使主 cohort 从 7 提升到 8。
+
+中间诊断：
+
+- retained-oracle validation 已通过：4 个候选全部 apply，reference 通过
+  oracle，3 个 negative 未通过 oracle；
+- 首次 P2P validation 将 reference 标为 `incorrect_regression`，原因不是
+  patch 回归，而是 `validate_candidates_with_p2p.py` 对 unittest scope 仍调用
+  pytest，pytest 无法识别 `test.test_utils.TestUtil...` dotted nodeid；
+- 已将该问题定位为执行链路 bug：candidate-level P2P validator 必须根据
+  manifest 的 `test_framework` 使用 `python -m unittest -q` 执行 unittest
+  scope。
+
+执行结果：
+
+- 新增 retained oracle：
+  `scripts/oracles/youtubedl_7_js_to_json.py`；
+- 新增 admission candidate builder：
+  `scripts/build_youtubedl7_candidates.py`；
+- retained-oracle validation 通过：
+  - record_count = 4；
+  - patch_applied_count = 4；
+  - oracle_all_passed_count = 1；
+  - validation_status_counts = `{"validated": 4}`；
+- 已修复 `scripts/validate_candidates_with_p2p.py` 的 unittest P2P dispatch；
+- 已同步修复 `scripts/run_evp7_visible_tests.py` 的 unittest visible-test
+  dispatch，避免 admission 后 E4 复现链路继续误用 pytest；
+- P2P-broad validation 通过：
+  - record_count = 4；
+  - retained_oracle_passed_count = 1；
+  - p2p_broad_test_count = 108；
+  - label_with_p2p_broad_counts =
+    `{"correct_under_f2p_and_p2p_broad": 1, "incorrect_issue_not_fixed": 3}`；
+- 已将 `bugsinpy_youtube-dl_7` 纳入
+  `data/cohorts/task_cohort_registry.json` 的 `p2p_broad_main`；
+- 已重建 EVP-7 task/candidate/evidence/tool-baseline/schema-dry-run/prompt
+  manifest artifacts；
+- 当前正式主 cohort 已从 7 提升到 8：
+  - main_task_count = 8；
+  - main_projects = 5；
+  - promoted candidates = 46；
+  - correct references = 8；
+  - issue-not-fixed negatives = 38；
+  - E0/E2/E4/E6 packets = 184；
+  - G5 prompt manifest records = 184。
+
+当前边界：
+
+- 旧 DeepSeek official G5 full run 覆盖的是 admission 前 168 packets；
+- 当前 8-task / 184-packet cohort 只完成 structural/no-API readiness；
+- 不能把旧 168-run 的 model-result claim 写成覆盖当前 8-task cohort。
+
+下一步：
+
+1. 先完成文档、索引、经验记录和质量门同步；
+2. 如果质量门通过，提交本轮 admission 变更；
+3. 随后最短路径是对当前 184 packets 做 fresh DeepSeek V4 real LLM run，
+   再决定是否进入 15-20 bugs controlled expansion。

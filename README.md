@@ -210,47 +210,39 @@ They should not override `final_paper_roadmap_zh.md`.
 - `bugsinpy_matplotlib_1` was blocked before F2P/P2P because the checkout probe
   required Matplotlib compiled extensions such as `ft2font`; editable/native
   builds were not run silently.
-- The 2026-06-12 decision freezes the current 7-task main cohort as
-  `EVP-7 Protocol Pilot`. The tracked candidate manifest now contains 42
-  promoted candidates across those 7 tasks. The tracked evidence packet
-  manifest now contains 168 E0/E2/E4/E6 packet records. E0/E2 are complete;
-  E4 and E6 are complete for 42/42 candidates after an independent visible-test
-  runner, tracked P2P compat-shim reuse, and deterministic visible tool
-  summaries. Three visible-test outcomes are `error` because partial candidates
-  break import; they remain valid visible outcomes, not missing evidence. The
-  realistic tool-only baselines are now generated for apply-only, visible-tests,
-  and visible-tool-summary conditions. The merge-gate schema dry-run now
-  generates 168 parse-valid accept/reject/escalate records with zero leakage
-  findings. The G5 metric scaffold now computes FAR, recall, escalation, FACR,
-  and Evidence Gain over schema-stable dry-run records. The G5 LLM prompt
-  manifest now covers all 168 E0/E2/E4/E6 packets with zero leakage findings
-  and no stored prompt text. A tracked G5 example config and preflight prove
-  structural readiness while keeping the tracked example blocked from real
-  execution. The real DeepSeek official G5 full run has now completed on all
-  168 packets with explicit bounded parallelism (`--concurrency 4`). It
-  produced 167 parse-valid outputs and one schema-invalid output, with
-  pilot-level evidence-visibility metric variation observed on EVP-7. This
-  supports EVP-7 pilot signal claims after quality audit, not scale-generalized
-  paper claims. A controlled-expansion readiness report now summarizes the
-  broader BugsInPy rescreen and defines project-diverse bounded probe lanes for
-  the next 15-20 bug expansion step. The first post-G5 lane,
-  `bugsinpy_fastapi_4`, completed checkout but is F2P-blocked by the current
-  Pydantic v2 environment and is not admitted. `bugsinpy_sanic_2` also
-  completed checkout but is F2P-blocked by the missing current-environment
-  Sanic dependency `aiofiles`. A parallel F2P-only triage then found
-  `bugsinpy_youtube-dl_2` as the first new clean F2P signal in that batch.
-  A follow-up youtube-dl F2P-only continuation also established clean F2P for
-  `bugsinpy_youtube-dl_3`, `bugsinpy_youtube-dl_4`, and
-  `bugsinpy_youtube-dl_5`. A second pure-utils continuation established
-  `bugsinpy_youtube-dl_6`, `bugsinpy_youtube-dl_7`, and
-  `bugsinpy_youtube-dl_11`; none are admitted until project-level P2P-broad and
-  candidate revalidation pass. The next efficient decision is one bounded
-  representative youtube-dl project-level P2P attempt, documented in
-  `docs/experiments/evp7_youtubedl_p2p_decision_packet_20260613.md`, rather than
-  bulk-adding more F2P-only probes. The remaining readiness lanes are blocked by environment or historical
-  probe constraints: Scrapy lacks Twisted, Ansible reaches Windows `fcntl`,
-  Luigi lacks Tornado after existing Python 3.11 compatibility, and
-  Matplotlib remains an incomplete/native-extension blocker.
+- The 2026-06-12 decision froze the then-current 7-task main cohort as
+  `EVP-7 Protocol Pilot` to validate the evidence-visibility protocol before
+  blind expansion. On 2026-06-13, the previously approved `bugsinpy_youtube-dl_7`
+  path completed formal admission after a retained oracle, four candidate
+  records, and P2P-broad validation. The current tracked main cohort is now 8
+  tasks across 5 projects. The tracked candidate manifest contains 46 promoted
+  candidates, including 8 correct reference patches and 38 issue-not-fixed
+  negatives. The tracked evidence packet manifest contains 184 E0/E2/E4/E6
+  packet records, with all four levels complete for 46/46 candidates and zero
+  leakage findings. Three visible-test outcomes are `error` because partial
+  candidates break import; they remain valid visible outcomes, not missing
+  evidence. The realistic tool-only baselines are generated for apply-only,
+  visible-tests, and visible-tool-summary conditions. The merge-gate schema
+  dry-run now generates 184 parse-valid accept/reject/escalate records with zero
+  leakage findings. The G5 metric scaffold computes FAR, recall, escalation,
+  FACR, and Evidence Gain over schema-stable dry-run records. The G5 LLM prompt
+  manifest covers all 184 current E0/E2/E4/E6 packets with zero leakage findings
+  and no stored prompt text. The previous real DeepSeek official G5 full run
+  covered the pre-admission 168-packet cohort; after `youtube-dl_7` admission,
+  the 8-task/184-packet cohort is structurally ready but still needs a fresh
+  real LLM run before making 8-task model-result claims. A controlled-expansion
+  readiness report summarizes the broader BugsInPy rescreen and defines
+  project-diverse bounded probe lanes for the next 15-20 bug expansion step. The
+  first post-G5 lane, `bugsinpy_fastapi_4`, completed checkout but is
+  F2P-blocked by the current Pydantic v2 environment and is not admitted.
+  `bugsinpy_sanic_2` also completed checkout but is F2P-blocked by the missing
+  current-environment Sanic dependency `aiofiles`. A parallel F2P-only triage
+  found clean youtube-dl F2P signals, and only `bugsinpy_youtube-dl_7` has now
+  crossed the project-level P2P-broad plus candidate revalidation boundary. The
+  remaining readiness lanes are blocked by environment or historical probe
+  constraints: Scrapy lacks Twisted, Ansible reaches Windows `fcntl`, Luigi
+  lacks Tornado after existing Python 3.11 compatibility, and Matplotlib remains
+  an incomplete/native-extension blocker.
   Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and
@@ -364,9 +356,10 @@ After a real G5 full run, regenerate the tracked raw-output-free summary with:
 python scripts\summarize_evp7_g5_llm_full_run.py
 ```
 
-The guarded workflow can run the full 168-packet execution with explicit
+The guarded workflow can run the full current 184-packet execution with explicit
 bounded parallelism, for example `--concurrency 4` or `--concurrency 6`. The
-default remains sequential.
+default remains sequential. The older tracked DeepSeek full-run summary remains
+valid only for the pre-admission 168-packet cohort.
 
 For full-goal completion evidence, run:
 

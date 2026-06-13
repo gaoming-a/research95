@@ -817,7 +817,7 @@ explanation 和 calibrated escalation。
 
 ## 17. 当前 Stage B/C 执行状态（2026-06-11）
 
-当前 `p2p_broad_main` 已扩展到 7 个完成 project-level P2P-broad 的真实任务：
+当前 `p2p_broad_main` 已扩展到 8 个完成 project-level P2P-broad 的真实任务：
 
 - `bugsinpy_httpie_5`
 - `bugsinpy_cookiecutter_1`
@@ -826,6 +826,7 @@ explanation 和 calibrated escalation。
 - `bugsinpy_tqdm_9`
 - `bugsinpy_PySnooper_1`
 - `bugsinpy_PySnooper_3`
+- `bugsinpy_youtube-dl_7`
 
 最新加入的 `bugsinpy_PySnooper_1` 使用独立 UTF-8 snoop-log oracle，包含 24 个
 稳定 P2P-broad 测试和 6 个已验证 candidate patches。它确认了当前路线的关键
@@ -842,6 +843,12 @@ patches。
 下一阶段仍然不是修复 legacy `nose` 或 Black `typed_ast` / MSVC blocker，而是继续
 筛选更多低摩擦 BugsInPy 项目，将主 cohort 扩展到 15-20 个 validation-stable
 真实 bugs。
+
+2026-06-13 更新：`bugsinpy_youtube-dl_7` 已在 retained oracle、4 个候选、
+retained-oracle validation 和 108-test project-level P2P-broad validation
+通过后正式纳入主 cohort。当前 EVP-7 tracked artifacts 为 8 tasks / 5 projects /
+46 candidates / 184 E0-E6 packets。旧 168-packet DeepSeek full run 只覆盖
+admission 前 cohort，不能直接作为 8-task model-result claim。
 
 ## 18. 2026-06-12 外部建议提取后的增量修订
 
@@ -942,10 +949,15 @@ BugsInPy 扩量，必须先解决当前候选池边界：
 
 已确认选择 Option A：
 
-- 冻结当前 BugsInPy low-friction cohort：7 bugs / 4 projects；
+- 冻结当时 BugsInPy low-friction cohort：7 bugs / 4 projects；
 - 停止继续以“第 8 个 bug”为目标盲扫 BugsInPy；
 - 立即转入 `EVP-7 Protocol Pilot`，先验证现有 7 个样本能否在最终
   evidence-visibility protocol 下产生论文级信号。
+
+2026-06-13 更新：这条决策禁止的是盲目追第 8 个 bug，不禁止已经完成
+project-level P2P-broad、retained oracle 和 candidate revalidation 的受控
+admission。`bugsinpy_youtube-dl_7` 已按该标准纳入，当前主 cohort 为
+8 bugs / 5 projects。
 
 当前不批准：
 
@@ -985,18 +997,18 @@ BugsInPy 扩量，必须先解决当前候选池边界：
 Phase A 已补齐 EVP-7 candidate-level schema：
 
 1. 已从已有 validated candidate outputs 生成
-   `data/patches/evp7_candidates.jsonl`，共 42 条候选；
-2. 其中 7 条为 `correct_reference`，35 条为 issue-not-fixed negatives；
-3. registry 中候选计数仍只能作为 36 条的下界，因为 `httpie_5` 缺少
+   `data/patches/evp7_candidates.jsonl`，共 46 条候选；
+2. 其中 8 条为 `correct_reference`，38 条为 issue-not-fixed negatives；
+3. registry 中候选计数仍只能作为 40 条的下界，因为 `httpie_5` 缺少
    candidate count 字段；
-4. 已生成 leakage-audited E0/E2/E4/E6 evidence packet records，共 168 条；
+4. 已生成 leakage-audited E0/E2/E4/E6 evidence packet records，共 184 条；
 5. 已新增 independent visible-test outcome source 和 deterministic visible
-   tool summary source；E4/E6 当前均为 42/42 complete；
+   tool summary source；E4/E6 当前均为 46/46 complete；
 6. G1 packet completeness 和 G2 leakage audit 当前均通过；3 条 visible
    `error` outcome 是 candidate-induced import failure，不是缺失证据；
 7. G3 tool-only baseline readiness 当前通过：apply-only、visible-tests、
-   visible-tool-summary 三组 baseline 均生成 42 条 schema-valid decisions；
-8. G4 merge-gate schema stability 当前通过：168 条 E0/E2/E4/E6 dry-run
+   visible-tool-summary 三组 baseline 均生成 46 条 schema-valid decisions；
+8. G4 merge-gate schema stability 当前通过：184 条 E0/E2/E4/E6 dry-run
    outputs 全部可解析为 accept/reject/escalate JSON schema，invalid parse
    count = 0，leakage findings = 0；
 9. 这些 G4 records 是 no-API parser/schema dry-run，不是 LLM verifier
@@ -1005,14 +1017,14 @@ Phase A 已补齐 EVP-7 candidate-level schema：
    escalation、FACR 和 Evidence Gain 的计算链路可复现；schema dry-run 和
    mock workflow 仍标记为 `requires_real_llm_verifier_outputs`；
 11. 真实 LLM verifier 的 G5 prompt manifest 和 readiness summary 当前通过
-   no-API 检查：168 条 prompts、四层各 42 条、leakage failed count = 0、
+   no-API 检查：184 条 prompts、四层各 46 条、leakage failed count = 0、
    prompt text 不写入 tracked manifest；
 12. G5 API example config 和 preflight 当前通过结构检查；tracked example
    仍保持 strict API readiness false，只允许 ignored local config 执行真实
    API；
 13. G5 guarded workflow 当前支持 check-only、mock validation 和 bounded
    concurrency；mock records 只验证 parser/metrics pipeline；
-14. 用户确认 DeepSeek V4 后，已完成真实 DeepSeek official G5 full run：
+14. 用户确认 DeepSeek V4 后，已完成 admission 前真实 DeepSeek official G5 full run：
    168 条 E0/E2/E4/E6 review，concurrency = 4；
 15. full run 质量审计：167/168 parse-valid，1 条 E0 输出缺少
    `primary_reason`，invalid-output rate = 0.005952；原始响应保留在
@@ -1022,8 +1034,9 @@ Phase A 已补齐 EVP-7 candidate-level schema：
    E4/E6 相对 E0 的 Evidence Gain 分别为 4.5 和 5.0，false accept rate
    均为 0；
 17. 该结果支持 EVP-7 pilot signal claims，不支持直接 scale-generalized
-   paper claims；下一步进入 15-20 bugs controlled expansion，同时保留
-   invalid-output 和成本字段缺失的质量边界。
+   paper claims，也不覆盖 `youtube-dl_7` admission 后的 184-packet cohort；
+   下一步应先对当前 184 packets 做 fresh real LLM run，再进入 15-20 bugs
+   controlled expansion，同时保留 invalid-output 和成本字段缺失的质量边界。
 18. 已生成 controlled expansion readiness summary：
    `docs/experiments/evp7_expansion_readiness.md` 和
    `data/tasks/evp7_expansion_readiness.json`；下一步应按 project-diverse

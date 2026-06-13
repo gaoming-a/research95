@@ -64,11 +64,11 @@ construction taxonomy remain forbidden in the rendered prompt payload.
 
 ## Readiness Result
 
-- prompt records = 168;
-- E0/E2/E4/E6 records = 42 each;
+- prompt records = 184;
+- E0/E2/E4/E6 records = 46 each;
 - prompt char range = 1880 to 4938;
-- prompt char total = 486475;
-- rough prompt-token estimate by chars/4 = 121619;
+- prompt char total = 528003;
+- rough prompt-token estimate by chars/4 = 132001;
 - leakage failed count = 0;
 - G5 LLM run readiness = `passed_without_api`;
 - API call attempted = false.
@@ -91,7 +91,7 @@ Before any real G5 API call, the user must confirm:
 - model;
 - maximum total cost in USD;
 - smoke scope;
-- permission for the full 168-record run after smoke.
+- permission for the full 184-record run after smoke.
 
 This readiness artifact is not model-result evidence and does not pass G5 by
 itself.
@@ -174,7 +174,9 @@ Current mock result:
 - G5 signal claim status = `requires_real_llm_verifier_outputs`.
 
 The mock run validates the output and metric pipeline only. It does not support
-any model-effect claim.
+any model-effect claim. This mock artifact was generated before `youtube-dl_7`
+admission and remains scoped to the older 168-record cohort until explicitly
+regenerated.
 
 ## Local Config Helper
 

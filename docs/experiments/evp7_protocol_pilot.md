@@ -12,6 +12,12 @@ Stop blind BugsInPy expansion under project-level P2P-broad.
 Move immediately to an evidence-visibility protocol pilot on the frozen cohort.
 ```
 
+2026-06-13 update: `bugsinpy_youtube-dl_7` has since passed the same formal
+admission boundary: retained oracle, four candidate records, retained-oracle
+validation, and project-level P2P-broad validation. The current tracked EVP-7
+cohort is therefore 8 bugs / 5 projects. This is a controlled admission, not a
+return to blind BugsInPy expansion.
+
 Option B is not approved as the current main path. Option C is deferred until
 the protocol interface is stable.
 
@@ -37,9 +43,9 @@ data/tasks/evp7_manifest_summary.json
 data/exclusions/blocked_bugsinpy_projects.jsonl
 ```
 
-## Frozen Cohort Summary
+## Current Cohort Summary
 
-The manifest contains exactly 7 completed project-level P2P-broad tasks:
+The manifest contains exactly 8 completed project-level P2P-broad tasks:
 
 | task | project |
 | --- | --- |
@@ -50,12 +56,13 @@ The manifest contains exactly 7 completed project-level P2P-broad tasks:
 | `bugsinpy_tqdm_9` | `tqdm` |
 | `bugsinpy_PySnooper_1` | `PySnooper` |
 | `bugsinpy_PySnooper_3` | `PySnooper` |
+| `bugsinpy_youtube-dl_7` | `youtube-dl` |
 
 Candidate count status:
 
-- registry-known lower bound: 36;
+- registry-known lower bound: 40;
 - registry missing candidate counts for `bugsinpy_httpie_5`;
-- promoted tracked candidate records: 42.
+- promoted tracked candidate records: 46.
 
 Project coverage:
 
@@ -64,6 +71,7 @@ PySnooper
 cookiecutter
 httpie
 tqdm
+youtube-dl
 ```
 
 ## Blocker Registry
@@ -120,11 +128,11 @@ data/patches/evp7_candidates.jsonl
 data/patches/evp7_candidate_summary.json
 ```
 
-The promoted manifest contains 42 candidates across the 7 EVP-7 tasks:
+The promoted manifest contains 46 candidates across the 8 EVP-7 tasks:
 
-- 7 `correct_reference` candidates labeled
+- 8 `correct_reference` candidates labeled
   `correct_under_f2p_and_p2p_broad`;
-- 35 issue-not-fixed negatives;
+- 38 issue-not-fixed negatives;
 - evaluator-only fields such as `candidate_type`, `expected_outcome`,
   `failure_type_label`, retained-oracle status, and P2P-broad labels.
 
@@ -152,21 +160,21 @@ data/evidence/evp7_evidence_packets.jsonl
 data/evidence/evp7_evidence_packet_summary.json
 ```
 
-The builder emits 168 packet records: 42 candidates times E0/E2/E4/E6.
+The builder emits 184 packet records: 46 candidates times E0/E2/E4/E6.
 
 Current status:
 
-- E0 complete for 42 candidates;
-- E2 complete for 42 candidates, using patch-apply evidence only;
-- E4 complete for 42 candidates after independently rerunning predeclared
+- E0 complete for 46 candidates;
+- E2 complete for 46 candidates, using patch-apply evidence only;
+- E4 complete for 46 candidates after independently rerunning predeclared
   visible tests in candidate workdirs with tracked P2P compat-shim reuse;
-- visible test outcomes include 7 passed checks, 39 failed checks, and 3 error
+- visible test outcomes include 8 passed checks, 42 failed checks, and 3 error
   checks; the 3 errors are candidate-induced import errors and are retained as
   visible runtime outcomes;
-- E6 complete for 42 candidates after deterministic visible tool summaries were
+- E6 complete for 46 candidates after deterministic visible tool summaries were
   generated from model-visible static and visible-test evidence;
 - automated leakage audit passes with zero findings.
-- deterministic tool-only baselines are generated for 42 candidates under three
+- deterministic tool-only baselines are generated for 46 candidates under three
   conditions: apply-only, visible-tests, and visible-tool-summary.
 
 ## Current Limitation
@@ -215,8 +223,8 @@ Current metrics:
 | condition | accepted precision | false accept rate | correct recall | escalation rate |
 | --- | ---: | ---: | ---: | ---: |
 | `tool_only_apply_only` | n/a | 0.0 | 0.0 | 1.0 |
-| `tool_only_visible_tests` | 1.0 | 0.0 | 0.857143 | 0.0 |
-| `tool_only_visible_tool_summary` | 1.0 | 0.0 | 0.857143 | 0.0 |
+| `tool_only_visible_tests` | 1.0 | 0.0 | 0.875 | 0.0 |
+| `tool_only_visible_tool_summary` | 1.0 | 0.0 | 0.875 | 0.0 |
 
 The visible-tests and visible-tool-summary baselines reject one correct patch,
 so they are strong safety baselines but not perfect recall baselines.
@@ -238,9 +246,9 @@ data/reviews/evp7_merge_gate_schema_dry_run_summary.json
 
 Current dry-run status:
 
-- records = 168;
-- E0/E2/E4/E6 level counts = 42 each;
-- parsed schema-valid outputs = 168;
+- records = 184;
+- E0/E2/E4/E6 level counts = 46 each;
+- parsed schema-valid outputs = 184;
 - invalid parse count = 0;
 - leakage findings = 0;
 - G4 schema stability = passed.
@@ -265,8 +273,8 @@ docs/experiments/evp7_g5_metric_scaffold.md
 
 Current scaffold status:
 
-- review records = 168;
-- E0/E2/E4/E6 level counts = 42 each;
+- review records = 184;
+- E0/E2/E4/E6 level counts = 46 each;
 - G5 metric scaffold = passed;
 - G5 signal claim status = `requires_real_llm_verifier_outputs`.
 
@@ -294,8 +302,8 @@ docs/experiments/evp7_g5_llm_run_readiness.md
 Current readiness status:
 
 - prompt id = `patch_verify_evidence_visibility_merge_gate_v1`;
-- prompt records = 168;
-- E0/E2/E4/E6 level counts = 42 each;
+- prompt records = 184;
+- E0/E2/E4/E6 level counts = 46 each;
 - prompt text stored = false;
 - label leakage failed count = 0;
 - G5 LLM run readiness = `passed_without_api`;
@@ -343,12 +351,16 @@ G5 real full-run status:
 - invalid output count = 1;
 - invalid output rate = 0.005952;
 - G5 metric scaffold = passed;
-- G5 signal claim status = `real_llm_verifier_signal_observed_on_evp7`.
+- G5 signal claim status = `real_llm_verifier_signal_observed_on_evp7`;
+- scope boundary = pre-`youtube-dl_7` admission, 7-task/42-candidate/168-packet
+  cohort only. The current 8-task/46-candidate/184-packet cohort has no fresh
+  real LLM full-run result yet.
 
 ## Current Next Step
 
-EVP-7 now supports pilot-level signal claims after quality audit. The next
-research step is 15-20 bugs controlled expansion, not a repeat of the same
-EVP-7 full run. Expansion should preserve the same hidden-evaluator boundary,
-tool-only baselines, E0/E2/E4/E6 evidence levels, and raw-output-free tracked
-summaries.
+EVP-7 now supports structural no-API readiness for 8 tasks and has historical
+pilot-level LLM signal on the pre-admission 7-task cohort. The next executable
+research step is a bounded fresh real LLM run over the current 184 packets, then
+15-20 bugs controlled expansion if the 8-task quality audit remains clean.
+Expansion should preserve the same hidden-evaluator boundary, tool-only
+baselines, E0/E2/E4/E6 evidence levels, and raw-output-free tracked summaries.

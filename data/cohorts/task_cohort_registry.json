@@ -6,10 +6,437 @@
     "retained_oracle_only": "Tasks with stable retained fail-to-pass oracle labels but no completed project-level P2P-broad scope."
   },
   "default_main_filter": {
-    "project_level_p2p_status": "completed",
-    "p2p_broad_main_included": true
+    "p2p_broad_main_included": true,
+    "project_level_p2p_status": "completed"
   },
   "tasks": [
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [],
+      "cohorts": [
+        "p2p_broad_main"
+      ],
+      "collection_summary": {
+        "candidate_count": 6,
+        "candidate_label_counts": {
+          "correct_under_f2p_and_p2p_broad": 1,
+          "incorrect_issue_not_fixed": 5
+        },
+        "collection_errors": 0,
+        "excluded_fail_to_pass_oracle": 1,
+        "excluded_failed_on_buggy_baseline": 4,
+        "nodeids": 29,
+        "p2p_broad_size": 24,
+        "test_files": 2,
+        "test_framework": "pytest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "project_level_p2p_broad"
+      },
+      "notes": "A migrated UTF-8 log oracle and six curated candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains 24 stable tests after excluding the F2P oracle and four buggy-baseline failures. Dependencies were installed only in an ignored isolated PySnooper venv from declared test extras.",
+      "p2p_broad_main_included": true,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_PySnooper_1_p2p_broad.json",
+      "project": "PySnooper",
+      "project_level_p2p_status": "completed",
+      "task_id": "bugsinpy_PySnooper_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "unclear_experimental_boundary",
+        "test_fixture_shim_required",
+        "reference_import_compatibility_gap"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": 2,
+        "nodeids": 0,
+        "p2p_broad_size": 0,
+        "test_framework": "pytest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Blocked after checkout and F2P probe. The run_test target is test_custom_repr_single, but buggy collection requires a missing tests/mini_toolbox.py fixture and the reference checkout imports pycompat.PY2 without defining it in pycompat.py. The user confirmed that compatibility/test-fixture shims are not allowed for main-cohort admission at this stage.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "PySnooper",
+      "project_level_p2p_status": "blocked_feasibility_case",
+      "shim_allowed_now": false,
+      "task_id": "bugsinpy_PySnooper_2"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [],
+      "cohorts": [
+        "p2p_broad_main"
+      ],
+      "collection_summary": {
+        "candidate_count": 4,
+        "candidate_label_counts": {
+          "correct_under_f2p_and_p2p_broad": 1,
+          "incorrect_issue_not_fixed": 3
+        },
+        "collection_errors": 0,
+        "excluded_fail_to_pass_oracle": 1,
+        "excluded_failed_on_buggy_baseline": 0,
+        "nodeids": 5,
+        "p2p_broad_size": 4,
+        "test_files": 1,
+        "test_framework": "pytest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "project_level_p2p_broad"
+      },
+      "notes": "A migrated file-output oracle and four candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains four stable tests after excluding the F2P oracle. Dependencies were installed only in an ignored isolated PySnooper_3 venv from declared runtime and test requirements; no task-specific compatibility/test-fixture shim was introduced.",
+      "p2p_broad_main_included": true,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_PySnooper_3_p2p_broad.json",
+      "project": "PySnooper",
+      "project_level_p2p_status": "completed",
+      "task_id": "bugsinpy_PySnooper_3"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "checkout_timeout"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "p2p_broad_size": null,
+        "test_framework": "pytest"
+      },
+      "f2p_oracle": {
+        "buggy": "not_run: buggy checkout timed out before BugsInPy marker files were written",
+        "fixed": "not_run",
+        "nodeids": [
+          "test/units/utils/test_version.py::test_alpha",
+          "test/units/utils/test_version.py::test_numeric"
+        ]
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Metadata-level target looked like pure version-comparison logic, but the large Ansible buggy checkout exceeded the bounded feasibility window and did not write bugsinpy_run_test.sh. The partial retained workspace was removed; no F2P or P2P scope was attempted.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_ansible_2_checkout_timeout.json",
+      "project": "ansible",
+      "project_level_p2p_status": "pending_blocked_checkout_timeout",
+      "task_id": "bugsinpy_ansible_2"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "missing_typed_ast_dependency",
+        "unittest_collection_error"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": 1,
+        "nodeids": 0,
+        "p2p_broad_size": 0,
+        "test_framework": "unittest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Unittest adapter ran, but project-level discovery produced a failed import because black requires typed_ast; dependency installation was not done silently.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_black_1_p2p_broad.json",
+      "project": "black",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_black_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "missing_typed_ast_dependency",
+        "project_level_import_blocked"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "test_files": null
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Screened as a possible sixth project-level P2P task. The checkout declares typed-ast>=1.4.0 and importing black fails with ModuleNotFoundError: typed_ast in the current Python 3.11 environment; prior typed-ast install attempts require local MSVC build tools. Do not silently install or emulate typed_ast.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "black",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_black_2"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "missing_typed_ast_dependency",
+        "unittest_collection_error"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": 1,
+        "nodeids": 0,
+        "p2p_broad_size": 0,
+        "test_framework": "unittest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Unittest adapter ran, but project-level discovery produced a failed import because black requires typed_ast; dependency installation was not done silently.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_black_3_p2p_broad.json",
+      "project": "black",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_black_3"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [],
+      "cohorts": [
+        "p2p_broad_main"
+      ],
+      "collection_summary": {
+        "candidate_count": 4,
+        "candidate_label_counts": {
+          "correct_under_f2p_and_p2p_broad": 1,
+          "incorrect_issue_not_fixed": 3
+        },
+        "collection_errors": 0,
+        "excluded_fail_to_pass_oracle": 1,
+        "excluded_failed_on_buggy_baseline": 5,
+        "nodeids": 296,
+        "p2p_broad_size": 290,
+        "test_files": 45,
+        "test_framework": "pytest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "project_level_p2p_broad"
+      },
+      "notes": "An isolated Cookiecutter dependency venv plus audited coverage-only addopts override produced a completed project-level P2P-broad scope with 290 stable tests. A migrated UTF-8 context oracle and four candidate patches validated under F2P plus P2P-broad: one reference correct patch and three issue-not-fixed negatives.",
+      "p2p_broad_main_included": true,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad.json",
+      "project": "cookiecutter",
+      "project_level_p2p_status": "completed",
+      "task_id": "bugsinpy_cookiecutter_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [],
+      "cohorts": [
+        "p2p_broad_main"
+      ],
+      "collection_summary": {
+        "candidate_count": 11,
+        "candidate_label_counts": {
+          "correct_under_f2p_and_p2p_broad": 1,
+          "incorrect_issue_not_fixed": 10
+        },
+        "collection_errors": 0,
+        "excluded_fail_to_pass_oracle": 1,
+        "excluded_failed_on_buggy_baseline": 7,
+        "nodeids": 286,
+        "p2p_broad_size": 278,
+        "test_files": 45,
+        "test_framework": "pytest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "project_level_p2p_broad"
+      },
+      "notes": "A migrated multiple-hook oracle and 11 candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains 278 stable tests after excluding the F2P oracle and seven buggy-baseline failures.",
+      "p2p_broad_main_included": true,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_2_p2p_broad.json",
+      "project": "cookiecutter",
+      "project_level_p2p_status": "completed",
+      "task_id": "bugsinpy_cookiecutter_2"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [],
+      "cohorts": [
+        "p2p_broad_main"
+      ],
+      "collection_summary": {
+        "candidate_count": 4,
+        "candidate_label_counts": {
+          "correct_under_f2p_and_p2p_broad": 1,
+          "incorrect_issue_not_fixed": 3
+        },
+        "collection_errors": 0,
+        "excluded_fail_to_pass_oracle": 4,
+        "excluded_failed_on_buggy_baseline": 3,
+        "nodeids": 262,
+        "p2p_broad_size": 255,
+        "test_files": 45,
+        "test_framework": "pytest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "project_level_p2p_broad"
+      },
+      "notes": "A migrated prompt choice oracle and four candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains 255 stable tests after excluding four parameterized F2P oracle nodeids and three buggy-baseline failures.",
+      "p2p_broad_main_included": true,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_3_p2p_broad.json",
+      "project": "cookiecutter",
+      "project_level_p2p_status": "completed",
+      "task_id": "bugsinpy_cookiecutter_3"
+    },
+    {
+      "appendix_smoke_included": false,
+      "attempts": [
+        {
+          "attempt_id": "full_repo_1",
+          "completed": false,
+          "scope_type": "project_level_p2p_broad",
+          "status": "timeout"
+        },
+        {
+          "attempt_id": "full_repo_2",
+          "completed": false,
+          "scope_type": "project_level_p2p_broad",
+          "status": "timeout"
+        },
+        {
+          "attempt_id": "official_test_root_1",
+          "completed": false,
+          "elapsed_minutes": 60,
+          "scope_roots": [
+            "tests/"
+          ],
+          "scope_type": "project_level_official_test_root",
+          "status": "timeout"
+        }
+      ],
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "full_repo_project_level_discovery_timeout",
+        "official_test_root_scope_timeout"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "p2p_broad_size": null,
+        "test_framework": "pytest"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "F2P oracle is clear, but full-repo discovery timed out twice. After user-approved official-test-root policy, the FastAPI tests/ scope also exceeded the 60 minute construction budget without a manifest. No task-file-level downgrade or test-fixture shim was used.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_fastapi_1_official_test_root_timeout.json",
+      "p2p_scope_roots": [
+        "tests/"
+      ],
+      "p2p_scope_type": "project_level_official_test_root",
+      "project": "fastapi",
+      "project_level_p2p_status": "pending_blocked_official_test_root_timeout",
+      "task_id": "bugsinpy_fastapi_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "shared_fastapi_official_test_root_timeout_risk"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "p2p_broad_size": null,
+        "test_framework": "pytest"
+      },
+      "f2p_oracle": {
+        "buggy": "failed: websocket received Socket Dependency instead of Override",
+        "fixed": "passed",
+        "nodeid": "tests/test_ws_router.py::test_router_ws_depends_with_override"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "F2P oracle is clear, but the task shares FastAPI's official test root with fastapi_1, whose full-repo and tests/ official-root P2P construction timed out without a manifest. The task was not advanced to another long P2P construction attempt.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "fastapi",
+      "project_level_p2p_status": "pending_blocked_shared_scope_risk",
+      "task_id": "bugsinpy_fastapi_2"
+    },
     {
       "appendix_smoke_included": false,
       "available_evidence": {
@@ -144,6 +571,260 @@
       "project": "httpie",
       "project_level_p2p_status": "completed",
       "task_id": "bugsinpy_httpie_5"
+    },
+    {
+      "appendix_smoke_included": true,
+      "attempts": [
+        {
+          "attempt_id": 1,
+          "completed": false,
+          "elapsed_minutes": 15
+        },
+        {
+          "attempt_id": 2,
+          "completed": false,
+          "elapsed_minutes": 20
+        }
+      ],
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "available"
+      },
+      "blocked_reason": [
+        "large_project_test_suite",
+        "collection_errors",
+        "project_level_scope_timeout"
+      ],
+      "cohorts": [
+        "blocked_or_pending",
+        "p2p_local_smoke"
+      ],
+      "collection_summary": {
+        "collection_errors": 44,
+        "nodeids": 904,
+        "test_files": 113
+      },
+      "label_scope": {
+        "appendix": "task_file_smoke_only",
+        "main": "not_included"
+      },
+      "notes": "Task-file P2P evidence is retained only as appendix/smoke evidence; this task must not enter regression-aware main metrics until project-level P2P-broad completes.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "luigi",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_luigi_3"
+    },
+    {
+      "appendix_smoke_included": true,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "available"
+      },
+      "blocked_reason": [
+        "project_level_scope_not_attempted_after_luigi_3_blocker",
+        "shared_large_project_test_suite"
+      ],
+      "cohorts": [
+        "blocked_or_pending",
+        "p2p_local_smoke"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "test_files": 113
+      },
+      "label_scope": {
+        "appendix": "task_file_smoke_only",
+        "main": "not_included"
+      },
+      "notes": "Task-file P2P evidence is retained only as appendix/smoke evidence; project-level P2P was not continued after the shared Luigi project-level blocker was confirmed.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "luigi",
+      "project_level_p2p_status": "pending_blocked",
+      "task_id": "bugsinpy_luigi_4"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "native_extension_import_blocker",
+        "f2p_not_established"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "p2p_broad_size": null,
+        "test_framework": "pytest"
+      },
+      "f2p_oracle": {
+        "buggy": "not_established: expected target test file was not found in the buggy retained checkout",
+        "fixed": "not_established: importing checkout Matplotlib failed because compiled extension ft2font is unavailable",
+        "nodeid": "lib/matplotlib/tests/test_bbox_tight.py::test_noop_tight_bbox"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "F2P was not established. The fixed checkout target test imports Matplotlib compiled extension ft2font, and the setup path requires editable/native build work outside the current boundary. No dependency substitution, source/test fixture edit, or task-file P2P downgrade was used.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_matplotlib_1_import_blocker.json",
+      "project": "matplotlib",
+      "project_level_p2p_status": "blocked_native_extension_import",
+      "task_id": "bugsinpy_matplotlib_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "project_level_scope_timeout"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "p2p_broad_size": null,
+        "test_framework": "pytest"
+      },
+      "dependency_environment_audit": "data/p2p_scopes/bugsinpy_sanic_1_dependency_environment_audit.json",
+      "f2p_oracle": {
+        "buggy": "failed: middleware order [1, 2, 3, 6, 5, 4] != [1, 2, 3, 4, 5, 6]",
+        "fixed": "passed",
+        "nodeid": "tests/test_blueprints.py::test_bp_middleware_order"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "F2P oracle is clear after declared dependency installation and Python 3.11 compatibility shim, but project-level P2P-broad construction reached the 60 minute budget without a manifest. No task-file-level scope was used.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_sanic_1_project_level_timeout.json",
+      "project": "sanic",
+      "project_level_p2p_status": "pending_blocked_project_level_scope_timeout",
+      "task_id": "bugsinpy_sanic_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "twisted_20_3_0_native_build_failed",
+        "local_msvc_build_tools_unavailable"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "p2p_broad_size": null,
+        "test_framework": "unittest"
+      },
+      "dependency_environment_audit": "data/p2p_scopes/bugsinpy_scrapy_1_dependency_blocker.json",
+      "f2p_oracle": {
+        "buggy": "not_established: missing Twisted before dependency install; Twisted==20.3.0 native build failed in isolated venv",
+        "fixed": "not_established: missing Twisted before dependency install; Twisted==20.3.0 native build failed in isolated venv",
+        "nodeids": [
+          "tests.test_spidermiddleware_offsite.TestOffsiteMiddleware4._get_spiderargs",
+          "tests.test_spidermiddleware_offsite.TestOffsiteMiddleware4.test_process_spider_output"
+        ]
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "Checkout succeeded, but the retained unittest F2P targets require Twisted. Installing the declared Twisted==20.3.0 dependency in an isolated venv failed because the package builds a native extension and local MSVC build tools are unavailable. No dependency substitution, fixture edit, or task-file P2P downgrade was used.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "project": "scrapy",
+      "project_level_p2p_status": "blocked_dependency_native_build",
+      "task_id": "bugsinpy_scrapy_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "project_level_unittest_scope_timeout"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "p2p_broad_size": null,
+        "test_framework": "unittest"
+      },
+      "f2p_oracle": {
+        "buggy": "failed after Windows selector event loop policy: WebSocketHandler.set_nodelay asserted on self.stream and the test observed None != 'hello'",
+        "fixed": "passed after Windows selector event loop policy",
+        "nodeid": "tornado.test.websocket_test.WebSocketTest.test_nodelay"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "F2P oracle is clear after the documented Windows selector event loop policy, but project-level unittest P2P-broad construction over tornado/test reached the 40 minute budget without producing a manifest. No source/test fixture edit, external network admission, or task-file P2P downgrade was used.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_tornado_1_project_level_timeout.json",
+      "project": "tornado",
+      "project_level_p2p_status": "pending_blocked_project_level_unittest_scope_timeout",
+      "task_id": "bugsinpy_tornado_1"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "not_available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [
+        "shared_tornado_project_level_unittest_scope_timeout"
+      ],
+      "cohorts": [
+        "blocked_or_pending"
+      ],
+      "collection_summary": {
+        "collection_errors": null,
+        "nodeids": null,
+        "p2p_broad_size": null,
+        "test_framework": "unittest"
+      },
+      "f2p_oracle": {
+        "buggy": "failed under shared compat shim: url_concat(..., None) raised TypeError",
+        "fixed": "passed under shared compat shim",
+        "nodeid": "tornado.test.httputil_test.TestUrlConcat.test_url_concat_none_params"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "not_included"
+      },
+      "notes": "F2P oracle is clear after serial checkout repair, but Tornado project-level unittest P2P-broad construction again failed to produce a manifest. No source/test fixture edit or task-file P2P downgrade was used.",
+      "p2p_broad_main_included": false,
+      "p2p_broad_manifest": null,
+      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_tornado_9_project_level_timeout.json",
+      "project": "tornado",
+      "project_level_p2p_status": "pending_blocked_shared_project_level_unittest_scope_timeout",
+      "task_id": "bugsinpy_tornado_9"
     },
     {
       "appendix_smoke_included": true,
@@ -396,12 +1077,12 @@
         "p2p_broad_main"
       ],
       "collection_summary": {
-        "collection_errors": 0,
         "candidate_count": 7,
         "candidate_label_counts": {
           "correct_under_f2p_and_p2p_broad": 1,
           "incorrect_issue_not_fixed": 6
         },
+        "collection_errors": 0,
         "excluded_fail_to_pass_oracle": 2,
         "excluded_failed_on_buggy_baseline": 0,
         "nodeids": 14,
@@ -419,276 +1100,6 @@
       "project": "tqdm",
       "project_level_p2p_status": "completed",
       "task_id": "bugsinpy_tqdm_9"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
-        "project_level_p2p_broad": "available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [],
-      "cohorts": [
-        "p2p_broad_main"
-      ],
-      "collection_summary": {
-        "candidate_count": 6,
-        "candidate_label_counts": {
-          "correct_under_f2p_and_p2p_broad": 1,
-          "incorrect_issue_not_fixed": 5
-        },
-        "collection_errors": 0,
-        "excluded_fail_to_pass_oracle": 1,
-        "excluded_failed_on_buggy_baseline": 4,
-        "nodeids": 29,
-        "p2p_broad_size": 24,
-        "test_files": 2,
-        "test_framework": "pytest"
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "project_level_p2p_broad"
-      },
-      "notes": "A migrated UTF-8 log oracle and six curated candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains 24 stable tests after excluding the F2P oracle and four buggy-baseline failures. Dependencies were installed only in an ignored isolated PySnooper venv from declared test extras.",
-      "p2p_broad_main_included": true,
-      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_PySnooper_1_p2p_broad.json",
-      "project": "PySnooper",
-      "project_level_p2p_status": "completed",
-      "task_id": "bugsinpy_PySnooper_1"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
-        "project_level_p2p_broad": "not_available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [
-        "unclear_experimental_boundary",
-        "test_fixture_shim_required",
-        "reference_import_compatibility_gap"
-      ],
-      "cohorts": [
-        "blocked_or_pending"
-      ],
-      "collection_summary": {
-        "collection_errors": 2,
-        "nodeids": 0,
-        "p2p_broad_size": 0,
-        "test_framework": "pytest"
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "not_included"
-      },
-      "notes": "Blocked after checkout and F2P probe. The run_test target is test_custom_repr_single, but buggy collection requires a missing tests/mini_toolbox.py fixture and the reference checkout imports pycompat.PY2 without defining it in pycompat.py. The user confirmed that compatibility/test-fixture shims are not allowed for main-cohort admission at this stage.",
-      "p2p_broad_main_included": false,
-      "p2p_broad_manifest": null,
-      "project": "PySnooper",
-      "project_level_p2p_status": "blocked_feasibility_case",
-      "shim_allowed_now": false,
-      "task_id": "bugsinpy_PySnooper_2"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
-        "project_level_p2p_broad": "available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [],
-      "cohorts": [
-        "p2p_broad_main"
-      ],
-      "collection_summary": {
-        "candidate_count": 4,
-        "candidate_label_counts": {
-          "correct_under_f2p_and_p2p_broad": 1,
-          "incorrect_issue_not_fixed": 3
-        },
-        "collection_errors": 0,
-        "excluded_fail_to_pass_oracle": 1,
-        "excluded_failed_on_buggy_baseline": 0,
-        "nodeids": 5,
-        "p2p_broad_size": 4,
-        "test_files": 1,
-        "test_framework": "pytest"
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "project_level_p2p_broad"
-      },
-      "notes": "A migrated file-output oracle and four candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains four stable tests after excluding the F2P oracle. Dependencies were installed only in an ignored isolated PySnooper_3 venv from declared runtime and test requirements; no task-specific compatibility/test-fixture shim was introduced.",
-      "p2p_broad_main_included": true,
-      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_PySnooper_3_p2p_broad.json",
-      "project": "PySnooper",
-      "project_level_p2p_status": "completed",
-      "task_id": "bugsinpy_PySnooper_3"
-    },
-    {
-      "appendix_smoke_included": false,
-      "attempts": [
-        {
-          "attempt_id": "full_repo_1",
-          "completed": false,
-          "scope_type": "project_level_p2p_broad",
-          "status": "timeout"
-        },
-        {
-          "attempt_id": "full_repo_2",
-          "completed": false,
-          "scope_type": "project_level_p2p_broad",
-          "status": "timeout"
-        },
-        {
-          "attempt_id": "official_test_root_1",
-          "completed": false,
-          "elapsed_minutes": 60,
-          "scope_roots": [
-            "tests/"
-          ],
-          "scope_type": "project_level_official_test_root",
-          "status": "timeout"
-        }
-      ],
-      "available_evidence": {
-        "project_level_p2p_broad": "not_available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [
-        "full_repo_project_level_discovery_timeout",
-        "official_test_root_scope_timeout"
-      ],
-      "cohorts": [
-        "blocked_or_pending"
-      ],
-      "collection_summary": {
-        "collection_errors": null,
-        "nodeids": null,
-        "p2p_broad_size": null,
-        "test_framework": "pytest"
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "not_included"
-      },
-      "notes": "F2P oracle is clear, but full-repo discovery timed out twice. After user-approved official-test-root policy, the FastAPI tests/ scope also exceeded the 60 minute construction budget without a manifest. No task-file-level downgrade or test-fixture shim was used.",
-      "p2p_broad_main_included": false,
-      "p2p_broad_manifest": null,
-      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_fastapi_1_official_test_root_timeout.json",
-      "p2p_scope_roots": [
-        "tests/"
-      ],
-      "p2p_scope_type": "project_level_official_test_root",
-      "project": "fastapi",
-      "project_level_p2p_status": "pending_blocked_official_test_root_timeout",
-      "task_id": "bugsinpy_fastapi_1"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
-        "project_level_p2p_broad": "not_available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [
-        "shared_fastapi_official_test_root_timeout_risk"
-      ],
-      "cohorts": [
-        "blocked_or_pending"
-      ],
-      "collection_summary": {
-        "collection_errors": null,
-        "nodeids": null,
-        "p2p_broad_size": null,
-        "test_framework": "pytest"
-      },
-      "f2p_oracle": {
-        "buggy": "failed: websocket received Socket Dependency instead of Override",
-        "fixed": "passed",
-        "nodeid": "tests/test_ws_router.py::test_router_ws_depends_with_override"
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "not_included"
-      },
-      "notes": "F2P oracle is clear, but the task shares FastAPI's official test root with fastapi_1, whose full-repo and tests/ official-root P2P construction timed out without a manifest. The task was not advanced to another long P2P construction attempt.",
-      "p2p_broad_main_included": false,
-      "p2p_broad_manifest": null,
-      "project": "fastapi",
-      "project_level_p2p_status": "pending_blocked_shared_scope_risk",
-      "task_id": "bugsinpy_fastapi_2"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
-        "project_level_p2p_broad": "not_available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [
-        "project_level_scope_timeout"
-      ],
-      "cohorts": [
-        "blocked_or_pending"
-      ],
-      "collection_summary": {
-        "collection_errors": null,
-        "nodeids": null,
-        "p2p_broad_size": null,
-        "test_framework": "pytest"
-      },
-      "dependency_environment_audit": "data/p2p_scopes/bugsinpy_sanic_1_dependency_environment_audit.json",
-      "f2p_oracle": {
-        "buggy": "failed: middleware order [1, 2, 3, 6, 5, 4] != [1, 2, 3, 4, 5, 6]",
-        "fixed": "passed",
-        "nodeid": "tests/test_blueprints.py::test_bp_middleware_order"
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "not_included"
-      },
-      "notes": "F2P oracle is clear after declared dependency installation and Python 3.11 compatibility shim, but project-level P2P-broad construction reached the 60 minute budget without a manifest. No task-file-level scope was used.",
-      "p2p_broad_main_included": false,
-      "p2p_broad_manifest": null,
-      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_sanic_1_project_level_timeout.json",
-      "project": "sanic",
-      "project_level_p2p_status": "pending_blocked_project_level_scope_timeout",
-      "task_id": "bugsinpy_sanic_1"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
-        "project_level_p2p_broad": "not_available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [
-        "twisted_20_3_0_native_build_failed",
-        "local_msvc_build_tools_unavailable"
-      ],
-      "cohorts": [
-        "blocked_or_pending"
-      ],
-      "collection_summary": {
-        "collection_errors": null,
-        "nodeids": null,
-        "p2p_broad_size": null,
-        "test_framework": "unittest"
-      },
-      "dependency_environment_audit": "data/p2p_scopes/bugsinpy_scrapy_1_dependency_blocker.json",
-      "f2p_oracle": {
-        "buggy": "not_established: missing Twisted before dependency install; Twisted==20.3.0 native build failed in isolated venv",
-        "fixed": "not_established: missing Twisted before dependency install; Twisted==20.3.0 native build failed in isolated venv",
-        "nodeids": [
-          "tests.test_spidermiddleware_offsite.TestOffsiteMiddleware4._get_spiderargs",
-          "tests.test_spidermiddleware_offsite.TestOffsiteMiddleware4.test_process_spider_output"
-        ]
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "not_included"
-      },
-      "notes": "Checkout succeeded, but the retained unittest F2P targets require Twisted. Installing the declared Twisted==20.3.0 dependency in an isolated venv failed because the package builds a native extension and local MSVC build tools are unavailable. No dependency substitution, fixture edit, or task-file P2P downgrade was used.",
-      "p2p_broad_main_included": false,
-      "p2p_broad_manifest": null,
-      "project": "scrapy",
-      "project_level_p2p_status": "blocked_dependency_native_build",
-      "task_id": "bugsinpy_scrapy_1"
     },
     {
       "appendix_smoke_included": false,
@@ -728,239 +1139,6 @@
     {
       "appendix_smoke_included": false,
       "available_evidence": {
-        "project_level_p2p_broad": "not_available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [
-        "project_level_unittest_scope_timeout"
-      ],
-      "cohorts": [
-        "blocked_or_pending"
-      ],
-      "collection_summary": {
-        "collection_errors": null,
-        "nodeids": null,
-        "p2p_broad_size": null,
-        "test_framework": "unittest"
-      },
-      "f2p_oracle": {
-        "buggy": "failed after Windows selector event loop policy: WebSocketHandler.set_nodelay asserted on self.stream and the test observed None != 'hello'",
-        "fixed": "passed after Windows selector event loop policy",
-        "nodeid": "tornado.test.websocket_test.WebSocketTest.test_nodelay"
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "not_included"
-      },
-      "notes": "F2P oracle is clear after the documented Windows selector event loop policy, but project-level unittest P2P-broad construction over tornado/test reached the 40 minute budget without producing a manifest. No source/test fixture edit, external network admission, or task-file P2P downgrade was used.",
-      "p2p_broad_main_included": false,
-      "p2p_broad_manifest": null,
-      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_tornado_1_project_level_timeout.json",
-      "project": "tornado",
-      "project_level_p2p_status": "pending_blocked_project_level_unittest_scope_timeout",
-      "task_id": "bugsinpy_tornado_1"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
-        "project_level_p2p_broad": "not_available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [
-        "shared_tornado_project_level_unittest_scope_timeout"
-      ],
-      "cohorts": [
-        "blocked_or_pending"
-      ],
-      "collection_summary": {
-        "collection_errors": null,
-        "nodeids": null,
-        "p2p_broad_size": null,
-        "test_framework": "unittest"
-      },
-      "f2p_oracle": {
-        "buggy": "failed under shared compat shim: url_concat(..., None) raised TypeError",
-        "fixed": "passed under shared compat shim",
-        "nodeid": "tornado.test.httputil_test.TestUrlConcat.test_url_concat_none_params"
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "not_included"
-      },
-      "notes": "F2P oracle is clear after serial checkout repair, but Tornado project-level unittest P2P-broad construction again failed to produce a manifest. No source/test fixture edit or task-file P2P downgrade was used.",
-      "p2p_broad_main_included": false,
-      "p2p_broad_manifest": null,
-      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_tornado_9_project_level_timeout.json",
-      "project": "tornado",
-      "project_level_p2p_status": "pending_blocked_shared_project_level_unittest_scope_timeout",
-      "task_id": "bugsinpy_tornado_9"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
-        "project_level_p2p_broad": "not_available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [
-        "checkout_timeout"
-      ],
-      "cohorts": [
-        "blocked_or_pending"
-      ],
-      "collection_summary": {
-        "collection_errors": null,
-        "nodeids": null,
-        "p2p_broad_size": null,
-        "test_framework": "pytest"
-      },
-      "f2p_oracle": {
-        "buggy": "not_run: buggy checkout timed out before BugsInPy marker files were written",
-        "fixed": "not_run",
-        "nodeids": [
-          "test/units/utils/test_version.py::test_alpha",
-          "test/units/utils/test_version.py::test_numeric"
-        ]
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "not_included"
-      },
-      "notes": "Metadata-level target looked like pure version-comparison logic, but the large Ansible buggy checkout exceeded the bounded feasibility window and did not write bugsinpy_run_test.sh. The partial retained workspace was removed; no F2P or P2P scope was attempted.",
-      "p2p_broad_main_included": false,
-      "p2p_broad_manifest": null,
-      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_ansible_2_checkout_timeout.json",
-      "project": "ansible",
-      "project_level_p2p_status": "pending_blocked_checkout_timeout",
-      "task_id": "bugsinpy_ansible_2"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
-        "project_level_p2p_broad": "not_available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [
-        "native_extension_import_blocker",
-        "f2p_not_established"
-      ],
-      "cohorts": [
-        "blocked_or_pending"
-      ],
-      "collection_summary": {
-        "collection_errors": null,
-        "nodeids": null,
-        "p2p_broad_size": null,
-        "test_framework": "pytest"
-      },
-      "f2p_oracle": {
-        "buggy": "not_established: expected target test file was not found in the buggy retained checkout",
-        "fixed": "not_established: importing checkout Matplotlib failed because compiled extension ft2font is unavailable",
-        "nodeid": "lib/matplotlib/tests/test_bbox_tight.py::test_noop_tight_bbox"
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "not_included"
-      },
-      "notes": "F2P was not established. The fixed checkout target test imports Matplotlib compiled extension ft2font, and the setup path requires editable/native build work outside the current boundary. No dependency substitution, source/test fixture edit, or task-file P2P downgrade was used.",
-      "p2p_broad_main_included": false,
-      "p2p_broad_manifest": null,
-      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_matplotlib_1_import_blocker.json",
-      "project": "matplotlib",
-      "project_level_p2p_status": "blocked_native_extension_import",
-      "task_id": "bugsinpy_matplotlib_1"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
-        "project_level_p2p_broad": "not_available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [
-        "missing_typed_ast_dependency",
-        "unittest_collection_error"
-      ],
-      "cohorts": [
-        "blocked_or_pending"
-      ],
-      "collection_summary": {
-        "collection_errors": 1,
-        "nodeids": 0,
-        "p2p_broad_size": 0,
-        "test_framework": "unittest"
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "not_included"
-      },
-      "notes": "Unittest adapter ran, but project-level discovery produced a failed import because black requires typed_ast; dependency installation was not done silently.",
-      "p2p_broad_main_included": false,
-      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_black_1_p2p_broad.json",
-      "project": "black",
-      "project_level_p2p_status": "pending_blocked",
-      "task_id": "bugsinpy_black_1"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
-        "project_level_p2p_broad": "not_available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [
-        "missing_typed_ast_dependency",
-        "project_level_import_blocked"
-      ],
-      "cohorts": [
-        "blocked_or_pending"
-      ],
-      "collection_summary": {
-        "collection_errors": null,
-        "nodeids": null,
-        "test_files": null
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "not_included"
-      },
-      "notes": "Screened as a possible sixth project-level P2P task. The checkout declares typed-ast>=1.4.0 and importing black fails with ModuleNotFoundError: typed_ast in the current Python 3.11 environment; prior typed-ast install attempts require local MSVC build tools. Do not silently install or emulate typed_ast.",
-      "p2p_broad_main_included": false,
-      "p2p_broad_manifest": null,
-      "project": "black",
-      "project_level_p2p_status": "pending_blocked",
-      "task_id": "bugsinpy_black_2"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
-        "project_level_p2p_broad": "not_available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [
-        "missing_typed_ast_dependency",
-        "unittest_collection_error"
-      ],
-      "cohorts": [
-        "blocked_or_pending"
-      ],
-      "collection_summary": {
-        "collection_errors": 1,
-        "nodeids": 0,
-        "p2p_broad_size": 0,
-        "test_framework": "unittest"
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "not_included"
-      },
-      "notes": "Unittest adapter ran, but project-level discovery produced a failed import because black requires typed_ast; dependency installation was not done silently.",
-      "p2p_broad_main_included": false,
-      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_black_3_p2p_broad.json",
-      "project": "black",
-      "project_level_p2p_status": "pending_blocked",
-      "task_id": "bugsinpy_black_3"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
         "project_level_p2p_broad": "available",
         "task_file_level_p2p": "not_recorded"
       },
@@ -969,172 +1147,31 @@
         "p2p_broad_main"
       ],
       "collection_summary": {
-        "collection_errors": 0,
         "candidate_count": 4,
         "candidate_label_counts": {
           "correct_under_f2p_and_p2p_broad": 1,
           "incorrect_issue_not_fixed": 3
         },
-        "excluded_fail_to_pass_oracle": 1,
-        "excluded_failed_on_buggy_baseline": 5,
-        "nodeids": 296,
-        "p2p_broad_size": 290,
-        "test_files": 45,
-        "test_framework": "pytest"
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "project_level_p2p_broad"
-      },
-      "notes": "An isolated Cookiecutter dependency venv plus audited coverage-only addopts override produced a completed project-level P2P-broad scope with 290 stable tests. A migrated UTF-8 context oracle and four candidate patches validated under F2P plus P2P-broad: one reference correct patch and three issue-not-fixed negatives.",
-      "p2p_broad_main_included": true,
-      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad.json",
-      "project": "cookiecutter",
-      "project_level_p2p_status": "completed",
-      "task_id": "bugsinpy_cookiecutter_1"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
-        "project_level_p2p_broad": "available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [],
-      "cohorts": [
-        "p2p_broad_main"
-      ],
-      "collection_summary": {
         "collection_errors": 0,
-        "candidate_count": 11,
-        "candidate_label_counts": {
-          "correct_under_f2p_and_p2p_broad": 1,
-          "incorrect_issue_not_fixed": 10
-        },
+        "excluded_dynamic_download_nodeids": 1297,
         "excluded_fail_to_pass_oracle": 1,
-        "excluded_failed_on_buggy_baseline": 7,
-        "nodeids": 286,
-        "p2p_broad_size": 278,
-        "test_files": 45,
-        "test_framework": "pytest"
+        "excluded_static_external_dependency_tests": 64,
+        "nodeids": 1472,
+        "p2p_broad_size": 108,
+        "test_files": 1,
+        "test_framework": "unittest"
       },
       "label_scope": {
         "appendix": null,
         "main": "project_level_p2p_broad"
       },
-      "notes": "A migrated multiple-hook oracle and 11 candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains 278 stable tests after excluding the F2P oracle and seven buggy-baseline failures.",
+      "notes": "Project-level unittest P2P-broad completed with youtube_dl_dynamic_download_nodeid_exclusion_v1; 108 stable P2P-broad tests retained after excluding generated downloader tests and static external-dependency tests. Four admission candidates validated: one correct reference and three issue-not-fixed negatives.",
       "p2p_broad_main_included": true,
-      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_2_p2p_broad.json",
-      "project": "cookiecutter",
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json",
+      "p2p_scope_policy_record": "docs/experiments/evp7_youtubedl_p2p_execution_attempt_20260613.md",
+      "project": "youtube-dl",
       "project_level_p2p_status": "completed",
-      "task_id": "bugsinpy_cookiecutter_2"
-    },
-    {
-      "appendix_smoke_included": false,
-      "available_evidence": {
-        "project_level_p2p_broad": "available",
-        "task_file_level_p2p": "not_recorded"
-      },
-      "blocked_reason": [],
-      "cohorts": [
-        "p2p_broad_main"
-      ],
-      "collection_summary": {
-        "collection_errors": 0,
-        "candidate_count": 4,
-        "candidate_label_counts": {
-          "correct_under_f2p_and_p2p_broad": 1,
-          "incorrect_issue_not_fixed": 3
-        },
-        "excluded_fail_to_pass_oracle": 4,
-        "excluded_failed_on_buggy_baseline": 3,
-        "nodeids": 262,
-        "p2p_broad_size": 255,
-        "test_files": 45,
-        "test_framework": "pytest"
-      },
-      "label_scope": {
-        "appendix": null,
-        "main": "project_level_p2p_broad"
-      },
-      "notes": "A migrated prompt choice oracle and four candidate patches validated under F2P plus project-level P2P-broad. The P2P scope retains 255 stable tests after excluding four parameterized F2P oracle nodeids and three buggy-baseline failures.",
-      "p2p_broad_main_included": true,
-      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_3_p2p_broad.json",
-      "project": "cookiecutter",
-      "project_level_p2p_status": "completed",
-      "task_id": "bugsinpy_cookiecutter_3"
-    },
-    {
-      "appendix_smoke_included": true,
-      "attempts": [
-        {
-          "attempt_id": 1,
-          "completed": false,
-          "elapsed_minutes": 15
-        },
-        {
-          "attempt_id": 2,
-          "completed": false,
-          "elapsed_minutes": 20
-        }
-      ],
-      "available_evidence": {
-        "project_level_p2p_broad": "not_available",
-        "task_file_level_p2p": "available"
-      },
-      "blocked_reason": [
-        "large_project_test_suite",
-        "collection_errors",
-        "project_level_scope_timeout"
-      ],
-      "cohorts": [
-        "blocked_or_pending",
-        "p2p_local_smoke"
-      ],
-      "collection_summary": {
-        "collection_errors": 44,
-        "nodeids": 904,
-        "test_files": 113
-      },
-      "label_scope": {
-        "appendix": "task_file_smoke_only",
-        "main": "not_included"
-      },
-      "notes": "Task-file P2P evidence is retained only as appendix/smoke evidence; this task must not enter regression-aware main metrics until project-level P2P-broad completes.",
-      "p2p_broad_main_included": false,
-      "p2p_broad_manifest": null,
-      "project": "luigi",
-      "project_level_p2p_status": "pending_blocked",
-      "task_id": "bugsinpy_luigi_3"
-    },
-    {
-      "appendix_smoke_included": true,
-      "available_evidence": {
-        "project_level_p2p_broad": "not_available",
-        "task_file_level_p2p": "available"
-      },
-      "blocked_reason": [
-        "project_level_scope_not_attempted_after_luigi_3_blocker",
-        "shared_large_project_test_suite"
-      ],
-      "cohorts": [
-        "blocked_or_pending",
-        "p2p_local_smoke"
-      ],
-      "collection_summary": {
-        "collection_errors": null,
-        "nodeids": null,
-        "test_files": 113
-      },
-      "label_scope": {
-        "appendix": "task_file_smoke_only",
-        "main": "not_included"
-      },
-      "notes": "Task-file P2P evidence is retained only as appendix/smoke evidence; project-level P2P was not continued after the shared Luigi project-level blocker was confirmed.",
-      "p2p_broad_main_included": false,
-      "p2p_broad_manifest": null,
-      "project": "luigi",
-      "project_level_p2p_status": "pending_blocked",
-      "task_id": "bugsinpy_luigi_4"
+      "task_id": "bugsinpy_youtube-dl_7"
     }
   ]
 }

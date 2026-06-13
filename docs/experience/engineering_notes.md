@@ -1553,3 +1553,18 @@ This file starts fresh for the patch-verification project.
   handoff packets should stop rendering the old approval command. Otherwise a
   later continuation can accidentally rerun stale parameters that predate the
   final scope policy.
+- Candidate-level P2P validation must dispatch by the P2P manifest's
+  `test_framework`. `bugsinpy_youtube-dl_7` stores unittest dotted nodeids; when
+  the validator reused pytest, the correct reference patch was mislabeled as a
+  regression even though the patch and P2P scope were sound. The fix is to run
+  unittest scopes as `python -m unittest -q <nodeids...>` and keep pytest only
+  for pytest scopes.
+- Visible-test reproduction has the same runner-boundary requirement. After
+  admitting a unittest task, `run_evp7_visible_tests.py` must use the task's P2P
+  manifest framework instead of assuming pytest, otherwise E4 evidence can drift
+  from P2P validation behavior.
+- When the EVP-7 cohort grows, hardcoded gate constants must be updated in the
+  builders before trusting check output. The `youtube-dl_7` admission changed
+  the current structural counts from 7 tasks / 42 candidates / 168 packets to
+  8 tasks / 46 candidates / 184 packets. Old real LLM summaries should remain
+  scoped to the cohort they actually ran on.

@@ -203,9 +203,9 @@ def _signal_preview(groups: dict[str, dict[str, Any]]) -> dict[str, Any]:
 
 
 def _scaffold_passed(reviews: list[dict[str, Any]], groups: dict[str, dict[str, Any]]) -> bool:
-    if len(reviews) != 168:
+    if len(reviews) != 184:
         return False
-    return all(groups[level]["record_count"] == 42 for level in EVIDENCE_LEVELS)
+    return all(groups[level]["record_count"] == 46 for level in EVIDENCE_LEVELS)
 
 
 def _run_kind(reviews: list[dict[str, Any]]) -> str:
@@ -301,7 +301,7 @@ def _check(metrics: dict[str, Any], reviews_path: Path) -> None:
     if findings:
         raise SystemExit(f"evaluator marker leaked into dry-run review records: {findings}")
     for level, group in metrics["metric_groups"].items():
-        if group["record_count"] != 42:
+        if group["record_count"] != 46:
             raise SystemExit(f"{level} record count changed: {group['record_count']}")
         required = {
             "accepted_precision",

@@ -73,7 +73,7 @@ See `docs/prompts/api_pilot_prompts.md` for the full prompt templates.
   `patch_verify_evidence_first_v1` stop/redesign boundary by treating this as a
   new evidence-visibility protocol prompt rather than a scale-up of the failed
   prompt-only condition.
-- Label-leakage check: prompt manifest generation produced 168 records with
+- Label-leakage check: prompt manifest generation produced 184 current records with
   zero boundary findings. Candidate-specific evaluator fields such as
   `label_with_p2p_broad`, `candidate_type`, `expected_outcome`,
   `failure_type_label`, retained-oracle outcome, hidden P2P outcome, and
@@ -83,6 +83,8 @@ See `docs/prompts/api_pilot_prompts.md` for the full prompt templates.
 - Expected experimental impact: enables the real G5 test of whether increasing
   evidence visibility changes false accept rate, correct recall, escalation,
   FACR, or Evidence Gain in genuine LLM verifier outputs.
-- Runs that used it: no real API runs yet. No-API readiness only:
+- Runs that used it: DeepSeek official full run covered the pre-`youtube-dl_7`
+  admission 168-record cohort. The current no-API prompt manifest/readiness
+  artifacts cover 184 records after `youtube-dl_7` admission:
   `data/reviews/evp7_g5_llm_prompt_manifest.jsonl` and
   `data/reviews/evp7_g5_llm_run_readiness.json`.

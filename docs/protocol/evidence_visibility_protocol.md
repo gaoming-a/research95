@@ -49,7 +49,7 @@ The candidate manifest is:
 data/patches/evp7_candidates.jsonl
 ```
 
-It contains 42 promoted candidates from the validated EVP-7 candidate outputs.
+It contains 46 promoted candidates from the validated EVP-7 candidate outputs.
 Its labels and failure taxonomy are evaluator-only inputs for metrics and must
 not be copied into model-visible evidence packets.
 
@@ -59,10 +59,10 @@ The current evidence packet manifest is:
 data/evidence/evp7_evidence_packets.jsonl
 ```
 
-It contains E0/E2/E4/E6 records for all 42 candidates. E0/E2 are complete.
-E4 is complete for all 42 candidates after rerunning predeclared visible tests
+It contains E0/E2/E4/E6 records for all 46 candidates. E0/E2 are complete.
+E4 is complete for all 46 candidates after rerunning predeclared visible tests
 in candidate workdirs with the same tracked project-level compat shims recorded
-in the P2P manifests. E6 is complete for all 42 candidates after deterministic
+in the P2P manifests. E6 is complete for all 46 candidates after deterministic
 visible tool summaries were generated from already model-visible static and
 visible-test evidence. Three visible-test outcomes are `error` because partial
 candidates break import; those are visible outcomes, not hidden evaluator
@@ -166,9 +166,9 @@ Current gate status after the first packet builder:
   evaluator labels, oracle outcomes, hidden tests, reference provenance, or
   failure taxonomy in model-visible packets.
 - G3 passes for deterministic tool-only baselines: apply-only, visible-tests,
-  and visible-tool-summary conditions each produce 42 schema-valid decisions
+  and visible-tool-summary conditions each produce 46 schema-valid decisions
   and aggregate metrics.
-- G4 passes for the no-API merge-gate schema dry-run: all 168 E0/E2/E4/E6
+- G4 passes for the no-API merge-gate schema dry-run: all 184 E0/E2/E4/E6
   packet-level outputs parse into the fixed accept/reject/escalate JSON schema
   with zero leakage findings. These records are parser/schema evidence only,
   not LLM verifier results.
@@ -178,7 +178,7 @@ Current gate status after the first packet builder:
   outputs under an approved API/model/cost boundary.
 - The future G5 LLM prompt is
   `patch_verify_evidence_visibility_merge_gate_v1`. Its no-API prompt manifest
-  covers all 168 E0/E2/E4/E6 packet prompts with zero leakage failures and no
+  covers all 184 E0/E2/E4/E6 packet prompts with zero leakage failures and no
   tracked full prompt text. Real execution still requires user confirmation of
   provider, model, cost ceiling, smoke scope, and full-run permission.
 - The tracked `configs/evp7_g5_llm.example.json` and

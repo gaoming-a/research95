@@ -15,8 +15,9 @@ from typing import Any
 
 
 EXPECTED_PROMPT_ID = "patch_verify_evidence_visibility_merge_gate_v1"
-EXPECTED_LEVEL_COUNTS = {"E0": 42, "E2": 42, "E4": 42, "E6": 42}
-EXPECTED_RECORD_COUNT = 168
+EXPECTED_CANDIDATE_COUNT = 46
+EXPECTED_LEVEL_COUNTS = {"E0": 46, "E2": 46, "E4": 46, "E6": 46}
+EXPECTED_RECORD_COUNT = 184
 ALLOWED_CONDITIONS = {"evidence_visibility_merge_gate"}
 
 
@@ -210,7 +211,7 @@ def artifact_checks(config: dict[str, Any]) -> list[dict[str, Any]]:
         checks.extend(
             [
                 _structural_check("evidence_packet_count", evidence_count == EXPECTED_RECORD_COUNT, evidence_count),
-                _structural_check("candidate_count", candidate_count == 42, candidate_count),
+                _structural_check("candidate_count", candidate_count == EXPECTED_CANDIDATE_COUNT, candidate_count),
             ]
         )
 

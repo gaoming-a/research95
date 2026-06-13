@@ -2,6 +2,11 @@
 
 This tracked summary excludes raw model responses. Raw outputs remain under ignored `outputs/`.
 
+Scope boundary: this run covered the pre-`youtube-dl_7` admission cohort
+(7 tasks, 42 candidates, 168 packets). It remains valid historical LLM evidence
+for that cohort, but it does not cover the current 8-task/46-candidate/184-packet
+EVP-7 artifacts.
+
 ## Run
 
 - Provider: `deepseek_official`
@@ -27,7 +32,7 @@ This tracked summary excludes raw model responses. Raw outputs remain under igno
 - Run kind: `real_llm`
 - G5 metric scaffold: `passed`
 - G5 signal claim status: `real_llm_verifier_signal_observed_on_evp7`
-- Boundary: These metrics come from real LLM verifier outputs on the EVP-7 pilot. They can support EVP-7 pilot signal claims after quality audit, but not scale-generalized paper claims without controlled expansion.
+- Boundary: These metrics come from real LLM verifier outputs on the pre-admission EVP-7 pilot. They can support that pilot's signal claims after quality audit, but not the current 8-task cohort or scale-generalized paper claims without a fresh run and controlled expansion.
 
 | Evidence | Records | Decisions | Invalid | FAR | Accepted precision | Correct recall | Evidence gain vs E0 |
 | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: |

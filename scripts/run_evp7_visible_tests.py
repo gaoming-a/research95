@@ -71,6 +71,21 @@ def _pytest_command(python_executable: str, tests: list[str], addopts_override: 
     return command
 
 
+def _unittest_command(python_executable: str, tests: list[str]) -> list[str]:
+    return [python_executable, "-m", "unittest", "-q", *tests]
+
+
+def _test_command(
+    python_executable: str,
+    tests: list[str],
+    addopts_override: str | None,
+    test_framework: str | None,
+) -> list[str]:
+    if test_framework == "unittest":
+        return _unittest_command(python_executable, tests)
+    return _pytest_command(python_executable, tests, addopts_override)
+
+
 def _terminate(process: subprocess.Popen[str]) -> None:
     if process.poll() is not None:
         return
@@ -147,6 +162,7 @@ def _scope_compat_shim(candidate: dict[str, Any]) -> tuple[Path | None, dict[str
         "p2p_manifest": manifest_rel,
         "compat_shim_path": compat["path"],
         "source": "tracked_p2p_scope_manifest",
+        "test_framework": manifest.get("test_framework"),
     }
 
 
@@ -195,10 +211,11 @@ def _outcome_record(
             ],
         }
 
-    command = _pytest_command(
+    command = _test_command(
         str(python_executable),
         tests,
         validation.get("pytest_addopts_override"),
+        compat_record.get("test_framework"),
     )
     if dry_run:
         return base_record | {
@@ -282,10 +299,10 @@ def _counts(values: Any) -> dict[str, int]:
 
 
 def _check(records: list[dict[str, Any]], summary: dict[str, Any], dry_run: bool) -> None:
-    if summary["candidate_count"] != 42:
-        raise SystemExit(f"EVP-7 candidate count changed: {summary['candidate_count']} != 42")
-    if summary["record_count"] != 42:
-        raise SystemExit(f"visible outcome record count changed: {summary['record_count']} != 42")
+    if summary["candidate_count"] != 46:
+        raise SystemExit(f"EVP-7 candidate count changed: {summary['candidate_count']} != 46")
+    if summary["record_count"] != 46:
+        raise SystemExit(f"visible outcome record count changed: {summary['record_count']} != 46")
     forbidden = (
         "label_with_p2p_broad",
         "label_retained_oracle",

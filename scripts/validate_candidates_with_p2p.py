@@ -43,6 +43,7 @@ def run_p2p_chunk(
     timeout_seconds: int,
     pythonpath: Path | None,
     addopts_override: str | None,
+    test_framework: str,
 ) -> dict[str, Any]:
     env = os.environ.copy()
     if pythonpath is not None:
@@ -52,7 +53,7 @@ def run_p2p_chunk(
     process: subprocess.Popen[str] | None = None
     try:
         process = subprocess.Popen(
-            pytest_command(python, ["-q", *nodeids], addopts_override),
+            p2p_command(python, nodeids, addopts_override, test_framework),
             cwd=str(workdir),
             env=env,
             text=True,
@@ -96,6 +97,21 @@ def pytest_command(python: str, pytest_args: list[str], addopts_override: str | 
         command.extend(["-o", f"addopts={addopts_override}"])
     command.extend(pytest_args)
     return command
+
+
+def unittest_command(python: str, nodeids: list[str]) -> list[str]:
+    return [python, "-m", "unittest", "-q", *nodeids]
+
+
+def p2p_command(
+    python: str,
+    nodeids: list[str],
+    addopts_override: str | None,
+    test_framework: str,
+) -> list[str]:
+    if test_framework == "unittest":
+        return unittest_command(python, nodeids)
+    return pytest_command(python, ["-q", *nodeids], addopts_override)
 
 
 def kill_process_tree(pid: int) -> None:
@@ -156,6 +172,7 @@ def validate_candidate(
                     p2p_timeout_seconds,
                     pythonpath,
                     addopts_override,
+                    str(scope.get("test_framework") or "pytest"),
                 )
             )
     p2p_passed = bool(p2p_results) and all(result["passed"] for result in p2p_results)

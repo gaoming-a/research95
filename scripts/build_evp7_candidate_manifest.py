@@ -50,6 +50,10 @@ TASK_INPUTS: dict[str, tuple[str, str]] = {
         "outputs/pysnooper3_candidate_validation_001/candidates.jsonl",
         "outputs/pysnooper3_candidate_validation_001/p2p_validation.jsonl",
     ),
+    "bugsinpy_youtube-dl_7": (
+        "outputs/youtubedl7_candidate_validation_001/candidates.jsonl",
+        "outputs/youtubedl7_candidate_validation_001/p2p_validation.jsonl",
+    ),
 }
 
 
@@ -253,13 +257,13 @@ def main() -> int:
             raise SystemExit(
                 f"candidate count {len(records)} < registry-known lower bound {min_known}"
             )
-        if len(records) != 42:
-            raise SystemExit(f"EVP-7 candidate count changed: {len(records)} != 42")
+        if len(records) != 46:
+            raise SystemExit(f"EVP-7 candidate count changed: {len(records)} != 46")
         ids = [record["evp7_candidate_id"] for record in records]
         if len(ids) != len(set(ids)):
             raise SystemExit("evp7_candidate_id values are not unique")
-        if len({record["task_id"] for record in records}) != 7:
-            raise SystemExit("expected candidates from exactly 7 tasks")
+        if len({record["task_id"] for record in records}) != 8:
+            raise SystemExit("expected candidates from exactly 8 tasks")
         if any(not record.get("label_with_p2p_broad") for record in records):
             raise SystemExit("missing p2p labels")
 
