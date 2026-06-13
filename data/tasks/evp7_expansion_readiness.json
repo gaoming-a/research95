@@ -22,16 +22,15 @@
   "controlled_probe_results": {
     "p2p_candidate_tasks": [
       "bugsinpy_youtube-dl_11",
-      "bugsinpy_youtube-dl_3",
-      "bugsinpy_youtube-dl_4"
+      "bugsinpy_youtube-dl_3"
     ],
     "probe_status_counts": {
-      "admitted_p2p_broad_main": 4,
+      "admitted_p2p_broad_main": 5,
       "f2p_blocked_dependency_environment": 4,
       "f2p_blocked_existing_incomplete_native_probe": 1,
       "f2p_blocked_windows_posix_import": 1,
       "f2p_established_existing_p2p_timeout": 1,
-      "f2p_established_p2p_not_attempted": 3
+      "f2p_established_p2p_not_attempted": 2
     },
     "recorded_tasks": [
       "bugsinpy_ansible_1",
@@ -56,9 +55,9 @@
     "cookiecutter": 3,
     "httpie": 1,
     "tqdm": 1,
-    "youtube-dl": 4
+    "youtube-dl": 5
   },
-  "current_main_task_count": 11,
+  "current_main_task_count": 12,
   "current_main_tasks": [
     "bugsinpy_PySnooper_1",
     "bugsinpy_PySnooper_3",
@@ -68,6 +67,7 @@
     "bugsinpy_httpie_5",
     "bugsinpy_tqdm_9",
     "bugsinpy_youtube-dl_2",
+    "bugsinpy_youtube-dl_4",
     "bugsinpy_youtube-dl_5",
     "bugsinpy_youtube-dl_6",
     "bugsinpy_youtube-dl_7"

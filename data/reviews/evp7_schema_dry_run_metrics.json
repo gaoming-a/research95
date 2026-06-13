@@ -2,7 +2,7 @@
   "analysis_boundary": "Deterministic schema dry-run metrics validate the analysis path only. They are not model-effect evidence.",
   "analysis_input": "data\\reviews\\evp7_merge_gate_schema_dry_run.jsonl",
   "api_call_attempted": false,
-  "candidate_count": 58,
+  "candidate_count": 62,
   "cohort_id": "EVP-7",
   "dry_run_boundary": "Deterministic schema dry-run metrics validate the analysis path only; they are not model-effect evidence.",
   "evidence_levels": [
@@ -24,8 +24,8 @@
     "E0": {
       "accepted_precision": null,
       "confusion_counts": {
-        "escalated_correct": 11,
-        "escalated_incorrect": 47,
+        "escalated_correct": 12,
+        "escalated_incorrect": 50,
         "false_accept": 0,
         "false_reject": 0,
         "invalid_output": 0,
@@ -34,7 +34,7 @@
       },
       "correct_recall": 0.0,
       "decision_counts": {
-        "escalate": 58
+        "escalate": 62
       },
       "escalation_rate": 1.0,
       "evidence_gain_vs_e0": 0.0,
@@ -47,18 +47,18 @@
       "false_accept_rate": 0.0,
       "false_reject_rate": 0.0,
       "invalid_output_rate": 0.0,
-      "record_count": 58,
+      "record_count": 62,
       "utility": {
         "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
-        "score": -14.5,
+        "score": -15.5,
         "score_per_candidate": -0.25
       }
     },
     "E2": {
       "accepted_precision": null,
       "confusion_counts": {
-        "escalated_correct": 11,
-        "escalated_incorrect": 47,
+        "escalated_correct": 12,
+        "escalated_incorrect": 50,
         "false_accept": 0,
         "false_reject": 0,
         "invalid_output": 0,
@@ -67,7 +67,7 @@
       },
       "correct_recall": 0.0,
       "decision_counts": {
-        "escalate": 58
+        "escalate": 62
       },
       "escalation_rate": 1.0,
       "evidence_gain_vs_e0": 0.0,
@@ -80,99 +80,99 @@
       "false_accept_rate": 0.0,
       "false_reject_rate": 0.0,
       "invalid_output_rate": 0.0,
-      "record_count": 58,
+      "record_count": 62,
       "utility": {
         "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
-        "score": -14.5,
+        "score": -15.5,
         "score_per_candidate": -0.25
       }
     },
     "E4": {
-      "accepted_precision": 0.909091,
+      "accepted_precision": 0.916667,
       "confusion_counts": {
         "escalated_correct": 0,
         "escalated_incorrect": 0,
         "false_accept": 1,
         "false_reject": 1,
         "invalid_output": 0,
-        "true_accept": 10,
-        "true_reject": 46
+        "true_accept": 11,
+        "true_reject": 49
       },
-      "correct_recall": 0.909091,
+      "correct_recall": 0.916667,
       "decision_counts": {
-        "accept": 11,
-        "reject": 47
+        "accept": 12,
+        "reject": 50
       },
       "escalation_rate": 0.0,
-      "evidence_gain_vs_e0": 18.5,
+      "evidence_gain_vs_e0": 20.5,
       "facr": {
         "far_le_0": null,
         "far_le_0.01": null,
-        "far_le_0.05": 0.909091,
-        "far_le_0.1": 0.909091
+        "far_le_0.05": 0.916667,
+        "far_le_0.1": 0.916667
       },
-      "false_accept_rate": 0.021277,
-      "false_reject_rate": 0.090909,
+      "false_accept_rate": 0.02,
+      "false_reject_rate": 0.083333,
       "invalid_output_rate": 0.0,
-      "record_count": 58,
+      "record_count": 62,
       "utility": {
         "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
-        "score": 4.0,
-        "score_per_candidate": 0.068966
+        "score": 5.0,
+        "score_per_candidate": 0.080645
       }
     },
     "E6": {
-      "accepted_precision": 0.909091,
+      "accepted_precision": 0.916667,
       "confusion_counts": {
         "escalated_correct": 0,
         "escalated_incorrect": 0,
         "false_accept": 1,
         "false_reject": 1,
         "invalid_output": 0,
-        "true_accept": 10,
-        "true_reject": 46
+        "true_accept": 11,
+        "true_reject": 49
       },
-      "correct_recall": 0.909091,
+      "correct_recall": 0.916667,
       "decision_counts": {
-        "accept": 11,
-        "reject": 47
+        "accept": 12,
+        "reject": 50
       },
       "escalation_rate": 0.0,
-      "evidence_gain_vs_e0": 18.5,
+      "evidence_gain_vs_e0": 20.5,
       "facr": {
         "far_le_0": null,
         "far_le_0.01": null,
-        "far_le_0.05": 0.909091,
-        "far_le_0.1": 0.909091
+        "far_le_0.05": 0.916667,
+        "far_le_0.1": 0.916667
       },
-      "false_accept_rate": 0.021277,
-      "false_reject_rate": 0.090909,
+      "false_accept_rate": 0.02,
+      "false_reject_rate": 0.083333,
       "invalid_output_rate": 0.0,
-      "record_count": 58,
+      "record_count": 62,
       "utility": {
         "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
-        "score": 4.0,
-        "score_per_candidate": 0.068966
+        "score": 5.0,
+        "score_per_candidate": 0.080645
       }
     }
   },
   "mock_run": false,
   "model_call_attempted": false,
-  "review_record_count": 232,
+  "review_record_count": 248,
   "run_kind": "schema_dry_run",
   "signal_preview": {
     "evidence_gain_vs_e0": {
       "E2": 0.0,
-      "E4": 18.5,
-      "E6": 18.5
+      "E4": 20.5,
+      "E6": 20.5
     },
     "has_metric_variation": true,
     "interpretation_boundary": "Interpret this preview according to run_kind and analysis_boundary.",
     "metric_deltas_vs_e0": {
       "correct_recall": {
         "E2": 0.0,
-        "E4": 0.909091,
-        "E6": 0.909091
+        "E4": 0.916667,
+        "E6": 0.916667
       },
       "escalation_rate": {
         "E2": 0.0,
@@ -181,8 +181,8 @@
       },
       "false_accept_rate": {
         "E2": 0.0,
-        "E4": 0.021277,
-        "E6": 0.021277
+        "E4": 0.02,
+        "E6": 0.02
       }
     }
   },

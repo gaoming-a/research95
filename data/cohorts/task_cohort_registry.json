@@ -1195,6 +1195,48 @@
           "incorrect_issue_not_fixed": 3
         },
         "collection_errors": 0,
+        "excluded_dynamic_download_nodeids": 1772,
+        "excluded_fail_to_pass_oracle": 1,
+        "excluded_static_external_dependency_tests": 81,
+        "nodeids": 1994,
+        "p2p_broad_size": 137,
+        "test_files": 1,
+        "test_framework": "unittest"
+      },
+      "f2p_oracle": {
+        "buggy": "failed: ExtractorError unsupported JS expression 'x()'",
+        "fixed": "passed",
+        "nodeid": "test.test_jsinterp.TestJSInterpreter.test_call"
+      },
+      "label_scope": {
+        "appendix": null,
+        "main": "project_level_p2p_broad"
+      },
+      "notes": "Project-level unittest P2P-broad completed with youtube_dl_dynamic_download_nodeid_exclusion_v1; 137 stable P2P-broad tests retained after excluding generated downloader tests and static external-dependency tests. Four admission candidates validated: one correct reference and three issue-not-fixed negatives.",
+      "p2p_broad_main_included": true,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_youtube-dl_4_p2p_broad.json",
+      "p2p_scope_policy_record": "docs/experiments/youtubedl4_candidate_validation.md",
+      "project": "youtube-dl",
+      "project_level_p2p_status": "completed",
+      "task_id": "bugsinpy_youtube-dl_4"
+    },
+    {
+      "appendix_smoke_included": false,
+      "available_evidence": {
+        "project_level_p2p_broad": "available",
+        "task_file_level_p2p": "not_recorded"
+      },
+      "blocked_reason": [],
+      "cohorts": [
+        "p2p_broad_main"
+      ],
+      "collection_summary": {
+        "candidate_count": 4,
+        "candidate_label_counts": {
+          "correct_under_f2p_and_p2p_broad": 1,
+          "incorrect_issue_not_fixed": 3
+        },
+        "collection_errors": 0,
         "excluded_dynamic_download_nodeids": 1673,
         "excluded_fail_to_pass_oracle": 1,
         "excluded_static_external_dependency_tests": 80,

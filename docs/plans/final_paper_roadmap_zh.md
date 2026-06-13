@@ -880,6 +880,15 @@ fresh 232-packet DeepSeek V4 G5 run，覆盖当前 11-task / 58-candidate /
 audit，但仍只支持 bounded pilot observations，不支持规模泛化、LLM 优于
 deterministic tool-only baseline 或已知真实计费成本。
 
+2026-06-13 再后续更新：`bugsinpy_youtube-dl_4` 已按同一 admission gate
+纳入，包含 retained JSInterpreter call oracle、4 个候选、retained-oracle
+validation 和 137-test project-level P2P-broad validation。当前 no-API
+tracked artifacts 已提升为 12 tasks / 5 projects / 62 candidates / 248
+E0-E6 packets。248-packet prompt manifest、schema dry-run、tool-only baseline
+和 readiness checks 均已刷新；但最新真实 DeepSeek G5 结果仍只覆盖上一版
+11-task / 58-candidate / 232-packet cohort，不能外推到新增 ydl4 样本。下一步
+应先完成 fresh 248-packet DeepSeek V4 G5 run 和 quality audit，再继续扩量。
+
 ## 18. 2026-06-12 外部建议提取后的增量修订
 
 本节只记录相对既有路线图的增量约束。以下内容不得重复替代前文已经定义的
@@ -1047,7 +1056,7 @@ Phase A 已补齐 EVP-7 candidate-level schema：
    escalation、FACR 和 Evidence Gain 的计算链路可复现；schema dry-run 和
    mock workflow 仍标记为 `requires_real_llm_verifier_outputs`；
 11. 真实 LLM verifier 的 G5 prompt manifest 和 readiness summary 当前通过
-   no-API 检查：232 条 prompts、四层各 58 条、leakage failed count = 0、
+   no-API 检查：248 条 prompts、四层各 62 条、leakage failed count = 0、
    prompt text 不写入 tracked manifest；
 12. G5 API example config 和 preflight 当前通过结构检查；tracked example
    仍保持 strict API readiness false，只允许 ignored local config 执行真实
@@ -1081,5 +1090,9 @@ Phase A 已补齐 EVP-7 candidate-level schema：
     bounded probe 推进，不做盲目 BugsInPy 批量扩展。
 20. `bugsinpy_youtube-dl_5` admission 后的 10-task / 54-candidate /
     216-packet DeepSeek G5 run 现在是历史结果。
-21. `bugsinpy_youtube-dl_2` admission 后，当前 structural/no-API artifacts
-    和真实 DeepSeek G5 结果均已覆盖 11 tasks / 58 candidates / 232 packets。
+21. `bugsinpy_youtube-dl_2` admission 后，structural/no-API artifacts
+    和真实 DeepSeek G5 结果均覆盖 11 tasks / 58 candidates / 232 packets。
+22. `bugsinpy_youtube-dl_4` admission 后，当前 structural/no-API artifacts
+    已覆盖 12 tasks / 62 candidates / 248 packets；真实 DeepSeek G5 结果仍
+    停留在上一版 232-packet cohort，下一步必须 fresh run，不能把旧模型结果
+    外推到当前 cohort。

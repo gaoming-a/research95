@@ -50,7 +50,7 @@ The candidate manifest is:
 data/patches/evp7_candidates.jsonl
 ```
 
-It contains 58 promoted candidates from the validated EVP-7 candidate outputs.
+It contains 62 promoted candidates from the validated EVP-7 candidate outputs.
 Its labels and failure taxonomy are evaluator-only inputs for metrics and must
 not be copied into model-visible evidence packets.
 
@@ -60,10 +60,10 @@ The current evidence packet manifest is:
 data/evidence/evp7_evidence_packets.jsonl
 ```
 
-It contains E0/E2/E4/E6 records for all 58 candidates. E0/E2 are complete.
-E4 is complete for all 58 candidates after rerunning predeclared visible tests
+It contains E0/E2/E4/E6 records for all 62 candidates. E0/E2 are complete.
+E4 is complete for all 62 candidates after rerunning predeclared visible tests
 in candidate workdirs with the same tracked project-level compat shims recorded
-in the P2P manifests. E6 is complete for all 58 candidates after deterministic
+in the P2P manifests. E6 is complete for all 62 candidates after deterministic
 visible tool summaries were generated from already model-visible static and
 visible-test evidence. Three visible-test outcomes are `error` because partial
 candidates break import; those are visible outcomes, not hidden evaluator
@@ -167,13 +167,13 @@ Current gate status after the first packet builder:
   evaluator labels, oracle outcomes, hidden tests, reference provenance, or
   failure taxonomy in model-visible packets.
 - G3 passes for deterministic tool-only baselines: apply-only, visible-tests,
-  and visible-tool-summary conditions each produce 58 schema-valid decisions
+  and visible-tool-summary conditions each produce 62 schema-valid decisions
   and aggregate metrics.
-- G4 passes for the no-API merge-gate schema dry-run: all 232 E0/E2/E4/E6
+- G4 passes for the no-API merge-gate schema dry-run: all 248 E0/E2/E4/E6
   packet-level outputs parse into the fixed accept/reject/escalate JSON schema
   with zero leakage findings. These records are parser/schema evidence only,
   not LLM verifier results.
-- G5 has a fresh 232-packet real DeepSeek official run on the current
+- G5 has a fresh 232-packet real DeepSeek official run on the previous
   11-task/58-candidate cohort, with quality status
   `passed_with_limitations`. After retrying two empty model responses with the
   same prompt/config/model, the repaired ignored output has 232/232 parse-valid
@@ -181,19 +181,21 @@ Current gate status after the first packet builder:
   while increasing correct recall over E0 to 0.272727 at E4 and 0.090909 at E6,
   with positive Evidence Gain over E0. The metrics scaffold marks
   `real_llm_verifier_signal_observed_on_evp7`, so this supports bounded pilot
-  observations about evidence-level variation for the current EVP-7 cohort, not
-  scale-generalized paper claims.
+  observations about evidence-level variation for that 232-packet EVP-7
+  cohort, not scale-generalized paper claims and not evidence for the newly
+  admitted 248-packet cohort.
 - The tracked full-run quality audit is `passed_with_limitations`: it supports
   bounded pilot observations, but explicitly rejects claims that the LLM
   outperforms the deterministic visible-test tool-only baseline, that
   DeepSeek cost is known from runner output,
   or that the result generalizes beyond EVP-7.
 - The G5 LLM prompt is `patch_verify_evidence_visibility_merge_gate_v1`. Its
-  no-API prompt manifest covers all 232 E0/E2/E4/E6 packet prompts with zero
-  leakage failures and no tracked full prompt text. The latest real DeepSeek
-  official run wrote raw model responses only under ignored
+  current no-API prompt manifest covers all 248 E0/E2/E4/E6 packet prompts with
+  zero leakage failures and no tracked full prompt text. The latest real
+  DeepSeek official run wrote raw model responses only under ignored
   `outputs/evp7_g5_llm_232_full_repaired/`; tracked summaries remain
-  raw-output-free.
+  raw-output-free and scoped to 232 records until a fresh 248-packet run is
+  executed and summarized.
 - The tracked `configs/evp7_g5_llm.example.json` and
   `scripts/preflight_evp7_g5_llm_run.py` now prove structural readiness without
   API calls. Strict API readiness intentionally remains false until those user

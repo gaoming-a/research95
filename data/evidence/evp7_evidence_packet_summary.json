@@ -1,11 +1,11 @@
 {
-  "candidate_count": 58,
+  "candidate_count": 62,
   "cohort_id": "EVP-7",
   "complete_packet_counts_by_level": {
-    "E0": 58,
-    "E2": 58,
-    "E4": 58,
-    "E6": 58
+    "E0": 62,
+    "E2": 62,
+    "E4": 62,
+    "E6": 62
   },
   "evidence_levels": [
     "E0",
@@ -18,20 +18,20 @@
   "g2_leakage_audit": "passed",
   "leakage_findings_count": 0,
   "next_step": "Run tool-only baselines and merge-gate schema dry-run before any real LLM API calls.",
-  "packet_count": 232,
+  "packet_count": 248,
   "packet_counts_by_level": {
-    "E0": 58,
-    "E2": 58,
-    "E4": 58,
-    "E6": 58
+    "E0": 62,
+    "E2": 62,
+    "E4": 62,
+    "E6": 62
   },
   "visible_outcome_source": "data\\evidence\\evp7_visible_test_outcomes.jsonl",
   "visible_outcome_status_counts": {
-    "completed": 55,
+    "completed": 59,
     "error": 3
   },
   "visible_tool_summary_source": "data\\evidence\\evp7_visible_tool_summaries.jsonl",
   "visible_tool_summary_status_counts": {
-    "complete": 58
+    "complete": 62
   }
 }

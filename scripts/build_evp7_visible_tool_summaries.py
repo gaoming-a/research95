@@ -126,12 +126,12 @@ def leakage_audit(records: list[dict[str, Any]]) -> list[str]:
 
 
 def _check(records: list[dict[str, Any]], summary: dict[str, Any]) -> None:
-    if summary["record_count"] != 58:
-        raise SystemExit(f"tool summary count changed: {summary['record_count']} != 58")
+    if summary["record_count"] != 62:
+        raise SystemExit(f"tool summary count changed: {summary['record_count']} != 62")
     if summary["leakage_audit"] != "passed":
         raise SystemExit("visible tool summary leakage audit failed")
-    if summary["summary_status_counts"].get("complete") != 58:
-        raise SystemExit("expected 58 complete visible tool summaries")
+    if summary["summary_status_counts"].get("complete") != 62:
+        raise SystemExit("expected 62 complete visible tool summaries")
 
 
 def main() -> int:

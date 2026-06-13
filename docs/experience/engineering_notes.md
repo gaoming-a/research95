@@ -1651,3 +1651,28 @@ This file starts fresh for the patch-verification project.
   `p2p_broad_main`, but stale `f2p_established_p2p_not_attempted` probe records
   kept them in expansion readiness as P2P candidates. Refresh readiness only
   after the ledger and registry agree.
+
+## 2026-06-13 youtube-dl_4 controlled admission boundary
+
+- `bugsinpy_youtube-dl_4` reuses the same
+  `youtube_dl_dynamic_download_nodeid_exclusion_v1` policy, but it still needs
+  its own static preflight, builder dry-run, real P2P manifest, oracle
+  validation, and candidate P2P validation before admission. Family-level
+  policy reuse is not sample admission.
+- The ydl4 static preflight left 141 unittest methods after excluding
+  `YoutubeDL(`, `download(`, `urlopen`, `http://`, and `https://`, with no
+  buggy/fixed remaining-set diff. The final manifest retained 137 P2P-broad
+  tests after excluding 1772 generated download nodeids, 81 static
+  external-dependency tests, the F2P oracle, and 3 buggy-baseline failures.
+- Candidate patch hunks need direct apply validation before trusting labels.
+  The first ydl4 irrelevant patch contained a corrupt context hunk and failed
+  before oracle execution; fixing the minimal hunk header restored the intended
+  negative candidate without changing the experimental design.
+- The ydl4 admission changes the structural cohort to 12 tasks / 62 candidates
+  / 248 packets. Update builder constants, preflight checks, readiness
+  documents, and metric scaffolds to 248, but keep the repaired 232-packet
+  DeepSeek G5 result scoped to the previous 11-task cohort until a fresh
+  248-packet run is executed and audited.
+- After any cohort-size change, run evidence packets, then visible tool
+  summaries, then evidence packets again if E6 initially reads stale tool
+  summaries. This dependency order is sequential and should not be parallelized.
