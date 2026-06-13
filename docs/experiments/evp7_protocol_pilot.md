@@ -12,11 +12,12 @@ Stop blind BugsInPy expansion under project-level P2P-broad.
 Move immediately to an evidence-visibility protocol pilot on the frozen cohort.
 ```
 
-2026-06-13 update: `bugsinpy_youtube-dl_7` has since passed the same formal
-admission boundary: retained oracle, four candidate records, retained-oracle
-validation, and project-level P2P-broad validation. The current tracked EVP-7
-cohort is therefore 8 bugs / 5 projects. This is a controlled admission, not a
-return to blind BugsInPy expansion.
+2026-06-13 update: `bugsinpy_youtube-dl_7`, `bugsinpy_youtube-dl_6`, and
+`bugsinpy_youtube-dl_5` have since passed the same formal admission boundary:
+retained oracle, four candidate records, retained-oracle validation, and
+project-level P2P-broad validation. The current tracked EVP-7 cohort is
+therefore 10 bugs / 5 projects. This is controlled admission, not a return to
+blind BugsInPy expansion.
 
 Option B is not approved as the current main path. Option C is deferred until
 the protocol interface is stable.
@@ -45,7 +46,7 @@ data/exclusions/blocked_bugsinpy_projects.jsonl
 
 ## Current Cohort Summary
 
-The manifest contains exactly 8 completed project-level P2P-broad tasks:
+The manifest contains exactly 10 completed project-level P2P-broad tasks:
 
 | task | project |
 | --- | --- |
@@ -56,13 +57,15 @@ The manifest contains exactly 8 completed project-level P2P-broad tasks:
 | `bugsinpy_tqdm_9` | `tqdm` |
 | `bugsinpy_PySnooper_1` | `PySnooper` |
 | `bugsinpy_PySnooper_3` | `PySnooper` |
+| `bugsinpy_youtube-dl_5` | `youtube-dl` |
+| `bugsinpy_youtube-dl_6` | `youtube-dl` |
 | `bugsinpy_youtube-dl_7` | `youtube-dl` |
 
 Candidate count status:
 
-- registry-known lower bound: 40;
+- registry-known lower bound: 48;
 - registry missing candidate counts for `bugsinpy_httpie_5`;
-- promoted tracked candidate records: 46.
+- promoted tracked candidate records: 54.
 
 Project coverage:
 
@@ -128,11 +131,11 @@ data/patches/evp7_candidates.jsonl
 data/patches/evp7_candidate_summary.json
 ```
 
-The promoted manifest contains 50 candidates across the 9 EVP-7 tasks:
+The promoted manifest contains 54 candidates across the 10 EVP-7 tasks:
 
-- 9 `correct_reference` candidates labeled
+- 10 `correct_reference` candidates labeled
   `correct_under_f2p_and_p2p_broad`;
-- 41 issue-not-fixed negatives;
+- 44 issue-not-fixed negatives;
 - evaluator-only fields such as `candidate_type`, `expected_outcome`,
   `failure_type_label`, retained-oracle status, and P2P-broad labels.
 
@@ -160,21 +163,21 @@ data/evidence/evp7_evidence_packets.jsonl
 data/evidence/evp7_evidence_packet_summary.json
 ```
 
-The builder emits 200 packet records: 50 candidates times E0/E2/E4/E6.
+The builder emits 216 packet records: 54 candidates times E0/E2/E4/E6.
 
 Current status:
 
-- E0 complete for 50 candidates;
-- E2 complete for 50 candidates, using patch-apply evidence only;
-- E4 complete for 50 candidates after independently rerunning predeclared
+- E0 complete for 54 candidates;
+- E2 complete for 54 candidates, using patch-apply evidence only;
+- E4 complete for 54 candidates after independently rerunning predeclared
   visible tests in candidate workdirs with tracked P2P compat-shim reuse;
-- visible test outcomes include 8 passed checks, 42 failed checks, and 3 error
+- visible test outcomes include 11 passed checks, 47 failed checks, and 3 error
   checks; the 3 errors are candidate-induced import errors and are retained as
   visible runtime outcomes;
-- E6 complete for 50 candidates after deterministic visible tool summaries were
+- E6 complete for 54 candidates after deterministic visible tool summaries were
   generated from model-visible static and visible-test evidence;
 - automated leakage audit passes with zero findings.
-- deterministic tool-only baselines are generated for 50 candidates under three
+- deterministic tool-only baselines are generated for 54 candidates under three
   conditions: apply-only, visible-tests, and visible-tool-summary.
 
 ## Current Limitation
@@ -352,7 +355,7 @@ G5 real full-run status:
 - invalid output rate = 0.005;
 - G5 metric scaffold = passed;
 - G5 signal claim status = `real_llm_verifier_signal_observed_on_evp7`;
-- scope boundary = current 9-task/50-candidate/200-packet EVP-7 cohort;
+- scope boundary = earlier 9-task/50-candidate/200-packet EVP-7 cohort;
 - E4/E6 false accept rate = 0.0;
 - E4/E6 accepted precision = 1.0;
 - E4 correct recall = 0.111111;
@@ -370,7 +373,9 @@ G5 quality audit status:
 
 ## Current Next Step
 
-EVP-7 now has a 9-task/50-candidate/200-packet structural and real-LLM cohort.
+EVP-7 now has a 10-task/54-candidate/216-packet structural cohort. The latest
+real-LLM cohort remains the earlier 9-task/50-candidate/200-packet run until a
+fresh 216-packet run is executed and audited.
 The next executable research step is controlled expansion under the same
 admission gates, while preserving the quality-audit boundary that the pilot
 signal does not imply scale generalization or tool-baseline superiority.

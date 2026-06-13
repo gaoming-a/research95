@@ -1603,3 +1603,12 @@ This file starts fresh for the patch-verification project.
   and E6 recall is 0.222222, still below deterministic visible-test tool-only
   recall 0.888889. The supportable claim is a pilot evidence-visibility signal,
   not LLM superiority over the tool-only baseline or scale generalization.
+- `bugsinpy_youtube-dl_5` can reuse the approved
+  `youtube_dl_dynamic_download_nodeid_exclusion_v1` policy. The canonical
+  static tokens are `YoutubeDL(`, `download(`, `urlopen`, `http://`, and
+  `https://`; using a partial token set changes the static preflight count and
+  must be treated as a command-reproduction bug before running P2P.
+- The `youtube-dl_5` admission changed the no-API structural cohort to
+  10 tasks / 54 candidates / 216 packets. Keep the latest real DeepSeek G5
+  claim scoped to the previous 9-task / 50-candidate / 200-packet run until a
+  fresh 216-packet run is executed and audited.

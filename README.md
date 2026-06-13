@@ -214,27 +214,28 @@ They should not override `final_paper_roadmap_zh.md`.
   `EVP-7 Protocol Pilot` to validate the evidence-visibility protocol before
   blind expansion. On 2026-06-13, the previously approved `bugsinpy_youtube-dl_7`
   path completed formal admission after a retained oracle, four candidate
-  records, and P2P-broad validation. The later `bugsinpy_youtube-dl_6`
-  admission raised the current tracked main cohort to 9 tasks across 5
-  projects. The tracked candidate manifest contains 50 promoted candidates,
-  including 9 correct reference patches and 41 issue-not-fixed negatives. The
-  tracked evidence packet manifest contains 200 E0/E2/E4/E6 packet records,
-  with all four levels complete for 50/50 candidates and zero
+  records, and P2P-broad validation. The later `bugsinpy_youtube-dl_6` and
+  `bugsinpy_youtube-dl_5` admissions raised the current tracked main cohort to
+  10 tasks across 5 projects. The tracked candidate manifest contains 54
+  promoted candidates, including 10 correct reference patches and 44
+  issue-not-fixed negatives. The tracked evidence packet manifest contains 216
+  E0/E2/E4/E6 packet records, with all four levels complete for 54/54
+  candidates and zero
   leakage findings. Three visible-test outcomes are `error` because partial
   candidates break import; they remain valid visible outcomes, not missing
   evidence. The realistic tool-only baselines are generated for apply-only,
   visible-tests, and visible-tool-summary conditions. The merge-gate schema
-  dry-run now generates 200 parse-valid accept/reject/escalate records with zero
+  dry-run now generates 216 parse-valid accept/reject/escalate records with zero
   leakage findings. The G5 metric scaffold computes FAR, recall, escalation,
   FACR, and Evidence Gain over schema-stable dry-run records. The G5 LLM prompt
-  manifest covers all 200 current E0/E2/E4/E6 packets with zero leakage findings
-  and no stored prompt text. The fresh real DeepSeek official G5 full run now
-  covers the current 9-task/50-candidate/200-packet cohort with explicit bounded
+  manifest covers all 216 current E0/E2/E4/E6 packets with zero leakage findings
+  and no stored prompt text. The latest real DeepSeek official G5 full run still
+  covers the earlier 9-task/50-candidate/200-packet cohort with explicit bounded
   parallelism (`--concurrency 6`). It produced 199 parse-valid outputs and one
   schema-invalid output, with E4/E6 false accept rate 0.0, accepted precision
   1.0, E4 correct recall 0.111111, E6 correct recall 0.222222, and positive
   Evidence Gain over E0. The tracked
-  quality audit passes with limitations: it supports an EVP-7 pilot-level
+  quality audit passes with limitations for that 200-packet run: it supports an EVP-7 pilot-level
   evidence-visibility signal claim, but not scale-generalized claims or a claim
   that the LLM outperforms the deterministic visible-test tool-only baseline.
   A controlled-expansion readiness report summarizes the broader BugsInPy rescreen
@@ -327,7 +328,7 @@ The ninth admitted task is recorded in
 `docs/experiments/youtubedl6_candidate_validation.md`. It produced
 `data/p2p_scopes/bugsinpy_youtube-dl_6_p2p_broad.json` with 110 P2P-broad tests
 under the same explicit dynamic-download nodeid exclusion policy and rebuilt
-the no-API EVP-7 artifacts to 9 tasks, 50 candidates, and 200 evidence packets.
+the no-API EVP-7 artifacts to 10 tasks, 54 candidates, and 216 evidence packets.
 
 For future approval-gated P2P commands, validate the command without executing
 tests by appending `--dry-run` before any real run.
@@ -370,10 +371,11 @@ After a real G5 full run, regenerate the tracked raw-output-free summary with:
 python scripts\summarize_evp7_g5_llm_full_run.py
 ```
 
-The guarded workflow can run a full current 200-packet execution with explicit
+The guarded workflow can run a full current 216-packet execution with explicit
 bounded parallelism, for example `--concurrency 4` or `--concurrency 6`. The
 default remains sequential. The latest tracked DeepSeek full-run summary covers
-the current 200-packet cohort.
+the earlier 200-packet cohort; a fresh run is required before claiming model
+results on the current 216-packet cohort.
 
 For full-goal completion evidence, run:
 

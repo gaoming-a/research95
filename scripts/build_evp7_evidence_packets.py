@@ -314,8 +314,8 @@ def leakage_audit(packets: list[dict[str, Any]]) -> list[dict[str, str]]:
 
 
 def _check_packets(packets: list[dict[str, Any]], summary: dict[str, Any]) -> None:
-    if summary["candidate_count"] != 50:
-        raise SystemExit(f"EVP-7 candidate count changed: {summary['candidate_count']} != 50")
+    if summary["candidate_count"] != 54:
+        raise SystemExit(f"EVP-7 candidate count changed: {summary['candidate_count']} != 54")
     expected_packets = summary["candidate_count"] * len(EVIDENCE_LEVELS)
     if summary["packet_count"] != expected_packets:
         raise SystemExit(f"packet count {summary['packet_count']} != {expected_packets}")
@@ -333,8 +333,8 @@ def _check_packets(packets: list[dict[str, Any]], summary: dict[str, Any]) -> No
     findings = leakage_audit(packets)
     if findings:
         raise SystemExit(f"leakage audit failed: {findings[:5]}")
-    if summary["complete_packet_counts_by_level"]["E0"] != 50:
-        raise SystemExit("E0 packet completeness should cover all 50 candidates")
+    if summary["complete_packet_counts_by_level"]["E0"] != 54:
+        raise SystemExit("E0 packet completeness should cover all 54 candidates")
     expected_e4_complete = summary.get("visible_outcome_status_counts", {}).get("completed", 0)
     expected_e4_complete += summary.get("visible_outcome_status_counts", {}).get("error", 0)
     expected_e4_complete += summary.get("visible_outcome_status_counts", {}).get("timeout", 0)

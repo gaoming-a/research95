@@ -299,10 +299,10 @@ def _counts(values: Any) -> dict[str, int]:
 
 
 def _check(records: list[dict[str, Any]], summary: dict[str, Any], dry_run: bool) -> None:
-    if summary["candidate_count"] != 50:
-        raise SystemExit(f"EVP-7 candidate count changed: {summary['candidate_count']} != 50")
-    if summary["record_count"] != 50:
-        raise SystemExit(f"visible outcome record count changed: {summary['record_count']} != 50")
+    if summary["candidate_count"] != 54:
+        raise SystemExit(f"EVP-7 candidate count changed: {summary['candidate_count']} != 54")
+    if summary["record_count"] != 54:
+        raise SystemExit(f"visible outcome record count changed: {summary['record_count']} != 54")
     forbidden = (
         "label_with_p2p_broad",
         "label_retained_oracle",

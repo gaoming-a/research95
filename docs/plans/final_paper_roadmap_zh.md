@@ -860,6 +860,14 @@ fresh 200-packet DeepSeek V4 G5 run，覆盖当前 9-task / 50-candidate /
 200-packet cohort。该 run 支持 pilot evidence-visibility signal，但不支持
 scale-generalized result 或 LLM 优于 deterministic tool-only baseline。
 
+2026-06-13 再后续更新：`bugsinpy_youtube-dl_5` 已按同一 admission gate
+纳入，包含 retained unified-timestamp oracle、4 个候选、retained-oracle
+validation 和 128-test project-level P2P-broad validation。当前 no-API
+tracked artifacts 已提升为 10 tasks / 5 projects / 54 candidates / 216
+E0-E6 packets。最新真实 DeepSeek V4 G5 run 仍只覆盖上一轮
+9-task / 50-candidate / 200-packet cohort；216-packet cohort 需要 fresh real
+LLM run 后才能进入模型结果 claim。
+
 ## 18. 2026-06-12 外部建议提取后的增量修订
 
 本节只记录相对既有路线图的增量约束。以下内容不得重复替代前文已经定义的
@@ -1027,14 +1035,14 @@ Phase A 已补齐 EVP-7 candidate-level schema：
    escalation、FACR 和 Evidence Gain 的计算链路可复现；schema dry-run 和
    mock workflow 仍标记为 `requires_real_llm_verifier_outputs`；
 11. 真实 LLM verifier 的 G5 prompt manifest 和 readiness summary 当前通过
-   no-API 检查：200 条 prompts、四层各 50 条、leakage failed count = 0、
+   no-API 检查：216 条 prompts、四层各 54 条、leakage failed count = 0、
    prompt text 不写入 tracked manifest；
 12. G5 API example config 和 preflight 当前通过结构检查；tracked example
    仍保持 strict API readiness false，只允许 ignored local config 执行真实
    API；
 13. G5 guarded workflow 当前支持 check-only、mock validation 和 bounded
    concurrency；mock records 只验证 parser/metrics pipeline；
-14. 用户确认 DeepSeek V4 后，已完成当前 200-packet 真实 DeepSeek official
+14. 用户确认 DeepSeek V4 后，已完成上一轮 200-packet 真实 DeepSeek official
    G5 full run：200 条 E0/E2/E4/E6 review，concurrency = 6；
 15. full run 质量审计：199/200 parse-valid，1 条 E4 输出因
    `invalid_suspected_failure_type:test_overfitting` 未通过 schema，
@@ -1045,7 +1053,8 @@ Phase A 已补齐 EVP-7 candidate-level schema：
    E4/E6 相对 E0 的 Evidence Gain 分别为 5.0 和 4.75，false accept rate
    均为 0，accepted precision 均为 1.0，E4 correct recall = 0.111111，
    E6 correct recall = 0.222222；
-17. 该结果支持 EVP-7 pilot signal claims，不支持直接 scale-generalized
+17. 该结果支持 9-task / 50-candidate / 200-packet EVP-7 pilot signal claims，
+    不支持直接 scale-generalized
    paper claims；下一步应进入质量审计和 15-20 bugs controlled expansion，
    同时保留 invalid-output 和成本字段缺失的质量边界。
 18. 已完成 200-run quality audit：
@@ -1055,6 +1064,9 @@ Phase A 已补齐 EVP-7 candidate-level schema：
    visible-test tool-only baseline”、不支持已知
    DeepSeek 真实计费成本、不支持规模泛化；
 19. 已生成 controlled expansion readiness summary：
-   `docs/experiments/evp7_expansion_readiness.md` 和
-   `data/tasks/evp7_expansion_readiness.json`；下一步应按 project-diverse
-   bounded probe 推进，不做盲目 BugsInPy 批量扩展。
+    `docs/experiments/evp7_expansion_readiness.md` 和
+    `data/tasks/evp7_expansion_readiness.json`；下一步应按 project-diverse
+    bounded probe 推进，不做盲目 BugsInPy 批量扩展。
+20. `bugsinpy_youtube-dl_5` admission 后，当前 structural/no-API artifacts
+    已提升到 10 tasks / 54 candidates / 216 packets；真实 DeepSeek G5 结果
+    尚未覆盖这 216 packets。

@@ -9,7 +9,8 @@ The current protocol pilot is named `EVP-7 Protocol Pilot`.
 
 Approved now:
 
-- freeze the current 7 BugsInPy main tasks;
+- freeze the original 7 BugsInPy main tasks, then admit only controlled
+  project-level P2P-broad additions;
 - stop blind BugsInPy expansion under project-level P2P-broad;
 - build the evidence-visibility protocol on the frozen cohort.
 
@@ -59,10 +60,10 @@ The current evidence packet manifest is:
 data/evidence/evp7_evidence_packets.jsonl
 ```
 
-It contains E0/E2/E4/E6 records for all 50 candidates. E0/E2 are complete.
-E4 is complete for all 50 candidates after rerunning predeclared visible tests
+It contains E0/E2/E4/E6 records for all 54 candidates. E0/E2 are complete.
+E4 is complete for all 54 candidates after rerunning predeclared visible tests
 in candidate workdirs with the same tracked project-level compat shims recorded
-in the P2P manifests. E6 is complete for all 50 candidates after deterministic
+in the P2P manifests. E6 is complete for all 54 candidates after deterministic
 visible tool summaries were generated from already model-visible static and
 visible-test evidence. Three visible-test outcomes are `error` because partial
 candidates break import; those are visible outcomes, not hidden evaluator
@@ -172,7 +173,7 @@ Current gate status after the first packet builder:
   packet-level outputs parse into the fixed accept/reject/escalate JSON schema
   with zero leakage findings. These records are parser/schema evidence only,
   not LLM verifier results.
-- G5 passes for pilot-level signal existence on the current 200-packet
+- G5 passes for pilot-level signal existence on the earlier 200-packet
   DeepSeek official run: `real_llm_verifier_signal_observed_on_evp7`.
   E4/E6 preserve false accept rate 0.0 and accepted precision 1.0 while
   increasing correct recall over E0 to 0.111111 at E4 and 0.222222 at E6, with

@@ -6447,3 +6447,109 @@ full run 决策：
   baseline；
 - DeepSeek 官方响应 usage 未给出可计费价格，cost claim 仍保持 unknown；
 - raw model outputs 只保留在 ignored `outputs/evp7_g5_llm_003/`。
+
+## 88. 2026-06-13 tenth bug admission attempt: youtube-dl_5
+
+本轮小目标：
+
+- 在完成 200-packet G5 run 后，继续 controlled expansion；
+- 目标选择 `bugsinpy_youtube-dl_5`，因为它是剩余 clean-F2P
+  `youtube-dl` 候选中静态 P2P 成本最低的任务：
+  - `youtube-dl_5`: 191 common static unittest methods，137 remaining；
+  - `youtube-dl_4`: 196 common static unittest methods，141 remaining；
+  - `youtube-dl_2/3/11` 更大；
+- 先做 no-run static preflight 和 builder dry-run；
+- 只有 dry-run 通过后，才执行 bounded project-level unittest P2P-broad；
+- P2P manifest 合格后，才进入 candidate construction 和 retained-oracle +
+  P2P-broad revalidation。
+
+执行边界：
+
+- 复用已获准的 `youtube_dl_dynamic_download_nodeid_exclusion_v1` scope
+  policy；
+- 排除动态生成下载测试 nodeid 前缀
+  `test.test_download.TestDownload`；
+- 保留 `youtube-dl_5` 的 F2P oracle
+  `test.test_utils.TestUtil.test_unified_timestamps`，不得把 oracle 纳入
+  P2P-broad；
+- 不修改 prompt、不调用真实 LLM API、不修改 candidate labels；
+- 不引入 dependency shim、fixture shim 或 task-file P2P 降级；
+- 若 static preflight、builder dry-run、P2P construction 或 manifest quality
+  失败，先诊断，不进入 candidate validation。
+
+验收条件：
+
+- static preflight 输出与既有成本预期一致或更低；
+- builder dry-run 不创建 manifest；
+- real P2P manifest 包含 project-level unittest P2P-broad scope；
+- manifest 排除 F2P oracle 和动态下载 nodeids；
+- retained P2P-broad tests 数量 >= 3；
+- 通过后同步 plan、experience、INDEX/README 和实验记录。
+
+执行更新：
+
+- 第一次 static preflight 使用了不完整 token set，得到 191 total /
+  182 remaining，与既有 137 remaining 预期不一致；已诊断为命令复现问题，
+  未进入真实 P2P。
+- 使用 canonical static tokens 后，static preflight 复现预期：
+  - total static methods = 191；
+  - excluded by static tokens = 54；
+  - remaining after static exclusions = 137；
+  - buggy/fixed remaining set diff = 0。
+- builder dry-run 通过：
+  - fail-to-pass oracle =
+    `test.test_utils.TestUtil.test_unified_timestamps`；
+  - scope type = `project_level_p2p_broad`；
+  - test framework = `unittest`；
+  - exclude nodeid prefix = `test.test_download.TestDownload`；
+  - manifest write = false。
+- real P2P-broad construction 已完成：
+  - manifest = `data/p2p_scopes/bugsinpy_youtube-dl_5_p2p_broad.json`；
+  - collected tests = 1890；
+  - excluded dynamic download nodeids = 1673；
+  - excluded static external-dependency tests = 80；
+  - excluded fail-to-pass oracle = 1；
+  - excluded buggy-baseline failures = 8；
+  - retained P2P-broad tests = 128；
+  - retained dynamic download nodeids = 0。
+- 新增 oracle 和 candidate builder：
+  - `scripts/oracles/youtubedl_5_unified_timestamps.py`；
+  - `scripts/build_youtubedl5_candidates.py`。
+- retained-oracle validation 已通过 admission gate：
+  - candidates = 4；
+  - patch_applied = 4/4；
+  - oracle_ran = 4/4；
+  - oracle_all_passed = 1。
+- candidate-level P2P validation 已通过：
+  - P2P-broad test count = 128；
+  - labels = 1 `correct_under_f2p_and_p2p_broad`,
+    3 `incorrect_issue_not_fixed`。
+- 已将 `bugsinpy_youtube-dl_5` 纳入
+  `data/cohorts/task_cohort_registry.json` 的 `p2p_broad_main`。
+- 已重建 EVP-7 no-API artifacts：
+  - main tasks = 10；
+  - projects = 5；
+  - promoted candidates = 54；
+  - correct reference candidates = 10；
+  - issue-not-fixed candidates = 44；
+  - evidence packets = 216；
+  - E0/E2/E4/E6 各 54；
+  - visible outcomes = 54，51 completed / 3 error；
+  - visible tool summaries = 54 complete；
+  - G1 packet completeness = passed；
+  - G2 leakage audit = passed；
+  - G3 tool-only baseline readiness = passed；
+  - G4 schema stability = passed；
+  - G5 prompt manifest = 216 records，passed_without_api；
+  - example preflight structural_ready = true，api_ready = false。
+- 新增实验记录：
+  `docs/experiments/youtubedl5_candidate_validation.md`。
+
+当前边界：
+
+- 第 10 个 bug 已完成 admission，主 structural cohort 数量已经提升；
+- 最新真实 DeepSeek V4 G5 full run 仍只覆盖上一轮
+  9-task / 50-candidate / 200-packet cohort；
+- 当前 10-task / 54-candidate / 216-packet cohort 已完成 no-API gates，
+  但尚未执行 fresh real LLM verifier run；
+- 因此不能把旧 200-run 的模型结果 claim 直接外推到第 10 个样本。
