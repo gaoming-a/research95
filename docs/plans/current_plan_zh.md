@@ -7090,3 +7090,119 @@ full run 决策：
 - 下一步应在同步本轮 admission 后，用已获批的 DeepSeek V4 路线执行
   fresh 248-packet G5 smoke/full run、raw-output-free summary 和 quality
   audit。
+
+## 94. 2026-06-13 fresh DeepSeek V4 G5 run on 248-packet cohort
+
+背景：
+
+- `bugsinpy_youtube-dl_4` 已完成 formal admission，并已同步 GitHub；
+- 当前 structural/no-API cohort = 12 tasks / 62 candidates / 248 packets；
+- no-API gates 已通过：
+  - G1 packet completeness = passed；
+  - G2 leakage audit = passed；
+  - G3 tool-only baseline readiness = passed；
+  - G4 schema stability = passed；
+  - G5 prompt manifest = 248 records，passed_without_api；
+  - example config structural preflight = true，api_ready = false；
+  - ignored local config exists and previously used DeepSeek V4 route。
+- 最新真实 DeepSeek V4 G5 result 仍只覆盖上一版
+  11-task / 58-candidate / 232-packet cohort，不能作为当前 248-packet
+  cohort 的模型结果。
+
+本轮小目标：
+
+1. 用 `configs/evp7_g5_llm.local.json` 对当前 248-packet artifacts 运行
+   strict local preflight；
+2. 先执行 4-packet smoke run，覆盖同一候选的 E0/E2/E4/E6；
+3. smoke 若满足 review_count=4、parse_status 全 valid、无 `run_error.json`、
+   metrics scaffold 可构建，再执行 full 248-packet run；
+4. full run 完成后检查 invalid rate、level counts、metrics scaffold；
+5. 若 full run 有少量 API/model 空响应，在同一
+   prompt/config/model/temperature/max_tokens 下只重试 empty-response
+   invalid packets；若是非空 schema-invalid 输出，则作为模型输出质量边界报告；
+6. 生成 raw-output-free tracked summary、quality audit，并同步文档与 GitHub。
+
+边界：
+
+- 使用用户已批准的 DeepSeek V4 provider/model 路线；
+- 不修改 prompt、candidate labels、P2P scope 或 evidence packets；
+- smoke 不作为论文结论；
+- raw model responses 只留在 ignored `outputs/`；
+- 如果 strict preflight、prompt-boundary、leakage、API authentication、
+  smoke parse validity 或 full-run invalid rate 触发 stop condition，立即停止
+  并诊断，不继续下一步。
+
+验收条件：
+
+- strict local preflight：structural_ready = true 且 api_ready = true；
+- smoke：4 records，E0/E2/E4/E6 各 1，parse_status 全 valid；
+- full/repaired full：248 records，E0/E2/E4/E6 各 62，invalid output 可解释且
+  低于 stop condition；
+- tracked summary 不包含 raw response text；
+- quality audit 至少达到 `passed_with_limitations` 或明确给出阻塞诊断；
+- 完成后同步 README、INDEX、protocol/pilot/G5 docs、current plan、
+  engineering notes，并提交推送。
+
+执行结果：
+
+- strict local preflight 已通过：
+  - structural_ready = true；
+  - api_ready = true；
+  - prompt manifest records = 248；
+  - E0/E2/E4/E6 各 62。
+- 4-packet smoke run 已完成：
+  - review_count = 4；
+  - parse_status = 4 valid / 0 invalid；
+  - E0/E2/E4/E6 各 1；
+  - 无 `run_error.json`；
+  - smoke metrics 标记 `real_llm_verifier_outputs_incomplete`，这是因为
+    smoke 只覆盖 4 条，不是 full-run 失败。
+- full 248-packet run 已完成：
+  - review_count = 248；
+  - E0/E2/E4/E6 各 62；
+  - parse_status = 247 valid / 1 invalid；
+  - invalid record = `evp7_candidate_0030__E2`；
+  - invalid reason = `invalid_json:No JSON object found in model response`；
+  - raw response chars = 444；
+  - output dir = ignored `outputs/evp7_g5_llm_248_full`；
+  - concurrency = 6。
+
+诊断：
+
+- 这 1 条 invalid 不是空响应，而是非空截断 JSON；
+- 根据既有 engineering note，空响应可以 targeted retry，非空 schema-invalid
+  full-run 输出不应静默修复；
+- 因此本轮不重试该记录，而是在 tracked raw-output-free summary 和 quality audit
+  中显式报告；
+- invalid-output rate = 1/248 = 0.004032，低于 stop condition。
+
+指标与审计：
+
+- tracked summary 已生成：
+  - `data/reviews/evp7_g5_llm_full_run_summary.json`；
+  - `docs/experiments/evp7_g5_llm_full_run_result.md`。
+- quality audit 已生成并通过限制性审计：
+  - `quality_status = passed_with_limitations`；
+  - raw outputs read = false；
+  - raw outputs tracked = false；
+  - review count = 248；
+  - candidate count = 62。
+- full-run metrics：
+  - G5 signal claim status =
+    `real_llm_verifier_signal_observed_on_evp7`；
+  - E4 false accept rate = 0.0；
+  - E6 false accept rate = 0.0；
+  - E4/E6 accepted precision = 1.0；
+  - E4 correct recall = 0.166667；
+  - E6 correct recall = 0.25；
+  - E4/E6 Evidence Gain vs E0 = 7.25 / 7.5。
+
+当前边界：
+
+- 支持：当前 12-task / 62-candidate / 248-packet EVP-7 pilot 中，证据可见性
+  改变 DeepSeek V4 merge-gate 决策，E4/E6 在 zero observed false accept 下
+  提升 correct recall，并产生正 Evidence Gain；
+- 不支持：规模泛化、LLM 优于 deterministic visible-test tool-only baseline、
+  E6 严格优于 E4、DeepSeek 真实计费成本已知；
+- 下一步必须在 controlled expansion 与 paper-result consolidation 之间做研究
+  决策，不能再把“继续加一个 bug”当作默认目标。

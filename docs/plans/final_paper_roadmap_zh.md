@@ -885,9 +885,11 @@ deterministic tool-only baseline 或已知真实计费成本。
 validation 和 137-test project-level P2P-broad validation。当前 no-API
 tracked artifacts 已提升为 12 tasks / 5 projects / 62 candidates / 248
 E0-E6 packets。248-packet prompt manifest、schema dry-run、tool-only baseline
-和 readiness checks 均已刷新；但最新真实 DeepSeek G5 结果仍只覆盖上一版
-11-task / 58-candidate / 232-packet cohort，不能外推到新增 ydl4 样本。下一步
-应先完成 fresh 248-packet DeepSeek V4 G5 run 和 quality audit，再继续扩量。
+和 readiness checks 均已刷新；随后已完成 fresh 248-packet DeepSeek V4 G5
+run 和 raw-output-free quality audit。该 run 产生 247/248 parse-valid 输出，
+1 条 E2 非空截断 JSON 被报告为模型输出质量边界而未静默重试。E4/E6 继续保持
+false accept rate = 0.0 和 accepted precision = 1.0，E4 correct recall =
+0.166667，E6 correct recall = 0.25，Evidence Gain 分别为 7.25 和 7.5。
 
 ## 18. 2026-06-12 外部建议提取后的增量修订
 
@@ -1063,22 +1065,22 @@ Phase A 已补齐 EVP-7 candidate-level schema：
    API；
 13. G5 guarded workflow 当前支持 check-only、mock validation 和 bounded
    concurrency；mock records 只验证 parser/metrics pipeline；
-14. 用户确认 DeepSeek V4 后，已完成 fresh 232-packet 真实 DeepSeek official
-    G5 full run：232 条 E0/E2/E4/E6 review，concurrency = 6；
-15. full run 质量审计：初次 full run 有 2 条空响应；按同一
-    prompt/config/model 重试后，repaired output 为 232/232 parse-valid，
-    invalid-output rate = 0.0；原始响应保留在 ignored `outputs/`，tracked
-    summary 不包含 raw model responses；
+14. 用户确认 DeepSeek V4 后，已完成 fresh 248-packet 真实 DeepSeek official
+    G5 full run：248 条 E0/E2/E4/E6 review，concurrency = 6；
+15. full run 质量审计：full run 有 1 条非空截断 JSON 输出；
+    tracked summary 记录 247/248 parse-valid，invalid-output rate =
+    0.004032；原始响应保留在 ignored `outputs/`，tracked summary 不包含 raw
+    model responses；
 16. EVP-7 pilot-level metric variation 已观察到；metrics scaffold 记录
     `g5_signal_claim_status = real_llm_verifier_signal_observed_on_evp7`。E4/E6
-    相对 E0 的 Evidence Gain 分别为 10.0 和 7.25，false accept rate 均为 0，
-    accepted precision 均为 1.0，E4 correct recall = 0.272727，E6 correct
-    recall = 0.090909；
-17. 该结果支持 11-task / 58-candidate / 232-packet EVP-7 bounded pilot
+    相对 E0 的 Evidence Gain 分别为 7.25 和 7.5，false accept rate 均为 0，
+    accepted precision 均为 1.0，E4 correct recall = 0.166667，E6 correct
+    recall = 0.25；
+17. 该结果支持 12-task / 62-candidate / 248-packet EVP-7 bounded pilot
     observations，不支持直接 scale-generalized paper claims；下一步应继续
     controlled expansion，同时保留成本字段缺失和 LLM 不优于 deterministic
     visible-test tool-only baseline 的质量边界。
-18. 已完成 232-run quality audit：
+18. 已完成 248-run quality audit：
     `docs/experiments/evp7_g5_full_run_quality_audit.md` 和
     `data/reviews/evp7_g5_full_run_quality_audit.json`；结论是
    `passed_with_limitations`，明确不支持“LLM 超过 deterministic
@@ -1093,6 +1095,9 @@ Phase A 已补齐 EVP-7 candidate-level schema：
 21. `bugsinpy_youtube-dl_2` admission 后，structural/no-API artifacts
     和真实 DeepSeek G5 结果均覆盖 11 tasks / 58 candidates / 232 packets。
 22. `bugsinpy_youtube-dl_4` admission 后，当前 structural/no-API artifacts
-    已覆盖 12 tasks / 62 candidates / 248 packets；真实 DeepSeek G5 结果仍
-    停留在上一版 232-packet cohort，下一步必须 fresh run，不能把旧模型结果
-    外推到当前 cohort。
+    已覆盖 12 tasks / 62 candidates / 248 packets。
+23. 已完成 fresh 248-packet DeepSeek V4 G5 run：247/248 parse-valid，
+    invalid-output rate = 0.004032；E4/E6 FAR = 0.0，accepted precision =
+    1.0，correct recall = 0.166667 / 0.25，Evidence Gain = 7.25 / 7.5。
+    quality audit = `passed_with_limitations`，仍不支持规模泛化、LLM 优于
+    deterministic visible-test tool-only baseline 或真实计费成本已知。

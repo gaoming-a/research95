@@ -8,7 +8,7 @@ This tracked summary excludes raw model responses. Raw outputs remain under igno
 - Model: `deepseek-v4-pro`
 - Prompt: `patch_verify_evidence_visibility_merge_gate_v1`
 - Concurrency: 6
-- Review count: 232
+- Review count: 248
 - API calls attempted: true
 - Model calls attempted: true
 - Runner-reported cost: 0.0
@@ -16,11 +16,11 @@ This tracked summary excludes raw model responses. Raw outputs remain under igno
 
 ## Quality
 
-- Unique review ids: 232
-- Parse counts: `{"valid": 232}`
-- Decision counts: `{"accept": 4, "escalate": 92, "reject": 136}`
-- Invalid output count: 0
-- Invalid output rate: 0.0
+- Unique review ids: 248
+- Parse counts: `{"invalid": 1, "valid": 247}`
+- Decision counts: `{"accept": 5, "escalate": 85, "invalid_output": 1, "reject": 157}`
+- Invalid output count: 1
+- Invalid output rate: 0.004032
 
 ## Metrics
 
@@ -31,11 +31,11 @@ This tracked summary excludes raw model responses. Raw outputs remain under igno
 
 | Evidence | Records | Decisions | Invalid | FAR | Accepted precision | Correct recall | Evidence gain vs E0 |
 | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: |
-| E0 | 58 | `{"escalate": 36, "reject": 22}` | 0.0 | 0.0 | None | 0.0 | 0.0 |
-| E2 | 58 | `{"escalate": 37, "reject": 21}` | 0.0 | 0.0 | None | 0.0 | 0.75 |
-| E4 | 58 | `{"accept": 3, "escalate": 8, "reject": 47}` | 0.0 | 0.0 | 1.0 | 0.272727 | 10.0 |
-| E6 | 58 | `{"accept": 1, "escalate": 11, "reject": 46}` | 0.0 | 0.0 | 1.0 | 0.090909 | 7.25 |
+| E0 | 62 | `{"escalate": 31, "reject": 31}` | 0.0 | 0.0 | None | 0.0 | 0.0 |
+| E2 | 62 | `{"escalate": 35, "invalid_output": 1, "reject": 26}` | 0.016129 | 0.0 | None | 0.0 | 0.0 |
+| E4 | 62 | `{"accept": 2, "escalate": 10, "reject": 50}` | 0.0 | 0.0 | 1.0 | 0.166667 | 7.25 |
+| E6 | 62 | `{"accept": 3, "escalate": 9, "reject": 50}` | 0.0 | 0.0 | 1.0 | 0.25 | 7.5 |
 
 ## Invalid Records
 
-- None
+- `evp7_candidate_0030__E2` (E2): invalid_json:No JSON object found in model response; raw chars=444

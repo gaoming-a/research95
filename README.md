@@ -223,21 +223,18 @@ They should not override `final_paper_roadmap_zh.md`.
   realistic tool-only baselines are generated for apply-only, visible-tests,
   and visible-tool-summary conditions. The merge-gate schema dry-run now
   generates 248 parse-valid accept/reject/escalate records with zero leakage
-  findings. The latest real DeepSeek official G5 full run covers the previous
-  11-task/58-candidate/232-packet cohort with explicit bounded parallelism
-  (`--concurrency 6`). Two empty model responses were retried with the same
-  prompt/config/model into a repaired ignored output, yielding 232/232
-  parse-valid records. The raw-output-free tracked summary reports
+  findings. The latest real DeepSeek official G5 full run covers the current
+  12-task/62-candidate/248-packet cohort with explicit bounded parallelism
+  (`--concurrency 6`). It produced 247/248 parse-valid records; the one invalid
+  E2 record is a non-empty truncated JSON model-output-quality boundary and was
+  not silently repaired. The raw-output-free tracked summary reports
   `real_llm_verifier_signal_observed_on_evp7`: E4/E6 keep observed false accept
-  rate 0.0 and accepted precision 1.0, with E4 recall 0.272727 and E6 recall
-  0.090909. The tracked quality audit passes with limitations: it supports
+  rate 0.0 and accepted precision 1.0, with E4 recall 0.166667 and E6 recall
+  0.25. The tracked quality audit passes with limitations: it supports
   pilot-level observations about evidence-level variation, but not
   scale-generalized claims, not a claim that the LLM outperforms the
   deterministic visible-test tool-only baseline, and not a known-cost claim.
-  The current 12-task/62-candidate/248-packet no-API cohort is ready for a
-  fresh G5 run, but old 232-record model results must not be extrapolated to
-  the newly admitted `bugsinpy_youtube-dl_4` sample. A controlled-expansion
-  readiness report summarizes the broader BugsInPy rescreen
+  A controlled-expansion readiness report summarizes the broader BugsInPy rescreen
   and defines project-diverse bounded probe lanes for the next 15-20 bug
   expansion step. The
   first post-G5 lane, `bugsinpy_fastapi_4`, completed checkout but is
@@ -328,8 +325,7 @@ The latest admitted task is recorded in
 `data/p2p_scopes/bugsinpy_youtube-dl_4_p2p_broad.json` with 137 P2P-broad
 tests under the same explicit dynamic-download nodeid exclusion policy and
 rebuilt the no-API EVP-7 artifacts to 12 tasks, 62 candidates, and 248 evidence
-packets. A fresh DeepSeek G5 run for this 248-packet cohort has not yet been
-tracked.
+packets. The latest tracked DeepSeek G5 run now covers this 248-packet cohort.
 
 Recent earlier youtube-dl admissions include
 `docs/experiments/youtubedl6_candidate_validation.md`. It produced
@@ -382,9 +378,9 @@ python scripts\summarize_evp7_g5_llm_full_run.py
 The guarded workflow can run a full current 248-packet execution with explicit
 bounded parallelism, for example `--concurrency 4` or `--concurrency 6`. The
 default remains sequential. The latest tracked DeepSeek full-run summary covers
-the previous 232-packet cohort after a same-prompt retry of two empty responses.
-Raw model responses remain under ignored `outputs/`; the current 248-packet
-cohort still needs a fresh tracked G5 run.
+the current 248-packet cohort, with one reported schema-invalid record and no
+raw model responses tracked. Raw model responses remain under ignored
+`outputs/`.
 
 For full-goal completion evidence, run:
 

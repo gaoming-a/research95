@@ -1676,3 +1676,21 @@ This file starts fresh for the patch-verification project.
 - After any cohort-size change, run evidence packets, then visible tool
   summaries, then evidence packets again if E6 initially reads stale tool
   summaries. This dependency order is sequential and should not be parallelized.
+
+## 2026-06-13 EVP-7 G5 248-packet full-run boundary
+
+- The fresh 248-packet DeepSeek V4 G5 run for the 12-task cohort produced one
+  schema-invalid record: `evp7_candidate_0030__E2` failed with
+  `invalid_json:No JSON object found in model response`.
+- This invalid response was not empty: raw response length was 444 chars and
+  showed a truncated JSON object. Treat it as model-output quality, not
+  prompt-boundary failure, evidence leakage, or an execution-chain bug.
+- Do not silently repair non-empty schema-invalid full-run responses. Targeted
+  retry is appropriate for empty model responses under the same prompt/config,
+  but truncated JSON should remain in the tracked raw-output-free summary as an
+  invalid-output limitation.
+- The 248-run quality audit is `passed_with_limitations`: E4/E6 keep zero
+  observed false accepts and accepted precision 1.0, with E4 recall 0.166667,
+  E6 recall 0.25, and Evidence Gain 7.25 / 7.5. The result still does not
+  support scale generalization, LLM superiority over deterministic visible-test
+  tool-only baseline, or a known-cost claim.

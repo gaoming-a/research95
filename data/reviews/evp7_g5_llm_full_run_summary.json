@@ -8,20 +8,20 @@
       "E0": {
         "accepted_precision": null,
         "confusion_counts": {
-          "escalated_correct": 10,
-          "escalated_incorrect": 26,
+          "escalated_correct": 11,
+          "escalated_incorrect": 20,
           "false_accept": 0,
           "false_reject": 1,
           "invalid_output": 0,
           "true_accept": 0,
-          "true_reject": 21
+          "true_reject": 30
         },
         "correct_recall": 0.0,
         "decision_counts": {
-          "escalate": 36,
-          "reject": 22
+          "escalate": 31,
+          "reject": 31
         },
-        "escalation_rate": 0.62069,
+        "escalation_rate": 0.5,
         "evidence_gain_vs_e0": 0.0,
         "facr": {
           "far_le_0": 0.0,
@@ -30,33 +30,34 @@
           "far_le_0.1": 0.0
         },
         "false_accept_rate": 0.0,
-        "false_reject_rate": 0.090909,
+        "false_reject_rate": 0.083333,
         "invalid_output_rate": 0.0,
-        "record_count": 58,
+        "record_count": 62,
         "utility": {
           "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
-          "score": -10.0,
-          "score_per_candidate": -0.172414
+          "score": -8.75,
+          "score_per_candidate": -0.141129
         }
       },
       "E2": {
         "accepted_precision": null,
         "confusion_counts": {
           "escalated_correct": 11,
-          "escalated_incorrect": 26,
+          "escalated_incorrect": 24,
           "false_accept": 0,
           "false_reject": 0,
-          "invalid_output": 0,
+          "invalid_output": 1,
           "true_accept": 0,
-          "true_reject": 21
+          "true_reject": 26
         },
         "correct_recall": 0.0,
         "decision_counts": {
-          "escalate": 37,
-          "reject": 21
+          "escalate": 35,
+          "invalid_output": 1,
+          "reject": 26
         },
-        "escalation_rate": 0.637931,
-        "evidence_gain_vs_e0": 0.75,
+        "escalation_rate": 0.564516,
+        "evidence_gain_vs_e0": 0.0,
         "facr": {
           "far_le_0": 0.0,
           "far_le_0.01": 0.0,
@@ -65,104 +66,104 @@
         },
         "false_accept_rate": 0.0,
         "false_reject_rate": 0.0,
-        "invalid_output_rate": 0.0,
-        "record_count": 58,
+        "invalid_output_rate": 0.016129,
+        "record_count": 62,
         "utility": {
           "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
-          "score": -9.25,
-          "score_per_candidate": -0.159483
+          "score": -8.75,
+          "score_per_candidate": -0.141129
         }
       },
       "E4": {
         "accepted_precision": 1.0,
         "confusion_counts": {
-          "escalated_correct": 7,
+          "escalated_correct": 9,
           "escalated_incorrect": 1,
           "false_accept": 0,
           "false_reject": 1,
           "invalid_output": 0,
-          "true_accept": 3,
-          "true_reject": 46
+          "true_accept": 2,
+          "true_reject": 49
         },
-        "correct_recall": 0.272727,
+        "correct_recall": 0.166667,
         "decision_counts": {
-          "accept": 3,
-          "escalate": 8,
-          "reject": 47
+          "accept": 2,
+          "escalate": 10,
+          "reject": 50
         },
-        "escalation_rate": 0.137931,
-        "evidence_gain_vs_e0": 10.0,
+        "escalation_rate": 0.16129,
+        "evidence_gain_vs_e0": 7.25,
         "facr": {
-          "far_le_0": 0.272727,
-          "far_le_0.01": 0.272727,
-          "far_le_0.05": 0.272727,
-          "far_le_0.1": 0.272727
+          "far_le_0": 0.166667,
+          "far_le_0.01": 0.166667,
+          "far_le_0.05": 0.166667,
+          "far_le_0.1": 0.166667
         },
         "false_accept_rate": 0.0,
-        "false_reject_rate": 0.090909,
+        "false_reject_rate": 0.083333,
         "invalid_output_rate": 0.0,
-        "record_count": 58,
+        "record_count": 62,
         "utility": {
           "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
-          "score": 0.0,
-          "score_per_candidate": 0.0
+          "score": -1.5,
+          "score_per_candidate": -0.024194
         }
       },
       "E6": {
         "accepted_precision": 1.0,
         "confusion_counts": {
-          "escalated_correct": 9,
+          "escalated_correct": 7,
           "escalated_incorrect": 2,
           "false_accept": 0,
-          "false_reject": 1,
+          "false_reject": 2,
           "invalid_output": 0,
-          "true_accept": 1,
-          "true_reject": 45
+          "true_accept": 3,
+          "true_reject": 48
         },
-        "correct_recall": 0.090909,
+        "correct_recall": 0.25,
         "decision_counts": {
-          "accept": 1,
-          "escalate": 11,
-          "reject": 46
+          "accept": 3,
+          "escalate": 9,
+          "reject": 50
         },
-        "escalation_rate": 0.189655,
-        "evidence_gain_vs_e0": 7.25,
+        "escalation_rate": 0.145161,
+        "evidence_gain_vs_e0": 7.5,
         "facr": {
-          "far_le_0": 0.090909,
-          "far_le_0.01": 0.090909,
-          "far_le_0.05": 0.090909,
-          "far_le_0.1": 0.090909
+          "far_le_0": 0.25,
+          "far_le_0.01": 0.25,
+          "far_le_0.05": 0.25,
+          "far_le_0.1": 0.25
         },
         "false_accept_rate": 0.0,
-        "false_reject_rate": 0.090909,
+        "false_reject_rate": 0.166667,
         "invalid_output_rate": 0.0,
-        "record_count": 58,
+        "record_count": 62,
         "utility": {
           "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
-          "score": -2.75,
-          "score_per_candidate": -0.047414
+          "score": -1.25,
+          "score_per_candidate": -0.020161
         }
       }
     },
     "run_kind": "real_llm",
     "signal_preview": {
       "evidence_gain_vs_e0": {
-        "E2": 0.75,
-        "E4": 10.0,
-        "E6": 7.25
+        "E2": 0.0,
+        "E4": 7.25,
+        "E6": 7.5
       },
       "has_metric_variation": true,
       "interpretation_boundary": "Interpret this preview according to run_kind and analysis_boundary.",
       "metric_deltas_vs_e0": {
         "correct_recall": {
           "E2": 0.0,
-          "E4": 0.272727,
-          "E6": 0.090909
+          "E4": 0.166667,
+          "E6": 0.25
         },
         "escalation_rate": {
-          "E2": 0.017241,
-          "E4": -0.482759,
-          "E6": -0.431035
+          "E2": 0.064516,
+          "E4": -0.33871,
+          "E6": -0.354839
         },
         "false_accept_rate": {
           "E2": 0.0,
@@ -177,19 +178,30 @@
   "provider": "deepseek_official",
   "quality": {
     "decision_counts": {
-      "accept": 4,
-      "escalate": 92,
-      "reject": 136
+      "accept": 5,
+      "escalate": 85,
+      "invalid_output": 1,
+      "reject": 157
     },
-    "invalid_output_count": 0,
-    "invalid_output_rate": 0.0,
-    "invalid_records": [],
+    "invalid_output_count": 1,
+    "invalid_output_rate": 0.004032,
+    "invalid_records": [
+      {
+        "candidate_id": "evp7_candidate_0030",
+        "evidence_level": "E2",
+        "evidence_packet_id": "evp7_candidate_0030__E2",
+        "invalid_reason": "invalid_json:No JSON object found in model response",
+        "prompt_chars": 3194,
+        "raw_response_chars": 444
+      }
+    ],
     "parse_counts": {
-      "valid": 232
+      "invalid": 1,
+      "valid": 247
     },
     "raw_outputs_tracked": false,
-    "review_count": 232,
-    "unique_review_ids": 232
+    "review_count": 248,
+    "unique_review_ids": 248
   },
   "run_name": "evp7_g5_llm_full_run",
   "workflow": {
@@ -198,7 +210,7 @@
     "cost_note": "DeepSeek response did not expose billable cost in the stored usage field; runner total is not a billing estimate.",
     "mode": "executed",
     "model_call_attempted": true,
-    "review_count": 232,
+    "review_count": 248,
     "total_cost_usd_reported_by_runner": 0.0
   }
 }

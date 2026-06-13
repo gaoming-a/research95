@@ -72,6 +72,5 @@ comparison and require sensitivity analysis before paper claims.
 
 This scaffold remains the no-API parser/metric path for the current
 12-task/62-candidate/248-packet cohort. The latest G5 model-result evidence is
-the separate 232-record DeepSeek run summarized in
-`docs/experiments/evp7_g5_llm_full_run_result.md`; it must not be extrapolated
-to the 248-packet cohort before a fresh run.
+the separate 248-record DeepSeek run summarized in
+`docs/experiments/evp7_g5_llm_full_run_result.md`.

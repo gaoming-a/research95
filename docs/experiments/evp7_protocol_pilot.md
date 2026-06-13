@@ -350,22 +350,24 @@ G5 real full-run status:
 
 - user-confirmed provider/model = DeepSeek official API, `deepseek-v4-pro`;
 - workflow used explicit bounded concurrency: `--concurrency 6`;
-- raw outputs remain ignored under `outputs/evp7_g5_llm_232_full_repaired/`;
+- raw outputs remain ignored under `outputs/evp7_g5_llm_248_full/`;
 - tracked summary = `docs/experiments/evp7_g5_llm_full_run_result.md`;
 - tracked JSON summary = `data/reviews/evp7_g5_llm_full_run_summary.json`;
-- review count = 232;
-- parse valid = 232/232 after retrying two empty model responses with the same
-  prompt/config/model;
-- invalid output count = 0;
-- invalid output rate = 0.0;
+- review count = 248;
+- parse valid = 247/248;
+- invalid output count = 1;
+- invalid output rate = 0.004032;
+- invalid record = `evp7_candidate_0030__E2`, a non-empty truncated JSON
+  response with 444 raw chars; it is reported as model-output quality rather
+  than silently repaired;
 - G5 metric scaffold = passed;
 - G5 signal claim status = `real_llm_verifier_signal_observed_on_evp7`;
-- scope boundary = previous 11-task/58-candidate/232-packet EVP-7 cohort;
+- scope boundary = current 12-task/62-candidate/248-packet EVP-7 cohort;
 - E4/E6 false accept rate = 0.0;
 - E4/E6 accepted precision = 1.0;
-- E4 correct recall = 0.272727;
-- E6 correct recall = 0.090909;
-- E4/E6 Evidence Gain vs E0 = 10.0 / 7.25.
+- E4 correct recall = 0.166667;
+- E6 correct recall = 0.25;
+- E4/E6 Evidence Gain vs E0 = 7.25 / 7.5.
 
 G5 quality audit status:
 
@@ -379,9 +381,8 @@ G5 quality audit status:
 
 ## Current Next Step
 
-EVP-7 now has a 12-task/62-candidate/248-packet structural/no-API cohort. The
-latest real-LLM cohort remains the previous 11-task/58-candidate/232-packet
-DeepSeek run. The next executable research step is a fresh bounded G5 run for
-the 248-packet cohort, followed by raw-output-free summary and quality audit,
-while preserving the boundary that the previous pilot signal does not imply
-scale generalization or tool-baseline superiority.
+EVP-7 now has a 12-task/62-candidate/248-packet structural and real-LLM
+cohort. The next executable research step is to decide whether to continue
+controlled expansion with the remaining youtube-dl P2P candidates or shift to
+paper-result consolidation, while preserving the boundary that the pilot signal
+does not imply scale generalization or tool-baseline superiority.
