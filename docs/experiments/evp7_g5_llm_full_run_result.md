@@ -8,7 +8,7 @@ This tracked summary excludes raw model responses. Raw outputs remain under igno
 - Model: `deepseek-v4-pro`
 - Prompt: `patch_verify_evidence_visibility_merge_gate_v1`
 - Concurrency: 6
-- Review count: 184
+- Review count: 200
 - API calls attempted: true
 - Model calls attempted: true
 - Runner-reported cost: 0.0
@@ -16,11 +16,11 @@ This tracked summary excludes raw model responses. Raw outputs remain under igno
 
 ## Quality
 
-- Unique review ids: 184
-- Parse counts: `{"invalid": 1, "valid": 183}`
-- Decision counts: `{"accept": 6, "escalate": 64, "invalid_output": 1, "reject": 113}`
+- Unique review ids: 200
+- Parse counts: `{"invalid": 1, "valid": 199}`
+- Decision counts: `{"accept": 3, "escalate": 71, "invalid_output": 1, "reject": 125}`
 - Invalid output count: 1
-- Invalid output rate: 0.005435
+- Invalid output rate: 0.005
 
 ## Metrics
 
@@ -31,11 +31,11 @@ This tracked summary excludes raw model responses. Raw outputs remain under igno
 
 | Evidence | Records | Decisions | Invalid | FAR | Accepted precision | Correct recall | Evidence gain vs E0 |
 | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: |
-| E0 | 46 | `{"escalate": 26, "reject": 20}` | 0.0 | 0.0 | None | 0.0 | 0.0 |
-| E2 | 46 | `{"escalate": 28, "invalid_output": 1, "reject": 17}` | 0.021739 | 0.0 | None | 0.0 | -0.5 |
-| E4 | 46 | `{"accept": 3, "escalate": 4, "reject": 39}` | 0.0 | 0.0 | 1.0 | 0.375 | 7.5 |
-| E6 | 46 | `{"accept": 3, "escalate": 6, "reject": 37}` | 0.0 | 0.0 | 1.0 | 0.375 | 7.0 |
+| E0 | 50 | `{"escalate": 28, "reject": 22}` | 0.0 | 0.0 | None | 0.0 | 0.0 |
+| E2 | 50 | `{"escalate": 26, "reject": 24}` | 0.0 | 0.0 | None | 0.0 | 0.5 |
+| E4 | 50 | `{"accept": 1, "escalate": 8, "invalid_output": 1, "reject": 40}` | 0.02 | 0.0 | 1.0 | 0.111111 | 5.0 |
+| E6 | 50 | `{"accept": 2, "escalate": 9, "reject": 39}` | 0.0 | 0.0 | 1.0 | 0.222222 | 4.75 |
 
 ## Invalid Records
 
-- `evp7_candidate_0004__E2` (E2): invalid_json:No JSON object found in model response; raw chars=0
+- `evp7_candidate_0021__E4` (E4): invalid_suspected_failure_type:test_overfitting; raw chars=540

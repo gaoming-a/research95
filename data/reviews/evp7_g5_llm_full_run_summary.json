@@ -8,20 +8,20 @@
       "E0": {
         "accepted_precision": null,
         "confusion_counts": {
-          "escalated_correct": 8,
-          "escalated_incorrect": 18,
+          "escalated_correct": 9,
+          "escalated_incorrect": 19,
           "false_accept": 0,
           "false_reject": 0,
           "invalid_output": 0,
           "true_accept": 0,
-          "true_reject": 20
+          "true_reject": 22
         },
         "correct_recall": 0.0,
         "decision_counts": {
-          "escalate": 26,
-          "reject": 20
+          "escalate": 28,
+          "reject": 22
         },
-        "escalation_rate": 0.565217,
+        "escalation_rate": 0.56,
         "evidence_gain_vs_e0": 0.0,
         "facr": {
           "far_le_0": 0.0,
@@ -32,32 +32,31 @@
         "false_accept_rate": 0.0,
         "false_reject_rate": 0.0,
         "invalid_output_rate": 0.0,
-        "record_count": 46,
+        "record_count": 50,
         "utility": {
           "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
-          "score": -6.5,
-          "score_per_candidate": -0.141304
+          "score": -7.0,
+          "score_per_candidate": -0.14
         }
       },
       "E2": {
         "accepted_precision": null,
         "confusion_counts": {
-          "escalated_correct": 8,
-          "escalated_incorrect": 20,
+          "escalated_correct": 9,
+          "escalated_incorrect": 17,
           "false_accept": 0,
           "false_reject": 0,
-          "invalid_output": 1,
+          "invalid_output": 0,
           "true_accept": 0,
-          "true_reject": 17
+          "true_reject": 24
         },
         "correct_recall": 0.0,
         "decision_counts": {
-          "escalate": 28,
-          "invalid_output": 1,
-          "reject": 17
+          "escalate": 26,
+          "reject": 24
         },
-        "escalation_rate": 0.608696,
-        "evidence_gain_vs_e0": -0.5,
+        "escalation_rate": 0.52,
+        "evidence_gain_vs_e0": 0.5,
         "facr": {
           "far_le_0": 0.0,
           "far_le_0.01": 0.0,
@@ -66,104 +65,105 @@
         },
         "false_accept_rate": 0.0,
         "false_reject_rate": 0.0,
-        "invalid_output_rate": 0.021739,
-        "record_count": 46,
+        "invalid_output_rate": 0.0,
+        "record_count": 50,
         "utility": {
           "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
-          "score": -7.0,
-          "score_per_candidate": -0.152174
+          "score": -6.5,
+          "score_per_candidate": -0.13
         }
       },
       "E4": {
         "accepted_precision": 1.0,
         "confusion_counts": {
-          "escalated_correct": 4,
-          "escalated_incorrect": 0,
+          "escalated_correct": 7,
+          "escalated_incorrect": 1,
           "false_accept": 0,
           "false_reject": 1,
-          "invalid_output": 0,
-          "true_accept": 3,
-          "true_reject": 38
+          "invalid_output": 1,
+          "true_accept": 1,
+          "true_reject": 39
         },
-        "correct_recall": 0.375,
+        "correct_recall": 0.111111,
         "decision_counts": {
-          "accept": 3,
-          "escalate": 4,
-          "reject": 39
+          "accept": 1,
+          "escalate": 8,
+          "invalid_output": 1,
+          "reject": 40
         },
-        "escalation_rate": 0.086957,
-        "evidence_gain_vs_e0": 7.5,
+        "escalation_rate": 0.16,
+        "evidence_gain_vs_e0": 5.0,
         "facr": {
-          "far_le_0": 0.375,
-          "far_le_0.01": 0.375,
-          "far_le_0.05": 0.375,
-          "far_le_0.1": 0.375
+          "far_le_0": 0.111111,
+          "far_le_0.01": 0.111111,
+          "far_le_0.05": 0.111111,
+          "far_le_0.1": 0.111111
         },
         "false_accept_rate": 0.0,
-        "false_reject_rate": 0.125,
-        "invalid_output_rate": 0.0,
-        "record_count": 46,
+        "false_reject_rate": 0.111111,
+        "invalid_output_rate": 0.02,
+        "record_count": 50,
         "utility": {
           "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
-          "score": 1.0,
-          "score_per_candidate": 0.021739
+          "score": -2.0,
+          "score_per_candidate": -0.04
         }
       },
       "E6": {
         "accepted_precision": 1.0,
         "confusion_counts": {
-          "escalated_correct": 4,
-          "escalated_incorrect": 2,
+          "escalated_correct": 5,
+          "escalated_incorrect": 4,
           "false_accept": 0,
-          "false_reject": 1,
+          "false_reject": 2,
           "invalid_output": 0,
-          "true_accept": 3,
-          "true_reject": 36
+          "true_accept": 2,
+          "true_reject": 37
         },
-        "correct_recall": 0.375,
+        "correct_recall": 0.222222,
         "decision_counts": {
-          "accept": 3,
-          "escalate": 6,
-          "reject": 37
+          "accept": 2,
+          "escalate": 9,
+          "reject": 39
         },
-        "escalation_rate": 0.130435,
-        "evidence_gain_vs_e0": 7.0,
+        "escalation_rate": 0.18,
+        "evidence_gain_vs_e0": 4.75,
         "facr": {
-          "far_le_0": 0.375,
-          "far_le_0.01": 0.375,
-          "far_le_0.05": 0.375,
-          "far_le_0.1": 0.375
+          "far_le_0": 0.222222,
+          "far_le_0.01": 0.222222,
+          "far_le_0.05": 0.222222,
+          "far_le_0.1": 0.222222
         },
         "false_accept_rate": 0.0,
-        "false_reject_rate": 0.125,
+        "false_reject_rate": 0.222222,
         "invalid_output_rate": 0.0,
-        "record_count": 46,
+        "record_count": 50,
         "utility": {
           "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
-          "score": 0.5,
-          "score_per_candidate": 0.01087
+          "score": -2.25,
+          "score_per_candidate": -0.045
         }
       }
     },
     "run_kind": "real_llm",
     "signal_preview": {
       "evidence_gain_vs_e0": {
-        "E2": -0.5,
-        "E4": 7.5,
-        "E6": 7.0
+        "E2": 0.5,
+        "E4": 5.0,
+        "E6": 4.75
       },
       "has_metric_variation": true,
       "interpretation_boundary": "Interpret this preview according to run_kind and analysis_boundary.",
       "metric_deltas_vs_e0": {
         "correct_recall": {
           "E2": 0.0,
-          "E4": 0.375,
-          "E6": 0.375
+          "E4": 0.111111,
+          "E6": 0.222222
         },
         "escalation_rate": {
-          "E2": 0.043479,
-          "E4": -0.47826,
-          "E6": -0.434782
+          "E2": -0.04,
+          "E4": -0.4,
+          "E6": -0.38
         },
         "false_accept_rate": {
           "E2": 0.0,
@@ -178,30 +178,30 @@
   "provider": "deepseek_official",
   "quality": {
     "decision_counts": {
-      "accept": 6,
-      "escalate": 64,
+      "accept": 3,
+      "escalate": 71,
       "invalid_output": 1,
-      "reject": 113
+      "reject": 125
     },
     "invalid_output_count": 1,
-    "invalid_output_rate": 0.005435,
+    "invalid_output_rate": 0.005,
     "invalid_records": [
       {
-        "candidate_id": "evp7_candidate_0004",
-        "evidence_level": "E2",
-        "evidence_packet_id": "evp7_candidate_0004__E2",
-        "invalid_reason": "invalid_json:No JSON object found in model response",
-        "prompt_chars": 2391,
-        "raw_response_chars": 0
+        "candidate_id": "evp7_candidate_0021",
+        "evidence_level": "E4",
+        "evidence_packet_id": "evp7_candidate_0021__E4",
+        "invalid_reason": "invalid_suspected_failure_type:test_overfitting",
+        "prompt_chars": 3316,
+        "raw_response_chars": 540
       }
     ],
     "parse_counts": {
       "invalid": 1,
-      "valid": 183
+      "valid": 199
     },
     "raw_outputs_tracked": false,
-    "review_count": 184,
-    "unique_review_ids": 184
+    "review_count": 200,
+    "unique_review_ids": 200
   },
   "run_name": "evp7_g5_llm_full_run",
   "workflow": {
@@ -210,7 +210,7 @@
     "cost_note": "DeepSeek response did not expose billable cost in the stored usage field; runner total is not a billing estimate.",
     "mode": "executed",
     "model_call_attempted": true,
-    "review_count": 184,
+    "review_count": 200,
     "total_cost_usd_reported_by_runner": 0.0
   }
 }

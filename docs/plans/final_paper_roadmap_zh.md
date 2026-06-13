@@ -855,8 +855,10 @@ retained-oracle validation 和 108-test project-level P2P-broad validation
 包含 retained DFXP time oracle、4 个候选、retained-oracle validation 和
 110-test project-level P2P-broad validation。当前 no-API tracked artifacts
 已提升为 9 tasks / 5 projects / 50 candidates / 200 E0-E6 packets。此前
-fresh DeepSeek V4 full run 仍只覆盖 8-task / 184-packet cohort；第 9 个样本
-需要 fresh 200-packet real LLM run 后才能进入模型结果 claim。
+fresh DeepSeek V4 full run 只覆盖 8-task / 184-packet cohort；随后已完成
+fresh 200-packet DeepSeek V4 G5 run，覆盖当前 9-task / 50-candidate /
+200-packet cohort。该 run 支持 pilot evidence-visibility signal，但不支持
+scale-generalized result 或 LLM 优于 deterministic tool-only baseline。
 
 ## 18. 2026-06-12 外部建议提取后的增量修订
 
@@ -1006,17 +1008,17 @@ Phase A 已补齐 EVP-7 candidate-level schema：
 
 1. 已从已有 validated candidate outputs 生成
    `data/patches/evp7_candidates.jsonl`，共 46 条候选；
-2. 其中 8 条为 `correct_reference`，38 条为 issue-not-fixed negatives；
-3. registry 中候选计数仍只能作为 40 条的下界，因为 `httpie_5` 缺少
+2. 其中 9 条为 `correct_reference`，41 条为 issue-not-fixed negatives；
+3. registry 中候选计数仍只能作为 44 条的下界，因为 `httpie_5` 缺少
    candidate count 字段；
-4. 已生成 leakage-audited E0/E2/E4/E6 evidence packet records，共 184 条；
+4. 已生成 leakage-audited E0/E2/E4/E6 evidence packet records，共 200 条；
 5. 已新增 independent visible-test outcome source 和 deterministic visible
-   tool summary source；E4/E6 当前均为 46/46 complete；
+   tool summary source；E4/E6 当前均为 50/50 complete；
 6. G1 packet completeness 和 G2 leakage audit 当前均通过；3 条 visible
    `error` outcome 是 candidate-induced import failure，不是缺失证据；
 7. G3 tool-only baseline readiness 当前通过：apply-only、visible-tests、
-   visible-tool-summary 三组 baseline 均生成 46 条 schema-valid decisions；
-8. G4 merge-gate schema stability 当前通过：184 条 E0/E2/E4/E6 dry-run
+   visible-tool-summary 三组 baseline 共生成 150 条 schema-valid decisions；
+8. G4 merge-gate schema stability 当前通过：200 条 E0/E2/E4/E6 dry-run
    outputs 全部可解析为 accept/reject/escalate JSON schema，invalid parse
    count = 0，leakage findings = 0；
 9. 这些 G4 records 是 no-API parser/schema dry-run，不是 LLM verifier
@@ -1025,30 +1027,32 @@ Phase A 已补齐 EVP-7 candidate-level schema：
    escalation、FACR 和 Evidence Gain 的计算链路可复现；schema dry-run 和
    mock workflow 仍标记为 `requires_real_llm_verifier_outputs`；
 11. 真实 LLM verifier 的 G5 prompt manifest 和 readiness summary 当前通过
-   no-API 检查：184 条 prompts、四层各 46 条、leakage failed count = 0、
+   no-API 检查：200 条 prompts、四层各 50 条、leakage failed count = 0、
    prompt text 不写入 tracked manifest；
 12. G5 API example config 和 preflight 当前通过结构检查；tracked example
    仍保持 strict API readiness false，只允许 ignored local config 执行真实
    API；
 13. G5 guarded workflow 当前支持 check-only、mock validation 和 bounded
    concurrency；mock records 只验证 parser/metrics pipeline；
-14. 用户确认 DeepSeek V4 后，已完成当前 184-packet 真实 DeepSeek official
-   G5 full run：184 条 E0/E2/E4/E6 review，concurrency = 6；
-15. full run 质量审计：183/184 parse-valid，1 条 E2 输出为空响应导致
-   invalid JSON，invalid-output rate = 0.005435；原始响应保留在
+14. 用户确认 DeepSeek V4 后，已完成当前 200-packet 真实 DeepSeek official
+   G5 full run：200 条 E0/E2/E4/E6 review，concurrency = 6；
+15. full run 质量审计：199/200 parse-valid，1 条 E4 输出因
+   `invalid_suspected_failure_type:test_overfitting` 未通过 schema，
+   invalid-output rate = 0.005；原始响应保留在
    ignored `outputs/`，tracked summary 不包含 raw model responses；
 16. EVP-7 pilot-level signal 已观察到：
    `g5_signal_claim_status = real_llm_verifier_signal_observed_on_evp7`；
-   E4/E6 相对 E0 的 Evidence Gain 分别为 7.5 和 7.0，false accept rate
-   均为 0，accepted precision 均为 1.0，correct recall 均为 0.375；
+   E4/E6 相对 E0 的 Evidence Gain 分别为 5.0 和 4.75，false accept rate
+   均为 0，accepted precision 均为 1.0，E4 correct recall = 0.111111，
+   E6 correct recall = 0.222222；
 17. 该结果支持 EVP-7 pilot signal claims，不支持直接 scale-generalized
    paper claims；下一步应进入质量审计和 15-20 bugs controlled expansion，
    同时保留 invalid-output 和成本字段缺失的质量边界。
-18. 已完成 184-run quality audit：
+18. 已完成 200-run quality audit：
    `docs/experiments/evp7_g5_full_run_quality_audit.md` 和
    `data/reviews/evp7_g5_full_run_quality_audit.json`；结论是
    `passed_with_limitations`，明确不支持“LLM 超过 deterministic
-   visible-test tool-only baseline”、不支持 E6 严格优于 E4、不支持已知
+   visible-test tool-only baseline”、不支持已知
    DeepSeek 真实计费成本、不支持规模泛化；
 19. 已生成 controlled expansion readiness summary：
    `docs/experiments/evp7_expansion_readiness.md` 和

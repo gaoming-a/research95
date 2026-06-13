@@ -1,15 +1,15 @@
 {
   "api_call_attempted": false,
-  "audit_id": "evp7_g5_184_quality_audit",
+  "audit_id": "evp7_g5_200_quality_audit",
   "checks": [
     {
       "check": "review_count",
-      "observed": 184,
+      "observed": 200,
       "passed": true
     },
     {
       "check": "unique_review_ids",
-      "observed": 184,
+      "observed": 200,
       "passed": true
     },
     {
@@ -24,7 +24,7 @@
     },
     {
       "check": "invalid_output_rate",
-      "observed": 0.005435,
+      "observed": 0.005,
       "passed": true
     },
     {
@@ -34,22 +34,22 @@
     },
     {
       "check": "E0_record_count",
-      "observed": 46,
+      "observed": 50,
       "passed": true
     },
     {
       "check": "E2_record_count",
-      "observed": 46,
+      "observed": 50,
       "passed": true
     },
     {
       "check": "E4_record_count",
-      "observed": 46,
+      "observed": 50,
       "passed": true
     },
     {
       "check": "E6_record_count",
-      "observed": 46,
+      "observed": 50,
       "passed": true
     },
     {
@@ -63,13 +63,13 @@
       "passed": true
     },
     {
-      "check": "E4_correct_recall",
-      "observed": 0.375,
+      "check": "E4_correct_recall_positive",
+      "observed": 0.111111,
       "passed": true
     },
     {
       "check": "E4_evidence_gain_positive",
-      "observed": 7.5,
+      "observed": 5.0,
       "passed": true
     },
     {
@@ -83,31 +83,31 @@
       "passed": true
     },
     {
-      "check": "E6_correct_recall",
-      "observed": 0.375,
+      "check": "E6_correct_recall_positive",
+      "observed": 0.222222,
       "passed": true
     },
     {
       "check": "E6_evidence_gain_positive",
-      "observed": 7.0,
+      "observed": 4.75,
       "passed": true
     }
   ],
   "cohort_id": "EVP-7",
   "input_summary": "data\\reviews\\evp7_g5_llm_full_run_summary.json",
   "limitations": [
-    "One E2 record is schema-invalid because the raw response was empty.",
-    "E4/E6 correct recall is 0.375, below the deterministic visible-test tool-only baseline recall of 0.875.",
+    "One E4 record is schema-invalid.",
+    "E4 correct recall is 0.111111 and E6 correct recall is 0.222222, below the deterministic visible-test tool-only baseline recall of 0.888889.",
     "Runner-reported cost is 0.0 because DeepSeek response usage did not expose billable cost in the stored field.",
-    "The cohort remains a pilot-scale 8-task BugsInPy slice."
+    "The cohort remains a pilot-scale 9-task BugsInPy slice."
   ],
   "quality_status": "passed_with_limitations",
   "raw_outputs_read": false,
   "raw_outputs_tracked": false,
   "supported_claims": [
-    "The current EVP-7 8-task/46-candidate/184-packet run observed evidence-visibility signal in real DeepSeek verifier outputs.",
-    "E4/E6 preserved zero observed false accepts and accepted precision 1.0 while accepting 3 of 8 correct patches.",
-    "E4/E6 improved correct recall from 0.0 at E0 to 0.375 and produced positive Evidence Gain versus E0."
+    "The current EVP-7 9-task/50-candidate/200-packet run observed evidence-visibility signal in real DeepSeek verifier outputs.",
+    "E4/E6 preserved zero observed false accepts and accepted precision 1.0.",
+    "E4/E6 improved correct recall over E0 and produced positive Evidence Gain versus E0."
   ],
   "unsupported_claims": [
     "Scale-generalized paper claims beyond EVP-7.",

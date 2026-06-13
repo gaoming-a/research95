@@ -6355,3 +6355,95 @@ full run 决策：
 - 新的 9-task / 50-candidate / 200-packet cohort 只完成 no-API structural
   gates，尚未执行 fresh real LLM verifier run；
 - 因此不能把旧 184-run 的模型结果 claim 直接外推到第 9 个样本。
+
+## 87. 2026-06-13 fresh 200-packet DeepSeek V4 G5 run
+
+本轮小目标：
+
+- 对当前 9-task / 50-candidate / 200-packet EVP-7 cohort 执行 fresh
+  DeepSeek V4 G5 verifier run；
+- 先验证 strict preflight 和 check-only workflow；
+- 先跑 smoke，再根据 stop condition 决定是否进入 full 200-packet run；
+- 只写 raw responses 到 ignored `outputs/evp7_g5_llm_003/`，tracked
+  artifacts 只保留 raw-output-free summary、metrics 和 quality audit。
+
+执行边界：
+
+- 使用已存在 ignored local config：
+  `configs/evp7_g5_llm.local.json`；
+- 当前 local config 指向 `deepseek_official` / `deepseek-v4-pro`；
+- 不修改 prompt；
+- 不修改 candidate labels；
+- 不把 raw model outputs 加入 Git；
+- 如果 strict preflight、check-only、smoke parse、invalid-output rate 或
+  cost/认证检查失败，停止 full run，先诊断；
+- 旧 184-packet run 继续保留为 historical 8-task evidence，不覆盖其 claim
+  边界。
+
+验收条件：
+
+- strict preflight 对 200-packet artifacts 返回 `api_ready=true`；
+- check-only workflow 不调用 API；
+- smoke run 通过 schema / parse / stop-condition 检查；
+- full 200-packet run 完成后生成 raw-output-free tracked summary；
+- metric scaffold 和 quality audit 覆盖 200 records；
+- README/INDEX/plan/experience/experiment docs 同步；
+- 提交本轮 tracked 结果，除非 GitHub sync 被重新启用，否则仍不 push。
+
+执行更新：
+
+- strict preflight 已通过：
+  - config = `configs/evp7_g5_llm.local.json`；
+  - api_provider = `deepseek_official`；
+  - model = `deepseek-v4-pro`；
+  - prompt manifest records = 200；
+  - evidence packets = 200；
+  - api_ready = true；
+  - api_call_attempted = false。
+- check-only workflow 已通过：
+  - structural_ready = true；
+  - api_ready = true；
+  - model_call_attempted = false。
+- smoke run 已完成：
+  - command output dir = `outputs/evp7_g5_llm_003/`；
+  - reviews = `smoke_reviews.jsonl`；
+  - review_count = 4；
+  - parse valid = 4/4；
+  - invalid output count = 0；
+  - decisions = 3 escalate, 1 accept；
+  - stop condition 未触发，可以进入 full 200-packet run。
+- full 200-packet run 已完成：
+  - reviews = `outputs/evp7_g5_llm_003/reviews.jsonl`；
+  - metrics = `outputs/evp7_g5_llm_003/metrics.json`；
+  - workflow summary = `outputs/evp7_g5_llm_003/workflow_summary.json`；
+  - review_count = 200；
+  - unique_review_ids = 200；
+  - parse valid = 199/200；
+  - invalid output = 1，位于 `evp7_candidate_0021__E4`，
+    原因为 `invalid_suspected_failure_type:test_overfitting`；
+  - E0/E2/E4/E6 各 50 条；
+  - G5 signal status = `real_llm_verifier_signal_observed_on_evp7`。
+- full-run summary 和 quality audit 已生成 tracked artifacts：
+  - `data/reviews/evp7_g5_llm_full_run_summary.json`；
+  - `docs/experiments/evp7_g5_llm_full_run_result.md`；
+  - `data/reviews/evp7_g5_full_run_quality_audit.json`；
+  - `docs/experiments/evp7_g5_full_run_quality_audit.md`。
+- quality audit 结果为 `passed_with_limitations`：
+  - E4 false_accept_rate = 0.0；
+  - E4 accepted_precision = 1.0；
+  - E4 correct_recall = 0.111111；
+  - E4 evidence_gain_vs_e0 = 5.0；
+  - E6 false_accept_rate = 0.0；
+  - E6 accepted_precision = 1.0；
+  - E6 correct_recall = 0.222222；
+  - E6 evidence_gain_vs_e0 = 4.75。
+
+当前边界：
+
+- 可以支持 9-task / 50-candidate / 200-packet EVP-7 pilot 中的
+  evidence-visibility signal；
+- 不能 claim scale-generalized result；
+- 不能 claim DeepSeek verifier 优于 deterministic visible-test tool-only
+  baseline；
+- DeepSeek 官方响应 usage 未给出可计费价格，cost claim 仍保持 unknown；
+- raw model outputs 只保留在 ignored `outputs/evp7_g5_llm_003/`。

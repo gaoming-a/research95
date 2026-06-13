@@ -228,11 +228,12 @@ They should not override `final_paper_roadmap_zh.md`.
   leakage findings. The G5 metric scaffold computes FAR, recall, escalation,
   FACR, and Evidence Gain over schema-stable dry-run records. The G5 LLM prompt
   manifest covers all 200 current E0/E2/E4/E6 packets with zero leakage findings
-  and no stored prompt text. The fresh real DeepSeek official G5 full run
-  covers the earlier 8-task/46-candidate/184-packet cohort with explicit bounded
-  parallelism (`--concurrency 6`). It produced 183 parse-valid outputs and one
+  and no stored prompt text. The fresh real DeepSeek official G5 full run now
+  covers the current 9-task/50-candidate/200-packet cohort with explicit bounded
+  parallelism (`--concurrency 6`). It produced 199 parse-valid outputs and one
   schema-invalid output, with E4/E6 false accept rate 0.0, accepted precision
-  1.0, correct recall 0.375, and positive Evidence Gain over E0. The tracked
+  1.0, E4 correct recall 0.111111, E6 correct recall 0.222222, and positive
+  Evidence Gain over E0. The tracked
   quality audit passes with limitations: it supports an EVP-7 pilot-level
   evidence-visibility signal claim, but not scale-generalized claims or a claim
   that the LLM outperforms the deterministic visible-test tool-only baseline.
@@ -372,8 +373,7 @@ python scripts\summarize_evp7_g5_llm_full_run.py
 The guarded workflow can run a full current 200-packet execution with explicit
 bounded parallelism, for example `--concurrency 4` or `--concurrency 6`. The
 default remains sequential. The latest tracked DeepSeek full-run summary covers
-the earlier 184-packet cohort and should not be read as covering the newly
-admitted ninth task.
+the current 200-packet cohort.
 
 For full-goal completion evidence, run:
 

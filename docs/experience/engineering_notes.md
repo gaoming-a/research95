@@ -1589,6 +1589,17 @@ This file starts fresh for the patch-verification project.
 - The `youtube-dl_6` admission changed the current structural cohort from
   8 tasks / 46 candidates / 184 packets to 9 tasks / 50 candidates / 200
   packets. Update no-API builders and preflight gates to the new counts, but do
-  not rewrite the old real DeepSeek G5 full-run claim: that real run remains
-  scoped to the earlier 184-packet cohort until a fresh 200-packet real LLM run
-  is explicitly executed and audited.
+  not rewrite the old real DeepSeek G5 full-run claim: that run remains scoped
+  to the earlier 184-packet cohort even after the separate 200-packet run is
+  executed and audited.
+- The fresh 200-packet DeepSeek V4 G5 run for the 9-task cohort produced one
+  schema-invalid record: `evp7_candidate_0021__E4` failed with
+  `invalid_suspected_failure_type:test_overfitting`. Treat this as model-output
+  quality, not a prompt-boundary, leakage, or execution-chain failure. Keep raw
+  responses only in ignored `outputs/evp7_g5_llm_003/`.
+- The 200-run quality audit is `passed_with_limitations`: E4/E6 reached zero
+  observed false accepts and accepted precision 1.0, with positive recall and
+  positive evidence gain over E0. The limitation is that E4 recall is 0.111111
+  and E6 recall is 0.222222, still below deterministic visible-test tool-only
+  recall 0.888889. The supportable claim is a pilot evidence-visibility signal,
+  not LLM superiority over the tool-only baseline or scale generalization.
