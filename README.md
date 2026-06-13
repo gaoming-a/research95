@@ -319,9 +319,12 @@ tests entered the batch. The completed rerun uses
 `--exclude-nodeid-prefix "test.test_download.TestDownload"` and the scope policy
 `youtube_dl_dynamic_download_nodeid_exclusion_v1`; it produced
 `data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json` with 108 P2P-broad tests.
+The current human-input packet treats that approval-gated P2P path as resolved
+and does not print the stale pre-policy rerun command once the tracked manifest
+exists.
 
-To validate the proposed P2P command without executing tests, append `--dry-run`
-to the command packet emitted by that audit.
+For future approval-gated P2P commands, validate the command without executing
+tests by appending `--dry-run` before any real run.
 
 For stage-by-stage plan progress, run:
 

@@ -61,6 +61,7 @@ def build_audit() -> dict[str, Any]:
     youtubedl_decision = read_json(Path("outputs/youtubedl_p2p_decision_audit/latest.json")) or {}
     youtubedl_attempt_path = "docs/experiments/evp7_youtubedl_p2p_execution_attempt_20260613.md"
     youtubedl_manifest_path = "data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json"
+    youtubedl_manifest = read_json(Path(youtubedl_manifest_path)) or {}
     artifact_audit = read_json(Path("artifacts/research95_anonymous_artifact_audit.json")) or {}
     repro = read_json(Path("outputs/reproducibility/pilot_compare.json")) or {}
     full_dir = Path("outputs/patch_verification_api_pilot_002")
@@ -296,11 +297,13 @@ def build_audit() -> dict[str, Any]:
                 "approval_required": (youtubedl_decision.get("command_packet") or {}).get("approval_required"),
                 "proposed_manifest": youtubedl_manifest_path,
                 "proposed_manifest_exists": file_exists(youtubedl_manifest_path),
+                "manifest_scope_policy": youtubedl_manifest.get("scope_policy"),
+                "manifest_p2p_broad_tests": len(youtubedl_manifest.get("p2p_broad_tests") or []),
                 "recommended_task": (youtubedl_decision.get("decision_packet") or {}).get("recommended_task_id"),
                 "boundary": (
-                    "Goal remains incomplete until the approved youtube-dl_7 P2P path either produces "
-                    "a manifest or is explicitly stopped. The first approved attempt timed out in dynamic "
-                    "test_download tests, so rerun requires a separate nodeid-level scope-policy decision."
+                    "The youtube-dl_7 P2P path is resolved when the tracked manifest exists. "
+                    "The manifest must preserve its explicit scope policy and must not be described "
+                    "as an unfiltered full-suite claim."
                 ),
             },
         ),

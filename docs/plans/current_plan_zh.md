@@ -5905,3 +5905,27 @@ full run 决策：
 - 该结果是带 `youtube_dl_dynamic_download_nodeid_exclusion_v1` scope policy 的
   P2P manifest，不等于无排除的 full test-suite claim；
 - GitHub 同步按用户指示暂时不作为阻塞项，本地分支仍需后续同步。
+
+## 82. 2026-06-13 handoff packet reflects resolved youtube-dl manifest
+
+本轮小目标：
+
+- 修复 `youtube-dl_7` manifest 已存在后，人类输入包仍展示旧 approval-gated
+  P2P command 的交接歧义；
+- 修复 goal completion audit 中仍使用“等待 manifest 或停止”的旧 boundary 文案；
+- 不重新运行 P2P，不修改 scope policy，不调用 API。
+
+执行边界：
+
+- manifest 存在时，`write_human_input_packet.py` 将
+  `approval_required=false`，并不再输出旧重跑命令；
+- `audit_goal_completion.py` 在 evidence 中展示 manifest scope policy 和
+  P2P-broad 数量；
+- 这只是报告同步，不改变 `data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json`。
+
+验收条件：
+
+- human-input packet 仍为 `missing=[]`；
+- packet 中 youtube-dl decision 显示 approval required = no；
+- packet 不再包含未带 nodeid exclusion 的旧 approval command；
+- goal completion 仍为 `complete=true`。

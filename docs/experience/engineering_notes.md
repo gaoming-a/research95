@@ -1549,3 +1549,7 @@ This file starts fresh for the patch-verification project.
   1472 common unittest nodeids, 1297 generated download nodeids excluded by
   prefix, 64 external-dependency tests excluded statically, one retained oracle
   excluded, and 108 P2P-broad tests retained.
+- Once a previously approval-gated P2P path has produced a tracked manifest,
+  handoff packets should stop rendering the old approval command. Otherwise a
+  later continuation can accidentally rerun stale parameters that predate the
+  final scope policy.

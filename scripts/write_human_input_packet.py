@@ -75,6 +75,7 @@ def build_packet() -> dict[str, Any]:
     youtubedl_decision = read_json(YOUTUBEDL_DECISION_PATH) or {}
     youtubedl_attempt_exists = YOUTUBEDL_ATTEMPT_PATH.exists()
     youtubedl_manifest_exists = YOUTUBEDL_MANIFEST_PATH.exists()
+    youtubedl_command_packet = None if youtubedl_manifest_exists else youtubedl_decision.get("command_packet")
     api = readiness.get("api", {}) if isinstance(readiness, dict) else {}
     local_config = api.get("local_config", {}) if isinstance(api, dict) else {}
     model_selection = api.get("model_selection", {}) if isinstance(api, dict) else {}
@@ -126,9 +127,9 @@ def build_packet() -> dict[str, Any]:
             "present": youtubedl_manifest_exists,
             "target": "docs/experiments/evp7_youtubedl_p2p_execution_attempt_20260613.md",
             "instruction": (
-                "Decide whether to allow an explicit nodeid-level exclusion for dynamically generated "
-                "test.test_download.TestDownload.* tests before rerunning youtube-dl_7 P2P, or stop the "
-                "youtube-dl expansion path."
+                "The explicit nodeid-level exclusion for dynamically generated "
+                "test.test_download.TestDownload.* tests is resolved once the tracked youtube-dl_7 "
+                "P2P manifest exists."
             ),
         },
         {
@@ -157,11 +158,11 @@ def build_packet() -> dict[str, Any]:
             "attempt_path": YOUTUBEDL_ATTEMPT_PATH.as_posix(),
             "attempt_record_exists": youtubedl_attempt_exists,
             "audit_passed": youtubedl_decision.get("passed"),
-            "approval_required": (youtubedl_decision.get("command_packet") or {}).get("approval_required"),
+            "approval_required": False if youtubedl_manifest_exists else (youtubedl_command_packet or {}).get("approval_required"),
             "manifest_exists": youtubedl_manifest_exists,
             "manifest_path": YOUTUBEDL_MANIFEST_PATH.as_posix(),
             "recommended_task": (youtubedl_decision.get("decision_packet") or {}).get("recommended_task_id"),
-            "command_packet": youtubedl_decision.get("command_packet"),
+            "command_packet": youtubedl_command_packet,
             "builder_dry_run_checks": {
                 key: value
                 for key, value in (youtubedl_decision.get("checks") or {}).items()
@@ -203,8 +204,8 @@ def build_packet() -> dict[str, Any]:
             "Do not print the API key in logs, reports, or tracked docs.",
             "Do not run --execute before strict preflight and check-only pass.",
             "Do not treat mock or dry-run outputs as model experiment results.",
-            "Do not run youtube-dl_7 P2P unless youtube_dl_p2p_decision is explicitly approved.",
-            "Do not rerun youtube-dl_7 P2P with nodeid-level exclusions unless youtube_dl_dynamic_download_scope_policy is explicitly approved.",
+            "Do not run youtube-dl_7 P2P unless youtube_dl_p2p_decision is explicitly approved or the tracked manifest already exists.",
+            "Do not rerun youtube-dl_7 P2P with nodeid-level exclusions unless youtube_dl_dynamic_download_scope_policy is explicitly approved or the tracked manifest already exists.",
         ],
         "decision_aids": [
             "docs/experiments/model_selection_shortlist.md",
@@ -275,6 +276,8 @@ def build_markdown(packet: dict[str, Any]) -> str:
                 "",
             ]
         )
+    elif youtubedl_decision.get("manifest_exists"):
+        lines.extend(["Approval-gated command packet:", "", "- Resolved; tracked manifest already exists.", ""])
     lines.extend(["", "## Preferred Command Order After Inputs Are Available", ""])
     for command in packet["preferred_command_order"]:
         lines.extend(["```powershell", command, "```", ""])
