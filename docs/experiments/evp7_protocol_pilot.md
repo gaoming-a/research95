@@ -46,7 +46,7 @@ data/exclusions/blocked_bugsinpy_projects.jsonl
 
 ## Current Cohort Summary
 
-The manifest contains exactly 10 completed project-level P2P-broad tasks:
+The manifest contains exactly 11 completed project-level P2P-broad tasks:
 
 | task | project |
 | --- | --- |
@@ -57,15 +57,16 @@ The manifest contains exactly 10 completed project-level P2P-broad tasks:
 | `bugsinpy_tqdm_9` | `tqdm` |
 | `bugsinpy_PySnooper_1` | `PySnooper` |
 | `bugsinpy_PySnooper_3` | `PySnooper` |
+| `bugsinpy_youtube-dl_2` | `youtube-dl` |
 | `bugsinpy_youtube-dl_5` | `youtube-dl` |
 | `bugsinpy_youtube-dl_6` | `youtube-dl` |
 | `bugsinpy_youtube-dl_7` | `youtube-dl` |
 
 Candidate count status:
 
-- registry-known lower bound: 48;
+- registry-known lower bound: 52;
 - registry missing candidate counts for `bugsinpy_httpie_5`;
-- promoted tracked candidate records: 54.
+- promoted tracked candidate records: 58.
 
 Project coverage:
 
@@ -131,7 +132,7 @@ data/patches/evp7_candidates.jsonl
 data/patches/evp7_candidate_summary.json
 ```
 
-The promoted manifest contains 54 candidates across the 10 EVP-7 tasks:
+The promoted manifest contains 58 candidates across the 11 EVP-7 tasks:
 
 - 10 `correct_reference` candidates labeled
   `correct_under_f2p_and_p2p_broad`;
@@ -163,21 +164,21 @@ data/evidence/evp7_evidence_packets.jsonl
 data/evidence/evp7_evidence_packet_summary.json
 ```
 
-The builder emits 216 packet records: 54 candidates times E0/E2/E4/E6.
+The builder emits 232 packet records: 58 candidates times E0/E2/E4/E6.
 
 Current status:
 
-- E0 complete for 54 candidates;
-- E2 complete for 54 candidates, using patch-apply evidence only;
-- E4 complete for 54 candidates after independently rerunning predeclared
+- E0 complete for 58 candidates;
+- E2 complete for 58 candidates, using patch-apply evidence only;
+- E4 complete for 58 candidates after independently rerunning predeclared
   visible tests in candidate workdirs with tracked P2P compat-shim reuse;
 - visible test outcomes include 11 passed checks, 47 failed checks, and 3 error
   checks; the 3 errors are candidate-induced import errors and are retained as
   visible runtime outcomes;
-- E6 complete for 54 candidates after deterministic visible tool summaries were
+- E6 complete for 58 candidates after deterministic visible tool summaries were
   generated from model-visible static and visible-test evidence;
 - automated leakage audit passes with zero findings.
-- deterministic tool-only baselines are generated for 54 candidates under three
+- deterministic tool-only baselines are generated for 58 candidates under three
   conditions: apply-only, visible-tests, and visible-tool-summary.
 
 ## Current Limitation
@@ -355,7 +356,7 @@ G5 real full-run status:
 - invalid output rate = 0.00463;
 - G5 metric scaffold = not_passed;
 - G5 signal claim status = `real_llm_verifier_outputs_incomplete`;
-- scope boundary = current 10-task/54-candidate/216-packet EVP-7 cohort;
+- scope boundary = previous 10-task/54-candidate/216-packet EVP-7 cohort;
 - E4/E6 false accept rate = 0.0;
 - E4/E6 accepted precision = 1.0;
 - E4 correct recall = 0.1;
@@ -374,7 +375,9 @@ G5 quality audit status:
 
 ## Current Next Step
 
-EVP-7 now has a 10-task/54-candidate/216-packet structural and real-LLM cohort.
+EVP-7 now has an 11-task/58-candidate/232-packet structural cohort. The latest
+real-LLM cohort remains the previous 10-task/54-candidate/216-packet run until a
+fresh 232-packet run is executed and audited.
 The next executable research step is controlled expansion under the same
 admission gates, while preserving the quality-audit boundary that the pilot
 signal does not imply scale generalization or tool-baseline superiority.

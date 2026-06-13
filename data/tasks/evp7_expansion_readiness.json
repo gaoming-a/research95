@@ -22,19 +22,18 @@
   "controlled_probe_results": {
     "p2p_candidate_tasks": [
       "bugsinpy_youtube-dl_11",
-      "bugsinpy_youtube-dl_2",
       "bugsinpy_youtube-dl_3",
       "bugsinpy_youtube-dl_4",
       "bugsinpy_youtube-dl_5",
       "bugsinpy_youtube-dl_6"
     ],
     "probe_status_counts": {
-      "admitted_p2p_broad_main": 1,
+      "admitted_p2p_broad_main": 2,
       "f2p_blocked_dependency_environment": 4,
       "f2p_blocked_existing_incomplete_native_probe": 1,
       "f2p_blocked_windows_posix_import": 1,
       "f2p_established_existing_p2p_timeout": 1,
-      "f2p_established_p2p_not_attempted": 6
+      "f2p_established_p2p_not_attempted": 5
     },
     "recorded_tasks": [
       "bugsinpy_ansible_1",
@@ -59,9 +58,9 @@
     "cookiecutter": 3,
     "httpie": 1,
     "tqdm": 1,
-    "youtube-dl": 1
+    "youtube-dl": 4
   },
-  "current_main_task_count": 8,
+  "current_main_task_count": 11,
   "current_main_tasks": [
     "bugsinpy_PySnooper_1",
     "bugsinpy_PySnooper_3",
@@ -70,6 +69,9 @@
     "bugsinpy_cookiecutter_3",
     "bugsinpy_httpie_5",
     "bugsinpy_tqdm_9",
+    "bugsinpy_youtube-dl_2",
+    "bugsinpy_youtube-dl_5",
+    "bugsinpy_youtube-dl_6",
     "bugsinpy_youtube-dl_7"
   ],
   "next_execution_boundary": [
@@ -243,10 +245,10 @@
       "latest_probe": {
         "blocked_reason": [],
         "date": "2026-06-13",
-        "decision": "f2p_established_hold_for_p2p_decision",
-        "notes": "Both checkouts completed and the target unittest produced the expected buggy fail and fixed pass. Project-level P2P-broad construction and candidate validation were not attempted in this F2P-only triage batch."
+        "decision": "admitted_to_p2p_broad_main",
+        "notes": "Both checkouts completed and the target unittest produced the expected buggy fail and fixed pass. A later approved project-level P2P-broad run produced 147 retained P2P tests, and four candidate records passed retained-oracle and P2P-broad validation before admission."
       },
-      "probe_status": "f2p_established_p2p_not_attempted",
+      "probe_status": "admitted_p2p_broad_main",
       "project": "youtube-dl",
       "run_commands": [
         "python -m unittest -q test.test_InfoExtractor.TestInfoExtractor.test_parse_mpd_formats"

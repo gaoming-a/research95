@@ -1,23 +1,23 @@
 {
-  "candidate_count": 54,
+  "candidate_count": 58,
   "candidate_type_counts": {
-    "buggy_noop": 10,
-    "correct_reference": 10,
-    "irrelevant_patch": 10,
-    "partial_fix": 24
+    "buggy_noop": 11,
+    "correct_reference": 11,
+    "irrelevant_patch": 11,
+    "partial_fix": 25
   },
   "cohort_id": "EVP-7",
   "evidence_packet_artifact": "data/evidence/evp7_evidence_packets.jsonl",
   "evidence_packet_status": "managed_by_separate_builder",
   "failure_type_counts": {
-    "irrelevant_edit": 10,
-    "no_op_patch": 10,
-    "none": 10,
-    "partial_fix": 24
+    "irrelevant_edit": 11,
+    "no_op_patch": 11,
+    "none": 11,
+    "partial_fix": 25
   },
   "label_with_p2p_broad_counts": {
-    "correct_under_f2p_and_p2p_broad": 10,
-    "incorrect_issue_not_fixed": 44
+    "correct_under_f2p_and_p2p_broad": 11,
+    "incorrect_issue_not_fixed": 47
   },
   "next_step": "Use scripts/build_evp7_evidence_packets.py to regenerate model-visible evidence packets and leakage-audit summary.",
   "project_count": 5,
@@ -29,9 +29,10 @@
     "bugsinpy_cookiecutter_3": 4,
     "bugsinpy_httpie_5": 6,
     "bugsinpy_tqdm_9": 7,
+    "bugsinpy_youtube-dl_2": 4,
     "bugsinpy_youtube-dl_5": 4,
     "bugsinpy_youtube-dl_6": 4,
     "bugsinpy_youtube-dl_7": 4
   },
-  "task_count": 10
+  "task_count": 11
 }

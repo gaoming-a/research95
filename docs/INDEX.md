@@ -29,7 +29,7 @@
   default `p2p_broad_main` metrics.
 - `protocol/evidence_visibility_protocol.md`: Phase A protocol after the
   2026-06-12 Option A decision and controlled youtube-dl formal admissions
-  through `youtube-dl_5`. The current tracked cohort is 10 tasks across 5 projects, defines
+  through `youtube-dl_2`. The current tracked cohort is 11 tasks across 5 projects, defines
   E0/E2/E4/E6 first, keeps E7 as oracle-only, and sets G1-G5 gates before
   expansion.
 - `../data/tasks/evp7_tasks.jsonl`: tracked task manifest for the frozen
@@ -46,14 +46,14 @@
   for controlled expansion probes that have been attempted but are not main
   cohort admissions.
 - `../data/patches/evp7_candidates.jsonl`: tracked candidate manifest promoted
-  from validated EVP-7 candidate outputs. It contains 54 candidates with global
+  from validated EVP-7 candidate outputs. It contains 58 candidates with global
   anonymous `evp7_candidate_id` values and evaluator-only labels kept explicit.
 - `../data/patches/evp7_candidate_summary.json`: summary of the promoted EVP-7
-  candidate records: 54 candidates, 10 correct reference patches, and 44
+  candidate records: 58 candidates, 11 correct reference patches, and 47
   issue-not-fixed candidates.
 - `../data/evidence/evp7_evidence_packets.jsonl`: tracked EVP-7 model-visible
   evidence packet records. It contains 216 E0/E2/E4/E6 records; E0/E2 are
-  complete, and E4/E6 are complete for all 54 candidates.
+  complete, and E4/E6 are complete for all 58 candidates.
 - `../data/evidence/evp7_evidence_packet_summary.json`: summary and leakage
   audit result for the EVP-7 evidence packets. G1 and G2 currently pass.
 - `../data/evidence/evp7_visible_test_outcomes.jsonl`: independent model-visible
@@ -84,11 +84,12 @@
   recall, escalation, FACR, and Evidence Gain, but marks G5 signal claims as
   requiring genuine LLM verifier outputs.
 - `../data/reviews/evp7_g5_llm_full_run_summary.json`: tracked raw-output-free
-  summary of the latest real DeepSeek official EVP-7 G5 full run on the current
+  summary of the latest real DeepSeek official EVP-7 G5 full run on the previous
   10-task/54-candidate/216-packet cohort. It records 216 reviews, 215
   parse-valid outputs, one schema-invalid output, and metric variation across
   E0/E2/E4/E6 while the scaffold keeps
-  `real_llm_verifier_outputs_incomplete`.
+  `real_llm_verifier_outputs_incomplete`. The current 11-task/58-candidate/
+  232-packet cohort has no-API readiness only until a fresh real run is executed.
 - `../data/reviews/evp7_g5_full_run_quality_audit.json`: tracked quality audit
   for the 216-record DeepSeek full run. It reads only the raw-output-free
   summary and marks the run `passed_with_limitations`.
@@ -342,8 +343,13 @@
 - `experiments/youtubedl5_candidate_validation.md`: formal admission record for
   `bugsinpy_youtube-dl_5`. It documents the retained unified-timestamp oracle,
   four candidate records, project-level P2P-broad validation with 128 retained
-  unittest tests, registry admission, and the current 10-task/54-candidate/
+  unittest tests, registry admission, and the then-current 10-task/54-candidate/
   216-packet no-API artifact refresh.
+- `experiments/youtubedl2_candidate_validation.md`: formal admission record for
+  `bugsinpy_youtube-dl_2`. It documents the retained MPD parser oracle, four
+  candidate records, project-level P2P-broad validation with 147 retained
+  unittest tests, registry admission, and the current 11-task/58-candidate/
+  232-packet no-API artifact refresh.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

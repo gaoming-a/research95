@@ -15,9 +15,9 @@ from typing import Any
 
 
 EXPECTED_PROMPT_ID = "patch_verify_evidence_visibility_merge_gate_v1"
-EXPECTED_CANDIDATE_COUNT = 54
-EXPECTED_LEVEL_COUNTS = {"E0": 54, "E2": 54, "E4": 54, "E6": 54}
-EXPECTED_RECORD_COUNT = 216
+EXPECTED_CANDIDATE_COUNT = 58
+EXPECTED_LEVEL_COUNTS = {"E0": 58, "E2": 58, "E4": 58, "E6": 58}
+EXPECTED_RECORD_COUNT = 232
 ALLOWED_CONDITIONS = {"evidence_visibility_merge_gate"}
 
 

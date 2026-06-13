@@ -50,7 +50,7 @@ The candidate manifest is:
 data/patches/evp7_candidates.jsonl
 ```
 
-It contains 46 promoted candidates from the validated EVP-7 candidate outputs.
+It contains 58 promoted candidates from the validated EVP-7 candidate outputs.
 Its labels and failure taxonomy are evaluator-only inputs for metrics and must
 not be copied into model-visible evidence packets.
 
@@ -60,10 +60,10 @@ The current evidence packet manifest is:
 data/evidence/evp7_evidence_packets.jsonl
 ```
 
-It contains E0/E2/E4/E6 records for all 54 candidates. E0/E2 are complete.
-E4 is complete for all 54 candidates after rerunning predeclared visible tests
+It contains E0/E2/E4/E6 records for all 58 candidates. E0/E2 are complete.
+E4 is complete for all 58 candidates after rerunning predeclared visible tests
 in candidate workdirs with the same tracked project-level compat shims recorded
-in the P2P manifests. E6 is complete for all 54 candidates after deterministic
+in the P2P manifests. E6 is complete for all 58 candidates after deterministic
 visible tool summaries were generated from already model-visible static and
 visible-test evidence. Three visible-test outcomes are `error` because partial
 candidates break import; those are visible outcomes, not hidden evaluator
@@ -167,19 +167,21 @@ Current gate status after the first packet builder:
   evaluator labels, oracle outcomes, hidden tests, reference provenance, or
   failure taxonomy in model-visible packets.
 - G3 passes for deterministic tool-only baselines: apply-only, visible-tests,
-  and visible-tool-summary conditions each produce 54 schema-valid decisions
+  and visible-tool-summary conditions each produce 58 schema-valid decisions
   and aggregate metrics.
-- G4 passes for the no-API merge-gate schema dry-run: all 216 E0/E2/E4/E6
+- G4 passes for the no-API merge-gate schema dry-run: all 232 E0/E2/E4/E6
   packet-level outputs parse into the fixed accept/reject/escalate JSON schema
   with zero leakage findings. These records are parser/schema evidence only,
   not LLM verifier results.
-- G5 has a fresh 216-packet real DeepSeek official run with quality status
+- G5 has a fresh 216-packet real DeepSeek official run on the previous
+  10-task/54-candidate cohort, with quality status
   `passed_with_limitations`. E4/E6 preserve false accept rate 0.0 and accepted
   precision 1.0 while increasing correct recall over E0 to 0.1 at E4 and 0.2
   at E6, with positive Evidence Gain over E0. The metrics scaffold still marks
   `real_llm_verifier_outputs_incomplete`, so this supports bounded pilot
-  observations about evidence-level variation, not scale-generalized paper
-  claims.
+  observations about evidence-level variation for that cohort, not
+  scale-generalized paper claims. The current 232-packet cohort is no-API ready
+  but still needs a fresh real LLM run for current-cohort model claims.
 - The tracked full-run quality audit is `passed_with_limitations`: it supports
   bounded pilot observations, but explicitly rejects claims that the LLM
   outperforms the deterministic visible-test tool-only baseline, that

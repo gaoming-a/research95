@@ -5,9 +5,11 @@ Date: 2026-06-13
 ## Purpose
 
 This document records the no-API readiness package for the real LLM G5
-signal-existence run. The current 216-record package has now been consumed by
-the fresh DeepSeek official run summarized in
-`docs/experiments/evp7_g5_llm_full_run_result.md`.
+signal-existence run. The previous 216-record package was consumed by the fresh
+DeepSeek official run summarized in
+`docs/experiments/evp7_g5_llm_full_run_result.md`. The current no-API package
+has been refreshed to 232 records after `bugsinpy_youtube-dl_2` admission and
+has not yet been consumed by a fresh real LLM run.
 
 The goal of G5 is to test whether E0/E2/E4/E6 evidence visibility changes LLM
 merge-gate decisions in an explainable way. This readiness step prepares the
@@ -93,11 +95,12 @@ Before any real G5 API call, the user must confirm:
 - model;
 - maximum total cost in USD;
 - smoke scope;
-- permission for the full 216-record run after smoke.
+- permission for the full 232-record run after smoke.
 
 This readiness artifact is not model-result evidence and does not pass G5 by
-itself; the latest 216-record DeepSeek run provides the current model-result
-evidence and is summarized separately.
+itself; the latest 216-record DeepSeek run remains the latest model-result
+evidence, but it covers the previous cohort rather than the current 232-record
+package.
 
 ## Config And Preflight
 

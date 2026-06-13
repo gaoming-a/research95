@@ -6646,3 +6646,125 @@ full run 决策：
   - LLM 优于 deterministic visible-test tool-only baseline；
   - E6 严格优于 E4；
   - DeepSeek 真实计费成本已知。
+
+## 90. 2026-06-13 controlled expansion attempt: youtube-dl_2
+
+背景：
+
+- 216-packet DeepSeek V4 G5 run 已完成并通过 raw-output-free quality audit；
+- controlled expansion readiness 已刷新到当前 10-task registry；
+- metadata-promising pool 没有新的低风险 fresh-project lane；
+- `bugsinpy_youtube-dl_2` 已在 controlled probe 中建立 F2P：
+  - buggy fails；
+  - fixed passes；
+  - target = `test.test_InfoExtractor.TestInfoExtractor.test_parse_mpd_formats`；
+  - P2P-broad 尚未尝试。
+- 该任务属于已经验证过的 youtube-dl unittest family，可复用
+  `youtube_dl_dynamic_download_nodeid_exclusion_v1`，但仍必须重新经过
+  static preflight、builder dry-run、real P2P 和 manifest quality gate。
+
+本轮小目标：
+
+1. 用 canonical youtube-dl static tokens 运行 static P2P preflight；
+2. 运行 `build_pass_to_pass_scope.py --dry-run`，确认 F2P oracle、nodeid
+   exclusion 和 static exclusion 边界正确；
+3. 只有 dry-run 通过后，才构造真实 project-level P2P-broad manifest；
+4. 若 manifest retained P2P-broad tests >= 3 且排除了 F2P oracle 与
+   `test.test_download.TestDownload`，再进入 candidate/oracle construction。
+
+边界：
+
+- 不调用模型 API；
+- 不修改 prompt、已有候选标签或既有 P2P manifests；
+- 不引入 compatibility shim、dependency install、fixture shim 或 task-file
+  P2P 降级；
+- 若 static preflight、dry-run、P2P construction 或 manifest quality 失败，
+  立即停止并诊断，不进入 candidate validation。
+
+验收条件：
+
+- static preflight 的 buggy/fixed remaining set 无 diff；
+- dry-run 不写 manifest；
+- real P2P manifest 为 `project_level_p2p_broad` / `unittest`；
+- manifest 排除 F2P oracle 和动态下载 nodeids；
+- retained P2P-broad tests >= 3；
+- 完成后同步 current plan、engineering notes、INDEX/README 和 GitHub。
+
+执行更新：
+
+- controlled expansion readiness 已刷新到当前 registry：
+  - main tasks = 10 before this attempt；
+  - youtube-dl main tasks = 3 before this attempt。
+- static preflight 已通过：
+  - total static unittest methods = 212；
+  - excluded by canonical static tokens = 61；
+  - remaining after static exclusions = 151；
+  - buggy/fixed remaining set diff = 0。
+- builder dry-run 已通过：
+  - fail-to-pass oracle =
+    `test.test_InfoExtractor.TestInfoExtractor.test_parse_mpd_formats`；
+  - scope type = `project_level_p2p_broad`；
+  - test framework = `unittest`；
+  - exclude nodeid prefix = `test.test_download.TestDownload`；
+  - manifest write = false。
+- real P2P-broad construction 已完成：
+  - manifest = `data/p2p_scopes/bugsinpy_youtube-dl_2_p2p_broad.json`；
+  - collected tests = 2235；
+  - excluded dynamic download nodeids = 1997；
+  - excluded static external-dependency tests = 86；
+  - excluded fail-to-pass oracle = 1；
+  - excluded buggy-baseline failures = 4；
+  - retained P2P-broad tests = 147；
+  - retained dynamic download nodeids = 0。
+- 新增 oracle 和 candidate builder：
+  - `scripts/oracles/youtubedl_2_parse_mpd_formats.py`；
+  - `scripts/build_youtubedl2_candidates.py`。
+- retained-oracle validation 已通过 admission gate：
+  - candidates = 4；
+  - patch_applied = 4/4；
+  - oracle_ran = 4/4；
+  - oracle_all_passed = 1。
+- candidate-level P2P validation 已通过：
+  - P2P-broad test count = 147；
+  - labels = 1 `correct_under_f2p_and_p2p_broad`,
+    3 `incorrect_issue_not_fixed`。
+- 已将 `bugsinpy_youtube-dl_2` 纳入
+  `data/cohorts/task_cohort_registry.json` 的 `p2p_broad_main`，并将
+  `data/tasks/evp7_controlled_probe_results.json` 更新为 admitted。
+- 已重建 EVP-7 no-API artifacts：
+  - main tasks = 11；
+  - projects = 5；
+  - promoted candidates = 58；
+  - correct reference candidates = 11；
+  - issue-not-fixed candidates = 47；
+  - evidence packets = 232；
+  - E0/E2/E4/E6 各 58；
+  - visible outcomes = 58，55 completed / 3 error；
+  - visible tool summaries = 58 complete；
+  - G1 packet completeness = passed；
+  - G2 leakage audit = passed；
+  - G3 tool-only baseline readiness = passed；
+  - G4 schema stability = passed；
+  - G5 prompt manifest = 232 records，passed_without_api；
+  - example preflight structural_ready = true，api_ready = false；
+  - local preflight structural_ready = true，api_ready = true。
+- 新增实验记录：
+  `docs/experiments/youtubedl2_candidate_validation.md`。
+
+诊断记录：
+
+- 第一次并行运行 `build_evp7_visible_tool_summaries.py --check` 和
+  `build_evp7_evidence_packets.py --check` 时，tool summary 读取了旧的
+  54-candidate evidence packets，导致 E6 complete 只有 54；
+- 这是依赖顺序问题：tool summary 依赖最新 evidence packets，不能和
+  evidence builder 并行；
+- 按顺序重跑 tool summary，再重跑 evidence packets 后，G1/G2 通过。
+
+当前边界：
+
+- 第 11 个 bug 已完成 admission，主 structural/no-API cohort 已提升到
+  11-task / 58-candidate / 232-packet；
+- 最新真实 DeepSeek V4 G5 full run 仍只覆盖上一轮
+  10-task / 54-candidate / 216-packet cohort；
+- 当前 232-packet cohort 已完成 no-API gates，但尚未执行 fresh real LLM run；
+- 因此不能把旧 216-run 的模型结果 claim 直接外推到第 11 个样本。

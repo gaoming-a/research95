@@ -1619,3 +1619,16 @@ This file starts fresh for the patch-verification project.
   200 reviews, 50 candidates per level, and 9-task wording. Quality audits
   should derive review count, level counts, and invalid-output rate from the
   tracked summary so controlled expansion does not create false gate failures.
+- `bugsinpy_youtube-dl_2` can reuse
+  `youtube_dl_dynamic_download_nodeid_exclusion_v1`. Its canonical static
+  preflight leaves 151 unittest methods after excluding `YoutubeDL(`,
+  `download(`, `urlopen`, `http://`, and `https://`, with no buggy/fixed set
+  diff. The final P2P-broad manifest retains 147 tests after excluding 1997
+  generated download nodeids, 86 static external-dependency tests, the F2P
+  oracle, and 4 buggy-baseline failures.
+- `build_evp7_visible_tool_summaries.py` depends on the latest
+  `evp7_evidence_packets.jsonl`; it should not be run in parallel with
+  `build_evp7_evidence_packets.py` after a cohort-size change. In the
+  `youtube-dl_2` admission, running them concurrently made tool summaries read
+  the old 54-candidate packet file. Sequentially rerunning tool summaries and
+  then evidence packets fixed E6 completeness for the 58-candidate cohort.

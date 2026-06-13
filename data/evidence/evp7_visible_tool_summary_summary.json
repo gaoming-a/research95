@@ -2,12 +2,12 @@
   "cohort_id": "EVP-7",
   "leakage_audit": "passed",
   "leakage_findings_count": 0,
-  "record_count": 54,
+  "record_count": 58,
   "summary_status_counts": {
-    "complete": 54
+    "complete": 58
   },
   "visible_test_run_status_counts": {
-    "completed": 51,
+    "completed": 55,
     "error": 3
   }
 }
