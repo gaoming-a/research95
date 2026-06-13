@@ -1036,7 +1036,13 @@ Phase A 已补齐 EVP-7 candidate-level schema：
 17. 该结果支持 EVP-7 pilot signal claims，不支持直接 scale-generalized
    paper claims；下一步应进入质量审计和 15-20 bugs controlled expansion，
    同时保留 invalid-output 和成本字段缺失的质量边界。
-18. 已生成 controlled expansion readiness summary：
+18. 已完成 184-run quality audit：
+   `docs/experiments/evp7_g5_full_run_quality_audit.md` 和
+   `data/reviews/evp7_g5_full_run_quality_audit.json`；结论是
+   `passed_with_limitations`，明确不支持“LLM 超过 deterministic
+   visible-test tool-only baseline”、不支持 E6 严格优于 E4、不支持已知
+   DeepSeek 真实计费成本、不支持规模泛化；
+19. 已生成 controlled expansion readiness summary：
    `docs/experiments/evp7_expansion_readiness.md` 和
    `data/tasks/evp7_expansion_readiness.json`；下一步应按 project-diverse
    bounded probe 推进，不做盲目 BugsInPy 批量扩展。

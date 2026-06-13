@@ -178,6 +178,11 @@ Current gate status after the first packet builder:
   increasing correct recall from 0.0 at E0 to 0.375, with positive Evidence
   Gain over E0. This supports EVP-7 pilot signal claims, not scale-generalized
   paper claims.
+- The tracked full-run quality audit is `passed_with_limitations`: it supports
+  the pilot evidence-visibility signal claim, but explicitly rejects claims that
+  the LLM outperforms the deterministic visible-test tool-only baseline, that
+  E6 strictly improves over E4, that DeepSeek cost is known from runner output,
+  or that the result generalizes beyond EVP-7.
 - The G5 LLM prompt is `patch_verify_evidence_visibility_merge_gate_v1`. Its
   no-API prompt manifest covers all 184 E0/E2/E4/E6 packet prompts with zero
   leakage failures and no tracked full prompt text. The real DeepSeek official

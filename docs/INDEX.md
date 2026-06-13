@@ -88,6 +88,9 @@
   8-task/46-candidate/184-packet cohort. It records 184 reviews, 183
   parse-valid outputs, one schema-invalid output, and
   `real_llm_verifier_signal_observed_on_evp7`.
+- `../data/reviews/evp7_g5_full_run_quality_audit.json`: tracked quality audit
+  for the 184-record DeepSeek full run. It reads only the raw-output-free
+  summary and marks the run `passed_with_limitations`.
 - `../data/reviews/evp7_g5_llm_prompt_manifest.jsonl`: no-API prompt manifest
   for the G5 evidence-visibility LLM run. It stores prompt hashes,
   lengths, prompt id, evidence level, and leakage-check status, not full prompt
@@ -288,6 +291,9 @@
 - `experiments/evp7_g5_llm_full_run_result.md`: tracked summary of the real
   DeepSeek official EVP-7 G5 full run. Raw model responses remain ignored under
   `outputs/`.
+- `experiments/evp7_g5_full_run_quality_audit.md`: tracked claim-boundary audit
+  for the 184-record DeepSeek run. It lists supported pilot claims,
+  unsupported claims, and limitations.
 - `experiments/evp7_expansion_readiness.md`: controlled-expansion readiness
   report after EVP-7 G5. It records current main tasks, blocked-risk counts,
   broader BugsInPy metadata candidates, and bounded project-lane probe rules.
@@ -656,6 +662,9 @@
 - `../scripts/summarize_evp7_g5_llm_full_run.py`: converts ignored real G5
   outputs into tracked JSON/Markdown summaries without copying raw model
   responses.
+- `../scripts/audit_evp7_g5_full_run_quality.py`: audits the tracked G5
+  full-run summary without reading raw outputs and writes the claim-boundary
+  JSON/Markdown audit.
 - `../scripts/summarize_evp7_expansion_readiness.py`: summarizes current
   registry state, broader BugsInPy rescreen outputs, and tracked controlled
   probe statuses into expansion readiness artifacts.

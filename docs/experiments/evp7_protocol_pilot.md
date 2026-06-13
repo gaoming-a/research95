@@ -358,10 +358,19 @@ G5 real full-run status:
 - E4/E6 correct recall = 0.375;
 - E4/E6 Evidence Gain vs E0 = 7.5 / 7.0.
 
+G5 quality audit status:
+
+- audit = `docs/experiments/evp7_g5_full_run_quality_audit.md`;
+- JSON = `data/reviews/evp7_g5_full_run_quality_audit.json`;
+- quality status = `passed_with_limitations`;
+- supported claim = EVP-7 pilot-level evidence-visibility signal;
+- unsupported claims = scale-generalized result, LLM outperforming tool-only
+  baseline, E6 strictly improving over E4, and known DeepSeek billing cost.
+
 ## Current Next Step
 
-EVP-7 now supports pilot-level LLM signal on the current 8-task cohort. The next
-executable research step is quality audit, then 15-20 bugs controlled expansion
-if the 8-task quality audit remains clean. Expansion should preserve the same
-hidden-evaluator boundary, tool-only baselines, E0/E2/E4/E6 evidence levels,
-and raw-output-free tracked summaries.
+EVP-7 now supports pilot-level LLM signal on the current 8-task cohort, with the
+quality audit boundary recorded. The next executable research step is 15-20 bugs
+controlled expansion. Expansion should preserve the same hidden-evaluator
+boundary, tool-only baselines, E0/E2/E4/E6 evidence levels, and raw-output-free
+tracked summaries.

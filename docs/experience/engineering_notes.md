@@ -1574,3 +1574,9 @@ This file starts fresh for the patch-verification project.
   API/model-output quality issue, not a prompt-boundary or evidence-leakage
   failure. The tracked summary should report the invalid rate and keep raw
   responses only in ignored `outputs/evp7_g5_llm_002/`.
+- The 184-run quality audit should be `passed_with_limitations`, not an
+  unconditional pass. The key boundary is that DeepSeek E4/E6 reached zero
+  observed false accepts and 0.375 correct recall, while deterministic
+  visible-test tool-only recall is 0.875. Therefore the paper can claim
+  evidence visibility changes LLM merge decisions in the EVP-7 pilot, but
+  cannot claim the LLM outperforms the tool-only baseline.

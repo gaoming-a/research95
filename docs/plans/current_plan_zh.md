@@ -6144,3 +6144,90 @@ full run 决策：
   `outputs/evp7_g5_llm_002/`，无参运行确认仍生成 184-run summary；
 - local quality gate 通过；
 - goal completion audit 通过。
+
+## 85. 2026-06-13 184-run quality audit and claim boundary
+
+本轮小目标：
+
+- 对当前 184-packet DeepSeek V4 G5 full run 做 tracked、可复现的质量审计；
+- 明确哪些 claim 可以写、哪些 claim 不能写；
+- 不重新调用 API，不读取或复制 raw model responses；
+- 不新增 bug，不进入 controlled expansion 实验执行。
+
+当前事实：
+
+- tracked summary 已存在：
+  `data/reviews/evp7_g5_llm_full_run_summary.json`；
+- full run 覆盖当前 8-task / 46-candidate / 184-packet cohort；
+- invalid output 为 1 条空响应；
+- E4/E6 false accept rate = 0.0，accepted precision = 1.0，
+  correct recall = 0.375；
+- G5 signal claim status =
+  `real_llm_verifier_signal_observed_on_evp7`。
+
+审计边界：
+
+- 审计只读取 raw-output-free tracked summary；
+- 审计不把 raw response text 写入 tracked files；
+- 审计结论只能支持 EVP-7 pilot-level signal claim；
+- 不能写成 scale-generalized paper claim；
+- 不能写成 LLM 超过 tool-only baseline，因为 tool-only visible-tests 当前
+  correct recall = 0.875，高于 DeepSeek E4/E6 的 0.375。
+
+验收条件：
+
+- 新增或更新质量审计脚本，输出 JSON + Markdown；
+- 审计检查：
+  - review_count = 184；
+  - unique_review_ids = 184；
+  - raw_outputs_tracked = false；
+  - invalid_output_count = 1；
+  - invalid_output_rate = 0.005435；
+  - E4/E6 false_accept_rate = 0.0；
+  - E4/E6 accepted_precision = 1.0；
+  - E4/E6 correct_recall = 0.375；
+  - G5 signal observed；
+- 同步 README、INDEX、protocol/experiment docs、experience notes；
+- 运行最小验证、local quality gate、goal completion audit；
+- 提交 tracked 结果，仍不 push。
+
+执行结果：
+
+- 新增质量审计脚本：
+  `scripts/audit_evp7_g5_full_run_quality.py`；
+- 生成 tracked audit：
+  - `data/reviews/evp7_g5_full_run_quality_audit.json`；
+  - `docs/experiments/evp7_g5_full_run_quality_audit.md`；
+- 审计结果：
+  - quality_status = `passed_with_limitations`；
+  - review_count = 184；
+  - unique_review_ids = 184；
+  - raw_outputs_read = false；
+  - raw_outputs_tracked = false；
+  - invalid_output_count = 1；
+  - invalid_output_rate = 0.005435；
+  - E4/E6 false_accept_rate = 0.0；
+  - E4/E6 accepted_precision = 1.0；
+  - E4/E6 correct_recall = 0.375；
+  - E4/E6 Evidence Gain vs E0 = 7.5 / 7.0；
+  - G5 signal observed。
+
+当前 claim 边界：
+
+- 支持：
+  - 当前 EVP-7 8-task/46-candidate/184-packet run 观察到真实 DeepSeek verifier
+    outputs 中的 evidence-visibility signal；
+  - E4/E6 在零 observed false accepts 下接受 3/8 correct patches；
+  - E4/E6 相对 E0 提高 correct recall 并产生正 Evidence Gain；
+- 不支持：
+  - scale-generalized paper claim；
+  - LLM 超过 deterministic visible-test tool-only baseline；
+  - E6 严格优于 E4；
+  - DeepSeek 真实计费成本已知。
+
+下一步：
+
+- 进入 15-20 bugs controlled expansion 的执行决策；
+- 继续沿用 admission gate：F2P、project-level P2P-broad、candidate
+  construction、candidate revalidation 全部通过后才能入主 cohort；
+- 不重复跑当前 184-packet G5 full run。

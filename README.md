@@ -231,8 +231,11 @@ They should not override `final_paper_roadmap_zh.md`.
   covers the current 8-task/46-candidate/184-packet cohort with explicit bounded
   parallelism (`--concurrency 6`). It produced 183 parse-valid outputs and one
   schema-invalid output, with E4/E6 false accept rate 0.0, accepted precision
-  1.0, correct recall 0.375, and positive Evidence Gain over E0. A
-  controlled-expansion readiness report summarizes the broader BugsInPy rescreen
+  1.0, correct recall 0.375, and positive Evidence Gain over E0. The tracked
+  quality audit passes with limitations: it supports an EVP-7 pilot-level
+  evidence-visibility signal claim, but not scale-generalized claims or a claim
+  that the LLM outperforms the deterministic visible-test tool-only baseline.
+  A controlled-expansion readiness report summarizes the broader BugsInPy rescreen
   and defines project-diverse bounded probe lanes for the next 15-20 bug
   expansion step. The
   first post-G5 lane, `bugsinpy_fastapi_4`, completed checkout but is
