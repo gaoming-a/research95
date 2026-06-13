@@ -6215,7 +6215,7 @@ full run 决策：
 当前 claim 边界：
 
 - 支持：
-  - 当前 EVP-7 8-task/46-candidate/184-packet run 观察到真实 DeepSeek verifier
+  - 当时 EVP-7 8-task/46-candidate/184-packet run 观察到真实 DeepSeek verifier
     outputs 中的 evidence-visibility signal；
   - E4/E6 在零 observed false accepts 下接受 3/8 correct patches；
   - E4/E6 相对 E0 提高 correct recall 并产生正 Evidence Gain；
@@ -6231,3 +6231,127 @@ full run 决策：
 - 继续沿用 admission gate：F2P、project-level P2P-broad、candidate
   construction、candidate revalidation 全部通过后才能入主 cohort；
 - 不重复跑当前 184-packet G5 full run。
+
+## 86. 2026-06-13 ninth bug admission: youtube-dl_6
+
+本轮小目标：
+
+- 完成第 9 个正式主 cohort bug admission；
+- 只在已 clean-F2P 的 `youtube-dl` 候选中选最低成本目标推进；
+- 目标选择为 `bugsinpy_youtube-dl_6`，因为既有 no-run static sweep 中它是
+  除已 admitted `youtube-dl_7` 外的最低静态 P2P 成本：
+  - `youtube-dl_6`: 154 common static unittest methods，111 remaining；
+  - `youtube-dl_5`: 191 common static unittest methods，137 remaining；
+  - `youtube-dl_4`: 196 common static unittest methods，141 remaining；
+  - `youtube-dl_2/3/11` 更大。
+
+执行边界：
+
+- 不调用模型 API；
+- 不重复跑当前 184-packet G5 full run；
+- 不做 dependency install、compat shim 或 task-file downgrade；
+- 先用 `build_pass_to_pass_scope.py --dry-run` 验证 command；
+- 真实 P2P 若发现动态下载/网络测试进入 scope，先诊断并采用可审计的
+  nodeid exclusion policy，不能静默扩大 scope policy；
+- P2P manifest 通过后，才能构造 candidate slice 和做 retained-oracle +
+  P2P-broad validation；
+- validation 通过后，才更新 registry 和 EVP-7 artifacts，使主 cohort 从
+  8 提升到 9。
+
+验收条件：
+
+- `bugsinpy_youtube-dl_6` retained F2P oracle 明确；
+- 生成 tracked P2P manifest；
+- 构造最小 admission candidate slice：reference、noop、partial/incorrect、
+  irrelevant；
+- retained-oracle validation 全部符合预期；
+- P2P-broad validation 中 reference 通过、negative 不被误标为 correct；
+- `data/cohorts/task_cohort_registry.json` 纳入第 9 个主任务；
+- EVP-7 task/candidate/evidence/baseline/schema/prompt artifacts 重建并通过
+  no-API gates；
+- README/INDEX/plan/experience/experiment record 同步；
+- local quality gate 和 goal completion audit 通过；
+- 提交本轮 tracked 结果，仍不 push。
+
+本轮执行更新：
+
+- `bugsinpy_youtube-dl_6` static no-run preflight 通过：
+  - static unittest methods = 154；
+  - remaining after static exclusions = 111；
+  - common remaining = 111；
+  - buggy-only/fixed-only = 0。
+- `build_pass_to_pass_scope.py --dry-run` 通过，未写 manifest。
+- 第一次真实 P2P 构建在工具级 40 分钟超时，未生成 manifest。
+- 超时诊断：
+  - 残留 builder 子进程正在执行
+    `test.test_download.TestDownload.*` 动态下载测试；
+  - 这与 `youtube-dl_7` 已记录问题相同，属于动态生成下载用例进入
+    project-level scope 的执行链路问题；
+  - 不是 `youtube-dl_6` admission 语义失败。
+- 修订后的 rerun policy：
+  - policy name: `youtube_dl_dynamic_download_nodeid_exclusion_v1`；
+  - excluded nodeid prefix: `test.test_download.TestDownload`；
+  - retained F2P oracle 仍为
+    `test.test_utils.TestUtil.test_parse_dfxp_time_expr`；
+  - 先 dry-run，再真实 rerun；
+  - 不扩大到其他未审计 exclusion。
+
+完成结果：
+
+- 真实 P2P rerun 完成，生成
+  `data/p2p_scopes/bugsinpy_youtube-dl_6_p2p_broad.json`：
+  - common collected unittest nodeids = 1525；
+  - excluded dynamic download nodeids = 1345；
+  - excluded static external-dependency tests = 67；
+  - excluded retained F2P oracle = 1；
+  - retained P2P-broad tests = 110；
+  - retained tests 中没有 `test.test_download.TestDownload` 前缀。
+- 新增 retained oracle：
+  `scripts/oracles/youtubedl_6_dfxp_time.py`；
+  - buggy checkout fail；
+  - fixed checkout pass。
+- 新增 candidate builder：
+  `scripts/build_youtubedl6_candidates.py`；
+  - admission slice = 4 candidates；
+  - reference / noop / partial / irrelevant。
+- retained-oracle validation 通过：
+  - record_count = 4；
+  - patch_applied_count = 4；
+  - oracle_ran_count = 4；
+  - oracle_all_passed_count = 1；
+  - all_validated = true。
+- P2P-broad validation 通过：
+  - record_count = 4；
+  - retained_oracle_passed_count = 1；
+  - p2p_broad_test_count = 110；
+  - label counts =
+    `correct_under_f2p_and_p2p_broad: 1`,
+    `incorrect_issue_not_fixed: 3`。
+- 已将 `bugsinpy_youtube-dl_6` 纳入
+  `data/cohorts/task_cohort_registry.json` 的 `p2p_broad_main`。
+- 已重建 EVP-7 no-API artifacts：
+  - main tasks = 9；
+  - projects = 5；
+  - promoted candidates = 50；
+  - correct reference candidates = 9；
+  - issue-not-fixed candidates = 41；
+  - evidence packets = 200；
+  - E0/E2/E4/E6 各 50；
+  - G1 packet completeness = passed；
+  - G2 leakage audit = passed；
+  - G3 tool-only baseline readiness = passed；
+  - G4 schema stability = passed；
+  - G5 prompt manifest = 200 records，passed_without_api；
+  - example preflight structural_ready = true，api_ready = false。
+- 新增实验记录：
+  `docs/experiments/youtubedl6_candidate_validation.md`。
+- README、docs/INDEX、engineering notes 已同步。
+
+当前边界：
+
+- 第 9 个 bug 已完成 admission，主 cohort 数量已经提升；
+- 旧 DeepSeek V4 真实 G5 full run 仍只覆盖
+  8-task / 46-candidate / 184-packet cohort；
+- 新的 9-task / 50-candidate / 200-packet cohort 只完成 no-API structural
+  gates，尚未执行 fresh real LLM verifier run；
+- 因此不能把旧 184-run 的模型结果 claim 直接外推到第 9 个样本。

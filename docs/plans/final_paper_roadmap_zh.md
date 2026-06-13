@@ -826,6 +826,7 @@ explanation 和 calibrated escalation。
 - `bugsinpy_tqdm_9`
 - `bugsinpy_PySnooper_1`
 - `bugsinpy_PySnooper_3`
+- `bugsinpy_youtube-dl_6`
 - `bugsinpy_youtube-dl_7`
 
 最新加入的 `bugsinpy_PySnooper_1` 使用独立 UTF-8 snoop-log oracle，包含 24 个
@@ -846,9 +847,16 @@ patches。
 
 2026-06-13 更新：`bugsinpy_youtube-dl_7` 已在 retained oracle、4 个候选、
 retained-oracle validation 和 108-test project-level P2P-broad validation
-通过后正式纳入主 cohort。当前 EVP-7 tracked artifacts 为 8 tasks / 5 projects /
+通过后正式纳入主 cohort。当时 EVP-7 tracked artifacts 为 8 tasks / 5 projects /
 46 candidates / 184 E0-E6 packets。随后已完成 fresh DeepSeek V4 full run，
 覆盖当前 184 packets；旧 168-packet run 只保留为 admission 前历史记录。
+
+2026-06-13 后续更新：`bugsinpy_youtube-dl_6` 已按同一 admission gate 纳入，
+包含 retained DFXP time oracle、4 个候选、retained-oracle validation 和
+110-test project-level P2P-broad validation。当前 no-API tracked artifacts
+已提升为 9 tasks / 5 projects / 50 candidates / 200 E0-E6 packets。此前
+fresh DeepSeek V4 full run 仍只覆盖 8-task / 184-packet cohort；第 9 个样本
+需要 fresh 200-packet real LLM run 后才能进入模型结果 claim。
 
 ## 18. 2026-06-12 外部建议提取后的增量修订
 
@@ -956,8 +964,8 @@ BugsInPy 扩量，必须先解决当前候选池边界：
 
 2026-06-13 更新：这条决策禁止的是盲目追第 8 个 bug，不禁止已经完成
 project-level P2P-broad、retained oracle 和 candidate revalidation 的受控
-admission。`bugsinpy_youtube-dl_7` 已按该标准纳入，当前主 cohort 为
-8 bugs / 5 projects。
+admission。`bugsinpy_youtube-dl_7` 和 `bugsinpy_youtube-dl_6` 已按该标准
+纳入，当前主 cohort 为 9 bugs / 5 projects。
 
 当前不批准：
 

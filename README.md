@@ -214,21 +214,22 @@ They should not override `final_paper_roadmap_zh.md`.
   `EVP-7 Protocol Pilot` to validate the evidence-visibility protocol before
   blind expansion. On 2026-06-13, the previously approved `bugsinpy_youtube-dl_7`
   path completed formal admission after a retained oracle, four candidate
-  records, and P2P-broad validation. The current tracked main cohort is now 8
-  tasks across 5 projects. The tracked candidate manifest contains 46 promoted
-  candidates, including 8 correct reference patches and 38 issue-not-fixed
-  negatives. The tracked evidence packet manifest contains 184 E0/E2/E4/E6
-  packet records, with all four levels complete for 46/46 candidates and zero
+  records, and P2P-broad validation. The later `bugsinpy_youtube-dl_6`
+  admission raised the current tracked main cohort to 9 tasks across 5
+  projects. The tracked candidate manifest contains 50 promoted candidates,
+  including 9 correct reference patches and 41 issue-not-fixed negatives. The
+  tracked evidence packet manifest contains 200 E0/E2/E4/E6 packet records,
+  with all four levels complete for 50/50 candidates and zero
   leakage findings. Three visible-test outcomes are `error` because partial
   candidates break import; they remain valid visible outcomes, not missing
   evidence. The realistic tool-only baselines are generated for apply-only,
   visible-tests, and visible-tool-summary conditions. The merge-gate schema
-  dry-run now generates 184 parse-valid accept/reject/escalate records with zero
+  dry-run now generates 200 parse-valid accept/reject/escalate records with zero
   leakage findings. The G5 metric scaffold computes FAR, recall, escalation,
   FACR, and Evidence Gain over schema-stable dry-run records. The G5 LLM prompt
-  manifest covers all 184 current E0/E2/E4/E6 packets with zero leakage findings
-  and no stored prompt text. The fresh real DeepSeek official G5 full run now
-  covers the current 8-task/46-candidate/184-packet cohort with explicit bounded
+  manifest covers all 200 current E0/E2/E4/E6 packets with zero leakage findings
+  and no stored prompt text. The fresh real DeepSeek official G5 full run
+  covers the earlier 8-task/46-candidate/184-packet cohort with explicit bounded
   parallelism (`--concurrency 6`). It produced 183 parse-valid outputs and one
   schema-invalid output, with E4/E6 false accept rate 0.0, accepted precision
   1.0, correct recall 0.375, and positive Evidence Gain over E0. The tracked
@@ -242,8 +243,9 @@ They should not override `final_paper_roadmap_zh.md`.
   F2P-blocked by the current Pydantic v2 environment and is not admitted.
   `bugsinpy_sanic_2` also completed checkout but is F2P-blocked by the missing
   current-environment Sanic dependency `aiofiles`. A parallel F2P-only triage
-  found clean youtube-dl F2P signals, and only `bugsinpy_youtube-dl_7` has now
-  crossed the project-level P2P-broad plus candidate revalidation boundary. The
+  found clean youtube-dl F2P signals, and `bugsinpy_youtube-dl_7` plus
+  `bugsinpy_youtube-dl_6` have now crossed the project-level P2P-broad plus
+  candidate revalidation boundary. The
   remaining readiness lanes are blocked by environment or historical probe
   constraints: Scrapy lacks Twisted, Ansible reaches Windows `fcntl`, Luigi
   lacks Tornado after existing Python 3.11 compatibility, and Matplotlib remains
@@ -320,6 +322,12 @@ The current human-input packet treats that approval-gated P2P path as resolved
 and does not print the stale pre-policy rerun command once the tracked manifest
 exists.
 
+The ninth admitted task is recorded in
+`docs/experiments/youtubedl6_candidate_validation.md`. It produced
+`data/p2p_scopes/bugsinpy_youtube-dl_6_p2p_broad.json` with 110 P2P-broad tests
+under the same explicit dynamic-download nodeid exclusion policy and rebuilt
+the no-API EVP-7 artifacts to 9 tasks, 50 candidates, and 200 evidence packets.
+
 For future approval-gated P2P commands, validate the command without executing
 tests by appending `--dry-run` before any real run.
 
@@ -361,10 +369,11 @@ After a real G5 full run, regenerate the tracked raw-output-free summary with:
 python scripts\summarize_evp7_g5_llm_full_run.py
 ```
 
-The guarded workflow can run the full current 184-packet execution with explicit
+The guarded workflow can run a full current 200-packet execution with explicit
 bounded parallelism, for example `--concurrency 4` or `--concurrency 6`. The
 default remains sequential. The latest tracked DeepSeek full-run summary covers
-the current 184-packet cohort.
+the earlier 184-packet cohort and should not be read as covering the newly
+admitted ninth task.
 
 For full-goal completion evidence, run:
 

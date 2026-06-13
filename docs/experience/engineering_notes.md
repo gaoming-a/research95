@@ -1580,3 +1580,15 @@ This file starts fresh for the patch-verification project.
   visible-test tool-only recall is 0.875. Therefore the paper can claim
   evidence visibility changes LLM merge decisions in the EVP-7 pilot, but
   cannot claim the LLM outperforms the tool-only baseline.
+- `bugsinpy_youtube-dl_6` hit the same generated-download P2P hazard as
+  `youtube-dl_7`: a broad unittest run can spend the full batch budget inside
+  `test.test_download.TestDownload.*`. Reuse the explicit
+  `youtube_dl_dynamic_download_nodeid_exclusion_v1` boundary for this family,
+  verify it with `--dry-run`, and confirm the final manifest has zero retained
+  nodeids with that prefix.
+- The `youtube-dl_6` admission changed the current structural cohort from
+  8 tasks / 46 candidates / 184 packets to 9 tasks / 50 candidates / 200
+  packets. Update no-API builders and preflight gates to the new counts, but do
+  not rewrite the old real DeepSeek G5 full-run claim: that real run remains
+  scoped to the earlier 184-packet cohort until a fresh 200-packet real LLM run
+  is explicitly executed and audited.

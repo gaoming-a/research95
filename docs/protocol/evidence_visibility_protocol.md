@@ -59,10 +59,10 @@ The current evidence packet manifest is:
 data/evidence/evp7_evidence_packets.jsonl
 ```
 
-It contains E0/E2/E4/E6 records for all 46 candidates. E0/E2 are complete.
-E4 is complete for all 46 candidates after rerunning predeclared visible tests
+It contains E0/E2/E4/E6 records for all 50 candidates. E0/E2 are complete.
+E4 is complete for all 50 candidates after rerunning predeclared visible tests
 in candidate workdirs with the same tracked project-level compat shims recorded
-in the P2P manifests. E6 is complete for all 46 candidates after deterministic
+in the P2P manifests. E6 is complete for all 50 candidates after deterministic
 visible tool summaries were generated from already model-visible static and
 visible-test evidence. Three visible-test outcomes are `error` because partial
 candidates break import; those are visible outcomes, not hidden evaluator
@@ -166,13 +166,13 @@ Current gate status after the first packet builder:
   evaluator labels, oracle outcomes, hidden tests, reference provenance, or
   failure taxonomy in model-visible packets.
 - G3 passes for deterministic tool-only baselines: apply-only, visible-tests,
-  and visible-tool-summary conditions each produce 46 schema-valid decisions
+  and visible-tool-summary conditions each produce 50 schema-valid decisions
   and aggregate metrics.
-- G4 passes for the no-API merge-gate schema dry-run: all 184 E0/E2/E4/E6
+- G4 passes for the no-API merge-gate schema dry-run: all 200 E0/E2/E4/E6
   packet-level outputs parse into the fixed accept/reject/escalate JSON schema
   with zero leakage findings. These records are parser/schema evidence only,
   not LLM verifier results.
-- G5 passes for pilot-level signal existence on the current 184-packet
+- G5 passes for pilot-level signal existence on the earlier 184-packet
   DeepSeek official run: `real_llm_verifier_signal_observed_on_evp7`.
   E4/E6 preserve false accept rate 0.0 and accepted precision 1.0 while
   increasing correct recall from 0.0 at E0 to 0.375, with positive Evidence
@@ -184,7 +184,7 @@ Current gate status after the first packet builder:
   E6 strictly improves over E4, that DeepSeek cost is known from runner output,
   or that the result generalizes beyond EVP-7.
 - The G5 LLM prompt is `patch_verify_evidence_visibility_merge_gate_v1`. Its
-  no-API prompt manifest covers all 184 E0/E2/E4/E6 packet prompts with zero
+  no-API prompt manifest covers all 200 E0/E2/E4/E6 packet prompts with zero
   leakage failures and no tracked full prompt text. The real DeepSeek official
   run wrote raw model responses only under ignored `outputs/evp7_g5_llm_002/`;
   tracked summaries remain raw-output-free.

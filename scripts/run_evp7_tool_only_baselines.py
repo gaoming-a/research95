@@ -214,8 +214,8 @@ def leakage_audit(decisions: list[dict[str, Any]]) -> list[str]:
 
 
 def _check(decisions: list[dict[str, Any]], metrics: dict[str, Any]) -> None:
-    if len(decisions) != 138:
-        raise SystemExit(f"expected 138 decisions, got {len(decisions)}")
+    if len(decisions) != 150:
+        raise SystemExit(f"expected 150 decisions, got {len(decisions)}")
     if metrics["g3_baseline_readiness"] != "passed":
         raise SystemExit("G3 baseline readiness did not pass")
     findings = leakage_audit(decisions)

@@ -66,11 +66,11 @@ construction taxonomy remain forbidden in the rendered prompt payload.
 
 ## Readiness Result
 
-- prompt records = 184;
-- E0/E2/E4/E6 records = 46 each;
+- prompt records = 200;
+- E0/E2/E4/E6 records = 50 each;
 - prompt char range = 1880 to 4938;
-- prompt char total = 528003;
-- rough prompt-token estimate by chars/4 = 132001;
+- prompt char total = 572419;
+- rough prompt-token estimate by chars/4 = 143105;
 - leakage failed count = 0;
 - G5 LLM run readiness = `passed_without_api`;
 - API call attempted = false.

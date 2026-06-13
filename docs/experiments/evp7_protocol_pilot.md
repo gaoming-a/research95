@@ -128,11 +128,11 @@ data/patches/evp7_candidates.jsonl
 data/patches/evp7_candidate_summary.json
 ```
 
-The promoted manifest contains 46 candidates across the 8 EVP-7 tasks:
+The promoted manifest contains 50 candidates across the 9 EVP-7 tasks:
 
-- 8 `correct_reference` candidates labeled
+- 9 `correct_reference` candidates labeled
   `correct_under_f2p_and_p2p_broad`;
-- 38 issue-not-fixed negatives;
+- 41 issue-not-fixed negatives;
 - evaluator-only fields such as `candidate_type`, `expected_outcome`,
   `failure_type_label`, retained-oracle status, and P2P-broad labels.
 
@@ -160,21 +160,21 @@ data/evidence/evp7_evidence_packets.jsonl
 data/evidence/evp7_evidence_packet_summary.json
 ```
 
-The builder emits 184 packet records: 46 candidates times E0/E2/E4/E6.
+The builder emits 200 packet records: 50 candidates times E0/E2/E4/E6.
 
 Current status:
 
-- E0 complete for 46 candidates;
-- E2 complete for 46 candidates, using patch-apply evidence only;
-- E4 complete for 46 candidates after independently rerunning predeclared
+- E0 complete for 50 candidates;
+- E2 complete for 50 candidates, using patch-apply evidence only;
+- E4 complete for 50 candidates after independently rerunning predeclared
   visible tests in candidate workdirs with tracked P2P compat-shim reuse;
 - visible test outcomes include 8 passed checks, 42 failed checks, and 3 error
   checks; the 3 errors are candidate-induced import errors and are retained as
   visible runtime outcomes;
-- E6 complete for 46 candidates after deterministic visible tool summaries were
+- E6 complete for 50 candidates after deterministic visible tool summaries were
   generated from model-visible static and visible-test evidence;
 - automated leakage audit passes with zero findings.
-- deterministic tool-only baselines are generated for 46 candidates under three
+- deterministic tool-only baselines are generated for 50 candidates under three
   conditions: apply-only, visible-tests, and visible-tool-summary.
 
 ## Current Limitation
@@ -352,7 +352,7 @@ G5 real full-run status:
 - invalid output rate = 0.005435;
 - G5 metric scaffold = passed;
 - G5 signal claim status = `real_llm_verifier_signal_observed_on_evp7`;
-- scope boundary = current 8-task/46-candidate/184-packet EVP-7 cohort;
+- scope boundary = earlier 8-task/46-candidate/184-packet EVP-7 cohort;
 - E4/E6 false accept rate = 0.0;
 - E4/E6 accepted precision = 1.0;
 - E4/E6 correct recall = 0.375;
@@ -369,8 +369,8 @@ G5 quality audit status:
 
 ## Current Next Step
 
-EVP-7 now supports pilot-level LLM signal on the current 8-task cohort, with the
-quality audit boundary recorded. The next executable research step is 15-20 bugs
-controlled expansion. Expansion should preserve the same hidden-evaluator
-boundary, tool-only baselines, E0/E2/E4/E6 evidence levels, and raw-output-free
-tracked summaries.
+EVP-7 now has a 9-task/50-candidate/200-packet no-API structural cohort. The
+real DeepSeek signal still applies only to the earlier 8-task cohort, with the
+quality audit boundary recorded. The next executable research step is either a
+fresh 200-packet real LLM verifier run or continued controlled expansion under
+the same admission gates.
