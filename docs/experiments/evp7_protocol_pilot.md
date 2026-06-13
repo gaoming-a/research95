@@ -250,9 +250,9 @@ data/reviews/evp7_merge_gate_schema_dry_run_summary.json
 
 Current dry-run status:
 
-- records = 200;
-- E0/E2/E4/E6 level counts = 50 each;
-- parsed schema-valid outputs = 200;
+- records = 232;
+- E0/E2/E4/E6 level counts = 58 each;
+- parsed schema-valid outputs = 232;
 - invalid parse count = 0;
 - leakage findings = 0;
 - G4 schema stability = passed.
@@ -277,8 +277,8 @@ docs/experiments/evp7_g5_metric_scaffold.md
 
 Current scaffold status:
 
-- review records = 200;
-- E0/E2/E4/E6 level counts = 46 each;
+- review records = 232;
+- E0/E2/E4/E6 level counts = 58 each;
 - G5 metric scaffold = passed;
 - G5 signal claim status = `requires_real_llm_verifier_outputs`.
 
@@ -306,8 +306,8 @@ docs/experiments/evp7_g5_llm_run_readiness.md
 Current readiness status:
 
 - prompt id = `patch_verify_evidence_visibility_merge_gate_v1`;
-- prompt records = 184;
-- E0/E2/E4/E6 level counts = 46 each;
+- prompt records = 232;
+- E0/E2/E4/E6 level counts = 58 each;
 - prompt text stored = false;
 - label leakage failed count = 0;
 - G5 LLM run readiness = `passed_without_api`;
@@ -347,21 +347,22 @@ G5 real full-run status:
 
 - user-confirmed provider/model = DeepSeek official API, `deepseek-v4-pro`;
 - workflow used explicit bounded concurrency: `--concurrency 6`;
-- raw outputs remain ignored under `outputs/evp7_g5_llm_004/`;
+- raw outputs remain ignored under `outputs/evp7_g5_llm_232_full_repaired/`;
 - tracked summary = `docs/experiments/evp7_g5_llm_full_run_result.md`;
 - tracked JSON summary = `data/reviews/evp7_g5_llm_full_run_summary.json`;
-- review count = 216;
-- parse valid = 215/216;
-- invalid output count = 1;
-- invalid output rate = 0.00463;
-- G5 metric scaffold = not_passed;
-- G5 signal claim status = `real_llm_verifier_outputs_incomplete`;
-- scope boundary = previous 10-task/54-candidate/216-packet EVP-7 cohort;
+- review count = 232;
+- parse valid = 232/232 after retrying two empty model responses with the same
+  prompt/config/model;
+- invalid output count = 0;
+- invalid output rate = 0.0;
+- G5 metric scaffold = passed;
+- G5 signal claim status = `real_llm_verifier_signal_observed_on_evp7`;
+- scope boundary = current 11-task/58-candidate/232-packet EVP-7 cohort;
 - E4/E6 false accept rate = 0.0;
 - E4/E6 accepted precision = 1.0;
-- E4 correct recall = 0.1;
-- E6 correct recall = 0.2;
-- E4/E6 Evidence Gain vs E0 = 4.75 / 6.0.
+- E4 correct recall = 0.272727;
+- E6 correct recall = 0.090909;
+- E4/E6 Evidence Gain vs E0 = 10.0 / 7.25.
 
 G5 quality audit status:
 
@@ -375,9 +376,7 @@ G5 quality audit status:
 
 ## Current Next Step
 
-EVP-7 now has an 11-task/58-candidate/232-packet structural cohort. The latest
-real-LLM cohort remains the previous 10-task/54-candidate/216-packet run until a
-fresh 232-packet run is executed and audited.
-The next executable research step is controlled expansion under the same
-admission gates, while preserving the quality-audit boundary that the pilot
-signal does not imply scale generalization or tool-baseline superiority.
+EVP-7 now has an 11-task/58-candidate/232-packet structural and real-LLM
+cohort. The next executable research step is controlled expansion under the
+same admission gates, while preserving the quality-audit boundary that the
+pilot signal does not imply scale generalization or tool-baseline superiority.

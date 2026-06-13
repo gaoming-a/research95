@@ -38,9 +38,9 @@ data/reviews/evp7_schema_dry_run_metrics.json
 
 ## Current Status
 
-- review records = 184;
-- candidates = 46;
-- E0/E2/E4/E6 record counts = 46 each;
+- review records = 232;
+- candidates = 58;
+- E0/E2/E4/E6 record counts = 58 each;
 - G5 metric scaffold = passed;
 - G5 signal claim status = `requires_real_llm_verifier_outputs`.
 
@@ -50,8 +50,8 @@ data/reviews/evp7_schema_dry_run_metrics.json
 | --- | ---: | ---: | ---: | ---: | ---: |
 | E0 | 0.0 | n/a | 0.0 | 1.0 | 0.0 |
 | E2 | 0.0 | n/a | 0.0 | 1.0 | 0.0 |
-| E4 | 0.0 | 1.0 | 0.875 | 0.0 | 17.5 |
-| E6 | 0.0 | 1.0 | 0.875 | 0.0 | 17.5 |
+| E4 | 0.021277 | 0.909091 | 0.909091 | 0.0 | 18.5 |
+| E6 | 0.021277 | 0.909091 | 0.909091 | 0.0 | 18.5 |
 
 The variation above is produced by deterministic schema dry-run rules, not by
 an LLM. It validates metric-path sensitivity only.
@@ -70,6 +70,6 @@ comparison and require sensitivity analysis before paper claims.
 
 ## Boundary
 
-This scaffold is ready for future real verifier outputs, but G5 remains
-unproven until the same metric path is run on genuine LLM verifier decisions
-under an explicitly approved API/model/cost boundary.
+This scaffold remains the no-API parser/metric path. The latest G5 model-result
+evidence is the separate 232-record DeepSeek run summarized in
+`docs/experiments/evp7_g5_llm_full_run_result.md`.

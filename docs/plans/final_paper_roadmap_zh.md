@@ -872,9 +872,13 @@ deterministic tool-only baseline、不支持已知真实计费成本。
 2026-06-13 再后续更新：`bugsinpy_youtube-dl_2` 已按同一 admission gate
 纳入，包含 retained MPD parser oracle、4 个候选、retained-oracle validation
 和 147-test project-level P2P-broad validation。当前 no-API tracked artifacts
-已提升为 11 tasks / 5 projects / 58 candidates / 232 E0-E6 packets。最新真实
-DeepSeek V4 G5 run 仍只覆盖上一轮 10-task / 54-candidate / 216-packet cohort；
-232-packet cohort 需要 fresh real LLM run 后才能进入当前模型结果 claim。
+已提升为 11 tasks / 5 projects / 58 candidates / 232 E0-E6 packets。随后已完成
+fresh 232-packet DeepSeek V4 G5 run，覆盖当前 11-task / 58-candidate /
+232-packet cohort。该 run 在同 prompt/config/model 下重试 2 条空响应后得到
+232/232 parse-valid 结果，G5 signal status =
+`real_llm_verifier_signal_observed_on_evp7`，并通过 raw-output-free quality
+audit，但仍只支持 bounded pilot observations，不支持规模泛化、LLM 优于
+deterministic tool-only baseline 或已知真实计费成本。
 
 ## 18. 2026-06-12 外部建议提取后的增量修订
 
@@ -1043,29 +1047,29 @@ Phase A 已补齐 EVP-7 candidate-level schema：
    escalation、FACR 和 Evidence Gain 的计算链路可复现；schema dry-run 和
    mock workflow 仍标记为 `requires_real_llm_verifier_outputs`；
 11. 真实 LLM verifier 的 G5 prompt manifest 和 readiness summary 当前通过
-   no-API 检查：216 条 prompts、四层各 54 条、leakage failed count = 0、
+   no-API 检查：232 条 prompts、四层各 58 条、leakage failed count = 0、
    prompt text 不写入 tracked manifest；
 12. G5 API example config 和 preflight 当前通过结构检查；tracked example
    仍保持 strict API readiness false，只允许 ignored local config 执行真实
    API；
 13. G5 guarded workflow 当前支持 check-only、mock validation 和 bounded
    concurrency；mock records 只验证 parser/metrics pipeline；
-14. 用户确认 DeepSeek V4 后，已完成 fresh 216-packet 真实 DeepSeek official
-    G5 full run：216 条 E0/E2/E4/E6 review，concurrency = 6；
-15. full run 质量审计：215/216 parse-valid，1 条 E4 输出因
-    `invalid_json:No JSON object found in model response` 未通过 schema，
-    invalid-output rate = 0.00463；原始响应保留在
-    ignored `outputs/`，tracked summary 不包含 raw model responses；
-16. EVP-7 pilot-level metric variation 已观察到；metrics scaffold 仍记录
-    `g5_signal_claim_status = real_llm_verifier_outputs_incomplete`。E4/E6
-    相对 E0 的 Evidence Gain 分别为 4.75 和 6.0，false accept rate 均为 0，
-    accepted precision 均为 1.0，E4 correct recall = 0.1，E6 correct
-    recall = 0.2；
-17. 该结果支持 10-task / 54-candidate / 216-packet EVP-7 bounded pilot
-    observations，不支持直接 scale-generalized paper claims；下一步应进入
-    15-20 bugs controlled expansion，
-    同时保留 invalid-output 和成本字段缺失的质量边界。
-18. 已完成 216-run quality audit：
+14. 用户确认 DeepSeek V4 后，已完成 fresh 232-packet 真实 DeepSeek official
+    G5 full run：232 条 E0/E2/E4/E6 review，concurrency = 6；
+15. full run 质量审计：初次 full run 有 2 条空响应；按同一
+    prompt/config/model 重试后，repaired output 为 232/232 parse-valid，
+    invalid-output rate = 0.0；原始响应保留在 ignored `outputs/`，tracked
+    summary 不包含 raw model responses；
+16. EVP-7 pilot-level metric variation 已观察到；metrics scaffold 记录
+    `g5_signal_claim_status = real_llm_verifier_signal_observed_on_evp7`。E4/E6
+    相对 E0 的 Evidence Gain 分别为 10.0 和 7.25，false accept rate 均为 0，
+    accepted precision 均为 1.0，E4 correct recall = 0.272727，E6 correct
+    recall = 0.090909；
+17. 该结果支持 11-task / 58-candidate / 232-packet EVP-7 bounded pilot
+    observations，不支持直接 scale-generalized paper claims；下一步应继续
+    controlled expansion，同时保留成本字段缺失和 LLM 不优于 deterministic
+    visible-test tool-only baseline 的质量边界。
+18. 已完成 232-run quality audit：
     `docs/experiments/evp7_g5_full_run_quality_audit.md` 和
     `data/reviews/evp7_g5_full_run_quality_audit.json`；结论是
    `passed_with_limitations`，明确不支持“LLM 超过 deterministic
@@ -1075,9 +1079,7 @@ Phase A 已补齐 EVP-7 candidate-level schema：
     `docs/experiments/evp7_expansion_readiness.md` 和
     `data/tasks/evp7_expansion_readiness.json`；下一步应按 project-diverse
     bounded probe 推进，不做盲目 BugsInPy 批量扩展。
-20. `bugsinpy_youtube-dl_5` admission 后，当前 structural/no-API artifacts
-    已提升到 10 tasks / 54 candidates / 216 packets；真实 DeepSeek G5 结果
-    已覆盖这 216 packets。
+20. `bugsinpy_youtube-dl_5` admission 后的 10-task / 54-candidate /
+    216-packet DeepSeek G5 run 现在是历史结果。
 21. `bugsinpy_youtube-dl_2` admission 后，当前 structural/no-API artifacts
-    已提升到 11 tasks / 58 candidates / 232 packets；真实 DeepSeek G5 结果
-    尚未覆盖这 232 packets。
+    和真实 DeepSeek G5 结果均已覆盖 11 tasks / 58 candidates / 232 packets。

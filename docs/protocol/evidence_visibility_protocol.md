@@ -173,25 +173,27 @@ Current gate status after the first packet builder:
   packet-level outputs parse into the fixed accept/reject/escalate JSON schema
   with zero leakage findings. These records are parser/schema evidence only,
   not LLM verifier results.
-- G5 has a fresh 216-packet real DeepSeek official run on the previous
-  10-task/54-candidate cohort, with quality status
-  `passed_with_limitations`. E4/E6 preserve false accept rate 0.0 and accepted
-  precision 1.0 while increasing correct recall over E0 to 0.1 at E4 and 0.2
-  at E6, with positive Evidence Gain over E0. The metrics scaffold still marks
-  `real_llm_verifier_outputs_incomplete`, so this supports bounded pilot
-  observations about evidence-level variation for that cohort, not
-  scale-generalized paper claims. The current 232-packet cohort is no-API ready
-  but still needs a fresh real LLM run for current-cohort model claims.
+- G5 has a fresh 232-packet real DeepSeek official run on the current
+  11-task/58-candidate cohort, with quality status
+  `passed_with_limitations`. After retrying two empty model responses with the
+  same prompt/config/model, the repaired ignored output has 232/232 parse-valid
+  records. E4/E6 preserve false accept rate 0.0 and accepted precision 1.0
+  while increasing correct recall over E0 to 0.272727 at E4 and 0.090909 at E6,
+  with positive Evidence Gain over E0. The metrics scaffold marks
+  `real_llm_verifier_signal_observed_on_evp7`, so this supports bounded pilot
+  observations about evidence-level variation for the current EVP-7 cohort, not
+  scale-generalized paper claims.
 - The tracked full-run quality audit is `passed_with_limitations`: it supports
   bounded pilot observations, but explicitly rejects claims that the LLM
   outperforms the deterministic visible-test tool-only baseline, that
   DeepSeek cost is known from runner output,
   or that the result generalizes beyond EVP-7.
 - The G5 LLM prompt is `patch_verify_evidence_visibility_merge_gate_v1`. Its
-  no-API prompt manifest covers all 200 E0/E2/E4/E6 packet prompts with zero
-  leakage failures and no tracked full prompt text. The real DeepSeek official
-  run wrote raw model responses only under ignored `outputs/evp7_g5_llm_003/`;
-  tracked summaries remain raw-output-free.
+  no-API prompt manifest covers all 232 E0/E2/E4/E6 packet prompts with zero
+  leakage failures and no tracked full prompt text. The latest real DeepSeek
+  official run wrote raw model responses only under ignored
+  `outputs/evp7_g5_llm_232_full_repaired/`; tracked summaries remain
+  raw-output-free.
 - The tracked `configs/evp7_g5_llm.example.json` and
   `scripts/preflight_evp7_g5_llm_run.py` now prove structural readiness without
   API calls. Strict API readiness intentionally remains false until those user

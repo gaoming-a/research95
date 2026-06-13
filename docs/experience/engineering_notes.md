@@ -1632,3 +1632,17 @@ This file starts fresh for the patch-verification project.
   `youtube-dl_2` admission, running them concurrently made tool summaries read
   the old 54-candidate packet file. Sequentially rerunning tool summaries and
   then evidence packets fixed E6 completeness for the 58-candidate cohort.
+- The 232-packet DeepSeek V4 G5 run initially produced two empty model
+  responses: `evp7_candidate_0055__E4` and `evp7_candidate_0057__E0`. When raw
+  response length is zero and prompt-boundary checks already passed, classify
+  this as API/model output quality rather than prompt leakage or evidence data
+  failure.
+- For empty model responses, the shortest repair is a targeted retry of only
+  those packets with the same config, prompt, model, temperature, and max token
+  setting. Write the merged result to a new ignored repaired output directory
+  and keep the original full-run output for audit.
+- G5 metric scaffold checks must derive expected record counts from the current
+  candidate manifest. The invariant is
+  `total_reviews == candidate_count * len(EVIDENCE_LEVELS)` and each evidence
+  level has exactly `candidate_count` records. Do not hardcode 200/50,
+  216/54, or any historical cohort size into current gates.

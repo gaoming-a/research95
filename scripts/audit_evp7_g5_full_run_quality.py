@@ -57,6 +57,15 @@ def build_audit(summary: dict[str, Any]) -> dict[str, Any]:
             ]
         )
 
+    limitations = [
+        "E4/E6 correct recall remains below the deterministic visible-test tool-only baseline recall.",
+        "Runner-reported cost is 0.0 because DeepSeek response usage did not expose billable cost in the stored field.",
+        "The cohort remains a pilot-scale BugsInPy slice.",
+    ]
+    invalid_count = int(quality.get("invalid_output_count") or 0)
+    if invalid_count:
+        limitations.insert(0, f"{invalid_count} record(s) are schema-invalid.")
+
     return {
         "audit_id": "evp7_g5_full_run_quality_audit",
         "cohort_id": summary.get("cohort_id"),
@@ -81,13 +90,7 @@ def build_audit(summary: dict[str, Any]) -> dict[str, Any]:
             "A claim that E6 strictly improves over E4 in this run.",
             "A claim that DeepSeek cost is known from runner output.",
         ],
-        "limitations": [
-            f"{quality.get('invalid_output_count')} record(s) are schema-invalid.",
-            "E4/E6 correct recall remains below the deterministic visible-test tool-only baseline recall.",
-            f"G5 signal claim status remains `{metrics.get('g5_signal_claim_status')}` in the metrics scaffold.",
-            "Runner-reported cost is 0.0 because DeepSeek response usage did not expose billable cost in the stored field.",
-            "The cohort remains a pilot-scale BugsInPy slice.",
-        ],
+        "limitations": limitations,
     }
 
 

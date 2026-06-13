@@ -82,8 +82,16 @@ def build_metrics(reviews_path: Path, candidates_path: Path) -> dict[str, Any]:
         "utility_weights": UTILITY_WEIGHTS,
         "facr_thresholds": list(FACR_THRESHOLDS),
         "signal_preview": signal_preview,
-        "g5_metric_scaffold": "passed" if _scaffold_passed(reviews, groups) else "not_passed",
-        "g5_signal_claim_status": _signal_claim_status(run_kind, reviews, groups, signal_preview),
+        "g5_metric_scaffold": "passed"
+        if _scaffold_passed(reviews, groups, candidate_count=len(labels))
+        else "not_passed",
+        "g5_signal_claim_status": _signal_claim_status(
+            run_kind,
+            reviews,
+            groups,
+            signal_preview,
+            candidate_count=len(labels),
+        ),
         "analysis_boundary": _analysis_boundary(run_kind),
         "label_join_boundary": "Evaluator labels are joined only for aggregate metrics, never copied into dry-run review records.",
     }
@@ -202,10 +210,16 @@ def _signal_preview(groups: dict[str, dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def _scaffold_passed(reviews: list[dict[str, Any]], groups: dict[str, dict[str, Any]]) -> bool:
-    if len(reviews) != 200:
+def _scaffold_passed(
+    reviews: list[dict[str, Any]],
+    groups: dict[str, dict[str, Any]],
+    *,
+    candidate_count: int,
+) -> bool:
+    expected_record_count = candidate_count * len(EVIDENCE_LEVELS)
+    if len(reviews) != expected_record_count:
         return False
-    return all(groups[level]["record_count"] == 50 for level in EVIDENCE_LEVELS)
+    return all(groups[level]["record_count"] == candidate_count for level in EVIDENCE_LEVELS)
 
 
 def _run_kind(reviews: list[dict[str, Any]]) -> str:
@@ -225,8 +239,10 @@ def _signal_claim_status(
     reviews: list[dict[str, Any]],
     groups: dict[str, dict[str, Any]],
     signal_preview: dict[str, Any],
+    *,
+    candidate_count: int,
 ) -> str:
-    scaffold_passed = _scaffold_passed(reviews, groups)
+    scaffold_passed = _scaffold_passed(reviews, groups, candidate_count=candidate_count)
     if run_kind != "real_llm":
         return "requires_real_llm_verifier_outputs"
     if not scaffold_passed:
@@ -300,8 +316,9 @@ def _check(metrics: dict[str, Any], reviews_path: Path) -> None:
     findings = leakage_audit_reviews(reviews_path)
     if findings:
         raise SystemExit(f"evaluator marker leaked into dry-run review records: {findings}")
+    expected_record_count = int(metrics["candidate_count"])
     for level, group in metrics["metric_groups"].items():
-        if group["record_count"] != 50:
+        if group["record_count"] != expected_record_count:
             raise SystemExit(f"{level} record count changed: {group['record_count']}")
         required = {
             "accepted_precision",

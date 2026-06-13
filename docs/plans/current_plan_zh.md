@@ -6768,3 +6768,133 @@ full run 决策：
   10-task / 54-candidate / 216-packet cohort；
 - 当前 232-packet cohort 已完成 no-API gates，但尚未执行 fresh real LLM run；
 - 因此不能把旧 216-run 的模型结果 claim 直接外推到第 11 个样本。
+
+## 91. 2026-06-13 fresh DeepSeek V4 G5 run on 232-packet cohort
+
+背景：
+
+- `bugsinpy_youtube-dl_2` 已纳入 EVP-7 main cohort；
+- no-API gates 已重建并通过：
+  - candidates = 58；
+  - evidence packets = 232；
+  - G1 packet completeness = passed；
+  - G2 leakage audit = passed；
+  - G3 tool-only baseline readiness = passed；
+  - G4 schema stability = passed；
+  - G5 prompt manifest = passed_without_api；
+  - local preflight api_ready = true。
+- 旧真实 DeepSeek V4 G5 run 只覆盖 216 packets，不能作为当前
+  232-packet cohort 的模型结果。
+
+本轮小目标：
+
+1. 用 `configs/evp7_g5_llm.local.json` 重新运行 strict local preflight；
+2. 先执行 4-packet smoke run，覆盖同一 candidate 的 E0/E2/E4/E6；
+3. smoke 若满足 record_count=4、parse_status 全 valid、metrics scaffold 可构建，
+   再执行 full 232-packet run；
+4. full run 完成后运行 metrics/audit，总结 232-run 是否形成论文级信号；
+5. 同步更新 G5 run 文档、current plan、engineering notes、README/INDEX，
+   然后提交并同步 GitHub。
+
+边界：
+
+- 使用用户已确认的 DeepSeek V4 provider/model：
+  `deepseek_official` / `deepseek-v4-pro`；
+- 不修改 prompt、label、candidate、P2P scope 或 evidence-packet 内容；
+- 不把 smoke 结果当作 full-run 论文结论；
+- 若 strict preflight、prompt-boundary、schema parse、metrics scaffold 或 API
+  任一失败，立即停止真实 full run 并先诊断。
+
+验收条件：
+
+- smoke run：
+  - review_count = 4；
+  - parse_status 全 valid；
+  - no `run_error.json`；
+  - metrics scaffold 能读取 58-candidate labels。
+- full run：
+  - review_count = 232；
+  - E0/E2/E4/E6 各 58；
+  - invalid_parse_count 可解释且不超过协议 stop condition；
+  - raw outputs 只保存在 ignored `outputs/`，tracked data/docs 不保存真实
+    raw_response_text；
+  - 完成后 GitHub 同步。
+
+执行更新：
+
+- strict local preflight 已通过：
+  - structural_ready = true；
+  - api_ready = true；
+  - prompt manifest records = 232；
+  - E0/E2/E4/E6 各 58。
+- 4-packet smoke run 已完成：
+  - review_count = 4；
+  - parse_status = 4 valid；
+  - E0/E2/E4/E6 各 1；
+  - decision = 4 escalate；
+  - 无 `run_error.json`。
+- full 232-packet run 已完成：
+  - review_count = 232；
+  - E0/E2/E4/E6 各 58；
+  - parse_status = 230 valid / 2 invalid；
+  - invalid reason = `invalid_json:No JSON object found in model response`；
+  - invalid records =
+    `evp7_candidate_0055__E4`,
+    `evp7_candidate_0057__E0`；
+  - raw response chars = 0 for both invalid records；
+  - output dir = ignored `outputs/evp7_g5_llm_232_full`。
+
+诊断：
+
+- 2 条 invalid 是 API/model 空响应导致的 parse failure，不是 prompt-boundary、
+  evidence-packet 或 label leakage 问题；
+- invalid rate = 2/232 = 0.0086，低于协议 stop condition，但会削弱
+  quality audit；
+- `scripts/analyze_evp7_schema_dry_run_metrics.py` 的 `_scaffold_passed`
+  仍硬编码 200 records / each level 50 records，这是 10-task/50-candidate
+  旧队列假设；当前 58-candidate/232-record 队列会被误判为 incomplete。
+
+修复边界：
+
+- 对两个空响应 packet 使用同一 config、同一 prompt、同一 model 重试；
+- 生成 repaired ignored output，不覆盖原始 full run；
+- 修复 metrics scaffold 为动态校验：record_count 必须等于
+  `candidate_count * len(EVIDENCE_LEVELS)`，且每个 evidence level 必须等于
+  `candidate_count`；
+- 不修改 prompt、labels、candidate 内容或 evidence packets。
+
+修复结果：
+
+- 已重试两个空响应 packet：
+  - `evp7_candidate_0055__E4`；
+  - `evp7_candidate_0057__E0`。
+- repaired output =
+  `outputs/evp7_g5_llm_232_full_repaired/reviews.jsonl`；
+- repaired parse_status = 232 valid / 0 invalid；
+- 已修复 `scripts/analyze_evp7_schema_dry_run_metrics.py` 的 G5 scaffold
+  动态规模校验；
+- schema dry-run metrics 已重新生成并通过：
+  - review records = 232；
+  - E0/E2/E4/E6 各 58；
+  - G5 metric scaffold = passed。
+- repaired real-run metrics 已重新生成并通过：
+  - review records = 232；
+  - E0/E2/E4/E6 各 58；
+  - G5 metric scaffold = passed；
+  - G5 signal claim status =
+    `real_llm_verifier_signal_observed_on_evp7`；
+  - E4/E6 false accept rate = 0.0；
+  - E4/E6 accepted precision = 1.0；
+  - E4 correct recall = 0.272727；
+  - E6 correct recall = 0.090909；
+  - E4/E6 Evidence Gain vs E0 = 10.0 / 7.25。
+- 已用默认 summarizer 生成 raw-output-free tracked summary：
+  - `data/reviews/evp7_g5_llm_full_run_summary.json`；
+  - `docs/experiments/evp7_g5_llm_full_run_result.md`。
+- 已运行 raw-output-free quality audit：
+  - `quality_status = passed_with_limitations`；
+  - raw outputs read = false；
+  - raw outputs tracked = false；
+  - unsupported claims 仍包括 scale-generalized result、LLM outperforming
+    tool-only baseline、E6 strictly improves over E4、known DeepSeek billing
+    cost。

@@ -5,11 +5,9 @@ Date: 2026-06-13
 ## Purpose
 
 This document records the no-API readiness package for the real LLM G5
-signal-existence run. The previous 216-record package was consumed by the fresh
-DeepSeek official run summarized in
-`docs/experiments/evp7_g5_llm_full_run_result.md`. The current no-API package
-has been refreshed to 232 records after `bugsinpy_youtube-dl_2` admission and
-has not yet been consumed by a fresh real LLM run.
+signal-existence run. The 232-record package after `bugsinpy_youtube-dl_2`
+admission has now been consumed by the fresh DeepSeek official run summarized
+in `docs/experiments/evp7_g5_llm_full_run_result.md`.
 
 The goal of G5 is to test whether E0/E2/E4/E6 evidence visibility changes LLM
 merge-gate decisions in an explainable way. This readiness step prepares the
@@ -68,11 +66,11 @@ construction taxonomy remain forbidden in the rendered prompt payload.
 
 ## Readiness Result
 
-- prompt records = 216;
-- E0/E2/E4/E6 records = 54 each;
+- prompt records = 232;
+- E0/E2/E4/E6 records = 58 each;
 - prompt char range = 1880 to 4938;
-- prompt char total = 618039;
-- rough prompt-token estimate by chars/4 = 154510;
+- prompt char total = 665655;
+- rough prompt-token estimate by chars/4 = 166414;
 - leakage failed count = 0;
 - G5 LLM run readiness = `passed_without_api`;
 - API call attempted = false.
@@ -97,10 +95,9 @@ Before any real G5 API call, the user must confirm:
 - smoke scope;
 - permission for the full 232-record run after smoke.
 
-This readiness artifact is not model-result evidence and does not pass G5 by
-itself; the latest 216-record DeepSeek run remains the latest model-result
-evidence, but it covers the previous cohort rather than the current 232-record
-package.
+This readiness artifact is not model-result evidence by itself; the latest
+model-result evidence is the repaired 232-record DeepSeek run summarized in
+`docs/experiments/evp7_g5_llm_full_run_result.md`.
 
 ## Config And Preflight
 
