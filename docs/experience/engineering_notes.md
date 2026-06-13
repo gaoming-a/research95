@@ -1533,3 +1533,19 @@ This file starts fresh for the patch-verification project.
   P2P run can enter long network/download batches even when static preflight
   looks cheap. Treat this as a scope-policy decision: add an explicit
   nodeid-level exclusion only after recording the policy boundary.
+- For that case, use `build_pass_to_pass_scope.py --exclude-nodeid-prefix`
+  rather than adding misleading static source tokens. The policy should name the
+  generated prefix, keep the retained F2P oracle untouched, and be verified by
+  dry-run before any real P2P rerun.
+- For unittest project-level scopes, static source filtering must map dotted
+  nodeids like `test.test_age_restriction.TestAgeRestriction.test_youtube` back
+  to `test/test_age_restriction.py`. Method-only source scanning is also too
+  shallow for local helper wrappers such as `_assert_restricted()` calling
+  `_download_restricted()`. Expand only same-file helper calls so external
+  dependency tokens catch indirect downloads without inventing a broad
+  cross-file analysis.
+- After that fix, `bugsinpy_youtube-dl_7` completed project-level P2P-broad
+  with the explicit `youtube_dl_dynamic_download_nodeid_exclusion_v1` policy:
+  1472 common unittest nodeids, 1297 generated download nodeids excluded by
+  prefix, 64 external-dependency tests excluded statically, one retained oracle
+  excluded, and 108 P2P-broad tests retained.

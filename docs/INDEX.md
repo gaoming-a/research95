@@ -314,8 +314,11 @@
 - `experiments/evp7_youtubedl_p2p_execution_attempt_20260613.md`: tracked
   record of the approved `bugsinpy_youtube-dl_7` P2P attempt. The command timed
   out before producing a manifest because dynamically generated
-  `test.test_download.TestDownload.*` tests entered the batch; continuing needs
-  an explicit nodeid-level scope-policy decision.
+  `test.test_download.TestDownload.*` tests entered the batch. The follow-up
+  approved execution-chain fix reran with the explicit
+  `test.test_download.TestDownload` nodeid prefix exclusion and produced
+  `data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json` with 108 P2P-broad
+  tests.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on
@@ -405,15 +408,15 @@
   for completion of the whole plan. It also requires the experiment run-record
   ledger to cover no-API, smoke API, full API, and quality-gate records. It
   preserves the prompt-only result as negative and checks the tool-augmented
-  conditional claim separately. It now also treats unresolved `youtube-dl_7`
-  P2P admission as a required completion blocker. Latest report:
+  conditional claim separately. It now also verifies the resolved
+  `youtube-dl_7` P2P admission manifest. Latest report:
   `outputs/goal_completion/latest.md`.
 - `scripts/write_human_input_packet.py`: writes an ignored handoff packet that
   lists missing human inputs, safe command order, and forbidden actions before
   real API execution. It includes smoke/full postprocess commands with expected
   candidate counts, separate prompt-only/tool-augmented claim readiness, and the
-  required `youtube-dl_7` P2P approve/reject decision.
-  Latest report: `outputs/handoff/human_input_packet.md`.
+  current required human-input list. Latest report:
+  `outputs/handoff/human_input_packet.md`.
 - `scripts/write_git_sync_packet.py`: writes an ignored Git sync decision
   packet with current Git state, old remote context, required remote decision,
   staging allowlist, safe command template, post-sync acceptance criteria, and
@@ -511,8 +514,9 @@
   generation prompt manifests, and the tracked task cohort registry.
 - `scripts/build_pass_to_pass_scope.py`: collects project tests and builds
   P2P-core/P2P-broad stable runnable subsets for a task. It supports pytest and
-  bounded unittest discovery/runner adapters, plus `--dry-run` input validation
-  that prints a no-run plan without creating output directories or manifests.
+  bounded unittest discovery/runner adapters, explicit nodeid-prefix exclusions
+  for generated tests, plus `--dry-run` input validation that prints a no-run
+  plan without creating output directories or manifests.
 - `scripts/static_unittest_p2p_preflight.py`: no-run AST preflight for unittest
   P2P candidates. It estimates static test-method counts, token exclusions, and
   buggy/fixed remaining-set differences before expensive dynamic P2P runs.

@@ -5830,3 +5830,78 @@ full run 决策：
 - 继续执行需要新的 scope-policy 决策：是否允许为 youtube-dl 动态下载测试加入
   nodeid-level exclusion，例如排除 `test.test_download.TestDownload` 后重跑；
 - 在该策略未确认前，不继续真实 P2P。
+
+## 81. 2026-06-13 youtube-dl_7 dynamic-download nodeid exclusion rerun
+
+本轮小目标：
+
+- 根据用户最新确认，将明确的执行链路修复视为已批准：只为
+  `bugsinpy_youtube-dl_7` 增加可审计的 nodeid-level exclusion；
+- 先验证 `scripts/build_pass_to_pass_scope.py --dry-run` 是否记录该排除策略且
+  不创建 manifest；
+- dry-run 通过后，按同一 scope policy 重跑一次 bounded project-level P2P-broad。
+
+执行边界：
+
+- 只排除动态生成的 `test.test_download.TestDownload` 前缀；
+- 不新增静态 token 规则来伪装该动态排除；
+- 修复 unittest 静态源码扫描时，只允许把 dotted unittest nodeid 映射回同一
+  测试文件，并展开同文件本地 helper；不做跨文件依赖分析；
+- 不运行其他 youtube-dl task 的 P2P；
+- 不调用模型 API；
+- GitHub 同步仍按用户上一轮指示暂时不作为阻塞项；
+- 若 rerun 再次超时或出现新的非明确 scope 分歧，停止并诊断，不继续改
+  scope。
+
+验收条件：
+
+- builder dry-run 输出包含 `exclude_nodeid_prefixes`，且
+  `will_execute_tests=false`、`will_write_manifest=false`；
+- 若真实 P2P 完成，`data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json`
+  存在，并且 manifest 记录：
+  - `scope_policy.policy_name = youtube_dl_dynamic_download_nodeid_exclusion_v1`；
+  - `exclude_nodeid_prefixes = ["test.test_download.TestDownload"]`；
+  - `counts.exclusion_reason_counts.excluded_nodeid_prefix > 0`；
+  - `p2p_broad_tests` 不包含该动态下载前缀。
+
+中间诊断：
+
+- 首次 nodeid-prefix rerun 再次工具层超时，未生成 manifest；
+- 遗留进程显示卡在
+  `test.test_age_restriction.TestAgeRestriction.test_youtube`；
+- 该测试通过同文件 helper 调用 `YoutubeDL(...).download(...)`，但旧静态扫描
+  对 unittest dotted nodeid 没有映射源码文件，也没有展开本地 helper；
+- 已将该问题定位为执行链路 bug，而不是新的研究 scope 决策。
+
+执行结果：
+
+- builder dry-run 通过，确认不会执行测试、不会写 manifest，且记录
+  `exclude_nodeid_prefixes = ["test.test_download.TestDownload"]`；
+- 修复 unittest dotted nodeid 静态源码映射和同文件 helper 展开后，真实 P2P
+  rerun 完成；
+- 已生成
+  `data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json`；
+- manifest 统计：
+  - collected/common tests = 1472；
+  - `excluded_nodeid_prefix` = 1297；
+  - `excluded_static_external_dependency` = 64；
+  - `excluded_fail_to_pass_oracle` = 1；
+  - included `p2p_broad_tests` = 108；
+  - `p2p_broad_tests` 不包含 `test.test_download.TestDownload` 前缀。
+
+验证：
+
+- `python -m py_compile scripts\build_pass_to_pass_scope.py` 通过；
+- 静态源码验证确认
+  `test.test_age_restriction.TestAgeRestriction.test_youtube` 被
+  `excluded_static_external_dependency` 捕获；
+- `audit_goal_completion.py` 输出 `complete=true`；
+- `write_human_input_packet.py` 输出 `missing=[]`；
+- `run_local_quality_gate.py` 输出 `passed=true`。
+
+当前 gate：
+
+- `youtube-dl_7` 的 project-level P2P-broad admission blocker 已解决；
+- 该结果是带 `youtube_dl_dynamic_download_nodeid_exclusion_v1` scope policy 的
+  P2P manifest，不等于无排除的 full test-suite claim；
+- GitHub 同步按用户指示暂时不作为阻塞项，本地分支仍需后续同步。

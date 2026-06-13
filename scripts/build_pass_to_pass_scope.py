@@ -8,6 +8,7 @@ import os
 import shlex
 import subprocess
 import sys
+import textwrap
 import time
 from collections import Counter
 from pathlib import Path
@@ -581,10 +582,58 @@ def collect_unittest_tests(
     return tests, summary
 
 
+def unittest_nodeid_source_path(nodeid: str) -> str | None:
+    if "::" in nodeid:
+        return None
+    parts = nodeid.split(".")
+    if len(parts) < 3:
+        return None
+    return Path(*parts[:-2]).with_suffix(".py").as_posix()
+
+
+def module_name_from_relative_file(relative_file: str) -> str:
+    return Path(relative_file).with_suffix("").as_posix().replace("/", ".")
+
+
+def called_helper_names(source: str) -> set[str]:
+    try:
+        tree = ast.parse(textwrap.dedent(source))
+    except SyntaxError:
+        return set()
+    names: set[str] = set()
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        if isinstance(node.func, ast.Name):
+            names.add(node.func.id)
+        elif isinstance(node.func, ast.Attribute):
+            names.add(node.func.attr)
+    return names
+
+
+def expand_with_local_helpers(segment: str, helper_sources: dict[str, str]) -> str:
+    expanded = [segment]
+    seen: set[str] = set()
+    pending = sorted(called_helper_names(segment))
+    while pending:
+        name = pending.pop(0)
+        if name in seen or name not in helper_sources:
+            continue
+        seen.add(name)
+        helper_source = helper_sources[name]
+        expanded.append(helper_source)
+        for nested_name in sorted(called_helper_names(helper_source)):
+            if nested_name not in seen:
+                pending.append(nested_name)
+    return "\n".join(expanded)
+
+
 def static_source_segments(checkout: Path, test_path: str, nodeids: list[str]) -> dict[str, str]:
     methods: dict[str, str] = {}
-    file_paths = sorted({nodeid.split("::", 1)[0] for nodeid in nodeids if "::" in nodeid})
-    if not is_project_level_path(test_path) and not (checkout / test_path).is_dir():
+    path_nodeids = [nodeid for nodeid in nodeids if "::" in nodeid]
+    unittest_source_paths = [path for nodeid in nodeids if (path := unittest_nodeid_source_path(nodeid))]
+    file_paths = sorted({nodeid.split("::", 1)[0] for nodeid in path_nodeids} | set(unittest_source_paths))
+    if not unittest_source_paths and not is_project_level_path(test_path) and not (checkout / test_path).is_dir():
         file_paths = [test_path]
 
     for relative_file in file_paths:
@@ -596,15 +645,28 @@ def static_source_segments(checkout: Path, test_path: str, nodeids: list[str]) -
             tree = ast.parse(source)
         except SyntaxError:
             continue
+        module_name = module_name_from_relative_file(relative_file)
+        helper_sources: dict[str, str] = {}
+        for child in tree.body:
+            if isinstance(child, ast.FunctionDef) and not child.name.startswith("test_"):
+                helper_sources[child.name] = ast.get_source_segment(source, child) or ""
+        for class_node in [node for node in ast.walk(tree) if isinstance(node, ast.ClassDef)]:
+            for child in class_node.body:
+                if isinstance(child, ast.FunctionDef) and not child.name.startswith("test_"):
+                    helper_sources[child.name] = ast.get_source_segment(source, child) or ""
         for class_node in [node for node in ast.walk(tree) if isinstance(node, ast.ClassDef)]:
             for child in class_node.body:
                 if isinstance(child, ast.FunctionDef) and child.name.startswith("test_"):
                     segment = ast.get_source_segment(source, child) or ""
-                    methods[f"{relative_file}::{class_node.name}::{child.name}"] = segment
+                    expanded_segment = expand_with_local_helpers(segment, helper_sources)
+                    methods[f"{relative_file}::{class_node.name}::{child.name}"] = expanded_segment
+                    methods[f"{module_name}.{class_node.name}.{child.name}"] = expanded_segment
         for child in tree.body:
             if isinstance(child, ast.FunctionDef) and child.name.startswith("test_"):
                 segment = ast.get_source_segment(source, child) or ""
-                methods[f"{relative_file}::{child.name}"] = segment
+                expanded_segment = expand_with_local_helpers(segment, helper_sources)
+                methods[f"{relative_file}::{child.name}"] = expanded_segment
+                methods[f"{module_name}.{child.name}"] = expanded_segment
     return {nodeid: methods.get(nodeid, methods.get(normalize_parametrized_nodeid(nodeid), "")) for nodeid in nodeids}
 
 
@@ -867,6 +929,12 @@ def parse_args() -> argparse.Namespace:
         help="If provided, only dynamically run test methods whose source contains at least one token. Repeatable.",
     )
     parser.add_argument(
+        "--exclude-nodeid-prefix",
+        action="append",
+        default=[],
+        help="Exclude collected tests whose nodeid starts with this prefix before dynamic runs. Repeatable.",
+    )
+    parser.add_argument(
         "--batch-first",
         action="store_true",
         help="Validate candidate P2P tests in batches first; fall back to per-test runs only if the batch fails.",
@@ -957,6 +1025,7 @@ def main() -> None:
             "batch_first": args.batch_first,
             "static_exclude_tokens": args.static_exclude_token,
             "static_include_tokens": args.static_include_token,
+            "exclude_nodeid_prefixes": args.exclude_nodeid_prefix,
             "out_dir": str(out_dir),
             "out_dir_exists": out_dir.exists(),
             "manifest_out": args.manifest_out,
@@ -1055,6 +1124,13 @@ def main() -> None:
         if nodeid in fail_to_pass:
             reason = "excluded_fail_to_pass_oracle"
             record["exclusion_reason"] = reason
+            records.append(record)
+            exclusions.append({"nodeid": nodeid, "reason": reason})
+            continue
+        if any(nodeid.startswith(prefix) for prefix in args.exclude_nodeid_prefix):
+            reason = "excluded_nodeid_prefix"
+            record["exclusion_reason"] = reason
+            record["exclude_nodeid_prefixes"] = args.exclude_nodeid_prefix
             records.append(record)
             exclusions.append({"nodeid": nodeid, "reason": reason})
             continue
@@ -1213,6 +1289,7 @@ def main() -> None:
         "core_patterns": core_patterns,
         "static_exclude_tokens": args.static_exclude_token,
         "static_include_tokens": args.static_include_token,
+        "exclude_nodeid_prefixes": args.exclude_nodeid_prefix,
         "p2p_broad_tests": p2p_broad,
         "p2p_core_tests": p2p_core,
         "exclusions": exclusions,
