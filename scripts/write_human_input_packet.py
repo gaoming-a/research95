@@ -12,6 +12,8 @@ API_CONFIG_PATH = Path("configs") / "api_pilot.local.json"
 READINESS_PATH = Path("outputs") / "readiness_audit" / "latest.json"
 PLAN_PROGRESS_PATH = Path("outputs") / "plan_progress" / "latest.json"
 YOUTUBEDL_DECISION_PATH = Path("outputs") / "youtubedl_p2p_decision_audit" / "latest.json"
+YOUTUBEDL_ATTEMPT_PATH = Path("docs") / "experiments" / "evp7_youtubedl_p2p_execution_attempt_20260613.md"
+YOUTUBEDL_MANIFEST_PATH = Path("data") / "p2p_scopes" / "bugsinpy_youtube-dl_7_p2p_broad.json"
 
 
 BOOTSTRAP_DRY_RUN_COMMAND = (
@@ -71,6 +73,8 @@ def build_packet() -> dict[str, Any]:
     readiness = read_json(READINESS_PATH) or {}
     progress = read_json(PLAN_PROGRESS_PATH) or {}
     youtubedl_decision = read_json(YOUTUBEDL_DECISION_PATH) or {}
+    youtubedl_attempt_exists = YOUTUBEDL_ATTEMPT_PATH.exists()
+    youtubedl_manifest_exists = YOUTUBEDL_MANIFEST_PATH.exists()
     api = readiness.get("api", {}) if isinstance(readiness, dict) else {}
     local_config = api.get("local_config", {}) if isinstance(api, dict) else {}
     model_selection = api.get("model_selection", {}) if isinstance(api, dict) else {}
@@ -109,15 +113,22 @@ def build_packet() -> dict[str, Any]:
         {
             "id": "youtube_dl_p2p_decision",
             "required": True,
-            "present": bool(
-                youtubedl_decision
-                and youtubedl_decision.get("passed") is True
-                and (youtubedl_decision.get("command_packet") or {}).get("approval_required") is False
-            ),
-            "target": "docs/experiments/evp7_youtubedl_p2p_decision_packet_20260613.md",
+            "present": bool(youtubedl_attempt_exists or youtubedl_manifest_exists),
+            "target": "docs/experiments/evp7_youtubedl_p2p_execution_attempt_20260613.md",
             "instruction": (
-                "Approve one bounded project-level P2P-broad attempt for bugsinpy_youtube-dl_7, "
-                "or explicitly reject/stop the youtube-dl expansion path and record that decision in the plan."
+                "Original bounded project-level P2P-broad approval has been recorded and attempted once. "
+                "Keep the execution-attempt record tracked."
+            ),
+        },
+        {
+            "id": "youtube_dl_dynamic_download_scope_policy",
+            "required": bool(youtubedl_attempt_exists and not youtubedl_manifest_exists),
+            "present": youtubedl_manifest_exists,
+            "target": "docs/experiments/evp7_youtubedl_p2p_execution_attempt_20260613.md",
+            "instruction": (
+                "Decide whether to allow an explicit nodeid-level exclusion for dynamically generated "
+                "test.test_download.TestDownload.* tests before rerunning youtube-dl_7 P2P, or stop the "
+                "youtube-dl expansion path."
             ),
         },
         {
@@ -143,8 +154,12 @@ def build_packet() -> dict[str, Any]:
         "missing_required_input_ids": [item["id"] for item in missing],
         "youtube_dl_p2p_decision": {
             "audit_path": YOUTUBEDL_DECISION_PATH.as_posix(),
+            "attempt_path": YOUTUBEDL_ATTEMPT_PATH.as_posix(),
+            "attempt_record_exists": youtubedl_attempt_exists,
             "audit_passed": youtubedl_decision.get("passed"),
             "approval_required": (youtubedl_decision.get("command_packet") or {}).get("approval_required"),
+            "manifest_exists": youtubedl_manifest_exists,
+            "manifest_path": YOUTUBEDL_MANIFEST_PATH.as_posix(),
             "recommended_task": (youtubedl_decision.get("decision_packet") or {}).get("recommended_task_id"),
             "command_packet": youtubedl_decision.get("command_packet"),
             "builder_dry_run_checks": {
@@ -189,11 +204,13 @@ def build_packet() -> dict[str, Any]:
             "Do not run --execute before strict preflight and check-only pass.",
             "Do not treat mock or dry-run outputs as model experiment results.",
             "Do not run youtube-dl_7 P2P unless youtube_dl_p2p_decision is explicitly approved.",
+            "Do not rerun youtube-dl_7 P2P with nodeid-level exclusions unless youtube_dl_dynamic_download_scope_policy is explicitly approved.",
         ],
         "decision_aids": [
             "docs/experiments/model_selection_shortlist.md",
             "docs/experiments/model_selection_protocol.md",
             "docs/experiments/evp7_youtubedl_p2p_decision_packet_20260613.md",
+            "docs/experiments/evp7_youtubedl_p2p_execution_attempt_20260613.md",
             "outputs/youtubedl_p2p_decision_audit/latest.md",
         ],
     }
@@ -234,8 +251,12 @@ def build_markdown(packet: dict[str, Any]) -> str:
             "## youtube-dl P2P Decision",
             "",
             f"- audit path: `{youtubedl_decision['audit_path']}`",
+            f"- attempt path: `{youtubedl_decision['attempt_path']}`",
+            f"- attempt record exists: {bool_mark(youtubedl_decision['attempt_record_exists'])}",
             f"- audit passed: {bool_mark(youtubedl_decision['audit_passed'])}",
             f"- approval required: {bool_mark(youtubedl_decision['approval_required'])}",
+            f"- manifest path: `{youtubedl_decision['manifest_path']}`",
+            f"- manifest exists: {bool_mark(youtubedl_decision['manifest_exists'])}",
             f"- recommended task: `{youtubedl_decision['recommended_task']}`",
             f"- builder dry-run checks: `{youtubedl_decision['builder_dry_run_checks']}`",
             "",

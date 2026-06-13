@@ -5781,3 +5781,52 @@ full run 决策：
 - 不改变论文 claim；
 - 只让 human-input packet 与 pre-API handoff、paper readiness、local quality
   gate 的 claim 边界一致。
+
+## 80. 2026-06-13 approved youtube-dl_7 bounded P2P execution
+
+本轮小目标：
+
+- 根据用户明确回复 `1、批准 2、暂时不用管`，执行一次
+  `bugsinpy_youtube-dl_7` bounded project-level P2P-broad；
+- GitHub 同步暂时不作为本轮阻塞项；
+- 将批准和执行记录写入
+  `docs/experiments/evp7_youtubedl_p2p_execution_attempt_20260613.md`，避免只
+  依赖聊天上下文。
+
+执行边界：
+
+- 只执行 `bugsinpy_youtube-dl_7`；
+- 只使用已审计过的 command packet 参数；
+- 不批量执行其他 youtube-dl P2P；
+- 不调用模型 API；
+- 若 P2P 失败，先诊断为执行链路、环境、数据/证据或实验设计问题，不继续扩量。
+
+验收条件：
+
+- 生成 `data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json`；
+- 该 manifest 的 task、scope type、fail-to-pass nodeid、P2P broad tests 和
+  buggy/fixed/reference run 状态可被本地审计验证；
+- `audit_goal_completion.py` 不再依赖 pre-run no-run 审计里的
+  `approval_required=true` 字段判断该决策未解决，而应读取批准记录和执行结果。
+
+执行结果：
+
+- 已执行一次批准命令；
+- 工具层 40 分钟超时，未生成
+  `data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json`；
+- 只创建了 ignored 输出目录
+  `outputs/p2p_scope_builds/bugsinpy_youtube-dl_7` 中的 compat shim；
+- 超时后发现遗留进程：
+  - builder 进程：`scripts/build_pass_to_pass_scope.py ... youtube-dl_7 ...`；
+  - unittest 子进程正在运行动态生成的
+    `test.test_download.TestDownload.*` 下载测试；
+- 已终止这两个遗留进程；
+- 诊断：当前 static source-token filter 不会排除动态生成的
+  `TestDownload` nodeid，因为它们不对应 AST 中的静态 `test_` 方法。
+
+当前 gate：
+
+- 这次批准已被执行一次，但 P2P manifest 未生成；
+- 继续执行需要新的 scope-policy 决策：是否允许为 youtube-dl 动态下载测试加入
+  nodeid-level exclusion，例如排除 `test.test_download.TestDownload` 后重跑；
+- 在该策略未确认前，不继续真实 P2P。

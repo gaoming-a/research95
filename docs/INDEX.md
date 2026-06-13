@@ -311,6 +311,11 @@
   current seven clean-F2P `youtube-dl` candidates. It now includes a no-run
   static preflight sweep that selects `youtube-dl_7` as the lowest-static-cost
   representative.
+- `experiments/evp7_youtubedl_p2p_execution_attempt_20260613.md`: tracked
+  record of the approved `bugsinpy_youtube-dl_7` P2P attempt. The command timed
+  out before producing a manifest because dynamically generated
+  `test.test_download.TestDownload.*` tests entered the batch; continuing needs
+  an explicit nodeid-level scope-policy decision.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on

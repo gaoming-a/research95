@@ -312,6 +312,12 @@ This audit writes an approval-required command packet for the proposed
 It also invokes the P2P scope builder with `--dry-run` to verify that the
 generated command is accepted without executing tests.
 
+The approved `youtube-dl_7` P2P attempt is recorded in
+`docs/experiments/evp7_youtubedl_p2p_execution_attempt_20260613.md`. It timed
+out before producing `data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json`
+because dynamically generated `test.test_download.TestDownload.*` tests entered
+the batch. Continuing requires an explicit nodeid-level scope-policy decision.
+
 To validate the proposed P2P command without executing tests, append `--dry-run`
 to the command packet emitted by that audit.
 

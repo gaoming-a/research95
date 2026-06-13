@@ -59,6 +59,8 @@ def build_audit() -> dict[str, Any]:
     local_quality = read_json(Path("outputs/local_quality_gate/latest.json")) or {}
     run_records = read_json(Path("outputs/experiment_run_records/latest.json")) or {}
     youtubedl_decision = read_json(Path("outputs/youtubedl_p2p_decision_audit/latest.json")) or {}
+    youtubedl_attempt_path = "docs/experiments/evp7_youtubedl_p2p_execution_attempt_20260613.md"
+    youtubedl_manifest_path = "data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json"
     artifact_audit = read_json(Path("artifacts/research95_anonymous_artifact_audit.json")) or {}
     repro = read_json(Path("outputs/reproducibility/pilot_compare.json")) or {}
     full_dir = Path("outputs/patch_verification_api_pilot_002")
@@ -283,16 +285,23 @@ def build_audit() -> dict[str, Any]:
             bool(
                 youtubedl_decision
                 and youtubedl_decision.get("passed") is True
-                and (youtubedl_decision.get("command_packet") or {}).get("approval_required") is False
-                and file_exists("data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json")
+                and file_exists(youtubedl_attempt_path)
+                and file_exists(youtubedl_manifest_path)
             ),
             {
                 "source": "outputs/youtubedl_p2p_decision_audit/latest.json",
+                "attempt_record": youtubedl_attempt_path,
+                "attempt_record_exists": file_exists(youtubedl_attempt_path),
                 "decision_audit_passed": youtubedl_decision.get("passed"),
                 "approval_required": (youtubedl_decision.get("command_packet") or {}).get("approval_required"),
-                "proposed_manifest_exists": file_exists("data/p2p_scopes/bugsinpy_youtube-dl_7_p2p_broad.json"),
+                "proposed_manifest": youtubedl_manifest_path,
+                "proposed_manifest_exists": file_exists(youtubedl_manifest_path),
                 "recommended_task": (youtubedl_decision.get("decision_packet") or {}).get("recommended_task_id"),
-                "boundary": "Goal remains incomplete until the user approves or rejects the youtube-dl_7 bounded P2P attempt and the result is recorded.",
+                "boundary": (
+                    "Goal remains incomplete until the approved youtube-dl_7 P2P path either produces "
+                    "a manifest or is explicitly stopped. The first approved attempt timed out in dynamic "
+                    "test_download tests, so rerun requires a separate nodeid-level scope-policy decision."
+                ),
             },
         ),
     ]

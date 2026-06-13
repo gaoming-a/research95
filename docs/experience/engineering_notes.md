@@ -1527,3 +1527,9 @@ This file starts fresh for the patch-verification project.
   handoff. A single "positive paper claim ready" line is ambiguous after the
   tool-augmented full run passed while prompt-only evidence-first remains a
   negative/redesign result.
+- youtube-dl unittest discovery can produce dynamic `test.test_download`
+  nodeids that are not visible to AST source-token filtering. Static
+  `--static-exclude-token` rules do not catch those generated tests, so a real
+  P2P run can enter long network/download batches even when static preflight
+  looks cheap. Treat this as a scope-policy decision: add an explicit
+  nodeid-level exclusion only after recording the policy boundary.
