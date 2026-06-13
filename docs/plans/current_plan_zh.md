@@ -6898,3 +6898,67 @@ full run 决策：
   - unsupported claims 仍包括 scale-generalized result、LLM outperforming
     tool-only baseline、E6 strictly improves over E4、known DeepSeek billing
     cost。
+
+## 92. 2026-06-13 controlled expansion readiness ledger repair
+
+背景：
+
+- 232-run 已完成并同步 GitHub；
+- 回到 controlled expansion 后，`data/tasks/evp7_expansion_readiness.json`
+  仍把 `bugsinpy_youtube-dl_5` 和 `bugsinpy_youtube-dl_6` 列为
+  `f2p_established_p2p_not_attempted`；
+- 但这两个任务已经有 tracked P2P-broad manifests、candidate validation
+  reports，并已纳入 `data/cohorts/task_cohort_registry.json` 的
+  `p2p_broad_main`；
+- 该不一致会污染下一步 P2P candidate 选择。
+
+本轮小目标：
+
+1. 修正 `data/tasks/evp7_controlled_probe_results.json` 中 ydl5/ydl6 的
+   probe status；
+2. 重新生成 `data/tasks/evp7_expansion_readiness.json` 和
+   `docs/experiments/evp7_expansion_readiness.md`；
+3. 验证 readiness 的 P2P candidate list 只剩尚未 admission 的
+   `youtube-dl_3`、`youtube-dl_4`、`youtube-dl_11`；
+4. 根据已有 static preflight sweep，选择下一轮最低静态成本候选。
+
+边界：
+
+- 不新跑 P2P；
+- 不改 cohort registry；
+- 不改 candidate labels、prompt 或 evidence packets；
+- 只修 ledger/status 与 readiness 派生文档。
+
+验收条件：
+
+- ydl5/ydl6 probe status = `admitted_p2p_broad_main`；
+- readiness `p2p_candidate_tasks` 不再包含 ydl5/ydl6；
+- 下一步候选选择必须基于已记录 static preflight，而不是盲目扩量。
+
+执行结果：
+
+- 已将 `bugsinpy_youtube-dl_5` 和 `bugsinpy_youtube-dl_6` 的
+  controlled-probe ledger 修正为：
+  - decision = `admitted_to_p2p_broad_main`；
+  - probe_status = `admitted_p2p_broad_main`；
+  - 补充对应 P2P manifest 和 candidate validation report 路径。
+- 已重新生成 expansion readiness：
+  - admitted_p2p_broad_main = 4；
+  - f2p_established_p2p_not_attempted = 3；
+  - P2P candidate tasks =
+    `bugsinpy_youtube-dl_11`,
+    `bugsinpy_youtube-dl_3`,
+    `bugsinpy_youtube-dl_4`。
+- 根据 section 66 的 static preflight sweep：
+  - ydl3 remaining methods = 151；
+  - ydl4 remaining methods = 141；
+  - ydl11 remaining methods = 167；
+  - 下一轮最低静态成本候选是 `bugsinpy_youtube-dl_4`。
+
+下一步边界：
+
+- 同步 ledger 修复后，若继续 controlled expansion，优先对
+  `bugsinpy_youtube-dl_4` 执行 static preflight refresh、builder dry-run 和
+  bounded real P2P；
+- 不并行运行多个 youtube-dl P2P；
+- 不修改 task-file P2P、dependency 或 fixture policy。

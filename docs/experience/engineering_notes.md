@@ -1646,3 +1646,8 @@ This file starts fresh for the patch-verification project.
   `total_reviews == candidate_count * len(EVIDENCE_LEVELS)` and each evidence
   level has exactly `candidate_count` records. Do not hardcode 200/50,
   216/54, or any historical cohort size into current gates.
+- After a task is formally admitted, update both the cohort registry and the
+  controlled-probe ledger. `youtube-dl_5` and `youtube-dl_6` were already in
+  `p2p_broad_main`, but stale `f2p_established_p2p_not_attempted` probe records
+  kept them in expansion readiness as P2P candidates. Refresh readiness only
+  after the ledger and registry agree.
