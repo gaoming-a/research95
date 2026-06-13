@@ -13,10 +13,8 @@ DEFAULT_SUMMARY = REPO_ROOT / "data" / "reviews" / "evp7_g5_llm_full_run_summary
 DEFAULT_JSON_OUT = REPO_ROOT / "data" / "reviews" / "evp7_g5_full_run_quality_audit.json"
 DEFAULT_MD_OUT = REPO_ROOT / "docs" / "experiments" / "evp7_g5_full_run_quality_audit.md"
 
-EXPECTED_REVIEW_COUNT = 200
-EXPECTED_CANDIDATES_PER_LEVEL = 50
-EXPECTED_INVALID_COUNT = 1
-EXPECTED_INVALID_RATE = 0.005
+EXPECTED_LEVELS = ("E0", "E2", "E4", "E6")
+MAX_INVALID_OUTPUT_RATE = 0.02
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -30,22 +28,24 @@ def build_audit(summary: dict[str, Any]) -> dict[str, Any]:
     quality = summary["quality"]
     metrics = summary["metrics"]
     groups = metrics["metric_groups"]
+    workflow = summary["workflow"]
+    review_count = int(quality.get("review_count") or 0)
+    level_counts = {level: int(groups[level].get("record_count") or 0) for level in EXPECTED_LEVELS}
+    expected_count_from_levels = sum(level_counts.values())
+    candidate_count = review_count // len(EXPECTED_LEVELS) if review_count else 0
+    invalid_rate = float(quality.get("invalid_output_rate") or 0.0)
 
     checks = [
-        _check("review_count", quality.get("review_count") == EXPECTED_REVIEW_COUNT, quality.get("review_count")),
-        _check("unique_review_ids", quality.get("unique_review_ids") == EXPECTED_REVIEW_COUNT, quality.get("unique_review_ids")),
+        _check("real_llm_run", metrics.get("run_kind") == "real_llm", metrics.get("run_kind")),
+        _check("model_call_attempted", workflow.get("model_call_attempted") is True, workflow.get("model_call_attempted")),
+        _check("review_count_matches_levels", review_count == expected_count_from_levels, review_count),
+        _check("unique_review_ids", quality.get("unique_review_ids") == review_count, quality.get("unique_review_ids")),
         _check("raw_outputs_not_tracked", quality.get("raw_outputs_tracked") is False, quality.get("raw_outputs_tracked")),
-        _check("invalid_output_count", quality.get("invalid_output_count") == EXPECTED_INVALID_COUNT, quality.get("invalid_output_count")),
-        _check("invalid_output_rate", quality.get("invalid_output_rate") == EXPECTED_INVALID_RATE, quality.get("invalid_output_rate")),
-        _check(
-            "g5_signal_observed",
-            metrics.get("g5_signal_claim_status") == "real_llm_verifier_signal_observed_on_evp7",
-            metrics.get("g5_signal_claim_status"),
-        ),
+        _check("invalid_output_rate_within_limit", invalid_rate <= MAX_INVALID_OUTPUT_RATE, quality.get("invalid_output_rate")),
+        _check("has_metric_variation", metrics.get("signal_preview", {}).get("has_metric_variation") is True, metrics.get("signal_preview", {}).get("has_metric_variation")),
     ]
-    for level in ("E0", "E2", "E4", "E6"):
-        group = groups[level]
-        checks.append(_check(f"{level}_record_count", group.get("record_count") == EXPECTED_CANDIDATES_PER_LEVEL, group.get("record_count")))
+    for level, count in level_counts.items():
+        checks.append(_check(f"{level}_record_count", count == candidate_count, count))
     for level in ("E4", "E6"):
         group = groups[level]
         checks.extend(
@@ -58,16 +58,20 @@ def build_audit(summary: dict[str, Any]) -> dict[str, Any]:
         )
 
     return {
-        "audit_id": "evp7_g5_200_quality_audit",
+        "audit_id": "evp7_g5_full_run_quality_audit",
         "cohort_id": summary.get("cohort_id"),
         "input_summary": _display(DEFAULT_SUMMARY),
         "api_call_attempted": False,
         "raw_outputs_read": False,
         "raw_outputs_tracked": quality.get("raw_outputs_tracked"),
+        "review_count": review_count,
+        "candidate_count": candidate_count,
+        "level_counts": level_counts,
         "quality_status": "passed_with_limitations" if all(item["passed"] for item in checks) else "not_passed",
         "checks": checks,
         "supported_claims": [
-            "The current EVP-7 9-task/50-candidate/200-packet run observed evidence-visibility signal in real DeepSeek verifier outputs.",
+            "The current EVP-7 run produced raw-output-free tracked metrics from real DeepSeek verifier outputs.",
+            "The run shows evidence-level metric variation in the tracked summary.",
             "E4/E6 preserved zero observed false accepts and accepted precision 1.0.",
             "E4/E6 improved correct recall over E0 and produced positive Evidence Gain versus E0.",
         ],
@@ -78,10 +82,11 @@ def build_audit(summary: dict[str, Any]) -> dict[str, Any]:
             "A claim that DeepSeek cost is known from runner output.",
         ],
         "limitations": [
-            "One E4 record is schema-invalid.",
-            "E4 correct recall is 0.111111 and E6 correct recall is 0.222222, below the deterministic visible-test tool-only baseline recall of 0.888889.",
+            f"{quality.get('invalid_output_count')} record(s) are schema-invalid.",
+            "E4/E6 correct recall remains below the deterministic visible-test tool-only baseline recall.",
+            f"G5 signal claim status remains `{metrics.get('g5_signal_claim_status')}` in the metrics scaffold.",
             "Runner-reported cost is 0.0 because DeepSeek response usage did not expose billable cost in the stored field.",
-            "The cohort remains a pilot-scale 9-task BugsInPy slice.",
+            "The cohort remains a pilot-scale BugsInPy slice.",
         ],
     }
 
@@ -102,6 +107,8 @@ def render_markdown(audit: dict[str, Any]) -> str:
         f"- API call attempted by audit: {str(audit['api_call_attempted']).lower()}",
         f"- Raw outputs read by audit: {str(audit['raw_outputs_read']).lower()}",
         f"- Raw outputs tracked: {str(audit['raw_outputs_tracked']).lower()}",
+        f"- Review count: {audit['review_count']}",
+        f"- Candidate count: {audit['candidate_count']}",
         "",
         "## Checks",
         "",

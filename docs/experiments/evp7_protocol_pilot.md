@@ -346,36 +346,35 @@ G5 real full-run status:
 
 - user-confirmed provider/model = DeepSeek official API, `deepseek-v4-pro`;
 - workflow used explicit bounded concurrency: `--concurrency 6`;
-- raw outputs remain ignored under `outputs/evp7_g5_llm_003/`;
+- raw outputs remain ignored under `outputs/evp7_g5_llm_004/`;
 - tracked summary = `docs/experiments/evp7_g5_llm_full_run_result.md`;
 - tracked JSON summary = `data/reviews/evp7_g5_llm_full_run_summary.json`;
-- review count = 200;
-- parse valid = 199/200;
+- review count = 216;
+- parse valid = 215/216;
 - invalid output count = 1;
-- invalid output rate = 0.005;
-- G5 metric scaffold = passed;
-- G5 signal claim status = `real_llm_verifier_signal_observed_on_evp7`;
-- scope boundary = earlier 9-task/50-candidate/200-packet EVP-7 cohort;
+- invalid output rate = 0.00463;
+- G5 metric scaffold = not_passed;
+- G5 signal claim status = `real_llm_verifier_outputs_incomplete`;
+- scope boundary = current 10-task/54-candidate/216-packet EVP-7 cohort;
 - E4/E6 false accept rate = 0.0;
 - E4/E6 accepted precision = 1.0;
-- E4 correct recall = 0.111111;
-- E6 correct recall = 0.222222;
-- E4/E6 Evidence Gain vs E0 = 5.0 / 4.75.
+- E4 correct recall = 0.1;
+- E6 correct recall = 0.2;
+- E4/E6 Evidence Gain vs E0 = 4.75 / 6.0.
 
 G5 quality audit status:
 
 - audit = `docs/experiments/evp7_g5_full_run_quality_audit.md`;
 - JSON = `data/reviews/evp7_g5_full_run_quality_audit.json`;
 - quality status = `passed_with_limitations`;
-- supported claim = EVP-7 pilot-level evidence-visibility signal;
+- supported claim = bounded EVP-7 pilot observations about evidence-level
+  metric variation;
 - unsupported claims = scale-generalized result, LLM outperforming tool-only
   baseline, and known DeepSeek billing cost.
 
 ## Current Next Step
 
-EVP-7 now has a 10-task/54-candidate/216-packet structural cohort. The latest
-real-LLM cohort remains the earlier 9-task/50-candidate/200-packet run until a
-fresh 216-packet run is executed and audited.
+EVP-7 now has a 10-task/54-candidate/216-packet structural and real-LLM cohort.
 The next executable research step is controlled expansion under the same
 admission gates, while preserving the quality-audit boundary that the pilot
 signal does not imply scale generalization or tool-baseline superiority.

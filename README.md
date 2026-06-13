@@ -229,15 +229,15 @@ They should not override `final_paper_roadmap_zh.md`.
   leakage findings. The G5 metric scaffold computes FAR, recall, escalation,
   FACR, and Evidence Gain over schema-stable dry-run records. The G5 LLM prompt
   manifest covers all 216 current E0/E2/E4/E6 packets with zero leakage findings
-  and no stored prompt text. The latest real DeepSeek official G5 full run still
-  covers the earlier 9-task/50-candidate/200-packet cohort with explicit bounded
-  parallelism (`--concurrency 6`). It produced 199 parse-valid outputs and one
+  and no stored prompt text. The latest real DeepSeek official G5 full run now
+  covers the 10-task/54-candidate/216-packet cohort with explicit bounded
+  parallelism (`--concurrency 6`). It produced 215 parse-valid outputs and one
   schema-invalid output, with E4/E6 false accept rate 0.0, accepted precision
-  1.0, E4 correct recall 0.111111, E6 correct recall 0.222222, and positive
-  Evidence Gain over E0. The tracked
-  quality audit passes with limitations for that 200-packet run: it supports an EVP-7 pilot-level
-  evidence-visibility signal claim, but not scale-generalized claims or a claim
-  that the LLM outperforms the deterministic visible-test tool-only baseline.
+  1.0, E4 correct recall 0.1, E6 correct recall 0.2, and positive Evidence Gain
+  over E0. The tracked quality audit passes with limitations: it supports
+  pilot-level observations about evidence-level variation, but not
+  scale-generalized claims, not a claim that the LLM outperforms the
+  deterministic visible-test tool-only baseline, and not a known-cost claim.
   A controlled-expansion readiness report summarizes the broader BugsInPy rescreen
   and defines project-diverse bounded probe lanes for the next 15-20 bug
   expansion step. The
@@ -373,9 +373,9 @@ python scripts\summarize_evp7_g5_llm_full_run.py
 
 The guarded workflow can run a full current 216-packet execution with explicit
 bounded parallelism, for example `--concurrency 4` or `--concurrency 6`. The
-default remains sequential. The latest tracked DeepSeek full-run summary covers
-the earlier 200-packet cohort; a fresh run is required before claiming model
-results on the current 216-packet cohort.
+default remains sequential. The latest tracked DeepSeek full-run summary now
+covers the current 216-packet cohort; raw model responses remain under ignored
+`outputs/`.
 
 For full-goal completion evidence, run:
 

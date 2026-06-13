@@ -84,12 +84,13 @@
   recall, escalation, FACR, and Evidence Gain, but marks G5 signal claims as
   requiring genuine LLM verifier outputs.
 - `../data/reviews/evp7_g5_llm_full_run_summary.json`: tracked raw-output-free
-  summary of the real DeepSeek official EVP-7 G5 full run on the earlier
-  9-task/50-candidate/200-packet cohort. It records 200 reviews, 199
-  parse-valid outputs, one schema-invalid output, and
-  `real_llm_verifier_signal_observed_on_evp7`.
+  summary of the latest real DeepSeek official EVP-7 G5 full run on the current
+  10-task/54-candidate/216-packet cohort. It records 216 reviews, 215
+  parse-valid outputs, one schema-invalid output, and metric variation across
+  E0/E2/E4/E6 while the scaffold keeps
+  `real_llm_verifier_outputs_incomplete`.
 - `../data/reviews/evp7_g5_full_run_quality_audit.json`: tracked quality audit
-  for the 200-record DeepSeek full run. It reads only the raw-output-free
+  for the 216-record DeepSeek full run. It reads only the raw-output-free
   summary and marks the run `passed_with_limitations`.
 - `../data/reviews/evp7_g5_llm_prompt_manifest.jsonl`: no-API prompt manifest
   for the G5 evidence-visibility LLM run. It stores prompt hashes,

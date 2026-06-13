@@ -2,41 +2,42 @@
   "cohort_id": "EVP-7",
   "metrics": {
     "analysis_boundary": "These metrics come from real LLM verifier outputs on the EVP-7 pilot. They can support EVP-7 pilot signal claims after quality audit, but not scale-generalized paper claims without controlled expansion.",
-    "g5_metric_scaffold": "passed",
-    "g5_signal_claim_status": "real_llm_verifier_signal_observed_on_evp7",
+    "g5_metric_scaffold": "not_passed",
+    "g5_signal_claim_status": "real_llm_verifier_outputs_incomplete",
     "metric_groups": {
       "E0": {
-        "accepted_precision": null,
+        "accepted_precision": 1.0,
         "confusion_counts": {
           "escalated_correct": 9,
-          "escalated_incorrect": 19,
+          "escalated_incorrect": 23,
           "false_accept": 0,
           "false_reject": 0,
           "invalid_output": 0,
-          "true_accept": 0,
-          "true_reject": 22
+          "true_accept": 1,
+          "true_reject": 21
         },
-        "correct_recall": 0.0,
+        "correct_recall": 0.1,
         "decision_counts": {
-          "escalate": 28,
-          "reject": 22
+          "accept": 1,
+          "escalate": 32,
+          "reject": 21
         },
-        "escalation_rate": 0.56,
+        "escalation_rate": 0.592593,
         "evidence_gain_vs_e0": 0.0,
         "facr": {
-          "far_le_0": 0.0,
-          "far_le_0.01": 0.0,
-          "far_le_0.05": 0.0,
-          "far_le_0.1": 0.0
+          "far_le_0": 0.1,
+          "far_le_0.01": 0.1,
+          "far_le_0.05": 0.1,
+          "far_le_0.1": 0.1
         },
         "false_accept_rate": 0.0,
         "false_reject_rate": 0.0,
         "invalid_output_rate": 0.0,
-        "record_count": 50,
+        "record_count": 54,
         "utility": {
           "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
           "score": -7.0,
-          "score_per_candidate": -0.14
+          "score_per_candidate": -0.12963
         }
       },
       "E2": {
@@ -45,18 +46,18 @@
           "escalated_correct": 9,
           "escalated_incorrect": 17,
           "false_accept": 0,
-          "false_reject": 0,
+          "false_reject": 1,
           "invalid_output": 0,
           "true_accept": 0,
-          "true_reject": 24
+          "true_reject": 27
         },
         "correct_recall": 0.0,
         "decision_counts": {
           "escalate": 26,
-          "reject": 24
+          "reject": 28
         },
-        "escalation_rate": 0.52,
-        "evidence_gain_vs_e0": 0.5,
+        "escalation_rate": 0.481481,
+        "evidence_gain_vs_e0": -0.5,
         "facr": {
           "far_le_0": 0.0,
           "far_le_0.01": 0.0,
@@ -64,106 +65,106 @@
           "far_le_0.1": 0.0
         },
         "false_accept_rate": 0.0,
-        "false_reject_rate": 0.0,
+        "false_reject_rate": 0.1,
         "invalid_output_rate": 0.0,
-        "record_count": 50,
+        "record_count": 54,
         "utility": {
           "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
-          "score": -6.5,
-          "score_per_candidate": -0.13
+          "score": -7.5,
+          "score_per_candidate": -0.138889
         }
       },
       "E4": {
+        "accepted_precision": 1.0,
+        "confusion_counts": {
+          "escalated_correct": 8,
+          "escalated_incorrect": 1,
+          "false_accept": 0,
+          "false_reject": 1,
+          "invalid_output": 1,
+          "true_accept": 1,
+          "true_reject": 42
+        },
+        "correct_recall": 0.1,
+        "decision_counts": {
+          "accept": 1,
+          "escalate": 9,
+          "invalid_output": 1,
+          "reject": 43
+        },
+        "escalation_rate": 0.166667,
+        "evidence_gain_vs_e0": 4.75,
+        "facr": {
+          "far_le_0": 0.1,
+          "far_le_0.01": 0.1,
+          "far_le_0.05": 0.1,
+          "far_le_0.1": 0.1
+        },
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.1,
+        "invalid_output_rate": 0.018519,
+        "record_count": 54,
+        "utility": {
+          "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
+          "score": -2.25,
+          "score_per_candidate": -0.041667
+        }
+      },
+      "E6": {
         "accepted_precision": 1.0,
         "confusion_counts": {
           "escalated_correct": 7,
           "escalated_incorrect": 1,
           "false_accept": 0,
           "false_reject": 1,
-          "invalid_output": 1,
-          "true_accept": 1,
-          "true_reject": 39
-        },
-        "correct_recall": 0.111111,
-        "decision_counts": {
-          "accept": 1,
-          "escalate": 8,
-          "invalid_output": 1,
-          "reject": 40
-        },
-        "escalation_rate": 0.16,
-        "evidence_gain_vs_e0": 5.0,
-        "facr": {
-          "far_le_0": 0.111111,
-          "far_le_0.01": 0.111111,
-          "far_le_0.05": 0.111111,
-          "far_le_0.1": 0.111111
-        },
-        "false_accept_rate": 0.0,
-        "false_reject_rate": 0.111111,
-        "invalid_output_rate": 0.02,
-        "record_count": 50,
-        "utility": {
-          "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
-          "score": -2.0,
-          "score_per_candidate": -0.04
-        }
-      },
-      "E6": {
-        "accepted_precision": 1.0,
-        "confusion_counts": {
-          "escalated_correct": 5,
-          "escalated_incorrect": 4,
-          "false_accept": 0,
-          "false_reject": 2,
           "invalid_output": 0,
           "true_accept": 2,
-          "true_reject": 37
+          "true_reject": 43
         },
-        "correct_recall": 0.222222,
+        "correct_recall": 0.2,
         "decision_counts": {
           "accept": 2,
-          "escalate": 9,
-          "reject": 39
+          "escalate": 8,
+          "reject": 44
         },
-        "escalation_rate": 0.18,
-        "evidence_gain_vs_e0": 4.75,
+        "escalation_rate": 0.148148,
+        "evidence_gain_vs_e0": 6.0,
         "facr": {
-          "far_le_0": 0.222222,
-          "far_le_0.01": 0.222222,
-          "far_le_0.05": 0.222222,
-          "far_le_0.1": 0.222222
+          "far_le_0": 0.2,
+          "far_le_0.01": 0.2,
+          "far_le_0.05": 0.2,
+          "far_le_0.1": 0.2
         },
         "false_accept_rate": 0.0,
-        "false_reject_rate": 0.222222,
+        "false_reject_rate": 0.1,
         "invalid_output_rate": 0.0,
-        "record_count": 50,
+        "record_count": 54,
         "utility": {
           "formula": "accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct",
-          "score": -2.25,
-          "score_per_candidate": -0.045
+          "score": -1.0,
+          "score_per_candidate": -0.018519
         }
       }
     },
     "run_kind": "real_llm",
     "signal_preview": {
       "evidence_gain_vs_e0": {
-        "E2": 0.5,
-        "E4": 5.0,
-        "E6": 4.75
+        "E2": -0.5,
+        "E4": 4.75,
+        "E6": 6.0
       },
       "has_metric_variation": true,
       "interpretation_boundary": "Interpret this preview according to run_kind and analysis_boundary.",
       "metric_deltas_vs_e0": {
         "correct_recall": {
-          "E2": 0.0,
-          "E4": 0.111111,
-          "E6": 0.222222
+          "E2": -0.1,
+          "E4": 0.0,
+          "E6": 0.1
         },
         "escalation_rate": {
-          "E2": -0.04,
-          "E4": -0.4,
-          "E6": -0.38
+          "E2": -0.111112,
+          "E4": -0.425926,
+          "E6": -0.444445
         },
         "false_accept_rate": {
           "E2": 0.0,
@@ -178,30 +179,30 @@
   "provider": "deepseek_official",
   "quality": {
     "decision_counts": {
-      "accept": 3,
-      "escalate": 71,
+      "accept": 4,
+      "escalate": 75,
       "invalid_output": 1,
-      "reject": 125
+      "reject": 136
     },
     "invalid_output_count": 1,
-    "invalid_output_rate": 0.005,
+    "invalid_output_rate": 0.00463,
     "invalid_records": [
       {
-        "candidate_id": "evp7_candidate_0021",
+        "candidate_id": "evp7_candidate_0034",
         "evidence_level": "E4",
-        "evidence_packet_id": "evp7_candidate_0021__E4",
-        "invalid_reason": "invalid_suspected_failure_type:test_overfitting",
-        "prompt_chars": 3316,
-        "raw_response_chars": 540
+        "evidence_packet_id": "evp7_candidate_0034__E4",
+        "invalid_reason": "invalid_json:No JSON object found in model response",
+        "prompt_chars": 3289,
+        "raw_response_chars": 0
       }
     ],
     "parse_counts": {
       "invalid": 1,
-      "valid": 199
+      "valid": 215
     },
     "raw_outputs_tracked": false,
-    "review_count": 200,
-    "unique_review_ids": 200
+    "review_count": 216,
+    "unique_review_ids": 216
   },
   "run_name": "evp7_g5_llm_full_run",
   "workflow": {
@@ -210,7 +211,7 @@
     "cost_note": "DeepSeek response did not expose billable cost in the stored usage field; runner total is not a billing estimate.",
     "mode": "executed",
     "model_call_attempted": true,
-    "review_count": 200,
+    "review_count": 216,
     "total_cost_usd_reported_by_runner": 0.0
   }
 }

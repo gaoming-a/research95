@@ -1,15 +1,26 @@
 {
   "api_call_attempted": false,
-  "audit_id": "evp7_g5_200_quality_audit",
+  "audit_id": "evp7_g5_full_run_quality_audit",
+  "candidate_count": 54,
   "checks": [
     {
-      "check": "review_count",
-      "observed": 200,
+      "check": "real_llm_run",
+      "observed": "real_llm",
+      "passed": true
+    },
+    {
+      "check": "model_call_attempted",
+      "observed": true,
+      "passed": true
+    },
+    {
+      "check": "review_count_matches_levels",
+      "observed": 216,
       "passed": true
     },
     {
       "check": "unique_review_ids",
-      "observed": 200,
+      "observed": 216,
       "passed": true
     },
     {
@@ -18,38 +29,33 @@
       "passed": true
     },
     {
-      "check": "invalid_output_count",
-      "observed": 1,
+      "check": "invalid_output_rate_within_limit",
+      "observed": 0.00463,
       "passed": true
     },
     {
-      "check": "invalid_output_rate",
-      "observed": 0.005,
-      "passed": true
-    },
-    {
-      "check": "g5_signal_observed",
-      "observed": "real_llm_verifier_signal_observed_on_evp7",
+      "check": "has_metric_variation",
+      "observed": true,
       "passed": true
     },
     {
       "check": "E0_record_count",
-      "observed": 50,
+      "observed": 54,
       "passed": true
     },
     {
       "check": "E2_record_count",
-      "observed": 50,
+      "observed": 54,
       "passed": true
     },
     {
       "check": "E4_record_count",
-      "observed": 50,
+      "observed": 54,
       "passed": true
     },
     {
       "check": "E6_record_count",
-      "observed": 50,
+      "observed": 54,
       "passed": true
     },
     {
@@ -64,12 +70,12 @@
     },
     {
       "check": "E4_correct_recall_positive",
-      "observed": 0.111111,
+      "observed": 0.1,
       "passed": true
     },
     {
       "check": "E4_evidence_gain_positive",
-      "observed": 5.0,
+      "observed": 4.75,
       "passed": true
     },
     {
@@ -84,28 +90,37 @@
     },
     {
       "check": "E6_correct_recall_positive",
-      "observed": 0.222222,
+      "observed": 0.2,
       "passed": true
     },
     {
       "check": "E6_evidence_gain_positive",
-      "observed": 4.75,
+      "observed": 6.0,
       "passed": true
     }
   ],
   "cohort_id": "EVP-7",
   "input_summary": "data\\reviews\\evp7_g5_llm_full_run_summary.json",
+  "level_counts": {
+    "E0": 54,
+    "E2": 54,
+    "E4": 54,
+    "E6": 54
+  },
   "limitations": [
-    "One E4 record is schema-invalid.",
-    "E4 correct recall is 0.111111 and E6 correct recall is 0.222222, below the deterministic visible-test tool-only baseline recall of 0.888889.",
+    "1 record(s) are schema-invalid.",
+    "E4/E6 correct recall remains below the deterministic visible-test tool-only baseline recall.",
+    "G5 signal claim status remains `real_llm_verifier_outputs_incomplete` in the metrics scaffold.",
     "Runner-reported cost is 0.0 because DeepSeek response usage did not expose billable cost in the stored field.",
-    "The cohort remains a pilot-scale 9-task BugsInPy slice."
+    "The cohort remains a pilot-scale BugsInPy slice."
   ],
   "quality_status": "passed_with_limitations",
   "raw_outputs_read": false,
   "raw_outputs_tracked": false,
+  "review_count": 216,
   "supported_claims": [
-    "The current EVP-7 9-task/50-candidate/200-packet run observed evidence-visibility signal in real DeepSeek verifier outputs.",
+    "The current EVP-7 run produced raw-output-free tracked metrics from real DeepSeek verifier outputs.",
+    "The run shows evidence-level metric variation in the tracked summary.",
     "E4/E6 preserved zero observed false accepts and accepted precision 1.0.",
     "E4/E6 improved correct recall over E0 and produced positive Evidence Gain versus E0."
   ],

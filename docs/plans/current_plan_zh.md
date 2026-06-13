@@ -6553,3 +6553,96 @@ full run 决策：
 - 当前 10-task / 54-candidate / 216-packet cohort 已完成 no-API gates，
   但尚未执行 fresh real LLM verifier run；
 - 因此不能把旧 200-run 的模型结果 claim 直接外推到第 10 个样本。
+
+## 89. 2026-06-13 fresh 216-packet DeepSeek V4 G5 run
+
+背景：
+
+- 第 88 节已经完成 `bugsinpy_youtube-dl_5` admission；
+- 当前 structural cohort 已提升到 10 tasks / 54 candidates / 216 packets；
+- `configs/evp7_g5_llm.local.json` 仍指向
+  `deepseek_official` / `deepseek-v4-pro`，且 full-run permission 已为 true；
+- 为避免覆盖旧 run，本轮 raw outputs 只写入 ignored
+  `outputs/evp7_g5_llm_004/`。
+
+本轮小目标：
+
+1. 对 216-packet cohort 运行 local strict preflight；
+2. 执行 4-packet smoke，确认 API、JSON parse 和 schema 仍稳定；
+3. smoke 通过后执行 216-packet full run；
+4. 只把 tracked summary、quality audit 和文档更新纳入 Git；
+5. raw model responses 保持在 ignored `outputs/evp7_g5_llm_004/`。
+
+边界：
+
+- 不修改 prompt、candidate labels、evidence packets 或 P2P manifests；
+- 不读取或提交 raw model response 正文；
+- 若 strict preflight、smoke、JSON parse、API auth 或 full-run summary 失败，
+  立即停止并诊断；
+- 旧 200-run 结果继续保留为历史，不再作为当前 216-packet cohort 的最新模型证据。
+
+验收条件：
+
+- local strict preflight: structural_ready=true, api_ready=true；
+- smoke: model_call_attempted=true, invalid_json 不超过既有 stop 条件；
+- full run: 216 review records，E0/E2/E4/E6 各 54；
+- tracked summary 明确记录 provider/model、run size、invalid-output rate、主要指标；
+- README、INDEX、experiment report、current plan 和 engineering notes 同步更新。
+
+执行更新：
+
+- local strict preflight 已通过：
+  - config = `configs/evp7_g5_llm.local.json`；
+  - provider/model = `deepseek_official` / `deepseek-v4-pro`；
+  - structural_ready = true；
+  - api_ready = true；
+  - prompt records = 216；
+  - candidates = 54；
+  - E0/E2/E4/E6 各 54。
+- 4-packet smoke 已完成：
+  - output dir = `outputs/evp7_g5_llm_004/`；
+  - model_call_attempted = true；
+  - review_count = 4；
+  - parse_status = 4 valid / 0 invalid；
+  - stop condition 未触发。
+- full 216-packet run 已完成：
+  - command output = `outputs/evp7_g5_llm_004/reviews.jsonl`,
+    `metrics.json`, `workflow_summary.json`；
+  - concurrency = 6；
+  - review_count = 216；
+  - E0/E2/E4/E6 各 54；
+  - parse-valid = 215；
+  - invalid = 1，位置为 `evp7_candidate_0034__E4`，
+    reason = `invalid_json:No JSON object found in model response`；
+  - raw responses 仍只在 ignored `outputs/`。
+- tracked summary 已刷新：
+  - `data/reviews/evp7_g5_llm_full_run_summary.json`；
+  - `docs/experiments/evp7_g5_llm_full_run_result.md`。
+- 当前主要指标：
+  - E0: accept=1, escalate=32, reject=21, FAR=0.0, correct_recall=0.1；
+  - E2: escalate=26, reject=28, FAR=0.0, correct_recall=0.0；
+  - E4: accept=1, escalate=9, reject=43, invalid=1, FAR=0.0,
+    correct_recall=0.1, Evidence Gain vs E0 = 4.75；
+  - E6: accept=2, escalate=8, reject=44, FAR=0.0,
+    correct_recall=0.2, Evidence Gain vs E0 = 6.0。
+- `scripts/audit_evp7_g5_full_run_quality.py` 原先硬编码
+  200 records / 50 candidates / 9-task wording，导致 216-run 审计失败；
+  已修为从 summary 动态读取 review count、level count 和 invalid rate。
+- 质量审计已通过：
+  - `data/reviews/evp7_g5_full_run_quality_audit.json`；
+  - `docs/experiments/evp7_g5_full_run_quality_audit.md`；
+  - quality_status = `passed_with_limitations`；
+  - raw_outputs_read = false；
+  - raw_outputs_tracked = false。
+
+当前边界：
+
+- 最新真实 DeepSeek V4 G5 full run 已覆盖当前
+  10-task / 54-candidate / 216-packet cohort；
+- 该 run 支持 bounded pilot observations：证据层级带来 metric variation，
+  E4/E6 保持 zero false accepts 和 accepted precision 1.0；
+- 仍不能 claim：
+  - scale-generalized paper result；
+  - LLM 优于 deterministic visible-test tool-only baseline；
+  - E6 严格优于 E4；
+  - DeepSeek 真实计费成本已知。

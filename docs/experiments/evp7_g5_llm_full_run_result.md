@@ -8,7 +8,7 @@ This tracked summary excludes raw model responses. Raw outputs remain under igno
 - Model: `deepseek-v4-pro`
 - Prompt: `patch_verify_evidence_visibility_merge_gate_v1`
 - Concurrency: 6
-- Review count: 200
+- Review count: 216
 - API calls attempted: true
 - Model calls attempted: true
 - Runner-reported cost: 0.0
@@ -16,26 +16,26 @@ This tracked summary excludes raw model responses. Raw outputs remain under igno
 
 ## Quality
 
-- Unique review ids: 200
-- Parse counts: `{"invalid": 1, "valid": 199}`
-- Decision counts: `{"accept": 3, "escalate": 71, "invalid_output": 1, "reject": 125}`
+- Unique review ids: 216
+- Parse counts: `{"invalid": 1, "valid": 215}`
+- Decision counts: `{"accept": 4, "escalate": 75, "invalid_output": 1, "reject": 136}`
 - Invalid output count: 1
-- Invalid output rate: 0.005
+- Invalid output rate: 0.00463
 
 ## Metrics
 
 - Run kind: `real_llm`
-- G5 metric scaffold: `passed`
-- G5 signal claim status: `real_llm_verifier_signal_observed_on_evp7`
+- G5 metric scaffold: `not_passed`
+- G5 signal claim status: `real_llm_verifier_outputs_incomplete`
 - Boundary: These metrics come from real LLM verifier outputs on the EVP-7 pilot. They can support EVP-7 pilot signal claims after quality audit, but not scale-generalized paper claims without controlled expansion.
 
 | Evidence | Records | Decisions | Invalid | FAR | Accepted precision | Correct recall | Evidence gain vs E0 |
 | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: |
-| E0 | 50 | `{"escalate": 28, "reject": 22}` | 0.0 | 0.0 | None | 0.0 | 0.0 |
-| E2 | 50 | `{"escalate": 26, "reject": 24}` | 0.0 | 0.0 | None | 0.0 | 0.5 |
-| E4 | 50 | `{"accept": 1, "escalate": 8, "invalid_output": 1, "reject": 40}` | 0.02 | 0.0 | 1.0 | 0.111111 | 5.0 |
-| E6 | 50 | `{"accept": 2, "escalate": 9, "reject": 39}` | 0.0 | 0.0 | 1.0 | 0.222222 | 4.75 |
+| E0 | 54 | `{"accept": 1, "escalate": 32, "reject": 21}` | 0.0 | 0.0 | 1.0 | 0.1 | 0.0 |
+| E2 | 54 | `{"escalate": 26, "reject": 28}` | 0.0 | 0.0 | None | 0.0 | -0.5 |
+| E4 | 54 | `{"accept": 1, "escalate": 9, "invalid_output": 1, "reject": 43}` | 0.018519 | 0.0 | 1.0 | 0.1 | 4.75 |
+| E6 | 54 | `{"accept": 2, "escalate": 8, "reject": 44}` | 0.0 | 0.0 | 1.0 | 0.2 | 6.0 |
 
 ## Invalid Records
 
-- `evp7_candidate_0021__E4` (E4): invalid_suspected_failure_type:test_overfitting; raw chars=540
+- `evp7_candidate_0034__E4` (E4): invalid_json:No JSON object found in model response; raw chars=0

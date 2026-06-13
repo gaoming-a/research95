@@ -864,9 +864,10 @@ scale-generalized result 或 LLM 优于 deterministic tool-only baseline。
 纳入，包含 retained unified-timestamp oracle、4 个候选、retained-oracle
 validation 和 128-test project-level P2P-broad validation。当前 no-API
 tracked artifacts 已提升为 10 tasks / 5 projects / 54 candidates / 216
-E0-E6 packets。最新真实 DeepSeek V4 G5 run 仍只覆盖上一轮
-9-task / 50-candidate / 200-packet cohort；216-packet cohort 需要 fresh real
-LLM run 后才能进入模型结果 claim。
+E0-E6 packets。随后已完成 fresh 216-packet DeepSeek V4 G5 run，覆盖当前
+10-task / 54-candidate / 216-packet cohort。该 run 通过质量审计但仍有限制：
+支持 bounded pilot observations，不支持规模泛化、不支持 LLM 优于
+deterministic tool-only baseline、不支持已知真实计费成本。
 
 ## 18. 2026-06-12 外部建议提取后的增量修订
 
@@ -1042,24 +1043,24 @@ Phase A 已补齐 EVP-7 candidate-level schema：
    API；
 13. G5 guarded workflow 当前支持 check-only、mock validation 和 bounded
    concurrency；mock records 只验证 parser/metrics pipeline；
-14. 用户确认 DeepSeek V4 后，已完成上一轮 200-packet 真实 DeepSeek official
-   G5 full run：200 条 E0/E2/E4/E6 review，concurrency = 6；
-15. full run 质量审计：199/200 parse-valid，1 条 E4 输出因
-   `invalid_suspected_failure_type:test_overfitting` 未通过 schema，
-   invalid-output rate = 0.005；原始响应保留在
-   ignored `outputs/`，tracked summary 不包含 raw model responses；
-16. EVP-7 pilot-level signal 已观察到：
-   `g5_signal_claim_status = real_llm_verifier_signal_observed_on_evp7`；
-   E4/E6 相对 E0 的 Evidence Gain 分别为 5.0 和 4.75，false accept rate
-   均为 0，accepted precision 均为 1.0，E4 correct recall = 0.111111，
-   E6 correct recall = 0.222222；
-17. 该结果支持 9-task / 50-candidate / 200-packet EVP-7 pilot signal claims，
-    不支持直接 scale-generalized
-   paper claims；下一步应进入质量审计和 15-20 bugs controlled expansion，
-   同时保留 invalid-output 和成本字段缺失的质量边界。
-18. 已完成 200-run quality audit：
-   `docs/experiments/evp7_g5_full_run_quality_audit.md` 和
-   `data/reviews/evp7_g5_full_run_quality_audit.json`；结论是
+14. 用户确认 DeepSeek V4 后，已完成 fresh 216-packet 真实 DeepSeek official
+    G5 full run：216 条 E0/E2/E4/E6 review，concurrency = 6；
+15. full run 质量审计：215/216 parse-valid，1 条 E4 输出因
+    `invalid_json:No JSON object found in model response` 未通过 schema，
+    invalid-output rate = 0.00463；原始响应保留在
+    ignored `outputs/`，tracked summary 不包含 raw model responses；
+16. EVP-7 pilot-level metric variation 已观察到；metrics scaffold 仍记录
+    `g5_signal_claim_status = real_llm_verifier_outputs_incomplete`。E4/E6
+    相对 E0 的 Evidence Gain 分别为 4.75 和 6.0，false accept rate 均为 0，
+    accepted precision 均为 1.0，E4 correct recall = 0.1，E6 correct
+    recall = 0.2；
+17. 该结果支持 10-task / 54-candidate / 216-packet EVP-7 bounded pilot
+    observations，不支持直接 scale-generalized paper claims；下一步应进入
+    15-20 bugs controlled expansion，
+    同时保留 invalid-output 和成本字段缺失的质量边界。
+18. 已完成 216-run quality audit：
+    `docs/experiments/evp7_g5_full_run_quality_audit.md` 和
+    `data/reviews/evp7_g5_full_run_quality_audit.json`；结论是
    `passed_with_limitations`，明确不支持“LLM 超过 deterministic
    visible-test tool-only baseline”、不支持已知
    DeepSeek 真实计费成本、不支持规模泛化；
@@ -1069,4 +1070,4 @@ Phase A 已补齐 EVP-7 candidate-level schema：
     bounded probe 推进，不做盲目 BugsInPy 批量扩展。
 20. `bugsinpy_youtube-dl_5` admission 后，当前 structural/no-API artifacts
     已提升到 10 tasks / 54 candidates / 216 packets；真实 DeepSeek G5 结果
-    尚未覆盖这 216 packets。
+    已覆盖这 216 packets。

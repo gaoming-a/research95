@@ -167,21 +167,22 @@ Current gate status after the first packet builder:
   evaluator labels, oracle outcomes, hidden tests, reference provenance, or
   failure taxonomy in model-visible packets.
 - G3 passes for deterministic tool-only baselines: apply-only, visible-tests,
-  and visible-tool-summary conditions each produce 50 schema-valid decisions
+  and visible-tool-summary conditions each produce 54 schema-valid decisions
   and aggregate metrics.
-- G4 passes for the no-API merge-gate schema dry-run: all 200 E0/E2/E4/E6
+- G4 passes for the no-API merge-gate schema dry-run: all 216 E0/E2/E4/E6
   packet-level outputs parse into the fixed accept/reject/escalate JSON schema
   with zero leakage findings. These records are parser/schema evidence only,
   not LLM verifier results.
-- G5 passes for pilot-level signal existence on the earlier 200-packet
-  DeepSeek official run: `real_llm_verifier_signal_observed_on_evp7`.
-  E4/E6 preserve false accept rate 0.0 and accepted precision 1.0 while
-  increasing correct recall over E0 to 0.111111 at E4 and 0.222222 at E6, with
-  positive Evidence Gain over E0. This supports EVP-7 pilot signal claims, not
-  scale-generalized paper claims.
+- G5 has a fresh 216-packet real DeepSeek official run with quality status
+  `passed_with_limitations`. E4/E6 preserve false accept rate 0.0 and accepted
+  precision 1.0 while increasing correct recall over E0 to 0.1 at E4 and 0.2
+  at E6, with positive Evidence Gain over E0. The metrics scaffold still marks
+  `real_llm_verifier_outputs_incomplete`, so this supports bounded pilot
+  observations about evidence-level variation, not scale-generalized paper
+  claims.
 - The tracked full-run quality audit is `passed_with_limitations`: it supports
-  the pilot evidence-visibility signal claim, but explicitly rejects claims that
-  the LLM outperforms the deterministic visible-test tool-only baseline, that
+  bounded pilot observations, but explicitly rejects claims that the LLM
+  outperforms the deterministic visible-test tool-only baseline, that
   DeepSeek cost is known from runner output,
   or that the result generalizes beyond EVP-7.
 - The G5 LLM prompt is `patch_verify_evidence_visibility_merge_gate_v1`. Its

@@ -1608,7 +1608,14 @@ This file starts fresh for the patch-verification project.
   static tokens are `YoutubeDL(`, `download(`, `urlopen`, `http://`, and
   `https://`; using a partial token set changes the static preflight count and
   must be treated as a command-reproduction bug before running P2P.
-- The `youtube-dl_5` admission changed the no-API structural cohort to
-  10 tasks / 54 candidates / 216 packets. Keep the latest real DeepSeek G5
-  claim scoped to the previous 9-task / 50-candidate / 200-packet run until a
-  fresh 216-packet run is executed and audited.
+- The `youtube-dl_5` admission changed the structural cohort to
+  10 tasks / 54 candidates / 216 packets. The fresh DeepSeek V4 G5 run for this
+  cohort produced one schema-invalid record: `evp7_candidate_0034__E4` failed
+  with `invalid_json:No JSON object found in model response`. Treat this as
+  model-output quality, not prompt-boundary, leakage, or execution-chain
+  failure. Keep raw responses only in ignored `outputs/evp7_g5_llm_004/`.
+- Do not hardcode G5 quality-audit cohort sizes. The 216-run initially failed
+  `audit_evp7_g5_full_run_quality.py` because the script still expected
+  200 reviews, 50 candidates per level, and 9-task wording. Quality audits
+  should derive review count, level counts, and invalid-output rate from the
+  tracked summary so controlled expansion does not create false gate failures.
