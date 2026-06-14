@@ -50,7 +50,7 @@ The candidate manifest is:
 data/patches/evp7_candidates.jsonl
 ```
 
-It contains 82 promoted candidates from the validated EVP-7 candidate outputs.
+It contains 86 promoted candidates from the validated EVP-7 candidate outputs.
 Its labels and failure taxonomy are evaluator-only inputs for metrics and must
 not be copied into model-visible evidence packets.
 
@@ -60,10 +60,10 @@ The current evidence packet manifest is:
 data/evidence/evp7_evidence_packets.jsonl
 ```
 
-It contains E0/E2/E4/E6 records for all 82 candidates. E0/E2 are complete.
-E4 is complete for all 82 candidates after rerunning predeclared visible tests
+It contains E0/E2/E4/E6 records for all 86 candidates. E0/E2 are complete.
+E4 is complete for all 86 candidates after rerunning predeclared visible tests
 in candidate workdirs with the same tracked project-level compat shims recorded
-in the P2P manifests. E6 is complete for all 82 candidates after deterministic
+in the P2P manifests. E6 is complete for all 86 candidates after deterministic
 visible tool summaries were generated from already model-visible static and
 visible-test evidence. Three visible-test outcomes are `error` because partial
 candidates break import; those are visible outcomes, not hidden evaluator

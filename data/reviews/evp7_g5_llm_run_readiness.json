@@ -6,15 +6,15 @@
   "default_max_tokens": 1024,
   "default_model": "user_confirmed_model_required",
   "default_temperature": 0.0,
-  "estimated_prompt_tokens_char_div_4": 231718,
-  "expected_prompt_record_count": 328,
+  "estimated_prompt_tokens_char_div_4": 242055,
+  "expected_prompt_record_count": 344,
   "g5_llm_run_readiness": "passed_without_api",
   "label_leakage_failed_count": 0,
   "level_counts": {
-    "E0": 82,
-    "E2": 82,
-    "E4": 82,
-    "E6": 82
+    "E0": 86,
+    "E2": 86,
+    "E4": 86,
+    "E6": 86
   },
   "planned_conditions": [
     "evidence_visibility_merge_gate"
@@ -25,12 +25,12 @@
     "E4",
     "E6"
   ],
-  "planned_output_records": 328,
+  "planned_output_records": 344,
   "prompt_char_max": 4938,
   "prompt_char_min": 1880,
-  "prompt_char_total": 926871,
+  "prompt_char_total": 968219,
   "prompt_id": "patch_verify_evidence_visibility_merge_gate_v1",
-  "prompt_record_count": 328,
+  "prompt_record_count": 344,
   "prompt_text_stored": false,
   "requires_user_confirmation": [
     "api_provider",

@@ -14,7 +14,7 @@
     "youtube-dl"
   ],
   "blocked_task_count": 27,
-  "candidate_count_known_from_registry": 76,
+  "candidate_count_known_from_registry": 80,
   "candidate_count_missing_in_registry_tasks": [
     "bugsinpy_httpie_5"
   ],
@@ -28,5 +28,5 @@
     "tqdm",
     "youtube-dl"
   ],
-  "main_task_count": 17
+  "main_task_count": 18
 }

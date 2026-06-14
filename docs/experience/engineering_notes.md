@@ -1866,3 +1866,27 @@ This file starts fresh for the patch-verification project.
   328 packets. The latest real DeepSeek G5 result remains the earlier
   12-task / 62-candidate / 248-packet run until a fresh 328-packet run is
   explicitly authorized and audited.
+
+## 2026-06-14 youtube-dl_21 admission and urljoin bytes oracle
+
+- ydl21 is a pure `test/test_utils.py` unittest lane for `urljoin`. The
+  reference source patch decodes UTF-8 bytes for both `base` and `path` before
+  validating and joining URLs.
+- The retained oracle must check bytes in both positions independently and
+  together. Path-only and base-only fixes are plausible partial patches: each
+  fixes one new assertion but still misses the full behavior.
+- Candidate builders that handwrite unified diffs must keep hunk line counts in
+  sync with the normalized patch text. The local `normalize_patch_blank_context`
+  helper strips trailing blank lines, so a hunk copied from `git diff` with a
+  final blank context line may need reduced `-old,+new` counts after
+  normalization. Otherwise `git apply` reports `corrupt patch` even when the
+  code intent is right.
+- Corrected-policy project-level P2P-broad succeeded with the canonical
+  youtube-dl generated-download nodeid exclusion: 2107 common nodeids,
+  1879 generated downloader tests excluded, 81 static external-dependency
+  tests excluded, 1 F2P oracle excluded, 3 buggy-baseline failures excluded,
+  and 143 retained P2P tests.
+- ydl21 admission raises the structural cohort to 18 tasks / 86 candidates /
+  344 packets. The latest real DeepSeek G5 result remains the earlier
+  12-task / 62-candidate / 248-packet run until a fresh 344-packet run is
+  explicitly authorized and audited.

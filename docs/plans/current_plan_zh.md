@@ -8086,3 +8086,116 @@ Plan:
   248-packet cohort；
 - 不得把旧 248-run 的真实模型 claim 延伸到当前 328-packet structural
   cohort，除非后续显式授权并完成新的真实 328-packet run 与质量审计。
+
+## 104. 2026-06-14 next controlled probe lane: youtube-dl_21
+
+Inspect:
+
+- ydl20 admission commit 后工作区干净，本地 main ahead origin 8；
+- 当前结构化 EVP-7 cohort = 17 tasks / 5 projects / 82 candidates /
+  328 packets，距 20 bug 上限还差 3 个 admission；
+- readiness 当前没有新的 fresh-project promising lane，后续 admission 只能继续
+  controlled youtube-dl pure-unittest lane，或等待用户确认真实 G5 API run；
+- `bugsinpy_youtube-dl_21` 是 metadata-clean pure unittest lane：
+  - target = `test.test_utils.TestUtil.test_urljoin`；
+  - test file = `test/test_utils.py`；
+  - source patch = `youtube_dl/utils.py` 中 `urljoin` 对 bytes base/path 的
+    UTF-8 解码支持；
+  - requirements empty；
+  - buggy commit = `96182695e4e37795a30ab143129c91dab18a9865`；
+  - fixed commit = `4b5de77bdb7765df4797bf068592926285ba709a`；
+- local youtube-dl clone 已可读取该 commit pair 的 source/test diff：
+  fixed test 新增 bytes base、bytes path、both-bytes 三个 F2P assertions。
+
+Plan:
+
+1. 复用本地 youtube-dl Git clone，串行构造 ydl21 buggy/fixed checkout；
+2. 验证 marker、HEAD 和 diff 边界；
+3. 运行 retained F2P command，要求 buggy fail、fixed pass；
+4. 若 F2P 成立，先 dry-run corrected-policy project-level P2P-broad：
+   - `--exclude-nodeid-prefix "test.test_download.TestDownload"`；
+   - canonical static tokens:
+     `YoutubeDL(`, `download(`, `urlopen`, `http://`, `https://`；
+5. dry-run 通过后运行 bounded real P2P-broad；
+6. F2P、P2P-broad、candidate construction 和 candidate validation 全部通过后
+   才 admission；
+7. 若 P2P 超时或 retained tests < 3，记录 blocker，不做 task-file P2P 降级。
+
+验收条件：
+
+- 若 admission 成功：EVP-7 structural cohort 达到
+  18 tasks / 86 candidates / 344 packets；
+- 最新真实 DeepSeek G5 claim 仍限定在旧 12-task / 62-candidate /
+  248-packet run。
+
+执行结果：
+
+- ydl21 本地 clone checkout 构造成功：
+  - buggy diff 仅包含 fixed `test/test_utils.py`；
+  - fixed diff 包含 fixed `test/test_utils.py` 和 `youtube_dl/utils.py`；
+  - 两端 HEAD 均为 `96182695e4e37795a30ab143129c91dab18a9865`，
+    fixed 版本通过放回 fixed commit 变更文件表示修复态。
+- F2P target command 结果：
+  - buggy: bytes base URL 输入返回 `None`；
+  - fixed: pass。
+- corrected-policy P2P-broad 成功：
+  - collected/common nodeids = 2107；
+  - excluded generated download nodeids = 1879；
+  - excluded static external-dependency tests = 81；
+  - excluded retained F2P oracle = 1；
+  - excluded buggy-baseline failures = 3；
+  - retained P2P-broad tests = 143；
+  - collection error files = 0；
+  - scope policy = `youtube_dl_dynamic_download_nodeid_exclusion_v1`。
+- 新增 retained oracle：
+  `scripts/oracles/youtubedl_21_urljoin_bytes.py`；
+- 新增 candidate builder：
+  `scripts/build_youtubedl21_candidates.py`；
+- retained-oracle validation 首次失败：
+  - reference/base-only patch apply failed，原因是手写 diff hunk 末尾空白上下文
+    被 builder normalize strip 后 hunk 行数不匹配；
+  - 修复方式是调整 hunk 计数为实际输出行数，而不是依赖末尾空白上下文。
+- retained-oracle validation 修复后通过：
+  - candidates = 4；
+  - patch applied = 4/4；
+  - oracle ran = 4/4；
+  - oracle passed = 1/4。
+- P2P validation 通过：
+  - retained P2P-broad tests = 143；
+  - labels:
+    - `correct_under_f2p_and_p2p_broad`: 1；
+    - `incorrect_issue_not_fixed`: 3。
+- `bugsinpy_youtube-dl_21` 已加入 `p2p_broad_main`。
+
+重建结果：
+
+- `build_evp7_protocol_manifests.py --check` 通过：
+  main tasks = 18；
+- `build_evp7_candidate_manifest.py --check` 通过：
+  candidates = 86，correct = 18，incorrect = 68；
+- `run_evp7_visible_tests.py --run --check --timeout 90` 通过：
+  86 records，83 completed，3 error；
+- 首次 `build_evp7_evidence_packets.py --check` 暴露 E6 仍只有旧的 82 个
+  visible tool summaries；
+- 按 evidence packets -> tool summaries -> evidence packets 顺序重跑后通过：
+  344 packets，E0/E2/E4/E6 各 86，G1/G2 passed；
+- `run_evp7_tool_only_baselines.py --check` 通过：
+  258 decisions，G3 passed；
+- `run_evp7_merge_gate_schema_dry_run.py --check` 通过：
+  344 valid parses，G4 passed；
+- `analyze_evp7_schema_dry_run_metrics.py --check` 通过：
+  no-API metric scaffold passed，仍要求真实 LLM verifier outputs；
+- `build_evp7_g5_llm_prompt_manifest.py --check` 通过：
+  344 prompt records，zero leakage failures；
+- example preflight/check-only workflow 通过：
+  structural_ready = true，api_ready = false，model_call_attempted = false。
+
+当前边界：
+
+- 当前结构化 EVP-7 cohort = 18 tasks / 5 projects / 86 candidates /
+  344 evidence packets；
+- 15 bug 下限已达到，距 20 bug 上限还差 2 个 admission；
+- 最新真实 DeepSeek G5 full run 仍为旧 12-task / 62-candidate /
+  248-packet cohort；
+- 不得把旧 248-run 的真实模型 claim 延伸到当前 344-packet structural
+  cohort，除非后续显式授权并完成新的真实 344-packet run 与质量审计。
