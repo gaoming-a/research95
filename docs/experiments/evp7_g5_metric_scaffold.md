@@ -38,9 +38,9 @@ data/reviews/evp7_schema_dry_run_metrics.json
 
 ## Current Status
 
-- review records = 312;
-- candidates = 78;
-- E0/E2/E4/E6 record counts = 78 each;
+- review records = 328;
+- candidates = 82;
+- E0/E2/E4/E6 record counts = 82 each;
 - G5 metric scaffold = passed;
 - G5 signal claim status = `requires_real_llm_verifier_outputs`.
 
@@ -50,8 +50,8 @@ data/reviews/evp7_schema_dry_run_metrics.json
 | --- | ---: | ---: | ---: | ---: | ---: |
 | E0 | 0.0 | n/a | 0.0 | 1.0 | 0.0 |
 | E2 | 0.0 | n/a | 0.0 | 1.0 | 0.0 |
-| E4 | 0.048387 | 0.833333 | 0.9375 | 0.0 | 18.5 |
-| E6 | 0.048387 | 0.833333 | 0.9375 | 0.0 | 18.5 |
+| E4 | 0.061538 | 0.8 | 0.941176 | 0.0 | 15.5 |
+| E6 | 0.061538 | 0.8 | 0.941176 | 0.0 | 15.5 |
 
 The variation above is produced by deterministic schema dry-run rules, not by
 an LLM. It validates metric-path sensitivity only.
@@ -71,6 +71,6 @@ comparison and require sensitivity analysis before paper claims.
 ## Boundary
 
 This scaffold remains the no-API parser/metric path for the current
-16-task/78-candidate/312-packet structural cohort. The latest G5 model-result
+17-task/82-candidate/328-packet structural cohort. The latest G5 model-result
 evidence is the separate 248-record DeepSeek run summarized in
 `docs/experiments/evp7_g5_llm_full_run_result.md`.

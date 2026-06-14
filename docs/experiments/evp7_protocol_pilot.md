@@ -46,7 +46,7 @@ data/exclusions/blocked_bugsinpy_projects.jsonl
 
 ## Current Cohort Summary
 
-The manifest contains 13 completed project-level P2P-broad tasks:
+The manifest contains 17 completed project-level P2P-broad tasks:
 
 | task | project |
 | --- | --- |
@@ -66,12 +66,13 @@ The manifest contains 13 completed project-level P2P-broad tasks:
 | `bugsinpy_youtube-dl_16` | `youtube-dl` |
 | `bugsinpy_youtube-dl_17` | `youtube-dl` |
 | `bugsinpy_youtube-dl_43` | `youtube-dl` |
+| `bugsinpy_youtube-dl_20` | `youtube-dl` |
 
 Candidate count status:
 
-- registry-known lower bound: 72;
+- registry-known lower bound: 76;
 - registry missing candidate counts for `bugsinpy_httpie_5`;
-- promoted tracked candidate records: 78.
+- promoted tracked candidate records: 82.
 
 Project coverage:
 
@@ -137,11 +138,11 @@ data/patches/evp7_candidates.jsonl
 data/patches/evp7_candidate_summary.json
 ```
 
-The promoted manifest contains 78 candidates across the 16 EVP-7 tasks:
+The promoted manifest contains 82 candidates across the 17 EVP-7 tasks:
 
-- 16 `correct_reference` candidates labeled
+- 17 `correct_reference` candidates labeled
   `correct_under_f2p_and_p2p_broad`;
-- 62 issue-not-fixed negatives;
+- 65 issue-not-fixed negatives;
 - evaluator-only fields such as `candidate_type`, `expected_outcome`,
   `failure_type_label`, retained-oracle status, and P2P-broad labels.
 
@@ -169,21 +170,21 @@ data/evidence/evp7_evidence_packets.jsonl
 data/evidence/evp7_evidence_packet_summary.json
 ```
 
-The builder emits 312 packet records: 78 candidates times E0/E2/E4/E6.
+The builder emits 328 packet records: 82 candidates times E0/E2/E4/E6.
 
 Current status:
 
-- E0 complete for 78 candidates;
-- E2 complete for 78 candidates, using patch-apply evidence only;
-- E4 complete for 78 candidates after independently rerunning predeclared
+- E0 complete for 82 candidates;
+- E2 complete for 82 candidates, using patch-apply evidence only;
+- E4 complete for 82 candidates after independently rerunning predeclared
   visible tests in candidate workdirs with tracked P2P compat-shim reuse;
-- visible test outcomes include 19 passed checks, 63 failed checks, and 3 error
+- visible test outcomes include 21 passed checks, 65 failed checks, and 3 error
   checks; the 3 errors are candidate-induced import errors and are retained as
   visible runtime outcomes;
-- E6 complete for 78 candidates after deterministic visible tool summaries were
+- E6 complete for 82 candidates after deterministic visible tool summaries were
   generated from model-visible static and visible-test evidence;
 - automated leakage audit passes with zero findings.
-- deterministic tool-only baselines are generated for 78 candidates under three
+- deterministic tool-only baselines are generated for 82 candidates under three
   conditions: apply-only, visible-tests, and visible-tool-summary.
 
 ## Current Limitation
@@ -232,11 +233,11 @@ Current metrics:
 | condition | accepted precision | false accept rate | correct recall | escalation rate |
 | --- | ---: | ---: | ---: | ---: |
 | `tool_only_apply_only` | n/a | 0.0 | 0.0 | 1.0 |
-| `tool_only_visible_tests` | 0.833333 | 0.048387 | 0.9375 | 0.0 |
-| `tool_only_visible_tool_summary` | 0.833333 | 0.048387 | 0.9375 | 0.0 |
+| `tool_only_visible_tests` | 0.8 | 0.061538 | 0.941176 | 0.0 |
+| `tool_only_visible_tool_summary` | 0.8 | 0.061538 | 0.941176 | 0.0 |
 
-The visible-tests and visible-tool-summary baselines accept 15 correct patches,
-reject one correct patch, and falsely accept three incorrect patches. They remain
+The visible-tests and visible-tool-summary baselines accept 16 correct patches,
+reject one correct patch, and falsely accept four incorrect patches. They remain
 strong safety baselines, but the youtube-dl expansion shows they are no longer
 perfect-false-accept baselines.
 
@@ -257,9 +258,9 @@ data/reviews/evp7_merge_gate_schema_dry_run_summary.json
 
 Current dry-run status:
 
-- records = 312;
-- E0/E2/E4/E6 level counts = 78 each;
-- parsed schema-valid outputs = 312;
+- records = 328;
+- E0/E2/E4/E6 level counts = 82 each;
+- parsed schema-valid outputs = 328;
 - invalid parse count = 0;
 - leakage findings = 0;
 - G4 schema stability = passed.
@@ -284,8 +285,8 @@ docs/experiments/evp7_g5_metric_scaffold.md
 
 Current scaffold status:
 
-- review records = 312;
-- E0/E2/E4/E6 level counts = 78 each;
+- review records = 328;
+- E0/E2/E4/E6 level counts = 82 each;
 - G5 metric scaffold = passed;
 - G5 signal claim status = `requires_real_llm_verifier_outputs`.
 
@@ -313,8 +314,8 @@ docs/experiments/evp7_g5_llm_run_readiness.md
 Current readiness status:
 
 - prompt id = `patch_verify_evidence_visibility_merge_gate_v1`;
-- prompt records = 312;
-- E0/E2/E4/E6 level counts = 78 each;
+- prompt records = 328;
+- E0/E2/E4/E6 level counts = 82 each;
 - prompt text stored = false;
 - label leakage failed count = 0;
 - G5 LLM run readiness = `passed_without_api`;
@@ -385,10 +386,10 @@ G5 quality audit status:
 
 ## Current Next Step
 
-EVP-7 now has a 16-task/78-candidate/312-packet structural cohort. The latest
+EVP-7 now has a 17-task/82-candidate/328-packet structural cohort. The latest
 real-LLM run remains scoped to the previous 12-task/62-candidate/248-packet
 cohort. The 15-bug lower bound is met; the next executable research step is to
 continue the planned controlled expansion toward 20 bugs or explicitly run a
-fresh G5 real-LLM pass for the current 312-packet structural cohort, while
+fresh G5 real-LLM pass for the current 328-packet structural cohort, while
 preserving the boundary that the existing real pilot signal does not imply scale
 generalization or tool-baseline superiority.

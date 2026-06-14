@@ -1846,3 +1846,23 @@ This file starts fresh for the patch-verification project.
   312 packets. The latest real DeepSeek G5 result remains the earlier
   12-task / 62-candidate / 248-packet run until a fresh 312-packet run is
   explicitly authorized and audited.
+
+## 2026-06-14 youtube-dl_20 admission and HTML attribute oracle
+
+- ydl20 is a pure `test/test_utils.py` unittest lane for
+  `get_element_by_attribute`. The reference source patch broadens
+  `get_elements_by_attribute` so HTML elements still match a target attribute
+  when valueless attributes such as `itemscope` appear before or after it.
+- The retained oracle must check both attribute orders. A partial patch that
+  accepts only prefix valueless attributes or only suffix valueless attributes
+  can satisfy one order and still miss the other, so the oracle needs paired
+  before/after cases rather than a single copied F2P assertion.
+- Corrected-policy project-level P2P-broad succeeded with the canonical
+  youtube-dl generated-download nodeid exclusion: 2181 common nodeids,
+  1948 generated downloader tests excluded, 84 static external-dependency
+  tests excluded, 1 F2P oracle excluded, 6 buggy-baseline failures excluded,
+  and 142 retained P2P tests.
+- ydl20 admission raises the structural cohort to 17 tasks / 82 candidates /
+  328 packets. The latest real DeepSeek G5 result remains the earlier
+  12-task / 62-candidate / 248-packet run until a fresh 328-packet run is
+  explicitly authorized and audited.

@@ -6,7 +6,7 @@ Date: 2026-06-14
 
 This document records the no-API readiness package for the real LLM G5
 signal-existence run. The current structural package after
-`bugsinpy_youtube-dl_43` admission contains 312 prompt records. The latest
+`bugsinpy_youtube-dl_20` admission contains 328 prompt records. The latest
 real DeepSeek official run remains the earlier 248-record run summarized in
 `docs/experiments/evp7_g5_llm_full_run_result.md`.
 
@@ -67,11 +67,11 @@ construction taxonomy remain forbidden in the rendered prompt payload.
 
 ## Readiness Result
 
-- prompt records = 312;
-- E0/E2/E4/E6 records = 78 each;
+- prompt records = 328;
+- E0/E2/E4/E6 records = 82 each;
 - prompt char range = 1880 to 4938;
-- prompt char total = 883807;
-- rough prompt-token estimate by chars/4 = 220952;
+- prompt char total = 926871;
+- rough prompt-token estimate by chars/4 = 231718;
 - leakage failed count = 0;
 - G5 LLM run readiness = `passed_without_api`;
 - API call attempted = false.
@@ -94,7 +94,7 @@ Before any real G5 API call, the user must confirm:
 - model;
 - maximum total cost in USD;
 - smoke scope;
-- permission for the full 312-record run after smoke.
+- permission for the full 328-record run after smoke.
 
 This readiness artifact is not model-result evidence by itself; the latest
 model-result evidence is still the 248-record DeepSeek run summarized in
@@ -182,7 +182,7 @@ any model-effect claim. This mock artifact was generated before `youtube-dl_7`
 admission and remains scoped to the older 168-record cohort until explicitly
 regenerated.
 
-The current check-only and prompt-manifest readiness artifacts cover 312
+The current check-only and prompt-manifest readiness artifacts cover 328
 records. The older mock artifact remains historical pipeline-validation data
 and is not used as current cohort evidence.
 
