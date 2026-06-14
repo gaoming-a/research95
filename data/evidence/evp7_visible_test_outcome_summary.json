@@ -1,13 +1,13 @@
 {
   "blocked_count": 0,
-  "candidate_count": 86,
+  "candidate_count": 90,
   "cohort_id": "EVP-7",
-  "complete_visible_outcome_count": 86,
+  "complete_visible_outcome_count": 90,
   "leakage_policy": "records contain visible test names and outcomes only; evaluator labels are not read or emitted",
   "mode": "run",
-  "record_count": 86,
+  "record_count": 90,
   "run_status_counts": {
-    "completed": 83,
+    "completed": 87,
     "error": 3
   },
   "run_status_counts_by_task": {
@@ -51,6 +51,9 @@
     "bugsinpy_youtube-dl_21": {
       "completed": 4
     },
+    "bugsinpy_youtube-dl_23": {
+      "completed": 4
+    },
     "bugsinpy_youtube-dl_4": {
       "completed": 4
     },
@@ -69,7 +72,7 @@
   },
   "test_outcome_counts": {
     "error": 3,
-    "failed": 68,
-    "passed": 22
+    "failed": 71,
+    "passed": 23
   }
 }

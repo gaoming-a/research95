@@ -6,7 +6,7 @@ Date: 2026-06-14
 
 This document records the no-API readiness package for the real LLM G5
 signal-existence run. The current structural package after
-`bugsinpy_youtube-dl_21` admission contains 344 prompt records. The latest
+`bugsinpy_youtube-dl_23` admission contains 360 prompt records. The latest
 real DeepSeek official run remains the earlier 248-record run summarized in
 `docs/experiments/evp7_g5_llm_full_run_result.md`.
 
@@ -67,11 +67,11 @@ construction taxonomy remain forbidden in the rendered prompt payload.
 
 ## Readiness Result
 
-- prompt records = 344;
-- E0/E2/E4/E6 records = 86 each;
+- prompt records = 360;
+- E0/E2/E4/E6 records = 90 each;
 - prompt char range = 1880 to 4938;
-- prompt char total = 968219;
-- rough prompt-token estimate by chars/4 = 242055;
+- prompt char total = 1010059;
+- rough prompt-token estimate by chars/4 = 252515;
 - leakage failed count = 0;
 - G5 LLM run readiness = `passed_without_api`;
 - API call attempted = false.
@@ -94,7 +94,7 @@ Before any real G5 API call, the user must confirm:
 - model;
 - maximum total cost in USD;
 - smoke scope;
-- permission for the full 344-record run after smoke.
+- permission for the full 360-record run after smoke.
 
 This readiness artifact is not model-result evidence by itself; the latest
 model-result evidence is still the 248-record DeepSeek run summarized in

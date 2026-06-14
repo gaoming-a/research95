@@ -101,17 +101,17 @@
     {
       "category": "structural",
       "check": "prompt_manifest_record_count",
-      "detail": 344,
+      "detail": 360,
       "passed": true
     },
     {
       "category": "structural",
       "check": "prompt_manifest_level_counts",
       "detail": {
-        "E0": 86,
-        "E2": 86,
-        "E4": 86,
-        "E6": 86
+        "E0": 90,
+        "E2": 90,
+        "E4": 90,
+        "E6": 90
       },
       "passed": true
     },
@@ -154,17 +154,17 @@
     {
       "category": "structural",
       "check": "run_readiness_prompt_count",
-      "detail": 344,
+      "detail": 360,
       "passed": true
     },
     {
       "category": "structural",
       "check": "run_readiness_level_counts",
       "detail": {
-        "E0": 86,
-        "E2": 86,
-        "E4": 86,
-        "E6": 86
+        "E0": 90,
+        "E2": 90,
+        "E4": 90,
+        "E6": 90
       },
       "passed": true
     },
@@ -183,13 +183,13 @@
     {
       "category": "structural",
       "check": "evidence_packet_count",
-      "detail": 344,
+      "detail": 360,
       "passed": true
     },
     {
       "category": "structural",
       "check": "candidate_count",
-      "detail": 86,
+      "detail": 90,
       "passed": true
     }
   ],

@@ -1890,3 +1890,30 @@ This file starts fresh for the patch-verification project.
   344 packets. The latest real DeepSeek G5 result remains the earlier
   12-task / 62-candidate / 248-packet run until a fresh 344-packet run is
   explicitly authorized and audited.
+
+## 2026-06-14 youtube-dl_23 admission and js_to_json line-comment oracle
+
+- ydl23 is a pure `test/test_utils.py` unittest lane for `js_to_json`. The
+  reference source patch requires two coordinated changes: tokenize
+  `//[^\n]*` comments and make `fix_kv` drop tokens starting with `//`.
+- Good partial negatives are therefore `regex_only_line_comment` and
+  `replacer_only_line_comment`; each applies cleanly but still fails the
+  retained oracle because the behavior needs both tokenizer and replacer logic.
+- When reusing a local checkout as a clone source, copied BugsInPy marker files
+  may describe the previous lane. Before F2P/P2P, verify and correct
+  `bugsinpy_bug.info`, `bugsinpy_patchfile.info`, and
+  `bugsinpy_run_test.sh`; otherwise audit records can silently point to the
+  wrong commit pair even if the checkout diffs are correct.
+- Corrected-policy project-level P2P-broad succeeded with the canonical
+  youtube-dl generated-download nodeid exclusion: 2059 common nodeids,
+  1836 generated downloader tests excluded, 82 static external-dependency
+  tests excluded, 1 F2P oracle excluded, 3 buggy-baseline failures excluded,
+  and 137 retained P2P tests.
+- As with ydl21, adding candidates first left E6 complete counts stale until
+  `build_evp7_visible_tool_summaries.py --check` refreshed summaries. The
+  correct rebuild order after new visible outcomes is visible tests -> tool
+  summaries -> evidence packets.
+- ydl23 admission raises the structural cohort to 19 tasks / 90 candidates /
+  360 packets. The latest real DeepSeek G5 result remains the earlier
+  12-task / 62-candidate / 248-packet run until a fresh 360-packet run is
+  explicitly authorized and audited.
