@@ -7206,3 +7206,73 @@ full run 决策：
   E6 严格优于 E4、DeepSeek 真实计费成本已知；
 - 下一步必须在 controlled expansion 与 paper-result consolidation 之间做研究
   决策，不能再把“继续加一个 bug”当作默认目标。
+
+## 95. 2026-06-14 paper-result consolidation and stale-doc repair
+
+背景：
+
+- 顶层 readiness、plan-progress 和 goal-completion 审计均已通过；
+- 当前真实 DeepSeek V4 G5 结果已覆盖 12-task / 62-candidate /
+  248-packet EVP-7 cohort；
+- `docs/plans/final_paper_roadmap_zh.md` 已明确要求在继续扩量前统一论文草稿、
+  README、计划和 cohort registry 的当前主线口径；
+- 当前不应默认再加入一个 bug。
+
+本轮小目标：
+
+1. 选择 paper-result consolidation 作为当前最短路径，而不是继续 controlled
+   expansion；
+2. 审计并修复 stale 文档口径，重点是旧的 8/9/10/11-task、168/184/200/216/232
+   历史结果不能被写成当前主结论；
+3. 如果生成脚本仍输出旧口径，修脚本而不是手改生成物；
+4. 重新运行最小文档/论文审计和本地质量门；
+5. 同步更新 README、INDEX、current plan、engineering notes，并提交推送。
+
+边界：
+
+- 不调用真实模型 API；
+- 不修改 prompt、candidate labels、P2P scope 或 evidence packets；
+- 不继续扩新 bug；
+- 不把 248-run 写成规模泛化、LLM 优于 tool-only 或已知成本结论；
+- 如果发现论文生成链路仍只支持旧 30-candidate pilot，本轮只做最短路径修复
+  或明确记录阻塞，不重构整篇论文。
+
+验收条件：
+
+- current plan 明确记录本轮选择和边界；
+- stale 文档审计不再发现会误导当前 EVP-7 主结论的旧口径；
+- 最小 paper/readiness/quality gate 通过，或阻塞原因被归类并记录；
+- 代码或文档变更只暂存本轮相关文件，检查 diff 和敏感信息后同步 GitHub。
+
+执行结果：
+
+- 已选择 paper-result consolidation 作为本轮路线，不继续扩新 bug、不调用真实 API；
+- 已扩展 `scripts/audit_paper_readiness.py`：
+  - 保留旧 prompt-only positive claim 字段，继续报告旧 full-run gate 为
+    `stop_or_redesign`；
+  - 保留旧 tool-augmented conditional claim 字段；
+  - 新增 `evp7_g5`、`evp7_bounded_pilot_claim_ready` 和
+    `current_result_claim_ready` 字段；
+  - EVP-7 readiness 只读取 raw-output-free tracked summary 和 quality audit，
+    要求 248 reviews、E0/E2/E4/E6 各 62、raw outputs 未 tracked、
+    `real_llm_verifier_signal_observed_on_evp7`、E4/E6 positive recall 和
+    positive Evidence Gain。
+- 已修正 `docs/plans/final_paper_roadmap_zh.md` 中当前 cohort 的 stale 口径：
+  - 当前 `p2p_broad_main` = 12 completed project-level P2P-broad tasks；
+  - 当前主 cohort = 12 bugs / 5 projects；
+  - 旧 184/200/216/232 run 仍保留为历史运行边界。
+- 已同步 README、INDEX 和 engineering notes，记录新的 paper readiness
+  frontier 和三条 claim 边界。
+
+验证结果：
+
+- `python -m py_compile scripts\audit_paper_readiness.py` 通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md` 通过：
+  - `prompt_only_positive_claim_ready = false`；
+  - `tool_augmented_claim_ready = true`；
+  - `evp7_bounded_pilot_claim_ready = true`；
+  - `current_result_claim_ready = true`；
+  - `evp7_blockers = []`。
+- `python scripts\audit_goal_completion.py --out-json outputs\goal_completion\latest.json --out-md outputs\goal_completion\latest.md` 通过，`complete = true`；
+- `git diff --check` 只有 Windows LF/CRLF 提示，无 whitespace error；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md` 通过，`passed = true`。

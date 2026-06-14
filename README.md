@@ -254,6 +254,11 @@ They should not override `final_paper_roadmap_zh.md`.
   `data/evidence/evp7_evidence_packets.jsonl`.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
+- `scripts/audit_paper_readiness.py` now separates three paper-result
+  boundaries: the old prompt-only gate remains a negative/redesign result, the
+  old 30-candidate tool-augmented run remains a conditional tool-assisted
+  result, and the current 248-record EVP-7 G5 run is reported as a bounded
+  pilot evidence-visibility result with explicit limitations.
 - Further expansion to 15-20 bugs is now gated by controlled-probe outcomes and
   the next project-level P2P-broad decision, not by adding metadata candidates
   directly.

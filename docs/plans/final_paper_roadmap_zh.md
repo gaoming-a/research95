@@ -817,7 +817,7 @@ explanation 和 calibrated escalation。
 
 ## 17. 当前 Stage B/C 执行状态（2026-06-11）
 
-当前 `p2p_broad_main` 已扩展到 8 个完成 project-level P2P-broad 的真实任务：
+当前 `p2p_broad_main` 已扩展到 12 个完成 project-level P2P-broad 的真实任务：
 
 - `bugsinpy_httpie_5`
 - `bugsinpy_cookiecutter_1`
@@ -828,8 +828,11 @@ explanation 和 calibrated escalation。
 - `bugsinpy_PySnooper_3`
 - `bugsinpy_youtube-dl_6`
 - `bugsinpy_youtube-dl_7`
+- `bugsinpy_youtube-dl_5`
+- `bugsinpy_youtube-dl_2`
+- `bugsinpy_youtube-dl_4`
 
-最新加入的 `bugsinpy_PySnooper_1` 使用独立 UTF-8 snoop-log oracle，包含 24 个
+此前加入的 `bugsinpy_PySnooper_1` 使用独立 UTF-8 snoop-log oracle，包含 24 个
 稳定 P2P-broad 测试和 6 个已验证 candidate patches。它确认了当前路线的关键
 执行规则：新增任务可以来自 broader BugsInPy pool，但必须经过同一套
 project-level P2P-broad 构造、retained oracle validation、F2P + P2P-broad
@@ -997,8 +1000,10 @@ BugsInPy 扩量，必须先解决当前候选池边界：
 
 2026-06-13 更新：这条决策禁止的是盲目追第 8 个 bug，不禁止已经完成
 project-level P2P-broad、retained oracle 和 candidate revalidation 的受控
-admission。`bugsinpy_youtube-dl_7` 和 `bugsinpy_youtube-dl_6` 已按该标准
-纳入，当前主 cohort 为 9 bugs / 5 projects。
+admission。`bugsinpy_youtube-dl_7`、`bugsinpy_youtube-dl_6`、
+`bugsinpy_youtube-dl_5`、`bugsinpy_youtube-dl_2` 和
+`bugsinpy_youtube-dl_4` 已按该标准纳入，当前主 cohort 为 12 bugs /
+5 projects。
 
 当前不批准：
 

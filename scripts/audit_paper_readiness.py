@@ -8,6 +8,8 @@ from typing import Any
 
 DEFAULT_FULL_RUN_DIR = Path("outputs") / "patch_verification_api_pilot_002"
 DEFAULT_TOOL_AUGMENTED_FULL_RUN_DIR = Path("outputs") / "patch_verification_tool_augmented_full_001"
+DEFAULT_EVP7_SUMMARY = Path("data") / "reviews" / "evp7_g5_llm_full_run_summary.json"
+DEFAULT_EVP7_QUALITY_AUDIT = Path("data") / "reviews" / "evp7_g5_full_run_quality_audit.json"
 
 
 def read_json(path: Path) -> dict[str, Any] | None:
@@ -170,9 +172,111 @@ def tool_augmented_completeness_state(run_dir: Path) -> dict[str, Any]:
     }
 
 
+def evp7_g5_state(summary_path: Path, quality_path: Path) -> dict[str, Any]:
+    summary = read_json(summary_path)
+    quality = read_json(quality_path)
+    metrics = summary.get("metrics", {}) if isinstance(summary, dict) else {}
+    metric_groups = metrics.get("metric_groups", {}) if isinstance(metrics, dict) else {}
+    quality_checks = quality.get("checks", []) if isinstance(quality, dict) else []
+    quality_check_map = {
+        str(item.get("check")): item
+        for item in quality_checks
+        if isinstance(item, dict) and item.get("check") is not None
+    }
+    level_counts = quality.get("level_counts", {}) if isinstance(quality, dict) else {}
+    required_docs = {
+        "protocol": file_state(Path("docs") / "protocol" / "evidence_visibility_protocol.md"),
+        "run_result": file_state(Path("docs") / "experiments" / "evp7_g5_llm_full_run_result.md"),
+        "quality_audit": file_state(Path("docs") / "experiments" / "evp7_g5_full_run_quality_audit.md"),
+        "expansion_readiness": file_state(Path("docs") / "experiments" / "evp7_expansion_readiness.md"),
+    }
+    required_levels = {"E0": 62, "E2": 62, "E4": 62, "E6": 62}
+    supported_claims = quality.get("supported_claims", []) if isinstance(quality, dict) else []
+    unsupported_claims = quality.get("unsupported_claims", []) if isinstance(quality, dict) else []
+    ready = bool(
+        summary
+        and quality
+        and metrics.get("run_kind") == "real_llm"
+        and metrics.get("g5_metric_scaffold") == "passed"
+        and metrics.get("g5_signal_claim_status") == "real_llm_verifier_signal_observed_on_evp7"
+        and summary.get("quality", {}).get("review_count") == 248
+        and summary.get("quality", {}).get("unique_review_ids") == 248
+        and summary.get("quality", {}).get("invalid_output_rate", 1.0) <= 0.02
+        and quality.get("quality_status") in {"passed", "passed_with_limitations"}
+        and quality.get("raw_outputs_read") is False
+        and quality.get("raw_outputs_tracked") is False
+        and quality.get("review_count") == 248
+        and quality.get("candidate_count") == 62
+        and level_counts == required_levels
+        and all(doc["exists"] for doc in required_docs.values())
+        and (metric_groups.get("E4") or {}).get("false_accept_rate") == 0.0
+        and (metric_groups.get("E6") or {}).get("false_accept_rate") == 0.0
+        and (metric_groups.get("E4") or {}).get("accepted_precision") == 1.0
+        and (metric_groups.get("E6") or {}).get("accepted_precision") == 1.0
+        and (metric_groups.get("E4") or {}).get("correct_recall", 0.0) > 0.0
+        and (metric_groups.get("E6") or {}).get("correct_recall", 0.0) > 0.0
+        and (metric_groups.get("E4") or {}).get("evidence_gain_vs_e0", 0.0) > 0.0
+        and (metric_groups.get("E6") or {}).get("evidence_gain_vs_e0", 0.0) > 0.0
+    )
+    blockers: list[str] = []
+    if summary is None:
+        blockers.append(f"Missing EVP-7 G5 summary: {summary_path.as_posix()}.")
+    if quality is None:
+        blockers.append(f"Missing EVP-7 G5 quality audit: {quality_path.as_posix()}.")
+    if summary and metrics.get("run_kind") != "real_llm":
+        blockers.append("EVP-7 G5 summary is not marked as a real LLM run.")
+    if summary and metrics.get("g5_metric_scaffold") != "passed":
+        blockers.append("EVP-7 G5 metric scaffold has not passed.")
+    if summary and metrics.get("g5_signal_claim_status") != "real_llm_verifier_signal_observed_on_evp7":
+        blockers.append("EVP-7 G5 signal status is not ready for bounded pilot claims.")
+    if quality and quality.get("quality_status") not in {"passed", "passed_with_limitations"}:
+        blockers.append(f"EVP-7 quality status is `{quality.get('quality_status')}`.")
+    if quality and quality.get("raw_outputs_tracked") is not False:
+        blockers.append("EVP-7 quality audit does not prove raw outputs stay untracked.")
+    if quality and level_counts != required_levels:
+        blockers.append(f"EVP-7 level counts are `{level_counts}`, expected `{required_levels}`.")
+    missing_docs = [name for name, state in required_docs.items() if not state["exists"]]
+    if missing_docs:
+        blockers.append(f"Missing EVP-7 tracked docs: {', '.join(missing_docs)}.")
+    return {
+        "summary_path": summary_path.as_posix(),
+        "quality_audit_path": quality_path.as_posix(),
+        "ready_for_bounded_pilot_claim": ready,
+        "blockers": blockers,
+        "required_docs": required_docs,
+        "quality_status": quality.get("quality_status") if quality else None,
+        "review_count": quality.get("review_count") if quality else None,
+        "candidate_count": quality.get("candidate_count") if quality else None,
+        "level_counts": level_counts,
+        "raw_outputs_tracked": quality.get("raw_outputs_tracked") if quality else None,
+        "run_kind": metrics.get("run_kind") if metrics else None,
+        "g5_signal_claim_status": metrics.get("g5_signal_claim_status") if metrics else None,
+        "invalid_output_rate": summary.get("quality", {}).get("invalid_output_rate") if summary else None,
+        "metric_groups": {
+            level: {
+                "false_accept_rate": (metric_groups.get(level) or {}).get("false_accept_rate"),
+                "accepted_precision": (metric_groups.get(level) or {}).get("accepted_precision"),
+                "correct_recall": (metric_groups.get(level) or {}).get("correct_recall"),
+                "evidence_gain_vs_e0": (metric_groups.get(level) or {}).get("evidence_gain_vs_e0"),
+            }
+            for level in ["E0", "E2", "E4", "E6"]
+        },
+        "supported_claims": supported_claims,
+        "unsupported_claims": unsupported_claims,
+        "quality_checks": {
+            name: {
+                "passed": item.get("passed"),
+                "observed": item.get("observed"),
+            }
+            for name, item in sorted(quality_check_map.items())
+        },
+    }
+
+
 def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     run_dir = Path(args.full_run_dir)
     tool_augmented_run_dir = Path(args.tool_augmented_run_dir)
+    evp7 = evp7_g5_state(Path(args.evp7_summary), Path(args.evp7_quality_audit))
     required_docs = {
         "pilot_report": file_state(Path("docs") / "experiments" / "patch_verification_pilot_report.md"),
         "tool_augmented_full_result": file_state(
@@ -251,13 +355,17 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     return {
         "full_run_dir": run_dir.as_posix(),
         "tool_augmented_run_dir": tool_augmented_run_dir.as_posix(),
+        "evp7_g5": evp7,
         "minimum_inputs_ready": minimum_inputs_ready,
         "positive_claim_ready": positive_claim_ready,
         "prompt_only_positive_claim_ready": positive_claim_ready,
         "tool_augmented_claim_ready": tool_augmented_claim_ready,
+        "evp7_bounded_pilot_claim_ready": evp7["ready_for_bounded_pilot_claim"],
+        "current_result_claim_ready": evp7["ready_for_bounded_pilot_claim"] or tool_augmented_claim_ready,
         "claim_boundary": (
             "Prompt-only evidence-first remains unsupported by the old full-run gate. "
-            "The new positive claim is limited to a conditional tool-assisted verifier."
+            "The old tool-augmented positive claim is limited to a conditional tool-assisted verifier. "
+            "The current EVP-7 G5 result supports only bounded pilot observations about evidence-level variation."
         ),
         "negative_or_methods_draft_ready": negative_or_methods_draft_ready,
         "required_docs": required_docs,
@@ -272,6 +380,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "tool_augmented_gate": tool_gate,
         "blockers": blockers,
         "tool_augmented_blockers": tool_augmented_blockers,
+        "evp7_blockers": evp7["blockers"],
     }
 
 
@@ -290,6 +399,8 @@ def build_markdown(audit: dict[str, Any]) -> str:
         f"- minimum inputs ready: {bool_mark(audit['minimum_inputs_ready'])}",
         f"- prompt-only positive claim ready: {bool_mark(audit['prompt_only_positive_claim_ready'])}",
         f"- tool-augmented claim ready: {bool_mark(audit['tool_augmented_claim_ready'])}",
+        f"- EVP-7 bounded pilot claim ready: {bool_mark(audit['evp7_bounded_pilot_claim_ready'])}",
+        f"- current result claim ready: {bool_mark(audit['current_result_claim_ready'])}",
         f"- methods/negative draft ready: {bool_mark(audit['negative_or_methods_draft_ready'])}",
         f"- claim boundary: {audit['claim_boundary']}",
         "",
@@ -337,6 +448,20 @@ def build_markdown(audit: dict[str, Any]) -> str:
             f"- usable for tool-augmented claim: {bool_mark(audit['tool_augmented_gate']['usable_for_tool_augmented_claim'])}",
             f"- metrics: `{audit['tool_augmented_gate']['metrics']}`",
             "",
+            "## EVP-7 G5 Current Result",
+            "",
+            f"- ready for bounded pilot claim: {bool_mark(audit['evp7_g5']['ready_for_bounded_pilot_claim'])}",
+            f"- summary path: `{audit['evp7_g5']['summary_path']}`",
+            f"- quality audit path: `{audit['evp7_g5']['quality_audit_path']}`",
+            f"- quality status: `{audit['evp7_g5']['quality_status']}`",
+            f"- review count: {audit['evp7_g5']['review_count']}",
+            f"- candidate count: {audit['evp7_g5']['candidate_count']}",
+            f"- level counts: `{audit['evp7_g5']['level_counts']}`",
+            f"- invalid output rate: {audit['evp7_g5']['invalid_output_rate']}",
+            f"- raw outputs tracked: {bool_mark(audit['evp7_g5']['raw_outputs_tracked'])}",
+            f"- signal status: `{audit['evp7_g5']['g5_signal_claim_status']}`",
+            f"- metric groups: `{audit['evp7_g5']['metric_groups']}`",
+            "",
             "## Failure Examples",
             "",
             f"- exists: {bool_mark(audit['failures']['exists'])}",
@@ -364,6 +489,12 @@ def build_markdown(audit: dict[str, Any]) -> str:
             lines.append(f"- {blocker}")
     else:
         lines.append("- None.")
+    lines.extend(["", "## EVP-7 Blockers", ""])
+    if audit["evp7_blockers"]:
+        for blocker in audit["evp7_blockers"]:
+            lines.append(f"- {blocker}")
+    else:
+        lines.append("- None.")
     lines.append("")
     return "\n".join(lines)
 
@@ -372,6 +503,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Audit whether the paper draft can move beyond pre-API methods.")
     parser.add_argument("--full-run-dir", default=str(DEFAULT_FULL_RUN_DIR))
     parser.add_argument("--tool-augmented-run-dir", default=str(DEFAULT_TOOL_AUGMENTED_FULL_RUN_DIR))
+    parser.add_argument("--evp7-summary", default=str(DEFAULT_EVP7_SUMMARY))
+    parser.add_argument("--evp7-quality-audit", default=str(DEFAULT_EVP7_QUALITY_AUDIT))
     parser.add_argument("--out-json", required=True)
     parser.add_argument("--out-md", required=True)
     return parser.parse_args()

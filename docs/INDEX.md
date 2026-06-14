@@ -360,8 +360,8 @@
   `bugsinpy_youtube-dl_2`. It documents the retained MPD parser oracle, four
   candidate records, project-level P2P-broad validation with 147 retained
   unittest tests, registry admission, and the previous 11-task/58-candidate/
-  232-packet artifact refresh that is covered by the latest repaired DeepSeek
-  G5 full run.
+  232-packet artifact refresh that was covered by the repaired DeepSeek G5
+  full run before the later 248-packet cohort became current.
 - `experiments/luigi_replacement_tasks_result.md`: validation, P2P scope, and
   task-accounting result for `bugsinpy_luigi_3` and `bugsinpy_luigi_4`. Both
   are classified as `main_balanced_task`; current P2P-broad scope is based on
@@ -486,8 +486,10 @@
   examples, and the relevant gate are present. It reports prompt-only positive
   readiness and tool-augmented conditional readiness separately, so the
   `tool_augmented_evidence` result cannot be mistaken for prompt-only model
-  ability. It also reports whether pre-API methods evidence is complete:
-  pilot report, paper draft/outline, model-selection docs, reproducibility
+  ability. It now also reports the current EVP-7 G5 bounded-pilot claim
+  readiness from the raw-output-free 248-record DeepSeek summary and quality
+  audit. It also reports whether pre-API methods evidence is complete: pilot
+  report, paper draft/outline, model-selection docs, reproducibility
   comparison, model catalog audit, and pre-API handoff.
 - `scripts/write_paper_tables.py`: generates Markdown and LaTeX pre-API paper
   tables from dataset summary, validation summary, metrics, and deterministic

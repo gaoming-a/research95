@@ -1694,3 +1694,21 @@ This file starts fresh for the patch-verification project.
   E6 recall 0.25, and Evidence Gain 7.25 / 7.5. The result still does not
   support scale generalization, LLM superiority over deterministic visible-test
   tool-only baseline, or a known-cost claim.
+
+## 2026-06-14 paper readiness frontier drift
+
+- `scripts/audit_paper_readiness.py` originally tracked the older
+  30-candidate prompt-only/tool-augmented paper route only. After EVP-7 reached
+  a 12-task / 62-candidate / 248-record real DeepSeek G5 run, that audit still
+  reported only the old prompt-only `stop_or_redesign` blocker and the old
+  tool-augmented conditional claim.
+- The fix is to keep those legacy fields for compatibility but add a separate
+  `evp7_g5` readiness block. It reads only the raw-output-free tracked summary
+  and quality audit, requires 248 reviews, four evidence levels with 62 records
+  each, `real_llm_verifier_signal_observed_on_evp7`, no tracked raw outputs,
+  positive E4/E6 recall and Evidence Gain, and the tracked EVP-7 protocol/result
+  documents.
+- Do not collapse these three paper-result boundaries. Prompt-only remains a
+  negative/redesign result, the old tool-augmented run remains a conditional
+  tool-assisted result, and EVP-7 G5 supports only bounded pilot observations
+  about evidence-level variation.
