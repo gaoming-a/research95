@@ -1993,3 +1993,17 @@ This file starts fresh for the patch-verification project.
 - Historical smoke output cannot be backfilled because it did not persist
   provider `usage`. Re-run a bounded smoke after this repair before considering
   the 376-record full run.
+
+## 2026-06-14 post-repair G5 smoke cost check
+
+- The repaired smoke must use a new output directory, not overwrite the
+  pre-repair smoke. `outputs/evp7_g5_llm_376_smoke_002` preserves a clean
+  before/after boundary.
+- DeepSeek official returned token usage with prompt cache hit/miss splits.
+  The runner estimated 4/4 costs from tokens with
+  `unknown_cost_record_count=0` and total estimated cost USD `0.003392942`.
+- The smoke also showed decision variability versus the pre-repair smoke:
+  E4 was `accept`, while E0/E2/E6 were `escalate`. This is smoke-level evidence
+  only and should not be analyzed as a cohort-level signal.
+- After cost observability passes on a real smoke, the next decision point is
+  whether to execute the full 376-packet G5 run under the confirmed cost budget.

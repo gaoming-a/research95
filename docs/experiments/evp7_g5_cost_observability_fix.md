@@ -44,3 +44,16 @@ The fix was verified with synthetic responses only:
 This repair makes future G5 runs cost-observable when DeepSeek returns token
 usage. It does not change the claim boundary of the previous smoke: the latest
 376-packet evidence remains a 4-packet smoke, not a full-run result.
+
+## Post-Repair Smoke
+
+The repair was subsequently validated against real DeepSeek responses in
+`outputs/evp7_g5_llm_376_smoke_002`. The tracked raw-output-free report is
+`docs/experiments/evp7_g5_llm_376_smoke_002_result.md`.
+
+- 4/4 records parsed as valid JSON.
+- 4/4 records were non-mock real API outputs.
+- 4/4 records included provider token usage summaries.
+- 4/4 costs used `cost_source = estimated_from_tokens`.
+- `unknown_cost_record_count = 0`.
+- Estimated total cost USD: 0.003392942.

@@ -8633,3 +8633,76 @@ Plan:
   未保存 provider `usage`；
 - 后续 G5 smoke/full run 具备成本可观测路径；
 - 本轮未执行新的真实 API smoke，也未执行 376-record full run。
+
+## 110. 2026-06-14 run post-repair G5 smoke cost check
+
+Inspect:
+
+- 当前工作区干净，本地 main ahead origin 14；
+- ignored `configs/evp7_g5_llm.local.json` 仍使用用户确认配置：
+  `deepseek_official` / `deepseek-v4-pro` / `max_total_cost_usd=10` /
+  `smoke_scope=4` / `full_run_permission=true`；
+- 新输出目录 `outputs/evp7_g5_llm_376_smoke_002` 尚不存在；
+- 上一轮已修复成本可观测性，但尚未用真实 provider response 验证。
+
+Plan:
+
+1. 用现有 ignored local config 跑 strict preflight，要求
+   `structural_ready=true`、`api_ready=true`、`api_call_attempted=false`；
+2. 跑 workflow check-only，要求 `model_call_attempted=false`；
+3. 执行新的 4-packet real smoke 到
+   `outputs/evp7_g5_llm_376_smoke_002`，不覆盖旧 smoke；
+4. 审计新 smoke：
+   - review_count = 4；
+   - mock_run=false for 4/4；
+   - parse_status valid for 4/4；
+   - `usage` summary 存在；
+   - `cost_source` 为 `estimated_from_tokens` 或
+     `provider_reported_usage_cost`；
+   - `unknown_cost_record_count=0`；
+   - `total_cost_usd <= 10`；
+5. 仅在 smoke 审计通过后更新 raw-output-free tracked summary/docs；
+6. 本轮不执行 376-record full run。
+
+验收条件：
+
+- 真实 API smoke 验证成本可观测性；
+- raw model outputs 仍只留在 ignored `outputs/`；
+- 如果 API 或 cost gate 失败，记录 blocker 并停止，不扩量。
+
+执行结果：
+
+- strict preflight 通过：
+  - output = `outputs/evp7_g5_llm_376_smoke_002/preflight_strict.json`；
+  - structural_ready = true；
+  - api_ready = true；
+  - api_call_attempted = false。
+- check-only workflow 通过：
+  - output = `outputs/evp7_g5_llm_376_smoke_002/check_only.json`；
+  - model_call_attempted = false；
+  - api_call_attempted = false。
+- 4-packet real smoke 已执行：
+  - run dir = `outputs/evp7_g5_llm_376_smoke_002`；
+  - review_count = 4；
+  - E0/E2/E4/E6 各 1 条，均属于 `evp7_candidate_0001`；
+  - mock_run = false for 4/4；
+  - api_call_attempted = true for 4/4；
+  - parse_status = valid for 4/4；
+  - invalid_output_rate = 0.0；
+  - decisions = accept 1 / escalate 3；
+  - usage summary present for 4/4；
+  - `cost_source=estimated_from_tokens` for 4/4；
+  - `cost_observability=estimated_from_provider_token_usage` for 4/4；
+  - `unknown_cost_record_count=0`；
+  - estimated total cost USD = 0.003392942；
+  - budget gate passed against `max_total_cost_usd=10`。
+- 已生成 raw-output-free smoke summary：
+  - `data/reviews/evp7_g5_llm_376_smoke_002_summary.json`；
+  - `docs/experiments/evp7_g5_llm_376_smoke_002_result.md`。
+- 本地质量门通过：`python scripts\run_local_quality_gate.py` -> `passed=true`。
+
+当前边界：
+
+- 成本可观测性已被真实 smoke 验证；
+- smoke_002 仍不是 376-packet full run evidence；
+- 下一步可进入“是否执行 376-record full run”的决策和执行闭环，但本轮未执行 full run。

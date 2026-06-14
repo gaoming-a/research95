@@ -135,6 +135,12 @@
 - `experiments/evp7_g5_cost_observability_fix.md`: no-API repair record for
   G5 cost observability. It documents token-usage-based DeepSeek cost
   estimation, unknown-cost failure behavior, and the historical smoke boundary.
+- `../data/reviews/evp7_g5_llm_376_smoke_002_summary.json`: raw-output-free
+  summary of the post-repair 4-packet real G5 smoke. It records provider token
+  usage summaries, estimated token-price costs, and `unknown_cost_record_count=0`.
+- `experiments/evp7_g5_llm_376_smoke_002_result.md`: human-readable
+  post-repair smoke report. It validates the API/parser/cost-observability path
+  only, not a full 376-packet G5 result.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 

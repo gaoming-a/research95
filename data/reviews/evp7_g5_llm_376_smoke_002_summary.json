@@ -1,0 +1,117 @@
+{
+  "api_call_attempted_counts": {
+    "True": 4
+  },
+  "api_provider": "deepseek_official",
+  "claim_boundary": "Smoke validates API/parser/cost-observability path only; it is not a full 376-packet G5 result.",
+  "cohort_boundary": "20 tasks / 94 candidates / 376 packets",
+  "cost_observability_counts": {
+    "estimated_from_provider_token_usage": 4
+  },
+  "cost_source_counts": {
+    "estimated_from_tokens": 4
+  },
+  "decision_counts": {
+    "accept": 1,
+    "escalate": 3
+  },
+  "evidence_level_counts": {
+    "E0": 1,
+    "E2": 1,
+    "E4": 1,
+    "E6": 1
+  },
+  "full_run_decision": "eligible_for_user_confirmed_376_packet_full_run_after_smoke_002_cost_gate",
+  "invalid_output_rate": 0.0,
+  "limit": 4,
+  "mock_run_counts": {
+    "False": 4
+  },
+  "model": "deepseek-v4-pro",
+  "parse_status_counts": {
+    "valid": 4
+  },
+  "pricing_source": "https://api-docs.deepseek.com/quick_start/pricing",
+  "records": [
+    {
+      "candidate_id": "evp7_candidate_0001",
+      "cost_observability": "estimated_from_provider_token_usage",
+      "cost_source": "estimated_from_tokens",
+      "cost_usd": 0.000601779,
+      "decision": "escalate",
+      "evidence_level": "E0",
+      "invalid_reason": null,
+      "parse_status": "valid",
+      "review_id": "evp7_candidate_0001__E0__evidence_visibility_merge_gate",
+      "usage": {
+        "completion_tokens": 625,
+        "prompt_cache_hit_tokens": 768,
+        "prompt_cache_miss_tokens": 127,
+        "prompt_tokens": 895,
+        "total_tokens": 1520
+      }
+    },
+    {
+      "candidate_id": "evp7_candidate_0001",
+      "cost_observability": "estimated_from_provider_token_usage",
+      "cost_source": "estimated_from_tokens",
+      "cost_usd": 0.001132508,
+      "decision": "escalate",
+      "evidence_level": "E2",
+      "invalid_reason": null,
+      "parse_status": "valid",
+      "review_id": "evp7_candidate_0001__E2__evidence_visibility_merge_gate",
+      "usage": {
+        "completion_tokens": 1270,
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 56,
+        "prompt_tokens": 952,
+        "total_tokens": 2222
+      }
+    },
+    {
+      "candidate_id": "evp7_candidate_0001",
+      "cost_observability": "estimated_from_provider_token_usage",
+      "cost_source": "estimated_from_tokens",
+      "cost_usd": 0.001067693,
+      "decision": "accept",
+      "evidence_level": "E4",
+      "invalid_reason": null,
+      "parse_status": "valid",
+      "review_id": "evp7_candidate_0001__E4__evidence_visibility_merge_gate",
+      "usage": {
+        "completion_tokens": 1166,
+        "prompt_cache_hit_tokens": 896,
+        "prompt_cache_miss_tokens": 115,
+        "prompt_tokens": 1011,
+        "total_tokens": 2177
+      }
+    },
+    {
+      "candidate_id": "evp7_candidate_0001",
+      "cost_observability": "estimated_from_provider_token_usage",
+      "cost_source": "estimated_from_tokens",
+      "cost_usd": 0.000590962,
+      "decision": "escalate",
+      "evidence_level": "E6",
+      "invalid_reason": null,
+      "parse_status": "valid",
+      "review_id": "evp7_candidate_0001__E6__evidence_visibility_merge_gate",
+      "usage": {
+        "completion_tokens": 639,
+        "prompt_cache_hit_tokens": 1024,
+        "prompt_cache_miss_tokens": 72,
+        "prompt_tokens": 1096,
+        "total_tokens": 1735
+      }
+    }
+  ],
+  "review_count": 4,
+  "run_dir": "outputs/evp7_g5_llm_376_smoke_002",
+  "run_id": "evp7_g5_llm_376_smoke_002",
+  "smoke_cost_gate": "passed",
+  "smoke_parse_gate": "passed",
+  "total_cost_usd": 0.003392942,
+  "unknown_cost_record_count": 0,
+  "usage_present_count": 4
+}

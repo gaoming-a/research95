@@ -453,6 +453,13 @@ and estimates `deepseek_official` / `deepseek-v4-pro` cost from official token
 pricing when provider-reported cost is absent. Future executed runs fail if
 cost remains unknown.
 
+The post-repair 4-packet smoke is
+`docs/experiments/evp7_g5_llm_376_smoke_002_result.md`. It produced 4/4 valid
+non-mock outputs, 4/4 token-usage summaries, `unknown_cost_record_count=0`, and
+estimated total cost USD `0.003392942`. This validates the cost gate but remains
+smoke evidence only; a fresh 376-packet full run is still required for current
+cohort G5 claims.
+
 For full-goal completion evidence, run:
 
 ```powershell

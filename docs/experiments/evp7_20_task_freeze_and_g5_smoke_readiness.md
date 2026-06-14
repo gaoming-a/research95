@@ -76,6 +76,12 @@ record raw-output-free usage summaries, estimate `deepseek_official` /
 and fail if cost remains unknown. This does not backfill the old smoke because
 its review records did not persist provider `usage`.
 
+A post-repair 4-packet smoke was executed in
+`outputs/evp7_g5_llm_376_smoke_002`; the tracked report is
+`docs/experiments/evp7_g5_llm_376_smoke_002_result.md`. It produced 4 valid
+non-mock records, 4 token-usage summaries, `unknown_cost_record_count=0`, and
+estimated total cost USD `0.003392942`.
+
 ## Required User Confirmations
 
 Before any real smoke run, the user must explicitly confirm:
@@ -114,8 +120,8 @@ python scripts\run_evp7_g5_llm_workflow.py `
 
 Only after the smoke run has acceptable parse status, invalid-output rate,
 observable cost, and run summary should a 376-record full run be considered.
-The current historical smoke passed parse/schema checks but exposed the
-pre-repair cost-observability blocker.
+The post-repair smoke now satisfies this cost-observability gate, but it remains
+smoke evidence only.
 
 ## Forbidden Actions
 
