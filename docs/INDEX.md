@@ -122,6 +122,10 @@
 - `../data/reviews/evp7_g5_local_config_dry_run.json`: dry-run packet for the
   future ignored G5 local config. It records that local config writing and API
   calls were not attempted, and lists the still-missing user confirmations.
+- `experiments/evp7_20_task_freeze_and_g5_smoke_readiness.md`: freeze and
+  smoke-readiness record for the current 20-task / 94-candidate / 376-packet
+  structural cohort. It documents the no-API gate status and the exact user
+  confirmations required before any real G5 smoke run.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 

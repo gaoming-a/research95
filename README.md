@@ -437,6 +437,12 @@ raw model responses tracked. A fresh 376-packet run is required before extending
 real-model claims to the current structural cohort. Raw model responses remain
 under ignored `outputs/`.
 
+The 20-task cohort is frozen for the next G5 step. The freeze and no-API smoke
+readiness record is `docs/experiments/evp7_20_task_freeze_and_g5_smoke_readiness.md`.
+It confirms structural readiness and records that real smoke execution still
+requires explicit user confirmation for provider, model, cost ceiling, smoke
+packet count, and full-run permission.
+
 For full-goal completion evidence, run:
 
 ```powershell

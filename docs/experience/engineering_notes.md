@@ -1943,3 +1943,20 @@ This file starts fresh for the patch-verification project.
   376 packets. The latest real DeepSeek G5 result remains the earlier
   12-task / 62-candidate / 248-packet run until a fresh 376-packet run is
   explicitly authorized and audited.
+
+## 2026-06-14 20-task cohort freeze and G5 smoke gate
+
+- After ydl37, EVP-7 reached the planned upper bound: 20 tasks / 94 candidates /
+  376 evidence packets. Continuing admissions would increase youtube-dl
+  concentration and should not be the next default step.
+- The correct next boundary is a frozen structural cohort plus guarded G5 smoke
+  preparation. The current package is structurally ready, but it is not new LLM
+  evidence because no API call has been made for the 376-packet cohort.
+- `create_evp7_g5_llm_local_config.py --dry-run` is the safe way to refresh the
+  confirmation packet. It does not write `configs/evp7_g5_llm.local.json` and
+  records missing provider/model/cost/smoke/full-run confirmations.
+- Strict preflight with the tracked example config should fail API readiness
+  while passing structural readiness. That failure is the expected guard, not an
+  execution bug.
+- Do not execute real smoke until provider, model, max total cost, smoke packet
+  count, and post-smoke full-run permission are explicitly confirmed.

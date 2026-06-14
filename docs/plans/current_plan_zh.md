@@ -8422,3 +8422,73 @@ Plan:
   248-packet cohort；
 - 不得把旧 248-run 的真实模型 claim 延伸到当前 376-packet structural
   cohort，除非后续显式授权并完成新的真实 376-packet run 与质量审计。
+
+## 107. 2026-06-14 freeze 20-task cohort and prepare G5 smoke
+
+Inspect:
+
+- 当前工作区干净，本地 main ahead origin 11；
+- 当前结构化 EVP-7 cohort = 20 tasks / 5 projects / 94 candidates /
+  376 evidence packets；
+- 15-20 bug 目标已达到上限，继续补 bug 会进一步扩大 youtube-dl 占比，
+  不应作为下一步；
+- G5 no-API readiness 已通过：
+  - prompt records = 376；
+  - E0/E2/E4/E6 各 94；
+  - prompt text not stored；
+  - label leakage failures = 0；
+  - API call attempted = false；
+- 真实 G5 API smoke 仍缺少用户确认：
+  provider、model、max_total_cost_usd、smoke_scope 和 full_run_permission。
+
+Plan:
+
+1. 冻结当前 20-task cohort 作为 EVP-7 structural cohort 上限；
+2. 更新 G5 execution confirmation packet，明确 376-record 当前边界、
+   必需用户确认和安全命令顺序；
+3. 运行 strict preflight，预期因缺少用户确认而失败，但必须写出 JSON 证明
+   structural_ready=true、api_ready=false、api_call_attempted=false；
+4. 运行 guarded workflow check-only，证明 workflow 不会在未确认状态下调用模型；
+5. 更新 README / docs index / readiness 文档 / engineering notes；
+6. 不创建 `configs/evp7_g5_llm.local.json`，不读取凭证，不执行 `--execute`。
+
+验收条件：
+
+- tracked docs 明确 cohort frozen at 20 tasks / 94 candidates / 376 packets；
+- strict preflight artifact 当前为“结构 ready、API not ready”；
+- check-only summary 当前为 `model_call_attempted=false`；
+- 后续真实 smoke 只能在用户确认 provider/model/cost/smoke/full-run 参数后执行。
+
+执行结果：
+
+- 已生成/刷新 G5 local config dry-run packet：
+  - `data/reviews/evp7_g5_local_config_dry_run.json`；
+  - `docs/experiments/evp7_g5_execution_confirmation_packet.md`；
+  - local config write attempted = false；
+  - api_call_attempted = false；
+  - missing_or_unconfirmed =
+    provider、model、max_total_cost_usd、smoke_scope、full_run_permission。
+- strict preflight 已运行并按预期阻止 API-ready：
+  - output = `data/reviews/evp7_g5_llm_preflight_strict_example.json`；
+  - structural_ready = true；
+  - api_ready = false；
+  - api_call_attempted = false；
+  - PowerShell wrapper 将预期 exit 1 视为 guard-pass。
+- guarded workflow check-only 已运行：
+  - output = `data/reviews/evp7_g5_workflow_check_only_example.json`；
+  - structural_ready = true；
+  - api_ready = false；
+  - model_call_attempted = false；
+  - api_call_attempted = false。
+- 新增 freeze/smoke readiness 记录：
+  `docs/experiments/evp7_20_task_freeze_and_g5_smoke_readiness.md`。
+- `configs/evp7_g5_llm.local.json` 在工作区中已存在且被忽略；本轮 dry-run
+  未创建、未修改、未暂存该 local config。
+
+当前边界：
+
+- EVP-7 cohort 冻结在 20 tasks / 5 projects / 94 candidates /
+  376 evidence packets；
+- 真实 G5 smoke 尚未执行，且不得在缺少用户确认时执行；
+- 最新真实模型证据仍只来自旧 12-task / 62-candidate / 248-packet
+  DeepSeek G5 run。
