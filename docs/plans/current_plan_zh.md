@@ -7873,3 +7873,109 @@ Plan:
   248-packet cohort；
 - 不得把旧 248-run 的真实模型 claim 延伸到当前 296-packet structural
   cohort，除非后续显式授权并完成新的真实 296-packet run 与质量审计。
+
+## 102. 2026-06-14 next controlled probe lane: youtube-dl_43
+
+Inspect:
+
+- ydl17 admission commit 后工作区干净，本地 main ahead origin 6；
+- 15 bug 下限已达到，但计划上限仍允许继续 controlled expansion 到 20 bugs；
+- 真实 G5 296-packet run 需要用户确认 API provider/model/cost/smoke/full-run
+  permission，因此本轮不进入 API；
+- 未登记且未记录 blocker 的 metadata-clean youtube-dl unittest lane 中，
+  `bugsinpy_youtube-dl_43` 是最短 source diff：
+  - target = `test.test_utils.TestUtil.test_url_basename`；
+  - test file = `test/test_utils.py`；
+  - source patch = `youtube_dl/utils.py` 中一行 `url_basename` regex 修复；
+  - requirements empty；
+  - buggy commit = `cecaaf3f58ad9f544dbb79af1e565d9353fa2b2d`；
+  - fixed commit = `d6c7a367e88096bb17e323954002c084477fe908`；
+- 两个 commit 均已确认存在于本地 youtube-dl clone；
+- 最近 ydl16/ydl17 P2P manifests 显示 `test_url_basename` 可收集并稳定运行。
+
+Plan:
+
+1. 复用本地 youtube-dl Git clone，串行构造 ydl43 buggy/fixed checkout；
+2. 运行 retained F2P command，要求 buggy fail、fixed pass；
+3. 若 F2P 成立，先 dry-run corrected-policy project-level P2P-broad：
+   - `--exclude-nodeid-prefix "test.test_download.TestDownload"`；
+   - canonical static tokens:
+     `YoutubeDL(`, `download(`, `urlopen`, `http://`, `https://`；
+4. dry-run 通过后再运行 bounded real P2P-broad；
+5. 只有 F2P、P2P-broad、candidate construction 和 candidate validation 全部
+   通过，才将 ydl43 纳入 `p2p_broad_main` 并重建 EVP-7 artifacts；
+6. 若 checkout/F2P/P2P 任一失败，记录 blocker，不做 task-file P2P 降级。
+
+验收条件：
+
+- 若 admission 成功：EVP-7 structural cohort 达到
+  16 tasks / 78 candidates / 312 packets；
+- 最新真实 DeepSeek G5 claim 仍限定在旧 12-task / 62-candidate /
+  248-packet run，除非后续显式执行新的真实 run。
+
+执行结果：
+
+- ydl43 本地 clone checkout 构造成功：
+  - buggy diff 仅包含 fixed `test/test_utils.py`；
+  - fixed diff 包含 fixed `test/test_utils.py` 和 `youtube_dl/utils.py`；
+  - 两端 HEAD 均为 `cecaaf3f58ad9f544dbb79af1e565d9353fa2b2d`，
+    fixed 版本通过放回 fixed commit 变更文件表示修复态。
+- F2P target command 结果：
+  - buggy: `url_basename` 对多级路径 URL 返回空字符串；
+  - fixed: pass。
+- corrected-policy P2P-broad 成功：
+  - collected/common nodeids = 324；
+  - excluded generated download nodeids = 224；
+  - excluded static external-dependency tests = 49；
+  - excluded retained F2P oracle = 1；
+  - excluded buggy-baseline failures = 32；
+  - retained P2P-broad tests = 18；
+  - collection error files = 0；
+  - scope policy = `youtube_dl_dynamic_download_nodeid_exclusion_v1`。
+- 新增 retained oracle：
+  `scripts/oracles/youtubedl_43_url_basename.py`；
+- 新增 candidate builder：
+  `scripts/build_youtubedl43_candidates.py`；
+- retained-oracle validation 通过：
+  - candidates = 4；
+  - patch applied = 4/4；
+  - oracle ran = 4/4；
+  - oracle passed = 1/4。
+- P2P validation 通过：
+  - labels:
+    - `correct_under_f2p_and_p2p_broad`: 1；
+    - `incorrect_issue_not_fixed`: 3。
+- `bugsinpy_youtube-dl_43` 已加入 `p2p_broad_main`。
+
+重建结果：
+
+- `build_evp7_protocol_manifests.py --check` 通过：
+  main tasks = 16；
+- `build_evp7_candidate_manifest.py --check` 通过：
+  candidates = 78，correct = 16，incorrect = 62；
+- `run_evp7_visible_tests.py --run --check --timeout 90` 通过：
+  78 records，75 completed，3 error；
+- `build_evp7_visible_tool_summaries.py --check` 通过：
+  78 complete summaries；
+- `build_evp7_evidence_packets.py --check` 通过：
+  312 packets，E0/E2/E4/E6 各 78，G1/G2 passed；
+- `run_evp7_tool_only_baselines.py --check` 通过：
+  234 decisions，G3 passed；
+- `run_evp7_merge_gate_schema_dry_run.py --check` 通过：
+  312 valid parses，G4 passed；
+- `analyze_evp7_schema_dry_run_metrics.py --check` 通过：
+  no-API metric scaffold passed，仍要求真实 LLM verifier outputs；
+- `build_evp7_g5_llm_prompt_manifest.py --check` 通过：
+  312 prompt records，zero leakage failures；
+- example preflight/check-only workflow 通过：
+  structural_ready = true，api_ready = false，model_call_attempted = false。
+
+当前边界：
+
+- 当前结构化 EVP-7 cohort = 16 tasks / 5 projects / 78 candidates /
+  312 evidence packets；
+- 15 bug 下限已达到，距 20 bug 上限还差 4 个 admission；
+- 最新真实 DeepSeek G5 full run 仍为旧 12-task / 62-candidate /
+  248-packet cohort；
+- 不得把旧 248-run 的真实模型 claim 延伸到当前 312-packet structural
+  cohort，除非后续显式授权并完成新的真实 312-packet run 与质量审计。

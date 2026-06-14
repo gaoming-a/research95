@@ -1,19 +1,19 @@
 {
-  "candidate_count": 74,
+  "candidate_count": 78,
   "cohort_id": "EVP-7",
   "conditions": [
     "tool_only_apply_only",
     "tool_only_visible_tests",
     "tool_only_visible_tool_summary"
   ],
-  "decision_count": 222,
+  "decision_count": 234,
   "g3_baseline_readiness": "passed",
   "groups": {
     "tool_only_apply_only": {
       "accepted_precision": null,
       "confusion_counts": {
-        "escalated_correct": 15,
-        "escalated_incorrect": 59,
+        "escalated_correct": 16,
+        "escalated_incorrect": 62,
         "false_accept": 0,
         "false_reject": 0,
         "invalid_output": 0,
@@ -22,57 +22,57 @@
       },
       "correct_recall": 0.0,
       "decision_counts": {
-        "escalate": 74
+        "escalate": 78
       },
       "escalation_rate": 1.0,
       "false_accept_rate": 0.0,
       "false_reject_rate": 0.0,
       "invalid_output_rate": 0.0,
-      "record_count": 74
+      "record_count": 78
     },
     "tool_only_visible_tests": {
-      "accepted_precision": 0.823529,
+      "accepted_precision": 0.833333,
       "confusion_counts": {
         "escalated_correct": 0,
         "escalated_incorrect": 0,
         "false_accept": 3,
         "false_reject": 1,
         "invalid_output": 0,
-        "true_accept": 14,
-        "true_reject": 56
+        "true_accept": 15,
+        "true_reject": 59
       },
-      "correct_recall": 0.933333,
+      "correct_recall": 0.9375,
       "decision_counts": {
-        "accept": 17,
-        "reject": 57
+        "accept": 18,
+        "reject": 60
       },
       "escalation_rate": 0.0,
-      "false_accept_rate": 0.050847,
-      "false_reject_rate": 0.066667,
+      "false_accept_rate": 0.048387,
+      "false_reject_rate": 0.0625,
       "invalid_output_rate": 0.0,
-      "record_count": 74
+      "record_count": 78
     },
     "tool_only_visible_tool_summary": {
-      "accepted_precision": 0.823529,
+      "accepted_precision": 0.833333,
       "confusion_counts": {
         "escalated_correct": 0,
         "escalated_incorrect": 0,
         "false_accept": 3,
         "false_reject": 1,
         "invalid_output": 0,
-        "true_accept": 14,
-        "true_reject": 56
+        "true_accept": 15,
+        "true_reject": 59
       },
-      "correct_recall": 0.933333,
+      "correct_recall": 0.9375,
       "decision_counts": {
-        "accept": 17,
-        "reject": 57
+        "accept": 18,
+        "reject": 60
       },
       "escalation_rate": 0.0,
-      "false_accept_rate": 0.050847,
-      "false_reject_rate": 0.066667,
+      "false_accept_rate": 0.048387,
+      "false_reject_rate": 0.0625,
       "invalid_output_rate": 0.0,
-      "record_count": 74
+      "record_count": 78
     }
   },
   "label_join_boundary": "Decisions are generated from evidence packets only; evaluator labels are joined only for aggregate metrics."

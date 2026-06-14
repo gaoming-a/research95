@@ -1827,3 +1827,22 @@ This file starts fresh for the patch-verification project.
   latest real DeepSeek G5 result remains the earlier 12-task / 62-candidate /
   248-packet run until a fresh 296-packet run is explicitly authorized and
   audited.
+
+## 2026-06-14 youtube-dl_43 admission and small-suite P2P
+
+- ydl43 is a pure `test/test_utils.py` unittest lane for `url_basename`. The
+  reference source patch is a one-line regex fix in `youtube_dl/utils.py` that
+  allows multiple path segments before the basename.
+- The old youtube-dl version around ydl43 has a much smaller collected unittest
+  surface than ydl16/ydl17: 324 common nodeids instead of roughly 2200. After
+  dynamic-download and static external-dependency exclusion, 32 buggy-baseline
+  failures also had to be excluded, leaving 18 retained P2P-broad tests.
+- This is still a valid project-level P2P-broad admission because the retained
+  tests come from project-level discovery, exclude the F2P oracle, and pass the
+  same repeated stability gate. It should be documented as a small-suite
+  youtube-dl vintage rather than compared directly with later 140+ retained
+  scopes.
+- ydl43 admission raises the structural cohort to 16 tasks / 78 candidates /
+  312 packets. The latest real DeepSeek G5 result remains the earlier
+  12-task / 62-candidate / 248-packet run until a fresh 312-packet run is
+  explicitly authorized and audited.
