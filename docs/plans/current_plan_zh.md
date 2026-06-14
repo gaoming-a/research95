@@ -7629,3 +7629,125 @@ Inspect 结果：
   264 packets；
 - 15 bug 目标仍差 2 个 admission，下一轮应继续寻找新的 bounded lane，优先
   避免重复进入同类 40 分钟 P2P 超时路径。
+
+## 100. 2026-06-14 next controlled probe lane: youtube-dl_16
+
+背景：
+
+- ydl10 已建立 F2P，但 corrected-policy P2P-broad 超时，不能 admission；
+- 继续重复旧版 ydl10/ydl3 的 40 分钟 P2P 路径收益低；
+- `bugsinpy_youtube-dl_16` 是后续无 metadata blocker 的 pure
+  `test/test_utils.py` lane，target command 为
+  `python -m unittest -q test.test_utils.TestUtil.test_dfxp2srt`；
+- ydl16 的 buggy/fixed commit 均已在本地既有 youtube-dl Git checkout 中验证
+  存在，可以复用 ydl10 已审计的本地 clone checkout 流程，避免 GitHub clone
+  TLS 中断。
+
+本轮小目标：
+
+1. 使用本地 Git clone 按 BugsInPy checkout 脚本逻辑构造 ydl16 buggy/fixed
+   workspace；
+2. 验证 marker、HEAD 和 diff 边界；
+3. 串行运行 target F2P command；
+4. 若 buggy fail 且 fixed pass，则执行 corrected-policy P2P-broad dry-run；
+5. dry-run 通过后执行真实 P2P-broad；若 manifest retained tests >= 3，则进入
+   oracle/candidate construction，否则记录 blocker。
+
+边界：
+
+- 不调用模型 API；
+- 不安装依赖、不修改 checkout、不引入 shim；
+- 不调用不稳定 GitHub clone；
+- 同一任务 buggy/fixed 测试串行；
+- P2P 必须沿用 `youtube_dl_dynamic_download_nodeid_exclusion_v1` 和
+  `--exclude-nodeid-prefix "test.test_download.TestDownload"`；
+- 若 P2P 再次超时，停止残留进程并记录，不降级为 task-file P2P。
+
+验收条件：
+
+- ydl16 workspace marker 与 diff 验证通过；
+- F2P target command 形成 buggy fail / fixed pass；
+- P2P manifest 若生成，必须是 `project_level_p2p_broad` 且 retained tests >= 3；
+- 完成后同步 ledger、readiness、current plan、engineering notes 和 INDEX。
+
+执行结果：
+
+- ydl16 本地 clone checkout 构造成功：
+  - buggy/fixed marker 文件存在；
+  - buggy diff 仅包含 fixed `test/test_utils.py`；
+  - fixed diff 包含 `ChangeLog`、fixed test file、
+    `youtube_dl/postprocessor/ffmpeg.py` 和 `youtube_dl/utils.py`；
+  - buggy/fixed HEAD 均为 `68d43a61b552007a718894967b869c0f1d8ff00f`，
+    fixed 版本通过放回 fixed commit 变更文件表示修复态。
+- F2P target command 结果：
+  - buggy: `TypeError: a bytes-like object is required, not 'str'`；
+  - fixed: pass。
+- corrected-policy P2P-broad 成功：
+  - collected/common nodeids = 2222；
+  - excluded generated download nodeids = 1985；
+  - excluded static external-dependency tests = 85；
+  - excluded retained F2P oracle = 1；
+  - excluded buggy-baseline failures = 4；
+  - retained P2P-broad tests = 147；
+  - collection error files = 0；
+  - scope policy = `youtube_dl_dynamic_download_nodeid_exclusion_v1`。
+- 新增 retained oracle：
+  `scripts/oracles/youtubedl_16_dfxp2srt_bytes.py`；
+- 新增 candidate builder：
+  `scripts/build_youtubedl16_candidates.py`；
+- retained-oracle validation 通过：
+  - candidates = 4；
+  - patch applied = 4/4；
+  - oracle ran = 4/4；
+  - oracle passed = 1/4。
+- P2P validation 通过：
+  - labels:
+    - `correct_under_f2p_and_p2p_broad`: 1；
+    - `incorrect_issue_not_fixed`: 3。
+- `bugsinpy_youtube-dl_16` 已加入 `p2p_broad_main`。
+
+修复/诊断：
+
+- 初版 ydl16 candidate patch hunk 手写不精确，导致 patch apply failure；
+  已改为直接复用 fixed workspace 的 source-only `git diff`；
+- `validate_patch_candidates.py` 暴露执行链路 bug：validation workdir 位于
+  当前 Git repo 的 ignored `outputs/` 下且没有 `.git`，`git apply` 会向上
+  发现 research95 仓库，造成 patch apply false positive；已通过
+  `GIT_CEILING_DIRECTORIES = workdir.parent` 阻止向上发现仓库，确保 patch
+  应用到 candidate workdir；
+- 同一修复被 `validate_candidates_with_p2p.py` 复用，因为它调用同一个
+  `apply_patch`。
+
+重建结果：
+
+- `build_evp7_protocol_manifests.py --check` 通过：
+  main tasks = 14；
+- `build_evp7_candidate_manifest.py --check` 通过：
+  candidates = 70，correct = 14，incorrect = 56；
+- `run_evp7_visible_tests.py --run --check --timeout 90` 通过：
+  70 records，67 completed，3 error；
+- `build_evp7_visible_tool_summaries.py --check` 首次读取旧 66-summary；
+  按 evidence packets -> tool summaries -> evidence packets 顺序重跑后通过：
+  70 complete summaries；
+- `build_evp7_evidence_packets.py --check` 通过：
+  280 packets，E0/E2/E4/E6 各 70，G1/G2 passed；
+- `run_evp7_tool_only_baselines.py --check` 通过：
+  210 decisions，G3 passed；
+- `run_evp7_merge_gate_schema_dry_run.py --check` 通过：
+  280 valid parses，G4 passed；
+- `analyze_evp7_schema_dry_run_metrics.py --check` 通过：
+  no-API metric scaffold passed，仍要求真实 LLM verifier outputs；
+- `build_evp7_g5_llm_prompt_manifest.py --check` 通过：
+  280 prompt records，zero leakage failures；
+- example preflight/check-only workflow 通过：
+  structural_ready = true，api_ready = false，model_call_attempted = false。
+
+当前边界：
+
+- 当前结构化 EVP-7 cohort = 14 tasks / 5 projects / 70 candidates /
+  280 evidence packets；
+- 最新真实 DeepSeek G5 full run 仍为旧 12-task / 62-candidate /
+  248-packet cohort；
+- 不得把旧 248-run 的真实模型 claim 延伸到当前 280-packet structural
+  cohort，除非后续显式授权并完成新的真实 280-packet run 与质量审计；
+- 15 bug 目标仍差 1 个 admission。

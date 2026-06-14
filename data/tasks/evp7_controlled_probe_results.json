@@ -448,6 +448,34 @@
           "result": "pass"
         }
       }
+    },
+    {
+      "blocked_reason": [],
+      "bug_id": "16",
+      "candidate_validation_report": "docs/experiments/youtubedl16_candidate_validation.md",
+      "date": "2026-06-14",
+      "decision": "admitted_to_p2p_broad_main",
+      "fixed_result": "pass",
+      "notes": "Local clone checkout followed the BugsInPy reset/copy-test-file flow after GitHub clone instability was observed in earlier probes. The target pure-utils unittest produced the expected buggy error and fixed pass. A later project-level P2P-broad run produced 147 retained P2P tests with youtube_dl_dynamic_download_nodeid_exclusion_v1, and four candidate records passed retained-oracle and P2P-broad validation before admission.",
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_youtube-dl_16_p2p_broad.json",
+      "probe_status": "admitted_p2p_broad_main",
+      "project": "youtube-dl",
+      "run_command": "python -m unittest -q test.test_utils.TestUtil.test_dfxp2srt",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_youtube-dl_16",
+      "test_file": "test/test_utils.py",
+      "versions": {
+        "buggy": {
+          "checkout": "local_clone",
+          "git_head": "68d43a61b552007a718894967b869c0f1d8ff00f",
+          "result": "fail"
+        },
+        "fixed": {
+          "checkout": "local_clone",
+          "git_head": "68d43a61b552007a718894967b869c0f1d8ff00f_with_fixed_files",
+          "result": "pass"
+        }
+      }
     }
   ],
   "schema": "controlled_probe_results.v1"

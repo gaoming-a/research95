@@ -81,12 +81,21 @@ def copy_checkout(source_root: Path, candidate: dict[str, Any], workdir: Path) -
     )
 
 
-def run_command(command: list[str], cwd: Path, timeout_seconds: int) -> dict[str, Any]:
+def run_command(
+    command: list[str],
+    cwd: Path,
+    timeout_seconds: int,
+    extra_env: dict[str, str] | None = None,
+) -> dict[str, Any]:
     started = time.monotonic()
+    env = os.environ.copy()
+    if extra_env:
+        env.update(extra_env)
     try:
         completed = subprocess.run(
             command,
             cwd=str(cwd),
+            env=env,
             text=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -129,6 +138,7 @@ def apply_patch(candidate: dict[str, Any], workdir: Path, timeout_seconds: int) 
         ["git", "apply", "--whitespace=nowarn", str(patch_path.resolve())],
         cwd=workdir,
         timeout_seconds=timeout_seconds,
+        extra_env={"GIT_CEILING_DIRECTORIES": str(workdir.parent.resolve())},
     )
     result["attempted"] = True
     result["applied"] = result["exit_code"] == 0

@@ -22,7 +22,7 @@
   "controlled_probe_results": {
     "p2p_candidate_tasks": [],
     "probe_status_counts": {
-      "admitted_p2p_broad_main": 6,
+      "admitted_p2p_broad_main": 7,
       "f2p_blocked_checkout_timeout": 1,
       "f2p_blocked_dependency_environment": 4,
       "f2p_blocked_existing_incomplete_native_probe": 1,
@@ -41,6 +41,7 @@
       "bugsinpy_youtube-dl_10",
       "bugsinpy_youtube-dl_11",
       "bugsinpy_youtube-dl_13",
+      "bugsinpy_youtube-dl_16",
       "bugsinpy_youtube-dl_2",
       "bugsinpy_youtube-dl_3",
       "bugsinpy_youtube-dl_4",
@@ -55,9 +56,9 @@
     "cookiecutter": 3,
     "httpie": 1,
     "tqdm": 1,
-    "youtube-dl": 6
+    "youtube-dl": 7
   },
-  "current_main_task_count": 13,
+  "current_main_task_count": 14,
   "current_main_tasks": [
     "bugsinpy_PySnooper_1",
     "bugsinpy_PySnooper_3",
@@ -71,7 +72,8 @@
     "bugsinpy_youtube-dl_5",
     "bugsinpy_youtube-dl_6",
     "bugsinpy_youtube-dl_7",
-    "bugsinpy_youtube-dl_11"
+    "bugsinpy_youtube-dl_11",
+    "bugsinpy_youtube-dl_16"
   ],
   "next_execution_boundary": [
     "Run at most one bounded checkout/F2P/P2P probe per risky project lane at a time.",

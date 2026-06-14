@@ -1781,3 +1781,24 @@ This file starts fresh for the patch-verification project.
   project-level P2P-broad still exceeded the 40 minute budget with no manifest.
   Treat it like ydl3: a P2P timeout blocker, not an admission and not
   permission to downgrade to task-file P2P.
+
+## 2026-06-14 youtube-dl_16 admission and validator ceiling
+
+- ydl16 used the local clone checkout path after GitHub clone instability was
+  observed. The admission still requires the same gates as a normal checkout:
+  marker files, HEAD/diff verification, F2P fail/pass, project-level P2P-broad,
+  retained-oracle validation, and P2P validation.
+- Candidate patch text should be sourced from the fixed workspace `git diff`
+  whenever possible. The first ydl16 candidate builder used hand-written hunks
+  and produced patch-apply failures; replacing them with source-only diffs from
+  the validated workspace fixed the issue without changing the candidate set.
+- Validation workdirs under `outputs/` are inside the research95 Git repository
+  but intentionally lack their own `.git`. Plain `git apply` can discover the
+  parent research95 repository and report success without modifying the copied
+  checkout. Set `GIT_CEILING_DIRECTORIES` to the validation workdir parent
+  before applying candidate patches so Git treats the copied checkout as the
+  working directory root.
+- ydl16 admission raises the structural cohort to 14 tasks / 70 candidates /
+  280 packets. The latest real DeepSeek G5 result remains the earlier
+  12-task / 62-candidate / 248-packet run until a fresh 280-packet run is
+  explicitly authorized and audited.
