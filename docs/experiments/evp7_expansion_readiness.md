@@ -4,8 +4,8 @@ This report is a planning artifact. It does not admit new bugs into the main coh
 
 ## Current Cohort
 
-- Main tasks: 14
-- Main projects: `{"PySnooper": 2, "cookiecutter": 3, "httpie": 1, "tqdm": 1, "youtube-dl": 7}`
+- Main tasks: 15
+- Main projects: `{"PySnooper": 2, "cookiecutter": 3, "httpie": 1, "tqdm": 1, "youtube-dl": 8}`
 - Blocked or pending registry tasks: 27
 
 ## Candidate Pool
@@ -19,8 +19,8 @@ This report is a planning artifact. It does not admit new bugs into the main coh
 - Metadata blocker counts: `{"external_service_dependency": 5, "heavy_ml_dependency": 45, "native_build_dependency": 179, "network_reference_in_metadata": 102}`
 - Fresh-project promising candidates: 0
 - Controlled probe result source: `data\tasks\evp7_controlled_probe_results.json`
-- Controlled probe recorded tasks: `["bugsinpy_ansible_1", "bugsinpy_fastapi_4", "bugsinpy_luigi_1", "bugsinpy_matplotlib_1", "bugsinpy_sanic_2", "bugsinpy_scrapy_2", "bugsinpy_tornado_1", "bugsinpy_youtube-dl_10", "bugsinpy_youtube-dl_11", "bugsinpy_youtube-dl_13", "bugsinpy_youtube-dl_16", "bugsinpy_youtube-dl_2", "bugsinpy_youtube-dl_3", "bugsinpy_youtube-dl_4", "bugsinpy_youtube-dl_5", "bugsinpy_youtube-dl_6", "bugsinpy_youtube-dl_7"]`
-- Controlled probe status counts: `{"admitted_p2p_broad_main": 7, "f2p_blocked_checkout_timeout": 1, "f2p_blocked_dependency_environment": 4, "f2p_blocked_existing_incomplete_native_probe": 1, "f2p_blocked_windows_posix_import": 1, "f2p_established_corrected_policy_p2p_timeout": 2, "f2p_established_existing_p2p_timeout": 1}`
+- Controlled probe recorded tasks: `["bugsinpy_ansible_1", "bugsinpy_fastapi_4", "bugsinpy_luigi_1", "bugsinpy_matplotlib_1", "bugsinpy_sanic_2", "bugsinpy_scrapy_2", "bugsinpy_tornado_1", "bugsinpy_youtube-dl_10", "bugsinpy_youtube-dl_11", "bugsinpy_youtube-dl_13", "bugsinpy_youtube-dl_16", "bugsinpy_youtube-dl_17", "bugsinpy_youtube-dl_2", "bugsinpy_youtube-dl_3", "bugsinpy_youtube-dl_4", "bugsinpy_youtube-dl_5", "bugsinpy_youtube-dl_6", "bugsinpy_youtube-dl_7"]`
+- Controlled probe status counts: `{"admitted_p2p_broad_main": 8, "f2p_blocked_checkout_timeout": 1, "f2p_blocked_dependency_environment": 4, "f2p_blocked_existing_incomplete_native_probe": 1, "f2p_blocked_windows_posix_import": 1, "f2p_established_corrected_policy_p2p_timeout": 2, "f2p_established_existing_p2p_timeout": 1}`
 - F2P-established P2P candidates: `[]`
 
 ## Probe Lanes

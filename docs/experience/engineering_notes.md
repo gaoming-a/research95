@@ -1802,3 +1802,28 @@ This file starts fresh for the patch-verification project.
   280 packets. The latest real DeepSeek G5 result remains the earlier
   12-task / 62-candidate / 248-packet run until a fresh 280-packet run is
   explicitly authorized and audited.
+
+## 2026-06-14 youtube-dl_17 admission and oracle import path
+
+- ydl17 is a pure `test/test_utils.py` unittest lane for
+  `cli_bool_option`. The BugsInPy patch only changes `youtube_dl/utils.py`:
+  missing optional bool params should return `[]`, while explicit `False`
+  still emits the false option.
+- The same local clone checkout strategy worked: both buggy and fixed
+  workspaces stay on the buggy commit, with fixed test files copied into both
+  sides and the fixed source file copied only into the fixed side.
+- Corrected-policy project-level P2P-broad succeeded with the canonical
+  youtube-dl generated-download nodeid exclusion: 2203 common nodeids,
+  1967 generated downloader tests excluded, 85 static external-dependency
+  tests excluded, 1 F2P oracle excluded, 4 buggy-baseline failures excluded,
+  and 146 retained P2P tests.
+- New oracle scripts that import the target project must add `Path.cwd()` to
+  `sys.path` inside `main()` before importing project modules. The validator
+  executes oracle scripts by absolute path from research95, so without this
+  insertion Python resolves imports from `scripts/oracles` and misses the
+  candidate checkout.
+- ydl17 admission raises the structural cohort to 15 tasks / 74 candidates /
+  296 packets, meeting the lower bound of the 15-20 bug expansion target. The
+  latest real DeepSeek G5 result remains the earlier 12-task / 62-candidate /
+  248-packet run until a fresh 296-packet run is explicitly authorized and
+  audited.

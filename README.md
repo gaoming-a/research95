@@ -213,17 +213,17 @@ They should not override `final_paper_roadmap_zh.md`.
 - The 2026-06-12 decision froze the then-current 7-task main cohort as
   `EVP-7 Protocol Pilot` to validate the evidence-visibility protocol before
   blind expansion. Controlled `youtube-dl` admissions through
-  `bugsinpy_youtube-dl_16` have raised the tracked structural cohort to 14
-  tasks across 5 projects. The tracked candidate manifest contains 70 promoted
-  candidates, including 14 correct reference patches and 56 issue-not-fixed
-  negatives. The tracked evidence packet manifest contains 280 E0/E2/E4/E6
-  packet records, with all four levels complete for 70/70 candidates and zero
+  `bugsinpy_youtube-dl_17` have raised the tracked structural cohort to 15
+  tasks across 5 projects. The tracked candidate manifest contains 74 promoted
+  candidates, including 15 correct reference patches and 59 issue-not-fixed
+  negatives. The tracked evidence packet manifest contains 296 E0/E2/E4/E6
+  packet records, with all four levels complete for 74/74 candidates and zero
   leakage findings.
   Three visible-test outcomes are `error` because partial candidates break
   import; they remain valid visible outcomes, not missing evidence. The
   realistic tool-only baselines are generated for apply-only, visible-tests,
   and visible-tool-summary conditions. The merge-gate schema dry-run now
-  generates 280 parse-valid accept/reject/escalate records with zero leakage
+  generates 296 parse-valid accept/reject/escalate records with zero leakage
   findings. The latest real DeepSeek official G5 full run still covers the
   previous 12-task/62-candidate/248-packet cohort with explicit bounded
   parallelism (`--concurrency 6`). It produced 247/248 parse-valid records; the
@@ -244,7 +244,7 @@ They should not override `final_paper_roadmap_zh.md`.
   `bugsinpy_sanic_2` also completed checkout but is F2P-blocked by the missing
   current-environment Sanic dependency `aiofiles`. A parallel F2P-only triage
   found clean youtube-dl F2P signals, and controlled youtube-dl admissions
-  through `bugsinpy_youtube-dl_16` have now crossed the project-level P2P-broad
+  through `bugsinpy_youtube-dl_17` have now crossed the project-level P2P-broad
   plus candidate revalidation boundary. The
   remaining readiness lanes are blocked by environment or historical probe
   constraints: Scrapy lacks Twisted, Ansible reaches Windows `fcntl`, Luigi
@@ -328,14 +328,20 @@ and does not print the stale pre-policy rerun command once the tracked manifest
 exists.
 
 The latest admitted task is recorded in
-`docs/experiments/youtubedl16_candidate_validation.md`. It produced
-`data/p2p_scopes/bugsinpy_youtube-dl_16_p2p_broad.json` with 147 P2P-broad
+`docs/experiments/youtubedl17_candidate_validation.md`. It produced
+`data/p2p_scopes/bugsinpy_youtube-dl_17_p2p_broad.json` with 146 P2P-broad
 tests under the same explicit dynamic-download nodeid exclusion policy and
-rebuilt the no-API EVP-7 artifacts to 14 tasks, 70 candidates, and 280 evidence
+rebuilt the no-API EVP-7 artifacts to 15 tasks, 74 candidates, and 296 evidence
 packets. The latest tracked DeepSeek G5 run still covers the previous
 12-task/62-candidate/248-packet cohort.
 
 The preceding admitted task is recorded in
+`docs/experiments/youtubedl16_candidate_validation.md`. It produced
+`data/p2p_scopes/bugsinpy_youtube-dl_16_p2p_broad.json` with 147 P2P-broad
+tests and rebuilt the then-current no-API artifacts to 14 tasks, 70 candidates,
+and 280 evidence packets.
+
+The earlier admitted task is recorded in
 `docs/experiments/youtubedl11_candidate_validation.md`. It produced
 `data/p2p_scopes/bugsinpy_youtube-dl_11_p2p_broad.json` with 160 P2P-broad
 tests and rebuilt the then-current no-API artifacts to 13 tasks, 66 candidates,
@@ -389,11 +395,11 @@ After a real G5 full run, regenerate the tracked raw-output-free summary with:
 python scripts\summarize_evp7_g5_llm_full_run.py
 ```
 
-The guarded workflow can run a full current 280-packet execution with explicit
+The guarded workflow can run a full current 296-packet execution with explicit
 bounded parallelism, for example `--concurrency 4` or `--concurrency 6`. The
 default remains sequential. The latest tracked DeepSeek full-run summary covers
 the earlier 248-packet cohort, with one reported schema-invalid record and no
-raw model responses tracked. A fresh 280-packet run is required before extending
+raw model responses tracked. A fresh 296-packet run is required before extending
 real-model claims to the current structural cohort. Raw model responses remain
 under ignored `outputs/`.
 
