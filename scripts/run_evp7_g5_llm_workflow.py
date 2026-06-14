@@ -41,6 +41,12 @@ DEFAULT_CHECK_SUMMARY_OUT = REPO_ROOT / "data" / "reviews" / "evp7_g5_workflow_c
 DEFAULT_MOCK_REVIEWS_OUT = REPO_ROOT / "data" / "reviews" / "evp7_g5_workflow_mock_reviews.jsonl"
 DEFAULT_MOCK_METRICS_OUT = REPO_ROOT / "data" / "reviews" / "evp7_g5_workflow_mock_metrics.json"
 DEFAULT_MOCK_SUMMARY_OUT = REPO_ROOT / "data" / "reviews" / "evp7_g5_workflow_mock_summary.json"
+DEEPSEEK_PRICING_SOURCE_URL = "https://api-docs.deepseek.com/quick_start/pricing"
+DEEPSEEK_V4_PRO_USD_PER_1M_TOKENS = {
+    "input_cache_hit": 0.003625,
+    "input_cache_miss": 0.435,
+    "output": 0.87,
+}
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -116,6 +122,7 @@ def review_record(
     mock_run: bool,
 ) -> dict[str, Any]:
     parsed, invalid_reason, raw_text = normalize_provider_response(response)
+    cost = cost_summary(response=response, api_provider=api_provider, model=model, mock_run=mock_run)
     return {
         "review_id": f"{packet['evidence_packet_id']}__evidence_visibility_merge_gate",
         "evidence_packet_id": packet["evidence_packet_id"],
@@ -135,7 +142,11 @@ def review_record(
         "parsed_output": parsed,
         "parse_status": "valid" if invalid_reason is None else "invalid",
         "invalid_reason": invalid_reason,
-        "cost_usd": _cost(response),
+        "usage": cost["usage"],
+        "cost_usd": cost["cost_usd"],
+        "cost_source": cost["cost_source"],
+        "cost_observability": cost["cost_observability"],
+        "cost_pricing": cost["cost_pricing"],
         "run_date_utc": datetime.now(timezone.utc).isoformat(),
     }
 
@@ -144,14 +155,144 @@ def _safe(value: str) -> str:
     return re.sub(r"[^A-Za-z0-9_.-]+", "_", value)
 
 
-def _cost(response: dict[str, Any]) -> float:
+def cost_summary(
+    *,
+    response: dict[str, Any],
+    api_provider: str,
+    model: str,
+    mock_run: bool,
+) -> dict[str, Any]:
     usage = response.get("usage", {})
     if not isinstance(usage, dict):
-        return 0.0
+        return _unknown_cost("missing_usage")
+    normalized_usage = _usage_summary(usage)
+    if mock_run:
+        return {
+            "usage": normalized_usage,
+            "cost_usd": 0.0,
+            "cost_source": "mock",
+            "cost_observability": "mock_no_billing",
+            "cost_pricing": None,
+        }
     try:
-        return float(usage.get("cost") or 0.0)
+        provider_cost = float(usage.get("cost"))
     except (TypeError, ValueError):
-        return 0.0
+        provider_cost = None
+    if provider_cost is not None:
+        return {
+            "usage": normalized_usage,
+            "cost_usd": round(provider_cost, 9),
+            "cost_source": "provider_reported_usage_cost",
+            "cost_observability": "provider_reported_cost",
+            "cost_pricing": None,
+        }
+    if api_provider == "deepseek_official" and model == "deepseek-v4-pro":
+        estimated = _estimate_deepseek_v4_pro_cost(usage)
+        if estimated is not None:
+            return {
+                "usage": normalized_usage,
+                "cost_usd": round(estimated["cost_usd"], 9),
+                "cost_source": "estimated_from_tokens",
+                "cost_observability": "estimated_from_provider_token_usage",
+                "cost_pricing": {
+                    "source": DEEPSEEK_PRICING_SOURCE_URL,
+                    "unit": "USD per 1M tokens",
+                    "model": "deepseek-v4-pro",
+                    "rates": DEEPSEEK_V4_PRO_USD_PER_1M_TOKENS,
+                    "input_cache_miss_fallback": estimated["input_cache_miss_fallback"],
+                },
+            }
+    return _unknown_cost("missing_provider_cost_or_supported_token_pricing", usage=normalized_usage)
+
+
+def _unknown_cost(reason: str, usage: dict[str, Any] | None = None) -> dict[str, Any]:
+    return {
+        "usage": usage or {},
+        "cost_usd": None,
+        "cost_source": "unknown",
+        "cost_observability": reason,
+        "cost_pricing": None,
+    }
+
+
+def _usage_summary(usage: dict[str, Any]) -> dict[str, Any]:
+    allowed = {
+        "prompt_tokens",
+        "completion_tokens",
+        "total_tokens",
+        "prompt_cache_hit_tokens",
+        "prompt_cache_miss_tokens",
+        "cache_hit_tokens",
+        "cache_miss_tokens",
+    }
+    summary: dict[str, Any] = {}
+    for key in sorted(allowed):
+        value = usage.get(key)
+        if isinstance(value, (int, float)):
+            summary[key] = int(value)
+    return summary
+
+
+def _estimate_deepseek_v4_pro_cost(usage: dict[str, Any]) -> dict[str, Any] | None:
+    completion_tokens = _token_count(usage.get("completion_tokens"))
+    prompt_tokens = _token_count(usage.get("prompt_tokens"))
+    cache_hit_tokens = _token_count(usage.get("prompt_cache_hit_tokens"), usage.get("cache_hit_tokens"))
+    cache_miss_tokens = _token_count(usage.get("prompt_cache_miss_tokens"), usage.get("cache_miss_tokens"))
+    input_cache_miss_fallback = False
+    if cache_hit_tokens is None and cache_miss_tokens is None and prompt_tokens is not None:
+        cache_hit_tokens = 0
+        cache_miss_tokens = prompt_tokens
+        input_cache_miss_fallback = True
+    if completion_tokens is None and prompt_tokens is None and cache_hit_tokens is None and cache_miss_tokens is None:
+        return None
+    prompt_cost = 0.0
+    if cache_hit_tokens is not None:
+        prompt_cost += cache_hit_tokens * DEEPSEEK_V4_PRO_USD_PER_1M_TOKENS["input_cache_hit"] / 1_000_000
+    if cache_miss_tokens is not None:
+        prompt_cost += cache_miss_tokens * DEEPSEEK_V4_PRO_USD_PER_1M_TOKENS["input_cache_miss"] / 1_000_000
+    completion_cost = 0.0
+    if completion_tokens is not None:
+        completion_cost = completion_tokens * DEEPSEEK_V4_PRO_USD_PER_1M_TOKENS["output"] / 1_000_000
+    return {
+        "cost_usd": prompt_cost + completion_cost,
+        "input_cache_miss_fallback": input_cache_miss_fallback,
+    }
+
+
+def _token_count(*values: Any) -> int | None:
+    for value in values:
+        if value is None:
+            continue
+        try:
+            count = int(value)
+        except (TypeError, ValueError):
+            continue
+        if count >= 0:
+            return count
+    return None
+
+
+def run_cost_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
+    total = 0.0
+    unknown = 0
+    sources: dict[str, int] = {}
+    observability: dict[str, int] = {}
+    for record in records:
+        source = str(record.get("cost_source") or "unknown")
+        sources[source] = sources.get(source, 0) + 1
+        status = str(record.get("cost_observability") or "unknown")
+        observability[status] = observability.get(status, 0) + 1
+        cost = record.get("cost_usd")
+        if cost is None:
+            unknown += 1
+            continue
+        total += float(cost)
+    return {
+        "total_cost_usd": round(total, 9),
+        "unknown_cost_record_count": unknown,
+        "cost_source_counts": dict(sorted(sources.items())),
+        "cost_observability_counts": dict(sorted(observability.items())),
+    }
 
 
 def run_check_only(args: argparse.Namespace) -> dict[str, Any]:
@@ -236,8 +377,7 @@ def run_execute(args: argparse.Namespace) -> dict[str, Any]:
     _validate_prompt_boundaries(packets)
     records = _execute_packets(packets, config, args.concurrency)
     max_total_cost = float(config["max_total_cost_usd"])
-    if sum(float(item.get("cost_usd") or 0.0) for item in records) > max_total_cost:
-        raise SystemExit("G5 workflow stopped because observed cost exceeded max_total_cost_usd.")
+    cost = run_cost_summary(records)
 
     reviews_out = _abs(args.reviews_out or Path(config["out_dir"]) / "reviews.jsonl")
     metrics_out = _abs(args.metrics_out or Path(config["out_dir"]) / "metrics.json")
@@ -254,10 +394,18 @@ def run_execute(args: argparse.Namespace) -> dict[str, Any]:
         "api_call_attempted": True,
         "model_call_attempted": True,
         "concurrency": args.concurrency,
-        "total_cost_usd": round(sum(float(item.get("cost_usd") or 0.0) for item in records), 6),
+        "total_cost_usd": cost["total_cost_usd"],
+        "cost_summary": cost,
         "g5_signal_claim_status": metrics["g5_signal_claim_status"],
     }
     write_json(summary_out, summary)
+    if cost["unknown_cost_record_count"]:
+        raise SystemExit(
+            "G5 workflow stopped after writing outputs because cost observability is incomplete: "
+            + json.dumps(cost, ensure_ascii=False, sort_keys=True)
+        )
+    if float(cost["total_cost_usd"]) > max_total_cost:
+        raise SystemExit("G5 workflow stopped because observed or estimated cost exceeded max_total_cost_usd.")
     return summary
 
 

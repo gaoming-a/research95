@@ -447,8 +447,11 @@ After confirmation, a 4-packet real G5 smoke was run in
 `outputs/evp7_g5_llm_376_smoke_001`. The raw-output-free report is
 `docs/experiments/evp7_g5_llm_376_smoke_result.md`: 4/4 outputs parsed, all
 non-mock, but the provider response did not expose reliable cost telemetry.
-The full 376-record run is therefore blocked until that cost boundary is
-resolved or explicitly accepted.
+That historical smoke cannot be backfilled because it did not persist provider
+`usage`, but `scripts/run_evp7_g5_llm_workflow.py` now records usage summaries
+and estimates `deepseek_official` / `deepseek-v4-pro` cost from official token
+pricing when provider-reported cost is absent. Future executed runs fail if
+cost remains unknown.
 
 For full-goal completion evidence, run:
 

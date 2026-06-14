@@ -27,6 +27,12 @@ The smoke parser/API gate passed: all 4 records were valid, non-mock, real API r
 
 The workflow observed `cost_usd = 0.0` for all records. This should be treated as missing or non-reporting provider cost telemetry, not proof that the run was free. Because the configured `max_total_cost_usd = 10` cannot be reliably enforced from the recorded provider response, the 376-record full run is blocked until cost observability is fixed or the user explicitly accepts this telemetry limitation.
 
+Follow-up repair: `docs/experiments/evp7_g5_cost_observability_fix.md`
+documents the no-API runner fix. Future G5 executions record provider `usage`
+summaries and estimate `deepseek_official` / `deepseek-v4-pro` cost from
+DeepSeek token pricing when direct provider cost is absent. The old smoke cannot
+be backfilled because its review records did not persist provider `usage`.
+
 ## Claim Boundary
 
 This smoke validates the real API path and parser/schema stability on 4 packets only. It is not a full G5 result and must not be used to extend the old 248-packet DeepSeek claim to the current 376-packet cohort.

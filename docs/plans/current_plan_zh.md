@@ -8571,3 +8571,65 @@ Plan:
 - full run blocked pending cost observability fix or explicit user override；
 - smoke 仅证明真实 API/parser path 可用，不构成当前 376-packet cohort 的
   G5 full-run evidence。
+
+## 109. 2026-06-14 repair G5 cost observability
+
+Inspect:
+
+- 当前工作区干净，本地 main ahead origin 13；
+- 4-packet smoke 已证明 API/parser path 可用，但 review 记录只写入
+  `cost_usd`，没有保留 provider `usage`；
+- runner 当前只读取 `response["usage"]["cost"]`，DeepSeek official 的
+  OpenAI-compatible response 通常提供 token usage 而非直接账单 cost；
+- 因此 `cost_usd=0.0` 是 client 映射缺口，不能作为预算门依据。
+
+Plan:
+
+1. 在 G5 runner 内新增 provider/model cost extraction：
+   - 优先使用 provider 返回的 `usage.cost`；
+   - 如果 cost 缺失，则从 prompt/completion/cache token usage 按
+     provider/model price estimate 计算；
+   - 明确记录 `cost_observability`，区分 provider-reported、estimated、
+     missing_usage 和 mock；
+2. 每条 review 写入 raw-output-free 的 usage summary 和 cost estimate
+   metadata，不写 prompt text 或 raw model content 到 tracked 文件；
+3. workflow summary 使用同一成本聚合结果执行 `max_total_cost_usd` gate；
+4. 用合成 DeepSeek response 做 no-API 最小验证，确认 token usage 能生成
+   非零估算成本；
+5. 更新 smoke result/readiness 文档、README、docs index 和 engineering notes；
+6. 不执行新的真实 API smoke，不执行 376-record full run。
+
+验收条件：
+
+- 合成 DeepSeek usage 下 `cost_usd > 0` 且 `cost_source=estimated_from_tokens`；
+- 缺失 usage 时明确标记 cost observability failure，不能被当作 0 成本通过；
+- check-only 仍不调用 API；
+- local quality gate 通过。
+
+执行结果：
+
+- 已修复 `scripts/run_evp7_g5_llm_workflow.py`：
+  - 每条 review 保留 raw-output-free `usage` summary；
+  - 新增 `cost_source`、`cost_observability`、`cost_pricing`；
+  - 优先读取 provider-reported `usage.cost`；
+  - 对 `deepseek_official` / `deepseek-v4-pro` 使用 DeepSeek official
+    Models & Pricing token 单价估算成本；
+  - 如果 provider usage 或受支持 pricing 缺失，则 `cost_usd=null`，
+    workflow summary 写出后以 unknown cost 失败；
+  - mock 路径继续标记 `mock_no_billing`，不污染真实成本统计。
+- 已新增修复记录：
+  `docs/experiments/evp7_g5_cost_observability_fix.md`。
+- 已用合成 response 完成 no-API 最小验证：
+  - prompt/completion token usage -> `cost_source=estimated_from_tokens`，
+    `cost_usd=0.000609`；
+  - cache hit/miss split usage -> non-zero estimate；
+  - missing usage -> `cost_source=unknown` 且 aggregate unknown count = 1；
+  - mock workflow `--limit 1` 未调用 API，记录 `mock_no_billing`。
+- 本地质量门通过：`python scripts\run_local_quality_gate.py` -> `passed=true`。
+
+当前边界：
+
+- 旧 `outputs/evp7_g5_llm_376_smoke_001` 不能回填成本，因为 review 记录
+  未保存 provider `usage`；
+- 后续 G5 smoke/full run 具备成本可观测路径；
+- 本轮未执行新的真实 API smoke，也未执行 376-record full run。

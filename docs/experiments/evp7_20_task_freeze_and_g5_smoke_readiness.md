@@ -69,6 +69,13 @@ or non-reporting cost telemetry, not proof of zero cost. The 376-record full run
 is blocked until cost observability is fixed or the user explicitly accepts the
 telemetry limitation.
 
+Cost-observability repair is recorded in
+`docs/experiments/evp7_g5_cost_observability_fix.md`. Future G5 executions
+record raw-output-free usage summaries, estimate `deepseek_official` /
+`deepseek-v4-pro` cost from DeepSeek token pricing when provider cost is absent,
+and fail if cost remains unknown. This does not backfill the old smoke because
+its review records did not persist provider `usage`.
+
 ## Required User Confirmations
 
 Before any real smoke run, the user must explicitly confirm:
@@ -105,9 +112,10 @@ python scripts\run_evp7_g5_llm_workflow.py `
   --limit <smoke-packet-count>
 ```
 
-Only after the smoke run has acceptable parse status, invalid-output rate, cost,
-and run summary should a 376-record full run be considered. The current smoke
-passed parse/schema checks but exposed a cost-observability blocker.
+Only after the smoke run has acceptable parse status, invalid-output rate,
+observable cost, and run summary should a 376-record full run be considered.
+The current historical smoke passed parse/schema checks but exposed the
+pre-repair cost-observability blocker.
 
 ## Forbidden Actions
 

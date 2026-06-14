@@ -132,6 +132,9 @@
 - `experiments/evp7_g5_llm_376_smoke_result.md`: human-readable report for the
   confirmed 4-packet G5 smoke. It is parser/API path evidence only, not a full
   G5 result.
+- `experiments/evp7_g5_cost_observability_fix.md`: no-API repair record for
+  G5 cost observability. It documents token-usage-based DeepSeek cost
+  estimation, unknown-cost failure behavior, and the historical smoke boundary.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 
@@ -741,7 +744,9 @@
   supports check-only and mock validation without API calls, and refuses real
   execution unless strict preflight passes with an ignored local config and
   explicit `--execute`. Real execution also supports explicit bounded
-  `--concurrency` while preserving ordered JSONL output.
+  `--concurrency` while preserving ordered JSONL output, records raw-output-free
+  usage summaries, estimates DeepSeek V4 Pro token cost when provider cost is
+  absent, and fails executed runs whose cost remains unknown.
 - `../scripts/create_evp7_g5_llm_local_config.py`: dry-run/write helper for
   ignored `configs/evp7_g5_llm.local.json`. Write mode requires explicit
   provider, model, cost ceiling, smoke scope, and full-run permission.

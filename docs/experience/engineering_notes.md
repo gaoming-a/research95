@@ -1976,3 +1976,20 @@ This file starts fresh for the patch-verification project.
   Because the configured $10 cost ceiling cannot be reliably enforced from the
   recorded response, do not proceed to the 376-record full run without fixing
   cost observability or getting explicit user approval for this limitation.
+
+## 2026-06-14 G5 cost observability repair
+
+- Root cause: the G5 runner only read `response["usage"]["cost"]`. DeepSeek
+  official OpenAI-compatible responses can expose token usage without a direct
+  `cost` field, so the runner collapsed missing billing metadata into
+  `cost_usd=0.0`.
+- The fix keeps `cost_usd` for downstream compatibility but adds `usage`,
+  `cost_source`, `cost_observability`, and `cost_pricing` to each review.
+  Provider-reported cost wins; otherwise `deepseek_official` /
+  `deepseek-v4-pro` is estimated from DeepSeek's per-1M-token pricing.
+- Missing usage or unsupported pricing now produces unknown cost and stops the
+  executed workflow after writing outputs. Unknown cost must never be treated as
+  zero-cost budget compliance.
+- Historical smoke output cannot be backfilled because it did not persist
+  provider `usage`. Re-run a bounded smoke after this repair before considering
+  the 376-record full run.
