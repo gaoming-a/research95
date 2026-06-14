@@ -1960,3 +1960,19 @@ This file starts fresh for the patch-verification project.
   execution bug.
 - Do not execute real smoke until provider, model, max total cost, smoke packet
   count, and post-smoke full-run permission are explicitly confirmed.
+
+## 2026-06-14 G5 376-packet cohort smoke execution
+
+- Confirmed smoke config used `deepseek_official`, `deepseek-v4-pro`,
+  `max_total_cost_usd=10`, `smoke_scope=4`, and full-run permission after
+  smoke.
+- Strict local preflight and check-only passed before execution. The smoke then
+  produced 4 real non-mock API records, one per E0/E2/E4/E6 for
+  `evp7_candidate_0001`.
+- Parser/schema gate passed: 4/4 valid JSON outputs, invalid output rate 0.0.
+  The model chose `escalate` for all four smoke packets.
+- The recorded `cost_usd` was 0.0 for every record. Treat this as provider
+  cost telemetry missing or not mapped by the client, not as proof of zero cost.
+  Because the configured $10 cost ceiling cannot be reliably enforced from the
+  recorded response, do not proceed to the 376-record full run without fixing
+  cost observability or getting explicit user approval for this limitation.

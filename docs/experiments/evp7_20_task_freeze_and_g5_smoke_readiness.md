@@ -46,6 +46,29 @@ Current gate status:
 - API call attempted: false
 - model call attempted: false
 
+## Smoke Execution Update
+
+A 4-packet real smoke was executed after user confirmation:
+
+- Run directory: `outputs/evp7_g5_llm_376_smoke_001`
+- Raw-output-free summary:
+  `data/reviews/evp7_g5_llm_376_smoke_summary.json`
+- Report: `docs/experiments/evp7_g5_llm_376_smoke_result.md`
+- Review count: 4
+- Evidence levels: E0/E2/E4/E6 for `evp7_candidate_0001`
+- Parse status: 4 valid / 0 invalid
+- Mock records: 0
+- API call attempted: true for 4 records
+- Decision counts: 4 escalate
+
+The smoke validates the real API and parser path, but it is not a full G5
+result.
+
+The workflow observed `cost_usd = 0.0` for all records. Treat this as missing
+or non-reporting cost telemetry, not proof of zero cost. The 376-record full run
+is blocked until cost observability is fixed or the user explicitly accepts the
+telemetry limitation.
+
 ## Required User Confirmations
 
 Before any real smoke run, the user must explicitly confirm:
@@ -83,7 +106,8 @@ python scripts\run_evp7_g5_llm_workflow.py `
 ```
 
 Only after the smoke run has acceptable parse status, invalid-output rate, cost,
-and run summary should a 376-record full run be considered.
+and run summary should a 376-record full run be considered. The current smoke
+passed parse/schema checks but exposed a cost-observability blocker.
 
 ## Forbidden Actions
 

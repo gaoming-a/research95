@@ -1,0 +1,71 @@
+{
+  "api_call_attempted_counts": {
+    "True": 4
+  },
+  "api_provider": "deepseek_official",
+  "claim_boundary": "Smoke validates API/parser path only; it is not a full 376-packet G5 result.",
+  "cohort_boundary": "20 tasks / 94 candidates / 376 packets",
+  "cost_observability": "provider_response_reported_zero_or_no_cost; do not treat as reliable total-cost proof",
+  "decision_counts": {
+    "escalate": 4
+  },
+  "evidence_level_counts": {
+    "E0": 1,
+    "E2": 1,
+    "E4": 1,
+    "E6": 1
+  },
+  "full_run_decision": "blocked_pending_cost_observability_or_explicit_override",
+  "invalid_output_rate": 0.0,
+  "limit": 4,
+  "mock_run_counts": {
+    "False": 4
+  },
+  "model": "deepseek-v4-pro",
+  "observed_cost_usd": 0.0,
+  "parse_status_counts": {
+    "valid": 4
+  },
+  "records": [
+    {
+      "candidate_id": "evp7_candidate_0001",
+      "cost_usd": 0.0,
+      "decision": "escalate",
+      "evidence_level": "E0",
+      "invalid_reason": null,
+      "parse_status": "valid",
+      "review_id": "evp7_candidate_0001__E0__evidence_visibility_merge_gate"
+    },
+    {
+      "candidate_id": "evp7_candidate_0001",
+      "cost_usd": 0.0,
+      "decision": "escalate",
+      "evidence_level": "E2",
+      "invalid_reason": null,
+      "parse_status": "valid",
+      "review_id": "evp7_candidate_0001__E2__evidence_visibility_merge_gate"
+    },
+    {
+      "candidate_id": "evp7_candidate_0001",
+      "cost_usd": 0.0,
+      "decision": "escalate",
+      "evidence_level": "E4",
+      "invalid_reason": null,
+      "parse_status": "valid",
+      "review_id": "evp7_candidate_0001__E4__evidence_visibility_merge_gate"
+    },
+    {
+      "candidate_id": "evp7_candidate_0001",
+      "cost_usd": 0.0,
+      "decision": "escalate",
+      "evidence_level": "E6",
+      "invalid_reason": null,
+      "parse_status": "valid",
+      "review_id": "evp7_candidate_0001__E6__evidence_visibility_merge_gate"
+    }
+  ],
+  "review_count": 4,
+  "run_dir": "outputs/evp7_g5_llm_376_smoke_001",
+  "run_id": "evp7_g5_llm_376_smoke_001",
+  "smoke_parse_gate": "passed"
+}

@@ -443,6 +443,13 @@ It confirms structural readiness and records that real smoke execution still
 requires explicit user confirmation for provider, model, cost ceiling, smoke
 packet count, and full-run permission.
 
+After confirmation, a 4-packet real G5 smoke was run in
+`outputs/evp7_g5_llm_376_smoke_001`. The raw-output-free report is
+`docs/experiments/evp7_g5_llm_376_smoke_result.md`: 4/4 outputs parsed, all
+non-mock, but the provider response did not expose reliable cost telemetry.
+The full 376-record run is therefore blocked until that cost boundary is
+resolved or explicitly accepted.
+
 For full-goal completion evidence, run:
 
 ```powershell

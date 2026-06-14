@@ -8492,3 +8492,82 @@ Plan:
 - 真实 G5 smoke 尚未执行，且不得在缺少用户确认时执行；
 - 最新真实模型证据仍只来自旧 12-task / 62-candidate / 248-packet
   DeepSeek G5 run。
+
+## 108. 2026-06-14 execute confirmed G5 smoke
+
+Inspect:
+
+- 当前工作区干净，本地 main ahead origin 12；
+- EVP-7 cohort 已冻结在 20 tasks / 5 projects / 94 candidates /
+  376 evidence packets；
+- strict preflight/check-only example 已证明结构 ready，但因缺少用户确认
+  API not ready；
+- 用户已确认采用以下 G5 execution 参数：
+  - api_provider = `deepseek_official`；
+  - model = `deepseek-v4-pro`；
+  - max_total_cost_usd = `10`；
+  - smoke_scope = `4`；
+  - full_run_permission = true。
+
+Plan:
+
+1. 用确认参数写入 ignored `configs/evp7_g5_llm.local.json`；
+2. 运行 strict preflight，要求 structural_ready=true 且 api_ready=true；
+3. 运行 guarded workflow check-only，要求 `model_call_attempted=false`；
+4. 执行 4-packet real smoke：
+   `run_evp7_g5_llm_workflow.py --execute --limit 4`；
+5. 审计 smoke 输出：
+   - review_count = 4；
+   - `mock_run=false`；
+   - `parse_status` invalid rate <= 0.2；
+   - cost <= 10；
+   - raw outputs 只保留在 ignored `outputs/`；
+6. smoke 通过后再决定是否进入 376-record full run；不得在未完成 smoke
+   审计前直接 full run。
+
+验收条件：
+
+- 如果 credentials/API 正常：生成 smoke outputs 并记录 smoke gate；
+- 如果 credentials/API 失败：记录 blocker，不修改 prompt 或扩量；
+- 本轮 API 调用仅限 smoke 4 packets。
+
+执行结果：
+
+- 已写入 ignored local config：
+  `configs/evp7_g5_llm.local.json`；
+- strict preflight 通过：
+  - output = `outputs/evp7_g5_llm_376_smoke_001/preflight_strict.json`；
+  - structural_ready = true；
+  - api_ready = true；
+  - api_call_attempted = false；
+- check-only workflow 通过：
+  - output = `outputs/evp7_g5_llm_376_smoke_001/check_only.json`；
+  - model_call_attempted = false；
+  - api_call_attempted = false；
+- 4-packet real smoke 已执行：
+  - run dir = `outputs/evp7_g5_llm_376_smoke_001`；
+  - review_count = 4；
+  - E0/E2/E4/E6 各 1 条，均属于 `evp7_candidate_0001`；
+  - mock_run = false for 4/4；
+  - api_call_attempted = true for 4/4；
+  - parse_status = valid for 4/4；
+  - invalid_output_rate = 0.0；
+  - decisions = escalate for 4/4；
+  - workflow observed cost = 0.0。
+- 已生成 raw-output-free smoke summary：
+  - `data/reviews/evp7_g5_llm_376_smoke_summary.json`；
+  - `docs/experiments/evp7_g5_llm_376_smoke_result.md`。
+
+诊断：
+
+- smoke parser/API gate 通过；
+- 但 provider response 未提供可用成本遥测，workflow 记录的
+  `cost_usd=0.0` 不能证明真实成本为 0；
+- 因此当前不能可靠执行 `max_total_cost_usd=10` 的成本上限。
+
+当前边界：
+
+- 不直接进入 376-record full run；
+- full run blocked pending cost observability fix or explicit user override；
+- smoke 仅证明真实 API/parser path 可用，不构成当前 376-packet cohort 的
+  G5 full-run evidence。

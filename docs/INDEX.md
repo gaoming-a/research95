@@ -126,6 +126,12 @@
   smoke-readiness record for the current 20-task / 94-candidate / 376-packet
   structural cohort. It documents the no-API gate status and the exact user
   confirmations required before any real G5 smoke run.
+- `../data/reviews/evp7_g5_llm_376_smoke_summary.json`: raw-output-free summary
+  of the confirmed 4-packet real G5 smoke on the frozen 376-packet cohort. It
+  records 4 valid non-mock API outputs and the cost-observability blocker.
+- `experiments/evp7_g5_llm_376_smoke_result.md`: human-readable report for the
+  confirmed 4-packet G5 smoke. It is parser/API path evidence only, not a full
+  G5 result.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 
