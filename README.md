@@ -224,18 +224,18 @@ They should not override `final_paper_roadmap_zh.md`.
   realistic tool-only baselines are generated for apply-only, visible-tests,
   and visible-tool-summary conditions. The merge-gate schema dry-run now
   generates 376 parse-valid accept/reject/escalate records with zero leakage
-  findings. The latest real DeepSeek official G5 full run still covers the
-  previous 12-task/62-candidate/248-packet cohort with explicit bounded
-  parallelism (`--concurrency 6`). It produced 247/248 parse-valid records; the
-  one invalid
-  E2 record is a non-empty truncated JSON model-output-quality boundary and was
-  not silently repaired. The raw-output-free tracked summary reports
+  findings. The latest real DeepSeek official G5 full run covers the frozen
+  20-task/94-candidate/376-packet cohort with explicit bounded parallelism
+  (`--concurrency 4`). It produced 376/376 parse-valid records, token-usage cost
+  estimates for 376/376 records, and estimated total cost USD `0.327352058`.
+  The raw-output-free tracked summary reports
   `real_llm_verifier_signal_observed_on_evp7`: E4/E6 keep observed false accept
-  rate 0.0 and accepted precision 1.0, with E4 recall 0.166667 and E6 recall
-  0.25. The tracked quality audit passes with limitations: it supports
-  pilot-level observations about evidence-level variation, but not
-  scale-generalized claims, not a claim that the LLM outperforms the
-  deterministic visible-test tool-only baseline, and not a known-cost claim.
+  rate 0.0 and accepted precision 1.0, with E4 recall 0.05 and E6 recall 0.35.
+  The tracked quality audit passes with limitations: it supports pilot-level
+  observations about evidence-level variation, but not scale-generalized
+  claims, not a claim that the LLM outperforms the deterministic visible-test
+  tool-only baseline, and not a claim that runner-estimated cost is an external
+  billing statement.
   A controlled-expansion readiness report summarizes the broader BugsInPy rescreen
   and defines project-diverse bounded probe lanes for the next 15-20 bug
   expansion step. The
@@ -332,8 +332,8 @@ The latest admitted task is recorded in
 `data/p2p_scopes/bugsinpy_youtube-dl_37_p2p_broad.json` with 30 P2P-broad
 tests under the same explicit dynamic-download nodeid exclusion policy and
 rebuilt the no-API EVP-7 artifacts to 20 tasks, 94 candidates, and 376 evidence
-packets. The latest tracked DeepSeek G5 run still covers the previous
-12-task/62-candidate/248-packet cohort.
+packets. The latest tracked DeepSeek G5 run now covers this frozen
+20-task/94-candidate/376-packet cohort.
 
 The preceding admitted task is recorded in
 `docs/experiments/youtubedl23_candidate_validation.md`. It produced
@@ -431,11 +431,10 @@ python scripts\summarize_evp7_g5_llm_full_run.py
 
 The guarded workflow can run a full current 376-packet execution with explicit
 bounded parallelism, for example `--concurrency 4` or `--concurrency 6`. The
-default remains sequential. The latest tracked DeepSeek full-run summary covers
-the earlier 248-packet cohort, with one reported schema-invalid record and no
-raw model responses tracked. A fresh 376-packet run is required before extending
-real-model claims to the current structural cohort. Raw model responses remain
-under ignored `outputs/`.
+default remains sequential. The latest tracked DeepSeek full-run summary is
+`docs/experiments/evp7_g5_llm_376_full_result.md`; it covers the frozen
+20-task/94-candidate/376-packet cohort, has no schema-invalid records, and keeps
+raw model responses under ignored `outputs/`.
 
 The 20-task cohort is frozen for the next G5 step. The freeze and no-API smoke
 readiness record is `docs/experiments/evp7_20_task_freeze_and_g5_smoke_readiness.md`.
@@ -457,8 +456,14 @@ The post-repair 4-packet smoke is
 `docs/experiments/evp7_g5_llm_376_smoke_002_result.md`. It produced 4/4 valid
 non-mock outputs, 4/4 token-usage summaries, `unknown_cost_record_count=0`, and
 estimated total cost USD `0.003392942`. This validates the cost gate but remains
-smoke evidence only; a fresh 376-packet full run is still required for current
-cohort G5 claims.
+smoke evidence only.
+
+The 376-packet full run is recorded in
+`docs/experiments/evp7_g5_llm_376_full_result.md`, with the quality audit in
+`docs/experiments/evp7_g5_376_full_quality_audit.md`. The audit status is
+`passed_with_limitations`; it supports bounded EVP-7 pilot signal claims and
+continues to reject scale-generalized and deterministic-baseline superiority
+claims.
 
 For full-goal completion evidence, run:
 

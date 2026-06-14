@@ -2007,3 +2007,25 @@ This file starts fresh for the patch-verification project.
   only and should not be analyzed as a cohort-level signal.
 - After cost observability passes on a real smoke, the next decision point is
   whether to execute the full 376-packet G5 run under the confirmed cost budget.
+
+## 2026-06-15 post-repair 376-packet G5 full run
+
+- Run full G5 executions in a fresh directory. The post-repair 376-packet run
+  used `outputs/evp7_g5_llm_376_full_001` and did not overwrite either smoke.
+- `--concurrency 4` completed the 376-record run successfully while preserving
+  ordered JSONL output. The runner still writes reviews only after all futures
+  complete, so long runs have weak progress observability; avoid starting a
+  duplicate run while waiting.
+- The full run produced 376/376 valid records, E0/E2/E4/E6 each 94, no mock
+  records, API attempted for all records, token-usage cost estimates for all
+  records, and `unknown_cost_record_count=0`. Estimated total cost was
+  0.327352058 USD.
+- G5 signal status is now observed on the frozen 20-task/94-candidate/376-packet
+  cohort, but the claim boundary remains pilot-scale. The quality audit still
+  rejects scale-generalized claims, deterministic-baseline superiority, E6
+  strict superiority over E4, and treating runner-estimated cost as an external
+  billing statement.
+- `audit_api_run_completeness.py` is not a valid audit for G5 review records:
+  it expects the old API-pilot schema with raw response path/hash and patch
+  fields. Use `summarize_evp7_g5_llm_full_run.py` plus
+  `audit_evp7_g5_full_run_quality.py` for G5.

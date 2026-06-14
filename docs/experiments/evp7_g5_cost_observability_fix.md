@@ -57,3 +57,15 @@ The repair was subsequently validated against real DeepSeek responses in
 - 4/4 costs used `cost_source = estimated_from_tokens`.
 - `unknown_cost_record_count = 0`.
 - Estimated total cost USD: 0.003392942.
+
+## Post-Repair Full Run
+
+The repaired cost path was also exercised in the full 376-packet run:
+`outputs/evp7_g5_llm_376_full_001`.
+
+- 376/376 records included provider token usage summaries.
+- 376/376 costs used `cost_source = estimated_from_tokens`.
+- `unknown_cost_record_count = 0`.
+- Estimated total cost USD: 0.327352058.
+- The tracked full-run report is
+  `docs/experiments/evp7_g5_llm_376_full_result.md`.

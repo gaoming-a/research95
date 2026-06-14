@@ -59,7 +59,8 @@ def summarize(reviews_path: Path, metrics_path: Path, workflow_path: Path) -> di
             "api_call_attempted": workflow.get("api_call_attempted"),
             "model_call_attempted": workflow.get("model_call_attempted"),
             "total_cost_usd_reported_by_runner": workflow.get("total_cost_usd"),
-            "cost_note": "DeepSeek response did not expose billable cost in the stored usage field; runner total is not a billing estimate.",
+            "cost_summary": workflow.get("cost_summary"),
+            "cost_note": _cost_note(workflow),
         },
         "quality": {
             "review_count": len(reviews),
@@ -80,6 +81,19 @@ def summarize(reviews_path: Path, metrics_path: Path, workflow_path: Path) -> di
             "signal_preview": metrics.get("signal_preview"),
         },
     }
+
+
+def _cost_note(workflow: dict[str, Any]) -> str:
+    cost_summary = workflow.get("cost_summary")
+    if isinstance(cost_summary, dict) and cost_summary.get("unknown_cost_record_count") == 0:
+        return (
+            "Runner cost is estimated from provider token usage when provider-reported "
+            "cost is absent; see cost_summary for observability counts."
+        )
+    return (
+        "DeepSeek response did not expose billable cost in the stored usage field; "
+        "runner total is not a billing estimate."
+    )
 
 
 def _decision(record: dict[str, Any]) -> str:
@@ -118,6 +132,7 @@ def render_markdown(summary: dict[str, Any]) -> str:
         f"- Model calls attempted: {str(workflow['model_call_attempted']).lower()}",
         f"- Runner-reported cost: {workflow['total_cost_usd_reported_by_runner']}",
         f"- Cost note: {workflow['cost_note']}",
+        f"- Cost summary: `{json.dumps(workflow.get('cost_summary'), sort_keys=True)}`",
         "",
         "## Quality",
         "",

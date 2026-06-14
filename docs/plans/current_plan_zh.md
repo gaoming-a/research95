@@ -8706,3 +8706,107 @@ Plan:
 - 成本可观测性已被真实 smoke 验证；
 - smoke_002 仍不是 376-packet full run evidence；
 - 下一步可进入“是否执行 376-record full run”的决策和执行闭环，但本轮未执行 full run。
+
+## 111. 2026-06-14 execute post-repair 376-packet G5 full run
+
+Inspect:
+
+- 当前工作区干净，本地 main ahead origin 15；
+- ignored `configs/evp7_g5_llm.local.json` 仍使用用户确认配置：
+  `deepseek_official` / `deepseek-v4-pro` / `max_total_cost_usd=10` /
+  `smoke_scope=4` / `full_run_permission=true`；
+- post-repair smoke_002 已验证真实 API/parser/cost-observability path：
+  4/4 valid、4/4 usage summary、unknown cost = 0、estimated total cost
+  USD = 0.003392942；
+- 新 full-run 输出目录 `outputs/evp7_g5_llm_376_full_001` 尚不存在；
+- `summarize_evp7_g5_llm_full_run.py` 支持指定 reviews/metrics/workflow
+  和 summary 输出路径。
+
+Plan:
+
+1. 用现有 ignored local config 跑 full-run strict preflight，要求
+   `structural_ready=true`、`api_ready=true`、`api_call_attempted=false`；
+2. 跑 workflow check-only，要求 `model_call_attempted=false`；
+3. 执行完整 376-packet real run：
+   - `--execute --limit 0`；
+   - 输出到 `outputs/evp7_g5_llm_376_full_001`；
+   - `--concurrency 4`，保持 ordered JSONL；
+4. 审计 full run：
+   - review_count = 376；
+   - E0/E2/E4/E6 各 94；
+   - non-mock/API-attempted for 376/376；
+   - parse invalid rate；
+   - `unknown_cost_record_count=0`；
+   - total cost <= 10；
+5. 生成 raw-output-free tracked summary/report；
+6. 更新 README、docs index、plan、engineering notes 和必要的 claim-boundary
+   文档；
+7. 本轮不改 prompt，不扩 cohort。
+
+验收条件：
+
+- full run 完整结束且成本可观测；
+- raw model outputs 仍只保留在 ignored `outputs/`；
+- 如果 API、parse、cost 或 completeness gate 失败，记录 blocker 并停止。
+
+执行结果：
+
+- strict preflight 通过：
+  - output = `outputs/evp7_g5_llm_376_full_001/preflight_strict.json`；
+  - structural_ready = true；
+  - api_ready = true；
+  - api_call_attempted = false。
+- check-only workflow 通过：
+  - output = `outputs/evp7_g5_llm_376_full_001/check_only.json`；
+  - model_call_attempted = false；
+  - api_call_attempted = false。
+- 376-packet real full run 已完成：
+  - run dir = `outputs/evp7_g5_llm_376_full_001`；
+  - concurrency = 4；
+  - review_count = 376；
+  - E0/E2/E4/E6 各 94；
+  - mock_run = false for 376/376；
+  - api_call_attempted = true for 376/376；
+  - parse_status = valid for 376/376；
+  - invalid_output_rate = 0.0；
+  - decisions = accept 9 / escalate 143 / reject 224；
+  - by level:
+    - E0: accept 1 / escalate 49 / reject 44；
+    - E2: escalate 57 / reject 37；
+    - E4: accept 1 / escalate 21 / reject 72；
+    - E6: accept 7 / escalate 16 / reject 71；
+  - `cost_source=estimated_from_tokens` for 376/376；
+  - `cost_observability=estimated_from_provider_token_usage` for 376/376；
+  - `unknown_cost_record_count=0`；
+  - estimated total cost USD = 0.327352058；
+  - budget gate passed against `max_total_cost_usd=10`；
+  - `g5_signal_claim_status=real_llm_verifier_signal_observed_on_evp7`。
+- Metrics:
+  - G5 metric scaffold = passed；
+  - E4 false_accept_rate = 0.0，accepted_precision = 1.0，
+    correct_recall = 0.05，evidence_gain_vs_e0 = 7.0；
+  - E6 false_accept_rate = 0.0，accepted_precision = 1.0，
+    correct_recall = 0.35，evidence_gain_vs_e0 = 14.25。
+- 已生成 tracked raw-output-free summary/report：
+  - `data/reviews/evp7_g5_llm_376_full_summary.json`；
+  - `docs/experiments/evp7_g5_llm_376_full_result.md`。
+- 已生成 tracked quality audit：
+  - `data/reviews/evp7_g5_376_full_quality_audit.json`；
+  - `docs/experiments/evp7_g5_376_full_quality_audit.md`；
+  - status = `passed_with_limitations`。
+- 旧 `audit_api_run_completeness.py` 已试跑但不适配 G5 schema：
+  它要求旧 API-pilot raw_response_path/raw_response_sha256/patch_id 字段。
+  G5 full-run 完整性以 G5 summary + quality audit 为准。
+- 本地质量门通过：`python scripts\run_local_quality_gate.py` -> `passed=true`。
+
+当前边界：
+
+- 最新真实 DeepSeek V4 G5 full run 已覆盖当前 frozen
+  20-task / 94-candidate / 376-packet cohort；
+- 支持 bounded EVP-7 pilot signal claim：当前 run 产生真实 LLM verifier
+  signal，且 evidence-level metrics 有变化；
+- 仍不支持：
+  - scale-generalized paper claim；
+  - LLM 明确优于 deterministic visible-test/tool-only baseline；
+  - E6 严格优于 E4；
+  - runner-estimated cost 等同外部 DeepSeek 账单。

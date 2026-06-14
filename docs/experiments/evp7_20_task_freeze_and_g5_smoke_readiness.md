@@ -123,6 +123,26 @@ observable cost, and run summary should a 376-record full run be considered.
 The post-repair smoke now satisfies this cost-observability gate, but it remains
 smoke evidence only.
 
+## Full Run Update
+
+The post-repair 376-packet full run was executed in
+`outputs/evp7_g5_llm_376_full_001`. The tracked raw-output-free report is
+`docs/experiments/evp7_g5_llm_376_full_result.md`, and the quality audit is
+`docs/experiments/evp7_g5_376_full_quality_audit.md`.
+
+- Review count: 376
+- E0/E2/E4/E6: 94 records each
+- Parse status: 376 valid / 0 invalid
+- Unknown cost records: 0
+- Estimated total cost USD: 0.327352058
+- G5 signal status: `real_llm_verifier_signal_observed_on_evp7`
+- Quality audit: `passed_with_limitations`
+
+This updates the latest real G5 evidence from the older 248-packet cohort to
+the frozen 376-packet cohort. It does not support scale-generalized claims,
+deterministic-baseline superiority, E6 strict superiority over E4, or treating
+runner-estimated cost as an external billing statement.
+
 ## Forbidden Actions
 
 - Do not run `--execute` with `configs/evp7_g5_llm.example.json`.

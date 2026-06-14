@@ -24,11 +24,12 @@ def read_json(path: Path) -> dict[str, Any]:
     return value
 
 
-def build_audit(summary: dict[str, Any]) -> dict[str, Any]:
+def build_audit(summary: dict[str, Any], summary_path: Path = DEFAULT_SUMMARY) -> dict[str, Any]:
     quality = summary["quality"]
     metrics = summary["metrics"]
     groups = metrics["metric_groups"]
     workflow = summary["workflow"]
+    cost_summary = workflow.get("cost_summary") if isinstance(workflow.get("cost_summary"), dict) else {}
     review_count = int(quality.get("review_count") or 0)
     level_counts = {level: int(groups[level].get("record_count") or 0) for level in EXPECTED_LEVELS}
     expected_count_from_levels = sum(level_counts.values())
@@ -43,6 +44,7 @@ def build_audit(summary: dict[str, Any]) -> dict[str, Any]:
         _check("raw_outputs_not_tracked", quality.get("raw_outputs_tracked") is False, quality.get("raw_outputs_tracked")),
         _check("invalid_output_rate_within_limit", invalid_rate <= MAX_INVALID_OUTPUT_RATE, quality.get("invalid_output_rate")),
         _check("has_metric_variation", metrics.get("signal_preview", {}).get("has_metric_variation") is True, metrics.get("signal_preview", {}).get("has_metric_variation")),
+        _check("cost_observability_complete", cost_summary.get("unknown_cost_record_count") in (0, None), cost_summary.get("unknown_cost_record_count")),
     ]
     for level, count in level_counts.items():
         checks.append(_check(f"{level}_record_count", count == candidate_count, count))
@@ -59,9 +61,18 @@ def build_audit(summary: dict[str, Any]) -> dict[str, Any]:
 
     limitations = [
         "E4/E6 correct recall remains below the deterministic visible-test tool-only baseline recall.",
-        "Runner-reported cost is 0.0 because DeepSeek response usage did not expose billable cost in the stored field.",
         "The cohort remains a pilot-scale BugsInPy slice.",
     ]
+    if cost_summary.get("unknown_cost_record_count") == 0:
+        limitations.insert(
+            1,
+            "Runner cost is an estimate from provider token usage and configured pricing, not an external billing statement.",
+        )
+    else:
+        limitations.insert(
+            1,
+            "Runner-reported cost is incomplete because provider usage did not expose billable cost or supported token usage.",
+        )
     invalid_count = int(quality.get("invalid_output_count") or 0)
     if invalid_count:
         limitations.insert(0, f"{invalid_count} record(s) are schema-invalid.")
@@ -69,7 +80,7 @@ def build_audit(summary: dict[str, Any]) -> dict[str, Any]:
     return {
         "audit_id": "evp7_g5_full_run_quality_audit",
         "cohort_id": summary.get("cohort_id"),
-        "input_summary": _display(DEFAULT_SUMMARY),
+        "input_summary": _display(summary_path),
         "api_call_attempted": False,
         "raw_outputs_read": False,
         "raw_outputs_tracked": quality.get("raw_outputs_tracked"),
@@ -88,7 +99,7 @@ def build_audit(summary: dict[str, Any]) -> dict[str, Any]:
             "Scale-generalized paper claims beyond EVP-7.",
             "A claim that the LLM outperforms the deterministic visible-test tool-only baseline.",
             "A claim that E6 strictly improves over E4 in this run.",
-            "A claim that DeepSeek cost is known from runner output.",
+            "A claim that runner-estimated cost is an external DeepSeek billing statement.",
         ],
         "limitations": limitations,
     }
@@ -157,7 +168,7 @@ def main() -> int:
     args = parser.parse_args()
 
     summary = read_json(args.summary)
-    audit = build_audit(summary)
+    audit = build_audit(summary, args.summary)
     write_json(args.json_out, audit)
     write_text(args.md_out, render_markdown(audit))
     print(json.dumps(audit, ensure_ascii=False, sort_keys=True))

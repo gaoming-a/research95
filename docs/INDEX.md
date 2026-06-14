@@ -85,13 +85,19 @@
   recall, escalation, FACR, and Evidence Gain, but marks G5 signal claims as
   requiring genuine LLM verifier outputs.
 - `../data/reviews/evp7_g5_llm_full_run_summary.json`: tracked raw-output-free
-  summary of the latest real DeepSeek official EVP-7 G5 full run on the previous
-  12-task/62-candidate/248-packet cohort. It records 248 reviews, 247
-  parse-valid outputs, one reported schema-invalid E2 response, and metric
-  variation across E0/E2/E4/E6 with
-  `real_llm_verifier_signal_observed_on_evp7`.
+  summary of the earlier 12-task/62-candidate/248-packet DeepSeek official G5
+  full run. Retained for historical comparison.
 - `../data/reviews/evp7_g5_full_run_quality_audit.json`: tracked quality audit
-  for the 248-record DeepSeek full run. It reads only the raw-output-free
+  for the earlier 248-record DeepSeek full run. Retained for historical
+  comparison.
+- `../data/reviews/evp7_g5_llm_376_full_summary.json`: tracked raw-output-free
+  summary of the latest real DeepSeek official G5 full run on the frozen
+  20-task/94-candidate/376-packet cohort. It records 376/376 parse-valid
+  outputs, token-usage cost estimates for 376/376 records, estimated total cost
+  USD 0.327352058, and
+  `real_llm_verifier_signal_observed_on_evp7`.
+- `../data/reviews/evp7_g5_376_full_quality_audit.json`: tracked quality audit
+  for the 376-record DeepSeek full run. It reads only the raw-output-free
   summary and marks the run `passed_with_limitations`.
 - `../data/reviews/evp7_g5_llm_prompt_manifest.jsonl`: no-API prompt manifest
   for the G5 evidence-visibility LLM run. It stores prompt hashes,
@@ -141,6 +147,12 @@
 - `experiments/evp7_g5_llm_376_smoke_002_result.md`: human-readable
   post-repair smoke report. It validates the API/parser/cost-observability path
   only, not a full 376-packet G5 result.
+- `experiments/evp7_g5_llm_376_full_result.md`: human-readable tracked summary
+  of the latest real 376-packet DeepSeek G5 full run. Raw model responses stay
+  ignored under `outputs/`.
+- `experiments/evp7_g5_376_full_quality_audit.md`: human-readable quality audit
+  for the 376-packet DeepSeek G5 full run. It supports bounded EVP-7 pilot
+  signal claims and lists unsupported scale/baseline/cost-billing claims.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 
@@ -758,10 +770,10 @@
   provider, model, cost ceiling, smoke scope, and full-run permission.
 - `../scripts/summarize_evp7_g5_llm_full_run.py`: converts ignored real G5
   outputs into tracked JSON/Markdown summaries without copying raw model
-  responses.
+  responses. It records workflow cost summaries when present.
 - `../scripts/audit_evp7_g5_full_run_quality.py`: audits the tracked G5
   full-run summary without reading raw outputs and writes the claim-boundary
-  JSON/Markdown audit.
+  JSON/Markdown audit, including cost-observability completeness.
 - `../scripts/summarize_evp7_expansion_readiness.py`: summarizes current
   registry state, broader BugsInPy rescreen outputs, and tracked controlled
   probe statuses into expansion readiness artifacts.
