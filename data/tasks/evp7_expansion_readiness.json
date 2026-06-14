@@ -23,6 +23,7 @@
     "p2p_candidate_tasks": [],
     "probe_status_counts": {
       "admitted_p2p_broad_main": 6,
+      "f2p_blocked_checkout_timeout": 1,
       "f2p_blocked_dependency_environment": 4,
       "f2p_blocked_existing_incomplete_native_probe": 1,
       "f2p_blocked_windows_posix_import": 1,
@@ -38,6 +39,7 @@
       "bugsinpy_scrapy_2",
       "bugsinpy_tornado_1",
       "bugsinpy_youtube-dl_11",
+      "bugsinpy_youtube-dl_13",
       "bugsinpy_youtube-dl_2",
       "bugsinpy_youtube-dl_3",
       "bugsinpy_youtube-dl_4",

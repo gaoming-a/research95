@@ -1738,3 +1738,30 @@ This file starts fresh for the patch-verification project.
   264 packets, but the latest real DeepSeek G5 run remains the previous
   12-task / 62-candidate / 248-packet run. Keep claim boundaries separate until
   a fresh 264-packet real run is explicitly authorized and audited.
+
+## 2026-06-14 youtube-dl_13 checkout timeout boundary
+
+- A BugsInPy checkout can fail before any F2P evidence exists. For
+  `bugsinpy_youtube-dl_13`, the local checkout tool was available only through
+  the retained archive and WSL bash path, but the buggy checkout exceeded the
+  10 minute probe window and produced only an incomplete `.git` directory.
+- Do not treat an incomplete checkout directory as a reusable workspace. If
+  expected BugsInPy markers such as `bugsinpy_run_test.sh` are missing after
+  timeout, stop residual processes, verify the resolved path is inside the
+  intended workspace root, remove the partial directory, and record a checkout
+  blocker.
+- A checkout timeout is distinct from F2P failure and P2P failure. For ydl13,
+  no fixed checkout, target unittest, P2P dry-run, dependency install, or
+  checkout edit was performed, so the controlled-probe ledger status is
+  `f2p_blocked_checkout_timeout`.
+- On Windows, quality-gate subprocess output must not rely on the process
+  locale. `run_local_quality_gate.py` previously used `subprocess.run(text=True)`
+  without an explicit encoding, so `rg` output containing non-GBK bytes could
+  raise `UnicodeDecodeError` before the gate summary was written. Use explicit
+  UTF-8 decoding with replacement and make tail rendering tolerant of missing
+  captured streams; this preserves the gate rules while fixing the execution
+  chain.
+- Tracked plans and reports should avoid local absolute workspace paths. The
+  artifact dry-run treats them as package-safety violations, so checkout
+  diagnostics should name the retained archive or workspace role and the task
+  directory, not the developer-specific root path.

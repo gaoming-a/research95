@@ -391,6 +391,34 @@
           "result": "not_rerun"
         }
       }
+    },
+    {
+      "blocked_reason": [
+        "checkout_timeout"
+      ],
+      "bug_id": "13",
+      "date": "2026-06-14",
+      "decision": "do_not_admit_checkout_timeout",
+      "fixed_result": "not_attempted",
+      "notes": "The local BugsInPy checkout tool was available through the retained archive, but the buggy checkout exceeded the 10 minute bounded probe window and produced only an incomplete .git directory without bugsinpy_run_test.sh. The residual bash process was stopped and the incomplete youtube-dl_13 workspace was removed. No fixed checkout, F2P run, dependency install, or checkout edit was performed.",
+      "probe_status": "f2p_blocked_checkout_timeout",
+      "project": "youtube-dl",
+      "run_command": "python -m unittest -q test.test_utils.TestUtil.test_urljoin",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_youtube-dl_13",
+      "test_file": "test/test_utils.py",
+      "versions": {
+        "buggy": {
+          "checkout": "timeout_incomplete_removed",
+          "git_head": null,
+          "result": "not_run"
+        },
+        "fixed": {
+          "checkout": "not_attempted",
+          "git_head": null,
+          "result": "not_run"
+        }
+      }
     }
   ],
   "schema": "controlled_probe_results.v1"

@@ -300,7 +300,8 @@
   unsupported claims, and limitations.
 - `experiments/evp7_expansion_readiness.md`: controlled-expansion readiness
   report after EVP-7 G5. It records current main tasks, blocked-risk counts,
-  broader BugsInPy metadata candidates, and bounded project-lane probe rules.
+  broader BugsInPy metadata candidates, bounded project-lane probe rules, and
+  the latest checkout/P2P blockers such as `bugsinpy_youtube-dl_13`.
 - `experiments/evp7_fastapi4_f2p_probe.md`: F2P-only controlled probe for
   `bugsinpy_fastapi_4`, currently blocked by current-environment Pydantic v2
   import incompatibility before target-test execution.

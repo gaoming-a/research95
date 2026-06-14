@@ -33,6 +33,8 @@ def run_command(command: list[str], allow_exit_codes: set[int] | None = None) ->
     completed = subprocess.run(
         command,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
@@ -45,7 +47,9 @@ def run_command(command: list[str], allow_exit_codes: set[int] | None = None) ->
     }
 
 
-def tail(text: str, max_chars: int = 3000) -> str:
+def tail(text: str | None, max_chars: int = 3000) -> str:
+    if text is None:
+        return ""
     return text[-max_chars:] if len(text) > max_chars else text
 
 

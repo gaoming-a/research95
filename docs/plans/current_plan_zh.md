@@ -7450,3 +7450,86 @@ Inspect 结果：
   cohort，除非后续显式授权并完成新的真实 264-packet run 与质量审计；
 - 15 bug 目标仍差 2 个 admission，需要从 readiness 的其他 probe lanes
   继续寻找新的 F2P/P2P/candidate validation 路径。
+
+## 98. 2026-06-14 next controlled probe lane: youtube-dl_13
+
+背景：
+
+- ydl11 admission 后，当前结构化 EVP-7 cohort = 13 tasks / 66 candidates /
+  264 packets；
+- 目标 15-20 bugs 仍至少差 2 个 admission；
+- `data/tasks/evp7_expansion_readiness.json` 当前没有
+  F2P-established/P2P-not-attempted candidates；
+- fresh-project promising candidates 仍为 0，FastAPI/Sanic/Scrapy 等 top
+  lanes 已有当前环境依赖阻塞记录；
+- candidate pool 中仍有未探测的 `youtube-dl` unittest 候选。纯
+  `test/test_utils.py` 候选比已阻塞依赖项目更短路径。
+
+本轮小目标：
+
+1. 只读确认本地 BugsInPy checkout 工具是否可用；
+2. 若可用，串行 checkout `bugsinpy_youtube-dl_13` 的 buggy/fixed 版本；
+3. 运行候选池记录的 F2P command：
+   `python -m unittest -q test.test_utils.TestUtil.test_urljoin`；
+4. 若 buggy fail 且 fixed pass，则记录 F2P established，并进入 bounded
+   project-level P2P-broad dry-run；
+5. 若 checkout 工具不可用、checkout 超时、或 F2P 不成立，则记录 blocker，
+   不继续 P2P。
+
+边界：
+
+- 不调用模型 API；
+- 不安装依赖、不修改 checkout、不引入 shim；
+- 同一任务的 buggy/fixed checkout 必须串行；
+- 不并行运行多个 youtube-dl P2P；
+- 不复用 ydl3 的已知 timeout 命令；
+- 如果本地 checkout 工具不可执行，停止该 lane 并记录阻塞。
+
+验收条件：
+
+- checkout 工具路径和可执行性被记录；
+- 若 F2P 成立，buggy/fixed 测试输出和命令边界被记录；
+- 若失败，阻塞类别明确归类为 checkout/tooling/F2P，而不是继续执行后续
+  P2P；
+- 任何代码或文档更新后继续执行最小验证并提交。
+
+执行结果：
+
+- 本地 `bugsinpy-checkout` 不在 PATH，但 retained BugsInPy archive 中存在
+  `framework/bin/bugsinpy-checkout` 可执行入口；
+- 通过 WSL bash 路径验证 `--help` 可执行；
+- `projects/youtube-dl/bugs/13/bug.info` 确认：
+  - `buggy_commit_id = 6945b9e78f38284eb4e440b7badea2fc60b66c2f`；
+  - `fixed_commit_id = fad4ceb53404227f471af2f3544c4c14a5df4acb`；
+  - `test_file = test/test_utils.py`；
+  - target command =
+    `python -m unittest -q test.test_utils.TestUtil.test_urljoin`。
+- buggy checkout 在 10 分钟 bounded probe 窗口内超时，只产生不完整 `.git`
+  目录，没有 `bugsinpy_run_test.sh`；
+- 超时后残留 bash 进程已停止，不完整 `youtube-dl_13` workspace 已在确认
+  路径边界后从 BugsInPy workspace root 删除；
+- fixed checkout、F2P 测试、P2P dry-run、dependency install 和 checkout edit
+  均未执行。
+
+诊断与决策：
+
+- `bugsinpy_youtube-dl_13` 当前归类为
+  `f2p_blocked_checkout_timeout`；
+- 这不是 F2P 失败，也不是 P2P 失败，而是 checkout/tooling 阶段阻塞；
+- readiness 已刷新，当前 main cohort 仍为 13 tasks / 66 candidates /
+  264 packets；
+- 15 bug 目标仍差 2 个 admission，下一轮应继续选择新的 bounded probe lane，
+  不复用该不完整 checkout。
+
+验证修复计划：
+
+- 本轮最小验证中的 `run_local_quality_gate.py` 在 Windows 子进程输出解码处
+  崩溃：`subprocess.run(text=True)` 使用本地 GBK codec 读取 `rg` 输出时遇到
+  非 GBK 字节，随后 `tail(None)` 触发二次异常；
+- 问题类型归类为执行链路 bug，不是 ydl13 实验设计或数据问题；
+- 最短路径修复是让本地质量门显式使用 UTF-8 解码并用
+  `errors="replace"` 保留扫描结果，同时让 `tail` 对 `None` 返回空字符串；
+- 首次修复后质量门继续失败，原因是本节记录了本机绝对路径，触发
+  sensitive scan 和 anonymous artifact dry-run；已改为 archive/workspace
+  相对描述；
+- 修复后重新运行 `py_compile`、本地质量门和 diff 检查。
