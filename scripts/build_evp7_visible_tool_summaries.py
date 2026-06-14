@@ -125,13 +125,19 @@ def leakage_audit(records: list[dict[str, Any]]) -> list[str]:
     return [marker for marker in FORBIDDEN_MARKERS if marker in serialized]
 
 
-def _check(records: list[dict[str, Any]], summary: dict[str, Any]) -> None:
-    if summary["record_count"] != 62:
-        raise SystemExit(f"tool summary count changed: {summary['record_count']} != 62")
+def _check(records: list[dict[str, Any]], summary: dict[str, Any], packets_path: Path) -> None:
+    expected_candidates = len(
+        {
+            packet["model_visible"]["candidate_id"]
+            for packet in _read_jsonl(packets_path)
+        }
+    )
+    if summary["record_count"] != expected_candidates:
+        raise SystemExit(f"tool summary count {summary['record_count']} != candidate count {expected_candidates}")
     if summary["leakage_audit"] != "passed":
         raise SystemExit("visible tool summary leakage audit failed")
-    if summary["summary_status_counts"].get("complete") != 62:
-        raise SystemExit("expected 62 complete visible tool summaries")
+    if summary["summary_status_counts"].get("complete") != expected_candidates:
+        raise SystemExit("expected complete visible tool summaries for all candidates")
 
 
 def main() -> int:
@@ -149,7 +155,7 @@ def main() -> int:
     args.summary_out.write_text(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     if args.check:
-        _check(records, summary)
+        _check(records, summary, args.packets_in)
 
     print(json.dumps(summary, ensure_ascii=False, sort_keys=True))
     return 0

@@ -7276,3 +7276,177 @@ full run 决策：
 - `python scripts\audit_goal_completion.py --out-json outputs\goal_completion\latest.json --out-md outputs\goal_completion\latest.md` 通过，`complete = true`；
 - `git diff --check` 只有 Windows LF/CRLF 提示，无 whitespace error；
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md` 通过，`passed = true`。
+
+## 96. 2026-06-14 controlled expansion P2P retry: youtube-dl_3
+
+背景：
+
+- 用户明确当前目标是继续补充 bug 到计划中的 15-20 bugs；
+- 当前 EVP-7 主 cohort = 12 tasks / 5 projects / 62 candidates /
+  248 evidence packets，距离 15 个 bug 还差 3 个；
+- `data/tasks/evp7_expansion_readiness.json` 当前只列出两个已建立 F2P 但尚未
+  P2P admission 的候选：
+  - `bugsinpy_youtube-dl_3`；
+  - `bugsinpy_youtube-dl_11`。
+- 此前对 `bugsinpy_youtube-dl_3` 的 bounded project-level P2P-broad 运行在
+  外层约 1904 秒超时，未生成
+  `data/p2p_scopes/bugsinpy_youtube-dl_3_p2p_broad.json`；
+- 该失败命令缺少 youtube-dl 已验证 family policy 中的显式动态下载 nodeid 排除：
+  `--exclude-nodeid-prefix "test.test_download.TestDownload"`。
+
+Inspect 结果：
+
+- 当前无残留 Python/Git 进程；
+- Git 工作区干净，但本地 `main` 仍比 `origin/main` ahead 1；
+- `bugsinpy_youtube-dl_2/4/5/6/7` 的成功 P2P manifests 均记录：
+  - `scope_type = project_level_p2p_broad`；
+  - `test_framework = unittest`；
+  - `exclude_nodeid_prefixes = ["test.test_download.TestDownload"]`；
+  - `scope_policy.policy_name = youtube_dl_dynamic_download_nodeid_exclusion_v1`；
+  - retained P2P-broad tests 分别为 147、137、128、110、108。
+
+本轮小目标：
+
+1. 先用修正后的 ydl3 P2P 命令执行 `--dry-run`，验证命令边界且不写 manifest；
+2. dry-run 通过后，使用同一 family policy 重跑 ydl3 bounded
+   project-level P2P-broad；
+3. 若 manifest retained P2P-broad tests >= 3，且记录动态下载排除 policy，
+   进入 ydl3 oracle/candidate construction；
+4. 若 ydl3 仍因 project-level P2P 超时或质量门失败，则记录 blocker 并转向
+   `bugsinpy_youtube-dl_11`，不重复无边界长跑。
+
+边界：
+
+- 不调用模型 API；
+- 不修改 prompt、既有候选标签或既有 P2P manifests；
+- 不并行运行多个 youtube-dl P2P；
+- 不引入 compatibility shim、dependency install、fixture shim 或 task-file P2P
+  降级；
+- 不重复执行缺少 `exclude-nodeid-prefix` 的旧命令；
+- GitHub push 若继续超时，记录后继续本地任务。
+
+验收条件：
+
+- dry-run 输出显示 `manifest_write = false`；
+- real P2P manifest 存在且为 `project_level_p2p_broad` / `unittest`；
+- manifest 记录 `youtube_dl_dynamic_download_nodeid_exclusion_v1` 和
+  `exclude_nodeid_prefixes = ["test.test_download.TestDownload"]`；
+- retained P2P-broad tests >= 3；
+- 完成后同步 current plan、engineering notes、INDEX/README，并只提交本轮相关文件。
+
+执行结果：
+
+- 修正后的 dry-run 已通过：
+  - `will_write_manifest = false`；
+  - `will_execute_tests = false`；
+  - `exclude_nodeid_prefixes = ["test.test_download.TestDownload"]`；
+  - `scope_type = project_level_p2p_broad`；
+  - `test_framework = unittest`。
+- 真实 ydl3 P2P 在外层 40 分钟超时后仍未生成
+  `data/p2p_scopes/bugsinpy_youtube-dl_3_p2p_broad.json`；
+- 超时后残留进程显示主 builder 仍在运行，子 unittest 卡在
+  `test.test_utils.TestUtil.test_xpath_attr`，随后又残留
+  `test.test_utils.TestUtil.test_xpath_element`；
+- 已停止 ydl3 builder 和残留 unittest 子进程；
+- 诊断：动态下载排除修复了已知 family-policy 漏洞，但 ydl3 仍触发
+  project-level unittest P2P construction timeout，当前不能 admission；
+- 决策：记录 ydl3 为 corrected-policy P2P timeout blocker，转向
+  `bugsinpy_youtube-dl_11`，沿用同一
+  `youtube_dl_dynamic_download_nodeid_exclusion_v1` policy。
+
+## 97. 2026-06-14 controlled expansion admission: youtube-dl_11
+
+本轮小目标：
+
+1. 对 `bugsinpy_youtube-dl_11` 执行 bounded project-level P2P-broad；
+2. 构造 retained oracle 和 4 个候选补丁；
+3. 通过 retained-oracle validation 与 P2P-broad validation 后 admission；
+4. 重建 EVP-7 no-API artifacts，并保持真实 G5 结论不越界到未实跑的
+   264-packet cohort。
+
+边界：
+
+- 不调用模型 API；
+- 不安装依赖、不修改 checkout、不引入 fixture shim；
+- 不把 ydl3 timeout 降级为 task-file P2P；
+- GitHub push 如果继续频繁失败，允许先保留本地提交继续任务；
+- 最新真实 DeepSeek G5 结果仍只覆盖旧 12-task/62-candidate/248-packet
+  cohort。
+
+执行结果：
+
+- `bugsinpy_youtube-dl_11` P2P-broad 成功：
+  - collected/common nodeids = 2326；
+  - excluded generated download nodeids = 2095；
+  - excluded static external-dependency tests = 66；
+  - excluded retained F2P oracle = 1；
+  - excluded buggy-baseline failures = 4；
+  - retained P2P-broad tests = 160；
+  - scope policy =
+    `youtube_dl_dynamic_download_nodeid_exclusion_v1`。
+- 新增 retained oracle：
+  `scripts/oracles/youtubedl_11_str_to_int.py`。
+- 新增候选构造脚本：
+  `scripts/build_youtubedl11_candidates.py`。
+- retained-oracle validation 通过：
+  - candidates = 4；
+  - patch applied = 4/4；
+  - oracle ran = 4/4；
+  - oracle passed = 1/4。
+- P2P validation 通过：
+  - labels:
+    - `correct_under_f2p_and_p2p_broad`: 1；
+    - `incorrect_issue_not_fixed`: 3。
+- 已更新 registry 与 controlled-probe ledger：
+  - ydl11 admitted；
+  - ydl3 记录为 corrected-policy P2P timeout blocker。
+
+修复/诊断：
+
+- ydl11 候选脚本的初版 hunk header 不正确，导致 patch apply 报
+  `corrupt patch`；已按最短路径修正 hunk 行号后重新验证。
+- 初次 13-task candidate manifest 生成时，字符串排序会把
+  `youtube-dl_11` 插到 `youtube-dl_2` 前，造成既有 candidate ID 漂移；
+  已改为按任务末尾数字自然排序，旧 62 条 candidate ID 保持稳定，
+  ydl11 追加为 `evp7_candidate_0063` 到 `evp7_candidate_0066`。
+- protocol manifest check 不能用 registry-known candidate count 作为
+  62-candidate floor，因为 `httpie_5` 仍缺 registry candidate count；
+  已删除该错误 gate，candidate manifest 本身仍生成实际 66 条。
+
+重建结果：
+
+- `python scripts\build_evp7_protocol_manifests.py --check` 通过：
+  main tasks = 13；
+- `python scripts\build_evp7_candidate_manifest.py --check` 通过：
+  candidates = 66，correct = 13，incorrect = 53；
+- `python scripts\run_evp7_visible_tests.py --run --check --timeout 90`
+  通过：66 records，63 completed，3 error；
+- `python scripts\build_evp7_visible_tool_summaries.py --check` 通过：
+  66 complete summaries；
+- `python scripts\build_evp7_evidence_packets.py --check` 通过：
+  264 packets，E0/E2/E4/E6 各 66，G1/G2 passed；
+- `python scripts\run_evp7_tool_only_baselines.py --check` 通过：
+  198 decisions，G3 passed；
+- `python scripts\run_evp7_merge_gate_schema_dry_run.py --check` 通过：
+  264 valid parses，G4 passed；
+- `python scripts\analyze_evp7_schema_dry_run_metrics.py --check` 通过：
+  no-API metric scaffold passed，仍要求真实 LLM verifier outputs；
+- `python scripts\build_evp7_g5_llm_prompt_manifest.py --check` 通过：
+  264 prompt records，zero leakage failures；
+- `python scripts\preflight_evp7_g5_llm_run.py --config configs\evp7_g5_llm.example.json --out data\reviews\evp7_g5_llm_preflight_example.json`
+  通过：structural_ready = true，api_ready = false；
+- `python scripts\run_evp7_g5_llm_workflow.py --check-only --summary-out data\reviews\evp7_g5_workflow_check_only_example.json`
+  通过：未调用模型/API；
+- `python scripts\summarize_evp7_expansion_readiness.py` 通过：
+  当前 main tasks = 13，P2P candidate tasks = []。
+
+当前边界：
+
+- 当前结构化 EVP-7 cohort = 13 tasks / 5 projects / 66 candidates /
+  264 evidence packets；
+- 最新真实 DeepSeek G5 full run 仍为旧 12-task / 62-candidate /
+  248-packet cohort；
+- 不得把旧 248-run 的真实模型 claim 延伸到当前 264-packet structural
+  cohort，除非后续显式授权并完成新的真实 264-packet run 与质量审计；
+- 15 bug 目标仍差 2 个 admission，需要从 readiness 的其他 probe lanes
+  继续寻找新的 F2P/P2P/candidate validation 路径。

@@ -70,6 +70,10 @@ TASK_INPUTS: dict[str, tuple[str, str]] = {
         "outputs/youtubedl7_candidate_validation_001/candidates.jsonl",
         "outputs/youtubedl7_candidate_validation_001/p2p_validation.jsonl",
     ),
+    "bugsinpy_youtube-dl_11": (
+        "outputs/youtubedl11_candidate_validation_001/candidates.jsonl",
+        "outputs/youtubedl11_candidate_validation_001/p2p_validation.jsonl",
+    ),
 }
 
 
@@ -113,6 +117,13 @@ def _failure_label(candidate_type: str, label: str) -> str:
     if label == "incorrect_regression":
         return "regression_introducing"
     return "unknown_issue_not_fixed"
+
+
+def _task_sort_key(task_id: str) -> tuple[str, int | str]:
+    prefix, separator, suffix = task_id.rpartition("_")
+    if separator and suffix.isdigit():
+        return prefix, int(suffix)
+    return task_id, task_id
 
 
 def _candidate_record(
@@ -196,7 +207,7 @@ def build_candidates(task_manifest: Path) -> tuple[list[dict[str, Any]], dict[st
 
     records: list[dict[str, Any]] = []
     next_index = 1
-    for task_id in sorted(task_records):
+    for task_id in sorted(task_records, key=_task_sort_key):
         candidate_rel, validation_rel = TASK_INPUTS[task_id]
         candidate_path = REPO_ROOT / candidate_rel
         validation_path = REPO_ROOT / validation_rel
@@ -273,13 +284,15 @@ def main() -> int:
             raise SystemExit(
                 f"candidate count {len(records)} < registry-known lower bound {min_known}"
             )
-        if len(records) != 62:
-            raise SystemExit(f"EVP-7 candidate count changed: {len(records)} != 62")
         ids = [record["evp7_candidate_id"] for record in records]
         if len(ids) != len(set(ids)):
             raise SystemExit("evp7_candidate_id values are not unique")
-        if len({record["task_id"] for record in records}) != 12:
-            raise SystemExit("expected candidates from exactly 12 tasks")
+        expected_task_count = manifest_summary.get("main_task_count")
+        actual_task_count = len({record["task_id"] for record in records})
+        if expected_task_count is not None and actual_task_count != expected_task_count:
+            raise SystemExit(
+                f"expected candidates from {expected_task_count} tasks, got {actual_task_count}"
+            )
         if any(not record.get("label_with_p2p_broad") for record in records):
             raise SystemExit("missing p2p labels")
 

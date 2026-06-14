@@ -15,9 +15,6 @@ from typing import Any
 
 
 EXPECTED_PROMPT_ID = "patch_verify_evidence_visibility_merge_gate_v1"
-EXPECTED_CANDIDATE_COUNT = 62
-EXPECTED_LEVEL_COUNTS = {"E0": 62, "E2": 62, "E4": 62, "E6": 62}
-EXPECTED_RECORD_COUNT = 248
 ALLOWED_CONDITIONS = {"evidence_visibility_merge_gate"}
 
 
@@ -167,14 +164,15 @@ def artifact_checks(config: dict[str, Any]) -> list[dict[str, Any]]:
 
     if prompt_manifest_path.exists():
         records = read_jsonl(prompt_manifest_path)
+        expected_counts = _expected_counts(config)
         level_counts = counts(record.get("evidence_level") for record in records)
         leakage_failed = sum(1 for record in records if record.get("label_leakage_check") != "passed")
         prompt_ids = sorted({record.get("prompt_id") for record in records})
         prompt_text_stored = any(record.get("prompt_text_stored") is not False for record in records)
         checks.extend(
             [
-                _structural_check("prompt_manifest_record_count", len(records) == EXPECTED_RECORD_COUNT, len(records)),
-                _structural_check("prompt_manifest_level_counts", level_counts == EXPECTED_LEVEL_COUNTS, level_counts),
+                _structural_check("prompt_manifest_record_count", len(records) == expected_counts["record_count"], len(records)),
+                _structural_check("prompt_manifest_level_counts", level_counts == expected_counts["level_counts"], level_counts),
                 _structural_check("prompt_manifest_prompt_id", prompt_ids == [EXPECTED_PROMPT_ID], prompt_ids),
                 _structural_check("prompt_manifest_leakage", leakage_failed == 0, {"failed": leakage_failed}),
                 _structural_check("prompt_text_not_stored", not prompt_text_stored, {"prompt_text_stored_any": prompt_text_stored}),
@@ -183,12 +181,13 @@ def artifact_checks(config: dict[str, Any]) -> list[dict[str, Any]]:
 
     if readiness_path.exists():
         readiness = read_json(readiness_path)
+        expected_counts = _expected_counts(config)
         checks.extend(
             [
                 _structural_check("run_readiness_status", readiness.get("g5_llm_run_readiness") == "passed_without_api", readiness.get("g5_llm_run_readiness")),
                 _structural_check("run_readiness_api_not_attempted", readiness.get("api_call_attempted") is False, readiness.get("api_call_attempted")),
-                _structural_check("run_readiness_prompt_count", readiness.get("prompt_record_count") == EXPECTED_RECORD_COUNT, readiness.get("prompt_record_count")),
-                _structural_check("run_readiness_level_counts", readiness.get("level_counts") == EXPECTED_LEVEL_COUNTS, readiness.get("level_counts")),
+                _structural_check("run_readiness_prompt_count", readiness.get("prompt_record_count") == expected_counts["record_count"], readiness.get("prompt_record_count")),
+                _structural_check("run_readiness_level_counts", readiness.get("level_counts") == expected_counts["level_counts"], readiness.get("level_counts")),
             ]
         )
 
@@ -208,14 +207,26 @@ def artifact_checks(config: dict[str, Any]) -> list[dict[str, Any]]:
     if evidence_path.exists() and candidates_path.exists():
         evidence_count = len(read_jsonl(evidence_path))
         candidate_count = len(read_jsonl(candidates_path))
+        expected_record_count = candidate_count * 4
         checks.extend(
             [
-                _structural_check("evidence_packet_count", evidence_count == EXPECTED_RECORD_COUNT, evidence_count),
-                _structural_check("candidate_count", candidate_count == EXPECTED_CANDIDATE_COUNT, candidate_count),
+                _structural_check("evidence_packet_count", evidence_count == expected_record_count, evidence_count),
+                _structural_check("candidate_count", candidate_count > 0, candidate_count),
             ]
         )
 
     return checks
+
+
+def _expected_counts(config: dict[str, Any]) -> dict[str, Any]:
+    candidates_path = Path(str(config.get("candidates", "")))
+    candidate_count = len(read_jsonl(candidates_path)) if candidates_path.exists() else 0
+    level_counts = {level: candidate_count for level in ("E0", "E2", "E4", "E6")}
+    return {
+        "candidate_count": candidate_count,
+        "level_counts": level_counts,
+        "record_count": candidate_count * len(level_counts),
+    }
 
 
 def _structural_check(name: str, passed: bool, detail: Any) -> dict[str, Any]:

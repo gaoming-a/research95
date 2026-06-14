@@ -1,22 +1,22 @@
 {
   "cohort_id": "EVP-7",
   "decision_counts": {
-    "accept": 24,
-    "escalate": 124,
-    "reject": 100
+    "accept": 28,
+    "escalate": 132,
+    "reject": 104
   },
   "dry_run_boundary": "No model API calls; deterministic schema-only outputs generated from model-visible evidence packets.",
-  "expected_record_count": 248,
+  "expected_record_count": 264,
   "g4_schema_stability": "passed",
   "invalid_parse_count": 0,
   "leakage_findings_count": 0,
   "level_counts": {
-    "E0": 62,
-    "E2": 62,
-    "E4": 62,
-    "E6": 62
+    "E0": 66,
+    "E2": 66,
+    "E4": 66,
+    "E6": 66
   },
   "paper_claim_boundary": "These records validate parser/schema stability only and are not LLM verifier results.",
-  "record_count": 248,
-  "valid_parse_count": 248
+  "record_count": 264,
+  "valid_parse_count": 264
 }

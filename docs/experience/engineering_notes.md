@@ -1712,3 +1712,29 @@ This file starts fresh for the patch-verification project.
   negative/redesign result, the old tool-augmented run remains a conditional
   tool-assisted result, and EVP-7 G5 supports only bounded pilot observations
   about evidence-level variation.
+
+## 2026-06-14 youtube-dl_11 controlled admission
+
+- `bugsinpy_youtube-dl_3` still times out under corrected
+  `youtube_dl_dynamic_download_nodeid_exclusion_v1` policy. The timeout moved
+  past dynamic download tests and then stalled in `test_xpath_attr` /
+  `test_xpath_element`. Treat this as a corrected-policy project-level P2P
+  timeout blocker, not as permission to downgrade to task-file P2P.
+- `bugsinpy_youtube-dl_11` can reuse the same youtube-dl family policy. Its
+  manifest retains 160 P2P-broad tests after excluding
+  `test.test_download.TestDownload*`, static external-dependency tests, the F2P
+  oracle, and buggy-baseline failures.
+- Candidate hunk headers must be validated before trusting oracle labels. The
+  first ydl11 candidate script emitted corrupt patch hunks; fixing only the hunk
+  ranges restored 4/4 patch apply and preserved the intended candidate set.
+- Preserve `evp7_candidate_id` stability when adding tasks. Lexicographic sort
+  places `youtube-dl_11` before `youtube-dl_2` and shifts historical IDs. Use a
+  task sort key that treats the trailing bug id numerically so new youtube-dl
+  tasks append after existing lower-numbered admissions.
+- Registry-known candidate count is a lower bound while `httpie_5` lacks
+  candidate count fields in the registry. Do not use it as a hard floor for the
+  true candidate manifest; validate the generated candidate manifest directly.
+- After ydl11 admission, the structural cohort is 13 tasks / 66 candidates /
+  264 packets, but the latest real DeepSeek G5 run remains the previous
+  12-task / 62-candidate / 248-packet run. Keep claim boundaries separate until
+  a fresh 264-packet real run is explicitly authorized and audited.

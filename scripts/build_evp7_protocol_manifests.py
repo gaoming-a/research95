@@ -180,16 +180,14 @@ def main() -> int:
     args.summary_out.write_text(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     if args.check:
-        for path, expected in [(args.tasks_out, 12), (args.blockers_out, None)]:
+        for path, expected in [(args.tasks_out, summary["main_task_count"]), (args.blockers_out, None)]:
             rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
             if expected is not None and len(rows) != expected:
                 raise SystemExit(f"{path} has {len(rows)} records, expected {expected}")
-        if summary["main_task_count"] != 12:
-            raise SystemExit("EVP-7 must contain exactly 12 main tasks")
+        if summary["main_task_count"] < 12:
+            raise SystemExit("EVP-7 main task count fell below the established 12-task pilot floor")
         if "cookiecutter" not in summary["main_projects"] or "PySnooper" not in summary["main_projects"]:
             raise SystemExit("EVP-7 project summary is incomplete")
-        if "bugsinpy_httpie_5" not in summary["candidate_count_missing_in_registry_tasks"]:
-            raise SystemExit("Expected httpie_5 candidate count to be missing from registry")
 
     print(json.dumps(summary, ensure_ascii=False, sort_keys=True))
     return 0

@@ -1,0 +1,23 @@
+{
+  "error_count": 2,
+  "errors": [
+    {
+      "error_type": "ImportError",
+      "message": "Failed to import test module: test.test_subtitles\nTraceback (most recent call last):\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 419, in _find_test_path\n    module = self._get_module_from_name(name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 362, in _get_module_from_name\n    __import__(name)\n  File \"D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\youtube-dl_11\\buggy\\youtube-dl\\test\\test_subtitles.py\", line 13, in <module>\n    from youtube_dl.extractor import (\nImportError: cannot import name 'FunnyOrDieIE' from 'youtube_dl.extractor' (D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\youtube-dl_11\\buggy\\youtube-dl\\youtube_dl\\extractor\\__init__.py)\n",
+      "module_or_path": "unittest.loader._FailedTest.test.test_subtitles",
+      "traceback_excerpt": "ImportError: Failed to import test module: test.test_subtitles\nTraceback (most recent call last):\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 419, in _find_test_path\n    module = self._get_module_from_name(name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 362, in _get_module_from_name\n    __import__(name)\n  File \"D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\youtube-dl_11\\buggy\\youtube-dl\\test\\test_subtitles.py\", line 13, in <module>\n    from youtube_dl.extractor import (\nImportError: cannot import name 'FunnyOrDieIE' from 'youtube_dl.extractor' (D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\youtube-dl_11\\buggy\\youtube-dl\\youtube_dl\\extractor\\__init__.py)\n\n",
+      "version": "buggy"
+    },
+    {
+      "error_type": "ImportError",
+      "message": "Failed to import test module: test.test_subtitles\nTraceback (most recent call last):\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 419, in _find_test_path\n    module = self._get_module_from_name(name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 362, in _get_module_from_name\n    __import__(name)\n  File \"D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\youtube-dl_11\\fixed\\youtube-dl\\test\\test_subtitles.py\", line 13, in <module>\n    from youtube_dl.extractor import (\nImportError: cannot import name 'FunnyOrDieIE' from 'youtube_dl.extractor' (D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\youtube-dl_11\\fixed\\youtube-dl\\youtube_dl\\extractor\\__init__.py)\n",
+      "module_or_path": "unittest.loader._FailedTest.test.test_subtitles",
+      "traceback_excerpt": "ImportError: Failed to import test module: test.test_subtitles\nTraceback (most recent call last):\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 419, in _find_test_path\n    module = self._get_module_from_name(name)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Python311\\Lib\\unittest\\loader.py\", line 362, in _get_module_from_name\n    __import__(name)\n  File \"D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\youtube-dl_11\\fixed\\youtube-dl\\test\\test_subtitles.py\", line 13, in <module>\n    from youtube_dl.extractor import (\nImportError: cannot import name 'FunnyOrDieIE' from 'youtube_dl.extractor' (D:\\mgao\\code\\research\\data\\real_bugs\\bugsinpy_workspace\\youtube-dl_11\\fixed\\youtube-dl\\youtube_dl\\extractor\\__init__.py)\n\n",
+      "version": "reference"
+    }
+  ],
+  "project": "youtube-dl",
+  "scope_type": "project_level_p2p_broad",
+  "task_id": "bugsinpy_youtube-dl_11",
+  "test_framework": "unittest"
+}

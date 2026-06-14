@@ -20,17 +20,14 @@
   },
   "cohort_id": "EVP-7",
   "controlled_probe_results": {
-    "p2p_candidate_tasks": [
-      "bugsinpy_youtube-dl_11",
-      "bugsinpy_youtube-dl_3"
-    ],
+    "p2p_candidate_tasks": [],
     "probe_status_counts": {
-      "admitted_p2p_broad_main": 5,
+      "admitted_p2p_broad_main": 6,
       "f2p_blocked_dependency_environment": 4,
       "f2p_blocked_existing_incomplete_native_probe": 1,
       "f2p_blocked_windows_posix_import": 1,
-      "f2p_established_existing_p2p_timeout": 1,
-      "f2p_established_p2p_not_attempted": 2
+      "f2p_established_corrected_policy_p2p_timeout": 1,
+      "f2p_established_existing_p2p_timeout": 1
     },
     "recorded_tasks": [
       "bugsinpy_ansible_1",
@@ -55,9 +52,9 @@
     "cookiecutter": 3,
     "httpie": 1,
     "tqdm": 1,
-    "youtube-dl": 5
+    "youtube-dl": 6
   },
-  "current_main_task_count": 12,
+  "current_main_task_count": 13,
   "current_main_tasks": [
     "bugsinpy_PySnooper_1",
     "bugsinpy_PySnooper_3",
@@ -70,7 +67,8 @@
     "bugsinpy_youtube-dl_4",
     "bugsinpy_youtube-dl_5",
     "bugsinpy_youtube-dl_6",
-    "bugsinpy_youtube-dl_7"
+    "bugsinpy_youtube-dl_7",
+    "bugsinpy_youtube-dl_11"
   ],
   "next_execution_boundary": [
     "Run at most one bounded checkout/F2P/P2P probe per risky project lane at a time.",

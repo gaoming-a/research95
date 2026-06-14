@@ -265,9 +265,11 @@ def _summary(records: list[dict[str, Any]]) -> dict[str, Any]:
     leakage_findings = leakage_audit(records)
     level_counts = _counts(record["evidence_level"] for record in records)
     decision_counts = _counts((record.get("parsed_output") or {}).get("decision", "invalid") for record in records)
-    expected_level_counts = {level: 62 for level in EVIDENCE_LEVELS}
+    candidate_count = len({record["candidate_id"] for record in records})
+    expected_level_counts = {level: candidate_count for level in EVIDENCE_LEVELS}
+    expected_record_count = candidate_count * len(EVIDENCE_LEVELS)
     passed = (
-        len(records) == 248
+        len(records) == expected_record_count
         and not invalid
         and not leakage_findings
         and level_counts == expected_level_counts
@@ -275,7 +277,7 @@ def _summary(records: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         "cohort_id": "EVP-7",
         "record_count": len(records),
-        "expected_record_count": 248,
+        "expected_record_count": expected_record_count,
         "level_counts": level_counts,
         "decision_counts": decision_counts,
         "valid_parse_count": len(records) - len(invalid),

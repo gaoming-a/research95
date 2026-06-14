@@ -142,13 +142,15 @@
       }
     },
     {
-      "blocked_reason": [],
+      "blocked_reason": [
+        "corrected_policy_project_level_p2p_timeout"
+      ],
       "bug_id": "3",
-      "date": "2026-06-13",
-      "decision": "f2p_established_hold_for_p2p_decision",
+      "date": "2026-06-14",
+      "decision": "do_not_admit_corrected_policy_p2p_timeout",
       "fixed_result": "pass",
-      "notes": "Both checkouts completed and the target unittest produced the expected buggy fail and fixed pass. Project-level P2P-broad construction and candidate validation were not attempted in this F2P-only continuation batch.",
-      "probe_status": "f2p_established_p2p_not_attempted",
+      "notes": "Both checkouts completed and the target unittest produced the expected buggy fail and fixed pass. A corrected project-level P2P-broad retry reused youtube_dl_dynamic_download_nodeid_exclusion_v1 and excluded test.test_download.TestDownload, but the builder still exceeded the 40 minute outer budget and left no manifest. Residual unittest processes were stopped; no task-file downgrade was used.",
+      "probe_status": "f2p_established_corrected_policy_p2p_timeout",
       "project": "youtube-dl",
       "run_command": "python -m unittest -q test.test_utils.TestUtil.test_unescape_html",
       "source": "BugsInPy",
@@ -308,11 +310,13 @@
     {
       "blocked_reason": [],
       "bug_id": "11",
-      "date": "2026-06-13",
-      "decision": "f2p_established_hold_for_p2p_decision",
+      "candidate_validation_report": "docs/experiments/youtubedl11_candidate_validation.md",
+      "date": "2026-06-14",
+      "decision": "admitted_to_p2p_broad_main",
       "fixed_result": "pass",
-      "notes": "Both checkouts completed and the target pure-utils unittest produced the expected buggy error and fixed pass. Project-level P2P-broad construction and candidate validation were not attempted in this F2P-only continuation batch.",
-      "probe_status": "f2p_established_p2p_not_attempted",
+      "notes": "Both checkouts completed and the target pure-utils unittest produced the expected buggy error and fixed pass. A later project-level P2P-broad run produced 160 retained P2P tests with youtube_dl_dynamic_download_nodeid_exclusion_v1, and four candidate records passed retained-oracle and P2P-broad validation before admission.",
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_youtube-dl_11_p2p_broad.json",
+      "probe_status": "admitted_p2p_broad_main",
       "project": "youtube-dl",
       "run_command": "python -m unittest -q test.test_utils.TestUtil.test_str_to_int",
       "source": "BugsInPy",
