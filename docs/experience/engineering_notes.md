@@ -1765,3 +1765,19 @@ This file starts fresh for the patch-verification project.
   artifact dry-run treats them as package-safety violations, so checkout
   diagnostics should name the retained archive or workspace role and the task
   directory, not the developer-specific root path.
+
+## 2026-06-14 youtube-dl_10 local clone and P2P timeout
+
+- `bugsinpy-checkout` can return exit code 0 even when `git clone` fails. For
+  ydl10, GitHub clone failed with a TLS termination, then the script continued
+  and printed missing-directory errors. Always verify BugsInPy marker files
+  such as `bugsinpy_run_test.sh`; do not trust checkout exit code alone.
+- If the exact buggy/fixed commits already exist in a local checkout, a local
+  clone can avoid a transient GitHub clone failure. The replacement must follow
+  the BugsInPy checkout logic: copy the fixed test file, reset to the buggy
+  commit, restore the fixed test file for buggy, and additionally restore fixed
+  changed files for fixed. Verify the resulting diffs before running F2P.
+- ydl10 established F2P after local clone repair, but corrected-policy
+  project-level P2P-broad still exceeded the 40 minute budget with no manifest.
+  Treat it like ydl3: a P2P timeout blocker, not an admission and not
+  permission to downgrade to task-file P2P.

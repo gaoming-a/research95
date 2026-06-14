@@ -419,6 +419,35 @@
           "result": "not_run"
         }
       }
+    },
+    {
+      "blocked_reason": [
+        "github_clone_tls_failure_repaired_with_local_clone",
+        "corrected_policy_project_level_p2p_timeout"
+      ],
+      "bug_id": "10",
+      "date": "2026-06-14",
+      "decision": "do_not_admit_corrected_policy_p2p_timeout",
+      "fixed_result": "pass",
+      "notes": "Initial BugsInPy checkout reached a GitHub clone TLS termination and produced no marker files despite exit code 0. The workspace was reconstructed from an existing local youtube-dl Git checkout after verifying both ydl10 commits were present, following the BugsInPy reset/copy-test-file flow without dependency install, source edit, or shim. The target unittest then failed on buggy and passed on fixed, establishing F2P. Corrected-policy project-level P2P-broad dry-run passed, but the real builder exceeded the 40 minute outer budget, produced no manifest, and was stopped with a residual unittest subprocess.",
+      "probe_status": "f2p_established_corrected_policy_p2p_timeout",
+      "project": "youtube-dl",
+      "run_command": "python -m unittest -q test.test_utils.TestUtil.test_js_to_json_realworld",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_youtube-dl_10",
+      "test_file": "test/test_utils.py",
+      "versions": {
+        "buggy": {
+          "checkout": "local_clone_after_github_tls_failure",
+          "git_head": "85d586617750d38d742a24f141b099f6b898d269",
+          "result": "fail"
+        },
+        "fixed": {
+          "checkout": "local_clone_after_github_tls_failure",
+          "git_head": "85d586617750d38d742a24f141b099f6b898d269_with_fixed_files",
+          "result": "pass"
+        }
+      }
     }
   ],
   "schema": "controlled_probe_results.v1"

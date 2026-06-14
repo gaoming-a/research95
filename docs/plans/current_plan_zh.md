@@ -7533,3 +7533,99 @@ Inspect 结果：
   sensitive scan 和 anonymous artifact dry-run；已改为 archive/workspace
   相对描述；
 - 修复后重新运行 `py_compile`、本地质量门和 diff 检查。
+
+## 99. 2026-06-14 next controlled probe lane: youtube-dl_10
+
+背景：
+
+- ydl13 已记录为 checkout/tooling 阶段阻塞，未产生可复用 workspace；
+- 当前结构化 EVP-7 cohort 仍为 13 tasks / 66 candidates / 264 packets；
+- 目标 15-20 bugs 仍至少差 2 个 admission；
+- 已有完整本地 checkout 但未入主 cohort 的任务均有明确既有阻塞：
+  `youtube-dl_1` 为 project-level unittest discovery timeout，
+  `httpie_2/3/4` 为 project-level scope timeout 或 requests 兼容性问题，
+  `black_*` 为 `typed_ast` 依赖阻塞，`luigi_*` 为 large-suite/P2P blocker；
+- 剩余未记录 `youtube-dl` 候选中，`bugsinpy_youtube-dl_10` 是无 metadata
+  blocker 的 pure `test/test_utils.py` unittest lane，target command 为
+  `python -m unittest -q test.test_utils.TestUtil.test_js_to_json_realworld`。
+
+本轮小目标：
+
+1. 串行 bounded checkout `bugsinpy_youtube-dl_10` buggy 版本；
+2. 若 buggy checkout 完整，再运行 target F2P command；
+3. 若 buggy fail，再串行 checkout fixed 版本并运行同一 target command；
+4. 若 buggy fail 且 fixed pass，则记录 F2P established，并进入 corrected
+   youtube-dl family P2P-broad dry-run；
+5. 若 checkout 超时、target test 不成立或环境阻塞，则记录 blocker，不继续
+   P2P。
+
+边界：
+
+- 不调用模型 API；
+- 不安装依赖、不修改 checkout、不引入 shim；
+- 同一任务 buggy/fixed checkout 串行，禁止并行；
+- checkout 每个版本使用 10 分钟 bounded probe window；
+- 不复用 ydl13 的不完整 workspace；
+- 不把已有 blocked task 降级为 task-file P2P。
+
+验收条件：
+
+- checkout 结果明确记录完整/超时/阻塞；
+- 如果 F2P 不成立，ledger 记录应停在 checkout/F2P 阶段；
+- 如果 F2P 成立，后续 P2P 命令必须沿用
+  `youtube_dl_dynamic_download_nodeid_exclusion_v1` 和
+  `--exclude-nodeid-prefix "test.test_download.TestDownload"`；
+- 每个关键动作后运行最小验证并更新 readiness/经验文档。
+
+执行修订：
+
+- 首次调用 retained BugsInPy checkout 进行 buggy checkout 未超时，但 GitHub
+  clone 因 TLS connection terminated 中断，且 `bugsinpy-checkout` 仍返回 0；
+- marker 验证显示 `bugsinpy_run_test.sh` 不存在，workspace 只有空的
+  `buggy` 目录，因此不能视为完整 checkout；
+- ydl10 的 buggy/fixed commit 均已在本地既有 `youtube-dl_11` Git checkout
+  中验证存在；
+- 为避免重复依赖不稳定 GitHub clone，本轮改用本地 Git clone 构造
+  ydl10 workspace，但必须按 BugsInPy checkout 脚本同样流程执行：
+  先 reset fixed commit 并复制 fixed test file，再 reset buggy commit，
+  buggy 版本只放回 fixed test file；fixed 版本再放回 fixed commit 变更文件；
+- 该修订不安装依赖、不修改 checkout 内容、不引入 shim；完成后必须验证
+  marker 文件存在、HEAD 为 buggy commit，并分别运行 target unittest。
+
+执行结果：
+
+- 本地 clone checkout 构造成功：
+  - buggy workspace marker `bugsinpy_run_test.sh` 存在；
+  - fixed workspace marker `bugsinpy_run_test.sh` 存在；
+  - buggy workspace diff 仅包含 fixed `test/test_utils.py`；
+  - fixed workspace diff 包含 fixed `test/test_utils.py` 和
+    `youtube_dl/utils.py`；
+  - buggy/fixed workspace HEAD 均为
+    `85d586617750d38d742a24f141b099f6b898d269`，fixed 版本通过放回
+    fixed commit 变更文件表示修复态，符合 BugsInPy checkout 脚本逻辑。
+- F2P target command 结果：
+  - buggy: `python -m unittest -q test.test_utils.TestUtil.test_js_to_json_realworld`
+    失败，`json.decoder.JSONDecodeError: Extra data`；
+  - fixed: 同一命令通过。
+- corrected-policy P2P dry-run 通过：
+  - checkout 存在；
+  - `will_write_manifest = false`；
+  - `will_execute_tests = false`；
+  - `exclude_nodeid_prefixes = ["test.test_download.TestDownload"]`；
+  - `scope_policy_name = youtube_dl_dynamic_download_nodeid_exclusion_v1`。
+- 真实 project-level P2P-broad 在 40 分钟外层超时：
+  - 未生成 `data/p2p_scopes/bugsinpy_youtube-dl_10_p2p_broad.json`；
+  - 输出目录仅留下 ignored `compat_shim`；
+  - 残留 builder 和 unittest 子进程已停止。
+
+诊断与决策：
+
+- `bugsinpy_youtube-dl_10` 当前归类为
+  `f2p_established_corrected_policy_p2p_timeout`；
+- F2P 已成立，但 project-level P2P-broad 未完成，因此不能 admission；
+- 该 lane 进一步说明 youtube-dl pure-utils 候选仍可能被 broader unittest
+  scope 中的 subtitles/swf/utils 批次拖入超时；
+- readiness 已刷新，当前 main cohort 仍为 13 tasks / 66 candidates /
+  264 packets；
+- 15 bug 目标仍差 2 个 admission，下一轮应继续寻找新的 bounded lane，优先
+  避免重复进入同类 40 分钟 P2P 超时路径。
