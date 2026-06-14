@@ -94,6 +94,10 @@ TASK_INPUTS: dict[str, tuple[str, str]] = {
         "outputs/youtubedl23_candidate_validation_001/candidates.jsonl",
         "outputs/youtubedl23_candidate_validation_001/p2p_validation.jsonl",
     ),
+    "bugsinpy_youtube-dl_37": (
+        "outputs/youtubedl37_candidate_validation_001/candidates.jsonl",
+        "outputs/youtubedl37_candidate_validation_001/p2p_validation.jsonl",
+    ),
     "bugsinpy_youtube-dl_43": (
         "outputs/youtubedl43_candidate_validation_001/candidates.jsonl",
         "outputs/youtubedl43_candidate_validation_001/p2p_validation.jsonl",

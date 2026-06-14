@@ -1917,3 +1917,29 @@ This file starts fresh for the patch-verification project.
   360 packets. The latest real DeepSeek G5 result remains the earlier
   12-task / 62-candidate / 248-packet run until a fresh 360-packet run is
   explicitly authorized and audited.
+
+## 2026-06-14 youtube-dl_37 admission and uppercase_escape oracle
+
+- ydl37 is a pure `test/test_utils.py` unittest lane for `uppercase_escape`.
+  The Python 3 failure is an `AttributeError` from calling
+  `str.decode('unicode-escape')`; the reference patch uses
+  `codecs.getdecoder('unicode_escape')` and returns the decoded string.
+- Useful negatives are simple and local: importing `codecs` without replacing
+  the failing call still raises the same error, while returning the raw escape
+  string avoids the exception but fails the semantic decode oracle.
+- Writing ydl37 marker files during checkout construction avoided the ydl23
+  marker-copy issue. For future local clone reuse, marker creation should be
+  treated as part of checkout construction, not as a blind file copy.
+- Corrected-policy project-level P2P-broad succeeded with the canonical
+  youtube-dl generated-download nodeid exclusion: 528 common nodeids,
+  380 generated downloader tests excluded, 73 static external-dependency tests
+  excluded, 1 F2P oracle excluded, 44 buggy-baseline failures excluded, and
+  30 retained P2P tests.
+- Tool summaries depend on the current evidence-packet candidate universe.
+  After adding ydl37, running summaries before the first evidence-packet rebuild
+  left the summary count at 90. The reliable order is visible tests -> evidence
+  packets -> tool summaries -> evidence packets.
+- ydl37 admission raises the structural cohort to 20 tasks / 94 candidates /
+  376 packets. The latest real DeepSeek G5 result remains the earlier
+  12-task / 62-candidate / 248-packet run until a fresh 376-packet run is
+  explicitly authorized and audited.
