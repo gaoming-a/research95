@@ -213,8 +213,8 @@
   for Candidate Patches`.
 - `paper/patch_verification_draft.md`: staged result draft with no-API
   validation, the first DeepSeek official API full-run outcome, the
-  tool-augmented full run, related-work positioning, and the bounded EVP-7 G5
-  376-record result.
+  tool-augmented full run, reader-flow bridge, related-work positioning, and
+  the bounded EVP-7 G5 376-record result.
 - `paper/generated_tables.md`: generated Markdown paper tables from current
   tracked outputs, including the EVP-7 G5 376-record real-LLM result,
   Wilson/bootstrap intervals, utility sensitivity, deterministic tool-only
@@ -225,9 +225,9 @@
 - `paper/ieee_submission_draft.tex`: current anonymous IEEEtran submission
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
-  evidence-visibility result, related-work positioning, deterministic
-  tool-only attribution, qualitative case interpretation, figures, threats,
-  and conclusion.
+  evidence-visibility result, the early decision-to-metric reader-flow bridge,
+  related-work positioning, deterministic tool-only attribution, qualitative
+  case interpretation, figures, threats, and conclusion.
 - `experiments/evp7_related_work_positioning.md`: related-work citation and
   positioning artifact. It maps field-specific primary references to the
   paper's evidence-visibility distinction and records why a strict Nature/CNS

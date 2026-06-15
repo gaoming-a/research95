@@ -2249,3 +2249,16 @@ This file starts fresh for the patch-verification project.
 - Evidence Gain must remain a descriptive pilot metric for the frozen EVP-7
   protocol. Do not frame it as a standardized community benchmark score unless
   a later paper explicitly validates it as such.
+
+## 2026-06-15 reader-flow simplification
+
+- Put the experiment's unit of analysis before historical runs. The reader
+  should see candidate patch -> model-visible evidence packet ->
+  accept/reject/escalate decision -> hidden-label join -> aggregate metric
+  before first-pilot chronology.
+- Existing figures can carry this structure. When `fig7_decision_metric_flow`
+  exists, reference it in the IEEE draft rather than leaving it as an unused
+  asset.
+- Keep first-pilot API and tool-augmented results as diagnostic design evidence.
+  The current paper-facing result remains the frozen EVP-7 evidence-visibility
+  run.

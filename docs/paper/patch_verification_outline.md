@@ -20,6 +20,19 @@ opinion: it needs a decision tied to visible, non-leaking engineering evidence.
 The current project treats AI-generated patches as one possible candidate
 source, not as the required unit of every task.
 
+## Reader Path
+
+The paper should explain the experiment before historical runs:
+
+1. candidate patch;
+2. model-visible evidence packet;
+3. accept/reject/escalate decision;
+4. hidden evaluator label join after review;
+5. aggregate metric and claim-boundary computation.
+
+The first-pilot API and tool-augmented sections are diagnostic design evidence.
+The frozen EVP-7 run is the paper-facing evidence-visibility result.
+
 ## Research Questions
 
 RQ1. How does LLM-only review behave when deciding whether candidate patches
@@ -45,15 +58,17 @@ ability?
 2. A related-work positioning that separates evidence visibility from
    benchmark pass rates, test-only validation, prompt engineering, and generic
    tool-use prompting.
-3. A real-bug-derived candidate-patch pilot with hidden evaluator separation
+3. A compact reader-flow bridge from candidate patch to metric computation,
+   anchored by the decision-to-metric figure.
+4. A real-bug-derived candidate-patch pilot with hidden evaluator separation
    and project-level P2P-broad validation for the current main cohort.
-4. A negative or mixed prompt-only evidence-first result from the first real
+5. A negative or mixed prompt-only evidence-first result from the first real
    API pilot.
-5. A conditional tool-assisted verification result from the separate
+6. A conditional tool-assisted verification result from the separate
    tool-augmented run.
-6. A bounded EVP-7 evidence-visibility pilot over 20 tasks, 94 candidates, and
+7. A bounded EVP-7 evidence-visibility pilot over 20 tasks, 94 candidates, and
    376 evidence packets.
-7. Paper-facing artifacts for the frozen EVP-7 result: Evidence Visibility
+8. Paper-facing artifacts for the frozen EVP-7 result: Evidence Visibility
    Curve, statistical intervals, utility sensitivity, and claim-boundary
    traceability.
 

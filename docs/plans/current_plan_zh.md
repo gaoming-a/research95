@@ -10514,3 +10514,77 @@ Verify:
 - 论文现在明确区别 evidence visibility 与 benchmark pass rate、test-only
   validation、LLM repair 和 agentic software-engineering task solving；
 - 下一步应处理 reader-flow simplification，而不是继续补实验或扩 cohort。
+
+## 2026-06-15 reader-flow simplification
+
+Inspect:
+
+- 当前分支本地领先 `origin/main` 7 个提交，工作区在本轮开始时干净；
+- Nature-style reviewer report 的第四个硬缺口是 reader workflow：
+  当前正文要求读者先学习 first pilot、tool-augmented redesign、EVP-7、G5、
+  statistics、utility 和 artifact controls，主线不够早；
+- 当前 `docs/figures/fig7_decision_metric_flow.pdf` 已存在，但 IEEE draft
+  尚未引用；
+- 本轮只调整论文叙事和 readiness guard，不调用 API、不改 cohort、不改
+  experimental metrics。
+
+Plan:
+
+1. 在 IEEE draft generator 的 Related Work 后加入
+   `How to Read the Experiment` section；
+2. 用五步路径解释 candidate patch -> visible evidence packet -> model
+   decision -> hidden label join -> aggregate metric；
+3. 引用 `fig7_decision_metric_flow.pdf`，让图文对应；
+4. 将 first-pilot 路线明确写成 diagnostic motivation，避免和 EVP-7 主结果
+   抢主线；
+5. 同步 Markdown draft、outline、README、INDEX 和 engineering notes；
+6. 更新 paper readiness，要求 IEEE/generator/Markdown draft 都包含 reader-flow
+   bridge 和 fig7 reference；
+7. 重新生成 IEEE draft、运行 paper readiness、LaTeX、claim-boundary、local
+   quality gate、diff check 后提交。
+
+验收条件：
+
+- 早期正文必须出现五步 reader path；
+- PDF 必须包含 fig7 / decision-to-metric flow 的正文或 caption；
+- first-pilot 仍作为 diagnostic design evidence，不升级为主结果；
+- paper readiness 和 local quality gate 通过。
+
+Execute:
+
+- 已在 IEEE generator 的 Related Work 后加入 `How to Read the Experiment`
+  section；
+- 已把 reader path 固定为 candidate patch -> model-visible evidence packet
+  -> accept/reject/escalate decision -> hidden label join -> aggregate metrics；
+- 已在 IEEE draft 中引用 `docs/figures/fig7_decision_metric_flow.pdf`，
+  并加入 decision-to-metric flow caption；
+- 已同步 Markdown draft、outline、research definition、README、INDEX 和
+  engineering notes；
+- 已扩展 `scripts/audit_paper_readiness.py`，要求 generator、IEEE draft 和
+  Markdown draft 都包含 reader-flow bridge，并检查 fig7 reference 与
+  first-pilot diagnostic framing。
+
+Verify:
+
+- `python -m compileall scripts\write_ieee_latex_draft.py scripts\audit_paper_readiness.py`
+  通过；
+- `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`
+  通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，reader-flow、fig7 reference 和 first-pilot diagnostic checks 全部为 true；
+- `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex`
+  连续两遍通过，第二遍无 undefined reference；
+- `python scripts\audit_paper_claim_boundary.py` 通过，`passed=true`、
+  `raw_output_free=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `pdftotext outputs\paper_compile\ieee_submission_draft.pdf -` 检查确认
+  PDF 包含 candidate patch、model-visible evidence packet、hidden label
+  join、decision-to-metric flow、diagnostic design evidence 和 frozen EVP-7。
+
+结论：
+
+- 本轮完成预审报告第四项技术风险：reader-flow simplification；
+- 论文读者现在可在进入 first-pilot / tool-augmented / EVP-7 细节前先看到
+  统一的实验单位、决策链和指标链；
+- 下一步应做 final manuscript polish / consistency pass，而不是继续补实验。

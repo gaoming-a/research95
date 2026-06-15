@@ -32,6 +32,18 @@ the unit of analysis:
 | Reviewer explanation | Evidence-supported patch claim |
 | Regression oracle as post-hoc label | Evidence source for verification |
 
+## Reader Workflow
+
+The manuscript should keep one path visible before introducing historical
+experiments:
+
+> candidate patch -> model-visible evidence packet -> accept/reject/escalate
+> decision -> hidden evaluator label join -> aggregate metric and claim
+> boundary.
+
+The first prompt-only and tool-augmented runs explain why the EVP-7 protocol was
+needed. The frozen EVP-7 run is the current paper-facing result.
+
 ## Revised Target Contribution
 
 The target contribution is not a new foundation model or an immediate broad
@@ -53,6 +65,9 @@ evidence-visibility workflow for candidate patch verification:
    patch validation, LLM program repair, and agentic software-engineering
    systems: those lines motivate the setting, while this paper isolates the
    evidence visible to the verifier at merge-gate decision time.
+8. Keep the reader path centered on candidate patch, evidence packet, model
+   decision, hidden-label join, and aggregate metric before discussing
+   diagnostic first-pilot history.
 
 ## Revised Hypotheses
 

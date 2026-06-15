@@ -257,8 +257,8 @@ They should not override `final_paper_roadmap_zh.md`.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`; it now
   includes the prompt-only negative result, the conditional tool-augmented
   result, the bounded EVP-7 G5 376-record evidence-visibility result, and the
-  related-work positioning, deterministic tool-only attribution, and
-  qualitative decision-case boundaries.
+  reader-flow bridge, related-work positioning, deterministic tool-only
+  attribution, and qualitative decision-case boundaries.
 - A Nature-style pre-submission reviewer assessment is tracked at
   `docs/paper/nature_reviewer_presubmission_report.md`. It identifies the next
   paper-writing risks as tool-only attribution, EVP-7 qualitative cases,
@@ -655,6 +655,9 @@ figure. The draft foregrounds the current EVP-7 bounded result and treats the
 earlier 30-candidate API pilot as diagnostic design evidence. It also references
 the qualitative case audit as interpretation of decision mechanics, not as
 additional scale evidence.
+It includes an early `How to Read the Experiment` bridge that maps candidate
+patches to evidence packets, model decisions, hidden-label joins, and aggregate
+metrics using `fig7_decision_metric_flow`.
 
 Paper readiness also checks the current paper framing. The tracked outline,
 research definition, Markdown draft, and IEEE draft must use the
@@ -663,6 +666,8 @@ claim boundary; stale AI-generated-patch title framing fails readiness.
 It also checks that the IEEE draft contains a related-work section with the
 core field-specific citations and the boundary that Evidence Gain is a
 descriptive pilot metric, not a proposed universal benchmark score.
+It also checks that the IEEE draft, generator, and Markdown draft keep the
+reader-flow bridge and fig7 decision-to-metric reference.
 It also checks `docs/protocol/evidence_visibility_protocol.md` for the current
 20-task / 94-candidate / 376-packet EVP-7 state, so a stale protocol summary no
 longer passes merely because the file exists. The same check covers

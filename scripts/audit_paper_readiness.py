@@ -142,6 +142,27 @@ def paper_framing_state() -> dict[str, Any]:
         "related_work_ris_exists": bool(texts["related_work_ris"])
         and "TY  - CONF" in texts["related_work_ris"]
         and "ID  - just2014defects4j" in texts["related_work_ris"],
+        "ieee_has_reader_flow_section": r"\section{How to Read the Experiment}"
+        in texts["ieee_submission_draft"],
+        "generator_has_reader_flow_section": r"\section{{How to Read the Experiment}}"
+        in texts["ieee_submission_generator"],
+        "markdown_draft_has_reader_flow_section": "## 3. How to Read the Experiment" in texts["paper_draft"],
+        "reader_flow_mentions_five_step_path": all(
+            phrase in normalized_texts["ieee_submission_draft"]
+            for phrase in [
+                "candidate patch",
+                "model-visible evidence packet",
+                "accept, reject, or escalate",
+                "hidden evaluator labels and oracle outcomes are joined only after the decision",
+                "aggregated into false accepts, correct recall, escalation, utility",
+            ]
+        ),
+        "reader_flow_references_fig7": "fig7_decision_metric_flow.pdf" in texts["ieee_submission_draft"]
+        and r"\label{fig:decision-metric-flow}" in texts["ieee_submission_draft"],
+        "reader_flow_marks_first_pilot_diagnostic": "diagnostic design evidence"
+        in normalized_texts["ieee_submission_draft"]
+        and "frozen EVP-7 run is the paper-facing evidence-visibility result"
+        in normalized_texts["ieee_submission_draft"],
         "current_artifacts_do_not_use_stale_title": all(
             stale_title not in normalized_text for normalized_text in normalized_texts.values()
         ),

@@ -238,6 +238,28 @@ labels are joined only after review to compute false accepts, correct recall,
 escalation, and utility. Evidence Gain is a descriptive pilot metric for this
 frozen protocol, not a proposed universal benchmark score.
 
+\section{{How to Read the Experiment}}
+
+The experiment has one recurring unit, shown in
+Fig.~\ref{{fig:decision-metric-flow}}. First, a real software task is paired
+with a candidate patch. Second, the verifier receives a model-visible evidence
+packet at a stated level, such as E0, E2, E4, or E6. Third, the verifier makes
+one merge-gate decision: accept, reject, or escalate. Fourth, hidden evaluator
+labels and oracle outcomes are joined only after the decision. Fifth, the joined
+records are aggregated into false accepts, correct recall, escalation, utility,
+and claim-boundary checks. The first-pilot sections later in the paper are
+diagnostic design evidence for this workflow; the frozen EVP-7 run is the
+paper-facing evidence-visibility result.
+
+\begin{{figure}}[t]
+\centering
+\includegraphics[width=\columnwidth]{{docs/figures/fig7_decision_metric_flow.pdf}}
+\caption{{Decision-to-metric flow. A candidate patch and visible evidence packet
+produce an accept/reject/escalate decision; hidden evaluator labels are joined
+only after review to compute paper metrics and claim boundaries.}}
+\label{{fig:decision-metric-flow}}
+\end{{figure}}
+
 \section{{Research Questions}}
 
 \textbf{{RQ1.}} How risky is evidence-poor LLM review as a merge gate for
