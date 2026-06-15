@@ -186,7 +186,7 @@ def artifact_readme(manifest: dict[str, Any]) -> str:
             "",
             "## Paper Draft",
             "",
-            "The current paper framing is `Evidence Visibility Matters: A Systematic Study of LLM-Based Verification for Candidate Patches`. The active protocol entry is `docs/protocol/evidence_visibility_protocol.md`; the protocol pilot report is `docs/experiments/evp7_protocol_pilot.md`. Together they record the current 20-task / 94-candidate / 376-packet EVP-7 state and the visible/hidden evidence boundary.",
+            "The current paper framing is `Evidence Visibility Matters: A Systematic Study of LLM-Based Verification for Candidate Patches`. The canonical roadmap is `docs/plans/final_paper_roadmap_zh.md`; the active protocol entry is `docs/protocol/evidence_visibility_protocol.md`; the protocol pilot report is `docs/experiments/evp7_protocol_pilot.md`. Together they record the current 20-task / 94-candidate / 376-packet EVP-7 state and the visible/hidden evidence boundary.",
             "",
             "```powershell",
             "python scripts\\analyze_evp7_g5_statistics.py",

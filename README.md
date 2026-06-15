@@ -641,7 +641,9 @@ It also checks `docs/protocol/evidence_visibility_protocol.md` for the current
 20-task / 94-candidate / 376-packet EVP-7 state, so a stale protocol summary no
 longer passes merely because the file exists. The same check covers
 `docs/experiments/evp7_protocol_pilot.md`, which must also treat the 376-record
-G5 run as current and the 248-record run as historical.
+G5 run as current and the 248-record run as historical. It also checks the
+canonical roadmap, `docs/plans/final_paper_roadmap_zh.md`, so stale Phase A
+counts cannot pass while the protocol files are current.
 
 For a dry-run bootstrap of the current DeepSeek official API prerequisite
 configs, run:

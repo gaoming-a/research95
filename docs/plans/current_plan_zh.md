@@ -9783,3 +9783,95 @@ Verify:
 - anonymous artifact 审计也要求携带该 protocol pilot report；
 - 该修复只巩固 frozen 20-task EVP-7 paper/artifact readiness，不改变实验边界
   或 claim 边界。
+
+## 123. 2026-06-15 refresh final roadmap Phase A current state
+
+Inspect:
+
+- 当前工作区干净，`main...origin/main`；
+- `outputs/local_quality_gate/latest.md` 显示 local quality gate 通过，计划阶段
+  14/14 complete；
+- `outputs/paper_readiness/latest.md` 显示 paper framing、active protocol 和
+  protocol pilot report current-state checks 均通过；
+- 但 canonical `docs/plans/final_paper_roadmap_zh.md` 的 Phase A 尾部仍用
+  “当前通过”描述旧状态：
+  - 46 candidates / 200 evidence packets；
+  - E4/E6 50/50 complete；
+  - 150 tool-only decisions；
+  - 200 dry-run records；
+  - 248 prompt manifest / four levels each 62；
+- 同一段后面又写 376-run 是当前 paper-facing result，形成 roadmap 内部
+  current-state drift。
+
+Plan:
+
+1. 将 `final_paper_roadmap_zh.md` 的 Phase A 状态段改成当前 20-task /
+   94-candidate / 376-packet / 282-tool-only / 376-dry-run / 376-real-LLM
+   口径；
+2. 保留 248-run 和早期 10/11/12-task run 为 historical checkpoints；
+3. 在 `audit_paper_readiness.py` 加入 final roadmap current-state check，防止
+   canonical roadmap 再把旧 46/200/248 prompt 状态写成当前；
+4. 同步 README / docs index / engineering notes；
+5. 运行 compile、paper readiness、artifact package + audit、local quality gate；
+6. 本轮不调用 API、不扩 cohort、不修改 prompt、不跟踪 raw model outputs。
+
+验收条件：
+
+- roadmap Phase A 当前状态与 tracked summaries 一致；
+- paper readiness 输出 final roadmap current-state check 且通过；
+- stale roadmap-state 检查不再命中旧 46/200/150/248 prompt 的 current wording；
+- README / docs index / engineering notes 已同步；
+- quality gates 通过。
+
+Execute:
+
+- 已刷新 `docs/plans/final_paper_roadmap_zh.md` 的 Phase A/G1-G5 当前状态：
+  - 当前 candidate manifest = 94 candidates，20 correct reference，74
+    issue-not-fixed negatives；
+  - 当前 structural cohort = 20 tasks / 5 projects / 94 candidates；
+  - 当前 evidence packets = 376 E0/E2/E4/E6 records，四层各 94；
+  - 当前 tool-only baseline = 282 schema-valid decisions，三组各 94；
+  - 当前 G4 dry-run = 376 records，invalid parse count 0；
+  - 当前 G5 prompt manifest = 376 prompts，四层各 94；
+  - 当前 paper-facing G5 run = 376/376 parse-valid DeepSeek V4 records，
+    estimated total cost USD 0.327352058；
+- 已将 10/11/12-task run 和 248-packet run 改为 historical checkpoints；
+- 已在 `scripts/audit_paper_readiness.py` 新增 `final_roadmap` current-state
+  check，并让 `current_result_claim_ready` 与 `evp7_bounded_pilot_claim_ready`
+  依赖该 check；
+- 已将 `docs/plans/final_paper_roadmap_zh.md` 加入 anonymous artifact required
+  files，并在 embedded ARTIFACT_README 中列为 canonical roadmap；
+- 已同步 README、docs index、anonymous artifact 文档和 engineering notes；
+- 诊断并恢复了非本轮范围的 fig2/generate-figures diff，保留上一轮已确认的
+  evaluator truth labels 图注；
+- 本轮未调用 API、未扩 cohort、未修改 prompt、未跟踪 raw model outputs。
+
+Verify:
+
+- `python -m compileall scripts\audit_paper_readiness.py scripts\audit_anonymous_artifact.py scripts\prepare_anonymous_artifact.py`
+  通过；
+- stale roadmap-state 检查在 current roadmap/protocol/README/INDEX 入口未命中：
+  - `共 46 条候选`；
+  - `共 200 条`；
+  - `50/50 complete`；
+  - `150 条 schema-valid`；
+  - `248 条 prompts`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`final_roadmap.passed=true`、`protocol_pilot_report.passed=true`、
+  `protocol_current_state.passed=true`、`current_result_claim_ready=true`、
+  `evp7_bounded_pilot_claim_ready=true`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`safe_to_package=true`、`file_count=280`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 本轮按计划修复 canonical final-paper roadmap Phase A current-state drift；
+- paper readiness 现在同时验证 paper framing、active protocol、protocol pilot
+  report 和 final roadmap；
+- anonymous artifact 审计也要求携带 canonical roadmap；
+- 该修复只巩固 frozen 20-task EVP-7 paper/artifact readiness，不改变实验边界
+  或 claim 边界。

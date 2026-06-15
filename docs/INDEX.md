@@ -17,7 +17,8 @@
   update extracts only non-duplicative external advice: the Evidence Visibility
   Curve framing, FACR/Evidence Gain as calibrated secondary metrics, staged
   E0/E2/E4/E6-first ablation, realistic tool-only boundaries, and the need to
-  resolve stale paper/cohort wording before further scaling claims.
+  keep roadmap Phase A counts aligned with the frozen 20-task / 94-candidate /
+  376-packet paper-facing cohort.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.
@@ -601,9 +602,9 @@
   `tool_augmented_evidence` result cannot be mistaken for prompt-only model
   ability. It now also reports the current EVP-7 G5 bounded-pilot claim
   readiness from the raw-output-free 376-record DeepSeek summary and quality
-  audit. It also reports whether pre-API methods evidence is complete: pilot
-  report, paper draft/outline, model-selection docs, reproducibility
-  comparison, model catalog audit, and pre-API handoff.
+  audit. It also checks paper framing, active protocol, protocol pilot report,
+  and final roadmap current-state consistency before marking the current result
+  claim ready.
 - `scripts/write_paper_tables.py`: generates Markdown and LaTeX paper tables
   from dataset summary, validation summary, metrics, deterministic
   reproducibility comparison, and the current EVP-7 G5 376-record summary plus

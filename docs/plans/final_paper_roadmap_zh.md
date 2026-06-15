@@ -1068,77 +1068,62 @@ admission。`bugsinpy_youtube-dl_7`、`bugsinpy_youtube-dl_6`、
 - `scripts/build_evp7_candidate_manifest.py`；
 - `scripts/build_evp7_evidence_packets.py`。
 
-Phase A 已补齐 EVP-7 candidate-level schema：
+Phase A/G1-G5 当前状态：
 
-1. 已从已有 validated candidate outputs 生成
-   `data/patches/evp7_candidates.jsonl`，共 46 条候选；
-2. 其中 9 条为 `correct_reference`，41 条为 issue-not-fixed negatives；
-3. registry 中候选计数仍只能作为 44 条的下界，因为 `httpie_5` 缺少
-   candidate count 字段；
-4. 已生成 leakage-audited E0/E2/E4/E6 evidence packet records，共 200 条；
-5. 已新增 independent visible-test outcome source 和 deterministic visible
-   tool summary source；E4/E6 当前均为 50/50 complete；
-6. G1 packet completeness 和 G2 leakage audit 当前均通过；3 条 visible
-   `error` outcome 是 candidate-induced import failure，不是缺失证据；
-7. G3 tool-only baseline readiness 当前通过：apply-only、visible-tests、
-   visible-tool-summary 三组 baseline 共生成 150 条 schema-valid decisions；
-8. G4 merge-gate schema stability 当前通过：200 条 E0/E2/E4/E6 dry-run
+1. 已从 validated candidate outputs 生成当前
+   `data/patches/evp7_candidates.jsonl`：94 candidates，其中 20 个
+   `correct_reference`，74 个 issue-not-fixed negatives；
+2. 当前 structural cohort 已冻结为 20 tasks / 5 projects / 94 candidates；
+3. 已生成 leakage-audited E0/E2/E4/E6 evidence packet records，共 376 条，
+   四层各 94 条；
+4. independent visible-test outcome source 和 deterministic visible tool
+   summary source 均已为当前 94-candidate cohort 补齐；visible outcome 中的
+   `error` 记录是 candidate-induced import failure，不是缺失证据；
+5. G1 packet completeness 和 G2 leakage audit 当前通过，tracked summary 为
+   `data/evidence/evp7_evidence_packet_summary.json`；
+6. G3 tool-only baseline readiness 当前通过：apply-only、visible-tests、
+   visible-tool-summary 三组 baseline 共生成 282 条 schema-valid decisions，
+   每组 94 条；
+7. G4 merge-gate schema stability 当前通过：376 条 E0/E2/E4/E6 dry-run
    outputs 全部可解析为 accept/reject/escalate JSON schema，invalid parse
    count = 0，leakage findings = 0；
-9. 这些 G4 records 是 no-API parser/schema dry-run，不是 LLM verifier
-   结果，不能支持模型效果结论；
-10. G5 metric scaffold 当前通过：FAR、accepted precision、correct recall、
-   escalation、FACR 和 Evidence Gain 的计算链路可复现；schema dry-run 和
-   mock workflow 仍标记为 `requires_real_llm_verifier_outputs`；
-11. 真实 LLM verifier 的 G5 prompt manifest 和 readiness summary 当前通过
-   no-API 检查：248 条 prompts、四层各 62 条、leakage failed count = 0、
-   prompt text 不写入 tracked manifest；
-12. G5 API example config 和 preflight 当前通过结构检查；tracked example
-   仍保持 strict API readiness false，只允许 ignored local config 执行真实
-   API；
-13. G5 guarded workflow 当前支持 check-only、mock validation 和 bounded
-   concurrency；mock records 只验证 parser/metrics pipeline；
-14. 用户确认 DeepSeek V4 后，已完成 fresh 248-packet 真实 DeepSeek official
-    G5 full run：248 条 E0/E2/E4/E6 review，concurrency = 6。该 run 现在是
-    historical checkpoint；
-15. 248-run 质量审计：full run 有 1 条非空截断 JSON 输出；
-    tracked summary 记录 247/248 parse-valid，invalid-output rate =
-    0.004032；原始响应保留在 ignored `outputs/`，tracked summary 不包含 raw
-    model responses；
-16. 248-run EVP-7 pilot-level metric variation 已观察到；metrics scaffold
-    记录 `g5_signal_claim_status = real_llm_verifier_signal_observed_on_evp7`。
-    E4/E6 相对 E0 的 Evidence Gain 分别为 7.25 和 7.5，false accept rate
-    均为 0，accepted precision 均为 1.0，E4 correct recall = 0.166667，
-    E6 correct recall = 0.25；
-17. 248-run 支持 12-task / 62-candidate / 248-packet historical bounded pilot
-    observations，不支持直接 scale-generalized paper claims；它不再是当前主
-    cohort 的最新真实模型结果。
-18. 已完成 248-run quality audit：
-    `docs/experiments/evp7_g5_full_run_quality_audit.md` 和
-    `data/reviews/evp7_g5_full_run_quality_audit.json`；结论是
-   `passed_with_limitations`，明确不支持“LLM 超过 deterministic
-   visible-test tool-only baseline”、不支持已知
-   DeepSeek 真实计费成本、不支持规模泛化；
-19. 已生成 controlled expansion readiness summary：
+8. G4 records 是 no-API parser/schema dry-run，不是 LLM verifier 结果，
+   不能支持模型效果结论；
+9. G5 prompt manifest 和 readiness summary 当前覆盖 376 条 prompts，
+   E0/E2/E4/E6 四层各 94 条，leakage failed count = 0，prompt text 不写入
+   tracked manifest；
+10. G5 guarded workflow 支持 check-only、mock validation 和 bounded
+    concurrency；mock records 只验证 parser/metrics pipeline；
+11. 已完成当前 paper-facing 376-packet DeepSeek V4 G5 full run：376/376
+    parse-valid，review_count = 376，candidate_count = 94，E0/E2/E4/E6 各
+    94，`cost_observability=estimated_from_provider_token_usage` for 376/376，
+    estimated total cost USD = 0.327352058；
+12. 当前 G5 quality audit =
+    `data/reviews/evp7_g5_376_full_quality_audit.json` /
+    `docs/experiments/evp7_g5_376_full_quality_audit.md`，结论为
+    `passed_with_limitations`；
+13. 当前 paper-facing run 只支持 bounded EVP-7 evidence-visibility pilot
+    observations，不支持规模泛化、不支持 LLM 优于 deterministic visible-test
+    tool-only baseline、不支持 E6 严格优于 E4，也不支持外部 billing 等价
+    claim；
+14. 已生成 controlled expansion readiness summary：
     `docs/experiments/evp7_expansion_readiness.md` 和
-    `data/tasks/evp7_expansion_readiness.json`；下一步应按 project-diverse
-    bounded probe 推进，不做盲目 BugsInPy 批量扩展。
-20. `bugsinpy_youtube-dl_5` admission 后的 10-task / 54-candidate /
-    216-packet DeepSeek G5 run 现在是历史结果。
-21. `bugsinpy_youtube-dl_2` admission 后，structural/no-API artifacts
-    和真实 DeepSeek G5 结果均覆盖 11 tasks / 58 candidates / 232 packets。
-22. `bugsinpy_youtube-dl_4` admission 后，当前 structural/no-API artifacts
-    已覆盖 12 tasks / 62 candidates / 248 packets。
-23. 已完成 fresh 248-packet DeepSeek V4 G5 run：247/248 parse-valid，
-    invalid-output rate = 0.004032；E4/E6 FAR = 0.0，accepted precision =
-    1.0，correct recall = 0.166667 / 0.25，Evidence Gain = 7.25 / 7.5。
-    quality audit = `passed_with_limitations`，仍不支持规模泛化、LLM 优于
-    deterministic visible-test tool-only baseline 或真实计费成本已知。
-24. 已完成 fresh 376-packet DeepSeek V4 G5 run：376/376 parse-valid，
-    review_count = 376，candidate_count = 94，E0/E2/E4/E6 各 94，
-    `cost_observability=estimated_from_provider_token_usage` for 376/376，
-    estimated total cost USD = 0.327352058。quality audit =
-    `passed_with_limitations`；该 run 是当前 paper-facing 结果，只支持 bounded
-    EVP-7 evidence-visibility pilot observations，不支持规模泛化、不支持 LLM
-    优于 deterministic visible-test tool-only baseline、不支持 E6 严格优于
-    E4，也不支持外部 billing 等价 claim。
+    `data/tasks/evp7_expansion_readiness.json`。它是后续研究边界参考，不是
+    默认继续补 bug 的执行指令。
+
+Historical checkpoints：
+
+1. `bugsinpy_youtube-dl_5` admission 后的 10-task / 54-candidate /
+   216-packet DeepSeek G5 run 是历史结果；
+2. `bugsinpy_youtube-dl_2` admission 后，structural/no-API artifacts 和真实
+   DeepSeek G5 结果覆盖 11 tasks / 58 candidates / 232 packets；
+3. `bugsinpy_youtube-dl_4` admission 后，structural/no-API artifacts 覆盖
+   12 tasks / 62 candidates / 248 packets；
+4. fresh 248-packet DeepSeek V4 G5 run 是 12-task / 62-candidate /
+   248-packet historical bounded pilot observation：247/248 parse-valid，
+   invalid-output rate = 0.004032，E4/E6 FAR = 0.0，accepted precision =
+   1.0，correct recall = 0.166667 / 0.25，Evidence Gain = 7.25 / 7.5；
+5. 248-run quality audit =
+   `docs/experiments/evp7_g5_full_run_quality_audit.md` /
+   `data/reviews/evp7_g5_full_run_quality_audit.json`，结论为
+   `passed_with_limitations`。它不再是当前主 cohort 的最新真实模型结果。

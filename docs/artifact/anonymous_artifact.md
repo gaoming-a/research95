@@ -51,6 +51,7 @@ The latest ZIP audit passed. It confirms:
 - required source, config template, documentation, and handoff scripts are
   present;
 - required protocol and paper-framing files are present:
+  `docs/plans/final_paper_roadmap_zh.md`,
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`,
   `docs/paper/research_definition.md`, and

@@ -16,6 +16,7 @@ REQUIRED_FILES = [
     "configs/model_selection.example.json",
     "docs/INDEX.md",
     "docs/artifact/anonymous_artifact.md",
+    "docs/plans/final_paper_roadmap_zh.md",
     "docs/protocol/evidence_visibility_protocol.md",
     "docs/experiments/evp7_protocol_pilot.md",
     "docs/experiments/tool_augmented_full_run_result.md",
