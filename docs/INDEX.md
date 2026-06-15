@@ -620,8 +620,8 @@
 - `scripts/generate_paper_figures.py`: generates the publication figure set
   under `docs/figures/` in PDF, SVG, and PNG formats. Figures cover the
   workflow, compact E0/E2/E4/E6 evidence boundary, dataset composition,
-  first-pilot result tradeoff, claim boundary, and EVP-7 evidence visibility
-  curve.
+  first-pilot result tradeoff, claim boundary, EVP-7 evidence visibility
+  curve, and the model decision-to-metric computation flow.
 - `scripts/analyze_evp7_g5_statistics.py`: generates the raw-output-free
   statistical analysis for the frozen EVP-7 G5 376-record run. It reads ignored
   review records structurally, joins tracked candidate labels only for aggregate

@@ -113,6 +113,29 @@ def add_arrow(ax: plt.Axes, start: tuple[float, float], end: tuple[float, float]
     ax.add_patch(arrow)
 
 
+def add_text(
+    ax: plt.Axes,
+    x: float,
+    y: float,
+    text: str,
+    size: float = 8.0,
+    color: str | None = None,
+    weight: str = "regular",
+    ha: str = "left",
+) -> None:
+    ax.text(
+        x,
+        y,
+        text,
+        fontsize=size,
+        color=color or COLORS["ink"],
+        weight=weight,
+        ha=ha,
+        va="center",
+        linespacing=1.18,
+    )
+
+
 def prefixed_group(groups: dict[str, Any], prefix: str) -> dict[str, Any]:
     for key, value in groups.items():
         if key.startswith(prefix):
@@ -356,9 +379,147 @@ def fig_evp7_visibility_curve(out_dir: Path, evp7_summary: dict[str, Any]) -> No
     save_figure(fig, out_dir, "fig6_evp7_visibility_curve")
 
 
+def fig_decision_metric_flow(out_dir: Path) -> None:
+    fig, ax = plt.subplots(figsize=(7.6, 4.25))
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.axis("off")
+
+    ax.text(
+        0.02,
+        0.96,
+        "Merge-gate decision to metric computation flow",
+        fontsize=11.5,
+        weight="bold",
+        color=COLORS["ink"],
+    )
+    ax.text(
+        0.02,
+        0.91,
+        "Each candidate is reviewed at one evidence level. Hidden labels are "
+        "joined only after the review to compute aggregate metrics.",
+        fontsize=7.4,
+        color=COLORS["muted"],
+    )
+
+    add_box(
+        ax,
+        (0.03, 0.70),
+        0.19,
+        0.11,
+        "Candidate patch i\n+ issue summary",
+        "#e8f1ff",
+        ec=COLORS["blue"],
+        fontsize=7.6,
+        weight="bold",
+    )
+    add_box(
+        ax,
+        (0.03, 0.52),
+        0.19,
+        0.12,
+        "Evidence level e\nE0 / E2 / E4 / E6",
+        "#f3f4f6",
+        ec=COLORS["muted"],
+        fontsize=7.6,
+        weight="bold",
+    )
+    add_text(ax, 0.04, 0.44, "E0: issue + patch diff", 7.0, COLORS["muted"])
+    add_text(ax, 0.04, 0.39, "E2: + apply/static evidence", 7.0, COLORS["muted"])
+    add_text(ax, 0.04, 0.34, "E4: + F2P/P2P results", 7.0, COLORS["muted"])
+    add_text(ax, 0.04, 0.29, "E6: + tool/behavior summary", 7.0, COLORS["muted"])
+
+    add_arrow(ax, (0.22, 0.63), (0.31, 0.63), COLORS["muted"])
+    add_box(
+        ax,
+        (0.31, 0.54),
+        0.21,
+        0.18,
+        "LLM verifier\nDeepSeek G5\nprompted at level e",
+        "#fff3cd",
+        ec=COLORS["yellow"],
+        fontsize=7.8,
+        weight="bold",
+    )
+    add_text(ax, 0.34, 0.50, r"output $d_i^e$", 7.0, COLORS["muted"])
+
+    add_arrow(ax, (0.52, 0.65), (0.61, 0.78), COLORS["green"])
+    add_arrow(ax, (0.52, 0.62), (0.61, 0.62), COLORS["red"])
+    add_arrow(ax, (0.52, 0.59), (0.61, 0.46), COLORS["muted"])
+    add_box(
+        ax,
+        (0.61, 0.73),
+        0.16,
+        0.09,
+        "accept\nmergeable",
+        "#d8f3dc",
+        ec=COLORS["green"],
+        fontsize=7.3,
+        weight="bold",
+    )
+    add_box(
+        ax,
+        (0.61, 0.57),
+        0.16,
+        0.09,
+        "reject\ndo not merge",
+        "#fde2e1",
+        ec=COLORS["red"],
+        fontsize=7.3,
+        weight="bold",
+    )
+    add_box(
+        ax,
+        (0.61, 0.41),
+        0.16,
+        0.09,
+        "escalate\nhuman review",
+        COLORS["gray"],
+        ec=COLORS["muted"],
+        fontsize=7.3,
+        weight="bold",
+    )
+
+    add_arrow(ax, (0.77, 0.62), (0.84, 0.62), COLORS["muted"])
+    add_box(
+        ax,
+        (0.84, 0.67),
+        0.13,
+        0.12,
+        "Hidden label\n$y_i \\in \\{1,0\\}$",
+        "#f3f4f6",
+        ec=COLORS["muted"],
+        fontsize=7.4,
+        weight="bold",
+    )
+    add_text(ax, 0.845, 0.61, "Joined after review:", 6.8, COLORS["muted"])
+    add_text(ax, 0.845, 0.56, "correct / wrong", 6.8, COLORS["muted"])
+    add_text(ax, 0.845, 0.51, "oracle outcome", 6.8, COLORS["muted"])
+
+    ax.plot([0.03, 0.97], [0.23, 0.23], color=COLORS["grid"], linewidth=1.0)
+    add_text(ax, 0.03, 0.19, "Metric counts per evidence level e", 7.8, COLORS["ink"], "bold")
+    add_text(
+        ax,
+        0.03,
+        0.14,
+        r"$TP_e=\#(accept \wedge y=1)$    $FP_e=\#(accept \wedge y=0)$    "
+        r"$FR_e=\#(reject \wedge y=1)$    $Esc_e=\#(escalate)$",
+        7.0,
+        COLORS["muted"],
+    )
+
+    add_text(ax, 0.03, 0.08, r"$FAR_e=FP_e/N_{wrong}$", 7.2, COLORS["red"], "bold")
+    add_text(ax, 0.25, 0.08, r"$Precision_e=TP_e/(TP_e+FP_e)$", 7.2, COLORS["green"], "bold")
+    add_text(ax, 0.53, 0.08, r"$Recall_e=TP_e/N_{correct}$", 7.2, COLORS["blue"], "bold")
+    add_text(ax, 0.76, 0.08, r"$EscRate_e=Esc_e/N$", 7.2, COLORS["muted"], "bold")
+    add_text(ax, 0.03, 0.025, r"$U_e=TP_e-5FP_e-0.25Esc_e-FR_e$    $Gain_e=U_e-U_{E0}$", 7.2, COLORS["purple"], "bold")
+
+    save_figure(fig, out_dir, "fig7_decision_metric_flow")
+
+
 def write_manifest(out_dir: Path) -> None:
     manifest = {
-        "figure_count": 6,
+        "figure_count": 7,
         "formats": ["pdf", "svg", "png"],
         "figures": [
             {"id": "fig1_framework", "purpose": "overall workflow"},
@@ -367,6 +528,7 @@ def write_manifest(out_dir: Path) -> None:
             {"id": "fig4_result_tradeoff", "purpose": "first-pilot API result metrics"},
             {"id": "fig5_claim_boundary", "purpose": "claim boundary and interpretation"},
             {"id": "fig6_evp7_visibility_curve", "purpose": "EVP-7 evidence visibility curve"},
+            {"id": "fig7_decision_metric_flow", "purpose": "LLM decision to metric computation flow"},
         ],
     }
     (out_dir / "figure_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -398,8 +560,9 @@ def main() -> None:
     fig_result_tradeoff(out_dir, metrics)
     fig_claim_boundary(out_dir)
     fig_evp7_visibility_curve(out_dir, evp7_summary)
+    fig_decision_metric_flow(out_dir)
     write_manifest(out_dir)
-    print(json.dumps({"out_dir": str(out_dir), "figure_count": 6, "formats": ["pdf", "svg", "png"]}, indent=2))
+    print(json.dumps({"out_dir": str(out_dir), "figure_count": 7, "formats": ["pdf", "svg", "png"]}, indent=2))
 
 
 if __name__ == "__main__":

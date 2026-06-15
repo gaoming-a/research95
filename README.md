@@ -614,8 +614,8 @@ result, statistical intervals, utility sensitivity, and claim boundary. The
 claim-boundary audit maps supported and unsupported EVP-7 claims to tracked
 evidence and paper coverage before the tables and draft are regenerated.
 
-For reproducible paper figures, including the EVP-7 evidence visibility curve,
-run:
+For reproducible paper figures, including the EVP-7 evidence visibility curve
+and the decision-to-metric flowchart, run:
 
 ```powershell
 python scripts\generate_paper_figures.py

@@ -19,6 +19,8 @@ Each figure is emitted as PDF, SVG, and PNG:
 - `fig4_result_tradeoff`: first-pilot safety/recall tradeoff result.
 - `fig5_claim_boundary`: supported claim boundary.
 - `fig6_evp7_visibility_curve`: EVP-7 evidence visibility curve over E0/E2/E4/E6.
+- `fig7_decision_metric_flow`: flow from evidence-level LLM decisions to
+  hidden-label metric computation.
 
 The IEEE submission draft references the PDF versions.
 

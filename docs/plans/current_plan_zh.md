@@ -10024,3 +10024,54 @@ Verify:
   condition caption；
 - 该修复只巩固 frozen 20-task / 94-candidate / 376-packet EVP-7 bounded pilot
   paper readiness，不改变实验边界或 claim 边界。
+
+## 2026-06-15 PPT 决策到指标流程图
+
+Inspect:
+
+- 用户需要一张流程图，解释模型在每个证据层级下如何输出 accept / reject /
+  escalate，以及这些判断如何转化为 FAR、接收精确率、正确召回率、
+  升级复核率和证据增益；
+- 当前可复现图件由 `scripts/generate_paper_figures.py` 生成到
+  `docs/figures/`，已有 fig1-fig6 和 manifest；
+- 本轮只补充解释性方法图，不改变 EVP-7 数据、指标定义、实验结果、
+  prompt 或 API 调用边界。
+
+Plan:
+
+1. 在可复现图件脚本中新增 `fig7_decision_metric_flow`；
+2. 图中展示输入证据层级 E0/E2/E4/E6、LLM 审查器、三类输出、
+   隐藏真实标签对齐，以及每层级指标公式；
+3. 同步 figure manifest、figures README、README 和 docs index；
+4. 重新生成 PDF/SVG/PNG 并人工检查 PNG 版面。
+
+Execute:
+
+- 已新增 `docs/figures/fig7_decision_metric_flow.{pdf,svg,png}`；
+- 已将 figure manifest 更新为 7 张图；
+- 已在 `docs/figures/README.md`、README 和 `docs/INDEX.md` 中补充 fig7
+  或 decision-to-metric flow 入口；
+- 已将 fig7 文案改为英文，并恢复全局 matplotlib 字体为 `DejaVu Sans`，
+  避免为单张图引入中文字体选择导致 fig1-fig6 无关重渲染；
+- 本轮未调用 API、未修改实验数据、未改变结果表格或 claim boundary。
+
+Diagnose / Repair:
+
+- 初版 fig7 为中文标签，并在 `ensure_style()` 中按系统字体切换到
+  `Microsoft YaHei`；该全局字体改动会导致 fig1-fig6 的 PDF/SVG/PNG 出现
+  与内容无关的渲染漂移；
+- 问题类型为图件生成链路可复现性问题，不是实验结果或论文 claim 问题；
+- 已改为英文 fig7，并保持全局字体稳定，使本轮 diff 收窄到 fig7 新增、
+  figure manifest、生成脚本和文档入口。
+
+Verify:
+
+- `python -m compileall scripts\generate_paper_figures.py` 通过；
+- `python scripts\generate_paper_figures.py` 通过，输出
+  `figure_count = 7`；
+- 已人工检查 `docs/figures/fig7_decision_metric_flow.png`：英文标题、
+  证据层级、accept/reject/escalate 三类输出、隐藏标签对齐和底部指标公式
+  均可读，未发现明显重叠；
+- `git diff --stat` 确认 fig1-fig6 不再显示修改，本轮图件 diff 已收窄；
+- 该图适合放在 PPT 公式页之前或实验结果表格之前，用来解释“模型判断
+  如何变成表格指标”。

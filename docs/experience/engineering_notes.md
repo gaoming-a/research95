@@ -2178,6 +2178,11 @@ This file starts fresh for the patch-verification project.
 - Readiness checks that inspect generated LaTeX captions should normalize
   whitespace before matching prose. TeX line wrapping can split a semantically
   correct caption across physical lines and otherwise produce false blockers.
+- Figure-specific typography should not change global matplotlib font settings.
+  A Chinese-label draft of `fig7_decision_metric_flow` switched the global
+  figure font to `Microsoft YaHei` when available, which regenerated fig1-fig6
+  with unrelated visual diffs. Keep the global font stable for existing figures,
+  or isolate typography to the new figure.
 - Canonical roadmap drift can recur even after protocol and paper files are
   fixed. `final_paper_roadmap_zh.md` had a current-state update to 20 tasks /
   94 candidates / 376 packets, but its Phase A numbered list still described

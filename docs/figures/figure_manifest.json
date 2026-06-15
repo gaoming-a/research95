@@ -1,5 +1,5 @@
 {
-  "figure_count": 6,
+  "figure_count": 7,
   "formats": [
     "pdf",
     "svg",
@@ -29,6 +29,10 @@
     {
       "id": "fig6_evp7_visibility_curve",
       "purpose": "EVP-7 evidence visibility curve"
+    },
+    {
+      "id": "fig7_decision_metric_flow",
+      "purpose": "LLM decision to metric computation flow"
     }
   ]
 }
