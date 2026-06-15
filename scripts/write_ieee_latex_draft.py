@@ -214,6 +214,30 @@ LLM-only review produced useful signals but also over-reported defects on
 fixed/reference controls. That makes prompt-only review unsuitable as a merge
 gate without stronger evidence discipline.
 
+\section{{Related Work and Positioning}}
+
+Real-bug benchmarks and issue-based tasks make controlled repair evaluation
+possible. Defects4J and BugsInPy provide reproducible fault corpora for testing
+and debugging studies, while SWE-bench moves the setting toward real GitHub
+issues and repository-level task resolution~\cite{{just2014defects4j,widyasari2020bugsinpy,jimenez2024swebench}}.
+These benchmarks define tasks and outcomes, but they do not by themselves
+specify what evidence was visible to a verifier before a patch was accepted,
+rejected, or escalated.
+
+Automated repair research has long separated plausible patches from correct
+patches. Generate-and-validate systems can produce patches that pass available
+tests yet remain semantically incorrect~\cite{{qi2015patchcorrectness}}. More
+recent LLM-based repair and agentic software-engineering systems expand how
+patches are generated or tasks are attempted~\cite{{xia2023llmapr,yang2024sweagent}}.
+EVP-7 asks a different question: given a candidate patch, what decision should
+a verifier make under a stated evidence packet?
+
+The distinction is therefore evidence visibility, not another pass-rate
+benchmark. The verifier decision is made with hidden evaluator labels withheld;
+labels are joined only after review to compute false accepts, correct recall,
+escalation, and utility. Evidence Gain is a descriptive pilot metric for this
+frozen protocol, not a proposed universal benchmark score.
+
 \section{{Research Questions}}
 
 \textbf{{RQ1.}} How risky is evidence-poor LLM review as a merge gate for
@@ -481,6 +505,39 @@ LLM is deployment-ready or superior to deterministic tool evidence. It is that
 candidate-patch verification must report what evidence was visible, how hidden
 labels were withheld until evaluation, and which claims remain bounded by the
 current cohort, model, and evidence design.
+
+\begin{{thebibliography}}{{9}}
+
+\bibitem{{just2014defects4j}}
+R.~Just, D.~Jalali, and M.~D. Ernst, ``Defects4J: A database of existing faults
+to enable controlled testing studies for Java programs,'' in \emph{{Proc. ISSTA}},
+2014, pp. 437--440.
+
+\bibitem{{widyasari2020bugsinpy}}
+R.~Widyasari \emph{{et al.}}, ``BugsInPy: A database of existing bugs in Python
+programs to enable controlled testing and debugging studies,'' in \emph{{Proc.
+ESEC/FSE}}, 2020, pp. 1556--1560.
+
+\bibitem{{jimenez2024swebench}}
+C.~E. Jimenez, J.~Yang, A.~Wettig, S.~Yao, K.~Pei, O.~Press, and
+K.~Narasimhan, ``SWE-bench: Can language models resolve real-world GitHub
+issues?'' in \emph{{Proc. ICLR}}, 2024.
+
+\bibitem{{qi2015patchcorrectness}}
+Z.~Qi, F.~Long, S.~Achour, and M.~Rinard, ``An analysis of patch plausibility
+and correctness for generate-and-validate patch generation systems,'' in
+\emph{{Proc. ISSTA}}, 2015, pp. 24--36.
+
+\bibitem{{xia2023llmapr}}
+C.~S. Xia, Y.~Wei, and L.~Zhang, ``Automated program repair in the era of large
+pre-trained language models,'' in \emph{{Proc. ICSE}}, 2023, pp. 1482--1494.
+
+\bibitem{{yang2024sweagent}}
+J.~Yang, C.~E. Jimenez, A.~Wettig, K.~Lieret, S.~Yao, K.~Narasimhan, and
+O.~Press, ``SWE-agent: Agent-computer interfaces enable automated software
+engineering,'' \emph{{arXiv preprint arXiv:2405.15793}}, 2024.
+
+\end{{thebibliography}}
 
 \end{{document}}
 """

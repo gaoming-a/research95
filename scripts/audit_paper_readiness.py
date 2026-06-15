@@ -59,6 +59,8 @@ def paper_framing_state() -> dict[str, Any]:
         "paper_draft": Path("docs") / "paper" / "patch_verification_draft.md",
         "ieee_submission_draft": Path("docs") / "paper" / "ieee_submission_draft.tex",
         "ieee_submission_generator": Path("scripts") / "write_ieee_latex_draft.py",
+        "related_work_positioning": Path("docs") / "experiments" / "evp7_related_work_positioning.md",
+        "related_work_ris": Path("docs") / "references" / "evp7_related_work_references.ris",
     }
     texts = {name: read_text_if_exists(path) for name, path in paths.items()}
     normalized_texts = {name: " ".join(text.split()) for name, text in texts.items()}
@@ -114,6 +116,32 @@ def paper_framing_state() -> dict[str, Any]:
         in normalized_texts["ieee_submission_generator"]
         and "model-visible decision sequence" in normalized_texts["ieee_submission_generator"]
         and "evaluator-only interpretation" in normalized_texts["ieee_submission_generator"],
+        "ieee_has_related_work_section": r"\section{Related Work and Positioning}"
+        in texts["ieee_submission_draft"],
+        "generator_has_related_work_section": r"\section{{Related Work and Positioning}}"
+        in texts["ieee_submission_generator"],
+        "markdown_draft_has_related_work_section": "## 2. Related Work and Positioning" in texts["paper_draft"],
+        "related_work_distinguishes_evidence_visibility": "Evidence Gain is a descriptive pilot metric"
+        in normalized_texts["ieee_submission_draft"]
+        and "not a proposed universal benchmark score" in normalized_texts["ieee_submission_draft"],
+        "related_work_cites_core_sources": all(
+            key in texts["ieee_submission_draft"]
+            for key in [
+                "just2014defects4j",
+                "widyasari2020bugsinpy",
+                "jimenez2024swebench",
+                "qi2015patchcorrectness",
+                "xia2023llmapr",
+                "yang2024sweagent",
+            ]
+        ),
+        "related_work_has_bibliography": r"\begin{thebibliography}{9}" in texts["ieee_submission_draft"]
+        and r"\end{thebibliography}" in texts["ieee_submission_draft"],
+        "related_work_positioning_doc_exists": bool(texts["related_work_positioning"])
+        and "Segment-to-Reference Map" in texts["related_work_positioning"],
+        "related_work_ris_exists": bool(texts["related_work_ris"])
+        and "TY  - CONF" in texts["related_work_ris"]
+        and "ID  - just2014defects4j" in texts["related_work_ris"],
         "current_artifacts_do_not_use_stale_title": all(
             stale_title not in normalized_text for normalized_text in normalized_texts.values()
         ),
@@ -607,6 +635,10 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "ieee_submission_draft": file_state(Path("docs") / "paper" / "ieee_submission_draft.tex"),
         "model_selection_shortlist": file_state(Path("docs") / "experiments" / "model_selection_shortlist.md"),
         "model_selection_protocol": file_state(Path("docs") / "experiments" / "model_selection_protocol.md"),
+        "related_work_positioning": file_state(
+            Path("docs") / "experiments" / "evp7_related_work_positioning.md"
+        ),
+        "related_work_ris": file_state(Path("docs") / "references" / "evp7_related_work_references.ris"),
     }
     pre_api_evidence = {
         "reproducibility_compare": file_state(Path("outputs") / "reproducibility" / "pilot_compare.json"),

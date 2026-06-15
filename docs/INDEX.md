@@ -213,7 +213,8 @@
   for Candidate Patches`.
 - `paper/patch_verification_draft.md`: staged result draft with no-API
   validation, the first DeepSeek official API full-run outcome, the
-  tool-augmented full run, and the bounded EVP-7 G5 376-record result.
+  tool-augmented full run, related-work positioning, and the bounded EVP-7 G5
+  376-record result.
 - `paper/generated_tables.md`: generated Markdown paper tables from current
   tracked outputs, including the EVP-7 G5 376-record real-LLM result,
   Wilson/bootstrap intervals, utility sensitivity, deterministic tool-only
@@ -224,8 +225,15 @@
 - `paper/ieee_submission_draft.tex`: current anonymous IEEEtran submission
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
-  evidence-visibility result, deterministic tool-only attribution, figures,
-  threats, and conclusion.
+  evidence-visibility result, related-work positioning, deterministic
+  tool-only attribution, qualitative case interpretation, figures, threats,
+  and conclusion.
+- `experiments/evp7_related_work_positioning.md`: related-work citation and
+  positioning artifact. It maps field-specific primary references to the
+  paper's evidence-visibility distinction and records why a strict Nature/CNS
+  citation scope is not appropriate for this software-engineering claim.
+- `references/evp7_related_work_references.ris`: reference-manager-ready RIS
+  export for the related-work section.
 - `paper/nature_reviewer_presubmission_report.md`: Nature-style
   pre-submission reviewer assessment of the current IEEE draft. It provides
   three reviewer reports plus a cross-review synthesis and keeps the assessment
@@ -659,6 +667,9 @@
 - `scripts/analyze_evp7_qualitative_cases.py`: generates the raw-output-free
   qualitative case report for selected EVP-7 decision paths while keeping
   reviewer-facing decision sequences separate from evaluator-only labels.
+- `scripts/write_ieee_latex_draft.py`: generates the current IEEE draft,
+  including the related-work positioning section and bibliography as well as
+  the EVP-7 bounded-result narrative.
 - `scripts/audit_paper_claim_boundary.py`: generates the EVP-7 claim-boundary
   traceability audit and fails when supported/unsupported claims are not covered
   by the current paper artifacts or required IEEE boundary cues are missing.

@@ -42,15 +42,18 @@ ability?
 
 1. A candidate patch verification framing with accept/reject/escalate decisions
    under controlled evidence visibility.
-2. A real-bug-derived candidate-patch pilot with hidden evaluator separation
+2. A related-work positioning that separates evidence visibility from
+   benchmark pass rates, test-only validation, prompt engineering, and generic
+   tool-use prompting.
+3. A real-bug-derived candidate-patch pilot with hidden evaluator separation
    and project-level P2P-broad validation for the current main cohort.
-3. A negative or mixed prompt-only evidence-first result from the first real
+4. A negative or mixed prompt-only evidence-first result from the first real
    API pilot.
-4. A conditional tool-assisted verification result from the separate
+5. A conditional tool-assisted verification result from the separate
    tool-augmented run.
-5. A bounded EVP-7 evidence-visibility pilot over 20 tasks, 94 candidates, and
+6. A bounded EVP-7 evidence-visibility pilot over 20 tasks, 94 candidates, and
    376 evidence packets.
-6. Paper-facing artifacts for the frozen EVP-7 result: Evidence Visibility
+7. Paper-facing artifacts for the frozen EVP-7 result: Evidence Visibility
    Curve, statistical intervals, utility sensitivity, and claim-boundary
    traceability.
 

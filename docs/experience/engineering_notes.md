@@ -2235,3 +2235,17 @@ This file starts fresh for the patch-verification project.
 - Use qualitative cases to explain decision mechanics and reader flow. They do
   not increase sample size and must not be used to make scale-generalized claims
   beyond the frozen EVP-7 pilot.
+
+## 2026-06-15 related-work positioning boundary
+
+- Nature/CNS-only citation scope can be wrong for a software-engineering claim.
+  When the paper needs to position against benchmarks, automated program repair,
+  or agentic software engineering, use field-specific primary sources and record
+  the scope decision rather than forcing irrelevant Nature/CNS citations.
+- Related work should be grouped by mechanism: real-bug benchmarks, patch
+  plausibility/test-suite validation, and LLM/agent repair. End the section by
+  stating the gap this paper fills: evidence visible to the verifier at
+  accept/reject/escalate decision time.
+- Evidence Gain must remain a descriptive pilot metric for the frozen EVP-7
+  protocol. Do not frame it as a standardized community benchmark score unless
+  a later paper explicitly validates it as such.

@@ -10430,3 +10430,87 @@ Verify:
 - 这些 cases 只能解释决策机制和安全/召回权衡，不能扩大样本量或支撑
   scale-generalized claim；
 - 下一步应进入 related-work positioning，而不是继续跑 API。
+
+## 2026-06-15 related-work positioning
+
+Inspect:
+
+- 当前分支本地领先 `origin/main` 6 个提交，工作区在本轮开始时干净；
+- Nature-style reviewer report 的第三个硬缺口是 prior-work positioning：
+  需要说明 evidence visibility 与普通 prompt engineering、tool-use prompting、
+  benchmark pass rate 和 test-only patch validation 的区别；
+- 当前 IEEE draft generator 没有 Related Work section，也没有
+  `thebibliography`；
+- Nature/CNS 严格引用范围不适合支撑软件工程相关工作；本轮按
+  `nature-citation` 的保守原则使用已验证的领域主文献，不造 Nature/CNS
+  不相关引用；
+- 本轮不调用实验 API、不改 cohort、不改 prompt。
+
+Plan:
+
+1. 新增 related-work positioning 文档，记录引用范围、分段 claim、支撑来源和
+   风险边界；
+2. 新增 reference-manager-ready RIS 文件；
+3. 在 IEEE draft generator 中加入简短 `Related Work and Positioning`
+   section 和 `thebibliography`；
+4. 同步 Markdown draft、outline、README、INDEX 和 engineering notes；
+5. 更新 paper readiness，要求 related-work section、关键 citation keys、
+   Evidence Gain descriptive boundary 和 bibliography 存在；
+6. 重新生成 IEEE draft、运行 paper readiness、LaTeX、claim-boundary、local
+   quality gate、diff check 后提交。
+
+验收条件：
+
+- related work 按机制分组，不做 citation dump；
+- 每个引用只支撑其实际覆盖的 claim；
+- 明确 Evidence Gain 是 descriptive pilot metric，不是 proposed universal
+  benchmark score；
+- PDF 编译通过且引用无未定义；
+- paper readiness 和 local quality gate 通过。
+
+Execute:
+
+- 新增 `docs/experiments/evp7_related_work_positioning.md`，记录：
+  - strict Nature/CNS citation scope 不适合本软件工程 claim；
+  - benchmark / test-suite validation / LLM-agent repair 三类相关工作；
+  - segment-to-reference map；
+  - Evidence Gain 的 descriptive pilot metric 边界；
+- 新增 `docs/references/evp7_related_work_references.ris`；
+- 在 `scripts/write_ieee_latex_draft.py` 中加入
+  `Related Work and Positioning` section 和 `thebibliography`；
+- 同步 `docs/paper/patch_verification_draft.md`、
+  `docs/paper/patch_verification_outline.md`、
+  `docs/paper/research_definition.md`；
+- 更新 `scripts/audit_paper_readiness.py`，要求：
+  - IEEE/generator/Markdown draft 有 related-work section；
+  - core citation keys 存在；
+  - bibliography 存在；
+  - Evidence Gain 是 descriptive pilot metric；
+  - positioning doc 和 RIS export 存在；
+- 已同步 README、`docs/INDEX.md` 和 engineering notes。
+
+Verify:
+
+- `python -m compileall scripts\write_ieee_latex_draft.py scripts\audit_paper_readiness.py`
+  通过；
+- `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`
+  通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，related-work checks 全部为 yes；
+- `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex`
+  连续两遍通过，第二遍无 undefined citation/reference 警告；
+- `python scripts\audit_paper_claim_boundary.py` 通过，`passed=true`、
+  `raw_output_free=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `pdftotext outputs\paper_compile\ieee_submission_draft.pdf -` 检查确认
+  PDF 正文包含 Real-bug benchmarks、Defects4J、BugsInPy、SWE-bench、
+  Evidence Gain descriptive pilot metric 和 not a proposed universal benchmark
+  score。
+
+结论：
+
+- 本轮完成预审报告第三项技术风险：related-work positioning；
+- 论文现在明确区别 evidence visibility 与 benchmark pass rate、test-only
+  validation、LLM repair 和 agentic software-engineering task solving；
+- 下一步应处理 reader-flow simplification，而不是继续补实验或扩 cohort。

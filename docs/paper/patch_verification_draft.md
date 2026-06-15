@@ -54,7 +54,33 @@ LLM-only review produced useful signals but also over-reported defects on
 fixed/reference controls. That makes prompt-only review unsuitable as a merge
 gate without stronger evidence discipline.
 
-## 2. Research Questions
+## 2. Related Work and Positioning
+
+Real-bug benchmarks and issue-based tasks make controlled repair evaluation
+possible. Defects4J and BugsInPy provide reproducible fault corpora for testing
+and debugging studies, while SWE-bench moves the setting toward real GitHub
+issues and repository-level task resolution. These benchmarks define tasks and
+outcomes, but they do not by themselves specify what evidence was visible to a
+verifier before a patch was accepted, rejected, or escalated.
+
+Automated repair research has long separated plausible patches from correct
+patches. Generate-and-validate systems can produce patches that pass available
+tests yet remain semantically incorrect. More recent LLM-based repair and
+agentic software-engineering systems expand how patches are generated or tasks
+are attempted. EVP-7 asks a different question: given a candidate patch, what
+decision should a verifier make under a stated evidence packet?
+
+The distinction is therefore evidence visibility, not another pass-rate
+benchmark. The verifier decision is made with hidden evaluator labels withheld;
+labels are joined only after review to compute false accepts, correct recall,
+escalation, and utility. Evidence Gain is a descriptive pilot metric for this
+frozen protocol, not a proposed universal benchmark score.
+
+Reference mapping and RIS export are tracked in
+`docs/experiments/evp7_related_work_positioning.md` and
+`docs/references/evp7_related_work_references.ris`.
+
+## 3. Research Questions
 
 RQ1. How reliable is LLM-only review when deciding whether candidate patches
 should be accepted?
@@ -68,7 +94,7 @@ does it only reduce false accepts by rejecting or escalating too aggressively?
 RQ4. Does tool-augmented evidence verification recover the correct-patch recall
 lost by prompt-only evidence-first verification?
 
-## 3. Dataset Construction
+## 4. Dataset Construction
 
 The pilot dataset is built from retained BugsInPy-derived real-bug assets. Each
 source task has a buggy checkout, a fixed checkout, a task summary, touched
@@ -112,7 +138,7 @@ Patch materialization uses retained source artifacts:
 - `reference_diff_with_one_change_omitted`: partial candidate omitting one change block.
 - `reference_replace_with_one_line_reverted`: partial candidate reverting one line inside a replace block.
 
-## 4. Executable Label Validation
+## 5. Executable Label Validation
 
 Candidate labels are validated by applying each candidate patch to a copied
 buggy checkout and running retained executable oracles. This guards against
@@ -131,7 +157,7 @@ Correct patches are expected to pass all retained oracles. Negative candidates
 (`incorrect`, `irrelevant_or_noop`, and `partial`) are expected to fail at least
 one retained oracle.
 
-## 5. Review Conditions
+## 6. Review Conditions
 
 ### LLM-Only Review
 
@@ -159,7 +185,7 @@ because it is tool-assisted verification, not prompt-only model ability.
 The evaluator can use hidden labels and oracle outcomes to produce an upper
 bound. This is not model capability and must be reported separately.
 
-## 6. Metrics
+## 7. Metrics
 
 Primary metrics are patch-level:
 
@@ -174,7 +200,7 @@ Escalation is neither accept nor reject. It should be reported separately
 because reducing false accepts by escalating everything is not a useful merge
 gate.
 
-## 7. Current No-API Results
+## 8. Current No-API Results
 
 The current no-API baselines validate the metric implementation and expected
 tradeoffs.
@@ -189,7 +215,7 @@ Interpretation: the dataset and metrics expose the intended merge-gate tension.
 The no-API results do not test the research hypothesis because no real model
 reviewer decisions have been collected.
 
-## 8. API Pilot Result
+## 9. API Pilot Result
 
 The first API pilot ran two conditions on the validated 30 candidates:
 
@@ -216,7 +242,7 @@ fixes, while `evidence_first` did not accept them. However, `evidence_first`
 also rejected or escalated two correct reference patches. The current result
 therefore supports a safety/utility tradeoff claim, not a superiority claim.
 
-## 9. Tool-Augmented Redesign Smoke
+## 10. Tool-Augmented Redesign Smoke
 
 After the prompt-only full run returned `stop_or_redesign`, a targeted
 5-candidate redesign smoke tested a separate `tool_augmented_evidence`
@@ -236,7 +262,7 @@ narrow diagnostic claim: the prompt-only failure was plausibly caused by
 evidence poverty. It does not rescue the original prompt-only claim. It only
 justifies a separate 30-candidate tool-augmented full run.
 
-## 10. Tool-Augmented Full Run
+## 11. Tool-Augmented Full Run
 
 The tool-augmented full run evaluated the same 30 candidates under a separate
 `tool_augmented_evidence` condition. The verifier saw patch-apply status and
@@ -257,7 +283,7 @@ not show that prompt-only evidence-first review is sufficient; instead, it
 shows that executable evidence summaries can be decisive for the known
 safety/recall tradeoff.
 
-## 11. EVP-7 Evidence Visibility Pilot
+## 12. EVP-7 Evidence Visibility Pilot
 
 After the 30-candidate pilots, EVP-7 freezes a larger evidence-visibility
 cohort at 20 real-bug tasks, 94 patch candidates, and four model-visible
@@ -307,7 +333,7 @@ correct patches downgraded by the LLM, and non-fixing patches rejected after
 evidence became visible. These examples are interpretive evidence for the
 bounded pilot, not additional scale evidence.
 
-## 12. Reproducibility and Handoff Controls
+## 13. Reproducibility and Handoff Controls
 
 The pre-API artifact includes deterministic reproduction checks for the local
 dataset construction pipeline. The original no-API pilot and a reproduced run
@@ -337,7 +363,7 @@ deterministic reproducibility. This is an engineering control: it prevents
 dry-run, mock, or local validation outputs from being mistaken for model
 results.
 
-## 13. Model Selection Boundary
+## 14. Model Selection Boundary
 
 The first real API pilot is a within-model comparison. The same model must be
 used for `llm_only` and `evidence_first`, so the first claim controls for base
@@ -357,7 +383,7 @@ The current DeepSeek runs use `deepseek-v4-pro` through DeepSeek official API.
 This controls for base-model capability within each comparison, but it does not
 establish cross-model generality.
 
-## 14. Threats to Validity
+## 15. Threats to Validity
 
 Dataset size is small. The first 30-candidate pilot and the later 376-packet
 EVP-7 pilot are designed to validate the method and failure surfaces, not to
@@ -386,7 +412,7 @@ presented as pure LLM reasoning ability. If the summaries include direct
 pass/fail outcomes, the condition is an evidence-assisted verifier and should
 be interpreted as a tool workflow.
 
-## 15. Current Conclusion
+## 16. Current Conclusion
 
 The current artifact establishes a validated patch-verification pilot and a
 completed single-model API pilot. The result does not establish that

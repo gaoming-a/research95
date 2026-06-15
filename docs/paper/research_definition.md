@@ -49,6 +49,10 @@ evidence-visibility workflow for candidate patch verification:
 6. Report tool-augmented verification separately when executable behavior
    summaries are visible, because that is an evidence-assisted workflow rather
    than prompt-only model ability.
+7. Position the contribution against real-bug benchmarks, test-suite-based
+   patch validation, LLM program repair, and agentic software-engineering
+   systems: those lines motivate the setting, while this paper isolates the
+   evidence visible to the verifier at merge-gate decision time.
 
 ## Revised Hypotheses
 
@@ -73,6 +77,8 @@ Secondary hypotheses:
 - H6: The current EVP-7 result supports bounded pilot observations only; it does
   not establish scale generality, deterministic-baseline superiority, or strict
   E6-over-E4 superiority.
+- H7: Evidence Gain is a descriptive pilot metric for the frozen EVP-7 protocol,
+  not a proposed universal benchmark score.
 
 ## Non-Goals
 

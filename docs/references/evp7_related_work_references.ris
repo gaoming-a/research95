@@ -1,0 +1,94 @@
+TY  - CONF
+ID  - just2014defects4j
+AU  - Just, Rene
+AU  - Jalali, Darioush
+AU  - Ernst, Michael D.
+TI  - Defects4J: A Database of Existing Faults to Enable Controlled Testing Studies for Java Programs
+T2  - Proceedings of the 2014 International Symposium on Software Testing and Analysis
+PY  - 2014
+SP  - 437
+EP  - 440
+DO  - 10.1145/2610384.2628055
+ER  -
+
+TY  - CONF
+ID  - widyasari2020bugsinpy
+AU  - Widyasari, Ratnadira
+AU  - Lok, Jerry
+AU  - Qi, Haodi
+AU  - Phan, Jack
+AU  - Tay, Qingxiao
+AU  - Tan, Sean
+AU  - Wee, Fiona
+AU  - Eghtesad, Twen
+AU  - Yew, Clifford
+AU  - Santoso, Juwita
+AU  - Khoo, Hian Hian
+AU  - Xiao, Danyang
+AU  - Zhang, Lingming
+AU  - Lo, David
+TI  - BugsInPy: A Database of Existing Bugs in Python Programs to Enable Controlled Testing and Debugging Studies
+T2  - Proceedings of the 28th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering
+PY  - 2020
+SP  - 1556
+EP  - 1560
+DO  - 10.1145/3368089.3417943
+ER  -
+
+TY  - CONF
+ID  - qi2015patchcorrectness
+AU  - Qi, Zichao
+AU  - Long, Fan
+AU  - Achour, Sara
+AU  - Rinard, Martin
+TI  - An Analysis of Patch Plausibility and Correctness for Generate-and-Validate Patch Generation Systems
+T2  - Proceedings of the 2015 International Symposium on Software Testing and Analysis
+PY  - 2015
+SP  - 24
+EP  - 36
+DO  - 10.1145/2771783.2771791
+ER  -
+
+TY  - CONF
+ID  - xia2023llmapr
+AU  - Xia, Chunqiu Steven
+AU  - Wei, Yuxiang
+AU  - Zhang, Lingming
+TI  - Automated Program Repair in the Era of Large Pre-trained Language Models
+T2  - 2023 IEEE/ACM 45th International Conference on Software Engineering
+PY  - 2023
+SP  - 1482
+EP  - 1494
+DO  - 10.1109/ICSE48619.2023.00129
+ER  -
+
+TY  - CONF
+ID  - jimenez2024swebench
+AU  - Jimenez, Carlos E.
+AU  - Yang, John
+AU  - Wettig, Alexander
+AU  - Yao, Shunyu
+AU  - Pei, Kexin
+AU  - Press, Ofir
+AU  - Narasimhan, Karthik
+TI  - SWE-bench: Can Language Models Resolve Real-World GitHub Issues?
+T2  - International Conference on Learning Representations
+PY  - 2024
+UR  - https://openreview.net/forum?id=VTF8yNQM66
+ER  -
+
+TY  - JOUR
+ID  - yang2024sweagent
+AU  - Yang, John
+AU  - Jimenez, Carlos E.
+AU  - Wettig, Alexander
+AU  - Lieret, Kilian
+AU  - Yao, Shunyu
+AU  - Narasimhan, Karthik
+AU  - Press, Ofir
+TI  - SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering
+JO  - arXiv
+PY  - 2024
+DO  - 10.48550/arXiv.2405.15793
+UR  - https://arxiv.org/abs/2405.15793
+ER  -
