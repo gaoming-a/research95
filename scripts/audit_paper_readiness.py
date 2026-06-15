@@ -12,6 +12,7 @@ DEFAULT_EVP7_SUMMARY = Path("data") / "reviews" / "evp7_g5_llm_376_full_summary.
 DEFAULT_EVP7_QUALITY_AUDIT = Path("data") / "reviews" / "evp7_g5_376_full_quality_audit.json"
 DEFAULT_EVP7_CLAIM_TRACEABILITY = Path("data") / "reviews" / "evp7_g5_376_claim_traceability.json"
 DEFAULT_EVP7_UTILITY_SENSITIVITY = Path("data") / "reviews" / "evp7_g5_376_utility_sensitivity.json"
+DEFAULT_EVP7_TOOL_ATTRIBUTION = Path("data") / "reviews" / "evp7_g5_376_tool_attribution.json"
 
 
 def read_json(path: Path) -> dict[str, Any] | None:
@@ -96,6 +97,14 @@ def paper_framing_state() -> dict[str, Any]:
         and "We then run an EVP-7 evidence-visibility pilot" not in texts["ieee_submission_draft"]
         and "The first pilot contains 30 validated patch candidates" not in texts["ieee_submission_generator"]
         and "We then run an EVP-7 evidence-visibility pilot" not in texts["ieee_submission_generator"],
+        "ieee_mentions_tool_attribution_boundary": "deterministic tool-only attribution analysis"
+        in normalized_texts["ieee_submission_draft"]
+        and "bounded safety/recall tradeoff interpretation" in normalized_texts["ieee_submission_draft"],
+        "generator_mentions_tool_attribution_boundary": "deterministic tool-only attribution analysis"
+        in normalized_texts["ieee_submission_generator"]
+        and "bounded safety/recall tradeoff interpretation" in normalized_texts["ieee_submission_generator"],
+        "generated_tables_include_tool_attribution": "tab:evp7-tool-attribution" in texts["ieee_submission_draft"]
+        and "EVP-7 deterministic tool-only attribution" in normalized_texts["ieee_submission_draft"],
         "current_artifacts_do_not_use_stale_title": all(
             stale_title not in normalized_text for normalized_text in normalized_texts.values()
         ),
@@ -327,11 +336,13 @@ def evp7_g5_state(
     quality_path: Path,
     claim_traceability_path: Path,
     utility_sensitivity_path: Path,
+    tool_attribution_path: Path,
 ) -> dict[str, Any]:
     summary = read_json(summary_path)
     quality = read_json(quality_path)
     claim_traceability = read_json(claim_traceability_path)
     utility_sensitivity = read_json(utility_sensitivity_path)
+    tool_attribution = read_json(tool_attribution_path)
     metrics = summary.get("metrics", {}) if isinstance(summary, dict) else {}
     metric_groups = metrics.get("metric_groups", {}) if isinstance(metrics, dict) else {}
     quality_checks = quality.get("checks", []) if isinstance(quality, dict) else []
@@ -347,6 +358,7 @@ def evp7_g5_state(
         "quality_audit": file_state(Path("docs") / "experiments" / "evp7_g5_376_full_quality_audit.md"),
         "claim_traceability": file_state(Path("docs") / "experiments" / "evp7_g5_376_claim_traceability.md"),
         "utility_sensitivity": file_state(Path("docs") / "experiments" / "evp7_g5_376_utility_sensitivity.md"),
+        "tool_attribution": file_state(Path("docs") / "experiments" / "evp7_g5_376_tool_attribution.md"),
         "expansion_readiness": file_state(Path("docs") / "experiments" / "evp7_expansion_readiness.md"),
     }
     required_levels = {"E0": 94, "E2": 94, "E4": 94, "E6": 94}
@@ -372,6 +384,19 @@ def evp7_g5_state(
         and utility_sensitivity
         and utility_sensitivity.get("raw_output_free_check", {}).get("passed") is True
         and utility_sensitivity.get("scenario_count") == 27
+        and tool_attribution
+        and tool_attribution.get("raw_output_free_check", {}).get("passed") is True
+        and ((tool_attribution.get("comparisons") or {}).get("E6") or {}).get("agreement_count") == 76
+        and ((tool_attribution.get("comparisons") or {}).get("E6") or {}).get(
+            "llm_accept_subset_of_tool_accepts"
+        )
+        is True
+        and (
+            (((tool_attribution.get("comparisons") or {}).get("E6") or {}).get("tool_false_accept_recovery") or {}).get(
+                "recovered"
+            )
+            == 4
+        )
         and level_counts == required_levels
         and all(doc["exists"] for doc in required_docs.values())
         and (metric_groups.get("E4") or {}).get("false_accept_rate") == 0.0
@@ -400,6 +425,12 @@ def evp7_g5_state(
         blockers.append("EVP-7 utility sensitivity analysis is not raw-output-free.")
     if utility_sensitivity and utility_sensitivity.get("scenario_count") != 27:
         blockers.append("EVP-7 utility sensitivity analysis does not cover the expected 27 penalty scenarios.")
+    if tool_attribution is None:
+        blockers.append(f"Missing EVP-7 tool-only attribution analysis: {tool_attribution_path.as_posix()}.")
+    if tool_attribution and tool_attribution.get("raw_output_free_check", {}).get("passed") is not True:
+        blockers.append("EVP-7 tool-only attribution analysis is not raw-output-free.")
+    if tool_attribution and ((tool_attribution.get("comparisons") or {}).get("E6") or {}).get("agreement_count") != 76:
+        blockers.append("EVP-7 tool-only attribution analysis does not match the expected E6 agreement count.")
     if summary and metrics.get("run_kind") != "real_llm":
         blockers.append("EVP-7 G5 summary is not marked as a real LLM run.")
     if summary and metrics.get("g5_metric_scaffold") != "passed":
@@ -420,6 +451,7 @@ def evp7_g5_state(
         "quality_audit_path": quality_path.as_posix(),
         "claim_traceability_path": claim_traceability_path.as_posix(),
         "utility_sensitivity_path": utility_sensitivity_path.as_posix(),
+        "tool_attribution_path": tool_attribution_path.as_posix(),
         "ready_for_bounded_pilot_claim": ready,
         "blockers": blockers,
         "required_docs": required_docs,
@@ -472,6 +504,29 @@ def evp7_g5_state(
                 else None
             ),
         },
+        "tool_attribution": {
+            "exists": tool_attribution is not None,
+            "raw_output_free": (
+                tool_attribution.get("raw_output_free_check", {}).get("passed")
+                if tool_attribution
+                else None
+            ),
+            "E6_agreement_count": ((tool_attribution.get("comparisons") or {}).get("E6") or {}).get(
+                "agreement_count"
+            )
+            if tool_attribution
+            else None,
+            "E6_llm_accept_subset_of_tool_accepts": ((tool_attribution.get("comparisons") or {}).get("E6") or {}).get(
+                "llm_accept_subset_of_tool_accepts"
+            )
+            if tool_attribution
+            else None,
+            "E6_recovered_tool_false_accepts": (
+                (((tool_attribution.get("comparisons") or {}).get("E6") or {}).get("tool_false_accept_recovery") or {})
+            ).get("recovered")
+            if tool_attribution
+            else None,
+        },
     }
 
 
@@ -483,6 +538,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         Path(args.evp7_quality_audit),
         Path(args.evp7_claim_traceability),
         Path(args.evp7_utility_sensitivity),
+        Path(args.evp7_tool_attribution),
     )
     required_docs = {
         "pilot_report": file_state(Path("docs") / "experiments" / "patch_verification_pilot_report.md"),
@@ -721,6 +777,8 @@ def build_markdown(audit: dict[str, Any]) -> str:
             f"- claim traceability: `{audit['evp7_g5']['claim_traceability']}`",
             f"- utility sensitivity path: `{audit['evp7_g5']['utility_sensitivity_path']}`",
             f"- utility sensitivity: `{audit['evp7_g5']['utility_sensitivity']}`",
+            f"- tool attribution path: `{audit['evp7_g5']['tool_attribution_path']}`",
+            f"- tool attribution: `{audit['evp7_g5']['tool_attribution']}`",
             f"- quality status: `{audit['evp7_g5']['quality_status']}`",
             f"- review count: {audit['evp7_g5']['review_count']}",
             f"- candidate count: {audit['evp7_g5']['candidate_count']}",
@@ -775,6 +833,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--evp7-quality-audit", default=str(DEFAULT_EVP7_QUALITY_AUDIT))
     parser.add_argument("--evp7-claim-traceability", default=str(DEFAULT_EVP7_CLAIM_TRACEABILITY))
     parser.add_argument("--evp7-utility-sensitivity", default=str(DEFAULT_EVP7_UTILITY_SENSITIVITY))
+    parser.add_argument("--evp7-tool-attribution", default=str(DEFAULT_EVP7_TOOL_ATTRIBUTION))
     parser.add_argument("--out-json", required=True)
     parser.add_argument("--out-md", required=True)
     return parser.parse_args()

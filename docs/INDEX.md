@@ -108,6 +108,10 @@
 - `../data/reviews/evp7_g5_376_utility_sensitivity.json`: tracked
   raw-output-free utility sensitivity analysis over false-accept, escalation,
   and false-reject penalty grids for the frozen EVP-7 G5 run.
+- `../data/reviews/evp7_g5_376_tool_attribution.json`: tracked
+  raw-output-free attribution analysis comparing deterministic tool-only
+  decisions with matched E4/E6 LLM decisions. It shows the safety/recall
+  boundary without claiming LLM superiority over tool evidence.
 - `../data/reviews/evp7_g5_376_claim_traceability.json`: tracked
   raw-output-free claim-boundary traceability audit for the same EVP-7 G5 run.
   It maps supported and unsupported claims to summary, quality, statistics, and
@@ -173,6 +177,10 @@
 - `experiments/evp7_g5_376_utility_sensitivity.md`: human-readable utility
   sensitivity analysis showing how evidence-level utility rankings behave under
   a bounded penalty grid.
+- `experiments/evp7_g5_376_tool_attribution.md`: human-readable attribution
+  analysis comparing matched deterministic tool-only and LLM decisions at E4
+  and E6. It reports decision overlap, recovered tool-only false accepts, and
+  correct tool accepts downgraded by the LLM.
 - `experiments/evp7_g5_376_claim_traceability.md`: human-readable
   claim-boundary traceability audit that verifies supported/unsupported EVP-7
   claims are covered by the paper tables, Markdown draft, and IEEE draft while
@@ -199,15 +207,17 @@
   validation, the first DeepSeek official API full-run outcome, the
   tool-augmented full run, and the bounded EVP-7 G5 376-record result.
 - `paper/generated_tables.md`: generated Markdown paper tables from current
-  tracked outputs, including the EVP-7 G5 376-record real-LLM result and claim
-  boundary.
+  tracked outputs, including the EVP-7 G5 376-record real-LLM result,
+  Wilson/bootstrap intervals, utility sensitivity, deterministic tool-only
+  attribution, and claim boundary.
 - `paper/generated_tables.tex`: generated LaTeX table snippets used by the
-  current IEEE draft, including the EVP-7 G5 376-record result and claim
-  boundary snippets.
+  current IEEE draft, including the EVP-7 G5 376-record result,
+  deterministic tool-only attribution, and claim-boundary snippets.
 - `paper/ieee_submission_draft.tex`: current anonymous IEEEtran submission
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
-  evidence-visibility result, figures, threats, and conclusion.
+  evidence-visibility result, deterministic tool-only attribution, figures,
+  threats, and conclusion.
 - `paper/nature_reviewer_presubmission_report.md`: Nature-style
   pre-submission reviewer assessment of the current IEEE draft. It provides
   three reviewer reports plus a cross-review synthesis and keeps the assessment
@@ -635,6 +645,9 @@
 - `scripts/analyze_evp7_utility_sensitivity.py`: generates the raw-output-free
   utility sensitivity analysis for EVP-7, varying false-accept, escalation, and
   false-reject penalties without changing the frozen cohort or prompt.
+- `scripts/analyze_evp7_tool_attribution.py`: generates the raw-output-free
+  deterministic tool-only attribution analysis for EVP-7 by comparing matched
+  E4/E6 tool-only and LLM decisions without writing raw model responses.
 - `scripts/audit_paper_claim_boundary.py`: generates the EVP-7 claim-boundary
   traceability audit and fails when supported/unsupported claims are not covered
   by the current paper artifacts or required IEEE boundary cues are missing.

@@ -94,6 +94,7 @@ def build_markdown(
     evp7_quality: dict[str, Any],
     evp7_statistics: dict[str, Any],
     evp7_utility: dict[str, Any],
+    evp7_tool_attribution: dict[str, Any],
 ) -> str:
     lines = [
         "# Paper Tables",
@@ -153,9 +154,10 @@ def build_markdown(
             f"{fmt(group['invalid_output_rate'])} | {fmt(group['false_accept_rate'])} | "
             f"{fmt(group['accepted_precision'])} | {fmt(group['correct_recall'])} | "
             f"{fmt(group['evidence_gain_vs_e0'])} |"
-        )
+    )
     lines.extend(evp7_statistics_markdown(evp7_statistics))
     lines.extend(evp7_utility_markdown(evp7_utility))
+    lines.extend(evp7_tool_attribution_markdown(evp7_tool_attribution))
     lines.extend(
         [
             "",
@@ -198,6 +200,7 @@ def build_latex(
     evp7_quality: dict[str, Any],
     evp7_statistics: dict[str, Any],
     evp7_utility: dict[str, Any],
+    evp7_tool_attribution: dict[str, Any],
 ) -> str:
     parts = [
         "% Generated paper tables. Requires booktabs.",
@@ -252,6 +255,7 @@ def build_latex(
         evp7_latex_table(evp7_summary),
         evp7_statistics_latex_table(evp7_statistics),
         evp7_utility_latex_table(evp7_utility),
+        evp7_tool_attribution_latex_table(evp7_tool_attribution),
         evp7_claim_boundary_latex_table(evp7_quality),
     ]
     return "\n\n".join(parts)
@@ -426,6 +430,71 @@ def evp7_utility_latex_table(utility: dict[str, Any]) -> str:
     )
 
 
+def evp7_tool_attribution_markdown(attribution: dict[str, Any]) -> list[str]:
+    lines = [
+        "",
+        "## EVP-7 Tool-Only Attribution",
+        "",
+        f"- boundary: {attribution['boundary']}",
+        "",
+        "| evidence | tool condition | agreement | LLM accepts outside tool accepts | recovered tool false accepts | downgraded tool true accepts |",
+        "|---|---|---:|---:|---:|---:|",
+    ]
+    for level in EVIDENCE_LEVELS:
+        if level not in attribution["comparisons"]:
+            continue
+        item = attribution["comparisons"][level]
+        counts = item["label_interaction_counts"]
+        recovery = item["tool_false_accept_recovery"]
+        retention = item["tool_true_accept_retention"]
+        lines.append(
+            f"| {level} | `{item['tool_condition']}` | "
+            f"{item['agreement_count']}/{item['record_count']} ({fmt(item['agreement_rate'])}) | "
+            f"{counts.get('llm_accept_not_tool_accept', 0)} | "
+            f"{recovery['recovered']}/{recovery['total_tool_false_accepts']} | "
+            f"{retention['downgraded']}/{retention['total_tool_true_accepts']} |"
+        )
+    return lines
+
+
+def evp7_tool_attribution_latex_table(attribution: dict[str, Any]) -> str:
+    rows = []
+    for level in EVIDENCE_LEVELS:
+        if level not in attribution["comparisons"]:
+            continue
+        item = attribution["comparisons"][level]
+        counts = item["label_interaction_counts"]
+        recovery = item["tool_false_accept_recovery"]
+        retention = item["tool_true_accept_retention"]
+        rows.append(
+            " & ".join(
+                [
+                    escape_latex(level),
+                    escape_latex(item["tool_condition"].replace("tool_only_", "")),
+                    f"{item['agreement_count']}/{item['record_count']}",
+                    str(counts.get("llm_accept_not_tool_accept", 0)),
+                    f"{recovery['recovered']}/{recovery['total_tool_false_accepts']}",
+                    f"{retention['downgraded']}/{retention['total_tool_true_accepts']}",
+                ]
+            )
+            + r" \\"
+        )
+    return (
+        "\\begin{table*}[t]\n"
+        "\\centering\n"
+        "\\caption{EVP-7 deterministic tool-only attribution. LLM decisions are compared with the matched visible-test or visible-tool-summary baseline at the same evidence level.}\n"
+        "\\label{tab:evp7-tool-attribution}\n"
+        "\\begin{tabular}{llrrrr}\n"
+        "\\toprule\n"
+        "Evidence & Tool condition & Agreement & LLM accept outside tool & Recovered tool false accepts & Downgraded tool true accepts \\\\\n"
+        "\\midrule\n"
+        + "\n".join(rows)
+        + "\n\\bottomrule\n"
+        "\\end{tabular}\n"
+        "\\end{table*}\n"
+    )
+
+
 def interval_text(interval: dict[str, Any]) -> str:
     if interval.get("low") is None or interval.get("high") is None:
         return "--"
@@ -467,6 +536,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--evp7-quality-audit", default="data/reviews/evp7_g5_376_full_quality_audit.json")
     parser.add_argument("--evp7-statistics", default="data/reviews/evp7_g5_376_statistical_analysis.json")
     parser.add_argument("--evp7-utility-sensitivity", default="data/reviews/evp7_g5_376_utility_sensitivity.json")
+    parser.add_argument("--evp7-tool-attribution", default="data/reviews/evp7_g5_376_tool_attribution.json")
     parser.add_argument("--out-md", default="docs/paper/generated_tables.md")
     parser.add_argument("--out-tex", default="docs/paper/generated_tables.tex")
     return parser.parse_args()
@@ -482,13 +552,34 @@ def main() -> None:
     evp7_quality = read_json(Path(args.evp7_quality_audit))
     evp7_statistics = read_json(Path(args.evp7_statistics))
     evp7_utility = read_json(Path(args.evp7_utility_sensitivity))
+    evp7_tool_attribution = read_json(Path(args.evp7_tool_attribution))
     write_text(
         Path(args.out_md),
-        build_markdown(dataset, validation, metrics, repro, evp7_summary, evp7_quality, evp7_statistics, evp7_utility),
+        build_markdown(
+            dataset,
+            validation,
+            metrics,
+            repro,
+            evp7_summary,
+            evp7_quality,
+            evp7_statistics,
+            evp7_utility,
+            evp7_tool_attribution,
+        ),
     )
     write_text(
         Path(args.out_tex),
-        build_latex(dataset, validation, metrics, repro, evp7_summary, evp7_quality, evp7_statistics, evp7_utility),
+        build_latex(
+            dataset,
+            validation,
+            metrics,
+            repro,
+            evp7_summary,
+            evp7_quality,
+            evp7_statistics,
+            evp7_utility,
+            evp7_tool_attribution,
+        ),
     )
     print(json.dumps({"out_md": args.out_md, "out_tex": args.out_tex}, ensure_ascii=False, indent=2, sort_keys=True))
 

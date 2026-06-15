@@ -306,6 +306,21 @@ E6 & 27 \\
 
 \begin{table*}[t]
 \centering
+\caption{EVP-7 deterministic tool-only attribution. LLM decisions are compared with the matched visible-test or visible-tool-summary baseline at the same evidence level.}
+\label{tab:evp7-tool-attribution}
+\begin{tabular}{llrrrr}
+\toprule
+Evidence & Tool condition & Agreement & LLM accept outside tool & Recovered tool false accepts & Downgraded tool true accepts \\
+\midrule
+E4 & visible\_tests & 72/94 & 0 & 4/4 & 18/19 \\
+E6 & visible\_tool\_summary & 76/94 & 0 & 4/4 & 12/19 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
+\begin{table*}[t]
+\centering
 \caption{EVP-7 G5 claim boundary.}
 \label{tab:evp7-claim-boundary}
 \begin{tabular}{p{0.45\textwidth}p{0.45\textwidth}}
@@ -395,6 +410,15 @@ recall 0.3500, and evidence gain 14.2500. The bounded
 interpretation is that evidence visibility changes merge-gate behavior on this
 pilot cohort. It does not establish deterministic-baseline superiority, E6
 strict superiority over E4, scale generality, or billing equivalence.
+
+The deterministic tool-only attribution analysis in
+Table~\ref{tab:evp7-tool-attribution} sharpens that boundary. At E6, the LLM
+and the matched visible-tool-summary baseline agree on 76 of 94 candidates, and
+the LLM accepts no candidate outside the tool-only accept set. The LLM recovers
+the four observed tool-only false accepts, but it also downgrades 12 tool-only
+true accepts to reject or escalation. This supports a bounded safety/recall
+tradeoff interpretation rather than a claim that the LLM outperforms
+deterministic visible evidence.
 
 \begin{figure*}[t]
 \centering

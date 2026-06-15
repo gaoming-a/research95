@@ -136,6 +136,21 @@ E6 & 27 \\
 
 \begin{table*}[t]
 \centering
+\caption{EVP-7 deterministic tool-only attribution. LLM decisions are compared with the matched visible-test or visible-tool-summary baseline at the same evidence level.}
+\label{tab:evp7-tool-attribution}
+\begin{tabular}{llrrrr}
+\toprule
+Evidence & Tool condition & Agreement & LLM accept outside tool & Recovered tool false accepts & Downgraded tool true accepts \\
+\midrule
+E4 & visible\_tests & 72/94 & 0 & 4/4 & 18/19 \\
+E6 & visible\_tool\_summary & 76/94 & 0 & 4/4 & 12/19 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
+\begin{table*}[t]
+\centering
 \caption{EVP-7 G5 claim boundary.}
 \label{tab:evp7-claim-boundary}
 \begin{tabular}{p{0.45\textwidth}p{0.45\textwidth}}

@@ -101,6 +101,15 @@ These tables are generated from current tracked artifacts. Raw model responses a
 | E4 | 0 |
 | E6 | 27 |
 
+## EVP-7 Tool-Only Attribution
+
+- boundary: This artifact compares deterministic tool-only decisions with LLM decisions at matching EVP-7 evidence levels. It reads ignored review records structurally but writes only candidate-level decision aggregates and raw-output-free summaries. It does not support a claim that the LLM outperforms deterministic tool evidence.
+
+| evidence | tool condition | agreement | LLM accepts outside tool accepts | recovered tool false accepts | downgraded tool true accepts |
+|---|---|---:|---:|---:|---:|
+| E4 | `tool_only_visible_tests` | 72/94 (0.7660) | 0 | 4/4 | 18/19 |
+| E6 | `tool_only_visible_tool_summary` | 76/94 (0.8085) | 0 | 4/4 | 12/19 |
+
 ## EVP-7 Claim Boundary
 
 | supported claims | unsupported claims |

@@ -10251,3 +10251,89 @@ Verify:
 - 下一步写作优先级不应是扩实验或重跑 G5，而是按预审报告处理
   tool-only attribution、EVP-7 qualitative cases、related-work positioning 和
   reader-flow simplification。
+
+## 2026-06-15 EVP-7 deterministic tool-only attribution
+
+Inspect:
+
+- 当前分支本地领先 `origin/main` 4 个提交，工作区在本轮开始时干净；
+- Nature-style pre-submission report 将 tool-only attribution 列为最高优先级；
+- 现有 tracked `data/baselines/evp7_tool_only_decisions.jsonl` 覆盖
+  94 candidates x 3 tool-only conditions；
+- ignored real LLM run `outputs/evp7_g5_llm_376_full_001/reviews.jsonl`
+  包含 candidate_id、evidence_level 和 parsed decision；
+- 本轮只做 raw-output-free 结构分析，不读取或写入 raw response text 到
+  tracked artifacts，不调用 API、不扩 cohort、不改 prompt。
+
+Plan:
+
+1. 新增 raw-output-free attribution 脚本，比较 E4 LLM vs
+   `tool_only_visible_tests` 和 E6 LLM vs
+   `tool_only_visible_tool_summary`；
+2. 输出 tracked JSON/Markdown 分析报告；
+3. 将 attribution 表接入 `write_paper_tables.py` 和 IEEE draft generator；
+4. 更新 readiness gate，要求 attribution JSON/Markdown 存在、raw-output-free，
+   且 IEEE draft 包含 attribution boundary；
+5. 同步 README、docs index、Markdown draft、engineering notes；
+6. 重新生成 tables、IEEE draft、paper readiness、PDF 和 local quality gate。
+
+验收条件：
+
+- E4/E6 attribution 数字来自 candidate-level matched decisions；
+- 输出不包含 raw response text 或 prompt text；
+- 论文只表述 bounded safety/recall tradeoff，不声称 LLM 优于 deterministic
+  visible evidence；
+- paper readiness 和 local quality gate 通过。
+
+Execute:
+
+- 新增 `scripts/analyze_evp7_tool_attribution.py`；
+- 生成：
+  - `data/reviews/evp7_g5_376_tool_attribution.json`；
+  - `docs/experiments/evp7_g5_376_tool_attribution.md`；
+- 分析结果：
+  - E4：LLM 与 visible-tests tool-only baseline agreement = 72/94，
+    recovered tool false accepts = 4/4，downgraded tool true accepts = 18/19；
+  - E6：LLM 与 visible-tool-summary baseline agreement = 76/94，
+    LLM accepts outside tool accepts = 0，recovered tool false accepts = 4/4，
+    downgraded tool true accepts = 12/19；
+- 已将 attribution 表接入 generated tables 和 IEEE draft；
+- 已在 IEEE EVP-7 section 增加 attribution boundary 段落；
+- 已更新 `scripts/audit_paper_readiness.py`，将 attribution 表和 boundary 纳入
+  paper framing / EVP-7 readiness；
+- 已同步 README、`docs/INDEX.md`、`docs/paper/patch_verification_draft.md` 和
+  `docs/experience/engineering_notes.md`。
+
+Verify:
+
+- `python -m compileall scripts\analyze_evp7_tool_attribution.py scripts\write_paper_tables.py scripts\write_ieee_latex_draft.py scripts\audit_paper_readiness.py`
+  通过；
+- `python scripts\analyze_evp7_tool_attribution.py` 通过，
+  `raw_output_free=true`；
+- `python scripts\write_paper_tables.py --out-md docs\paper\generated_tables.md --out-tex docs\paper\generated_tables.tex`
+  通过；
+- `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`
+  通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`evp7_bounded_pilot_claim_ready=true`，
+  且 `tool_attribution.raw_output_free=true`；
+- `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex`
+  连续两遍通过，输出 `outputs\paper_compile\ieee_submission_draft.pdf`；
+- `python scripts\audit_paper_claim_boundary.py` 通过，`passed=true`、
+  `raw_output_free=true`；
+- `pdftotext outputs\paper_compile\ieee_submission_draft.pdf -` 检查确认
+  PDF 包含 deterministic tool-only attribution、76/94 agreement、4 个
+  tool-only false accepts 和 bounded safety/recall tradeoff；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `git diff --check` 通过，仅有既有 LF/CRLF 工作区提示。
+
+结论：
+
+- 本轮完成预审报告第一项技术风险：EVP-7 LLM+evidence 相对 deterministic
+  tool-only 的归因边界；
+- 结论必须写成：LLM 在 E6 恢复 tool-only false accepts，但以降级一部分
+  tool-only true accepts 为代价；这支持安全/召回权衡，不支持 LLM
+  superiority claim；
+- 下一步可以进入 EVP-7 qualitative decision cases 或 related-work positioning，
+  不需要继续跑 API。

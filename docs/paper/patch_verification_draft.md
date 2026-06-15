@@ -291,6 +291,14 @@ scale-generalized claims, a claim that the LLM outperforms the deterministic
 visible-test/tool-only baseline, a claim that E6 strictly improves over E4, or a
 claim that runner-estimated cost is an external bill.
 
+The deterministic tool-only attribution analysis makes that boundary more
+specific. At E6, the LLM and the matched visible-tool-summary baseline agree on
+76 of 94 candidates, and the LLM accepts no candidate outside the tool-only
+accept set. The LLM recovers the four observed tool-only false accepts, but it
+also downgrades 12 tool-only true accepts to reject or escalation. This supports
+a bounded safety/recall tradeoff interpretation, not a claim that the LLM
+outperforms deterministic visible evidence.
+
 ## 12. Reproducibility and Handoff Controls
 
 The pre-API artifact includes deterministic reproduction checks for the local

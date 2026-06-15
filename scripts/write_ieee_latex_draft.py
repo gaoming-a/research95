@@ -378,6 +378,15 @@ interpretation is that evidence visibility changes merge-gate behavior on this
 pilot cohort. It does not establish deterministic-baseline superiority, E6
 strict superiority over E4, scale generality, or billing equivalence.
 
+The deterministic tool-only attribution analysis in
+Table~\ref{{tab:evp7-tool-attribution}} sharpens that boundary. At E6, the LLM
+and the matched visible-tool-summary baseline agree on 76 of 94 candidates, and
+the LLM accepts no candidate outside the tool-only accept set. The LLM recovers
+the four observed tool-only false accepts, but it also downgrades 12 tool-only
+true accepts to reject or escalation. This supports a bounded safety/recall
+tradeoff interpretation rather than a claim that the LLM outperforms
+deterministic visible evidence.
+
 \begin{{figure*}}[t]
 \centering
 \includegraphics[width=0.86\textwidth]{{docs/figures/fig6_evp7_visibility_curve.pdf}}

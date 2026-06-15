@@ -256,7 +256,8 @@ They should not override `final_paper_roadmap_zh.md`.
   `data/evidence/evp7_evidence_packets.jsonl`.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`; it now
   includes the prompt-only negative result, the conditional tool-augmented
-  result, and the bounded EVP-7 G5 376-record evidence-visibility result.
+  result, the bounded EVP-7 G5 376-record evidence-visibility result, and the
+  deterministic tool-only attribution boundary.
 - A Nature-style pre-submission reviewer assessment is tracked at
   `docs/paper/nature_reviewer_presubmission_report.md`. It identifies the next
   paper-writing risks as tool-only attribution, EVP-7 qualitative cases,
@@ -608,6 +609,7 @@ For generated paper tables, run:
 ```powershell
 python scripts\analyze_evp7_g5_statistics.py
 python scripts\analyze_evp7_utility_sensitivity.py
+python scripts\analyze_evp7_tool_attribution.py
 python scripts\audit_paper_claim_boundary.py
 python scripts\write_paper_tables.py `
   --out-md docs\paper\generated_tables.md `
@@ -615,9 +617,10 @@ python scripts\write_paper_tables.py `
 ```
 
 The generated tables now include the current EVP-7 G5 376-record real LLM
-result, statistical intervals, utility sensitivity, and claim boundary. The
-claim-boundary audit maps supported and unsupported EVP-7 claims to tracked
-evidence and paper coverage before the tables and draft are regenerated.
+result, statistical intervals, utility sensitivity, deterministic tool-only
+attribution, and claim boundary. The claim-boundary audit maps supported and
+unsupported EVP-7 claims to tracked evidence and paper coverage before the
+tables and draft are regenerated.
 
 For reproducible paper figures, including the EVP-7 evidence visibility curve
 and the decision-to-metric flowchart, run:

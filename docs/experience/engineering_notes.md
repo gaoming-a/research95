@@ -2208,3 +2208,16 @@ This file starts fresh for the patch-verification project.
   is distinct from generic prompt engineering or test-only validation; and the
   reader path should foreground the evidence-packet-to-metric flow before
   first-pilot chronology.
+
+## 2026-06-15 EVP-7 tool-only attribution boundary
+
+- Aggregate LLM metrics are not enough to answer the reviewer question "is the
+  LLM doing more than restating tool evidence?" Add candidate-level
+  tool-only-vs-LLM overlap analysis before strengthening any LLM contribution
+  claim.
+- For the current EVP-7 result, matched E6 LLM decisions agree with the
+  visible-tool-summary baseline on 76/94 candidates, accept no candidate outside
+  the tool-only accept set, and recover 4/4 observed tool-only false accepts.
+  The same comparison also downgrades 12/19 tool-only true accepts. The
+  defensible wording is therefore a bounded safety/recall attribution boundary,
+  not LLM superiority over deterministic visible evidence.
