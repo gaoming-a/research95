@@ -85,6 +85,31 @@ def paper_framing_state() -> dict[str, Any]:
     }
 
 
+def protocol_current_state() -> dict[str, Any]:
+    path = Path("docs") / "protocol" / "evidence_visibility_protocol.md"
+    text = read_text_if_exists(path)
+    checks = {
+        "mentions_20_task_pilot": "20-task" in text,
+        "mentions_94_candidates": "94 promoted candidates" in text and "94-candidate" in text,
+        "mentions_376_packets": "376-packet" in text and "all 376 E0/E2/E4/E6" in text,
+        "mentions_282_tool_only_decisions": "282 total tool-only decisions" in text,
+        "mentions_376_real_llm_records": "376/376 parse-valid non-mock records" in text,
+        "uses_current_g5_output_dir": "outputs/evp7_g5_llm_376_full_001/" in text,
+        "keeps_248_run_historical": "248-packet DeepSeek official run remains a historical checkpoint" in text,
+        "does_not_describe_86_as_current": "It contains 86 promoted candidates" not in text,
+        "does_not_describe_70_per_condition_as_current": "each produce 70 schema-valid decisions" not in text,
+        "does_not_describe_280_schema_as_current": "all 280 E0/E2/E4/E6" not in text,
+        "does_not_describe_248_g5_as_current": "G5 has a fresh 248-packet real DeepSeek official run" not in text,
+    }
+    blockers = [name for name, passed in checks.items() if not passed]
+    return {
+        "passed": not blockers,
+        "path": path.as_posix(),
+        "checks": checks,
+        "blockers": blockers,
+    }
+
+
 def review_state(run_dir: Path) -> dict[str, Any]:
     reviews_path = run_dir / "reviews.jsonl"
     metrics_path = run_dir / "metrics.json"
@@ -413,6 +438,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     tool_completeness = tool_augmented_completeness_state(tool_augmented_run_dir)
     tool_gate = tool_augmented_gate_state(tool_augmented_run_dir)
     paper_framing = paper_framing_state()
+    protocol_state = protocol_current_state()
 
     minimum_inputs_ready = all(doc["exists"] for doc in required_docs.values()) and all(
         state["exists"] for state in run_files.values()
@@ -429,6 +455,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         all(state["exists"] for state in required_docs.values())
         and all(state["exists"] for state in pre_api_evidence.values())
         and paper_framing["passed"]
+        and protocol_state["passed"]
     )
 
     blockers: list[str] = []
@@ -446,6 +473,8 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         blockers.append(f"Gate verdict is `{gate['verdict']}`, so positive claims are not ready.")
     if not paper_framing["passed"]:
         blockers.append(f"Paper framing check failed: {', '.join(paper_framing['blockers'])}.")
+    if not protocol_state["passed"]:
+        blockers.append(f"Protocol current-state check failed: {', '.join(protocol_state['blockers'])}.")
 
     tool_augmented_blockers: list[str] = []
     if not required_docs["tool_augmented_full_result"]["exists"]:
@@ -467,9 +496,12 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "positive_claim_ready": positive_claim_ready,
         "prompt_only_positive_claim_ready": positive_claim_ready,
         "tool_augmented_claim_ready": tool_augmented_claim_ready,
-        "evp7_bounded_pilot_claim_ready": evp7["ready_for_bounded_pilot_claim"] and paper_framing["passed"],
+        "evp7_bounded_pilot_claim_ready": evp7["ready_for_bounded_pilot_claim"]
+        and paper_framing["passed"]
+        and protocol_state["passed"],
         "current_result_claim_ready": (evp7["ready_for_bounded_pilot_claim"] or tool_augmented_claim_ready)
-        and paper_framing["passed"],
+        and paper_framing["passed"]
+        and protocol_state["passed"],
         "claim_boundary": (
             "Prompt-only evidence-first remains unsupported by the old full-run gate. "
             "The old tool-augmented positive claim is limited to a conditional tool-assisted verifier. "
@@ -477,6 +509,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         ),
         "negative_or_methods_draft_ready": negative_or_methods_draft_ready,
         "paper_framing": paper_framing,
+        "protocol_current_state": protocol_state,
         "required_docs": required_docs,
         "pre_api_evidence": pre_api_evidence,
         "run_files": run_files,
@@ -525,6 +558,13 @@ def build_markdown(audit: dict[str, Any]) -> str:
         lines.append(f"- `{name}`: {bool_mark(passed)}")
     if audit["paper_framing"]["blockers"]:
         lines.append(f"- blockers: `{', '.join(audit['paper_framing']['blockers'])}`")
+    lines.extend(["", "## Protocol Current State", ""])
+    lines.append(f"- passed: {bool_mark(audit['protocol_current_state']['passed'])}")
+    lines.append(f"- path: `{audit['protocol_current_state']['path']}`")
+    for name, passed in audit["protocol_current_state"]["checks"].items():
+        lines.append(f"- `{name}`: {bool_mark(passed)}")
+    if audit["protocol_current_state"]["blockers"]:
+        lines.append(f"- blockers: `{', '.join(audit['protocol_current_state']['blockers'])}`")
     lines.extend(["", "## Pre-API Evidence", ""])
     for name, state in audit["pre_api_evidence"].items():
         lines.append(f"- `{name}`: {bool_mark(state['exists'])} (`{state['path']}`)")

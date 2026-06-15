@@ -30,9 +30,9 @@
 - `protocol/evidence_visibility_protocol.md`: Phase A protocol after the
   2026-06-12 Option A decision and controlled youtube-dl formal admissions
   through `youtube-dl_37`. The current tracked structural cohort is 20 tasks
-  across 5 projects, defines E0/E2/E4/E6 first, keeps E7 as oracle-only, and
-  sets G1-G5 gates before expansion. The latest real DeepSeek G5 result still
-  covers the previous 12-task/62-candidate/248-packet cohort.
+  across 5 projects, 94 candidates, and 376 E0/E2/E4/E6 evidence packets. It
+  keeps E7 as oracle-only, records G1-G5 gate status, and points to the current
+  376-record real DeepSeek G5 result as the paper-facing bounded pilot.
 - `../data/tasks/evp7_tasks.jsonl`: tracked task manifest for the frozen
   EVP-7 protocol pilot, generated from the cohort registry and P2P manifests.
 - `../data/tasks/evp7_manifest_summary.json`: task-level summary of the current

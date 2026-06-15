@@ -1,7 +1,8 @@
 # Evidence Visibility Protocol
 
-This protocol defines the immediate Phase A route after the 2026-06-12
-decision to freeze the current BugsInPy low-friction cohort.
+This protocol defines the current EVP-7 evidence-visibility route after the
+2026-06-12 decision to freeze the initial BugsInPy low-friction cohort and the
+2026-06-15 controlled admissions that reached the 20-task bounded pilot.
 
 ## Decision
 
@@ -50,9 +51,10 @@ The candidate manifest is:
 data/patches/evp7_candidates.jsonl
 ```
 
-It contains 86 promoted candidates from the validated EVP-7 candidate outputs.
-Its labels and failure taxonomy are evaluator-only inputs for metrics and must
-not be copied into model-visible evidence packets.
+It contains 94 promoted candidates from the validated EVP-7 candidate outputs:
+20 correct reference patches and 74 issue-not-fixed negatives across 20 tasks
+and 5 projects. Its labels and failure taxonomy are evaluator-only inputs for
+metrics and must not be copied into model-visible evidence packets.
 
 The current evidence packet manifest is:
 
@@ -160,40 +162,40 @@ Before further expansion, five gates must pass:
 
 If G5 fails, the protocol should be redesigned before adding bugs.
 
-Current gate status after the first packet builder:
+Current gate status for the frozen 20-task / 94-candidate / 376-packet pilot:
 
 - G1 passes: every admitted candidate has E0/E2/E4/E6 packet records;
 - G2 passes for the generated packet records: automated leakage audit found no
   evaluator labels, oracle outcomes, hidden tests, reference provenance, or
   failure taxonomy in model-visible packets.
 - G3 passes for deterministic tool-only baselines: apply-only, visible-tests,
-  and visible-tool-summary conditions each produce 70 schema-valid decisions
-  and aggregate metrics.
-- G4 passes for the no-API merge-gate schema dry-run: all 280 E0/E2/E4/E6
+  and visible-tool-summary conditions each produce 94 schema-valid decisions,
+  for 282 total tool-only decisions and aggregate metrics.
+- G4 passes for the no-API merge-gate schema dry-run: all 376 E0/E2/E4/E6
   packet-level outputs parse into the fixed accept/reject/escalate JSON schema
   with zero leakage findings. These records are parser/schema evidence only,
   not LLM verifier results.
-- G5 has a fresh 248-packet real DeepSeek official run on the previous
-  12-task/62-candidate cohort, with quality status
-  `passed_with_limitations`. It produced 247/248 parse-valid records; the one
-  invalid E2 record is a non-empty truncated JSON model-output-quality boundary
-  and is reported rather than silently repaired. E4/E6 preserve false accept
-  rate 0.0 and accepted precision 1.0 while increasing correct recall over E0
-  to 0.166667 at E4 and 0.25 at E6, with Evidence Gain 7.25 and 7.5 over E0.
-  The metrics scaffold marks
+- G5 has a current 376-packet real DeepSeek official run on the frozen
+  20-task / 94-candidate cohort, with quality status
+  `passed_with_limitations`. It produced 376/376 parse-valid non-mock records.
+  E0/E2/E4/E6 each contain 94 records. E4 and E6 preserve false accept rate
+  0.0 and accepted precision 1.0; E6 reaches correct recall 0.35 and Evidence
+  Gain 14.25 versus E0. The metrics scaffold marks
   `real_llm_verifier_signal_observed_on_evp7`, so this supports bounded pilot
-  observations about evidence-level variation for that 248-packet
-  EVP-7 cohort, not scale-generalized paper claims.
+  observations about evidence-level variation for the frozen EVP-7 cohort, not
+  scale-generalized paper claims.
 - The tracked full-run quality audit is `passed_with_limitations`: it supports
   bounded pilot observations, but explicitly rejects claims that the LLM
   outperforms the deterministic visible-test tool-only baseline, that
-  DeepSeek cost is known from runner output,
-  or that the result generalizes beyond EVP-7.
+  E6 strictly improves over E4 as a generalized finding, that runner-estimated
+  cost is an external DeepSeek billing statement, or that the result
+  generalizes beyond EVP-7.
 - The G5 LLM prompt is `patch_verify_evidence_visibility_merge_gate_v1`. Its
-  current no-API prompt manifest covers all 280 E0/E2/E4/E6 packet prompts with
-  zero leakage failures and no tracked full prompt text. The latest real
+  current no-API prompt manifest covers all 376 E0/E2/E4/E6 packet prompts
+  with zero leakage failures and no tracked full prompt text. The latest real
   DeepSeek official run wrote raw model responses only under ignored
-  `outputs/evp7_g5_llm_248_full/`; tracked summaries remain raw-output-free.
+  `outputs/evp7_g5_llm_376_full_001/`; tracked summaries remain
+  raw-output-free.
 - The tracked `configs/evp7_g5_llm.example.json` and
   `scripts/preflight_evp7_g5_llm_run.py` now prove structural readiness without
   API calls. Strict API readiness intentionally remains false until those user
@@ -209,9 +211,18 @@ Current gate status after the first packet builder:
 
 ## Post-A Expansion
 
-Expansion to 15-20 bugs is deferred until Phase A passes. The preferred order is:
+The 15-20 bug target has been reached and frozen at 20 tasks. The next default
+step is not another bug admission. Continue strengthening the frozen-cohort
+paper artifacts, claim boundary, reproducibility notes, and reviewer-facing
+artifact until a separate 30-50 bug decision is made.
+
+If the project later enters another expansion stage, the preferred order is:
 
 1. C-lite external/source expansion after protocol interfaces freeze;
 2. B-selective native/build probes only when one project can unlock multiple
    tasks and the build is containerizable;
 3. no return to blind BugsInPy sweeping as the default strategy.
+
+The previous 248-packet DeepSeek official run remains a historical checkpoint
+for the 12-task / 62-candidate cohort. It must not be described as the current
+paper-facing G5 result.

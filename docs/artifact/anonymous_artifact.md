@@ -26,7 +26,7 @@ python scripts\audit_anonymous_artifact.py `
 - `docs/` plans, schemas, metrics, prompt records, the current
   Evidence Visibility / Candidate Patches paper framing, reports,
   raw-output-free statistical, utility-sensitivity, and claim-boundary
-  summaries, and reproducible paper figures.
+  summaries, the active EVP-7 protocol, and reproducible paper figures.
 - `examples/` small static examples.
 
 ## Excluded
@@ -50,6 +50,10 @@ The latest ZIP audit passed. It confirms:
 
 - required source, config template, documentation, and handoff scripts are
   present;
+- required protocol and paper-framing files are present:
+  `docs/protocol/evidence_visibility_protocol.md`,
+  `docs/paper/research_definition.md`, and
+  `docs/paper/patch_verification_outline.md`;
 - embedded `ARTIFACT_README.md` includes no-API reproduction, local quality,
   credential-boundary, bootstrap-safety, command-template, pre-API handoff, and
   guarded real-API command templates, including full-run completeness

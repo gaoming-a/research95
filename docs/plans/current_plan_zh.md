@@ -9541,3 +9541,111 @@ Verify:
   已与 evidence-visibility / candidate-patches roadmap 对齐；
 - 该修复只巩固 frozen 20-task EVP-7 paper readiness，不改变实验边界或 claim
   边界。
+
+## 120. 2026-06-15 refresh active EVP-7 protocol current state
+
+Inspect:
+
+- 当前工作区干净，本地 main ahead origin 24；
+- paper readiness、anonymous artifact audit 和 local quality gate 均通过；
+- `docs/protocol/evidence_visibility_protocol.md` 是 active protocol 入口，
+  但当前内容仍混有历史状态：
+  - candidate manifest 写 86 promoted candidates；
+  - G3 写 70 条/condition；
+  - G4 写 280 E0/E2/E4/E6 records；
+  - G5 主叙述仍是 248-packet historical run；
+- 当前结构化 tracked summaries 已经是：
+  - `data/tasks/evp7_manifest_summary.json`: 20 main tasks / 5 projects；
+  - `data/patches/evp7_candidate_summary.json`: 94 candidates；
+  - `data/evidence/evp7_evidence_packet_summary.json`: 376 packets, E0/E2/E4/E6
+    each 94, leakage findings 0；
+  - `data/baselines/evp7_tool_only_metrics.json`: 282 tool-only decisions,
+    94 per condition；
+  - `data/reviews/evp7_merge_gate_schema_dry_run_summary.json`: 376 schema
+    dry-run records, 376 valid parses；
+  - `data/reviews/evp7_g5_llm_376_full_summary.json`: 376 real LLM records,
+    cost observability complete, bounded signal observed；
+- paper readiness 当前只检查 protocol 文件存在，尚未检查 protocol 是否使用当前
+  20/94/376 状态。
+
+Plan:
+
+1. 刷新 `docs/protocol/evidence_visibility_protocol.md` 的 frozen cohort、
+   Phase A gate 和 post-A expansion 状态；
+2. 保留 248-run 作为 historical checkpoint，但明确 current paper-facing G5
+   result 是 376-run；
+3. 在 `audit_paper_readiness.py` 中加入 protocol current-state check，验证
+   protocol 文档包含 20 tasks / 94 candidates / 376 packets、282 tool-only
+   decisions、376 schema dry-run records、376 real LLM records 和 bounded claim
+   boundary；
+4. 同步 README / docs index / artifact notes / engineering notes；
+5. 运行 compile、paper readiness、artifact package + audit、local quality gate；
+6. 本轮不调用 API、不扩 cohort、不修改 prompt、不跟踪 raw model outputs。
+
+验收条件：
+
+- protocol current-state text 与 tracked summaries 一致；
+- paper readiness 输出 protocol current-state check 且通过；
+- stale protocol-state 检查不再把 86 candidates、70/condition、280 records 或
+  248-run 写成 current state；
+- README / docs index / artifact notes / engineering notes 已同步；
+- quality gates 通过。
+
+Execute:
+
+- 已刷新 `docs/protocol/evidence_visibility_protocol.md`：
+  - 顶部说明改为 2026-06-15 controlled admissions 后的 20-task bounded
+    pilot；
+  - candidate manifest 状态改为 94 promoted candidates，20 correct reference
+    patches，74 issue-not-fixed negatives，20 tasks / 5 projects；
+  - G1/G2 保持通过；
+  - G3 改为 apply-only、visible-tests、visible-tool-summary 各 94 条
+    schema-valid decisions，共 282 tool-only decisions；
+  - G4 改为 376 E0/E2/E4/E6 schema dry-run records，376 valid parses；
+  - G5 改为当前 376-packet real DeepSeek official run：376/376 parse-valid
+    non-mock records，E0/E2/E4/E6 各 94，E6 correct recall 0.35，
+    Evidence Gain 14.25；
+  - 248-packet run 被降级为 historical checkpoint，不再作为 current
+    paper-facing G5 result；
+  - Post-A expansion 改为 15-20 bug target 已达到并冻结，默认下一步不再是
+    bug admission；
+- 已更新 `scripts/audit_paper_readiness.py`：
+  - 新增 `protocol_current_state` check；
+  - current result / EVP-7 bounded pilot readiness 现在依赖 protocol current
+    state 通过；
+  - readiness Markdown 输出 protocol current-state checks；
+- 已更新 anonymous artifact 审计：
+  - required files 新增 active protocol、research definition、paper outline；
+  - embedded ARTIFACT_README 必须包含当前 paper title 和 protocol 入口；
+- 已同步 README、docs index、anonymous artifact 文档和 engineering notes；
+- 本轮未调用 API、未扩 cohort、未修改 prompt、未跟踪 raw model outputs。
+
+Verify:
+
+- `python -m compileall scripts\audit_paper_readiness.py scripts\audit_anonymous_artifact.py scripts\prepare_anonymous_artifact.py`
+  通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`protocol_current_state.passed=true`、`current_result_claim_ready=true`、
+  `evp7_bounded_pilot_claim_ready=true`；
+- stale protocol-state 检查未命中：
+  - `It contains 86 promoted candidates`；
+  - `each produce 70 schema-valid decisions`；
+  - `all 280 E0/E2/E4/E6`；
+  - `G5 has a fresh 248-packet real DeepSeek official run`；
+  - `outputs/evp7_g5_llm_248_full`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`safe_to_package=true`、`file_count=283`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 本轮按计划修复 active EVP-7 protocol current-state drift；
+- paper readiness 现在会验证 protocol 是否反映当前 20-task / 94-candidate /
+  376-packet 状态；
+- anonymous artifact 审计也要求携带 active protocol 和 current paper-framing
+  入口；
+- 该修复只巩固 frozen 20-task EVP-7 paper/artifact readiness，不改变实验边界
+  或 claim 边界。

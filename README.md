@@ -637,6 +637,9 @@ Paper readiness also checks the current paper framing. The tracked outline,
 research definition, Markdown draft, and IEEE draft must use the
 Evidence Visibility / Candidate Patches title and preserve the bounded EVP-7
 claim boundary; stale AI-generated-patch title framing fails readiness.
+It also checks `docs/protocol/evidence_visibility_protocol.md` for the current
+20-task / 94-candidate / 376-packet EVP-7 state, so a stale protocol summary no
+longer passes merely because the file exists.
 
 For a dry-run bootstrap of the current DeepSeek official API prerequisite
 configs, run:

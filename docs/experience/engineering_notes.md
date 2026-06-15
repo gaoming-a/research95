@@ -2140,3 +2140,19 @@ This file starts fresh for the patch-verification project.
   ZIP path. The audit can observe a partially written archive and raise
   `BadZipFile`. Run `prepare_anonymous_artifact.py` to completion before
   `audit_anonymous_artifact.py`.
+
+## 2026-06-15 active protocol current-state drift
+
+- `docs/protocol/evidence_visibility_protocol.md` is an execution entry, not a
+  historical note. If it still describes 86 candidates, 70 tool-only decisions
+  per condition, 280 schema dry-run records, or the 248-packet run as current,
+  later work can restart from an obsolete protocol state even when paper tables
+  and readiness summaries are current.
+- Use tracked summaries as the source of truth for protocol refreshes:
+  `evp7_manifest_summary.json`, `evp7_candidate_summary.json`,
+  `evp7_evidence_packet_summary.json`, `evp7_tool_only_metrics.json`,
+  `evp7_merge_gate_schema_dry_run_summary.json`, and the current G5 summary.
+- `audit_paper_readiness.py` should check protocol current-state text, not only
+  protocol file existence. Required phrases should cover the current
+  20-task / 94-candidate / 376-packet state and explicitly demote the 248-run
+  to a historical checkpoint.
