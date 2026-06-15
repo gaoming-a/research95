@@ -257,6 +257,11 @@ They should not override `final_paper_roadmap_zh.md`.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`; it now
   includes the prompt-only negative result, the conditional tool-augmented
   result, and the bounded EVP-7 G5 376-record evidence-visibility result.
+- A Nature-style pre-submission reviewer assessment is tracked at
+  `docs/paper/nature_reviewer_presubmission_report.md`. It identifies the next
+  paper-writing risks as tool-only attribution, EVP-7 qualitative cases,
+  related-work positioning, and simplifying the reader path around the frozen
+  EVP-7 result.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - `scripts/audit_paper_readiness.py` now separates three paper-result
   boundaries: the old prompt-only gate remains a negative/redesign result, the

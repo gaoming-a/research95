@@ -2194,3 +2194,17 @@ This file starts fresh for the patch-verification project.
   older 46-candidate, 200-packet, 150-tool-decision, and 248-prompt states as
   current. Paper readiness should check the roadmap itself, not only protocol
   reports.
+
+## 2026-06-15 Nature-style reviewer audit
+
+- A reviewer-style paper audit should be treated as a manuscript-quality
+  artifact, not as new experimental evidence. It can identify technical and
+  framing risks, but must not introduce new results, citations, line-specific
+  claims, reviewer identities, or an editorial decision.
+- The current Nature-style pre-submission audit found four next paper-writing
+  risks: the EVP-7 LLM-plus-evidence result still needs clearer attribution
+  against deterministic tool-only baselines; the paper needs qualitative EVP-7
+  decision cases; related-work positioning must explain why evidence visibility
+  is distinct from generic prompt engineering or test-only validation; and the
+  reader path should foreground the evidence-packet-to-metric flow before
+  first-pilot chronology.

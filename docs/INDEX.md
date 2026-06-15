@@ -208,6 +208,10 @@
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
   evidence-visibility result, figures, threats, and conclusion.
+- `paper/nature_reviewer_presubmission_report.md`: Nature-style
+  pre-submission reviewer assessment of the current IEEE draft. It provides
+  three reviewer reports plus a cross-review synthesis and keeps the assessment
+  bounded to the tracked manuscript, tables, figures, and readiness evidence.
 - `paper/ieee_preapi_draft.tex`: historical IEEEtran pre-API LaTeX draft.
 - `experiments/patch_verification_plan.md`: experiment design for the first
   patch-verification pilot.

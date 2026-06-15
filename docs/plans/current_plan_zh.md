@@ -10175,3 +10175,79 @@ Verify:
   tool-assisted boundary 和设计动机；
 - readiness gate 已覆盖该 narrative-center drift，后续刷新不应重新把旧
   first pilot 放回 paper-facing 主线。
+
+## 2026-06-15 Nature-reviewer pre-submission assessment
+
+Inspect:
+
+- 当前工作区干净，`main` 本地领先 `origin/main` 3 个提交；
+- `outputs/paper_readiness/latest.md` 显示 current result claim ready、
+  EVP-7 bounded pilot claim ready 均为 yes；
+- 唯一 blocker 是历史 prompt-only positive claim 的
+  `stop_or_redesign` gate，不阻塞 EVP-7 bounded pilot；
+- 已加载 `nature-reviewer` 规则和本地 Nature editorial criteria：
+  评估轴限定为 originality、scientific importance、interdisciplinary
+  readership、technical soundness 和 nonspecialist readability；
+- 本轮输入范围限定为当前 IEEE submission draft、生成表格和 figure
+  manifest；不调用 API、不扩 cohort、不修改 prompt、不改变统计。
+
+Plan:
+
+1. 新增一份 reviewer-style 预投稿评估文档，包含 3 份 reviewer reports
+   和 1 份 cross-review synthesis；
+2. 明确该评估是 Nature-style reviewer lens，不是编辑决定，也不是作者
+   rebuttal；
+3. 将主要风险集中到技术证据链、novelty/significance framing、跨领域
+   可读性和 unsupported claims；
+4. 同步 README、docs index 和 engineering notes；
+5. 运行文档结构检查、paper readiness、local quality gate 和 diff check。
+
+验收条件：
+
+- 预审报告完整包含 Review setup、Reviewer 1/2/3、Cross-review
+  synthesis、Risk / unsupported claims；
+- 三位 reviewer 只按评估重点不同，不引入身份、单位、专业角色或隐藏
+  知识；
+- 所有 substantive comments 可追溯到当前草稿、表格、figure manifest
+  或本地 Nature reviewer criteria；
+- 不新增实验结果、引用、结论或投稿归属判断。
+
+Execute:
+
+- 已新增 `docs/paper/nature_reviewer_presubmission_report.md`；
+- 报告采用 `nature-reviewer` 默认结构：
+  - Review setup；
+  - Reviewer 1：technical soundness / tool-only attribution 重点；
+  - Reviewer 2：originality / significance / prior-work positioning 重点；
+  - Reviewer 3：interdisciplinary readability / reader workflow 重点；
+  - Cross-review synthesis；
+  - Risk / unsupported claims；
+- 报告将当前主要论文风险收敛为四项：
+  1. EVP-7 LLM-plus-evidence 相对 deterministic tool-only 的归因还不够清楚；
+  2. 需要少量 EVP-7 qualitative decision cases 解释 accept/reject/escalate
+     机制；
+  3. related work 需要说明 evidence visibility 与普通 prompt engineering、
+     tool-use prompting、test-only validation 的区别；
+  4. 读者路径应先解释 evidence packet -> model decision -> hidden-label
+     join -> aggregate metric，再展开 first-pilot chronology；
+- 已同步 README、`docs/INDEX.md` 和 `docs/experience/engineering_notes.md`；
+- 本轮未调用 API、未扩 cohort、未新增实验 claim、未修改 prompt 或统计结果。
+
+Verify:
+
+- 预审报告结构检查通过，包含所有必需 section；
+- 收窄后的 reviewer-boundary 检查通过，未发现 reviewer 身份发明或最终
+  editorial decision assertion；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，current result claim ready 和 EVP-7 bounded pilot claim ready 仍为
+  true；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `git diff --check` 通过。
+
+结论：
+
+- 本轮完成 Nature-style pre-submission reviewer assessment；
+- 下一步写作优先级不应是扩实验或重跑 G5，而是按预审报告处理
+  tool-only attribution、EVP-7 qualitative cases、related-work positioning 和
+  reader-flow simplification。
