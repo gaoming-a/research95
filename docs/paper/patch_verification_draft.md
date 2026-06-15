@@ -1,4 +1,4 @@
-# Verifiable Review of AI-Generated Patches in Real Software Projects
+# Evidence Visibility Matters: A Systematic Study of LLM-Based Verification for Candidate Patches
 
 Draft status: EVP-7 376-run bounded-pilot result draft, 2026-06-15.
 

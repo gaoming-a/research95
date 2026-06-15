@@ -155,7 +155,7 @@ def build_draft(
 
 \newcommand{{\toolname}}{{Tool-Augmented Patch Verification\xspace}}
 
-\title{{Verifiable Review of AI-Generated Patches in Real Software Projects}}
+\title{{Evidence Visibility Matters: A Systematic Study of LLM-Based Verification for Candidate Patches}}
 
 \author{{
 \IEEEauthorblockN{{Anonymous Authors}}

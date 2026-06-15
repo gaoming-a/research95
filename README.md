@@ -633,6 +633,11 @@ The IEEE draft generator reads the current EVP-7 G5 376-record summary and
 quality audit by default, so the generated body and tables stay on the same
 claim boundary.
 
+Paper readiness also checks the current paper framing. The tracked outline,
+research definition, Markdown draft, and IEEE draft must use the
+Evidence Visibility / Candidate Patches title and preserve the bounded EVP-7
+claim boundary; stale AI-generated-patch title framing fails readiness.
+
 For a dry-run bootstrap of the current DeepSeek official API prerequisite
 configs, run:
 

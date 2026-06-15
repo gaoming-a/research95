@@ -2,16 +2,18 @@
 
 ## Core Problem
 
-AI coding agents can generate patches for real software tasks, but a generated
-patch is not automatically safe to merge. Existing tests may be incomplete, and
-LLM reviewers can accept plausible but incorrect explanations or reject correct
-patches for unsupported reasons.
+Candidate patches for real software tasks can come from reference fixes,
+constructed controls, AI generators, or agent workflows. A candidate patch is
+not automatically safe to merge merely because it looks plausible or passes
+some visible checks. Existing tests may be incomplete, and LLM reviewers can
+accept plausible but incorrect changes or reject correct patches for
+unsupported reasons.
 
 This project studies patch acceptance as a verification problem:
 
 > Given a real software task and a candidate patch, decide whether the patch
 > should be accepted, rejected, or escalated based on executable or tool-backed
-> evidence.
+> evidence visible to the verifier.
 
 ## Why This Is Different From the Old Project
 
@@ -32,36 +34,45 @@ the unit of analysis:
 
 ## Revised Target Contribution
 
-The target contribution is not a new foundation model or a broad benchmark. The
-target contribution is an empirically validated patch-verification workflow:
+The target contribution is not a new foundation model or an immediate broad
+benchmark. The target contribution is an empirically validated
+evidence-visibility workflow for candidate patch verification:
 
 1. Build paired real-task patch candidates.
 2. Evaluate LLM-only patch review as a baseline.
-3. Evaluate prompt-only evidence-first verification and report its failure
-   modes.
-4. Evaluate a tool-augmented verifier that can inspect patch-apply status and
-   executable behavior summaries.
-5. Analyze when unsupported patch plausibility causes false accepts and when
-   evidence poverty causes false rejects or escalations.
+3. Evaluate prompt-only evidence-first verification and report its negative or
+   mixed result under the configured gate.
+4. Vary visible evidence levels from task/patch context through realistic tool
+   evidence summaries.
+5. Compare the resulting false accepts, accepted precision, correct recall,
+   escalation, utility, and claim boundaries.
+6. Report tool-augmented verification separately when executable behavior
+   summaries are visible, because that is an evidence-assisted workflow rather
+   than prompt-only model ability.
 
 ## Revised Hypotheses
 
-H1: LLM-only patch review is not a reliable merge gate because it can accept
-plausible but partial patches.
+H1: LLM-only patch review is not a reliable merge gate because it can accept or
+explain plausible but unsupported patch claims.
 
 H2: Prompt-only evidence-first verification can reduce false accepts, but may
-lose correct-patch recall when the visible evidence packet lacks executable
-behavior evidence.
+lose correct-patch recall when the visible evidence packet lacks executable or
+tool-backed behavior evidence.
 
-H3: A tool-augmented verifier that sees patch-apply status and executable
-behavior summaries can improve the safety/recall tradeoff relative to
-prompt-only review on the same candidate set.
+H3: Increasing evidence visibility changes merge-gate behavior: safety,
+correct-patch recall, escalation, and utility should be reported together
+rather than collapsed into a single accept/reject score.
 
 Secondary hypotheses:
 
-- H4: Majority review does not reliably solve unsupported patch claims.
+- H4: For clear executable outcomes, deterministic visible-tool evidence may
+  dominate binary accept/reject decisions; any LLM contribution must be
+  bounded and separated from tool-only baselines.
 - H5: Escalation is necessary for patches whose correctness cannot be supported
   by available evidence.
+- H6: The current EVP-7 result supports bounded pilot observations only; it does
+  not establish scale generality, deterministic-baseline superiority, or strict
+  E6-over-E4 superiority.
 
 ## Non-Goals
 
@@ -71,3 +82,5 @@ Secondary hypotheses:
 - Do not rely on synthetic coding tasks as the primary evidence.
 - Do not revive the old claim that cross-review is generally better.
 - Do not present tool-augmented results as prompt-only model ability.
+- Do not title or frame the current paper as primarily about AI-generated
+  patches until generated patches become a dominant validated candidate source.

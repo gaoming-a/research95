@@ -34,11 +34,54 @@ def write_json(path: Path, value: dict[str, Any]) -> None:
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def read_text_if_exists(path: Path) -> str:
+    if not path.exists():
+        return ""
+    return path.read_text(encoding="utf-8")
+
+
 def file_state(path: Path) -> dict[str, Any]:
     return {
         "path": path.as_posix(),
         "exists": path.exists(),
         "size_bytes": path.stat().st_size if path.exists() else 0,
+    }
+
+
+def paper_framing_state() -> dict[str, Any]:
+    current_title = "Evidence Visibility Matters: A Systematic Study of LLM-Based Verification for Candidate Patches"
+    stale_title = "Verifiable Review of AI-Generated Patches"
+    paths = {
+        "research_definition": Path("docs") / "paper" / "research_definition.md",
+        "paper_outline": Path("docs") / "paper" / "patch_verification_outline.md",
+        "paper_draft": Path("docs") / "paper" / "patch_verification_draft.md",
+        "ieee_submission_draft": Path("docs") / "paper" / "ieee_submission_draft.tex",
+    }
+    texts = {name: read_text_if_exists(path) for name, path in paths.items()}
+    normalized_texts = {name: " ".join(text.split()) for name, text in texts.items()}
+    checks = {
+        "outline_uses_current_title": current_title in normalized_texts["paper_outline"],
+        "outline_mentions_evidence_visibility": "evidence visibility" in texts["paper_outline"].lower(),
+        "outline_mentions_bounded_evp7": "bounded EVP-7" in texts["paper_outline"],
+        "research_definition_uses_evidence_visibility": "evidence-visibility workflow" in texts[
+            "research_definition"
+        ],
+        "research_definition_bounds_current_claims": "bounded pilot observations only" in texts[
+            "research_definition"
+        ],
+        "markdown_draft_uses_current_title": texts["paper_draft"].startswith(f"# {current_title}"),
+        "ieee_draft_uses_current_title": rf"\title{{{current_title}}}" in texts["ieee_submission_draft"],
+        "current_artifacts_do_not_use_stale_title": all(
+            stale_title not in normalized_text for normalized_text in normalized_texts.values()
+        ),
+    }
+    blockers = [name for name, passed in checks.items() if not passed]
+    return {
+        "passed": not blockers,
+        "title": current_title,
+        "paths": {name: path.as_posix() for name, path in paths.items()},
+        "checks": checks,
+        "blockers": blockers,
     }
 
 
@@ -341,6 +384,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "tool_augmented_full_result": file_state(
             Path("docs") / "experiments" / "tool_augmented_full_run_result.md"
         ),
+        "research_definition": file_state(Path("docs") / "paper" / "research_definition.md"),
         "paper_draft": file_state(Path("docs") / "paper" / "patch_verification_draft.md"),
         "paper_outline": file_state(Path("docs") / "paper" / "patch_verification_outline.md"),
         "generated_tables_md": file_state(Path("docs") / "paper" / "generated_tables.md"),
@@ -368,6 +412,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     tool_reviews = review_state(tool_augmented_run_dir)
     tool_completeness = tool_augmented_completeness_state(tool_augmented_run_dir)
     tool_gate = tool_augmented_gate_state(tool_augmented_run_dir)
+    paper_framing = paper_framing_state()
 
     minimum_inputs_ready = all(doc["exists"] for doc in required_docs.values()) and all(
         state["exists"] for state in run_files.values()
@@ -383,6 +428,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     negative_or_methods_draft_ready = bool(
         all(state["exists"] for state in required_docs.values())
         and all(state["exists"] for state in pre_api_evidence.values())
+        and paper_framing["passed"]
     )
 
     blockers: list[str] = []
@@ -398,6 +444,8 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         blockers.append("Missing stop/continue gate report.")
     elif gate["verdict"] != "continue":
         blockers.append(f"Gate verdict is `{gate['verdict']}`, so positive claims are not ready.")
+    if not paper_framing["passed"]:
+        blockers.append(f"Paper framing check failed: {', '.join(paper_framing['blockers'])}.")
 
     tool_augmented_blockers: list[str] = []
     if not required_docs["tool_augmented_full_result"]["exists"]:
@@ -419,14 +467,16 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "positive_claim_ready": positive_claim_ready,
         "prompt_only_positive_claim_ready": positive_claim_ready,
         "tool_augmented_claim_ready": tool_augmented_claim_ready,
-        "evp7_bounded_pilot_claim_ready": evp7["ready_for_bounded_pilot_claim"],
-        "current_result_claim_ready": evp7["ready_for_bounded_pilot_claim"] or tool_augmented_claim_ready,
+        "evp7_bounded_pilot_claim_ready": evp7["ready_for_bounded_pilot_claim"] and paper_framing["passed"],
+        "current_result_claim_ready": (evp7["ready_for_bounded_pilot_claim"] or tool_augmented_claim_ready)
+        and paper_framing["passed"],
         "claim_boundary": (
             "Prompt-only evidence-first remains unsupported by the old full-run gate. "
             "The old tool-augmented positive claim is limited to a conditional tool-assisted verifier. "
             "The current EVP-7 G5 result supports only bounded pilot observations about evidence-level variation."
         ),
         "negative_or_methods_draft_ready": negative_or_methods_draft_ready,
+        "paper_framing": paper_framing,
         "required_docs": required_docs,
         "pre_api_evidence": pre_api_evidence,
         "run_files": run_files,
@@ -468,6 +518,13 @@ def build_markdown(audit: dict[str, Any]) -> str:
     ]
     for name, state in audit["required_docs"].items():
         lines.append(f"- `{name}`: {bool_mark(state['exists'])} (`{state['path']}`)")
+    lines.extend(["", "## Paper Framing", ""])
+    lines.append(f"- passed: {bool_mark(audit['paper_framing']['passed'])}")
+    lines.append(f"- title: `{audit['paper_framing']['title']}`")
+    for name, passed in audit["paper_framing"]["checks"].items():
+        lines.append(f"- `{name}`: {bool_mark(passed)}")
+    if audit["paper_framing"]["blockers"]:
+        lines.append(f"- blockers: `{', '.join(audit['paper_framing']['blockers'])}`")
     lines.extend(["", "## Pre-API Evidence", ""])
     for name, state in audit["pre_api_evidence"].items():
         lines.append(f"- `{name}`: {bool_mark(state['exists'])} (`{state['path']}`)")

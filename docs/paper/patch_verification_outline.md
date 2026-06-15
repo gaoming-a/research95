@@ -1,54 +1,78 @@
-# Paper Outline: Verifiable Review of AI-Generated Patches
+# Paper Outline: Evidence Visibility for Candidate Patch Verification
 
 ## Working Title
 
-Verifiable Review of AI-Generated Patches in Real Software Projects
+Evidence Visibility Matters: A Systematic Study of LLM-Based Verification for
+Candidate Patches
 
 ## One-Sentence Contribution
 
-We show that prompt-only LLM patch review has a safety/recall tradeoff on
-real-bug patch candidates, then evaluate whether a tool-augmented verifier can
-use executable evidence summaries to make safer accept/reject decisions.
+We study candidate patch verification as an accept/reject/escalate merge-gate
+decision problem and show, within a bounded real-bug pilot, how increasing
+visible evidence changes LLM verifier behavior, safety, recall, escalation, and
+utility.
 
 ## Motivation
 
-AI coding agents increasingly generate patches for real issues. Existing
-benchmarks often ask whether an agent can produce a passing patch, but software
-teams also need to know whether a patch should be trusted. Previous experiments
-in this project found that LLM-only code review has persistent false positives
-on fixed/reference controls. That makes LLM-only review a weak merge gate.
+Candidate patches can look plausible even when they are partial, irrelevant, or
+regression-prone. A merge gate therefore needs more than a fluent reviewer
+opinion: it needs a decision tied to visible, non-leaking engineering evidence.
+The current project treats AI-generated patches as one possible candidate
+source, not as the required unit of every task.
 
 ## Research Questions
 
-RQ1. How reliable are LLM-only reviewers when deciding whether AI-generated
-patches should be accepted?
+RQ1. How does LLM-only review behave when deciding whether candidate patches
+should be accepted, rejected, or escalated?
 
-RQ2. What failure modes cause false accepts and false rejects in patch review?
+RQ2. Does prompt-only evidence discipline reduce false accepts without
+collapsing correct-patch recall?
 
-RQ3. Why does prompt-only evidence-first verification fail to preserve
-correct-patch recall in the first full pilot?
+RQ3. How do increasing evidence levels, from E0 through E6, change false
+accepts, accepted precision, correct recall, escalation, and merge-gate utility?
 
-RQ4. Does a tool-augmented verifier improve the safety/recall tradeoff when it
-sees patch-apply status and executable behavior summaries?
+RQ4. What claim boundary is supported by the current frozen EVP-7 cohort, and
+which scale-generalized or baseline-superiority claims remain unsupported?
+
+RQ5. Where does tool-visible executable evidence help, and why must
+tool-assisted verification be reported separately from prompt-only model
+ability?
 
 ## Expected Contributions
 
-1. A paired patch-verification benchmark constructed from real bug/fix pairs.
-2. An empirical study of LLM-only patch review reliability.
-3. A taxonomy of patch-review failure modes.
-4. A negative result for prompt-only evidence-first verification under the
-   configured gate.
-5. A tool-augmented verification protocol and baseline implementation.
-6. A reproducible artifact with no-API validation, deterministic output
-   comparison, documented model-selection boundaries, and optional API reruns.
+1. A candidate patch verification framing with accept/reject/escalate decisions
+   under controlled evidence visibility.
+2. A real-bug-derived candidate-patch pilot with hidden evaluator separation
+   and project-level P2P-broad validation for the current main cohort.
+3. A negative or mixed prompt-only evidence-first result from the first real
+   API pilot.
+4. A conditional tool-assisted verification result from the separate
+   tool-augmented run.
+5. A bounded EVP-7 evidence-visibility pilot over 20 tasks, 94 candidates, and
+   376 evidence packets.
+6. Paper-facing artifacts for the frozen EVP-7 result: Evidence Visibility
+   Curve, statistical intervals, utility sensitivity, and claim-boundary
+   traceability.
+
+## Current Supported Claims
+
+- The first prompt-only evidence-first full run is not a positive result under
+  its configured gate.
+- The separate tool-augmented full run supports only a conditional
+  tool-assisted verifier claim.
+- The EVP-7 G5 run supports bounded pilot observations that verifier decisions
+  and metrics vary by evidence level on the frozen 20-task cohort.
+- In the current EVP-7 run, E4 and E6 preserve zero observed false accepts and
+  accepted precision 1.0, while E6 has higher correct recall and utility than
+  E0 within the bounded pilot.
 
 ## Non-Claims
 
-- Do not claim that cross-review is generally better.
-- Do not claim that LLM-only adjudication is reliable.
-- Do not present oracle-gated results as pure model ability.
-- Do not present tool-augmented results as proof that prompt-only evidence-first
-  succeeded.
-- Do not claim deployment readiness unless evidence sources are available
-  before acceptance.
-- Do not claim cross-model generality from the first single-model pilot.
+- Do not claim scale generality from the frozen 20-task EVP-7 pilot.
+- Do not claim that the LLM strictly outperforms deterministic visible-test or
+  tool-only baselines.
+- Do not claim that E6 is strictly superior to E4 as a generalized finding.
+- Do not present tool-augmented results as proof of prompt-only model ability.
+- Do not treat runner-estimated cost as an external billing statement.
+- Do not title the current paper around AI-generated patches until generated
+  patches become a dominant, validated candidate source.

@@ -189,10 +189,11 @@
 
 ## New Paper Direction
 
-- `paper/research_definition.md`: precise problem definition, hypotheses, and
-  non-goals.
-- `paper/patch_verification_outline.md`: target paper outline and contribution
-  framing.
+- `paper/research_definition.md`: current evidence-visibility problem
+  definition, hypotheses, non-goals, and bounded-claim boundary.
+- `paper/patch_verification_outline.md`: current paper outline for
+  `Evidence Visibility Matters: A Systematic Study of LLM-Based Verification
+  for Candidate Patches`.
 - `paper/patch_verification_draft.md`: staged result draft with no-API
   validation, the first DeepSeek official API full-run outcome, the
   tool-augmented full run, and the bounded EVP-7 G5 376-record result.

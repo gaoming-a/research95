@@ -9434,3 +9434,110 @@ Verify:
   utility 参数选择与 sensitivity 边界；
 - 该结果仅强化 frozen 20-task pilot 内的 utility interpretation，不改变
   unsupported claim 边界。
+
+## 119. 2026-06-15 align paper framing with evidence-visibility roadmap
+
+Inspect:
+
+- 当前工作区干净，本地 main ahead origin 23；
+- `outputs/paper_readiness/latest.md` 显示 EVP-7 bounded pilot claim ready；
+- canonical roadmap 明确当前论文题目和主线应使用
+  `Evidence Visibility` / `Candidate Patches`，在真实 AI-generated patches
+  未成为主体前不得过早写成 `AI-Generated Patches`；
+- `docs/paper/patch_verification_outline.md` 仍使用旧标题
+  `Verifiable Review of AI-Generated Patches`，并把主贡献写成
+  tool-augmented verifier；
+- `docs/paper/research_definition.md` 仍把最终贡献写成 tool-augmented
+  verifier 正向路线，未反映当前 EVP-7 evidence-visibility bounded pilot；
+- `docs/paper/patch_verification_draft.md` 和 IEEE generator 标题仍使用旧
+  AI-generated patches 口径；
+- 当前 readiness 只检查 outline 文件存在，尚未检查 paper framing 是否与
+  roadmap 一致。
+
+Plan:
+
+1. 将 paper outline 改为 evidence-visibility / candidate-patch framing；
+2. 将 research definition 的核心贡献和假设改为 evidence-level variation、
+   prompt-only negative result、conditional tool-assisted result 和 bounded
+   EVP-7 result；
+3. 将 Markdown draft 与 IEEE generator 的标题改为 roadmap 推荐的
+   `Evidence Visibility Matters: A Systematic Study of LLM-Based Verification
+   for Candidate Patches`；
+4. 在 `audit_paper_readiness.py` 中加入 paper-framing 检查，防止旧标题或
+   tool-augmented-as-main-claim 文本重新进入 current readiness；
+5. 同步 README / docs index / engineering notes；
+6. 重新生成 IEEE draft，运行 paper readiness、artifact audit、local quality
+   gate，并只提交本轮相关文件。
+
+验收条件：
+
+- paper outline / research definition / Markdown draft / IEEE draft 的标题和
+  RQ framing 与 roadmap 一致；
+- paper readiness 输出 paper framing check 且通过；
+- stale old-title 检查不再命中 current paper artifacts；
+- README / docs index / engineering notes 已同步；
+- quality gates 通过。
+
+Execute:
+
+- 已重写 `docs/paper/patch_verification_outline.md`：
+  - 工作标题改为 roadmap 推荐的
+    `Evidence Visibility Matters: A Systematic Study of LLM-Based Verification
+    for Candidate Patches`；
+  - RQ 改为 LLM-only、prompt-only evidence discipline、E0-E6 evidence
+    visibility、bounded claim boundary 和 tool-assisted result separation；
+  - supported / non-claims 明确禁止 scale generality、deterministic-baseline
+    superiority、E6 strict superiority、billing equivalence 和当前
+    AI-generated-patches 标题化；
+- 已更新 `docs/paper/research_definition.md`：
+  - 将核心对象从 generated patch 改为 candidate patch；
+  - 将目标贡献改为 evidence-visibility workflow；
+  - 将假设改为 evidence visibility 对 safety/recall/escalation/utility 的影响；
+  - 明确当前 EVP-7 只支持 bounded pilot observations；
+- 已将 Markdown draft 标题改为 current roadmap title；
+- 已更新 `scripts/write_ieee_latex_draft.py` 并重新生成
+  `docs/paper/ieee_submission_draft.tex`；
+- 已在 `scripts/audit_paper_readiness.py` 中加入 `paper_framing` 检查：
+  - outline 必须使用当前标题；
+  - outline 必须提到 evidence visibility 和 bounded EVP-7；
+  - research definition 必须使用 evidence-visibility workflow 并保留 bounded
+    current-claim wording；
+  - Markdown draft 和 IEEE draft 必须使用当前标题；
+  - current paper artifacts 不得继续使用旧
+    `Verifiable Review of AI-Generated Patches` 标题；
+- 已同步 README、docs index、anonymous artifact 文档和 engineering notes；
+- 本轮未调用 API、未扩 cohort、未修改 prompt、未跟踪 raw model outputs。
+
+Verify:
+
+- `python -m compileall scripts\audit_paper_readiness.py scripts\write_ieee_latex_draft.py`
+  通过；
+- `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`
+  通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`paper_framing.passed=true`、`current_result_claim_ready=true`、
+  `evp7_bounded_pilot_claim_ready=true`；
+- stale old-title 检查在 current paper artifacts / README / docs index /
+  artifact docs 中未命中；
+- `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex`
+  连续运行通过，生成 6 页 IEEE draft PDF；仅保留既有 underfull hbox /
+  MiKTeX update 提示；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`safe_to_package=true`、`file_count=280`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- 一次将 artifact prepare 与 audit 并行执行时，audit 读到正在写入的 ZIP 并报
+  `BadZipFile`；已诊断为执行顺序问题，改为 prepare 完成后顺序 audit 并通过，
+  engineering notes 已记录该约束；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 本轮按计划修复 paper framing drift；
+- paper readiness 现在会验证 high-level paper framing，不再只检查 outline /
+  research definition 是否存在；
+- 当前论文标题、outline、research definition、Markdown draft 和 IEEE draft
+  已与 evidence-visibility / candidate-patches roadmap 对齐；
+- 该修复只巩固 frozen 20-task EVP-7 paper readiness，不改变实验边界或 claim
+  边界。

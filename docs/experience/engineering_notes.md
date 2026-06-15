@@ -2120,3 +2120,23 @@ This file starts fresh for the patch-verification project.
 - Keep sensitivity conclusions scoped to the frozen 20-task pilot. Stable
   rankings across the grid strengthen the local interpretation but do not prove
   scale generality or LLM superiority over a deterministic baseline.
+
+## 2026-06-15 paper framing drift
+
+- Paper tables, readiness summaries, and result sections can be current while
+  high-level framing files still carry an older title or contribution claim.
+  In this project the outline and research definition still centered
+  AI-generated patches and a tool-augmented verifier after the roadmap had
+  moved to evidence visibility for candidate patch verification.
+- Treat title, one-sentence contribution, research questions, and non-claims as
+  readiness-critical artifacts, not just prose. Add explicit paper-framing
+  checks to `audit_paper_readiness.py` so stale framing fails the gate instead
+  of silently passing because the file exists.
+- Keep tool-augmented results in the paper, but describe them as a conditional
+  evidence-assisted workflow. The current main title should remain
+  `Candidate Patches` until AI-generated patches become a dominant validated
+  candidate source.
+- Do not run artifact packaging and artifact audit in parallel against the same
+  ZIP path. The audit can observe a partially written archive and raise
+  `BadZipFile`. Run `prepare_anonymous_artifact.py` to completion before
+  `audit_anonymous_artifact.py`.
