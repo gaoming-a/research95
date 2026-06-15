@@ -30,31 +30,40 @@ def build_audit(old_repo: str) -> dict[str, Any]:
     except ValueError:
         check_ignore_index = -1
     try:
-        add_index = commands.index("git add .gitignore .env.example README.md pyproject.toml configs docs examples scripts src")
+        status_branch_index = commands.index("git status --short --branch")
     except ValueError:
-        add_index = -1
+        status_branch_index = -1
     try:
-        diff_cached_index = commands.index("git diff --cached --name-only")
+        log_ahead_index = commands.index("git log --oneline --decorate origin/main..HEAD")
     except ValueError:
-        diff_cached_index = -1
+        log_ahead_index = -1
 
     checks = {
         "requires_human_decision_when_not_sync_ready": packet["requires_human_decision"] is (not packet["sync_ready"]),
         "decision_template_present": all(
             key in packet.get("decision_record_template", {})
-            for key in ["initialize_clean_workspace", "github_remote_url", "reuse_old_review_remote", "reason"]
+            for key in ["push_current_branch", "defer_reason", "github_remote_url", "reason"]
         ),
+        "ahead_behind_fields_present": all(
+            key in packet
+            for key in ["current_status_branch", "current_upstream", "current_ahead", "current_behind", "current_status_clean"]
+        ),
+        "ahead_requires_human_decision": not packet.get("current_ahead") or packet["requires_human_decision"],
+        "sync_ready_requires_zero_ahead_behind": (not packet["sync_ready"])
+        or (packet.get("current_ahead") == 0 and packet.get("current_behind") == 0),
         "staging_allowlist_present": all(
             item in staging_allowlist for item in [".gitignore", ".env.example", "README.md", "configs", "docs", "scripts", "src"]
         ),
         "no_dot_add_template": all(command.strip() != "git add ." for command in commands),
         "no_secret_paths_in_allowlist": ".env" not in staging_allowlist and "configs/*.local.json" not in staging_allowlist,
-        "ignore_check_before_add": check_ignore_index >= 0 and add_index >= 0 and check_ignore_index < add_index,
-        "cached_diff_after_add": add_index >= 0 and diff_cached_index > add_index,
-        "push_is_last": bool(commands) and commands[-1] == "git push -u origin main",
+        "status_branch_before_push": status_branch_index >= 0 and status_branch_index < len(commands) - 1,
+        "ignore_check_before_push": check_ignore_index >= 0 and check_ignore_index < len(commands) - 1,
+        "ahead_log_before_push": log_ahead_index >= 0 and log_ahead_index < len(commands) - 1,
+        "push_is_last": bool(commands) and commands[-1] == "git push origin main",
         "post_sync_acceptance_present": len(packet.get("post_sync_acceptance", [])) >= 4,
-        "forbidden_mentions_old_remote": any("old remote" in item for item in forbidden),
+        "forbidden_mentions_remote_change": any("remote" in item and "confirms" in item for item in forbidden),
         "forbidden_mentions_dot_add": any("git add ." in item for item in forbidden),
+        "forbidden_mentions_ahead_state": any("ahead or behind" in item for item in forbidden),
     }
     return {
         "passed": all(checks.values()),
@@ -62,6 +71,9 @@ def build_audit(old_repo: str) -> dict[str, Any]:
         "packet_summary": {
             "current_is_git_repo": packet["current_is_git_repo"],
             "current_has_remote": packet["current_has_remote"],
+            "current_upstream": packet.get("current_upstream"),
+            "current_ahead": packet.get("current_ahead"),
+            "current_behind": packet.get("current_behind"),
             "sync_ready": packet["sync_ready"],
             "requires_human_decision": packet["requires_human_decision"],
             "old_repo_is_git_repo": packet["old_repo_is_git_repo"],
@@ -78,6 +90,9 @@ def build_markdown(audit: dict[str, Any]) -> str:
         f"- passed: {bool_mark(audit['passed'])}",
         f"- current is git repo: {bool_mark(audit['packet_summary']['current_is_git_repo'])}",
         f"- current has remote: {bool_mark(audit['packet_summary']['current_has_remote'])}",
+        f"- current upstream: `{audit['packet_summary']['current_upstream']}`",
+        f"- current ahead: `{audit['packet_summary']['current_ahead']}`",
+        f"- current behind: `{audit['packet_summary']['current_behind']}`",
         f"- sync ready: {bool_mark(audit['packet_summary']['sync_ready'])}",
         f"- requires human decision: {bool_mark(audit['packet_summary']['requires_human_decision'])}",
         f"- old repo is git repo: {bool_mark(audit['packet_summary']['old_repo_is_git_repo'])}",

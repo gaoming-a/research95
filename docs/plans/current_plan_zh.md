@@ -10748,3 +10748,83 @@ Verify:
 - 匿名 ZIP 已在本地刷新并通过 audit，但 `artifacts/` 仍按规则不提交；
 - 下一步应做 final pre-push / release handoff audit；如果仍不 push，则只需
   提供本地提交和明确的推送边界。
+
+## 2026-06-15 final pre-push / release handoff audit
+
+Inspect:
+
+- 当前分支本地领先 `origin/main` 10 个提交，工作区在本轮开始时干净；
+- 当前 remote 为 `https://github.com/gaoming-a/research95.git`；
+- 旧 `outputs/handoff/git_sync_packet.md` 显示 `sync ready: yes`，但
+  `git status --short --branch` 明确为 `ahead 10`；
+- 问题类型：Git handoff 审计口径 bug。它只检查当前 repo 有 remote，
+  没有检查 upstream ahead/behind，因此会把未 push 状态误报为已同步；
+- 本轮不执行 `git push`，只修本地 handoff/sync audit、刷新 ignored
+  handoff 报告并提交 tracked 修复。
+
+Plan:
+
+1. 修复 `scripts/write_git_sync_packet.py`，使用
+   `git status --short --branch` 解析 upstream、ahead、behind、dirty；
+2. 将 `sync_ready` 定义为 repo + remote + clean + upstream + ahead=0 + behind=0；
+3. 更新 `scripts/audit_git_sync_packet.py`，要求 packet 暴露 ahead/behind，
+   且 ahead 时必须需要 human decision；
+4. 刷新 git sync packet、pre-API handoff、local quality gate；
+5. 同步 README、INDEX、engineering notes 和计划；
+6. 提交本轮 tracked 修复，不 push。
+
+验收条件：
+
+- 当前 ahead 10 时，git sync packet 必须显示 `sync_ready=false`、
+  `requires_human_decision=true`；
+- audit_git_sync_packet 必须通过；
+- pre-API handoff 必须刷新并通过本地命令；
+- local quality gate 必须通过；
+- 工作区不得提交 ignored handoff/output/artifact 文件。
+
+Execute:
+
+- 已修复 `scripts/write_git_sync_packet.py`：
+  - 使用 `git status --short --branch`；
+  - 解析 `current_upstream`、`current_ahead`、`current_behind`、
+    `current_status_clean`；
+  - 将 `sync_ready` 定义为 repo + remote + clean + upstream + ahead=0 +
+    behind=0；
+  - 将 required decision 改为 push/defer 当前分支，而不是旧的 init/remote
+    决策；
+  - 将安全命令模板改为 inspect ignored paths、检查 `origin/main..HEAD`、
+    最后 `git push origin main`；
+- 已更新 `scripts/audit_git_sync_packet.py`：
+  - 要求 ahead/behind 字段存在；
+  - ahead 时必须 `requires_human_decision=true`；
+  - `sync_ready=true` 时必须 ahead/behind 都为 0；
+  - push 必须仍是最后一步；
+- 已同步 README、docs/INDEX 和 engineering notes；
+- 已刷新 ignored handoff outputs，不提交 `outputs/`。
+
+Verify:
+
+- `python -m compileall scripts\write_git_sync_packet.py scripts\audit_git_sync_packet.py`
+  通过；
+- `python scripts\write_git_sync_packet.py --out-json outputs\handoff\git_sync_packet.json --out-md outputs\handoff\git_sync_packet.md`
+  通过，当前本地 ahead 状态下输出 `requires_human_decision=true`；
+- `python scripts\audit_git_sync_packet.py --out-json outputs\git_sync_packet_audit\latest.json --out-md outputs\git_sync_packet_audit\latest.md`
+  通过，`passed=true`；
+- 刷新后的 git sync packet 明确记录：
+  `current_upstream=origin/main`、`current_ahead=10`、
+  `current_behind=0`、`sync_ready=false`、
+  `requires_human_decision=true`；
+- `python scripts\write_pre_api_handoff.py --out-json outputs\handoff\pre_api_handoff.json --out-md outputs\handoff\pre_api_handoff.md`
+  通过，`commands_passed=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `git status --short --branch --ignored=matching outputs artifacts` 显示
+  `outputs/` 和 `artifacts/` 仍为 ignored，不是 tracked 待提交文件。
+
+结论：
+
+- 本轮完成 final pre-push / release handoff audit；
+- 当前本地 release handoff 可用，但 GitHub sync 明确未完成：本地 main 仍
+  ahead origin/main；
+- 按此前“不 push”的边界，本轮只提交 handoff/audit 修复；真正远端同步需要
+  用户显式允许后执行 `git push origin main`。

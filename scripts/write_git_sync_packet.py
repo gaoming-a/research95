@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -43,10 +44,37 @@ def parse_remote_stdout(stdout: str) -> list[dict[str, str]]:
     return remotes
 
 
+def parse_status_branch(stdout: str) -> dict[str, Any]:
+    lines = stdout.splitlines()
+    branch_header = lines[0] if lines and lines[0].startswith("## ") else ""
+    dirty_lines = [line for line in lines if not line.startswith("## ")]
+    upstream = None
+    ahead = 0
+    behind = 0
+    if "..." in branch_header:
+        upstream_part = branch_header.split("...", 1)[1]
+        upstream = upstream_part.split(" ", 1)[0].strip()
+    ahead_match = re.search(r"ahead (\d+)", branch_header)
+    behind_match = re.search(r"behind (\d+)", branch_header)
+    if ahead_match:
+        ahead = int(ahead_match.group(1))
+    if behind_match:
+        behind = int(behind_match.group(1))
+    return {
+        "branch_header": branch_header,
+        "upstream": upstream,
+        "ahead": ahead,
+        "behind": behind,
+        "dirty_lines": dirty_lines,
+        "clean": not dirty_lines,
+    }
+
+
 def build_packet(args: argparse.Namespace) -> dict[str, Any]:
     current_root = Path.cwd()
     old_root = Path(args.old_repo).resolve()
-    current_git = run_git(["status", "--short"], current_root)
+    current_git = run_git(["status", "--short", "--branch"], current_root)
+    current_status = parse_status_branch(current_git["stdout"]) if current_git["passed"] else {}
     current_remote = run_git(["remote", "-v"], current_root)
     current_remotes = parse_remote_stdout(current_remote.get("stdout", "")) if current_remote["passed"] else []
     current_has_remote = bool(current_remotes)
@@ -54,13 +82,27 @@ def build_packet(args: argparse.Namespace) -> dict[str, Any]:
     old_status = run_git(["status", "--short"], old_root) if old_git_exists else {}
     old_remote = run_git(["remote", "-v"], old_root) if old_git_exists else {}
     old_remotes = parse_remote_stdout(old_remote.get("stdout", "")) if old_remote else []
-    requires_human_decision = (not current_git["passed"]) or (not current_has_remote)
+    sync_ready = bool(
+        current_git["passed"]
+        and current_has_remote
+        and current_status.get("clean")
+        and current_status.get("upstream")
+        and current_status.get("ahead") == 0
+        and current_status.get("behind") == 0
+    )
+    requires_human_decision = not sync_ready
 
     return {
         "current_workspace": "<repo_root>",
         "current_is_git_repo": current_git["passed"],
         "current_has_remote": current_has_remote,
         "current_status_short": current_git["stdout"].splitlines() if current_git["passed"] and current_git["stdout"] else [],
+        "current_status_branch": current_status.get("branch_header"),
+        "current_status_clean": bool(current_status.get("clean")),
+        "current_upstream": current_status.get("upstream"),
+        "current_ahead": current_status.get("ahead", 0),
+        "current_behind": current_status.get("behind", 0),
+        "current_dirty_lines": current_status.get("dirty_lines", []),
         "current_git_error": current_git["stderr"] if not current_git["passed"] else None,
         "current_remote_available": current_remote["passed"],
         "current_remotes": current_remotes,
@@ -70,16 +112,16 @@ def build_packet(args: argparse.Namespace) -> dict[str, Any]:
         "old_repo_status_clean": old_status.get("passed") is True and not old_status.get("stdout"),
         "old_repo_remotes": old_remotes,
         "requires_human_decision": requires_human_decision,
-        "sync_ready": current_git["passed"] and current_has_remote,
+        "sync_ready": sync_ready,
         "required_decision": (
-            "Confirm whether to initialize <repo_root> as its own Git repository, "
-            "which GitHub remote should receive it, and whether the old review "
-            "remote is intentionally reused or explicitly rejected."
+            "Confirm whether to push the local commits to the configured research95 "
+            "remote now, or intentionally defer GitHub sync and keep the local "
+            "ahead state visible in handoff."
         ),
         "decision_record_template": {
-            "initialize_clean_workspace": "<yes/no>",
-            "github_remote_url": "<github-repo-url>",
-            "reuse_old_review_remote": "<yes/no>",
+            "push_current_branch": "<yes/no>",
+            "defer_reason": "<one sentence if no>",
+            "github_remote_url": "<configured-github-repo-url>",
             "reason": "<one sentence>",
         },
         "staging_allowlist": [
@@ -94,31 +136,26 @@ def build_packet(args: argparse.Namespace) -> dict[str, Any]:
             "src",
         ],
         "safe_command_template_after_decision": [
-            "git init",
-            "git branch -M main",
-            "git remote add origin <github-repo-url-confirmed-by-user>",
+            "git status --short --branch",
             "git remote -v",
             "git check-ignore -v .env configs/api_pilot.local.json configs/model_selection.local.json outputs artifacts data tmp",
             "git status --short --ignored",
-            "git status --short",
-            "git add .gitignore .env.example README.md pyproject.toml configs docs examples scripts src",
-            "git diff --cached --name-only",
             "git diff --cached --check",
-            "git status --short",
-            "git commit -m \"Prepare research95 patch verification workspace\"",
-            "git push -u origin main",
+            "git log --oneline --decorate origin/main..HEAD",
+            "git push origin main",
         ],
         "post_sync_acceptance": [
             "git status --short reports no unexpected tracked local files.",
             "git remote -v shows the user-confirmed remote.",
             "git ls-files does not include .env, configs/*.local.json, outputs/, data/, tmp/, artifacts/, or benchmark checkouts.",
+            "git status --short --branch reports no local ahead or behind state.",
             "The pushed branch is visible on GitHub before claiming sync complete.",
         ],
         "forbidden": [
             "Do not commit .env, configs/*.local.json, outputs/, data/, tmp/, artifacts/, or benchmark checkouts.",
-            "Do not reuse an old remote for this workspace unless the user explicitly confirms it.",
+            "Do not change the configured research95 remote unless the user explicitly confirms it.",
             "Do not run git add . for this workspace.",
-            "Do not claim GitHub sync until init, commit, and push have succeeded.",
+            "Do not claim GitHub sync until git status --short --branch shows no ahead or behind state after push.",
         ],
     }
 
@@ -133,6 +170,11 @@ def build_markdown(packet: dict[str, Any]) -> str:
         f"- current is git repo: {bool_mark(packet['current_is_git_repo'])}",
         f"- current remote available: {bool_mark(packet['current_remote_available'])}",
         f"- current has remote: {bool_mark(packet['current_has_remote'])}",
+        f"- current status: `{packet['current_status_branch']}`",
+        f"- current status clean: {bool_mark(packet['current_status_clean'])}",
+        f"- current upstream: `{packet['current_upstream']}`",
+        f"- current ahead: `{packet['current_ahead']}`",
+        f"- current behind: `{packet['current_behind']}`",
         f"- sync ready: {bool_mark(packet['sync_ready'])}",
         f"- old repo checked: `{packet['old_repo_checked']}`",
         f"- old repo is git repo: {bool_mark(packet['old_repo_is_git_repo'])}",

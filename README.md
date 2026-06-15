@@ -519,6 +519,10 @@ python scripts\write_git_sync_packet.py `
   --out-md outputs\handoff\git_sync_packet.md
 ```
 
+The packet uses `git status --short --branch` and treats local `ahead` or
+`behind` state as not synced. A workspace with a configured remote is not
+GitHub-synced until the branch is clean and reports `ahead=0` and `behind=0`.
+
 For Git sync packet safety checks only, run:
 
 ```powershell

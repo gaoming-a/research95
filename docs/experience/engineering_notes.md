@@ -2286,3 +2286,13 @@ This file starts fresh for the patch-verification project.
   manifest, and audit reports are generated delivery artifacts.
 - Do not run artifact packaging and artifact audit in parallel. The audit reads
   the ZIP and can observe a partially written archive if both commands overlap.
+
+## 2026-06-15 Git sync ahead-state handoff
+
+- A configured remote is not the same as GitHub sync. The sync packet must parse
+  `git status --short --branch` and require `ahead=0`, `behind=0`, a clean
+  working tree, and an upstream before reporting `sync_ready=true`.
+- When the branch is locally ahead, the handoff should require a push/defer
+  decision. Do not report sync complete just because `git remote -v` is present.
+- The safe command template for an already initialized repo should inspect
+  ignored paths and `origin/main..HEAD` before the final `git push origin main`.

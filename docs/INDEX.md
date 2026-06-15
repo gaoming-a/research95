@@ -609,13 +609,15 @@
   exists, it suppresses the stale approval-gated rerun command. Latest report:
   `outputs/handoff/human_input_packet.md`.
 - `scripts/write_git_sync_packet.py`: writes an ignored Git sync decision
-  packet with current Git state, old remote context, required remote decision,
-  staging allowlist, safe command template, post-sync acceptance criteria, and
-  forbidden actions. Latest report: `outputs/handoff/git_sync_packet.md`.
+  packet with current Git state, upstream ahead/behind visibility, old remote
+  context, required push/defer decision, staging allowlist, safe command
+  template, post-sync acceptance criteria, and forbidden actions. Latest report:
+  `outputs/handoff/git_sync_packet.md`.
 - `scripts/audit_git_sync_packet.py`: audits the Git sync packet safety rules,
-  including the human decision gate, staging allowlist, ignored local-file
-  checks before staging, cached-diff checks after staging, and the ban on
-  `git add .`. Latest report: `outputs/git_sync_packet_audit/latest.md`.
+  including the human decision gate, ahead/behind fields, staging allowlist,
+  ignored local-file checks before push, ahead-log inspection before push, and
+  the ban on `git add .`. Latest report:
+  `outputs/git_sync_packet_audit/latest.md`.
 - `scripts/write_pre_api_handoff.py`: one-command local handoff that refreshes
   readiness, reproducibility, paper readiness, plan progress, goal completion,
   experiment run records, human-input, Git-decision, and Git handoff audit
