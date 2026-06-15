@@ -8958,3 +8958,75 @@ Verify:
 - 论文 Markdown draft、generated tables、paper readiness 和 IEEE submission
   draft 现在都对齐到当前 376-run bounded EVP-7 G5 claim boundary；
 - 本轮未调用 API、未扩 cohort、未修改 G5 prompt。
+
+## 114. 2026-06-15 refresh final-paper roadmap current state
+
+Inspect:
+
+- 当前工作区干净，本地 main ahead origin 18；
+- `outputs/paper_readiness/latest.md` 显示：
+  - `current_result_claim_ready=yes`；
+  - `evp7_bounded_pilot_claim_ready=yes`；
+  - `prompt-only positive claim ready=no`；
+  - EVP-7 current result = 376 reviews / 94 candidates / E0-E6 各 94；
+- `data/cohorts/task_cohort_registry.json` 当前 inferred main cohort =
+  20 tasks / 5 projects，其中 youtube-dl 13、cookiecutter 3、PySnooper 2、
+  httpie 1、tqdm 1；
+- `docs/plans/final_paper_roadmap_zh.md` 作为 canonical roadmap，仍在
+  Stage B/C 和 EVP-7 protocol 状态中保留 2026-06-11/12-task/248-packet
+  口径，并写着下一阶段继续扩到 15-20 bugs；
+- 当前 15-20 bugs 中期增强版上限已经达到，继续扩 bug 不应再作为默认下一步。
+
+Plan:
+
+1. 更新 `docs/plans/final_paper_roadmap_zh.md` 的当前状态段，明确当前主
+   cohort 已冻结在 20 tasks / 94 candidates / 376 evidence packets；
+2. 明确 248-run、12-task 叙述只保留为历史 checkpoint；
+3. 更新 README / docs index / engineering notes 中仍暗示“下一步扩到
+   15-20 bugs”的当前口径；
+4. 运行 paper/readiness/local quality gate；
+5. 本轮不跑 API、不扩 cohort、不改 prompt、不修改 tracked evidence 数据。
+
+验收条件：
+
+- canonical roadmap 不再把“扩到 15-20 bugs”写作当前下一步；
+- roadmap 当前状态与 registry/summary 一致：20 tasks / 5 projects /
+  94 candidates / 376 evidence packets；
+- 248-run 明确是 historical checkpoint；
+- quality gates 通过。
+
+Execute:
+
+- 已更新 `docs/plans/final_paper_roadmap_zh.md`：
+  - 当前建议从“再扩到 15-20 bugs”改为“15-20 bugs 已达到上限，先巩固
+    20-task 结果、论文口径、统计/图表和 claim boundary”；
+  - Stage B/C 当前状态改为 2026-06-15，列出 frozen 20-task cohort；
+  - 记录当前项目分布：youtube-dl 13、cookiecutter 3、PySnooper 2、
+    httpie 1、tqdm 1；
+  - 将 12-task/248-run 标为 historical checkpoint；
+  - 新增 current 376-run 状态：376/376 parse-valid、94 candidates、
+    E0/E2/E4/E6 各 94、estimated total cost USD 0.327352058、
+    `passed_with_limitations` claim boundary；
+- 已更新 README，说明 15-20 bug 目标已经达到并冻结，继续扩量需要新的
+  30-50 bug decision boundary；
+- 已更新 docs index，修正 EVP-7 protocol pilot 和 youtube-dl_4 admission
+  的 historical/current result 关系；
+- 已更新 engineering notes，记录 canonical roadmap current-state drift。
+
+Verify:
+
+- stale text search 未命中会把 12/248 或 13/264 当成当前结果、或把
+  “扩到 15-20 bugs”当成当前下一步的文本；
+- `git diff --check` 通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、
+  `evp7_bounded_pilot_claim_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 本轮按计划完成 canonical final-paper roadmap current-state refresh；
+- 当前计划入口不再误导继续补 bug 到 15-20，下一步应围绕 frozen 20-task
+  结果的统计/图表/claim consolidation 或新的 30-50 bug 决策展开；
+- 本轮未调用 API、未扩 cohort、未修改 G5 prompt 或 tracked evidence 数据。

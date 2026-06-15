@@ -2060,3 +2060,15 @@ This file starts fresh for the patch-verification project.
   evidence-visibility signal is allowed; scale generality, deterministic
   baseline superiority, E6 strict superiority, and billing equivalence remain
   unsupported.
+
+## 2026-06-15 canonical roadmap current-state drift
+
+- `final_paper_roadmap_zh.md` is the canonical planning entry. If it still says
+  the current cohort is 12 tasks / 248 packets or that the next step is
+  expanding to 15-20 bugs, later execution can incorrectly restart expansion
+  work that has already reached the frozen 20-task boundary.
+- After a fresh cohort freeze or full G5 run, update the canonical roadmap, not
+  only `current_plan_zh.md`, README, and generated paper artifacts.
+- Keep 248-run text as a historical checkpoint and make the current state
+  explicit: 20 tasks / 5 projects / 94 candidates / 376 evidence packets,
+  376/376 parse-valid G5 records, and bounded pilot-only claims.

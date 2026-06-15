@@ -315,9 +315,9 @@
 - `experiments/evp7_protocol_pilot.md`: Option A execution record. It documents
   the EVP-7 freeze, generated manifests, blocker registry, and why candidate
   records/evidence packets are the next step instead of blind BugsInPy
-  expansion. It now records controlled youtube-dl admissions through
-  `youtube-dl_11`, raising the structural cohort to 13/66/264 while the latest
-  real DeepSeek G5 run remains scoped to the previous 12/62/248 cohort.
+  expansion. It now records controlled admissions through the frozen
+  20-task/94-candidate/376-packet cohort; the earlier 12/62/248 and 13/66/264
+  states are historical checkpoints.
 - `experiments/evp7_g5_metric_scaffold.md`: no-API G5 metric scaffold report.
   It documents the FACR/Evidence Gain computation and the boundary that dry-run
   metric variation is not LLM signal evidence.
@@ -399,8 +399,8 @@
   `bugsinpy_youtube-dl_4`. It documents the retained JSInterpreter call oracle,
   four candidate records, project-level P2P-broad validation with 137 retained
   unittest tests, registry admission, and the then-current 12-task/62-candidate/
-  248-packet no-API artifact refresh. The latest real G5 run covers that
-  historical cohort.
+  248-packet no-API artifact refresh. The latest 376-packet real G5 run
+  supersedes that historical cohort as the current paper-facing result.
 - `experiments/youtubedl11_candidate_validation.md`: formal admission record
   for `bugsinpy_youtube-dl_11`. It documents the retained `str_to_int` oracle,
   four candidate records, project-level P2P-broad validation with 160 retained

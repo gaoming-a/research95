@@ -237,8 +237,8 @@ They should not override `final_paper_roadmap_zh.md`.
   tool-only baseline, and not a claim that runner-estimated cost is an external
   billing statement.
   A controlled-expansion readiness report summarizes the broader BugsInPy rescreen
-  and defines project-diverse bounded probe lanes for the next 15-20 bug
-  expansion step. The
+  and the project-diverse bounded probe lanes used to reach the frozen
+  20-task cohort. The
   first post-G5 lane, `bugsinpy_fastapi_4`, completed checkout but is
   F2P-blocked by the current Pydantic v2 environment and is not admitted.
   `bugsinpy_sanic_2` also completed checkout but is F2P-blocked by the missing
@@ -263,9 +263,9 @@ They should not override `final_paper_roadmap_zh.md`.
   old 30-candidate tool-augmented run remains a conditional tool-assisted
   result, and the latest real 376-record EVP-7 G5 run is reported as a bounded
   pilot evidence-visibility result with explicit limitations.
-- Further expansion to 15-20 bugs is now gated by controlled-probe outcomes and
-  the next project-level P2P-broad decision, not by adding metadata candidates
-  directly.
+- The 15-20 bug expansion target has been reached and frozen at 20 tasks.
+  Further expansion is no longer the default next step; it requires a new
+  30-50 bug decision boundary rather than blind metadata admission.
 
 ## Core Commands
 
