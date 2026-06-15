@@ -92,6 +92,7 @@ def build_markdown(
     repro: dict[str, Any],
     evp7_summary: dict[str, Any],
     evp7_quality: dict[str, Any],
+    evp7_statistics: dict[str, Any],
 ) -> str:
     lines = [
         "# Paper Tables",
@@ -152,6 +153,7 @@ def build_markdown(
             f"{fmt(group['accepted_precision'])} | {fmt(group['correct_recall'])} | "
             f"{fmt(group['evidence_gain_vs_e0'])} |"
         )
+    lines.extend(evp7_statistics_markdown(evp7_statistics))
     lines.extend(
         [
             "",
@@ -192,6 +194,7 @@ def build_latex(
     repro: dict[str, Any],
     evp7_summary: dict[str, Any],
     evp7_quality: dict[str, Any],
+    evp7_statistics: dict[str, Any],
 ) -> str:
     parts = [
         "% Generated paper tables. Requires booktabs.",
@@ -244,6 +247,7 @@ def build_latex(
         "\\end{tabular}\n"
         "\\end{table}\n",
         evp7_latex_table(evp7_summary),
+        evp7_statistics_latex_table(evp7_statistics),
         evp7_claim_boundary_latex_table(evp7_quality),
     ]
     return "\n\n".join(parts)
@@ -305,6 +309,75 @@ def evp7_latex_row(level: str, group: dict[str, Any]) -> str:
     return " & ".join(values) + r" \\"
 
 
+def evp7_statistics_markdown(statistics: dict[str, Any]) -> list[str]:
+    lines = [
+        "",
+        "## EVP-7 Statistical Intervals",
+        "",
+        f"- bootstrap unit: `{statistics['method']['bootstrap_unit']}`",
+        f"- bootstrap samples: {statistics['method']['bootstrap_samples']}",
+        f"- bootstrap seed: {statistics['method']['bootstrap_seed']}",
+        "",
+        "| evidence | false accept Wilson 95% CI | correct recall Wilson 95% CI | escalation bootstrap 95% CI | utility delta vs E0 bootstrap 95% CI |",
+        "|---|---:|---:|---:|---:|",
+    ]
+    paired = statistics["paired_deltas_vs_e0"]
+    for level in EVIDENCE_LEVELS:
+        group = statistics["per_evidence_level"][level]
+        bootstrap = statistics["bootstrap_intervals"][level]
+        delta = "--"
+        if level != "E0":
+            delta = interval_text(paired[level]["utility_score"]["bootstrap_ci_95"])
+        lines.append(
+            f"| {level} | {interval_text(group['wilson_ci_95']['false_accept_rate'])} | "
+            f"{interval_text(group['wilson_ci_95']['correct_recall'])} | "
+            f"{interval_text(bootstrap['escalation_rate'])} | {delta} |"
+        )
+    return lines
+
+
+def evp7_statistics_latex_table(statistics: dict[str, Any]) -> str:
+    rows = []
+    paired = statistics["paired_deltas_vs_e0"]
+    for level in EVIDENCE_LEVELS:
+        group = statistics["per_evidence_level"][level]
+        bootstrap = statistics["bootstrap_intervals"][level]
+        delta = "--"
+        if level != "E0":
+            delta = interval_text(paired[level]["utility_score"]["bootstrap_ci_95"])
+        values = [
+            escape_latex(level),
+            escape_latex(interval_text(group["wilson_ci_95"]["false_accept_rate"])),
+            escape_latex(interval_text(group["wilson_ci_95"]["correct_recall"])),
+            escape_latex(interval_text(bootstrap["escalation_rate"])),
+            escape_latex(delta),
+        ]
+        rows.append(" & ".join(values) + r" \\")
+    samples = statistics["method"]["bootstrap_samples"]
+    return (
+        "\\begin{table*}[t]\n"
+        "\\centering\n"
+        "\\caption{EVP-7 G5 statistical intervals. Wilson intervals are used for binomial rates; candidate-level bootstrap intervals use "
+        + str(samples)
+        + " deterministic resamples.}\n"
+        "\\label{tab:evp7-statistical-intervals}\n"
+        "\\begin{tabular}{lrrrr}\n"
+        "\\toprule\n"
+        "Evidence & False accept Wilson 95\\% CI & Correct recall Wilson 95\\% CI & Escalation bootstrap 95\\% CI & Utility delta bootstrap 95\\% CI \\\\\n"
+        "\\midrule\n"
+        + "\n".join(rows)
+        + "\n\\bottomrule\n"
+        "\\end{tabular}\n"
+        "\\end{table*}\n"
+    )
+
+
+def interval_text(interval: dict[str, Any]) -> str:
+    if interval.get("low") is None or interval.get("high") is None:
+        return "--"
+    return f"[{fmt(interval['low'])}, {fmt(interval['high'])}]"
+
+
 def evp7_claim_boundary_latex_table(quality: dict[str, Any]) -> str:
     supported = quality.get("supported_claims", [])
     unsupported = quality.get("unsupported_claims", [])
@@ -338,6 +411,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--reproducibility", default="outputs/reproducibility/pilot_compare.json")
     parser.add_argument("--evp7-summary", default="data/reviews/evp7_g5_llm_376_full_summary.json")
     parser.add_argument("--evp7-quality-audit", default="data/reviews/evp7_g5_376_full_quality_audit.json")
+    parser.add_argument("--evp7-statistics", default="data/reviews/evp7_g5_376_statistical_analysis.json")
     parser.add_argument("--out-md", default="docs/paper/generated_tables.md")
     parser.add_argument("--out-tex", default="docs/paper/generated_tables.tex")
     return parser.parse_args()
@@ -351,8 +425,15 @@ def main() -> None:
     repro = read_json(Path(args.reproducibility))
     evp7_summary = read_json(Path(args.evp7_summary))
     evp7_quality = read_json(Path(args.evp7_quality_audit))
-    write_text(Path(args.out_md), build_markdown(dataset, validation, metrics, repro, evp7_summary, evp7_quality))
-    write_text(Path(args.out_tex), build_latex(dataset, validation, metrics, repro, evp7_summary, evp7_quality))
+    evp7_statistics = read_json(Path(args.evp7_statistics))
+    write_text(
+        Path(args.out_md),
+        build_markdown(dataset, validation, metrics, repro, evp7_summary, evp7_quality, evp7_statistics),
+    )
+    write_text(
+        Path(args.out_tex),
+        build_latex(dataset, validation, metrics, repro, evp7_summary, evp7_quality, evp7_statistics),
+    )
     print(json.dumps({"out_md": args.out_md, "out_tex": args.out_tex}, ensure_ascii=False, indent=2, sort_keys=True))
 
 

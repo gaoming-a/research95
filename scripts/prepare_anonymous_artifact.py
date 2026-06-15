@@ -187,6 +187,8 @@ def artifact_readme(manifest: dict[str, Any]) -> str:
             "## Paper Draft",
             "",
             "```powershell",
+            "python scripts\\analyze_evp7_g5_statistics.py",
+            "python scripts\\write_paper_tables.py",
             "python scripts\\generate_paper_figures.py",
             "python scripts\\write_ieee_latex_draft.py",
             "pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\\latex_build docs\\paper\\ieee_submission_draft.tex",

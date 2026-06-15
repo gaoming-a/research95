@@ -71,6 +71,19 @@ These tables are generated from current tracked artifacts. Raw model responses a
 | E4 | 94 | `{"accept": 1, "escalate": 21, "reject": 72}` | 0.0000 | 0.0000 | 1.0000 | 0.0500 | 7.0000 |
 | E6 | 94 | `{"accept": 7, "escalate": 16, "reject": 71}` | 0.0000 | 0.0000 | 1.0000 | 0.3500 | 14.2500 |
 
+## EVP-7 Statistical Intervals
+
+- bootstrap unit: `candidate_id`
+- bootstrap samples: 2000
+- bootstrap seed: 9507
+
+| evidence | false accept Wilson 95% CI | correct recall Wilson 95% CI | escalation bootstrap 95% CI | utility delta vs E0 bootstrap 95% CI |
+|---|---:|---:|---:|---:|
+| E0 | [0.0000, 0.0493] | [0.0089, 0.2361] | [0.4255, 0.6277] | -- |
+| E2 | [0.0000, 0.0493] | [0.0000, 0.1611] | [0.5106, 0.7021] | [-6.7500, 0.5000] |
+| E4 | [0.0000, 0.0493] | [0.0089, 0.2361] | [0.1383, 0.3085] | [2.5000, 11.7500] |
+| E6 | [0.0000, 0.0493] | [0.1812, 0.5671] | [0.0957, 0.2553] | [7.7500, 21.5063] |
+
 ## EVP-7 Claim Boundary
 
 | supported claims | unsupported claims |

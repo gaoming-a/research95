@@ -601,14 +601,15 @@ python scripts\write_reproducibility_manifest.py `
 For generated paper tables, run:
 
 ```powershell
+python scripts\analyze_evp7_g5_statistics.py
 python scripts\write_paper_tables.py `
   --out-md docs\paper\generated_tables.md `
   --out-tex docs\paper\generated_tables.tex
 ```
 
 The generated tables now include the current EVP-7 G5 376-record real LLM
-result and its claim boundary, in addition to the historical pre-API dataset and
-baseline tables.
+result, statistical intervals, and claim boundary, in addition to the historical
+pre-API dataset and baseline tables.
 
 For reproducible paper figures, including the EVP-7 evidence visibility curve,
 run:

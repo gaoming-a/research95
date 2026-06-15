@@ -1,0 +1,2772 @@
+{
+  "analysis_id": "evp7_g5_376_statistical_analysis",
+  "bootstrap_intervals": {
+    "E0": {
+      "accepted_precision": {
+        "high": 1.0,
+        "low": 1.0,
+        "median": 1.0,
+        "samples": 1305
+      },
+      "correct_recall": {
+        "high": 0.157895,
+        "low": 0.0,
+        "median": 0.047619,
+        "samples": 2000
+      },
+      "escalation_rate": {
+        "high": 0.62766,
+        "low": 0.425532,
+        "median": 0.521277,
+        "samples": 2000
+      },
+      "false_accept_rate": {
+        "high": 0.0,
+        "low": 0.0,
+        "median": 0.0,
+        "samples": 2000
+      },
+      "utility_score": {
+        "high": -8.5,
+        "low": -15.75,
+        "median": -12.25,
+        "samples": 2000
+      }
+    },
+    "E2": {
+      "accepted_precision": {
+        "high": null,
+        "low": null,
+        "median": null,
+        "samples": 0
+      },
+      "correct_recall": {
+        "high": 0.0,
+        "low": 0.0,
+        "median": 0.0,
+        "samples": 2000
+      },
+      "escalation_rate": {
+        "high": 0.702128,
+        "low": 0.510638,
+        "median": 0.606383,
+        "samples": 2000
+      },
+      "false_accept_rate": {
+        "high": 0.0,
+        "low": 0.0,
+        "median": 0.0,
+        "samples": 2000
+      },
+      "utility_score": {
+        "high": -12.5,
+        "low": -18.0,
+        "median": -15.25,
+        "samples": 2000
+      }
+    },
+    "E4": {
+      "accepted_precision": {
+        "high": 1.0,
+        "low": 1.0,
+        "median": 1.0,
+        "samples": 1281
+      },
+      "correct_recall": {
+        "high": 0.166667,
+        "low": 0.0,
+        "median": 0.047619,
+        "samples": 2000
+      },
+      "escalation_rate": {
+        "high": 0.308511,
+        "low": 0.138298,
+        "median": 0.223404,
+        "samples": 2000
+      },
+      "false_accept_rate": {
+        "high": 0.0,
+        "low": 0.0,
+        "median": 0.0,
+        "samples": 2000
+      },
+      "utility_score": {
+        "high": -1.75,
+        "low": -8.5,
+        "median": -5.25,
+        "samples": 2000
+      }
+    },
+    "E6": {
+      "accepted_precision": {
+        "high": 1.0,
+        "low": 1.0,
+        "median": 1.0,
+        "samples": 1998
+      },
+      "correct_recall": {
+        "high": 0.571429,
+        "low": 0.142857,
+        "median": 0.347826,
+        "samples": 2000
+      },
+      "escalation_rate": {
+        "high": 0.255319,
+        "low": 0.095745,
+        "median": 0.170213,
+        "samples": 2000
+      },
+      "false_accept_rate": {
+        "high": 0.0,
+        "low": 0.0,
+        "median": 0.0,
+        "samples": 2000
+      },
+      "utility_score": {
+        "high": 8.25,
+        "low": -3.5,
+        "median": 2.0,
+        "samples": 2000
+      }
+    }
+  },
+  "boundary": "Raw model responses remain ignored under outputs/. This artifact reads only review structure, decisions, costs, candidate labels, project, and patch-source metadata, then writes aggregate raw-output-free statistics.",
+  "cohort": {
+    "candidate_count": 94,
+    "evidence_levels": [
+      "E0",
+      "E2",
+      "E4",
+      "E6"
+    ],
+    "evidence_packet_count": 376,
+    "task_count": 20
+  },
+  "inputs": {
+    "candidates": "data/patches/evp7_candidates.jsonl",
+    "reviews": "outputs/evp7_g5_llm_376_full_001/reviews.jsonl"
+  },
+  "method": {
+    "bootstrap_confidence_level": 0.95,
+    "bootstrap_samples": 2000,
+    "bootstrap_seed": 9507,
+    "bootstrap_unit": "candidate_id",
+    "effect_size": "point estimate delta versus E0 for paired comparisons",
+    "paired_baseline": "E0",
+    "wilson_confidence_level": 0.95
+  },
+  "paired_deltas_vs_e0": {
+    "E2": {
+      "correct_recall": {
+        "bootstrap_ci_95": {
+          "high": 0.0,
+          "low": -0.166667,
+          "median": -0.047619,
+          "samples": 2000
+        },
+        "bootstrap_probability_delta_gt_0": 0.0,
+        "effect_size": -0.05,
+        "point_delta": -0.05
+      },
+      "escalation_rate": {
+        "bootstrap_ci_95": {
+          "high": 0.170213,
+          "low": -0.010638,
+          "median": 0.085106,
+          "samples": 2000
+        },
+        "bootstrap_probability_delta_gt_0": 0.951,
+        "effect_size": 0.085106,
+        "point_delta": 0.085106
+      },
+      "false_accept_rate": {
+        "bootstrap_ci_95": {
+          "high": 0.0,
+          "low": 0.0,
+          "median": 0.0,
+          "samples": 2000
+        },
+        "bootstrap_probability_delta_gt_0": 0.0,
+        "effect_size": 0.0,
+        "point_delta": 0.0
+      },
+      "utility_score": {
+        "bootstrap_ci_95": {
+          "high": 0.5,
+          "low": -6.75,
+          "median": -3.0,
+          "samples": 2000
+        },
+        "bootstrap_probability_delta_gt_0": 0.04,
+        "effect_size": -3.0,
+        "point_delta": -3.0
+      }
+    },
+    "E4": {
+      "correct_recall": {
+        "bootstrap_ci_95": {
+          "high": 0.142989,
+          "low": -0.153947,
+          "median": 0.0,
+          "samples": 2000
+        },
+        "bootstrap_probability_delta_gt_0": 0.3535,
+        "effect_size": 0.0,
+        "point_delta": 0.0
+      },
+      "escalation_rate": {
+        "bootstrap_ci_95": {
+          "high": -0.191489,
+          "low": -0.393617,
+          "median": -0.297872,
+          "samples": 2000
+        },
+        "bootstrap_probability_delta_gt_0": 0.0,
+        "effect_size": -0.297873,
+        "point_delta": -0.297873
+      },
+      "false_accept_rate": {
+        "bootstrap_ci_95": {
+          "high": 0.0,
+          "low": 0.0,
+          "median": 0.0,
+          "samples": 2000
+        },
+        "bootstrap_probability_delta_gt_0": 0.0,
+        "effect_size": 0.0,
+        "point_delta": 0.0
+      },
+      "utility_score": {
+        "bootstrap_ci_95": {
+          "high": 11.75,
+          "low": 2.5,
+          "median": 7.0,
+          "samples": 2000
+        },
+        "bootstrap_probability_delta_gt_0": 0.998,
+        "effect_size": 7.0,
+        "point_delta": 7.0
+      }
+    },
+    "E6": {
+      "correct_recall": {
+        "bootstrap_ci_95": {
+          "high": 0.526315,
+          "low": 0.1,
+          "median": 0.294118,
+          "samples": 2000
+        },
+        "bootstrap_probability_delta_gt_0": 0.9965,
+        "effect_size": 0.3,
+        "point_delta": 0.3
+      },
+      "escalation_rate": {
+        "bootstrap_ci_95": {
+          "high": -0.255319,
+          "low": -0.457447,
+          "median": -0.351064,
+          "samples": 2000
+        },
+        "bootstrap_probability_delta_gt_0": 0.0,
+        "effect_size": -0.351064,
+        "point_delta": -0.351064
+      },
+      "false_accept_rate": {
+        "bootstrap_ci_95": {
+          "high": 0.0,
+          "low": 0.0,
+          "median": 0.0,
+          "samples": 2000
+        },
+        "bootstrap_probability_delta_gt_0": 0.0,
+        "effect_size": 0.0,
+        "point_delta": 0.0
+      },
+      "utility_score": {
+        "bootstrap_ci_95": {
+          "high": 21.50625,
+          "low": 7.75,
+          "median": 14.0,
+          "samples": 2000
+        },
+        "bootstrap_probability_delta_gt_0": 1.0,
+        "effect_size": 14.25,
+        "point_delta": 14.25
+      }
+    }
+  },
+  "per_evidence_level": {
+    "E0": {
+      "accepted_precision": 1.0,
+      "confusion_counts": {
+        "escalated_correct": 18,
+        "escalated_incorrect": 31,
+        "false_accept": 0,
+        "false_reject": 1,
+        "invalid_output": 0,
+        "true_accept": 1,
+        "true_reject": 43
+      },
+      "correct_recall": 0.05,
+      "cost_usd_total": 0.08421687,
+      "decision_counts": {
+        "accept": 1,
+        "escalate": 49,
+        "reject": 44
+      },
+      "escalation_rate": 0.521277,
+      "false_accept_rate": 0.0,
+      "false_reject_rate": 0.05,
+      "invalid_output_rate": 0.0,
+      "record_count": 94,
+      "utility_score": -12.25,
+      "wilson_ci_95": {
+        "accepted_precision": {
+          "high": 1.0,
+          "low": 0.206549,
+          "n": 1,
+          "point": 1.0,
+          "successes": 1
+        },
+        "correct_recall": {
+          "high": 0.236131,
+          "low": 0.008881,
+          "n": 20,
+          "point": 0.05,
+          "successes": 1
+        },
+        "escalation_rate": {
+          "high": 0.619428,
+          "low": 0.421454,
+          "n": 94,
+          "point": 0.521277,
+          "successes": 49
+        },
+        "false_accept_rate": {
+          "high": 0.04935,
+          "low": 0.0,
+          "n": 74,
+          "point": 0.0,
+          "successes": 0
+        },
+        "invalid_output_rate": {
+          "high": 0.039262,
+          "low": 0.0,
+          "n": 94,
+          "point": 0.0,
+          "successes": 0
+        }
+      }
+    },
+    "E2": {
+      "accepted_precision": null,
+      "confusion_counts": {
+        "escalated_correct": 19,
+        "escalated_incorrect": 38,
+        "false_accept": 0,
+        "false_reject": 1,
+        "invalid_output": 0,
+        "true_accept": 0,
+        "true_reject": 36
+      },
+      "correct_recall": 0.0,
+      "cost_usd_total": 0.084102204,
+      "decision_counts": {
+        "escalate": 57,
+        "reject": 37
+      },
+      "escalation_rate": 0.606383,
+      "false_accept_rate": 0.0,
+      "false_reject_rate": 0.05,
+      "invalid_output_rate": 0.0,
+      "record_count": 94,
+      "utility_score": -15.25,
+      "wilson_ci_95": {
+        "accepted_precision": {
+          "high": null,
+          "low": null,
+          "n": 0,
+          "point": null,
+          "successes": 0
+        },
+        "correct_recall": {
+          "high": 0.161125,
+          "low": 0.0,
+          "n": 20,
+          "point": 0.0,
+          "successes": 0
+        },
+        "escalation_rate": {
+          "high": 0.699101,
+          "low": 0.505311,
+          "n": 94,
+          "point": 0.606383,
+          "successes": 57
+        },
+        "false_accept_rate": {
+          "high": 0.04935,
+          "low": 0.0,
+          "n": 74,
+          "point": 0.0,
+          "successes": 0
+        },
+        "invalid_output_rate": {
+          "high": 0.039262,
+          "low": 0.0,
+          "n": 94,
+          "point": 0.0,
+          "successes": 0
+        }
+      }
+    },
+    "E4": {
+      "accepted_precision": 1.0,
+      "confusion_counts": {
+        "escalated_correct": 18,
+        "escalated_incorrect": 3,
+        "false_accept": 0,
+        "false_reject": 1,
+        "invalid_output": 0,
+        "true_accept": 1,
+        "true_reject": 71
+      },
+      "correct_recall": 0.05,
+      "cost_usd_total": 0.080332726,
+      "decision_counts": {
+        "accept": 1,
+        "escalate": 21,
+        "reject": 72
+      },
+      "escalation_rate": 0.223404,
+      "false_accept_rate": 0.0,
+      "false_reject_rate": 0.05,
+      "invalid_output_rate": 0.0,
+      "record_count": 94,
+      "utility_score": -5.25,
+      "wilson_ci_95": {
+        "accepted_precision": {
+          "high": 1.0,
+          "low": 0.206549,
+          "n": 1,
+          "point": 1.0,
+          "successes": 1
+        },
+        "correct_recall": {
+          "high": 0.236131,
+          "low": 0.008881,
+          "n": 20,
+          "point": 0.05,
+          "successes": 1
+        },
+        "escalation_rate": {
+          "high": 0.317509,
+          "low": 0.151019,
+          "n": 94,
+          "point": 0.223404,
+          "successes": 21
+        },
+        "false_accept_rate": {
+          "high": 0.04935,
+          "low": 0.0,
+          "n": 74,
+          "point": 0.0,
+          "successes": 0
+        },
+        "invalid_output_rate": {
+          "high": 0.039262,
+          "low": 0.0,
+          "n": 94,
+          "point": 0.0,
+          "successes": 0
+        }
+      }
+    },
+    "E6": {
+      "accepted_precision": 1.0,
+      "confusion_counts": {
+        "escalated_correct": 12,
+        "escalated_incorrect": 4,
+        "false_accept": 0,
+        "false_reject": 1,
+        "invalid_output": 0,
+        "true_accept": 7,
+        "true_reject": 70
+      },
+      "correct_recall": 0.35,
+      "cost_usd_total": 0.078700258,
+      "decision_counts": {
+        "accept": 7,
+        "escalate": 16,
+        "reject": 71
+      },
+      "escalation_rate": 0.170213,
+      "false_accept_rate": 0.0,
+      "false_reject_rate": 0.05,
+      "invalid_output_rate": 0.0,
+      "record_count": 94,
+      "utility_score": 2.0,
+      "wilson_ci_95": {
+        "accepted_precision": {
+          "high": 1.0,
+          "low": 0.64567,
+          "n": 7,
+          "point": 1.0,
+          "successes": 7
+        },
+        "correct_recall": {
+          "high": 0.567146,
+          "low": 0.181192,
+          "n": 20,
+          "point": 0.35,
+          "successes": 7
+        },
+        "escalation_rate": {
+          "high": 0.258746,
+          "low": 0.107576,
+          "n": 94,
+          "point": 0.170213,
+          "successes": 16
+        },
+        "false_accept_rate": {
+          "high": 0.04935,
+          "low": 0.0,
+          "n": 74,
+          "point": 0.0,
+          "successes": 0
+        },
+        "invalid_output_rate": {
+          "high": 0.039262,
+          "low": 0.0,
+          "n": 94,
+          "point": 0.0,
+          "successes": 0
+        }
+      }
+    }
+  },
+  "per_patch_source_breakdown": {
+    "buggy_noop": {
+      "E0": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 12,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 8
+        },
+        "correct_recall": null,
+        "cost_usd_total": 0.011280188,
+        "decision_counts": {
+          "escalate": 12,
+          "reject": 8
+        },
+        "escalation_rate": 0.6,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": null,
+        "invalid_output_rate": 0.0,
+        "record_count": 20,
+        "utility_score": -3.0,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.781193,
+            "low": 0.386582,
+            "n": 20,
+            "point": 0.6,
+            "successes": 12
+          },
+          "false_accept_rate": {
+            "high": 0.161125,
+            "low": 0.0,
+            "n": 20,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.161125,
+            "low": 0.0,
+            "n": 20,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E2": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 15,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 5
+        },
+        "correct_recall": null,
+        "cost_usd_total": 0.010826396,
+        "decision_counts": {
+          "escalate": 15,
+          "reject": 5
+        },
+        "escalation_rate": 0.75,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": null,
+        "invalid_output_rate": 0.0,
+        "record_count": 20,
+        "utility_score": -3.75,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.888138,
+            "low": 0.531299,
+            "n": 20,
+            "point": 0.75,
+            "successes": 15
+          },
+          "false_accept_rate": {
+            "high": 0.161125,
+            "low": 0.0,
+            "n": 20,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.161125,
+            "low": 0.0,
+            "n": 20,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E4": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 20
+        },
+        "correct_recall": null,
+        "cost_usd_total": 0.014881495,
+        "decision_counts": {
+          "reject": 20
+        },
+        "escalation_rate": 0.0,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": null,
+        "invalid_output_rate": 0.0,
+        "record_count": 20,
+        "utility_score": 0.0,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.161125,
+            "low": 0.0,
+            "n": 20,
+            "point": 0.0,
+            "successes": 0
+          },
+          "false_accept_rate": {
+            "high": 0.161125,
+            "low": 0.0,
+            "n": 20,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.161125,
+            "low": 0.0,
+            "n": 20,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E6": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 1,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 19
+        },
+        "correct_recall": null,
+        "cost_usd_total": 0.014794379,
+        "decision_counts": {
+          "escalate": 1,
+          "reject": 19
+        },
+        "escalation_rate": 0.05,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": null,
+        "invalid_output_rate": 0.0,
+        "record_count": 20,
+        "utility_score": -0.25,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.236131,
+            "low": 0.008881,
+            "n": 20,
+            "point": 0.05,
+            "successes": 1
+          },
+          "false_accept_rate": {
+            "high": 0.161125,
+            "low": 0.0,
+            "n": 20,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.161125,
+            "low": 0.0,
+            "n": 20,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      }
+    },
+    "correct_reference": {
+      "E0": {
+        "accepted_precision": 1.0,
+        "confusion_counts": {
+          "escalated_correct": 18,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 1,
+          "invalid_output": 0,
+          "true_accept": 1,
+          "true_reject": 0
+        },
+        "correct_recall": 0.05,
+        "cost_usd_total": 0.022697169,
+        "decision_counts": {
+          "accept": 1,
+          "escalate": 18,
+          "reject": 1
+        },
+        "escalation_rate": 0.9,
+        "false_accept_rate": null,
+        "false_reject_rate": 0.05,
+        "invalid_output_rate": 0.0,
+        "record_count": 20,
+        "utility_score": -4.5,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": 1.0,
+            "low": 0.206549,
+            "n": 1,
+            "point": 1.0,
+            "successes": 1
+          },
+          "correct_recall": {
+            "high": 0.236131,
+            "low": 0.008881,
+            "n": 20,
+            "point": 0.05,
+            "successes": 1
+          },
+          "escalation_rate": {
+            "high": 0.972134,
+            "low": 0.698966,
+            "n": 20,
+            "point": 0.9,
+            "successes": 18
+          },
+          "false_accept_rate": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.161125,
+            "low": 0.0,
+            "n": 20,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E2": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 19,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 1,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 0
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.021610307,
+        "decision_counts": {
+          "escalate": 19,
+          "reject": 1
+        },
+        "escalation_rate": 0.95,
+        "false_accept_rate": null,
+        "false_reject_rate": 0.05,
+        "invalid_output_rate": 0.0,
+        "record_count": 20,
+        "utility_score": -5.75,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.161125,
+            "low": 0.0,
+            "n": 20,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.991119,
+            "low": 0.763869,
+            "n": 20,
+            "point": 0.95,
+            "successes": 19
+          },
+          "false_accept_rate": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.161125,
+            "low": 0.0,
+            "n": 20,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E4": {
+        "accepted_precision": 1.0,
+        "confusion_counts": {
+          "escalated_correct": 18,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 1,
+          "invalid_output": 0,
+          "true_accept": 1,
+          "true_reject": 0
+        },
+        "correct_recall": 0.05,
+        "cost_usd_total": 0.024274392,
+        "decision_counts": {
+          "accept": 1,
+          "escalate": 18,
+          "reject": 1
+        },
+        "escalation_rate": 0.9,
+        "false_accept_rate": null,
+        "false_reject_rate": 0.05,
+        "invalid_output_rate": 0.0,
+        "record_count": 20,
+        "utility_score": -4.5,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": 1.0,
+            "low": 0.206549,
+            "n": 1,
+            "point": 1.0,
+            "successes": 1
+          },
+          "correct_recall": {
+            "high": 0.236131,
+            "low": 0.008881,
+            "n": 20,
+            "point": 0.05,
+            "successes": 1
+          },
+          "escalation_rate": {
+            "high": 0.972134,
+            "low": 0.698966,
+            "n": 20,
+            "point": 0.9,
+            "successes": 18
+          },
+          "false_accept_rate": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.161125,
+            "low": 0.0,
+            "n": 20,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E6": {
+        "accepted_precision": 1.0,
+        "confusion_counts": {
+          "escalated_correct": 12,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 1,
+          "invalid_output": 0,
+          "true_accept": 7,
+          "true_reject": 0
+        },
+        "correct_recall": 0.35,
+        "cost_usd_total": 0.021097848,
+        "decision_counts": {
+          "accept": 7,
+          "escalate": 12,
+          "reject": 1
+        },
+        "escalation_rate": 0.6,
+        "false_accept_rate": null,
+        "false_reject_rate": 0.05,
+        "invalid_output_rate": 0.0,
+        "record_count": 20,
+        "utility_score": 3.0,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": 1.0,
+            "low": 0.64567,
+            "n": 7,
+            "point": 1.0,
+            "successes": 7
+          },
+          "correct_recall": {
+            "high": 0.567146,
+            "low": 0.181192,
+            "n": 20,
+            "point": 0.35,
+            "successes": 7
+          },
+          "escalation_rate": {
+            "high": 0.781193,
+            "low": 0.386582,
+            "n": 20,
+            "point": 0.6,
+            "successes": 12
+          },
+          "false_accept_rate": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.161125,
+            "low": 0.0,
+            "n": 20,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      }
+    },
+    "irrelevant_patch": {
+      "E0": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 14
+        },
+        "correct_recall": null,
+        "cost_usd_total": 0.009819429,
+        "decision_counts": {
+          "reject": 14
+        },
+        "escalation_rate": 0.0,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": null,
+        "invalid_output_rate": 0.0,
+        "record_count": 14,
+        "utility_score": 0.0,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.215311,
+            "low": 0.0,
+            "n": 14,
+            "point": 0.0,
+            "successes": 0
+          },
+          "false_accept_rate": {
+            "high": 0.215311,
+            "low": 0.0,
+            "n": 14,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.215311,
+            "low": 0.0,
+            "n": 14,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E2": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 14
+        },
+        "correct_recall": null,
+        "cost_usd_total": 0.010281515,
+        "decision_counts": {
+          "reject": 14
+        },
+        "escalation_rate": 0.0,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": null,
+        "invalid_output_rate": 0.0,
+        "record_count": 14,
+        "utility_score": 0.0,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.215311,
+            "low": 0.0,
+            "n": 14,
+            "point": 0.0,
+            "successes": 0
+          },
+          "false_accept_rate": {
+            "high": 0.215311,
+            "low": 0.0,
+            "n": 14,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.215311,
+            "low": 0.0,
+            "n": 14,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E4": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 14
+        },
+        "correct_recall": null,
+        "cost_usd_total": 0.009447417,
+        "decision_counts": {
+          "reject": 14
+        },
+        "escalation_rate": 0.0,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": null,
+        "invalid_output_rate": 0.0,
+        "record_count": 14,
+        "utility_score": 0.0,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.215311,
+            "low": 0.0,
+            "n": 14,
+            "point": 0.0,
+            "successes": 0
+          },
+          "false_accept_rate": {
+            "high": 0.215311,
+            "low": 0.0,
+            "n": 14,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.215311,
+            "low": 0.0,
+            "n": 14,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E6": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 14
+        },
+        "correct_recall": null,
+        "cost_usd_total": 0.008509267,
+        "decision_counts": {
+          "reject": 14
+        },
+        "escalation_rate": 0.0,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": null,
+        "invalid_output_rate": 0.0,
+        "record_count": 14,
+        "utility_score": 0.0,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.215311,
+            "low": 0.0,
+            "n": 14,
+            "point": 0.0,
+            "successes": 0
+          },
+          "false_accept_rate": {
+            "high": 0.215311,
+            "low": 0.0,
+            "n": 14,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.215311,
+            "low": 0.0,
+            "n": 14,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      }
+    },
+    "partial_fix": {
+      "E0": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 19,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 21
+        },
+        "correct_recall": null,
+        "cost_usd_total": 0.040420084,
+        "decision_counts": {
+          "escalate": 19,
+          "reject": 21
+        },
+        "escalation_rate": 0.475,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": null,
+        "invalid_output_rate": 0.0,
+        "record_count": 40,
+        "utility_score": -4.75,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.625026,
+            "low": 0.329355,
+            "n": 40,
+            "point": 0.475,
+            "successes": 19
+          },
+          "false_accept_rate": {
+            "high": 0.087622,
+            "low": 0.0,
+            "n": 40,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.087622,
+            "low": 0.0,
+            "n": 40,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E2": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 23,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 17
+        },
+        "correct_recall": null,
+        "cost_usd_total": 0.041383986,
+        "decision_counts": {
+          "escalate": 23,
+          "reject": 17
+        },
+        "escalation_rate": 0.575,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": null,
+        "invalid_output_rate": 0.0,
+        "record_count": 40,
+        "utility_score": -5.75,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.714906,
+            "low": 0.421951,
+            "n": 40,
+            "point": 0.575,
+            "successes": 23
+          },
+          "false_accept_rate": {
+            "high": 0.087622,
+            "low": 0.0,
+            "n": 40,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.087622,
+            "low": 0.0,
+            "n": 40,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E4": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 3,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 37
+        },
+        "correct_recall": null,
+        "cost_usd_total": 0.031729422,
+        "decision_counts": {
+          "escalate": 3,
+          "reject": 37
+        },
+        "escalation_rate": 0.075,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": null,
+        "invalid_output_rate": 0.0,
+        "record_count": 40,
+        "utility_score": -0.75,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.198642,
+            "low": 0.025836,
+            "n": 40,
+            "point": 0.075,
+            "successes": 3
+          },
+          "false_accept_rate": {
+            "high": 0.087622,
+            "low": 0.0,
+            "n": 40,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.087622,
+            "low": 0.0,
+            "n": 40,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E6": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 3,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 37
+        },
+        "correct_recall": null,
+        "cost_usd_total": 0.034298764,
+        "decision_counts": {
+          "escalate": 3,
+          "reject": 37
+        },
+        "escalation_rate": 0.075,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": null,
+        "invalid_output_rate": 0.0,
+        "record_count": 40,
+        "utility_score": -0.75,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.198642,
+            "low": 0.025836,
+            "n": 40,
+            "point": 0.075,
+            "successes": 3
+          },
+          "false_accept_rate": {
+            "high": 0.087622,
+            "low": 0.0,
+            "n": 40,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.087622,
+            "low": 0.0,
+            "n": 40,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      }
+    }
+  },
+  "per_project_breakdown": {
+    "PySnooper": {
+      "E0": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 2,
+          "escalated_incorrect": 3,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 5
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.006970353,
+        "decision_counts": {
+          "escalate": 5,
+          "reject": 5
+        },
+        "escalation_rate": 0.5,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 10,
+        "utility_score": -1.25,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.65762,
+            "low": 0.0,
+            "n": 2,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.763407,
+            "low": 0.236593,
+            "n": 10,
+            "point": 0.5,
+            "successes": 5
+          },
+          "false_accept_rate": {
+            "high": 0.324408,
+            "low": 0.0,
+            "n": 8,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.277533,
+            "low": 0.0,
+            "n": 10,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E2": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 2,
+          "escalated_incorrect": 4,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 4
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.007185417,
+        "decision_counts": {
+          "escalate": 6,
+          "reject": 4
+        },
+        "escalation_rate": 0.6,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 10,
+        "utility_score": -1.5,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.65762,
+            "low": 0.0,
+            "n": 2,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.83182,
+            "low": 0.312674,
+            "n": 10,
+            "point": 0.6,
+            "successes": 6
+          },
+          "false_accept_rate": {
+            "high": 0.324408,
+            "low": 0.0,
+            "n": 8,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.277533,
+            "low": 0.0,
+            "n": 10,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E4": {
+        "accepted_precision": 1.0,
+        "confusion_counts": {
+          "escalated_correct": 1,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 1,
+          "true_reject": 8
+        },
+        "correct_recall": 0.5,
+        "cost_usd_total": 0.007455233,
+        "decision_counts": {
+          "accept": 1,
+          "escalate": 1,
+          "reject": 8
+        },
+        "escalation_rate": 0.1,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 10,
+        "utility_score": 0.75,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": 1.0,
+            "low": 0.206549,
+            "n": 1,
+            "point": 1.0,
+            "successes": 1
+          },
+          "correct_recall": {
+            "high": 0.905469,
+            "low": 0.094531,
+            "n": 2,
+            "point": 0.5,
+            "successes": 1
+          },
+          "escalation_rate": {
+            "high": 0.40415,
+            "low": 0.017876,
+            "n": 10,
+            "point": 0.1,
+            "successes": 1
+          },
+          "false_accept_rate": {
+            "high": 0.324408,
+            "low": 0.0,
+            "n": 8,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.277533,
+            "low": 0.0,
+            "n": 10,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E6": {
+        "accepted_precision": 1.0,
+        "confusion_counts": {
+          "escalated_correct": 1,
+          "escalated_incorrect": 1,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 1,
+          "true_reject": 7
+        },
+        "correct_recall": 0.5,
+        "cost_usd_total": 0.007733401,
+        "decision_counts": {
+          "accept": 1,
+          "escalate": 2,
+          "reject": 7
+        },
+        "escalation_rate": 0.2,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 10,
+        "utility_score": 0.5,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": 1.0,
+            "low": 0.206549,
+            "n": 1,
+            "point": 1.0,
+            "successes": 1
+          },
+          "correct_recall": {
+            "high": 0.905469,
+            "low": 0.094531,
+            "n": 2,
+            "point": 0.5,
+            "successes": 1
+          },
+          "escalation_rate": {
+            "high": 0.509838,
+            "low": 0.056682,
+            "n": 10,
+            "point": 0.2,
+            "successes": 2
+          },
+          "false_accept_rate": {
+            "high": 0.324408,
+            "low": 0.0,
+            "n": 8,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.277533,
+            "low": 0.0,
+            "n": 10,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      }
+    },
+    "cookiecutter": {
+      "E0": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 3,
+          "escalated_incorrect": 5,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 11
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.015395839,
+        "decision_counts": {
+          "escalate": 8,
+          "reject": 11
+        },
+        "escalation_rate": 0.421053,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 19,
+        "utility_score": -2.0,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.561497,
+            "low": 0.0,
+            "n": 3,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.637241,
+            "low": 0.231419,
+            "n": 19,
+            "point": 0.421053,
+            "successes": 8
+          },
+          "false_accept_rate": {
+            "high": 0.193608,
+            "low": 0.0,
+            "n": 16,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.168179,
+            "low": 0.0,
+            "n": 19,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E2": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 3,
+          "escalated_incorrect": 8,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 8
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.01528561,
+        "decision_counts": {
+          "escalate": 11,
+          "reject": 8
+        },
+        "escalation_rate": 0.578947,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 19,
+        "utility_score": -2.75,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.561497,
+            "low": 0.0,
+            "n": 3,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.768581,
+            "low": 0.362759,
+            "n": 19,
+            "point": 0.578947,
+            "successes": 11
+          },
+          "false_accept_rate": {
+            "high": 0.193608,
+            "low": 0.0,
+            "n": 16,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.168179,
+            "low": 0.0,
+            "n": 19,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E4": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 2,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 1,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 16
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.013450113,
+        "decision_counts": {
+          "escalate": 2,
+          "reject": 17
+        },
+        "escalation_rate": 0.105263,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.333333,
+        "invalid_output_rate": 0.0,
+        "record_count": 19,
+        "utility_score": -1.5,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.561497,
+            "low": 0.0,
+            "n": 3,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.313941,
+            "low": 0.029359,
+            "n": 19,
+            "point": 0.105263,
+            "successes": 2
+          },
+          "false_accept_rate": {
+            "high": 0.193608,
+            "low": 0.0,
+            "n": 16,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.168179,
+            "low": 0.0,
+            "n": 19,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E6": {
+        "accepted_precision": 1.0,
+        "confusion_counts": {
+          "escalated_correct": 1,
+          "escalated_incorrect": 1,
+          "false_accept": 0,
+          "false_reject": 1,
+          "invalid_output": 0,
+          "true_accept": 1,
+          "true_reject": 15
+        },
+        "correct_recall": 0.333333,
+        "cost_usd_total": 0.012037204,
+        "decision_counts": {
+          "accept": 1,
+          "escalate": 2,
+          "reject": 16
+        },
+        "escalation_rate": 0.105263,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.333333,
+        "invalid_output_rate": 0.0,
+        "record_count": 19,
+        "utility_score": -0.5,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": 1.0,
+            "low": 0.206549,
+            "n": 1,
+            "point": 1.0,
+            "successes": 1
+          },
+          "correct_recall": {
+            "high": 0.79234,
+            "low": 0.061492,
+            "n": 3,
+            "point": 0.333333,
+            "successes": 1
+          },
+          "escalation_rate": {
+            "high": 0.313941,
+            "low": 0.029359,
+            "n": 19,
+            "point": 0.105263,
+            "successes": 2
+          },
+          "false_accept_rate": {
+            "high": 0.193608,
+            "low": 0.0,
+            "n": 16,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.168179,
+            "low": 0.0,
+            "n": 19,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      }
+    },
+    "httpie": {
+      "E0": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 1,
+          "escalated_incorrect": 3,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 2
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.005302563,
+        "decision_counts": {
+          "escalate": 4,
+          "reject": 2
+        },
+        "escalation_rate": 0.666667,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 6,
+        "utility_score": -1.0,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.793451,
+            "low": 0.0,
+            "n": 1,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.903229,
+            "low": 0.299993,
+            "n": 6,
+            "point": 0.666667,
+            "successes": 4
+          },
+          "false_accept_rate": {
+            "high": 0.434482,
+            "low": 0.0,
+            "n": 5,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.390334,
+            "low": 0.0,
+            "n": 6,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E2": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 1,
+          "escalated_incorrect": 3,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 2
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.004303919,
+        "decision_counts": {
+          "escalate": 4,
+          "reject": 2
+        },
+        "escalation_rate": 0.666667,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 6,
+        "utility_score": -1.0,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.793451,
+            "low": 0.0,
+            "n": 1,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.903229,
+            "low": 0.299993,
+            "n": 6,
+            "point": 0.666667,
+            "successes": 4
+          },
+          "false_accept_rate": {
+            "high": 0.434482,
+            "low": 0.0,
+            "n": 5,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.390334,
+            "low": 0.0,
+            "n": 6,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E4": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 1,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 5
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.004345273,
+        "decision_counts": {
+          "escalate": 1,
+          "reject": 5
+        },
+        "escalation_rate": 0.166667,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 6,
+        "utility_score": -0.25,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.793451,
+            "low": 0.0,
+            "n": 1,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.563503,
+            "low": 0.030053,
+            "n": 6,
+            "point": 0.166667,
+            "successes": 1
+          },
+          "false_accept_rate": {
+            "high": 0.434482,
+            "low": 0.0,
+            "n": 5,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.390334,
+            "low": 0.0,
+            "n": 6,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E6": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 1,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 5
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.003947393,
+        "decision_counts": {
+          "escalate": 1,
+          "reject": 5
+        },
+        "escalation_rate": 0.166667,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 6,
+        "utility_score": -0.25,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.793451,
+            "low": 0.0,
+            "n": 1,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.563503,
+            "low": 0.030053,
+            "n": 6,
+            "point": 0.166667,
+            "successes": 1
+          },
+          "false_accept_rate": {
+            "high": 0.434482,
+            "low": 0.0,
+            "n": 5,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.390334,
+            "low": 0.0,
+            "n": 6,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      }
+    },
+    "tqdm": {
+      "E0": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 1,
+          "escalated_incorrect": 2,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 4
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.007108712,
+        "decision_counts": {
+          "escalate": 3,
+          "reject": 4
+        },
+        "escalation_rate": 0.428571,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 7,
+        "utility_score": -0.75,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.793451,
+            "low": 0.0,
+            "n": 1,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.749542,
+            "low": 0.15822,
+            "n": 7,
+            "point": 0.428571,
+            "successes": 3
+          },
+          "false_accept_rate": {
+            "high": 0.390334,
+            "low": 0.0,
+            "n": 6,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.35433,
+            "low": 0.0,
+            "n": 7,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E2": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 1,
+          "escalated_incorrect": 4,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 2
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.006482805,
+        "decision_counts": {
+          "escalate": 5,
+          "reject": 2
+        },
+        "escalation_rate": 0.714286,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 7,
+        "utility_score": -1.25,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.793451,
+            "low": 0.0,
+            "n": 1,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.917781,
+            "low": 0.358934,
+            "n": 7,
+            "point": 0.714286,
+            "successes": 5
+          },
+          "false_accept_rate": {
+            "high": 0.390334,
+            "low": 0.0,
+            "n": 6,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.35433,
+            "low": 0.0,
+            "n": 7,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E4": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 1,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 6
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.005126214,
+        "decision_counts": {
+          "escalate": 1,
+          "reject": 6
+        },
+        "escalation_rate": 0.142857,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 7,
+        "utility_score": -0.25,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.793451,
+            "low": 0.0,
+            "n": 1,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.513128,
+            "low": 0.02568,
+            "n": 7,
+            "point": 0.142857,
+            "successes": 1
+          },
+          "false_accept_rate": {
+            "high": 0.390334,
+            "low": 0.0,
+            "n": 6,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.35433,
+            "low": 0.0,
+            "n": 7,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E6": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 1,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 6
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.004923649,
+        "decision_counts": {
+          "escalate": 1,
+          "reject": 6
+        },
+        "escalation_rate": 0.142857,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 7,
+        "utility_score": -0.25,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.793451,
+            "low": 0.0,
+            "n": 1,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.513128,
+            "low": 0.02568,
+            "n": 7,
+            "point": 0.142857,
+            "successes": 1
+          },
+          "false_accept_rate": {
+            "high": 0.390334,
+            "low": 0.0,
+            "n": 6,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.35433,
+            "low": 0.0,
+            "n": 7,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      }
+    },
+    "youtube-dl": {
+      "E0": {
+        "accepted_precision": 1.0,
+        "confusion_counts": {
+          "escalated_correct": 11,
+          "escalated_incorrect": 18,
+          "false_accept": 0,
+          "false_reject": 1,
+          "invalid_output": 0,
+          "true_accept": 1,
+          "true_reject": 21
+        },
+        "correct_recall": 0.076923,
+        "cost_usd_total": 0.049439403,
+        "decision_counts": {
+          "accept": 1,
+          "escalate": 29,
+          "reject": 22
+        },
+        "escalation_rate": 0.557692,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.076923,
+        "invalid_output_rate": 0.0,
+        "record_count": 52,
+        "utility_score": -7.25,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": 1.0,
+            "low": 0.206549,
+            "n": 1,
+            "point": 1.0,
+            "successes": 1
+          },
+          "correct_recall": {
+            "high": 0.33314,
+            "low": 0.01371,
+            "n": 13,
+            "point": 0.076923,
+            "successes": 1
+          },
+          "escalation_rate": {
+            "high": 0.684049,
+            "low": 0.423398,
+            "n": 52,
+            "point": 0.557692,
+            "successes": 29
+          },
+          "false_accept_rate": {
+            "high": 0.089667,
+            "low": 0.0,
+            "n": 39,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.068792,
+            "low": 0.0,
+            "n": 52,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E2": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 12,
+          "escalated_incorrect": 19,
+          "false_accept": 0,
+          "false_reject": 1,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 20
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.050844453,
+        "decision_counts": {
+          "escalate": 31,
+          "reject": 21
+        },
+        "escalation_rate": 0.596154,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.076923,
+        "invalid_output_rate": 0.0,
+        "record_count": 52,
+        "utility_score": -8.75,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.228095,
+            "low": 0.0,
+            "n": 13,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.718403,
+            "low": 0.460676,
+            "n": 52,
+            "point": 0.596154,
+            "successes": 31
+          },
+          "false_accept_rate": {
+            "high": 0.089667,
+            "low": 0.0,
+            "n": 39,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.068792,
+            "low": 0.0,
+            "n": 52,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E4": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 13,
+          "escalated_incorrect": 3,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 0,
+          "true_reject": 36
+        },
+        "correct_recall": 0.0,
+        "cost_usd_total": 0.049955893,
+        "decision_counts": {
+          "escalate": 16,
+          "reject": 36
+        },
+        "escalation_rate": 0.307692,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 52,
+        "utility_score": -4.0,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": null,
+            "low": null,
+            "n": 0,
+            "point": null,
+            "successes": 0
+          },
+          "correct_recall": {
+            "high": 0.228095,
+            "low": 0.0,
+            "n": 13,
+            "point": 0.0,
+            "successes": 0
+          },
+          "escalation_rate": {
+            "high": 0.442696,
+            "low": 0.199147,
+            "n": 52,
+            "point": 0.307692,
+            "successes": 16
+          },
+          "false_accept_rate": {
+            "high": 0.089667,
+            "low": 0.0,
+            "n": 39,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.068792,
+            "low": 0.0,
+            "n": 52,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      },
+      "E6": {
+        "accepted_precision": 1.0,
+        "confusion_counts": {
+          "escalated_correct": 8,
+          "escalated_incorrect": 2,
+          "false_accept": 0,
+          "false_reject": 0,
+          "invalid_output": 0,
+          "true_accept": 5,
+          "true_reject": 37
+        },
+        "correct_recall": 0.384615,
+        "cost_usd_total": 0.050058611,
+        "decision_counts": {
+          "accept": 5,
+          "escalate": 10,
+          "reject": 37
+        },
+        "escalation_rate": 0.192308,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.0,
+        "invalid_output_rate": 0.0,
+        "record_count": 52,
+        "utility_score": 2.5,
+        "wilson_ci_95": {
+          "accepted_precision": {
+            "high": 1.0,
+            "low": 0.565518,
+            "n": 5,
+            "point": 1.0,
+            "successes": 5
+          },
+          "correct_recall": {
+            "high": 0.644771,
+            "low": 0.177097,
+            "n": 13,
+            "point": 0.384615,
+            "successes": 5
+          },
+          "escalation_rate": {
+            "high": 0.318989,
+            "low": 0.10796,
+            "n": 52,
+            "point": 0.192308,
+            "successes": 10
+          },
+          "false_accept_rate": {
+            "high": 0.089667,
+            "low": 0.0,
+            "n": 39,
+            "point": 0.0,
+            "successes": 0
+          },
+          "invalid_output_rate": {
+            "high": 0.068792,
+            "low": 0.0,
+            "n": 52,
+            "point": 0.0,
+            "successes": 0
+          }
+        }
+      }
+    }
+  },
+  "raw_output_free_check": {
+    "checked_for_raw_response_fields": true,
+    "passed": true
+  }
+}

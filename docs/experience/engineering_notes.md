@@ -2084,3 +2084,16 @@ This file starts fresh for the patch-verification project.
   `evp7_g5_llm_376_full_summary.json`; do not hand-copy plotted values. Keep
   `fig4_result_tradeoff` scoped to the first pilot and use fig6 for E0/E2/E4/E6
   evidence-level claims.
+
+## 2026-06-15 EVP-7 statistical artifact boundary
+
+- The roadmap asks for Wilson intervals, bootstrap intervals, paired
+  comparisons, and per-project/per-source breakdowns. Point estimates in
+  `generated_tables.md` are not enough for paper-facing statistical analysis.
+- A statistics script may read ignored G5 review records, but tracked outputs
+  must remain raw-output-free. Normalize records down to candidate id, evidence
+  level, parse status, decision, project, patch source, label, and cost before
+  computing aggregates.
+- Use candidate-level bootstrap for EVP-7 because E0/E2/E4/E6 are paired by
+  candidate. Report effect sizes as point-estimate deltas versus E0, and keep
+  bootstrap probability/delta language bounded to the 20-task pilot.

@@ -23,8 +23,8 @@ python scripts\audit_anonymous_artifact.py `
   scripts, including the API run completeness audit required before paper
   claims.
 - `configs/` example configuration files only.
-- `docs/` plans, schemas, metrics, prompt records, paper draft, reports, and
-  reproducible paper figures.
+- `docs/` plans, schemas, metrics, prompt records, paper draft, reports,
+  raw-output-free statistical summaries, and reproducible paper figures.
 - `examples/` small static examples.
 
 ## Excluded

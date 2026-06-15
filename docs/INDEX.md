@@ -99,6 +99,11 @@
 - `../data/reviews/evp7_g5_376_full_quality_audit.json`: tracked quality audit
   for the 376-record DeepSeek full run. It reads only the raw-output-free
   summary and marks the run `passed_with_limitations`.
+- `../data/reviews/evp7_g5_376_statistical_analysis.json`: tracked
+  raw-output-free statistical analysis for the frozen 20-task/94-candidate
+  EVP-7 G5 run. It records Wilson intervals, candidate-level bootstrap
+  intervals, paired deltas against E0, per-project breakdowns, and
+  per-patch-source breakdowns without raw model responses.
 - `../data/reviews/evp7_g5_llm_prompt_manifest.jsonl`: no-API prompt manifest
   for the G5 evidence-visibility LLM run. It stores prompt hashes,
   lengths, prompt id, evidence level, and leakage-check status, not full prompt
@@ -153,6 +158,10 @@
 - `experiments/evp7_g5_376_full_quality_audit.md`: human-readable quality audit
   for the 376-packet DeepSeek G5 full run. It supports bounded EVP-7 pilot
   signal claims and lists unsupported scale/baseline/cost-billing claims.
+- `experiments/evp7_g5_376_statistical_analysis.md`: human-readable statistical
+  analysis for the same 376-record run, including Wilson CIs, candidate-level
+  bootstrap CIs, paired deltas versus E0, per-project breakdowns, and
+  per-patch-source breakdowns.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 
@@ -590,6 +599,10 @@
   under `docs/figures/` in PDF, SVG, and PNG formats. Figures cover the
   workflow, evidence boundary, dataset composition, first-pilot result tradeoff,
   claim boundary, and EVP-7 evidence visibility curve.
+- `scripts/analyze_evp7_g5_statistics.py`: generates the raw-output-free
+  statistical analysis for the frozen EVP-7 G5 376-record run. It reads ignored
+  review records structurally, joins tracked candidate labels only for aggregate
+  metrics, and writes Wilson/bootstrap/paired-breakdown artifacts.
 - `figures/`: reproducible paper figure assets. The IEEE submission draft uses
   the PDF versions, while PNG versions are for quick local inspection.
 - `figures/imagegen/`: generated raster visual candidates plus exact prompts

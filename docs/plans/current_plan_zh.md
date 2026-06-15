@@ -9119,3 +9119,113 @@ Verify:
   到 fig6；
 - 下一步应继续围绕 frozen cohort 的统计/图表/claim consolidation 推进，而
   不是默认继续补 bug。
+
+## 116. 2026-06-15 add EVP-7 statistical analysis artifact
+
+Inspect:
+
+- 当前工作区干净，本地 main ahead origin 20；
+- 第 115 节已完成 `fig6_evp7_visibility_curve`，local quality gate 通过；
+- canonical roadmap 的下一步明确是 frozen 20-task cohort 的统计/图表和
+  claim-boundary 巩固，不是继续默认补 bug；
+- roadmap 的统计分析要求至少覆盖 Wilson confidence interval、bootstrap
+  confidence interval、per-project breakdown、per-patch-source breakdown、
+  per-evidence-level comparison、paired comparison 和 effect size；
+- 当前 `docs/paper/generated_tables.md` 只有点估计和 claim boundary，尚未有
+  tracked 统计区间或 paired delta artifact；
+- ignored `outputs/evp7_g5_llm_376_full_001/reviews.jsonl` 可用于读取
+  parse/decision/cost 等结构字段；tracked `data/patches/evp7_candidates.jsonl`
+  提供 evaluator labels、project 和 patch source。统计输出必须保持
+  raw-output-free，不写入 raw response 字段。
+
+Plan:
+
+1. 新增 `scripts/analyze_evp7_g5_statistics.py`，从 376-run ignored reviews
+   和 tracked candidate labels 生成 raw-output-free 统计 JSON/Markdown；
+2. 统计内容覆盖：
+   - per-evidence-level Wilson CI；
+   - candidate-level deterministic bootstrap CI；
+   - E2/E4/E6 相对 E0 的 paired bootstrap delta 和 effect size；
+   - per-project breakdown；
+   - per-patch-source breakdown；
+3. 将统计报告纳入 docs index、README 和 anonymous artifact required files；
+4. 如有必要更新 paper table generator 或 IEEE draft，让论文入口能引用该
+   统计 artifact；
+5. 运行脚本、compile、paper readiness、artifact audit 和 local quality gate；
+6. 本轮不调用 API、不扩 cohort、不修改 prompt、不跟踪 raw model outputs。
+
+验收条件：
+
+- `data/reviews/evp7_g5_376_statistical_analysis.json` 存在且不包含 raw
+  response 字段；
+- `docs/experiments/evp7_g5_376_statistical_analysis.md` 存在，包含 Wilson CI、
+  bootstrap CI、paired delta、per-project 和 per-patch-source sections；
+- README / docs index / artifact audit required files 指向新统计 artifact；
+- quality gates 通过。
+
+Execute:
+
+- 已新增 `scripts/analyze_evp7_g5_statistics.py`：
+  - 默认读取 ignored `outputs/evp7_g5_llm_376_full_001/reviews.jsonl`；
+  - 只抽取 candidate id、evidence level、parse status、decision、project、
+    patch source、label 和 cost 等结构字段；
+  - 与 tracked `data/patches/evp7_candidates.jsonl` 连接 evaluator labels，
+    只用于聚合统计；
+  - 输出 raw-output-free
+    `data/reviews/evp7_g5_376_statistical_analysis.json` 和
+    `docs/experiments/evp7_g5_376_statistical_analysis.md`；
+- 统计报告覆盖：
+  - per-evidence-level Wilson 95% CI；
+  - candidate-level bootstrap 95% CI，固定 seed = 9507，samples = 2000；
+  - E2/E4/E6 相对 E0 的 paired bootstrap delta、effect size 和
+    `P(delta > 0)`；
+  - per-project breakdown；
+  - per-patch-source breakdown；
+- 已更新 `scripts/write_paper_tables.py`，让 generated tables 读取统计 JSON，
+  并生成 `tab:evp7-statistical-intervals`；
+- 已更新 `scripts/write_ieee_latex_draft.py`，在 EVP-7 结果叙述中明确
+  Wilson / candidate-level paired bootstrap 的统计边界；
+- 已重新生成 `docs/paper/generated_tables.md`、
+  `docs/paper/generated_tables.tex` 和 `docs/paper/ieee_submission_draft.tex`；
+- 已更新 README、docs index、anonymous artifact 文档、engineering notes；
+- 已更新 anonymous artifact audit / package README 生成逻辑，将统计报告和脚本
+  纳入 required files/snippets；
+- 本轮未调用 API、未扩 cohort、未修改 prompt、未跟踪 raw model outputs。
+
+Verify:
+
+- `python -m compileall scripts\analyze_evp7_g5_statistics.py scripts\write_paper_tables.py scripts\write_ieee_latex_draft.py scripts\audit_anonymous_artifact.py scripts\prepare_anonymous_artifact.py`
+  通过；
+- `python scripts\analyze_evp7_g5_statistics.py` 通过，输出
+  `raw_output_free=true`；
+- raw marker 检查确认以下 tracked 文件均不包含 raw response 字段、prompt
+  text 字段、本机路径或用户名：
+  - `data/reviews/evp7_g5_376_statistical_analysis.json`；
+  - `docs/experiments/evp7_g5_376_statistical_analysis.md`；
+  - `docs/paper/generated_tables.md`；
+  - `docs/paper/generated_tables.tex`；
+  - `docs/paper/ieee_submission_draft.tex`；
+- `python scripts\write_paper_tables.py --out-md docs\paper\generated_tables.md --out-tex docs\paper\generated_tables.tex`
+  通过；
+- `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`
+  通过；
+- `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex`
+  连续运行后通过，生成 7 页 IEEE draft PDF；仅保留既有 underfull hbox /
+  MiKTeX update 提示；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、
+  `evp7_bounded_pilot_claim_ready=true`；
+- `git diff --check` 通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 本轮按计划补齐 frozen EVP-7 376-run 的统计分析 artifact；
+- 当前论文表格和 IEEE draft 已从点估计推进到 Wilson / bootstrap / paired
+  delta 的受限统计表达；
+- 统计结果仍只支持 bounded EVP-7 pilot 观察，不改变 scale-generalized、
+  deterministic-baseline superiority、E6 strictly > E4 或 external billing
+  equivalence 的 unsupported claim 边界。
