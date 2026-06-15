@@ -15,9 +15,15 @@ Move immediately to an evidence-visibility protocol pilot on the frozen cohort.
 2026-06-13 update: controlled `youtube-dl` admissions through
 `bugsinpy_youtube-dl_4` have since passed the same formal admission boundary:
 retained oracle, four candidate records, retained-oracle validation, and
-project-level P2P-broad validation. The current tracked EVP-7 structural cohort
-is therefore 12 bugs / 5 projects. This is controlled admission, not a return
-to blind BugsInPy expansion.
+project-level P2P-broad validation. At that checkpoint, the tracked EVP-7
+structural cohort became 12 bugs / 5 projects. This was controlled admission,
+not a return to blind BugsInPy expansion.
+
+2026-06-15 update: further controlled admissions reached the frozen
+paper-facing cohort of 20 tasks / 5 projects / 94 candidates / 376 E0/E2/E4/E6
+evidence packets. The 15-20 bug target is now met and frozen. The current
+paper-facing real-LLM result is the 376-record DeepSeek G5 full run, not the
+earlier 248-record historical checkpoint.
 
 Option B is not approved as the current main path. Option C is deferred until
 the protocol interface is stable.
@@ -46,7 +52,7 @@ data/exclusions/blocked_bugsinpy_projects.jsonl
 
 ## Current Cohort Summary
 
-The manifest contains 18 completed project-level P2P-broad tasks:
+The manifest contains 20 completed project-level P2P-broad tasks:
 
 | task | project |
 | --- | --- |
@@ -357,42 +363,46 @@ G5 local-config helper status:
 G5 real full-run status:
 
 - user-confirmed provider/model = DeepSeek official API, `deepseek-v4-pro`;
-- workflow used explicit bounded concurrency: `--concurrency 6`;
-- raw outputs remain ignored under `outputs/evp7_g5_llm_248_full/`;
-- tracked summary = `docs/experiments/evp7_g5_llm_full_run_result.md`;
-- tracked JSON summary = `data/reviews/evp7_g5_llm_full_run_summary.json`;
-- review count = 248;
-- parse valid = 247/248;
-- invalid output count = 1;
-- invalid output rate = 0.004032;
-- invalid record = `evp7_candidate_0030__E2`, a non-empty truncated JSON
-  response with 444 raw chars; it is reported as model-output quality rather
-  than silently repaired;
+- workflow used explicit bounded concurrency: `--concurrency 4`;
+- raw outputs remain ignored under `outputs/evp7_g5_llm_376_full_001/`;
+- tracked summary = `docs/experiments/evp7_g5_llm_376_full_result.md`;
+- tracked JSON summary = `data/reviews/evp7_g5_llm_376_full_summary.json`;
+- review count = 376;
+- parse valid = 376/376;
+- invalid output count = 0;
+- invalid output rate = 0.0;
+- token-usage cost estimates covered 376/376 records, with runner-estimated
+  total cost USD 0.327352058 and `unknown_cost_record_count=0`;
 - G5 metric scaffold = passed;
 - G5 signal claim status = `real_llm_verifier_signal_observed_on_evp7`;
-- scope boundary = previous 12-task/62-candidate/248-packet EVP-7 cohort;
+- scope boundary = frozen 20-task/94-candidate/376-packet EVP-7 cohort;
 - E4/E6 false accept rate = 0.0;
 - E4/E6 accepted precision = 1.0;
-- E4 correct recall = 0.166667;
-- E6 correct recall = 0.25;
-- E4/E6 Evidence Gain vs E0 = 7.25 / 7.5.
+- E4 correct recall = 0.05;
+- E6 correct recall = 0.35;
+- E4/E6 Evidence Gain vs E0 = 7.0 / 14.25.
+
+The earlier 248-record DeepSeek G5 full run remains a historical checkpoint for
+the previous 12-task / 62-candidate cohort. It should not be cited as the
+current latest real-LLM result.
 
 G5 quality audit status:
 
-- audit = `docs/experiments/evp7_g5_full_run_quality_audit.md`;
-- JSON = `data/reviews/evp7_g5_full_run_quality_audit.json`;
+- audit = `docs/experiments/evp7_g5_376_full_quality_audit.md`;
+- JSON = `data/reviews/evp7_g5_376_full_quality_audit.json`;
 - quality status = `passed_with_limitations`;
 - supported claim = bounded EVP-7 pilot observations about evidence-level
   metric variation;
-- unsupported claims = scale-generalized result, LLM outperforming tool-only
-  baseline, and known DeepSeek billing cost.
+- unsupported claims = scale-generalized result, LLM outperforming the
+  deterministic visible-test/tool-only baseline, E6 strict superiority over E4,
+  and treating runner-estimated cost as an external DeepSeek billing statement.
 
 ## Current Next Step
 
-EVP-7 now has a 20-task/94-candidate/376-packet structural cohort. The latest
-real-LLM run remains scoped to the previous 12-task/62-candidate/248-packet
-cohort. The 15-bug lower bound is met; the next executable research step is to
-continue the planned controlled expansion toward 20 bugs or explicitly run a
-fresh G5 real-LLM pass for the current 376-packet structural cohort, while
-preserving the boundary that the existing real pilot signal does not imply scale
-generalization or tool-baseline superiority.
+EVP-7 now has a frozen 20-task/94-candidate/376-packet structural cohort and a
+matching 376-record real DeepSeek G5 full run. The next default research step is
+not another bug admission or another G5 run. Continue strengthening the
+paper-facing frozen-cohort artifacts: claim boundary, statistics, utility
+sensitivity, protocol/readiness consistency, and anonymous artifact
+reproducibility. Any move to 30-50 bugs or another benchmark/source changes the
+experiment boundary and requires a separate decision.

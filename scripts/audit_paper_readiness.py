@@ -110,6 +110,33 @@ def protocol_current_state() -> dict[str, Any]:
     }
 
 
+def protocol_pilot_report_state() -> dict[str, Any]:
+    path = Path("docs") / "experiments" / "evp7_protocol_pilot.md"
+    text = read_text_if_exists(path)
+    checks = {
+        "mentions_frozen_20_task_376_state": "20 tasks / 5 projects / 94 candidates / 376" in text
+        and "frozen 20-task/94-candidate/376-packet" in text,
+        "mentions_current_376_g5_run": "review count = 376" in text and "parse valid = 376/376" in text,
+        "mentions_current_376_outputs": "outputs/evp7_g5_llm_376_full_001/" in text
+        and "data/reviews/evp7_g5_llm_376_full_summary.json" in text,
+        "mentions_current_quality_audit": "docs/experiments/evp7_g5_376_full_quality_audit.md" in text
+        and "data/reviews/evp7_g5_376_full_quality_audit.json" in text,
+        "keeps_248_run_historical": "248-record DeepSeek G5 full run remains a historical checkpoint" in text,
+        "next_step_not_more_bug_or_g5_by_default": "not another bug admission or another G5 run" in text,
+        "does_not_call_12_task_current": "current tracked EVP-7 structural cohort\nis therefore 12 bugs" not in text,
+        "does_not_call_18_tasks_current": "contains 18 completed project-level P2P-broad tasks" not in text,
+        "does_not_use_248_output_as_current": "outputs/evp7_g5_llm_248_full/" not in text,
+        "does_not_say_376_run_pending": "fresh G5 real-LLM pass for the current 376-packet" not in text,
+    }
+    blockers = [name for name, passed in checks.items() if not passed]
+    return {
+        "passed": not blockers,
+        "path": path.as_posix(),
+        "checks": checks,
+        "blockers": blockers,
+    }
+
+
 def review_state(run_dir: Path) -> dict[str, Any]:
     reviews_path = run_dir / "reviews.jsonl"
     metrics_path = run_dir / "metrics.json"
@@ -439,6 +466,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     tool_gate = tool_augmented_gate_state(tool_augmented_run_dir)
     paper_framing = paper_framing_state()
     protocol_state = protocol_current_state()
+    protocol_pilot_report = protocol_pilot_report_state()
 
     minimum_inputs_ready = all(doc["exists"] for doc in required_docs.values()) and all(
         state["exists"] for state in run_files.values()
@@ -456,6 +484,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         and all(state["exists"] for state in pre_api_evidence.values())
         and paper_framing["passed"]
         and protocol_state["passed"]
+        and protocol_pilot_report["passed"]
     )
 
     blockers: list[str] = []
@@ -475,6 +504,8 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         blockers.append(f"Paper framing check failed: {', '.join(paper_framing['blockers'])}.")
     if not protocol_state["passed"]:
         blockers.append(f"Protocol current-state check failed: {', '.join(protocol_state['blockers'])}.")
+    if not protocol_pilot_report["passed"]:
+        blockers.append(f"Protocol pilot report check failed: {', '.join(protocol_pilot_report['blockers'])}.")
 
     tool_augmented_blockers: list[str] = []
     if not required_docs["tool_augmented_full_result"]["exists"]:
@@ -498,10 +529,12 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "tool_augmented_claim_ready": tool_augmented_claim_ready,
         "evp7_bounded_pilot_claim_ready": evp7["ready_for_bounded_pilot_claim"]
         and paper_framing["passed"]
-        and protocol_state["passed"],
+        and protocol_state["passed"]
+        and protocol_pilot_report["passed"],
         "current_result_claim_ready": (evp7["ready_for_bounded_pilot_claim"] or tool_augmented_claim_ready)
         and paper_framing["passed"]
-        and protocol_state["passed"],
+        and protocol_state["passed"]
+        and protocol_pilot_report["passed"],
         "claim_boundary": (
             "Prompt-only evidence-first remains unsupported by the old full-run gate. "
             "The old tool-augmented positive claim is limited to a conditional tool-assisted verifier. "
@@ -510,6 +543,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "negative_or_methods_draft_ready": negative_or_methods_draft_ready,
         "paper_framing": paper_framing,
         "protocol_current_state": protocol_state,
+        "protocol_pilot_report": protocol_pilot_report,
         "required_docs": required_docs,
         "pre_api_evidence": pre_api_evidence,
         "run_files": run_files,
@@ -565,6 +599,13 @@ def build_markdown(audit: dict[str, Any]) -> str:
         lines.append(f"- `{name}`: {bool_mark(passed)}")
     if audit["protocol_current_state"]["blockers"]:
         lines.append(f"- blockers: `{', '.join(audit['protocol_current_state']['blockers'])}`")
+    lines.extend(["", "## Protocol Pilot Report", ""])
+    lines.append(f"- passed: {bool_mark(audit['protocol_pilot_report']['passed'])}")
+    lines.append(f"- path: `{audit['protocol_pilot_report']['path']}`")
+    for name, passed in audit["protocol_pilot_report"]["checks"].items():
+        lines.append(f"- `{name}`: {bool_mark(passed)}")
+    if audit["protocol_pilot_report"]["blockers"]:
+        lines.append(f"- blockers: `{', '.join(audit['protocol_pilot_report']['blockers'])}`")
     lines.extend(["", "## Pre-API Evidence", ""])
     for name, state in audit["pre_api_evidence"].items():
         lines.append(f"- `{name}`: {bool_mark(state['exists'])} (`{state['path']}`)")

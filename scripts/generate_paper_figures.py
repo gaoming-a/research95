@@ -173,17 +173,22 @@ def fig_framework(out_dir: Path) -> None:
 
 
 def fig_evidence_visibility(out_dir: Path) -> None:
-    fig, ax = plt.subplots(figsize=(7.2, 3.3))
-    rows = ["Task + patch", "Visible tests", "Evidence metadata", "Patch apply status", "Behavior summary", "Evaluator labels"]
-    cols = ["LLM-only", "Prompt-only\nEvidence-first", "Tool-augmented\nEvidence"]
+    fig, ax = plt.subplots(figsize=(7.2, 3.35))
+    rows = [
+        "Issue summary + patch diff",
+        "Apply/static evidence",
+        "F2P/P2P test outcomes",
+        "Tool / behavior summary",
+        "Evaluator truth labels",
+    ]
+    cols = ["E0", "E2", "E4", "E6"]
     matrix = np.array(
         [
-            [1, 1, 1],
-            [0, 1, 1],
-            [0, 1, 1],
-            [0, 0, 1],
-            [0, 0, 1],
-            [0, 0, 0],
+            [1, 1, 1, 1],
+            [0, 1, 1, 1],
+            [0, 0, 1, 1],
+            [0, 0, 0, 1],
+            [0, 0, 0, 0],
         ]
     )
     color_map = np.empty(matrix.shape, dtype=object)
@@ -192,18 +197,35 @@ def fig_evidence_visibility(out_dir: Path) -> None:
             color_map[i, j] = COLORS["green"] if matrix[i, j] else COLORS["gray"]
     for i in range(matrix.shape[0]):
         for j in range(matrix.shape[1]):
-            ax.add_patch(Rectangle((j, i), 1, 1, facecolor=color_map[i, j], edgecolor="white", linewidth=1.5))
-            ax.text(j + 0.5, i + 0.5, "visible" if matrix[i, j] else "hidden", ha="center", va="center", fontsize=8, color=COLORS["ink"])
+            edge = COLORS["red"] if i == matrix.shape[0] - 1 else "white"
+            ax.add_patch(Rectangle((j, i), 1, 1, facecolor=color_map[i, j], edgecolor=edge, linewidth=1.5))
+            ax.text(
+                j + 0.5,
+                i + 0.5,
+                "visible" if matrix[i, j] else "hidden",
+                ha="center",
+                va="center",
+                fontsize=8,
+                color=COLORS["ink"],
+            )
     ax.set_xlim(0, len(cols))
     ax.set_ylim(0, len(rows))
     ax.invert_yaxis()
     ax.set_xticks(np.arange(len(cols)) + 0.5, cols)
     ax.set_yticks(np.arange(len(rows)) + 0.5, rows)
     ax.tick_params(length=0)
-    ax.set_title("Evidence boundary across review conditions", loc="left", weight="bold")
+    ax.set_title("EVP-7 evidence visibility boundary by level", loc="left", weight="bold")
+    fig.text(
+        0.30,
+        0.07,
+        "Evaluator truth labels include reference correctness, hidden final labels, and final oracle outcomes; "
+        "they never enter the reviewer prompt and are used only for metric computation.",
+        fontsize=7.2,
+        color=COLORS["muted"],
+    )
     for spine in ax.spines.values():
         spine.set_visible(False)
-    fig.subplots_adjust(left=0.22, right=0.98, top=0.84, bottom=0.22)
+    fig.subplots_adjust(left=0.30, right=0.98, top=0.84, bottom=0.22)
     save_figure(fig, out_dir, "fig2_evidence_visibility")
 
 
@@ -348,7 +370,7 @@ def write_manifest(out_dir: Path) -> None:
         "formats": ["pdf", "svg", "png"],
         "figures": [
             {"id": "fig1_framework", "purpose": "overall workflow"},
-            {"id": "fig2_evidence_visibility", "purpose": "condition evidence boundary"},
+            {"id": "fig2_evidence_visibility", "purpose": "EVP-7 evidence-level visibility boundary"},
             {"id": "fig3_dataset_composition", "purpose": "dataset and validation"},
             {"id": "fig4_result_tradeoff", "purpose": "first-pilot API result metrics"},
             {"id": "fig5_claim_boundary", "purpose": "claim boundary and interpretation"},

@@ -212,6 +212,10 @@
   patch-verification pilot.
 - `experiments/patch_verification_pilot_report.md`: tracked summary of the
   current no-API pilot, executable validation, metrics, and prompt dry-run.
+- `experiments/evp7_protocol_pilot.md`: current EVP-7 protocol-pilot report.
+  It now records the frozen 20-task / 94-candidate / 376-packet state, the
+  current 376-record DeepSeek G5 result, and the older 248-record run only as a
+  historical checkpoint.
 - `experiments/deepseek_full_run_result.md`: tracked summary of the first
   DeepSeek official API full run. The run completed with 60 non-mock reviews
   and passed completeness, but the gate verdict is `stop_or_redesign`.

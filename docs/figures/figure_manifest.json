@@ -12,7 +12,7 @@
     },
     {
       "id": "fig2_evidence_visibility",
-      "purpose": "condition evidence boundary"
+      "purpose": "EVP-7 evidence-level visibility boundary"
     },
     {
       "id": "fig3_dataset_composition",

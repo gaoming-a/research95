@@ -17,6 +17,7 @@ REQUIRED_FILES = [
     "docs/INDEX.md",
     "docs/artifact/anonymous_artifact.md",
     "docs/protocol/evidence_visibility_protocol.md",
+    "docs/experiments/evp7_protocol_pilot.md",
     "docs/experiments/tool_augmented_full_run_result.md",
     "docs/experiments/evp7_g5_376_statistical_analysis.md",
     "docs/experiments/evp7_g5_376_utility_sensitivity.md",

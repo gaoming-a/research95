@@ -9649,3 +9649,137 @@ Verify:
   入口；
 - 该修复只巩固 frozen 20-task EVP-7 paper/artifact readiness，不改变实验边界
   或 claim 边界。
+
+## 121. 2026-06-15 regenerate fig2 as EVP-7 evidence-level boundary
+
+Inspect:
+
+- 用户指出 `docs/figures/fig2_evidence_visibility` 与 PPT 中 E0/E2/E4/E6
+  证据等级表信息不对等；
+- 检查后确认旧 fig2 描述的是历史 `LLM-only` / prompt-only
+  `evidence_first` / `tool_augmented_evidence` 三组 review condition；
+- 当前中期报告和 paper-facing EVP-7 主线使用的是 E0/E2/E4/E6 evidence
+  visibility level，因此旧 fig2 不应作为当前方法页图。
+
+Plan:
+
+1. 将 `scripts/generate_paper_figures.py` 中 fig2 改为当前 E0/E2/E4/E6
+   证据等级边界矩阵；
+2. 保留 evaluator truth labels 作为全部 prompt 隐藏、仅用于指标计算的评估端
+   信息；
+3. 同步 `docs/figures/README.md` 和 figure manifest purpose；
+4. 重新生成 fig2 的 PDF/SVG/PNG，并人工检查新 PNG；
+5. 不修改实验数据、prompt、API 或当前 claim 边界。
+
+Execute:
+
+- 已将 `fig2_evidence_visibility` 从旧三条件矩阵改为 EVP-7 E0/E2/E4/E6
+  证据等级矩阵；
+- 行包括 issue summary + patch diff、apply/static evidence、F2P/P2P test
+  outcomes、tool/behavior summary 和 evaluator truth labels；
+- evaluator truth labels 在 E0/E2/E4/E6 中均为 hidden，并在图下注明只用于指标
+  计算；
+- 已同步 `docs/figures/README.md` 和 `figure_manifest.json` 中 fig2 的 purpose。
+
+Verify:
+
+- `python scripts\generate_paper_figures.py` 通过，输出
+  `figure_count=6`；
+- 已人工检查 `docs/figures/fig2_evidence_visibility.png`：新图与当前 PPT
+  证据等级表一致，不再混用旧 `LLM-only` / `Prompt-only Evidence-first` /
+  `Tool-augmented Evidence` 三条件语义；
+- 本轮未修改实验数据、prompt、API 调用或 claim 边界。
+
+## 122. 2026-06-15 refresh EVP-7 protocol pilot report current state
+
+Inspect:
+
+- 当前工作区干净，本地 main ahead origin 25；
+- active protocol 已刷新并通过 `protocol_current_state` readiness；
+- `docs/experiments/evp7_protocol_pilot.md` 仍有多处历史状态：
+  - Decision 段仍说 current tracked structural cohort 是 12 bugs / 5 projects；
+  - Current Cohort Summary 写 18 completed tasks，但表格实际列出 20 tasks；
+  - G5 real full-run status 仍把 248-run 写为主记录；
+  - Current Next Step 仍说 latest real-LLM run remains scoped to previous
+    12-task/62-candidate/248-packet cohort，并建议继续扩到 20 bugs 或运行 fresh
+    376 G5；
+- 当前事实已经是 20-task / 94-candidate / 376-packet structural cohort，且 fresh
+  376-packet DeepSeek G5 full run 已完成并成为 paper-facing result；
+- paper readiness 当前检查 active protocol，但尚未检查这个 protocol pilot report
+  是否同步。
+
+Plan:
+
+1. 刷新 `docs/experiments/evp7_protocol_pilot.md` 的 Decision、Cohort Summary、
+   G5 full-run status、quality audit 和 next-step 段；
+2. 保留 248-run 为 historical checkpoint，不再作为 current latest run；
+3. 在 `audit_paper_readiness.py` 中加入 protocol pilot report current-state
+   check；
+4. 将该 report 加入 anonymous artifact required files；
+5. 同步 README / docs index / artifact notes / engineering notes；
+6. 运行 compile、paper readiness、artifact package + audit、local quality gate；
+7. 本轮不调用 API、不扩 cohort、不修改 prompt、不跟踪 raw model outputs。
+
+验收条件：
+
+- protocol pilot report 与 20/94/376 tracked summaries 一致；
+- paper readiness 输出 protocol pilot report current-state check 且通过；
+- stale report-state 检查不再把 12/62/248 或 fresh 376 run 当作 pending next
+  step；
+- README / docs index / artifact notes / engineering notes 已同步；
+- quality gates 通过。
+
+Execute:
+
+- 已刷新 `docs/experiments/evp7_protocol_pilot.md`：
+  - 2026-06-13 段落改为 historical checkpoint，不再把 12 bugs / 5 projects
+    写作 current tracked cohort；
+  - 新增 2026-06-15 update，记录 frozen 20 tasks / 5 projects / 94 candidates /
+    376 E0/E2/E4/E6 evidence packets；
+  - Current Cohort Summary 改为 20 completed project-level P2P-broad tasks；
+  - G5 real full-run status 改为当前 376-record DeepSeek official API run：
+    `outputs/evp7_g5_llm_376_full_001/`、376/376 parse-valid、0 invalid、
+    cost observability 376/376、estimated total cost USD 0.327352058；
+  - 质量审计入口改为 `docs/experiments/evp7_g5_376_full_quality_audit.md` 和
+    `data/reviews/evp7_g5_376_full_quality_audit.json`；
+  - 248-record run 明确保留为 previous 12-task / 62-candidate cohort 的
+    historical checkpoint；
+  - Current Next Step 改为继续巩固 frozen-cohort paper/artifact readiness，
+    不再默认补 bug 或再跑 G5；
+- 已更新 `scripts/audit_paper_readiness.py`：
+  - 新增 `protocol_pilot_report` current-state check；
+  - current result / EVP-7 bounded pilot readiness 现在依赖该 report 通过；
+  - readiness Markdown 输出 protocol pilot report checks；
+- 已更新 anonymous artifact 审计：
+  - required files 新增 `docs/experiments/evp7_protocol_pilot.md`；
+  - embedded ARTIFACT_README 同时指向 active protocol 和 protocol pilot report；
+- 已同步 README、docs index、anonymous artifact 文档和 engineering notes；
+- 本轮未调用 API、未扩 cohort、未修改 prompt、未跟踪 raw model outputs。
+
+Verify:
+
+- `python -m compileall scripts\audit_paper_readiness.py scripts\audit_anonymous_artifact.py scripts\prepare_anonymous_artifact.py`
+  通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`protocol_pilot_report.passed=true`、`protocol_current_state.passed=true`、
+  `current_result_claim_ready=true`、`evp7_bounded_pilot_claim_ready=true`；
+- stale protocol-pilot report 检查未命中：
+  - `current tracked EVP-7 structural cohort is therefore 12`；
+  - `contains 18 completed project-level`；
+  - `outputs/evp7_g5_llm_248_full`；
+  - `fresh G5 real-LLM pass for the current 376-packet`；
+  - `latest real-LLM run remains scoped`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`safe_to_package=true`、`file_count=280`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 本轮按计划修复 `evp7_protocol_pilot.md` current-state drift；
+- paper readiness 现在同时验证 active protocol 和 protocol pilot report；
+- anonymous artifact 审计也要求携带该 protocol pilot report；
+- 该修复只巩固 frozen 20-task EVP-7 paper/artifact readiness，不改变实验边界
+  或 claim 边界。

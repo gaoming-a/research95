@@ -2156,3 +2156,13 @@ This file starts fresh for the patch-verification project.
   protocol file existence. Required phrases should cover the current
   20-task / 94-candidate / 376-packet state and explicitly demote the 248-run
   to a historical checkpoint.
+- Apply the same rule to `docs/experiments/evp7_protocol_pilot.md`. It began as
+  the protocol-pilot launch report, but later became a high-traffic handoff
+  entry. If its "current next step" still asks for a fresh 376-record G5 run
+  after that run has completed, downstream agents can repeat or misprioritize
+  expensive work.
+- Figure drift can also happen inside reusable figure IDs. In this project,
+  `fig2_evidence_visibility` originally encoded the older LLM-only /
+  prompt-only evidence-first / tool-augmented condition split. For current
+  EVP-7 paper-facing material, fig2 must encode the E0/E2/E4/E6 evidence-level
+  boundary and keep evaluator truth labels hidden across all levels.

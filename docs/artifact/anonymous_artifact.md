@@ -52,6 +52,7 @@ The latest ZIP audit passed. It confirms:
   present;
 - required protocol and paper-framing files are present:
   `docs/protocol/evidence_visibility_protocol.md`,
+  `docs/experiments/evp7_protocol_pilot.md`,
   `docs/paper/research_definition.md`, and
   `docs/paper/patch_verification_outline.md`;
 - embedded `ARTIFACT_README.md` includes no-API reproduction, local quality,
