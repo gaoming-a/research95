@@ -83,6 +83,19 @@ def paper_framing_state() -> dict[str, Any]:
         and "tool-augmented condition is distinguished" not in texts["ieee_submission_draft"]
         and "Evidence visibility by condition" not in texts["ieee_submission_generator"]
         and "tool-augmented condition is distinguished" not in texts["ieee_submission_generator"],
+        "ieee_abstract_foregrounds_frozen_evp7": "We construct a frozen EVP-7 pilot"
+        in normalized_texts["ieee_submission_draft"]
+        and "Earlier 30-candidate API pilots motivate the design boundary"
+        in normalized_texts["ieee_submission_draft"],
+        "generator_abstract_foregrounds_frozen_evp7": "We construct a frozen EVP-7 pilot"
+        in normalized_texts["ieee_submission_generator"]
+        and "Earlier 30-candidate API pilots motivate the design boundary"
+        in normalized_texts["ieee_submission_generator"],
+        "ieee_abstract_not_centered_on_old_first_pilot": "The first pilot contains 30 validated patch candidates"
+        not in texts["ieee_submission_draft"]
+        and "We then run an EVP-7 evidence-visibility pilot" not in texts["ieee_submission_draft"]
+        and "The first pilot contains 30 validated patch candidates" not in texts["ieee_submission_generator"]
+        and "We then run an EVP-7 evidence-visibility pilot" not in texts["ieee_submission_generator"],
         "current_artifacts_do_not_use_stale_title": all(
             stale_title not in normalized_text for normalized_text in normalized_texts.values()
         ),

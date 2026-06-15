@@ -10075,3 +10075,103 @@ Verify:
 - `git diff --stat` 确认 fig1-fig6 不再显示修改，本轮图件 diff 已收窄；
 - 该图适合放在 PPT 公式页之前或实验结果表格之前，用来解释“模型判断
   如何变成表格指标”。
+
+## 2026-06-15 Nature-guided IEEE draft consistency audit
+
+Inspect:
+
+- 已安装并加载 `nature-writing` / `nature-reviewer` 的必要规则：
+  - 先写一行核心论点；
+  - 每个主要 claim 必须有证据和边界；
+  - 审稿视角优先检查 originality / significance / technical soundness /
+    nonspecialist readability；
+  - 不发明实验、引用、结果或 novelty；
+- 当前 IEEE 草稿已包含 376-record EVP-7 G5 result、统计区间、utility
+  sensitivity、claim boundary 和 fig2/fig6；
+- 主要风险不是数据错误，而是结构排序：abstract 和 RQs 仍把旧
+  30-candidate 三条件 pilot 放在中心，EVP-7 376-run 像追加结果；
+- 按最终 roadmap，当前 paper-facing 主线应是 frozen
+  20-task / 94-candidate / 376-packet EVP-7 evidence visibility pilot，旧
+  30-candidate pilot 应作为前置动机、prompt-only negative result 和
+  tool-assisted workflow boundary；
+- 本轮不调用 API、不扩 cohort、不修改 prompt、不改变统计或 claim boundary。
+
+Plan:
+
+1. 修改 `scripts/write_ieee_latex_draft.py`，让 abstract、RQ 和 conclusion
+   foreground EVP-7 bounded evidence-visibility result；
+2. 将旧 30-candidate API/tool-augmented sections 明确写成 first-pilot
+   diagnostic/redesign evidence，避免读者误解为当前主实验；
+3. 重新生成 `docs/paper/ieee_submission_draft.tex` 并编译 PDF；
+4. 用 `pdftotext` 和 readiness gate 抽查 unsupported claims 未被重新引入；
+5. 同步 README / docs index / engineering notes（如新增论文结构经验）；
+6. 运行 paper readiness、anonymous artifact audit、local quality gate。
+
+验收条件：
+
+- Abstract/RQs/Conclusion 的主线从旧 first pilot 转为 EVP-7 evidence
+  visibility；
+- 仍明确保留 unsupported claims：不做 scale-generalized、LLM over
+  tool-only、E6 strict superiority、billing equivalence；
+- 所有文本改动来自生成器，生成的 IEEE `.tex` 可复现；
+- LaTeX 编译、paper readiness、artifact audit、local quality gate 通过。
+
+Execute:
+
+- 已按 `nature-writing` / `nature-reviewer` 规则执行 claim-evidence audit：
+  - 核心论点改为 frozen EVP-7 evidence-visibility pilot；
+  - 旧 30-candidate API pilots 保留为 diagnostic design evidence；
+  - 不新增实验、引用、novelty 或 scale-generalized claim；
+- 已修改 `scripts/write_ieee_latex_draft.py`：
+  - abstract foreground EVP-7 20-task / 94-candidate / 376-packet bounded
+    result；
+  - RQs 改为 evidence-poor risk、prompt-only cost、E0/E2/E4/E6 evidence
+    effect、baseline claim boundary、supported/unsupported claims；
+  - first-pilot sections 改名为 `First-Pilot API Diagnostic` 和
+    `First-Pilot Tool-Augmented Redesign`；
+  - EVP-7 result 段改为 paper-facing frozen result；
+  - conclusion foreground EVP-7 result，并将旧 first pilot 写成解释边界的
+    diagnostic evidence；
+- 已在 `scripts/audit_paper_readiness.py` 增加 narrative-center gate：
+  - IEEE draft 和生成器必须包含 `We construct a frozen EVP-7 pilot`；
+  - 必须把 `Earlier 30-candidate API pilots` 表述为 design boundary；
+  - 不得回退到旧 abstract 的 `The first pilot contains...` /
+    `We then run an EVP-7...` 结构；
+- 已同步 README、docs index 和 engineering notes；
+- 本轮未调用 API、未扩 cohort、未修改 prompt、未改统计结果或 claim
+  boundary。
+
+Verify:
+
+- `python -m compileall scripts\write_ieee_latex_draft.py scripts\audit_paper_readiness.py`
+  通过；
+- `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`
+  通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`paper_framing.passed=true`、`ieee_abstract_foregrounds_frozen_evp7=true`、
+  `generator_abstract_foregrounds_frozen_evp7=true`、
+  `ieee_abstract_not_centered_on_old_first_pilot=true`、
+  `current_result_claim_ready=true`、`evp7_bounded_pilot_claim_ready=true`；
+- `pdflatex` 连续两遍编译 `docs\paper\ieee_submission_draft.tex` 成功，输出
+  `outputs\paper_compile\ieee_submission_draft.pdf` 共 6 页；
+- `pdftotext outputs\paper_compile\ieee_submission_draft.pdf -` 抽查确认：
+  - PDF 包含 `Earlier 30-candidate API pilots motivate the design boundary`；
+  - PDF 保留 `not scale-generalized`、deterministic-baseline superiority、
+    E6 strict superiority 和 billing equivalence 边界；
+  - 旧 `The first pilot contains 30...` / `We then run an EVP-7...` wording
+    未命中；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`safe_to_package=true`、`file_count=283`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 本轮完成 Nature-guided IEEE draft consistency audit；
+- IEEE abstract/RQs/conclusion 现在以 frozen EVP-7 bounded result 为主线；
+- 旧 first-pilot 结果仍保留，但只作为 prompt-only negative result、
+  tool-assisted boundary 和设计动机；
+- readiness gate 已覆盖该 narrative-center drift，后续刷新不应重新把旧
+  first pilot 放回 paper-facing 主线。

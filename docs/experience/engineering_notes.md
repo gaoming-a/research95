@@ -2183,6 +2183,11 @@ This file starts fresh for the patch-verification project.
   figure font to `Microsoft YaHei` when available, which regenerated fig1-fig6
   with unrelated visual diffs. Keep the global font stable for existing figures,
   or isolate typography to the new figure.
+- A claim-bounded draft can still have the wrong narrative center. After the
+  376-record EVP-7 run became the paper-facing result, the IEEE abstract and
+  research questions still foregrounded the older 30-candidate three-condition
+  pilot. Fix this in the generator so the current result is the main argument
+  and the first pilot is diagnostic design evidence.
 - Canonical roadmap drift can recur even after protocol and paper files are
   fixed. `final_paper_roadmap_zh.md` had a current-state update to 20 tasks /
   94 candidates / 376 packets, but its Phase A numbered list still described

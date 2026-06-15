@@ -615,6 +615,8 @@
   the current EVP-7 G5 376-record summary plus claim-boundary audit.
   It also owns the paper-facing figure captions, including the compact EVP-7
   E0/E2/E4/E6 fig2 evidence-level caption checked by paper readiness.
+  The generated narrative foregrounds the frozen EVP-7 bounded result while
+  keeping the earlier 30-candidate API pilot as diagnostic design evidence.
   The old `docs/paper/ieee_preapi_draft.tex` is retained only as historical
   pre-API context.
 - `scripts/generate_paper_figures.py`: generates the publication figure set

@@ -169,22 +169,23 @@ Email: anonymous@example.com}}
 \begin{{abstract}}
 AI coding agents increasingly produce patches for real software tasks, but a
 patch that looks plausible is not necessarily safe to merge. This paper studies
-patch acceptance as a verification problem: given a real task and a candidate
-patch, decide whether the patch should be accepted, rejected, or escalated
-based on evidence. We construct a pilot patch-verification dataset from
-retained real-bug pairs, materialize source-level patch candidates, validate
-labels with executable oracles, and evaluate three review conditions: LLM-only
-patch review, prompt-only evidence-first verification, and tool-augmented
-evidence verification. The first pilot contains 30 validated patch candidates
-from 7 real-bug tasks across 2 projects, including 9 partial-fix candidates. In
-a single-model DeepSeek API pilot, prompt-only evidence-first verification
-removes observed false accepts but loses correct-patch recall. A separate
-tool-augmented verifier, given executable behavior summaries, restores correct
-recall while preserving zero observed false accepts on this pilot. We then run
-an EVP-7 evidence-visibility pilot over {evp7["task_count"]} tasks,
-{evp7["candidate_count"]} candidates, and {evp7["evidence_packet_count"]}
-evidence packets. The EVP-7 result supports bounded pilot observations about
-evidence-level variation, not scale-generalized model or deployment claims.
+patch acceptance as an evidence-conditioned merge-gate decision: given a real
+task and a candidate patch, decide whether the patch should be accepted,
+rejected, or escalated under visible evidence. We construct a frozen EVP-7
+pilot from retained real-bug tasks, materialize source-level patch candidates,
+validate labels with executable oracles, and review {evp7["candidate_count"]}
+candidates across E0/E2/E4/E6 evidence levels, yielding
+{evp7["evidence_packet_count"]} evidence packets. A single-model DeepSeek G5
+run produces {evp7["review_count"]} parse-valid non-mock records. E4 and E6
+preserve zero observed false accepts and accepted precision 1.0000, while E6
+achieves correct recall {evp7["e6_recall"]} and Evidence Gain
+{evp7["e6_gain"]}. Wilson intervals, candidate-level bootstrap deltas, and a
+claim-boundary audit keep the interpretation bounded. Earlier 30-candidate
+API pilots motivate the design boundary: prompt-only evidence discipline
+reduces observed false accepts but loses correct-patch recall, while
+tool-visible execution summaries support a separate tool-assisted workflow.
+The result supports bounded evidence-level variation, not scale-generalized
+model or deployment claims.
 \end{{abstract}}
 
 \section{{Introduction}}
@@ -215,22 +216,20 @@ gate without stronger evidence discipline.
 
 \section{{Research Questions}}
 
-\textbf{{RQ1.}} How reliable is LLM-only review when deciding whether candidate
-patches should be accepted?
+\textbf{{RQ1.}} How risky is evidence-poor LLM review as a merge gate for
+candidate patches?
 
-\textbf{{RQ2.}} Can prompt-only evidence-first verification reduce false
-accepts compared with LLM-only review?
+\textbf{{RQ2.}} Does prompt-only evidence discipline reduce observed false
+accepts, and what correct-recall cost does it introduce?
 
-\textbf{{RQ3.}} Does evidence-first verification preserve useful correct-patch
-recall, or does it only reduce false accepts by rejecting or escalating too
-aggressively?
+\textbf{{RQ3.}} Across E0/E2/E4/E6, how does visible evidence change false
+accepts, accepted precision, correct recall, escalation, and utility?
 
-\textbf{{RQ4.}} Does tool-augmented evidence verification recover the
-correct-patch recall lost by prompt-only evidence-first verification?
+\textbf{{RQ4.}} What do deterministic and tool-assisted evidence baselines
+allow us to claim about LLM contribution?
 
-\textbf{{RQ5.}} In a larger EVP-7 evidence-visibility pilot, do real merge-gate
-model outputs vary across evidence levels while preserving an explicit claim
-boundary?
+\textbf{{RQ5.}} Which paper claims remain supported or unsupported under the
+frozen 20-task EVP-7 pilot boundary?
 
 \section{{Dataset Construction}}
 
@@ -319,9 +318,10 @@ small but intentionally includes difficult partial-fix candidates.}}
 
 {tables_tex}
 
-\section{{Real API Pilot Result}}
+\section{{First-Pilot API Diagnostic}}
 
-The first API pilot ran two prompt-only conditions on the validated candidates:
+Before the frozen EVP-7 run, a first API pilot ran two prompt-only conditions
+on the validated candidates:
 LLM-only review and evidence-first verification. Both conditions used
 \texttt{{deepseek-v4-pro}} through the DeepSeek official API, yielding 60
 non-mock review records. The run passed completeness checks: 30 candidates, 2
@@ -333,7 +333,7 @@ improved accepted precision, but correct-patch recall dropped below the
 configured gate. The result is therefore mixed rather than positive: it
 supports a safety/utility tradeoff claim, not a superiority claim.
 
-\section{{Tool-Augmented Redesign}}
+\section{{First-Pilot Tool-Augmented Redesign}}
 
 After the prompt-only gate returned \texttt{{stop\_or\_redesign}}, we evaluated
 a separate \texttt{{tool\_augmented\_evidence}} condition. The verifier saw
@@ -351,7 +351,7 @@ summaries can be decisive when prompt-only evidence is too sparse.
 
 \section{{EVP-7 Evidence-Visibility Result}}
 
-We next freeze a larger EVP-7 cohort with {evp7["task_count"]} real-bug tasks,
+The paper-facing result freezes a larger EVP-7 cohort with {evp7["task_count"]} real-bug tasks,
 {evp7["candidate_count"]} patch candidates, and four model-visible evidence
 levels per candidate. The resulting {evp7["evidence_packet_count"]} evidence
 packets are reviewed by the G5 merge-gate verifier using
@@ -450,18 +450,20 @@ frontier models or all coding agents. The EVP-7 quality audit also rejects:
 
 \section{{Conclusion}}
 
-The current artifact establishes a validated patch-verification pilot and a
-completed single-model API pilot. Prompt-only evidence-first verification is
-not sufficient under the configured gate: it reduces false accepts but loses
-too much correct-patch recall. The redesigned tool-augmented verifier passes
-the 30-candidate full-run gate by accepting all correct reference patches and
-rejecting all negative candidates. The defensible conclusion is therefore a
-staged finding: LLM-only review is unsafe as a merge gate, prompt-only
-evidence-first review is too conservative under evidence poverty,
-tool-visible execution evidence can support a stronger verifier under the
-first pilot conditions, and the EVP-7 G5 run provides bounded evidence that
-evidence visibility changes merge-gate behavior on a larger frozen pilot
-cohort.
+The paper-facing artifact establishes a frozen EVP-7 evidence-visibility pilot:
+20 real-bug tasks, {evp7["candidate_count"]} patch candidates, and
+{evp7["evidence_packet_count"]} reviewed evidence packets. Within this bounded
+single-model setting, evidence visibility changes merge-gate behavior: E4 and
+E6 preserve zero observed false accepts and accepted precision 1.0000, while
+E6 improves correct recall and Evidence Gain over E0 in the tracked summary.
+The earlier 30-candidate pilots explain why this boundary matters:
+prompt-only evidence-first verification was safer but too conservative under
+evidence poverty, and tool-visible execution summaries supported a separate
+tool-assisted verifier. The defensible conclusion is therefore not that the
+LLM is deployment-ready or superior to deterministic tool evidence. It is that
+candidate-patch verification must report what evidence was visible, how hidden
+labels were withheld until evaluation, and which claims remain bounded by the
+current cohort, model, and evidence design.
 
 \end{{document}}
 """
