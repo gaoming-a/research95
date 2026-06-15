@@ -2166,6 +2166,10 @@ This file starts fresh for the patch-verification project.
   prompt-only evidence-first / tool-augmented condition split. For current
   EVP-7 paper-facing material, fig2 must encode the E0/E2/E4/E6 evidence-level
   boundary and keep evaluator truth labels hidden across all levels.
+- The compact fig2 layout can omit the long bottom explanatory sentence for
+  slide/PDF fit, but it must keep the evaluator truth labels row in the matrix
+  and show that row as hidden for E0/E2/E4/E6. Removing both the sentence and
+  the row would erase the hidden-evaluator boundary.
 - Canonical roadmap drift can recur even after protocol and paper files are
   fixed. `final_paper_roadmap_zh.md` had a current-state update to 20 tasks /
   94 candidates / 376 packets, but its Phase A numbered list still described

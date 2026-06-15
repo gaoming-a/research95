@@ -215,17 +215,9 @@ def fig_evidence_visibility(out_dir: Path) -> None:
     ax.set_yticks(np.arange(len(rows)) + 0.5, rows)
     ax.tick_params(length=0)
     ax.set_title("EVP-7 evidence visibility boundary by level", loc="left", weight="bold")
-    fig.text(
-        0.30,
-        0.07,
-        "Evaluator truth labels include reference correctness, hidden final labels, and final oracle outcomes; "
-        "they never enter the reviewer prompt and are used only for metric computation.",
-        fontsize=7.2,
-        color=COLORS["muted"],
-    )
     for spine in ax.spines.values():
         spine.set_visible(False)
-    fig.subplots_adjust(left=0.30, right=0.98, top=0.84, bottom=0.22)
+    fig.subplots_adjust(left=0.30, right=0.98, top=0.84, bottom=0.16)
     save_figure(fig, out_dir, "fig2_evidence_visibility")
 
 

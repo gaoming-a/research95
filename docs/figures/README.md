@@ -12,7 +12,9 @@ python scripts\generate_paper_figures.py
 Each figure is emitted as PDF, SVG, and PNG:
 
 - `fig1_framework`: patch-verification workflow.
-- `fig2_evidence_visibility`: EVP-7 evidence boundary across E0/E2/E4/E6 visibility levels.
+- `fig2_evidence_visibility`: compact EVP-7 evidence boundary across
+  E0/E2/E4/E6 visibility levels, with evaluator truth labels shown as hidden
+  across all levels.
 - `fig3_dataset_composition`: pilot dataset and executable validation.
 - `fig4_result_tradeoff`: first-pilot safety/recall tradeoff result.
 - `fig5_claim_boundary`: supported claim boundary.

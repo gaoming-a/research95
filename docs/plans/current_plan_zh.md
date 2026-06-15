@@ -9875,3 +9875,68 @@ Verify:
 - anonymous artifact 审计也要求携带 canonical roadmap；
 - 该修复只巩固 frozen 20-task EVP-7 paper/artifact readiness，不改变实验边界
   或 claim 边界。
+
+## 124. 2026-06-15 compact fig2 evidence boundary layout
+
+Inspect:
+
+- 当前工作区有未提交图形改动：
+  - `scripts/generate_paper_figures.py`；
+  - `docs/figures/fig2_evidence_visibility.{pdf,png,svg}`；
+- diff 显示改动只删除 `fig2_evidence_visibility` 底部长说明文字，并收紧底部
+  留白；
+- E0/E2/E4/E6 矩阵本体仍保留，`Evaluator truth labels` 行仍在四个 evidence
+  levels 下全部显示为 hidden；
+- 该改动不涉及实验数据、prompt、API、metrics 或 claim 边界。
+
+Plan:
+
+1. 保留 fig2 compact layout，前提是视觉检查确认矩阵、行列标签和 hidden
+   boundary 清晰；
+2. 运行 `scripts/generate_paper_figures.py` 重新生成 figures，确认脚本可复现；
+3. 同步 `docs/figures/README.md` 和 engineering notes，记录 fig2 compact
+   layout 仍必须保留 evaluator truth labels hidden 行；
+4. 运行 paper readiness、artifact package + audit、local quality gate；
+5. 本轮不调用 API、不扩 cohort、不修改 prompt、不改变 claim 边界。
+
+验收条件：
+
+- fig2 PNG 视觉检查通过；
+- `scripts/generate_paper_figures.py` 可复现当前图；
+- README/figure docs/engineering notes/current plan 已同步；
+- paper readiness、anonymous artifact audit、local quality gate 通过；
+- 只提交本轮 fig2 layout 与文档同步相关文件。
+
+Execute:
+
+- 已保留 `fig2_evidence_visibility` 的 compact layout：
+  - 删除底部长说明文字；
+  - 收紧底部留白；
+  - 保持 E0/E2/E4/E6 矩阵本体；
+  - 保持 `Evaluator truth labels` 行，且四个 evidence levels 均为 hidden；
+- 已运行 `python scripts\generate_paper_figures.py` 重新生成 PDF/SVG/PNG；
+- 已人工检查 `docs/figures/fig2_evidence_visibility.png`，矩阵、行列标签和
+  hidden evaluator boundary 清晰；
+- 已同步 `docs/figures/README.md`、`docs/INDEX.md` 和
+  `docs/experience/engineering_notes.md`；
+- 本轮未调用 API、未扩 cohort、未修改 prompt、未修改 metrics 或 claim 边界。
+
+Verify:
+
+- `python scripts\generate_paper_figures.py` 通过，输出 `figure_count=6`；
+- `python -m compileall scripts\generate_paper_figures.py` 通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`evp7_bounded_pilot_claim_ready=true`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`safe_to_package=true`、`file_count=280`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 本轮只压缩 fig2 版式，未改变 EVP-7 evidence boundary 语义；
+- evaluator truth labels 的 hidden boundary 仍在矩阵中显式可见；
+- 该修复服务于 paper/PPT figure readability，不改变实验边界或论文 claim
+  边界。
