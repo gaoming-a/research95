@@ -170,12 +170,15 @@
   non-goals.
 - `paper/patch_verification_outline.md`: target paper outline and contribution
   framing.
-- `paper/patch_verification_draft.md`: mixed-result draft with no-API
-  validation results and the first DeepSeek official API full-run outcome.
+- `paper/patch_verification_draft.md`: staged result draft with no-API
+  validation, the first DeepSeek official API full-run outcome, the
+  tool-augmented full run, and the bounded EVP-7 G5 376-record result.
 - `paper/generated_tables.md`: generated Markdown paper tables from current
-  no-API outputs.
+  tracked outputs, including the EVP-7 G5 376-record real-LLM result and claim
+  boundary.
 - `paper/generated_tables.tex`: generated LaTeX table snippets used by the
-  current IEEE draft.
+  current IEEE draft, including the EVP-7 G5 376-record result and claim
+  boundary snippets.
 - `paper/ieee_submission_draft.tex`: current anonymous IEEEtran submission
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, figures, threats, and conclusion.
@@ -323,12 +326,20 @@
 - `experiments/evp7_g5_execution_confirmation_packet.md`: human-facing
   confirmation packet for the G5 run. It records safe command
   order and forbidden actions before local config creation and API execution.
-- `experiments/evp7_g5_llm_full_run_result.md`: tracked summary of the real
-  DeepSeek official EVP-7 G5 full run. Raw model responses remain ignored under
+- `experiments/evp7_g5_llm_full_run_result.md`: historical tracked summary of
+  the earlier 248-record DeepSeek official EVP-7 G5 full run. Raw model
+  responses remain ignored under `outputs/`.
+- `experiments/evp7_g5_full_run_quality_audit.md`: historical tracked
+  claim-boundary audit for the earlier 248-record DeepSeek run. It lists
+  supported pilot claims, unsupported claims, and limitations.
+- `experiments/evp7_g5_llm_376_full_result.md`: tracked summary of the current
+  376-record DeepSeek official EVP-7 G5 full run on the frozen
+  20-task/94-candidate cohort. Raw model responses remain ignored under
   `outputs/`.
-- `experiments/evp7_g5_full_run_quality_audit.md`: tracked claim-boundary audit
-  for the latest 248-record DeepSeek run. It lists supported pilot claims,
-  unsupported claims, and limitations.
+- `experiments/evp7_g5_376_full_quality_audit.md`: tracked claim-boundary audit
+  for the current 376-record DeepSeek run. It records the bounded pilot signal,
+  zero observed false accepts, complete cost observability, and unsupported
+  scale/baseline/E6-strict/billing claims.
 - `experiments/evp7_expansion_readiness.md`: controlled-expansion readiness
   report after EVP-7 G5. It records current main tasks, blocked-risk counts,
   broader BugsInPy metadata candidates, bounded project-lane probe rules, and
@@ -560,13 +571,14 @@
   readiness and tool-augmented conditional readiness separately, so the
   `tool_augmented_evidence` result cannot be mistaken for prompt-only model
   ability. It now also reports the current EVP-7 G5 bounded-pilot claim
-  readiness from the raw-output-free 248-record DeepSeek summary and quality
+  readiness from the raw-output-free 376-record DeepSeek summary and quality
   audit. It also reports whether pre-API methods evidence is complete: pilot
   report, paper draft/outline, model-selection docs, reproducibility
   comparison, model catalog audit, and pre-API handoff.
-- `scripts/write_paper_tables.py`: generates Markdown and LaTeX pre-API paper
-  tables from dataset summary, validation summary, metrics, and deterministic
-  reproducibility comparison.
+- `scripts/write_paper_tables.py`: generates Markdown and LaTeX paper tables
+  from dataset summary, validation summary, metrics, deterministic
+  reproducibility comparison, and the current EVP-7 G5 376-record summary plus
+  claim-boundary audit.
 - `scripts/write_ieee_latex_draft.py`: generates the current IEEEtran
   submission draft at `docs/paper/ieee_submission_draft.tex` from generated
   dataset/no-API tables plus audited prompt-only and tool-augmented metrics.

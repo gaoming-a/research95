@@ -8,8 +8,8 @@ from typing import Any
 
 DEFAULT_FULL_RUN_DIR = Path("outputs") / "patch_verification_api_pilot_002"
 DEFAULT_TOOL_AUGMENTED_FULL_RUN_DIR = Path("outputs") / "patch_verification_tool_augmented_full_001"
-DEFAULT_EVP7_SUMMARY = Path("data") / "reviews" / "evp7_g5_llm_full_run_summary.json"
-DEFAULT_EVP7_QUALITY_AUDIT = Path("data") / "reviews" / "evp7_g5_full_run_quality_audit.json"
+DEFAULT_EVP7_SUMMARY = Path("data") / "reviews" / "evp7_g5_llm_376_full_summary.json"
+DEFAULT_EVP7_QUALITY_AUDIT = Path("data") / "reviews" / "evp7_g5_376_full_quality_audit.json"
 
 
 def read_json(path: Path) -> dict[str, Any] | None:
@@ -186,11 +186,11 @@ def evp7_g5_state(summary_path: Path, quality_path: Path) -> dict[str, Any]:
     level_counts = quality.get("level_counts", {}) if isinstance(quality, dict) else {}
     required_docs = {
         "protocol": file_state(Path("docs") / "protocol" / "evidence_visibility_protocol.md"),
-        "run_result": file_state(Path("docs") / "experiments" / "evp7_g5_llm_full_run_result.md"),
-        "quality_audit": file_state(Path("docs") / "experiments" / "evp7_g5_full_run_quality_audit.md"),
+        "run_result": file_state(Path("docs") / "experiments" / "evp7_g5_llm_376_full_result.md"),
+        "quality_audit": file_state(Path("docs") / "experiments" / "evp7_g5_376_full_quality_audit.md"),
         "expansion_readiness": file_state(Path("docs") / "experiments" / "evp7_expansion_readiness.md"),
     }
-    required_levels = {"E0": 62, "E2": 62, "E4": 62, "E6": 62}
+    required_levels = {"E0": 94, "E2": 94, "E4": 94, "E6": 94}
     supported_claims = quality.get("supported_claims", []) if isinstance(quality, dict) else []
     unsupported_claims = quality.get("unsupported_claims", []) if isinstance(quality, dict) else []
     ready = bool(
@@ -199,14 +199,14 @@ def evp7_g5_state(summary_path: Path, quality_path: Path) -> dict[str, Any]:
         and metrics.get("run_kind") == "real_llm"
         and metrics.get("g5_metric_scaffold") == "passed"
         and metrics.get("g5_signal_claim_status") == "real_llm_verifier_signal_observed_on_evp7"
-        and summary.get("quality", {}).get("review_count") == 248
-        and summary.get("quality", {}).get("unique_review_ids") == 248
+        and summary.get("quality", {}).get("review_count") == 376
+        and summary.get("quality", {}).get("unique_review_ids") == 376
         and summary.get("quality", {}).get("invalid_output_rate", 1.0) <= 0.02
         and quality.get("quality_status") in {"passed", "passed_with_limitations"}
         and quality.get("raw_outputs_read") is False
         and quality.get("raw_outputs_tracked") is False
-        and quality.get("review_count") == 248
-        and quality.get("candidate_count") == 62
+        and quality.get("review_count") == 376
+        and quality.get("candidate_count") == 94
         and level_counts == required_levels
         and all(doc["exists"] for doc in required_docs.values())
         and (metric_groups.get("E4") or {}).get("false_accept_rate") == 0.0

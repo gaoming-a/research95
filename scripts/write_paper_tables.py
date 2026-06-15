@@ -12,6 +12,8 @@ BASELINE_LABELS = {
     "no_api_oracle_upper_bound::oracle_upper_bound": "oracle upper bound",
 }
 
+EVIDENCE_LEVELS = ("E0", "E2", "E4", "E6")
+
 
 def read_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
@@ -83,11 +85,18 @@ def escape_latex(text: str) -> str:
     return text
 
 
-def build_markdown(dataset: dict[str, Any], validation: dict[str, Any], metrics: dict[str, Any], repro: dict[str, Any]) -> str:
+def build_markdown(
+    dataset: dict[str, Any],
+    validation: dict[str, Any],
+    metrics: dict[str, Any],
+    repro: dict[str, Any],
+    evp7_summary: dict[str, Any],
+    evp7_quality: dict[str, Any],
+) -> str:
     lines = [
-        "# Paper Tables: Pre-API Patch Verification",
+        "# Paper Tables",
         "",
-        "These tables are generated from current no-API outputs. They do not include real model-review results.",
+        "These tables are generated from current tracked artifacts. Raw model responses are not included.",
         "",
     ]
     lines.extend(md_count_table("Dataset By Project", dataset["project_counts"], "project"))
@@ -123,6 +132,45 @@ def build_markdown(dataset: dict[str, Any], validation: dict[str, Any], metrics:
     lines.extend(
         [
             "",
+            "## EVP-7 G5 Evidence Visibility Results",
+            "",
+            f"- cohort: 20 tasks / 94 candidates / 376 evidence packets",
+            f"- provider/model: `{evp7_summary['provider']}` / `{evp7_summary['model']}`",
+            f"- quality audit: `{evp7_quality['quality_status']}`",
+            f"- cost note: {evp7_summary['workflow']['cost_note']}",
+            f"- cost summary: `{json.dumps(evp7_summary['workflow'].get('cost_summary'), sort_keys=True)}`",
+            "",
+            "| evidence | records | decisions | invalid | false accept | accepted precision | correct recall | evidence gain vs E0 |",
+            "|---|---:|---|---:|---:|---:|---:|---:|",
+        ]
+    )
+    for level in EVIDENCE_LEVELS:
+        group = evp7_summary["metrics"]["metric_groups"][level]
+        lines.append(
+            f"| {level} | {group['record_count']} | `{json.dumps(group['decision_counts'], sort_keys=True)}` | "
+            f"{fmt(group['invalid_output_rate'])} | {fmt(group['false_accept_rate'])} | "
+            f"{fmt(group['accepted_precision'])} | {fmt(group['correct_recall'])} | "
+            f"{fmt(group['evidence_gain_vs_e0'])} |"
+        )
+    lines.extend(
+        [
+            "",
+            "## EVP-7 Claim Boundary",
+            "",
+            "| supported claims | unsupported claims |",
+            "|---|---|",
+        ]
+    )
+    supported = evp7_quality.get("supported_claims", [])
+    unsupported = evp7_quality.get("unsupported_claims", [])
+    row_count = max(len(supported), len(unsupported))
+    for index in range(row_count):
+        left = supported[index] if index < len(supported) else ""
+        right = unsupported[index] if index < len(unsupported) else ""
+        lines.append(f"| {left} | {right} |")
+    lines.extend(
+        [
+            "",
             "## Deterministic Reproducibility",
             "",
             "| item | value |",
@@ -137,9 +185,16 @@ def build_markdown(dataset: dict[str, Any], validation: dict[str, Any], metrics:
     return "\n".join(lines)
 
 
-def build_latex(dataset: dict[str, Any], validation: dict[str, Any], metrics: dict[str, Any], repro: dict[str, Any]) -> str:
+def build_latex(
+    dataset: dict[str, Any],
+    validation: dict[str, Any],
+    metrics: dict[str, Any],
+    repro: dict[str, Any],
+    evp7_summary: dict[str, Any],
+    evp7_quality: dict[str, Any],
+) -> str:
     parts = [
-        "% Generated pre-API paper tables. Requires booktabs.",
+        "% Generated paper tables. Requires booktabs.",
         latex_count_table("Dataset by project.", "tab:dataset-projects", dataset["project_counts"], "Project"),
         latex_count_table("Candidate types.", "tab:candidate-types", dataset["candidate_type_counts"], "Candidate type"),
         "\\begin{table}[t]\n"
@@ -188,6 +243,8 @@ def build_latex(dataset: dict[str, Any], validation: dict[str, Any], metrics: di
         "\\bottomrule\n"
         "\\end{tabular}\n"
         "\\end{table}\n",
+        evp7_latex_table(evp7_summary),
+        evp7_claim_boundary_latex_table(evp7_quality),
     ]
     return "\n\n".join(parts)
 
@@ -205,12 +262,82 @@ def baseline_latex_row(label: str, group: dict[str, Any]) -> str:
     return " & ".join(values) + r" \\"
 
 
+def evp7_latex_table(summary: dict[str, Any]) -> str:
+    rows = "\n".join(
+        evp7_latex_row(level, summary["metrics"]["metric_groups"][level])
+        for level in EVIDENCE_LEVELS
+    )
+    cost = summary["workflow"].get("total_cost_usd_reported_by_runner")
+    caption = (
+        "\\caption{EVP-7 G5 evidence-visibility results on the 376-packet frozen cohort. "
+        + "Runner-estimated total cost was "
+        + fmt_latex(cost)
+        + " USD.}\n"
+    )
+    return (
+        "\\begin{table*}[t]\n"
+        "\\centering\n"
+        + caption
+        + "\\label{tab:evp7-g5-results}\n"
+        "\\begin{tabular}{lrrrrrrr}\n"
+        "\\toprule\n"
+        "Evidence & Records & Accept & Escalate & Reject & False accept & Correct recall & Evidence gain \\\\\n"
+        "\\midrule\n"
+        + rows
+        + "\n\\bottomrule\n"
+        "\\end{tabular}\n"
+        "\\end{table*}\n"
+    )
+
+
+def evp7_latex_row(level: str, group: dict[str, Any]) -> str:
+    decisions = group.get("decision_counts", {})
+    values = [
+        escape_latex(level),
+        str(group.get("record_count")),
+        str(decisions.get("accept", 0)),
+        str(decisions.get("escalate", 0)),
+        str(decisions.get("reject", 0)),
+        fmt_latex(group.get("false_accept_rate")),
+        fmt_latex(group.get("correct_recall")),
+        fmt_latex(group.get("evidence_gain_vs_e0")),
+    ]
+    return " & ".join(values) + r" \\"
+
+
+def evp7_claim_boundary_latex_table(quality: dict[str, Any]) -> str:
+    supported = quality.get("supported_claims", [])
+    unsupported = quality.get("unsupported_claims", [])
+    row_count = max(len(supported), len(unsupported))
+    rows = []
+    for index in range(row_count):
+        left = supported[index] if index < len(supported) else ""
+        right = unsupported[index] if index < len(unsupported) else ""
+        rows.append(f"{escape_latex(left)} & {escape_latex(right)} \\\\")
+    return (
+        "\\begin{table*}[t]\n"
+        "\\centering\n"
+        "\\caption{EVP-7 G5 claim boundary.}\n"
+        "\\label{tab:evp7-claim-boundary}\n"
+        "\\begin{tabular}{p{0.45\\textwidth}p{0.45\\textwidth}}\n"
+        "\\toprule\n"
+        "Supported in the bounded EVP-7 pilot & Not supported \\\\\n"
+        "\\midrule\n"
+        + "\n".join(rows)
+        + "\n\\bottomrule\n"
+        "\\end{tabular}\n"
+        "\\end{table*}\n"
+    )
+
+
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Generate paper-ready pre-API tables from current outputs.")
+    parser = argparse.ArgumentParser(description="Generate paper-ready tables from current tracked outputs.")
     parser.add_argument("--dataset-summary", default="outputs/patch_verification_pilot_001/dataset_summary.json")
     parser.add_argument("--validation-summary", default="outputs/patch_verification_pilot_001/validation_summary.json")
     parser.add_argument("--metrics", default="outputs/patch_verification_pilot_001/metrics.json")
     parser.add_argument("--reproducibility", default="outputs/reproducibility/pilot_compare.json")
+    parser.add_argument("--evp7-summary", default="data/reviews/evp7_g5_llm_376_full_summary.json")
+    parser.add_argument("--evp7-quality-audit", default="data/reviews/evp7_g5_376_full_quality_audit.json")
     parser.add_argument("--out-md", default="docs/paper/generated_tables.md")
     parser.add_argument("--out-tex", default="docs/paper/generated_tables.tex")
     return parser.parse_args()
@@ -222,8 +349,10 @@ def main() -> None:
     validation = read_json(Path(args.validation_summary))
     metrics = read_json(Path(args.metrics))
     repro = read_json(Path(args.reproducibility))
-    write_text(Path(args.out_md), build_markdown(dataset, validation, metrics, repro))
-    write_text(Path(args.out_tex), build_latex(dataset, validation, metrics, repro))
+    evp7_summary = read_json(Path(args.evp7_summary))
+    evp7_quality = read_json(Path(args.evp7_quality_audit))
+    write_text(Path(args.out_md), build_markdown(dataset, validation, metrics, repro, evp7_summary, evp7_quality))
+    write_text(Path(args.out_tex), build_latex(dataset, validation, metrics, repro, evp7_summary, evp7_quality))
     print(json.dumps({"out_md": args.out_md, "out_tex": args.out_tex}, ensure_ascii=False, indent=2, sort_keys=True))
 
 

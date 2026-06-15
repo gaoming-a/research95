@@ -2029,3 +2029,20 @@ This file starts fresh for the patch-verification project.
   it expects the old API-pilot schema with raw response path/hash and patch
   fields. Use `summarize_evp7_g5_llm_full_run.py` plus
   `audit_evp7_g5_full_run_quality.py` for G5.
+
+## 2026-06-15 paper-facing 376-run readiness drift
+
+- After the 376-record G5 run, paper-facing scripts still pointed at the older
+  248-record summary/audit and generated tables still described themselves as
+  pre-API only. This would make the paper draft look current while the
+  readiness gate was auditing stale evidence.
+- Fix the drift by moving `audit_paper_readiness.py` defaults and cardinality
+  checks to the current 376-record summary/audit, then regenerate paper tables
+  from tracked raw-output-free summaries only.
+- Keep old 248-record documents indexed as historical artifacts. The current
+  claim boundary belongs to `evp7_g5_llm_376_full_summary.json` plus
+  `evp7_g5_376_full_quality_audit.json`.
+- The generated tables may report runner-estimated cost from provider token
+  usage, but should not label it as an external DeepSeek bill. Keep unsupported
+  claims explicit: scale generality, deterministic-baseline superiority, E6
+  strict superiority over E4, and billing equivalence.

@@ -8810,3 +8810,79 @@ Plan:
   - LLM 明确优于 deterministic visible-test/tool-only baseline；
   - E6 严格优于 E4；
   - runner-estimated cost 等同外部 DeepSeek 账单。
+
+## 112. 2026-06-15 refresh paper-facing artifacts for 376-run
+
+Inspect:
+
+- 当前工作区干净，本地 main ahead origin 16；
+- 最新真实 DeepSeek V4 G5 full run 已覆盖 frozen
+  20-task / 94-candidate / 376-packet cohort；
+- `scripts/audit_paper_readiness.py` 默认仍读取旧
+  `evp7_g5_llm_full_run_summary.json` / `evp7_g5_full_run_quality_audit.json`
+  路径，且 hard-code 248 records / 62 candidates / 62 per evidence level；
+- `scripts/write_paper_tables.py` 当前只生成 pre-API paper tables，文件头明确写
+  “do not include real model-review results”；
+- `docs/paper/patch_verification_draft.md` 仍是 2026-06-05 旧
+  tool-augmented/full-run draft 叙述。
+
+Plan:
+
+1. 更新 `audit_paper_readiness.py`，让 EVP-7 G5 readiness 默认使用
+   376-run summary/audit，并检查 376 records / 94 candidates / 94 per level；
+2. 更新 `write_paper_tables.py`，在保留旧 pre-API tables 的同时新增
+   EVP-7 G5 376-run result table 和 claim-boundary/cost summary；
+3. 重新生成 `docs/paper/generated_tables.md` 和
+   `docs/paper/generated_tables.tex`；
+4. 运行 `audit_paper_readiness.py`，确认
+   `evp7_bounded_pilot_claim_ready=true` 和
+   `current_result_claim_ready=true`；
+5. 更新 README / docs index / paper draft / engineering notes；
+6. 运行 local quality gate；
+7. 本轮不跑 API、不扩 cohort、不改 G5 prompt。
+
+验收条件：
+
+- generated tables 明确包含 376-run G5 real LLM metrics；
+- paper readiness 不再误读旧 248-run 为当前结果；
+- claim boundary 继续排除 scale-generalized、baseline-superiority、
+  E6 strict superiority 和 external-billing claims。
+
+Execute:
+
+- 已更新 `scripts/audit_paper_readiness.py` 默认输入和 readiness cardinality：
+  当前 EVP-7 G5 readiness 读取 376-run summary/audit，并检查
+  376 records / 94 candidates / E0/E2/E4/E6 各 94；
+- 已更新 `scripts/write_paper_tables.py`，在既有 dataset/baseline/repro
+  tables 后新增 EVP-7 G5 376-run result table、cost observability summary
+  和 claim-boundary table；
+- 已重新生成 `docs/paper/generated_tables.md` 和
+  `docs/paper/generated_tables.tex`；
+- 已更新 `docs/paper/patch_verification_draft.md`，把当前 draft 边界改为
+  EVP-7 376-run bounded-pilot result，并保留 prompt-only negative、
+  tool-augmented conditional positive 和 EVP-7 bounded pilot 三阶段叙述；
+- 已同步 README、docs index 和 engineering notes。
+
+Verify:
+
+- `python -m compileall scripts\write_paper_tables.py scripts\audit_paper_readiness.py`
+  通过；
+- `python scripts\write_paper_tables.py --out-md docs\paper\generated_tables.md --out-tex docs\paper\generated_tables.tex`
+  通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过：
+  - `evp7_bounded_pilot_claim_ready=true`；
+  - `current_result_claim_ready=true`；
+  - `prompt_only_positive_claim_ready=false` 仍由旧
+    `stop_or_redesign` gate 阻止，符合 claim boundary；
+- `python -m json.tool outputs\paper_readiness\latest.json > $null` 通过；
+- `git diff --check` 通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 本轮是按计划执行的 paper-facing refresh，没有调用 API、没有扩 cohort、
+  没有修改 G5 prompt；
+- 当前 paper readiness 已以 376-run 作为 EVP-7 G5 当前结果；
+- 旧 248-run 文件只作为 historical artifact 保留。

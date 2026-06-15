@@ -1,15 +1,18 @@
 # Verifiable Review of AI-Generated Patches in Real Software Projects
 
-Draft status: tool-augmented full-run result draft, 2026-06-05.
+Draft status: EVP-7 376-run bounded-pilot result draft, 2026-06-15.
 
-This draft reports the first full DeepSeek official API pilot. The current
-evidence supports dataset construction, executable label validation, no-API
-baselines, prompt-boundary checks, deterministic no-API reproducibility,
-model-selection boundary documentation, and a 60-record real API run. The result
-is mixed and does not support a positive prompt-only evidence-first claim under
-the configured gate. A follow-up tool-augmented full run shows that making
-tool-execution evidence visible restores the safety/recall tradeoff on this
-pilot.
+This draft reports the first full DeepSeek official API pilot, the follow-up
+tool-augmented verifier, and the current EVP-7 evidence-visibility pilot. The
+current evidence supports dataset construction, executable label validation,
+no-API baselines, prompt-boundary checks, deterministic no-API reproducibility,
+model-selection boundary documentation, a 60-record real API run, a
+30-candidate tool-augmented run, and a 376-record EVP-7 G5 run. The first
+prompt-only result is mixed and does not support a positive prompt-only
+evidence-first claim under the configured gate. The tool-augmented run shows
+that making tool-execution evidence visible restores the safety/recall tradeoff
+on the first pilot. The EVP-7 run supports only bounded pilot observations about
+evidence-level variation, not scale-generalized claims.
 
 ## Abstract
 
@@ -29,7 +32,10 @@ while reject-everything has false-accept rate 0.0 but correct-patch recall 0.0.
 The first API pilot tests whether prompt-only evidence-first verification
 reduces false accepts without collapsing correct-patch recall. It fails this
 gate. The revised tool-augmented run tests whether a verifier can recover the
-safety/recall tradeoff when executable evidence summaries are visible.
+safety/recall tradeoff when executable evidence summaries are visible. The
+later EVP-7 G5 pilot expands evidence visibility over 20 tasks, 94 candidates,
+and 376 evidence packets, showing evidence-level metric variation under a
+bounded claim boundary.
 
 ## 1. Introduction
 
@@ -73,7 +79,7 @@ Each candidate record contains evaluator-facing fields, including `patch_id`,
 use an anonymous `candidate_id` and omit evaluator labels, oracle paths, oracle
 results, and construction notes.
 
-The current pilot contains:
+The first patch-verification pilot contains:
 
 | item | value |
 |---|---:|
@@ -84,6 +90,18 @@ The current pilot contains:
 | empty/no-op controls | 7 |
 | unrelated controls | 7 |
 | partial-fix candidates | 9 |
+
+The current EVP-7 evidence-visibility pilot is a separate bounded cohort:
+
+| item | value |
+|---|---:|
+| real-bug tasks | 20 |
+| projects | 5 |
+| patch candidates | 94 |
+| evidence levels | 4 |
+| evidence packets | 376 |
+| correct reference patches | 20 |
+| issue-not-fixed negatives | 74 |
 
 Patch materialization uses retained source artifacts:
 
@@ -239,7 +257,34 @@ not show that prompt-only evidence-first review is sufficient; instead, it
 shows that executable evidence summaries can be decisive for the known
 safety/recall tradeoff.
 
-## 11. Reproducibility and Handoff Controls
+## 11. EVP-7 Evidence Visibility Pilot
+
+After the 30-candidate pilots, EVP-7 freezes a larger evidence-visibility
+cohort at 20 real-bug tasks, 94 patch candidates, and four model-visible
+evidence levels per candidate: E0, E2, E4, and E6. The G5 merge-gate verifier
+uses `deepseek-v4-pro` through the DeepSeek official API and returns
+accept/reject/escalate decisions in a fixed schema.
+
+The current 376-record full run produced 376 valid non-mock model outputs, no
+schema-invalid records, and complete token-usage cost observability. The
+runner-estimated cost is 0.327352058 USD; this is an estimate from provider
+token usage and configured pricing, not an external billing statement.
+
+| evidence | records | accept | escalate | reject | false accept | accepted precision | correct recall | evidence gain vs E0 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| E0 | 94 | 1 | 49 | 44 | 0.0000 | 1.0000 | 0.0500 | 0.0000 |
+| E2 | 94 | 0 | 57 | 37 | 0.0000 | NA | 0.0000 | -3.0000 |
+| E4 | 94 | 1 | 21 | 72 | 0.0000 | 1.0000 | 0.0500 | 7.0000 |
+| E6 | 94 | 7 | 16 | 71 | 0.0000 | 1.0000 | 0.3500 | 14.2500 |
+
+The quality audit passes with limitations. The result supports bounded EVP-7
+pilot claims that real DeepSeek verifier outputs vary by evidence level and
+that E4/E6 preserved zero observed false accepts with accepted precision 1.0.
+It does not support scale-generalized claims, a claim that the LLM outperforms
+the deterministic visible-test/tool-only baseline, a claim that E6 strictly
+improves over E4, or a claim that runner-estimated cost is an external bill.
+
+## 12. Reproducibility and Handoff Controls
 
 The pre-API artifact includes deterministic reproduction checks for the local
 dataset construction pipeline. The original no-API pilot and a reproduced run
@@ -258,7 +303,7 @@ mismatched files. Runtime work directories, raw API responses, external
 checkouts, and environment-dependent files are not treated as deterministic
 reproducibility evidence.
 
-Generated paper tables for the current pre-API state are available in
+Generated paper tables for the current tracked state are available in
 `docs/paper/generated_tables.md` and `docs/paper/generated_tables.tex`. These
 tables are generated from JSON outputs rather than manually copied values.
 
@@ -269,7 +314,7 @@ deterministic reproducibility. This is an engineering control: it prevents
 dry-run, mock, or local validation outputs from being mistaken for model
 results.
 
-## 12. Model Selection Boundary
+## 13. Model Selection Boundary
 
 The first real API pilot is a within-model comparison. The same model must be
 used for `llm_only` and `evidence_first`, so the first claim controls for base
@@ -285,14 +330,15 @@ Before any local model config is created, the executor must document:
 - reason for selection;
 - known limitations.
 
-The current run uses `deepseek-v4-pro` through DeepSeek official API. This
-controls for base-model capability within the two-condition comparison, but it
-does not establish cross-model generality.
+The current DeepSeek runs use `deepseek-v4-pro` through DeepSeek official API.
+This controls for base-model capability within each comparison, but it does not
+establish cross-model generality.
 
-## 13. Threats to Validity
+## 14. Threats to Validity
 
-Dataset size is small. The current pilot is designed to validate the method and
-failure surfaces, not to make broad claims about all AI-generated patches.
+Dataset size is small. The first 30-candidate pilot and the later 376-packet
+EVP-7 pilot are designed to validate the method and failure surfaces, not to
+make broad claims about all AI-generated patches.
 
 The partial-fix candidates are source-backed and oracle-checkable, but they are
 constructed from retained reference diffs rather than generated by live coding
@@ -317,7 +363,7 @@ presented as pure LLM reasoning ability. If the summaries include direct
 pass/fail outcomes, the condition is an evidence-assisted verifier and should
 be interpreted as a tool workflow.
 
-## 14. Current Conclusion
+## 15. Current Conclusion
 
 The current artifact establishes a validated patch-verification pilot and a
 completed single-model API pilot. The result does not establish that
@@ -328,7 +374,9 @@ tolerance.
 
 The revised tool-augmented verifier passed the 30-candidate full-run gate by
 accepting all correct reference patches and rejecting all negative candidates.
-The paper should therefore report a three-stage finding: prompt-only review is
-not enough, evidence-poor verification is too conservative, and tool-visible
-execution evidence can support a stronger verifier under the current pilot
-conditions.
+The EVP-7 G5 run then shows bounded evidence-level variation on a larger frozen
+cohort. The paper should therefore report a staged finding: prompt-only review
+is not enough, evidence-poor verification is too conservative, tool-visible
+execution evidence can support a stronger verifier under the first pilot, and
+the EVP-7 evidence-visibility run provides bounded pilot evidence that
+additional visible evidence changes merge-gate behavior.

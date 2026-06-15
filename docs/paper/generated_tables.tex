@@ -1,4 +1,4 @@
-% Generated pre-API paper tables. Requires booktabs.
+% Generated paper tables. Requires booktabs.
 
 \begin{table}[t]
 \centering
@@ -81,3 +81,37 @@ Missing & 0 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+
+\begin{table*}[t]
+\centering
+\caption{EVP-7 G5 evidence-visibility results on the 376-packet frozen cohort. Runner-estimated total cost was 0.3274 USD.}
+\label{tab:evp7-g5-results}
+\begin{tabular}{lrrrrrrr}
+\toprule
+Evidence & Records & Accept & Escalate & Reject & False accept & Correct recall & Evidence gain \\
+\midrule
+E0 & 94 & 1 & 49 & 44 & 0.0000 & 0.0500 & 0.0000 \\
+E2 & 94 & 0 & 57 & 37 & 0.0000 & 0.0000 & -3.0000 \\
+E4 & 94 & 1 & 21 & 72 & 0.0000 & 0.0500 & 7.0000 \\
+E6 & 94 & 7 & 16 & 71 & 0.0000 & 0.3500 & 14.2500 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
+\begin{table*}[t]
+\centering
+\caption{EVP-7 G5 claim boundary.}
+\label{tab:evp7-claim-boundary}
+\begin{tabular}{p{0.45\textwidth}p{0.45\textwidth}}
+\toprule
+Supported in the bounded EVP-7 pilot & Not supported \\
+\midrule
+The current EVP-7 run produced raw-output-free tracked metrics from real DeepSeek verifier outputs. & Scale-generalized paper claims beyond EVP-7. \\
+The run shows evidence-level metric variation in the tracked summary. & A claim that the LLM outperforms the deterministic visible-test tool-only baseline. \\
+E4/E6 preserved zero observed false accepts and accepted precision 1.0. & A claim that E6 strictly improves over E4 in this run. \\
+E4/E6 improved correct recall over E0 and produced positive Evidence Gain versus E0. & A claim that runner-estimated cost is an external DeepSeek billing statement. \\
+\bottomrule
+\end{tabular}
+\end{table*}

@@ -259,7 +259,7 @@ They should not override `final_paper_roadmap_zh.md`.
 - `scripts/audit_paper_readiness.py` now separates three paper-result
   boundaries: the old prompt-only gate remains a negative/redesign result, the
   old 30-candidate tool-augmented run remains a conditional tool-assisted
-  result, and the latest real 248-record EVP-7 G5 run is reported as a bounded
+  result, and the latest real 376-record EVP-7 G5 run is reported as a bounded
   pilot evidence-visibility result with explicit limitations.
 - Further expansion to 15-20 bugs is now gated by controlled-probe outcomes and
   the next project-level P2P-broad decision, not by adding metadata candidates
@@ -603,6 +603,10 @@ python scripts\write_paper_tables.py `
   --out-md docs\paper\generated_tables.md `
   --out-tex docs\paper\generated_tables.tex
 ```
+
+The generated tables now include the current EVP-7 G5 376-record real LLM
+result and its claim boundary, in addition to the historical pre-API dataset and
+baseline tables.
 
 For the current IEEEtran LaTeX submission draft, run:
 
