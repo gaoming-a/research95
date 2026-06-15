@@ -93,6 +93,7 @@ def build_markdown(
     evp7_summary: dict[str, Any],
     evp7_quality: dict[str, Any],
     evp7_statistics: dict[str, Any],
+    evp7_utility: dict[str, Any],
 ) -> str:
     lines = [
         "# Paper Tables",
@@ -154,6 +155,7 @@ def build_markdown(
             f"{fmt(group['evidence_gain_vs_e0'])} |"
         )
     lines.extend(evp7_statistics_markdown(evp7_statistics))
+    lines.extend(evp7_utility_markdown(evp7_utility))
     lines.extend(
         [
             "",
@@ -195,6 +197,7 @@ def build_latex(
     evp7_summary: dict[str, Any],
     evp7_quality: dict[str, Any],
     evp7_statistics: dict[str, Any],
+    evp7_utility: dict[str, Any],
 ) -> str:
     parts = [
         "% Generated paper tables. Requires booktabs.",
@@ -248,6 +251,7 @@ def build_latex(
         "\\end{table}\n",
         evp7_latex_table(evp7_summary),
         evp7_statistics_latex_table(evp7_statistics),
+        evp7_utility_latex_table(evp7_utility),
         evp7_claim_boundary_latex_table(evp7_quality),
     ]
     return "\n\n".join(parts)
@@ -372,6 +376,56 @@ def evp7_statistics_latex_table(statistics: dict[str, Any]) -> str:
     )
 
 
+def evp7_utility_markdown(utility: dict[str, Any]) -> list[str]:
+    stability = utility["stability_summary"]
+    return [
+        "",
+        "## EVP-7 Utility Sensitivity",
+        "",
+        f"- utility formula: `{utility['utility_formula']}`",
+        f"- scenario count: {utility['scenario_count']}",
+        f"- dominant best level: `{stability['dominant_best_level']}`",
+        f"- dominant best-level share: {fmt(stability['dominant_best_level_share'])}",
+        f"- dominant ranking: `{stability['dominant_ranking']}`",
+        f"- dominant ranking share: {fmt(stability['dominant_ranking_share'])}",
+        f"- interpretation: {stability['interpretation']}",
+        "",
+        "| evidence level | scenarios as best |",
+        "|---|---:|",
+        *[
+            f"| {level} | {utility['best_level_counts'].get(level, 0)} |"
+            for level in EVIDENCE_LEVELS
+        ],
+    ]
+
+
+def evp7_utility_latex_table(utility: dict[str, Any]) -> str:
+    rows = "\n".join(
+        f"{escape_latex(level)} & {utility['best_level_counts'].get(level, 0)} \\\\"
+        for level in EVIDENCE_LEVELS
+    )
+    stability = utility["stability_summary"]
+    caption = (
+        "\\caption{EVP-7 utility sensitivity over false-accept, escalation, and false-reject penalty grids. "
+        f"The dominant ranking was {escape_latex(stability['dominant_ranking'])} across "
+        f"{fmt(stability['dominant_ranking_share'])} of scenarios.}}\n"
+    )
+    return (
+        "\\begin{table}[t]\n"
+        "\\centering\n"
+        + caption
+        + "\\label{tab:evp7-utility-sensitivity}\n"
+        "\\begin{tabular}{lr}\n"
+        "\\toprule\n"
+        "Evidence level & Scenarios as best \\\\\n"
+        "\\midrule\n"
+        + rows
+        + "\n\\bottomrule\n"
+        "\\end{tabular}\n"
+        "\\end{table}\n"
+    )
+
+
 def interval_text(interval: dict[str, Any]) -> str:
     if interval.get("low") is None or interval.get("high") is None:
         return "--"
@@ -412,6 +466,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--evp7-summary", default="data/reviews/evp7_g5_llm_376_full_summary.json")
     parser.add_argument("--evp7-quality-audit", default="data/reviews/evp7_g5_376_full_quality_audit.json")
     parser.add_argument("--evp7-statistics", default="data/reviews/evp7_g5_376_statistical_analysis.json")
+    parser.add_argument("--evp7-utility-sensitivity", default="data/reviews/evp7_g5_376_utility_sensitivity.json")
     parser.add_argument("--out-md", default="docs/paper/generated_tables.md")
     parser.add_argument("--out-tex", default="docs/paper/generated_tables.tex")
     return parser.parse_args()
@@ -426,13 +481,14 @@ def main() -> None:
     evp7_summary = read_json(Path(args.evp7_summary))
     evp7_quality = read_json(Path(args.evp7_quality_audit))
     evp7_statistics = read_json(Path(args.evp7_statistics))
+    evp7_utility = read_json(Path(args.evp7_utility_sensitivity))
     write_text(
         Path(args.out_md),
-        build_markdown(dataset, validation, metrics, repro, evp7_summary, evp7_quality, evp7_statistics),
+        build_markdown(dataset, validation, metrics, repro, evp7_summary, evp7_quality, evp7_statistics, evp7_utility),
     )
     write_text(
         Path(args.out_tex),
-        build_latex(dataset, validation, metrics, repro, evp7_summary, evp7_quality, evp7_statistics),
+        build_latex(dataset, validation, metrics, repro, evp7_summary, evp7_quality, evp7_statistics, evp7_utility),
     )
     print(json.dumps({"out_md": args.out_md, "out_tex": args.out_tex}, ensure_ascii=False, indent=2, sort_keys=True))
 

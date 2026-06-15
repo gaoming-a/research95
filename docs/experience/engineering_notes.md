@@ -2108,3 +2108,15 @@ This file starts fresh for the patch-verification project.
 - When the traceability audit fails, prefer fixing the paper claim wording if
   the evidence already supports the claim. Only relax audit matching when the
   paper is already explicit and the matcher is too narrow.
+
+## 2026-06-15 utility sensitivity boundary
+
+- Utility formulas in paper tables are policy assumptions, not empirical facts.
+  Report the default penalty choice and at least one bounded sensitivity grid
+  before leaning on utility rankings.
+- In the current EVP-7 run every evidence level has zero observed false accepts,
+  so changing the false-accept penalty does not change rankings. The useful
+  sensitivity axis is escalation and false-reject penalty.
+- Keep sensitivity conclusions scoped to the frozen 20-task pilot. Stable
+  rankings across the grid strengthen the local interpretation but do not prove
+  scale generality or LLM superiority over a deterministic baseline.

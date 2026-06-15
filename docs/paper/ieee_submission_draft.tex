@@ -287,6 +287,23 @@ E6 & [0.0000, 0.0493] & [0.1812, 0.5671] & [0.0957, 0.2553] & [7.7500, 21.5063] 
 \end{table*}
 
 
+\begin{table}[t]
+\centering
+\caption{EVP-7 utility sensitivity over false-accept, escalation, and false-reject penalty grids. The dominant ranking was E6 > E4 > E0 > E2 across 1.0000 of scenarios.}
+\label{tab:evp7-utility-sensitivity}
+\begin{tabular}{lr}
+\toprule
+Evidence level & Scenarios as best \\
+\midrule
+E0 & 0 \\
+E2 & 0 \\
+E4 & 0 \\
+E6 & 27 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
 \begin{table*}[t]
 \centering
 \caption{EVP-7 G5 claim boundary.}
@@ -367,7 +384,9 @@ an external billing statement.
 The EVP-7 tables report evidence-level decisions and the audited claim
 boundary. Statistical intervals are reported with Wilson binomial intervals
 and candidate-level paired bootstrap deltas to avoid presenting the 376-record
-pilot as a scale-generalized result. E4 preserves false-accept rate 0.0000, accepted
+pilot as a scale-generalized result. A utility-sensitivity table varies
+false-accept, escalation, and false-reject penalties around the default
+merge-gate utility. E4 preserves false-accept rate 0.0000, accepted
 precision 1.0000, correct recall 0.0500, and
 evidence gain 7.0000. E6 preserves false-accept rate
 0.0000, accepted precision 1.0000, correct

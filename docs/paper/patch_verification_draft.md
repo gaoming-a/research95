@@ -277,6 +277,12 @@ token usage and configured pricing, not an external billing statement.
 | E4 | 94 | 1 | 21 | 72 | 0.0000 | 1.0000 | 0.0500 | 7.0000 |
 | E6 | 94 | 7 | 16 | 71 | 0.0000 | 1.0000 | 0.3500 | 14.2500 |
 
+Utility sensitivity varies false-accept, escalation, and false-reject penalties
+over 27 scenarios. Within this bounded grid, E6 is the best evidence level in
+all scenarios and the ranking remains E6 > E4 > E0 > E2. Because every evidence
+level has zero observed false accepts in this run, changing the false-accept
+penalty does not affect the utility ranking.
+
 The quality audit passes with limitations. The run produced raw-output-free
 tracked metrics from real DeepSeek verifier outputs, and supports bounded EVP-7
 pilot claims that those outputs vary by evidence level and that E4/E6 preserved

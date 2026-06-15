@@ -104,6 +104,9 @@
   EVP-7 G5 run. It records Wilson intervals, candidate-level bootstrap
   intervals, paired deltas against E0, per-project breakdowns, and
   per-patch-source breakdowns without raw model responses.
+- `../data/reviews/evp7_g5_376_utility_sensitivity.json`: tracked
+  raw-output-free utility sensitivity analysis over false-accept, escalation,
+  and false-reject penalty grids for the frozen EVP-7 G5 run.
 - `../data/reviews/evp7_g5_376_claim_traceability.json`: tracked
   raw-output-free claim-boundary traceability audit for the same EVP-7 G5 run.
   It maps supported and unsupported claims to summary, quality, statistics, and
@@ -166,6 +169,9 @@
   analysis for the same 376-record run, including Wilson CIs, candidate-level
   bootstrap CIs, paired deltas versus E0, per-project breakdowns, and
   per-patch-source breakdowns.
+- `experiments/evp7_g5_376_utility_sensitivity.md`: human-readable utility
+  sensitivity analysis showing how evidence-level utility rankings behave under
+  a bounded penalty grid.
 - `experiments/evp7_g5_376_claim_traceability.md`: human-readable
   claim-boundary traceability audit that verifies supported/unsupported EVP-7
   claims are covered by the paper tables, Markdown draft, and IEEE draft while
@@ -611,6 +617,9 @@
   statistical analysis for the frozen EVP-7 G5 376-record run. It reads ignored
   review records structurally, joins tracked candidate labels only for aggregate
   metrics, and writes Wilson/bootstrap/paired-breakdown artifacts.
+- `scripts/analyze_evp7_utility_sensitivity.py`: generates the raw-output-free
+  utility sensitivity analysis for EVP-7, varying false-accept, escalation, and
+  false-reject penalties without changing the frozen cohort or prompt.
 - `scripts/audit_paper_claim_boundary.py`: generates the EVP-7 claim-boundary
   traceability audit and fails when supported/unsupported claims are not covered
   by the current paper artifacts or required IEEE boundary cues are missing.

@@ -1,0 +1,743 @@
+{
+  "analysis_id": "evp7_g5_376_utility_sensitivity",
+  "best_level_counts": {
+    "E6": 27
+  },
+  "boundary": "This analysis reads ignored review records structurally and joins tracked candidate labels only for aggregate utility calculations. It writes no raw model responses or prompt text.",
+  "cohort": {
+    "candidate_count": 94,
+    "evidence_levels": [
+      "E0",
+      "E2",
+      "E4",
+      "E6"
+    ],
+    "evidence_packet_count": 376
+  },
+  "confusion_counts_by_level": {
+    "E0": {
+      "escalated_correct": 18,
+      "escalated_incorrect": 31,
+      "false_accept": 0,
+      "false_reject": 1,
+      "invalid_output": 0,
+      "true_accept": 1,
+      "true_reject": 43
+    },
+    "E2": {
+      "escalated_correct": 19,
+      "escalated_incorrect": 38,
+      "false_accept": 0,
+      "false_reject": 1,
+      "invalid_output": 0,
+      "true_accept": 0,
+      "true_reject": 36
+    },
+    "E4": {
+      "escalated_correct": 18,
+      "escalated_incorrect": 3,
+      "false_accept": 0,
+      "false_reject": 1,
+      "invalid_output": 0,
+      "true_accept": 1,
+      "true_reject": 71
+    },
+    "E6": {
+      "escalated_correct": 12,
+      "escalated_incorrect": 4,
+      "false_accept": 0,
+      "false_reject": 1,
+      "invalid_output": 0,
+      "true_accept": 7,
+      "true_reject": 70
+    }
+  },
+  "inputs": {
+    "candidates": "data/patches/evp7_candidates.jsonl",
+    "reviews": "outputs/evp7_g5_llm_376_full_001/reviews.jsonl"
+  },
+  "parameter_grid": {
+    "lambda_false_accept_penalty": [
+      1.0,
+      5.0,
+      10.0
+    ],
+    "mu_escalation_penalty": [
+      0.1,
+      0.25,
+      0.5
+    ],
+    "nu_false_reject_penalty": [
+      0.5,
+      1.0,
+      2.0
+    ]
+  },
+  "ranking_counts": {
+    "E6 > E4 > E0 > E2": 27
+  },
+  "raw_output_free_check": {
+    "checked_for_raw_response_fields": true,
+    "passed": true
+  },
+  "scenario_count": 27,
+  "scenarios": [
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -1.8,
+        "E4": 2.8,
+        "E6": 9.3
+      },
+      "lambda_false_accept_penalty": 1.0,
+      "mu_escalation_penalty": 0.1,
+      "nu_false_reject_penalty": 0.5,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -4.4,
+        "E2": -6.2,
+        "E4": -1.6,
+        "E6": 4.9
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -1.8,
+        "E4": 2.8,
+        "E6": 9.3
+      },
+      "lambda_false_accept_penalty": 1.0,
+      "mu_escalation_penalty": 0.1,
+      "nu_false_reject_penalty": 1.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -4.9,
+        "E2": -6.7,
+        "E4": -2.1,
+        "E6": 4.4
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -1.8,
+        "E4": 2.8,
+        "E6": 9.3
+      },
+      "lambda_false_accept_penalty": 1.0,
+      "mu_escalation_penalty": 0.1,
+      "nu_false_reject_penalty": 2.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -5.9,
+        "E2": -7.7,
+        "E4": -3.1,
+        "E6": 3.4
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -3.0,
+        "E4": 7.0,
+        "E6": 14.25
+      },
+      "lambda_false_accept_penalty": 1.0,
+      "mu_escalation_penalty": 0.25,
+      "nu_false_reject_penalty": 0.5,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -11.75,
+        "E2": -14.75,
+        "E4": -4.75,
+        "E6": 2.5
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -3.0,
+        "E4": 7.0,
+        "E6": 14.25
+      },
+      "lambda_false_accept_penalty": 1.0,
+      "mu_escalation_penalty": 0.25,
+      "nu_false_reject_penalty": 1.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -12.25,
+        "E2": -15.25,
+        "E4": -5.25,
+        "E6": 2.0
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -3.0,
+        "E4": 7.0,
+        "E6": 14.25
+      },
+      "lambda_false_accept_penalty": 1.0,
+      "mu_escalation_penalty": 0.25,
+      "nu_false_reject_penalty": 2.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -13.25,
+        "E2": -16.25,
+        "E4": -6.25,
+        "E6": 1.0
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -5.0,
+        "E4": 14.0,
+        "E6": 22.5
+      },
+      "lambda_false_accept_penalty": 1.0,
+      "mu_escalation_penalty": 0.5,
+      "nu_false_reject_penalty": 0.5,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -24.0,
+        "E2": -29.0,
+        "E4": -10.0,
+        "E6": -1.5
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -5.0,
+        "E4": 14.0,
+        "E6": 22.5
+      },
+      "lambda_false_accept_penalty": 1.0,
+      "mu_escalation_penalty": 0.5,
+      "nu_false_reject_penalty": 1.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -24.5,
+        "E2": -29.5,
+        "E4": -10.5,
+        "E6": -2.0
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -5.0,
+        "E4": 14.0,
+        "E6": 22.5
+      },
+      "lambda_false_accept_penalty": 1.0,
+      "mu_escalation_penalty": 0.5,
+      "nu_false_reject_penalty": 2.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -25.5,
+        "E2": -30.5,
+        "E4": -11.5,
+        "E6": -3.0
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -1.8,
+        "E4": 2.8,
+        "E6": 9.3
+      },
+      "lambda_false_accept_penalty": 5.0,
+      "mu_escalation_penalty": 0.1,
+      "nu_false_reject_penalty": 0.5,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -4.4,
+        "E2": -6.2,
+        "E4": -1.6,
+        "E6": 4.9
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -1.8,
+        "E4": 2.8,
+        "E6": 9.3
+      },
+      "lambda_false_accept_penalty": 5.0,
+      "mu_escalation_penalty": 0.1,
+      "nu_false_reject_penalty": 1.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -4.9,
+        "E2": -6.7,
+        "E4": -2.1,
+        "E6": 4.4
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -1.8,
+        "E4": 2.8,
+        "E6": 9.3
+      },
+      "lambda_false_accept_penalty": 5.0,
+      "mu_escalation_penalty": 0.1,
+      "nu_false_reject_penalty": 2.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -5.9,
+        "E2": -7.7,
+        "E4": -3.1,
+        "E6": 3.4
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -3.0,
+        "E4": 7.0,
+        "E6": 14.25
+      },
+      "lambda_false_accept_penalty": 5.0,
+      "mu_escalation_penalty": 0.25,
+      "nu_false_reject_penalty": 0.5,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -11.75,
+        "E2": -14.75,
+        "E4": -4.75,
+        "E6": 2.5
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -3.0,
+        "E4": 7.0,
+        "E6": 14.25
+      },
+      "lambda_false_accept_penalty": 5.0,
+      "mu_escalation_penalty": 0.25,
+      "nu_false_reject_penalty": 1.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -12.25,
+        "E2": -15.25,
+        "E4": -5.25,
+        "E6": 2.0
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -3.0,
+        "E4": 7.0,
+        "E6": 14.25
+      },
+      "lambda_false_accept_penalty": 5.0,
+      "mu_escalation_penalty": 0.25,
+      "nu_false_reject_penalty": 2.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -13.25,
+        "E2": -16.25,
+        "E4": -6.25,
+        "E6": 1.0
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -5.0,
+        "E4": 14.0,
+        "E6": 22.5
+      },
+      "lambda_false_accept_penalty": 5.0,
+      "mu_escalation_penalty": 0.5,
+      "nu_false_reject_penalty": 0.5,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -24.0,
+        "E2": -29.0,
+        "E4": -10.0,
+        "E6": -1.5
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -5.0,
+        "E4": 14.0,
+        "E6": 22.5
+      },
+      "lambda_false_accept_penalty": 5.0,
+      "mu_escalation_penalty": 0.5,
+      "nu_false_reject_penalty": 1.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -24.5,
+        "E2": -29.5,
+        "E4": -10.5,
+        "E6": -2.0
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -5.0,
+        "E4": 14.0,
+        "E6": 22.5
+      },
+      "lambda_false_accept_penalty": 5.0,
+      "mu_escalation_penalty": 0.5,
+      "nu_false_reject_penalty": 2.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -25.5,
+        "E2": -30.5,
+        "E4": -11.5,
+        "E6": -3.0
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -1.8,
+        "E4": 2.8,
+        "E6": 9.3
+      },
+      "lambda_false_accept_penalty": 10.0,
+      "mu_escalation_penalty": 0.1,
+      "nu_false_reject_penalty": 0.5,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -4.4,
+        "E2": -6.2,
+        "E4": -1.6,
+        "E6": 4.9
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -1.8,
+        "E4": 2.8,
+        "E6": 9.3
+      },
+      "lambda_false_accept_penalty": 10.0,
+      "mu_escalation_penalty": 0.1,
+      "nu_false_reject_penalty": 1.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -4.9,
+        "E2": -6.7,
+        "E4": -2.1,
+        "E6": 4.4
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -1.8,
+        "E4": 2.8,
+        "E6": 9.3
+      },
+      "lambda_false_accept_penalty": 10.0,
+      "mu_escalation_penalty": 0.1,
+      "nu_false_reject_penalty": 2.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -5.9,
+        "E2": -7.7,
+        "E4": -3.1,
+        "E6": 3.4
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -3.0,
+        "E4": 7.0,
+        "E6": 14.25
+      },
+      "lambda_false_accept_penalty": 10.0,
+      "mu_escalation_penalty": 0.25,
+      "nu_false_reject_penalty": 0.5,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -11.75,
+        "E2": -14.75,
+        "E4": -4.75,
+        "E6": 2.5
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -3.0,
+        "E4": 7.0,
+        "E6": 14.25
+      },
+      "lambda_false_accept_penalty": 10.0,
+      "mu_escalation_penalty": 0.25,
+      "nu_false_reject_penalty": 1.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -12.25,
+        "E2": -15.25,
+        "E4": -5.25,
+        "E6": 2.0
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -3.0,
+        "E4": 7.0,
+        "E6": 14.25
+      },
+      "lambda_false_accept_penalty": 10.0,
+      "mu_escalation_penalty": 0.25,
+      "nu_false_reject_penalty": 2.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -13.25,
+        "E2": -16.25,
+        "E4": -6.25,
+        "E6": 1.0
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -5.0,
+        "E4": 14.0,
+        "E6": 22.5
+      },
+      "lambda_false_accept_penalty": 10.0,
+      "mu_escalation_penalty": 0.5,
+      "nu_false_reject_penalty": 0.5,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -24.0,
+        "E2": -29.0,
+        "E4": -10.0,
+        "E6": -1.5
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -5.0,
+        "E4": 14.0,
+        "E6": 22.5
+      },
+      "lambda_false_accept_penalty": 10.0,
+      "mu_escalation_penalty": 0.5,
+      "nu_false_reject_penalty": 1.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -24.5,
+        "E2": -29.5,
+        "E4": -10.5,
+        "E6": -2.0
+      }
+    },
+    {
+      "best_level": "E6",
+      "deltas_vs_e0": {
+        "E0": 0.0,
+        "E2": -5.0,
+        "E4": 14.0,
+        "E6": 22.5
+      },
+      "lambda_false_accept_penalty": 10.0,
+      "mu_escalation_penalty": 0.5,
+      "nu_false_reject_penalty": 2.0,
+      "ranking": [
+        "E6",
+        "E4",
+        "E0",
+        "E2"
+      ],
+      "utilities": {
+        "E0": -25.5,
+        "E2": -30.5,
+        "E4": -11.5,
+        "E6": -3.0
+      }
+    }
+  ],
+  "stability_summary": {
+    "dominant_best_level": "E6",
+    "dominant_best_level_share": 1.0,
+    "dominant_ranking": "E6 > E4 > E0 > E2",
+    "dominant_ranking_share": 1.0,
+    "interpretation": "The current grid changes escalation and false-reject penalties but does not change false-accept penalties in this run because observed false accept counts are zero at every evidence level.",
+    "scenario_count": 27
+  },
+  "utility_formula": "true_accept - lambda*false_accept - mu*escalated - nu*false_reject"
+}

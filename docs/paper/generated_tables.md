@@ -84,6 +84,23 @@ These tables are generated from current tracked artifacts. Raw model responses a
 | E4 | [0.0000, 0.0493] | [0.0089, 0.2361] | [0.1383, 0.3085] | [2.5000, 11.7500] |
 | E6 | [0.0000, 0.0493] | [0.1812, 0.5671] | [0.0957, 0.2553] | [7.7500, 21.5063] |
 
+## EVP-7 Utility Sensitivity
+
+- utility formula: `true_accept - lambda*false_accept - mu*escalated - nu*false_reject`
+- scenario count: 27
+- dominant best level: `E6`
+- dominant best-level share: 1.0000
+- dominant ranking: `E6 > E4 > E0 > E2`
+- dominant ranking share: 1.0000
+- interpretation: The current grid changes escalation and false-reject penalties but does not change false-accept penalties in this run because observed false accept counts are zero at every evidence level.
+
+| evidence level | scenarios as best |
+|---|---:|
+| E0 | 0 |
+| E2 | 0 |
+| E4 | 0 |
+| E6 | 27 |
+
 ## EVP-7 Claim Boundary
 
 | supported claims | unsupported claims |

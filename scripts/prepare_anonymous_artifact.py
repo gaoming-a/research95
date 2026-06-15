@@ -188,6 +188,7 @@ def artifact_readme(manifest: dict[str, Any]) -> str:
             "",
             "```powershell",
             "python scripts\\analyze_evp7_g5_statistics.py",
+            "python scripts\\analyze_evp7_utility_sensitivity.py",
             "python scripts\\audit_paper_claim_boundary.py",
             "python scripts\\write_paper_tables.py",
             "python scripts\\generate_paper_figures.py",

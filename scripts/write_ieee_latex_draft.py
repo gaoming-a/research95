@@ -366,7 +366,9 @@ an external billing statement.
 The EVP-7 tables report evidence-level decisions and the audited claim
 boundary. Statistical intervals are reported with Wilson binomial intervals
 and candidate-level paired bootstrap deltas to avoid presenting the 376-record
-pilot as a scale-generalized result. E4 preserves false-accept rate {evp7["e4_false_accept"]}, accepted
+pilot as a scale-generalized result. A utility-sensitivity table varies
+false-accept, escalation, and false-reject penalties around the default
+merge-gate utility. E4 preserves false-accept rate {evp7["e4_false_accept"]}, accepted
 precision {evp7["e4_precision"]}, correct recall {evp7["e4_recall"]}, and
 evidence gain {evp7["e4_gain"]}. E6 preserves false-accept rate
 {evp7["e6_false_accept"]}, accepted precision {evp7["e6_precision"]}, correct

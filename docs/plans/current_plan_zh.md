@@ -9322,3 +9322,115 @@ Verify:
 - 该审计不改变 EVP-7 claim 边界：仍只支持 bounded pilot observations，不支持
   scale generality、deterministic-baseline superiority、E6 strictly > E4 或
   external billing equivalence。
+
+## 118. 2026-06-15 add EVP-7 utility sensitivity analysis
+
+Inspect:
+
+- 当前工作区干净，本地 main ahead origin 22；
+- 第 115/116/117 节已完成 evidence visibility curve、统计区间和 claim-boundary
+  traceability；
+- canonical roadmap 18.3 要求正式论文报告 utility 参数选择理由，并至少做一组
+  敏感性分析；
+- 当前 `evp7_g5_376_statistical_analysis` 已报告固定 utility formula
+  `accept_correct - 5*accept_wrong - 0.25*escalate - reject_correct`，但还没有
+  tracked sensitivity artifact；
+- 该分析可从 ignored 376-run review records 的结构字段和 tracked candidate
+  labels 生成 raw-output-free 聚合结果，不需要 API、prompt 或 cohort 改动。
+
+Plan:
+
+1. 新增 `scripts/analyze_evp7_utility_sensitivity.py`；
+2. 在固定候选集合上计算 utility：
+   `true_accept - lambda*false_accept - mu*escalated - nu*false_reject`；
+3. 参数网格：
+   - `lambda` false accept penalty: 1, 5, 10；
+   - `mu` escalation penalty: 0.1, 0.25, 0.5；
+   - `nu` false reject penalty: 0.5, 1, 2；
+4. 输出 raw-output-free JSON/Markdown，记录每个 scenario 下 E0/E2/E4/E6 的
+   utility、delta vs E0、best evidence level、ranking stability 和 sensitivity
+   结论；
+5. 将 sensitivity artifact 接入 generated tables / IEEE draft、README、
+   docs index、anonymous artifact 和 paper readiness；
+6. 运行 compile、analysis、paper generation、paper readiness、artifact audit 和
+   local quality gate；
+7. 本轮不调用 API、不扩 cohort、不修改 prompt、不跟踪 raw model outputs。
+
+验收条件：
+
+- `data/reviews/evp7_g5_376_utility_sensitivity.json` 存在且 raw-output-free；
+- `docs/experiments/evp7_g5_376_utility_sensitivity.md` 存在，包含参数网格、
+  per-scenario best level、ranking stability 和结论；
+- generated tables / IEEE draft 至少引用一张 utility sensitivity summary；
+- paper readiness 会检查 utility sensitivity artifact；
+- README / docs index / artifact audit required files 指向新分析；
+- quality gates 通过。
+
+Execute:
+
+- 已新增 `scripts/analyze_evp7_utility_sensitivity.py`：
+  - 默认读取 ignored `outputs/evp7_g5_llm_376_full_001/reviews.jsonl`；
+  - 与 tracked `data/patches/evp7_candidates.jsonl` 连接 labels，仅用于聚合；
+  - 输出 raw-output-free
+    `data/reviews/evp7_g5_376_utility_sensitivity.json` 和
+    `docs/experiments/evp7_g5_376_utility_sensitivity.md`；
+- 已实现 27 个 penalty scenarios：
+  - false accept penalty `lambda`: 1, 5, 10；
+  - escalation penalty `mu`: 0.1, 0.25, 0.5；
+  - false reject penalty `nu`: 0.5, 1, 2；
+- 当前 sensitivity 结果：
+  - E6 在 27/27 scenarios 中为 best level；
+  - dominant ranking = E6 > E4 > E0 > E2；
+  - 由于当前 run 各 evidence level 的 observed false accepts 都为 0，
+    false-accept penalty 不改变 ranking；
+- 已更新 `scripts/write_paper_tables.py`，生成
+  `tab:evp7-utility-sensitivity`；
+- 已更新 `scripts/write_ieee_latex_draft.py` 和
+  `docs/paper/ieee_submission_draft.tex`，在 EVP-7 结果中说明 utility
+  sensitivity 的 penalty-grid 边界；
+- 已更新 `docs/paper/patch_verification_draft.md`，让 Markdown paper draft 也
+  覆盖 utility sensitivity；
+- 已更新 `scripts/audit_paper_readiness.py`，将 utility sensitivity 纳入 EVP-7
+  bounded pilot readiness；
+- 已更新 README、docs index、anonymous artifact 文档、engineering notes、
+  anonymous artifact audit 和 package README 生成逻辑；
+- 本轮未调用 API、未扩 cohort、未修改 prompt、未跟踪 raw model outputs。
+
+Verify:
+
+- `python -m compileall scripts\analyze_evp7_utility_sensitivity.py scripts\write_paper_tables.py scripts\write_ieee_latex_draft.py scripts\audit_paper_readiness.py scripts\audit_anonymous_artifact.py scripts\prepare_anonymous_artifact.py`
+  通过；
+- `python scripts\analyze_evp7_utility_sensitivity.py` 通过，`scenario_count=27`；
+- `python scripts\write_paper_tables.py --out-md docs\paper\generated_tables.md --out-tex docs\paper\generated_tables.tex`
+  通过；
+- `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`
+  通过；
+- `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex`
+  连续运行后通过，生成 6 页 IEEE draft PDF；仅保留既有 underfull hbox /
+  MiKTeX update 提示；
+- `python scripts\audit_paper_claim_boundary.py` 通过，`passed=true`、
+  `raw_output_free=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，EVP-7 readiness 中 `utility_sensitivity.exists=true`、
+  `scenario_count=27`、`raw_output_free=true`、`dominant_best_level=E6`；
+- raw/local marker 检查确认以下 tracked 文件不包含 raw response 字段、prompt
+  text 字段、本机路径或用户名：
+  - `data/reviews/evp7_g5_376_utility_sensitivity.json`；
+  - `docs/experiments/evp7_g5_376_utility_sensitivity.md`；
+  - `docs/paper/generated_tables.md`；
+  - `docs/paper/generated_tables.tex`；
+  - `docs/paper/ieee_submission_draft.tex`；
+  - `docs/paper/patch_verification_draft.md`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `git diff --check` 通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 本轮按计划补齐 EVP-7 utility sensitivity analysis；
+- 当前 paper tables、Markdown draft、IEEE draft 和 paper readiness 都能显示
+  utility 参数选择与 sensitivity 边界；
+- 该结果仅强化 frozen 20-task pilot 内的 utility interpretation，不改变
+  unsupported claim 边界。
