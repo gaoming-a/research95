@@ -10337,3 +10337,96 @@ Verify:
   superiority claim；
 - 下一步可以进入 EVP-7 qualitative decision cases 或 related-work positioning，
   不需要继续跑 API。
+
+## 2026-06-15 EVP-7 qualitative decision cases
+
+Inspect:
+
+- 当前分支本地领先 `origin/main` 5 个提交，工作区在本轮开始时干净；
+- Nature-style pre-submission report 的第二个硬缺口是 qualitative EVP-7
+  decision evidence；
+- 上一轮已完成 deterministic tool-only attribution，下一步不应扩实验、
+  重跑 G5 或调用 API；
+- ignored `outputs/evp7_g5_llm_376_full_001/reviews.jsonl` 含
+  `raw_response_text`，因此 tracked qualitative artifacts 只能写结构化
+  decision flow 和摘要级 interpretation，不能写 raw response/prompt text；
+- qualitative case 必须区分 model-visible sequence 与 evaluator-only
+  interpretation，避免把 hidden label 混进 reviewer-facing 叙述。
+
+Plan:
+
+1. 新增 `scripts/analyze_evp7_qualitative_cases.py`，从现有 376 条
+   parse-valid review records、94 candidates 和 tool-only decisions 中抽取
+   6 个固定代表性 cases；
+2. 输出 raw-output-free tracked JSON/Markdown：
+   - `data/reviews/evp7_g5_376_qualitative_cases.json`；
+   - `docs/experiments/evp7_g5_376_qualitative_cases.md`；
+3. 覆盖 case roles：
+   - evidence enables accept；
+   - tool-only false accept recovered by LLM；
+   - correct patch downgraded by LLM；
+   - tool-summary-only late accept；
+   - no-op rejected after evidence；
+   - partial patch stable reject；
+4. 将 qualitative case boundary 接入 IEEE draft generator 和 Markdown draft；
+5. 更新 `audit_paper_readiness.py`，要求 qualitative cases 存在、
+   raw-output-free、case_count = 6，且论文/generator 明确包含 qualitative
+   boundary；
+6. 同步 README、`docs/INDEX.md` 和 engineering notes；
+7. 运行最小验证、paper readiness、PDF compile、claim boundary、local quality
+   gate、diff check 后提交。
+
+验收条件：
+
+- 不调用 API，不新增 cohort，不改 prompt；
+- qualitative 输出不包含 `raw_response_text`、`prompt_text` 或原始响应；
+- reviewer-facing sequence 不包含 evaluator-only truth label；
+- evaluator-only interpretation 单独标注，只用于解释 false accept / recall
+  tradeoff；
+- paper readiness 和 local quality gate 通过。
+
+Execute:
+
+- 新增 `scripts/analyze_evp7_qualitative_cases.py`；
+- 生成：
+  - `data/reviews/evp7_g5_376_qualitative_cases.json`；
+  - `docs/experiments/evp7_g5_376_qualitative_cases.md`；
+- 固定 6 个代表性 cases：
+  - QC1 `evidence_enabled_accept`；
+  - QC2 `tool_false_accept_recovered_by_llm`；
+  - QC3 `correct_patch_downgraded_by_llm`；
+  - QC4 `tool_summary_late_accept`；
+  - QC5 `no_op_rejected_after_evidence`；
+  - QC6 `partial_patch_rejected_after_evidence`；
+- 已将 qualitative case audit 段落接入 IEEE draft generator 和 Markdown draft；
+- 已更新 `scripts/audit_paper_readiness.py`，要求 qualitative JSON/Markdown
+  存在、case_count = 6、raw-output-free，且 reviewer-facing truth label 已隔离；
+- 已同步 README、`docs/INDEX.md` 和 `docs/experience/engineering_notes.md`。
+
+Verify:
+
+- `python -m compileall scripts\analyze_evp7_qualitative_cases.py` 通过；
+- `python scripts\analyze_evp7_qualitative_cases.py` 通过，`case_count=6`、
+  `raw_output_free=true`、`reviewer_facing_truth_label_separated=true`；
+- `python -m compileall scripts\analyze_evp7_qualitative_cases.py scripts\write_ieee_latex_draft.py scripts\audit_paper_readiness.py`
+  通过；
+- `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`
+  通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`evp7_bounded_pilot_claim_ready=true`，qualitative cases gate 通过；
+- `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex`
+  连续两遍通过，输出 6 页 PDF；仅有 underfull hbox 和 MiKTeX update 提示；
+- `python scripts\audit_paper_claim_boundary.py` 通过，`passed=true`、
+  `raw_output_free=true`；
+- `pdftotext outputs\paper_compile\ieee_submission_draft.pdf -` 检查确认
+  PDF 包含 qualitative case audit、model-visible decision sequence、
+  evaluator-only interpretation 和 not additional scale evidence；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 本轮完成预审报告第二项技术风险：EVP-7 qualitative decision cases；
+- 这些 cases 只能解释决策机制和安全/召回权衡，不能扩大样本量或支撑
+  scale-generalized claim；
+- 下一步应进入 related-work positioning，而不是继续跑 API。

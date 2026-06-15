@@ -257,7 +257,7 @@ They should not override `final_paper_roadmap_zh.md`.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`; it now
   includes the prompt-only negative result, the conditional tool-augmented
   result, the bounded EVP-7 G5 376-record evidence-visibility result, and the
-  deterministic tool-only attribution boundary.
+  deterministic tool-only attribution and qualitative decision-case boundaries.
 - A Nature-style pre-submission reviewer assessment is tracked at
   `docs/paper/nature_reviewer_presubmission_report.md`. It identifies the next
   paper-writing risks as tool-only attribution, EVP-7 qualitative cases,
@@ -610,6 +610,7 @@ For generated paper tables, run:
 python scripts\analyze_evp7_g5_statistics.py
 python scripts\analyze_evp7_utility_sensitivity.py
 python scripts\analyze_evp7_tool_attribution.py
+python scripts\analyze_evp7_qualitative_cases.py
 python scripts\audit_paper_claim_boundary.py
 python scripts\write_paper_tables.py `
   --out-md docs\paper\generated_tables.md `
@@ -621,6 +622,11 @@ result, statistical intervals, utility sensitivity, deterministic tool-only
 attribution, and claim boundary. The claim-boundary audit maps supported and
 unsupported EVP-7 claims to tracked evidence and paper coverage before the
 tables and draft are regenerated.
+
+The qualitative case analysis is a separate paper-writing artifact at
+`docs/experiments/evp7_g5_376_qualitative_cases.md`. It reports six
+representative EVP-7 decision sequences while keeping model-visible decisions
+separate from evaluator-only interpretations.
 
 For reproducible paper figures, including the EVP-7 evidence visibility curve
 and the decision-to-metric flowchart, run:
@@ -642,7 +648,9 @@ quality audit by default, so the generated body and tables stay on the same
 claim boundary. Paper readiness also checks the IEEE fig2 caption so the
 generated draft stays aligned with the compact E0/E2/E4/E6 evidence-level
 figure. The draft foregrounds the current EVP-7 bounded result and treats the
-earlier 30-candidate API pilot as diagnostic design evidence.
+earlier 30-candidate API pilot as diagnostic design evidence. It also references
+the qualitative case audit as interpretation of decision mechanics, not as
+additional scale evidence.
 
 Paper readiness also checks the current paper framing. The tracked outline,
 research definition, Markdown draft, and IEEE draft must use the

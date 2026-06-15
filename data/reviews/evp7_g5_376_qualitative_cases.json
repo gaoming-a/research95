@@ -1,0 +1,710 @@
+{
+  "analysis_id": "evp7_g5_376_qualitative_cases",
+  "boundary": "This artifact selects representative EVP-7 decision cases from existing parse-valid review records. It writes only structured decision sequences, model-visible evidence categories, deterministic tool-only decisions, and separated evaluator-only interpretations. It does not include raw responses, prompt text, or reviewer-facing truth labels.",
+  "case_count": 6,
+  "case_roles": [
+    "evidence_enabled_accept",
+    "tool_false_accept_recovered_by_llm",
+    "correct_patch_downgraded_by_llm",
+    "tool_summary_late_accept",
+    "no_op_rejected_after_evidence",
+    "partial_patch_rejected_after_evidence"
+  ],
+  "cases": [
+    {
+      "candidate_id": "evp7_candidate_0007",
+      "case_id": "QC1",
+      "evaluator_only_interpretation": {
+        "expected_outcome": "correct",
+        "failure_type_label": "none",
+        "interpretation": "Visible test evidence changed a cautious model-visible sequence into an accept decision. This case illustrates the intended value of evidence visibility when the evaluator-only label marks the patch as correct.",
+        "label_with_p2p_broad": "correct_under_f2p_and_p2p_broad",
+        "patch_source_label": "correct_reference"
+      },
+      "model_visible": {
+        "candidate_id": "evp7_candidate_0007",
+        "decision_sequence": {
+          "E0": "escalate",
+          "E2": "escalate",
+          "E4": "accept",
+          "E6": "accept"
+        },
+        "issue_summary": "snoop file output should append trace lines to the user-provided file path",
+        "level_records": [
+          {
+            "confidence": 0.4,
+            "decision": "escalate",
+            "evidence_level": "E0",
+            "evidence_used": [
+              "issue_summary",
+              "patch_diff"
+            ],
+            "human_review_needed": true,
+            "risk_flags": [
+              "insufficient_evidence"
+            ],
+            "suspected_failure_type": "unknown"
+          },
+          {
+            "confidence": 0.6,
+            "decision": "escalate",
+            "evidence_level": "E2",
+            "evidence_used": [
+              "issue_summary",
+              "patch_diff",
+              "patch_applies"
+            ],
+            "human_review_needed": true,
+            "risk_flags": [
+              "insufficient_evidence"
+            ],
+            "suspected_failure_type": "none"
+          },
+          {
+            "confidence": 0.9,
+            "decision": "accept",
+            "evidence_level": "E4",
+            "evidence_used": [
+              "patch_diff",
+              "issue_summary",
+              "test_results"
+            ],
+            "human_review_needed": false,
+            "risk_flags": [
+              "insufficient_evidence"
+            ],
+            "suspected_failure_type": "none"
+          },
+          {
+            "confidence": 0.95,
+            "decision": "accept",
+            "evidence_level": "E6",
+            "evidence_used": [
+              "patch_diff",
+              "visible_test_evidence",
+              "visible_static_evidence"
+            ],
+            "human_review_needed": false,
+            "risk_flags": [],
+            "suspected_failure_type": "none"
+          }
+        ],
+        "patch_size": {
+          "added_lines": 1,
+          "deleted_lines": 1,
+          "files_changed": 1
+        },
+        "project": "PySnooper",
+        "task_id": "bugsinpy_PySnooper_3",
+        "tool_only_decisions": {
+          "E4": {
+            "condition": "tool_only_visible_tests",
+            "decision": "accept",
+            "evidence_used": [
+              "visible_test_evidence.test_results"
+            ],
+            "human_review_needed": false
+          },
+          "E6": {
+            "condition": "tool_only_visible_tool_summary",
+            "decision": "accept",
+            "evidence_used": [
+              "visible_tool_evidence.summary.visible_test_outcome_counts"
+            ],
+            "human_review_needed": false
+          }
+        },
+        "touched_files": [
+          "pysnooper/pysnooper.py"
+        ],
+        "visible_tests_count": 1
+      },
+      "role": "evidence_enabled_accept"
+    },
+    {
+      "candidate_id": "evp7_candidate_0078",
+      "case_id": "QC2",
+      "evaluator_only_interpretation": {
+        "expected_outcome": "partial",
+        "failure_type_label": "partial_fix",
+        "interpretation": "The deterministic visible-test and visible-tool-summary baselines accepted this partial patch, whereas the LLM did not accept it at E4 or E6. This is one of the recovered tool-only false accepts.",
+        "label_with_p2p_broad": "incorrect_issue_not_fixed",
+        "patch_source_label": "partial_fix"
+      },
+      "model_visible": {
+        "candidate_id": "evp7_candidate_0078",
+        "decision_sequence": {
+          "E0": "escalate",
+          "E2": "reject",
+          "E4": "escalate",
+          "E6": "reject"
+        },
+        "issue_summary": "get_elements_by_attribute should match HTML elements that contain valueless attributes before or after the target attribute.",
+        "level_records": [
+          {
+            "confidence": 0.1,
+            "decision": "escalate",
+            "evidence_level": "E0",
+            "evidence_used": [
+              "issue_summary",
+              "patch_diff"
+            ],
+            "human_review_needed": true,
+            "risk_flags": [
+              "insufficient_evidence"
+            ],
+            "suspected_failure_type": "unknown"
+          },
+          {
+            "confidence": 0.95,
+            "decision": "reject",
+            "evidence_level": "E2",
+            "evidence_used": [
+              "issue_summary",
+              "patch_diff"
+            ],
+            "human_review_needed": false,
+            "risk_flags": [
+              "partial_fix",
+              "under_fix"
+            ],
+            "suspected_failure_type": "partial_fix"
+          },
+          {
+            "confidence": 0.3,
+            "decision": "escalate",
+            "evidence_level": "E4",
+            "evidence_used": [
+              "issue_summary",
+              "patch_diff",
+              "test_results"
+            ],
+            "human_review_needed": true,
+            "risk_flags": [
+              "under_fix",
+              "insufficient_evidence"
+            ],
+            "suspected_failure_type": "under_fix"
+          },
+          {
+            "confidence": 0.8,
+            "decision": "reject",
+            "evidence_level": "E6",
+            "evidence_used": [
+              "issue_summary",
+              "patch_diff",
+              "test_results"
+            ],
+            "human_review_needed": false,
+            "risk_flags": [
+              "under_fix",
+              "test_overfitting"
+            ],
+            "suspected_failure_type": "under_fix"
+          }
+        ],
+        "patch_size": {
+          "added_lines": 1,
+          "deleted_lines": 1,
+          "files_changed": 1
+        },
+        "project": "youtube-dl",
+        "task_id": "bugsinpy_youtube-dl_20",
+        "tool_only_decisions": {
+          "E4": {
+            "condition": "tool_only_visible_tests",
+            "decision": "accept",
+            "evidence_used": [
+              "visible_test_evidence.test_results"
+            ],
+            "human_review_needed": false
+          },
+          "E6": {
+            "condition": "tool_only_visible_tool_summary",
+            "decision": "accept",
+            "evidence_used": [
+              "visible_tool_evidence.summary.visible_test_outcome_counts"
+            ],
+            "human_review_needed": false
+          }
+        },
+        "touched_files": [
+          "youtube_dl/utils.py"
+        ],
+        "visible_tests_count": 1
+      },
+      "role": "tool_false_accept_recovered_by_llm"
+    },
+    {
+      "candidate_id": "evp7_candidate_0001",
+      "case_id": "QC3",
+      "evaluator_only_interpretation": {
+        "expected_outcome": "correct",
+        "failure_type_label": "none",
+        "interpretation": "The tool-only baselines accepted this correct reference patch at E4 and E6, but the LLM kept escalating. This case shows the recall cost behind the safety-oriented interpretation.",
+        "label_with_p2p_broad": "correct_under_f2p_and_p2p_broad",
+        "patch_source_label": "correct_reference"
+      },
+      "model_visible": {
+        "candidate_id": "evp7_candidate_0001",
+        "decision_sequence": {
+          "E0": "escalate",
+          "E2": "escalate",
+          "E4": "escalate",
+          "E6": "escalate"
+        },
+        "issue_summary": "Snooper log files and decoded source lines should preserve non-ASCII text as UTF-8",
+        "level_records": [
+          {
+            "confidence": 0.2,
+            "decision": "escalate",
+            "evidence_level": "E0",
+            "evidence_used": [
+              "issue_summary",
+              "patch_diff"
+            ],
+            "human_review_needed": true,
+            "risk_flags": [
+              "insufficient_evidence"
+            ],
+            "suspected_failure_type": "unknown"
+          },
+          {
+            "confidence": 0.3,
+            "decision": "escalate",
+            "evidence_level": "E2",
+            "evidence_used": [
+              "issue_summary",
+              "patch_diff",
+              "visible_static_evidence"
+            ],
+            "human_review_needed": true,
+            "risk_flags": [
+              "insufficient_evidence"
+            ],
+            "suspected_failure_type": "unknown"
+          },
+          {
+            "confidence": 0.6,
+            "decision": "escalate",
+            "evidence_level": "E4",
+            "evidence_used": [
+              "test_results",
+              "patch_diff",
+              "visible_static_evidence"
+            ],
+            "human_review_needed": true,
+            "risk_flags": [
+              "insufficient_evidence",
+              "regression_risk"
+            ],
+            "suspected_failure_type": "none"
+          },
+          {
+            "confidence": 0.4,
+            "decision": "escalate",
+            "evidence_level": "E6",
+            "evidence_used": [
+              "visible_test_evidence",
+              "patch_diff",
+              "issue_summary"
+            ],
+            "human_review_needed": true,
+            "risk_flags": [
+              "insufficient_evidence",
+              "regression_risk"
+            ],
+            "suspected_failure_type": "none"
+          }
+        ],
+        "patch_size": {
+          "added_lines": 6,
+          "deleted_lines": 2,
+          "files_changed": 2
+        },
+        "project": "PySnooper",
+        "task_id": "bugsinpy_PySnooper_1",
+        "tool_only_decisions": {
+          "E4": {
+            "condition": "tool_only_visible_tests",
+            "decision": "accept",
+            "evidence_used": [
+              "visible_test_evidence.test_results"
+            ],
+            "human_review_needed": false
+          },
+          "E6": {
+            "condition": "tool_only_visible_tool_summary",
+            "decision": "accept",
+            "evidence_used": [
+              "visible_tool_evidence.summary.visible_test_outcome_counts"
+            ],
+            "human_review_needed": false
+          }
+        },
+        "touched_files": [
+          "pysnooper/tracer.py",
+          "pysnooper/pycompat.py"
+        ],
+        "visible_tests_count": 1
+      },
+      "role": "correct_patch_downgraded_by_llm"
+    },
+    {
+      "candidate_id": "evp7_candidate_0051",
+      "case_id": "QC4",
+      "evaluator_only_interpretation": {
+        "expected_outcome": "correct",
+        "failure_type_label": "none",
+        "interpretation": "The model rejected or escalated before the full visible tool summary, then accepted at E6. This case illustrates that the strongest evidence level can recover some correct-patch recall.",
+        "label_with_p2p_broad": "correct_under_f2p_and_p2p_broad",
+        "patch_source_label": "correct_reference"
+      },
+      "model_visible": {
+        "candidate_id": "evp7_candidate_0051",
+        "decision_sequence": {
+          "E0": "reject",
+          "E2": "escalate",
+          "E4": "escalate",
+          "E6": "accept"
+        },
+        "issue_summary": "unified_timestamp should correctly add PM offsets for both strptime parsed timestamps and email parsedate_tz fallback timestamps.",
+        "level_records": [
+          {
+            "confidence": 0.95,
+            "decision": "reject",
+            "evidence_level": "E0",
+            "evidence_used": [
+              "issue_summary",
+              "patch_diff"
+            ],
+            "human_review_needed": false,
+            "risk_flags": [
+              "under_fix",
+              "regression_risk"
+            ],
+            "suspected_failure_type": "under_fix"
+          },
+          {
+            "confidence": 0.7,
+            "decision": "escalate",
+            "evidence_level": "E2",
+            "evidence_used": [
+              "issue_summary",
+              "patch_diff",
+              "patch_applies"
+            ],
+            "human_review_needed": true,
+            "risk_flags": [
+              "under_fix",
+              "regression_risk",
+              "insufficient_evidence"
+            ],
+            "suspected_failure_type": "under_fix"
+          },
+          {
+            "confidence": 0.7,
+            "decision": "escalate",
+            "evidence_level": "E4",
+            "evidence_used": [
+              "patch_diff",
+              "issue_summary",
+              "visible_test_evidence",
+              "visible_static_evidence"
+            ],
+            "human_review_needed": true,
+            "risk_flags": [
+              "insufficient_evidence"
+            ],
+            "suspected_failure_type": "none"
+          },
+          {
+            "confidence": 0.85,
+            "decision": "accept",
+            "evidence_level": "E6",
+            "evidence_used": [
+              "issue_summary",
+              "patch_diff",
+              "test_results"
+            ],
+            "human_review_needed": false,
+            "risk_flags": [],
+            "suspected_failure_type": "none"
+          }
+        ],
+        "patch_size": {
+          "added_lines": 3,
+          "deleted_lines": 3,
+          "files_changed": 1
+        },
+        "project": "youtube-dl",
+        "task_id": "bugsinpy_youtube-dl_5",
+        "tool_only_decisions": {
+          "E4": {
+            "condition": "tool_only_visible_tests",
+            "decision": "accept",
+            "evidence_used": [
+              "visible_test_evidence.test_results"
+            ],
+            "human_review_needed": false
+          },
+          "E6": {
+            "condition": "tool_only_visible_tool_summary",
+            "decision": "accept",
+            "evidence_used": [
+              "visible_tool_evidence.summary.visible_test_outcome_counts"
+            ],
+            "human_review_needed": false
+          }
+        },
+        "touched_files": [
+          "youtube_dl/utils.py"
+        ],
+        "visible_tests_count": 1
+      },
+      "role": "tool_summary_late_accept"
+    },
+    {
+      "candidate_id": "evp7_candidate_0031",
+      "case_id": "QC5",
+      "evaluator_only_interpretation": {
+        "expected_outcome": "incorrect",
+        "failure_type_label": "no_op_patch",
+        "interpretation": "A no-op control moved from escalation to rejection once visible test evidence was available. This supports the paper's merge-gate framing for non-fixing patches.",
+        "label_with_p2p_broad": "incorrect_issue_not_fixed",
+        "patch_source_label": "buggy_noop"
+      },
+      "model_visible": {
+        "candidate_id": "evp7_candidate_0031",
+        "decision_sequence": {
+          "E0": "escalate",
+          "E2": "escalate",
+          "E4": "reject",
+          "E6": "reject"
+        },
+        "issue_summary": "escaped long separators should be parsed as part of the key",
+        "level_records": [
+          {
+            "confidence": 0.0,
+            "decision": "escalate",
+            "evidence_level": "E0",
+            "evidence_used": [
+              "issue_summary",
+              "patch_diff"
+            ],
+            "human_review_needed": true,
+            "risk_flags": [
+              "insufficient_evidence"
+            ],
+            "suspected_failure_type": "unknown"
+          },
+          {
+            "confidence": 0.1,
+            "decision": "escalate",
+            "evidence_level": "E2",
+            "evidence_used": [
+              "patch_diff",
+              "patch_applies"
+            ],
+            "human_review_needed": true,
+            "risk_flags": [
+              "insufficient_evidence"
+            ],
+            "suspected_failure_type": "unknown"
+          },
+          {
+            "confidence": 0.95,
+            "decision": "reject",
+            "evidence_level": "E4",
+            "evidence_used": [
+              "issue_summary",
+              "test_results"
+            ],
+            "human_review_needed": false,
+            "risk_flags": [
+              "under_fix"
+            ],
+            "suspected_failure_type": "under_fix"
+          },
+          {
+            "confidence": 0.95,
+            "decision": "reject",
+            "evidence_level": "E6",
+            "evidence_used": [
+              "issue_summary",
+              "visible_test_evidence",
+              "test_results"
+            ],
+            "human_review_needed": false,
+            "risk_flags": [
+              "under_fix",
+              "regression_risk"
+            ],
+            "suspected_failure_type": "under_fix"
+          }
+        ],
+        "patch_size": {
+          "added_lines": 0,
+          "deleted_lines": 0,
+          "files_changed": 0
+        },
+        "project": "httpie",
+        "task_id": "bugsinpy_httpie_5",
+        "tool_only_decisions": {
+          "E4": {
+            "condition": "tool_only_visible_tests",
+            "decision": "reject",
+            "evidence_used": [
+              "visible_test_evidence.test_results"
+            ],
+            "human_review_needed": false
+          },
+          "E6": {
+            "condition": "tool_only_visible_tool_summary",
+            "decision": "reject",
+            "evidence_used": [
+              "visible_tool_evidence.summary.visible_test_outcome_counts"
+            ],
+            "human_review_needed": false
+          }
+        },
+        "touched_files": [
+          "httpie/cli.py"
+        ],
+        "visible_tests_count": 1
+      },
+      "role": "no_op_rejected_after_evidence"
+    },
+    {
+      "candidate_id": "evp7_candidate_0005",
+      "case_id": "QC6",
+      "evaluator_only_interpretation": {
+        "expected_outcome": "partial",
+        "failure_type_label": "partial_fix",
+        "interpretation": "A partial patch remained non-accepted after visible evidence was added. This case represents the common E4/E6 reject path rather than the smaller set of tool-only false accepts.",
+        "label_with_p2p_broad": "incorrect_issue_not_fixed",
+        "patch_source_label": "partial_fix"
+      },
+      "model_visible": {
+        "candidate_id": "evp7_candidate_0005",
+        "decision_sequence": {
+          "E0": "escalate",
+          "E2": "escalate",
+          "E4": "reject",
+          "E6": "reject"
+        },
+        "issue_summary": "Snooper log files and decoded source lines should preserve non-ASCII text as UTF-8",
+        "level_records": [
+          {
+            "confidence": 0.1,
+            "decision": "escalate",
+            "evidence_level": "E0",
+            "evidence_used": [
+              "issue_summary",
+              "patch_diff",
+              "touched_files"
+            ],
+            "human_review_needed": true,
+            "risk_flags": [
+              "insufficient_evidence",
+              "partial_fix"
+            ],
+            "suspected_failure_type": "partial_fix"
+          },
+          {
+            "confidence": 0.6,
+            "decision": "escalate",
+            "evidence_level": "E2",
+            "evidence_used": [
+              "issue_summary",
+              "patch_diff",
+              "patch_applies"
+            ],
+            "human_review_needed": true,
+            "risk_flags": [
+              "under_fix",
+              "insufficient_evidence"
+            ],
+            "suspected_failure_type": "unknown"
+          },
+          {
+            "confidence": 0.95,
+            "decision": "reject",
+            "evidence_level": "E4",
+            "evidence_used": [
+              "visible_test_evidence"
+            ],
+            "human_review_needed": false,
+            "risk_flags": [
+              "regression_risk"
+            ],
+            "suspected_failure_type": "regression"
+          },
+          {
+            "confidence": 0.95,
+            "decision": "reject",
+            "evidence_level": "E6",
+            "evidence_used": [
+              "patch_diff",
+              "visible_test_evidence"
+            ],
+            "human_review_needed": false,
+            "risk_flags": [
+              "regression_risk"
+            ],
+            "suspected_failure_type": "regression"
+          }
+        ],
+        "patch_size": {
+          "added_lines": 4,
+          "deleted_lines": 1,
+          "files_changed": 1
+        },
+        "project": "PySnooper",
+        "task_id": "bugsinpy_PySnooper_1",
+        "tool_only_decisions": {
+          "E4": {
+            "condition": "tool_only_visible_tests",
+            "decision": "reject",
+            "evidence_used": [
+              "visible_test_evidence.test_results"
+            ],
+            "human_review_needed": false
+          },
+          "E6": {
+            "condition": "tool_only_visible_tool_summary",
+            "decision": "reject",
+            "evidence_used": [
+              "visible_tool_evidence.summary.visible_test_outcome_counts"
+            ],
+            "human_review_needed": false
+          }
+        },
+        "touched_files": [
+          "pysnooper/tracer.py",
+          "pysnooper/pycompat.py"
+        ],
+        "visible_tests_count": 1
+      },
+      "role": "partial_patch_rejected_after_evidence"
+    }
+  ],
+  "inputs": {
+    "candidates": "data/patches/evp7_candidates.jsonl",
+    "llm_reviews": "outputs/evp7_g5_llm_376_full_001/reviews.jsonl",
+    "tool_only_decisions": "data/baselines/evp7_tool_only_decisions.jsonl"
+  },
+  "raw_output_free_check": {
+    "checked_for_raw_response_fields": true,
+    "passed": true,
+    "reviewer_facing_truth_label_separated": true
+  },
+  "role_counts": {
+    "correct_patch_downgraded_by_llm": 1,
+    "evidence_enabled_accept": 1,
+    "no_op_rejected_after_evidence": 1,
+    "partial_patch_rejected_after_evidence": 1,
+    "tool_false_accept_recovered_by_llm": 1,
+    "tool_summary_late_accept": 1
+  }
+}

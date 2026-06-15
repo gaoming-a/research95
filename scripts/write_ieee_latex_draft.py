@@ -387,6 +387,14 @@ true accepts to reject or escalation. This supports a bounded safety/recall
 tradeoff interpretation rather than a claim that the LLM outperforms
 deterministic visible evidence.
 
+The qualitative case audit then explains the decision mechanics behind the
+aggregate tradeoff. It selects six representative EVP-7 cases and keeps the
+model-visible decision sequence separate from the evaluator-only
+interpretation. The cases include evidence-enabled accepts, recovered tool-only
+false accepts, correct patches downgraded by the LLM, and non-fixing patches
+rejected after evidence became visible. These examples are used only to
+interpret the bounded pilot; they are not additional scale evidence.
+
 \begin{{figure*}}[t]
 \centering
 \includegraphics[width=0.86\textwidth]{{docs/figures/fig6_evp7_visibility_curve.pdf}}

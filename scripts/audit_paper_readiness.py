@@ -13,6 +13,7 @@ DEFAULT_EVP7_QUALITY_AUDIT = Path("data") / "reviews" / "evp7_g5_376_full_qualit
 DEFAULT_EVP7_CLAIM_TRACEABILITY = Path("data") / "reviews" / "evp7_g5_376_claim_traceability.json"
 DEFAULT_EVP7_UTILITY_SENSITIVITY = Path("data") / "reviews" / "evp7_g5_376_utility_sensitivity.json"
 DEFAULT_EVP7_TOOL_ATTRIBUTION = Path("data") / "reviews" / "evp7_g5_376_tool_attribution.json"
+DEFAULT_EVP7_QUALITATIVE_CASES = Path("data") / "reviews" / "evp7_g5_376_qualitative_cases.json"
 
 
 def read_json(path: Path) -> dict[str, Any] | None:
@@ -105,6 +106,14 @@ def paper_framing_state() -> dict[str, Any]:
         and "bounded safety/recall tradeoff interpretation" in normalized_texts["ieee_submission_generator"],
         "generated_tables_include_tool_attribution": "tab:evp7-tool-attribution" in texts["ieee_submission_draft"]
         and "EVP-7 deterministic tool-only attribution" in normalized_texts["ieee_submission_draft"],
+        "ieee_mentions_qualitative_case_boundary": "qualitative case audit"
+        in normalized_texts["ieee_submission_draft"]
+        and "model-visible decision sequence" in normalized_texts["ieee_submission_draft"]
+        and "evaluator-only interpretation" in normalized_texts["ieee_submission_draft"],
+        "generator_mentions_qualitative_case_boundary": "qualitative case audit"
+        in normalized_texts["ieee_submission_generator"]
+        and "model-visible decision sequence" in normalized_texts["ieee_submission_generator"]
+        and "evaluator-only interpretation" in normalized_texts["ieee_submission_generator"],
         "current_artifacts_do_not_use_stale_title": all(
             stale_title not in normalized_text for normalized_text in normalized_texts.values()
         ),
@@ -337,12 +346,14 @@ def evp7_g5_state(
     claim_traceability_path: Path,
     utility_sensitivity_path: Path,
     tool_attribution_path: Path,
+    qualitative_cases_path: Path,
 ) -> dict[str, Any]:
     summary = read_json(summary_path)
     quality = read_json(quality_path)
     claim_traceability = read_json(claim_traceability_path)
     utility_sensitivity = read_json(utility_sensitivity_path)
     tool_attribution = read_json(tool_attribution_path)
+    qualitative_cases = read_json(qualitative_cases_path)
     metrics = summary.get("metrics", {}) if isinstance(summary, dict) else {}
     metric_groups = metrics.get("metric_groups", {}) if isinstance(metrics, dict) else {}
     quality_checks = quality.get("checks", []) if isinstance(quality, dict) else []
@@ -359,6 +370,7 @@ def evp7_g5_state(
         "claim_traceability": file_state(Path("docs") / "experiments" / "evp7_g5_376_claim_traceability.md"),
         "utility_sensitivity": file_state(Path("docs") / "experiments" / "evp7_g5_376_utility_sensitivity.md"),
         "tool_attribution": file_state(Path("docs") / "experiments" / "evp7_g5_376_tool_attribution.md"),
+        "qualitative_cases": file_state(Path("docs") / "experiments" / "evp7_g5_376_qualitative_cases.md"),
         "expansion_readiness": file_state(Path("docs") / "experiments" / "evp7_expansion_readiness.md"),
     }
     required_levels = {"E0": 94, "E2": 94, "E4": 94, "E6": 94}
@@ -397,6 +409,19 @@ def evp7_g5_state(
             )
             == 4
         )
+        and qualitative_cases
+        and qualitative_cases.get("raw_output_free_check", {}).get("passed") is True
+        and qualitative_cases.get("raw_output_free_check", {}).get("reviewer_facing_truth_label_separated") is True
+        and qualitative_cases.get("case_count") == 6
+        and set(qualitative_cases.get("case_roles", []))
+        == {
+            "evidence_enabled_accept",
+            "tool_false_accept_recovered_by_llm",
+            "correct_patch_downgraded_by_llm",
+            "tool_summary_late_accept",
+            "no_op_rejected_after_evidence",
+            "partial_patch_rejected_after_evidence",
+        }
         and level_counts == required_levels
         and all(doc["exists"] for doc in required_docs.values())
         and (metric_groups.get("E4") or {}).get("false_accept_rate") == 0.0
@@ -431,6 +456,17 @@ def evp7_g5_state(
         blockers.append("EVP-7 tool-only attribution analysis is not raw-output-free.")
     if tool_attribution and ((tool_attribution.get("comparisons") or {}).get("E6") or {}).get("agreement_count") != 76:
         blockers.append("EVP-7 tool-only attribution analysis does not match the expected E6 agreement count.")
+    if qualitative_cases is None:
+        blockers.append(f"Missing EVP-7 qualitative case analysis: {qualitative_cases_path.as_posix()}.")
+    if qualitative_cases and qualitative_cases.get("raw_output_free_check", {}).get("passed") is not True:
+        blockers.append("EVP-7 qualitative case analysis is not raw-output-free.")
+    if (
+        qualitative_cases
+        and qualitative_cases.get("raw_output_free_check", {}).get("reviewer_facing_truth_label_separated") is not True
+    ):
+        blockers.append("EVP-7 qualitative case analysis does not separate reviewer-facing labels.")
+    if qualitative_cases and qualitative_cases.get("case_count") != 6:
+        blockers.append("EVP-7 qualitative case analysis does not contain the expected six cases.")
     if summary and metrics.get("run_kind") != "real_llm":
         blockers.append("EVP-7 G5 summary is not marked as a real LLM run.")
     if summary and metrics.get("g5_metric_scaffold") != "passed":
@@ -452,6 +488,7 @@ def evp7_g5_state(
         "claim_traceability_path": claim_traceability_path.as_posix(),
         "utility_sensitivity_path": utility_sensitivity_path.as_posix(),
         "tool_attribution_path": tool_attribution_path.as_posix(),
+        "qualitative_cases_path": qualitative_cases_path.as_posix(),
         "ready_for_bounded_pilot_claim": ready,
         "blockers": blockers,
         "required_docs": required_docs,
@@ -527,6 +564,21 @@ def evp7_g5_state(
             if tool_attribution
             else None,
         },
+        "qualitative_cases": {
+            "exists": qualitative_cases is not None,
+            "case_count": qualitative_cases.get("case_count") if qualitative_cases else None,
+            "raw_output_free": (
+                qualitative_cases.get("raw_output_free_check", {}).get("passed")
+                if qualitative_cases
+                else None
+            ),
+            "reviewer_facing_truth_label_separated": (
+                qualitative_cases.get("raw_output_free_check", {}).get("reviewer_facing_truth_label_separated")
+                if qualitative_cases
+                else None
+            ),
+            "case_roles": qualitative_cases.get("case_roles") if qualitative_cases else None,
+        },
     }
 
 
@@ -539,6 +591,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         Path(args.evp7_claim_traceability),
         Path(args.evp7_utility_sensitivity),
         Path(args.evp7_tool_attribution),
+        Path(args.evp7_qualitative_cases),
     )
     required_docs = {
         "pilot_report": file_state(Path("docs") / "experiments" / "patch_verification_pilot_report.md"),
@@ -779,6 +832,8 @@ def build_markdown(audit: dict[str, Any]) -> str:
             f"- utility sensitivity: `{audit['evp7_g5']['utility_sensitivity']}`",
             f"- tool attribution path: `{audit['evp7_g5']['tool_attribution_path']}`",
             f"- tool attribution: `{audit['evp7_g5']['tool_attribution']}`",
+            f"- qualitative cases path: `{audit['evp7_g5']['qualitative_cases_path']}`",
+            f"- qualitative cases: `{audit['evp7_g5']['qualitative_cases']}`",
             f"- quality status: `{audit['evp7_g5']['quality_status']}`",
             f"- review count: {audit['evp7_g5']['review_count']}",
             f"- candidate count: {audit['evp7_g5']['candidate_count']}",
@@ -834,6 +889,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--evp7-claim-traceability", default=str(DEFAULT_EVP7_CLAIM_TRACEABILITY))
     parser.add_argument("--evp7-utility-sensitivity", default=str(DEFAULT_EVP7_UTILITY_SENSITIVITY))
     parser.add_argument("--evp7-tool-attribution", default=str(DEFAULT_EVP7_TOOL_ATTRIBUTION))
+    parser.add_argument("--evp7-qualitative-cases", default=str(DEFAULT_EVP7_QUALITATIVE_CASES))
     parser.add_argument("--out-json", required=True)
     parser.add_argument("--out-md", required=True)
     return parser.parse_args()

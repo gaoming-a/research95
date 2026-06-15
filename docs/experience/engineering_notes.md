@@ -2221,3 +2221,17 @@ This file starts fresh for the patch-verification project.
   The same comparison also downgrades 12/19 tool-only true accepts. The
   defensible wording is therefore a bounded safety/recall attribution boundary,
   not LLM superiority over deterministic visible evidence.
+
+## 2026-06-15 EVP-7 qualitative case boundary
+
+- Qualitative cases should be reproducible selections from structured review
+  records, not hand-picked prose copied from raw responses. Keep `raw_response`
+  and prompt text out of tracked artifacts, and validate the selected cases
+  against expected decision sequences.
+- Separate model-visible sequence from evaluator-only interpretation. The
+  model-visible side may contain E0/E2/E4/E6 decisions, confidence, risk flags,
+  and evidence categories. Hidden labels, patch source, and validation outcomes
+  belong only in an explicitly marked evaluator-only section.
+- Use qualitative cases to explain decision mechanics and reader flow. They do
+  not increase sample size and must not be used to make scale-generalized claims
+  beyond the frozen EVP-7 pilot.

@@ -112,6 +112,10 @@
   raw-output-free attribution analysis comparing deterministic tool-only
   decisions with matched E4/E6 LLM decisions. It shows the safety/recall
   boundary without claiming LLM superiority over tool evidence.
+- `../data/reviews/evp7_g5_376_qualitative_cases.json`: tracked
+  raw-output-free qualitative case analysis for six representative EVP-7
+  decision sequences. It separates model-visible decisions from evaluator-only
+  interpretations.
 - `../data/reviews/evp7_g5_376_claim_traceability.json`: tracked
   raw-output-free claim-boundary traceability audit for the same EVP-7 G5 run.
   It maps supported and unsupported claims to summary, quality, statistics, and
@@ -181,6 +185,10 @@
   analysis comparing matched deterministic tool-only and LLM decisions at E4
   and E6. It reports decision overlap, recovered tool-only false accepts, and
   correct tool accepts downgraded by the LLM.
+- `experiments/evp7_g5_376_qualitative_cases.md`: human-readable qualitative
+  case report for six representative EVP-7 decision paths, including
+  evidence-enabled accepts, recovered tool-only false accepts, downgraded
+  correct patches, and rejected non-fixing patches.
 - `experiments/evp7_g5_376_claim_traceability.md`: human-readable
   claim-boundary traceability audit that verifies supported/unsupported EVP-7
   claims are covered by the paper tables, Markdown draft, and IEEE draft while
@@ -648,6 +656,9 @@
 - `scripts/analyze_evp7_tool_attribution.py`: generates the raw-output-free
   deterministic tool-only attribution analysis for EVP-7 by comparing matched
   E4/E6 tool-only and LLM decisions without writing raw model responses.
+- `scripts/analyze_evp7_qualitative_cases.py`: generates the raw-output-free
+  qualitative case report for selected EVP-7 decision paths while keeping
+  reviewer-facing decision sequences separate from evaluator-only labels.
 - `scripts/audit_paper_claim_boundary.py`: generates the EVP-7 claim-boundary
   traceability audit and fails when supported/unsupported claims are not covered
   by the current paper artifacts or required IEEE boundary cues are missing.

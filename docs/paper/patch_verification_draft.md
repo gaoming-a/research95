@@ -299,6 +299,14 @@ also downgrades 12 tool-only true accepts to reject or escalation. This supports
 a bounded safety/recall tradeoff interpretation, not a claim that the LLM
 outperforms deterministic visible evidence.
 
+The qualitative case audit explains the decision mechanics behind the aggregate
+tradeoff. It selects six representative EVP-7 cases and separates the
+model-visible decision sequence from the evaluator-only interpretation. The
+cases include evidence-enabled accepts, recovered tool-only false accepts,
+correct patches downgraded by the LLM, and non-fixing patches rejected after
+evidence became visible. These examples are interpretive evidence for the
+bounded pilot, not additional scale evidence.
+
 ## 12. Reproducibility and Handoff Controls
 
 The pre-API artifact includes deterministic reproduction checks for the local
