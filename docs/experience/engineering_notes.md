@@ -2170,6 +2170,14 @@ This file starts fresh for the patch-verification project.
   slide/PDF fit, but it must keep the evaluator truth labels row in the matrix
   and show that row as hidden for E0/E2/E4/E6. Removing both the sentence and
   the row would erase the hidden-evaluator boundary.
+- Figure captions can drift separately from figure assets. After compacting
+  fig2, the IEEE generator still described the old review-condition /
+  tool-augmented boundary. Fix the generator-owned caption and add a readiness
+  guard; editing only the generated `.tex` would be overwritten on the next
+  paper refresh.
+- Readiness checks that inspect generated LaTeX captions should normalize
+  whitespace before matching prose. TeX line wrapping can split a semantically
+  correct caption across physical lines and otherwise produce false blockers.
 - Canonical roadmap drift can recur even after protocol and paper files are
   fixed. `final_paper_roadmap_zh.md` had a current-state update to 20 tasks /
   94 candidates / 376 packets, but its Phase A numbered list still described

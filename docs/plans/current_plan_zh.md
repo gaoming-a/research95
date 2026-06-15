@@ -9940,3 +9940,87 @@ Verify:
 - evaluator truth labels 的 hidden boundary 仍在矩阵中显式可见；
 - 该修复服务于 paper/PPT figure readability，不改变实验边界或论文 claim
   边界。
+
+## 125. 2026-06-15 IEEE fig2 caption submission audit
+
+Inspect:
+
+- 当前工作区干净，`main...origin/main`；
+- `docs/figures/fig2_evidence_visibility.*` 已是 compact E0/E2/E4/E6
+  evidence-level boundary 图；
+- `outputs/paper_compile/ieee_submission_draft.pdf` 早于最新 fig2 生成时间，
+  需要重新编译；
+- `scripts/write_ieee_latex_draft.py` 仍把 fig2 caption 描述为旧的
+  review-condition / tool-augmented condition 边界；
+- 这会导致重新生成的 IEEE 草稿与当前 fig2 语义不一致，但不涉及实验数据、
+  prompt、API、metrics 或 claim 边界。
+
+Plan:
+
+1. 修复 IEEE 草稿生成器中的 fig2 caption，使其明确描述 EVP-7
+   E0/E2/E4/E6 evidence visibility levels；
+2. 在 paper readiness audit 中加入旧 fig2 caption 阻断，防止 generated
+   `.tex` 或生成器再次漂移；
+3. 重新生成 `docs/paper/ieee_submission_draft.tex` 并重新编译 PDF；
+4. 同步 README / docs index / engineering notes；
+5. 运行 paper readiness、anonymous artifact audit、local quality gate；
+6. 本轮不调用 API、不扩 cohort、不修改 prompt、不改变 claim 边界。
+
+验收条件：
+
+- IEEE draft 和生成器都不再包含旧 fig2 condition caption；
+- readiness gate 能检查 fig2 caption 语义；
+- PDF 重新编译成功；
+- paper readiness、anonymous artifact audit、local quality gate 通过；
+- 只提交本轮 caption/readiness/docs 相关文件。
+
+Execute:
+
+- 已修复 `scripts/write_ieee_latex_draft.py` 中 fig2 caption，使其描述
+  EVP-7 E0/E2/E4/E6 evidence visibility levels；
+- 已重新生成 `docs/paper/ieee_submission_draft.tex`；
+- 已在 `scripts/audit_paper_readiness.py` 中加入 fig2 caption drift 检查：
+  - IEEE draft 必须包含 EVP-7 evidence visibility levels；
+  - caption 必须声明 evaluator truth labels remain hidden at all levels；
+  - generated `.tex` 和生成器都不得继续使用旧 condition caption wording；
+- 已同步 README、docs index 和 engineering notes；
+- 本轮未调用 API、未扩 cohort、未修改 prompt、未修改 metrics 或 claim 边界。
+
+Diagnose / Repair:
+
+- 初版 readiness check 直接匹配原始 `.tex` 字符串，遇到 LaTeX caption 换行
+  后误报 `ieee_fig2_caption_keeps_truth_labels_hidden=false`；
+- 问题类型为执行链路审计 bug，不是论文内容或实验设计问题；
+- 已将 caption 正向检查改为基于 whitespace-normalized text，重新运行后
+  paper framing check 通过。
+
+Verify:
+
+- `python -m compileall scripts\write_ieee_latex_draft.py scripts\audit_paper_readiness.py`
+  通过；
+- `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`
+  通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`paper_framing.passed=true`、`current_result_claim_ready=true`、
+  `evp7_bounded_pilot_claim_ready=true`；
+- `pdflatex` 连续两遍编译 `docs\paper\ieee_submission_draft.tex` 成功，输出
+  `outputs\paper_compile\ieee_submission_draft.pdf` 共 6 页；
+- `pdftotext outputs\paper_compile\ieee_submission_draft.pdf -` 确认 PDF 中
+  fig2 caption 为 `EVP-7 evidence visibility levels`，且包含
+  `Evaluator truth labels remain hidden at all levels`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`safe_to_package=true`、`file_count=280`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 本轮完成 IEEE fig2 caption submission audit；
+- fig2 的生成器 caption、生成草稿和编译 PDF 现在都与 compact E0/E2/E4/E6
+  evidence boundary 一致；
+- readiness gate 已覆盖该 drift 类型，后续 paper refresh 不应重新引入旧
+  condition caption；
+- 该修复只巩固 frozen 20-task / 94-candidate / 376-packet EVP-7 bounded pilot
+  paper readiness，不改变实验边界或 claim 边界。

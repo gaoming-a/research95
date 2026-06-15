@@ -613,6 +613,8 @@
   submission draft at `docs/paper/ieee_submission_draft.tex` from generated
   dataset/no-API tables, audited prompt-only and tool-augmented metrics, and
   the current EVP-7 G5 376-record summary plus claim-boundary audit.
+  It also owns the paper-facing figure captions, including the compact EVP-7
+  E0/E2/E4/E6 fig2 evidence-level caption checked by paper readiness.
   The old `docs/paper/ieee_preapi_draft.tex` is retained only as historical
   pre-API context.
 - `scripts/generate_paper_figures.py`: generates the publication figure set

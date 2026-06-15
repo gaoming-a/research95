@@ -631,7 +631,9 @@ python scripts\write_ieee_latex_draft.py `
 
 The IEEE draft generator reads the current EVP-7 G5 376-record summary and
 quality audit by default, so the generated body and tables stay on the same
-claim boundary.
+claim boundary. Paper readiness also checks the IEEE fig2 caption so the
+generated draft stays aligned with the compact E0/E2/E4/E6 evidence-level
+figure.
 
 Paper readiness also checks the current paper framing. The tracked outline,
 research definition, Markdown draft, and IEEE draft must use the

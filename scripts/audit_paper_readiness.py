@@ -56,6 +56,7 @@ def paper_framing_state() -> dict[str, Any]:
         "paper_outline": Path("docs") / "paper" / "patch_verification_outline.md",
         "paper_draft": Path("docs") / "paper" / "patch_verification_draft.md",
         "ieee_submission_draft": Path("docs") / "paper" / "ieee_submission_draft.tex",
+        "ieee_submission_generator": Path("scripts") / "write_ieee_latex_draft.py",
     }
     texts = {name: read_text_if_exists(path) for name, path in paths.items()}
     normalized_texts = {name: " ".join(text.split()) for name, text in texts.items()}
@@ -71,6 +72,17 @@ def paper_framing_state() -> dict[str, Any]:
         ],
         "markdown_draft_uses_current_title": texts["paper_draft"].startswith(f"# {current_title}"),
         "ieee_draft_uses_current_title": rf"\title{{{current_title}}}" in texts["ieee_submission_draft"],
+        "ieee_fig2_caption_uses_evp7_levels": "EVP-7 evidence visibility levels"
+        in normalized_texts["ieee_submission_draft"],
+        "ieee_fig2_caption_keeps_truth_labels_hidden": "Evaluator truth labels remain hidden at all levels"
+        in normalized_texts["ieee_submission_draft"],
+        "generator_fig2_caption_uses_evp7_levels": "EVP-7 evidence visibility levels"
+        in normalized_texts["ieee_submission_generator"],
+        "fig2_caption_does_not_use_old_condition_wording": "Evidence visibility by condition"
+        not in texts["ieee_submission_draft"]
+        and "tool-augmented condition is distinguished" not in texts["ieee_submission_draft"]
+        and "Evidence visibility by condition" not in texts["ieee_submission_generator"]
+        and "tool-augmented condition is distinguished" not in texts["ieee_submission_generator"],
         "current_artifacts_do_not_use_stale_title": all(
             stale_title not in normalized_text for normalized_text in normalized_texts.values()
         ),
