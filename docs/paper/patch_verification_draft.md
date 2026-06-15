@@ -311,7 +311,7 @@ schema-invalid records, and complete token-usage cost observability. The
 runner-estimated cost is 0.327352058 USD; this is an estimate from provider
 token usage and configured pricing, not an external billing statement.
 
-| evidence | records | accept | escalate | reject | false accept | accepted precision | correct recall | evidence gain vs E0 |
+| evidence | records | accept | escalate | reject | false accept | accepted precision | correct recall | Evidence Gain vs E0 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | E0 | 94 | 1 | 49 | 44 | 0.0000 | 1.0000 | 0.0500 | 0.0000 |
 | E2 | 94 | 0 | 57 | 37 | 0.0000 | NA | 0.0000 | -3.0000 |
@@ -429,18 +429,17 @@ be interpreted as a tool workflow.
 
 ## 17. Current Conclusion
 
-The current artifact establishes a validated patch-verification pilot and a
-completed single-model API pilot. The result does not establish that
-prompt-only evidence-first verification improves over LLM-only review under the
-configured gate. Evidence-first reduced false accepts and improved accepted
-precision, but it also reduced correct-patch recall beyond the configured
-tolerance.
+The current artifact reports a validated patch-verification pilot and a
+completed single-model API pilot. The result does not show that prompt-only
+evidence-first verification improves over LLM-only review under the configured
+gate. Evidence-first reduced false accepts and improved accepted precision, but
+it also reduced correct-patch recall beyond the configured tolerance.
 
 The revised tool-augmented verifier passed the 30-candidate full-run gate by
 accepting all correct reference patches and rejecting all negative candidates.
 The EVP-7 G5 run then shows bounded evidence-level variation on a larger frozen
 cohort. The paper should therefore report a staged finding: prompt-only review
 is not enough, evidence-poor verification is too conservative, tool-visible
-execution evidence can support a stronger verifier under the first pilot, and
+execution evidence can support a separate verifier under the first pilot, and
 the EVP-7 evidence-visibility run provides bounded pilot evidence that
 additional visible evidence changes merge-gate behavior.

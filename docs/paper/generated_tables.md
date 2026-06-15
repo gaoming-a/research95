@@ -64,7 +64,7 @@ These tables are generated from current tracked artifacts. Raw model responses a
 - cost note: Runner cost is estimated from provider token usage when provider-reported cost is absent; see cost_summary for observability counts.
 - cost summary: `{"cost_observability_counts": {"estimated_from_provider_token_usage": 376}, "cost_source_counts": {"estimated_from_tokens": 376}, "total_cost_usd": 0.327352058, "unknown_cost_record_count": 0}`
 
-| evidence | records | decisions | invalid | false accept | accepted precision | correct recall | evidence gain vs E0 |
+| evidence | records | decisions | invalid | false accept | accepted precision | correct recall | Evidence Gain vs E0 |
 |---|---:|---|---:|---:|---:|---:|---:|
 | E0 | 94 | `{"accept": 1, "escalate": 49, "reject": 44}` | 0.0000 | 0.0000 | 1.0000 | 0.0500 | 0.0000 |
 | E2 | 94 | `{"escalate": 57, "reject": 37}` | 0.0000 | 0.0000 | NA | 0.0000 | -3.0000 |

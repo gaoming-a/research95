@@ -2262,3 +2262,16 @@ This file starts fresh for the patch-verification project.
 - Keep first-pilot API and tool-augmented results as diagnostic design evidence.
   The current paper-facing result remains the frozen EVP-7 evidence-visibility
   run.
+
+## 2026-06-15 manuscript consistency polish
+
+- A draft can pass claim-boundary checks while still sounding too strong.
+  Words such as "establishes" are risky in the conclusion when the evidence is a
+  bounded single-model pilot. Prefer "reports", "shows bounded variation", or
+  "supports bounded observations".
+- Keep paper-facing metric names canonical. `Evidence Gain` should stay
+  title-cased in tables, prose, captions, and generated drafts; do not let source
+  generators reintroduce lowercase variants.
+- Unsupported claims should be readable claims, not a long audit string pasted
+  into prose. Format them as explicit rejected interpretations so reviewers can
+  see the boundary without parsing JSON-like text.

@@ -10588,3 +10588,83 @@ Verify:
 - 论文读者现在可在进入 first-pilot / tool-augmented / EVP-7 细节前先看到
   统一的实验单位、决策链和指标链；
 - 下一步应做 final manuscript polish / consistency pass，而不是继续补实验。
+
+## 2026-06-15 final manuscript polish / consistency pass
+
+Inspect:
+
+- 当前分支本地领先 `origin/main` 8 个提交，工作区在本轮开始时干净；
+- 使用 `nature-polishing`，轴线为 `paper_type=research`、
+  `section=abstract/intro/results/discussion/conclusion`、`language=en`、
+  `journal=generic`；
+- 术语 ledger：
+  - canonical title:
+    `Evidence Visibility Matters: A Systematic Study of LLM-Based Verification for Candidate Patches`；
+  - canonical protocol/cohort: `EVP-7`；
+  - canonical metric: `Evidence Gain`；
+  - canonical claim scope: `bounded evidence-level variation` /
+    `bounded evidence-visibility pilot result`；
+  - unsupported claims: no scale-generalized claims, no deterministic-baseline
+    superiority claim, no strict E6-over-E4 claim, no external-billing claim；
+- 初查发现正文和 Markdown draft 中仍有几处容易误读的措辞：
+  `establishes` 用在结论/当前 artifact 上过强，unsupported-claim 串联句过长，
+  `evidence gain` 大小写不一致。
+
+Plan:
+
+1. 只做论文文字和 guard 的最小一致性修订，不新增实验、不改 metrics、不调用 API；
+2. 将结论中的强断言改为 bounded observation / reports / provides；
+3. 将 unsupported claims 从长串句改为可读的分号列表；
+4. 统一正文中的 `Evidence Gain` 大小写；
+5. 同步 Markdown draft、README/INDEX、engineering notes 和 readiness guard；
+6. 重新生成 IEEE draft、编译 PDF、运行 readiness、claim-boundary、local gate、
+   PDF 文本核验和 diff check 后提交。
+
+验收条件：
+
+- IEEE draft、generator、Markdown draft 都不得把 EVP-7 写成 scale-generalized
+  或 deterministic-baseline-superiority 结论；
+- 结论段必须保留 bounded single-model/cohort scope；
+- `Evidence Gain` 术语大小写一致；
+- readiness 和 local quality gate 通过。
+
+Execute:
+
+- 已将 IEEE generator 结论中的 `establishes` 改为 `reports`，避免把
+  bounded single-model pilot 写成更强的结论；
+- 已将 EVP-7 result 段中的小写 `evidence gain` 改为 canonical
+  `Evidence Gain`；
+- 已将 unsupported claims 从一条长串审计文本改为四个显式 rejected
+  interpretations；
+- 已同步 Markdown draft、paper table generator、generated tables、README、
+  INDEX 和 engineering notes；
+- 已在 `scripts/audit_paper_readiness.py` 中增加 final-polish checks：
+  bounded conclusion、unsupported-claim formatting、`Evidence Gain` title case。
+
+Verify:
+
+- `python scripts\write_paper_tables.py` 通过并刷新
+  `docs/paper/generated_tables.md` 与 `docs/paper/generated_tables.tex`；
+- `python -m compileall scripts\write_ieee_latex_draft.py scripts\write_paper_tables.py scripts\audit_paper_readiness.py`
+  通过；
+- `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`
+  通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，新增 final-polish checks 全部为 true；
+- `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex`
+  连续两遍通过，输出仍为 7 页；
+- `python scripts\audit_paper_claim_boundary.py` 通过，`passed=true`、
+  `raw_output_free=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `pdftotext outputs\paper_compile\ieee_submission_draft.pdf -` 检查确认
+  PDF 结论包含 bounded single-model scope、四项 rejected interpretations、
+  `Evidence Gain 7.0000` 和 `Evidence Gain 14.2500`。
+
+结论：
+
+- 本轮完成 final manuscript polish / consistency pass；
+- 论文当前主线为 frozen EVP-7 bounded evidence-visibility pilot，不再通过
+  结论措辞暗示 scale-generalized、deterministic-baseline-superiority 或
+  deployment-ready claim；
+- 下一步应做 final artifact packaging / submission checklist，而不是继续扩实验。

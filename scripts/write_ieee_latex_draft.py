@@ -114,6 +114,9 @@ def evp7_summary_text(evp7_summary: dict[str, Any], evp7_quality: dict[str, Any]
     unsupported = evp7_quality.get("unsupported_claims", [])
     limitations = evp7_quality.get("limitations", [])
     unsupported_text = "; ".join(latex_escape(str(item).rstrip(".")) for item in unsupported)
+    unsupported_sentence = "; ".join(
+        f"({index}) {latex_escape(str(item).rstrip('.'))}" for index, item in enumerate(unsupported, start=1)
+    )
     return {
         "provider": latex_escape(str(evp7_summary.get("provider", "unknown"))),
         "model": latex_escape(str(evp7_summary.get("model", "unknown"))),
@@ -134,6 +137,7 @@ def evp7_summary_text(evp7_summary: dict[str, Any], evp7_quality: dict[str, Any]
         "e6_recall": fmt_metric(e6.get("correct_recall")),
         "e6_gain": fmt_metric(e6.get("evidence_gain_vs_e0")),
         "unsupported_claims": unsupported_text,
+        "unsupported_claims_sentence": unsupported_sentence,
         "limitations": "; ".join(latex_escape(str(item)) for item in limitations),
     }
 
@@ -417,11 +421,11 @@ pilot as a scale-generalized result. A utility-sensitivity table varies
 false-accept, escalation, and false-reject penalties around the default
 merge-gate utility. E4 preserves false-accept rate {evp7["e4_false_accept"]}, accepted
 precision {evp7["e4_precision"]}, correct recall {evp7["e4_recall"]}, and
-evidence gain {evp7["e4_gain"]}. E6 preserves false-accept rate
+Evidence Gain {evp7["e4_gain"]}. E6 preserves false-accept rate
 {evp7["e6_false_accept"]}, accepted precision {evp7["e6_precision"]}, correct
-recall {evp7["e6_recall"]}, and evidence gain {evp7["e6_gain"]}. The bounded
+recall {evp7["e6_recall"]}, and Evidence Gain {evp7["e6_gain"]}. The bounded
 interpretation is that evidence visibility changes merge-gate behavior on this
-pilot cohort. It does not establish deterministic-baseline superiority, E6
+pilot cohort. It does not show deterministic-baseline superiority, E6
 strict superiority over E4, scale generality, or billing equivalence.
 
 The deterministic tool-only attribution analysis in
@@ -508,12 +512,12 @@ Model behavior can drift over time and across providers. Every API run must
 record model id, provider, date, prompt version, decoding settings, cost
 observability, raw-output handling, and invalid-output status. The current
 DeepSeek runs use a single model by design and cannot support claims about all
-frontier models or all coding agents. The EVP-7 quality audit also rejects:
-{evp7["unsupported_claims"]}.
+frontier models or all coding agents. The EVP-7 quality audit also rejects four
+interpretations: {evp7["unsupported_claims_sentence"]}.
 
 \section{{Conclusion}}
 
-The paper-facing artifact establishes a frozen EVP-7 evidence-visibility pilot:
+The paper-facing artifact reports a frozen EVP-7 evidence-visibility pilot:
 20 real-bug tasks, {evp7["candidate_count"]} patch candidates, and
 {evp7["evidence_packet_count"]} reviewed evidence packets. Within this bounded
 single-model setting, evidence visibility changes merge-gate behavior: E4 and

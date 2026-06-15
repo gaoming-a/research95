@@ -227,7 +227,9 @@
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
   evidence-visibility result, the early decision-to-metric reader-flow bridge,
   related-work positioning, deterministic tool-only attribution, qualitative
-  case interpretation, figures, threats, and conclusion.
+  case interpretation, figures, threats, conclusion, and final consistency
+  polish for `Evidence Gain`, unsupported-claim formatting, and bounded
+  conclusion wording.
 - `experiments/evp7_related_work_positioning.md`: related-work citation and
   positioning artifact. It maps field-specific primary references to the
   paper's evidence-visibility distinction and records why a strict Nature/CNS
@@ -633,8 +635,8 @@
   ability. It now also reports the current EVP-7 G5 bounded-pilot claim
   readiness from the raw-output-free 376-record DeepSeek summary and quality
   audit. It also checks paper framing, active protocol, protocol pilot report,
-  and final roadmap current-state consistency before marking the current result
-  claim ready.
+  final roadmap current-state consistency, reader-flow continuity, and
+  final-polish claim wording before marking the current result claim ready.
 - `scripts/write_paper_tables.py`: generates Markdown and LaTeX paper tables
   from dataset summary, validation summary, metrics, deterministic
   reproducibility comparison, and the current EVP-7 G5 376-record summary plus
@@ -646,7 +648,8 @@
   It also owns the paper-facing figure captions, including the compact EVP-7
   E0/E2/E4/E6 fig2 evidence-level caption checked by paper readiness.
   The generated narrative foregrounds the frozen EVP-7 bounded result while
-  keeping the earlier 30-candidate API pilot as diagnostic design evidence.
+  keeping the earlier 30-candidate API pilot as diagnostic design evidence and
+  reporting unsupported EVP-7 interpretations explicitly.
   The old `docs/paper/ieee_preapi_draft.tex` is retained only as historical
   pre-API context.
 - `scripts/generate_paper_figures.py`: generates the publication figure set

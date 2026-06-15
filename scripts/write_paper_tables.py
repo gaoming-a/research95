@@ -143,7 +143,7 @@ def build_markdown(
             f"- cost note: {evp7_summary['workflow']['cost_note']}",
             f"- cost summary: `{json.dumps(evp7_summary['workflow'].get('cost_summary'), sort_keys=True)}`",
             "",
-            "| evidence | records | decisions | invalid | false accept | accepted precision | correct recall | evidence gain vs E0 |",
+            "| evidence | records | decisions | invalid | false accept | accepted precision | correct recall | Evidence Gain vs E0 |",
             "|---|---:|---|---:|---:|---:|---:|---:|",
         ]
     )
@@ -293,7 +293,7 @@ def evp7_latex_table(summary: dict[str, Any]) -> str:
         + "\\label{tab:evp7-g5-results}\n"
         "\\begin{tabular}{lrrrrrrr}\n"
         "\\toprule\n"
-        "Evidence & Records & Accept & Escalate & Reject & False accept & Correct recall & Evidence gain \\\\\n"
+        "Evidence & Records & Accept & Escalate & Reject & False accept & Correct recall & Evidence Gain \\\\\n"
         "\\midrule\n"
         + rows
         + "\n\\bottomrule\n"

@@ -258,7 +258,8 @@ They should not override `final_paper_roadmap_zh.md`.
   includes the prompt-only negative result, the conditional tool-augmented
   result, the bounded EVP-7 G5 376-record evidence-visibility result, and the
   reader-flow bridge, related-work positioning, deterministic tool-only
-  attribution, and qualitative decision-case boundaries.
+  attribution, qualitative decision-case boundaries, and a final consistency
+  pass aligning `Evidence Gain`, unsupported claims, and the bounded conclusion.
 - A Nature-style pre-submission reviewer assessment is tracked at
   `docs/paper/nature_reviewer_presubmission_report.md`. It identifies the next
   paper-writing risks as tool-only attribution, EVP-7 qualitative cases,
@@ -668,6 +669,9 @@ core field-specific citations and the boundary that Evidence Gain is a
 descriptive pilot metric, not a proposed universal benchmark score.
 It also checks that the IEEE draft, generator, and Markdown draft keep the
 reader-flow bridge and fig7 decision-to-metric reference.
+It also checks that final-polish wording reports a bounded EVP-7 pilot, formats
+unsupported claims as explicit interpretations, and keeps `Evidence Gain`
+title-cased in paper-facing prose.
 It also checks `docs/protocol/evidence_visibility_protocol.md` for the current
 20-task / 94-candidate / 376-packet EVP-7 state, so a stale protocol summary no
 longer passes merely because the file exists. The same check covers

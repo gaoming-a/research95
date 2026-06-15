@@ -305,7 +305,7 @@ Missing & 0 \\
 \label{tab:evp7-g5-results}
 \begin{tabular}{lrrrrrrr}
 \toprule
-Evidence & Records & Accept & Escalate & Reject & False accept & Correct recall & Evidence gain \\
+Evidence & Records & Accept & Escalate & Reject & False accept & Correct recall & Evidence Gain \\
 \midrule
 E0 & 94 & 1 & 49 & 44 & 0.0000 & 0.0500 & 0.0000 \\
 E2 & 94 & 0 & 57 & 37 & 0.0000 & 0.0000 & -3.0000 \\
@@ -450,11 +450,11 @@ pilot as a scale-generalized result. A utility-sensitivity table varies
 false-accept, escalation, and false-reject penalties around the default
 merge-gate utility. E4 preserves false-accept rate 0.0000, accepted
 precision 1.0000, correct recall 0.0500, and
-evidence gain 7.0000. E6 preserves false-accept rate
+Evidence Gain 7.0000. E6 preserves false-accept rate
 0.0000, accepted precision 1.0000, correct
-recall 0.3500, and evidence gain 14.2500. The bounded
+recall 0.3500, and Evidence Gain 14.2500. The bounded
 interpretation is that evidence visibility changes merge-gate behavior on this
-pilot cohort. It does not establish deterministic-baseline superiority, E6
+pilot cohort. It does not show deterministic-baseline superiority, E6
 strict superiority over E4, scale generality, or billing equivalence.
 
 The deterministic tool-only attribution analysis in
@@ -541,12 +541,12 @@ Model behavior can drift over time and across providers. Every API run must
 record model id, provider, date, prompt version, decoding settings, cost
 observability, raw-output handling, and invalid-output status. The current
 DeepSeek runs use a single model by design and cannot support claims about all
-frontier models or all coding agents. The EVP-7 quality audit also rejects:
-Scale-generalized paper claims beyond EVP-7; A claim that the LLM outperforms the deterministic visible-test tool-only baseline; A claim that E6 strictly improves over E4 in this run; A claim that runner-estimated cost is an external DeepSeek billing statement.
+frontier models or all coding agents. The EVP-7 quality audit also rejects four
+interpretations: (1) Scale-generalized paper claims beyond EVP-7; (2) A claim that the LLM outperforms the deterministic visible-test tool-only baseline; (3) A claim that E6 strictly improves over E4 in this run; (4) A claim that runner-estimated cost is an external DeepSeek billing statement.
 
 \section{Conclusion}
 
-The paper-facing artifact establishes a frozen EVP-7 evidence-visibility pilot:
+The paper-facing artifact reports a frozen EVP-7 evidence-visibility pilot:
 20 real-bug tasks, 94 patch candidates, and
 376 reviewed evidence packets. Within this bounded
 single-model setting, evidence visibility changes merge-gate behavior: E4 and

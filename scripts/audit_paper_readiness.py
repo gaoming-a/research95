@@ -163,6 +163,17 @@ def paper_framing_state() -> dict[str, Any]:
         in normalized_texts["ieee_submission_draft"]
         and "frozen EVP-7 run is the paper-facing evidence-visibility result"
         in normalized_texts["ieee_submission_draft"],
+        "final_polish_uses_bounded_conclusion": "The paper-facing artifact reports a frozen EVP-7"
+        in normalized_texts["ieee_submission_draft"]
+        and "Within this bounded single-model setting" in normalized_texts["ieee_submission_draft"],
+        "final_polish_formats_unsupported_claims": "quality audit also rejects four interpretations"
+        in normalized_texts["ieee_submission_draft"]
+        and "(1) Scale-generalized paper claims beyond EVP-7" in normalized_texts["ieee_submission_draft"],
+        "final_polish_uses_evidence_gain_title_case": "evidence gain 7" not in texts[
+            "ieee_submission_draft"
+        ]
+        and "evidence gain 14" not in texts["ieee_submission_draft"]
+        and "Evidence Gain" in texts["ieee_submission_draft"],
         "current_artifacts_do_not_use_stale_title": all(
             stale_title not in normalized_text for normalized_text in normalized_texts.values()
         ),
