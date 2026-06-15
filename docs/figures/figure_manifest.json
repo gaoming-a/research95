@@ -1,5 +1,5 @@
 {
-  "figure_count": 5,
+  "figure_count": 6,
   "formats": [
     "pdf",
     "svg",
@@ -20,11 +20,15 @@
     },
     {
       "id": "fig4_result_tradeoff",
-      "purpose": "main API result metrics"
+      "purpose": "first-pilot API result metrics"
     },
     {
       "id": "fig5_claim_boundary",
       "purpose": "claim boundary and interpretation"
+    },
+    {
+      "id": "fig6_evp7_visibility_curve",
+      "purpose": "EVP-7 evidence visibility curve"
     }
   ]
 }

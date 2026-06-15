@@ -2072,3 +2072,15 @@ This file starts fresh for the patch-verification project.
 - Keep 248-run text as a historical checkpoint and make the current state
   explicit: 20 tasks / 5 projects / 94 candidates / 376 evidence packets,
   376/376 parse-valid G5 records, and bounded pilot-only claims.
+
+## 2026-06-15 evidence-visibility figure drift
+
+- After freezing the 20-task EVP-7 cohort, the existing publication figure set
+  still only contained first-pilot review-condition figures. The roadmap asks
+  for an Evidence Visibility Curve, so a current paper draft needs a separate
+  figure derived from the 376-run summary rather than reusing the older
+  30-candidate tradeoff chart.
+- Generate `fig6_evp7_visibility_curve` from
+  `evp7_g5_llm_376_full_summary.json`; do not hand-copy plotted values. Keep
+  `fig4_result_tradeoff` scoped to the first pilot and use fig6 for E0/E2/E4/E6
+  evidence-level claims.

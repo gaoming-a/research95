@@ -9030,3 +9030,92 @@ Verify:
 - 当前计划入口不再误导继续补 bug 到 15-20，下一步应围绕 frozen 20-task
   结果的统计/图表/claim consolidation 或新的 30-50 bug 决策展开；
 - 本轮未调用 API、未扩 cohort、未修改 G5 prompt 或 tracked evidence 数据。
+
+## 115. 2026-06-15 add EVP-7 evidence visibility curve figure
+
+Inspect:
+
+- 当前工作区干净，本地 main ahead origin 19；
+- canonical roadmap 当前建议已经转为 frozen 20-task 结果巩固；
+- `docs/plans/final_paper_roadmap_zh.md` 明确要求把 E0-E6 主结果组织为
+  `Evidence Visibility Curve`，核心曲线至少包含 false accept rate、
+  correct recall、accepted precision、escalation rate 和 safety/utility；
+- `scripts/generate_paper_figures.py` 当前只生成 5 张旧 pilot 图，其中
+  `fig4_result_tradeoff` 仍是 30-candidate prompt/tool-augmented 结果图，
+  没有当前 376-run 的 evidence-level curve；
+- 当前 376-run summary 已包含 E0/E2/E4/E6 的 false accept、correct recall、
+  accepted precision、escalation rate 和 Evidence Gain，可直接生成 tracked
+  reproducible figure。
+
+Plan:
+
+1. 更新 `scripts/generate_paper_figures.py`，读取
+   `data/reviews/evp7_g5_llm_376_full_summary.json` 并新增
+   `fig6_evp7_visibility_curve`；
+2. 更新 figure manifest、figures README、artifact audit required files；
+3. 更新 IEEE draft generator，让当前投稿稿引用 fig6；
+4. 重新生成 figures 和 IEEE draft；
+5. 同步 README / docs index / engineering notes / current plan；
+6. 运行最小生成、LaTeX、paper readiness、local quality gates；
+7. 本轮不跑 API、不扩 cohort、不改 G5 prompt。
+
+验收条件：
+
+- `docs/figures/fig6_evp7_visibility_curve.{pdf,svg,png}` 存在；
+- figure manifest 记录 6 张图；
+- IEEE draft 引用 fig6，并把 fig4 与 fig6 的语义区分清楚；
+- quality gates 通过。
+
+Execute:
+
+- 已更新 `scripts/generate_paper_figures.py`：
+  - 新增 `--evp7-summary` 默认输入
+    `data/reviews/evp7_g5_llm_376_full_summary.json`；
+  - 新增 `fig6_evp7_visibility_curve`，从当前 376-run summary 读取
+    E0/E2/E4/E6 的 false accept rate、accepted precision、correct recall、
+    escalation rate 和 Evidence Gain；
+  - 对 E2 accepted precision 为空的情况使用散点缺口表示，避免把 undefined
+    precision 误画为连续曲线；
+  - 为 SVG/PDF 输出增加稳定 metadata，减少可重复生成时的无意义漂移；
+- 已重新生成 `docs/figures/fig1` 到 `fig6` 的 PDF/SVG/PNG，并更新
+  `docs/figures/figure_manifest.json` 到 6 张图；
+- 已更新 `docs/figures/README.md`，明确 `fig4_result_tradeoff` 是 first-pilot
+  tradeoff 图，`fig6_evp7_visibility_curve` 是当前 EVP-7 376-run evidence
+  visibility curve；
+- 已更新 `scripts/write_ieee_latex_draft.py` 和
+  `docs/paper/ieee_submission_draft.tex`，在 EVP-7 结果段落后加入 fig6，并
+  保持 fig4/fig6 语义边界；
+- 已更新 `scripts/audit_anonymous_artifact.py`，将 fig6 PDF 纳入 anonymous
+  artifact required files；
+- 已同步 README、docs index、anonymous artifact 文档和 engineering notes；
+- 本轮未调用 API、未扩 cohort、未修改 G5 prompt，也未跟踪 raw model outputs；
+- 因 required files 变更后旧 zip 缺少 fig6 PDF，已重新生成 ignored
+  `artifacts/research95_anonymous_artifact.zip` 与 manifest，并重新审计通过。
+
+Verify:
+
+- `python -m compileall scripts\generate_paper_figures.py scripts\write_ieee_latex_draft.py scripts\audit_anonymous_artifact.py`
+  通过；
+- `python scripts\generate_paper_figures.py` 通过，输出 `figure_count = 6`；
+- `docs/figures/fig6_evp7_visibility_curve.png` 已人工检查：曲线、bar、legend
+  和 E2 precision undefined 注释可读，未把 E2 precision 画成连续值；
+- `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`
+  通过；
+- `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex`
+  连续运行后通过，生成 6 页 IEEE draft PDF；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、
+  `evp7_bounded_pilot_claim_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 本轮按计划完成 frozen 20-task / 376-record EVP-7 evidence visibility curve
+  图形补齐；
+- 当前 paper figures、IEEE draft、artifact audit 和 local quality gate 已对齐
+  到 fig6；
+- 下一步应继续围绕 frozen cohort 的统计/图表/claim consolidation 推进，而
+  不是默认继续补 bug。

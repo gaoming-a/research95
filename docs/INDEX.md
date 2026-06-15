@@ -588,8 +588,8 @@
   pre-API context.
 - `scripts/generate_paper_figures.py`: generates the publication figure set
   under `docs/figures/` in PDF, SVG, and PNG formats. Figures cover the
-  workflow, evidence boundary, dataset composition, result tradeoff, and claim
-  boundary.
+  workflow, evidence boundary, dataset composition, first-pilot result tradeoff,
+  claim boundary, and EVP-7 evidence visibility curve.
 - `figures/`: reproducible paper figure assets. The IEEE submission draft uses
   the PDF versions, while PNG versions are for quick local inspection.
 - `figures/imagegen/`: generated raster visual candidates plus exact prompts

@@ -27,6 +27,7 @@ REQUIRED_FILES = [
     "docs/figures/fig3_dataset_composition.pdf",
     "docs/figures/fig4_result_tradeoff.pdf",
     "docs/figures/fig5_claim_boundary.pdf",
+    "docs/figures/fig6_evp7_visibility_curve.pdf",
     "docs/figures/imagegen/README.md",
     "docs/figures/imagegen/prompts.md",
     "docs/figures/imagegen/imagegen_framework.png",

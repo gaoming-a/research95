@@ -46,6 +46,7 @@ def ensure_style() -> None:
             "pdf.fonttype": 42,
             "ps.fonttype": 42,
             "svg.fonttype": "none",
+            "svg.hashsalt": "research95-paper-figures",
             "figure.facecolor": COLORS["paper"],
             "axes.facecolor": COLORS["paper"],
         }
@@ -56,7 +57,13 @@ def save_figure(fig: plt.Figure, out_dir: Path, stem: str) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     for suffix in ["pdf", "svg", "png"]:
         path = out_dir / f"{stem}.{suffix}"
-        fig.savefig(path, bbox_inches="tight", dpi=300)
+        metadata = {"Creator": "research95 scripts/generate_paper_figures.py"}
+        if suffix == "svg":
+            metadata["Date"] = None
+        elif suffix == "pdf":
+            metadata["CreationDate"] = None
+            metadata["ModDate"] = None
+        fig.savefig(path, bbox_inches="tight", dpi=300, metadata=metadata)
         if suffix == "svg":
             strip_trailing_whitespace(path)
     plt.close(fig)
@@ -281,16 +288,71 @@ def fig_claim_boundary(out_dir: Path) -> None:
     save_figure(fig, out_dir, "fig5_claim_boundary")
 
 
+def fig_evp7_visibility_curve(out_dir: Path, evp7_summary: dict[str, Any]) -> None:
+    groups = evp7_summary.get("metrics", {}).get("metric_groups", {})
+    if not isinstance(groups, dict):
+        raise ValueError("EVP-7 summary must contain metrics.metric_groups")
+    levels = ["E0", "E2", "E4", "E6"]
+    x = np.arange(len(levels))
+    false_accept = [float(groups[level]["false_accept_rate"]) for level in levels]
+    correct_recall = [float(groups[level]["correct_recall"]) for level in levels]
+    escalation = [float(groups[level]["escalation_rate"]) for level in levels]
+    accepted_precision = [
+        float(groups[level]["accepted_precision"]) if groups[level].get("accepted_precision") is not None else np.nan
+        for level in levels
+    ]
+    evidence_gain = [float(groups[level]["evidence_gain_vs_e0"]) for level in levels]
+
+    fig, axes = plt.subplots(1, 2, figsize=(7.2, 3.2), gridspec_kw={"width_ratios": [1.35, 1.0]})
+    fig.suptitle("EVP-7 evidence visibility curve", x=0.02, y=1.02, ha="left", weight="bold", fontsize=12)
+
+    ax = axes[0]
+    ax.plot(x, false_accept, marker="o", linewidth=2.0, color=COLORS["red"], label="False accept")
+    ax.plot(x, correct_recall, marker="o", linewidth=2.0, color=COLORS["green"], label="Correct recall")
+    ax.plot(x, escalation, marker="o", linewidth=2.0, color=COLORS["orange"], label="Escalation")
+    ax.scatter(x, accepted_precision, marker="D", s=48, color=COLORS["blue"], label="Accepted precision", zorder=3)
+    ax.set_xticks(x, levels)
+    ax.set_ylim(-0.04, 1.05)
+    ax.set_ylabel("Rate")
+    ax.set_title("Merge-gate metrics by evidence level", loc="left", fontsize=10, weight="bold")
+    ax.grid(axis="y", color=COLORS["grid"], linewidth=0.7)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.legend(frameon=False, ncol=2, loc="upper center", bbox_to_anchor=(0.5, -0.18))
+
+    ax2 = axes[1]
+    bars = ax2.bar(levels, evidence_gain, color=[COLORS["gray"], COLORS["purple"], COLORS["cyan"], COLORS["green"]], width=0.65)
+    ax2.axhline(0, color=COLORS["ink"], linewidth=0.8)
+    ax2.set_title("Utility gain vs E0", loc="left", fontsize=10, weight="bold")
+    ax2.set_ylabel("Evidence Gain")
+    ax2.grid(axis="y", color=COLORS["grid"], linewidth=0.7)
+    ax2.spines[["top", "right"]].set_visible(False)
+    for bar, value in zip(bars, evidence_gain):
+        va = "bottom" if value >= 0 else "top"
+        y = value + (0.45 if value >= 0 else -0.45)
+        ax2.text(bar.get_x() + bar.get_width() / 2, y, f"{value:.2f}", ha="center", va=va, fontsize=7.5)
+
+    fig.text(
+        0.02,
+        -0.02,
+        "376 real DeepSeek G5 records; E0/E2/E4/E6 each contain 94 candidates. "
+        "Accepted precision is undefined for E2 because it accepted no patches.",
+        fontsize=7.5,
+        color=COLORS["muted"],
+    )
+    save_figure(fig, out_dir, "fig6_evp7_visibility_curve")
+
+
 def write_manifest(out_dir: Path) -> None:
     manifest = {
-        "figure_count": 5,
+        "figure_count": 6,
         "formats": ["pdf", "svg", "png"],
         "figures": [
             {"id": "fig1_framework", "purpose": "overall workflow"},
             {"id": "fig2_evidence_visibility", "purpose": "condition evidence boundary"},
             {"id": "fig3_dataset_composition", "purpose": "dataset and validation"},
-            {"id": "fig4_result_tradeoff", "purpose": "main API result metrics"},
+            {"id": "fig4_result_tradeoff", "purpose": "first-pilot API result metrics"},
             {"id": "fig5_claim_boundary", "purpose": "claim boundary and interpretation"},
+            {"id": "fig6_evp7_visibility_curve", "purpose": "EVP-7 evidence visibility curve"},
         ],
     }
     (out_dir / "figure_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -302,6 +364,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dataset-summary", default="outputs/patch_verification_pilot_001/dataset_summary.json")
     parser.add_argument("--prompt-metrics", default="outputs/patch_verification_api_pilot_002/metrics.json")
     parser.add_argument("--tool-gate", default="outputs/patch_verification_tool_augmented_full_001/tool_augmented_full_gate.json")
+    parser.add_argument("--evp7-summary", default="data/reviews/evp7_g5_llm_376_full_summary.json")
     return parser.parse_args()
 
 
@@ -312,6 +375,7 @@ def main() -> None:
     dataset_summary = read_json(Path(args.dataset_summary))
     prompt_metrics = read_json(Path(args.prompt_metrics))
     tool_gate = read_json(Path(args.tool_gate))
+    evp7_summary = read_json(Path(args.evp7_summary))
     metrics = merged_metrics(prompt_metrics, tool_gate)
 
     fig_framework(out_dir)
@@ -319,8 +383,9 @@ def main() -> None:
     fig_dataset(out_dir, dataset_summary)
     fig_result_tradeoff(out_dir, metrics)
     fig_claim_boundary(out_dir)
+    fig_evp7_visibility_curve(out_dir, evp7_summary)
     write_manifest(out_dir)
-    print(json.dumps({"out_dir": str(out_dir), "figure_count": 5, "formats": ["pdf", "svg", "png"]}, indent=2))
+    print(json.dumps({"out_dir": str(out_dir), "figure_count": 6, "formats": ["pdf", "svg", "png"]}, indent=2))
 
 
 if __name__ == "__main__":

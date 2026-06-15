@@ -23,7 +23,8 @@ python scripts\audit_anonymous_artifact.py `
   scripts, including the API run completeness audit required before paper
   claims.
 - `configs/` example configuration files only.
-- `docs/` plans, schemas, metrics, prompt records, paper draft, and reports.
+- `docs/` plans, schemas, metrics, prompt records, paper draft, reports, and
+  reproducible paper figures.
 - `examples/` small static examples.
 
 ## Excluded
@@ -36,8 +37,10 @@ python scripts\audit_anonymous_artifact.py `
 
 ## Current Boundary
 
-The current artifact supports no-API reproduction and API-run preparation. It
-does not contain real API model-review results yet.
+The current artifact supports no-API reproduction, API-run preparation, and
+tracked raw-output-free summaries of completed real API runs. It does not
+contain raw model responses, ignored run directories, local configs, or
+provider-private metadata.
 
 ## Current Audit
 

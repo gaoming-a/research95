@@ -610,6 +610,13 @@ The generated tables now include the current EVP-7 G5 376-record real LLM
 result and its claim boundary, in addition to the historical pre-API dataset and
 baseline tables.
 
+For reproducible paper figures, including the EVP-7 evidence visibility curve,
+run:
+
+```powershell
+python scripts\generate_paper_figures.py
+```
+
 For the current IEEEtran LaTeX submission draft, run:
 
 ```powershell
