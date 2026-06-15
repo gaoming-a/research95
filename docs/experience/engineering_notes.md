@@ -2275,3 +2275,14 @@ This file starts fresh for the patch-verification project.
 - Unsupported claims should be readable claims, not a long audit string pasted
   into prose. Format them as explicit rejected interpretations so reviewers can
   see the boundary without parsing JSON-like text.
+
+## 2026-06-15 final artifact packaging checklist
+
+- When the paper starts referencing a new figure, update the artifact audit's
+  required-file list in the same pass. Otherwise the manuscript can compile while
+  the anonymous package silently omits a required reviewer-facing asset.
+- Keep a tracked submission checklist separate from ignored `artifacts/`
+  outputs. The checklist is the stable reviewer/maintainer entry point; the ZIP,
+  manifest, and audit reports are generated delivery artifacts.
+- Do not run artifact packaging and artifact audit in parallel. The audit reads
+  the ZIP and can observe a partially written archive if both commands overlap.

@@ -10668,3 +10668,83 @@ Verify:
   结论措辞暗示 scale-generalized、deterministic-baseline-superiority 或
   deployment-ready claim；
 - 下一步应做 final artifact packaging / submission checklist，而不是继续扩实验。
+
+## 2026-06-15 final artifact packaging / submission checklist
+
+Inspect:
+
+- 当前分支本地领先 `origin/main` 9 个提交，工作区在本轮开始时干净；
+- `scripts/prepare_anonymous_artifact.py --dry-run` 通过，当前可打包文件数为
+  290，`safe_to_package=true`；
+- 当前 ignored artifact ZIP 已存在，但生成时间早于最新论文一致性修订，需要刷新；
+- 发现一个 artifact guard 缺口：当前 IEEE draft 已引用
+  `docs/figures/fig7_decision_metric_flow.pdf`，但
+  `scripts/audit_anonymous_artifact.py` 的 required file list 尚未要求 fig7；
+- 本轮只处理 artifact/submission checklist 与打包审计，不新增实验、不调用 API、
+  不提交 `artifacts/`。
+
+Plan:
+
+1. 新增最终提交清单文档，列出 paper、figures、artifact、claim-boundary、
+   reproducibility、excluded files 和 known non-blockers；
+2. 更新 anonymous artifact 文档和 embedded artifact README，使 fig7 与
+   final submission checklist 成为显式入口；
+3. 更新 artifact audit required files/snippets，要求 fig7 和 checklist 存在；
+4. 刷新匿名 artifact ZIP，并运行 artifact audit；
+5. 运行 paper readiness、local quality gate、diff check 后只提交 tracked
+   文档和脚本更新，不提交 ignored ZIP/audit outputs。
+
+验收条件：
+
+- artifact audit 必须通过并确认 fig7、submission checklist、paper draft、
+  protocol、claim-boundary summaries 都在 ZIP 中；
+- local quality gate 必须通过；
+- `git status --short` 不得出现 tracked `artifacts/` 文件；
+- 提交清单必须明确 old prompt-only gate blocker 是 known non-blocker，而不是
+  当前 EVP-7 bounded claim blocker。
+
+Execute:
+
+- 新增 `docs/artifact/submission_checklist.md`，记录当前 paper package、
+  七张 required PDF figures、claim-boundary evidence、rebuild/audit commands、
+  artifact commands、exclusion boundary 和 ready-to-submit criteria；
+- 更新 `docs/artifact/anonymous_artifact.md`，把 final submission checklist
+  和 fig7 纳入当前 artifact audit 说明；
+- 更新 `scripts/prepare_anonymous_artifact.py` 的 embedded
+  `ARTIFACT_README.md`，在 ZIP 内说明 checklist、七张 figures 和
+  `fig7_decision_metric_flow.pdf`；
+- 更新 `scripts/audit_anonymous_artifact.py`，将
+  `docs/artifact/submission_checklist.md` 与
+  `docs/figures/fig7_decision_metric_flow.pdf` 加入 required files/snippets；
+- 同步 README、docs/INDEX 和 engineering notes。
+
+Verify:
+
+- `python -m compileall scripts\prepare_anonymous_artifact.py scripts\audit_anonymous_artifact.py`
+  通过；
+- `python scripts\prepare_anonymous_artifact.py --dry-run --manifest-out artifacts\research95_anonymous_artifact_manifest_dry_run.json`
+  通过，`safe_to_package=true`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，刷新 ignored ZIP，packaged file count 为 291；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`、`missing_required=[]`、`missing_readme_snippets=[]`、
+  `forbidden_entries=[]`；
+- ZIP 直接核验确认包含 `docs/artifact/submission_checklist.md`、
+  `docs/figures/fig7_decision_metric_flow.pdf`、
+  `docs/paper/ieee_submission_draft.tex` 和
+  `docs/experiments/evp7_g5_376_claim_traceability.md`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，当前 result claim ready；
+- `python scripts\audit_paper_claim_boundary.py` 通过，`passed=true`、
+  `raw_output_free=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `git status --short --branch --ignored=matching artifacts ...` 显示
+  `artifacts/` 仍为 ignored，不是 tracked 待提交文件。
+
+结论：
+
+- 本轮完成 final artifact packaging / submission checklist；
+- 匿名 ZIP 已在本地刷新并通过 audit，但 `artifacts/` 仍按规则不提交；
+- 下一步应做 final pre-push / release handoff audit；如果仍不 push，则只需
+  提供本地提交和明确的推送边界。

@@ -721,3 +721,9 @@ python scripts\audit_anonymous_artifact.py `
   --out-json artifacts\research95_anonymous_artifact_audit.json `
   --out-md artifacts\research95_anonymous_artifact_audit.md
 ```
+
+The final submission checklist is `docs/artifact/submission_checklist.md`. It
+lists the current paper package, all seven required PDF figures, claim-boundary
+evidence, rebuild commands, artifact commands, exclusion boundary, and
+ready-to-submit criteria. The artifact audit requires this checklist and
+`docs/figures/fig7_decision_metric_flow.pdf` to be present in the ZIP.

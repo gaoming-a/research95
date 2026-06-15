@@ -684,11 +684,18 @@
   figures when supporting experimental claims.
 - `artifact/anonymous_artifact.md`: inclusion and exclusion policy for the
   anonymous supplemental package.
+- `artifact/submission_checklist.md`: final submission checklist for the current
+  IEEE draft and anonymous artifact. It records required paper figures,
+  claim-boundary evidence, rebuild/audit commands, exclusion boundaries, and
+  ready-to-submit criteria.
 - `scripts/prepare_anonymous_artifact.py`: package builder for anonymous
-  supplemental materials. It excludes credentials, local configs, raw outputs,
-  benchmark checkouts, and generated artifacts.
+  supplemental materials. It includes tracked source, scripts, configs, docs,
+  examples, and the final submission checklist while excluding credentials,
+  local configs, raw outputs, benchmark checkouts, and generated artifacts.
 - `scripts/audit_anonymous_artifact.py`: validates the generated anonymous ZIP
-  contents, required files, manifest consistency, and exclusion rules.
+  contents, required files, manifest consistency, and exclusion rules. It now
+  requires the submission checklist and all paper-facing PDF figures, including
+  `fig7_decision_metric_flow.pdf`.
 - `scripts/create_api_pilot_local_config.py`: helper that creates an ignored
   `configs/api_pilot.local.json` after a concrete provider model id is chosen.
 - `scripts/create_model_selection_local.py`: helper that creates an ignored
