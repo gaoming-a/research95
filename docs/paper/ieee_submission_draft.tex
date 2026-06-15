@@ -27,14 +27,16 @@ based on evidence. We construct a pilot patch-verification dataset from
 retained real-bug pairs, materialize source-level patch candidates, validate
 labels with executable oracles, and evaluate three review conditions: LLM-only
 patch review, prompt-only evidence-first verification, and tool-augmented
-evidence verification. The pilot contains 30 validated patch candidates from 7
-real-bug tasks across 2 projects, including 9 partial-fix candidates. In a
-single-model DeepSeek API pilot, prompt-only evidence-first verification
+evidence verification. The first pilot contains 30 validated patch candidates
+from 7 real-bug tasks across 2 projects, including 9 partial-fix candidates. In
+a single-model DeepSeek API pilot, prompt-only evidence-first verification
 removes observed false accepts but loses correct-patch recall. A separate
 tool-augmented verifier, given executable behavior summaries, restores correct
-recall while preserving zero observed false accepts on this pilot. The result
-supports a conditional tool-assisted verification claim rather than a general
-claim that prompt-only review is sufficient.
+recall while preserving zero observed false accepts on this pilot. We then run
+an EVP-7 evidence-visibility pilot over 20 tasks,
+94 candidates, and 376
+evidence packets. The EVP-7 result supports bounded pilot observations about
+evidence-level variation, not scale-generalized model or deployment claims.
 \end{abstract}
 
 \section{Introduction}
@@ -77,6 +79,10 @@ aggressively?
 
 \textbf{RQ4.} Does tool-augmented evidence verification recover the
 correct-patch recall lost by prompt-only evidence-first verification?
+
+\textbf{RQ5.} In a larger EVP-7 evidence-visibility pilot, do real merge-gate
+model outputs vary across evidence levels while preserving an explicit claim
+boundary?
 
 \section{Dataset Construction}
 
@@ -162,7 +168,7 @@ small but intentionally includes difficult partial-fix candidates.}
 \label{fig:dataset}
 \end{figure}
 
-% Generated dataset and no-API paper tables. Requires booktabs.
+% Generated paper tables. Requires booktabs.
 
 \begin{table}[t]
 \centering
@@ -247,6 +253,40 @@ Missing & 0 \\
 \end{table}
 
 
+\begin{table*}[t]
+\centering
+\caption{EVP-7 G5 evidence-visibility results on the 376-packet frozen cohort. Runner-estimated total cost was 0.3274 USD.}
+\label{tab:evp7-g5-results}
+\begin{tabular}{lrrrrrrr}
+\toprule
+Evidence & Records & Accept & Escalate & Reject & False accept & Correct recall & Evidence gain \\
+\midrule
+E0 & 94 & 1 & 49 & 44 & 0.0000 & 0.0500 & 0.0000 \\
+E2 & 94 & 0 & 57 & 37 & 0.0000 & 0.0000 & -3.0000 \\
+E4 & 94 & 1 & 21 & 72 & 0.0000 & 0.0500 & 7.0000 \\
+E6 & 94 & 7 & 16 & 71 & 0.0000 & 0.3500 & 14.2500 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
+\begin{table*}[t]
+\centering
+\caption{EVP-7 G5 claim boundary.}
+\label{tab:evp7-claim-boundary}
+\begin{tabular}{p{0.45\textwidth}p{0.45\textwidth}}
+\toprule
+Supported in the bounded EVP-7 pilot & Not supported \\
+\midrule
+The current EVP-7 run produced raw-output-free tracked metrics from real DeepSeek verifier outputs. & Scale-generalized paper claims beyond EVP-7. \\
+The run shows evidence-level metric variation in the tracked summary. & A claim that the LLM outperforms the deterministic visible-test tool-only baseline. \\
+E4/E6 preserved zero observed false accepts and accepted precision 1.0. & A claim that E6 strictly improves over E4 in this run. \\
+E4/E6 improved correct recall over E0 and produced positive Evidence Gain versus E0. & A claim that runner-estimated cost is an external DeepSeek billing statement. \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
 \section{Real API Pilot Result}
 
 The first API pilot ran two prompt-only conditions on the validated candidates:
@@ -292,6 +332,31 @@ This result supports a conditional tool-assisted verification claim. It does
 not reverse the prompt-only result. Instead, it shows that executable evidence
 summaries can be decisive when prompt-only evidence is too sparse.
 
+\section{EVP-7 Evidence-Visibility Result}
+
+We next freeze a larger EVP-7 cohort with 20 real-bug tasks,
+94 patch candidates, and four model-visible evidence
+levels per candidate. The resulting 376 evidence
+packets are reviewed by the G5 merge-gate verifier using
+\texttt{deepseek-v4-pro} through \texttt{deepseek\_official}. The run
+produced 376 non-mock records, invalid-output rate
+0.0000, and quality status
+\texttt{passed\_with\_limitations}. Cost observability is complete for the
+tracked records: the runner-estimated total cost is 0.3274
+USD and the unknown-cost record count is 0. This
+cost is estimated from provider token usage and configured pricing; it is not
+an external billing statement.
+
+The EVP-7 tables report evidence-level decisions and the audited claim
+boundary. E4 preserves false-accept rate 0.0000, accepted
+precision 1.0000, correct recall 0.0500, and
+evidence gain 7.0000. E6 preserves false-accept rate
+0.0000, accepted precision 1.0000, correct
+recall 0.3500, and evidence gain 14.2500. The bounded
+interpretation is that evidence visibility changes merge-gate behavior on this
+pilot cohort. It does not establish deterministic-baseline superiority, E6
+strict superiority over E4, scale generality, or billing equivalence.
+
 \begin{figure*}[t]
 \centering
 \includegraphics[width=0.86\textwidth]{docs/figures/fig4_result_tradeoff.pdf}
@@ -304,9 +369,9 @@ tool-augmented evidence restores recall under the current pilot.}
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{docs/figures/fig5_claim_boundary.pdf}
-\caption{Claim boundary supported by the current evidence. The positive claim
-is conditional on tool-visible execution evidence, not prompt-only model
-review.}
+\caption{Claim boundary supported by the current evidence. The first positive
+claim is conditional on tool-visible execution evidence; the EVP-7 claim is a
+bounded evidence-visibility pilot result.}
 \label{fig:claim-boundary}
 \end{figure}
 
@@ -325,19 +390,20 @@ deterministic reproducibility.
 
 \section{Model Selection Boundary}
 
-The first real API pilot is a within-model comparison using
-\texttt{deepseek-v4-pro} through the DeepSeek official API. This controls for
-base-model capability within the prompt-only comparison and isolates the
-condition change. It does not establish cross-model generality.
+The first real API pilot and the EVP-7 G5 run use \texttt{deepseek-v4-pro}
+through the DeepSeek official API. This controls for base-model capability
+within each comparison and isolates condition or evidence-level changes. It
+does not establish cross-model generality.
 
 \section{Threats to Validity}
 
-Dataset size is small. The current pilot is designed to validate the method and
-failure surfaces, not to make broad claims about all AI-generated patches. The
-partial-fix candidates are source-backed and oracle-checkable, but they are
-constructed from retained reference diffs rather than generated by live coding
-agents. A later stage should add model-generated patches or SWE-bench-style
-tasks.
+Dataset size remains small. The first 30-candidate pilot and the later EVP-7
+376-packet pilot are designed to validate the
+method and failure surfaces, not to make broad claims about all AI-generated
+patches. The partial-fix candidates are source-backed and oracle-checkable, but
+they are constructed from retained reference diffs rather than generated by
+live coding agents. A later stage should add model-generated patches or
+SWE-bench-style tasks.
 
 Visible test hints may not represent the evidence actually available in all
 engineering workflows. Tool-augmented evidence includes executable behavior
@@ -346,10 +412,11 @@ LLM review, but it may also be a strong upper-bound form of evidence depending
 on how such summaries are produced in deployment.
 
 Model behavior can drift over time and across providers. Every API run must
-record model id, provider, date, prompt version, decoding settings, cost, raw
-response path, and invalid-output status. The first pilot uses a single model
-by design and cannot support claims about all frontier models or all coding
-agents.
+record model id, provider, date, prompt version, decoding settings, cost
+observability, raw-output handling, and invalid-output status. The current
+DeepSeek runs use a single model by design and cannot support claims about all
+frontier models or all coding agents. The EVP-7 quality audit also rejects:
+Scale-generalized paper claims beyond EVP-7; A claim that the LLM outperforms the deterministic visible-test tool-only baseline; A claim that E6 strictly improves over E4 in this run; A claim that runner-estimated cost is an external DeepSeek billing statement.
 
 \section{Conclusion}
 
@@ -359,9 +426,11 @@ not sufficient under the configured gate: it reduces false accepts but loses
 too much correct-patch recall. The redesigned tool-augmented verifier passes
 the 30-candidate full-run gate by accepting all correct reference patches and
 rejecting all negative candidates. The defensible conclusion is therefore a
-three-stage finding: LLM-only review is unsafe as a merge gate, prompt-only
-evidence-first review is too conservative under evidence poverty, and
+staged finding: LLM-only review is unsafe as a merge gate, prompt-only
+evidence-first review is too conservative under evidence poverty,
 tool-visible execution evidence can support a stronger verifier under the
-current pilot conditions.
+first pilot conditions, and the EVP-7 G5 run provides bounded evidence that
+evidence visibility changes merge-gate behavior on a larger frozen pilot
+cohort.
 
 \end{document}

@@ -254,7 +254,9 @@ They should not override `final_paper_roadmap_zh.md`.
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and
   `data/evidence/evp7_evidence_packets.jsonl`.
-- The current IEEE draft is `docs/paper/ieee_submission_draft.tex`.
+- The current IEEE draft is `docs/paper/ieee_submission_draft.tex`; it now
+  includes the prompt-only negative result, the conditional tool-augmented
+  result, and the bounded EVP-7 G5 376-record evidence-visibility result.
 - `docs/paper/ieee_preapi_draft.tex` is historical pre-API context only.
 - `scripts/audit_paper_readiness.py` now separates three paper-result
   boundaries: the old prompt-only gate remains a negative/redesign result, the
@@ -615,6 +617,10 @@ python scripts\write_ieee_latex_draft.py `
   --tables-tex docs\paper\generated_tables.tex `
   --out docs\paper\ieee_submission_draft.tex
 ```
+
+The IEEE draft generator reads the current EVP-7 G5 376-record summary and
+quality audit by default, so the generated body and tables stay on the same
+claim boundary.
 
 For a dry-run bootstrap of the current DeepSeek official API prerequisite
 configs, run:

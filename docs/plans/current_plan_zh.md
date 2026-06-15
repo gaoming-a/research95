@@ -8879,6 +8879,9 @@ Verify:
 - `git diff --check` 通过；
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过，`passed=true`。
+- `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex`
+  连续运行两次均通过，生成 5-page PDF；第二次无 label rerun warning，
+  仅保留 underfull hbox 和 MiKTeX update 提示。
 
 结论：
 
@@ -8886,3 +8889,72 @@ Verify:
   没有修改 G5 prompt；
 - 当前 paper readiness 已以 376-run 作为 EVP-7 G5 当前结果；
 - 旧 248-run 文件只作为 historical artifact 保留。
+
+## 113. 2026-06-15 refresh IEEE LaTeX draft for 376-run
+
+Inspect:
+
+- 当前工作区干净，本地 main ahead origin 17；
+- 上一轮已完成 paper-facing 376-run refresh：
+  `generated_tables.md/.tex`、Markdown paper draft、README、INDEX、
+  engineering notes 和 paper readiness 都已指向当前
+  20-task / 94-candidate / 376-packet G5 result；
+- `docs/paper/ieee_submission_draft.tex` 和
+  `scripts/write_ieee_latex_draft.py` 仍主要停留在 first API pilot +
+  tool-augmented redesign 叙述，未在正文中解释 EVP-7 376-run bounded
+  evidence-visibility result；
+- `generated_tables.tex` 已包含 EVP-7 G5 376-run result table 和 claim
+  boundary table，因此本轮不需要重做 cohort、API、prompt 或底层 metrics。
+
+Plan:
+
+1. 更新 `scripts/write_ieee_latex_draft.py`，让 IEEE draft generator 读取
+   当前 376-run summary/audit，并在 abstract、RQ、结果、model boundary、
+   threats 和 conclusion 中加入 bounded EVP-7 G5 结果；
+2. 重新生成 `docs/paper/ieee_submission_draft.tex`；
+3. 同步 README、docs index、engineering notes 和本计划；
+4. 运行最小生成/编译/quality gates；
+5. 本轮不跑 API、不扩 cohort、不改 G5 prompt。
+
+验收条件：
+
+- IEEE draft 正文不再只停留在 30-candidate/tool-augmented 阶段；
+- IEEE draft 明确包含 376 records、20 tasks、94 candidates、EVP-7 G5
+  bounded pilot、estimated cost 和 unsupported claims；
+- generated tables 中的 EVP-7 表格继续被 IEEE draft 引用；
+- local quality gate 通过。
+
+Execute:
+
+- 已更新 `scripts/write_ieee_latex_draft.py`：
+  - 新增 `--evp7-summary` 和 `--evp7-quality-audit` 默认输入；
+  - 从当前 376-run raw-output-free summary/audit 提取 provider/model、
+    review_count、candidate_count、cost summary、E4/E6 metrics 和 unsupported
+    claims；
+  - 在 abstract、RQ5、EVP-7 result section、claim-boundary caption、
+    model-selection boundary、threats 和 conclusion 中写入 bounded EVP-7
+    G5 结果；
+- 已重新生成 `docs/paper/ieee_submission_draft.tex`；
+- 已同步 README、docs index 和 engineering notes。
+
+Verify:
+
+- `python -m compileall scripts\write_ieee_latex_draft.py` 通过；
+- `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`
+  通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，EVP-7 bounded pilot claim ready 仍为 true；
+- IEEE draft 一致性检查命中 RQ5、`EVP-7 Evidence-Visibility Result`、
+  `tab:evp7-g5-results`、`tab:evp7-claim-boundary`、94 candidates、
+  376 evidence records、0.3274 cost 和 unsupported claims；
+- stale-text check 未命中旧的 30-candidate-only/current-pilot-only 结论；
+- `git diff --check` 通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 本轮按计划完成 IEEE LaTeX draft refresh；
+- 论文 Markdown draft、generated tables、paper readiness 和 IEEE submission
+  draft 现在都对齐到当前 376-run bounded EVP-7 G5 claim boundary；
+- 本轮未调用 API、未扩 cohort、未修改 G5 prompt。

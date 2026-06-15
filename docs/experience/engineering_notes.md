@@ -2046,3 +2046,17 @@ This file starts fresh for the patch-verification project.
   usage, but should not label it as an external DeepSeek bill. Keep unsupported
   claims explicit: scale generality, deterministic-baseline superiority, E6
   strict superiority over E4, and billing equivalence.
+
+## 2026-06-15 IEEE draft body/table drift
+
+- Updating `generated_tables.tex` is not enough for the IEEE submission draft:
+  `write_ieee_latex_draft.py` also owns the abstract, research questions,
+  result narrative, model boundary, threats, and conclusion.
+- After adding EVP-7 G5 376-run tables, refresh the generator body from the
+  same raw-output-free summary and quality audit. Otherwise the compiled
+  submission can contain current tables but an obsolete 30-candidate-only
+  narrative.
+- Keep the IEEE draft claim boundary aligned with the audit: bounded EVP-7
+  evidence-visibility signal is allowed; scale generality, deterministic
+  baseline superiority, E6 strict superiority, and billing equivalence remain
+  unsupported.

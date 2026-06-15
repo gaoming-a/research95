@@ -181,7 +181,8 @@
   boundary snippets.
 - `paper/ieee_submission_draft.tex`: current anonymous IEEEtran submission
   draft. It includes the prompt-only mixed/negative result, the separate
-  tool-augmented full-run result, figures, threats, and conclusion.
+  tool-augmented full-run result, the bounded EVP-7 G5 376-record
+  evidence-visibility result, figures, threats, and conclusion.
 - `paper/ieee_preapi_draft.tex`: historical IEEEtran pre-API LaTeX draft.
 - `experiments/patch_verification_plan.md`: experiment design for the first
   patch-verification pilot.
@@ -581,7 +582,8 @@
   claim-boundary audit.
 - `scripts/write_ieee_latex_draft.py`: generates the current IEEEtran
   submission draft at `docs/paper/ieee_submission_draft.tex` from generated
-  dataset/no-API tables plus audited prompt-only and tool-augmented metrics.
+  dataset/no-API tables, audited prompt-only and tool-augmented metrics, and
+  the current EVP-7 G5 376-record summary plus claim-boundary audit.
   The old `docs/paper/ieee_preapi_draft.tex` is retained only as historical
   pre-API context.
 - `scripts/generate_paper_figures.py`: generates the publication figure set

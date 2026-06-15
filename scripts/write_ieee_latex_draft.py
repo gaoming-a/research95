@@ -30,6 +30,10 @@ def fmt_metric(value: Any) -> str:
     return f"{float(value):.4f}"
 
 
+def fmt_count(value: Any) -> str:
+    return str(int(value))
+
+
 def latex_escape(value: str) -> str:
     return (
         value.replace("\\", r"\textbackslash{}")
@@ -96,8 +100,52 @@ Condition & False accept & Accepted precision & Correct recall & False reject & 
 """
 
 
-def build_draft(tables_tex: str, result_tables_tex: str) -> str:
+def evp7_summary_text(evp7_summary: dict[str, Any], evp7_quality: dict[str, Any]) -> dict[str, str]:
+    quality = evp7_summary.get("quality", {})
+    workflow = evp7_summary.get("workflow", {})
+    metric_groups = evp7_summary.get("metrics", {}).get("metric_groups", {})
+    if not isinstance(quality, dict) or not isinstance(workflow, dict) or not isinstance(metric_groups, dict):
+        raise ValueError("EVP-7 summary is missing quality/workflow/metric_groups")
+    e4 = metric_groups.get("E4", {})
+    e6 = metric_groups.get("E6", {})
+    cost_summary = workflow.get("cost_summary", {})
+    if not isinstance(cost_summary, dict):
+        cost_summary = {}
+    unsupported = evp7_quality.get("unsupported_claims", [])
+    limitations = evp7_quality.get("limitations", [])
+    unsupported_text = "; ".join(latex_escape(str(item).rstrip(".")) for item in unsupported)
+    return {
+        "provider": latex_escape(str(evp7_summary.get("provider", "unknown"))),
+        "model": latex_escape(str(evp7_summary.get("model", "unknown"))),
+        "review_count": fmt_count(quality.get("review_count", 0)),
+        "candidate_count": fmt_count(evp7_quality.get("candidate_count", 0)),
+        "task_count": "20",
+        "evidence_packet_count": fmt_count(quality.get("review_count", 0)),
+        "invalid_output_rate": fmt_metric(quality.get("invalid_output_rate")),
+        "total_cost_usd": fmt_metric(cost_summary.get("total_cost_usd")),
+        "unknown_cost_count": fmt_count(cost_summary.get("unknown_cost_record_count", 0)),
+        "quality_status": latex_escape(str(evp7_quality.get("quality_status", "unknown"))),
+        "e4_false_accept": fmt_metric(e4.get("false_accept_rate")),
+        "e4_precision": fmt_metric(e4.get("accepted_precision")),
+        "e4_recall": fmt_metric(e4.get("correct_recall")),
+        "e4_gain": fmt_metric(e4.get("evidence_gain_vs_e0")),
+        "e6_false_accept": fmt_metric(e6.get("false_accept_rate")),
+        "e6_precision": fmt_metric(e6.get("accepted_precision")),
+        "e6_recall": fmt_metric(e6.get("correct_recall")),
+        "e6_gain": fmt_metric(e6.get("evidence_gain_vs_e0")),
+        "unsupported_claims": unsupported_text,
+        "limitations": "; ".join(latex_escape(str(item)) for item in limitations),
+    }
+
+
+def build_draft(
+    tables_tex: str,
+    result_tables_tex: str,
+    evp7_summary: dict[str, Any],
+    evp7_quality: dict[str, Any],
+) -> str:
     tables_tex = tables_tex.replace("Generated pre-API paper tables", "Generated dataset and no-API paper tables")
+    evp7 = evp7_summary_text(evp7_summary, evp7_quality)
     return rf"""\documentclass[conference]{{IEEEtran}}
 
 \usepackage{{booktabs}}
@@ -127,14 +175,16 @@ based on evidence. We construct a pilot patch-verification dataset from
 retained real-bug pairs, materialize source-level patch candidates, validate
 labels with executable oracles, and evaluate three review conditions: LLM-only
 patch review, prompt-only evidence-first verification, and tool-augmented
-evidence verification. The pilot contains 30 validated patch candidates from 7
-real-bug tasks across 2 projects, including 9 partial-fix candidates. In a
-single-model DeepSeek API pilot, prompt-only evidence-first verification
+evidence verification. The first pilot contains 30 validated patch candidates
+from 7 real-bug tasks across 2 projects, including 9 partial-fix candidates. In
+a single-model DeepSeek API pilot, prompt-only evidence-first verification
 removes observed false accepts but loses correct-patch recall. A separate
 tool-augmented verifier, given executable behavior summaries, restores correct
-recall while preserving zero observed false accepts on this pilot. The result
-supports a conditional tool-assisted verification claim rather than a general
-claim that prompt-only review is sufficient.
+recall while preserving zero observed false accepts on this pilot. We then run
+an EVP-7 evidence-visibility pilot over {evp7["task_count"]} tasks,
+{evp7["candidate_count"]} candidates, and {evp7["evidence_packet_count"]}
+evidence packets. The EVP-7 result supports bounded pilot observations about
+evidence-level variation, not scale-generalized model or deployment claims.
 \end{{abstract}}
 
 \section{{Introduction}}
@@ -177,6 +227,10 @@ aggressively?
 
 \textbf{{RQ4.}} Does tool-augmented evidence verification recover the
 correct-patch recall lost by prompt-only evidence-first verification?
+
+\textbf{{RQ5.}} In a larger EVP-7 evidence-visibility pilot, do real merge-gate
+model outputs vary across evidence levels while preserving an explicit claim
+boundary?
 
 \section{{Dataset Construction}}
 
@@ -294,6 +348,31 @@ This result supports a conditional tool-assisted verification claim. It does
 not reverse the prompt-only result. Instead, it shows that executable evidence
 summaries can be decisive when prompt-only evidence is too sparse.
 
+\section{{EVP-7 Evidence-Visibility Result}}
+
+We next freeze a larger EVP-7 cohort with {evp7["task_count"]} real-bug tasks,
+{evp7["candidate_count"]} patch candidates, and four model-visible evidence
+levels per candidate. The resulting {evp7["evidence_packet_count"]} evidence
+packets are reviewed by the G5 merge-gate verifier using
+\texttt{{{evp7["model"]}}} through \texttt{{{evp7["provider"]}}}. The run
+produced {evp7["review_count"]} non-mock records, invalid-output rate
+{evp7["invalid_output_rate"]}, and quality status
+\texttt{{{evp7["quality_status"]}}}. Cost observability is complete for the
+tracked records: the runner-estimated total cost is {evp7["total_cost_usd"]}
+USD and the unknown-cost record count is {evp7["unknown_cost_count"]}. This
+cost is estimated from provider token usage and configured pricing; it is not
+an external billing statement.
+
+The EVP-7 tables report evidence-level decisions and the audited claim
+boundary. E4 preserves false-accept rate {evp7["e4_false_accept"]}, accepted
+precision {evp7["e4_precision"]}, correct recall {evp7["e4_recall"]}, and
+evidence gain {evp7["e4_gain"]}. E6 preserves false-accept rate
+{evp7["e6_false_accept"]}, accepted precision {evp7["e6_precision"]}, correct
+recall {evp7["e6_recall"]}, and evidence gain {evp7["e6_gain"]}. The bounded
+interpretation is that evidence visibility changes merge-gate behavior on this
+pilot cohort. It does not establish deterministic-baseline superiority, E6
+strict superiority over E4, scale generality, or billing equivalence.
+
 \begin{{figure*}}[t]
 \centering
 \includegraphics[width=0.86\textwidth]{{docs/figures/fig4_result_tradeoff.pdf}}
@@ -306,9 +385,9 @@ tool-augmented evidence restores recall under the current pilot.}}
 \begin{{figure}}[t]
 \centering
 \includegraphics[width=\columnwidth]{{docs/figures/fig5_claim_boundary.pdf}}
-\caption{{Claim boundary supported by the current evidence. The positive claim
-is conditional on tool-visible execution evidence, not prompt-only model
-review.}}
+\caption{{Claim boundary supported by the current evidence. The first positive
+claim is conditional on tool-visible execution evidence; the EVP-7 claim is a
+bounded evidence-visibility pilot result.}}
 \label{{fig:claim-boundary}}
 \end{{figure}}
 
@@ -327,19 +406,20 @@ deterministic reproducibility.
 
 \section{{Model Selection Boundary}}
 
-The first real API pilot is a within-model comparison using
-\texttt{{deepseek-v4-pro}} through the DeepSeek official API. This controls for
-base-model capability within the prompt-only comparison and isolates the
-condition change. It does not establish cross-model generality.
+The first real API pilot and the EVP-7 G5 run use \texttt{{deepseek-v4-pro}}
+through the DeepSeek official API. This controls for base-model capability
+within each comparison and isolates condition or evidence-level changes. It
+does not establish cross-model generality.
 
 \section{{Threats to Validity}}
 
-Dataset size is small. The current pilot is designed to validate the method and
-failure surfaces, not to make broad claims about all AI-generated patches. The
-partial-fix candidates are source-backed and oracle-checkable, but they are
-constructed from retained reference diffs rather than generated by live coding
-agents. A later stage should add model-generated patches or SWE-bench-style
-tasks.
+Dataset size remains small. The first 30-candidate pilot and the later EVP-7
+{evp7["evidence_packet_count"]}-packet pilot are designed to validate the
+method and failure surfaces, not to make broad claims about all AI-generated
+patches. The partial-fix candidates are source-backed and oracle-checkable, but
+they are constructed from retained reference diffs rather than generated by
+live coding agents. A later stage should add model-generated patches or
+SWE-bench-style tasks.
 
 Visible test hints may not represent the evidence actually available in all
 engineering workflows. Tool-augmented evidence includes executable behavior
@@ -348,10 +428,11 @@ LLM review, but it may also be a strong upper-bound form of evidence depending
 on how such summaries are produced in deployment.
 
 Model behavior can drift over time and across providers. Every API run must
-record model id, provider, date, prompt version, decoding settings, cost, raw
-response path, and invalid-output status. The first pilot uses a single model
-by design and cannot support claims about all frontier models or all coding
-agents.
+record model id, provider, date, prompt version, decoding settings, cost
+observability, raw-output handling, and invalid-output status. The current
+DeepSeek runs use a single model by design and cannot support claims about all
+frontier models or all coding agents. The EVP-7 quality audit also rejects:
+{evp7["unsupported_claims"]}.
 
 \section{{Conclusion}}
 
@@ -361,10 +442,12 @@ not sufficient under the configured gate: it reduces false accepts but loses
 too much correct-patch recall. The redesigned tool-augmented verifier passes
 the 30-candidate full-run gate by accepting all correct reference patches and
 rejecting all negative candidates. The defensible conclusion is therefore a
-three-stage finding: LLM-only review is unsafe as a merge gate, prompt-only
-evidence-first review is too conservative under evidence poverty, and
+staged finding: LLM-only review is unsafe as a merge gate, prompt-only
+evidence-first review is too conservative under evidence poverty,
 tool-visible execution evidence can support a stronger verifier under the
-current pilot conditions.
+first pilot conditions, and the EVP-7 G5 run provides bounded evidence that
+evidence visibility changes merge-gate behavior on a larger frozen pilot
+cohort.
 
 \end{{document}}
 """
@@ -378,6 +461,8 @@ def parse_args() -> argparse.Namespace:
         "--tool-gate",
         default="outputs/patch_verification_tool_augmented_full_001/tool_augmented_full_gate.json",
     )
+    parser.add_argument("--evp7-summary", default="data/reviews/evp7_g5_llm_376_full_summary.json")
+    parser.add_argument("--evp7-quality-audit", default="data/reviews/evp7_g5_376_full_quality_audit.json")
     parser.add_argument("--out", default="docs/paper/ieee_submission_draft.tex")
     return parser.parse_args()
 
@@ -386,7 +471,9 @@ def main() -> None:
     args = parse_args()
     tables_tex = read_text(Path(args.tables_tex))
     result_tables_tex = build_result_tables(read_json(Path(args.prompt_metrics)), read_json(Path(args.tool_gate)))
-    write_text(Path(args.out), build_draft(tables_tex, result_tables_tex))
+    evp7_summary = read_json(Path(args.evp7_summary))
+    evp7_quality = read_json(Path(args.evp7_quality_audit))
+    write_text(Path(args.out), build_draft(tables_tex, result_tables_tex, evp7_summary, evp7_quality))
     print(f"wrote {args.out}")
 
 
