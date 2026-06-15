@@ -602,14 +602,16 @@ For generated paper tables, run:
 
 ```powershell
 python scripts\analyze_evp7_g5_statistics.py
+python scripts\audit_paper_claim_boundary.py
 python scripts\write_paper_tables.py `
   --out-md docs\paper\generated_tables.md `
   --out-tex docs\paper\generated_tables.tex
 ```
 
 The generated tables now include the current EVP-7 G5 376-record real LLM
-result, statistical intervals, and claim boundary, in addition to the historical
-pre-API dataset and baseline tables.
+result, statistical intervals, and claim boundary. The claim-boundary audit
+maps supported and unsupported EVP-7 claims to tracked evidence and paper
+coverage before the tables and draft are regenerated.
 
 For reproducible paper figures, including the EVP-7 evidence visibility curve,
 run:

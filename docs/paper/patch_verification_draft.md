@@ -277,12 +277,13 @@ token usage and configured pricing, not an external billing statement.
 | E4 | 94 | 1 | 21 | 72 | 0.0000 | 1.0000 | 0.0500 | 7.0000 |
 | E6 | 94 | 7 | 16 | 71 | 0.0000 | 1.0000 | 0.3500 | 14.2500 |
 
-The quality audit passes with limitations. The result supports bounded EVP-7
-pilot claims that real DeepSeek verifier outputs vary by evidence level and
-that E4/E6 preserved zero observed false accepts with accepted precision 1.0.
-It does not support scale-generalized claims, a claim that the LLM outperforms
-the deterministic visible-test/tool-only baseline, a claim that E6 strictly
-improves over E4, or a claim that runner-estimated cost is an external bill.
+The quality audit passes with limitations. The run produced raw-output-free
+tracked metrics from real DeepSeek verifier outputs, and supports bounded EVP-7
+pilot claims that those outputs vary by evidence level and that E4/E6 preserved
+zero observed false accepts with accepted precision 1.0. It does not support
+scale-generalized claims, a claim that the LLM outperforms the deterministic
+visible-test/tool-only baseline, a claim that E6 strictly improves over E4, or a
+claim that runner-estimated cost is an external bill.
 
 ## 12. Reproducibility and Handoff Controls
 

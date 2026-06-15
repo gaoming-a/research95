@@ -1,0 +1,220 @@
+{
+  "audit_id": "evp7_g5_376_claim_traceability",
+  "boundary": "This audit reads only tracked raw-output-free summaries and paper drafts. It maps current EVP-7 supported and unsupported claims to evidence files and paper coverage; it does not read or package raw model responses.",
+  "checks": [
+    {
+      "check": "summary_is_current_376_run",
+      "passed": true
+    },
+    {
+      "check": "quality_status_bounded",
+      "passed": true
+    },
+    {
+      "check": "statistics_raw_output_free",
+      "passed": true
+    },
+    {
+      "check": "all_supported_claims_covered",
+      "passed": true
+    },
+    {
+      "check": "all_unsupported_claims_covered",
+      "passed": true
+    },
+    {
+      "check": "all_ieee_boundary_cues_present",
+      "passed": true
+    }
+  ],
+  "evidence_sources": [
+    "data/reviews/evp7_g5_llm_376_full_summary.json",
+    "data/reviews/evp7_g5_376_full_quality_audit.json",
+    "data/reviews/evp7_g5_376_statistical_analysis.json",
+    "docs/paper/generated_tables.md",
+    "docs/paper/patch_verification_draft.md",
+    "docs/paper/ieee_submission_draft.tex"
+  ],
+  "ieee_boundary_cues": {
+    "bounded_pilot": {
+      "accepted_cues": [
+        "bounded",
+        "pilot"
+      ],
+      "passed": true
+    },
+    "no_billing_equivalence": {
+      "accepted_cues": [
+        "not an external billing statement",
+        "billing equivalence"
+      ],
+      "passed": true
+    },
+    "no_deterministic_superiority": {
+      "accepted_cues": [
+        "deterministic-baseline superiority",
+        "LLM outperforms the deterministic"
+      ],
+      "passed": true
+    },
+    "no_e6_strict_superiority": {
+      "accepted_cues": [
+        "E6 strict superiority over E4",
+        "E6 strictly improves over E4"
+      ],
+      "passed": true
+    },
+    "not_scale_generalized": {
+      "accepted_cues": [
+        "not scale-generalized",
+        "does not establish cross-model generality"
+      ],
+      "passed": true
+    }
+  },
+  "inputs": {
+    "generated_tables_md": "docs/paper/generated_tables.md",
+    "ieee_draft": "docs/paper/ieee_submission_draft.tex",
+    "patch_draft": "docs/paper/patch_verification_draft.md",
+    "quality_audit": "data/reviews/evp7_g5_376_full_quality_audit.json",
+    "statistics": "data/reviews/evp7_g5_376_statistical_analysis.json",
+    "summary": "data/reviews/evp7_g5_llm_376_full_summary.json"
+  },
+  "passed": true,
+  "raw_output_free_check": {
+    "checked_for_raw_response_fields": true,
+    "passed": true
+  },
+  "supported_claims": [
+    {
+      "claim": "The current EVP-7 run produced raw-output-free tracked metrics from real DeepSeek verifier outputs.",
+      "coverage": {
+        "all_required_docs": true,
+        "generated_tables_md": true,
+        "ieee_draft": true,
+        "patch_draft": true,
+        "quality_audit": true
+      },
+      "evidence_sources": [
+        "data/reviews/evp7_g5_llm_376_full_summary.json",
+        "data/reviews/evp7_g5_376_full_quality_audit.json",
+        "data/reviews/evp7_g5_376_statistical_analysis.json"
+      ],
+      "status": "supported"
+    },
+    {
+      "claim": "The run shows evidence-level metric variation in the tracked summary.",
+      "coverage": {
+        "all_required_docs": true,
+        "generated_tables_md": true,
+        "ieee_draft": true,
+        "patch_draft": true,
+        "quality_audit": true
+      },
+      "evidence_sources": [
+        "data/reviews/evp7_g5_llm_376_full_summary.json",
+        "data/reviews/evp7_g5_376_full_quality_audit.json",
+        "data/reviews/evp7_g5_376_statistical_analysis.json"
+      ],
+      "status": "supported"
+    },
+    {
+      "claim": "E4/E6 preserved zero observed false accepts and accepted precision 1.0.",
+      "coverage": {
+        "all_required_docs": true,
+        "generated_tables_md": true,
+        "ieee_draft": true,
+        "patch_draft": true,
+        "quality_audit": true
+      },
+      "evidence_sources": [
+        "data/reviews/evp7_g5_llm_376_full_summary.json",
+        "data/reviews/evp7_g5_376_full_quality_audit.json",
+        "data/reviews/evp7_g5_376_statistical_analysis.json"
+      ],
+      "status": "supported"
+    },
+    {
+      "claim": "E4/E6 improved correct recall over E0 and produced positive Evidence Gain versus E0.",
+      "coverage": {
+        "all_required_docs": true,
+        "generated_tables_md": true,
+        "ieee_draft": true,
+        "patch_draft": true,
+        "quality_audit": true
+      },
+      "evidence_sources": [
+        "data/reviews/evp7_g5_llm_376_full_summary.json",
+        "data/reviews/evp7_g5_376_full_quality_audit.json",
+        "data/reviews/evp7_g5_376_statistical_analysis.json"
+      ],
+      "status": "supported"
+    }
+  ],
+  "unsupported_claims": [
+    {
+      "claim": "Scale-generalized paper claims beyond EVP-7.",
+      "coverage": {
+        "all_required_docs": true,
+        "generated_tables_md": true,
+        "ieee_draft": true,
+        "patch_draft": true,
+        "quality_audit": true
+      },
+      "evidence_sources": [
+        "data/reviews/evp7_g5_llm_376_full_summary.json",
+        "data/reviews/evp7_g5_376_full_quality_audit.json",
+        "data/reviews/evp7_g5_376_statistical_analysis.json"
+      ],
+      "status": "unsupported"
+    },
+    {
+      "claim": "A claim that the LLM outperforms the deterministic visible-test tool-only baseline.",
+      "coverage": {
+        "all_required_docs": true,
+        "generated_tables_md": true,
+        "ieee_draft": true,
+        "patch_draft": true,
+        "quality_audit": true
+      },
+      "evidence_sources": [
+        "data/reviews/evp7_g5_llm_376_full_summary.json",
+        "data/reviews/evp7_g5_376_full_quality_audit.json",
+        "data/reviews/evp7_g5_376_statistical_analysis.json"
+      ],
+      "status": "unsupported"
+    },
+    {
+      "claim": "A claim that E6 strictly improves over E4 in this run.",
+      "coverage": {
+        "all_required_docs": true,
+        "generated_tables_md": true,
+        "ieee_draft": true,
+        "patch_draft": true,
+        "quality_audit": true
+      },
+      "evidence_sources": [
+        "data/reviews/evp7_g5_llm_376_full_summary.json",
+        "data/reviews/evp7_g5_376_full_quality_audit.json",
+        "data/reviews/evp7_g5_376_statistical_analysis.json"
+      ],
+      "status": "unsupported"
+    },
+    {
+      "claim": "A claim that runner-estimated cost is an external DeepSeek billing statement.",
+      "coverage": {
+        "all_required_docs": true,
+        "generated_tables_md": true,
+        "ieee_draft": true,
+        "patch_draft": true,
+        "quality_audit": true
+      },
+      "evidence_sources": [
+        "data/reviews/evp7_g5_llm_376_full_summary.json",
+        "data/reviews/evp7_g5_376_full_quality_audit.json",
+        "data/reviews/evp7_g5_376_statistical_analysis.json"
+      ],
+      "status": "unsupported"
+    }
+  ]
+}

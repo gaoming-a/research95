@@ -2097,3 +2097,14 @@ This file starts fresh for the patch-verification project.
 - Use candidate-level bootstrap for EVP-7 because E0/E2/E4/E6 are paired by
   candidate. Report effect sizes as point-estimate deltas versus E0, and keep
   bootstrap probability/delta language bounded to the 20-task pilot.
+
+## 2026-06-15 claim-boundary traceability
+
+- A passing quality audit is not enough for paper readiness if the paper body
+  does not visibly carry the same supported and unsupported claim boundary.
+- Keep a separate claim traceability artifact that maps supported/unsupported
+  claims to the tracked summary, quality audit, statistical analysis, generated
+  tables, Markdown draft, and IEEE draft.
+- When the traceability audit fails, prefer fixing the paper claim wording if
+  the evidence already supports the claim. Only relax audit matching when the
+  paper is already explicit and the matcher is too narrow.

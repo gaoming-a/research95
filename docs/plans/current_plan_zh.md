@@ -9229,3 +9229,96 @@ Verify:
 - 统计结果仍只支持 bounded EVP-7 pilot 观察，不改变 scale-generalized、
   deterministic-baseline superiority、E6 strictly > E4 或 external billing
   equivalence 的 unsupported claim 边界。
+
+## 117. 2026-06-15 add paper claim-boundary traceability audit
+
+Inspect:
+
+- 当前工作区干净，本地 main ahead origin 21；
+- 第 115/116 节已完成 EVP-7 evidence visibility curve 和统计区间 artifact；
+- canonical roadmap 的剩余默认方向是 frozen 20-task cohort 的论文结果巩固、
+  统计/图表和 claim-boundary 检查；
+- 30-50 bugs 属于改变实验边界的后续选择，roadmap 明确不能由执行代理私自
+  决定；
+- 当前 `audit_paper_readiness.py` 能验证 run 质量、paper tables 和 claim
+  readiness，但没有独立输出“每条 supported / unsupported claim 对应哪些证据、
+  是否被论文 draft 覆盖”的 traceability artifact。
+
+Plan:
+
+1. 新增 `scripts/audit_paper_claim_boundary.py`，读取 EVP-7 376-run summary、
+   quality audit、statistical analysis、paper generated tables、Markdown draft 和
+   IEEE draft；
+2. 输出 raw-output-free claim traceability JSON/Markdown，覆盖：
+   - supported claims；
+   - unsupported claims；
+   - 每条 claim 的 evidence sources；
+   - generated tables / Markdown draft / IEEE draft 中的覆盖状态；
+   - IEEE draft 中必要边界 cue：bounded pilot、not scale-generalized、
+     no deterministic-baseline superiority、no E6 strict superiority、no billing
+     equivalence；
+3. 将该审计纳入 `audit_paper_readiness.py` 的 required docs / readiness；
+4. 更新 README、docs index、anonymous artifact required files 和 engineering
+   notes；
+5. 运行脚本、paper readiness、artifact audit、local quality gate；
+6. 本轮不调用 API、不扩 cohort、不修改 prompt、不跟踪 raw model outputs。
+
+验收条件：
+
+- `data/reviews/evp7_g5_376_claim_traceability.json` 存在且 raw-output-free；
+- `docs/experiments/evp7_g5_376_claim_traceability.md` 存在，列出 supported /
+  unsupported claims 的 evidence sources 和 paper coverage；
+- `audit_paper_readiness.py` 会检查 claim traceability artifact；
+- README / docs index / artifact audit required files 指向新审计；
+- quality gates 通过。
+
+Execute:
+
+- 已新增 `scripts/audit_paper_claim_boundary.py`：
+  - 读取 tracked EVP-7 376-run summary、quality audit、statistical analysis、
+    generated tables、Markdown draft 和 IEEE draft；
+  - 生成 raw-output-free
+    `data/reviews/evp7_g5_376_claim_traceability.json` 和
+    `docs/experiments/evp7_g5_376_claim_traceability.md`；
+  - 映射每条 supported / unsupported claim 到 evidence sources 和 paper
+    coverage；
+  - 检查 IEEE draft 中的必要边界 cue：bounded pilot、not scale-generalized、
+    no deterministic-baseline superiority、no E6 strict superiority、no billing
+    equivalence；
+- 初次运行发现 Markdown paper draft 未明确覆盖 “raw-output-free tracked metrics
+  from real DeepSeek verifier outputs” 这条 supported claim，已修正文稿而非放宽
+  审计；
+- 已更新 `scripts/audit_paper_readiness.py`，将 claim traceability audit 纳入
+  EVP-7 bounded pilot claim readiness；
+- 已更新 README、docs index、anonymous artifact 文档、engineering notes；
+- 已更新 anonymous artifact required files/snippets 和 package README 生成逻辑；
+- 本轮未调用 API、未扩 cohort、未修改 prompt、未跟踪 raw model outputs。
+
+Verify:
+
+- `python -m compileall scripts\audit_paper_claim_boundary.py scripts\audit_paper_readiness.py scripts\audit_anonymous_artifact.py scripts\prepare_anonymous_artifact.py`
+  通过；
+- `python scripts\audit_paper_claim_boundary.py` 通过，`passed=true`、
+  `raw_output_free=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，EVP-7 readiness 中 `claim_traceability.exists=true`、
+  `passed=true`、`raw_output_free=true`；
+- raw/local marker 检查确认以下 tracked 文件不包含 raw response 字段、prompt
+  text 字段、本机路径或用户名：
+  - `data/reviews/evp7_g5_376_claim_traceability.json`；
+  - `docs/experiments/evp7_g5_376_claim_traceability.md`；
+  - `docs/paper/patch_verification_draft.md`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `git diff --check` 通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 本轮按计划补齐 paper claim-boundary traceability audit；
+- 当前 paper readiness 不再只依赖 run quality 和 generated tables，也会验证
+  supported / unsupported claims 是否被当前论文 artifacts 覆盖；
+- 该审计不改变 EVP-7 claim 边界：仍只支持 bounded pilot observations，不支持
+  scale generality、deterministic-baseline superiority、E6 strictly > E4 或
+  external billing equivalence。

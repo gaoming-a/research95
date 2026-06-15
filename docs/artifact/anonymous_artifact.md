@@ -24,7 +24,8 @@ python scripts\audit_anonymous_artifact.py `
   claims.
 - `configs/` example configuration files only.
 - `docs/` plans, schemas, metrics, prompt records, paper draft, reports,
-  raw-output-free statistical summaries, and reproducible paper figures.
+  raw-output-free statistical and claim-boundary summaries, and reproducible
+  paper figures.
 - `examples/` small static examples.
 
 ## Excluded

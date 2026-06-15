@@ -10,6 +10,7 @@ DEFAULT_FULL_RUN_DIR = Path("outputs") / "patch_verification_api_pilot_002"
 DEFAULT_TOOL_AUGMENTED_FULL_RUN_DIR = Path("outputs") / "patch_verification_tool_augmented_full_001"
 DEFAULT_EVP7_SUMMARY = Path("data") / "reviews" / "evp7_g5_llm_376_full_summary.json"
 DEFAULT_EVP7_QUALITY_AUDIT = Path("data") / "reviews" / "evp7_g5_376_full_quality_audit.json"
+DEFAULT_EVP7_CLAIM_TRACEABILITY = Path("data") / "reviews" / "evp7_g5_376_claim_traceability.json"
 
 
 def read_json(path: Path) -> dict[str, Any] | None:
@@ -172,9 +173,10 @@ def tool_augmented_completeness_state(run_dir: Path) -> dict[str, Any]:
     }
 
 
-def evp7_g5_state(summary_path: Path, quality_path: Path) -> dict[str, Any]:
+def evp7_g5_state(summary_path: Path, quality_path: Path, claim_traceability_path: Path) -> dict[str, Any]:
     summary = read_json(summary_path)
     quality = read_json(quality_path)
+    claim_traceability = read_json(claim_traceability_path)
     metrics = summary.get("metrics", {}) if isinstance(summary, dict) else {}
     metric_groups = metrics.get("metric_groups", {}) if isinstance(metrics, dict) else {}
     quality_checks = quality.get("checks", []) if isinstance(quality, dict) else []
@@ -188,6 +190,7 @@ def evp7_g5_state(summary_path: Path, quality_path: Path) -> dict[str, Any]:
         "protocol": file_state(Path("docs") / "protocol" / "evidence_visibility_protocol.md"),
         "run_result": file_state(Path("docs") / "experiments" / "evp7_g5_llm_376_full_result.md"),
         "quality_audit": file_state(Path("docs") / "experiments" / "evp7_g5_376_full_quality_audit.md"),
+        "claim_traceability": file_state(Path("docs") / "experiments" / "evp7_g5_376_claim_traceability.md"),
         "expansion_readiness": file_state(Path("docs") / "experiments" / "evp7_expansion_readiness.md"),
     }
     required_levels = {"E0": 94, "E2": 94, "E4": 94, "E6": 94}
@@ -207,6 +210,9 @@ def evp7_g5_state(summary_path: Path, quality_path: Path) -> dict[str, Any]:
         and quality.get("raw_outputs_tracked") is False
         and quality.get("review_count") == 376
         and quality.get("candidate_count") == 94
+        and claim_traceability
+        and claim_traceability.get("passed") is True
+        and claim_traceability.get("raw_output_free_check", {}).get("passed") is True
         and level_counts == required_levels
         and all(doc["exists"] for doc in required_docs.values())
         and (metric_groups.get("E4") or {}).get("false_accept_rate") == 0.0
@@ -223,6 +229,12 @@ def evp7_g5_state(summary_path: Path, quality_path: Path) -> dict[str, Any]:
         blockers.append(f"Missing EVP-7 G5 summary: {summary_path.as_posix()}.")
     if quality is None:
         blockers.append(f"Missing EVP-7 G5 quality audit: {quality_path.as_posix()}.")
+    if claim_traceability is None:
+        blockers.append(f"Missing EVP-7 claim traceability audit: {claim_traceability_path.as_posix()}.")
+    if claim_traceability and claim_traceability.get("passed") is not True:
+        blockers.append("EVP-7 claim traceability audit has not passed.")
+    if claim_traceability and claim_traceability.get("raw_output_free_check", {}).get("passed") is not True:
+        blockers.append("EVP-7 claim traceability audit is not raw-output-free.")
     if summary and metrics.get("run_kind") != "real_llm":
         blockers.append("EVP-7 G5 summary is not marked as a real LLM run.")
     if summary and metrics.get("g5_metric_scaffold") != "passed":
@@ -241,6 +253,7 @@ def evp7_g5_state(summary_path: Path, quality_path: Path) -> dict[str, Any]:
     return {
         "summary_path": summary_path.as_posix(),
         "quality_audit_path": quality_path.as_posix(),
+        "claim_traceability_path": claim_traceability_path.as_posix(),
         "ready_for_bounded_pilot_claim": ready,
         "blockers": blockers,
         "required_docs": required_docs,
@@ -270,13 +283,26 @@ def evp7_g5_state(summary_path: Path, quality_path: Path) -> dict[str, Any]:
             }
             for name, item in sorted(quality_check_map.items())
         },
+        "claim_traceability": {
+            "exists": claim_traceability is not None,
+            "passed": claim_traceability.get("passed") if claim_traceability else None,
+            "raw_output_free": (
+                claim_traceability.get("raw_output_free_check", {}).get("passed")
+                if claim_traceability
+                else None
+            ),
+        },
     }
 
 
 def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     run_dir = Path(args.full_run_dir)
     tool_augmented_run_dir = Path(args.tool_augmented_run_dir)
-    evp7 = evp7_g5_state(Path(args.evp7_summary), Path(args.evp7_quality_audit))
+    evp7 = evp7_g5_state(
+        Path(args.evp7_summary),
+        Path(args.evp7_quality_audit),
+        Path(args.evp7_claim_traceability),
+    )
     required_docs = {
         "pilot_report": file_state(Path("docs") / "experiments" / "patch_verification_pilot_report.md"),
         "tool_augmented_full_result": file_state(
@@ -453,6 +479,8 @@ def build_markdown(audit: dict[str, Any]) -> str:
             f"- ready for bounded pilot claim: {bool_mark(audit['evp7_g5']['ready_for_bounded_pilot_claim'])}",
             f"- summary path: `{audit['evp7_g5']['summary_path']}`",
             f"- quality audit path: `{audit['evp7_g5']['quality_audit_path']}`",
+            f"- claim traceability path: `{audit['evp7_g5']['claim_traceability_path']}`",
+            f"- claim traceability: `{audit['evp7_g5']['claim_traceability']}`",
             f"- quality status: `{audit['evp7_g5']['quality_status']}`",
             f"- review count: {audit['evp7_g5']['review_count']}",
             f"- candidate count: {audit['evp7_g5']['candidate_count']}",
@@ -505,6 +533,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--tool-augmented-run-dir", default=str(DEFAULT_TOOL_AUGMENTED_FULL_RUN_DIR))
     parser.add_argument("--evp7-summary", default=str(DEFAULT_EVP7_SUMMARY))
     parser.add_argument("--evp7-quality-audit", default=str(DEFAULT_EVP7_QUALITY_AUDIT))
+    parser.add_argument("--evp7-claim-traceability", default=str(DEFAULT_EVP7_CLAIM_TRACEABILITY))
     parser.add_argument("--out-json", required=True)
     parser.add_argument("--out-md", required=True)
     return parser.parse_args()

@@ -104,6 +104,10 @@
   EVP-7 G5 run. It records Wilson intervals, candidate-level bootstrap
   intervals, paired deltas against E0, per-project breakdowns, and
   per-patch-source breakdowns without raw model responses.
+- `../data/reviews/evp7_g5_376_claim_traceability.json`: tracked
+  raw-output-free claim-boundary traceability audit for the same EVP-7 G5 run.
+  It maps supported and unsupported claims to summary, quality, statistics, and
+  paper-draft coverage.
 - `../data/reviews/evp7_g5_llm_prompt_manifest.jsonl`: no-API prompt manifest
   for the G5 evidence-visibility LLM run. It stores prompt hashes,
   lengths, prompt id, evidence level, and leakage-check status, not full prompt
@@ -162,6 +166,10 @@
   analysis for the same 376-record run, including Wilson CIs, candidate-level
   bootstrap CIs, paired deltas versus E0, per-project breakdowns, and
   per-patch-source breakdowns.
+- `experiments/evp7_g5_376_claim_traceability.md`: human-readable
+  claim-boundary traceability audit that verifies supported/unsupported EVP-7
+  claims are covered by the paper tables, Markdown draft, and IEEE draft while
+  preserving the bounded-pilot claim boundary.
 - `../data/exclusions/blocked_bugsinpy_projects.jsonl`: tracked blocker
   registry for tasks excluded from the EVP-7 core cohort.
 
@@ -603,6 +611,9 @@
   statistical analysis for the frozen EVP-7 G5 376-record run. It reads ignored
   review records structurally, joins tracked candidate labels only for aggregate
   metrics, and writes Wilson/bootstrap/paired-breakdown artifacts.
+- `scripts/audit_paper_claim_boundary.py`: generates the EVP-7 claim-boundary
+  traceability audit and fails when supported/unsupported claims are not covered
+  by the current paper artifacts or required IEEE boundary cues are missing.
 - `figures/`: reproducible paper figure assets. The IEEE submission draft uses
   the PDF versions, while PNG versions are for quick local inspection.
 - `figures/imagegen/`: generated raster visual candidates plus exact prompts
