@@ -2380,3 +2380,33 @@ This file starts fresh for the patch-verification project.
   started real pytest batches but exceeded the 30 minute outer budget and
   produced no manifest. Residual pytest processes were stopped. Record the
   task as `f2p_established_project_p2p_timeout`, not as admission evidence.
+
+## 2026-06-16 rules-root P2P policy admission boundary
+
+- A static include token is not a collection filter. For `thefuck`, the
+  collection-wide `--static-include-token pip` attempt still had to collect
+  shell and functional tests first, so it could not avoid collection-time
+  blockers or runtime budget pressure.
+- If a full project P2P attempt times out, an admissible redesign must change
+  the collection root or scope type explicitly and record the policy name. For
+  `bugsinpy_thefuck_1`, the successful boundary is
+  `thefuck_rules_root_pip_p2p_v1`: collect `tests/rules`, then retain
+  `pip`-related source segments. This supports a rules-root pip-family claim,
+  not full project coverage.
+- Registry, controlled-probe results, admission reports, and README/INDEX text
+  must all carry the same boundary. Otherwise readiness summaries can continue
+  to report a task as timed out after it has been admitted under a later policy.
+
+## 2026-06-16 visible-test runner and wrapper oracles
+
+- `run_evp7_visible_tests.py` originally inferred the test Python executable
+  from the first retained-oracle command. That works when the oracle command is
+  `python -m pytest` or `python -m unittest`, but fails when the retained oracle
+  is a wrapper script that internally launches an isolated venv Python.
+- The failure mode is misleading: pytest can return `exit_code=4` for every
+  visible test even though the candidate workdirs and tests are valid. Re-run a
+  sample command with the P2P manifest's batch Python before classifying it as
+  evidence failure.
+- The runner now uses direct oracle Python only for `-m` test commands. For
+  wrapper oracles, it reads the tracked P2P manifest batch command and resolves
+  relative Python paths against the repo root.

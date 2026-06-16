@@ -44,11 +44,43 @@ def _validation_row(candidate: dict[str, Any]) -> dict[str, Any]:
     raise SystemExit(f"missing validation row for {candidate['evp7_candidate_id']}")
 
 
-def _python_executable(validation: dict[str, Any]) -> str | None:
+def _resolve_command_python(command: list[str]) -> str | None:
+    if not command:
+        return None
+    path = Path(command[0])
+    if not path.is_absolute():
+        path = REPO_ROOT / path
+    return str(path)
+
+
+def _p2p_manifest_python(candidate: dict[str, Any]) -> str | None:
+    manifest_rel = candidate.get("source_files", {}).get("p2p_manifest")
+    if not manifest_rel:
+        return None
+    manifest_path = REPO_ROOT / manifest_rel
+    if not manifest_path.exists():
+        return None
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    for chunk in manifest.get("batch_runs", {}).get("chunks", []):
+        for key in ("buggy_runs", "reference_runs"):
+            for run in chunk.get(key, []):
+                command = run.get("command") or []
+                python = _resolve_command_python(command)
+                if python:
+                    return python
+    return None
+
+
+def _python_executable(validation: dict[str, Any], candidate: dict[str, Any]) -> str | None:
     for result in validation.get("oracle_result", {}).get("results", []):
         command = result.get("command") or []
+        if len(command) > 2 and command[1] == "-m":
+            return _resolve_command_python(command)
+        manifest_python = _p2p_manifest_python(candidate)
+        if manifest_python:
+            return manifest_python
         if command:
-            return command[0]
+            return _resolve_command_python(command)
     return None
 
 
@@ -174,7 +206,7 @@ def _outcome_record(
 ) -> dict[str, Any]:
     tests = list(candidate.get("visible_tests") or [])
     workdir, workdir_kind = _candidate_workdir(candidate)
-    python_executable = _python_executable(validation)
+    python_executable = _python_executable(validation, candidate)
     blockers = []
     if not tests:
         blockers.append("missing_visible_tests")

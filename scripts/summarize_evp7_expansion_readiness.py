@@ -235,7 +235,11 @@ def render_markdown(summary: dict[str, Any]) -> str:
     lines = [
         "# EVP-7 Expansion Readiness",
         "",
-        "This report is a planning artifact. It does not admit new bugs into the main cohort.",
+        (
+            "This report is a planning artifact and registry summary. Main-cohort "
+            "admission is controlled by `data/cohorts/task_cohort_registry.json`; "
+            "this report does not admit tasks by itself."
+        ),
         "",
         "## Current Cohort",
         "",

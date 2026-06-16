@@ -21,10 +21,11 @@
 
 - 当前主张：bounded EVP-7 evidence-visibility pilot claim。
 - 当前实验边界：
-  - 20 real-bug tasks；
-  - 94 patch candidates；
-  - 376 E0/E2/E4/E6 evidence packets；
-  - real DeepSeek G5 verifier run；
+  - structural cohort：21 real-bug tasks；
+  - structural candidate manifest：98 patch candidates；
+  - no-API evidence packets：392 E0/E2/E4/E6 records；
+  - real DeepSeek G5 verifier run：仍限定在旧 20-task / 94-candidate /
+    376-packet cohort；
   - raw-output-free tracked summaries and audits。
 - 当前 paper-facing 结果：
   - `docs/paper/ieee_submission_draft.tex`
@@ -39,18 +40,17 @@
 如果继续实验，不应直接扩量或直接调用 API。必须先选择一个目标：
 
 1. 扩 EVP-7 cohort：
-   - 目标：补样本规模和项目多样性；
+   - 当前状态：本轮已完成 `bugsinpy_thefuck_1` admission；
+   - 当前结果：21 tasks / 98 candidates / 392 no-API evidence packets；
    - 当前 gate：`docs/experiments/evp7_expansion_readiness.md` 已刷新为
-     20 tasks / 94 candidates；
-   - metadata screen 已识别 32 个 fresh-project `thefuck` candidates；
-   - `bugsinpy_thefuck_1` 已在 ignored isolated Python 3.11 venv 中建立
-     F2P；
-   - 该任务的 bounded project-level P2P-broad execution 已尝试，但 30 分钟
-     外层预算内无 manifest，当前状态为
-     `f2p_established_project_p2p_timeout`；
-   - 下一步需要明确的 `thefuck` P2P policy redesign，或换一个 fresh-project
-     lane；P2P-broad、candidate construction 和 candidate revalidation 通过前不能
-     admission。
+     21 tasks / 98 candidates；
+   - `bugsinpy_thefuck_1` 的 admission scope 是
+     `thefuck_rules_root_pip_p2p_v1`：`tests/rules` + `pip` source-token
+     filter，不能写成 full-project coverage；
+   - 当前 metadata-promising pool 没有 fresh-project candidates outside
+     already-main or already-risky projects；
+   - 下一步不是继续盲目扩 cohort，而是决定是否做新的 30-50 bug 边界、
+     跨模型复现实验，或论文结果同步。
 2. 跨模型复现实验：
    - 目标：检查 DeepSeek G5 的 evidence-visibility 趋势是否跨模型稳定；
    - 下一步：先确定 provider、model、预算、停止条件和 preflight。
@@ -82,7 +82,11 @@
 - `docs/protocol/evidence_visibility_protocol.md`：
   当前 EVP-7 protocol 和 evidence visibility boundary。
 - `docs/experiments/evp7_protocol_pilot.md`：
-  当前 20-task / 94-candidate / 376-packet protocol pilot 报告。
+  当前 protocol pilot 报告；真实 G5 结果仍是 20-task / 94-candidate /
+  376-packet，structural no-API cohort 已扩到 21 / 98 / 392。
+- `docs/experiments/thefuck1_candidate_validation.md`：
+  `bugsinpy_thefuck_1` rules-root pip-family P2P policy、candidate validation
+  和 admission 记录。
 - `docs/experiments/evp7_g5_llm_376_full_result.md`：
   376-record real G5 run result。
 - `docs/experiments/evp7_g5_376_full_quality_audit.md`：

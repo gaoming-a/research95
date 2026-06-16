@@ -646,15 +646,15 @@
       }
     },
     {
-      "blocked_reason": [
-        "project_level_p2p_timeout_no_manifest"
-      ],
+      "blocked_reason": [],
       "bug_id": "1",
+      "candidate_validation_report": "docs/experiments/thefuck1_candidate_validation.md",
       "date": "2026-06-16",
-      "decision": "do_not_admit_project_p2p_timeout",
+      "decision": "admitted_to_p2p_broad_main",
       "fixed_result": "target_passed",
-      "notes": "Retry after GitHub checkout became reachable established F2P in an ignored isolated Python 3.11 venv: buggy target pytest failed 1/2 parameterized cases and fixed target pytest passed 2/2. A project-level P2P-broad dry-run then validated the builder inputs, checkout junction workspace, venv python, and F2P oracle nodeid. The first P2P execution exposed a builder compat-shim bug that shadowed installed psutil; after repairing the builder to prefer real psutil, the bounded P2P execution started real pytest batches but exceeded the 30 minute outer budget and left no manifest. Residual pytest processes were stopped. No candidate construction, candidate revalidation, or admission was performed.",
-      "probe_status": "f2p_established_project_p2p_timeout",
+      "notes": "Both checkouts completed and the target pytest produced the expected buggy fail and fixed pass. Full thefuck project-level P2P and collection-wide pip include attempts exceeded bounded budgets, so a later explicit thefuck_rules_root_pip_p2p_v1 policy collected tests/rules and filtered pip-related source segments. That run retained 4 stable P2P-broad tests after excluding the F2P oracle and one external-dependency test. Four candidates passed admission validation: one correct reference, two issue-not-fixed negatives, and one regression negative. The admitted scope is rules-root pip-family evidence, not full project coverage.",
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_thefuck_1_p2p_broad_rules_pip_policy.json",
+      "probe_status": "admitted_p2p_broad_main",
       "project": "thefuck",
       "run_command": "PYTHONPATH=. python -m pytest tests/rules/test_pip_unknown_command.py::test_get_new_command -q",
       "source": "BugsInPy",

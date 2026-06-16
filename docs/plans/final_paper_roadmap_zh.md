@@ -1071,26 +1071,27 @@ admission。`bugsinpy_youtube-dl_7`、`bugsinpy_youtube-dl_6`、
 Phase A/G1-G5 当前状态：
 
 1. 已从 validated candidate outputs 生成当前
-   `data/patches/evp7_candidates.jsonl`：94 candidates，其中 20 个
-   `correct_reference`，74 个 issue-not-fixed negatives；
-2. 当前 structural cohort 已冻结为 20 tasks / 5 projects / 94 candidates；
-3. 已生成 leakage-audited E0/E2/E4/E6 evidence packet records，共 376 条，
-   四层各 94 条；
+   `data/patches/evp7_candidates.jsonl`：98 candidates，其中 21 个
+   `correct_reference`，76 个 issue-not-fixed negatives，1 个 regression
+   negative；
+2. 当前 structural cohort 为 21 tasks / 6 projects / 98 candidates；
+3. 已生成 leakage-audited E0/E2/E4/E6 evidence packet records，共 392 条，
+   四层各 98 条；
 4. independent visible-test outcome source 和 deterministic visible tool
-   summary source 均已为当前 94-candidate cohort 补齐；visible outcome 中的
+   summary source 均已为当前 98-candidate cohort 补齐；visible outcome 中的
    `error` 记录是 candidate-induced import failure，不是缺失证据；
 5. G1 packet completeness 和 G2 leakage audit 当前通过，tracked summary 为
    `data/evidence/evp7_evidence_packet_summary.json`；
 6. G3 tool-only baseline readiness 当前通过：apply-only、visible-tests、
-   visible-tool-summary 三组 baseline 共生成 282 条 schema-valid decisions，
-   每组 94 条；
-7. G4 merge-gate schema stability 当前通过：376 条 E0/E2/E4/E6 dry-run
+   visible-tool-summary 三组 baseline 共生成 294 条 schema-valid decisions，
+   每组 98 条；
+7. G4 merge-gate schema stability 当前通过：392 条 E0/E2/E4/E6 dry-run
    outputs 全部可解析为 accept/reject/escalate JSON schema，invalid parse
    count = 0，leakage findings = 0；
 8. G4 records 是 no-API parser/schema dry-run，不是 LLM verifier 结果，
    不能支持模型效果结论；
-9. G5 prompt manifest 和 readiness summary 当前覆盖 376 条 prompts，
-   E0/E2/E4/E6 四层各 94 条，leakage failed count = 0，prompt text 不写入
+9. G5 prompt manifest 和 readiness summary 当前覆盖 392 条 prompts，
+   E0/E2/E4/E6 四层各 98 条，leakage failed count = 0，prompt text 不写入
    tracked manifest；
 10. G5 guarded workflow 支持 check-only、mock validation 和 bounded
     concurrency；mock records 只验证 parser/metrics pipeline；
@@ -1108,8 +1109,14 @@ Phase A/G1-G5 当前状态：
     claim；
 14. 已生成 controlled expansion readiness summary：
     `docs/experiments/evp7_expansion_readiness.md` 和
-    `data/tasks/evp7_expansion_readiness.json`。它是后续研究边界参考，不是
-    默认继续补 bug 的执行指令。
+    `data/tasks/evp7_expansion_readiness.json`。它现在报告 21-task /
+    98-candidate structural cohort，并说明 metadata-promising pool 没有
+    fresh-project candidates outside already-main or already-risky projects；
+15. 新 392-packet cohort 只有 no-API readiness，没有真实 LLM verifier 结果。
+    若要把它写成 paper-facing real-run result，必须先执行 user-confirmed
+    G5 smoke/full rerun，并重建 raw-output-free summary、quality audit、
+    statistics、utility、tool attribution、qualitative cases 和 claim
+    traceability。
 
 Historical checkpoints：
 

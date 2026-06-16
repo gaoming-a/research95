@@ -14,7 +14,7 @@
     "youtube-dl"
   ],
   "blocked_task_count": 27,
-  "candidate_count_known_from_registry": 94,
+  "candidate_count_known_from_registry": 98,
   "candidate_count_missing_in_registry_tasks": [],
   "candidate_records_status": "task-level manifest only; candidate-level EVP-7 records are managed by scripts/build_evp7_candidate_manifest.py.",
   "cohort_id": "EVP-7",
@@ -23,8 +23,9 @@
     "PySnooper",
     "cookiecutter",
     "httpie",
+    "thefuck",
     "tqdm",
     "youtube-dl"
   ],
-  "main_task_count": 20
+  "main_task_count": 21
 }

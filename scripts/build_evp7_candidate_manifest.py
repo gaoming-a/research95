@@ -42,6 +42,10 @@ TASK_INPUTS: dict[str, tuple[str, str]] = {
         "outputs/tqdm9_candidate_validation_001/candidates.jsonl",
         "outputs/tqdm9_candidate_validation_001/p2p_validation.jsonl",
     ),
+    "bugsinpy_thefuck_1": (
+        "outputs/thefuck1_candidate_validation_001/candidates.jsonl",
+        "outputs/thefuck1_candidate_validation_001/p2p_validation.jsonl",
+    ),
     "bugsinpy_PySnooper_1": (
         "outputs/pysnooper1_candidate_validation_001/candidates.jsonl",
         "outputs/pysnooper1_candidate_validation_001/p2p_validation.jsonl",

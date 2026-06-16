@@ -1,8 +1,9 @@
 # Evidence Visibility Protocol
 
 This protocol defines the current EVP-7 evidence-visibility route after the
-2026-06-12 decision to freeze the initial BugsInPy low-friction cohort and the
-2026-06-15 controlled admissions that reached the 20-task bounded pilot.
+2026-06-12 decision to freeze the initial BugsInPy low-friction cohort, the
+2026-06-15 controlled admissions that reached the 20-task bounded pilot, and
+the 2026-06-16 bounded `thefuck_1` rules-root pip-family admission.
 
 ## Decision
 
@@ -51,10 +52,11 @@ The candidate manifest is:
 data/patches/evp7_candidates.jsonl
 ```
 
-It contains 94 promoted candidates from the validated EVP-7 candidate outputs:
-20 correct reference patches and 74 issue-not-fixed negatives across 20 tasks
-and 5 projects. Its labels and failure taxonomy are evaluator-only inputs for
-metrics and must not be copied into model-visible evidence packets.
+It contains 98 promoted candidates from the validated EVP-7 candidate outputs:
+21 correct reference patches, 76 issue-not-fixed negatives, and 1 regression
+negative across 21 tasks and 6 projects. Its labels and failure taxonomy are
+evaluator-only inputs for metrics and must not be copied into model-visible
+evidence packets.
 
 The current evidence packet manifest is:
 
@@ -62,10 +64,10 @@ The current evidence packet manifest is:
 data/evidence/evp7_evidence_packets.jsonl
 ```
 
-It contains E0/E2/E4/E6 records for all 94 candidates. E0/E2 are complete.
-E4 is complete for all 94 candidates after rerunning predeclared visible tests
+It contains E0/E2/E4/E6 records for all 98 candidates. E0/E2 are complete.
+E4 is complete for all 98 candidates after rerunning predeclared visible tests
 in candidate workdirs with the same tracked project-level compat shims recorded
-in the P2P manifests. E6 is complete for all 94 candidates after deterministic
+in the P2P manifests. E6 is complete for all 98 candidates after deterministic
 visible tool summaries were generated from already model-visible static and
 visible-test evidence. Three visible-test outcomes are `error` because partial
 candidates break import; those are visible outcomes, not hidden evaluator
@@ -162,16 +164,17 @@ Before further expansion, five gates must pass:
 
 If G5 fails, the protocol should be redesigned before adding bugs.
 
-Current gate status for the frozen 20-task / 94-candidate / 376-packet pilot:
+Current no-API gate status for the 21-task / 98-candidate / 392-packet
+structural cohort:
 
 - G1 passes: every admitted candidate has E0/E2/E4/E6 packet records;
 - G2 passes for the generated packet records: automated leakage audit found no
   evaluator labels, oracle outcomes, hidden tests, reference provenance, or
   failure taxonomy in model-visible packets.
 - G3 passes for deterministic tool-only baselines: apply-only, visible-tests,
-  and visible-tool-summary conditions each produce 94 schema-valid decisions,
-  for 282 total tool-only decisions and aggregate metrics.
-- G4 passes for the no-API merge-gate schema dry-run: all 376 E0/E2/E4/E6
+  and visible-tool-summary conditions each produce 98 schema-valid decisions,
+  for 294 total tool-only decisions and aggregate metrics.
+- G4 passes for the no-API merge-gate schema dry-run: all 392 E0/E2/E4/E6
   packet-level outputs parse into the fixed accept/reject/escalate JSON schema
   with zero leakage findings. These records are parser/schema evidence only,
   not LLM verifier results.
@@ -191,9 +194,10 @@ Current gate status for the frozen 20-task / 94-candidate / 376-packet pilot:
   cost is an external DeepSeek billing statement, or that the result
   generalizes beyond EVP-7.
 - The G5 LLM prompt is `patch_verify_evidence_visibility_merge_gate_v1`. Its
-  current no-API prompt manifest covers all 376 E0/E2/E4/E6 packet prompts
+  current no-API prompt manifest covers all 392 E0/E2/E4/E6 packet prompts
   with zero leakage failures and no tracked full prompt text. The latest real
-  DeepSeek official run wrote raw model responses only under ignored
+  DeepSeek official run remains scoped to 376 prompts and wrote raw model
+  responses only under ignored
   `outputs/evp7_g5_llm_376_full_001/`; tracked summaries remain
   raw-output-free.
 - The tracked `configs/evp7_g5_llm.example.json` and
@@ -211,10 +215,10 @@ Current gate status for the frozen 20-task / 94-candidate / 376-packet pilot:
 
 ## Post-A Expansion
 
-The 15-20 bug target has been reached and frozen at 20 tasks. The next default
-step is not another bug admission. Continue strengthening the frozen-cohort
-paper artifacts, claim boundary, reproducibility notes, and reviewer-facing
-artifact until a separate 30-50 bug decision is made.
+The 15-20 bug target has been exceeded at 21 tasks. The next default step is
+not another bug admission. Continue strengthening the cohort paper artifacts,
+claim boundary, reproducibility notes, and reviewer-facing artifact until a
+separate 30-50 bug decision is made.
 
 If the project later enters another expansion stage, the preferred order is:
 

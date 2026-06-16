@@ -11305,3 +11305,190 @@ Verify:
 - 完成扩 cohort 的下一步需要：
   - 明确 `thefuck` P2P policy redesign；或
   - 选择另一条 fresh-project lane 做 checkout/F2P/P2P。
+
+## 2026-06-16 bugsinpy_thefuck_1 pip-rule-family P2P policy probe
+
+Inspect:
+
+- 当前 readiness：main cohort 仍为 20 tasks / 94 candidates；
+- `p2p_candidate_tasks = []`；
+- registry-risk 排除后，fresh-project promising candidates 全部来自 `thefuck`
+  项目，换 `thefuck_2` 等同项目任务不能绕开 project-level P2P 超时；
+- 既有成功路线允许显式 project-level scope policy，例如
+  `youtube_dl_dynamic_download_nodeid_exclusion_v1`；
+- `build_pass_to_pass_scope.py` 的 `--static-include-token` 会在 collection 后、
+  dynamic run 前过滤 nodeid，适合先做 no-API bounded policy experiment。
+
+Plan:
+
+1. 定义显式 policy：`thefuck_pip_rule_family_p2p_v1`；
+2. 仍使用已验证 `thefuck_1` buggy/fixed checkout 和 project-level P2P builder；
+3. 使用 `--static-include-token pip`，只动态验证源段含 `pip` 的 project-level
+   collected tests；
+4. 继续排除默认外部 token：`httpbin`, `http://`, `https://`；
+5. 输出到 ignored `outputs/thefuck1_project_p2p_scope_pip_policy_001/` 和 tracked
+   `data/p2p_scopes/bugsinpy_thefuck_1_p2p_broad_pip_policy.json`；
+6. 该 manifest 即便成功，也只证明 policy experiment；进入 admission 前还必须
+   candidate construction 和 candidate revalidation。
+
+验收条件:
+
+- 不调用 API；
+- 不修改 checkout；
+- 不构造 candidates；
+- 不 admission；
+- 如果 P2P-broad tests < 3 或 manifest 未生成，记录 blocker；
+- 如果 P2P-broad tests >= 3，只进入 candidate construction 计划，不直接改
+  registry main cohort。
+
+Execute:
+
+- 运行 `thefuck_pip_rule_family_p2p_v1` 时，builder 仍在 collection 阶段尝试
+  收集 shell/functional 文件；
+- 15 分钟外层预算内没有 manifest；
+- 残留 builder / pytest collect-only 进程已终止；
+- Diagnose：`--static-include-token pip` 是 collection 后过滤，不能避免非目标
+  test files 的 collection blocker。
+
+Repair Plan:
+
+1. 改为 rules-root policy：`thefuck_rules_root_pip_p2p_v1`；
+2. 使用 `--scope-type project_level_official_test_root --test-path tests/rules`，让
+   builder 只收集 `tests/rules` 根；
+3. 继续使用 `--static-include-token pip`，只动态验证 pip 相关 rule-family tests；
+4. 该策略仍是 no-API policy experiment；manifest 成功也不直接 admission。
+
+Repair Execute:
+
+- `thefuck_rules_root_pip_p2p_v1` dry-run 通过，test paths 限定在
+  `tests/rules`；
+- policy run 生成 tracked manifest
+  `data/p2p_scopes/bugsinpy_thefuck_1_p2p_broad_rules_pip_policy.json`；
+- manifest 统计：
+  - collected tests = 1431；
+  - collection error files = 0；
+  - excluded fail-to-pass oracle = 1；
+  - static include filter excluded = 1425；
+  - P2P-broad tests = 4；
+- P2P-broad tests：
+  - `tests/rules/test_fix_alt_space.py::test_match`；
+  - `tests/rules/test_pip_install.py::test_get_new_command`；
+  - `tests/rules/test_pip_unknown_command.py::test_get_new_command[pip instatl-instatl-install-pip install]`；
+  - `tests/rules/test_pip_unknown_command.py::test_match`。
+
+Next Gate:
+
+- 该 policy manifest 已满足 >=3 P2P-broad tests，但还不是 admission；
+- 下一步只允许进行 minimal candidate construction 和 F2P + P2P revalidation；
+- 若 reference patch 不能通过 retained oracle + P2P，必须停止并记录 blocker。
+
+Cleanup:
+
+- 已清理本轮失败或冗余过程目录：
+  - `outputs/thefuck1_project_p2p_scope_001/`；
+  - `outputs/thefuck1_project_p2p_scope_pip_policy_001/`；
+  - `outputs/thefuck1_candidate_validation_001/workdirs/`；
+- `outputs/thefuck1_project_p2p_scope_rules_pip_policy_001/` 的 raw
+  `p2p_scope.*` 已由 tracked
+  `data/p2p_scopes/bugsinpy_thefuck_1_p2p_broad_rules_pip_policy.json`
+  承接，但该 tracked manifest 引用的 `compat_shim/` 仍需保留，已恢复最小
+  shim 目录；
+- 已清理历史 candidate validation 中不再被 visible-test runner 读取的
+  `oracle_workdirs/` 与空 `workdirs/`，保留 `p2p_workdirs/`、候选 JSON 和
+  validation JSON；
+- Verify：所有 tracked P2P manifest 的 enabled `compat_shim.path` 均存在；
+  `scripts/build_evp7_candidate_manifest.py` 当前声明的候选输入 JSON 均存在。
+
+## 2026-06-16 bugsinpy_thefuck_1 admission and EVP-7 21-task rebuild
+
+Inspect:
+
+- 当前 registry admission 前为 20 tasks / 94 candidates；
+- `bugsinpy_thefuck_1` 已有：
+  - rules-root pip-family P2P manifest：
+    `data/p2p_scopes/bugsinpy_thefuck_1_p2p_broad_rules_pip_policy.json`；
+  - 4 retained P2P-broad tests；
+  - 4 candidate validation records；
+  - label counts：1 correct, 2 issue-not-fixed, 1 regression。
+
+Plan:
+
+1. 只按已验证 policy boundary admission；
+2. 明确 `thefuck_rules_root_pip_p2p_v1` 是 `tests/rules` + `pip`
+   source-token policy，不写成 full-project coverage；
+3. 更新 registry、controlled probe result、candidate manifest input mapping；
+4. 重建 no-API deterministic artifacts；
+5. 不调用真实 LLM API，不重写 376-record real G5 result。
+
+Execute:
+
+- `bugsinpy_thefuck_1` 已加入 `p2p_broad_main`；
+- 新增 candidate builder：
+  `scripts/build_thefuck1_candidates.py`；
+- 新增 retained oracle：
+  `scripts/oracles/thefuck_1_pip_unknown_command.py`；
+- 新增 admission report：
+  `docs/experiments/thefuck1_candidate_validation.md`；
+- 修复 `scripts/run_evp7_visible_tests.py`：
+  - retained oracle 若是包装脚本，不再误用包装脚本的 Python 解释器；
+  - 从 tracked P2P manifest 的 batch command 取真实测试 Python；
+  - 相对 Python 路径按 repo root 解析为绝对路径。
+
+Verify:
+
+- `python scripts/build_evp7_protocol_manifests.py --check`
+  - main tasks = 21；
+  - known candidates = 98；
+  - projects = 6；
+- `python scripts/build_evp7_candidate_manifest.py --check`
+  - candidates = 98；
+  - correct = 21；
+  - issue-not-fixed = 76；
+  - regression = 1；
+- `python scripts/run_evp7_visible_tests.py --run --check --timeout 90`
+  - visible outcomes = 98；
+  - completed = 95；
+  - error = 3；
+  - `bugsinpy_thefuck_1` = 4 completed；
+- `python scripts/build_evp7_visible_tool_summaries.py --check`
+  - summaries = 98 complete；
+- `python scripts/build_evp7_evidence_packets.py --check`
+  - packets = 392；
+  - E0/E2/E4/E6 each = 98 complete；
+  - G1 = passed；
+  - G2 leakage audit = passed；
+- `python scripts/run_evp7_tool_only_baselines.py --check`
+  - G3 = passed；
+- `python scripts/run_evp7_merge_gate_schema_dry_run.py --check`
+  - records = 392；
+  - valid parses = 392；
+  - G4 = passed；
+- `python scripts/analyze_evp7_schema_dry_run_metrics.py --check`
+  - G5 metric scaffold = passed；
+  - still requires real LLM verifier outputs for model-effect claims；
+- `python scripts/build_evp7_g5_llm_prompt_manifest.py --check`
+  - prompt records = 392；
+  - leakage failures = 0；
+  - readiness = `passed_without_api`；
+- G5 example preflight and workflow check-only:
+  - structural ready = true；
+  - API ready = false because provider/model/cost/smoke/full-run confirmation
+    remains intentionally missing。
+
+Conclusion:
+
+- EVP-7 structural cohort expansion is now 21 tasks / 98 candidates / 392
+  no-API evidence packets；
+- The latest real DeepSeek G5 full run remains the historical
+  20-task / 94-candidate / 376-packet result；
+- The new 392-packet cohort is ready for a future user-confirmed G5 smoke/full
+  run, but no real API call has been attempted in this admission round。
+
+Next Boundary:
+
+- Do not continue blind BugsInPy sweeping；
+- Choose one of:
+  - user-confirmed G5 rerun on the 392-packet cohort；
+  - new 30-50 bug expansion decision boundary；
+  - paper/manuscript synchronization that keeps 376-real-run and 392-no-API
+    boundaries separate。

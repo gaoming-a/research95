@@ -220,18 +220,19 @@ They should not override `final_paper_roadmap_zh.md`.
 - The 2026-06-12 decision froze the then-current 7-task main cohort as
   `EVP-7 Protocol Pilot` to validate the evidence-visibility protocol before
   blind expansion. Controlled `youtube-dl` admissions through
-  `bugsinpy_youtube-dl_37` have raised the tracked structural cohort to 20
-  tasks across 5 projects. The tracked candidate manifest contains 94 promoted
-  candidates, including 20 correct reference patches and 74 issue-not-fixed
-  negatives. The tracked evidence packet manifest contains 376 E0/E2/E4/E6
-  packet records, with all four levels complete for 94/94 candidates and zero
-  leakage findings.
+  `bugsinpy_youtube-dl_37` and the bounded `bugsinpy_thefuck_1`
+  rules-root pip-family admission have raised the tracked structural cohort to
+  21 tasks across 6 projects. The tracked candidate manifest contains 98
+  promoted candidates, including 21 correct reference patches, 76
+  issue-not-fixed negatives, and 1 regression negative. The tracked evidence
+  packet manifest contains 392 E0/E2/E4/E6 packet records, with all four
+  levels complete for 98/98 candidates and zero leakage findings.
   Three visible-test outcomes are `error` because partial candidates break
   import; they remain valid visible outcomes, not missing evidence. The
   realistic tool-only baselines are generated for apply-only, visible-tests,
   and visible-tool-summary conditions. The merge-gate schema dry-run now
-  generates 376 parse-valid accept/reject/escalate records with zero leakage
-  findings. The latest real DeepSeek official G5 full run covers the frozen
+  generates 392 parse-valid accept/reject/escalate records with zero leakage
+  findings. The latest real DeepSeek official G5 full run still covers the
   20-task/94-candidate/376-packet cohort with explicit bounded parallelism
   (`--concurrency 4`). It produced 376/376 parse-valid records, token-usage cost
   estimates for 376/376 records, and estimated total cost USD `0.327352058`.
@@ -242,10 +243,12 @@ They should not override `final_paper_roadmap_zh.md`.
   observations about evidence-level variation, but not scale-generalized
   claims, not a claim that the LLM outperforms the deterministic visible-test
   tool-only baseline, and not a claim that runner-estimated cost is an external
-  billing statement.
+  billing statement. The new 21-task/98-candidate/392-packet cohort has passed
+  no-API structural gates and prompt-boundary checks, but it has not been rerun
+  with a real LLM verifier.
   A controlled-expansion readiness report summarizes the broader BugsInPy rescreen
-  and the project-diverse bounded probe lanes used to reach the frozen
-  20-task / 94-candidate cohort. The
+  and the project-diverse bounded probe lanes used to reach the current
+  21-task / 98-candidate cohort. The
   first post-G5 lane, `bugsinpy_fastapi_4`, completed checkout but is
   F2P-blocked by the current Pydantic v2 environment and is not admitted.
   `bugsinpy_sanic_2` also completed checkout but is F2P-blocked by the missing
@@ -257,16 +260,13 @@ They should not override `final_paper_roadmap_zh.md`.
   constraints: Scrapy lacks Twisted, Ansible reaches Windows `fcntl`, Luigi
   lacks Tornado after existing Python 3.11 compatibility, and Matplotlib remains
   an incomplete/native-extension blocker. The refreshed metadata screen now
-  identifies 32 fresh-project `thefuck` candidates after classifying its
-  self editable Git requirement as an install boundary rather than an external
-  network-service blocker. After GitHub checkout became reachable, a bounded
-  `bugsinpy_thefuck_1` retry established F2P in an ignored isolated Python
-  3.11 test venv: the buggy target pytest failed one parameterized case and
-  the fixed target pytest passed both cases. A bounded project-level P2P-broad
-  dry-run validated the builder inputs, but the real P2P execution exceeded
-  the 30 minute outer budget and produced no manifest, so this is still not
-  cohort admission. The next boundary is either an explicit bounded P2P policy
-  redesign for `thefuck` or a different fresh-project lane.
+  identifies no fresh-project promising candidates outside already-main or
+  already-risky projects. After GitHub checkout became reachable,
+  `bugsinpy_thefuck_1` established F2P in an ignored isolated Python 3.11 test
+  venv. Full-project P2P exceeded budget, but the explicit
+  `thefuck_rules_root_pip_p2p_v1` policy collected `tests/rules`, retained 4
+  pip-family P2P-broad tests, and validated four candidates before admission.
+  This admission is rules-root pip-family evidence, not full project coverage.
   Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and
@@ -291,9 +291,9 @@ They should not override `final_paper_roadmap_zh.md`.
   old 30-candidate tool-augmented run remains a conditional tool-assisted
   result, and the latest real 376-record EVP-7 G5 run is reported as a bounded
   pilot evidence-visibility result with explicit limitations.
-- The 15-20 bug expansion target has been reached and frozen at 20 tasks.
-  Further expansion is no longer the default next step; it requires a new
-  30-50 bug decision boundary rather than blind metadata admission.
+- The 15-20 bug expansion target has been exceeded at 21 tasks. Further
+  expansion is no longer the default next step; it requires a new 30-50 bug
+  decision boundary rather than blind metadata admission.
 
 ## Core Commands
 
@@ -358,12 +358,19 @@ and does not print the stale pre-policy rerun command once the tracked manifest
 exists.
 
 The latest admitted task is recorded in
+`docs/experiments/thefuck1_candidate_validation.md`. It produced
+`data/p2p_scopes/bugsinpy_thefuck_1_p2p_broad_rules_pip_policy.json` with 4
+P2P-broad tests under the explicit `thefuck_rules_root_pip_p2p_v1` policy and
+rebuilt the no-API EVP-7 artifacts to 21 tasks, 98 candidates, and 392 evidence
+packets. The latest tracked DeepSeek G5 run still covers the earlier
+20-task/94-candidate/376-packet cohort.
+
+The preceding admitted task is recorded in
 `docs/experiments/youtubedl37_candidate_validation.md`. It produced
 `data/p2p_scopes/bugsinpy_youtube-dl_37_p2p_broad.json` with 30 P2P-broad
 tests under the same explicit dynamic-download nodeid exclusion policy and
 rebuilt the no-API EVP-7 artifacts to 20 tasks, 94 candidates, and 376 evidence
-packets. The latest tracked DeepSeek G5 run now covers this frozen
-20-task/94-candidate/376-packet cohort.
+packets.
 
 The preceding admitted task is recorded in
 `docs/experiments/youtubedl23_candidate_validation.md`. It produced
@@ -459,18 +466,20 @@ After a real G5 full run, regenerate the tracked raw-output-free summary with:
 python scripts\summarize_evp7_g5_llm_full_run.py
 ```
 
-The guarded workflow can run a full current 376-packet execution with explicit
+The guarded workflow can run a full current 392-packet execution with explicit
 bounded parallelism, for example `--concurrency 4` or `--concurrency 6`. The
 default remains sequential. The latest tracked DeepSeek full-run summary is
 `docs/experiments/evp7_g5_llm_376_full_result.md`; it covers the frozen
 20-task/94-candidate/376-packet cohort, has no schema-invalid records, and keeps
 raw model responses under ignored `outputs/`.
 
-The 20-task cohort is frozen for the next G5 step. The freeze and no-API smoke
-readiness record is `docs/experiments/evp7_20_task_freeze_and_g5_smoke_readiness.md`.
-It confirms structural readiness and records that real smoke execution still
-requires explicit user confirmation for provider, model, cost ceiling, smoke
-packet count, and full-run permission.
+The current 21-task structural cohort is ready for the next G5 step only after
+user confirmation. The historical freeze and no-API smoke readiness record is
+`docs/experiments/evp7_20_task_freeze_and_g5_smoke_readiness.md`; it applies to
+the earlier 20-task cohort. Current structural readiness is tracked in
+`data/reviews/evp7_g5_llm_run_readiness.json` and records that real smoke
+execution still requires explicit user confirmation for provider, model, cost
+ceiling, smoke packet count, and full-run permission.
 
 After confirmation, a 4-packet real G5 smoke was run in
 `outputs/evp7_g5_llm_376_smoke_001`. The raw-output-free report is
@@ -694,10 +703,11 @@ It also checks that final-polish wording reports a bounded EVP-7 pilot, formats
 unsupported claims as explicit interpretations, and keeps `Evidence Gain`
 title-cased in paper-facing prose.
 It also checks `docs/protocol/evidence_visibility_protocol.md` for the current
-20-task / 94-candidate / 376-packet EVP-7 state, so a stale protocol summary no
-longer passes merely because the file exists. The same check covers
+21-task / 98-candidate / 392-packet structural EVP-7 state, so a stale protocol
+summary no longer passes merely because the file exists. The same check covers
 `docs/experiments/evp7_protocol_pilot.md`, which must also treat the 376-record
-G5 run as current and the 248-record run as historical. It also checks the
+G5 run as historical real-run evidence for the previous 20-task cohort and the
+248-record run as an older historical checkpoint. It also checks the
 canonical roadmap, `docs/plans/final_paper_roadmap_zh.md`, so stale Phase A
 counts cannot pass while the protocol files are current.
 

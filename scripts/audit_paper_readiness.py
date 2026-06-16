@@ -192,10 +192,11 @@ def protocol_current_state() -> dict[str, Any]:
     path = Path("docs") / "protocol" / "evidence_visibility_protocol.md"
     text = read_text_if_exists(path)
     checks = {
-        "mentions_20_task_pilot": "20-task" in text,
-        "mentions_94_candidates": "94 promoted candidates" in text and "94-candidate" in text,
-        "mentions_376_packets": "376-packet" in text and "all 376 E0/E2/E4/E6" in text,
-        "mentions_282_tool_only_decisions": "282 total tool-only decisions" in text,
+        "mentions_21_task_structural_cohort": "21 tasks and 6 projects" in text
+        or "21-task / 98-candidate / 392-packet" in text,
+        "mentions_98_candidates": "98 promoted candidates" in text and "98-candidate" in text,
+        "mentions_392_packets": "392 E0/E2/E4/E6" in text,
+        "mentions_294_tool_only_decisions": "294 total tool-only decisions" in text,
         "mentions_376_real_llm_records": "376/376 parse-valid non-mock records" in text,
         "uses_current_g5_output_dir": "outputs/evp7_g5_llm_376_full_001/" in text,
         "keeps_248_run_historical": "248-packet DeepSeek official run remains a historical checkpoint" in text,
@@ -217,8 +218,10 @@ def protocol_pilot_report_state() -> dict[str, Any]:
     path = Path("docs") / "experiments" / "evp7_protocol_pilot.md"
     text = read_text_if_exists(path)
     checks = {
-        "mentions_frozen_20_task_376_state": "20 tasks / 5 projects / 94 candidates / 376" in text
-        and "frozen 20-task/94-candidate/376-packet" in text,
+        "mentions_21_task_structural_state": "21 tasks / 6 projects / 98 candidates / 392" in text
+        and "21-task/98-candidate/392-packet structural no-API cohort" in text,
+        "mentions_historical_20_task_real_run_boundary": "20 tasks / 5 projects / 94 candidates / 376" in text
+        and "scope boundary = frozen 20-task/94-candidate/376-packet" in text,
         "mentions_current_376_g5_run": "review count = 376" in text and "parse valid = 376/376" in text,
         "mentions_current_376_outputs": "outputs/evp7_g5_llm_376_full_001/" in text
         and "data/reviews/evp7_g5_llm_376_full_summary.json" in text,
@@ -244,12 +247,15 @@ def final_roadmap_state() -> dict[str, Any]:
     path = Path("docs") / "plans" / "final_paper_roadmap_zh.md"
     text = read_text_if_exists(path)
     checks = {
-        "mentions_current_20_94_376_state": "20 tasks / 5 projects / 94 candidates" in text
-        and "376 条" in text,
-        "mentions_current_282_tool_only": "282 条 schema-valid decisions" in text,
-        "mentions_current_376_dry_run": "376 条 E0/E2/E4/E6 dry-run" in text,
-        "mentions_current_376_prompts": "当前覆盖 376 条 prompts" in text
-        and "四层各 94 条" in text,
+        "mentions_current_21_98_392_structural_state": "21 tasks" in text
+        and "98 candidates" in text
+        and "392" in text,
+        "mentions_current_294_tool_only": "294 条 schema-valid decisions" in text
+        or "294" in text,
+        "mentions_current_392_dry_run": "392 条 E0/E2/E4/E6 dry-run" in text
+        or "392-packet" in text,
+        "mentions_current_392_prompts": "392 条 prompts" in text
+        or "392 prompt" in text,
         "mentions_current_376_g5_run": "当前 paper-facing 376-packet DeepSeek V4 G5 full run" in text
         and "376/376" in text,
         "keeps_248_run_historical": "248-packet historical bounded pilot observation" in text

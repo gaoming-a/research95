@@ -6,7 +6,7 @@
       "pytest": 351,
       "unittest": 102
     },
-    "fresh_project_promising_candidates": 32,
+    "fresh_project_promising_candidates": 0,
     "metadata_blocker_counts": {
       "external_service_dependency": 5,
       "heavy_ml_dependency": 45,
@@ -21,14 +21,13 @@
   "controlled_probe_results": {
     "p2p_candidate_tasks": [],
     "probe_status_counts": {
-      "admitted_p2p_broad_main": 13,
+      "admitted_p2p_broad_main": 14,
       "f2p_blocked_checkout_timeout": 1,
       "f2p_blocked_dependency_environment": 4,
       "f2p_blocked_existing_incomplete_native_probe": 1,
       "f2p_blocked_windows_posix_import": 1,
       "f2p_established_corrected_policy_p2p_timeout": 2,
-      "f2p_established_existing_p2p_timeout": 1,
-      "f2p_established_project_p2p_timeout": 1
+      "f2p_established_existing_p2p_timeout": 1
     },
     "recorded_tasks": [
       "bugsinpy_ansible_1",
@@ -58,15 +57,16 @@
     ],
     "source": "data\\tasks\\evp7_controlled_probe_results.json"
   },
-  "current_main_candidate_count_from_registry": 94,
+  "current_main_candidate_count_from_registry": 98,
   "current_main_projects": {
     "PySnooper": 2,
     "cookiecutter": 3,
     "httpie": 1,
+    "thefuck": 1,
     "tqdm": 1,
     "youtube-dl": 13
   },
-  "current_main_task_count": 20,
+  "current_main_task_count": 21,
   "current_main_tasks": [
     "bugsinpy_PySnooper_1",
     "bugsinpy_PySnooper_3",
@@ -74,20 +74,21 @@
     "bugsinpy_cookiecutter_2",
     "bugsinpy_cookiecutter_3",
     "bugsinpy_httpie_5",
+    "bugsinpy_thefuck_1",
     "bugsinpy_tqdm_9",
+    "bugsinpy_youtube-dl_2",
+    "bugsinpy_youtube-dl_4",
+    "bugsinpy_youtube-dl_5",
+    "bugsinpy_youtube-dl_6",
+    "bugsinpy_youtube-dl_7",
     "bugsinpy_youtube-dl_11",
     "bugsinpy_youtube-dl_16",
     "bugsinpy_youtube-dl_17",
-    "bugsinpy_youtube-dl_2",
     "bugsinpy_youtube-dl_20",
     "bugsinpy_youtube-dl_21",
     "bugsinpy_youtube-dl_23",
     "bugsinpy_youtube-dl_37",
-    "bugsinpy_youtube-dl_4",
-    "bugsinpy_youtube-dl_43",
-    "bugsinpy_youtube-dl_5",
-    "bugsinpy_youtube-dl_6",
-    "bugsinpy_youtube-dl_7"
+    "bugsinpy_youtube-dl_43"
   ],
   "next_execution_boundary": [
     "Run at most one bounded checkout/F2P/P2P probe per risky project lane at a time.",
@@ -95,7 +96,7 @@
     "Do not admit a task to p2p_broad_main until F2P, project-level P2P-broad, candidate construction, and candidate revalidation all pass.",
     "Avoid repeating known blockers unless the probe explicitly tests a new bounded policy."
   ],
-  "readiness_decision": "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled project-diverse probes, not blind BugsInPy sweeping or bulk admission. The current metadata-promising pool has 32 fresh-project candidates, and `bugsinpy_thefuck_1` established F2P but its bounded project-level P2P-broad construction timed out without a manifest. The next boundary is either an explicit bounded P2P policy redesign for that project or a different fresh-project lane; p2p_broad_main admission remains prohibited.",
+  "readiness_decision": "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled project-diverse probes, not blind BugsInPy sweeping or bulk admission. The current metadata-promising pool has no fresh-project candidates outside already-main or already-risky projects.",
   "registry_blocked_or_pending_count": 27,
   "registry_blocked_reason_counts": {
     "checkout_timeout": 1,
@@ -193,14 +194,12 @@
         "registered_blocked_tasks": 0
       },
       "latest_probe": {
-        "blocked_reason": [
-          "project_level_p2p_timeout_no_manifest"
-        ],
+        "blocked_reason": [],
         "date": "2026-06-16",
-        "decision": "do_not_admit_project_p2p_timeout",
-        "notes": "Retry after GitHub checkout became reachable established F2P in an ignored isolated Python 3.11 venv: buggy target pytest failed 1/2 parameterized cases and fixed target pytest passed 2/2. A project-level P2P-broad dry-run then validated the builder inputs, checkout junction workspace, venv python, and F2P oracle nodeid. The first P2P execution exposed a builder compat-shim bug that shadowed installed psutil; after repairing the builder to prefer real psutil, the bounded P2P execution started real pytest batches but exceeded the 30 minute outer budget and left no manifest. Residual pytest processes were stopped. No candidate construction, candidate revalidation, or admission was performed."
+        "decision": "admitted_to_p2p_broad_main",
+        "notes": "Both checkouts completed and the target pytest produced the expected buggy fail and fixed pass. Full thefuck project-level P2P and collection-wide pip include attempts exceeded bounded budgets, so a later explicit thefuck_rules_root_pip_p2p_v1 policy collected tests/rules and filtered pip-related source segments. That run retained 4 stable P2P-broad tests after excluding the F2P oracle and one external-dependency test. Four candidates passed admission validation: one correct reference, two issue-not-fixed negatives, and one regression negative. The admitted scope is rules-root pip-family evidence, not full project coverage."
       },
-      "probe_status": "f2p_established_project_p2p_timeout",
+      "probe_status": "admitted_p2p_broad_main",
       "project": "thefuck",
       "run_commands": [
         "pytest tests/rules/test_pip_unknown_command.py::test_get_new_command"

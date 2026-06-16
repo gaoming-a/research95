@@ -20,10 +20,16 @@ structural cohort became 12 bugs / 5 projects. This was controlled admission,
 not a return to blind BugsInPy expansion.
 
 2026-06-15 update: further controlled admissions reached the frozen
-paper-facing cohort of 20 tasks / 5 projects / 94 candidates / 376 E0/E2/E4/E6
-evidence packets. The 15-20 bug target is now met and frozen. The current
-paper-facing real-LLM result is the 376-record DeepSeek G5 full run, not the
-earlier 248-record historical checkpoint.
+paper-facing real-run cohort of 20 tasks / 5 projects / 94 candidates / 376
+E0/E2/E4/E6 evidence packets. The current paper-facing real-LLM result is the
+376-record DeepSeek G5 full run, not the earlier 248-record historical
+checkpoint.
+
+2026-06-16 update: `bugsinpy_thefuck_1` was admitted under the explicit
+`thefuck_rules_root_pip_p2p_v1` policy. The current structural no-API cohort is
+21 tasks / 6 projects / 98 candidates / 392 E0/E2/E4/E6 evidence packets. The
+new 392-packet cohort has passed structural gates and prompt-boundary checks,
+but it has not been rerun with a real LLM verifier.
 
 Option B is not approved as the current main path. Option C is deferred until
 the protocol interface is stable.
@@ -52,7 +58,7 @@ data/exclusions/blocked_bugsinpy_projects.jsonl
 
 ## Current Cohort Summary
 
-The manifest contains 20 completed project-level P2P-broad tasks:
+The manifest contains 21 completed P2P-broad main tasks:
 
 | task | project |
 | --- | --- |
@@ -61,6 +67,7 @@ The manifest contains 20 completed project-level P2P-broad tasks:
 | `bugsinpy_cookiecutter_2` | `cookiecutter` |
 | `bugsinpy_cookiecutter_3` | `cookiecutter` |
 | `bugsinpy_tqdm_9` | `tqdm` |
+| `bugsinpy_thefuck_1` | `thefuck` |
 | `bugsinpy_PySnooper_1` | `PySnooper` |
 | `bugsinpy_PySnooper_3` | `PySnooper` |
 | `bugsinpy_youtube-dl_2` | `youtube-dl` |
@@ -79,9 +86,9 @@ The manifest contains 20 completed project-level P2P-broad tasks:
 
 Candidate count status:
 
-- registry-known candidate count: 94;
+- registry-known candidate count: 98;
 - registry missing candidate counts: none;
-- promoted tracked candidate records: 94.
+- promoted tracked candidate records: 98.
 
 Project coverage:
 
@@ -89,6 +96,7 @@ Project coverage:
 PySnooper
 cookiecutter
 httpie
+thefuck
 tqdm
 youtube-dl
 ```
@@ -147,11 +155,12 @@ data/patches/evp7_candidates.jsonl
 data/patches/evp7_candidate_summary.json
 ```
 
-The promoted manifest contains 94 candidates across the 20 EVP-7 tasks:
+The promoted manifest contains 98 candidates across the 21 EVP-7 tasks:
 
-- 20 `correct_reference` candidates labeled
+- 21 `correct_reference` candidates labeled
   `correct_under_f2p_and_p2p_broad`;
-- 74 issue-not-fixed negatives;
+- 76 issue-not-fixed negatives;
+- 1 regression negative;
 - evaluator-only fields such as `candidate_type`, `expected_outcome`,
   `failure_type_label`, retained-oracle status, and P2P-broad labels.
 
@@ -179,21 +188,21 @@ data/evidence/evp7_evidence_packets.jsonl
 data/evidence/evp7_evidence_packet_summary.json
 ```
 
-The builder emits 376 packet records: 94 candidates times E0/E2/E4/E6.
+The builder emits 392 packet records: 98 candidates times E0/E2/E4/E6.
 
 Current status:
 
-- E0 complete for 94 candidates;
-- E2 complete for 94 candidates, using patch-apply evidence only;
-- E4 complete for 94 candidates after independently rerunning predeclared
+- E0 complete for 98 candidates;
+- E2 complete for 98 candidates, using patch-apply evidence only;
+- E4 complete for 98 candidates after independently rerunning predeclared
   visible tests in candidate workdirs with tracked P2P compat-shim reuse;
-- visible test outcomes include 24 passed checks, 74 failed checks, and 3 error
+- visible test outcomes include 26 passed checks, 76 failed checks, and 3 error
   checks; the 3 errors are candidate-induced import errors and are retained as
   visible runtime outcomes;
-- E6 complete for 94 candidates after deterministic visible tool summaries were
+- E6 complete for 98 candidates after deterministic visible tool summaries were
   generated from model-visible static and visible-test evidence;
 - automated leakage audit passes with zero findings.
-- deterministic tool-only baselines are generated for 94 candidates under three
+- deterministic tool-only baselines are generated for 98 candidates under three
   conditions: apply-only, visible-tests, and visible-tool-summary.
 
 ## Current Limitation
@@ -242,11 +251,11 @@ Current metrics:
 | condition | accepted precision | false accept rate | correct recall | escalation rate |
 | --- | ---: | ---: | ---: | ---: |
 | `tool_only_apply_only` | n/a | 0.0 | 0.0 | 1.0 |
-| `tool_only_visible_tests` | 0.826087 | 0.054054 | 0.95 | 0.0 |
-| `tool_only_visible_tool_summary` | 0.826087 | 0.054054 | 0.95 | 0.0 |
+| `tool_only_visible_tests` | 0.8 | 0.064935 | 0.952381 | 0.0 |
+| `tool_only_visible_tool_summary` | 0.8 | 0.064935 | 0.952381 | 0.0 |
 
-The visible-tests and visible-tool-summary baselines accept 19 correct patches,
-reject one correct patch, and falsely accept four incorrect patches. They remain
+The visible-tests and visible-tool-summary baselines accept 20 correct patches,
+reject one correct patch, and falsely accept five incorrect patches. They remain
 strong safety baselines, but the youtube-dl expansion shows they are no longer
 perfect-false-accept baselines.
 
@@ -267,9 +276,9 @@ data/reviews/evp7_merge_gate_schema_dry_run_summary.json
 
 Current dry-run status:
 
-- records = 376;
-- E0/E2/E4/E6 level counts = 94 each;
-- parsed schema-valid outputs = 376;
+- records = 392;
+- E0/E2/E4/E6 level counts = 98 each;
+- parsed schema-valid outputs = 392;
 - invalid parse count = 0;
 - leakage findings = 0;
 - G4 schema stability = passed.
@@ -294,8 +303,8 @@ docs/experiments/evp7_g5_metric_scaffold.md
 
 Current scaffold status:
 
-- review records = 376;
-- E0/E2/E4/E6 level counts = 94 each;
+- review records = 392;
+- E0/E2/E4/E6 level counts = 98 each;
 - G5 metric scaffold = passed;
 - G5 signal claim status = `requires_real_llm_verifier_outputs`.
 
@@ -323,8 +332,8 @@ docs/experiments/evp7_g5_llm_run_readiness.md
 Current readiness status:
 
 - prompt id = `patch_verify_evidence_visibility_merge_gate_v1`;
-- prompt records = 376;
-- E0/E2/E4/E6 level counts = 94 each;
+- prompt records = 392;
+- E0/E2/E4/E6 level counts = 98 each;
 - prompt text stored = false;
 - label leakage failed count = 0;
 - G5 LLM run readiness = `passed_without_api`;
@@ -399,10 +408,10 @@ G5 quality audit status:
 
 ## Current Next Step
 
-EVP-7 now has a frozen 20-task/94-candidate/376-packet structural cohort and a
-matching 376-record real DeepSeek G5 full run. The next default research step is
-not another bug admission or another G5 run. Continue strengthening the
-paper-facing frozen-cohort artifacts: claim boundary, statistics, utility
-sensitivity, protocol/readiness consistency, and anonymous artifact
-reproducibility. Any move to 30-50 bugs or another benchmark/source changes the
-experiment boundary and requires a separate decision.
+EVP-7 now has a 21-task/98-candidate/392-packet structural no-API cohort and a
+historical 20-task/94-candidate/376-record real DeepSeek G5 full run. The next
+default research step is not another bug admission or another G5 run. Continue
+strengthening the paper-facing artifacts while keeping the 376-real-run and
+392-no-API-readiness boundaries separate. Any move to 30-50 bugs, another
+benchmark/source, or a 392-packet real LLM rerun changes the experiment
+boundary and requires a separate decision.

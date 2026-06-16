@@ -186,7 +186,7 @@ def artifact_readme(manifest: dict[str, Any]) -> str:
             "",
             "## Paper Draft",
             "",
-            "The current paper framing is `Evidence Visibility Matters: A Systematic Study of LLM-Based Verification for Candidate Patches`. The canonical roadmap is `docs/plans/final_paper_roadmap_zh.md`; the active protocol entry is `docs/protocol/evidence_visibility_protocol.md`; the protocol pilot report is `docs/experiments/evp7_protocol_pilot.md`. Together they record the current 20-task / 94-candidate / 376-packet EVP-7 state and the visible/hidden evidence boundary.",
+            "The current paper framing is `Evidence Visibility Matters: A Systematic Study of LLM-Based Verification for Candidate Patches`. The canonical roadmap is `docs/plans/final_paper_roadmap_zh.md`; the active protocol entry is `docs/protocol/evidence_visibility_protocol.md`; the protocol pilot report is `docs/experiments/evp7_protocol_pilot.md`. Together they record the current 21-task / 98-candidate / 392-packet EVP-7 structural state, the historical 20-task / 94-candidate / 376-record real G5 run boundary, and the visible/hidden evidence boundary.",
             "",
             "The final submission checklist is `docs/artifact/submission_checklist.md`. It records the current paper package, required seven PDF figures, claim-boundary evidence, rebuild commands, audit commands, anonymous artifact commands, exclusion boundary, and ready-to-submit criteria.",
             "",
