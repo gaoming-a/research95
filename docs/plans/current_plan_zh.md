@@ -11492,3 +11492,54 @@ Next Boundary:
   - new 30-50 bug expansion decision boundary；
   - paper/manuscript synchronization that keeps 376-real-run and 392-no-API
     boundaries separate。
+
+## 2026-06-16 EVP-7-30 controlled expansion start
+
+Inspect:
+
+- 当前 synced baseline：21 tasks / 98 candidates / 392 no-API evidence packets；
+- 当前 main projects：
+  - `youtube-dl`: 13；
+  - `cookiecutter`: 3；
+  - `PySnooper`: 2；
+  - `httpie`: 1；
+  - `thefuck`: 1；
+  - `tqdm`: 1；
+- 目标：扩到 30 tasks，至少 8 projects；
+- 缺口：
+  - tasks: +9；
+  - projects: 至少 +2；
+- `evp7_expansion_readiness` 当前显示 fresh-project promising candidates = 0，
+  但 metadata-promising top lanes 仍包含 underrepresented/risky projects：
+  `fastapi`, `sanic`, `scrapy`, `tornado`, `ansible`, `luigi`。
+
+Plan:
+
+1. 建立 `EVP-7-30 controlled expansion` 边界；
+2. 优先 project-diverse lanes，不继续默认堆 `youtube-dl`；
+3. 每个新 project 先尝试 1 个任务，除非第一个 admission 非常顺利；
+4. 单任务 admission gate 不降低：
+   - F2P established；
+   - P2P-broad >= 3；
+   - candidate construction + retained oracle + P2P revalidation；
+5. 当前回合先选择一个 fresh/underrepresented lane 做 bounded checkout/F2P
+   前置验证；不调用 LLM API，不做 bulk admission。
+
+Candidate lane priority:
+
+1. `sanic_2` / `sanic_3`：new project，当前 blocker 是 missing `aiofiles`
+   或历史 project-level timeout，适合先用 isolated declared-dependency venv
+   复核 F2P；
+2. `fastapi_4` / nearby FastAPI tasks：new project，但当前 blocker 是
+   Pydantic v2 compatibility，需更谨慎地按 declared dependency venv 复核；
+3. `tornado_2`：new project，metadata-only 未 probe，但已有 Tornado
+   project-level timeout risk；
+4. `scrapy_2`：new project，但 Twisted dependency/native blocker 风险高；
+5. `ansible_1`、`luigi_1`：Windows/POSIX or missing dependency blockers，先不
+   作为首选。
+
+Acceptance boundary:
+
+- 如果 F2P 失败或暴露环境 blocker，记录 blocker，不进入 P2P；
+- 如果 F2P 通过，再单独更新计划后做 P2P dry-run；
+- P2P manifest 成功且 >=3 后，才允许 candidate construction。
