@@ -1438,6 +1438,22 @@ This file starts fresh for the patch-verification project.
   but run independent project lanes concurrently. This saved time while still
   keeping each F2P result interpretable.
 - `bugsinpy_youtube-dl_2` established clean F2P under the no-install boundary.
+
+## 2026-06-16 Sanic 2 dependency recheck and P2P gate
+
+- `bugsinpy_sanic_2` should no longer be treated as only
+  `missing_aiofiles_dependency`. An explicit isolated env
+  `outputs/envs/sanic2_f2p_py311` with `httpx==0.9.3`,
+  `aiofiles==0.5.0`, `websockets==8.1`, `multidict==4.7.6`, and the existing
+  Python 3.11 asyncio shim reaches the actual F2P behavior: buggy fails on
+  missing `AsyncioServer.start_serving`, fixed passes.
+- Reusing the older `sanic1_p2p_py311` env is not equivalent for Sanic 2,
+  because it carries `httpx==0.11.1` and fails during Sanic import before the
+  target behavior.
+- The Sanic official tests-root P2P construction for `bugsinpy_sanic_2`
+  exceeded a 15 minute outer budget and produced no manifest. Do not admit this
+  task, do not construct candidates, and do not fall back to task-file-only P2P
+  without an explicit policy decision.
   It is not admission evidence until project-level P2P-broad and candidate
   revalidation are explicitly run.
 - In F2P-only screening, distinguish path setup from dependency installation:

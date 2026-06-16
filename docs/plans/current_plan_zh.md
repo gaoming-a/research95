@@ -11543,3 +11543,72 @@ Acceptance boundary:
 - 如果 F2P 失败或暴露环境 blocker，记录 blocker，不进入 P2P；
 - 如果 F2P 通过，再单独更新计划后做 P2P dry-run；
 - P2P manifest 成功且 >=3 后，才允许 candidate construction。
+
+## 2026-06-16 `bugsinpy_sanic_2` F2P recheck under isolated dependency env
+
+Inspect:
+
+- `bugsinpy_sanic_2` 的 buggy/fixed checkout marker 和目标测试文件完整；
+- BugsInPy metadata:
+  - command: `pytest tests/test_app.py::test_asyncio_server_start_serving`；
+  - buggy commit: `ba9b432993019b0af0c4827a5ed42aaa091bd17d`；
+  - fixed commit: `801595e24acdf8050b8d3ffa512d424147848d32`；
+- 旧 probe 的 blocker 是当前环境缺少 `aiofiles`，未安装依赖、未修改 checkout、
+  未到达目标测试。
+
+Execute:
+
+- 新建 ignored dependency env：`outputs/envs/sanic2_f2p_py311`；
+- 安装 Sanic 2 F2P 所需的最小声明依赖组合，关键版本包括：
+  `aiofiles==0.5.0`、`websockets==8.1`、`multidict==4.7.6`、
+  `httpx==0.9.3`、`httpcore==0.3.0`；
+- 沿用 Sanic 1 已记录的 Python 3.11 compatibility shim，只恢复旧 Sanic
+  在 Python 3.11 下缺失的 asyncio API，不修改 checkout。
+
+Verify:
+
+- buggy target test 失败并到达预期行为点：
+  `AttributeError: 'AsyncioServer' object has no attribute 'start_serving'`；
+- fixed target test 通过：`1 passed, 1 warning`；
+- 因此 `bugsinpy_sanic_2` 的 F2P gate 已建立。
+
+Next Boundary:
+
+- 不能直接 admission；
+- 下一步只允许对 Sanic official test root `tests/` 做 P2P-broad dry-run /
+  bounded construction；
+- 由于 `bugsinpy_sanic_1` 已有 full project scope timeout，不能重跑无边界的
+  `.` full project P2P；
+- 若 official test root P2P-broad manifest 未能稳定产生至少 3 个 pass-to-pass
+  tests，则 `bugsinpy_sanic_2` 继续保持 non-main pending/blocker 状态。
+
+P2P Attempt Result:
+
+- Dry-run 通过，Sanic official test root `tests/` 解析为 44 个 test files；
+- bounded construction 使用：
+  - scope type: `project_level_official_test_root`；
+  - policy: `sanic_tests_root_py311_dependency_p2p_v1`；
+  - runs = 3；
+  - per-test timeout = 30s；
+  - batch timeout = 120s；
+  - outer budget = 15 minutes；
+- 真实构造超过外层预算，未生成
+  `data/p2p_scopes/bugsinpy_sanic_2_official_test_root_p2p_broad.json`；
+- 终止后发现残留 pytest 进程卡在
+  `tests/test_custom_request.py::test_custom_request`，已停止该 Sanic P2P
+  相关进程；
+- 已新增 timeout policy record：
+  `data/p2p_scopes/bugsinpy_sanic_2_official_test_root_timeout.json`；
+- 当前 admission 结论：
+  - F2P established；
+  - P2P-broad gate failed by official-root timeout/no manifest；
+  - 不构造 candidates；
+  - 不进入 `p2p_broad_main`；
+  - EVP-7 cohort 仍为 21 tasks / 98 candidates / 392 no-API packets。
+
+Next:
+
+- `bugsinpy_sanic_2` 暂停，除非之后明确设计新的 bounded P2P policy；
+- 下一扩量任务应转向另一个 fresh/underrepresented lane，优先
+  `tornado_2` 或 FastAPI dependency-isolated recheck，而不是继续对 Sanic
+  做 task-file-only fallback。

@@ -116,14 +116,14 @@
     },
     {
       "blocked_reason": [
-        "missing_aiofiles_dependency"
+        "official_test_root_scope_timeout"
       ],
       "bug_id": "2",
-      "date": "2026-06-13",
-      "decision": "do_not_admit_environment_blocked",
-      "fixed_result": "import_error_before_target_test",
-      "notes": "Both buggy and fixed checkouts completed, but the target pytest command failed while loading tests/conftest.py because aiofiles is not installed in the current environment. No dependency install or checkout edit was performed.",
-      "probe_status": "f2p_blocked_dependency_environment",
+      "date": "2026-06-16",
+      "decision": "do_not_admit_official_root_p2p_timeout",
+      "fixed_result": "pass",
+      "notes": "Initial no-install probe was blocked before target-test execution by missing aiofiles. A later explicit isolated-dependency recheck used outputs/envs/sanic2_f2p_py311 with the declared Sanic 2 httpx/aiofiles dependency boundary plus the existing Python 3.11 asyncio compatibility shim. The target F2P is now established: buggy fails with AttributeError on AsyncioServer.start_serving and fixed passes. Bounded Sanic official tests-root P2P construction then exceeded the 15 minute outer budget, left no manifest, and was stopped after a residual pytest process on tests/test_custom_request.py::test_custom_request.",
+      "probe_status": "f2p_established_official_root_p2p_timeout",
       "project": "sanic",
       "run_command": "python -m pytest tests/test_app.py::test_asyncio_server_start_serving",
       "source": "BugsInPy",
@@ -133,12 +133,12 @@
         "buggy": {
           "checkout": "completed",
           "git_head": "ba9b4329",
-          "result": "import_error_before_target_test"
+          "result": "fail"
         },
         "fixed": {
           "checkout": "completed",
           "git_head": "ba9b4329",
-          "result": "import_error_before_target_test"
+          "result": "pass"
         }
       }
     },

@@ -21,7 +21,7 @@ This report is a planning artifact and registry summary. Main-cohort admission i
 - Fresh-project promising candidates: 0
 - Controlled probe result source: `data\tasks\evp7_controlled_probe_results.json`
 - Controlled probe recorded tasks: `["bugsinpy_ansible_1", "bugsinpy_fastapi_4", "bugsinpy_luigi_1", "bugsinpy_matplotlib_1", "bugsinpy_sanic_2", "bugsinpy_scrapy_2", "bugsinpy_thefuck_1", "bugsinpy_tornado_1", "bugsinpy_youtube-dl_10", "bugsinpy_youtube-dl_11", "bugsinpy_youtube-dl_13", "bugsinpy_youtube-dl_16", "bugsinpy_youtube-dl_17", "bugsinpy_youtube-dl_2", "bugsinpy_youtube-dl_20", "bugsinpy_youtube-dl_21", "bugsinpy_youtube-dl_23", "bugsinpy_youtube-dl_3", "bugsinpy_youtube-dl_37", "bugsinpy_youtube-dl_4", "bugsinpy_youtube-dl_43", "bugsinpy_youtube-dl_5", "bugsinpy_youtube-dl_6", "bugsinpy_youtube-dl_7"]`
-- Controlled probe status counts: `{"admitted_p2p_broad_main": 14, "f2p_blocked_checkout_timeout": 1, "f2p_blocked_dependency_environment": 4, "f2p_blocked_existing_incomplete_native_probe": 1, "f2p_blocked_windows_posix_import": 1, "f2p_established_corrected_policy_p2p_timeout": 2, "f2p_established_existing_p2p_timeout": 1}`
+- Controlled probe status counts: `{"admitted_p2p_broad_main": 14, "f2p_blocked_checkout_timeout": 1, "f2p_blocked_dependency_environment": 3, "f2p_blocked_existing_incomplete_native_probe": 1, "f2p_blocked_windows_posix_import": 1, "f2p_established_corrected_policy_p2p_timeout": 2, "f2p_established_existing_p2p_timeout": 1, "f2p_established_official_root_p2p_timeout": 1}`
 - F2P-established P2P candidates: `[]`
 
 ## Probe Lanes
@@ -29,7 +29,7 @@ This report is a planning artifact and registry summary. Main-cohort admission i
 | Task | Project | Framework | Score | Known blocked tasks | Probe status |
 | --- | --- | --- | ---: | ---: | --- |
 | `bugsinpy_fastapi_4` | `fastapi` | `pytest` | 8 | 2 | `f2p_blocked_dependency_environment` |
-| `bugsinpy_sanic_2` | `sanic` | `pytest` | 8 | 1 | `f2p_blocked_dependency_environment` |
+| `bugsinpy_sanic_2` | `sanic` | `pytest` | 8 | 1 | `f2p_established_official_root_p2p_timeout` |
 | `bugsinpy_thefuck_1` | `thefuck` | `pytest` | 8 | 0 | `admitted_p2p_broad_main` |
 | `bugsinpy_scrapy_2` | `scrapy` | `unittest` | 7 | 1 | `f2p_blocked_dependency_environment` |
 | `bugsinpy_tornado_2` | `tornado` | `unittest` | 7 | 2 | `metadata_only_not_admitted` |

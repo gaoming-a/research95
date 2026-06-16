@@ -23,11 +23,12 @@
     "probe_status_counts": {
       "admitted_p2p_broad_main": 14,
       "f2p_blocked_checkout_timeout": 1,
-      "f2p_blocked_dependency_environment": 4,
+      "f2p_blocked_dependency_environment": 3,
       "f2p_blocked_existing_incomplete_native_probe": 1,
       "f2p_blocked_windows_posix_import": 1,
       "f2p_established_corrected_policy_p2p_timeout": 2,
-      "f2p_established_existing_p2p_timeout": 1
+      "f2p_established_existing_p2p_timeout": 1,
+      "f2p_established_official_root_p2p_timeout": 1
     },
     "recorded_tasks": [
       "bugsinpy_ansible_1",
@@ -173,13 +174,13 @@
       },
       "latest_probe": {
         "blocked_reason": [
-          "missing_aiofiles_dependency"
+          "official_test_root_scope_timeout"
         ],
-        "date": "2026-06-13",
-        "decision": "do_not_admit_environment_blocked",
-        "notes": "Both buggy and fixed checkouts completed, but the target pytest command failed while loading tests/conftest.py because aiofiles is not installed in the current environment. No dependency install or checkout edit was performed."
+        "date": "2026-06-16",
+        "decision": "do_not_admit_official_root_p2p_timeout",
+        "notes": "Initial no-install probe was blocked before target-test execution by missing aiofiles. A later explicit isolated-dependency recheck used outputs/envs/sanic2_f2p_py311 with the declared Sanic 2 httpx/aiofiles dependency boundary plus the existing Python 3.11 asyncio compatibility shim. The target F2P is now established: buggy fails with AttributeError on AsyncioServer.start_serving and fixed passes. Bounded Sanic official tests-root P2P construction then exceeded the 15 minute outer budget, left no manifest, and was stopped after a residual pytest process on tests/test_custom_request.py::test_custom_request."
       },
-      "probe_status": "f2p_blocked_dependency_environment",
+      "probe_status": "f2p_established_official_root_p2p_timeout",
       "project": "sanic",
       "run_commands": [
         "pytest tests/test_app.py::test_asyncio_server_start_serving"

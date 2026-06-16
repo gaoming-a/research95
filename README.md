@@ -251,8 +251,9 @@ They should not override `final_paper_roadmap_zh.md`.
   21-task / 98-candidate cohort. The
   first post-G5 lane, `bugsinpy_fastapi_4`, completed checkout but is
   F2P-blocked by the current Pydantic v2 environment and is not admitted.
-  `bugsinpy_sanic_2` also completed checkout but is F2P-blocked by the missing
-  current-environment Sanic dependency `aiofiles`. A parallel F2P-only triage
+  `bugsinpy_sanic_2` now has F2P under an ignored isolated Sanic dependency
+  env, but its bounded official tests-root P2P construction timed out without
+  a manifest and is not admitted. A parallel F2P-only triage
   found clean youtube-dl F2P signals, and controlled youtube-dl admissions
   through `bugsinpy_youtube-dl_37` have now crossed the project-level P2P-broad
   plus candidate revalidation boundary. The

@@ -419,8 +419,9 @@
   `bugsinpy_fastapi_4`, currently blocked by current-environment Pydantic v2
   import incompatibility before target-test execution.
 - `experiments/evp7_sanic2_f2p_probe.md`: F2P-only controlled probe for
-  `bugsinpy_sanic_2`, currently blocked by missing `aiofiles` before
-  target-test execution.
+  `bugsinpy_sanic_2`; the isolated dependency recheck now establishes F2P,
+  but Sanic official tests-root P2P timed out without a manifest, so it is not
+  admitted.
 - `experiments/evp7_parallel_f2p_triage_20260613.md`: parallel F2P-only triage
   for `scrapy_2`, `tornado_1`, and `youtube-dl_2`; only `youtube-dl_2` produced
   a new clean F2P signal in this batch.

@@ -1,0 +1,58 @@
+{
+  "task_id": "bugsinpy_sanic_2",
+  "project": "sanic",
+  "p2p_scope_type": "project_level_official_test_root",
+  "p2p_scope_roots": [
+    "tests/"
+  ],
+  "dependency_environment": {
+    "path": "outputs/envs/sanic2_f2p_py311",
+    "ignored": true,
+    "python": "Python 3.11",
+    "key_installed_versions": {
+      "aiofiles": "0.5.0",
+      "httpcore": "0.3.0",
+      "httptools": "0.8.0",
+      "httpx": "0.9.3",
+      "multidict": "4.7.6",
+      "pytest": "9.1.0",
+      "pytest-sanic": "1.6.2",
+      "websockets": "8.1"
+    }
+  },
+  "compat_shim": {
+    "source": "outputs/sanic1_f2p_probe/compat_shim/sitecustomize.py",
+    "reason": "restore legacy asyncio APIs removed in Python 3.11 for legacy Sanic execution",
+    "checkout_modified": false
+  },
+  "f2p_oracle": {
+    "nodeid": "tests/test_app.py::test_asyncio_server_start_serving",
+    "buggy": "failed: AttributeError: 'AsyncioServer' object has no attribute 'start_serving'",
+    "fixed": "passed: 1 passed, 1 warning"
+  },
+  "official_test_root_discovery": {
+    "attempted": true,
+    "attempts": 1,
+    "status": "outer_timeout",
+    "elapsed_minutes": 15,
+    "manifest_generated": false,
+    "last_observed_nodeid": "tests/test_custom_request.py::test_custom_request"
+  },
+  "scope_policy": {
+    "policy_name": "sanic_tests_root_py311_dependency_p2p_v1",
+    "reason": "sanic_1 already has full-project P2P timeout; use the official tests root while avoiding unbounded repository scope",
+    "is_task_file_level": false,
+    "is_project_official_test_root": true
+  },
+  "main_experiment_eligibility": {
+    "requires_p2p_broad_size_at_least": 3,
+    "requires_stability_runs": 3,
+    "eligible": false,
+    "blocking_reason": "official_test_root_scope_timeout"
+  },
+  "result": {
+    "project_level_p2p_status": "pending_blocked_official_test_root_timeout",
+    "p2p_broad_main_included": false,
+    "p2p_broad_manifest": null
+  }
+}
