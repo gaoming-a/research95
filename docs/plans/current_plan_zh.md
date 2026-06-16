@@ -10871,6 +10871,7 @@ Execute:
 - 更新 README，使 Current Execution Target 和 Current Status 指向新入口；
 - 更新 `docs/INDEX.md` 的 Active Plan，说明新入口的定位；
 - 更新 `docs/experience/engineering_notes.md`，记录长计划文件整理经验；
+- 移除短入口中的固定 latest commit hash，避免每次提交后状态入口立即过期；
 - 未移动、删除或归档任何历史计划文件。
 
 Verify:
@@ -10878,6 +10879,8 @@ Verify:
 - `Test-Path docs\plans\current_project_state_zh.md` 返回 true；
 - `Select-String -Path README.md,docs\INDEX.md -Pattern 'current_project_state_zh.md'`
   确认 README 和 INDEX 都引用了新入口；
+- `Select-String -Path README.md,docs\plans\current_project_state_zh.md -Pattern '5555260|最新已同步提交|latest pushed commit'`
+  用于发现固定提交号会漂移，已改为只记录 `main` 与 `origin/main` 同步；
 - `git diff --check` 通过，仅有 Windows 换行提示；
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过，`passed=true`。

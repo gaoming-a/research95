@@ -11,7 +11,6 @@
 - 分支：`main`
 - 远端：`origin/main`
 - 当前 Git 状态：已同步，`ahead=0`、`behind=0`
-- 最新已同步提交：`5555260 Fix release handoff git sync audit`
 - ignored 本地交付物：
   - `outputs/`
   - `artifacts/`
