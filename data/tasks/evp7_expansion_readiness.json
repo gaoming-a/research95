@@ -28,7 +28,8 @@
       "f2p_blocked_windows_posix_import": 1,
       "f2p_established_corrected_policy_p2p_timeout": 2,
       "f2p_established_existing_p2p_timeout": 1,
-      "f2p_established_official_root_p2p_timeout": 1
+      "f2p_established_official_root_p2p_timeout": 1,
+      "f2p_established_shared_tornado_p2p_timeout_risk": 1
     },
     "recorded_tasks": [
       "bugsinpy_ansible_1",
@@ -39,6 +40,7 @@
       "bugsinpy_scrapy_2",
       "bugsinpy_thefuck_1",
       "bugsinpy_tornado_1",
+      "bugsinpy_tornado_2",
       "bugsinpy_youtube-dl_10",
       "bugsinpy_youtube-dl_11",
       "bugsinpy_youtube-dl_13",
@@ -251,7 +253,15 @@
           "pending_blocked_shared_project_level_unittest_scope_timeout": 1
         }
       },
-      "probe_status": "metadata_only_not_admitted",
+      "latest_probe": {
+        "blocked_reason": [
+          "shared_tornado_project_level_unittest_scope_timeout"
+        ],
+        "date": "2026-06-16",
+        "decision": "f2p_established_but_not_admitted_shared_p2p_timeout_risk",
+        "notes": "Constructed buggy/fixed checkouts from the retained local Tornado Git clone using the BugsInPy reset/copy-test-file/copy-fixed-file flow. With the documented Windows selector event loop policy, the target unittest failed on buggy with HTTPStreamClosedError followed by a 5 second TimeoutError and passed on fixed. Project-level unittest P2P builder dry-run passed for tornado/test with *_test.py, but real P2P construction was not started because tornado_1 and tornado_9 already show repeated Tornado project-level unittest timeout risk. No source/test fixture edit, external network dependency, candidate construction, or task-file P2P downgrade was used."
+      },
+      "probe_status": "f2p_established_shared_tornado_p2p_timeout_risk",
       "project": "tornado",
       "run_commands": [
         "python -m unittest -q tornado.test.httpclient_test.HTTPClientCommonTestCase.test_redirect_put_without_body"

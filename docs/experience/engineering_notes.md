@@ -1454,6 +1454,23 @@ This file starts fresh for the patch-verification project.
   exceeded a 15 minute outer budget and produced no manifest. Do not admit this
   task, do not construct candidates, and do not fall back to task-file-only P2P
   without an explicit policy decision.
+
+## 2026-06-16 Tornado 2 F2P without repeated long P2P
+
+- `bugsinpy_tornado_2` can be reconstructed from the retained local Tornado Git
+  clone without a GitHub checkout. Follow the BugsInPy flow: reset to fixed,
+  copy the fixed test file and fixed source file, reset to buggy, then copy the
+  fixed test into both checkouts and the fixed source only into the fixed
+  checkout.
+- Use the same Windows selector event loop policy documented for Tornado 1:
+  `asyncio.WindowsSelectorEventLoopPolicy()`. Without changing Tornado source or
+  tests, this reaches the real F2P behavior for local HTTP server tests.
+- Tornado 2 F2P is clear: buggy fails with `HTTPStreamClosedError` and a
+  5-second `TimeoutError`, fixed passes.
+- Do not launch another long Tornado project-level unittest P2P sweep by
+  default. Tornado 1 and Tornado 9 already show repeated timeout risk. A dry-run
+  is enough to record the boundary unless a new explicit bounded P2P policy is
+  approved.
   It is not admission evidence until project-level P2P-broad and candidate
   revalidation are explicitly run.
 - In F2P-only screening, distinguish path setup from dependency installation:

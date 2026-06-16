@@ -211,6 +211,10 @@ They should not override `final_paper_roadmap_zh.md`.
 - `bugsinpy_tornado_9` has a clear pure-function F2P oracle, but the Tornado
   project-level unittest P2P-broad path again failed to produce a manifest. It
   is recorded as shared Tornado project-level scope risk.
+- `bugsinpy_tornado_2` has a clear redirect PUT F2P oracle after local checkout
+  reconstruction and the documented Windows selector event loop policy, but
+  only a P2P dry-run was performed because Tornado project-level unittest P2P
+  already has repeated timeout evidence. It is not admitted.
 - `bugsinpy_ansible_2` was blocked before F2P because the large repository
   checkout exceeded the bounded feasibility window and did not write BugsInPy
   marker files.

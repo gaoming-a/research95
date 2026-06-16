@@ -375,6 +375,10 @@
 - `experiments/tornado9_feasibility.md`: Tornado 9 feasibility probe. It
   records the same-task checkout parallelism boundary, a clear `url_concat`
   F2P oracle, and a shared Tornado project-level unittest P2P timeout.
+- `experiments/tornado2_feasibility.md`: Tornado 2 feasibility probe. It
+  records a clear redirect PUT F2P oracle under the Windows selector event loop
+  policy, plus a P2P dry-run only; no real P2P manifest exists, so the task is
+  not admitted.
 - `experiments/ansible2_feasibility.md`: Ansible 2 feasibility probe. It
   records a checkout timeout before F2P, with the incomplete retained workspace
   removed and no task-file downgrade.

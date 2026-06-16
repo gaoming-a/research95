@@ -200,6 +200,34 @@
     },
     {
       "blocked_reason": [
+        "shared_tornado_project_level_unittest_scope_timeout"
+      ],
+      "bug_id": "2",
+      "date": "2026-06-16",
+      "decision": "f2p_established_but_not_admitted_shared_p2p_timeout_risk",
+      "fixed_result": "pass",
+      "notes": "Constructed buggy/fixed checkouts from the retained local Tornado Git clone using the BugsInPy reset/copy-test-file/copy-fixed-file flow. With the documented Windows selector event loop policy, the target unittest failed on buggy with HTTPStreamClosedError followed by a 5 second TimeoutError and passed on fixed. Project-level unittest P2P builder dry-run passed for tornado/test with *_test.py, but real P2P construction was not started because tornado_1 and tornado_9 already show repeated Tornado project-level unittest timeout risk. No source/test fixture edit, external network dependency, candidate construction, or task-file P2P downgrade was used.",
+      "probe_status": "f2p_established_shared_tornado_p2p_timeout_risk",
+      "project": "tornado",
+      "run_command": "python -c \"import asyncio, runpy, sys; asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy()); sys.argv=['python -m unittest','-q','tornado.test.httpclient_test.HTTPClientCommonTestCase.test_redirect_put_without_body']; runpy.run_module('unittest', run_name='__main__')\"",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_tornado_2",
+      "test_file": "tornado/test/httpclient_test.py",
+      "versions": {
+        "buggy": {
+          "checkout": "local_clone_bugsinpy_flow",
+          "git_head": "2ca8821d",
+          "result": "fail"
+        },
+        "fixed": {
+          "checkout": "local_clone_bugsinpy_flow",
+          "git_head": "2ca8821d",
+          "result": "pass"
+        }
+      }
+    },
+    {
+      "blocked_reason": [
         "github_clone_tls_failure_repaired_with_local_clone",
         "corrected_policy_project_level_p2p_timeout"
       ],

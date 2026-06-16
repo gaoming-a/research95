@@ -11612,3 +11612,81 @@ Next:
 - 下一扩量任务应转向另一个 fresh/underrepresented lane，优先
   `tornado_2` 或 FastAPI dependency-isolated recheck，而不是继续对 Sanic
   做 task-file-only fallback。
+
+## 2026-06-16 `bugsinpy_tornado_2` bounded F2P probe start
+
+Inspect:
+
+- 当前 EVP-7 main cohort 仍为 21 tasks / 98 candidates / 392 no-API packets；
+- 仍缺 9 tasks，且 project count 需要从 6 提升到至少 8；
+- `bugsinpy_sanic_2` 已建立 F2P，但 Sanic official-root P2P 超时，无 admission；
+- `bugsinpy_tornado_2` 是 readiness 中的 metadata-only lane：
+  - framework: `unittest`；
+  - command:
+    `python -m unittest -q tornado.test.httpclient_test.HTTPClientCommonTestCase.test_redirect_put_without_body`；
+  - buggy commit: `2ca8821d006f6693f920a4b183a3a7c985a5c8ad`；
+  - fixed commit: `4f486a4aec746e9d66441600ee3b0743228b061c`；
+  - requirements: `tornado==6.0.4`；
+  - patch touches `tornado/http1connection.py` transfer-encoding handling。
+
+Plan:
+
+1. 串行准备 `bugsinpy_tornado_2` buggy/fixed checkout；
+2. 验证 BugsInPy marker、目标测试文件和 checkout 状态；
+3. 只运行 F2P target test，不调用 LLM API，不构造 candidates；
+4. 若 Windows/Python 3.11 事件循环策略导致本地 Tornado server 无法运行，
+   只允许复用已记录的 `asyncio.WindowsSelectorEventLoopPolicy()` runtime policy；
+5. 若 F2P 不成立，记录 blocker 并停止；
+6. 若 F2P 成立，本轮最多执行 P2P dry-run 或记录 P2P 边界，不重复 Tornado
+   project-level long sweep。
+
+Boundary:
+
+- 不修改 Tornado source/test/fixture；
+- 不允许外部网络服务；
+- 不做 task-file-only P2P fallback；
+- 由于 `bugsinpy_tornado_1` 和 `bugsinpy_tornado_9` 已有 Tornado
+  project-level unittest scope timeout 记录，本轮不启动新的长时间真实 P2P
+  construction，除非先有新的 bounded policy 和 dry-run 证据。
+
+Execute / Verify:
+
+- 已从 retained local Tornado Git clone 按 BugsInPy
+  reset/copy-test-file/copy-fixed-file 流程构造 `bugsinpy_tornado_2`
+  buggy/fixed checkout；
+- marker 和目标测试文件验证通过：
+  - `bugsinpy_run_test.sh`；
+  - `bugsinpy_bug.info`；
+  - `bugsinpy_requirements.txt`；
+  - `tornado/test/httpclient_test.py`；
+- buggy checkout 仅包含 fixed test 注入；
+- fixed checkout 包含 fixed test 注入和 `tornado/http1connection.py` 修复；
+- 使用已记录的 Windows selector event-loop policy 运行 F2P：
+  - buggy：`HTTPStreamClosedError` 后 5s `TimeoutError`，失败；
+  - fixed：`OK`；
+- 因此 `bugsinpy_tornado_2` F2P established。
+
+P2P Dry-run:
+
+- `build_pass_to_pass_scope.py --dry-run` 通过；
+- dry-run 参数：
+  - `--test-framework unittest`；
+  - `--unittest-start-dir tornado/test`；
+  - `--unittest-pattern *_test.py`；
+  - `--unittest-top-level-dir .`；
+  - `--fail-to-pass-nodeid tornado.test.httpclient_test.HTTPClientCommonTestCase.test_redirect_put_without_body`；
+  - runs = 3；
+  - timeout = 8s；
+  - batch timeout = 120s；
+  - batch first enabled；
+- 未启动真实 P2P construction，未生成 P2P manifest。
+
+Decision:
+
+- `bugsinpy_tornado_2` 记录为
+  `f2p_established_shared_tornado_p2p_timeout_risk`；
+- 不构造 candidates；
+- 不进入 `p2p_broad_main`；
+- EVP-7 cohort 仍为 21 tasks / 98 candidates / 392 no-API packets；
+- 下一步应转向非 Tornado 的 fresh/underrepresented lane，或回到
+  underrepresented admitted project 中寻找可复用 P2P policy 的任务。

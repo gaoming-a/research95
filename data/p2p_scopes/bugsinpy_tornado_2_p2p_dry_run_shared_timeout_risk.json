@@ -1,0 +1,52 @@
+{
+  "task_id": "bugsinpy_tornado_2",
+  "project": "tornado",
+  "status": "f2p_established_p2p_not_attempted_shared_timeout_risk",
+  "p2p_broad_main_included": false,
+  "buggy_commit_id": "2ca8821d006f6693f920a4b183a3a7c985a5c8ad",
+  "fixed_commit_id": "4f486a4aec746e9d66441600ee3b0743228b061c",
+  "f2p_oracle": {
+    "nodeid": "tornado.test.httpclient_test.HTTPClientCommonTestCase.test_redirect_put_without_body",
+    "buggy": "failed after Windows selector event loop policy: HTTPStreamClosedError followed by TimeoutError after 5 seconds",
+    "fixed": "passed after Windows selector event loop policy"
+  },
+  "compatibility_boundary": {
+    "type": "windows_asyncio_event_loop_policy",
+    "policy": "asyncio.WindowsSelectorEventLoopPolicy",
+    "reason": "Tornado local HTTP server tests require add_reader support on Windows.",
+    "source_or_fixture_edit": false,
+    "external_network_dependency": false
+  },
+  "checkout_boundary": {
+    "construction": "local clone reconstructed with the BugsInPy reset/copy-test-file/copy-fixed-file flow",
+    "clone_source": "D:/mgao/code/research/data/real_bugs/bugsinpy_workspace/tornado_1/buggy/tornado",
+    "same_task_parallel_checkout_allowed": false,
+    "marker_files_verified": true
+  },
+  "p2p_dry_run": {
+    "scope_type": "project_level_p2p_broad",
+    "test_framework": "unittest",
+    "unittest_start_dir": "tornado/test",
+    "unittest_pattern": "*_test.py",
+    "unittest_top_level_dir": ".",
+    "runs": 3,
+    "timeout_seconds": 8,
+    "batch_timeout_seconds": 120,
+    "batch_size": 20,
+    "batch_first": true,
+    "manifest_out": "data/p2p_scopes/bugsinpy_tornado_2_p2p_broad.json",
+    "manifest_generated": false,
+    "dry_run_passed": true,
+    "real_construction_attempted": false,
+    "policy_name": "tornado_unittest_root_dry_run_after_shared_timeout_v1",
+    "policy_reason": "Tornado 1 and Tornado 9 already timed out under project-level unittest P2P; this turn only validates the bounded parameters and does not start a third long sweep."
+  },
+  "decision": {
+    "reason": "The retained F2P oracle is clear, but Tornado project-level unittest P2P has repeated timeout evidence from tornado_1 and tornado_9. No real P2P manifest exists for tornado_2.",
+    "no_task_file_downgrade": true,
+    "no_source_or_test_fixture_edit": true,
+    "local_server_tests_allowed": true,
+    "external_network_tests_allowed": false,
+    "admit_to_main": false
+  }
+}
