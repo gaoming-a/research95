@@ -31,6 +31,7 @@ def summarize(registry_path: Path, pool_path: Path, probe_results_path: Path | N
     tasks = registry.get("tasks", [])
     main_tasks = [task for task in tasks if task.get("p2p_broad_main_included") is True]
     blocked_tasks = [task for task in tasks if task.get("p2p_broad_main_included") is not True]
+    main_candidate_count = sum(_candidate_count(task.get("collection_summary", {})) or 0 for task in main_tasks)
     project_risks = _project_risks(blocked_tasks)
     promising = pool.get("promising_candidates", [])
     main_projects = {str(task.get("project")) for task in main_tasks}
@@ -45,6 +46,7 @@ def summarize(registry_path: Path, pool_path: Path, probe_results_path: Path | N
     return {
         "cohort_id": "EVP-7",
         "current_main_task_count": len(main_tasks),
+        "current_main_candidate_count_from_registry": main_candidate_count,
         "current_main_tasks": [task.get("task_id") for task in main_tasks],
         "current_main_projects": dict(sorted(Counter(task.get("project") for task in main_tasks).items())),
         "registry_blocked_or_pending_count": len(blocked_tasks),
@@ -127,6 +129,15 @@ def _read_probe_results(path: Path | None) -> dict[str, dict[str, Any]]:
     return by_task
 
 
+def _candidate_count(collection: dict[str, Any]) -> int | None:
+    if collection.get("candidate_count") is not None:
+        return int(collection["candidate_count"])
+    label_counts = collection.get("candidate_label_counts")
+    if isinstance(label_counts, dict) and label_counts:
+        return sum(int(value) for value in label_counts.values())
+    return None
+
+
 def _top_by_project(
     promising: list[dict[str, Any]],
     project_risks: dict[str, dict[str, Any]],
@@ -174,6 +185,7 @@ def render_markdown(summary: dict[str, Any]) -> str:
         "## Current Cohort",
         "",
         f"- Main tasks: {summary['current_main_task_count']}",
+        f"- Main candidates from registry: {summary['current_main_candidate_count_from_registry']}",
         f"- Main projects: `{json.dumps(summary['current_main_projects'], sort_keys=True)}`",
         f"- Blocked or pending registry tasks: {summary['registry_blocked_or_pending_count']}",
         "",

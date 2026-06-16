@@ -245,7 +245,7 @@ They should not override `final_paper_roadmap_zh.md`.
   billing statement.
   A controlled-expansion readiness report summarizes the broader BugsInPy rescreen
   and the project-diverse bounded probe lanes used to reach the frozen
-  20-task cohort. The
+  20-task / 94-candidate cohort. The
   first post-G5 lane, `bugsinpy_fastapi_4`, completed checkout but is
   F2P-blocked by the current Pydantic v2 environment and is not admitted.
   `bugsinpy_sanic_2` also completed checkout but is F2P-blocked by the missing
@@ -256,7 +256,10 @@ They should not override `final_paper_roadmap_zh.md`.
   remaining readiness lanes are blocked by environment or historical probe
   constraints: Scrapy lacks Twisted, Ansible reaches Windows `fcntl`, Luigi
   lacks Tornado after existing Python 3.11 compatibility, and Matplotlib remains
-  an incomplete/native-extension blocker.
+  an incomplete/native-extension blocker. The refreshed expansion gate has no
+  `f2p_established_p2p_not_attempted` task and zero fresh-project promising
+  candidates outside already-main or already-risky projects, so it does not
+  admit a new task by itself.
   Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and

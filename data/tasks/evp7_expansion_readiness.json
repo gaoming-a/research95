@@ -57,6 +57,7 @@
     ],
     "source": "data\\tasks\\evp7_controlled_probe_results.json"
   },
+  "current_main_candidate_count_from_registry": 94,
   "current_main_projects": {
     "PySnooper": 2,
     "cookiecutter": 3,

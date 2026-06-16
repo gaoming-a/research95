@@ -40,7 +40,11 @@
 
 1. 扩 EVP-7 cohort：
    - 目标：补样本规模和项目多样性；
-   - 下一步：先写 no-API expansion plan 和 dry-run/preflight。
+   - 当前 gate：`docs/experiments/evp7_expansion_readiness.md` 已刷新为
+     20 tasks / 94 candidates；
+   - 当前没有 `f2p_established_p2p_not_attempted` 任务，也没有 fresh-project
+     promising candidates；
+   - 下一步必须先决定新的受控 probe 边界或数据源，不能直接 admission。
 2. 跨模型复现实验：
    - 目标：检查 DeepSeek G5 的 evidence-visibility 趋势是否跨模型稳定；
    - 下一步：先确定 provider、model、预算、停止条件和 preflight。

@@ -41,13 +41,14 @@
 - `../data/tasks/evp7_tasks.jsonl`: tracked task manifest for the frozen
   EVP-7 protocol pilot, generated from the cohort registry and P2P manifests.
 - `../data/tasks/evp7_manifest_summary.json`: task-level summary of the current
-  protocol pilot: 20 main tasks and 5 projects. It reports an 88-candidate
-  registry-known lower bound because `httpie_5` lacks candidate count fields in
-  the registry.
+  protocol pilot: 20 main tasks, 5 projects, and 94 registry-known candidates.
+  The earlier `httpie_5` missing-count drift has been repaired in the tracked
+  cohort registry.
 - `../data/tasks/evp7_expansion_readiness.json`: post-G5 controlled-expansion
   readiness summary. It combines the current EVP-7 registry with the broader
-  BugsInPy candidate-pool rescreen and lists project-diverse probe lanes that
-  are metadata-only, not admitted tasks.
+  BugsInPy candidate-pool rescreen, reports the 20-task / 94-candidate current
+  cohort, and lists project-diverse probe lanes that are metadata-only or
+  blocked, not admitted tasks.
 - `../data/tasks/evp7_controlled_probe_results.json`: tracked status records
   for controlled expansion probes that have been attempted but are not main
   cohort admissions.

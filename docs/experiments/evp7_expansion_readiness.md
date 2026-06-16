@@ -5,6 +5,7 @@ This report is a planning artifact. It does not admit new bugs into the main coh
 ## Current Cohort
 
 - Main tasks: 20
+- Main candidates from registry: 94
 - Main projects: `{"PySnooper": 2, "cookiecutter": 3, "httpie": 1, "tqdm": 1, "youtube-dl": 13}`
 - Blocked or pending registry tasks: 27
 

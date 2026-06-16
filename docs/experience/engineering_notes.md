@@ -2308,3 +2308,19 @@ This file starts fresh for the patch-verification project.
 - For broad "整理项目文件" requests, use a non-destructive pass first: audit
   current status, add/update indexes, and list future cleanup candidates rather
   than moving or deleting files silently.
+
+## 2026-06-16 EVP-7 expansion gate metadata repair
+
+- Expansion readiness depends on registry metadata as well as the candidate
+  manifest. `bugsinpy_httpie_5` had six tracked candidates in
+  `data/patches/evp7_candidates.jsonl`, but its cohort-registry entry lacked
+  `collection_summary.candidate_count`, causing registry-derived candidate
+  totals to read as 88 instead of the paper-facing 94.
+- Repair the registry metadata from tracked candidate and P2P evidence before
+  making any expansion decision. After repair, protocol summary, expansion
+  readiness, candidate manifest, and evidence-packet counts align at 20 tasks /
+  94 candidates / 376 E0/E2/E4/E6 packets.
+- A refreshed expansion gate that reports zero
+  `f2p_established_p2p_not_attempted` tasks and zero fresh-project promising
+  candidates is not a cohort expansion. Treat it as a boundary result requiring
+  an explicit next probe/data-source decision before admission.

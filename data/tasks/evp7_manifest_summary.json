@@ -14,10 +14,8 @@
     "youtube-dl"
   ],
   "blocked_task_count": 27,
-  "candidate_count_known_from_registry": 88,
-  "candidate_count_missing_in_registry_tasks": [
-    "bugsinpy_httpie_5"
-  ],
+  "candidate_count_known_from_registry": 94,
+  "candidate_count_missing_in_registry_tasks": [],
   "candidate_records_status": "task-level manifest only; candidate-level EVP-7 records are managed by scripts/build_evp7_candidate_manifest.py.",
   "cohort_id": "EVP-7",
   "expansion_decision": "Option A approved: freeze EVP-7 and stop blind BugsInPy expansion until protocol gates pass.",

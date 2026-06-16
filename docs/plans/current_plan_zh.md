@@ -10891,3 +10891,90 @@ Verify:
 - 后续继续实验时应先读 `docs/plans/current_project_state_zh.md`，再决定进入
   EVP-7 cohort expansion、cross-model replication 或 new verifier design；
 - 若要进一步“归档/删除/移动”旧计划文件，需要单独确认具体文件清单。
+
+## 2026-06-16 EVP-7 cohort expansion gate
+
+Inspect:
+
+- 用户目标恢复为“完成扩 EVP-7 cohort”；
+- 当前短入口 `docs/plans/current_project_state_zh.md` 明确要求扩 cohort 前先做
+  no-API expansion plan 和 dry-run/preflight；
+- canonical roadmap 记录当前主 cohort 已冻结为 20 tasks / 5 projects / 94
+  candidates / 376 evidence packets，继续扩量会进入 30-50 bugs 的硕士论文
+  稳健版方向，不能盲目补 bug；
+- `docs/experiments/evp7_expansion_readiness.md` 和
+  `data/tasks/evp7_expansion_readiness.json` 当前显示：metadata-promising pool
+  没有 fresh-project promising candidates，controlled probe 没有
+  `f2p_established_p2p_not_attempted` 任务；
+- 本轮不调用真实 API，不修改 prompt，不把 dry-run/mock/schema 记录写成 real
+  verifier result。
+
+Plan:
+
+1. 刷新 EVP-7 expansion readiness summary，确认当前候选池、probe lane 和
+   main cohort 状态；
+2. 审计是否已有任务满足“F2P established 但 P2P 未尝试”或可直接进入
+   project-level P2P/candidate revalidation 的前置条件；
+3. 若没有可直接 admission 的任务，记录为 expansion gate blocked by candidate
+   availability，而不是伪造 cohort expansion；
+4. 同步 README / INDEX / engineering notes / 当前状态入口中的下一步边界；
+5. 运行最小 no-API quality gate，提交并同步本轮文档或脚本更新。
+
+验收条件:
+
+- 不新增 `p2p_broad_main` 任务，除非对应任务已有 F2P、project-level
+  P2P-broad、candidate construction、candidate revalidation 的全链路证据；
+- readiness 输出必须明确 main task count、project distribution、候选池状态和
+  next execution boundary；
+- 若 expansion 暂不可执行，必须给出可验证原因和下一步需要用户决策的边界；
+- 工作区不得提交 `outputs/`、`artifacts/`、`.env` 或 local config。
+
+Execute:
+
+- 运行 `python scripts\summarize_evp7_expansion_readiness.py` 刷新 tracked
+  readiness summary；
+- 审计 registry、candidate manifest 和 evidence packet manifest 后发现
+  `bugsinpy_httpie_5` 在 `data/patches/evp7_candidates.jsonl` 中有 6 条候选，
+  但 `data/cohorts/task_cohort_registry.json` 缺少 `collection_summary`，
+  导致 registry-derived candidate count 为 88；
+- 根据 tracked candidate/P2P evidence 补齐 `bugsinpy_httpie_5`
+  `collection_summary`：6 candidates，1 个
+  `correct_under_f2p_and_p2p_broad`，5 个 `incorrect_issue_not_fixed`；
+- 更新 `scripts/summarize_evp7_expansion_readiness.py`，使 readiness 显式报告
+  `current_main_candidate_count_from_registry`；
+- 重新运行 `scripts\build_evp7_protocol_manifests.py`，刷新 task manifest 和
+  `data/tasks/evp7_manifest_summary.json`；
+- 同步更新 README、`docs/INDEX.md`、`docs/plans/current_project_state_zh.md`、
+  `docs/experiments/evp7_protocol_pilot.md` 和 engineering notes。
+
+Verify:
+
+- `python -m compileall scripts\summarize_evp7_expansion_readiness.py scripts\build_evp7_protocol_manifests.py`
+  通过；
+- JSON 解析检查覆盖 `data/cohorts/task_cohort_registry.json`、
+  `data/tasks/evp7_manifest_summary.json`、
+  `data/tasks/evp7_expansion_readiness.json`，通过；
+- 数量一致性检查通过：
+  - registry main task count = 20；
+  - registry candidate count = 94；
+  - `data/patches/evp7_candidates.jsonl` records = 94；
+  - `data/evidence/evp7_evidence_packets.jsonl` records = 376；
+  - readiness `current_main_candidate_count_from_registry` = 94；
+  - readiness `f2p_established_p2p_not_attempted` = `[]`；
+  - readiness fresh-project promising candidates = 0；
+- 当前入口文档中不再出现旧的 `88-candidate` / `registry-known lower bound: 88`
+  表述；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `git diff --check` 通过，仅有 Windows 换行提示。
+
+结论:
+
+- 本轮完成 EVP-7 cohort expansion 的 no-API gate 修复和审计；
+- 当前 cohort 仍为 20 tasks / 94 candidates / 376 packets，没有新增 main
+  task；
+- 没有任务满足直接 admission 前置条件：
+  `f2p_established_p2p_not_attempted=[]`，fresh-project promising candidates =
+  0；
+- 因此不能安全地把 cohort 扩成 21+ tasks。继续扩 EVP-7 cohort 需要先明确新的
+  受控 probe 边界或新数据源边界。

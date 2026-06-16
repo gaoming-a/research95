@@ -79,8 +79,8 @@ The manifest contains 20 completed project-level P2P-broad tasks:
 
 Candidate count status:
 
-- registry-known lower bound: 88;
-- registry missing candidate counts for `bugsinpy_httpie_5`;
+- registry-known candidate count: 94;
+- registry missing candidate counts: none;
 - promoted tracked candidate records: 94.
 
 Project coverage:
