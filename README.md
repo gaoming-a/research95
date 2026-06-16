@@ -62,6 +62,10 @@ The following were intentionally not copied:
 
 ## Current Execution Target
 
+Use the current short status entry first:
+
+- `docs/plans/current_project_state_zh.md`
+
 The final-paper route is:
 
 - `docs/plans/final_paper_roadmap_zh.md`
@@ -85,6 +89,10 @@ They should not override `final_paper_roadmap_zh.md`.
 
 ## Current Status
 
+- GitHub sync is complete as of 2026-06-16: local `main` matches
+  `origin/main`, and the latest pushed commit is
+  `5555260 Fix release handoff git sync audit`.
+- The short project/file map is `docs/plans/current_project_state_zh.md`.
 - The prompt-only DeepSeek full run completed and produced a mixed/negative
   `stop_or_redesign` result. It is not a positive paper claim.
 - The later tool-augmented full run passed its dedicated gate, but only supports

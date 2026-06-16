@@ -8,6 +8,10 @@
 
 ## Active Plan
 
+- `plans/current_project_state_zh.md`: short current-state entry and file map.
+  Start here before reading the long execution log. It records Git sync state,
+  current paper/result boundaries, experiment-decision gates, active plan roles,
+  key project files, script entry points, and forbidden misuses.
 - `plans/final_paper_roadmap_zh.md`: canonical final-paper route and subsequent
   research target. It upgrades the current pilot into an evidence-visibility
   empirical study with expanded data, tool-only baselines, hidden-evaluator

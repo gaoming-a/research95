@@ -2296,3 +2296,15 @@ This file starts fresh for the patch-verification project.
   decision. Do not report sync complete just because `git remote -v` is present.
 - The safe command template for an already initialized repo should inspect
   ignored paths and `origin/main..HEAD` before the final `git push origin main`.
+
+## 2026-06-16 plan and file-map organization
+
+- When the active execution log becomes large, do not split, delete, or reorder
+  historical plan sections without an explicit archival decision. Add a short
+  current-state entry instead and point README/INDEX to it.
+- Keep `current_plan_zh.md` as the strict append-only execution log, and keep
+  `final_paper_roadmap_zh.md` as the canonical research route. A short state map
+  may summarize them, but must not override them.
+- For broad "整理项目文件" requests, use a non-destructive pass first: audit
+  current status, add/update indexes, and list future cleanup candidates rather
+  than moving or deleting files silently.

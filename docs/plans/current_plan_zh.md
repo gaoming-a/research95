@@ -10828,3 +10828,63 @@ Verify:
   ahead origin/main；
 - 按此前“不 push”的边界，本轮只提交 handoff/audit 修复；真正远端同步需要
   用户显式允许后执行 `git push origin main`。
+
+## 2026-06-16 plan/project file organization
+
+Inspect:
+
+- 当前 Git 状态为 `main...origin/main`，本地与远端已同步；
+- `docs/plans/current_plan_zh.md` 是严格逐轮执行日志，但文件已接近 0.5 MB，
+  不适合作为唯一入口；
+- `docs/plans/final_paper_roadmap_zh.md` 仍是 canonical research route；
+- `README.md` 和 `docs/INDEX.md` 信息完整，但缺少一个短的“当前状态与文件地图”
+  入口；
+- 本轮整理范围仅限非破坏性文档组织：不移动、不删除、不归档旧计划文件。
+
+Plan:
+
+1. 新增短入口 `docs/plans/current_project_state_zh.md`；
+2. 在短入口中整理当前 Git 同步状态、bounded EVP-7 claim、继续实验前决策门、
+   计划文档分工、项目文件地图、脚本入口和禁止误用；
+3. 更新 README 的 Current Execution Target 和 Current Status；
+4. 更新 `docs/INDEX.md` 的 Active Plan；
+5. 运行最小检查后提交并同步。
+
+验收条件：
+
+- 新入口不替代 `current_plan_zh.md` 和 `final_paper_roadmap_zh.md`；
+- README 和 INDEX 都指向新入口；
+- 不删除或移动历史计划文件；
+- Git 状态和当前 claim boundary 表述与最新同步状态一致。
+
+Execute:
+
+- 新增 `docs/plans/current_project_state_zh.md`，作为当前短入口和文件地图；
+- 文件中整理了：
+  - 当前 Git 同步状态；
+  - 当前 bounded EVP-7 研究状态；
+  - 继续实验前的三类决策门；
+  - 计划文档分工；
+  - 项目文件地图；
+  - 脚本入口地图；
+  - 禁止误用清单；
+- 更新 README，使 Current Execution Target 和 Current Status 指向新入口；
+- 更新 `docs/INDEX.md` 的 Active Plan，说明新入口的定位；
+- 更新 `docs/experience/engineering_notes.md`，记录长计划文件整理经验；
+- 未移动、删除或归档任何历史计划文件。
+
+Verify:
+
+- `Test-Path docs\plans\current_project_state_zh.md` 返回 true；
+- `Select-String -Path README.md,docs\INDEX.md -Pattern 'current_project_state_zh.md'`
+  确认 README 和 INDEX 都引用了新入口；
+- `git diff --check` 通过，仅有 Windows 换行提示；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
+
+结论：
+
+- 当前计划和项目文件已完成非破坏性整理；
+- 后续继续实验时应先读 `docs/plans/current_project_state_zh.md`，再决定进入
+  EVP-7 cohort expansion、cross-model replication 或 new verifier design；
+- 若要进一步“归档/删除/移动”旧计划文件，需要单独确认具体文件清单。
