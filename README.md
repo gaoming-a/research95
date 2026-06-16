@@ -256,10 +256,12 @@ They should not override `final_paper_roadmap_zh.md`.
   remaining readiness lanes are blocked by environment or historical probe
   constraints: Scrapy lacks Twisted, Ansible reaches Windows `fcntl`, Luigi
   lacks Tornado after existing Python 3.11 compatibility, and Matplotlib remains
-  an incomplete/native-extension blocker. The refreshed expansion gate has no
-  `f2p_established_p2p_not_attempted` task and zero fresh-project promising
-  candidates outside already-main or already-risky projects, so it does not
-  admit a new task by itself.
+  an incomplete/native-extension blocker. The refreshed metadata screen now
+  identifies 32 fresh-project `thefuck` candidates after classifying its
+  self editable Git requirement as an install boundary rather than an external
+  network-service blocker. The next expansion action is a bounded
+  checkout/F2P probe for `bugsinpy_thefuck_1` or another `thefuck` lane; this
+  metadata result does not admit a new task by itself.
   Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and

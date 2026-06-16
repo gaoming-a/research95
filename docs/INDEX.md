@@ -281,8 +281,10 @@
 - `experiments/bugsinpy_candidate_pool_screening.md`: broader BugsInPy
   metadata-level candidate-pool screening after the decision to stop
   prioritizing legacy `nose` and Black `typed_ast` repair. It identifies
-  promising new projects such as `PySnooper`, `fastapi`, and `sanic` before any
-  checkout or P2P construction.
+  promising probe lanes before any checkout or P2P construction. The latest
+  refresh treats self editable Git requirements as install-boundary notes
+  rather than external network-service blockers, surfacing `thefuck` as the
+  next fresh-project controlled probe lane.
 - `experiments/httpie_stage_ab_result.md`: tracked result for
   `httpie_stage_ab_001`, the first Stage A/B validated dataset slice with five
   `httpie` tasks, 22 candidates, executable validation, no-API baselines,

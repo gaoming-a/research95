@@ -2321,6 +2321,19 @@ This file starts fresh for the patch-verification project.
   readiness, candidate manifest, and evidence-packet counts align at 20 tasks /
   94 candidates / 376 E0/E2/E4/E6 packets.
 - A refreshed expansion gate that reports zero
-  `f2p_established_p2p_not_attempted` tasks and zero fresh-project promising
-  candidates is not a cohort expansion. Treat it as a boundary result requiring
-  an explicit next probe/data-source decision before admission.
+  `f2p_established_p2p_not_attempted` tasks is not a cohort expansion. Treat it
+  as a boundary result requiring an explicit next probe/data-source decision
+  before admission.
+
+## 2026-06-16 self editable Git requirements in BugsInPy screening
+
+- Do not treat every URL in `requirements.txt` as an external network-service
+  blocker. `thefuck` tasks use a self editable Git requirement such as
+  `-e git+https://github.com/nvbn/thefuck@...#egg=thefuck`; the target
+  `bug.info` and `run_test.sh` do not contain network references.
+- Classify that pattern as a metadata note (`self_editable_git_requirement`)
+  and keep it out of `network_reference_in_metadata`. This surfaces fresh
+  project-diverse probe lanes without silently admitting them.
+- The next valid expansion step is still bounded checkout/F2P probing. Metadata
+  eligibility for `bugsinpy_thefuck_1` does not satisfy project-level
+  P2P-broad, candidate construction, or candidate revalidation.

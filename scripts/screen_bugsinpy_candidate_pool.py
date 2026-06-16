@@ -72,12 +72,33 @@ def framework_from_commands(commands: list[str]) -> str:
     return "other"
 
 
-def blocker_reasons(requirements: str, commands: list[str], test_file: str) -> list[str]:
+def blocker_reasons(project: str, requirements: str, commands: list[str], test_file: str) -> list[str]:
     text = "\n".join([requirements.lower(), "\n".join(commands).lower(), test_file.lower()])
     reasons = sorted({reason for token, reason in LEGACY_OR_NATIVE_TOKENS.items() if token in text})
-    if "http://" in text or "https://" in text:
+    network_text = "\n".join([_non_self_editable_requirements(project, requirements), "\n".join(commands), test_file])
+    if "http://" in network_text.lower() or "https://" in network_text.lower():
         reasons.append("network_reference_in_metadata")
     return reasons
+
+
+def metadata_notes(project: str, requirements: str) -> list[str]:
+    notes: list[str] = []
+    for line in requirements.splitlines():
+        lowered = line.strip().lower()
+        if lowered.startswith("-e git+") and f"#egg={project.lower()}" in lowered:
+            notes.append("self_editable_git_requirement")
+            break
+    return notes
+
+
+def _non_self_editable_requirements(project: str, requirements: str) -> str:
+    retained: list[str] = []
+    for line in requirements.splitlines():
+        lowered = line.strip().lower()
+        if lowered.startswith("-e git+") and f"#egg={project.lower()}" in lowered:
+            continue
+        retained.append(line)
+    return "\n".join(retained)
 
 
 def score_candidate(project: str, framework: str, blockers: list[str], test_file: str, command_count: int) -> int:
@@ -120,7 +141,7 @@ def collect_candidates(bugsinpy_root: Path, registry_path: Path) -> dict[str, An
             commands = read_lines(bug_dir / "run_test.sh")
             requirements = (bug_dir / "requirements.txt").read_text(encoding="utf-8", errors="replace") if (bug_dir / "requirements.txt").exists() else ""
             framework = framework_from_commands(commands)
-            blockers = blocker_reasons(requirements, commands, info.get("test_file", ""))
+            blockers = blocker_reasons(project_dir.name, requirements, commands, info.get("test_file", ""))
             record = {
                 "task_id": task_id,
                 "project": project_dir.name,
@@ -131,6 +152,7 @@ def collect_candidates(bugsinpy_root: Path, registry_path: Path) -> dict[str, An
                 "run_test_commands": commands,
                 "test_framework_hint": framework,
                 "metadata_blockers": blockers,
+                "metadata_notes": metadata_notes(project_dir.name, requirements),
                 "preferred_project": project_dir.name in PREFERRED_PROJECTS,
                 "screening_score": score_candidate(
                     project=project_dir.name,

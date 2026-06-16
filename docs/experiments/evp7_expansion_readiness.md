@@ -13,12 +13,12 @@ This report is a planning artifact. It does not admit new bugs into the main coh
 
 - Source: `outputs\candidate_pool_rescreen\parallel_latest.json`
 - Total BugsInPy tasks: 501
-- Already registered tasks: 30
-- New candidate tasks: 471
-- Metadata-promising candidates: 187
-- Framework counts: `{"other": 1, "pytest": 353, "unittest": 117}`
-- Metadata blocker counts: `{"external_service_dependency": 5, "heavy_ml_dependency": 45, "native_build_dependency": 179, "network_reference_in_metadata": 102}`
-- Fresh-project promising candidates: 0
+- Already registered tasks: 47
+- New candidate tasks: 454
+- Metadata-promising candidates: 202
+- Framework counts: `{"other": 1, "pytest": 351, "unittest": 102}`
+- Metadata blocker counts: `{"external_service_dependency": 5, "heavy_ml_dependency": 45, "native_build_dependency": 179}`
+- Fresh-project promising candidates: 32
 - Controlled probe result source: `data\tasks\evp7_controlled_probe_results.json`
 - Controlled probe recorded tasks: `["bugsinpy_ansible_1", "bugsinpy_fastapi_4", "bugsinpy_luigi_1", "bugsinpy_matplotlib_1", "bugsinpy_sanic_2", "bugsinpy_scrapy_2", "bugsinpy_tornado_1", "bugsinpy_youtube-dl_10", "bugsinpy_youtube-dl_11", "bugsinpy_youtube-dl_13", "bugsinpy_youtube-dl_16", "bugsinpy_youtube-dl_17", "bugsinpy_youtube-dl_2", "bugsinpy_youtube-dl_20", "bugsinpy_youtube-dl_21", "bugsinpy_youtube-dl_23", "bugsinpy_youtube-dl_3", "bugsinpy_youtube-dl_37", "bugsinpy_youtube-dl_4", "bugsinpy_youtube-dl_43", "bugsinpy_youtube-dl_5", "bugsinpy_youtube-dl_6", "bugsinpy_youtube-dl_7"]`
 - Controlled probe status counts: `{"admitted_p2p_broad_main": 13, "f2p_blocked_checkout_timeout": 1, "f2p_blocked_dependency_environment": 4, "f2p_blocked_existing_incomplete_native_probe": 1, "f2p_blocked_windows_posix_import": 1, "f2p_established_corrected_policy_p2p_timeout": 2, "f2p_established_existing_p2p_timeout": 1}`
@@ -30,16 +30,16 @@ This report is a planning artifact. It does not admit new bugs into the main coh
 | --- | --- | --- | ---: | ---: | --- |
 | `bugsinpy_fastapi_4` | `fastapi` | `pytest` | 8 | 2 | `f2p_blocked_dependency_environment` |
 | `bugsinpy_sanic_2` | `sanic` | `pytest` | 8 | 1 | `f2p_blocked_dependency_environment` |
+| `bugsinpy_thefuck_1` | `thefuck` | `pytest` | 8 | 0 | `metadata_only_not_admitted` |
 | `bugsinpy_scrapy_2` | `scrapy` | `unittest` | 7 | 1 | `f2p_blocked_dependency_environment` |
-| `bugsinpy_tornado_1` | `tornado` | `unittest` | 7 | 2 | `f2p_established_existing_p2p_timeout` |
-| `bugsinpy_youtube-dl_2` | `youtube-dl` | `unittest` | 7 | 1 | `admitted_p2p_broad_main` |
+| `bugsinpy_tornado_2` | `tornado` | `unittest` | 7 | 2 | `metadata_only_not_admitted` |
+| `bugsinpy_youtube-dl_3` | `youtube-dl` | `unittest` | 7 | 1 | `f2p_established_corrected_policy_p2p_timeout` |
 | `bugsinpy_ansible_1` | `ansible` | `pytest` | 5 | 1 | `f2p_blocked_windows_posix_import` |
 | `bugsinpy_luigi_1` | `luigi` | `pytest` | 5 | 2 | `f2p_blocked_dependency_environment` |
-| `bugsinpy_matplotlib_1` | `matplotlib` | `pytest` | 5 | 1 | `f2p_blocked_existing_incomplete_native_probe` |
 
 ## Decision
 
-EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled project-diverse probes, not blind BugsInPy sweeping or bulk admission. The current metadata-promising pool has no fresh-project candidates outside already-main or already-risky projects.
+EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled project-diverse probes, not blind BugsInPy sweeping or bulk admission. The current metadata-promising pool has 32 fresh-project candidates; the next no-API boundary is a bounded checkout/F2P probe for `bugsinpy_thefuck_1` or another fresh-project lane before any p2p_broad_main admission.
 
 ## Execution Boundary
 

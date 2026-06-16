@@ -1,20 +1,19 @@
 {
   "candidate_pool": {
-    "already_registered_tasks": 30,
+    "already_registered_tasks": 47,
     "framework_counts": {
       "other": 1,
-      "pytest": 353,
-      "unittest": 117
+      "pytest": 351,
+      "unittest": 102
     },
-    "fresh_project_promising_candidates": 0,
+    "fresh_project_promising_candidates": 32,
     "metadata_blocker_counts": {
       "external_service_dependency": 5,
       "heavy_ml_dependency": 45,
-      "native_build_dependency": 179,
-      "network_reference_in_metadata": 102
+      "native_build_dependency": 179
     },
-    "new_candidate_tasks": 471,
-    "promising_candidate_tasks": 187,
+    "new_candidate_tasks": 454,
+    "promising_candidate_tasks": 202,
     "source": "outputs\\candidate_pool_rescreen\\parallel_latest.json",
     "total_tasks": 501
   },
@@ -94,7 +93,7 @@
     "Do not admit a task to p2p_broad_main until F2P, project-level P2P-broad, candidate construction, and candidate revalidation all pass.",
     "Avoid repeating known blockers unless the probe explicitly tests a new bounded policy."
   ],
-  "readiness_decision": "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled project-diverse probes, not blind BugsInPy sweeping or bulk admission. The current metadata-promising pool has no fresh-project candidates outside already-main or already-risky projects.",
+  "readiness_decision": "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled project-diverse probes, not blind BugsInPy sweeping or bulk admission. The current metadata-promising pool has 32 fresh-project candidates; the next no-API boundary is a bounded checkout/F2P probe for `bugsinpy_thefuck_1` or another fresh-project lane before any p2p_broad_main admission.",
   "registry_blocked_or_pending_count": 27,
   "registry_blocked_reason_counts": {
     "checkout_timeout": 1,
@@ -187,6 +186,20 @@
       "test_file": "tests/test_app.py"
     },
     {
+      "framework": "pytest",
+      "known_project_risk": {
+        "registered_blocked_tasks": 0
+      },
+      "probe_status": "metadata_only_not_admitted",
+      "project": "thefuck",
+      "run_commands": [
+        "pytest tests/rules/test_pip_unknown_command.py::test_get_new_command"
+      ],
+      "screening_score": 8,
+      "task_id": "bugsinpy_thefuck_1",
+      "test_file": "tests/rules/test_pip_unknown_command.py"
+    },
+    {
       "framework": "unittest",
       "known_project_risk": {
         "blocked_reasons": {
@@ -228,22 +241,14 @@
           "pending_blocked_shared_project_level_unittest_scope_timeout": 1
         }
       },
-      "latest_probe": {
-        "blocked_reason": [
-          "existing_project_level_p2p_timeout"
-        ],
-        "date": "2026-06-13",
-        "decision": "f2p_established_but_not_admitted",
-        "notes": "Reused existing checkout and reran the target unittest with the documented Windows selector event loop policy. Buggy fails and fixed passes, but the task already has a project-level P2P-broad timeout blocker and is not admitted."
-      },
-      "probe_status": "f2p_established_existing_p2p_timeout",
+      "probe_status": "metadata_only_not_admitted",
       "project": "tornado",
       "run_commands": [
-        "python -m unittest -q tornado.test.websocket_test.WebSocketTest.test_nodelay"
+        "python -m unittest -q tornado.test.httpclient_test.HTTPClientCommonTestCase.test_redirect_put_without_body"
       ],
       "screening_score": 7,
-      "task_id": "bugsinpy_tornado_1",
-      "test_file": "tornado/test/websocket_test.py"
+      "task_id": "bugsinpy_tornado_2",
+      "test_file": "tornado/test/httpclient_test.py"
     },
     {
       "framework": "unittest",
@@ -257,19 +262,21 @@
         }
       },
       "latest_probe": {
-        "blocked_reason": [],
-        "date": "2026-06-13",
-        "decision": "admitted_to_p2p_broad_main",
-        "notes": "Both checkouts completed and the target unittest produced the expected buggy fail and fixed pass. A later approved project-level P2P-broad run produced 147 retained P2P tests, and four candidate records passed retained-oracle and P2P-broad validation before admission."
+        "blocked_reason": [
+          "corrected_policy_project_level_p2p_timeout"
+        ],
+        "date": "2026-06-14",
+        "decision": "do_not_admit_corrected_policy_p2p_timeout",
+        "notes": "Both checkouts completed and the target unittest produced the expected buggy fail and fixed pass. A corrected project-level P2P-broad retry reused youtube_dl_dynamic_download_nodeid_exclusion_v1 and excluded test.test_download.TestDownload, but the builder still exceeded the 40 minute outer budget and left no manifest. Residual unittest processes were stopped; no task-file downgrade was used."
       },
-      "probe_status": "admitted_p2p_broad_main",
+      "probe_status": "f2p_established_corrected_policy_p2p_timeout",
       "project": "youtube-dl",
       "run_commands": [
-        "python -m unittest -q test.test_InfoExtractor.TestInfoExtractor.test_parse_mpd_formats"
+        "python -m unittest -q test.test_utils.TestUtil.test_unescape_html"
       ],
       "screening_score": 7,
-      "task_id": "bugsinpy_youtube-dl_2",
-      "test_file": "test/test_InfoExtractor.py"
+      "task_id": "bugsinpy_youtube-dl_3",
+      "test_file": "test/test_utils.py"
     },
     {
       "framework": "pytest",
@@ -330,36 +337,6 @@
       "screening_score": 5,
       "task_id": "bugsinpy_luigi_1",
       "test_file": "test/server_test.py"
-    },
-    {
-      "framework": "pytest",
-      "known_project_risk": {
-        "blocked_reasons": {
-          "f2p_not_established": 1,
-          "native_extension_import_blocker": 1
-        },
-        "registered_blocked_tasks": 1,
-        "statuses": {
-          "blocked_native_extension_import": 1
-        }
-      },
-      "latest_probe": {
-        "blocked_reason": [
-          "existing_incomplete_checkout",
-          "native_extension_import_blocker"
-        ],
-        "date": "2026-06-13",
-        "decision": "do_not_admit_existing_blocker",
-        "notes": "Historical matplotlib_1 workspace exists but the buggy checkout lacks the target test file; this task already has a native-extension import blocker and was not rebuilt in this F2P-only batch."
-      },
-      "probe_status": "f2p_blocked_existing_incomplete_native_probe",
-      "project": "matplotlib",
-      "run_commands": [
-        "pytest lib/matplotlib/tests/test_bbox_tight.py::test_noop_tight_bbox"
-      ],
-      "screening_score": 5,
-      "task_id": "bugsinpy_matplotlib_1",
-      "test_file": "lib/matplotlib/tests/test_bbox_tight.py"
     }
   ]
 }

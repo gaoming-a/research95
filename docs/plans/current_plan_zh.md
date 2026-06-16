@@ -10978,3 +10978,75 @@ Verify:
   0；
 - 因此不能安全地把 cohort 扩成 21+ tasks。继续扩 EVP-7 cohort 需要先明确新的
   受控 probe 边界或新数据源边界。
+
+## 2026-06-16 EVP-7 fresh-project metadata screen repair
+
+Inspect:
+
+- 上轮 expansion gate 证明当前没有可直接 admission 的任务；
+- 继续检查 broader BugsInPy candidate pool 后发现 `thefuck` 项目有 32 个
+  pytest 任务，但全部被 `network_reference_in_metadata` 排除；
+- 抽查 `bugsinpy_thefuck_1` 发现网络 URL 只出现在 requirements 的
+  `-e git+https://github.com/nvbn/thefuck@...#egg=thefuck` 自项目 editable
+  requirement 中，目标 `bug.info` 和 `run_test.sh` 不含网络引用；
+- 这不是 admission 证据，但说明当前 metadata screen 过保守，把潜在 fresh
+  project probe lane 误归为 blocker。
+
+Plan:
+
+1. 修复 `scripts/screen_bugsinpy_candidate_pool.py`：把 self editable Git
+   requirement 记录为 metadata note，而不是 `network_reference_in_metadata`
+   blocker；
+2. 刷新 candidate pool screening 和 EVP-7 expansion readiness；
+3. 验证 readiness 中 fresh-project promising candidates 不再错误为 0；
+4. 更新 README / INDEX / current state / engineering notes，说明下一步应是
+   `thefuck` 受控 checkout/F2P probe，而不是直接 admission；
+5. 不安装依赖、不 checkout、不调用 API、不新增 main cohort task。
+
+验收条件:
+
+- `thefuck` 任务可作为 fresh-project metadata-promising probe lane 出现在
+  readiness 中；
+- 当前 main cohort 仍保持 20 tasks / 94 candidates / 376 packets；
+- `p2p_broad_main` 不新增任务；
+- GitHub push 若网络仍失败，必须明确记录本地 ahead 状态。
+
+Execute:
+
+- 修复 `scripts/screen_bugsinpy_candidate_pool.py`：
+  - self editable Git requirement 通过 `metadata_notes` 记录为
+    `self_editable_git_requirement`；
+  - 只有非 self editable requirement、run command 或 test file 中的 URL 才继续
+    触发 `network_reference_in_metadata`；
+- 重新运行 broader BugsInPy candidate-pool screen，tracked markdown 刷新为：
+  - total BugsInPy tasks = 501；
+  - already registered tasks = 47；
+  - new candidate tasks = 454；
+  - promising metadata-level candidates = 202；
+  - metadata blocker counts 不再包含 self editable Git requirement 造成的
+    `network_reference_in_metadata`；
+- 重新运行 `scripts\summarize_evp7_expansion_readiness.py`；
+- readiness 现在显示 fresh-project promising candidates = 32，top probe lane
+  包含 `bugsinpy_thefuck_1`，状态为 `metadata_only_not_admitted`；
+- 更新 README、`docs/INDEX.md`、`docs/plans/current_project_state_zh.md` 和
+  engineering notes，说明下一步是 `thefuck` bounded checkout/F2P probe，而不是
+  admission。
+
+Verify:
+
+- `python -m compileall scripts\screen_bugsinpy_candidate_pool.py scripts\summarize_evp7_expansion_readiness.py`
+  通过；
+- `data/tasks/evp7_expansion_readiness.json` 检查通过：
+  - `current_main_task_count=20`；
+  - `current_main_candidate_count_from_registry=94`；
+  - `fresh_project_promising_candidates=32`；
+  - top probe lanes 包含 `bugsinpy_thefuck_1`；
+- 当前未运行 checkout、未安装依赖、未新增 main cohort task。
+
+结论:
+
+- 本轮把“没有 fresh-project candidates”的错误边界推进为“存在 32 个
+  fresh-project metadata candidates，首选 `bugsinpy_thefuck_1` 做受控探针”；
+- 这仍不是 cohort admission。完成扩 EVP-7 cohort 的下一步是对
+  `bugsinpy_thefuck_1` 执行 bounded checkout/F2P probe，并在通过后再进入
+  project-level P2P-broad 和 candidate revalidation。

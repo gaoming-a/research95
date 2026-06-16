@@ -43,6 +43,7 @@ def summarize(registry_path: Path, pool_path: Path, probe_results_path: Path | N
         and str(record.get("project")) not in risky_projects
     ]
     top_by_project = _top_by_project(promising, project_risks, probe_results)
+    readiness_decision = _readiness_decision(fresh_promising)
     return {
         "cohort_id": "EVP-7",
         "current_main_task_count": len(main_tasks),
@@ -74,12 +75,7 @@ def summarize(registry_path: Path, pool_path: Path, probe_results_path: Path | N
                 if record.get("probe_status") == "f2p_established_p2p_not_attempted"
             ),
         },
-        "readiness_decision": (
-            "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled "
-            "project-diverse probes, not blind BugsInPy sweeping or bulk admission. "
-            "The current metadata-promising pool has no fresh-project candidates outside "
-            "already-main or already-risky projects."
-        ),
+        "readiness_decision": readiness_decision,
         "next_execution_boundary": [
             "Run at most one bounded checkout/F2P/P2P probe per risky project lane at a time.",
             "Parallelize across independent projects only; do not run buggy and fixed checkout for the same task concurrently.",
@@ -101,6 +97,25 @@ def _project_risks(blocked_tasks: list[dict[str, Any]]) -> dict[str, dict[str, A
             "statuses": dict(sorted(Counter(str(item.get("project_level_p2p_status")) for item in items).items())),
         }
     return risks
+
+
+def _readiness_decision(fresh_promising: list[dict[str, Any]]) -> str:
+    if fresh_promising:
+        first = fresh_promising[0]
+        return (
+            "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled "
+            "project-diverse probes, not blind BugsInPy sweeping or bulk admission. "
+            f"The current metadata-promising pool has {len(fresh_promising)} fresh-project "
+            f"candidates; the next no-API boundary is a bounded checkout/F2P probe for "
+            f"`{first.get('task_id')}` or another fresh-project lane before any "
+            "p2p_broad_main admission."
+        )
+    return (
+        "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled "
+        "project-diverse probes, not blind BugsInPy sweeping or bulk admission. "
+        "The current metadata-promising pool has no fresh-project candidates outside "
+        "already-main or already-risky projects."
+    )
 
 
 def _blocked_reason_counts(tasks: list[dict[str, Any]]) -> Counter[str]:
