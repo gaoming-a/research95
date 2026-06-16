@@ -11134,3 +11134,174 @@ Repair:
 - EVP-7 cohort 仍未扩到 21 tasks；
 - 完成扩 cohort 的下一步外部条件是：GitHub clone 可达或提供经过审计的本地
   `thefuck` mirror。
+
+## 2026-06-16 bugsinpy_thefuck_1 checkout reachability retry
+
+Inspect:
+
+- 工作区当前干净且已同步到 `origin/main`；
+- readiness 仍显示 main cohort = 20 tasks / 94 candidates；
+- `bugsinpy_thefuck_1` 已记录为 `f2p_blocked_checkout_network`；
+- 本轮目标不是 admission，而是检查上轮外部条件是否解除。
+
+Plan:
+
+1. 先运行 `git ls-remote https://github.com/nvbn/thefuck.git`；
+2. 如果 GitHub checkout 路径仍不可达，只记录连续 blocker，不创建 checkout；
+3. 如果可达，再创建 ignored `outputs/evp7_thefuck1_f2p_probe_retry/`，顺序运行
+   buggy/fixed checkout；
+4. 只有两个 checkout 均通过目录/marker 验证后，才运行目标 pytest F2P；
+5. 根据结果更新 tracked readiness/plan/experience，提交并同步。
+
+验收条件:
+
+- 不调用 API；
+- 不安装依赖，除非 F2P checkout 已真实完成且计划另行记录；
+- 不修改 checkout、不构造 candidates、不 admission；
+- 不提交 `outputs/` raw logs。
+
+Execute:
+
+- `git ls-remote https://github.com/nvbn/thefuck.git HEAD` 在 Windows 和 WSL
+  路径均成功，说明上轮 checkout 网络 blocker 已解除；
+- 顺序 checkout `bugsinpy_thefuck_1` buggy/fixed 到 ignored
+  `outputs/evp7_thefuck1_f2p_probe_retry/`；
+- buggy/fixed checkout 目录均真实存在；
+- BugsInPy fixed checkout 形态为 buggy HEAD 加 patched files，两个 checkout
+  的 git HEAD 均为 buggy commit，这是该 checkout 工具的输出形态；
+- 在未安装依赖的当前环境中运行目标 pytest，两个版本均在 collection 前因缺少
+  `psutil` 失败，尚不能判断 F2P。
+
+Repair Plan:
+
+1. 在 ignored `outputs/envs/thefuck1_f2p_py311/` 创建隔离 venv；
+2. 只安装 target pytest 所需依赖，不安装 editable self Git requirement，不改全局环境；
+3. 在 venv 中顺序重跑 buggy/fixed 目标 pytest；
+4. 若仍为依赖/兼容 blocker，记录为 environment blocked；
+5. 若 buggy fail 且 fixed pass，只记录 `f2p_established_p2p_not_attempted`，不直接
+   admission。
+
+Repair Execute:
+
+- 创建 ignored venv `outputs/envs/thefuck1_f2p_py311/`；
+- 安装目标测试最小依赖：
+  `pytest`, `psutil`, `six`, `decorator`, `colorama`, `pyte`,
+  `win-unicode-console`；
+- 未安装 editable self Git requirement，未修改 checkout，未修改全局环境；
+- venv 中 buggy 目标 pytest：1 failed / 1 passed；
+- venv 中 fixed 目标 pytest：2 passed；
+- 更新 `data/tasks/evp7_controlled_probe_results.json`：
+  `bugsinpy_thefuck_1 = f2p_established_p2p_not_attempted`；
+- 修正 readiness decision：下一步是 bounded project-level P2P-broad，而不是重复
+  checkout/F2P。
+
+Verify:
+
+- `data/tasks/evp7_expansion_readiness.json` 现在记录：
+  - `p2p_candidate_tasks = ["bugsinpy_thefuck_1"]`；
+  - `f2p_established_p2p_not_attempted = 1`；
+  - `f2p_blocked_checkout_network` 已不再出现；
+  - main cohort 仍为 20 tasks / 94 candidates；
+- `docs/experiments/evp7_expansion_readiness.md` 同步显示
+  `bugsinpy_thefuck_1` 的下一步为 project-level P2P-broad。
+
+Diagnose:
+
+- 问题类型从 checkout/network blocker 推进为 F2P established / P2P pending；
+- 这不是 cohort expansion 完成状态，因为尚无 project-level P2P-broad manifest、
+  candidate construction 或 candidate revalidation。
+
+结论:
+
+- `bugsinpy_thefuck_1` 已成为第一个 fresh-project
+  `f2p_established_p2p_not_attempted` lane；
+- 完成扩 EVP-7 cohort 的下一步是 bounded project-level P2P-broad construction；
+- 通过 P2P-broad 前不得新增 `p2p_broad_main` task 或重新计算 21-task metrics。
+
+## 2026-06-16 bugsinpy_thefuck_1 project-level P2P-broad dry-run
+
+Inspect:
+
+- F2P 已建立，但 main cohort 仍为 20 tasks / 94 candidates；
+- `scripts/build_pass_to_pass_scope.py` 是现有 project-level P2P-broad builder；
+- builder 期望 checkout source root 形态为
+  `<source_root>/thefuck_1/{buggy,fixed}/thefuck`；
+- 当前 F2P checkout 位于 ignored
+  `outputs/evp7_thefuck1_f2p_probe_retry/{buggy,fixed}/thefuck`。
+
+Plan:
+
+1. 创建 ignored `outputs/thefuck1_p2p_workspace/thefuck_1/{buggy,fixed}/`；
+2. 用目录 junction 指向已验证的 F2P buggy/fixed checkout，不复制到 tracked 区；
+3. 运行 `build_pass_to_pass_scope.py --dry-run`，确认 project-level pytest test
+   paths、F2P oracle nodeid、venv python、输出路径和 manifest 路径；
+4. dry-run 通过后，再决定是否进入 bounded project-level P2P-broad execution。
+
+验收条件:
+
+- dry-run 不执行测试、不创建 manifest；
+- 不 admission、不构造 candidates；
+- 如果 dry-run 暴露路径或 oracle nodeid 问题，先修计划和命令，不运行 P2P。
+
+Execute:
+
+- 创建 ignored junction 工作区
+  `outputs/thefuck1_p2p_workspace/thefuck_1/{buggy,fixed}/thefuck`，指向已验证
+  F2P checkout；
+- `build_pass_to_pass_scope.py --dry-run` 通过；
+- dry-run 确认：
+  - buggy/fixed checkout 均存在；
+  - F2P oracle nodeid 为
+    `tests/rules/test_pip_unknown_command.py::test_get_new_command[pip un+install thefuck-un+install-uninstall-pip uninstall thefuck]`；
+  - test framework = `pytest`；
+  - scope type = `project_level_p2p_broad`；
+  - output dir = `outputs/thefuck1_project_p2p_scope_001`；
+  - manifest out = `data/p2p_scopes/bugsinpy_thefuck_1_p2p_broad.json`；
+  - dry-run 不执行测试、不创建 manifest。
+
+Execution Plan:
+
+1. 使用相同参数移除 `--dry-run`；
+2. 运行 bounded project-level P2P-broad builder：
+   - runs = 3；
+   - per-test timeout = 30s；
+   - batch timeout = 600s；
+   - batch size = 50；
+   - batch-first enabled；
+3. 若 manifest 成功且 `p2p_broad_tests >= 3`，进入 candidate construction 计划；
+4. 若 manifest 不足或 collection/runtime blocker，记录 blocker，不 admission。
+
+Execute:
+
+- 第一次 P2P execution 生成 0-test collection-error manifest；
+- Diagnose：`build_pass_to_pass_scope.py` 的 compat shim 在 venv 已安装真实
+  `psutil` 时仍注入 fallback `psutil`，导致 `thefuck.shells.Process(os.getpid())`
+  报 `_Process() takes no arguments`；
+- Repair：修复 builder shim，先 import real `psutil`，仅 import 失败时使用 fallback；
+  fallback `Process` 也补齐 `__init__`, `name`, `parent`, `children`；
+- 删除错误 shim 产生的 0-test manifest 和 raw P2P 输出，重新 dry-run 通过；
+- 修复后重新执行 P2P builder，真实 pytest batches 开始运行，但达到 30 分钟
+  外层超时仍无 manifest；
+- 终止残留 builder/pytest 进程；
+- 更新 controlled probe result：
+  `bugsinpy_thefuck_1 = f2p_established_project_p2p_timeout`。
+
+Verify:
+
+- `data/p2p_scopes/bugsinpy_thefuck_1_p2p_broad.json` 不存在；
+- `data/p2p_scopes/bugsinpy_thefuck_1_p2p_broad_collection_errors.json` 不存在；
+- readiness 现在记录：
+  - `p2p_candidate_tasks = []`；
+  - `f2p_established_project_p2p_timeout = 1`；
+  - main cohort 仍为 20 tasks / 94 candidates；
+- 无残留 `bugsinpy_thefuck_1` / `thefuck1_p2p` / `thefuck1_f2p_py311` 相关
+  python 进程。
+
+结论:
+
+- `bugsinpy_thefuck_1` 已建立 F2P，但 project-level P2P-broad 在当前 30 分钟
+  bounded policy 下没有 manifest；
+- 不得 admission，不得构造 candidates，不得更新 21-task metrics；
+- 完成扩 cohort 的下一步需要：
+  - 明确 `thefuck` P2P policy redesign；或
+  - 选择另一条 fresh-project lane 做 checkout/F2P/P2P。

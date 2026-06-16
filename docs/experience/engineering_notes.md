@@ -2351,3 +2351,32 @@ This file starts fresh for the patch-verification project.
 - Future checkout probes must verify the expected checkout directory and marker
   files (`bugsinpy_bug.info`, `bugsinpy_run_test.sh`, and target test file)
   before running tests or summarizing F2P status.
+
+## 2026-06-16 thefuck_1 F2P retry after checkout recovery
+
+- Once GitHub checkout became reachable, `bugsinpy_thefuck_1` checkout completed
+  for both buggy and fixed versions. The fixed checkout produced the BugsInPy
+  patched-file form on the buggy HEAD, so verify both git status and modified
+  files instead of expecting the fixed commit as HEAD.
+- The first no-install target pytest run failed during collection because
+  `psutil` was missing. An ignored isolated Python 3.11 venv with only target
+  test dependencies (`pytest`, `psutil`, `six`, `decorator`, `colorama`,
+  `pyte`, `win-unicode-console`) established the oracle: buggy = one failed
+  parameterized case plus one pass; fixed = two passes.
+- Record this as `f2p_established_p2p_not_attempted`, not as cohort expansion.
+  The next gate is project-level P2P-broad, then candidate construction and
+  candidate revalidation before any `p2p_broad_main` admission.
+
+## 2026-06-16 P2P builder psutil shim and thefuck timeout
+
+- `build_pass_to_pass_scope.py` previously injected a fallback `psutil` module
+  whenever `sitecustomize` started before real `psutil` was imported. In a venv
+  where `psutil` is installed, that shadowed the real package and broke
+  `thefuck.shells.Process(os.getpid())` with `_Process() takes no arguments`.
+- The builder shim now first attempts to import real `psutil` and only falls
+  back when import fails; the fallback `Process` accepts constructor arguments
+  and exposes minimal `name`, `parent`, and `children` methods.
+- After this repair, `bugsinpy_thefuck_1` project-level P2P-broad execution
+  started real pytest batches but exceeded the 30 minute outer budget and
+  produced no manifest. Residual pytest processes were stopped. Record the
+  task as `f2p_established_project_p2p_timeout`, not as admission evidence.

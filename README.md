@@ -259,12 +259,14 @@ They should not override `final_paper_roadmap_zh.md`.
   an incomplete/native-extension blocker. The refreshed metadata screen now
   identifies 32 fresh-project `thefuck` candidates after classifying its
   self editable Git requirement as an install boundary rather than an external
-  network-service blocker. A bounded `bugsinpy_thefuck_1` checkout/F2P probe
-  was attempted next, but both buggy and fixed checkouts failed while cloning
-  GitHub over port 443, so it is recorded as checkout/network blocked rather
-  than F2P evidence. Retrying requires GitHub reachability from the checkout
-  path or an audited local mirror; this metadata/probe result does not admit a
-  new task by itself.
+  network-service blocker. After GitHub checkout became reachable, a bounded
+  `bugsinpy_thefuck_1` retry established F2P in an ignored isolated Python
+  3.11 test venv: the buggy target pytest failed one parameterized case and
+  the fixed target pytest passed both cases. A bounded project-level P2P-broad
+  dry-run validated the builder inputs, but the real P2P execution exceeded
+  the 30 minute outer budget and produced no manifest, so this is still not
+  cohort admission. The next boundary is either an explicit bounded P2P policy
+  redesign for `thefuck` or a different fresh-project lane.
   Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and

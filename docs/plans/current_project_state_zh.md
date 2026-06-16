@@ -42,12 +42,15 @@
    - 目标：补样本规模和项目多样性；
    - 当前 gate：`docs/experiments/evp7_expansion_readiness.md` 已刷新为
      20 tasks / 94 candidates；
-   - 当前没有 `f2p_established_p2p_not_attempted` 任务；
    - metadata screen 已识别 32 个 fresh-project `thefuck` candidates；
-   - `bugsinpy_thefuck_1` bounded checkout/F2P probe 已尝试，但 GitHub
-     checkout network blocked；
-   - 下一步需要 GitHub checkout 路径可达，或提供 audited local mirror 后重试，
-     不能直接 admission。
+   - `bugsinpy_thefuck_1` 已在 ignored isolated Python 3.11 venv 中建立
+     F2P；
+   - 该任务的 bounded project-level P2P-broad execution 已尝试，但 30 分钟
+     外层预算内无 manifest，当前状态为
+     `f2p_established_project_p2p_timeout`；
+   - 下一步需要明确的 `thefuck` P2P policy redesign，或换一个 fresh-project
+     lane；P2P-broad、candidate construction 和 candidate revalidation 通过前不能
+     admission。
 2. 跨模型复现实验：
    - 目标：检查 DeepSeek G5 的 evidence-visibility 趋势是否跨模型稳定；
    - 下一步：先确定 provider、model、预算、停止条件和 preflight。

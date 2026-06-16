@@ -647,29 +647,29 @@
     },
     {
       "blocked_reason": [
-        "github_checkout_network_unavailable"
+        "project_level_p2p_timeout_no_manifest"
       ],
       "bug_id": "1",
       "date": "2026-06-16",
-      "decision": "do_not_admit_checkout_network_blocked",
-      "fixed_result": "not_run",
-      "notes": "Fresh-project metadata screening selected this task after self editable Git requirements were no longer treated as external network-service blockers. The bounded BugsInPy checkout probe attempted buggy and fixed checkouts sequentially, but both failed while cloning https://github.com/nvbn/thefuck from GitHub over port 443. The BugsInPy checkout script returned success despite missing checkout directories, so the probe result is recorded as checkout/network blocked rather than F2P evidence. No dependency install, checkout edit, local mirror substitution, candidate construction, or admission was performed.",
-      "probe_status": "f2p_blocked_checkout_network",
+      "decision": "do_not_admit_project_p2p_timeout",
+      "fixed_result": "target_passed",
+      "notes": "Retry after GitHub checkout became reachable established F2P in an ignored isolated Python 3.11 venv: buggy target pytest failed 1/2 parameterized cases and fixed target pytest passed 2/2. A project-level P2P-broad dry-run then validated the builder inputs, checkout junction workspace, venv python, and F2P oracle nodeid. The first P2P execution exposed a builder compat-shim bug that shadowed installed psutil; after repairing the builder to prefer real psutil, the bounded P2P execution started real pytest batches but exceeded the 30 minute outer budget and left no manifest. Residual pytest processes were stopped. No candidate construction, candidate revalidation, or admission was performed.",
+      "probe_status": "f2p_established_project_p2p_timeout",
       "project": "thefuck",
-      "run_command": "python -m pytest tests/rules/test_pip_unknown_command.py::test_get_new_command",
+      "run_command": "PYTHONPATH=. python -m pytest tests/rules/test_pip_unknown_command.py::test_get_new_command -q",
       "source": "BugsInPy",
       "task_id": "bugsinpy_thefuck_1",
       "test_file": "tests/rules/test_pip_unknown_command.py",
       "versions": {
         "buggy": {
-          "checkout": "github_clone_failed",
-          "git_head": null,
-          "result": "not_run"
+          "checkout": "completed",
+          "git_head": "2ced7a7f33ae",
+          "result": "target_failed_1_failed_1_passed"
         },
         "fixed": {
-          "checkout": "github_clone_failed",
-          "git_head": null,
-          "result": "not_run"
+          "checkout": "completed_bugsinpy_patched_files_on_buggy_head",
+          "git_head": "2ced7a7f33ae",
+          "result": "target_passed_2_passed"
         }
       }
     }

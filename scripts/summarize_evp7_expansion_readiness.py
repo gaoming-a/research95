@@ -103,6 +103,21 @@ def _readiness_decision(
     fresh_promising: list[dict[str, Any]],
     probe_results: dict[str, dict[str, Any]],
 ) -> str:
+    p2p_ready = sorted(
+        task_id
+        for task_id, record in probe_results.items()
+        if record.get("probe_status") == "f2p_established_p2p_not_attempted"
+    )
+    if p2p_ready:
+        return (
+            "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled "
+            "project-diverse probes, not blind BugsInPy sweeping or bulk admission. "
+            f"The current metadata-promising pool has {len(fresh_promising)} fresh-project "
+            f"candidates, and F2P is established for `{p2p_ready[0]}`. The next no-API "
+            "boundary is bounded project-level P2P-broad construction for that task; "
+            "candidate construction, candidate revalidation, and p2p_broad_main admission "
+            "remain prohibited until P2P-broad passes."
+        )
     if fresh_promising:
         first = fresh_promising[0]
         first_probe = probe_results.get(str(first.get("task_id")), {})
@@ -116,6 +131,16 @@ def _readiness_decision(
                 "The next boundary is to retry that checkout when GitHub is reachable or to "
                 "provide an audited local mirror before any F2P, P2P, candidate construction, "
                 "or p2p_broad_main admission."
+            )
+        if first_probe.get("probe_status") == "f2p_established_project_p2p_timeout":
+            return (
+                "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled "
+                "project-diverse probes, not blind BugsInPy sweeping or bulk admission. "
+                f"The current metadata-promising pool has {len(fresh_promising)} fresh-project "
+                f"candidates, and `{first.get('task_id')}` established F2P but its bounded "
+                "project-level P2P-broad construction timed out without a manifest. The next "
+                "boundary is either an explicit bounded P2P policy redesign for that project "
+                "or a different fresh-project lane; p2p_broad_main admission remains prohibited."
             )
         return (
             "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled "
