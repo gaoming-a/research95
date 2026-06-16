@@ -259,9 +259,12 @@ They should not override `final_paper_roadmap_zh.md`.
   an incomplete/native-extension blocker. The refreshed metadata screen now
   identifies 32 fresh-project `thefuck` candidates after classifying its
   self editable Git requirement as an install boundary rather than an external
-  network-service blocker. The next expansion action is a bounded
-  checkout/F2P probe for `bugsinpy_thefuck_1` or another `thefuck` lane; this
-  metadata result does not admit a new task by itself.
+  network-service blocker. A bounded `bugsinpy_thefuck_1` checkout/F2P probe
+  was attempted next, but both buggy and fixed checkouts failed while cloning
+  GitHub over port 443, so it is recorded as checkout/network blocked rather
+  than F2P evidence. Retrying requires GitHub reachability from the checkout
+  path or an audited local mirror; this metadata/probe result does not admit a
+  new task by itself.
   Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and

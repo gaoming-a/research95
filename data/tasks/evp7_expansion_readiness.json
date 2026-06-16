@@ -22,6 +22,7 @@
     "p2p_candidate_tasks": [],
     "probe_status_counts": {
       "admitted_p2p_broad_main": 13,
+      "f2p_blocked_checkout_network": 1,
       "f2p_blocked_checkout_timeout": 1,
       "f2p_blocked_dependency_environment": 4,
       "f2p_blocked_existing_incomplete_native_probe": 1,
@@ -36,6 +37,7 @@
       "bugsinpy_matplotlib_1",
       "bugsinpy_sanic_2",
       "bugsinpy_scrapy_2",
+      "bugsinpy_thefuck_1",
       "bugsinpy_tornado_1",
       "bugsinpy_youtube-dl_10",
       "bugsinpy_youtube-dl_11",
@@ -93,7 +95,7 @@
     "Do not admit a task to p2p_broad_main until F2P, project-level P2P-broad, candidate construction, and candidate revalidation all pass.",
     "Avoid repeating known blockers unless the probe explicitly tests a new bounded policy."
   ],
-  "readiness_decision": "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled project-diverse probes, not blind BugsInPy sweeping or bulk admission. The current metadata-promising pool has 32 fresh-project candidates; the next no-API boundary is a bounded checkout/F2P probe for `bugsinpy_thefuck_1` or another fresh-project lane before any p2p_broad_main admission.",
+  "readiness_decision": "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled project-diverse probes, not blind BugsInPy sweeping or bulk admission. The current metadata-promising pool has 32 fresh-project candidates, but the first fresh-project probe `bugsinpy_thefuck_1` is blocked at checkout because GitHub was unavailable from the checkout path. The next boundary is to retry that checkout when GitHub is reachable or to provide an audited local mirror before any F2P, P2P, candidate construction, or p2p_broad_main admission.",
   "registry_blocked_or_pending_count": 27,
   "registry_blocked_reason_counts": {
     "checkout_timeout": 1,
@@ -190,7 +192,15 @@
       "known_project_risk": {
         "registered_blocked_tasks": 0
       },
-      "probe_status": "metadata_only_not_admitted",
+      "latest_probe": {
+        "blocked_reason": [
+          "github_checkout_network_unavailable"
+        ],
+        "date": "2026-06-16",
+        "decision": "do_not_admit_checkout_network_blocked",
+        "notes": "Fresh-project metadata screening selected this task after self editable Git requirements were no longer treated as external network-service blockers. The bounded BugsInPy checkout probe attempted buggy and fixed checkouts sequentially, but both failed while cloning https://github.com/nvbn/thefuck from GitHub over port 443. The BugsInPy checkout script returned success despite missing checkout directories, so the probe result is recorded as checkout/network blocked rather than F2P evidence. No dependency install, checkout edit, local mirror substitution, candidate construction, or admission was performed."
+      },
+      "probe_status": "f2p_blocked_checkout_network",
       "project": "thefuck",
       "run_commands": [
         "pytest tests/rules/test_pip_unknown_command.py::test_get_new_command"

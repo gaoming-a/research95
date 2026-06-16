@@ -44,8 +44,10 @@
      20 tasks / 94 candidates；
    - 当前没有 `f2p_established_p2p_not_attempted` 任务；
    - metadata screen 已识别 32 个 fresh-project `thefuck` candidates；
-   - 下一步是对 `bugsinpy_thefuck_1` 或同项目 lane 做 bounded
-     checkout/F2P probe，不能直接 admission。
+   - `bugsinpy_thefuck_1` bounded checkout/F2P probe 已尝试，但 GitHub
+     checkout network blocked；
+   - 下一步需要 GitHub checkout 路径可达，或提供 audited local mirror 后重试，
+     不能直接 admission。
 2. 跨模型复现实验：
    - 目标：检查 DeepSeek G5 的 evidence-visibility 趋势是否跨模型稳定；
    - 下一步：先确定 provider、model、预算、停止条件和 preflight。

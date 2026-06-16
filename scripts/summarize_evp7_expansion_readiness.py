@@ -43,7 +43,7 @@ def summarize(registry_path: Path, pool_path: Path, probe_results_path: Path | N
         and str(record.get("project")) not in risky_projects
     ]
     top_by_project = _top_by_project(promising, project_risks, probe_results)
-    readiness_decision = _readiness_decision(fresh_promising)
+    readiness_decision = _readiness_decision(fresh_promising, probe_results)
     return {
         "cohort_id": "EVP-7",
         "current_main_task_count": len(main_tasks),
@@ -99,9 +99,24 @@ def _project_risks(blocked_tasks: list[dict[str, Any]]) -> dict[str, dict[str, A
     return risks
 
 
-def _readiness_decision(fresh_promising: list[dict[str, Any]]) -> str:
+def _readiness_decision(
+    fresh_promising: list[dict[str, Any]],
+    probe_results: dict[str, dict[str, Any]],
+) -> str:
     if fresh_promising:
         first = fresh_promising[0]
+        first_probe = probe_results.get(str(first.get("task_id")), {})
+        if first_probe.get("probe_status") == "f2p_blocked_checkout_network":
+            return (
+                "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled "
+                "project-diverse probes, not blind BugsInPy sweeping or bulk admission. "
+                f"The current metadata-promising pool has {len(fresh_promising)} fresh-project "
+                f"candidates, but the first fresh-project probe `{first.get('task_id')}` is "
+                "blocked at checkout because GitHub was unavailable from the checkout path. "
+                "The next boundary is to retry that checkout when GitHub is reachable or to "
+                "provide an audited local mirror before any F2P, P2P, candidate construction, "
+                "or p2p_broad_main admission."
+            )
         return (
             "EVP-7 passed pilot-level G5 signal; expansion should proceed as controlled "
             "project-diverse probes, not blind BugsInPy sweeping or bulk admission. "

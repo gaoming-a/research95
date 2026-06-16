@@ -11050,3 +11050,87 @@ Verify:
 - 这仍不是 cohort admission。完成扩 EVP-7 cohort 的下一步是对
   `bugsinpy_thefuck_1` 执行 bounded checkout/F2P probe，并在通过后再进入
   project-level P2P-broad 和 candidate revalidation。
+
+## 2026-06-16 bugsinpy_thefuck_1 bounded checkout/F2P probe
+
+Inspect:
+
+- `bugsinpy_thefuck_1` 当前是 fresh-project metadata-promising lane；
+- BugsInPy metadata：
+  - project = `thefuck`；
+  - bug id = 1；
+  - buggy commit = `2ced7a7f33ae0bec3ffc7a43ce95330bdf6cfcb9`；
+  - fixed commit = `444908ce1c17767ef4aaf9e0b4950497914f7f63`；
+  - target test = `pytest tests/rules/test_pip_unknown_command.py::test_get_new_command`；
+- 本轮只做 checkout/F2P probe，不安装依赖、不修改 checkout、不构造候选、不
+  admission。
+
+Plan:
+
+1. 在 ignored `outputs/evp7_thefuck1_f2p_probe/` 下创建 buggy/fixed checkout；
+2. 顺序运行 BugsInPy checkout，禁止并行 checkout 同一任务；
+3. 在 buggy 和 fixed checkout 中分别运行目标 pytest；
+4. 根据结果更新 controlled probe status 和实验文档：
+   - buggy fail + fixed pass 才能进入下一阶段 project-level P2P；
+   - import/dependency/collection/checkout blocker 则记录为 blocked，不 admission；
+5. 运行最小验证，提交并同步 tracked 记录。
+
+验收条件:
+
+- 不提交 checkout、raw test logs 或 `outputs/`；
+- 如果 F2P 未建立，不得新增 `p2p_broad_main`；
+- 如果 F2P 建立，也只记录 `f2p_established_p2p_not_attempted`，不直接
+  admission。
+
+Execute:
+
+- 使用 WSL bash 路径运行 BugsInPy checkout；
+- 在 ignored `outputs/evp7_thefuck1_f2p_probe/` 下顺序尝试：
+  - buggy checkout：`bugsinpy-checkout -p thefuck -i 1 -v 0`；
+  - fixed checkout：`bugsinpy-checkout -p thefuck -i 1 -v 1`；
+- 两次 checkout 均在 `git clone https://github.com/nvbn/thefuck` 阶段因
+  GitHub 443 连接不可达失败；
+- BugsInPy checkout 脚本在 clone 失败后继续执行并最终返回 success，因此必须
+  以目录/marker 文件验证 checkout 是否真实完成；
+- 未运行目标 pytest，未安装依赖，未修改 checkout，未构造 candidates，未
+  admission；
+- 追加 `data/tasks/evp7_controlled_probe_results.json` 记录：
+  `bugsinpy_thefuck_1` = `f2p_blocked_checkout_network`；
+- 刷新 `docs/experiments/evp7_expansion_readiness.md` 和
+  `data/tasks/evp7_expansion_readiness.json`。
+
+Verify:
+
+- checkout 目录检查：
+  - `outputs/evp7_thefuck1_f2p_probe/buggy/thefuck` 不存在；
+  - `outputs/evp7_thefuck1_f2p_probe/fixed/thefuck` 不存在；
+- `git ls-remote https://github.com/nvbn/thefuck.git` 也因 GitHub 443 不可达失败；
+- readiness 现在记录：
+  - `f2p_blocked_checkout_network = 1`；
+  - recorded tasks 包含 `bugsinpy_thefuck_1`；
+  - top probe lane 中 `bugsinpy_thefuck_1` 状态为
+    `f2p_blocked_checkout_network`；
+  - main cohort 仍为 20 tasks / 94 candidates。
+
+Diagnose:
+
+- 问题类型：checkout/network/tooling blocker；
+- 不是 F2P 设计问题、不是 candidate label 问题、不是 verifier/API 问题；
+- 当前不能进入 P2P 或 candidate construction。
+
+Repair:
+
+- 记录 controlled probe result，避免后续把 metadata-only `thefuck_1` 当成未尝试；
+- 更新 readiness decision：下一步需要 GitHub checkout 路径可达或 audited local
+  mirror，之后才能重试 F2P。
+- 清理本轮 ignored raw checkout 过程目录
+  `outputs/evp7_thefuck1_f2p_probe/`；保留 tracked JSON/Markdown 结论作为审计
+  记录，不保留 failed checkout logs 作为仓库证据。
+
+结论:
+
+- `bugsinpy_thefuck_1` 是有效 fresh-project metadata lane，但本轮 checkout
+  network blocked；
+- EVP-7 cohort 仍未扩到 21 tasks；
+- 完成扩 cohort 的下一步外部条件是：GitHub clone 可达或提供经过审计的本地
+  `thefuck` mirror。

@@ -2337,3 +2337,17 @@ This file starts fresh for the patch-verification project.
 - The next valid expansion step is still bounded checkout/F2P probing. Metadata
   eligibility for `bugsinpy_thefuck_1` does not satisfy project-level
   P2P-broad, candidate construction, or candidate revalidation.
+
+## 2026-06-16 BugsInPy checkout can mask clone failure
+
+- The BugsInPy checkout script can continue after `git clone` fails and still
+  return success, leaving no checkout directory and producing downstream
+  `cd`/`cp`/`git reset` errors. Do not treat checkout process exit code alone
+  as evidence of a valid checkout.
+- For `bugsinpy_thefuck_1`, both buggy and fixed checkout attempts failed while
+  cloning `https://github.com/nvbn/thefuck` over port 443. Record this as
+  `f2p_blocked_checkout_network`, not as F2P evidence and not as an admission
+  candidate.
+- Future checkout probes must verify the expected checkout directory and marker
+  files (`bugsinpy_bug.info`, `bugsinpy_run_test.sh`, and target test file)
+  before running tests or summarizing F2P status.

@@ -644,6 +644,34 @@
           "result": "pass"
         }
       }
+    },
+    {
+      "blocked_reason": [
+        "github_checkout_network_unavailable"
+      ],
+      "bug_id": "1",
+      "date": "2026-06-16",
+      "decision": "do_not_admit_checkout_network_blocked",
+      "fixed_result": "not_run",
+      "notes": "Fresh-project metadata screening selected this task after self editable Git requirements were no longer treated as external network-service blockers. The bounded BugsInPy checkout probe attempted buggy and fixed checkouts sequentially, but both failed while cloning https://github.com/nvbn/thefuck from GitHub over port 443. The BugsInPy checkout script returned success despite missing checkout directories, so the probe result is recorded as checkout/network blocked rather than F2P evidence. No dependency install, checkout edit, local mirror substitution, candidate construction, or admission was performed.",
+      "probe_status": "f2p_blocked_checkout_network",
+      "project": "thefuck",
+      "run_command": "python -m pytest tests/rules/test_pip_unknown_command.py::test_get_new_command",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_thefuck_1",
+      "test_file": "tests/rules/test_pip_unknown_command.py",
+      "versions": {
+        "buggy": {
+          "checkout": "github_clone_failed",
+          "git_head": null,
+          "result": "not_run"
+        },
+        "fixed": {
+          "checkout": "github_clone_failed",
+          "git_head": null,
+          "result": "not_run"
+        }
+      }
     }
   ],
   "schema": "controlled_probe_results.v1"
