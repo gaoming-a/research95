@@ -2430,6 +2430,21 @@ This file starts fresh for the patch-verification project.
   must all carry the same boundary. Otherwise readiness summaries can continue
   to report a task as timed out after it has been admitted under a later policy.
 
+## 2026-06-16 thefuck_5 legacy pytest and P2P boundary
+
+- Later `thefuck` bugs may sit on older commits than `thefuck_1`. For
+  `bugsinpy_thefuck_5`, `tests/conftest.py` still uses
+  `request.node.get_marker`, so the pytest 9 env from `thefuck_1` is the wrong
+  toolchain and fails before F2P.
+- A task-specific ignored env with `pytest==3.10.1` reaches the target test, but
+  Python 3.11 needs `py==1.11.0` and `--assert=plain` to avoid legacy
+  assertion-rewrite AST failures.
+- `bugsinpy_thefuck_5` F2P is clear, but P2P does not pass admission: the
+  rules-root `git push` filter yields only 2 P2P tests, while the broader `git`
+  filter times out around `tests/rules/test_git_merge.py::test_match`.
+- Do not construct candidates for `thefuck_5` unless a new bounded P2P policy
+  produces at least 3 stable pass-to-pass tests.
+
 ## 2026-06-16 visible-test runner and wrapper oracles
 
 - `run_evp7_visible_tests.py` originally inferred the test Python executable

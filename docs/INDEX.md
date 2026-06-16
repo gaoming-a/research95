@@ -426,6 +426,10 @@
   `bugsinpy_sanic_2`; the isolated dependency recheck now establishes F2P,
   but Sanic official tests-root P2P timed out without a manifest, so it is not
   admitted.
+- `experiments/thefuck5_feasibility.md`: blocked follow-up probe for
+  `bugsinpy_thefuck_5`. It establishes F2P under a task-specific legacy pytest
+  env, but rules-root git P2P policies fail the >=3 gate or time out, so the
+  task is not admitted.
 - `experiments/evp7_parallel_f2p_triage_20260613.md`: parallel F2P-only triage
   for `scrapy_2`, `tornado_1`, and `youtube-dl_2`; only `youtube-dl_2` produced
   a new clean F2P signal in this batch.

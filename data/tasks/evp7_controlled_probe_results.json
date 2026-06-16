@@ -700,6 +700,36 @@
           "result": "target_passed_2_passed"
         }
       }
+    },
+    {
+      "blocked_reason": [
+        "insufficient_p2p_broad_size",
+        "rules_root_git_policy_timeout"
+      ],
+      "bug_id": "5",
+      "date": "2026-06-16",
+      "decision": "f2p_established_but_not_admitted_p2p_gate_failed",
+      "fixed_result": "pass",
+      "notes": "Constructed buggy/fixed checkouts from the retained local thefuck Git clone using the BugsInPy reset/copy-test-file/copy-fixed-file flow. A task-specific Python 3.11 env using pytest==3.10.1 plus --assert=plain was required because this checkout's conftest uses legacy request.node.get_marker. The target F2P is established: buggy fails test_match_bitbucket with AssertionError and fixed passes. The rules-root git-push P2P policy retained only two tests after excluding the F2P oracle, and the broader rules-root git policy exceeded the 15 minute outer budget without a manifest. No candidate construction, task-file fallback, source/test fixture edit, or LLM API call was used.",
+      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_thefuck_5_p2p_blocked_rules_git_policy.json",
+      "probe_status": "f2p_established_p2p_gate_failed",
+      "project": "thefuck",
+      "run_command": "PYTEST_ADDOPTS=--assert=plain python -m pytest -q tests/rules/test_git_push.py::test_match_bitbucket",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_thefuck_5",
+      "test_file": "tests/rules/test_git_push.py",
+      "versions": {
+        "buggy": {
+          "checkout": "local_clone_bugsinpy_flow",
+          "git_head": "7c858fadb345",
+          "result": "fail"
+        },
+        "fixed": {
+          "checkout": "local_clone_bugsinpy_flow",
+          "git_head": "7c858fadb345",
+          "result": "pass"
+        }
+      }
     }
   ],
   "schema": "controlled_probe_results.v1"

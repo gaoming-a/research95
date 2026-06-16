@@ -272,6 +272,10 @@ They should not override `final_paper_roadmap_zh.md`.
   `thefuck_rules_root_pip_p2p_v1` policy collected `tests/rules`, retained 4
   pip-family P2P-broad tests, and validated four candidates before admission.
   This admission is rules-root pip-family evidence, not full project coverage.
+  A follow-up `bugsinpy_thefuck_5` probe established F2P under a task-specific
+  legacy pytest env, but the rules-root `git push` policy retained only 2 P2P
+  tests and the broader `git` policy timed out without a manifest, so it is not
+  admitted.
   Start from
   `docs/protocol/evidence_visibility_protocol.md`,
   `docs/experiments/evp7_protocol_pilot.md`, and

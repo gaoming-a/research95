@@ -1,0 +1,73 @@
+{
+  "task_id": "bugsinpy_thefuck_5",
+  "project": "thefuck",
+  "status": "f2p_established_p2p_not_admitted",
+  "p2p_broad_main_included": false,
+  "buggy_commit_id": "7c858fadb3458be829d3d43666ccb46c3ed5b8a0",
+  "fixed_commit_id": "c205683a8df8a57e2db1e9816a5a7ce3255b08fc",
+  "dependency_environment": {
+    "path": "outputs/envs/thefuck5_f2p_py311",
+    "ignored": true,
+    "cleaned_after_recording": true,
+    "python": "Python 3.11",
+    "key_installed_versions": {
+      "attrs": "19.3.0",
+      "colorama": "0.4.3",
+      "decorator": "4.4.2",
+      "mock": "4.0.2",
+      "pluggy": "0.13.1",
+      "psutil": "7.2.2",
+      "py": "1.11.0",
+      "pytest": "3.10.1",
+      "pyte": "0.8.0",
+      "six": "1.15.0",
+      "wcwidth": "0.1.9",
+      "win-unicode-console": "0.5"
+    },
+    "pytest_invocation_note": "pytest 3.10.1 requires --assert=plain on Python 3.11 to avoid legacy assertion-rewrite AST incompatibility"
+  },
+  "f2p_oracle": {
+    "nodeid": "tests/rules/test_git_push.py::test_match_bitbucket",
+    "buggy": "failed: AssertionError because match(Command('git push origin', bitbucket output)) returned true",
+    "fixed": "passed"
+  },
+  "p2p_attempts": [
+    {
+      "policy_name": "thefuck_rules_root_git_push_p2p_v1",
+      "scope_type": "project_level_official_test_root",
+      "test_root": "tests/rules",
+      "static_include_token": "git push",
+      "real_construction_attempted": true,
+      "manifest_generated": true,
+      "p2p_broad_size": 2,
+      "p2p_broad_tests": [
+        "tests/rules/test_git_push_different_branch_names.py::test_get_new_command",
+        "tests/rules/test_git_push_different_branch_names.py::test_match"
+      ],
+      "admission_gate": "failed_insufficient_p2p_broad_size"
+    },
+    {
+      "policy_name": "thefuck_rules_root_git_p2p_v1",
+      "scope_type": "project_level_official_test_root",
+      "test_root": "tests/rules",
+      "static_include_token": "git",
+      "real_construction_attempted": true,
+      "manifest_generated": false,
+      "outer_timeout_minutes": 15,
+      "observed_stuck_test": "tests/rules/test_git_merge.py::test_match",
+      "admission_gate": "failed_timeout_no_manifest"
+    }
+  ],
+  "decision": {
+    "admit_to_main": false,
+    "reason": "F2P is established, but no P2P-broad scope reached at least three stable pass-to-pass tests. The narrow git-push policy yielded only two tests, and the broader git-family policy timed out without a manifest.",
+    "candidate_construction_allowed": false,
+    "no_task_file_downgrade": true,
+    "no_source_or_test_fixture_edit": true,
+    "llm_api_called": false
+  },
+  "local_process_dirs_cleaned_after_recording": [
+    "outputs/thefuck5_p2p_workspace",
+    "outputs/envs/thefuck5_f2p_py311"
+  ]
+}

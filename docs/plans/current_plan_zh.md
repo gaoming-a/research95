@@ -11690,3 +11690,86 @@ Decision:
 - EVP-7 cohort 仍为 21 tasks / 98 candidates / 392 no-API packets；
 - 下一步应转向非 Tornado 的 fresh/underrepresented lane，或回到
   underrepresented admitted project 中寻找可复用 P2P policy 的任务。
+
+## 2026-06-16 `bugsinpy_thefuck_5` underrepresented-policy expansion start
+
+Inspect:
+
+- 当前 main cohort 仍为 21 tasks / 98 candidates / 392 no-API packets；
+- fresh-project lanes `sanic_2` 和 `tornado_2` 均已建立 F2P，但未通过 P2P
+  admission gate；
+- `thefuck` 目前只有 1 个 main task，但 `bugsinpy_thefuck_1` 已在
+  `thefuck_rules_root_pip_p2p_v1` 下顺利完成 F2P、P2P-broad 和 candidate
+  validation；
+- `bugsinpy_thefuck_5` 是同项目 underrepresented rules-root candidate：
+  - command: `pytest tests/rules/test_git_push.py::test_match_bitbucket`；
+  - buggy commit: `7c858fadb3458be829d3d43666ccb46c3ed5b8a0`；
+  - fixed commit: `c205683a8df8a57e2db1e9816a5a7ce3255b08fc`；
+  - patch target: `thefuck/rules/git_push.py`；
+  - target file `tests/rules/test_git_push.py` 中除 F2P 外还有多条
+    `test_match`、`test_not_match` 和 `test_get_new_command` 用例，具备
+    P2P-broad 候选空间。
+
+Plan:
+
+1. 从已验证的 local thefuck Git checkout 构造 `bugsinpy_thefuck_5`
+   buggy/fixed workspace；
+2. 验证 marker、目标测试文件、fixed source diff；
+3. 使用 existing ignored env `outputs/envs/thefuck1_f2p_py311` 运行 F2P；
+4. 若 F2P 不成立，记录 blocker 并停止；
+5. 若 F2P 成立，再用 explicit rules-root git-push policy 做 P2P dry-run；
+6. 只有 P2P-broad >= 3 后才允许 candidate construction 和 revalidation。
+
+Boundary:
+
+- 不调用 LLM API；
+- 不修改 checkout source/test/fixture；
+- 不使用 task-file-only fallback；
+- 不把 `thefuck_1` 的 pip-specific P2P tests 直接复用给 git-push 任务；
+- 新 policy 必须明确为 rules-root + git-push/test source bounded scope。
+
+Execute / Diagnose:
+
+- 已按 BugsInPy checkout 形态构造 `bugsinpy_thefuck_5` buggy/fixed workspace；
+- 初次复用 `thefuck_1` 的 pytest 9 env 时，目标测试在旧
+  `request.node.get_marker` API 处失败，属于工具链环境 blocker，不是 F2P
+  结果；
+- 根据 `thefuck_5` requirements 建立 ignored env
+  `outputs/envs/thefuck5_f2p_py311`：
+  - `pytest==3.10.1`；
+  - `pluggy==0.13.1`；
+  - `py==1.11.0`；
+  - `pyte==0.8.0`；
+  - `win-unicode-console==0.5`；
+- Python 3.11 下运行旧 pytest 需要 `--assert=plain`，否则 assertion rewrite
+  在 AST 兼容层失败；
+- F2P 结果：
+  - buggy：`test_match_bitbucket` 到达目标行为并 `AssertionError`；
+  - fixed：`1 passed`；
+  - 因此 F2P established。
+
+P2P Attempts:
+
+1. `thefuck_rules_root_git_push_p2p_v1`
+   - scope: `project_level_official_test_root`；
+   - root: `tests/rules`；
+   - static include token: `git push`；
+   - result: 只保留 2 条 P2P-broad tests，不满足 >=3；
+2. `thefuck_rules_root_git_p2p_v1`
+   - root: `tests/rules`；
+   - static include token: `git`；
+   - result: 15 分钟外层超时，未生成 manifest；
+   - observed stuck test:
+     `tests/rules/test_git_merge.py::test_match`。
+
+Decision:
+
+- `bugsinpy_thefuck_5` 记录为 `f2p_established_p2p_gate_failed`；
+- 已删除不达标的 1MB generated P2P manifest 和 P2P 输出目录；
+- 已保留小型 blocker record：
+  `data/p2p_scopes/bugsinpy_thefuck_5_p2p_blocked_rules_git_policy.json`；
+- 不构造 candidates；
+- 不进入 `p2p_broad_main`；
+- EVP-7 cohort 仍为 21 tasks / 98 candidates / 392 no-API packets；
+- 已清理本轮 ignored checkout/env 过程目录：
+  `outputs/thefuck5_p2p_workspace` 和 `outputs/envs/thefuck5_f2p_py311`。
