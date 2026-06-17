@@ -2458,3 +2458,17 @@ This file starts fresh for the patch-verification project.
 - The runner now uses direct oracle Python only for `-m` test commands. For
   wrapper oracles, it reads the tracked P2P manifest batch command and resolves
   relative Python paths against the repo root.
+
+## 2026-06-17 EVP-7 four-anchor boundary
+
+- Do not treat the current E0/E2/E4/E6 artifacts as a partially filled
+  adjacent-difference E0-E6 ladder. The current E0 already exposes
+  `patch_diff` and `touched_files`, while E2 mainly adds patch-apply evidence
+  and keeps syntax/import/static analysis as `not_run`.
+- Because of that implementation, adding E1/E3/E5 to the current EVP-7 would
+  duplicate or overlap evidence variables rather than create clean one-variable
+  increments. It would also require rerunning packets, prompts, baselines, LLM
+  reviews, statistics, and figures.
+- The current paper route should frame EVP-7 as a four-anchor evidence
+  visibility pilot. A complete adjacent-difference ladder belongs in a future
+  EVP-8 or EVP-7-v2 protocol with redesigned levels from E0 onward.

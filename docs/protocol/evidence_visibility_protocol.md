@@ -95,13 +95,18 @@ Run the pilot with four levels first:
 
 | Level | Visible evidence | Purpose |
 | --- | --- | --- |
-| E0 | issue or bug summary + candidate patch diff | LLM diff-only merge-gate behavior |
-| E2 | E0 + apply/static/syntax/import style evidence | low-cost tool filtering |
+| E0 | issue or bug summary + candidate patch diff + touched files | LLM diff-only merge-gate behavior |
+| E2 | E0 + patch-apply evidence; syntax/import/static slots currently remain `not_run` | low-cost apply-evidence filtering |
 | E4 | E2 + visible F2P/P2P execution evidence | executable visible evidence effect |
 | E6 | E4 + realistic visible tool evidence summary | strongest realistic non-oracle setting |
 
-E1/E3/E5 are deferred until the core curve is stable. E7 is an oracle upper
-bound only and must not support realistic merge-gate claims.
+E1/E3/E5 are not part of the current EVP-7 paper-facing protocol. They must
+not be inserted into the existing E0/E2/E4/E6 artifacts after the fact, because
+the current E0 already includes patch diff and touched files while E2 mainly
+adds patch-apply evidence. A full adjacent-difference E0-E6 ladder requires a
+new EVP-8 or EVP-7-v2 protocol with regenerated packets, prompts, baselines,
+LLM runs, statistics, and figures. E7 is an oracle upper bound only and must
+not support realistic merge-gate claims.
 
 ## Visible And Hidden Boundary
 

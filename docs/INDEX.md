@@ -19,10 +19,13 @@
   generator-unsolved but validation-stable tasks such as `httpie_5` should be
   treated as hard-generation/stress cases rather than deleted. The 2026-06-12
   update extracts only non-duplicative external advice: the Evidence Visibility
-  Curve framing, FACR/Evidence Gain as calibrated secondary metrics, staged
-  E0/E2/E4/E6-first ablation, realistic tool-only boundaries, and the need to
-  keep roadmap Phase A counts aligned with the tracked structural cohort while
-  keeping the historical real G5 run boundary explicit.
+  Curve framing, FACR/Evidence Gain as calibrated secondary metrics, the
+  current E0/E2/E4/E6 four-anchor pilot boundary, realistic tool-only
+  boundaries, and the need to keep roadmap Phase A counts aligned with the
+  tracked structural cohort while keeping the historical real G5 run boundary
+  explicit. As of 2026-06-17, E1/E3/E5 are not follow-up insertions for the
+  current EVP-7 artifacts; a full adjacent-difference E0-E6 ladder requires a
+  new EVP-8 or EVP-7-v2 protocol and rerun.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.
@@ -37,8 +40,10 @@
   `youtube-dl_37`, and the bounded `thefuck_1` rules-root pip-family
   admission. The current tracked structural cohort is 21 tasks across 6
   projects, 98 candidates, and 392 E0/E2/E4/E6 evidence packets. It keeps E7 as
-  oracle-only, records G1-G5 no-API gate status, and preserves the 376-record
-  real DeepSeek G5 result as a historical 20-task/94-candidate bounded pilot.
+  oracle-only, records that E1/E3/E5 are outside the current EVP-7
+  paper-facing protocol, records G1-G5 no-API gate status, and preserves the
+  376-record real DeepSeek G5 result as a historical
+  20-task/94-candidate bounded pilot.
 - `../data/tasks/evp7_tasks.jsonl`: tracked task manifest for the frozen
   EVP-7 protocol pilot, generated from the cohort registry and P2P manifests.
 - `../data/tasks/evp7_manifest_summary.json`: task-level summary of the current

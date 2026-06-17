@@ -11773,3 +11773,59 @@ Decision:
 - EVP-7 cohort 仍为 21 tasks / 98 candidates / 392 no-API packets；
 - 已清理本轮 ignored checkout/env 过程目录：
   `outputs/thefuck5_p2p_workspace` 和 `outputs/envs/thefuck5_f2p_py311`。
+
+## 2026-06-17 final roadmap evidence-level boundary optimization
+
+Inspect:
+
+- 当前 canonical final route 是 `docs/plans/final_paper_roadmap_zh.md`；
+- roadmap 仍包含旧的完整 E0-E7 ladder 建议，并写有“核心曲线稳定后补齐
+  E1/E3/E5”的分阶段消融建议；
+- 当前实际 evidence packet builder 只生成 E0/E2/E4/E6，且 E0 已包含
+  `issue_summary`、`patch_diff` 和 `touched_files`；
+- 当前 E2 相比 E0 的主要新增证据是 `patch_applies`，`syntax_import_check`
+  和 `static_analysis` 仍为 `not_run`；
+- 因此 E1/E3/E5 不能作为当前 EVP-7 四层之间的自然中间层直接插入，否则会
+  混淆 four-anchor pilot 与 full adjacent-difference ladder。
+
+Plan:
+
+1. 将 `final_paper_roadmap_zh.md` 中的短期路线明确改为 EVP-7
+   four-anchor evidence visibility pilot；
+2. 删除或替换“核心曲线稳定后补齐 E1/E3/E5”的旧执行建议；
+3. 将完整 E0-E6 adjacent-difference ladder 下沉为未来 EVP-8 /
+   EVP-7-v2 协议，要求从 E0 开始重新定义、重建 packets/prompts/baselines/
+   LLM runs/statistics；
+4. 同步更新 protocol、INDEX 和 engineering notes，防止后续继续按旧路线补
+   E135；
+5. 只做文档路线修订，不改实验数据、不调用 API、不重新生成 evidence packets。
+
+Acceptance:
+
+- roadmap 明确区分 short-term four-anchor paper 和 future full-ladder study；
+- protocol 不再暗示当前 EVP-7 稳定后可直接补 E1/E3/E5；
+- INDEX 和 engineering notes 能指向新的路线边界；
+- 文档审计/最小检查通过，且 diff 不包含 raw outputs、credentials 或本地路径。
+
+Execute:
+
+- 已更新 `docs/plans/final_paper_roadmap_zh.md`：
+  - 当前 paper-facing EVP-7 定义为 E0/E2/E4/E6 four-anchor pilot；
+  - 删除“核心曲线稳定后补齐 E1/E3/E5”的后续执行路线；
+  - 将完整 E0-E6 adjacent-difference ladder 下沉为未来 EVP-8 /
+    EVP-7-v2，需要整体重做 packets/prompts/baselines/LLM runs/statistics；
+  - 修正 historical checkpoint 中把四层 artifacts 误写为 `E0-E6 packets`
+    的表述。
+- 已同步 `docs/protocol/evidence_visibility_protocol.md`、`README.md`、
+  `docs/INDEX.md`、`docs/plans/current_project_state_zh.md` 和
+  `docs/experience/engineering_notes.md`。
+
+Verify:
+
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过 final roadmap / protocol / paper framing 检查；保留的唯一 blocker 仍是
+  历史 prompt-only positive claim 的 `stop_or_redesign`，不影响当前 bounded
+  EVP-7 claim。
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过。
+- `git diff --check` 通过。

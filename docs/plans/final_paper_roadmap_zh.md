@@ -19,6 +19,11 @@
 - 主实验任务集必须按 validation stability 和 dataset balance 重构；每个 bug
   不要求都有 AI-generated correct patch，但每个纳入任务必须有可靠 ground
   truth 和可复现 validation。
+- 2026-06-17 起，当前 paper-facing EVP-7 明确为
+  **four-anchor evidence visibility pilot**，只使用 E0/E2/E4/E6。不得在
+  当前 EVP-7 artifacts 中直接补插 E1/E3/E5。完整相邻差分 E0-E6 ladder
+  只能作为 EVP-8 或 EVP-7-v2 新协议，从层级定义、packets、prompts、
+  baselines、LLM runs 和统计分析整体重做。
 
 ## 1. 论文主线
 
@@ -86,25 +91,26 @@
 这是最终论文的核心贡献。后续不应只比较三组条件，而应做 evidence
 visibility ablation。
 
-建议 evidence levels：
+当前论文采用 four-anchor evidence levels：
 
 | Level | Verifier 可见信息 |
 | --- | --- |
-| E0 | issue summary + patch diff |
-| E1 | E0 + modified files / changed functions |
-| E2 | E1 + static/apply/syntax/import result |
-| E3 | E2 + failing test names / runtime trace |
-| E4 | E3 + visible fail-to-pass and pass-to-pass test results |
-| E5 | E4 + generated targeted test results |
-| E6 | E5 + realistic full tool evidence summary |
+| E0 | issue summary + patch diff + touched files |
+| E2 | E0 + patch-apply evidence；syntax/import/static analysis slots are currently `not_run` |
+| E4 | E2 + independent visible fail-to-pass/pass-to-pass test outcomes |
+| E6 | E4 + deterministic visible tool evidence summary |
 | E7 | oracle upper bound，单独报告，不作为真实可见设置 |
+
+该设计不是完整 E0-E6 连续阶梯，而是四个证据可见性锚点。E1/E3/E5 不在当前
+EVP-7 paper-facing protocol 内补做；若未来要研究相邻单变量机制，必须新开
+EVP-8 / EVP-7-v2 full-ladder protocol，并从 E0 开始重新定义每一级新增证据。
 
 需要回答：
 
-- 从 E0 到 E6，false accept 是否下降；
+- 从 E0/E2/E4/E6 四个锚点看，false accept 是否下降；
 - correct recall 是否下降；
 - escalation 是否增加；
-- 哪一层 evidence 对决策影响最大；
+- 哪个 evidence anchor 对决策影响最大；
 - E6 是否真的优于 tool-only rule；
 - E7 是否只是 oracle leakage upper bound。
 
@@ -864,13 +870,13 @@ cohort 的论文结果巩固、统计分析、图表和 claim-boundary 检查。
 2026-06-13 更新：`bugsinpy_youtube-dl_7` 已在 retained oracle、4 个候选、
 retained-oracle validation 和 108-test project-level P2P-broad validation
 通过后正式纳入主 cohort。当时 EVP-7 tracked artifacts 为 8 tasks / 5 projects /
-46 candidates / 184 E0-E6 packets。随后已完成 fresh DeepSeek V4 full run，
+46 candidates / 184 E0/E2/E4/E6 packets。随后已完成 fresh DeepSeek V4 full run，
 覆盖当前 184 packets；旧 168-packet run 只保留为 admission 前历史记录。
 
 2026-06-13 后续更新：`bugsinpy_youtube-dl_6` 已按同一 admission gate 纳入，
 包含 retained DFXP time oracle、4 个候选、retained-oracle validation 和
 110-test project-level P2P-broad validation。当前 no-API tracked artifacts
-已提升为 9 tasks / 5 projects / 50 candidates / 200 E0-E6 packets。此前
+已提升为 9 tasks / 5 projects / 50 candidates / 200 E0/E2/E4/E6 packets。此前
 fresh DeepSeek V4 full run 只覆盖 8-task / 184-packet cohort；随后已完成
 fresh 200-packet DeepSeek V4 G5 run，覆盖当前 9-task / 50-candidate /
 200-packet cohort。该 run 支持 pilot evidence-visibility signal，但不支持
@@ -880,7 +886,7 @@ scale-generalized result 或 LLM 优于 deterministic tool-only baseline。
 纳入，包含 retained unified-timestamp oracle、4 个候选、retained-oracle
 validation 和 128-test project-level P2P-broad validation。当前 no-API
 tracked artifacts 已提升为 10 tasks / 5 projects / 54 candidates / 216
-E0-E6 packets。随后已完成 fresh 216-packet DeepSeek V4 G5 run，覆盖当前
+E0/E2/E4/E6 packets。随后已完成 fresh 216-packet DeepSeek V4 G5 run，覆盖当前
 10-task / 54-candidate / 216-packet cohort。该 run 通过质量审计但仍有限制：
 支持 bounded pilot observations，不支持规模泛化、不支持 LLM 优于
 deterministic tool-only baseline、不支持已知真实计费成本。
@@ -888,7 +894,7 @@ deterministic tool-only baseline、不支持已知真实计费成本。
 2026-06-13 再后续更新：`bugsinpy_youtube-dl_2` 已按同一 admission gate
 纳入，包含 retained MPD parser oracle、4 个候选、retained-oracle validation
 和 147-test project-level P2P-broad validation。当前 no-API tracked artifacts
-已提升为 11 tasks / 5 projects / 58 candidates / 232 E0-E6 packets。随后已完成
+已提升为 11 tasks / 5 projects / 58 candidates / 232 E0/E2/E4/E6 packets。随后已完成
 fresh 232-packet DeepSeek V4 G5 run，覆盖当前 11-task / 58-candidate /
 232-packet cohort。该 run 在同 prompt/config/model 下重试 2 条空响应后得到
 232/232 parse-valid 结果，G5 signal status =
@@ -900,7 +906,7 @@ deterministic tool-only baseline 或已知真实计费成本。
 纳入，包含 retained JSInterpreter call oracle、4 个候选、retained-oracle
 validation 和 137-test project-level P2P-broad validation。当前 no-API
 tracked artifacts 已提升为 12 tasks / 5 projects / 62 candidates / 248
-E0-E6 packets。248-packet prompt manifest、schema dry-run、tool-only baseline
+E0/E2/E4/E6 packets。248-packet prompt manifest、schema dry-run、tool-only baseline
 和 readiness checks 均已刷新；随后已完成 fresh 248-packet DeepSeek V4 G5
 run 和 raw-output-free quality audit。该 run 产生 247/248 parse-valid 输出，
 1 条 E2 非空截断 JSON 被报告为模型输出质量边界而未静默重试。E4/E6 继续保持
@@ -921,8 +927,9 @@ runner-estimated cost 当作外部 DeepSeek billing statement。
 ## 18. 2026-06-12 外部建议提取后的增量修订
 
 本节只记录相对既有路线图的增量约束。以下内容不得重复替代前文已经定义的
-E0-E7 evidence levels、visible/hidden 分离、tool-only baseline、Candidate
-Patches 标题和规模分档。
+four-anchor EVP-7 levels、visible/hidden 分离、tool-only baseline、Candidate
+Patches 标题和规模分档。完整 E0-E6 adjacent-difference ladder 只属于未来
+EVP-8 / EVP-7-v2 协议。
 
 ### 18.1 先修正文档一致性，再继续扩量
 
@@ -940,7 +947,7 @@ Patches 标题和规模分档。
 
 ### 18.2 Evidence Visibility Curve 作为核心图形
 
-最终论文应把 E0-E6 的主结果组织为一条
+最终论文应把 E0/E2/E4/E6 四个锚点的主结果组织为一条
 `Evidence Visibility Curve`，而不是只报告若干条件表格。核心曲线至少包含：
 
 - false accept rate；
@@ -976,17 +983,35 @@ Utility = AcceptCorrect - lambda * AcceptWrong - mu * Escalate - nu * RejectCorr
 patch 的代价高于升级人工和错误拒绝正确 patch。正式论文中必须报告参数选择
 理由，并至少做一组敏感性分析。
 
-### 18.4 分阶段消融，避免一次性全因子爆炸
+### 18.4 四锚点主线与 full-ladder 边界
 
-如果成本或数据规模不足，优先采用分阶段设计：
+当前论文不再采用“核心曲线稳定后补齐 E1/E3/E5”的路线。原因是当前 EVP-7
+真实 artifacts 中，E0 已包含 `patch_diff` 和 `touched_files`，E2 相比 E0
+主要只新增 patch-apply evidence；在这个协议中间直接插入 E1 会造成变量重叠，
+不能形成干净的相邻单变量差分。
 
-1. 全量任务先跑核心 evidence levels：`E0`、`E2`、`E4`、`E6`；
-2. 只有当核心曲线稳定后，再补齐 `E1`、`E3`、`E5`；
-3. 多模型稳健性优先跑关键层级：`E0`、`E4`、`E6`；
-4. generated tests 仍是增强项，不能在 Stage A-F 未稳定前成为主线依赖。
+短期路线：
 
-这样可以保留 evidence-visibility 研究问题，同时避免把实验推进变成无法复现的
-全量矩阵。
+1. 当前 paper-facing 结果只使用 `E0`、`E2`、`E4`、`E6` 四个锚点；
+2. claim 写成 bounded four-anchor evidence-visibility pilot，不写成完整
+   E0-E6 ladder 机制验证；
+3. 不再为当前 EVP-7 追加 E1/E3/E5 API run、packet generation 或统计图；
+4. 若需要增强答辩或论文工作量呈现，优先补强 cohort construction、
+   F2P/P2P validation、tool-only baseline、case analysis、审计和图表叙事，
+   而不是硬插中间层级；
+5. 多模型稳健性若后续执行，应优先覆盖关键锚点 `E0`、`E4`、`E6`，并在
+   user-confirmed API budget 下单独记录。
+
+长期路线：
+
+1. 完整 adjacent-difference ladder 只能作为 EVP-8 或 EVP-7-v2；
+2. 新协议必须从 E0 开始重新设计每一级的新增证据，保证 `Ek - E(k-1)`
+   只有一类清晰变量；
+3. 新协议不能把当前 EVP-7 的 E2/E4/E6 结果直接当作 full-ladder 中间层；
+4. 新协议需要重新生成 evidence packets、prompt manifests、tool-only
+   baselines、LLM review records、statistics、utility analysis 和 figures；
+5. generated targeted tests 属于未来协议的可选增强项，不能成为当前论文主线
+   的临时补丁。
 
 ### 18.5 LLM 增量价值的判定边界
 

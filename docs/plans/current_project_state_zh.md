@@ -1,6 +1,6 @@
 # 当前项目状态与文件地图
 
-日期：2026-06-16
+日期：2026-06-17
 
 本文件是短入口，用来整理当前计划文档和项目文件。它不替代
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
@@ -10,7 +10,9 @@
 
 - 分支：`main`
 - 远端：`origin/main`
-- 当前 Git 状态：已同步，`ahead=0`、`behind=0`
+- 当前 Git 状态：以 `git status --short --branch` 为准；2026-06-17
+  检查时存在进行中的本地文档修改和未跟踪 `cookiecutter_4` P2P scope 文件，
+  其中后者不属于 final-roadmap 边界修订。
 - ignored 本地交付物：
   - `outputs/`
   - `artifacts/`
@@ -27,6 +29,9 @@
   - real DeepSeek G5 verifier run：仍限定在旧 20-task / 94-candidate /
     376-packet cohort；
   - raw-output-free tracked summaries and audits。
+- 当前 evidence-level 边界：EVP-7 是 E0/E2/E4/E6 four-anchor pilot，不是
+  完整 E0-E6 adjacent-difference ladder；E1/E3/E5 不应补插进当前 artifacts，
+  只能在未来 EVP-8 / EVP-7-v2 新协议中整体重做。
 - 当前 paper-facing 结果：
   - `docs/paper/ieee_submission_draft.tex`
   - `docs/paper/patch_verification_draft.md`

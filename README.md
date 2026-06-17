@@ -72,9 +72,11 @@ The final-paper route is:
 
 Treat that file as the single source for the next research target. It upgrades
 the current pilot into an evidence-visibility empirical study with expanded
-real-bug tasks, hidden-evaluator separation, tool-only baselines, evidence
-ablation, an Evidence Visibility Curve, calibrated secondary metrics such as
-FACR/Evidence Gain, and an anonymous artifact.
+real-bug tasks, hidden-evaluator separation, tool-only baselines, four-anchor
+E0/E2/E4/E6 evidence ablation, an Evidence Visibility Curve, calibrated
+secondary metrics such as FACR/Evidence Gain, and an anonymous artifact. A
+complete adjacent-difference E0-E6 ladder is future EVP-8 / EVP-7-v2 work, not
+an insertion into the current EVP-7 artifacts.
 
 Every concrete continuation round must first update:
 
