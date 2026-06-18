@@ -13391,3 +13391,55 @@ Verify:
 - `git diff --check` 通过；
 - tracked drift 限于 `docs/plans/current_project_state_zh.md`、
   `docs/plans/current_plan_zh.md` 和 `docs/experience/engineering_notes.md`。
+
+## 2026-06-18 ignored handoff refresh without tracked drift
+
+Inspect:
+
+- 当前工作区干净，`main...origin/main [ahead 17]`；
+- 最近提交为 `6a220e0 Avoid fixed ahead count in project state`；
+- `docs/experiments/evp7_next_decision_packet_20260618.md` 仍指定无明确新决策时
+  只能继续 no-API paper-submission maintenance；
+- 未发现需要再次追写 tracked ahead 数的稳定文档漂移；
+- 但 ignored `outputs/handoff/*` 和 `outputs/git_sync_packet_audit/*` 是本地交接
+  状态，适合在不改实验数据、不调用 API 的前提下刷新。
+
+Plan:
+
+1. 刷新 ignored Git sync packet 和 audit；
+2. 刷新 ignored pre-API handoff；
+3. 重跑 paper readiness、anonymous artifact audit 和 local quality gate；
+4. 若 tracked 文件除本计划日志外无漂移，则只提交本轮计划记录；
+5. 不调用 API、不扩 bug、不补 E1/E3/E5、不重建 evidence packets、不提交
+   `outputs/` 或 `artifacts/`。
+
+Acceptance:
+
+- ignored handoff reports 能反映当前 local-ahead / GitHub-sync-deferred 状态；
+- paper/package gates 继续通过；
+- tracked drift 不包含 ignored reports 或 generated artifacts。
+
+Execute:
+
+- 已运行 `python scripts\write_git_sync_packet.py --out-json outputs\handoff\git_sync_packet.json --out-md outputs\handoff\git_sync_packet.md`；
+- 已运行 `python scripts\audit_git_sync_packet.py --out-json outputs\git_sync_packet_audit\latest.json --out-md outputs\git_sync_packet_audit\latest.md`；
+- 已运行 `python scripts\write_pre_api_handoff.py --out-json outputs\handoff\pre_api_handoff.json --out-md outputs\handoff\pre_api_handoff.md`；
+- 这些输出均位于 ignored `outputs/`，不提交。
+
+Verify:
+
+- direct JSON inspection 确认 `git_requires_human_decision=True`、
+  `git_sync_ready=False`、`git_audit_passed=True`、
+  `pre_api_commands_passed=True`、`pre_api_ready_for_real_api=True`、
+  `pre_api_git_decision_required=True`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=303`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `git diff --check` 通过；
+- `git status --short --branch` 显示 tracked drift 仅为
+  `docs/plans/current_plan_zh.md`。
