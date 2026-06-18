@@ -10,10 +10,13 @@
 
 - 分支：`main`
 - 远端：`origin/main`
-- 当前 Git 状态：以 `git status --short --branch` 为准。2026-06-18 本轮检查
-  为 `main...origin/main [ahead 15]` 且工作区干净；最近本地提交
-  `6423ecf Record no-API submission maintenance` 已完成 no-API submission
-  package rebuild / readiness / artifact / local quality 验证记录。
+- 当前 Git 状态：以 `git status --short --branch` 为准。2026-06-18 最近几轮
+  检查均为本地 `main` clean 且 ahead `origin/main`；精确 ahead 数会随本地
+  文档维护提交增加，不应写成长期 truth。
+- 最近本地 no-API 维护提交包括
+  `6423ecf Record no-API submission maintenance` 和
+  `1766932 Refresh short project state`；前者记录 paper/package rebuild、
+  readiness、artifact 和 local quality 验证，后者刷新短状态入口。
 - GitHub sync 边界：此前 push 频繁失败，用户已允许在同步失败时跳过 GitHub
   并继续本地计划执行；因此本地 `main` ahead `origin/main` 是已知同步状态，
   不应解读为未完成实验或未提交工作。

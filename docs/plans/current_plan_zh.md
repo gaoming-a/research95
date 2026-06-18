@@ -13331,3 +13331,63 @@ Verify:
 - `git diff --check` 通过；
 - 当前 tracked drift 限于 `docs/plans/current_project_state_zh.md`、
   `docs/plans/current_plan_zh.md` 和 `docs/experience/engineering_notes.md`。
+
+## 2026-06-18 non-cyclic Git ahead wording refresh
+
+Inspect:
+
+- 当前工作区干净，`main...origin/main [ahead 16]`；
+- 最近提交为 `1766932 Refresh short project state`；
+- `docs/plans/current_project_state_zh.md` 已要求以
+  `git status --short --branch` 为准，但仍把 `ahead 15` 写在“当前同步状态”
+  第一段，后续每次本地提交都会让该数字过期；
+- `docs/experience/engineering_notes.md` 已记录“committing the refresh itself
+  can increase the local ahead count”，因此本轮应把短状态页改成非循环措辞，而
+  不是继续追精确 ahead 数；
+- 本轮仍没有 second-model、30-50 bug expansion、新 verifier design 或 final
+  freeze 的明确用户确认。
+
+Plan:
+
+1. 将 `docs/plans/current_project_state_zh.md` 的 Git 同步段改成非循环措辞：
+   精确 ahead 数以当前 `git status` 为准，文档只记录最近检查为 clean/local
+   ahead 和最近 no-API maintenance 提交；
+2. 在 `docs/experience/engineering_notes.md` 补充不要反复追 ahead 数的经验；
+3. 运行 targeted rg、paper readiness、artifact audit、local quality 和 diff
+   checks；
+4. 不调用 API、不扩 bug、不补 E1/E3/E5、不重建 evidence packets、不提交 ignored
+   outputs/artifacts。
+
+Acceptance:
+
+- 短状态页不再把某个 ahead 数写成长期 current truth；
+- 文档仍记录 GitHub sync 失败时可按用户授权暂缓同步；
+- 当前 bounded EVP-7 paper/package readiness 不退化；
+- tracked drift 只限本轮文档维护文件。
+
+Execute:
+
+- 已将 `docs/plans/current_project_state_zh.md` 的 Git 同步段改为非循环措辞：
+  精确 ahead 数以 `git status --short --branch` 为准，短状态页只记录最近几轮
+  检查为 clean/local-ahead；
+- 已保留最近 no-API 维护提交 `6423ecf` 和短状态页刷新提交 `1766932` 作为
+  handoff anchors；
+- 已在 `docs/experience/engineering_notes.md` 补充不要每轮追写 ahead 数的经验；
+- 未修改 README/INDEX，因为入口索引和 Git sync 说明仍正确。
+
+Verify:
+
+- targeted `rg` 检查确认 `current_project_state_zh.md` 不再将 `ahead 15` 或
+  `ahead 16` 写成 current truth，并仍保留 `git status --short --branch`、
+  GitHub sync 延后、no-E1/E3/E5 和 no-final-freeze 边界；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=303`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `git diff --check` 通过；
+- tracked drift 限于 `docs/plans/current_project_state_zh.md`、
+  `docs/plans/current_plan_zh.md` 和 `docs/experience/engineering_notes.md`。

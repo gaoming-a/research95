@@ -2642,5 +2642,9 @@ This file starts fresh for the patch-verification project.
 - Keep exact ahead counts tied to the inspection time and still tell readers to
   use `git status --short --branch` as source of truth; committing the refresh
   itself can increase the local ahead count.
+- If repeated local documentation commits make the exact ahead count stale,
+  prefer non-cyclic wording such as "local main is clean and ahead; use
+  `git status --short --branch` for the exact count" instead of committing a new
+  ahead number every turn.
 - Treat GitHub push failures as sync-state context only. They do not authorize
   API calls, cohort expansion, E1/E3/E5 insertion, or a final freeze.
