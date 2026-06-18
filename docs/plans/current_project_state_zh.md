@@ -40,6 +40,7 @@
   - `docs/paper/generated_tables.md`
   - `docs/paper/generated_tables.tex`
   - `docs/artifact/submission_checklist.md`
+  - `docs/artifact/submission_handoff_20260618.md`
 - 当前 known non-blocker：
   - old prompt-only evidence-first gate remains `stop_or_redesign`；
   - this blocks prompt-only positive claims, not the current bounded EVP-7 claim。

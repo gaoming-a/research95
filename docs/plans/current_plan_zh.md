@@ -11859,6 +11859,68 @@ Verify:
   通过；
 - `git diff --check` 通过。
 
+## 2026-06-18 no-API submission handoff refresh
+
+Inspect:
+
+- 当前 `main` 与 `origin/main` 同步，工作区干净；
+- 最新决策包已规定：没有明确 provider/model/预算/scope 决策时，只能继续
+  no-API paper-submission maintenance；
+- 当前 tracked paper/artifact 文档已经记录 workload-ledger 后的 submission
+  readiness，但缺少一个短 handoff 文件把最新 no-API rebuild/audit 状态集中给
+  下个会话使用。
+
+Plan:
+
+1. 重新生成 paper tables 和 IEEE draft，确认 tracked paper outputs 无漂移；
+2. 连续两遍编译 IEEE PDF，并抽查 PDF 文本中的 workload ledger 和 bounded
+   EVP-7 conclusion；
+3. 重建 ignored anonymous artifact ZIP，并运行 artifact audit；
+4. 新增 tracked submission handoff，记录当前可提交状态、验证命令、默认下一步和
+   禁止动作；
+5. 同步 README、INDEX、current project state 和 submission checklist；
+6. 不调用 API、不扩 bug、不补 E1/E3/E5、不改实验数据。
+
+Execute:
+
+- `python scripts\write_paper_tables.py` 通过；
+- `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`
+  通过；
+- `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex`
+  连续两遍通过，输出 7 页 PDF；
+- `pdftotext outputs\paper_compile\ieee_submission_draft.pdf - | rg -n ...`
+  确认 PDF 包含 21/98/392 structural workload、20/94/376 real G5 run 和
+  bounded EVP-7 conclusion；
+- `python scripts\audit_paper_claim_boundary.py` 通过，`raw_output_free=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过 current bounded EVP-7 claim readiness；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  生成 299-file ignored artifact，`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- 已新增 `docs/artifact/submission_handoff_20260618.md`；
+- 已同步 `README.md`、`docs/INDEX.md`、
+  `docs/plans/current_project_state_zh.md` 和
+  `docs/artifact/submission_checklist.md`。
+
+Verify:
+
+- 本轮 rebuild/audit 没有修改 tracked paper outputs；
+- handoff 明确默认下一步仍是 no-API paper-submission maintenance；
+- handoff 明确禁止在未确认前执行 second-model API、cohort expansion、
+  E1/E3/E5 insertion 或 new verifier design run；
+- `rg -n "submission_handoff_20260618|299 files|second-model API|E1/E3/E5|no-API paper-submission maintenance" ...`
+  确认 README、INDEX、current project state、submission checklist、handoff 和
+  current plan 均可检索到新 handoff 与禁止动作边界；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过 current bounded EVP-7 claim readiness；保留的唯一 blocker 仍是旧
+  prompt-only positive claim 的 `stop_or_redesign`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过。
+
 ## 2026-06-18 no-API next-decision packet
 
 Inspect:

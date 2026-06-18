@@ -48,6 +48,7 @@ state for the Evidence Visibility / Candidate Patches submission path.
 - `docs/experiments/evp7_g5_376_tool_attribution.md`
 - `docs/experiments/evp7_g5_376_qualitative_cases.md`
 - `docs/experiments/evp7_g5_376_claim_traceability.md`
+- `docs/artifact/submission_handoff_20260618.md`
 
 ## Rebuild Commands
 
@@ -99,11 +100,16 @@ The anonymous package must not contain:
 
 ## Latest Local Verification
 
-Last checked on 2026-06-18 after workload-ledger integration:
+Last checked on 2026-06-18 after the no-API submission handoff refresh:
 
 - paper tables regenerated from tracked summaries;
 - IEEE draft regenerated from the current table snippets;
 - LaTeX compiled twice without unresolved references;
 - PDF text contains the structural workload ledger and bounded EVP-7
   conclusion;
-- anonymous artifact ZIP rebuilt and audit result was `safe: true`.
+- claim-boundary audit passed and remained raw-output-free;
+- paper readiness and local quality gate passed;
+- anonymous artifact ZIP rebuilt with 299 files and audit result was
+  `safe: true`;
+- tracked handoff packet:
+  `docs/artifact/submission_handoff_20260618.md`.
