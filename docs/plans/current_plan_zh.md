@@ -12722,3 +12722,70 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过；
 - `git diff --check` 通过。
+
+## 2026-06-18 submission freeze-candidate packet
+
+Inspect:
+
+- 当前 `git status --short --branch` 为 `main...origin/main [ahead 7]`，
+  工作区在本轮开始时干净；此前 GitHub push 已频繁失败，当前可 local-only
+  继续；
+- `docs/experiments/evp7_next_decision_packet_20260618.md` 明确：没有新决策时
+  只能做 no-API paper-submission maintenance；
+- 当前 handoff/checklist 已说明需要确认 target venue/format 与是否冻结当前
+  7-page IEEE PDF，但缺少单独的 submission freeze-candidate packet；
+- 本轮不调用 API、不扩 bug、不补 E1/E3/E5、不修改 evidence packets、不把当前
+  候选包标成 final freeze。
+
+Plan:
+
+1. 新增 tracked no-API `docs/artifact/submission_freeze_candidate_20260618.md`；
+2. 记录当前可冻结候选状态：bounded EVP-7 claim、21/98/392 structural
+   pipeline、20/94/376 real G5 run、7-page IEEE PDF target、301-file artifact
+   readiness、advisor workload packet；
+3. 明确仍需用户确认：target venue/format、是否冻结当前 7-page IEEE PDF、
+   是否保持 no-API/no-expansion 边界、是否稍后重试 GitHub sync；
+4. 将该 packet 纳入 README/INDEX/current project state/checklist/handoff/
+   anonymous artifact 文档；
+5. 将该 packet 加入 `audit_anonymous_artifact.py` required files/snippets 和
+   `audit_paper_readiness.py` required docs；
+6. 重建 ignored anonymous artifact 并运行 paper readiness、artifact audit、
+   local quality、diff check。
+
+Acceptance:
+
+- freeze-candidate packet 存在并明确不是最终冻结版；
+- paper readiness 的 required docs 包含该 packet；
+- anonymous artifact audit 强制包含该 packet 和 embedded README entry；
+- readiness/artifact/local gates 均通过；
+- 本轮提交只包含相关 tracked 文档和 gate 脚本，不提交 ignored outputs/artifacts。
+
+Execute:
+
+- 已新增 `docs/artifact/submission_freeze_candidate_20260618.md`，记录当前
+  paper/artifact package 是 freeze candidate 而非 final freeze；
+- 已同步 README、docs/INDEX、current project state、submission checklist、
+  submission handoff、anonymous artifact 文档和 engineering notes；
+- 已将 freeze-candidate packet 加入 `scripts/audit_anonymous_artifact.py`
+  required files/snippets；
+- 已更新 `scripts/prepare_anonymous_artifact.py`，使 embedded
+  `ARTIFACT_README.md` 指向 freeze-candidate packet；
+- 已将 freeze-candidate packet 加入 `scripts/audit_paper_readiness.py`
+  required docs。
+
+Verify:
+
+- `python -m py_compile scripts\audit_paper_readiness.py scripts\audit_anonymous_artifact.py scripts\prepare_anonymous_artifact.py scripts\run_local_quality_gate.py`
+  通过；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=302`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`required_docs.submission_freeze_candidate.exists=true`、
+  `submission_package_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- direct JSON/ZIP inspection 确认 `manifest_file_count=302`、
+  `missing_required=[]`、`missing_readme_snippets=[]`、
+  `zip_has_freeze_packet=true`。

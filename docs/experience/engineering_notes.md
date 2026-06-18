@@ -2572,3 +2572,16 @@ This file starts fresh for the patch-verification project.
 - Do not keep README Git sync text that claims local `main` matches
   `origin/main` when the branch is known to be ahead after push failures. Use
   `git status --short --branch` as the sync source of truth.
+
+## 2026-06-18 submission freeze-candidate boundary
+
+- A freeze-candidate packet is not a final freeze decision. It should record the
+  current paper/artifact candidate state and the remaining user confirmations,
+  especially venue/format constraints and whether the current PDF should be
+  frozen.
+- If the freeze-candidate packet becomes part of the submission-facing package,
+  add it to both artifact audit required files/snippets and paper readiness
+  required docs. Otherwise the handoff can mention it while the package gates do
+  not enforce it.
+- Do not include artifact ZIP hashes in tracked freeze-candidate docs if the
+  doc is packaged into the artifact; that creates a circular package state.

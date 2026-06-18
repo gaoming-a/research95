@@ -685,6 +685,9 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "related_work_ris": file_state(Path("docs") / "references" / "evp7_related_work_references.ris"),
         "submission_checklist": file_state(Path("docs") / "artifact" / "submission_checklist.md"),
         "submission_handoff": file_state(DEFAULT_HANDOFF),
+        "submission_freeze_candidate": file_state(
+            Path("docs") / "artifact" / "submission_freeze_candidate_20260618.md"
+        ),
     }
     pre_api_evidence = {
         "reproducibility_compare": file_state(Path("outputs") / "reproducibility" / "pilot_compare.json"),

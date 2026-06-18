@@ -248,6 +248,10 @@
   packet for the current paper package. It summarizes the 21/98/392 structural
   pipeline, the 20/94/376 real G5 run, validation/audit/artifact work, allowed
   bounded claims, and disallowed overclaims.
+- `artifact/submission_freeze_candidate_20260618.md`: no-API freeze-candidate
+  packet for the current paper/artifact package. It records the current
+  candidate state and the user confirmations still required before final
+  freeze; it does not authorize API calls, expansion, or E1/E3/E5 insertion.
 - `experiments/evp7_related_work_positioning.md`: related-work citation and
   positioning artifact. It maps field-specific primary references to the
   paper's evidence-visibility distinction and records why a strict Nature/CNS
@@ -735,15 +739,20 @@
   four-anchor EVP-7 submission package. It records the latest PDF/artifact
   rebuild commands, audit results, default next action, and forbidden
   experiment actions without explicit user confirmation.
+- `artifact/submission_freeze_candidate_20260618.md`: no-API freeze-candidate
+  packet for the current paper/artifact package. It records the candidate
+  state, open user confirmations, and no-API/no-expansion boundary before any
+  final freeze decision.
 - `scripts/prepare_anonymous_artifact.py`: package builder for anonymous
   supplemental materials. It includes tracked source, scripts, configs, docs,
   examples, and the final submission checklist while excluding credentials,
   local configs, raw outputs, benchmark checkouts, and generated artifacts.
 - `scripts/audit_anonymous_artifact.py`: validates the generated anonymous ZIP
   contents, required files, manifest consistency, and exclusion rules. It now
-  requires the submission checklist, the no-API submission handoff, and all
-  paper-facing PDF figures, including `fig7_decision_metric_flow.pdf`, plus
-  the advisor-facing workload response packet.
+  requires the submission checklist, the no-API submission handoff, the
+  submission freeze-candidate packet, and all paper-facing PDF figures,
+  including `fig7_decision_metric_flow.pdf`, plus the advisor-facing workload
+  response packet.
 - `scripts/create_api_pilot_local_config.py`: helper that creates an ignored
   `configs/api_pilot.local.json` after a concrete provider model id is chosen.
 - `scripts/create_model_selection_local.py`: helper that creates an ignored

@@ -25,6 +25,10 @@ state for the Evidence Visibility / Candidate Patches submission path.
   `docs/paper/advisor_workload_response_zh.md` summarizes why the current work
   is a candidate-patch verification pipeline rather than only a prompt
   comparison, while preserving the bounded EVP-7 claim boundary.
+- Submission freeze candidate:
+  `docs/artifact/submission_freeze_candidate_20260618.md` records the current
+  paper/artifact package as a candidate state only. It does not freeze the
+  current 7-page IEEE PDF or approve any new experiment.
 - Latest compiled PDF check:
   `outputs/paper_compile/ieee_submission_draft.pdf` was regenerated from the
   current IEEE draft on 2026-06-18. The PDF is 7 pages and contains the
@@ -53,6 +57,7 @@ state for the Evidence Visibility / Candidate Patches submission path.
 - `docs/experiments/evp7_g5_376_qualitative_cases.md`
 - `docs/experiments/evp7_g5_376_claim_traceability.md`
 - `docs/artifact/submission_handoff_20260618.md`
+- `docs/artifact/submission_freeze_candidate_20260618.md`
 
 ## Rebuild Commands
 
@@ -118,5 +123,7 @@ Last checked on 2026-06-18 after the advisor workload packet artifact gate:
 - anonymous artifact ZIP rebuilt with 301 files and audit result was
   `safe: true`;
 - artifact audit now requires `docs/paper/advisor_workload_response_zh.md`;
+- artifact and paper readiness gates now require
+  `docs/artifact/submission_freeze_candidate_20260618.md`;
 - tracked handoff packet:
   `docs/artifact/submission_handoff_20260618.md`.

@@ -309,6 +309,11 @@ They should not override `final_paper_roadmap_zh.md`.
   `docs/paper/advisor_workload_response_zh.md`. This is a no-API explanation
   packet for why the current paper is a full candidate-patch verification
   pipeline rather than only a prompt comparison.
+- The current submission freeze candidate is tracked at
+  `docs/artifact/submission_freeze_candidate_20260618.md`. It records the
+  current paper/artifact package as a candidate state only; target venue,
+  final formatting, and freezing the current 7-page IEEE PDF still require
+  explicit user confirmation.
 - A Nature-style pre-submission reviewer assessment is tracked at
   `docs/paper/nature_reviewer_presubmission_report.md`. It identifies the next
   paper-writing risks as tool-only attribution, EVP-7 qualitative cases,
@@ -325,7 +330,7 @@ They should not override `final_paper_roadmap_zh.md`.
   pilot evidence-visibility result with explicit limitations. It also reports
   `submission_package_ready`, which joins the current result claim readiness
   with the no-API submission handoff boundary and requires the advisor-facing
-  workload response packet to exist.
+  workload response packet and submission freeze-candidate packet to exist.
 - The 15-20 bug expansion target has been exceeded at 21 tasks. Further
   expansion is no longer the default next step; it requires a new 30-50 bug
   decision boundary rather than blind metadata admission.

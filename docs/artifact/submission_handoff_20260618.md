@@ -46,7 +46,9 @@ Observed results:
   paper route;
 - local quality gate passed;
 - anonymous artifact package rebuilt with 301 files and `safe: true`;
-- artifact audit requires the advisor workload response packet.
+- artifact audit requires the advisor workload response packet;
+- the submission freeze-candidate packet records the current package as a
+  candidate state only and does not finalize the 7-page IEEE PDF.
 
 ## Next Decision Boundary
 
@@ -78,4 +80,5 @@ Forbidden without explicit user confirmation:
 - `docs/paper/generated_tables.tex`
 - `docs/artifact/submission_checklist.md`
 - `docs/artifact/anonymous_artifact.md`
+- `docs/artifact/submission_freeze_candidate_20260618.md`
 - `artifacts/research95_anonymous_artifact.zip` ignored local build

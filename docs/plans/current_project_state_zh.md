@@ -138,6 +138,9 @@
 - `docs/paper/advisor_workload_response_zh.md`：
   中文导师/答辩工作量说明；集中回答当前工作量、bounded claim、不能写的
   overclaim，以及为什么当前论文不是单纯 prompt comparison。
+- `docs/artifact/submission_freeze_candidate_20260618.md`：
+  no-API freeze-candidate packet；记录当前 paper/artifact candidate 状态和
+  仍需用户确认的 target venue、format、final freeze、Git sync 边界。
 - `docs/figures/`：
   reproducible PDF/SVG/PNG paper figures。当前 draft 使用 fig1-fig7。
 - `docs/artifact/anonymous_artifact.md`：

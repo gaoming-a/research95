@@ -56,6 +56,8 @@ artifact gate. It confirms:
   `docs/artifact/submission_checklist.md`;
 - the no-API submission handoff is present at
   `docs/artifact/submission_handoff_20260618.md`;
+- the submission freeze-candidate packet is present at
+  `docs/artifact/submission_freeze_candidate_20260618.md`;
 - the advisor-facing workload response is present at
   `docs/paper/advisor_workload_response_zh.md`;
 - required protocol and paper-framing files are present:
@@ -73,7 +75,8 @@ artifact gate. It confirms:
   credential-boundary, bootstrap-safety, command-template, pre-API handoff,
   submission-handoff audit, and guarded real-API command templates, including
   full-run completeness postprocessing and the current no-API submission
-  handoff entry, plus the advisor-facing workload response entry;
+  handoff entry, the submission freeze-candidate entry, plus the
+  advisor-facing workload response entry;
 - `outputs/`, `data/`, `tmp/`, `artifacts/`, real `.env`, and
   `configs/*.local.json` are absent;
 - the embedded `ARTIFACT_MANIFEST.json` matches the packaged file list.
