@@ -2651,6 +2651,10 @@ This file starts fresh for the patch-verification project.
   ahead number every turn.
 - Treat GitHub push failures as sync-state context only. They do not authorize
   API calls, cohort expansion, E1/E3/E5 insertion, or a final freeze.
+- A `git push origin main` failure with `Recv failure: Connection was reset`
+  is still a network-level GitHub sync failure. Record it, keep `git status
+  --short --branch` as the source of truth, and continue local no-API work when
+  the user has authorized skipping repeated sync failures.
 
 ## 2026-06-18 Markdown and IEEE RQ drift
 

@@ -13732,3 +13732,51 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过，`passed=true`；
 - `git diff --check` 通过。
+
+## 2026-06-18 GitHub sync retry remains network-blocked
+
+Inspect:
+
+- 当前工作区干净，`main...origin/main [ahead 22]`；
+- 最新提交为 `2b67f5e Record local completion audit boundary`；
+- local completion audit 已确认本地 no-API/package boundary 成立，但
+  `audit_execution_readiness.py` 仍显示 `synced_with_upstream=false`；
+- 用户已明确允许 GitHub 频繁同步失败时跳过同步并继续执行后续任务。
+
+Plan:
+
+1. 在不修改实验数据、不调用 API 的前提下尝试一次 `git push origin main`；
+2. 若 push 成功，重新检查 Git 状态；
+3. 若 push 仍因网络层失败，记录为 GitHub sync deferred，不把它解释为实验或
+   paper/package readiness 失败。
+
+Acceptance:
+
+- push 结果被记录；
+- 若失败，计划明确该失败只影响 GitHub sync claim，不影响 local no-API
+  completion/package readiness；
+- 不提交 ignored `outputs/`、`artifacts/`、`.env` 或 local config。
+
+Execute:
+
+- 已运行 `git push origin main`；
+- push 失败，错误为 `fatal: unable to access 'https://github.com/gaoming-a/research95.git/': Recv failure: Connection was reset`；
+- `git status --short --branch` 仍显示 `main...origin/main [ahead 22]`，工作区干净；
+- 已在 `docs/experience/engineering_notes.md` 记录该 connection-reset retry 仍属于
+  network-level GitHub sync failure；
+- 未调用 API、未修改实验数据、未重建 evidence packets。
+
+Verify:
+
+- GitHub sync 仍未成立，不能声称本地 `main` 已同步到 `origin/main`；
+- 本轮失败符合既有 network-level sync failure boundary；
+- 按用户授权，后续可以继续本地计划执行，不因该网络失败阻塞 no-API
+  submission maintenance；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=303`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
