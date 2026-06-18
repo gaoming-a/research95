@@ -48,6 +48,10 @@
 
 如果继续实验，不应直接扩量或直接调用 API。必须先选择一个目标：
 
+当前 no-API 下一步决策包：
+
+- `docs/experiments/evp7_next_decision_packet_20260618.md`
+
 1. 论文工作量呈现强化：
    - 默认优先，无 API；
    - 目标：把 cohort construction、candidate construction、F2P/P2P

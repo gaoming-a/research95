@@ -11859,6 +11859,48 @@ Verify:
   通过；
 - `git diff --check` 通过。
 
+## 2026-06-18 no-API next-decision packet
+
+Inspect:
+
+- 当前 `main` 本地有 `a9e1ca9` 未推送，GitHub push 仍因 443 连接失败；
+- 工作区在本轮开始时没有 tracked diff；
+- 当前 paper/artifact 已通过 no-API readiness re-audit；
+- 剩余实验分支包括第二模型关键锚点复现、30-50 bug 扩量和新 verifier
+  design，均需要用户确认 provider/model/budget/scope 或实验边界；
+- 为避免后续 agent 把普通 `continue` 误解为 API 调用或盲目扩量，需要一个
+  明确的 no-API next-decision packet。
+
+Plan:
+
+1. 新增 no-API next-decision packet，列出可选路线、前置确认和禁止动作；
+2. 同步 INDEX 和 current project state；
+3. 不调用 API、不扩 bug、不改 evidence levels、不修改实验数据；
+4. 验证文档可检索、paper readiness 和 local quality gate 仍通过。
+
+Execute:
+
+- 已新增 `docs/experiments/evp7_next_decision_packet_20260618.md`；
+- 已将后续路线分为：
+  - submit current four-anchor paper package；
+  - second-model E0/E4/E6 key-anchor replication；
+  - new 30-50 bug expansion boundary；
+  - new verifier design；
+- 已明确默认无决策时只能做 no-API paper-submission maintenance；
+- 已同步 `docs/INDEX.md` 和 `docs/plans/current_project_state_zh.md`。
+
+Verify:
+
+- `rg -n "evp7_next_decision_packet_20260618|second-model|30-50|provider|model|E1/E3/E5|API"`
+  覆盖 next-decision packet、INDEX、current project state 和 current plan，
+  确认第二模型复现只作为需确认的 E0/E4/E6 条件路线出现；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过 final roadmap / protocol / paper framing 检查；保留的唯一 blocker 仍是
+  历史 prompt-only positive claim 的 `stop_or_redesign`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过。
+
 ## 2026-06-18 final submission checklist re-audit
 
 Inspect:

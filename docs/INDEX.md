@@ -422,6 +422,11 @@
   for the current 376-record DeepSeek run. It records the bounded pilot signal,
   zero observed false accepts, complete cost observability, and unsupported
   scale/baseline/E6-strict/billing claims.
+- `experiments/evp7_next_decision_packet_20260618.md`: no-API next-decision
+  packet. It separates the current submit-ready four-anchor paper route from
+  second-model key-anchor replication, new 30-50 bug expansion, and new
+  verifier-design work; each experimental path requires explicit user
+  confirmation before execution.
 - `experiments/evp7_expansion_readiness.md`: controlled-expansion readiness
   report after EVP-7 G5. It records current main tasks, blocked-risk counts,
   broader BugsInPy metadata candidates, bounded project-lane probe rules, and
