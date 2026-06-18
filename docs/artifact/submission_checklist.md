@@ -63,6 +63,7 @@ state for the Evidence Visibility / Candidate Patches submission path.
 
 ```powershell
 python scripts\write_paper_tables.py
+python scripts\generate_paper_figures.py
 python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex
 pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex
 pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex

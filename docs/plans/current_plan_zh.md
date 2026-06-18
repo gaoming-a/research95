@@ -13148,3 +13148,60 @@ Verify:
   `paper_submission_package_ready=true`、`artifact_safe=true`、
   `local_quality_passed=true`、`zip_has_submission_handoff=true`、
   `zip_has_current_plan=true`。
+
+## 2026-06-18 submission rebuild-command and artifact-audit refresh
+
+Inspect:
+
+- 当前工作区干净，`main...origin/main [ahead 13]`；
+- `docs/artifact/submission_checklist.md` 的 Rebuild Commands 仍缺少
+  `python scripts\generate_paper_figures.py`，但最新 no-API rebuild 已重新生成
+  7 张 paper figures；
+- `docs/artifact/anonymous_artifact.md` 的 Current Audit 仍写成
+  `after the freeze-candidate semantic audit gate`，没有反映后续 no-API paper
+  package rebuild、checklist refresh 和 handoff refresh；
+- 这些是提交包维护记录漂移，不改变实验数据或 paper claim。
+
+Plan:
+
+1. 将 `generate_paper_figures.py` 加入 submission checklist rebuild commands；
+2. 刷新 `anonymous_artifact.md` 的 Current Audit 口径，指向最新 no-API paper
+   package rebuild / handoff refresh；
+3. 在 engineering notes 记录 rebuild-command / artifact-current-audit drift；
+4. 不调用 API、不扩 bug、不补 E1/E3/E5、不重建 evidence packets；
+5. 运行 targeted checks、paper readiness、artifact audit、local quality 和 diff
+   checks。
+
+Acceptance:
+
+- checklist rebuild commands 能完整复现 tables、figures、IEEE draft 和 PDF；
+- anonymous artifact current audit 不再停留在旧 freeze-candidate-only gate；
+- readiness/artifact/local gates 仍通过。
+
+Execute:
+
+- 已将 `python scripts\generate_paper_figures.py` 加入
+  `docs/artifact/submission_checklist.md` 的 Rebuild Commands；
+- 已刷新 `docs/artifact/anonymous_artifact.md` 的 Current Audit 口径，改为
+  no-API paper package rebuild、submission checklist refresh 和 submission
+  handoff refresh 后的 ZIP audit；
+- 已在 `docs/experience/engineering_notes.md` 增加 submission rebuild-command
+  drift 经验记录。
+
+Verify:
+
+- targeted `rg` 检查确认 checklist rebuild commands 包含
+  `generate_paper_figures.py`，anonymous artifact Current Audit 指向最新 no-API
+  rebuild/handoff refresh；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=303`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- direct JSON/ZIP inspection 确认 `manifest_file_count=303`、
+  `paper_submission_package_ready=true`、`artifact_safe=true`、
+  `local_quality_passed=true`、`zip_has_anonymous_artifact_doc=true`、
+  `zip_has_submission_checklist=true`、`zip_has_current_plan=true`。

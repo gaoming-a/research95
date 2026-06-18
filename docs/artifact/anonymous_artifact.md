@@ -47,8 +47,9 @@ provider-private metadata.
 
 ## Current Audit
 
-The latest ZIP audit passed on 2026-06-18 after the freeze-candidate semantic
-audit gate. It confirms:
+The latest ZIP audit passed on 2026-06-18 after the no-API paper package
+rebuild, submission checklist refresh, and submission handoff refresh. It
+confirms:
 
 - required source, config template, documentation, handoff scripts, and
   freeze-candidate audit scripts are present;
@@ -78,6 +79,9 @@ audit gate. It confirms:
   and the current no-API submission handoff entry, the submission
   freeze-candidate entry, plus the
   advisor-facing workload response entry;
+- tracked submission maintenance docs record the current rebuild boundary:
+  paper tables, all seven paper figures, IEEE draft/PDF compilation,
+  submission checklist latest verification, and no-API handoff refresh;
 - `outputs/`, `data/`, `tmp/`, `artifacts/`, real `.env`, and
   `configs/*.local.json` are absent;
 - the embedded `ARTIFACT_MANIFEST.json` matches the packaged file list.

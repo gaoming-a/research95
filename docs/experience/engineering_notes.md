@@ -2621,3 +2621,15 @@ This file starts fresh for the patch-verification project.
   refreshed submission checklist status.
 - Keep this as documentation maintenance only: do not reinterpret it as a final
   freeze decision, second-model authorization, or new experimental result.
+
+## 2026-06-18 submission rebuild-command drift
+
+- If paper figures are part of the required submission package, the submission
+  checklist rebuild command block must include `scripts/generate_paper_figures.py`
+  alongside table and IEEE draft generation.
+- The anonymous artifact `Current Audit` paragraph should follow the latest
+  package-maintenance boundary. If it remains tied to an older gate, future
+  handoffs can underestimate which paper/artifact checks were actually rerun.
+- This is still documentation synchronization: updating rebuild commands and
+  current-audit wording does not authorize API calls, dataset expansion, or a
+  final freeze.
