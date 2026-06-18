@@ -12970,3 +12970,62 @@ Verify:
   通过，`submission_package_ready=true`；
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过，`passed=true`。
+
+## 2026-06-18 no-API paper package rebuild after reinforcement routing
+
+Inspect:
+
+- 当前工作区干净，`main...origin/main [ahead 10]`；
+- `docs/experiments/evp7_next_decision_packet_20260618.md` 指定无新决策时只继续
+  Option A no-API paper-submission maintenance；
+- 上一轮已把“工作量呈现强化”和“第二模型关键层级复现”写入 current plan；
+- 当前仍没有用户确认 second-model provider/model/budget/scope/stop rule，也没有
+  venue/format 或 final PDF freeze confirmation。
+
+Plan:
+
+1. 重新生成 paper tables、paper figures 和 IEEE LaTeX draft；
+2. 连续两遍编译 `docs/paper/ieee_submission_draft.tex` 到 ignored
+   `outputs/paper_compile/ieee_submission_draft.pdf`；
+3. 抽查 PDF 文本，确认 workload ledger、20/94/376 real G5 run、
+   21/98/392 structural pipeline 和 bounded EVP-7 conclusion 仍进入 PDF；
+4. 重建 anonymous artifact 并运行 artifact/readiness/local gates；
+5. 不调用模型 API、不扩 bug、不补 E1/E3/E5、不修改 evidence packets、不把
+   freeze-candidate 写成 final freeze。
+
+Acceptance:
+
+- 表格、图、IEEE draft 和 PDF 可从 tracked inputs 重建；
+- PDF 文本包含工作量呈现和 bounded claim 的关键文本；
+- artifact/readiness/local gates 通过；
+- 若 tracked generated paper artifacts 有变化，只提交本轮相关文件。
+
+Execute:
+
+- 已重新运行 `python scripts\write_paper_tables.py --out-md docs\paper\generated_tables.md --out-tex docs\paper\generated_tables.tex`；
+- 已重新运行 `python scripts\generate_paper_figures.py`，输出 7 张 paper figures
+  的 PDF/SVG/PNG；
+- 已重新运行 `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`；
+- 已连续两遍编译 `docs/paper/ieee_submission_draft.tex` 到
+  `outputs/paper_compile/ieee_submission_draft.pdf`；
+- 本轮 paper generation 未造成 tracked generated paper artifacts 漂移，除本
+  current plan 记录外无 tracked paper diff。
+
+Verify:
+
+- `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex`
+  连续两遍通过，输出 7 页 PDF；
+- `pdftotext outputs\paper_compile\ieee_submission_draft.pdf - | rg -n ...`
+  确认 PDF 包含 structural/no-API `21 tasks / 98 candidates / 392`
+  workload、paper-facing `20 tasks / 94 candidates / 376` real G5 run、
+  `bounded single-model` 和 `not scale-generalized` 边界；
+- `pdfinfo outputs\paper_compile\ieee_submission_draft.pdf` 确认 `Pages: 7`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=303`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `git diff --check` 通过。
