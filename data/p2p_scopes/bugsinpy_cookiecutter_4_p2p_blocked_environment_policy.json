@@ -1,0 +1,39 @@
+{
+  "task_id": "bugsinpy_cookiecutter_4",
+  "project": "cookiecutter",
+  "status": "p2p_not_admitted_environment_blocked",
+  "p2p_broad_main_included": false,
+  "buggy_commit_id": "9568ab6ecd2d6836646006c59473c4a4ac0dee04",
+  "fixed_commit_id": "457a1a4e862aab4102b644ff1d2b2e2b5a766b3c",
+  "target_oracle": {
+    "nodeid": "tests/test_hooks.py::TestExternalHooks::test_run_failing_hook",
+    "test_file": "tests/test_hooks.py",
+    "tracked_f2p_status": "not_promoted"
+  },
+  "p2p_attempt": {
+    "scope_type": "project_level_p2p_broad",
+    "test_root": "tests",
+    "real_construction_attempted": true,
+    "manifest_admitted": false,
+    "collection_error_count": 26,
+    "observed_blockers": [
+      "missing_yaml_dependency",
+      "missing_ruamel_dependency",
+      "missing_past_dependency",
+      "cookiecutter_console_command_not_on_path",
+      "external_template_tests_timeout_or_fail"
+    ],
+    "raw_builder_outputs_not_tracked": [
+      "data/p2p_scopes/bugsinpy_cookiecutter_4_p2p_broad.json",
+      "data/p2p_scopes/bugsinpy_cookiecutter_4_p2p_broad_collection_errors.json"
+    ]
+  },
+  "decision": {
+    "admit_to_main": false,
+    "reason": "The project-level P2P construction did not produce an admissible stable pass-to-pass scope. Collection and batch execution were dominated by missing cookiecutter runtime dependencies, unavailable console command invocation, and external template test failures/timeouts.",
+    "candidate_construction_allowed": false,
+    "no_task_file_downgrade": true,
+    "no_source_or_test_fixture_edit": true,
+    "llm_api_called": false
+  }
+}

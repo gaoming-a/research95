@@ -174,6 +174,13 @@ They should not override `final_paper_roadmap_zh.md`.
 - `bugsinpy_cookiecutter_3` now enters `p2p_broad_main`: its prompt choice
   oracle validates four candidates under F2P plus a separate project-level
   P2P-broad scope with 255 stable tests.
+- `bugsinpy_cookiecutter_4` is not admitted. A bounded project-level P2P-broad
+  construction attempt is recorded as blocked by the current environment and
+  command boundary: missing `yaml`/`ruamel`/`past`, unavailable `cookiecutter`
+  console command invocation, and external template tests that failed or timed
+  out. The tracked record is
+  `data/p2p_scopes/bugsinpy_cookiecutter_4_p2p_blocked_environment_policy.json`;
+  no candidates were constructed.
 - `bugsinpy_tqdm_9` now enters `p2p_broad_main`: its SI-format and
   `len(tqdm(total=...))` oracle validates seven curated candidates under F2P
   plus a project-level P2P-broad scope with 12 stable tests. The first generic

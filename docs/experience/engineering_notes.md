@@ -2498,3 +2498,18 @@ This file starts fresh for the patch-verification project.
 - Avoid wording that reverses the hidden-evaluator design. The pipeline is a
   hidden-evaluator verification setup with labels joined after review, not a
   hidden-evaluator-free setup.
+
+## 2026-06-18 Cookiecutter 4 P2P blocked by runtime command boundary
+
+- Do not promote `bugsinpy_cookiecutter_4` from a partial project-level P2P
+  builder output. The observed P2P attempt was dominated by environment and
+  command failures: missing `yaml`, `ruamel`, and `past`; unavailable
+  `cookiecutter` console command invocation; and external template tests that
+  failed or timed out.
+- Track only the decision-level blocker policy in
+  `data/p2p_scopes/bugsinpy_cookiecutter_4_p2p_blocked_environment_policy.json`.
+  The full builder outputs contain local paths and verbose failure tails, so
+  they are local diagnostics, not admission artifacts.
+- This task is not a `p2p_broad_main` admission and should not trigger
+  candidate construction unless a future plan explicitly changes the dependency
+  and command boundary first.

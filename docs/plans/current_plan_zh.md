@@ -11774,6 +11774,91 @@ Decision:
 - 已清理本轮 ignored checkout/env 过程目录：
   `outputs/thefuck5_p2p_workspace` 和 `outputs/envs/thefuck5_f2p_py311`。
 
+## 2026-06-16 `bugsinpy_cookiecutter_4` underrepresented-project expansion start
+
+Inspect:
+
+- 当前 main cohort 仍为 21 tasks / 98 candidates / 392 no-API packets / 6
+  projects；
+- fresh-project lanes 中，FastAPI/Sanic/Tornado/Scrapy/Ansible/Luigi 均已有
+  明确 dependency、Windows 或 project-level P2P blocker；
+- underrepresented existing projects 中：
+  - `httpie_1` 到 `httpie_4` 已记录 collection/timeout/compatibility
+    blocker；
+  - `tqdm_1` 和 `tqdm_2` 的 P2P-broad size 只有 1，`tqdm_3` 到
+    `tqdm_8` 共享 missing nose / insufficient collectable P2P blocker；
+  - `PySnooper_2` 需要 test-fixture/compatibility shim，已按用户确认冻结；
+- `cookiecutter` 已有 3 个 admitted tasks，project-level P2P 环境和
+  candidate validation 路径稳定；
+- `bugsinpy_cookiecutter_4` 是剩余 Cookiecutter task：
+  - buggy commit: `9568ab6ecd2d6836646006c59473c4a4ac0dee04`；
+  - fixed commit: `457a1a4e862aab4102b644ff1d2b2e2b5a766b3c`；
+  - target: `tests/test_hooks.py::TestExternalHooks::test_run_failing_hook`；
+  - test file: `tests/test_hooks.py`；
+  - command in BugsInPy metadata: `tox tests/test_hooks.py::TestExternalHooks::test_run_failing_hook`。
+
+Plan:
+
+1. 构造 `bugsinpy_cookiecutter_4` buggy/fixed checkout；
+2. 验证 marker、目标测试文件、bug patch 与 fixed patch 作用文件；
+3. 使用已审计 Cookiecutter isolated env 运行目标 F2P；
+4. 若 F2P 不成立或 oracle 与既有 Cookiecutter bug 重复/污染，记录 blocker
+   并停止；
+5. 若 F2P 成立，再复用 Cookiecutter project-level P2P builder policy；
+6. 只有 P2P-broad >= 3 后，才补 retained oracle、构造 candidates，并执行
+   retained-oracle + P2P validation。
+
+Boundary:
+
+- 不调用 LLM API；
+- 不修改 checkout source/test fixture；
+- 不使用 task-file-only fallback；
+- 不把其他 Cookiecutter task 的 P2P manifest 直接复用为 admission 证据；
+- 若目标 oracle 已经被证明只是其他 Cookiecutter bug 的重复标签，停止并记录，
+  不强行扩 cohort。
+
+Execute:
+
+- 已检查本地残留的 `bugsinpy_cookiecutter_4` project-level P2P 构造输出；
+- 该输出不构成 admissible P2P-broad manifest：collection/batch 执行被
+  missing `yaml` / `ruamel` / `past`、不可用的 `cookiecutter` console command
+  invocation，以及 external template tests fail/timeout 主导；
+- 已新增小型 blocker policy：
+  `data/p2p_scopes/bugsinpy_cookiecutter_4_p2p_blocked_environment_policy.json`；
+- 已将 `data/tasks/evp7_controlled_probe_results.json` 追加
+  `p2p_blocked_dependency_environment` 记录；
+- 已重新运行 `scripts/summarize_evp7_expansion_readiness.py`，刷新
+  `data/tasks/evp7_expansion_readiness.json` 和
+  `docs/experiments/evp7_expansion_readiness.md`；
+- 已同步 README、INDEX、current project state 和 engineering notes。
+
+Decision:
+
+- `bugsinpy_cookiecutter_4` 不进入 `p2p_broad_main`；
+- 不构造 candidates；
+- 不使用 task-file P2P downgrade；
+- 不修改 source/test fixture；
+- 不调用 LLM API；
+- 完整 builder 失败输出仅作为本地诊断残留，不提交为 tracked admission
+  artifact。
+
+Verify:
+
+- `python -m json.tool data\tasks\evp7_controlled_probe_results.json` 通过；
+- `python -m json.tool data\tasks\evp7_expansion_readiness.json` 通过；
+- `python -m json.tool data\p2p_scopes\bugsinpy_cookiecutter_4_p2p_blocked_environment_policy.json`
+  通过；
+- `python scripts\summarize_evp7_expansion_readiness.py` 通过，并显示
+  `bugsinpy_cookiecutter_4` 已进入 controlled probe records、
+  `p2p_blocked_dependency_environment = 1`、main cohort 仍为 21 tasks /
+  98 candidates；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过 current EVP-7 bounded-pilot claim readiness；保留的唯一 blocker 仍是
+  历史 prompt-only positive claim 的 `stop_or_redesign`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过。
+
 ## 2026-06-17 final roadmap evidence-level boundary optimization
 
 Inspect:

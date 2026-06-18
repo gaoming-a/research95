@@ -12,7 +12,9 @@
 - 远端：`origin/main`
 - 当前 Git 状态：以 `git status --short --branch` 为准；2026-06-17
   检查时存在进行中的本地文档修改和未跟踪 `cookiecutter_4` P2P scope 文件，
-  其中后者不属于 final-roadmap 边界修订。
+  其中后者不属于 final-roadmap 边界修订。2026-06-18 后续整理已将
+  `bugsinpy_cookiecutter_4` 收束为 tracked blocker policy；完整 builder
+  失败输出仍是本地诊断残留，不应提交。
 - ignored 本地交付物：
   - `outputs/`
   - `artifacts/`
@@ -60,7 +62,9 @@
    - 边界：不补 E1/E3/E5，不证明第二模型优于 tool-only baseline，不替代
      当前 376-record DeepSeek G5 主结果。
 3. 扩 EVP-7 cohort：
-   - 当前状态：本轮已完成 `bugsinpy_thefuck_1` admission；
+   - 当前状态：本轮已完成 `bugsinpy_thefuck_1` admission；后续
+     `bugsinpy_cookiecutter_4` P2P 构造被记录为 dependency/command/timeout
+     blocker，未 admission；
    - 当前结果：21 tasks / 98 candidates / 392 no-API evidence packets；
    - 当前 gate：`docs/experiments/evp7_expansion_readiness.md` 已刷新为
      21 tasks / 98 candidates；

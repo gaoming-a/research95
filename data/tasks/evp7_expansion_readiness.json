@@ -30,10 +30,12 @@
       "f2p_established_existing_p2p_timeout": 1,
       "f2p_established_official_root_p2p_timeout": 1,
       "f2p_established_p2p_gate_failed": 1,
-      "f2p_established_shared_tornado_p2p_timeout_risk": 1
+      "f2p_established_shared_tornado_p2p_timeout_risk": 1,
+      "p2p_blocked_dependency_environment": 1
     },
     "recorded_tasks": [
       "bugsinpy_ansible_1",
+      "bugsinpy_cookiecutter_4",
       "bugsinpy_fastapi_4",
       "bugsinpy_luigi_1",
       "bugsinpy_matplotlib_1",

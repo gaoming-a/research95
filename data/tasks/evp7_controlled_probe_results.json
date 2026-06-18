@@ -730,6 +730,39 @@
           "result": "pass"
         }
       }
+    },
+    {
+      "blocked_reason": [
+        "missing_yaml_dependency",
+        "missing_ruamel_dependency",
+        "missing_past_dependency",
+        "cookiecutter_console_command_not_on_path",
+        "external_template_tests_timeout_or_fail"
+      ],
+      "bug_id": "4",
+      "date": "2026-06-18",
+      "decision": "do_not_admit_project_level_p2p_environment_blocked",
+      "fixed_result": "not_promoted",
+      "notes": "A bounded project-level P2P-broad construction attempt for tests/ did not produce an admissible stable pass-to-pass scope. Collection and batch execution were dominated by missing cookiecutter runtime dependencies (yaml, ruamel, past), unavailable cookiecutter console command invocation, and external template tests that failed or timed out. The raw builder failure outputs are left untracked as local diagnostics; the tracked blocker policy is the admission record. No candidate construction, task-file fallback, source/test fixture edit, or LLM API call was used.",
+      "p2p_scope_policy_record": "data/p2p_scopes/bugsinpy_cookiecutter_4_p2p_blocked_environment_policy.json",
+      "probe_status": "p2p_blocked_dependency_environment",
+      "project": "cookiecutter",
+      "run_command": "python -m pytest -q tests/test_hooks.py::TestExternalHooks::test_run_failing_hook",
+      "source": "BugsInPy",
+      "task_id": "bugsinpy_cookiecutter_4",
+      "test_file": "tests/test_hooks.py",
+      "versions": {
+        "buggy": {
+          "checkout": "completed",
+          "git_head": "9568ab6ecd2",
+          "result": "not_promoted"
+        },
+        "fixed": {
+          "checkout": "completed",
+          "git_head": "9568ab6ecd2_with_fixed_files",
+          "result": "not_promoted"
+        }
+      }
     }
   ],
   "schema": "controlled_probe_results.v1"
