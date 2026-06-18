@@ -11935,3 +11935,68 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过；
 - `git diff --check` 通过。
+
+## 2026-06-18 submission artifact readiness refresh
+
+Inspect:
+
+- 最新 commit `acfe037` 已完成 paper workload presentation reinforcement；
+- 当前 `docs/paper/ieee_submission_draft.tex` 已更新，但 ignored PDF
+  `outputs/paper_compile/ieee_submission_draft.pdf` 需要用最新 draft 重新编译；
+- 当前继续实验的第二模型复现、30-50 bug 扩量或新 verifier design 都需要
+  用户确认边界，不是本轮默认动作；
+- `cookiecutter_4` 的未提交 P2P scope 残留显示 dependency/command/timeout
+  blocker，不构成 admission evidence，本轮不继续扩量；
+- 本轮目标是 no-API submission readiness：编译最新 IEEE PDF，必要时重建并
+  审计 ignored anonymous artifact。
+
+Plan:
+
+1. 重新生成 paper tables 和 IEEE draft，确保 script outputs 与 tracked summaries
+   一致；
+2. 使用最新 `docs/paper/ieee_submission_draft.tex` 连续编译 IEEE PDF；
+3. 用 `pdftotext` 或可用文本抽查确认 workload ledger 和 bounded conclusion
+   进入 PDF；
+4. 构建 ignored anonymous artifact ZIP，并运行 artifact audit；
+5. 同步 submission checklist、README/INDEX 或 engineering notes 中需要更新的
+   no-API readiness 状态；
+6. 不调用模型 API、不扩 bug、不修改 E0/E2/E4/E6 evidence levels、不提交
+   `outputs/` 或 `artifacts/`。
+
+Acceptance:
+
+- IEEE PDF 从最新 LaTeX draft 成功编译；
+- PDF 文本包含 `Workload at a Glance` / workload ledger 和 bounded EVP-7
+  conclusion；
+- anonymous artifact audit 通过；
+- paper readiness / local quality / diff check 通过；
+- 本轮提交只包含文档和生成器/清单更新，不纳入 `cookiecutter_4` 残留。
+
+Execute:
+
+- 已重新运行 `python scripts\write_paper_tables.py` 和
+  `python scripts\write_ieee_latex_draft.py`；
+- 已连续两遍编译 `docs/paper/ieee_submission_draft.tex`，输出
+  `outputs/paper_compile/ieee_submission_draft.pdf`，共 7 页；
+- 已用 `pdftotext` 抽查 PDF，确认 structural workload ledger、20/94/376
+  real G5 run 和 bounded EVP-7 conclusion 进入最新 PDF；
+- 已重建 ignored artifact ZIP：
+  `artifacts/research95_anonymous_artifact.zip`；
+- 已更新 `docs/artifact/submission_checklist.md`、
+  `docs/artifact/anonymous_artifact.md` 和 `docs/INDEX.md`，记录
+  2026-06-18 workload-ledger 后的 PDF/artifact readiness。
+
+Verify:
+
+- `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex`
+  连续两遍通过；第二遍无 unresolved references；
+- `pdftotext outputs\paper_compile\ieee_submission_draft.pdf - | rg ...`
+  确认 PDF 包含 workload ledger 和 bounded conclusion 关键文本；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe: true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过 current EVP-7 bounded-pilot claim readiness；保留的唯一 blocker 仍是
+  历史 prompt-only positive claim 的 `stop_or_redesign`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过。

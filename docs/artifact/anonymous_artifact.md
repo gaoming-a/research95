@@ -47,7 +47,8 @@ provider-private metadata.
 
 ## Current Audit
 
-The latest ZIP audit passed. It confirms:
+The latest ZIP audit passed on 2026-06-18 after the paper workload-ledger
+refresh. It confirms:
 
 - required source, config template, documentation, and handoff scripts are
   present;
@@ -61,6 +62,9 @@ The latest ZIP audit passed. It confirms:
   `docs/paper/patch_verification_outline.md`;
 - all seven paper-facing PDF figures are present, including
   `docs/figures/fig7_decision_metric_flow.pdf`;
+- the current paper materials include the workload-at-a-glance ledger that
+  separates the 21-task / 98-candidate / 392-packet structural pipeline from
+  the 20-task / 94-candidate / 376-record real DeepSeek G5 run;
 - embedded `ARTIFACT_README.md` includes no-API reproduction, local quality,
   credential-boundary, bootstrap-safety, command-template, pre-API handoff, and
   guarded real-API command templates, including full-run completeness

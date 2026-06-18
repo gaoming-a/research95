@@ -1,6 +1,6 @@
 # Final Submission Checklist
 
-Date: 2026-06-15
+Date: 2026-06-18
 
 This checklist records the current paper and anonymous supplemental artifact
 state for the Evidence Visibility / Candidate Patches submission path.
@@ -16,6 +16,15 @@ state for the Evidence Visibility / Candidate Patches submission path.
 - Current claim scope:
   bounded EVP-7 evidence-visibility pilot, single DeepSeek G5 verifier run,
   20 real-bug tasks, 94 patch candidates, and 376 evidence packets.
+- Current workload presentation:
+  the paper also reports the broader structural/no-API pipeline as tracked
+  workload evidence: 21 tasks, 98 candidates, 392 E0/E2/E4/E6 evidence
+  packets, 294 deterministic tool-only decisions, qualitative cases, and
+  raw-output-free claim/audit artifacts.
+- Latest compiled PDF check:
+  `outputs/paper_compile/ieee_submission_draft.pdf` was regenerated from the
+  current IEEE draft on 2026-06-18. The PDF is 7 pages and contains the
+  workload ledger plus the bounded EVP-7 conclusion.
 - Known non-blocker:
   the old prompt-only evidence-first full-run gate remains
   `stop_or_redesign`. This blocks prompt-only positive claims, not the current
@@ -87,3 +96,14 @@ The anonymous package must not contain:
 - Anonymous artifact audit passes and includes this checklist plus all seven
   required paper figures.
 - Local quality gate passes.
+
+## Latest Local Verification
+
+Last checked on 2026-06-18 after workload-ledger integration:
+
+- paper tables regenerated from tracked summaries;
+- IEEE draft regenerated from the current table snippets;
+- LaTeX compiled twice without unresolved references;
+- PDF text contains the structural workload ledger and bounded EVP-7
+  conclusion;
+- anonymous artifact ZIP rebuilt and audit result was `safe: true`.

@@ -716,7 +716,8 @@
 - `artifact/submission_checklist.md`: final submission checklist for the current
   IEEE draft and anonymous artifact. It records required paper figures,
   claim-boundary evidence, rebuild/audit commands, exclusion boundaries, and
-  ready-to-submit criteria.
+  ready-to-submit criteria, plus the latest local PDF/artifact verification
+  status after the workload-ledger refresh.
 - `scripts/prepare_anonymous_artifact.py`: package builder for anonymous
   supplemental materials. It includes tracked source, scripts, configs, docs,
   examples, and the final submission checklist while excluding credentials,
