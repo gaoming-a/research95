@@ -13029,3 +13029,62 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过，`passed=true`；
 - `git diff --check` 通过。
+
+## 2026-06-18 submission checklist latest-verification refresh
+
+Inspect:
+
+- 当前工作区干净，`main...origin/main [ahead 11]`；
+- 上一轮已完成 reinforcement-routing 后的 no-API paper package rebuild；
+- `docs/artifact/submission_checklist.md` 的 `Latest Local Verification` 仍写成
+  `after the advisor workload packet artifact gate`，没有反映最新 PDF/artifact
+  rebuild 和 freeze-candidate semantic gate；
+- `docs/INDEX.md` 对 checklist 的说明仍提到 `after the workload-ledger refresh`，
+  容易让后续 agent 低估最近的 no-API submission package maintenance。
+
+Plan:
+
+1. 刷新 `docs/artifact/submission_checklist.md` 的 latest local verification
+   段落，使其指向最新 no-API paper package rebuild；
+2. 同步 `docs/INDEX.md` 中 checklist 的说明，去掉过期的 workload-ledger-only
+   口径；
+3. 在 `docs/experience/engineering_notes.md` 记录该类 submission checklist
+   状态漂移的处理经验；
+4. 不修改实验数据、不重建 evidence packets、不调用 API、不把 freeze-candidate
+   写成 final freeze；
+5. 运行最小文档检索、paper readiness、artifact audit、local quality 和 diff
+   checks。
+
+Acceptance:
+
+- checklist latest local verification 反映最新 no-API rebuild、7-page PDF、
+  303-file artifact、handoff/freeze semantic gates；
+- INDEX 对 checklist 的说明不再停留在 workload-ledger refresh；
+- engineering notes 记录状态字段需要跟随提交包 rebuild 更新；
+- readiness/artifact/local gates 仍通过。
+
+Execute:
+
+- 已刷新 `docs/artifact/submission_checklist.md` 的 Latest Local Verification，
+  改为记录 reinforcement-route clarification 后的 no-API paper package rebuild；
+- 已同步 `docs/INDEX.md` 中 submission checklist 的说明，改为 latest local
+  PDF/artifact verification after the no-API paper package rebuild；
+- 已在 `docs/experience/engineering_notes.md` 增加 submission checklist latest
+  verification drift 经验记录。
+
+Verify:
+
+- targeted `rg` 检查确认 checklist/INDEX/engineering notes 使用最新 no-API
+  paper package rebuild 口径；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=303`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- direct JSON/ZIP inspection 确认 `manifest_file_count=303`、
+  `paper_submission_package_ready=true`、`artifact_safe=true`、
+  `local_quality_passed=true`、`zip_has_submission_checklist=true`、
+  `zip_has_current_plan=true`。

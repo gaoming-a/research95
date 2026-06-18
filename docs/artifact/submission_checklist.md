@@ -111,13 +111,16 @@ The anonymous package must not contain:
 
 ## Latest Local Verification
 
-Last checked on 2026-06-18 after the advisor workload packet artifact gate:
+Last checked on 2026-06-18 after the no-API paper package rebuild that followed
+the reinforcement-route clarification:
 
 - paper tables regenerated from tracked summaries;
+- all seven paper figures regenerated in PDF/SVG/PNG form;
 - IEEE draft regenerated from the current table snippets;
-- LaTeX compiled twice without unresolved references;
+- LaTeX compiled twice without unresolved references, producing a 7-page PDF;
 - PDF text contains the structural workload ledger and bounded EVP-7
-  conclusion;
+  conclusion, including the 21/98/392 structural pipeline and the 20/94/376
+  paper-facing DeepSeek G5 run;
 - claim-boundary audit passed and remained raw-output-free;
 - paper readiness and local quality gate passed, including the no-API
   submission handoff and freeze-candidate boundaries;

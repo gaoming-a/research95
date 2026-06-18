@@ -2596,3 +2596,16 @@ This file starts fresh for the patch-verification project.
   script, the current anonymous artifact manifest count is 303.
 - Paper readiness should require both the handoff semantic audit and the
   freeze-candidate semantic audit before reporting `submission_package_ready`.
+
+## 2026-06-18 submission checklist latest verification drift
+
+- A submission checklist can be structurally correct while its latest local
+  verification paragraph still describes an older gate. After rebuilding the
+  paper package, refresh that paragraph in the same pass as current plan notes.
+- The checklist should say which maintenance action was last verified, not just
+  that some prior artifact gate passed. For the current package, the relevant
+  latest state is the no-API paper package rebuild with a 7-page PDF, 303-file
+  anonymous artifact, and handoff/freeze-candidate semantic gates.
+- Keep INDEX wording generic enough to survive future rebuilds: describe the
+  checklist as carrying the latest local PDF/artifact verification status,
+  rather than tying it to an older workload-ledger-only refresh.

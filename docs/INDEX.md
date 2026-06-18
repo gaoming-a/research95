@@ -734,7 +734,7 @@
   IEEE draft and anonymous artifact. It records required paper figures,
   claim-boundary evidence, rebuild/audit commands, exclusion boundaries, and
   ready-to-submit criteria, plus the latest local PDF/artifact verification
-  status after the workload-ledger refresh.
+  status after the no-API paper package rebuild.
 - `artifact/submission_handoff_20260618.md`: no-API handoff for the current
   four-anchor EVP-7 submission package. It records the latest PDF/artifact
   rebuild commands, audit results, default next action, and forbidden
