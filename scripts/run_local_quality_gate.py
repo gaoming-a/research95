@@ -94,6 +94,7 @@ def build_markdown(summary: dict[str, Any]) -> str:
         f"- command templates passed: {bool_mark(summary['command_templates']['passed'])}",
         f"- experiment run records passed: {bool_mark(summary['experiment_run_records']['passed'])}",
         f"- git sync packet audit passed: {bool_mark(summary['git_sync_packet_audit']['passed'])}",
+        f"- submission handoff audit passed: {bool_mark(summary['submission_handoff_audit']['passed'])}",
         f"- artifact dry-run passed: {bool_mark(summary['artifact_dry_run']['passed'])}",
         f"- artifact zip audit passed: {bool_mark(summary['artifact_zip_audit']['passed'])}",
         f"- pycache directories removed: {summary['pycache_removed']}",
@@ -120,6 +121,7 @@ def build_markdown(summary: dict[str, Any]) -> str:
             "command_templates",
             "experiment_run_records",
             "git_sync_packet_audit",
+            "submission_handoff_audit",
             "artifact_dry_run",
             "artifact_zip_audit",
         ]:
@@ -236,6 +238,16 @@ def main() -> None:
             "outputs/git_sync_packet_audit/latest.md",
         ]
     )
+    submission_handoff_audit = run_command(
+        [
+            sys.executable,
+            "scripts/audit_submission_handoff.py",
+            "--out-json",
+            "outputs/submission_handoff_audit/latest.json",
+            "--out-md",
+            "outputs/submission_handoff_audit/latest.md",
+        ]
+    )
     readiness_json = Path("outputs/readiness_audit/latest.json")
     readiness_md = Path("outputs/readiness_audit/latest.md")
     readiness_run = run_command(
@@ -328,6 +340,7 @@ def main() -> None:
             and command_templates["passed"]
             and experiment_run_records["passed"]
             and git_sync_packet_audit["passed"]
+            and submission_handoff_audit["passed"]
             and artifact_dry_run["passed"]
             and artifact_zip_audit["passed"]
         ),
@@ -341,6 +354,7 @@ def main() -> None:
         "command_templates": command_templates,
         "experiment_run_records": experiment_run_records,
         "git_sync_packet_audit": git_sync_packet_audit,
+        "submission_handoff_audit": submission_handoff_audit,
         "readiness_run": readiness_run,
         "paper_readiness_run": paper_run,
         "plan_progress_run": plan_progress_run,

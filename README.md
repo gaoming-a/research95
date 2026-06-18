@@ -99,7 +99,8 @@ They should not override `final_paper_roadmap_zh.md`.
 - The current submission handoff is
   `docs/artifact/submission_handoff_20260618.md`; it records the latest
   PDF/artifact rebuild, readiness audits, and the default no-API continuation
-  boundary.
+  boundary. Its boundary is checked by
+  `scripts/audit_submission_handoff.py` and the local quality gate.
 - The prompt-only DeepSeek full run completed and produced a mixed/negative
   `stop_or_redesign` result. It is not a positive paper claim.
 - The later tool-augmented full run passed its dedicated gate, but only supports
@@ -599,6 +600,14 @@ For local quality checks after edits, run:
 python scripts\run_local_quality_gate.py `
   --out-json outputs\local_quality_gate\latest.json `
   --out-md outputs\local_quality_gate\latest.md
+```
+
+For the submission-handoff boundary check only, run:
+
+```powershell
+python scripts\audit_submission_handoff.py `
+  --out-json outputs\submission_handoff_audit\latest.json `
+  --out-md outputs\submission_handoff_audit\latest.md
 ```
 
 For credential-boundary checks only, run:

@@ -64,6 +64,7 @@ pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper
 ```powershell
 python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md
 python scripts\audit_paper_claim_boundary.py
+python scripts\audit_submission_handoff.py --out-json outputs\submission_handoff_audit\latest.json --out-md outputs\submission_handoff_audit\latest.md
 python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md
 ```
 
@@ -109,7 +110,7 @@ Last checked on 2026-06-18 after the no-API submission handoff refresh:
   conclusion;
 - claim-boundary audit passed and remained raw-output-free;
 - paper readiness and local quality gate passed;
-- anonymous artifact ZIP rebuilt with 299 files and audit result was
+- anonymous artifact ZIP rebuilt with 300 files and audit result was
   `safe: true`;
 - tracked handoff packet:
   `docs/artifact/submission_handoff_20260618.md`.

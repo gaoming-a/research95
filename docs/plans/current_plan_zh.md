@@ -11859,6 +11859,61 @@ Verify:
   通过；
 - `git diff --check` 通过。
 
+## 2026-06-18 submission handoff semantic audit
+
+Inspect:
+
+- 当前 `main` 与 `origin/main` 同步，工作区干净；
+- `docs/artifact/submission_handoff_20260618.md` 已进入 anonymous artifact
+  required files；
+- 但目前 artifact audit 只能证明 handoff 被打包，不能证明 handoff 内容仍保留
+  four-anchor counts、默认 no-API continuation 和 forbidden-action boundary；
+- 下一步应在 no-API local quality gate 中加入 handoff semantic audit，防止后续
+  文案漂移。
+
+Plan:
+
+1. 新增 `scripts/audit_submission_handoff.py`，只检查 tracked handoff 文本和
+   next-decision packet 存在性；
+2. 将该 audit 接入 `scripts/run_local_quality_gate.py`；
+3. 将该脚本和命令纳入 anonymous artifact required files/snippets 与 generated
+   `ARTIFACT_README.md`；
+4. 同步 README、INDEX、submission checklist、anonymous artifact 文档和
+   engineering notes；
+5. 不调用 API、不扩 bug、不修改 evidence packets 或实验数据。
+
+Execute:
+
+- 已新增 `scripts/audit_submission_handoff.py`；
+- 已将 submission handoff audit 接入 `scripts/run_local_quality_gate.py`；
+- 已将 `scripts/audit_submission_handoff.py` 加入 anonymous artifact required
+  files/snippets；
+- 已更新 `scripts/prepare_anonymous_artifact.py`，在 generated
+  `ARTIFACT_README.md` 的 local quality/readiness block 中写入 handoff audit
+  命令；
+- 已同步 README、INDEX、submission checklist、anonymous artifact 文档和
+  engineering notes。
+
+Verify:
+
+- `python -m py_compile scripts\audit_submission_handoff.py scripts\run_local_quality_gate.py scripts\audit_anonymous_artifact.py scripts\prepare_anonymous_artifact.py`
+  通过；
+- 首次 `python scripts\audit_submission_handoff.py ...` 暴露规则问题：
+  forbidden phrase `LLM beats deterministic tool-only baselines` 会误伤 handoff
+  中正确的 `no claim that ...` 禁止动作；已改为只禁止正向支持表述；
+- 修复后 `python scripts\audit_submission_handoff.py --out-json outputs\submission_handoff_audit\latest.json --out-md outputs\submission_handoff_audit\latest.md`
+  通过；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，新增 audit script 后 `file_count=300`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过 current bounded EVP-7 claim readiness；保留的唯一 blocker 仍是旧
+  prompt-only positive claim 的 `stop_or_redesign`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，且已覆盖 submission handoff audit；
+- `git diff --check` 通过。
+
 ## 2026-06-18 artifact audit requires submission handoff
 
 Inspect:

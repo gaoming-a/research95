@@ -2513,3 +2513,16 @@ This file starts fresh for the patch-verification project.
 - This task is not a `p2p_broad_main` admission and should not trigger
   candidate construction unless a future plan explicitly changes the dependency
   and command boundary first.
+
+## 2026-06-18 submission handoff audit boundary
+
+- Adding a handoff file is weaker than auditing the handoff contract. The
+  anonymous artifact audit can prove the file is packaged, but it cannot prove
+  the file still says no-API default continuation, no second-model API without
+  confirmation, no cohort expansion, and no E1/E3/E5 insertion.
+- Use `scripts/audit_submission_handoff.py` for that semantic boundary. It
+  checks the tracked handoff text, the next-decision packet pointer, the
+  four-anchor counts, and forbidden-action wording without calling APIs or
+  touching experiment data.
+- Keep this audit inside `scripts/run_local_quality_gate.py` so routine
+  end-of-turn checks catch handoff drift before artifact packaging.

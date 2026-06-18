@@ -147,6 +147,7 @@ def artifact_readme(manifest: dict[str, Any]) -> str:
             "python scripts\\audit_ai_plan_progress.py --out-json outputs\\plan_progress\\latest.json --out-md outputs\\plan_progress\\latest.md",
             "python scripts\\audit_goal_completion.py --out-json outputs\\goal_completion\\latest.json --out-md outputs\\goal_completion\\latest.md",
             "python scripts\\audit_paper_readiness.py --out-json outputs\\paper_readiness\\latest.json --out-md outputs\\paper_readiness\\latest.md",
+            "python scripts\\audit_submission_handoff.py --out-json outputs\\submission_handoff_audit\\latest.json --out-md outputs\\submission_handoff_audit\\latest.md",
             "python scripts\\write_experiment_run_records.py --out-json outputs\\experiment_run_records\\latest.json --out-md outputs\\experiment_run_records\\latest.md",
             "```",
             "",

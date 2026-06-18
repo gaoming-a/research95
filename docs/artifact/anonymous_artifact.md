@@ -21,7 +21,7 @@ python scripts\audit_anonymous_artifact.py `
 - `src/` reusable utilities.
 - `scripts/` dataset, validation, API, reporting, gate, readiness, and artifact
   scripts, including the API run completeness audit required before paper
-  claims.
+  claims and the no-API submission handoff audit.
 - `configs/` example configuration files only.
 - `docs/` plans, schemas, metrics, prompt records, the current
   Evidence Visibility / Candidate Patches paper framing, reports,
@@ -68,9 +68,10 @@ refresh. It confirms:
   separates the 21-task / 98-candidate / 392-packet structural pipeline from
   the 20-task / 94-candidate / 376-record real DeepSeek G5 run;
 - embedded `ARTIFACT_README.md` includes no-API reproduction, local quality,
-  credential-boundary, bootstrap-safety, command-template, pre-API handoff, and
-  guarded real-API command templates, including full-run completeness
-  postprocessing and the current no-API submission handoff entry;
+  credential-boundary, bootstrap-safety, command-template, pre-API handoff,
+  submission-handoff audit, and guarded real-API command templates, including
+  full-run completeness postprocessing and the current no-API submission
+  handoff entry;
 - `outputs/`, `data/`, `tmp/`, `artifacts/`, real `.env`, and
   `configs/*.local.json` are absent;
 - the embedded `ARTIFACT_MANIFEST.json` matches the packaged file list.
