@@ -2536,3 +2536,13 @@ This file starts fresh for the patch-verification project.
 - Reuse `audit_submission_handoff.py` instead of duplicating handoff phrases in
   paper readiness. This keeps the no-API default and forbidden-action contract
   in one semantic audit while still surfacing it in paper readiness output.
+
+## 2026-06-18 Windows JSON audit read encoding
+
+- Inline Python checks on Windows must pass `encoding="utf-8"` when reading
+  tracked or generated JSON/Markdown outputs with `Path.read_text()`. The
+  default Windows locale can be GBK, which can raise `UnicodeDecodeError` on
+  UTF-8 audit files even when the audit itself passed.
+- Treat this as a local inspection-command issue, not an experiment or artifact
+  failure. Re-run the read with an explicit UTF-8 encoding before diagnosing
+  downstream readiness fields.

@@ -11859,6 +11859,72 @@ Verify:
   通过；
 - `git diff --check` 通过。
 
+## 2026-06-18 default no-API paper maintenance continuation
+
+Inspect:
+
+- 当前本地 `main` 比 `origin/main` ahead 2，两个未推送提交已记录为 GitHub
+  网络层同步失败边界；
+- `docs/experiments/evp7_next_decision_packet_20260618.md` 明确：没有新的
+  实验决策时，只能继续 no-API paper-submission maintenance；
+- 当前允许的默认路线是 Option A：提交当前 four-anchor paper package；
+- 第二模型关键锚点复现、30-50 bug 扩量和新 verifier design 都需要用户确认
+  provider/model/budget/scope 或实验边界，不属于本轮。
+
+Plan:
+
+1. 重新生成 paper tables 和 IEEE LaTeX draft，确认 tracked paper outputs 与
+   tracked summaries 一致；
+2. 连续两遍编译 IEEE PDF，并抽查 PDF 文本中的 workload ledger、376-record
+   real G5 run 和 bounded EVP-7 conclusion；
+3. 重建 ignored anonymous artifact ZIP，并运行 artifact audit；
+4. 运行 paper readiness 和 local quality gate；
+5. 若 tracked 文档需要刷新，只同步 submission checklist / handoff / INDEX /
+   current plan 等 no-API readiness 文档；
+6. 不调用 API、不扩 cohort、不补 E1/E3/E5、不修改 evidence levels、不提交
+   `outputs/` 或 `artifacts/`。
+
+Acceptance:
+
+- paper table/draft generators 运行成功；
+- PDF 两遍编译成功，文本抽查命中工作量和 bounded conclusion；
+- artifact audit、paper readiness、local quality gate 通过；
+- 工作区只包含本轮相关 tracked 文档/脚本变化；
+- GitHub 若继续网络失败，记录事实并不阻塞后续任务。
+
+Execute:
+
+- `python scripts\write_paper_tables.py` 通过，重新生成
+  `docs/paper/generated_tables.md` 和 `docs/paper/generated_tables.tex`；
+- `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`
+  通过；因 draft 依赖刚生成的 LaTeX table，已顺序重跑一次以避免读取时序歧义；
+- `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex`
+  连续两遍通过，输出 7 页 PDF；
+- `pdftotext outputs\paper_compile\ieee_submission_draft.pdf - | rg ...`
+  抽查确认 PDF 包含 abstract 工作量、Table III workload ledger、20/94/376
+  real G5 run、bounded EVP-7 conclusion 和 unsupported scale-generalized
+  claim boundary；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=300`、`safe_to_package=true`。
+- 已同步 `docs/experience/engineering_notes.md`，记录 Windows inline Python
+  JSON audit read 必须显式使用 UTF-8 encoding。
+
+Verify:
+
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`、`missing_required=[]`、
+  `missing_readme_snippets=[]`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、
+  `submission_package_ready=true`、`submission_handoff.passed=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`，且 `artifact_zip_audit.passed=true`、
+  `submission_handoff_audit.passed=true`；
+- 首次直接读取 latest JSON 使用 Windows 默认 GBK 解码失败；已用 UTF-8 重读并确认
+  上述字段成立。该问题是本地检查命令的编码问题，不是实验或 artifact 问题；
+- 重新生成 paper tables / IEEE draft 未造成 tracked paper output 漂移；当前
+  tracked diff 仅为本轮 `current_plan_zh.md` 和 engineering notes 记录。
+
 ## 2026-06-18 paper readiness checks submission handoff
 
 Inspect:
