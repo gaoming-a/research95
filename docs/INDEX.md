@@ -734,8 +734,8 @@
   local configs, raw outputs, benchmark checkouts, and generated artifacts.
 - `scripts/audit_anonymous_artifact.py`: validates the generated anonymous ZIP
   contents, required files, manifest consistency, and exclusion rules. It now
-  requires the submission checklist and all paper-facing PDF figures, including
-  `fig7_decision_metric_flow.pdf`.
+  requires the submission checklist, the no-API submission handoff, and all
+  paper-facing PDF figures, including `fig7_decision_metric_flow.pdf`.
 - `scripts/create_api_pilot_local_config.py`: helper that creates an ignored
   `configs/api_pilot.local.json` after a concrete provider model id is chosen.
 - `scripts/create_model_selection_local.py`: helper that creates an ignored

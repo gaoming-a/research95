@@ -54,6 +54,8 @@ refresh. It confirms:
   present;
 - the final submission checklist is present at
   `docs/artifact/submission_checklist.md`;
+- the no-API submission handoff is present at
+  `docs/artifact/submission_handoff_20260618.md`;
 - required protocol and paper-framing files are present:
   `docs/plans/final_paper_roadmap_zh.md`,
   `docs/protocol/evidence_visibility_protocol.md`,
@@ -68,7 +70,7 @@ refresh. It confirms:
 - embedded `ARTIFACT_README.md` includes no-API reproduction, local quality,
   credential-boundary, bootstrap-safety, command-template, pre-API handoff, and
   guarded real-API command templates, including full-run completeness
-  postprocessing;
+  postprocessing and the current no-API submission handoff entry;
 - `outputs/`, `data/`, `tmp/`, `artifacts/`, real `.env`, and
   `configs/*.local.json` are absent;
 - the embedded `ARTIFACT_MANIFEST.json` matches the packaged file list.

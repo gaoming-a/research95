@@ -11859,6 +11859,59 @@ Verify:
   通过；
 - `git diff --check` 通过。
 
+## 2026-06-18 artifact audit requires submission handoff
+
+Inspect:
+
+- 当前 `main` 与 `origin/main` 同步，工作区干净；
+- `docs/artifact/submission_handoff_20260618.md` 已被新增并纳入 artifact
+  文档入口；
+- 但 `scripts/audit_anonymous_artifact.py` 的 required file/snippet 清单尚未把
+  submission handoff 设为强制项；
+- `scripts/prepare_anonymous_artifact.py` 生成的 embedded `ARTIFACT_README.md`
+  也尚未显式提到 handoff，因此不能只改 audit required snippets。
+
+Plan:
+
+1. 将 `docs/artifact/submission_handoff_20260618.md` 加入 anonymous artifact
+   audit required files；
+2. 在 generated `ARTIFACT_README.md` 中加入 handoff 入口；
+3. 将 handoff 路径加入 audit required README snippets；
+4. 同步 `docs/artifact/anonymous_artifact.md` 与 `docs/INDEX.md`；
+5. 重新打包 ignored artifact ZIP 并运行 artifact audit；
+6. 运行最小代码/质量验证，不调用 API、不扩 bug、不改实验数据。
+
+Execute:
+
+- 已更新 `scripts/audit_anonymous_artifact.py`：
+  - required files 新增 `docs/artifact/submission_handoff_20260618.md`；
+  - required README snippets 新增
+    `docs/artifact/submission_handoff_20260618.md`；
+- 已更新 `scripts/prepare_anonymous_artifact.py`，使 embedded
+  `ARTIFACT_README.md` 明确指向 no-API submission handoff；
+- 已同步 `docs/artifact/anonymous_artifact.md` 和 `docs/INDEX.md`。
+
+Verify:
+
+- `python -m py_compile scripts\audit_anonymous_artifact.py scripts\prepare_anonymous_artifact.py`
+  通过；
+- `rg -n "submission_handoff_20260618|no-API submission handoff|required files|required README|ARTIFACT_README" ...`
+  确认 audit required files/snippets、generated `ARTIFACT_README.md` 和文档入口均
+  包含 submission handoff；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=299`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- 直接读取 `artifacts/research95_anonymous_artifact_audit.json` 确认
+  `missing_required=[]`、`missing_readme_snippets=[]`、
+  `forbidden_entries=[]`、`manifest_matches_zip=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过 current bounded EVP-7 claim readiness；保留的唯一 blocker 仍是旧
+  prompt-only positive claim 的 `stop_or_redesign`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过。
+
 ## 2026-06-18 no-API submission handoff refresh
 
 Inspect:
