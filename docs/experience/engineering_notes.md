@@ -2585,3 +2585,14 @@ This file starts fresh for the patch-verification project.
   not enforce it.
 - Do not include artifact ZIP hashes in tracked freeze-candidate docs if the
   doc is packaged into the artifact; that creates a circular package state.
+
+## 2026-06-18 freeze-candidate semantic audit gate
+
+- Required-file checks are not enough for submission freeze candidates. Add a
+  semantic audit that requires the packet to remain a candidate, not a final
+  freeze decision, and to keep API, expansion, and E1/E3/E5 actions forbidden.
+- Keep the artifact file count in the freeze-candidate packet aligned with the
+  packaged tracked file count. After adding the packet and its semantic audit
+  script, the current anonymous artifact manifest count is 303.
+- Paper readiness should require both the handoff semantic audit and the
+  freeze-candidate semantic audit before reporting `submission_package_ready`.

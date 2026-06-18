@@ -7,8 +7,10 @@ from typing import Any
 
 try:
     from scripts.audit_submission_handoff import DEFAULT_HANDOFF, audit_handoff
+    from scripts.audit_submission_freeze_candidate import DEFAULT_FREEZE_CANDIDATE, audit_freeze_candidate
 except ModuleNotFoundError:
     from audit_submission_handoff import DEFAULT_HANDOFF, audit_handoff
+    from audit_submission_freeze_candidate import DEFAULT_FREEZE_CANDIDATE, audit_freeze_candidate
 
 
 DEFAULT_FULL_RUN_DIR = Path("outputs") / "patch_verification_api_pilot_002"
@@ -712,6 +714,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     protocol_pilot_report = protocol_pilot_report_state()
     final_roadmap = final_roadmap_state()
     submission_handoff = audit_handoff(DEFAULT_HANDOFF)
+    submission_freeze_candidate = audit_freeze_candidate(DEFAULT_FREEZE_CANDIDATE)
 
     required_docs_ready = all(doc["exists"] for doc in required_docs.values())
     minimum_inputs_ready = required_docs_ready and all(
@@ -757,6 +760,8 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         blockers.append(f"Final roadmap check failed: {', '.join(final_roadmap['blockers'])}.")
     if not submission_handoff["passed"]:
         blockers.append("Submission handoff boundary audit failed.")
+    if not submission_freeze_candidate["passed"]:
+        blockers.append("Submission freeze-candidate boundary audit failed.")
 
     tool_augmented_blockers: list[str] = []
     if not required_docs["tool_augmented_full_result"]["exists"]:
@@ -795,7 +800,8 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         and protocol_state["passed"]
         and protocol_pilot_report["passed"]
         and final_roadmap["passed"]
-        and submission_handoff["passed"],
+        and submission_handoff["passed"]
+        and submission_freeze_candidate["passed"],
         "claim_boundary": (
             "Prompt-only evidence-first remains unsupported by the old full-run gate. "
             "The old tool-augmented positive claim is limited to a conditional tool-assisted verifier. "
@@ -807,6 +813,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "protocol_pilot_report": protocol_pilot_report,
         "final_roadmap": final_roadmap,
         "submission_handoff": submission_handoff,
+        "submission_freeze_candidate": submission_freeze_candidate,
         "required_docs": required_docs,
         "pre_api_evidence": pre_api_evidence,
         "run_files": run_files,
@@ -884,6 +891,13 @@ def build_markdown(audit: dict[str, Any]) -> str:
     lines.append(f"- next decision packet exists: {bool_mark(audit['submission_handoff']['next_decision_packet_exists'])}")
     lines.append(f"- missing required snippets: {len(audit['submission_handoff']['missing_required_snippets'])}")
     lines.append(f"- forbidden snippet hits: {len(audit['submission_handoff']['forbidden_snippet_hits'])}")
+    lines.extend(["", "## Submission Freeze Candidate", ""])
+    lines.append(f"- passed: {bool_mark(audit['submission_freeze_candidate']['passed'])}")
+    lines.append(f"- freeze candidate path: `{audit['submission_freeze_candidate']['freeze_candidate_path']}`")
+    lines.append(
+        f"- missing required snippets: {len(audit['submission_freeze_candidate']['missing_required_snippets'])}"
+    )
+    lines.append(f"- forbidden snippet hits: {len(audit['submission_freeze_candidate']['forbidden_snippet_hits'])}")
     lines.extend(["", "## Pre-API Evidence", ""])
     for name, state in audit["pre_api_evidence"].items():
         lines.append(f"- `{name}`: {bool_mark(state['exists'])} (`{state['path']}`)")

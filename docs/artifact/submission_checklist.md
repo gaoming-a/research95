@@ -74,6 +74,7 @@ pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper
 python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md
 python scripts\audit_paper_claim_boundary.py
 python scripts\audit_submission_handoff.py --out-json outputs\submission_handoff_audit\latest.json --out-md outputs\submission_handoff_audit\latest.md
+python scripts\audit_submission_freeze_candidate.py --out-json outputs\submission_freeze_candidate_audit\latest.json --out-md outputs\submission_freeze_candidate_audit\latest.md
 python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md
 ```
 
@@ -119,11 +120,13 @@ Last checked on 2026-06-18 after the advisor workload packet artifact gate:
   conclusion;
 - claim-boundary audit passed and remained raw-output-free;
 - paper readiness and local quality gate passed, including the no-API
-  submission handoff boundary;
-- anonymous artifact ZIP rebuilt with 301 files and audit result was
+  submission handoff and freeze-candidate boundaries;
+- anonymous artifact ZIP rebuilt with 303 files and audit result was
   `safe: true`;
 - artifact audit now requires `docs/paper/advisor_workload_response_zh.md`;
 - artifact and paper readiness gates now require
   `docs/artifact/submission_freeze_candidate_20260618.md`;
+- paper readiness and local quality now run
+  `scripts/audit_submission_freeze_candidate.py`;
 - tracked handoff packet:
   `docs/artifact/submission_handoff_20260618.md`.

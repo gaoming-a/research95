@@ -154,6 +154,9 @@
 
 - `scripts/audit_paper_readiness.py`：
   paper framing、protocol state、EVP-7 bounded-claim readiness。
+- `scripts/audit_submission_freeze_candidate.py`：
+  no-API freeze-candidate semantic boundary audit；防止 candidate packet 漂移为
+  final freeze、API 授权、扩量授权或 E1/E3/E5 插入。
 - `scripts/audit_paper_claim_boundary.py`：
   supported/unsupported claim traceability。
 - `scripts/write_paper_tables.py`：

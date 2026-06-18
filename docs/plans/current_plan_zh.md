@@ -12760,6 +12760,76 @@ Acceptance:
 - readiness/artifact/local gates 均通过；
 - 本轮提交只包含相关 tracked 文档和 gate 脚本，不提交 ignored outputs/artifacts。
 
+## 2026-06-18 submission freeze-candidate semantic audit
+
+Inspect:
+
+- `docs/artifact/submission_freeze_candidate_20260618.md` 已纳入 artifact
+  和 paper readiness required docs；
+- 但当前只有存在性/packaging gate，尚无语义 gate 防止该 packet 漂移成
+  final freeze、API 授权、扩量授权或 E1/E3/E5 插入；
+- 现有 `scripts/audit_submission_handoff.py` 已提供 no-API handoff semantic
+  audit 模式，可以用最短路径为 freeze-candidate packet 建立同类审计；
+- 本轮检查还发现 freeze-candidate 文档中的 artifact file count 会随提交包
+  required 文件增长而漂移；纳入该 packet 和语义审计脚本后最新 manifest
+  file count 为 303。
+
+Plan:
+
+1. 新增 `scripts/audit_submission_freeze_candidate.py`，只检查 tracked packet
+   的语义边界，不调用 API、不读 ignored raw outputs；
+2. 修正 freeze-candidate 文档中的 artifact file count 为 303；
+3. 将新审计接入 `scripts/run_local_quality_gate.py` 和 anonymous artifact
+   required files/snippets；
+4. 在 paper readiness 中调用该审计，并让 `submission_package_ready` 同时要求
+   freeze-candidate semantic audit 通过；
+5. 同步 README、INDEX、artifact/checklist/handoff/current state/engineering
+   notes；
+6. 用正向 gate 和临时破坏文档的负向检查验证审计有效。
+
+Acceptance:
+
+- freeze-candidate semantic audit 通过正向文档；
+- 临时把 packet 改成 final freeze 或 API 授权时，审计失败；
+- local quality gate 覆盖该审计；
+- paper readiness 的 `submission_package_ready` 依赖该审计；
+- anonymous artifact 必须包含该审计脚本和 README 命令；
+- artifact/readiness/local gates 均通过。
+
+Execute:
+
+- 已新增 `scripts/audit_submission_freeze_candidate.py`；
+- 已将 freeze-candidate packet 的 artifact file count 从旧 301/302 边界更新为
+  当前 303；
+- 已将 freeze-candidate audit 接入 `scripts/run_local_quality_gate.py`；
+- 已将 freeze-candidate audit 接入 `scripts/audit_paper_readiness.py`，并使
+  `submission_package_ready` 依赖该 semantic audit；
+- 已将 `scripts/audit_submission_freeze_candidate.py` 和对应命令加入 anonymous
+  artifact required files/snippets 与 generated `ARTIFACT_README.md`；
+- 已同步 README、INDEX、current project state、submission checklist、
+  submission handoff、anonymous artifact 文档和 engineering notes。
+
+Verify:
+
+- `python scripts\audit_submission_freeze_candidate.py --out-json outputs\submission_freeze_candidate_audit\latest.json --out-md outputs\submission_freeze_candidate_audit\latest.md`
+  通过；
+- 负向检查：临时复制 freeze packet 并改为 final freeze/API authorization 后，
+  `audit_submission_freeze_candidate.py` 按预期失败，临时文件已删除；
+- `python -m py_compile scripts\audit_submission_freeze_candidate.py scripts\audit_paper_readiness.py scripts\audit_anonymous_artifact.py scripts\prepare_anonymous_artifact.py scripts\run_local_quality_gate.py`
+  通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`submission_freeze_candidate.passed=true` 且
+  `submission_package_ready=true`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=303`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，且 `submission_freeze_candidate_audit.passed=true`；
+- `git diff --check` 通过；
+- direct JSON/ZIP inspection 确认 `manifest_file_count=303`、
+  `zip_has_freeze_audit_script=true`、`zip_has_freeze_packet=true`。
+
 Execute:
 
 - 已新增 `docs/artifact/submission_freeze_candidate_20260618.md`，记录当前

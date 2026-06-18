@@ -784,11 +784,17 @@
   compile checks, cache cleanup, sensitive scan, credential-boundary checks,
   bootstrap safety, workflow guard, API failure handling, command templates,
   experiment run-record generation, Git handoff safety, readiness audits, paper
-  readiness, submission-handoff boundary checks, and anonymous artifact dry-run.
+  readiness, submission-handoff and freeze-candidate boundary checks, and
+  anonymous artifact dry-run.
 - `scripts/audit_submission_handoff.py`: no-API audit for
   `docs/artifact/submission_handoff_20260618.md`. It fails if the handoff loses
   the current four-anchor counts, the next-decision packet pointer, the default
   no-API continuation, or the forbidden-action boundary.
+- `scripts/audit_submission_freeze_candidate.py`: no-API audit for
+  `docs/artifact/submission_freeze_candidate_20260618.md`. It fails if the
+  packet stops being a candidate, claims final freeze, authorizes API calls or
+  expansion, loses the no-E1/E3/E5 boundary, or reports a stale artifact file
+  count.
 - `scripts/analyze_patch_verification.py`: patch-verification metrics analyzer
   for verifier outputs. By default, it reads
   `data/cohorts/task_cohort_registry.json` and filters metrics to the

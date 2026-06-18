@@ -45,10 +45,12 @@ Observed results:
   prompt-only `stop_or_redesign` blocker retained as a non-blocker for this
   paper route;
 - local quality gate passed;
-- anonymous artifact package rebuilt with 301 files and `safe: true`;
+- anonymous artifact package rebuilt with 303 files and `safe: true`;
 - artifact audit requires the advisor workload response packet;
 - the submission freeze-candidate packet records the current package as a
-  candidate state only and does not finalize the 7-page IEEE PDF.
+  candidate state only and does not finalize the 7-page IEEE PDF;
+- `scripts/audit_submission_freeze_candidate.py` checks that candidate boundary
+  before paper readiness and local quality report submission-package readiness.
 
 ## Next Decision Boundary
 

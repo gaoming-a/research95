@@ -47,11 +47,11 @@ provider-private metadata.
 
 ## Current Audit
 
-The latest ZIP audit passed on 2026-06-18 after the advisor workload packet
-artifact gate. It confirms:
+The latest ZIP audit passed on 2026-06-18 after the freeze-candidate semantic
+audit gate. It confirms:
 
-- required source, config template, documentation, and handoff scripts are
-  present;
+- required source, config template, documentation, handoff scripts, and
+  freeze-candidate audit scripts are present;
 - the final submission checklist is present at
   `docs/artifact/submission_checklist.md`;
 - the no-API submission handoff is present at
@@ -73,9 +73,10 @@ artifact gate. It confirms:
   the 20-task / 94-candidate / 376-record real DeepSeek G5 run;
 - embedded `ARTIFACT_README.md` includes no-API reproduction, local quality,
   credential-boundary, bootstrap-safety, command-template, pre-API handoff,
-  submission-handoff audit, and guarded real-API command templates, including
-  full-run completeness postprocessing and the current no-API submission
-  handoff entry, the submission freeze-candidate entry, plus the
+  submission-handoff audit, submission freeze-candidate audit, and guarded
+  real-API command templates, including full-run completeness postprocessing
+  and the current no-API submission handoff entry, the submission
+  freeze-candidate entry, plus the
   advisor-facing workload response entry;
 - `outputs/`, `data/`, `tmp/`, `artifacts/`, real `.env`, and
   `configs/*.local.json` are absent;

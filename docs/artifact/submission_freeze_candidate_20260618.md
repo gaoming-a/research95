@@ -19,7 +19,7 @@ authorize model calls, cohort expansion, or evidence-level changes.
   local ignored build.
 - Current anonymous artifact target:
   `artifacts/research95_anonymous_artifact.zip` local ignored build.
-- Latest artifact readiness boundary: 301 packaged tracked files, audit
+- Latest artifact readiness boundary: 303 packaged tracked files, audit
   `safe: true`, and required advisor workload packet included.
 
 ## What This Candidate Supports
