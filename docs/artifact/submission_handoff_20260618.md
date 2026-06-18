@@ -24,6 +24,7 @@ The following commands were rerun on 2026-06-18:
 
 ```powershell
 python scripts\write_paper_tables.py
+python scripts\generate_paper_figures.py
 python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex
 pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex
 pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex
@@ -38,6 +39,7 @@ python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anony
 Observed results:
 
 - paper tables and IEEE draft regenerated without tracked drift;
+- all seven paper figures regenerated in PDF/SVG/PNG form;
 - IEEE PDF compiled twice to 7 pages;
 - PDF text contains the workload ledger and bounded EVP-7 conclusion;
 - claim-boundary audit passed and remained raw-output-free;
@@ -46,6 +48,8 @@ Observed results:
   paper route;
 - local quality gate passed;
 - anonymous artifact package rebuilt with 303 files and `safe: true`;
+- `docs/artifact/submission_checklist.md` latest local verification now points
+  to the reinforcement-route no-API paper package rebuild;
 - artifact audit requires the advisor workload response packet;
 - the submission freeze-candidate packet records the current package as a
   candidate state only and does not finalize the 7-page IEEE PDF;

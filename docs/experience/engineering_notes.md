@@ -2609,3 +2609,15 @@ This file starts fresh for the patch-verification project.
 - Keep INDEX wording generic enough to survive future rebuilds: describe the
   checklist as carrying the latest local PDF/artifact verification status,
   rather than tying it to an older workload-ledger-only refresh.
+
+## 2026-06-18 submission handoff latest-run drift
+
+- The handoff semantic audit protects no-API, no-expansion, and no-E1/E3/E5
+  boundaries, but it does not prove that the latest-run command list includes
+  every maintenance action just performed.
+- After a paper package rebuild, update the handoff's latest maintenance run
+  alongside the checklist. In this package, that means listing figure
+  regeneration, 7-page PDF compilation, 303-file artifact rebuild, and the
+  refreshed submission checklist status.
+- Keep this as documentation maintenance only: do not reinterpret it as a final
+  freeze decision, second-model authorization, or new experimental result.
