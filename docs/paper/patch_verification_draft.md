@@ -1,6 +1,6 @@
 # Evidence Visibility Matters: A Systematic Study of LLM-Based Verification for Candidate Patches
 
-Draft status: EVP-7 376-run bounded-pilot result draft, 2026-06-15.
+Draft status: EVP-7 bounded four-anchor submission draft, 2026-06-18.
 
 This draft reports the first full DeepSeek official API pilot, the follow-up
 tool-augmented verifier, and the current EVP-7 evidence-visibility pilot. The
@@ -115,17 +115,20 @@ study.
 
 ## 5. Research Questions
 
-RQ1. How reliable is LLM-only review when deciding whether candidate patches
-should be accepted?
+RQ1. How risky is evidence-poor LLM review as a merge gate for candidate
+patches?
 
-RQ2. Can prompt-only evidence-first verification reduce false accepts compared
-with LLM-only review?
+RQ2. Does prompt-only evidence discipline reduce observed false accepts, and
+what correct-recall cost does it introduce?
 
-RQ3. Does evidence-first verification preserve useful correct-patch recall, or
-does it only reduce false accepts by rejecting or escalating too aggressively?
+RQ3. Across E0/E2/E4/E6, how does visible evidence change false accepts,
+accepted precision, correct recall, escalation, and utility?
 
-RQ4. Does tool-augmented evidence verification recover the correct-patch recall
-lost by prompt-only evidence-first verification?
+RQ4. What do deterministic and tool-assisted evidence baselines allow us to
+claim about LLM contribution?
+
+RQ5. Which paper claims remain supported or unsupported under the frozen
+20-task EVP-7 pilot boundary?
 
 ## 6. Dataset Construction
 

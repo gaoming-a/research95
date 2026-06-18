@@ -13443,3 +13443,62 @@ Verify:
 - `git diff --check` 通过；
 - `git status --short --branch` 显示 tracked drift 仅为
   `docs/plans/current_plan_zh.md`。
+
+## 2026-06-18 markdown draft RQ alignment
+
+Inspect:
+
+- 当前工作区干净，`main...origin/main [ahead 18]`；
+- `docs/experiments/evp7_next_decision_packet_20260618.md` 仍要求无新决策时只做
+  no-API paper-submission maintenance；
+- targeted paper-text search 发现 `docs/paper/patch_verification_draft.md` 的
+  Research Questions 仍停留在早期 LLM-only / prompt-only /
+  tool-augmented pilot 四问；
+- 当前 `docs/paper/ieee_submission_draft.tex` 已使用 paper-facing EVP-7
+  evidence-visibility 五问：evidence-poor risk、prompt-only cost、
+  E0/E2/E4/E6 evidence-level effect、deterministic/tool-assisted baseline
+  claim boundary、frozen 20-task pilot claim boundary；
+- 这是论文文本一致性漂移，不是实验数据问题。
+
+Plan:
+
+1. 将 `docs/paper/patch_verification_draft.md` 的 draft status 更新到当前
+   2026-06-18 bounded four-anchor submission draft；
+2. 将 Markdown draft 的 Research Questions 改为与 IEEE submission draft
+   一致的 RQ1-RQ5；
+3. 在 `docs/experience/engineering_notes.md` 记录 Markdown/IEEE RQ drift 经验；
+4. 不调用 API、不扩 bug、不补 E1/E3/E5、不修改实验数据或 evidence packets。
+
+Acceptance:
+
+- Markdown draft 和 IEEE submission draft 的 RQ framing 一致；
+- 不引入 scale-generalized、LLM-over-tool-only 或 final-freeze claim；
+- paper readiness、artifact audit、local quality 和 diff checks 通过。
+
+Execute:
+
+- 已将 `docs/paper/patch_verification_draft.md` 的 draft status 更新为
+  `EVP-7 bounded four-anchor submission draft, 2026-06-18`；
+- 已将 Markdown draft RQ1-RQ5 对齐到 IEEE submission draft 的当前
+  evidence-visibility framing；
+- 已在 `docs/experience/engineering_notes.md` 增加 Markdown and IEEE RQ drift
+  经验记录；
+- 未修改 IEEE generator、实验数据、evidence packets 或模型输出。
+
+Verify:
+
+- targeted `rg` 检查确认 Markdown draft 和 IEEE submission draft 都包含当前
+  RQ1-RQ5 framing，Markdown draft status 已更新为 2026-06-18 bounded
+  four-anchor submission draft；
+- targeted `rg` 同时确认 Markdown draft 仍保留 `not scale-generalized`、
+  no LLM superiority 和 no full-ladder 边界；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=303`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `git diff --check` 通过；
+- tracked drift 限于 Markdown paper draft、current plan 和 engineering notes。

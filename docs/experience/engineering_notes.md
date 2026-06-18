@@ -2648,3 +2648,13 @@ This file starts fresh for the patch-verification project.
   ahead number every turn.
 - Treat GitHub push failures as sync-state context only. They do not authorize
   API calls, cohort expansion, E1/E3/E5 insertion, or a final freeze.
+
+## 2026-06-18 Markdown and IEEE RQ drift
+
+- The Markdown paper draft and the IEEE submission draft can drift because the
+  IEEE draft is generated from `scripts/write_ieee_latex_draft.py`, while the
+  Markdown draft is manually maintained.
+- When the paper-facing RQs move from first-pilot LLM-only/prompt-only framing
+  to EVP-7 evidence-visibility framing, update both drafts in the same pass.
+- This is wording synchronization only: do not use RQ alignment to add new
+  scale, second-model, or LLM-over-tool-only claims.
