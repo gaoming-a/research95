@@ -13205,3 +13205,71 @@ Verify:
   `paper_submission_package_ready=true`、`artifact_safe=true`、
   `local_quality_passed=true`、`zip_has_anonymous_artifact_doc=true`、
   `zip_has_submission_checklist=true`、`zip_has_current_plan=true`。
+
+## 2026-06-18 no-API submission maintenance continuation
+
+Inspect:
+
+- 当前工作区干净，`main...origin/main [ahead 14]`；
+- `docs/experiments/evp7_next_decision_packet_20260618.md` 指定无明确新决策时，
+  只能继续 no-API paper-submission maintenance；
+- 当前未获得 second-model provider/model/budget/scope/stop rule 确认，不能启动
+  第二模型复现；
+- 当前未获得 30-50 bug expansion 或新 verifier design 的边界确认，不能扩
+  cohort 或重开旧 prompt-only 路线；
+- submission checklist 已包含 tables、figures、IEEE draft/PDF、readiness、
+  local quality 和 anonymous artifact audit 的 rebuild/audit 命令。
+
+Plan:
+
+1. 重建 paper tables、paper figures 和 IEEE LaTeX draft；
+2. 连续两遍编译 IEEE PDF，并抽查 PDF 文本中的 workload ledger 和 bounded
+   EVP-7 conclusion；
+3. 重跑 claim-boundary、paper readiness、submission handoff、freeze-candidate、
+   anonymous artifact 和 local quality gates；
+4. 如重建发现 tracked drift，仅更新提交包维护相关文档，不改实验数据；
+5. 不调用 API、不扩 bug、不补 E1/E3/E5、不重建 evidence packets、不把
+   freeze-candidate 写成 final freeze。
+
+Acceptance:
+
+- paper tables / figures / IEEE draft 可重建；
+- IEEE PDF 两遍编译成功且仍为当前 bounded four-anchor paper；
+- readiness、artifact 和 local gates 仍通过；
+- 若有文档漂移，记录原因、验证结果并只提交本轮相关文件。
+
+Execute:
+
+- 已运行 `python scripts\write_paper_tables.py`，重新生成
+  `docs/paper/generated_tables.md` 和 `docs/paper/generated_tables.tex`；
+- 已运行 `python scripts\generate_paper_figures.py`，重新生成 7 张 paper
+  figures 的 PDF/SVG/PNG；
+- 已运行 `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`；
+- 已连续两遍运行 `pdflatex`，输出
+  `outputs/paper_compile/ieee_submission_draft.pdf`，7 pages；
+- 已重建匿名 artifact ZIP，保持 `file_count=303`。
+
+Verify:
+
+- `pdftotext outputs\paper_compile\ieee_submission_draft.pdf - | rg ...`
+  确认 PDF 包含 `20 tasks`、`94 candidates`、`376 records`、`21 tasks`、
+  `98 candidates`、`392`、`bounded EVP-7`、`not scale-generalized` 和
+  `single-model`；
+- PowerShell PDF file inspection 确认 PDF 存在且 size 为 `258854` bytes；
+- `python scripts\audit_paper_claim_boundary.py` 通过，`passed=true`、
+  `raw_output_free=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\audit_submission_handoff.py --out-json outputs\submission_handoff_audit\latest.json --out-md outputs\submission_handoff_audit\latest.md`
+  通过，`passed=true`；
+- `python scripts\audit_submission_freeze_candidate.py --out-json outputs\submission_freeze_candidate_audit\latest.json --out-md outputs\submission_freeze_candidate_audit\latest.md`
+  通过，`passed=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- direct JSON/ZIP inspection 确认 `paper_current_result_claim_ready=True`、
+  `paper_submission_package_ready=True`、`artifact_safe=True`、
+  `local_quality_passed=True`、`manifest_file_count=303`、
+  `zip_has_current_plan=True`、`zip_has_submission_handoff=True`、
+  `zip_has_submission_checklist=True`、`zip_has_fig7=True`。
