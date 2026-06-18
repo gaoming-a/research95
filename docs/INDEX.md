@@ -244,6 +244,10 @@
   conclusion, and final consistency polish for `Evidence Gain`,
   unsupported-claim formatting, and bounded
   conclusion wording.
+- `paper/advisor_workload_response_zh.md`: no-API advisor-facing explanation
+  packet for the current paper package. It summarizes the 21/98/392 structural
+  pipeline, the 20/94/376 real G5 run, validation/audit/artifact work, allowed
+  bounded claims, and disallowed overclaims.
 - `experiments/evp7_related_work_positioning.md`: related-work citation and
   positioning artifact. It maps field-specific primary references to the
   paper's evidence-visibility distinction and records why a strict Nature/CNS

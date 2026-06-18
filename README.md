@@ -303,6 +303,10 @@ They should not override `final_paper_roadmap_zh.md`.
   tool-only attribution, qualitative decision-case boundaries, and a final
   consistency pass aligning `Evidence Gain`, unsupported claims, and the
   bounded conclusion.
+- Advisor-facing workload and claim-boundary talking points are tracked at
+  `docs/paper/advisor_workload_response_zh.md`. This is a no-API explanation
+  packet for why the current paper is a full candidate-patch verification
+  pipeline rather than only a prompt comparison.
 - A Nature-style pre-submission reviewer assessment is tracked at
   `docs/paper/nature_reviewer_presubmission_report.md`. It identifies the next
   paper-writing risks as tool-only attribution, EVP-7 qualitative cases,

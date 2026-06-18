@@ -72,6 +72,7 @@ Forbidden without explicit user confirmation:
 - `docs/paper/ieee_submission_draft.tex`
 - `outputs/paper_compile/ieee_submission_draft.pdf` ignored local build
 - `docs/paper/patch_verification_draft.md`
+- `docs/paper/advisor_workload_response_zh.md`
 - `docs/paper/generated_tables.md`
 - `docs/paper/generated_tables.tex`
 - `docs/artifact/submission_checklist.md`

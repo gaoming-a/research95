@@ -21,6 +21,10 @@ state for the Evidence Visibility / Candidate Patches submission path.
   workload evidence: 21 tasks, 98 candidates, 392 E0/E2/E4/E6 evidence
   packets, 294 deterministic tool-only decisions, qualitative cases, and
   raw-output-free claim/audit artifacts.
+- Advisor-facing workload response:
+  `docs/paper/advisor_workload_response_zh.md` summarizes why the current work
+  is a candidate-patch verification pipeline rather than only a prompt
+  comparison, while preserving the bounded EVP-7 claim boundary.
 - Latest compiled PDF check:
   `outputs/paper_compile/ieee_submission_draft.pdf` was regenerated from the
   current IEEE draft on 2026-06-18. The PDF is 7 pages and contains the

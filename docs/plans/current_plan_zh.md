@@ -11925,6 +11925,69 @@ Verify:
 - 重新生成 paper tables / IEEE draft 未造成 tracked paper output 漂移；当前
   tracked diff 仅为本轮 `current_plan_zh.md` 和 engineering notes 记录。
 
+## 2026-06-18 advisor-facing workload response packet
+
+Inspect:
+
+- `docs/experiments/evp7_next_decision_packet_20260618.md` 的 Option A 允许
+  `response-to-advisor summary`；
+- 当前 README、INDEX、paper draft 和 submission checklist 已有 workload
+  ledger，但缺少一个中文短文档，直接回应“工作量是否够”和“当前能投什么 claim”；
+- 当前默认边界仍是 no-API paper-submission maintenance，不启动第二模型、
+  30-50 bug 扩量或新 verifier design。
+
+Plan:
+
+1. 新增中文 advisor/workload response packet，总结当前 structural pipeline、
+   real G5 run、验证/审计/论文 artifact 工作量；
+2. 明确论文可写 claim、不能写 claim、为什么不是“只跑四组 prompt”；
+3. 同步 README、INDEX、current project state 和 submission checklist 的入口；
+4. 不改实验数据、不重建 evidence packets、不调用 API、不扩 cohort、不补
+   E1/E3/E5。
+
+Acceptance:
+
+- 新文档能独立说明当前工作量和投稿边界；
+- 所有新增表述保持 bounded four-anchor EVP-7 pilot，不引入 scale-generalized、
+  LLM-over-tool-only、E6-strict 或 full-ladder claim；
+- paper readiness / local quality / diff check 通过。
+
+Execute:
+
+- 已新增 `docs/paper/advisor_workload_response_zh.md`；
+- 已同步 README、docs/INDEX、current project state、submission checklist 和
+  submission handoff 入口；
+- 文档明确当前工作量包括 21/98/392 structural pipeline、294 tool-only
+  decisions、20/94/376 real G5 run、statistics、qualitative cases、
+  claim-boundary audit 和 artifact readiness；
+- 文档明确不能声称 scale-generalized、LLM-over-tool-only、E6 strict
+  superiority、external billing equivalence 或 current E1/E3/E5 full ladder。
+
+Verify:
+
+- `rg -n "advisor_workload_response_zh|21 real-bug tasks|98 candidate patches|392|294 deterministic|376|scale-generalized|LLM 明确优于|E1/E3/E5|prompt comparison|bounded EVP-7" ...`
+  确认新文档和入口均可检索，且 overclaim 关键词只作为禁止主张出现；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=301`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`、`missing_required=[]`、
+  `missing_readme_snippets=[]`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`submission_package_ready=true`、
+  `submission_handoff.passed=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`、`artifact_zip_audit.passed=true`、
+  `submission_handoff_audit.passed=true`；
+- 直接检查 ZIP 确认 `docs/paper/advisor_workload_response_zh.md` 已包含在匿名
+  artifact 中。
+
+Commit / Git Sync:
+
+- 本轮只暂存 advisor/workload packet 及其入口文档；
+- staged diff check 与敏感信息扫描通过；
+- 由于当前分支已有连续 GitHub 网络层同步失败记录，本轮不再反复重试
+  `git push origin main`，只保留本地提交并在最终状态中报告 ahead 数。
+
 ## 2026-06-18 paper readiness checks submission handoff
 
 Inspect:
