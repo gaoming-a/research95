@@ -672,6 +672,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "research_definition": file_state(Path("docs") / "paper" / "research_definition.md"),
         "paper_draft": file_state(Path("docs") / "paper" / "patch_verification_draft.md"),
         "paper_outline": file_state(Path("docs") / "paper" / "patch_verification_outline.md"),
+        "advisor_workload_response": file_state(Path("docs") / "paper" / "advisor_workload_response_zh.md"),
         "generated_tables_md": file_state(Path("docs") / "paper" / "generated_tables.md"),
         "generated_tables_tex": file_state(Path("docs") / "paper" / "generated_tables.tex"),
         "ieee_preapi_draft": file_state(Path("docs") / "paper" / "ieee_preapi_draft.tex"),
@@ -709,7 +710,8 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     final_roadmap = final_roadmap_state()
     submission_handoff = audit_handoff(DEFAULT_HANDOFF)
 
-    minimum_inputs_ready = all(doc["exists"] for doc in required_docs.values()) and all(
+    required_docs_ready = all(doc["exists"] for doc in required_docs.values())
+    minimum_inputs_ready = required_docs_ready and all(
         state["exists"] for state in run_files.values()
     ) and reviews["counts_match"] and completeness["usable_full_run"] and failures["usable_for_paper"] and gate["exists"]
     positive_claim_ready = bool(minimum_inputs_ready and gate["usable_for_positive_claim"])
@@ -721,7 +723,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         and tool_gate["usable_for_tool_augmented_claim"]
     )
     negative_or_methods_draft_ready = bool(
-        all(state["exists"] for state in required_docs.values())
+        required_docs_ready
         and all(state["exists"] for state in pre_api_evidence.values())
         and paper_framing["passed"]
         and protocol_state["passed"]
@@ -769,6 +771,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "full_run_dir": run_dir.as_posix(),
         "tool_augmented_run_dir": tool_augmented_run_dir.as_posix(),
         "evp7_g5": evp7,
+        "required_docs_ready": required_docs_ready,
         "minimum_inputs_ready": minimum_inputs_ready,
         "positive_claim_ready": positive_claim_ready,
         "prompt_only_positive_claim_ready": positive_claim_ready,
@@ -783,7 +786,8 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         and protocol_state["passed"]
         and protocol_pilot_report["passed"]
         and final_roadmap["passed"],
-        "submission_package_ready": (evp7["ready_for_bounded_pilot_claim"] or tool_augmented_claim_ready)
+        "submission_package_ready": required_docs_ready
+        and (evp7["ready_for_bounded_pilot_claim"] or tool_augmented_claim_ready)
         and paper_framing["passed"]
         and protocol_state["passed"]
         and protocol_pilot_report["passed"]
@@ -828,6 +832,7 @@ def build_markdown(audit: dict[str, Any]) -> str:
         "",
         f"- full run dir: `{audit['full_run_dir']}`",
         f"- tool-augmented run dir: `{audit['tool_augmented_run_dir']}`",
+        f"- required docs ready: {bool_mark(audit['required_docs_ready'])}",
         f"- minimum inputs ready: {bool_mark(audit['minimum_inputs_ready'])}",
         f"- prompt-only positive claim ready: {bool_mark(audit['prompt_only_positive_claim_ready'])}",
         f"- tool-augmented claim ready: {bool_mark(audit['tool_augmented_claim_ready'])}",

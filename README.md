@@ -322,7 +322,8 @@ They should not override `final_paper_roadmap_zh.md`.
   result, and the latest real 376-record EVP-7 G5 run is reported as a bounded
   pilot evidence-visibility result with explicit limitations. It also reports
   `submission_package_ready`, which joins the current result claim readiness
-  with the no-API submission handoff boundary.
+  with the no-API submission handoff boundary and requires the advisor-facing
+  workload response packet to exist.
 - The 15-20 bug expansion target has been exceeded at 21 tasks. Further
   expansion is no longer the default next step; it requires a new 30-50 bug
   decision boundary rather than blind metadata admission.

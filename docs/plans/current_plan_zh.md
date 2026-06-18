@@ -11859,6 +11859,64 @@ Verify:
   通过；
 - `git diff --check` 通过。
 
+## 2026-06-18 paper readiness requires advisor workload packet
+
+Inspect:
+
+- 上一轮已将 `docs/paper/advisor_workload_response_zh.md` 纳入 anonymous
+  artifact required gate；
+- `scripts/audit_paper_readiness.py` 的 required docs 尚未包含该 advisor packet；
+- 因此当前 artifact audit 会在 advisor packet 缺失时失败，但 paper readiness
+  仍可能报告 submission package ready，两个提交包 readiness gate 不一致。
+
+Plan:
+
+1. 将 `docs/paper/advisor_workload_response_zh.md` 加入
+   `audit_paper_readiness.py` 的 required docs；
+2. 不改变 `current_result_claim_ready`、`evp7_bounded_pilot_claim_ready`、
+   prompt-only/tool-augmented claim 或 paper framing 逻辑；
+3. 用正向 readiness run 和临时缺失 advisor packet 的负向 run 验证；
+4. 同步 README/INDEX/engineering notes 中的 readiness gate 说明；
+5. 不调用 API、不扩 cohort、不补 E1/E3/E5、不修改实验数据。
+
+Acceptance:
+
+- 当前正常 paper readiness 继续通过，`submission_package_ready=true`；
+- 临时缺失 advisor packet 时，paper readiness 表现为
+  `required_docs_ready=false`、`minimum_inputs_ready=false`、
+  `negative_or_methods_draft_ready=false` 和 `submission_package_ready=false`；
+- local quality gate 通过；
+- diff check 和 staged sensitive scan 通过。
+
+Execute:
+
+- 已更新 `scripts/audit_paper_readiness.py`：
+  - required docs 新增 `advisor_workload_response`；
+  - 输出 `required_docs_ready`；
+  - `submission_package_ready` 现在同时要求 required docs 全部存在；
+  - 未改变 `current_result_claim_ready`、`evp7_bounded_pilot_claim_ready`、
+    prompt-only/tool-augmented claim 逻辑；
+- 已同步 README、docs/INDEX 和 engineering notes，说明 paper readiness required
+  docs 也包含 advisor-facing workload response。
+
+Verify:
+
+- `python -m py_compile scripts\audit_paper_readiness.py scripts\audit_anonymous_artifact.py scripts\prepare_anonymous_artifact.py scripts\run_local_quality_gate.py`
+  通过；
+- 正向 `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`required_docs_ready=true`、
+  `required_docs.advisor_workload_response.exists=true`、
+  `submission_package_ready=true`；
+- 负向 readiness：临时重命名 `docs/paper/advisor_workload_response_zh.md`
+  后运行 `audit_paper_readiness.py`，输出
+  `required_docs_ready=false`、`minimum_inputs_ready=false`、
+  `negative_or_methods_draft_ready=false`、`submission_package_ready=false`、
+  `required_docs.advisor_workload_response.exists=false`；随后已恢复文件；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`。
+
 ## 2026-06-18 default no-API paper maintenance continuation
 
 Inspect:

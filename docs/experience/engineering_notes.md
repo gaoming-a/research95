@@ -2556,3 +2556,6 @@ This file starts fresh for the patch-verification project.
 - The advisor workload response is not experimental evidence, but it is a
   paper-package explanation artifact. It should travel with the anonymous
   package because it records the bounded workload and overclaim boundary.
+- Keep the same boundary visible in `audit_paper_readiness.py` required docs.
+  Otherwise the artifact gate can fail while paper readiness still appears
+  ready, which splits the submission-package contract.
