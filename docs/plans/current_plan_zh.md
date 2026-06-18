@@ -13612,3 +13612,67 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过，`passed=true`；
 - `git diff --check` 通过。
+
+## 2026-06-18 no-API package rebuild after branch clarification
+
+Inspect:
+
+- 当前工作区干净，`main...origin/main [ahead 20]`；
+- 最新提交为 `2249665 Clarify reinforcement plan branches`；
+- `docs/experiments/evp7_next_decision_packet_20260618.md` 仍规定：无明确
+  provider/model/预算/scope/停止条件时，只能继续 Option A no-API
+  paper-submission maintenance；
+- `docs/artifact/submission_checklist.md` 和
+  `docs/artifact/submission_handoff_20260618.md` 已列出可复现 rebuild 命令；
+- 当前没有 target venue/final freeze 确认，也没有第二模型、30-50 bug 扩量、
+  E1/E3/E5 或新 verifier design 授权。
+
+Plan:
+
+1. 按 submission checklist 重新生成 paper tables、figures 和 IEEE draft；
+2. 连续两遍编译 IEEE PDF，并抽查 PDF 文本中的 workload ledger 与 bounded
+   EVP-7 conclusion；
+3. 运行 claim-boundary、paper readiness、local quality、anonymous artifact
+   rebuild 和 artifact audit；
+4. 若 tracked 生成物没有 drift，只提交本轮 `current_plan_zh.md` 执行日志；
+5. 不调用 API、不扩 bug、不补 E1/E3/E5、不重建 evidence packets、不提交
+   ignored `outputs/` 或 `artifacts/`。
+
+Acceptance:
+
+- tables/figures/IEEE draft/PDF 可由 tracked scripts 复现；
+- PDF 仍为当前 7-page paper package，并包含 21/98/392 structural workload 和
+  20/94/376 paper-facing G5 boundary；
+- paper readiness、claim-boundary、artifact audit、local quality 和 diff checks
+  通过；
+- tracked drift 不包含 ignored outputs/artifacts 或实验数据。
+
+Execute:
+
+- 已运行 `python scripts\write_paper_tables.py`，重建
+  `docs/paper/generated_tables.md` 和 `docs/paper/generated_tables.tex`；
+- 已运行 `python scripts\generate_paper_figures.py`，重建 7 张 paper figures 的
+  PDF/SVG/PNG 输出；
+- 已运行 `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`；
+- 已连续两遍运行 `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=outputs\paper_compile docs\paper\ieee_submission_draft.tex`，
+  输出 7-page `outputs/paper_compile/ieee_submission_draft.pdf`；
+- 已运行 PDF 文本抽查、claim-boundary audit、paper readiness、local quality、
+  anonymous artifact rebuild 和 artifact audit；
+- 生成步骤未造成 tracked tables/figures/IEEE draft 漂移，当前 tracked drift 仅为
+  本轮 `docs/plans/current_plan_zh.md` 日志。
+
+Verify:
+
+- `pdftotext outputs\paper_compile\ieee_submission_draft.pdf - | rg -n "Workload at a Glance|20 tasks|94 candidates|376 records|21 tasks|98 candidates|392|bounded EVP-7|not scale-generalized|not claim"`
+  命中 workload ledger、21/98/392 structural pipeline、20/94/376 paper-facing
+  DeepSeek G5 run 和 bounded EVP-7 conclusion；
+- `python scripts\audit_paper_claim_boundary.py` 通过，`passed=true`、
+  `raw_output_free=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=303`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`。
