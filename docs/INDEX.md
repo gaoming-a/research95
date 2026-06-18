@@ -670,6 +670,8 @@
   audit. It also checks paper framing, active protocol, protocol pilot report,
   final roadmap current-state consistency, reader-flow continuity, and
   final-polish claim wording before marking the current result claim ready.
+  Its `submission_package_ready` field additionally requires the no-API
+  submission handoff boundary to pass.
 - `scripts/write_paper_tables.py`: generates Markdown and LaTeX paper tables
   from dataset summary, validation summary, metrics, deterministic
   reproducibility comparison, the current EVP-7 workload ledger, and the

@@ -316,7 +316,9 @@ They should not override `final_paper_roadmap_zh.md`.
   boundaries: the old prompt-only gate remains a negative/redesign result, the
   old 30-candidate tool-augmented run remains a conditional tool-assisted
   result, and the latest real 376-record EVP-7 G5 run is reported as a bounded
-  pilot evidence-visibility result with explicit limitations.
+  pilot evidence-visibility result with explicit limitations. It also reports
+  `submission_package_ready`, which joins the current result claim readiness
+  with the no-API submission handoff boundary.
 - The 15-20 bug expansion target has been exceeded at 21 tasks. Further
   expansion is no longer the default next step; it requires a new 30-50 bug
   decision boundary rather than blind metadata admission.

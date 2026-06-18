@@ -5,6 +5,11 @@ import json
 from pathlib import Path
 from typing import Any
 
+try:
+    from scripts.audit_submission_handoff import DEFAULT_HANDOFF, audit_handoff
+except ModuleNotFoundError:
+    from audit_submission_handoff import DEFAULT_HANDOFF, audit_handoff
+
 
 DEFAULT_FULL_RUN_DIR = Path("outputs") / "patch_verification_api_pilot_002"
 DEFAULT_TOOL_AUGMENTED_FULL_RUN_DIR = Path("outputs") / "patch_verification_tool_augmented_full_001"
@@ -677,6 +682,8 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
             Path("docs") / "experiments" / "evp7_related_work_positioning.md"
         ),
         "related_work_ris": file_state(Path("docs") / "references" / "evp7_related_work_references.ris"),
+        "submission_checklist": file_state(Path("docs") / "artifact" / "submission_checklist.md"),
+        "submission_handoff": file_state(DEFAULT_HANDOFF),
     }
     pre_api_evidence = {
         "reproducibility_compare": file_state(Path("outputs") / "reproducibility" / "pilot_compare.json"),
@@ -700,6 +707,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     protocol_state = protocol_current_state()
     protocol_pilot_report = protocol_pilot_report_state()
     final_roadmap = final_roadmap_state()
+    submission_handoff = audit_handoff(DEFAULT_HANDOFF)
 
     minimum_inputs_ready = all(doc["exists"] for doc in required_docs.values()) and all(
         state["exists"] for state in run_files.values()
@@ -742,6 +750,8 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         blockers.append(f"Protocol pilot report check failed: {', '.join(protocol_pilot_report['blockers'])}.")
     if not final_roadmap["passed"]:
         blockers.append(f"Final roadmap check failed: {', '.join(final_roadmap['blockers'])}.")
+    if not submission_handoff["passed"]:
+        blockers.append("Submission handoff boundary audit failed.")
 
     tool_augmented_blockers: list[str] = []
     if not required_docs["tool_augmented_full_result"]["exists"]:
@@ -773,6 +783,12 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         and protocol_state["passed"]
         and protocol_pilot_report["passed"]
         and final_roadmap["passed"],
+        "submission_package_ready": (evp7["ready_for_bounded_pilot_claim"] or tool_augmented_claim_ready)
+        and paper_framing["passed"]
+        and protocol_state["passed"]
+        and protocol_pilot_report["passed"]
+        and final_roadmap["passed"]
+        and submission_handoff["passed"],
         "claim_boundary": (
             "Prompt-only evidence-first remains unsupported by the old full-run gate. "
             "The old tool-augmented positive claim is limited to a conditional tool-assisted verifier. "
@@ -783,6 +799,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "protocol_current_state": protocol_state,
         "protocol_pilot_report": protocol_pilot_report,
         "final_roadmap": final_roadmap,
+        "submission_handoff": submission_handoff,
         "required_docs": required_docs,
         "pre_api_evidence": pre_api_evidence,
         "run_files": run_files,
@@ -816,6 +833,7 @@ def build_markdown(audit: dict[str, Any]) -> str:
         f"- tool-augmented claim ready: {bool_mark(audit['tool_augmented_claim_ready'])}",
         f"- EVP-7 bounded pilot claim ready: {bool_mark(audit['evp7_bounded_pilot_claim_ready'])}",
         f"- current result claim ready: {bool_mark(audit['current_result_claim_ready'])}",
+        f"- submission package ready: {bool_mark(audit['submission_package_ready'])}",
         f"- methods/negative draft ready: {bool_mark(audit['negative_or_methods_draft_ready'])}",
         f"- claim boundary: {audit['claim_boundary']}",
         "",
@@ -852,6 +870,12 @@ def build_markdown(audit: dict[str, Any]) -> str:
         lines.append(f"- `{name}`: {bool_mark(passed)}")
     if audit["final_roadmap"]["blockers"]:
         lines.append(f"- blockers: `{', '.join(audit['final_roadmap']['blockers'])}`")
+    lines.extend(["", "## Submission Handoff", ""])
+    lines.append(f"- passed: {bool_mark(audit['submission_handoff']['passed'])}")
+    lines.append(f"- handoff path: `{audit['submission_handoff']['handoff_path']}`")
+    lines.append(f"- next decision packet exists: {bool_mark(audit['submission_handoff']['next_decision_packet_exists'])}")
+    lines.append(f"- missing required snippets: {len(audit['submission_handoff']['missing_required_snippets'])}")
+    lines.append(f"- forbidden snippet hits: {len(audit['submission_handoff']['forbidden_snippet_hits'])}")
     lines.extend(["", "## Pre-API Evidence", ""])
     for name, state in audit["pre_api_evidence"].items():
         lines.append(f"- `{name}`: {bool_mark(state['exists'])} (`{state['path']}`)")

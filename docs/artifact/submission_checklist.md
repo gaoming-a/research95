@@ -109,7 +109,8 @@ Last checked on 2026-06-18 after the no-API submission handoff refresh:
 - PDF text contains the structural workload ledger and bounded EVP-7
   conclusion;
 - claim-boundary audit passed and remained raw-output-free;
-- paper readiness and local quality gate passed;
+- paper readiness and local quality gate passed, including the no-API
+  submission handoff boundary;
 - anonymous artifact ZIP rebuilt with 300 files and audit result was
   `safe: true`;
 - tracked handoff packet:

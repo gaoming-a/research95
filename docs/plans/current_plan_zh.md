@@ -11859,6 +11859,62 @@ Verify:
   通过；
 - `git diff --check` 通过。
 
+## 2026-06-18 paper readiness checks submission handoff
+
+Inspect:
+
+- `scripts/audit_submission_handoff.py` 已进入 local quality gate 和 anonymous
+  artifact required checks；
+- `scripts/audit_paper_readiness.py` 仍只报告 paper/result readiness，没有把
+  submission handoff boundary 显式纳入 paper-readiness 输出；
+- 为避免“claim ready”和“submission package ready”混淆，应新增独立字段，而不是
+  改写既有 `current_result_claim_ready` 定义。
+
+Plan:
+
+1. 在 `audit_paper_readiness.py` 中复用 `audit_submission_handoff.py` 的
+   `audit_handoff`；
+2. required docs 增加 `submission_checklist` 和 `submission_handoff`；
+3. 输出独立 `submission_handoff` 子状态和 `submission_package_ready` 字段；
+4. 不改变 `current_result_claim_ready`、`evp7_bounded_pilot_claim_ready` 或
+   prompt-only/tool-augmented claim 逻辑；
+5. 同步 README、INDEX、submission checklist 和 engineering notes。
+
+Execute:
+
+- 已更新 `scripts/audit_paper_readiness.py`：
+  - 兼容脚本运行和模块运行的 `audit_submission_handoff` import；
+  - required docs 新增 submission checklist / handoff；
+  - 输出 `submission_handoff` 子状态；
+  - 输出 `submission_package_ready`，其含义为 current result claim readiness
+    且 handoff boundary passed；
+  - Markdown report 新增 `Submission Handoff` 小节；
+- 已同步 README、INDEX、submission checklist 和 engineering notes。
+
+Verify:
+
+- `python -m py_compile scripts\audit_paper_readiness.py scripts\audit_submission_handoff.py`
+  通过；
+- 首次直接运行发现 `scripts.audit_submission_handoff` 在脚本模式下不能解析；
+  已增加 fallback import；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，输出 `submission_handoff.passed=true`、
+  `submission_package_ready=true`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=300`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`、`missing_required=[]`、
+  `missing_readme_snippets=[]`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- 直接读取 latest JSON 确认：
+  - `paper_current_result_claim_ready=true`；
+  - `paper_submission_package_ready=true`；
+  - `paper_submission_handoff_passed=true`；
+  - `local_quality_handoff_passed=true`；
+  - `artifact_safe=true`；
+- `git diff --check` 通过。
+
 ## 2026-06-18 submission handoff semantic audit
 
 Inspect:

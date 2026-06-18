@@ -2526,3 +2526,13 @@ This file starts fresh for the patch-verification project.
   touching experiment data.
 - Keep this audit inside `scripts/run_local_quality_gate.py` so routine
   end-of-turn checks catch handoff drift before artifact packaging.
+
+## 2026-06-18 paper readiness submission package boundary
+
+- `audit_paper_readiness.py` should keep result-claim readiness and submission
+  package readiness separate. A bounded EVP-7 claim can be ready while a
+  packaging or handoff boundary is broken; the audit now reports
+  `submission_package_ready` for the conjunction.
+- Reuse `audit_submission_handoff.py` instead of duplicating handoff phrases in
+  paper readiness. This keeps the no-API default and forbidden-action contract
+  in one semantic audit while still surfacing it in paper readiness output.
