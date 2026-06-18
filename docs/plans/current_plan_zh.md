@@ -13502,3 +13502,113 @@ Verify:
   通过，`passed=true`；
 - `git diff --check` 通过；
 - tracked drift 限于 Markdown paper draft、current plan 和 engineering notes。
+
+## 2026-06-18 outline RQ alignment
+
+Inspect:
+
+- 当前工作区干净，`main...origin/main [ahead 19]`；
+- 最近提交为 `10f2371 Align markdown draft research questions`；
+- `docs/experiments/evp7_next_decision_packet_20260618.md` 仍要求无明确新决策时只做
+  no-API paper-submission maintenance；
+- 上一轮已对齐 `docs/paper/patch_verification_draft.md` 和
+  `docs/paper/ieee_submission_draft.tex` 的 RQ1-RQ5；
+- 本轮继续 targeted paper-facing search 发现
+  `docs/paper/patch_verification_outline.md` 的 Research Questions 仍保留早期
+  LLM-only / prompt-only / tool-assisted framing，并写有 `E0 through E6`，
+  容易被误读为 full ladder。
+
+Plan:
+
+1. 将 `docs/paper/patch_verification_outline.md` 的 RQ1-RQ5 同步为当前
+   evidence-visibility framing；
+2. 把 outline 中的 evidence-level wording 改为 `E0/E2/E4/E6`，避免暗示完整
+   E0-E6 ladder；
+3. 补充 `docs/experience/engineering_notes.md`，记录 outline 也必须和 Markdown /
+   IEEE draft 同步；
+4. 不调用 API、不扩 bug、不补 E1/E3/E5、不修改实验数据或 evidence packets。
+
+Acceptance:
+
+- outline、Markdown draft 和 IEEE submission draft 的 RQ framing 一致；
+- outline 不再暗示 full E0-E6 ladder；
+- paper readiness、artifact audit、local quality 和 diff checks 通过。
+
+Execute:
+
+- 已将 `docs/paper/patch_verification_outline.md` 的 RQ1-RQ5 同步为当前
+  evidence-visibility framing；
+- 已将 outline 的 evidence-level wording 改为 `E0/E2/E4/E6`；
+- 已在 `docs/experience/engineering_notes.md` 补充 outline RQ drift 经验记录；
+- 未修改实验数据、IEEE generator、evidence packets 或模型输出。
+
+Verify:
+
+- targeted `rg` 检查确认 outline、Markdown draft 和 IEEE submission draft 的
+  RQ1-RQ5 framing 已保持一致，outline 使用 `E0/E2/E4/E6` 而不是
+  `E0 through E6`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `git diff --check` 通过。
+
+## 2026-06-18 non-conflicting second-model/workload plan entry
+
+Inspect:
+
+- 用户要求把补“第二模型关键层级复现”或“工作量呈现”写到计划里，并且不能与
+  其他内容冲突矛盾；
+- `docs/plans/final_paper_roadmap_zh.md` 已有“工作量呈现强化”和
+  “第二模型关键锚点复现”两条非冲突路线，但“关键层级”这个说法仍可能被误读为
+  连续 E0-E6 ladder；
+- 当前 paper-facing route 仍是 EVP-7 four-anchor E0/E2/E4/E6 bounded
+  pilot，不补插 E1/E3/E5；
+- `docs/experiments/evp7_next_decision_packet_20260618.md` 仍要求：无明确
+  provider/model/预算/scope/停止条件时，不启动第二模型 API。
+
+Plan:
+
+1. 在 `docs/plans/final_paper_roadmap_zh.md` 中明确：第二模型“关键层级”
+   复现等价于 `E0`、`E4`、`E6` key-anchor replication，不是完整 E0-E6
+   adjacent-difference ladder；
+2. 在 `docs/plans/current_project_state_zh.md` 同步同一表述，方便新会话先读
+   短状态页时不误判；
+3. 在 `docs/experience/engineering_notes.md` 记录该措辞归一规则；
+4. 默认优先执行工作量呈现强化；第二模型只作为需用户确认 provider、model、
+   预算、scope 和停止条件后的条件补强路线；
+5. 不调用 API、不扩 bug、不补 E1/E3/E5、不重建 evidence packets、不改变
+   当前 DeepSeek G5 376-record 主结果边界。
+
+Acceptance:
+
+- 计划明确包含“工作量呈现强化”和“第二模型关键层级/关键锚点复现”；
+- “关键层级”被限定为 `E0`、`E4`、`E6`，不与 no-E1/E3/E5 和
+  future EVP-8/full-ladder 边界冲突；
+- 默认路线仍是 no-API 工作量呈现，第二模型路线仍需明确授权；
+- targeted rg、paper readiness、artifact audit、local quality 和 diff checks 通过。
+
+Execute:
+
+- 已将 `docs/plans/final_paper_roadmap_zh.md` 的条件补强路线改为
+  “第二模型关键层级/关键锚点复现”，并声明“关键层级”只指 `E0`、`E4`、`E6`
+  三个 key anchors；
+- 已将 `docs/plans/current_project_state_zh.md` 的短状态页同步为同一口径；
+- 已在 `docs/experience/engineering_notes.md` 补充：用户说“第二模型关键层级
+  复现”时，应归一为 `E0`/`E4`/`E6` key anchors，不得解释为 E1/E3/E5
+  插入或 full ladder 授权。
+
+Verify:
+
+- targeted `rg` 检查确认 `final_paper_roadmap_zh.md`、
+  `current_project_state_zh.md`、`current_plan_zh.md`、`engineering_notes.md`、
+  `evp7_next_decision_packet_20260618.md` 和 `docs/INDEX.md` 中保留：
+  工作量呈现默认 no-API、第二模型仅 `E0`/`E4`/`E6` key anchors、需用户确认
+  provider/model/预算/scope/停止条件、no-E1/E3/E5 和 future full-ladder 边界；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=303`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `git diff --check` 通过。

@@ -67,10 +67,10 @@
      qualitative cases、claim traceability 和 artifact audit 写成清晰的论文
      工作量闭环；
    - 边界：不补 E1/E3/E5，不扩 bug，不改当前 four-anchor claim。
-2. 第二模型关键锚点复现：
+2. 第二模型关键层级/关键锚点复现：
    - 条件执行，必须先确认 provider、model、预算、scope 和停止条件；
-   - 默认只覆盖 `E0`、`E4`、`E6`，用于检查 DeepSeek G5 趋势是否跨模型
-     稳定；
+   - “关键层级”只指当前 four-anchor pilot 中的 `E0`、`E4`、`E6`
+     key anchors，用于检查 DeepSeek G5 趋势是否跨模型稳定；
    - 边界：不补 E1/E3/E5，不证明第二模型优于 tool-only baseline，不替代
      当前 376-record DeepSeek G5 主结果。
 3. 扩 EVP-7 cohort：

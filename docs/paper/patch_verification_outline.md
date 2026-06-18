@@ -35,21 +35,20 @@ The frozen EVP-7 run is the paper-facing evidence-visibility result.
 
 ## Research Questions
 
-RQ1. How does LLM-only review behave when deciding whether candidate patches
-should be accepted, rejected, or escalated?
+RQ1. How risky is evidence-poor LLM review as a merge gate for candidate
+patches?
 
-RQ2. Does prompt-only evidence discipline reduce false accepts without
-collapsing correct-patch recall?
+RQ2. Does prompt-only evidence discipline reduce observed false accepts, and
+what correct-recall cost does it introduce?
 
-RQ3. How do increasing evidence levels, from E0 through E6, change false
-accepts, accepted precision, correct recall, escalation, and merge-gate utility?
+RQ3. Across E0/E2/E4/E6, how does visible evidence change false accepts,
+accepted precision, correct recall, escalation, and utility?
 
-RQ4. What claim boundary is supported by the current frozen EVP-7 cohort, and
-which scale-generalized or baseline-superiority claims remain unsupported?
+RQ4. What do deterministic and tool-assisted evidence baselines allow us to
+claim about LLM contribution?
 
-RQ5. Where does tool-visible executable evidence help, and why must
-tool-assisted verification be reported separately from prompt-only model
-ability?
+RQ5. Which paper claims remain supported or unsupported under the frozen
+20-task EVP-7 pilot boundary?
 
 ## Expected Contributions
 

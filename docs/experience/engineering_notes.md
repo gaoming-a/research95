@@ -2566,6 +2566,9 @@ This file starts fresh for the patch-verification project.
   the plan only as separate branches: workload presentation is the default
   no-API route, while second-model replication requires explicit provider,
   model, budget, scope, and stop-condition confirmation before any API call.
+- If the user says "second-model key-level replication", normalize that phrase
+  to the current `E0`/`E4`/`E6` key anchors. Do not interpret it as permission
+  to insert `E1`/`E3`/`E5` or to build a full adjacent-difference ladder.
 - Do not describe the current pipeline as `hidden-evaluator-free`. The current
   paper relies on hidden-evaluator separation: model-visible evidence is
   reviewed before labels are joined for aggregate metrics and audits.
@@ -2656,5 +2659,8 @@ This file starts fresh for the patch-verification project.
   Markdown draft is manually maintained.
 - When the paper-facing RQs move from first-pilot LLM-only/prompt-only framing
   to EVP-7 evidence-visibility framing, update both drafts in the same pass.
+- The paper outline is a third paper-facing RQ source. Keep it aligned with the
+  Markdown and IEEE drafts, and use `E0/E2/E4/E6` rather than `E0 through E6`
+  when describing the current four-anchor pilot.
 - This is wording synchronization only: do not use RQ alignment to add new
   scale, second-model, or LLM-over-tool-only claims.
