@@ -2633,3 +2633,14 @@ This file starts fresh for the patch-verification project.
 - This is still documentation synchronization: updating rebuild commands and
   current-audit wording does not authorize API calls, dataset expansion, or a
   final freeze.
+
+## 2026-06-18 short project-state drift
+
+- The short project state page is the first handoff entry for future sessions,
+  so it must not preserve an old dirty-worktree description after later commits
+  make the branch clean.
+- Keep exact ahead counts tied to the inspection time and still tell readers to
+  use `git status --short --branch` as source of truth; committing the refresh
+  itself can increase the local ahead count.
+- Treat GitHub push failures as sync-state context only. They do not authorize
+  API calls, cohort expansion, E1/E3/E5 insertion, or a final freeze.

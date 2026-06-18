@@ -10,10 +10,14 @@
 
 - 分支：`main`
 - 远端：`origin/main`
-- 当前 Git 状态：以 `git status --short --branch` 为准；2026-06-17
-  检查时存在进行中的本地文档修改和未跟踪 `cookiecutter_4` P2P scope 文件，
-  其中后者不属于 final-roadmap 边界修订。2026-06-18 后续整理已将
-  `bugsinpy_cookiecutter_4` 收束为 tracked blocker policy；完整 builder
+- 当前 Git 状态：以 `git status --short --branch` 为准。2026-06-18 本轮检查
+  为 `main...origin/main [ahead 15]` 且工作区干净；最近本地提交
+  `6423ecf Record no-API submission maintenance` 已完成 no-API submission
+  package rebuild / readiness / artifact / local quality 验证记录。
+- GitHub sync 边界：此前 push 频繁失败，用户已允许在同步失败时跳过 GitHub
+  并继续本地计划执行；因此本地 `main` ahead `origin/main` 是已知同步状态，
+  不应解读为未完成实验或未提交工作。
+- `bugsinpy_cookiecutter_4` 已收束为 tracked blocker policy；完整 builder
   失败输出仍是本地诊断残留，不应提交。
 - ignored 本地交付物：
   - `outputs/`

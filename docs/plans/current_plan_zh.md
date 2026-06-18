@@ -13273,3 +13273,61 @@ Verify:
   `local_quality_passed=True`、`manifest_file_count=303`、
   `zip_has_current_plan=True`、`zip_has_submission_handoff=True`、
   `zip_has_submission_checklist=True`、`zip_has_fig7=True`。
+
+## 2026-06-18 short project-state sync refresh
+
+Inspect:
+
+- 当前工作区干净，`main...origin/main [ahead 15]`；
+- 最近提交为 `6423ecf Record no-API submission maintenance`；
+- `docs/plans/current_project_state_zh.md` 是短入口，但其 Git 同步段仍主要描述
+  2026-06-17 的早期本地残留状态，没有显式反映当前 clean / ahead 15 /
+  最新 no-API submission maintenance verification；
+- README 和 `docs/INDEX.md` 对短入口的说明保持泛化，没有发现必须同步改动的
+  新入口或索引漂移；
+- 本轮仍没有 second-model、30-50 bug expansion 或新 verifier design 的明确
+  用户确认。
+
+Plan:
+
+1. 刷新 `docs/plans/current_project_state_zh.md` 的当前同步状态，记录 clean、
+   ahead 15、最新本地 no-API 维护提交和 GitHub sync 延后边界；
+2. 在 `docs/experience/engineering_notes.md` 记录短状态页同步漂移经验；
+3. 不改 README/INDEX，因为没有新增入口且现有入口描述仍正确；
+4. 不调用 API、不扩 bug、不补 E1/E3/E5、不重建 evidence packets。
+
+Acceptance:
+
+- 短状态页不再把 2026-06-17 残留描述作为当前同步状态；
+- 文档仍要求 `git status --short --branch` 作为最终 Git source of truth；
+- 第二模型、扩量、新 verifier 和 final freeze 边界不被放宽；
+- targeted rg、paper readiness、artifact audit、local quality 和 diff checks 通过。
+
+Execute:
+
+- 已刷新 `docs/plans/current_project_state_zh.md` 的当前同步状态，记录本轮检查为
+  `main...origin/main [ahead 15]`、工作区干净、最近本地提交 `6423ecf` 已记录
+  no-API submission maintenance；
+- 已明确 GitHub sync 失败时可按用户授权暂缓同步，不能把 ahead 状态解读为未完成
+  实验工作；
+- 已保留 `bugsinpy_cookiecutter_4` blocker policy 和本地诊断残留不得提交的边界；
+- 已在 `docs/experience/engineering_notes.md` 增加 short project-state drift
+  经验记录；
+- README 和 `docs/INDEX.md` 未修改，因为现有短入口索引仍正确且没有新增文件入口。
+
+Verify:
+
+- targeted `rg` 检查确认 `current_project_state_zh.md`、`current_plan_zh.md` 和
+  `engineering_notes.md` 包含 `ahead 15`、`6423ecf`、GitHub sync 延后边界、
+  no-API submission maintenance 和 no-E1/E3/E5 / no-final-freeze 边界；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=303`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `git diff --check` 通过；
+- 当前 tracked drift 限于 `docs/plans/current_project_state_zh.md`、
+  `docs/plans/current_plan_zh.md` 和 `docs/experience/engineering_notes.md`。
