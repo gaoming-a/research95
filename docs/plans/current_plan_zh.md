@@ -13676,3 +13676,59 @@ Verify:
   通过，`file_count=303`、`safe_to_package=true`；
 - `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
   通过，`safe=true`。
+
+## 2026-06-18 local completion audit boundary
+
+Inspect:
+
+- 当前工作区干净，`main...origin/main [ahead 21]`；
+- 最新提交为 `3b3865c Record no-API package rebuild`；
+- 用户未提供 target venue/final freeze、第二模型 provider/model/预算/scope、30-50
+  bug 扩量或新 verifier design 授权；
+- `docs/experiments/evp7_next_decision_packet_20260618.md` 仍要求无明确决策时
+  只做 no-API paper-submission maintenance。
+
+Plan:
+
+1. 运行 `audit_goal_completion.py`、`audit_ai_plan_progress.py` 和
+   `audit_execution_readiness.py`，区分本地计划完成状态、提交包状态和 GitHub
+   sync 状态；
+2. 将审计结果记录为 local completion boundary，不把它误写成 final freeze 或
+   GitHub synchronized；
+3. 不调用 API、不扩 bug、不补 E1/E3/E5、不重建 evidence packets、不提交
+   ignored `outputs/`。
+
+Acceptance:
+
+- 本地目标/计划审计结果可追溯到 ignored audit outputs；
+- plan 明确 GitHub sync 仍未成立，不能 claimed synced；
+- no-API submission package readiness 不退化；
+- artifact audit、local quality、diff checks 通过。
+
+Execute:
+
+- 已运行 `python scripts\audit_goal_completion.py --out-json outputs\goal_completion\latest.json --out-md outputs\goal_completion\latest.md`；
+- 已运行 `python scripts\audit_ai_plan_progress.py --out-json outputs\plan_progress\latest.json --out-md outputs\plan_progress\latest.md`；
+- 已运行 `python scripts\audit_execution_readiness.py --out-json outputs\readiness_audit\latest.json --out-md outputs\readiness_audit\latest.md`；
+- 未调用模型 API，未修改实验数据，未重建 evidence packets。
+
+Verify:
+
+- `outputs/goal_completion/latest.json` 显示 `complete=true`，18/18 required
+  checks passed；
+- `outputs/plan_progress/latest.json` 显示 `stage_counts={"complete": 14}`，
+  next actions 为空；
+- `outputs/readiness_audit/latest.json` 显示 worktree clean、ahead 21、behind 0，
+  但 `synced_with_upstream=false`，next action 是 push local commits before
+  claiming GitHub sync；
+- 该审计结果只支持 local no-API/package completion boundary，不代表 target
+  venue/final freeze 已确认，也不代表 GitHub 已同步；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=303`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `git diff --check` 通过。
