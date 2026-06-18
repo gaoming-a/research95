@@ -12663,3 +12663,62 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过；
 - `git diff --check` 通过。
+
+## 2026-06-18 non-conflicting reinforcement plan wording audit
+
+Inspect:
+
+- 当前 canonical final roadmap 已包含“工作量呈现强化”和“第二模型关键锚点
+  复现”两条非冲突补强路线；
+- 现有边界仍是 EVP-7 four-anchor E0/E2/E4/E6 pilot，不补 E1/E3/E5，不写
+  full-ladder claim；
+- `docs/experiments/evp7_next_decision_packet_20260618.md` 已把第二模型复现
+  写成需要用户确认 provider、model、预算、scope 和停止条件的 Option B；
+- 本轮检查发现一个措辞冲突：final roadmap 的工作量呈现说明把当前 pipeline
+  写成“不带 hidden evaluator”的形式，这与 hidden-evaluator separation 设计
+  相反；
+- README 中原先的 Git 同步状态已经过期；当前应以
+  `git status --short --branch` 为准，并承认 GitHub push failure 后可能
+  local-only 继续。
+
+Plan:
+
+1. 保留最终路线中的两条非冲突补强路线：
+   - 默认优先：工作量呈现强化，不调用 API、不扩 bug、不改 E0/E2/E4/E6；
+   - 条件执行：第二模型关键锚点复现，只覆盖 E0/E4/E6，且必须先由用户确认
+     provider、model、预算、scope 和停止条件；
+2. 修正 final roadmap 中与 hidden-evaluator separation 冲突的措辞；
+3. 修正 README 的 Git 同步状态，避免与当前 ahead/push-failure 边界冲突；
+4. 同步工程经验记录；
+5. 不修改实验数据、不生成 packets、不调用模型 API、不改变论文 claim。
+
+Acceptance:
+
+- final roadmap 明确“工作量呈现”是默认 no-API 路线；
+- second-model replication 仍是需确认的 E0/E4/E6 条件路线；
+- 文档不再把当前主 pipeline 写成不带 hidden evaluator 的形式；
+- README 不再声称本地 main 一定与 origin/main 同步；
+- paper readiness / local quality / diff check 通过。
+
+Execute:
+
+- 已将 `docs/plans/final_paper_roadmap_zh.md` 中的工作量呈现表述改为
+  “带 hidden-evaluator separation 的 candidate patch verification
+  pipeline”；
+- 已将 README 的 Git 状态说明改为以 `git status --short --branch` 为准，并
+  记录 2026-06-18 GitHub push failure 后允许 local-only 继续；
+- 已在 `docs/experience/engineering_notes.md` 记录非冲突补强路线的措辞和同步
+  状态经验。
+
+Verify:
+
+- targeted `rg` checks 确认 final roadmap 和 README 不再保留旧的
+  hidden-evaluator / Git 同步冲突表述；
+- `rg -n "工作量呈现强化|第二模型关键锚点复现|provider、model、预算、scope|hidden-evaluator separation" ...`
+  确认默认工作量呈现和条件第二模型复现边界仍存在；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过 current EVP-7 bounded-pilot claim readiness；保留的唯一 blocker 仍是
+  历史 prompt-only positive claim 的 `stop_or_redesign`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过。

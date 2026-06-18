@@ -2559,3 +2559,16 @@ This file starts fresh for the patch-verification project.
 - Keep the same boundary visible in `audit_paper_readiness.py` required docs.
   Otherwise the artifact gate can fail while paper readiness still appears
   ready, which splits the submission-package contract.
+
+## 2026-06-18 non-conflicting reinforcement wording
+
+- Workload presentation and second-model key-anchor replication can coexist in
+  the plan only as separate branches: workload presentation is the default
+  no-API route, while second-model replication requires explicit provider,
+  model, budget, scope, and stop-condition confirmation before any API call.
+- Do not describe the current pipeline as `hidden-evaluator-free`. The current
+  paper relies on hidden-evaluator separation: model-visible evidence is
+  reviewed before labels are joined for aggregate metrics and audits.
+- Do not keep README Git sync text that claims local `main` matches
+  `origin/main` when the branch is known to be ahead after push failures. Use
+  `git status --short --branch` as the sync source of truth.

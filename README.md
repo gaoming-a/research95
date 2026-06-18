@@ -93,8 +93,10 @@ They should not override `final_paper_roadmap_zh.md`.
 
 ## Current Status
 
-- GitHub sync is complete as of 2026-06-18: local `main` matches
-  `origin/main` after the latest no-API submission handoff refresh.
+- Use `git status --short --branch` as the source of truth for Git sync. Recent
+  2026-06-18 GitHub pushes hit network failures, so local `main` may be ahead of
+  `origin/main`; when that repeats, continue the no-API paper/package work
+  locally and sync later.
 - The short project/file map is `docs/plans/current_project_state_zh.md`.
 - The current submission handoff is
   `docs/artifact/submission_handoff_20260618.md`; it records the latest
