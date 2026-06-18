@@ -12741,7 +12741,7 @@ Plan:
 
 1. 新增 tracked no-API `docs/artifact/submission_freeze_candidate_20260618.md`；
 2. 记录当前可冻结候选状态：bounded EVP-7 claim、21/98/392 structural
-   pipeline、20/94/376 real G5 run、7-page IEEE PDF target、301-file artifact
+   pipeline、20/94/376 real G5 run、7-page IEEE PDF target、artifact
    readiness、advisor workload packet；
 3. 明确仍需用户确认：target venue/format、是否冻结当前 7-page IEEE PDF、
    是否保持 no-API/no-expansion 边界、是否稍后重试 GitHub sync；
@@ -12759,6 +12759,36 @@ Acceptance:
 - anonymous artifact audit 强制包含该 packet 和 embedded README entry；
 - readiness/artifact/local gates 均通过；
 - 本轮提交只包含相关 tracked 文档和 gate 脚本，不提交 ignored outputs/artifacts。
+
+Execute:
+
+- 已新增 `docs/artifact/submission_freeze_candidate_20260618.md`，记录当前
+  paper/artifact package 是 freeze candidate 而非 final freeze；
+- 已同步 README、docs/INDEX、current project state、submission checklist、
+  submission handoff、anonymous artifact 文档和 engineering notes；
+- 已将 freeze-candidate packet 加入 `scripts/audit_anonymous_artifact.py`
+  required files/snippets；
+- 已更新 `scripts/prepare_anonymous_artifact.py`，使 embedded
+  `ARTIFACT_README.md` 指向 freeze-candidate packet；
+- 已将 freeze-candidate packet 加入 `scripts/audit_paper_readiness.py`
+  required docs。
+
+Verify:
+
+- `python -m py_compile scripts\audit_paper_readiness.py scripts\audit_anonymous_artifact.py scripts\prepare_anonymous_artifact.py scripts\run_local_quality_gate.py`
+  通过；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=302`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`required_docs.submission_freeze_candidate.exists=true`、
+  `submission_package_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- direct JSON/ZIP inspection 确认 `manifest_file_count=302`、
+  `missing_required=[]`、`missing_readme_snippets=[]`、
+  `zip_has_freeze_packet=true`。
 
 ## 2026-06-18 submission freeze-candidate semantic audit
 
@@ -12830,32 +12860,113 @@ Verify:
 - direct JSON/ZIP inspection 确认 `manifest_file_count=303`、
   `zip_has_freeze_audit_script=true`、`zip_has_freeze_packet=true`。
 
+## 2026-06-18 current plan freeze-candidate chronology repair
+
+Inspect:
+
+- 当前 `current_plan_zh.md` 中 `submission freeze-candidate packet` section
+  的 Execute/Verify 记录被后续 semantic audit section 隔开；
+- 该记录还保留 `manifest_file_count=302`，这是新增 semantic audit 脚本前的
+  历史验证结果，但放在 semantic audit 之后会误导为当前最新 artifact 状态；
+- 当前最新 artifact 状态应以 semantic audit section 的 `file_count=303` 为准。
+
+Plan:
+
+1. 将 freeze-candidate packet 的 Execute/Verify 记录移回该 section 内；
+2. 将该 section 的计划文字从具体 `301-file` 改为不易漂移的 artifact
+   readiness 边界；
+3. 保留 semantic audit section 的最新 `303` artifact 状态；
+4. 重建 ignored anonymous artifact，并重新运行 artifact/readiness/local gates；
+5. 不调用 API、不扩 bug、不改 evidence packets。
+
+Acceptance:
+
+- `current_plan_zh.md` 的 freeze-candidate packet 与 semantic audit sections
+  顺序清晰；
+- 最新 artifact/readiness/local gates 仍通过；
+- 提交只包含本轮文档顺序修复和必要的 regenerated ignored artifact state。
+
 Execute:
 
-- 已新增 `docs/artifact/submission_freeze_candidate_20260618.md`，记录当前
-  paper/artifact package 是 freeze candidate 而非 final freeze；
-- 已同步 README、docs/INDEX、current project state、submission checklist、
-  submission handoff、anonymous artifact 文档和 engineering notes；
-- 已将 freeze-candidate packet 加入 `scripts/audit_anonymous_artifact.py`
-  required files/snippets；
-- 已更新 `scripts/prepare_anonymous_artifact.py`，使 embedded
-  `ARTIFACT_README.md` 指向 freeze-candidate packet；
-- 已将 freeze-candidate packet 加入 `scripts/audit_paper_readiness.py`
-  required docs。
+- 已将 `submission freeze-candidate packet` section 的 Execute/Verify 记录移回
+  该 section 内；
+- 已将该 section 中易漂移的 `301-file artifact readiness` 改为
+  `artifact readiness`；
+- 已保留后续 semantic audit section 的最新 `file_count=303` / audit-script
+  packaging 状态。
 
 Verify:
 
-- `python -m py_compile scripts\audit_paper_readiness.py scripts\audit_anonymous_artifact.py scripts\prepare_anonymous_artifact.py scripts\run_local_quality_gate.py`
-  通过；
+- `git diff -- docs\plans\current_plan_zh.md` 确认 freeze-candidate packet
+  Execute/Verify 不再落在 semantic audit section 之后；
 - `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
-  通过，`file_count=302`、`safe_to_package=true`；
+  通过，`file_count=303`、`safe_to_package=true`；
 - `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
   通过，`safe=true`；
 - `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
-  通过，`required_docs.submission_freeze_candidate.exists=true`、
-  `submission_package_ready=true`；
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过；
-- direct JSON/ZIP inspection 确认 `manifest_file_count=302`、
-  `missing_required=[]`、`missing_readme_snippets=[]`、
+- direct JSON/ZIP inspection 确认 `manifest_file_count=303`、
+  `paper_submission_package_ready=true`、`artifact_safe=true`、
+  `local_quality_passed=true`、`zip_has_freeze_audit_script=true`、
   `zip_has_freeze_packet=true`。
+
+## 2026-06-18 non-conflicting reinforcement route recording
+
+Inspect:
+
+- 用户要求把“第二模型关键层级复现”或“工作量呈现”写入计划，并且不能与
+  现有路线互相冲突；
+- canonical final roadmap 已有 `18.4.1 当前论文的非冲突补强路线`，但当前
+  计划仍需要把这次决策边界记录为本轮可执行约束；
+- 当前 EVP-7 paper-facing route 仍是 four-anchor E0/E2/E4/E6 bounded pilot；
+- 当前 freeze-candidate / submission handoff 边界仍禁止未确认的 API 调用、
+  cohort expansion、E1/E3/E5 insertion 和 full-ladder claim。
+
+Plan:
+
+1. 将 **工作量呈现强化** 记录为默认优先路线：不调用 API、不扩 bug、不改变
+   E0/E2/E4/E6 evidence levels；只把已完成的 admission、candidate
+   construction、F2P/P2P validation、evidence packets、LLM review、tool-only
+   baseline、qualitative cases、claim traceability 和 artifact audit 写清楚；
+2. 将 **第二模型关键层级复现** 记录为条件补强路线：只覆盖关键锚点
+   `E0`、`E4`、`E6`，默认沿用当前 paper-facing 20-task / 94-candidate
+   cohort；
+3. 第二模型路线必须先由用户确认 provider、model、预算、smoke scope、
+   full-run permission 和停止条件，并通过 no-API preflight 后才能调用模型；
+4. 两条路线都不能重开 E1/E3/E5、盲目扩 bug、新 verifier design，或把当前
+   结果写成 scale-generalized / LLM beats tool-only claim；
+5. 本轮只做计划记录和一致性验证，不修改实验数据、不生成 packets、不调用 API。
+
+Acceptance:
+
+- `current_plan_zh.md` 明确默认 no-API 工作量呈现路线和条件 second-model
+  E0/E4/E6 key-anchor replication 路线；
+- 该记录不覆盖 final roadmap、next-decision packet、freeze-candidate packet
+  或 submission handoff 中的既有边界；
+- targeted 文档检查确认没有引入 E1/E3/E5、full-ladder、API 自动执行或
+  LLM 优于 tool-only 的新 claim；
+- readiness/artifact/local gates 仍通过。
+
+Execute:
+
+- 已在 `current_plan_zh.md` 追加本轮非冲突补强路线记录；
+- 已将“工作量呈现强化”写为默认 no-API 路线；
+- 已将“第二模型关键层级复现”写为条件路线：仅 `E0`/`E4`/`E6` key anchors，
+  默认沿用当前 paper-facing 20-task / 94-candidate cohort，并要求用户先确认
+  provider、model、预算、smoke scope、full-run permission 和停止条件。
+
+Verify:
+
+- targeted `rg` 检查确认 final roadmap、next-decision packet 和 current plan
+  都保留 four-anchor / no-E1/E3/E5 / user-confirmed second-model boundary；
+- `git diff --check` 通过；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=303`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`submission_package_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。
