@@ -11859,6 +11859,60 @@ Verify:
   通过；
 - `git diff --check` 通过。
 
+## 2026-06-18 final submission checklist re-audit
+
+Inspect:
+
+- 当前 `main` 已与 `origin/main` 同步，工作区干净；
+- `bugsinpy_cookiecutter_4` 已收束为 tracked blocker policy，本地 raw builder
+  失败输出已删除；
+- 当前继续实验的第二模型复现、30-50 bug 扩量和新 verifier design 都需要用户
+  明确确认边界；
+- 当前可无歧义推进的事项是按 `docs/artifact/submission_checklist.md` 做
+  no-API final submission readiness re-audit。
+
+Plan:
+
+1. 重新生成 paper tables 和 IEEE draft；
+2. 连续两遍编译 IEEE PDF；
+3. 运行 claim-boundary audit、paper readiness、anonymous artifact audit 和
+   local quality gate；
+4. 抽查 PDF 文本仍包含 workload ledger 和 bounded conclusion；
+5. 不调用模型 API、不扩 bug、不改 evidence levels、不提交 ignored outputs 或
+   artifacts。
+
+Acceptance:
+
+- checklist 中列出的 no-API rebuild/audit commands 均通过；
+- PDF 文本抽查通过；
+- 工作区只包含本轮 current_plan 审计记录；
+- 若提交成功，GitHub 同步成功或明确记录同步失败。
+
+Execute:
+
+- 已重新运行 `python scripts\write_paper_tables.py`；
+- 已重新运行 `python scripts\write_ieee_latex_draft.py --tables-tex docs\paper\generated_tables.tex --out docs\paper\ieee_submission_draft.tex`；
+- 已连续两遍编译 `docs/paper/ieee_submission_draft.tex` 到
+  `outputs/paper_compile/ieee_submission_draft.pdf`；
+- 已运行 claim-boundary audit、anonymous artifact build/audit、paper readiness
+  和 local quality gate。
+
+Verify:
+
+- `python scripts\audit_paper_claim_boundary.py` 通过，`passed: true` 且
+  `raw_output_free: true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe: true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过 current EVP-7 bounded-pilot claim readiness；保留的唯一 blocker 仍是
+  历史 prompt-only positive claim 的 `stop_or_redesign`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `pdftotext outputs\paper_compile\ieee_submission_draft.pdf - | rg ...`
+  确认 PDF 包含 workload ledger、20 tasks / 94 candidates 和 bounded EVP-7
+  conclusion；
+- `git diff --check` 通过。
+
 ## 2026-06-17 final roadmap evidence-level boundary optimization
 
 Inspect:
