@@ -2649,6 +2649,9 @@ This file starts fresh for the patch-verification project.
   prefer non-cyclic wording such as "local main is clean and ahead; use
   `git status --short --branch` for the exact count" instead of committing a new
   ahead number every turn.
+- The short project-state page should also keep recent semantic anchor commits
+  current enough for handoff. Prefer anchors such as package rebuild, local
+  completion audit, and GitHub sync retry over an old exact ahead snapshot.
 - Treat GitHub push failures as sync-state context only. They do not authorize
   API calls, cohort expansion, E1/E3/E5 insertion, or a final freeze.
 - A `git push origin main` failure with `Recv failure: Connection was reset`

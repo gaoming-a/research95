@@ -13780,3 +13780,61 @@ Verify:
   通过，`safe=true`；
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过，`passed=true`。
+
+## 2026-06-18 short state latest-anchor refresh
+
+Inspect:
+
+- 当前工作区干净，`main...origin/main [ahead 23]`；
+- 最新提交为 `f15c621 Record GitHub sync retry failure`；
+- `docs/plans/current_project_state_zh.md` 的当前同步状态仍只列出较早的
+  `6423ecf` 和 `1766932` 作为 recent local no-API maintenance commits；
+- 之后已经新增更关键的 local anchors：`3b3865c` no-API package rebuild、
+  `2b67f5e` local completion audit boundary、`f15c621` GitHub sync retry
+  failure；
+- 本轮仍没有 target venue/final freeze、second-model provider/model/budget、
+  30-50 bug expansion 或 new verifier design 授权。
+
+Plan:
+
+1. 将 `docs/plans/current_project_state_zh.md` 的同步状态改为 latest semantic
+   anchors，而不是旧提交列表；
+2. 保持精确 ahead 数仍以 `git status --short --branch` 为准，避免下一次提交后
+   又产生循环漂移；
+3. 在 `docs/experience/engineering_notes.md` 补充短状态页应记录最新语义锚点而
+   不是老提交快照；
+4. 不调用 API、不扩 bug、不补 E1/E3/E5、不重建 evidence packets。
+
+Acceptance:
+
+- 短状态页能指向最新 local completion、package rebuild 和 GitHub sync retry
+  anchors；
+- 文档不声称 GitHub 已同步，也不把 push failure 写成 paper/package failure；
+- paper readiness、artifact audit、local quality 和 diff checks 通过。
+
+Execute:
+
+- 已将 `docs/plans/current_project_state_zh.md` 的最近提交说明改为 semantic
+  anchors：`3b3865c` package rebuild、`2b67f5e` local completion audit
+  boundary、`f15c621` GitHub sync retry failure；
+- 已保留精确 ahead 数以 `git status --short --branch` 为准的规则；
+- 已在 `docs/experience/engineering_notes.md` 补充短状态页应保持最新语义锚点，
+  而不是只追写旧 ahead 快照；
+- 未调用 API、未修改实验数据、未重建 evidence packets。
+
+Verify:
+
+- targeted `rg` 检查确认 `current_project_state_zh.md` 包含 `3b3865c`、
+  `2b67f5e`、`f15c621` 三个 latest semantic anchors，并仍保留
+  `git status --short --branch` source-of-truth 规则；
+- targeted `rg` 检查确认 `engineering_notes.md` 记录短状态页应优先维护语义
+  anchor commits，而不是旧 ahead snapshot；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=303`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `git diff --check` 通过。

@@ -13,10 +13,13 @@
 - 当前 Git 状态：以 `git status --short --branch` 为准。2026-06-18 最近几轮
   检查均为本地 `main` clean 且 ahead `origin/main`；精确 ahead 数会随本地
   文档维护提交增加，不应写成长期 truth。
-- 最近本地 no-API 维护提交包括
-  `6423ecf Record no-API submission maintenance` 和
-  `1766932 Refresh short project state`；前者记录 paper/package rebuild、
-  readiness、artifact 和 local quality 验证，后者刷新短状态入口。
+- 最近本地语义锚点包括：
+  - `3b3865c Record no-API package rebuild`：记录 paper tables、figures、
+    IEEE draft、7-page PDF、artifact 和 local quality 的 no-API rebuild；
+  - `2b67f5e Record local completion audit boundary`：记录本地 completion /
+    plan-progress audits 已通过，同时 GitHub sync 仍未成立；
+  - `f15c621 Record GitHub sync retry failure`：记录 `git push origin main`
+    仍因 connection reset 失败，属于 network-level sync boundary。
 - GitHub sync 边界：此前 push 频繁失败，用户已允许在同步失败时跳过 GitHub
   并继续本地计划执行；因此本地 `main` ahead `origin/main` 是已知同步状态，
   不应解读为未完成实验或未提交工作。
