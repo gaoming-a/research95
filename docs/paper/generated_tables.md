@@ -38,6 +38,18 @@ These tables are generated from current tracked artifacts. Raw model responses a
 | `reference_diff_with_one_change_omitted` | 6 |
 | `reference_replace_with_one_line_reverted` | 2 |
 
+## EVP-7 Workload Ledger
+
+| pipeline stage | tracked workload evidence |
+|---|---|
+| Task admission | 21 tasks / 6 projects admitted through project-level P2P or documented bounded policies. |
+| Candidate construction | 98 candidates: 21 correct references, 76 issue-not-fixed negatives, 1 regression negative. |
+| Evidence packets | 392 E0/E2/E4/E6 packets for 98 candidates; G1=passed, G2=passed, leakage findings=0. |
+| Visible evidence sources | visible tests completed=95, visible errors=3, tool summaries complete=98. |
+| Tool-only baselines | 294 deterministic decisions across 3 conditions; G3=passed. |
+| Real LLM G5 run | 376 DeepSeek G5 records over 20 tasks / 94 candidates; E0=94, E2=94, E4=94, E6=94; invalid rate=0.0000. |
+| Audit and interpretation | quality=passed_with_limitations; qualitative cases=6; cost observability unknown=0. |
+
 ## Executable Validation
 
 | item | value |

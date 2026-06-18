@@ -180,16 +180,18 @@ pilot from retained real-bug tasks, materialize source-level patch candidates,
 validate labels with executable oracles, and review {evp7["candidate_count"]}
 candidates across E0/E2/E4/E6 evidence levels, yielding
 {evp7["evidence_packet_count"]} evidence packets. A single-model DeepSeek G5
-run produces {evp7["review_count"]} parse-valid non-mock records. E4 and E6
-preserve zero observed false accepts and accepted precision 1.0000, while E6
-achieves correct recall {evp7["e6_recall"]} and Evidence Gain
-{evp7["e6_gain"]}. Wilson intervals, candidate-level bootstrap deltas, and a
-claim-boundary audit keep the interpretation bounded. Earlier 30-candidate
-API pilots motivate the design boundary: prompt-only evidence discipline
-reduces observed false accepts but loses correct-patch recall, while
-tool-visible execution summaries support a separate tool-assisted workflow.
-The result supports bounded evidence-level variation, not scale-generalized
-model or deployment claims.
+run produces {evp7["review_count"]} parse-valid non-mock records. The broader
+structural/no-API pipeline tracks 21 tasks, 98 candidates, 392 leakage-audited
+evidence packets, 294 deterministic tool-only decisions, qualitative cases, and
+claim-boundary artifacts. E4 and E6 preserve zero observed false accepts and
+accepted precision 1.0000, while E6 achieves correct recall
+{evp7["e6_recall"]} and Evidence Gain {evp7["e6_gain"]}. Wilson intervals,
+candidate-level bootstrap deltas, and a claim-boundary audit keep the
+interpretation bounded. Earlier 30-candidate API pilots motivate the design
+boundary: prompt-only evidence discipline reduces observed false accepts but
+loses correct-patch recall, while tool-visible execution summaries support a
+separate tool-assisted workflow. The result supports bounded evidence-level
+variation, not scale-generalized model or deployment claims.
 \end{{abstract}}
 
 \section{{Introduction}}
@@ -263,6 +265,16 @@ produce an accept/reject/escalate decision; hidden evaluator labels are joined
 only after review to compute paper metrics and claim boundaries.}}
 \label{{fig:decision-metric-flow}}
 \end{{figure}}
+
+\section{{Workload at a Glance}}
+
+The main contribution is not only a prompt comparison. Table~\ref{{tab:evp7-workload-ledger}}
+summarizes the tracked verification pipeline: task admission, candidate
+construction, F2P/P2P validation, evidence packets, model-visible tool
+evidence, deterministic baselines, real LLM review, qualitative cases, and
+claim audits. This ledger is the reason the paper frames EVP-7 as a bounded
+empirical pilot over a hidden-evaluator verification pipeline rather than
+as four isolated prompts.
 
 \section{{Research Questions}}
 

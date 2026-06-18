@@ -35,6 +35,8 @@
 - 当前 paper-facing 结果：
   - `docs/paper/ieee_submission_draft.tex`
   - `docs/paper/patch_verification_draft.md`
+  - `docs/paper/generated_tables.md`
+  - `docs/paper/generated_tables.tex`
   - `docs/artifact/submission_checklist.md`
 - 当前 known non-blocker：
   - old prompt-only evidence-first gate remains `stop_or_redesign`；
@@ -117,9 +119,13 @@
 - `docs/paper/patch_verification_outline.md`：
   current paper outline。
 - `docs/paper/patch_verification_draft.md`：
-  Markdown paper draft。
+  Markdown paper draft；当前包含 `Workload at a Glance`，把
+  21/98/392 structural pipeline 与 20/94/376 real G5 run 分开呈现。
+- `docs/paper/generated_tables.md`、`docs/paper/generated_tables.tex`：
+  script-generated paper tables；当前包含 EVP-7 workload ledger。
 - `docs/paper/ieee_submission_draft.tex`：
-  current IEEEtran submission draft。
+  current IEEEtran submission draft；当前包含 `Workload at a Glance` 章节和
+  `tab:evp7-workload-ledger`。
 - `docs/figures/`：
   reproducible PDF/SVG/PNG paper figures。当前 draft 使用 fig1-fig7。
 - `docs/artifact/anonymous_artifact.md`：
@@ -136,9 +142,9 @@
 - `scripts/audit_paper_claim_boundary.py`：
   supported/unsupported claim traceability。
 - `scripts/write_paper_tables.py`：
-  paper-ready Markdown/LaTeX tables。
+  paper-ready Markdown/LaTeX tables；当前也生成 EVP-7 workload ledger。
 - `scripts/write_ieee_latex_draft.py`：
-  IEEEtran draft generator。
+  IEEEtran draft generator；当前把 workload ledger 作为论文前段 reader bridge。
 - `scripts/generate_paper_figures.py`：
   reproducible figure generation。
 - `scripts/prepare_anonymous_artifact.py`：

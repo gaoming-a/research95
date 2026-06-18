@@ -11882,3 +11882,56 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过。
 - `git diff --check` 通过。
+
+## 2026-06-18 paper workload presentation reinforcement
+
+Inspect:
+
+- final roadmap 已把当前论文的默认补强路线定为工作量呈现强化；
+- `docs/paper/patch_verification_draft.md` 和
+  `docs/paper/ieee_submission_draft.tex` 尚未在前段集中呈现 cohort
+  construction、candidate construction、evidence packets、tool-only baseline、
+  real LLM review 和 claim audit 的完整工作量；
+- 当前 structural/no-API pipeline 是 21 tasks / 98 candidates / 392
+  E0/E2/E4/E6 packets；
+- 当前 paper-facing real DeepSeek G5 run 仍限定为 20 tasks / 94 candidates /
+  376 records；
+- 本轮不属于 `cookiecutter_4` 扩量，不处理其未提交 P2P 残留。
+
+Plan:
+
+1. 在 Markdown paper draft 中加入 `Workload at a Glance`，把现有 pipeline
+   工作量显式写成论文贡献；
+2. 在 `scripts/write_paper_tables.py` 中生成 EVP-7 workload ledger，避免
+   Markdown/LaTeX 表格手工漂移；
+3. 在 `scripts/write_ieee_latex_draft.py` 中加入 IEEE draft 的
+   `Workload at a Glance` reader bridge；
+4. 同步 README、INDEX、current project state 和 engineering notes；
+5. 不调用 API、不扩 bug、不补 E1/E3/E5、不改变当前 bounded four-anchor claim。
+
+Execute:
+
+- 已更新 `docs/paper/patch_verification_draft.md` 的摘要和
+  `Workload at a Glance`；
+- 已更新 `scripts/write_paper_tables.py`，从 tracked summaries 生成 EVP-7
+  workload ledger，并重新生成 `docs/paper/generated_tables.md` 和
+  `docs/paper/generated_tables.tex`；
+- 已更新 `scripts/write_ieee_latex_draft.py`，并重新生成
+  `docs/paper/ieee_submission_draft.tex`；
+- 已修复 workload ledger 中 `1 regression negative` 的单复数问题；
+- 已修复 IEEE generator 中与 hidden-evaluator 设计冲突的
+  `hidden-evaluator-free` 表述。
+
+Verify:
+
+- `python -m py_compile scripts\write_paper_tables.py scripts\write_ieee_latex_draft.py`
+  通过；
+- `python scripts\write_paper_tables.py` 通过并重新生成表格；
+- `python scripts\write_ieee_latex_draft.py` 通过并重新生成 IEEE draft；
+- `rg -n "hidden-evaluator-free|regression negatives"` 无残留。
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过 current EVP-7 bounded-pilot claim readiness；保留的唯一 blocker 仍是
+  历史 prompt-only positive claim 的 `stop_or_redesign`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过。

@@ -28,16 +28,18 @@ pilot from retained real-bug tasks, materialize source-level patch candidates,
 validate labels with executable oracles, and review 94
 candidates across E0/E2/E4/E6 evidence levels, yielding
 376 evidence packets. A single-model DeepSeek G5
-run produces 376 parse-valid non-mock records. E4 and E6
-preserve zero observed false accepts and accepted precision 1.0000, while E6
-achieves correct recall 0.3500 and Evidence Gain
-14.2500. Wilson intervals, candidate-level bootstrap deltas, and a
-claim-boundary audit keep the interpretation bounded. Earlier 30-candidate
-API pilots motivate the design boundary: prompt-only evidence discipline
-reduces observed false accepts but loses correct-patch recall, while
-tool-visible execution summaries support a separate tool-assisted workflow.
-The result supports bounded evidence-level variation, not scale-generalized
-model or deployment claims.
+run produces 376 parse-valid non-mock records. The broader
+structural/no-API pipeline tracks 21 tasks, 98 candidates, 392 leakage-audited
+evidence packets, 294 deterministic tool-only decisions, qualitative cases, and
+claim-boundary artifacts. E4 and E6 preserve zero observed false accepts and
+accepted precision 1.0000, while E6 achieves correct recall
+0.3500 and Evidence Gain 14.2500. Wilson intervals,
+candidate-level bootstrap deltas, and a claim-boundary audit keep the
+interpretation bounded. Earlier 30-candidate API pilots motivate the design
+boundary: prompt-only evidence discipline reduces observed false accepts but
+loses correct-patch recall, while tool-visible execution summaries support a
+separate tool-assisted workflow. The result supports bounded evidence-level
+variation, not scale-generalized model or deployment claims.
 \end{abstract}
 
 \section{Introduction}
@@ -111,6 +113,16 @@ produce an accept/reject/escalate decision; hidden evaluator labels are joined
 only after review to compute paper metrics and claim boundaries.}
 \label{fig:decision-metric-flow}
 \end{figure}
+
+\section{Workload at a Glance}
+
+The main contribution is not only a prompt comparison. Table~\ref{tab:evp7-workload-ledger}
+summarizes the tracked verification pipeline: task admission, candidate
+construction, F2P/P2P validation, evidence packets, model-visible tool
+evidence, deterministic baselines, real LLM review, qualitative cases, and
+claim audits. This ledger is the reason the paper frames EVP-7 as a bounded
+empirical pilot over a hidden-evaluator verification pipeline rather than
+as four isolated prompts.
 
 \section{Research Questions}
 
@@ -246,6 +258,26 @@ partial\_fix & 9 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+
+\begin{table*}[t]
+\centering
+\caption{EVP-7 workload ledger. Counts are generated from tracked task, candidate, evidence, baseline, review, and audit summaries; raw model responses are not included.}
+\label{tab:evp7-workload-ledger}
+\begin{tabular}{p{0.25\textwidth}p{0.68\textwidth}}
+\toprule
+Pipeline stage & Tracked workload evidence \\
+\midrule
+Task admission & 21 tasks / 6 projects admitted through project-level P2P or documented bounded policies. \\
+Candidate construction & 98 candidates: 21 correct references, 76 issue-not-fixed negatives, 1 regression negative. \\
+Evidence packets & 392 E0/E2/E4/E6 packets for 98 candidates; G1=passed, G2=passed, leakage findings=0. \\
+Visible evidence sources & visible tests completed=95, visible errors=3, tool summaries complete=98. \\
+Tool-only baselines & 294 deterministic decisions across 3 conditions; G3=passed. \\
+Real LLM G5 run & 376 DeepSeek G5 records over 20 tasks / 94 candidates; E0=94, E2=94, E4=94, E6=94; invalid rate=0.0000. \\
+Audit and interpretation & quality=passed\_with\_limitations; qualitative cases=6; cost observability unknown=0. \\
+\bottomrule
+\end{tabular}
+\end{table*}
 
 
 \begin{table}[t]

@@ -18,24 +18,21 @@ evidence-level variation, not scale-generalized claims.
 
 AI coding agents increasingly produce patches for real software tasks, but a
 patch that looks plausible is not necessarily safe to merge. This paper studies
-patch acceptance as a verification problem: given a real task and a candidate
-patch, decide whether the patch should be accepted, rejected, or escalated based
-on evidence. We construct a pilot patch-verification dataset from retained
-real-bug pairs, materialize source-level patch candidates, validate labels with
-executable oracles, and prepare three review conditions: LLM-only patch review,
-prompt-only evidence-first verification, and tool-augmented evidence
-verification. The current artifact contains 30 validated patch
-candidates from 7 real-bug tasks across 2 projects, including 9 partial-fix
-candidates. No-API baselines show the expected merge-gate tradeoff:
-accept-everything has perfect correct-patch recall but false-accept rate 1.0,
-while reject-everything has false-accept rate 0.0 but correct-patch recall 0.0.
-The first API pilot tests whether prompt-only evidence-first verification
-reduces false accepts without collapsing correct-patch recall. It fails this
-gate. The revised tool-augmented run tests whether a verifier can recover the
-safety/recall tradeoff when executable evidence summaries are visible. The
-later EVP-7 G5 pilot expands evidence visibility over 20 tasks, 94 candidates,
-and 376 evidence packets, showing evidence-level metric variation under a
-bounded claim boundary.
+patch acceptance as an evidence-conditioned merge-gate decision: given a real
+task and a candidate patch, decide whether the patch should be accepted,
+rejected, or escalated under visible evidence. We construct a hidden-evaluator
+patch-verification pipeline from retained real-bug tasks, materialize
+source-level candidates, validate labels with executable F2P/P2P evidence, and
+generate model-visible E0/E2/E4/E6 evidence packets. The paper-facing EVP-7
+pilot reviews 94 candidates from 20 real-bug tasks, yielding 376 real DeepSeek
+G5 verifier records. A broader structural/no-API cohort tracks 21 tasks, 98
+candidates, 392 leakage-audited evidence packets, 294 deterministic tool-only
+decisions, qualitative case analysis, claim traceability, and artifact
+readiness checks. E4 and E6 preserve zero observed false accepts and accepted
+precision 1.0; E6 reaches correct recall 0.35 and Evidence Gain 14.25. The
+result supports bounded four-anchor evidence-visibility observations, not a
+full E0-E6 ladder, scale-generalized claims, or LLM superiority over
+deterministic tool-only baselines.
 
 ## 1. Introduction
 
@@ -95,7 +92,28 @@ in the draft are diagnostic design evidence for the workflow; the frozen EVP-7
 run is the paper-facing evidence-visibility result. The corresponding visual
 asset is `docs/figures/fig7_decision_metric_flow.pdf`.
 
-## 4. Research Questions
+## 4. Workload at a Glance
+
+The main contribution is not only a set of prompts. The paper builds and audits
+an end-to-end verification pipeline whose intermediate artifacts are tracked and
+separated by visibility boundary.
+
+| pipeline stage | tracked workload evidence |
+|---|---|
+| task admission | 21 structural tasks across 6 projects, admitted through project-level P2P or documented bounded policies |
+| candidate construction | 98 structural candidates with 21 correct references, 76 issue-not-fixed negatives, and 1 regression negative |
+| evidence packets | 392 E0/E2/E4/E6 packets, all complete, with G1 completeness and G2 leakage audit passed |
+| visible evidence sources | 95 completed visible-test outcomes, 3 visible candidate-induced errors, and 98 complete visible tool summaries |
+| tool-only baselines | 294 deterministic decisions across apply-only, visible-tests, and visible-tool-summary baselines |
+| real LLM review | 376 DeepSeek G5 records over the paper-facing 20-task / 94-candidate cohort |
+| interpretation and audit | 6 qualitative cases plus raw-output-free quality, utility, tool-attribution, and claim-boundary artifacts |
+
+This ledger is why the current result is framed as a bounded empirical pilot
+rather than as a small prompt comparison. The first-pilot 30-candidate runs are
+diagnostic; the paper-facing result is the EVP-7 four-anchor evidence-visibility
+study.
+
+## 5. Research Questions
 
 RQ1. How reliable is LLM-only review when deciding whether candidate patches
 should be accepted?
@@ -109,7 +127,7 @@ does it only reduce false accepts by rejecting or escalating too aggressively?
 RQ4. Does tool-augmented evidence verification recover the correct-patch recall
 lost by prompt-only evidence-first verification?
 
-## 5. Dataset Construction
+## 6. Dataset Construction
 
 The pilot dataset is built from retained BugsInPy-derived real-bug assets. Each
 source task has a buggy checkout, a fixed checkout, a task summary, touched
@@ -153,7 +171,7 @@ Patch materialization uses retained source artifacts:
 - `reference_diff_with_one_change_omitted`: partial candidate omitting one change block.
 - `reference_replace_with_one_line_reverted`: partial candidate reverting one line inside a replace block.
 
-## 6. Executable Label Validation
+## 7. Executable Label Validation
 
 Candidate labels are validated by applying each candidate patch to a copied
 buggy checkout and running retained executable oracles. This guards against
@@ -172,7 +190,7 @@ Correct patches are expected to pass all retained oracles. Negative candidates
 (`incorrect`, `irrelevant_or_noop`, and `partial`) are expected to fail at least
 one retained oracle.
 
-## 7. Review Conditions
+## 8. Review Conditions
 
 ### LLM-Only Review
 
@@ -200,7 +218,7 @@ because it is tool-assisted verification, not prompt-only model ability.
 The evaluator can use hidden labels and oracle outcomes to produce an upper
 bound. This is not model capability and must be reported separately.
 
-## 8. Metrics
+## 9. Metrics
 
 Primary metrics are patch-level:
 
@@ -215,7 +233,7 @@ Escalation is neither accept nor reject. It should be reported separately
 because reducing false accepts by escalating everything is not a useful merge
 gate.
 
-## 9. Current No-API Results
+## 10. Current No-API Results
 
 The current no-API baselines validate the metric implementation and expected
 tradeoffs.
@@ -230,7 +248,7 @@ Interpretation: the dataset and metrics expose the intended merge-gate tension.
 The no-API results do not test the research hypothesis because no real model
 reviewer decisions have been collected.
 
-## 10. API Pilot Result
+## 11. API Pilot Result
 
 The first API pilot ran two conditions on the validated 30 candidates:
 
@@ -257,7 +275,7 @@ fixes, while `evidence_first` did not accept them. However, `evidence_first`
 also rejected or escalated two correct reference patches. The current result
 therefore supports a safety/utility tradeoff claim, not a superiority claim.
 
-## 11. Tool-Augmented Redesign Smoke
+## 12. Tool-Augmented Redesign Smoke
 
 After the prompt-only full run returned `stop_or_redesign`, a targeted
 5-candidate redesign smoke tested a separate `tool_augmented_evidence`
@@ -277,7 +295,7 @@ narrow diagnostic claim: the prompt-only failure was plausibly caused by
 evidence poverty. It does not rescue the original prompt-only claim. It only
 justifies a separate 30-candidate tool-augmented full run.
 
-## 12. Tool-Augmented Full Run
+## 13. Tool-Augmented Full Run
 
 The tool-augmented full run evaluated the same 30 candidates under a separate
 `tool_augmented_evidence` condition. The verifier saw patch-apply status and
@@ -298,7 +316,7 @@ not show that prompt-only evidence-first review is sufficient; instead, it
 shows that executable evidence summaries can be decisive for the known
 safety/recall tradeoff.
 
-## 13. EVP-7 Evidence Visibility Pilot
+## 14. EVP-7 Evidence Visibility Pilot
 
 After the 30-candidate pilots, EVP-7 freezes a larger evidence-visibility
 cohort at 20 real-bug tasks, 94 patch candidates, and four model-visible
@@ -348,7 +366,7 @@ correct patches downgraded by the LLM, and non-fixing patches rejected after
 evidence became visible. These examples are interpretive evidence for the
 bounded pilot, not additional scale evidence.
 
-## 14. Reproducibility and Handoff Controls
+## 15. Reproducibility and Handoff Controls
 
 The pre-API artifact includes deterministic reproduction checks for the local
 dataset construction pipeline. The original no-API pilot and a reproduced run
@@ -378,7 +396,7 @@ deterministic reproducibility. This is an engineering control: it prevents
 dry-run, mock, or local validation outputs from being mistaken for model
 results.
 
-## 15. Model Selection Boundary
+## 16. Model Selection Boundary
 
 The first real API pilot is a within-model comparison. The same model must be
 used for `llm_only` and `evidence_first`, so the first claim controls for base
@@ -398,7 +416,7 @@ The current DeepSeek runs use `deepseek-v4-pro` through DeepSeek official API.
 This controls for base-model capability within each comparison, but it does not
 establish cross-model generality.
 
-## 16. Threats to Validity
+## 17. Threats to Validity
 
 Dataset size is small. The first 30-candidate pilot and the later 376-packet
 EVP-7 pilot are designed to validate the method and failure surfaces, not to
@@ -427,7 +445,7 @@ presented as pure LLM reasoning ability. If the summaries include direct
 pass/fail outcomes, the condition is an evidence-assisted verifier and should
 be interpreted as a tool workflow.
 
-## 17. Current Conclusion
+## 18. Current Conclusion
 
 The current artifact reports a validated patch-verification pilot and a
 completed single-model API pilot. The result does not show that prompt-only

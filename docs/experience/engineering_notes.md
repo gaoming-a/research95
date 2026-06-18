@@ -2485,3 +2485,16 @@ This file starts fresh for the patch-verification project.
 - Do not let either reinforcement path reopen E1/E3/E5, full-ladder claims,
   blind bug expansion, or a claim that LLMs beat deterministic tool-only
   baselines.
+
+## 2026-06-18 EVP-7 workload ledger in paper generators
+
+- Workload presentation should be generated from tracked summaries, not typed
+  independently into only one draft. The current ledger pulls task, candidate,
+  packet, tool-only baseline, G5 quality, and qualitative-case counts through
+  `scripts/write_paper_tables.py`.
+- Keep the two scopes explicit: structural/no-API pipeline work is 21 tasks,
+  98 candidates, and 392 E0/E2/E4/E6 packets; the paper-facing real DeepSeek G5
+  run remains 20 tasks, 94 candidates, and 376 records.
+- Avoid wording that reverses the hidden-evaluator design. The pipeline is a
+  hidden-evaluator verification setup with labels joined after review, not a
+  hidden-evaluator-free setup.

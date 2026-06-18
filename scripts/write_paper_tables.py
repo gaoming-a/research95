@@ -90,6 +90,7 @@ def build_markdown(
     validation: dict[str, Any],
     metrics: dict[str, Any],
     repro: dict[str, Any],
+    evp7_workload: dict[str, Any],
     evp7_summary: dict[str, Any],
     evp7_quality: dict[str, Any],
     evp7_statistics: dict[str, Any],
@@ -106,6 +107,7 @@ def build_markdown(
     lines.extend(md_count_table("Candidate Types", dataset["candidate_type_counts"], "candidate type"))
     lines.extend(md_count_table("Expected Outcomes", dataset["expected_outcome_counts"], "expected outcome"))
     lines.extend(md_count_table("Patch Materialization", dataset["patch_materialization_counts"], "materialization"))
+    lines.extend(evp7_workload_markdown(evp7_workload))
     lines.extend(
         [
             "## Executable Validation",
@@ -196,6 +198,7 @@ def build_latex(
     validation: dict[str, Any],
     metrics: dict[str, Any],
     repro: dict[str, Any],
+    evp7_workload: dict[str, Any],
     evp7_summary: dict[str, Any],
     evp7_quality: dict[str, Any],
     evp7_statistics: dict[str, Any],
@@ -206,6 +209,7 @@ def build_latex(
         "% Generated paper tables. Requires booktabs.",
         latex_count_table("Dataset by project.", "tab:dataset-projects", dataset["project_counts"], "Project"),
         latex_count_table("Candidate types.", "tab:candidate-types", dataset["candidate_type_counts"], "Candidate type"),
+        evp7_workload_latex_table(evp7_workload),
         "\\begin{table}[t]\n"
         "\\centering\n"
         "\\caption{Executable validation summary.}\n"
@@ -272,6 +276,107 @@ def baseline_latex_row(label: str, group: dict[str, Any]) -> str:
         fmt_latex(group["invalid_output_rate"]),
     ]
     return " & ".join(values) + r" \\"
+
+
+def observed_check_value(audit: dict[str, Any], check_name: str, default: Any = None) -> Any:
+    checks = audit.get("checks", [])
+    if isinstance(checks, dict):
+        item = checks.get(check_name)
+        if isinstance(item, dict):
+            return item.get("observed", default)
+        return default
+    if isinstance(checks, list):
+        for item in checks:
+            if isinstance(item, dict) and item.get("check") == check_name:
+                return item.get("observed", default)
+    return default
+
+
+def build_evp7_workload(
+    task_summary: dict[str, Any],
+    candidate_summary: dict[str, Any],
+    packet_summary: dict[str, Any],
+    tool_only_metrics: dict[str, Any],
+    evp7_summary: dict[str, Any],
+    evp7_quality: dict[str, Any],
+    qualitative_cases: dict[str, Any],
+) -> dict[str, str]:
+    labels = candidate_summary.get("label_with_p2p_broad_counts", {})
+    visible_status = packet_summary.get("visible_outcome_status_counts", {})
+    tool_summary_status = packet_summary.get("visible_tool_summary_status_counts", {})
+    cost_summary = evp7_summary.get("workflow", {}).get("cost_summary", {})
+    level_counts = evp7_quality.get("level_counts", {})
+    level_count_text = ", ".join(f"{level}={level_counts[level]}" for level in EVIDENCE_LEVELS if level in level_counts)
+    regression_count = labels.get("incorrect_regression", 0)
+    regression_label = "negative" if regression_count == 1 else "negatives"
+    return {
+        "Task admission": (
+            f"{task_summary['main_task_count']} tasks / {len(task_summary['main_projects'])} projects "
+            "admitted through project-level P2P or documented bounded policies."
+        ),
+        "Candidate construction": (
+            f"{candidate_summary['candidate_count']} candidates: "
+            f"{labels.get('correct_under_f2p_and_p2p_broad', 0)} correct references, "
+            f"{labels.get('incorrect_issue_not_fixed', 0)} issue-not-fixed negatives, "
+            f"{regression_count} regression {regression_label}."
+        ),
+        "Evidence packets": (
+            f"{packet_summary['packet_count']} E0/E2/E4/E6 packets for "
+            f"{packet_summary['candidate_count']} candidates; G1={packet_summary['g1_packet_completeness']}, "
+            f"G2={packet_summary['g2_leakage_audit']}, leakage findings={packet_summary['leakage_findings_count']}."
+        ),
+        "Visible evidence sources": (
+            f"visible tests completed={visible_status.get('completed', 0)}, "
+            f"visible errors={visible_status.get('error', 0)}, "
+            f"tool summaries complete={tool_summary_status.get('complete', 0)}."
+        ),
+        "Tool-only baselines": (
+            f"{tool_only_metrics['decision_count']} deterministic decisions across "
+            f"{len(tool_only_metrics['conditions'])} conditions; G3={tool_only_metrics['g3_baseline_readiness']}."
+        ),
+        "Real LLM G5 run": (
+            f"{evp7_quality['review_count']} DeepSeek G5 records over "
+            f"20 tasks / {evp7_quality['candidate_count']} candidates; {level_count_text}; "
+            f"invalid rate={fmt(observed_check_value(evp7_quality, 'invalid_output_rate_within_limit', 0.0))}."
+        ),
+        "Audit and interpretation": (
+            f"quality={evp7_quality['quality_status']}; qualitative cases={qualitative_cases['case_count']}; "
+            f"cost observability unknown={cost_summary.get('unknown_cost_record_count', 0)}."
+        ),
+    }
+
+
+def evp7_workload_markdown(workload: dict[str, str]) -> list[str]:
+    lines = [
+        "## EVP-7 Workload Ledger",
+        "",
+        "| pipeline stage | tracked workload evidence |",
+        "|---|---|",
+    ]
+    for stage, evidence in workload.items():
+        lines.append(f"| {stage} | {evidence} |")
+    lines.append("")
+    return lines
+
+
+def evp7_workload_latex_table(workload: dict[str, str]) -> str:
+    rows = "\n".join(
+        f"{escape_latex(stage)} & {escape_latex(evidence)} \\\\" for stage, evidence in workload.items()
+    )
+    return (
+        "\\begin{table*}[t]\n"
+        "\\centering\n"
+        "\\caption{EVP-7 workload ledger. Counts are generated from tracked task, candidate, evidence, baseline, review, and audit summaries; raw model responses are not included.}\n"
+        "\\label{tab:evp7-workload-ledger}\n"
+        "\\begin{tabular}{p{0.25\\textwidth}p{0.68\\textwidth}}\n"
+        "\\toprule\n"
+        "Pipeline stage & Tracked workload evidence \\\\\n"
+        "\\midrule\n"
+        + rows
+        + "\n\\bottomrule\n"
+        "\\end{tabular}\n"
+        "\\end{table*}\n"
+    )
 
 
 def evp7_latex_table(summary: dict[str, Any]) -> str:
@@ -532,11 +637,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--validation-summary", default="outputs/patch_verification_pilot_001/validation_summary.json")
     parser.add_argument("--metrics", default="outputs/patch_verification_pilot_001/metrics.json")
     parser.add_argument("--reproducibility", default="outputs/reproducibility/pilot_compare.json")
+    parser.add_argument("--evp7-task-summary", default="data/tasks/evp7_manifest_summary.json")
+    parser.add_argument("--evp7-candidate-summary", default="data/patches/evp7_candidate_summary.json")
+    parser.add_argument("--evp7-packet-summary", default="data/evidence/evp7_evidence_packet_summary.json")
+    parser.add_argument("--evp7-tool-only-metrics", default="data/baselines/evp7_tool_only_metrics.json")
     parser.add_argument("--evp7-summary", default="data/reviews/evp7_g5_llm_376_full_summary.json")
     parser.add_argument("--evp7-quality-audit", default="data/reviews/evp7_g5_376_full_quality_audit.json")
     parser.add_argument("--evp7-statistics", default="data/reviews/evp7_g5_376_statistical_analysis.json")
     parser.add_argument("--evp7-utility-sensitivity", default="data/reviews/evp7_g5_376_utility_sensitivity.json")
     parser.add_argument("--evp7-tool-attribution", default="data/reviews/evp7_g5_376_tool_attribution.json")
+    parser.add_argument("--evp7-qualitative-cases", default="data/reviews/evp7_g5_376_qualitative_cases.json")
     parser.add_argument("--out-md", default="docs/paper/generated_tables.md")
     parser.add_argument("--out-tex", default="docs/paper/generated_tables.tex")
     return parser.parse_args()
@@ -548,11 +658,25 @@ def main() -> None:
     validation = read_json(Path(args.validation_summary))
     metrics = read_json(Path(args.metrics))
     repro = read_json(Path(args.reproducibility))
+    evp7_task_summary = read_json(Path(args.evp7_task_summary))
+    evp7_candidate_summary = read_json(Path(args.evp7_candidate_summary))
+    evp7_packet_summary = read_json(Path(args.evp7_packet_summary))
+    evp7_tool_only_metrics = read_json(Path(args.evp7_tool_only_metrics))
     evp7_summary = read_json(Path(args.evp7_summary))
     evp7_quality = read_json(Path(args.evp7_quality_audit))
     evp7_statistics = read_json(Path(args.evp7_statistics))
     evp7_utility = read_json(Path(args.evp7_utility_sensitivity))
     evp7_tool_attribution = read_json(Path(args.evp7_tool_attribution))
+    evp7_qualitative_cases = read_json(Path(args.evp7_qualitative_cases))
+    evp7_workload = build_evp7_workload(
+        evp7_task_summary,
+        evp7_candidate_summary,
+        evp7_packet_summary,
+        evp7_tool_only_metrics,
+        evp7_summary,
+        evp7_quality,
+        evp7_qualitative_cases,
+    )
     write_text(
         Path(args.out_md),
         build_markdown(
@@ -560,6 +684,7 @@ def main() -> None:
             validation,
             metrics,
             repro,
+            evp7_workload,
             evp7_summary,
             evp7_quality,
             evp7_statistics,
@@ -574,6 +699,7 @@ def main() -> None:
             validation,
             metrics,
             repro,
+            evp7_workload,
             evp7_summary,
             evp7_quality,
             evp7_statistics,

@@ -226,22 +226,23 @@
   for Candidate Patches`.
 - `paper/patch_verification_draft.md`: staged result draft with no-API
   validation, the first DeepSeek official API full-run outcome, the
-  tool-augmented full run, reader-flow bridge, related-work positioning, and
-  the bounded EVP-7 G5 376-record result.
+  tool-augmented full run, reader-flow bridge, workload-at-a-glance ledger,
+  related-work positioning, and the bounded EVP-7 G5 376-record result.
 - `paper/generated_tables.md`: generated Markdown paper tables from current
-  tracked outputs, including the EVP-7 G5 376-record real-LLM result,
-  Wilson/bootstrap intervals, utility sensitivity, deterministic tool-only
-  attribution, and claim boundary.
+  tracked outputs, including the EVP-7 workload ledger, G5 376-record real-LLM
+  result, Wilson/bootstrap intervals, utility sensitivity, deterministic
+  tool-only attribution, and claim boundary.
 - `paper/generated_tables.tex`: generated LaTeX table snippets used by the
-  current IEEE draft, including the EVP-7 G5 376-record result,
-  deterministic tool-only attribution, and claim-boundary snippets.
+  current IEEE draft, including the EVP-7 workload ledger, G5 376-record
+  result, deterministic tool-only attribution, and claim-boundary snippets.
 - `paper/ieee_submission_draft.tex`: current anonymous IEEEtran submission
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
   evidence-visibility result, the early decision-to-metric reader-flow bridge,
-  related-work positioning, deterministic tool-only attribution, qualitative
-  case interpretation, figures, threats, conclusion, and final consistency
-  polish for `Evidence Gain`, unsupported-claim formatting, and bounded
+  workload-at-a-glance ledger, related-work positioning, deterministic
+  tool-only attribution, qualitative case interpretation, figures, threats,
+  conclusion, and final consistency polish for `Evidence Gain`,
+  unsupported-claim formatting, and bounded
   conclusion wording.
 - `experiments/evp7_related_work_positioning.md`: related-work citation and
   positioning artifact. It maps field-specific primary references to the
@@ -665,8 +666,8 @@
   final-polish claim wording before marking the current result claim ready.
 - `scripts/write_paper_tables.py`: generates Markdown and LaTeX paper tables
   from dataset summary, validation summary, metrics, deterministic
-  reproducibility comparison, and the current EVP-7 G5 376-record summary plus
-  claim-boundary audit.
+  reproducibility comparison, the current EVP-7 workload ledger, and the
+  current EVP-7 G5 376-record summary plus claim-boundary audit.
 - `scripts/write_ieee_latex_draft.py`: generates the current IEEEtran
   submission draft at `docs/paper/ieee_submission_draft.tex` from generated
   dataset/no-API tables, audited prompt-only and tool-augmented metrics, and
@@ -675,7 +676,9 @@
   E0/E2/E4/E6 fig2 evidence-level caption checked by paper readiness.
   The generated narrative foregrounds the frozen EVP-7 bounded result while
   keeping the earlier 30-candidate API pilot as diagnostic design evidence and
-  reporting unsupported EVP-7 interpretations explicitly.
+  reporting unsupported EVP-7 interpretations explicitly; it also adds the
+  workload-at-a-glance bridge that separates structural 21/98/392 work from
+  paper-facing 20/94/376 real LLM review.
   The old `docs/paper/ieee_preapi_draft.tex` is retained only as historical
   pre-API context.
 - `scripts/generate_paper_figures.py`: generates the publication figure set

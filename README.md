@@ -287,9 +287,10 @@ They should not override `final_paper_roadmap_zh.md`.
 - The current IEEE draft is `docs/paper/ieee_submission_draft.tex`; it now
   includes the prompt-only negative result, the conditional tool-augmented
   result, the bounded EVP-7 G5 376-record evidence-visibility result, and the
-  reader-flow bridge, related-work positioning, deterministic tool-only
-  attribution, qualitative decision-case boundaries, and a final consistency
-  pass aligning `Evidence Gain`, unsupported claims, and the bounded conclusion.
+  reader-flow bridge, workload ledger, related-work positioning, deterministic
+  tool-only attribution, qualitative decision-case boundaries, and a final
+  consistency pass aligning `Evidence Gain`, unsupported claims, and the
+  bounded conclusion.
 - A Nature-style pre-submission reviewer assessment is tracked at
   `docs/paper/nature_reviewer_presubmission_report.md`. It identifies the next
   paper-writing risks as tool-only attribution, EVP-7 qualitative cases,
@@ -665,11 +666,11 @@ python scripts\write_paper_tables.py `
   --out-tex docs\paper\generated_tables.tex
 ```
 
-The generated tables now include the current EVP-7 G5 376-record real LLM
-result, statistical intervals, utility sensitivity, deterministic tool-only
-attribution, and claim boundary. The claim-boundary audit maps supported and
-unsupported EVP-7 claims to tracked evidence and paper coverage before the
-tables and draft are regenerated.
+The generated tables now include the current EVP-7 workload ledger, G5
+376-record real LLM result, statistical intervals, utility sensitivity,
+deterministic tool-only attribution, and claim boundary. The claim-boundary
+audit maps supported and unsupported EVP-7 claims to tracked evidence and paper
+coverage before the tables and draft are regenerated.
 
 The qualitative case analysis is a separate paper-writing artifact at
 `docs/experiments/evp7_g5_376_qualitative_cases.md`. It reports six
@@ -697,8 +698,8 @@ claim boundary. Paper readiness also checks the IEEE fig2 caption so the
 generated draft stays aligned with the compact E0/E2/E4/E6 evidence-level
 figure. The draft foregrounds the current EVP-7 bounded result and treats the
 earlier 30-candidate API pilot as diagnostic design evidence. It also references
-the qualitative case audit as interpretation of decision mechanics, not as
-additional scale evidence.
+the workload ledger and qualitative case audit as interpretation of pipeline
+scope and decision mechanics, not as additional scale evidence.
 It includes an early `How to Read the Experiment` bridge that maps candidate
 patches to evidence packets, model decisions, hidden-label joins, and aggregate
 metrics using `fig7_decision_metric_flow`.
