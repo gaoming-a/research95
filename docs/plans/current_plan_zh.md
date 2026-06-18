@@ -11915,6 +11915,16 @@ Verify:
   - `artifact_safe=true`；
 - `git diff --check` 通过。
 
+Commit / Git Sync:
+
+- 已只暂存本轮相关 6 个文件，并运行 staged diff check 与敏感信息扫描；
+- 已创建本地提交 `f6d5a9d Add submission package readiness gate`；
+- `git push origin main` 失败：`Error in the HTTP2 framing layer`；
+- `git -c http.version=HTTP/1.1 push origin main` 重试失败：无法连接
+  `github.com:443`；
+- 按用户规则，GitHub 频繁同步失败时不继续阻塞后续任务；当前本地 `main`
+  保留未推送提交。
+
 ## 2026-06-18 submission handoff semantic audit
 
 Inspect:
