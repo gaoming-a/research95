@@ -797,4 +797,6 @@ The final submission checklist is `docs/artifact/submission_checklist.md`. It
 lists the current paper package, all seven required PDF figures, claim-boundary
 evidence, rebuild commands, artifact commands, exclusion boundary, and
 ready-to-submit criteria. The artifact audit requires this checklist and
-`docs/figures/fig7_decision_metric_flow.pdf` to be present in the ZIP.
+`docs/figures/fig7_decision_metric_flow.pdf` to be present in the ZIP. It also
+requires `docs/paper/advisor_workload_response_zh.md`, so the submitted package
+keeps the advisor-facing workload and claim-boundary explanation.

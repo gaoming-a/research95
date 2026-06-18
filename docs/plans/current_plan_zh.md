@@ -11988,6 +11988,65 @@ Commit / Git Sync:
 - 由于当前分支已有连续 GitHub 网络层同步失败记录，本轮不再反复重试
   `git push origin main`，只保留本地提交并在最终状态中报告 ahead 数。
 
+## 2026-06-18 advisor packet artifact required gate
+
+Inspect:
+
+- `docs/paper/advisor_workload_response_zh.md` 已被创建并包含在当前匿名 ZIP 中；
+- `scripts/audit_anonymous_artifact.py` 的 required file / README snippet 清单
+  尚未显式要求 advisor/workload packet；
+- `scripts/prepare_anonymous_artifact.py` 生成的 embedded `ARTIFACT_README.md`
+  尚未指向该文档；
+- 若只依赖通用 docs 打包规则，后续 artifact 可以在缺失该说明文档时仍通过
+  audit，不符合当前 Option A 的工作量呈现强化目标。
+
+Plan:
+
+1. 将 `docs/paper/advisor_workload_response_zh.md` 加入 anonymous artifact
+   required files；
+2. 将该路径加入 embedded `ARTIFACT_README.md` 的 paper package 说明；
+3. 将该路径加入 artifact README required snippets；
+4. 同步 anonymous artifact 文档、README/INDEX 或 engineering notes 中必要的入口；
+5. 重建 ZIP 并运行 artifact audit、paper readiness、local quality gate；
+6. 不调用 API、不修改实验数据、不扩 cohort、不补 E1/E3/E5。
+
+Acceptance:
+
+- artifact audit 在缺少 advisor packet 时会失败；
+- 当前 rebuilt artifact audit 通过，且 ZIP 中包含 advisor packet；
+- paper readiness / local quality / diff check 通过。
+
+Execute:
+
+- 已更新 `scripts/audit_anonymous_artifact.py`：
+  - required files 新增 `docs/paper/advisor_workload_response_zh.md`；
+  - required `ARTIFACT_README.md` snippets 新增该路径；
+- 已更新 `scripts/prepare_anonymous_artifact.py`，使 generated
+  `ARTIFACT_README.md` 明确指向 advisor-facing workload response；
+- 已同步 README、docs/INDEX、anonymous artifact 文档、submission checklist、
+  submission handoff 和 engineering notes。
+
+Verify:
+
+- `python -m py_compile scripts\audit_anonymous_artifact.py scripts\prepare_anonymous_artifact.py scripts\run_local_quality_gate.py scripts\audit_paper_readiness.py`
+  通过；
+- `rg -n "advisor_workload_response_zh|advisor-facing workload response|advisor packet artifact gate" ...`
+  确认脚本、README、INDEX、artifact 文档、engineering notes 和 current plan 均有入口；
+- `python scripts\prepare_anonymous_artifact.py --out artifacts\research95_anonymous_artifact.zip --manifest-out artifacts\research95_anonymous_artifact_manifest.json`
+  通过，`file_count=301`、`safe_to_package=true`；
+- `python scripts\audit_anonymous_artifact.py --artifact artifacts\research95_anonymous_artifact.zip --out-json artifacts\research95_anonymous_artifact_audit.json --out-md artifacts\research95_anonymous_artifact_audit.md`
+  通过，`safe=true`、`missing_required=[]`、
+  `missing_readme_snippets=[]`；
+- 负向审计：构造删除 `docs/paper/advisor_workload_response_zh.md` 的临时 ZIP 后，
+  `audit_anonymous_artifact.py` 返回 `safe=false`，且
+  `missing_required=["docs/paper/advisor_workload_response_zh.md"]`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`submission_package_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- 直接检查 ZIP 确认 advisor packet 在 ZIP 中，且 embedded `ARTIFACT_README.md`
+  包含该路径。
+
 ## 2026-06-18 paper readiness checks submission handoff
 
 Inspect:

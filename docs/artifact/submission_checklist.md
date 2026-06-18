@@ -105,7 +105,7 @@ The anonymous package must not contain:
 
 ## Latest Local Verification
 
-Last checked on 2026-06-18 after the no-API submission handoff refresh:
+Last checked on 2026-06-18 after the advisor workload packet artifact gate:
 
 - paper tables regenerated from tracked summaries;
 - IEEE draft regenerated from the current table snippets;
@@ -115,7 +115,8 @@ Last checked on 2026-06-18 after the no-API submission handoff refresh:
 - claim-boundary audit passed and remained raw-output-free;
 - paper readiness and local quality gate passed, including the no-API
   submission handoff boundary;
-- anonymous artifact ZIP rebuilt with 300 files and audit result was
+- anonymous artifact ZIP rebuilt with 301 files and audit result was
   `safe: true`;
+- artifact audit now requires `docs/paper/advisor_workload_response_zh.md`;
 - tracked handoff packet:
   `docs/artifact/submission_handoff_20260618.md`.

@@ -2546,3 +2546,13 @@ This file starts fresh for the patch-verification project.
 - Treat this as a local inspection-command issue, not an experiment or artifact
   failure. Re-run the read with an explicit UTF-8 encoding before diagnosing
   downstream readiness fields.
+
+## 2026-06-18 advisor packet artifact gate
+
+- If a document becomes part of the submission-facing explanation contract, do
+  not rely only on broad `docs/` packaging. Add it to
+  `audit_anonymous_artifact.py` required files and to the generated
+  `ARTIFACT_README.md` snippets so future package drift fails loudly.
+- The advisor workload response is not experimental evidence, but it is a
+  paper-package explanation artifact. It should travel with the anonymous
+  package because it records the bounded workload and overclaim boundary.

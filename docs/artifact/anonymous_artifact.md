@@ -47,8 +47,8 @@ provider-private metadata.
 
 ## Current Audit
 
-The latest ZIP audit passed on 2026-06-18 after the paper workload-ledger
-refresh. It confirms:
+The latest ZIP audit passed on 2026-06-18 after the advisor workload packet
+artifact gate. It confirms:
 
 - required source, config template, documentation, and handoff scripts are
   present;
@@ -56,6 +56,8 @@ refresh. It confirms:
   `docs/artifact/submission_checklist.md`;
 - the no-API submission handoff is present at
   `docs/artifact/submission_handoff_20260618.md`;
+- the advisor-facing workload response is present at
+  `docs/paper/advisor_workload_response_zh.md`;
 - required protocol and paper-framing files are present:
   `docs/plans/final_paper_roadmap_zh.md`,
   `docs/protocol/evidence_visibility_protocol.md`,
@@ -71,7 +73,7 @@ refresh. It confirms:
   credential-boundary, bootstrap-safety, command-template, pre-API handoff,
   submission-handoff audit, and guarded real-API command templates, including
   full-run completeness postprocessing and the current no-API submission
-  handoff entry;
+  handoff entry, plus the advisor-facing workload response entry;
 - `outputs/`, `data/`, `tmp/`, `artifacts/`, real `.env`, and
   `configs/*.local.json` are absent;
 - the embedded `ARTIFACT_MANIFEST.json` matches the packaged file list.
