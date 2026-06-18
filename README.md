@@ -76,7 +76,9 @@ real-bug tasks, hidden-evaluator separation, tool-only baselines, four-anchor
 E0/E2/E4/E6 evidence ablation, an Evidence Visibility Curve, calibrated
 secondary metrics such as FACR/Evidence Gain, and an anonymous artifact. A
 complete adjacent-difference E0-E6 ladder is future EVP-8 / EVP-7-v2 work, not
-an insertion into the current EVP-7 artifacts.
+an insertion into the current EVP-7 artifacts. The non-conflicting current
+reinforcement options are workload presentation first, and a user-confirmed
+second-model replication over key anchors E0/E4/E6 only.
 
 Every concrete continuation round must first update:
 

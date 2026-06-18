@@ -11829,3 +11829,56 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过。
 - `git diff --check` 通过。
+
+## 2026-06-18 final roadmap non-conflicting workload reinforcement options
+
+Inspect:
+
+- 当前 canonical final roadmap 已明确 EVP-7 是 E0/E2/E4/E6 four-anchor pilot；
+- 当前路线已禁止把 E1/E3/E5 直接插入现有 EVP-7 artifacts；
+- 当前 paper-facing real G5 run 仍为 20 tasks / 94 candidates / 376 packets；
+- structural/no-API cohort 为 21 tasks / 98 candidates / 392 packets；
+- 工作区仍有 `cookiecutter_4` 扩量残留，不属于本轮 roadmap 补强路线；
+- 用户要求将“第二模型关键层级复现”或“工作量呈现”写入计划，且不能与现有
+  four-anchor / no-E135 / future full-ladder 边界冲突。
+
+Plan:
+
+1. 在 `docs/plans/final_paper_roadmap_zh.md` 中新增非冲突补强路线：
+   - 默认优先：工作量呈现强化，不调用 API，不扩 bug，不改 evidence levels；
+   - 条件选项：第二模型关键锚点复现，只覆盖 E0/E4/E6，需用户确认 provider、
+     model、预算、scope 和停止条件；
+2. 明确两条路线都服务当前 four-anchor paper，不支持 full ladder claim；
+3. 同步 README、INDEX、current project state 和 engineering notes；
+4. 不改实验数据，不重建 packets，不调用 API；
+5. 提交时不纳入既有 `cookiecutter_4` 未提交 P2P 残留。
+
+Acceptance:
+
+- final roadmap 将“工作量呈现”列为默认无 API 补强路径；
+- final roadmap 将“第二模型关键锚点复现”列为需确认预算和 scope 的条件路径；
+- 文档明确第二模型复现不补 E1/E3/E5、不扩 bug、不改当前 DeepSeek G5 结果边界；
+- paper readiness / local quality / diff check 通过。
+
+Execute:
+
+- 已在 `docs/plans/final_paper_roadmap_zh.md` 新增
+  `18.4.1 当前论文的非冲突补强路线`：
+  - 默认优先路线：工作量呈现强化；
+  - 条件补强路线：第二模型关键锚点复现；
+  - 第二模型只覆盖 E0/E4/E6，必须先由用户确认 provider、model、预算、
+    scope 和停止条件；
+  - 两条路线都不得重开 E1/E3/E5、full-ladder claim、盲目扩 bug 或
+    LLM 优于 tool-only baseline claim。
+- 已同步 `README.md`、`docs/INDEX.md`、
+  `docs/plans/current_project_state_zh.md` 和
+  `docs/experience/engineering_notes.md`。
+
+Verify:
+
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过 final roadmap / protocol / paper framing 检查；保留的唯一 blocker 仍是
+  历史 prompt-only positive claim 的 `stop_or_redesign`。
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过。
+- `git diff --check` 通过。

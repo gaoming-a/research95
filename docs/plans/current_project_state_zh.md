@@ -1,6 +1,6 @@
 # 当前项目状态与文件地图
 
-日期：2026-06-17
+日期：2026-06-18
 
 本文件是短入口，用来整理当前计划文档和项目文件。它不替代
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
@@ -44,7 +44,20 @@
 
 如果继续实验，不应直接扩量或直接调用 API。必须先选择一个目标：
 
-1. 扩 EVP-7 cohort：
+1. 论文工作量呈现强化：
+   - 默认优先，无 API；
+   - 目标：把 cohort construction、candidate construction、F2P/P2P
+     validation、evidence packets、LLM verifier、tool-only baseline、
+     qualitative cases、claim traceability 和 artifact audit 写成清晰的论文
+     工作量闭环；
+   - 边界：不补 E1/E3/E5，不扩 bug，不改当前 four-anchor claim。
+2. 第二模型关键锚点复现：
+   - 条件执行，必须先确认 provider、model、预算、scope 和停止条件；
+   - 默认只覆盖 `E0`、`E4`、`E6`，用于检查 DeepSeek G5 趋势是否跨模型
+     稳定；
+   - 边界：不补 E1/E3/E5，不证明第二模型优于 tool-only baseline，不替代
+     当前 376-record DeepSeek G5 主结果。
+3. 扩 EVP-7 cohort：
    - 当前状态：本轮已完成 `bugsinpy_thefuck_1` admission；
    - 当前结果：21 tasks / 98 candidates / 392 no-API evidence packets；
    - 当前 gate：`docs/experiments/evp7_expansion_readiness.md` 已刷新为
@@ -56,10 +69,7 @@
      already-main or already-risky projects；
    - 下一步不是继续盲目扩 cohort，而是决定是否做新的 30-50 bug 边界、
      跨模型复现实验，或论文结果同步。
-2. 跨模型复现实验：
-   - 目标：检查 DeepSeek G5 的 evidence-visibility 趋势是否跨模型稳定；
-   - 下一步：先确定 provider、model、预算、停止条件和 preflight。
-3. 新 verifier design：
+4. 新 verifier design：
    - 目标：重新设计旧 prompt-only evidence-first 失败路线；
    - 下一步：先做 redesign dry-run 和 prompt-boundary check；
    - 禁止按旧 `patch_verify_evidence_first_v1` prompt 继续扩量。

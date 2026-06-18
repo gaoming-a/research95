@@ -25,7 +25,9 @@
   tracked structural cohort while keeping the historical real G5 run boundary
   explicit. As of 2026-06-17, E1/E3/E5 are not follow-up insertions for the
   current EVP-7 artifacts; a full adjacent-difference E0-E6 ladder requires a
-  new EVP-8 or EVP-7-v2 protocol and rerun.
+  new EVP-8 or EVP-7-v2 protocol and rerun. As of 2026-06-18, non-conflicting
+  reinforcement means either workload presentation over the existing pipeline
+  or a user-confirmed second-model replication on E0/E4/E6 only.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.

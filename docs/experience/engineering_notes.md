@@ -2472,3 +2472,16 @@ This file starts fresh for the patch-verification project.
 - The current paper route should frame EVP-7 as a four-anchor evidence
   visibility pilot. A complete adjacent-difference ladder belongs in a future
   EVP-8 or EVP-7-v2 protocol with redesigned levels from E0 onward.
+
+## 2026-06-18 non-conflicting paper reinforcement
+
+- If workload is questioned, first make the existing pipeline visible:
+  admission, candidates, F2P/P2P, evidence packets, LLM review, tool-only
+  baselines, qualitative cases, claim traceability, and artifact audit. This is
+  a writing/figure/table task, not a new evidence-level experiment.
+- A second-model replication can strengthen robustness only when the user
+  confirms provider, model, budget, scope, and stop conditions. Keep it to
+  E0/E4/E6 key anchors unless a new plan explicitly says otherwise.
+- Do not let either reinforcement path reopen E1/E3/E5, full-ladder claims,
+  blind bug expansion, or a claim that LLMs beat deterministic tool-only
+  baselines.
