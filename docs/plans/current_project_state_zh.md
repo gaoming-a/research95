@@ -1,6 +1,6 @@
 # 当前项目状态与文件地图
 
-日期：2026-06-18
+日期：2026-06-20
 
 本文件是短入口，用来整理当前计划文档和项目文件。它不替代
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
@@ -63,20 +63,34 @@
 
 - `docs/experiments/evp7_next_decision_packet_20260618.md`
 
-1. 论文工作量呈现强化：
+1. EVP-8 期刊版 full-ladder protocol：
+   - 当前用户意图：将现有 bounded EVP-7 pilot 升级为期刊版；
+   - canonical 执行计划：
+     `docs/experiments/evp8_journal_scale_execution_plan_20260620.md`；
+   - 下一步不是 API，而是 no-API protocol freeze：重新定义 `E0-E6` 七层
+     adjacent-difference evidence ladder、packet schema、prompt schema、
+     candidate-set policy、evaluator joins、metrics、stop gates 和 provider
+     routing policy；
+   - 第一批模型只允许在 no-API gates 和 smoke gates 通过后执行
+     DeepSeek V4 Pro + Qwen3.7 Max；
+   - 后续补跑 Kimi K2.6、Devstral 2、Gemini 2.5 Flash 必须使用同一 frozen
+     packets/prompts/schema，不能边跑边改协议；
+   - 边界：不把 EVP-7 的 E2/E4/E6 直接当作 EVP-8 full-ladder 中间层，不从
+     DeepSeek+Qwen interim result 写成最终五模型结论。
+2. 论文工作量呈现强化：
    - 默认优先，无 API；
    - 目标：把 cohort construction、candidate construction、F2P/P2P
      validation、evidence packets、LLM verifier、tool-only baseline、
      qualitative cases、claim traceability 和 artifact audit 写成清晰的论文
      工作量闭环；
    - 边界：不补 E1/E3/E5，不扩 bug，不改当前 four-anchor claim。
-2. 第二模型关键层级/关键锚点复现：
+3. 第二模型关键层级/关键锚点复现：
    - 条件执行，必须先确认 provider、model、预算、scope 和停止条件；
    - “关键层级”只指当前 four-anchor pilot 中的 `E0`、`E4`、`E6`
      key anchors，用于检查 DeepSeek G5 趋势是否跨模型稳定；
    - 边界：不补 E1/E3/E5，不证明第二模型优于 tool-only baseline，不替代
      当前 376-record DeepSeek G5 主结果。
-3. 扩 EVP-7 cohort：
+4. 扩 EVP-7 cohort：
    - 当前状态：本轮已完成 `bugsinpy_thefuck_1` admission；后续
      `bugsinpy_cookiecutter_4` P2P 构造被记录为 dependency/command/timeout
      blocker，未 admission；
@@ -90,7 +104,7 @@
      already-main or already-risky projects；
    - 下一步不是继续盲目扩 cohort，而是决定是否做新的 30-50 bug 边界、
      跨模型复现实验，或论文结果同步。
-4. 新 verifier design：
+5. 新 verifier design：
    - 目标：重新设计旧 prompt-only evidence-first 失败路线；
    - 下一步：先做 redesign dry-run 和 prompt-boundary check；
    - 禁止按旧 `patch_verify_evidence_first_v1` prompt 继续扩量。
@@ -120,6 +134,9 @@
 - `docs/experiments/evp7_protocol_pilot.md`：
   当前 protocol pilot 报告；真实 G5 结果仍是 20-task / 94-candidate /
   376-packet，structural no-API cohort 已扩到 21 / 98 / 392。
+- `docs/experiments/evp8_journal_scale_execution_plan_20260620.md`：
+  EVP-8 期刊版后续执行计划；记录 no-API 协议冻结、七层 evidence ladder、
+  DeepSeek/Qwen 第一批执行和 Kimi/Devstral/Gemini 后续补跑边界。
 - `docs/experiments/thefuck1_candidate_validation.md`：
   `bugsinpy_thefuck_1` rules-root pip-family P2P policy、candidate validation
   和 admission 记录。

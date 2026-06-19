@@ -2,6 +2,8 @@
 
 Date: 2026-06-18
 
+Updated: 2026-06-20 for the user-confirmed journal-upgrade planning route.
+
 This is a no-API decision packet. It does not start a new experiment, call a
 model, expand the cohort, or change the evidence levels.
 
@@ -128,6 +130,60 @@ Forbidden by default:
 - do not use `tool_augmented_evidence` to rescue prompt-only conclusions;
 - do not call APIs before dry-run and prompt-boundary checks pass.
 
+### Option E: EVP-8 Journal-Scale Full-Ladder Protocol
+
+Use only if the priority is upgrading the current bounded pilot into a journal
+version.
+
+Canonical plan:
+
+- `docs/experiments/evp8_journal_scale_execution_plan_20260620.md`
+
+Default scope:
+
+- new EVP-8 protocol, not a modification of current EVP-7 artifacts;
+- seven model-visible levels `E0-E6`, plus evaluator-only `E7` oracle upper
+  bound;
+- target scale of 30-50 validation-stable bugs and 100-180 candidates;
+- five-model target set:
+  - `deepseek/deepseek-v4-pro`;
+  - `qwen/qwen3.7-max`;
+  - `moonshotai/kimi-k2.6`;
+  - `mistralai/devstral-2512`;
+  - `google/gemini-2.5-flash`.
+
+Execution order:
+
+1. No-API protocol freeze: evidence-level definitions, packet schema, prompt
+   schema, candidate-set policy, evaluator joins, metrics, stop gates, and
+   provider/model routing policy.
+2. DeepSeek + Qwen first batch only after dry-run, leakage, prompt-boundary,
+   cost-observability, and smoke gates pass.
+3. Later add Kimi, Devstral, and Gemini using the same frozen packets and
+   prompts.
+
+Required user confirmations before any API call:
+
+- whether the first EVP-8 execution should use the current 20-task /
+  94-candidate cohort for protocol validation or first expand toward 30-50
+  bugs;
+- DeepSeek provider/config;
+- Qwen provider/config;
+- maximum total cost for the first batch;
+- smoke packet count;
+- full-run permission after smoke passes;
+- stop rule for inconsistent, low-quality, or schema-invalid outputs.
+
+Forbidden by default:
+
+- no model API calls during protocol design;
+- no automatic use of Kimi/Devstral/Gemini until an OpenRouter or official-key
+  route is confirmed;
+- no modification of evidence levels, prompt schema, candidate set, or evaluator
+  joins after the first model call without bumping the protocol version and
+  rerunning affected models;
+- no final five-model journal claim from the DeepSeek + Qwen interim batch.
+
 ## Default If No Decision Is Given
 
 If no explicit decision is given, continue only with no-API paper-submission
@@ -140,8 +196,8 @@ maintenance:
 
 ## Current Recommended Path
 
-The shortest non-conflicting route is Option A: submit the current four-anchor
-paper package with the bounded EVP-7 claim and workload-ledger framing. Option
-B is the strongest empirical add-on, but it requires explicit cost and model
-approval. Options C and D change the research boundary and should not be
-started implicitly.
+As of 2026-06-20, the user has expressed intent to upgrade to a journal version.
+The next non-conflicting experimental path is therefore Option E, starting with
+no-API EVP-8 protocol design and freeze. This still does not authorize model
+API calls: DeepSeek and Qwen can run only after the EVP-8 no-API gates and
+explicit execution permission pass.

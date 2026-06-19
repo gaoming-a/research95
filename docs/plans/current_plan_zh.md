@@ -12905,6 +12905,7 @@ Verify:
   通过，`safe=true`；
 - `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
   通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过；
 - direct JSON/ZIP inspection 确认 `manifest_file_count=303`、
@@ -13838,3 +13839,68 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过，`passed=true`；
 - `git diff --check` 通过。
+
+## 2026-06-20 EVP-8 journal-scale follow-up plan
+
+Inspect:
+
+- 用户明确表示希望升级到期刊版本，并确认可先做 DeepSeek + Qwen，后续再补
+  Kimi / Devstral / Gemini；
+- 当前工作区检查前为 `main...origin/main`；
+- 现有 canonical roadmap 仍规定：当前 EVP-7 是 `E0/E2/E4/E6`
+  four-anchor pilot，E1/E3/E5 只能作为 EVP-8 / EVP-7-v2 新协议整体重做；
+- `docs/experiments/evp7_next_decision_packet_20260618.md` 原先只有 Option A-D，
+  其中第二模型路线仍是当前 EVP-7 的 `E0/E4/E6` key-anchor replication；
+- 用户询问模型选择、排行榜适用性和 OpenRouter 成本后，当前更优方向是
+  EVP-8 journal-scale full-ladder protocol，而不是继续旧 EVP-7 key-anchor
+  add-on。
+
+Plan:
+
+1. 新增 no-API EVP-8 期刊版执行计划，明确当前 EVP-7 只作为 pilot 和设计动机；
+2. 在最终路线图中加入 `EVP-8 journal-scale full-ladder` 路线；
+3. 在 next-decision packet 中新增 Option E，避免后续 generic continue 回到旧
+   Option A 或旧第二模型 key-anchor route；
+4. 同步 README、docs index、current project state 和 engineering notes；
+5. 不调用模型 API、不扩 cohort、不生成 EVP-8 packets、不提交 ignored outputs /
+   artifacts / local configs；
+6. 写清 DeepSeek/Qwen 第一批执行和 Kimi/Devstral/Gemini 后续补跑的冻结输入
+   约束。
+
+Acceptance:
+
+- 新计划必须要求先 no-API protocol freeze，再执行任何 DeepSeek/Qwen API；
+- EVP-8 必须是新协议，不能补插 E1/E3/E5 到现有 EVP-7 artifacts；
+- 模型选择理由不能依赖排行榜权威性，只能把 leaderboard 作为 secondary sanity
+  check；
+- DeepSeek + Qwen 可以作为 two-model interim result，但不能写成最终五模型
+  journal conclusion；
+- 后续 Kimi/Devstral/Gemini 必须使用同一 frozen packets/prompts/schema；
+- 文档检索、diff check 和 Git 状态检查通过后提交同步。
+
+Execute:
+
+- 新增 `docs/experiments/evp8_journal_scale_execution_plan_20260620.md`；
+- 更新 `docs/plans/final_paper_roadmap_zh.md`，加入 18.7 EVP-8 期刊版
+  full-ladder 路线；
+- 更新 `docs/experiments/evp7_next_decision_packet_20260618.md`，新增 Option E；
+- 更新 `docs/plans/current_project_state_zh.md`，将 EVP-8 期刊版计划列为当前
+  继续实验前的第一决策门；
+- 更新 `README.md` 和 `docs/INDEX.md`，加入 EVP-8 计划入口；
+- 更新 `docs/experience/engineering_notes.md`，记录模型选择和冻结协议边界。
+
+Verify:
+
+- targeted `rg` 检查确认 README、INDEX、final roadmap、current project state、
+  current plan、next decision packet、EVP-8 execution plan 和 engineering notes
+  均包含 EVP-8 期刊版入口、DeepSeek/Qwen 第一批执行、Kimi/Devstral/Gemini
+  后续补跑、排行榜仅作 secondary sanity check 等边界；
+- `git diff --check` 通过；仅报告若干 tracked Markdown 文件的 LF/CRLF
+  工作区提示，无 whitespace error；
+- `git status --short` 显示本轮 tracked drift 仅为 README、docs index、计划、
+  decision packet、engineering notes 和新增 EVP-8 execution plan；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- 本轮仍未调用模型 API，未改实验数据，未生成新 packets。

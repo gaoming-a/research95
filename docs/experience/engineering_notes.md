@@ -2671,3 +2671,29 @@ This file starts fresh for the patch-verification project.
   when describing the current four-anchor pilot.
 - This is wording synchronization only: do not use RQ alignment to add new
   scale, second-model, or LLM-over-tool-only claims.
+
+## 2026-06-20 EVP-8 journal-scale planning boundary
+
+- Upgrading to a journal version changes the research design. Do not treat it
+  as a continuation of EVP-7 by inserting `E1`/`E3`/`E5` into existing
+  artifacts. Create a new EVP-8 protocol, freeze the full E0-E6 evidence ladder
+  from E0 onward, and rerun packets/prompts/baselines/models/statistics under
+  that version.
+- The first execution batch may use DeepSeek V4 Pro and Qwen3.7 Max, but only
+  after no-API protocol freeze, leakage checks, prompt-boundary dry-run,
+  cost-observability readiness, and smoke gates pass. Once either model has
+  started, do not change evidence levels, prompt schema, candidate set, or
+  evaluator joins without bumping the protocol version and rerunning affected
+  models.
+- Later Kimi K2.6, Devstral 2, and Gemini 2.5 Flash runs are allowed only as
+  completion of the same frozen EVP-8 input set. If they are routed through
+  OpenRouter, pin exact model IDs and record actual returned model/provider per
+  review record; do not rely on unrecorded fallback or automatic substitution.
+- Do not justify model selection primarily by leaderboard rank. Public
+  leaderboards are at most a secondary sanity check. The defensible selection
+  criteria are fixed model IDs, context-window fit, structured-output support,
+  comparable practical cost/capability, provider-family diversity, and
+  software-engineering task suitability.
+- DeepSeek and Qwen can be excluded from external OpenRouter cost planning when
+  the user treats them as already available. The later three-model OpenRouter
+  planning estimate is only a budget estimate, not a billing statement.

@@ -78,7 +78,12 @@ secondary metrics such as FACR/Evidence Gain, and an anonymous artifact. A
 complete adjacent-difference E0-E6 ladder is future EVP-8 / EVP-7-v2 work, not
 an insertion into the current EVP-7 artifacts. The non-conflicting current
 reinforcement options are workload presentation first, and a user-confirmed
-second-model replication over key anchors E0/E4/E6 only.
+second-model replication over key anchors E0/E4/E6 only. As of 2026-06-20, the
+user-selected journal-upgrade route is recorded in
+`docs/experiments/evp8_journal_scale_execution_plan_20260620.md`: freeze a new
+EVP-8 full-ladder protocol first, then run DeepSeek V4 Pro and Qwen3.7 Max as
+the first model batch, with Kimi K2.6, Devstral 2, and Gemini 2.5 Flash added
+later on the same frozen packets and prompts.
 
 Every concrete continuation round must first update:
 
@@ -104,6 +109,11 @@ They should not override `final_paper_roadmap_zh.md`.
   boundary. Its boundary is checked by
   `scripts/audit_submission_handoff.py`,
   `scripts/audit_submission_freeze_candidate.py`, and the local quality gate.
+- The current journal-upgrade execution plan is
+  `docs/experiments/evp8_journal_scale_execution_plan_20260620.md`. It is a
+  no-API plan: it does not authorize model calls until the EVP-8 protocol,
+  packets, prompts, candidate-set policy, metrics, stop gates, and model routing
+  policy are frozen and explicitly approved for execution.
 - The prompt-only DeepSeek full run completed and produced a mixed/negative
   `stop_or_redesign` result. It is not a positive paper claim.
 - The later tool-augmented full run passed its dedicated gate, but only supports

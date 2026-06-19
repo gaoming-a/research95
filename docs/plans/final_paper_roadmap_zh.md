@@ -1078,6 +1078,60 @@ BugsInPy 扩量，必须先解决当前候选池边界：
 
 这些选择会改变实验边界，不能由执行代理私自决定。
 
+### 18.7 EVP-8 期刊版 full-ladder 路线
+
+2026-06-20 更新：用户明确希望升级到期刊版本。该决策不意味着可以直接调用
+API，也不意味着可以在 EVP-7 artifacts 中补插 E1/E3/E5。后续期刊版应新开
+EVP-8 journal-scale protocol，完整执行计划见
+`docs/experiments/evp8_journal_scale_execution_plan_20260620.md`。
+
+期刊版主线：
+
+1. 当前 EVP-7 保留为 bounded four-anchor pilot 和设计动机；
+2. EVP-8 从 E0 开始重新定义 `E0` 到 `E6` 的 adjacent-difference evidence
+   ladder，并保留 `E7` 作为 evaluator-only oracle upper bound；
+3. 目标规模为 30-50 validation-stable bugs / 100-180 candidates，但扩量前
+   必须先冻结协议、schema、prompt、candidate-set policy、统计计划和 stop
+   gates；
+4. 所有模型必须使用同一 frozen evidence packets、prompt version、schema 和
+   evaluator joins；
+5. 第一批只执行 DeepSeek V4 Pro 与 Qwen3.7 Max，用于 two-model interim
+   result；后续再补 Kimi K2.6、Devstral 2 和 Gemini 2.5 Flash；
+6. 如果第一批运行后发现协议问题，必须 bump protocol version 并从头重跑受影响
+   模型，不能把新旧协议结果混作同一 full-ladder 结论。
+
+EVP-8 当前计划模型集：
+
+| Role | Model id |
+| --- | --- |
+| anchor | `deepseek/deepseek-v4-pro` |
+| second comparable model | `qwen/qwen3.7-max` |
+| later comparable model | `moonshotai/kimi-k2.6` |
+| later non-Chinese code-oriented model | `mistralai/devstral-2512` |
+| later non-Chinese general model | `google/gemini-2.5-flash` |
+
+模型选择不能写成“排行榜相近所以选择”。更稳妥的论文口径是：
+
+> Models were selected for fixed model IDs, sufficient context windows,
+> structured-output compatibility, comparable practical cost/capability, and
+> provider-family diversity. Public leaderboards were used only as secondary
+> sanity checks, not as the primary selection criterion.
+
+执行边界：
+
+- DeepSeek/Qwen 可以先跑，但只能在 EVP-8 no-API protocol freeze、leakage
+  audit、prompt-boundary dry-run、cost-observability preflight 和 smoke gate
+  通过后执行；
+- Kimi/Devstral/Gemini 后续可通过 OpenRouter 统一路由补跑；若用 OpenRouter，
+  必须 pin exact model id，记录 actual returned model/provider，并避免未记录的
+  automatic model substitution；
+- 用户当前没有 Gemini 和 Devstral 官方 API key 不是 blocker；若采用 OpenRouter，
+  只需 `OPENROUTER_API_KEY`；
+- 按 100-180 candidates、7 levels、约 1200 input + 1000 output tokens/call
+  粗估，排除 DeepSeek 和 Qwen 后，Kimi K2.6 + Devstral 2 + Gemini 2.5 Flash
+  约为 USD 7.12-12.82，加 smoke/retry 后建议预留 USD 10-30。该数值是
+  planning estimate，不是账单声明。
+
 ## 19. 2026-06-12 EVP-7 protocol pilot 决策
 
 已确认选择 Option A：

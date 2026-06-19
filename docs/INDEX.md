@@ -27,7 +27,16 @@
   current EVP-7 artifacts; a full adjacent-difference E0-E6 ladder requires a
   new EVP-8 or EVP-7-v2 protocol and rerun. As of 2026-06-18, non-conflicting
   reinforcement means either workload presentation over the existing pipeline
-  or a user-confirmed second-model replication on E0/E4/E6 only.
+  or a user-confirmed second-model replication on E0/E4/E6 only. As of
+  2026-06-20, the user-selected journal-upgrade route is a new EVP-8
+  full-ladder protocol: freeze no-API packets/prompts/schema first, run
+  DeepSeek V4 Pro and Qwen3.7 Max as the first batch, then add Kimi K2.6,
+  Devstral 2, and Gemini 2.5 Flash on the same frozen inputs.
+- `experiments/evp8_journal_scale_execution_plan_20260620.md`: no-API
+  execution plan for the journal-scale EVP-8 route. It defines the planned
+  E0-E6 full-ladder boundary, target five-model set, phased DeepSeek/Qwen first
+  batch, later OpenRouter-compatible model completion, cost-planning boundary,
+  required outputs, stop gates, and forbidden shortcuts.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.
