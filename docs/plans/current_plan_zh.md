@@ -13904,3 +13904,87 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过，`passed=true`；
 - 本轮仍未调用模型 API，未改实验数据，未生成新 packets。
+
+## 2026-06-20 EVP-8 Phase 0 protocol-spec audit
+
+Inspect:
+
+- 当前工作区为 `main...origin/main [ahead 1]`，本地最新提交已记录 EVP-8
+  journal-scale execution plan，但 GitHub push 因网络失败尚未完成；
+- `docs/experiments/evp8_journal_scale_execution_plan_20260620.md` 要求先执行
+  no-API protocol freeze，之后才允许 DeepSeek/Qwen API smoke；
+- 现有 EVP-7 已有 evidence packet、prompt manifest 和 schema dry-run 脚本，但
+  EVP-8 目前还只有文字计划，没有机器可检查的协议定义；
+- `docs/experiments/patch_evidence_bench_schema.md` 和
+  `docs/experiments/leakage_policy.md` 已有长期 E0-E7 概念边界，EVP-8 新协议
+  应复用这些边界，同时避免修改 EVP-7 artifacts。
+
+Plan:
+
+1. 新增 tracked EVP-8 protocol spec，冻结 `E0-E6` 可见字段、每级新增证据类、
+   evaluator-only `E7`、模型计划、prompt/output schema、candidate-set policy 和
+   stop gates；
+2. 新增 no-API audit 脚本，验证相邻层级只新增一个 evidence class、可见字段不
+   含 evaluator-only labels、模型批次和 OpenRouter routing policy 已固定；
+3. 生成 tracked audit summary，作为 Phase 0 协议冻结的第一道机器检查；
+4. 同步 README、docs index、EVP-8 execution plan 和 engineering notes，写清
+   该步骤仍不授权 API、cohort expansion 或 packet generation；
+5. 运行最小验证：EVP-8 protocol audit、paper readiness、local quality gate、
+   `git diff --check`。
+
+Acceptance:
+
+- `E0-E6` 必须是连续 ladder，`E7` 只能是 evaluator-only upper bound；
+- 每个 `Ek - E(k-1)` 只能新增一个命名证据类，不能把 EVP-7 的 E2/E4/E6
+  直接移植为中间层；
+- 所有 model-visible field groups 不得包含 `expected_outcome`、
+  `candidate_type`、`failure_type_label`、hidden oracle 或 evaluator label；
+- DeepSeek/Qwen 是第一批，Kimi/Devstral/Gemini 是后续批次，且必须复用同一
+  frozen protocol/prompt/schema；
+- 审计脚本必须明确 `api_call_attempted=false`，不读取 local API config；
+- 本轮不生成 EVP-8 evidence packets，不调用任何模型 API。
+
+Execute:
+
+- 新增 `data/protocols/evp8_protocol_v0_1.json`，记录 EVP-8 v0.1
+  full-ladder machine spec：
+  - `E0` issue/patch seed；
+  - `E1` structured patch surface；
+  - `E2` patch-apply/static status slots；
+  - `E3` visible fail-to-pass evidence；
+  - `E4` visible pass-to-pass/regression evidence；
+  - `E5` broader visible tool diagnostics；
+  - `E6` deterministic visible merge-gate summary；
+  - `E7` evaluator-only oracle upper bound；
+- 新增 `scripts/audit_evp8_protocol_spec.py`，检查相邻差分、visible/hidden
+  字段边界、DeepSeek/Qwen 第一批模型、Kimi/Devstral/Gemini 后续批次、
+  routing policy、cost observability 和 stop gates；
+- 运行审计后生成
+  `data/protocols/evp8_protocol_v0_1_audit_summary.json`；
+- 更新 `.gitignore`，允许 tracked `data/protocols/*.json`，因为 protocol spec
+  和 audit summary 属于可复现协议数据，不是 raw experiment output；
+- 同步更新 README、docs index、EVP-8 execution plan、final roadmap、current
+  project state 和 engineering notes；
+- 未调用模型 API，未读取 local API config，未生成 EVP-8 evidence packets，未扩
+  cohort。
+
+Verify:
+
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过：
+  - `protocol_spec_audit_status = passed`；
+  - `model_visible_levels = E0-E6`；
+  - `adjacent_delta_count = 6`；
+  - `E7` 是 evaluator-only；
+  - `phase1_models = deepseek/deepseek-v4-pro, qwen/qwen3.7-max`；
+  - `phase2_models = moonshotai/kimi-k2.6, mistralai/devstral-2512,
+    google/gemini-2.5-flash`；
+  - `api_call_attempted = false`；
+  - `phase0_api_readiness = not_ready`，blockers 为 candidate set not frozen、
+    prompt text not frozen，以及 packet/schema/prompt/cost/baseline dry-run
+    outputs missing；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`；
+- `git diff --check` 初次通过，仅有 LF/CRLF 提示；最终提交前需在 `.gitignore`
+  和 current plan 更新后再复跑。

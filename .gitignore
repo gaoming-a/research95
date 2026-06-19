@@ -21,6 +21,8 @@ data/*
 !data/cohorts/*.json
 !data/p2p_scopes/
 !data/p2p_scopes/*.json
+!data/protocols/
+!data/protocols/*.json
 outputs/
 runs/
 artifacts/

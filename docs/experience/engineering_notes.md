@@ -2697,3 +2697,17 @@ This file starts fresh for the patch-verification project.
 - DeepSeek and Qwen can be excluded from external OpenRouter cost planning when
   the user treats them as already available. The later three-model OpenRouter
   planning estimate is only a budget estimate, not a billing statement.
+
+## 2026-06-20 EVP-8 protocol-spec audit boundary
+
+- A written EVP-8 plan is not enough for later API execution. Create a tracked
+  machine-readable protocol spec first, then audit adjacent evidence deltas,
+  visible/hidden field boundaries, model batches, routing policy, cost
+  observability, and stop gates before building packets or prompts.
+- The first EVP-8 spec audit may pass while API readiness remains blocked. That
+  is the intended state when the candidate set, prompt text, packet dry-run,
+  schema dry-run, prompt-boundary audit, cost-observability dry-run, and
+  deterministic baseline have not all been generated.
+- Keep the audit strict on synonymous hidden fields. If the script requires
+  both `hidden_oracle_results` and `hidden_oracle_result`, update the protocol
+  spec to cover both rather than weakening the leakage boundary.

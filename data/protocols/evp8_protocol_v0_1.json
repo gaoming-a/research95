@@ -1,0 +1,383 @@
+{
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "protocol_status": "phase0_no_api_protocol_spec",
+  "created_date": "2026-06-20",
+  "cohort_id": "EVP-8",
+  "api_call_attempted": false,
+  "scope_boundary": {
+    "evp7_relationship": "EVP-7 remains a completed four-anchor pilot and must not be modified by inserting E1/E3/E5.",
+    "evp8_relationship": "EVP-8 starts a new adjacent-difference protocol from E0 through E6.",
+    "packet_generation_authorized": false,
+    "model_run_authorized": false
+  },
+  "candidate_set_policy": {
+    "current_candidate_set_version": "not_frozen",
+    "allowed_phase0_choices_before_first_model_call": [
+      "reuse_evp7_20_task_94_candidate_cohort_for_evp8_smoke_only",
+      "expand_first_to_journal_scale_30_50_tasks_100_180_candidates"
+    ],
+    "journal_target_bug_count": "30-50",
+    "journal_target_candidate_count": "100-180",
+    "freeze_required_before_first_model_call": true,
+    "post_first_model_call_mutation_policy": "forbidden_without_protocol_version_bump_and_full_rerun"
+  },
+  "evidence_ladder": [
+    {
+      "level": "E0",
+      "visibility": "model_visible",
+      "level_name": "issue_patch_seed",
+      "adds_evidence_class": "issue_patch_seed",
+      "model_visible_field_groups": [
+        "issue_patch_seed"
+      ],
+      "required_fields": [
+        "anonymous_candidate_id",
+        "task_id",
+        "project",
+        "issue_summary",
+        "candidate_patch_diff",
+        "touched_filenames"
+      ],
+      "must_not_include": [
+        "expected_outcome",
+        "candidate_type",
+        "failure_type_label",
+        "hidden_oracle_paths",
+        "hidden_oracle_result",
+        "hidden_oracle_results",
+        "reference_patch_provenance",
+        "reference_patch_label",
+        "evaluator_merge_label"
+      ]
+    },
+    {
+      "level": "E1",
+      "visibility": "model_visible",
+      "level_name": "structured_patch_surface",
+      "adds_evidence_class": "patch_surface_map",
+      "model_visible_field_groups": [
+        "issue_patch_seed",
+        "patch_surface_map"
+      ],
+      "required_fields": [
+        "changed_files",
+        "changed_functions",
+        "changed_classes",
+        "hunk_locations",
+        "neighboring_symbols",
+        "related_imports",
+        "related_module_paths"
+      ],
+      "must_not_include": [
+        "expected_outcome",
+        "candidate_type",
+        "failure_type_label",
+        "hidden_oracle_paths",
+        "hidden_oracle_result",
+        "hidden_oracle_results",
+        "reference_patch_provenance",
+        "reference_patch_label",
+        "evaluator_merge_label"
+      ]
+    },
+    {
+      "level": "E2",
+      "visibility": "model_visible",
+      "level_name": "patch_apply_and_static_slots",
+      "adds_evidence_class": "patch_application_static_status",
+      "model_visible_field_groups": [
+        "issue_patch_seed",
+        "patch_surface_map",
+        "patch_application_static_status"
+      ],
+      "required_fields": [
+        "patch_apply_status",
+        "syntax_check_status",
+        "import_smoke_status",
+        "configured_static_check_status"
+      ],
+      "must_not_include": [
+        "expected_outcome",
+        "candidate_type",
+        "failure_type_label",
+        "hidden_oracle_paths",
+        "hidden_oracle_result",
+        "hidden_oracle_results",
+        "reference_patch_provenance",
+        "reference_patch_label",
+        "evaluator_merge_label"
+      ]
+    },
+    {
+      "level": "E3",
+      "visibility": "model_visible",
+      "level_name": "visible_fail_to_pass_tests",
+      "adds_evidence_class": "visible_fail_to_pass_test_evidence",
+      "model_visible_field_groups": [
+        "issue_patch_seed",
+        "patch_surface_map",
+        "patch_application_static_status",
+        "visible_fail_to_pass_test_evidence"
+      ],
+      "required_fields": [
+        "visible_fail_to_pass_scope_id",
+        "visible_fail_to_pass_test_names",
+        "visible_fail_to_pass_outcomes",
+        "sanitized_fail_to_pass_stdout_tail",
+        "fail_to_pass_command_fingerprint"
+      ],
+      "must_not_include": [
+        "expected_outcome",
+        "candidate_type",
+        "failure_type_label",
+        "hidden_oracle_paths",
+        "hidden_oracle_result",
+        "hidden_oracle_results",
+        "reference_patch_provenance",
+        "reference_patch_label",
+        "evaluator_merge_label"
+      ]
+    },
+    {
+      "level": "E4",
+      "visibility": "model_visible",
+      "level_name": "visible_pass_to_pass_regression_tests",
+      "adds_evidence_class": "visible_pass_to_pass_regression_evidence",
+      "model_visible_field_groups": [
+        "issue_patch_seed",
+        "patch_surface_map",
+        "patch_application_static_status",
+        "visible_fail_to_pass_test_evidence",
+        "visible_pass_to_pass_regression_evidence"
+      ],
+      "required_fields": [
+        "visible_pass_to_pass_scope_id",
+        "visible_pass_to_pass_test_names",
+        "visible_pass_to_pass_outcomes",
+        "sanitized_pass_to_pass_stdout_tail",
+        "pass_to_pass_scope_summary"
+      ],
+      "must_not_include": [
+        "expected_outcome",
+        "candidate_type",
+        "failure_type_label",
+        "hidden_oracle_paths",
+        "hidden_oracle_result",
+        "hidden_oracle_results",
+        "reference_patch_provenance",
+        "reference_patch_label",
+        "evaluator_merge_label"
+      ]
+    },
+    {
+      "level": "E5",
+      "visibility": "model_visible",
+      "level_name": "broader_visible_tool_diagnostics",
+      "adds_evidence_class": "broader_visible_tool_diagnostics",
+      "model_visible_field_groups": [
+        "issue_patch_seed",
+        "patch_surface_map",
+        "patch_application_static_status",
+        "visible_fail_to_pass_test_evidence",
+        "visible_pass_to_pass_regression_evidence",
+        "broader_visible_tool_diagnostics"
+      ],
+      "required_fields": [
+        "lint_or_static_diagnostic_summary",
+        "sanitized_test_log_observations",
+        "environment_diagnostic_summary",
+        "diagnostic_tool_versions"
+      ],
+      "must_not_include": [
+        "expected_outcome",
+        "candidate_type",
+        "failure_type_label",
+        "hidden_oracle_paths",
+        "hidden_oracle_result",
+        "hidden_oracle_results",
+        "reference_patch_provenance",
+        "reference_patch_label",
+        "evaluator_merge_label"
+      ]
+    },
+    {
+      "level": "E6",
+      "visibility": "model_visible",
+      "level_name": "deterministic_visible_tool_summary",
+      "adds_evidence_class": "deterministic_visible_merge_gate_summary",
+      "model_visible_field_groups": [
+        "issue_patch_seed",
+        "patch_surface_map",
+        "patch_application_static_status",
+        "visible_fail_to_pass_test_evidence",
+        "visible_pass_to_pass_regression_evidence",
+        "broader_visible_tool_diagnostics",
+        "deterministic_visible_merge_gate_summary"
+      ],
+      "required_fields": [
+        "visible_tool_summary_counts",
+        "visible_tool_summary_contradictions",
+        "rule_based_visible_merge_gate_decision",
+        "rule_based_visible_merge_gate_reasons"
+      ],
+      "must_not_include": [
+        "expected_outcome",
+        "candidate_type",
+        "failure_type_label",
+        "hidden_oracle_paths",
+        "hidden_oracle_result",
+        "hidden_oracle_results",
+        "reference_patch_provenance",
+        "reference_patch_label",
+        "evaluator_merge_label"
+      ]
+    },
+    {
+      "level": "E7",
+      "visibility": "evaluator_only",
+      "level_name": "oracle_upper_bound",
+      "adds_evidence_class": "hidden_oracle_upper_bound",
+      "model_visible_field_groups": [],
+      "required_fields": [
+        "expected_outcome",
+        "candidate_type",
+        "failure_type_label",
+        "hidden_oracle_paths",
+        "hidden_oracle_result",
+        "hidden_oracle_results",
+        "reference_patch_provenance",
+        "reference_patch_label",
+        "evaluator_merge_label"
+      ],
+      "claim_boundary": "E7 may be reported as an oracle upper bound only and must never be included in LLM verifier prompts."
+    }
+  ],
+  "field_group_definitions": {
+    "issue_patch_seed": "Issue summary, anonymous candidate id, project/task id, patch diff, and touched filenames.",
+    "patch_surface_map": "Structured changed files/functions/classes, hunk locations, neighboring symbols, and related imports/modules.",
+    "patch_application_static_status": "Patch apply result plus syntax, import-smoke, and configured static-check status slots.",
+    "visible_fail_to_pass_test_evidence": "Visible fail-to-pass test scope, names, outcomes, and sanitized minimal logs.",
+    "visible_pass_to_pass_regression_evidence": "Visible pass-to-pass or regression test scope, names, outcomes, and sanitized scope summary.",
+    "broader_visible_tool_diagnostics": "Sanitized non-oracle lint/static/test-log/environment diagnostics beyond pass/fail outcome slots.",
+    "deterministic_visible_merge_gate_summary": "Rule-based summary derived only from visible E0-E5 evidence.",
+    "hidden_oracle_upper_bound": "Evaluator-only ground truth and hidden oracle evidence."
+  },
+  "prompt_policy": {
+    "prompt_id": "evp8_visible_evidence_merge_gate_v0_1",
+    "prompt_text_frozen": false,
+    "prompt_text_storage_policy": "tracked manifest stores hashes and lengths; raw prompts are reproducible from packet plus template",
+    "visible_payload_only": true,
+    "hidden_label_instruction": "Use only model-visible fields; do not infer evaluator labels, hidden tests, hidden oracle outcomes, reference-patch provenance, or final merge labels.",
+    "decision_policy": [
+      "accept only when visible evidence directly supports the patch and no visible contradiction remains",
+      "reject when visible evidence contradicts the required behavior, patch application fails, or visible tests/tool summaries report failures",
+      "escalate when visible evidence is incomplete, ambiguous, or insufficient"
+    ]
+  },
+  "output_schema": {
+    "required_keys": [
+      "decision",
+      "confidence",
+      "primary_reason",
+      "evidence_used",
+      "visible_contradictions",
+      "risk_flags",
+      "human_review_needed"
+    ],
+    "decision_values": [
+      "accept",
+      "reject",
+      "escalate"
+    ],
+    "risk_flag_values": [
+      "patch_apply_failed",
+      "visible_test_failure",
+      "visible_regression_risk",
+      "tool_diagnostic_concern",
+      "insufficient_evidence",
+      "ambiguous_evidence"
+    ],
+    "forbidden_output_keys": [
+      "expected_outcome",
+      "candidate_type",
+      "failure_type_label",
+      "hidden_oracle_result",
+      "reference_patch_label"
+    ]
+  },
+  "model_plan": {
+    "phase1_first_batch": [
+      {
+        "model_id": "deepseek/deepseek-v4-pro",
+        "provider_family": "DeepSeek",
+        "cost_counted_in_openrouter_later_model_budget": false
+      },
+      {
+        "model_id": "qwen/qwen3.7-max",
+        "provider_family": "Qwen",
+        "cost_counted_in_openrouter_later_model_budget": false
+      }
+    ],
+    "phase2_later_batch": [
+      {
+        "model_id": "moonshotai/kimi-k2.6",
+        "provider_family": "Moonshot AI",
+        "cost_counted_in_openrouter_later_model_budget": true
+      },
+      {
+        "model_id": "mistralai/devstral-2512",
+        "provider_family": "Mistral AI",
+        "cost_counted_in_openrouter_later_model_budget": true
+      },
+      {
+        "model_id": "google/gemini-2.5-flash",
+        "provider_family": "Google",
+        "cost_counted_in_openrouter_later_model_budget": true
+      }
+    ],
+    "selection_rationale_policy": "Model selection is justified by fixed IDs, context, structured-output compatibility, cost/capability band, provider diversity, and software-engineering suitability. Public leaderboards are secondary sanity checks only."
+  },
+  "routing_policy": {
+    "provider": "OpenRouter_or_direct_provider_as_user_confirms_before_execution",
+    "exact_model_id_required": true,
+    "allow_unrecorded_provider_fallback": false,
+    "record_actual_model_id": true,
+    "record_actual_provider": true,
+    "temperature": 0.0,
+    "max_output_tokens": 1024,
+    "retry_policy": {
+      "max_retries_per_record": 1,
+      "retry_only_on_transport_or_rate_limit": true,
+      "no_silent_retry_for_parse_invalid": true
+    }
+  },
+  "cost_observability": {
+    "record_prompt_tokens": true,
+    "record_completion_tokens": true,
+    "record_total_tokens": true,
+    "record_provider_cost_usd": true,
+    "record_cost_source": true,
+    "exclude_deepseek_qwen_from_later_openrouter_budget_estimate": true
+  },
+  "stop_gates": [
+    "candidate_set_policy_not_frozen",
+    "schema_audit_failed",
+    "prompt_boundary_audit_failed",
+    "leakage_audit_failed",
+    "cost_observability_missing",
+    "model_route_or_model_id_unrecorded",
+    "smoke_parse_valid_rate_below_threshold",
+    "hidden_evaluator_label_visible_to_model"
+  ],
+  "required_phase0_outputs_before_api": [
+    "tracked_protocol_spec",
+    "protocol_audit_summary",
+    "candidate_set_manifest",
+    "evidence_packet_dry_run_summary",
+    "prompt_manifest",
+    "prompt_boundary_audit",
+    "schema_dry_run_summary",
+    "cost_observability_dry_run",
+    "deterministic_tool_baseline_dry_run"
+  ]
+}

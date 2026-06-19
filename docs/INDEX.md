@@ -37,6 +37,14 @@
   E0-E6 full-ladder boundary, target five-model set, phased DeepSeek/Qwen first
   batch, later OpenRouter-compatible model completion, cost-planning boundary,
   required outputs, stop gates, and forbidden shortcuts.
+- `../data/protocols/evp8_protocol_v0_1.json`: tracked EVP-8 protocol spec for
+  the v0.1 full-ladder. It records the model-visible `E0-E6` field groups,
+  evaluator-only `E7`, output schema, model plan, routing policy, cost
+  observability, and stop gates.
+- `../data/protocols/evp8_protocol_v0_1_audit_summary.json`: no-API audit
+  summary for the EVP-8 v0.1 protocol spec. It should show
+  `protocol_spec_audit_status=passed` and `phase0_api_readiness=not_ready`
+  until the remaining Phase 0 outputs are generated.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.

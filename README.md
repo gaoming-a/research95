@@ -84,6 +84,10 @@ user-selected journal-upgrade route is recorded in
 EVP-8 full-ladder protocol first, then run DeepSeek V4 Pro and Qwen3.7 Max as
 the first model batch, with Kimi K2.6, Devstral 2, and Gemini 2.5 Flash added
 later on the same frozen packets and prompts.
+The first tracked EVP-8 machine spec is
+`data/protocols/evp8_protocol_v0_1.json`, checked by
+`python scripts\audit_evp8_protocol_spec.py --check`. That audit currently
+passes the protocol-structure boundary but reports API readiness as not ready.
 
 Every concrete continuation round must first update:
 
@@ -114,6 +118,10 @@ They should not override `final_paper_roadmap_zh.md`.
   no-API plan: it does not authorize model calls until the EVP-8 protocol,
   packets, prompts, candidate-set policy, metrics, stop gates, and model routing
   policy are frozen and explicitly approved for execution.
+- The first EVP-8 protocol-spec audit is tracked at
+  `data/protocols/evp8_protocol_v0_1_audit_summary.json`. It confirms the
+  `E0-E6` adjacent-difference ladder and evaluator-only `E7` boundary, while
+  keeping API execution blocked until the remaining Phase 0 outputs exist.
 - The prompt-only DeepSeek full run completed and produced a mixed/negative
   `stop_or_redesign` result. It is not a positive paper claim.
 - The later tool-augmented full run passed its dedicated gate, but only supports

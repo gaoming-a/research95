@@ -67,6 +67,12 @@
    - 当前用户意图：将现有 bounded EVP-7 pilot 升级为期刊版；
    - canonical 执行计划：
      `docs/experiments/evp8_journal_scale_execution_plan_20260620.md`；
+   - 当前机器可审计协议：
+     `data/protocols/evp8_protocol_v0_1.json`，由
+     `python scripts\audit_evp8_protocol_spec.py --check` 检查；
+   - 当前审计状态：protocol spec audit passed，但
+     `phase0_api_readiness = not_ready`，因为 candidate set、prompt text、
+     packet/schema/prompt/cost/baseline dry-run 仍未冻结或生成；
    - 下一步不是 API，而是 no-API protocol freeze：重新定义 `E0-E6` 七层
      adjacent-difference evidence ladder、packet schema、prompt schema、
      candidate-set policy、evaluator joins、metrics、stop gates 和 provider
@@ -119,6 +125,13 @@
   canonical final-paper route 和研究路线。继续实验前应先检查这里的约束。
 - `docs/plans/current_plan.md`：
   英文 companion handoff，不是主要执行日志。
+- `data/protocols/evp8_protocol_v0_1.json`：
+  EVP-8 v0.1 七层 evidence ladder 的 tracked machine spec。
+- `data/protocols/evp8_protocol_v0_1_audit_summary.json`：
+  EVP-8 protocol spec 的 no-API 审计摘要；通过结构审计但仍阻止 API。
+- `scripts/audit_evp8_protocol_spec.py`：
+  检查 EVP-8 相邻差分、visible/hidden 字段边界、模型批次、routing policy、
+  cost observability 和 stop gates。
 - `docs/plans/agent_execution_plan_zh.md`、
   `docs/plans/ai_agent_experiment_execution_plan_zh.md`：
   历史执行计划，只保留溯源，不应覆盖当前路线。

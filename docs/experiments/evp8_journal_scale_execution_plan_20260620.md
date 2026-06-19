@@ -39,6 +39,39 @@ The final definitions must be frozen before any model call.
 The protocol must preserve visible/hidden separation: hidden evaluator labels,
 oracle paths, expected outcomes, and ground-truth joins are evaluator-only.
 
+## Current Phase 0 Artifacts
+
+The first machine-checkable protocol artifact is:
+
+- `data/protocols/evp8_protocol_v0_1.json`
+
+It freezes the draft v0.1 ladder as a tracked protocol spec:
+
+- `E0`: issue/patch seed;
+- `E1`: structured patch surface;
+- `E2`: patch-apply and static status slots;
+- `E3`: visible fail-to-pass test evidence;
+- `E4`: visible pass-to-pass/regression evidence;
+- `E5`: broader visible tool diagnostics;
+- `E6`: deterministic visible merge-gate summary;
+- `E7`: evaluator-only oracle upper bound.
+
+The corresponding audit command is:
+
+```powershell
+python scripts\audit_evp8_protocol_spec.py --check
+```
+
+Current audit status:
+
+- protocol spec audit: passed;
+- API readiness: not ready;
+- current blockers: candidate set not frozen, prompt text not frozen, and
+  packet/schema/prompt/cost/baseline dry-run outputs not yet generated.
+
+This audit is intentionally no-API and does not authorize model calls, cohort
+expansion, or EVP-8 evidence-packet generation.
+
 ## Model Plan
 
 The intended five-model journal set is:

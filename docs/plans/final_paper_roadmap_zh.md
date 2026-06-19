@@ -1084,6 +1084,10 @@ BugsInPy 扩量，必须先解决当前候选池边界：
 API，也不意味着可以在 EVP-7 artifacts 中补插 E1/E3/E5。后续期刊版应新开
 EVP-8 journal-scale protocol，完整执行计划见
 `docs/experiments/evp8_journal_scale_execution_plan_20260620.md`。
+第一版机器可审计协议已写入 `data/protocols/evp8_protocol_v0_1.json`，
+并由 `scripts/audit_evp8_protocol_spec.py --check` 验证相邻差分和
+visible/hidden 边界；该审计通过只说明 protocol spec 结构成立，不说明已经
+API-ready。
 
 期刊版主线：
 
