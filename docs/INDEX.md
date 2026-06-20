@@ -97,6 +97,12 @@
   boundary that this packet does not authorize API calls.
 - `experiments/evp8_deepseek_qwen_smoke_execution_packet_v0_1.md`: Markdown
   companion for the no-API smoke execution packet.
+- `../data/protocols/evp8_deepseek_qwen_smoke_result_audit_v0_1.json`:
+  no-API post-smoke audit scaffold. Before real execution it reports
+  `waiting_for_execution`; after execution it validates tracked summaries
+  without reading raw responses.
+- `experiments/evp8_deepseek_qwen_smoke_result_audit_v0_1.md`: Markdown
+  companion for the post-smoke audit scaffold.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.
@@ -1019,6 +1025,9 @@
 - `../scripts/write_evp8_smoke_execution_packet.py`: writes the no-API EVP-8
   DeepSeek/Qwen smoke execution packet and Markdown companion from tracked
   protocol/preflight/check-only summaries.
+- `../scripts/audit_evp8_smoke_results.py`: audits future EVP-8 DeepSeek/Qwen
+  smoke summaries without reading raw outputs; currently reports
+  `waiting_for_execution` until real smoke summaries exist.
 - `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict

@@ -2811,3 +2811,12 @@ This file starts fresh for the patch-verification project.
 - Record expected raw response paths under ignored `outputs/` and tracked
   summary paths separately. The packet should never copy rendered prompts, raw
   responses, local config contents, or API key values into tracked files.
+
+## 2026-06-20 EVP-8 post-smoke audit boundary
+
+- A post-smoke audit may report `waiting_for_execution` before real summaries
+  exist. That is an expected pre-API state, not a failed model result.
+- The audit should validate tracked raw-output-free summaries and raw-output
+  path boundaries without opening raw response JSONL files under `outputs/`.
+- Qwen summary presence is invalid unless the DeepSeek summary has already
+  passed. This preserves the predeclared DeepSeek-first smoke sequence.

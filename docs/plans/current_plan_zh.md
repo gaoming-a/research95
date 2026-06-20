@@ -14590,6 +14590,60 @@ Verify:
     `evp8_smoke_candidate_0047`；
 - 下一步仍是等待用户明确执行真实 DeepSeek/Qwen smoke，不自动调用 API。
 
+## 2026-06-20 EVP-8 post-smoke audit scaffold
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main [ahead 11]`；
+- 最新提交为 `bbf0c6f Add EVP-8 smoke execution packet`；
+- 真实 DeepSeek/Qwen smoke 仍未执行；
+- 当前已有 execution packet，但尚无 future smoke summaries 的统一审计入口；
+- 本轮仍不是 API 执行授权，不能运行任何真实模型调用。
+
+Plan:
+
+1. 新增 no-API EVP-8 post-smoke audit script；
+2. 审计脚本读取 execution packet 和未来 tracked smoke summaries，不读取 raw
+   responses；
+3. 当前无真实 smoke summaries 时，输出 `waiting_for_execution` 而非失败；
+4. 如果未来只有 Qwen summary 而 DeepSeek 未通过，必须判为失败；
+5. 如果未来 summary 存在，必须检查 model id、review_count=35、parse_valid=35、
+   invalid_parse=0、smoke_gate、usage_cost_gate、raw output path under ignored
+   `outputs/`；
+6. 生成 JSON/Markdown audit artifact，并同步 README、INDEX、EVP-8 execution
+   plan、current project state 和 engineering notes。
+
+Acceptance:
+
+- 当前 audit status 应为 `waiting_for_execution`；
+- `api_call_attempted=false`、`raw_outputs_read=false`；
+- 不读取或提交 raw outputs、local config 或 `.env`；
+- execution packet `--check`、runner check-only、strict preflight、protocol audit
+  和 local quality gate 继续通过。
+
+Execute:
+
+- 新增 `scripts/audit_evp8_smoke_results.py`；
+- 生成 no-API post-smoke audit scaffold：
+  - `data/protocols/evp8_deepseek_qwen_smoke_result_audit_v0_1.json`；
+  - `docs/experiments/evp8_deepseek_qwen_smoke_result_audit_v0_1.md`；
+- 当前无真实 smoke summaries，因此 audit status 为 `waiting_for_execution`；
+- 同步 README、docs index、EVP-8 execution plan、final roadmap、current project
+  state 和 engineering notes；
+- 本轮未调用模型 API，未读取 raw outputs，未生成 raw outputs，未提交 local
+  config。
+
+Verify:
+
+- `python -m py_compile scripts\audit_evp8_smoke_results.py` 通过；
+- `python scripts\audit_evp8_smoke_results.py --check` 通过：
+  - `audit_status = waiting_for_execution`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_read = false`；
+  - `raw_outputs_generated_by_audit = false`；
+  - `qwen_requires_deepseek_passed = true`；
+- 下一步仍是等待用户明确执行真实 DeepSeek/Qwen smoke，不自动调用 API。
+
 ## 2026-06-20 EVP-8 smoke subset selection repair
 
 Inspect:

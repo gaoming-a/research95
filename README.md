@@ -100,7 +100,10 @@ API calls or raw outputs. The final no-API smoke handoff packet is
 Markdown companion at
 `docs/experiments/evp8_deepseek_qwen_smoke_execution_packet_v0_1.md`. It records
 the exact guard commands and DeepSeek-then-Qwen execute commands, but explicitly
-does not authorize model calls by itself.
+does not authorize model calls by itself. The post-smoke audit scaffold is
+`data/protocols/evp8_deepseek_qwen_smoke_result_audit_v0_1.json`, with
+Markdown at `docs/experiments/evp8_deepseek_qwen_smoke_result_audit_v0_1.md`;
+before execution it is expected to report `waiting_for_execution`.
 The Phase 0 smoke/protocol-validation candidate set is frozen at
 `data/protocols/evp8_candidate_set_v0_1.json`: 21 tasks, 6 projects, and 98
 candidates from the tracked EVP-7 structural cohort. This is not the final

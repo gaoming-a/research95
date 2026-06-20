@@ -98,6 +98,9 @@
    - 当前 EVP-8 smoke execution packet：
      `python scripts\write_evp8_smoke_execution_packet.py --check` 已通过，
      packet status 为 `ready`，但 `execution_authorized_by_packet=false`；
+   - 当前 EVP-8 post-smoke audit scaffold：
+     `python scripts\audit_evp8_smoke_results.py --check` 已通过，当前状态为
+     `waiting_for_execution`，不读取 raw outputs；
    - 下一步不是自动 API，而是等待用户明确执行 EVP-8 DeepSeek/Qwen smoke；
    - 第一批模型只允许在 no-API gates 和 smoke gates 通过后执行
      DeepSeek V4 Pro + Qwen3.7 Max；
@@ -182,6 +185,10 @@
   `docs/experiments/evp8_deepseek_qwen_smoke_execution_packet_v0_1.md`：
   EVP-8 DeepSeek/Qwen smoke no-API execution packet；记录 guard commands、
   future execute commands、expected output paths、stop gates 和非授权边界。
+- `data/protocols/evp8_deepseek_qwen_smoke_result_audit_v0_1.json`、
+  `docs/experiments/evp8_deepseek_qwen_smoke_result_audit_v0_1.md`：
+  EVP-8 DeepSeek/Qwen post-smoke audit scaffold；当前等待真实执行，未来审计
+  tracked summaries、执行顺序、parse/cost gates 和 raw-output ignored boundary。
 - `scripts/audit_evp8_protocol_spec.py`：
   检查 EVP-8 相邻差分、visible/hidden 字段边界、模型批次、routing policy、
   cost observability 和 stop gates。
@@ -207,6 +214,9 @@
 - `scripts/write_evp8_smoke_execution_packet.py`：
   从 tracked protocol/preflight/check-only summaries 生成 no-API smoke
   execution packet；`--check` 要求 packet ready 且仍不授权 API。
+- `scripts/audit_evp8_smoke_results.py`：
+  不读取 raw outputs 的 post-smoke summary audit；当前无真实 smoke summaries
+  时输出 `waiting_for_execution`。
 - `docs/plans/agent_execution_plan_zh.md`、
   `docs/plans/ai_agent_experiment_execution_plan_zh.md`：
   历史执行计划，只保留溯源，不应覆盖当前路线。

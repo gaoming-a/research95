@@ -1,0 +1,72 @@
+{
+  "api_call_attempted": false,
+  "audit_id": "evp8_deepseek_qwen_smoke_result_audit_v0_1",
+  "audit_status": "waiting_for_execution",
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "claim_boundary": "This audit validates tracked smoke summaries when they exist. It is not model-result evidence before execution and never reads raw responses.",
+  "cohort_id": "EVP-8",
+  "model_audits": [
+    {
+      "checks": [
+        {
+          "check": "raw_path_under_outputs",
+          "detail": "outputs/evp8_phase1_deepseek_qwen_smoke/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+          "passed": true
+        }
+      ],
+      "model_id": "deepseek/deepseek-v4-pro",
+      "raw_response_path": "outputs/evp8_phase1_deepseek_qwen_smoke/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+      "status": "waiting_for_execution",
+      "summary_path": "data/reviews/evp8_deepseek_deepseek-v4-pro_smoke_summary.json",
+      "summary_present": false
+    },
+    {
+      "checks": [
+        {
+          "check": "raw_path_under_outputs",
+          "detail": "outputs/evp8_phase1_deepseek_qwen_smoke/qwen_qwen3.7-max/raw_responses.jsonl",
+          "passed": true
+        }
+      ],
+      "model_id": "qwen/qwen3.7-max",
+      "raw_response_path": "outputs/evp8_phase1_deepseek_qwen_smoke/qwen_qwen3.7-max/raw_responses.jsonl",
+      "status": "waiting_for_execution",
+      "summary_path": "data/reviews/evp8_qwen_qwen3.7-max_smoke_summary.json",
+      "summary_present": false
+    }
+  ],
+  "order_checks": [
+    {
+      "check": "packet_ready",
+      "detail": "ready",
+      "passed": true
+    },
+    {
+      "check": "packet_does_not_authorize_execution",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "packet_no_api",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_outputs_not_read_by_audit",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "qwen_requires_deepseek_passed",
+      "detail": {
+        "deepseek_status": "waiting_for_execution",
+        "qwen_present": false
+      },
+      "passed": true
+    }
+  ],
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "raw_outputs_generated_by_audit": false,
+  "raw_outputs_read": false,
+  "rendered_prompt_text_read": false
+}
