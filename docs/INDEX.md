@@ -98,6 +98,12 @@
   boundary that this packet does not authorize API calls.
 - `experiments/evp8_deepseek_qwen_smoke_execution_packet_v0_1.md`: Markdown
   companion for the no-API smoke execution packet.
+- `../data/protocols/evp8_deepseek_qwen_g0_guard_summary_v0_1.json`:
+  no-API one-command G0 guard summary. It records the status of protocol audit,
+  strict preflight, smoke check-only, execution packet check, post-smoke audit
+  self-test/check, ignored-boundary status, and no-API/no-raw-output boundary.
+- `experiments/evp8_deepseek_qwen_g0_guard_summary_v0_1.md`: Markdown
+  companion for the G0 guard summary.
 - `../data/protocols/evp8_deepseek_qwen_smoke_result_audit_v0_1.json`:
   no-API post-smoke audit scaffold. Before real execution it reports
   `waiting_for_execution`; after execution it validates tracked summaries
@@ -1028,6 +1034,9 @@
 - `../scripts/write_evp8_smoke_execution_packet.py`: writes the no-API EVP-8
   DeepSeek/Qwen smoke execution packet and Markdown companion from tracked
   protocol/preflight/check-only summaries.
+- `../scripts/check_evp8_deepseek_qwen_g0.py`: runs the no-API EVP-8
+  DeepSeek/Qwen G0 guard sequence in one command and writes the tracked G0
+  guard summary without calling APIs or reading raw responses.
 - `../scripts/audit_evp8_smoke_results.py`: audits future EVP-8 DeepSeek/Qwen
   smoke summaries without reading raw outputs; currently reports
   `waiting_for_execution` until real smoke summaries exist and supports a

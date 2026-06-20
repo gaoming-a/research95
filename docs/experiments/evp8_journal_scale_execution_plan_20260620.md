@@ -152,6 +152,7 @@ Immediate next execution order:
 1. Commit the DeepSeek/Qwen local preflight artifacts.
 2. Wait for the user to explicitly say to execute the EVP-8 Phase 1 smoke.
 3. After that command, rerun the no-API guards:
+   - `python scripts\check_evp8_deepseek_qwen_g0.py --check`
    - `python scripts\audit_evp8_protocol_spec.py --check`
    - `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
    - `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
@@ -174,6 +175,7 @@ plan.
 Gate G0: no-API revalidation immediately before any model call.
 
 - Run:
+  - `python scripts\check_evp8_deepseek_qwen_g0.py --check`
   - `python scripts\audit_evp8_protocol_spec.py --check`
   - `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
   - `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
@@ -182,8 +184,8 @@ Gate G0: no-API revalidation immediately before any model call.
   - `python scripts\audit_evp8_smoke_results.py --check`
   - `git status --short --branch --ignored configs\evp8_deepseek_qwen.local.json`
 - Acceptance:
-  - protocol audit, strict preflight, smoke check-only, execution packet, and
-    current post-smoke audit self-test/check all pass;
+  - G0 guard summary, protocol audit, strict preflight, smoke check-only,
+    execution packet, and current post-smoke audit self-test/check all pass;
   - no `.env`, `configs/*.local.json`, `outputs/`, `artifacts/`, raw responses,
     or rendered prompt text are staged;
   - current post-smoke audit remains `waiting_for_execution` before the first

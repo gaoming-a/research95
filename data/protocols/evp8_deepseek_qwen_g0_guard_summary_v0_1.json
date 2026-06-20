@@ -1,0 +1,122 @@
+{
+  "api_call_attempted": false,
+  "cohort_id": "EVP-8",
+  "command_results": [
+    {
+      "command": "python scripts\\audit_evp8_protocol_spec.py --check",
+      "exit_code": 0,
+      "name": "protocol_audit",
+      "parsed": {
+        "api_call_attempted": false,
+        "phase0_api_readiness": "ready_for_api_preflight",
+        "protocol_spec_audit_status": "passed"
+      },
+      "passed": true,
+      "stderr_preview": "",
+      "stdout_preview": ""
+    },
+    {
+      "command": "python scripts\\preflight_evp8_deepseek_qwen.py --config configs/evp8_deepseek_qwen.local.json --strict-api-ready",
+      "exit_code": 0,
+      "name": "strict_preflight",
+      "parsed": {
+        "api_call_attempted": false,
+        "api_key_values_printed": false,
+        "preflight_status": "passed",
+        "ready_for_user_execute_command": true
+      },
+      "passed": true,
+      "stderr_preview": "",
+      "stdout_preview": ""
+    },
+    {
+      "command": "python scripts\\run_evp8_deepseek_qwen_smoke.py --check-only --config configs/evp8_deepseek_qwen.local.json",
+      "exit_code": 0,
+      "name": "smoke_check_only",
+      "parsed": {
+        "api_call_attempted": false,
+        "check_only_status": "passed",
+        "packet_count": 35,
+        "prompt_hashes_unique_count": 35,
+        "raw_outputs_generated": false
+      },
+      "passed": true,
+      "stderr_preview": "",
+      "stdout_preview": ""
+    },
+    {
+      "command": "python scripts\\write_evp8_smoke_execution_packet.py --check",
+      "exit_code": 0,
+      "name": "execution_packet",
+      "parsed": {
+        "api_call_attempted": false,
+        "execution_authorized_by_packet": false,
+        "packet_status": "ready",
+        "raw_outputs_generated": false
+      },
+      "passed": true,
+      "stderr_preview": "",
+      "stdout_preview": ""
+    },
+    {
+      "command": "python scripts\\audit_evp8_smoke_results.py --self-test",
+      "exit_code": 0,
+      "name": "post_smoke_audit_self_test",
+      "parsed": {
+        "api_call_attempted": false,
+        "case_count": 8,
+        "raw_outputs_generated": false,
+        "raw_outputs_read": false,
+        "self_test_status": "passed",
+        "tracked_outputs_written": false
+      },
+      "passed": true,
+      "stderr_preview": "",
+      "stdout_preview": ""
+    },
+    {
+      "command": "python scripts\\audit_evp8_smoke_results.py --check",
+      "exit_code": 0,
+      "name": "post_smoke_audit_check",
+      "parsed": {
+        "api_call_attempted": false,
+        "audit_status": "waiting_for_execution",
+        "raw_outputs_generated_by_audit": false,
+        "raw_outputs_read": false,
+        "rendered_prompt_text_read": false
+      },
+      "passed": true,
+      "stderr_preview": "",
+      "stdout_preview": ""
+    },
+    {
+      "command": "git status --short --branch --ignored configs/evp8_deepseek_qwen.local.json outputs artifacts .env",
+      "exit_code": 0,
+      "ignored_boundary": {
+        "expected_ignored_entries": [
+          "!! .env",
+          "!! artifacts/",
+          "!! configs/evp8_deepseek_qwen.local.json",
+          "!! outputs/"
+        ],
+        "missing_ignored_entries": []
+      },
+      "name": "ignored_boundary_status",
+      "parsed": {},
+      "passed": true,
+      "stderr_preview": "",
+      "stdout_preview": "## main...origin/main\n!! .env\n!! artifacts/\n!! configs/evp8_deepseek_qwen.local.json\n!! outputs/"
+    }
+  ],
+  "config": "configs/evp8_deepseek_qwen.local.json",
+  "guard_id": "evp8_deepseek_qwen_g0_guard_v0_1",
+  "guard_status": "passed",
+  "local_config_content_stored": false,
+  "next_step": "Only after explicit user authorization, execute DeepSeek smoke first.",
+  "post_smoke_expected_status_before_execution": "waiting_for_execution",
+  "post_smoke_observed_status": "waiting_for_execution",
+  "raw_outputs_generated": false,
+  "raw_outputs_read": false,
+  "rendered_prompt_text_read": false,
+  "run_utc": "2026-06-20T05:11:48.171639+00:00"
+}

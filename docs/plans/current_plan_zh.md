@@ -15120,3 +15120,78 @@ Commit And Sync:
   `5a1e69c Track EVP-8 smoke actual model aggregates`；
 - `git push origin main` 成功；
 - 远端 `origin/main` 已同步到本轮提交。
+
+## 2026-06-20 EVP-8 G0 guard one-command summary
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main`；
+- 最新提交为 `cf4ace5 Record EVP-8 actual model sync`；
+- 自动续跑不是明确 API 授权，本轮仍不得执行 `--execute`；
+- EVP-8 G0 guards 已写在 execution plan 和 execution packet 中，但仍需要人工
+  逐条运行：
+  - protocol audit；
+  - strict local preflight；
+  - smoke runner check-only；
+  - execution packet check；
+  - post-smoke audit self-test；
+  - post-smoke audit check；
+  - ignored boundary status；
+- 这会增加真实 API 前漏跑 guard 或运行顺序漂移的风险。
+
+Plan:
+
+1. 新增 no-API G0 guard 汇总脚本，一键运行上述 guard commands；
+2. 脚本只记录命令、exit code、parsed status、raw-output/API/prompt-text
+   boundary，不保存 API key、local config 内容、raw responses 或 rendered
+   prompts；
+3. 生成 tracked summary artifact：
+   - `data/protocols/evp8_deepseek_qwen_g0_guard_summary_v0_1.json`；
+   - `docs/experiments/evp8_deepseek_qwen_g0_guard_summary_v0_1.md`；
+4. 将 execution plan 的 G0 入口改为优先运行该脚本，再保留单条 commands
+   作为展开明细；
+5. 同步 docs index 和 engineering notes。
+
+Acceptance:
+
+- `python scripts\check_evp8_deepseek_qwen_g0.py --check` 必须通过；
+- summary 必须明确 `api_call_attempted=false`、`raw_outputs_read=false`、
+  `raw_outputs_generated=false`、`rendered_prompt_text_read=false`；
+- 当前 post-smoke audit 仍应为 `waiting_for_execution`；
+- ignored `.env`、local config、outputs、artifacts 不得被 staged；
+- local quality gate 和 `git diff --check` 继续通过。
+
+Execute:
+
+- 新增 `scripts/check_evp8_deepseek_qwen_g0.py`；
+- 脚本按固定顺序运行：
+  - `python scripts\audit_evp8_protocol_spec.py --check`；
+  - `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`；
+  - `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`；
+  - `python scripts\write_evp8_smoke_execution_packet.py --check`；
+  - `python scripts\audit_evp8_smoke_results.py --self-test`；
+  - `python scripts\audit_evp8_smoke_results.py --check`；
+  - `git status --short --branch --ignored configs\evp8_deepseek_qwen.local.json outputs artifacts .env`；
+- 生成 tracked summary artifacts：
+  - `data/protocols/evp8_deepseek_qwen_g0_guard_summary_v0_1.json`；
+  - `docs/experiments/evp8_deepseek_qwen_g0_guard_summary_v0_1.md`；
+- summary 只保存 parsed no-secret status 和 ignored-boundary stdout，不保存
+  parsed JSON command 的长 stdout，不保存本机 Python 绝对路径；
+- 同步 EVP-8 execution plan、docs index 和 engineering notes。
+
+Verify:
+
+- `python -m py_compile scripts\check_evp8_deepseek_qwen_g0.py scripts\run_evp8_deepseek_qwen_smoke.py scripts\write_evp8_smoke_execution_packet.py scripts\audit_evp8_smoke_results.py`
+  通过；
+- `python scripts\check_evp8_deepseek_qwen_g0.py --check` 通过：
+  - `guard_status = passed`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_read = false`；
+  - `raw_outputs_generated = false`；
+  - `rendered_prompt_text_read = false`；
+  - `post_smoke_observed_status = waiting_for_execution`；
+  - ignored boundary entries include `.env`、`artifacts/`、
+    `configs/evp8_deepseek_qwen.local.json`、`outputs/`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- 本轮未调用模型 API，未读取 raw outputs，未生成 raw outputs。

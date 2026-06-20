@@ -2833,3 +2833,7 @@ This file starts fresh for the patch-verification project.
   executed summary needs aggregate request/actual model-id and provider-route
   counts. Without those raw-output-free aggregates, actual provider/model drift
   would only be visible in ignored raw outputs.
+- Keep a one-command G0 guard for future API execution. It should run the same
+  no-API commands listed in the handoff packet and execution plan, then write a
+  raw-output-free summary. This avoids drift between documented guard steps and
+  what a future executor actually runs before `--execute`.
