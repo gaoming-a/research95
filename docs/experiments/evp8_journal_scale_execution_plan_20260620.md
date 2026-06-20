@@ -186,6 +186,8 @@ Gate G0: no-API revalidation immediately before any model call.
 - Acceptance:
   - G0 guard summary, protocol audit, strict preflight, smoke check-only,
     execution packet, and current post-smoke audit self-test/check all pass;
+  - expected DeepSeek/Qwen raw-response and tracked-summary output paths do not
+    already exist;
   - no `.env`, `configs/*.local.json`, `outputs/`, `artifacts/`, raw responses,
     or rendered prompt text are staged;
   - current post-smoke audit remains `waiting_for_execution` before the first

@@ -2837,3 +2837,6 @@ This file starts fresh for the patch-verification project.
   no-API commands listed in the handoff packet and execution plan, then write a
   raw-output-free summary. This avoids drift between documented guard steps and
   what a future executor actually runs before `--execute`.
+- G0 should also fail if expected smoke raw-response or tracked-summary output
+  paths already exist. This catches stale outputs before the runner reaches its
+  overwrite-refusal branch at real execution time.

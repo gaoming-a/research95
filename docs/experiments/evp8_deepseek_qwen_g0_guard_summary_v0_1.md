@@ -27,6 +27,13 @@
 - `post_smoke_audit_check`: `true`
   - command: `python scripts\audit_evp8_smoke_results.py --check`
   - parsed: `{"api_call_attempted": false, "audit_status": "waiting_for_execution", "raw_outputs_generated_by_audit": false, "raw_outputs_read": false, "rendered_prompt_text_read": false}`
+- `expected_output_absence`: `true`
+  - command: `read data/protocols/evp8_deepseek_qwen_smoke_execution_packet_v0_1.json`
+  - parsed: `{"checked_output_count": 4, "existing_output_count": 0}`
+  - `raw_responses` `outputs/evp8_phase1_deepseek_qwen_smoke/deepseek_deepseek-v4-pro/raw_responses.jsonl` exists: `false`
+  - `tracked_summary` `data/reviews/evp8_deepseek_deepseek-v4-pro_smoke_summary.json` exists: `false`
+  - `raw_responses` `outputs/evp8_phase1_deepseek_qwen_smoke/qwen_qwen3.7-max/raw_responses.jsonl` exists: `false`
+  - `tracked_summary` `data/reviews/evp8_qwen_qwen3.7-max_smoke_summary.json` exists: `false`
 - `ignored_boundary_status`: `true`
   - command: `git status --short --branch --ignored configs/evp8_deepseek_qwen.local.json outputs artifacts .env`
 

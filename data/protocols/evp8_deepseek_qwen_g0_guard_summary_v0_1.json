@@ -90,6 +90,48 @@
       "stdout_preview": ""
     },
     {
+      "command": "read data/protocols/evp8_deepseek_qwen_smoke_execution_packet_v0_1.json",
+      "exit_code": 0,
+      "expected_output_absence": [
+        {
+          "exists": false,
+          "output_kind": "raw_responses",
+          "passed": true,
+          "path": "outputs/evp8_phase1_deepseek_qwen_smoke/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+          "step": "deepseek_smoke_first"
+        },
+        {
+          "exists": false,
+          "output_kind": "tracked_summary",
+          "passed": true,
+          "path": "data/reviews/evp8_deepseek_deepseek-v4-pro_smoke_summary.json",
+          "step": "deepseek_smoke_first"
+        },
+        {
+          "exists": false,
+          "output_kind": "raw_responses",
+          "passed": true,
+          "path": "outputs/evp8_phase1_deepseek_qwen_smoke/qwen_qwen3.7-max/raw_responses.jsonl",
+          "step": "qwen_smoke_after_deepseek_gate"
+        },
+        {
+          "exists": false,
+          "output_kind": "tracked_summary",
+          "passed": true,
+          "path": "data/reviews/evp8_qwen_qwen3.7-max_smoke_summary.json",
+          "step": "qwen_smoke_after_deepseek_gate"
+        }
+      ],
+      "name": "expected_output_absence",
+      "parsed": {
+        "checked_output_count": 4,
+        "existing_output_count": 0
+      },
+      "passed": true,
+      "stderr_preview": "",
+      "stdout_preview": ""
+    },
+    {
       "command": "git status --short --branch --ignored configs/evp8_deepseek_qwen.local.json outputs artifacts .env",
       "exit_code": 0,
       "ignored_boundary": {
@@ -105,10 +147,11 @@
       "parsed": {},
       "passed": true,
       "stderr_preview": "",
-      "stdout_preview": "## main...origin/main\n!! .env\n!! artifacts/\n!! configs/evp8_deepseek_qwen.local.json\n!! outputs/"
+      "stdout_preview": "## main...origin/main [ahead 2]\n!! .env\n!! artifacts/\n!! configs/evp8_deepseek_qwen.local.json\n!! outputs/"
     }
   ],
   "config": "configs/evp8_deepseek_qwen.local.json",
+  "expected_outputs_exist": false,
   "guard_id": "evp8_deepseek_qwen_g0_guard_v0_1",
   "guard_status": "passed",
   "local_config_content_stored": false,
@@ -118,5 +161,5 @@
   "raw_outputs_generated": false,
   "raw_outputs_read": false,
   "rendered_prompt_text_read": false,
-  "run_utc": "2026-06-20T05:11:48.171639+00:00"
+  "run_utc": "2026-06-20T05:18:22.452331+00:00"
 }

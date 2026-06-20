@@ -18,6 +18,7 @@ from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = REPO_ROOT / "configs" / "evp8_deepseek_qwen.local.json"
+EXECUTION_PACKET = REPO_ROOT / "data" / "protocols" / "evp8_deepseek_qwen_smoke_execution_packet_v0_1.json"
 DEFAULT_JSON_OUT = REPO_ROOT / "data" / "protocols" / "evp8_deepseek_qwen_g0_guard_summary_v0_1.json"
 DEFAULT_MD_OUT = REPO_ROOT / "docs" / "experiments" / "evp8_deepseek_qwen_g0_guard_summary_v0_1.md"
 
@@ -136,6 +137,50 @@ def ignored_boundary_result(command: list[str]) -> dict[str, Any]:
     return result
 
 
+def read_json(path: Path) -> dict[str, Any]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"{display_path(path)} must contain a JSON object")
+    return value
+
+
+def resolve_repo_path(path_value: str) -> Path:
+    path = Path(path_value)
+    return path if path.is_absolute() else REPO_ROOT / path
+
+
+def expected_output_absence_result(packet_path: Path = EXECUTION_PACKET) -> dict[str, Any]:
+    packet = read_json(packet_path)
+    checks: list[dict[str, Any]] = []
+    for command_record in packet.get("execute_commands_after_explicit_user_authorization") or []:
+        outputs = command_record.get("outputs") or {}
+        for output_kind in ("raw_responses", "tracked_summary"):
+            output_path = str(outputs.get(output_kind) or "")
+            exists = resolve_repo_path(output_path).exists()
+            checks.append(
+                {
+                    "step": command_record.get("step"),
+                    "output_kind": output_kind,
+                    "path": output_path,
+                    "exists": exists,
+                    "passed": not exists,
+                }
+            )
+    return {
+        "name": "expected_output_absence",
+        "command": f"read {display_path(packet_path)}",
+        "exit_code": 0,
+        "passed": all(item["passed"] for item in checks),
+        "parsed": {
+            "checked_output_count": len(checks),
+            "existing_output_count": sum(1 for item in checks if item["exists"]),
+        },
+        "expected_output_absence": checks,
+        "stdout_preview": "",
+        "stderr_preview": "",
+    }
+
+
 def build_summary(config: Path) -> dict[str, Any]:
     config_display = display_path(config)
     py = sys.executable
@@ -166,6 +211,7 @@ def build_summary(config: Path) -> dict[str, Any]:
         ("post_smoke_audit_check", [py, "scripts\\audit_evp8_smoke_results.py", "--check"]),
     ]
     command_results = [run_command(name, command) for name, command in commands]
+    command_results.append(expected_output_absence_result())
     command_results.append(
         ignored_boundary_result(
             [
@@ -195,6 +241,9 @@ def build_summary(config: Path) -> dict[str, Any]:
         "api_call_attempted": False,
         "raw_outputs_read": False,
         "raw_outputs_generated": False,
+        "expected_outputs_exist": bool(
+            parsed_by_name.get("expected_output_absence", {}).get("existing_output_count")
+        ),
         "rendered_prompt_text_read": False,
         "local_config_content_stored": False,
         "post_smoke_expected_status_before_execution": "waiting_for_execution",
@@ -228,6 +277,9 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
         lines.append(f"  - command: `{item['command']}`")
         if item["parsed"]:
             lines.append(f"  - parsed: `{json.dumps(item['parsed'], ensure_ascii=False, sort_keys=True)}`")
+        if item["name"] == "expected_output_absence":
+            for output in item.get("expected_output_absence", []):
+                lines.append(f"  - `{output['output_kind']}` `{output['path']}` exists: `{str(output['exists']).lower()}`")
     lines.extend(["", "## Boundary", "", summary["next_step"], ""])
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines), encoding="utf-8")

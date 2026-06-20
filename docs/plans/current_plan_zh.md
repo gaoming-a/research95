@@ -15204,3 +15204,63 @@ Commit And Sync:
 - GitHub sync 失败：
   `fatal: unable to access 'https://github.com/gaoming-a/research95.git/': Failed to connect to github.com port 443 after 21134 ms: Could not connect to server`；
 - 这是连续 network-level sync failure；按用户授权，不阻塞后续本地计划执行。
+
+Repair:
+
+- G0 guard 首版只检查 ignored boundary，尚未提前发现 stale expected outputs；
+- 扩展 `scripts/check_evp8_deepseek_qwen_g0.py`：
+  - 读取 `data/protocols/evp8_deepseek_qwen_smoke_execution_packet_v0_1.json`；
+  - 对每个 execute command 检查 `raw_responses` 和 `tracked_summary` 当前均不存在；
+  - 将 `expected_output_absence` 写入 JSON/Markdown summary；
+  - 若任一预期输出已存在，`guard_status` 变为 `failed`；
+- 同步 EVP-8 execution plan、docs index 和 engineering notes，明确 G0 会在 API
+  前检查 stale outputs。
+
+Gate:
+
+- `python -m py_compile scripts\check_evp8_deepseek_qwen_g0.py` 通过；
+- `python scripts\check_evp8_deepseek_qwen_g0.py --check` 通过：
+  - `guard_status = passed`；
+  - `expected_outputs_exist = false`；
+  - `checked_output_count = 4`；
+  - `existing_output_count = 0`；
+  - DeepSeek/Qwen expected `raw_responses` 和 `tracked_summary` 均不存在；
+  - `api_call_attempted = false`；
+  - `raw_outputs_read = false`；
+  - `raw_outputs_generated = false`；
+  - `post_smoke_observed_status = waiting_for_execution`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- 本轮仍未调用模型 API，未读取 raw outputs，未生成 raw outputs。
+
+## 2026-06-20 EVP-8 G0 expected-output absence guard
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main [ahead 2]`；
+- 最新本地提交为 `fdce346 Record EVP-8 G0 guard sync failure`；
+- 自动续跑不是明确 API 授权，本轮仍不得执行 `--execute`；
+- 当前 G0 guard 已能一键验证 protocol/preflight/check-only/execution
+  packet/post-smoke audit/ignored boundary；
+- 但 G0 guard 尚未检查 execution packet 中预声明的 DeepSeek/Qwen raw
+  responses 和 tracked summary 输出路径是否已经存在；
+- 若这些路径有旧残留，真实 `--execute` 会触发 overwrite refusal，但会延迟到 API
+  执行入口才发现，不利于真实执行前的 no-API readiness。
+
+Plan:
+
+1. 扩展 `scripts/check_evp8_deepseek_qwen_g0.py`，读取 execution packet；
+2. 检查每个 execute command 的 expected raw response path 和 tracked summary
+   path 当前均不存在；
+3. 将该检查写入 tracked G0 summary 和 Markdown；
+4. 同步 execution plan、docs index 和 engineering notes；
+5. 重新运行 G0 guard 和 local quality gate；
+6. 不调用 API，不读取 raw outputs，不生成 raw outputs。
+
+Acceptance:
+
+- `python scripts\check_evp8_deepseek_qwen_g0.py --check` 必须通过；
+- G0 summary 必须包含 expected output absence check；
+- 若未来 expected raw/summary output 已存在，G0 应先失败并阻止 API 前进；
+- 当前 post-smoke audit 仍应为 `waiting_for_execution`；
+- ignored `.env`、local config、outputs、artifacts 不得被 staged。
