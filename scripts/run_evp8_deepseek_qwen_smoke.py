@@ -101,6 +101,11 @@ def write_jsonl(path: Path, records: list[dict[str, Any]]) -> None:
     )
 
 
+def append_jsonl_record(handle: Any, record: dict[str, Any]) -> None:
+    handle.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
+    handle.flush()
+
+
 def resolve(path_value: Any) -> Path:
     path = Path(str(path_value))
     return path if path.is_absolute() else REPO_ROOT / path
@@ -517,31 +522,44 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     output_dir = resolve(scope_config["output_dir"]) / safe_name(str(model_config["model_id"]))
     raw_out = args.raw_out or output_dir / "raw_responses.jsonl"
     summary_out = args.summary_out or DEFAULT_EXEC_SUMMARY_DIR / f"evp8_{safe_name(str(model_config['model_id']))}_{args.run_scope}_summary.json"
-    if config.get("overwrite_policy") == "refuse_if_output_exists" and (raw_out.exists() or summary_out.exists()):
-        raise SystemExit(f"Refusing to overwrite existing {args.run_scope} outputs: {display_path(raw_out)} or {display_path(summary_out)}")
+    if config.get("overwrite_policy") == "refuse_if_output_exists":
+        if summary_out.exists():
+            raise SystemExit(f"Refusing to overwrite existing {args.run_scope} summary: {display_path(summary_out)}")
+        if raw_out.exists() and not args.resume:
+            raise SystemExit(
+                f"Refusing to overwrite existing {args.run_scope} raw output: {display_path(raw_out)}. "
+                "Use --resume only when this is an interrupted run without a tracked summary."
+            )
 
     load_env_file(str(resolve(config.get("env", ".env"))))
     spec = read_json(resolve(config["protocol_spec"]))
     template = resolve(config["prompt_template"]).read_text(encoding="utf-8")
     packets = build_packets(config, args.run_scope)
-    raw_records: list[dict[str, Any]] = []
-    parsed_records: list[dict[str, Any]] = []
-    for packet in packets:
-        prompt = render_prompt(template, packet)
-        findings = prompt_module._boundary_findings(prompt)  # noqa: SLF001
-        if findings:
-            raise SystemExit(f"prompt boundary failed for {packet['evidence_packet_id']}: {findings}")
-        response = _client(str(model_config["provider_route"])).chat_completion(
-            model=str(model_config["request_model_id"]),
-            prompt=prompt,
-            temperature=float(config.get("temperature", 0.0)),
-            max_tokens=int(config.get("max_output_tokens", 1024)),
-        )
-        raw_text = response_text(response)
-        parsed, invalid_reason = _parse_response(raw_text, spec)
-        cost = cost_summary(response=response, model_config=model_config)
-        raw_records.append(
-            {
+    completed_packet_ids, parsed_records = load_resume_state(
+        raw_out=raw_out,
+        packets=packets,
+        spec=spec,
+        model_config=model_config,
+        resume=args.resume,
+    )
+    resumed_raw_record_count = len(completed_packet_ids)
+    raw_out.parent.mkdir(parents=True, exist_ok=True)
+    raw_mode = "a" if args.resume and raw_out.exists() else "x"
+    with raw_out.open(raw_mode, encoding="utf-8") as raw_handle:
+        for packet in packets:
+            if packet["evidence_packet_id"] in completed_packet_ids:
+                continue
+            prompt = render_prompt(template, packet)
+            findings = prompt_module._boundary_findings(prompt)  # noqa: SLF001
+            if findings:
+                raise SystemExit(f"prompt boundary failed for {packet['evidence_packet_id']}: {findings}")
+            response = _client(str(model_config["provider_route"])).chat_completion(
+                model=str(model_config["request_model_id"]),
+                prompt=prompt,
+                temperature=float(config.get("temperature", 0.0)),
+                max_tokens=int(config.get("max_output_tokens", 1024)),
+            )
+            raw_record = {
                 "evidence_packet_id": packet["evidence_packet_id"],
                 "anonymous_candidate_id": packet["anonymous_candidate_id"],
                 "evidence_level": packet["evidence_level"],
@@ -549,35 +567,13 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
                 "configured_model_id": model_config["model_id"],
                 "actual_model_id": response.get("model"),
                 "provider_route": model_config["provider_route"],
-                "raw_response_text": raw_text,
+                "raw_response_text": response_text(response),
                 "response": response,
                 "run_date_utc": datetime.now(timezone.utc).isoformat(),
             }
-        )
-        parsed_records.append(
-            {
-                "evidence_packet_id": packet["evidence_packet_id"],
-                "anonymous_candidate_id": packet["anonymous_candidate_id"],
-                "evidence_level": packet["evidence_level"],
-                "parse_status": "valid" if invalid_reason is None else "invalid",
-                "invalid_reason": invalid_reason,
-                "decision": parsed.get("decision") if parsed else None,
-                "risk_flags": parsed.get("risk_flags") if parsed else [],
-                "human_review_needed": parsed.get("human_review_needed") if parsed else None,
-                "request_model_id": model_config["request_model_id"],
-                "configured_model_id": model_config["model_id"],
-                "actual_model_id": response.get("model"),
-                "provider_route": model_config["provider_route"],
-                "usage": cost["usage"],
-                "cost_usd": cost.get("cost_usd"),
-                "cost_cny": cost.get("cost_cny"),
-                "cost_currency": cost.get("cost_currency"),
-                "cost_source": cost["cost_source"],
-                "cost_observability": cost["cost_observability"],
-            }
-        )
+            append_jsonl_record(raw_handle, raw_record)
+            parsed_records.append(parsed_record_from_raw(raw_record, spec, model_config))
 
-    write_jsonl(raw_out, raw_records)
     cost = aggregate_cost(parsed_records)
     parse_valid_count = sum(1 for record in parsed_records if record["parse_status"] == "valid")
     summary = {
@@ -593,6 +589,9 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         "raw_responses_out": display_path(raw_out),
         "raw_response_text_stored_in_tracked_summary": False,
         "review_count": len(parsed_records),
+        "resume_enabled": bool(args.resume),
+        "resumed_raw_record_count": resumed_raw_record_count,
+        "new_api_call_count": len(parsed_records) - resumed_raw_record_count,
         "parse_valid_count": parse_valid_count,
         "invalid_parse_count": len(parsed_records) - parse_valid_count,
         "decision_counts": _counts(record["decision"] for record in parsed_records),
@@ -626,6 +625,77 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     if summary["run_gate"] != "passed":
         raise SystemExit(f"EVP-8 {args.run_scope} gate blocked after writing outputs: {summary['run_gate']}")
     return summary
+
+
+def load_resume_state(
+    *,
+    raw_out: Path,
+    packets: list[dict[str, Any]],
+    spec: dict[str, Any],
+    model_config: dict[str, Any],
+    resume: bool,
+) -> tuple[set[str], list[dict[str, Any]]]:
+    if not raw_out.exists():
+        return set(), []
+    if not resume:
+        return set(), []
+    raw_records = read_jsonl(raw_out)
+    expected_ids = [str(packet["evidence_packet_id"]) for packet in packets]
+    existing_ids = [str(record.get("evidence_packet_id")) for record in raw_records]
+    if existing_ids != expected_ids[: len(existing_ids)]:
+        raise SystemExit(
+            f"Cannot resume {display_path(raw_out)}: existing raw records are not a prefix of the planned packet order."
+        )
+    packet_by_id = {str(packet["evidence_packet_id"]): packet for packet in packets}
+    parsed_records: list[dict[str, Any]] = []
+    completed: set[str] = set()
+    for raw_record in raw_records:
+        packet_id = str(raw_record["evidence_packet_id"])
+        if packet_id in completed:
+            raise SystemExit(f"Cannot resume {display_path(raw_out)}: duplicate raw record {packet_id}.")
+        packet = packet_by_id[packet_id]
+        if raw_record.get("configured_model_id") != model_config["model_id"]:
+            raise SystemExit(f"Cannot resume {display_path(raw_out)}: configured model mismatch for {packet_id}.")
+        if raw_record.get("provider_route") != model_config["provider_route"]:
+            raise SystemExit(f"Cannot resume {display_path(raw_out)}: provider route mismatch for {packet_id}.")
+        if raw_record.get("anonymous_candidate_id") != packet["anonymous_candidate_id"]:
+            raise SystemExit(f"Cannot resume {display_path(raw_out)}: candidate mismatch for {packet_id}.")
+        if raw_record.get("evidence_level") != packet["evidence_level"]:
+            raise SystemExit(f"Cannot resume {display_path(raw_out)}: evidence-level mismatch for {packet_id}.")
+        completed.add(packet_id)
+        parsed_records.append(parsed_record_from_raw(raw_record, spec, model_config))
+    return completed, parsed_records
+
+
+def parsed_record_from_raw(
+    raw_record: dict[str, Any],
+    spec: dict[str, Any],
+    model_config: dict[str, Any],
+) -> dict[str, Any]:
+    response = raw_record.get("response") if isinstance(raw_record.get("response"), dict) else {}
+    raw_text = str(raw_record.get("raw_response_text") or "")
+    parsed, invalid_reason = _parse_response(raw_text, spec)
+    cost = cost_summary(response=response, model_config=model_config)
+    return {
+        "evidence_packet_id": raw_record["evidence_packet_id"],
+        "anonymous_candidate_id": raw_record["anonymous_candidate_id"],
+        "evidence_level": raw_record["evidence_level"],
+        "parse_status": "valid" if invalid_reason is None else "invalid",
+        "invalid_reason": invalid_reason,
+        "decision": parsed.get("decision") if parsed else None,
+        "risk_flags": parsed.get("risk_flags") if parsed else [],
+        "human_review_needed": parsed.get("human_review_needed") if parsed else None,
+        "request_model_id": model_config["request_model_id"],
+        "configured_model_id": model_config["model_id"],
+        "actual_model_id": raw_record.get("actual_model_id") or response.get("model"),
+        "provider_route": model_config["provider_route"],
+        "usage": cost["usage"],
+        "cost_usd": cost.get("cost_usd"),
+        "cost_cny": cost.get("cost_cny"),
+        "cost_currency": cost.get("cost_currency"),
+        "cost_source": cost["cost_source"],
+        "cost_observability": cost["cost_observability"],
+    }
 
 
 def _parse_response(raw_text: str, spec: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
@@ -880,6 +950,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--allow-missing-credentials", action="store_true")
     parser.add_argument("--summary-out", type=Path)
     parser.add_argument("--raw-out", type=Path)
+    parser.add_argument("--resume", action="store_true", help="Resume an interrupted execute run from an existing raw JSONL prefix.")
     return parser.parse_args()
 
 

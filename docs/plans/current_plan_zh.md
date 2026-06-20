@@ -16198,6 +16198,69 @@ Acceptance:
 - tracked summary 必须包含 parse/schema/usage-cost gates；
 - 若 DeepSeek full audit 失败，停止并诊断，不运行 Qwen。
 
+## 2026-06-20 EVP-8 G6 DeepSeek full-run observability repair
+
+Inspect:
+
+- DeepSeek G6 full run 已按授权启动，但外层工具在 2 小时后超时；
+- 超时后原 Python 子进程仍在运行，命令行为 DeepSeek full run；
+- 监控 10 分钟后仍未生成：
+  - `outputs/evp8_phase1_deepseek_qwen_full/deepseek_deepseek-v4-pro/raw_responses.jsonl`；
+  - `data/reviews/evp8_deepseek_deepseek-v4-pro_full_summary.json`；
+- `scripts/run_evp8_deepseek_qwen_smoke.py` 的 `execute()` 当前把所有 raw records
+  保存在内存，循环结束后才写 raw JSONL，因此 long run 中断时没有 partial
+  artifact 可审计；
+- 已停止该 unobservable Python 子进程，避免继续产生不可审计成本。
+
+Diagnosis:
+
+- 问题类型：执行链路 bug / 成本可观测性 bug；
+- 不是 protocol、prompt、schema、candidate set 或 evaluator join 问题；
+- 不运行 Qwen，不扩大实验，不改变 EVP-8 v0.1 inputs。
+
+Plan:
+
+1. 修复 `scripts/run_evp8_deepseek_qwen_smoke.py`：
+   - 每完成一条 API response 后立即 append 到 ignored raw JSONL；
+   - 新增显式 `--resume`，仅在 raw JSONL 已存在且 tracked summary 不存在时
+     从 existing raw prefix 续跑；
+   - 默认不放宽 overwrite policy：无 `--resume` 时仍拒绝覆盖任何既有 raw/summary；
+2. 重新运行 no-API check-only / packet / audit gates；
+3. 再次执行 DeepSeek G6 full run；
+4. 若仍失败，先依据 partial raw 和 audit 定位，不运行 Qwen。
+
+Acceptance:
+
+- `--check-only --run-scope full` 仍通过；
+- smoke check-only 仍通过；
+- `--resume` 不会把 raw response body 写入 tracked summary；
+- interrupted full run 后至少有 ignored raw prefix 可审计；
+- no-API gates 通过前不重启真实 API。
+
+Execute:
+
+- 已停止残留 DeepSeek full-run Python 子进程；
+- 已修改 `scripts/run_evp8_deepseek_qwen_smoke.py`：
+  - `execute()` 每条 API response 完成后立即 append 一行 raw JSONL；
+  - 新增显式 `--resume` 参数；
+  - `--resume` 只接受 existing raw records 是 planned packet order 的前缀；
+  - resume 记录必须匹配 candidate id、evidence level、configured model 和 provider
+    route；
+  - tracked summary 新增 `resume_enabled`、`resumed_raw_record_count` 和
+    `new_api_call_count`，不包含 raw response body；
+- 已更新 `docs/experience/engineering_notes.md`，记录 long API run checkpointing
+  经验。
+
+Verify:
+
+- `python -m py_compile scripts\run_evp8_deepseek_qwen_smoke.py` 通过；
+- `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --run-scope full --config configs\evp8_deepseek_qwen.local.json`
+  通过；
+- `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
+  通过；
+- 临时目录 resume-prefix self-test 通过；
+- 当前 DeepSeek full raw 和 summary 仍不存在，允许修复后重新执行 DeepSeek G6。
+
 Commit And Sync:
 
 - 初始提交为 `8983abd Record EVP-8 G6 authorization boundary`；

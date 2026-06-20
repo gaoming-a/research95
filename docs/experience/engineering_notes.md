@@ -2978,3 +2978,20 @@ This file starts fresh for the patch-verification project.
 - This kind of drift is a documentation-state repair only. It must not be
   interpreted as authorization to move from a no-API packet gate into a large
   API run.
+
+## 2026-06-20 EVP-8 long API run checkpointing
+
+- A 686-call full run must checkpoint raw responses incrementally under
+  ignored `outputs/`. Holding all raw records in memory and writing only at
+  the end creates an unobservable cost risk when an outer command timeout or
+  host interruption occurs.
+- Keep the default overwrite policy strict: a normal execute command must
+  refuse existing raw or summary outputs. Use `--resume` only when there is an
+  interrupted raw JSONL prefix and no tracked summary.
+- Resume must validate that existing raw records are exactly a prefix of the
+  planned packet order, with matching candidate id, evidence level, configured
+  model, and provider route. Do not silently skip unordered or mismatched raw
+  records.
+- If a long run becomes unobservable and has not written any raw prefix, stop
+  the orphan process before restarting after the checkpointing repair. Do not
+  run the next model while the first model's full audit is absent.
