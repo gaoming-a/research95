@@ -14650,3 +14650,13 @@ Verify:
     `evp8_smoke_candidate_0030`, `evp8_smoke_candidate_0040`,
     `evp8_smoke_candidate_0047`；
 - 下一步仍是等待用户明确执行真实 DeepSeek/Qwen smoke，不自动调用 API。
+
+Commit And Sync:
+
+- 已提交本轮 no-API selection 修正：
+  `21b78c8 Refine EVP-8 smoke subset selection`；
+- 尝试 `git push origin main`；
+- GitHub sync 失败：
+  `Failed to connect to github.com port 443 after 21079 ms`；
+- 按用户授权，GitHub 连续同步失败时不阻塞后续计划执行；本地 `main` 继续作为
+  当前工作状态源。
