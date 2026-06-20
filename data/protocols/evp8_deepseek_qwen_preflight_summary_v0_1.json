@@ -127,7 +127,7 @@
     {
       "category": "structural",
       "check": "max_output_tokens",
-      "detail": 1024,
+      "detail": 4096,
       "passed": true
     },
     {
@@ -169,6 +169,18 @@
     {
       "category": "structural",
       "check": "record_cost_source",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "record_cost_currency",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "record_provider_cost_cny",
       "detail": true,
       "passed": true
     },

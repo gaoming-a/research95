@@ -49,6 +49,8 @@ REQUIRED_COST_FIELDS = (
     "record_completion_tokens",
     "record_total_tokens",
     "record_provider_cost_usd",
+    "record_provider_cost_cny",
+    "record_cost_currency",
 )
 
 

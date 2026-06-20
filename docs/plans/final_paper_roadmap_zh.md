@@ -1102,11 +1102,14 @@ ignored local DeepSeek/Qwen preflight 已通过；tracked summary 只记录 cred
 presence，不包含 key value 或 raw outputs。guarded smoke runner check-only
 也已通过，覆盖 project-frequency-stratified 5 candidates x 7 levels =
 35 packets，并包含主导项目 youtube-dl；不保存 rendered prompt text、不生成
-raw outputs、不调用 API。smoke execution packet 当前为 `ready`，记录 exact
-guard commands 和 DeepSeek-then-Qwen execute commands，但
-`execution_authorized_by_packet=false`。post-smoke audit scaffold 当前为
-`waiting_for_execution`，未来只审计 tracked summaries，不读取 raw responses。
-下一步仍不是自动 API，而是等待用户明确执行 EVP-8 Phase 1 smoke，才允许真实模型调用。
+raw outputs、不调用 API。smoke execution packet 记录 exact guard commands 和
+DeepSeek-then-Qwen execute commands，但
+`execution_authorized_by_packet=false`。2026-06-20 在用户明确授权后，
+DeepSeek/Qwen Phase 1 smoke 已执行并通过 post-smoke audit 与 G4 smoke
+synthesis：两个模型各 35/35 parse-valid，tracked summaries 不含 raw response
+body 或 rendered prompt text；G4 只报告 frozen smoke subset 的 descriptive
+per-level decision counts。下一步不是自动 full run，而是生成 G5 no-API
+first-batch full-run packet。
 
 期刊版主线：
 
@@ -1125,18 +1128,17 @@ guard commands 和 DeepSeek-then-Qwen execute commands，但
 
 后续执行顺序：
 
-1. 先等待用户明确授权 EVP-8 Phase 1 DeepSeek/Qwen smoke；
-2. 运行 G0 no-API revalidation，然后按 DeepSeek-first、Qwen-after-DeepSeek
-   的顺序执行 5-candidate x 7-level smoke；
-3. smoke 通过后只生成 two-model smoke synthesis，不直接启动 686-call full
-   run；
-4. 若用户再明确授权 first-batch full run，先生成独立 no-API full-run packet，
+1. EVP-8 Phase 1 DeepSeek/Qwen smoke 已完成并通过 G4 synthesis；
+2. 当前下一步是生成独立 no-API first-batch full-run packet，明确 686-call
+   DeepSeek/Qwen full-run commands、expected outputs、cost/usage fields、
+   per-level aggregates、audit/synthesis commands 和 stop gates；
+3. 只有用户再明确授权 first-batch full run 后，才按 packet 执行
    再按 DeepSeek full run -> DeepSeek audit -> Qwen full run -> Qwen audit ->
    two-model first-batch synthesis 执行；
-5. Kimi K2.6、Devstral 2 和 Gemini 2.5 Flash 只能在 DeepSeek/Qwen first
+4. Kimi K2.6、Devstral 2 和 Gemini 2.5 Flash 只能在 DeepSeek/Qwen first
    batch 边界稳定后补跑，且必须使用同一 frozen EVP-8 packets、prompt、
    schema、parser、temperature、retry policy 和 evaluator joins；
-6. 五模型 synthesis 完成前，不写 final journal conclusion；若模型趋势不一致，
+5. 五模型 synthesis 完成前，不写 final journal conclusion；若模型趋势不一致，
    写成 robustness boundary，而不是筛选性报告。
 
 EVP-8 当前计划模型集：
@@ -1162,6 +1164,8 @@ EVP-8 当前计划模型集：
   audit、prompt-boundary dry-run、packet/schema dry-run、cost-observability
   dry-run、deterministic-baseline dry-run、local preflight、runner check-only
   和 smoke gate 通过后执行；
+- Qwen official cost 只能作为受控 CNY token-pricing estimate 记录，不得在
+  runner 中发明 USD cost 或隐式汇率换算；
 - Kimi/Devstral/Gemini 后续可通过 OpenRouter 统一路由补跑；若用 OpenRouter，
   必须 pin exact model id，记录 actual returned model/provider，并避免未记录的
   automatic model substitution；

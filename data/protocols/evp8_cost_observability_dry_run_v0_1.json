@@ -10,7 +10,7 @@
   "deepseek_qwen_excluded_from_later_openrouter_budget_estimate": true,
   "expected_planned_calls_per_model": 686,
   "local_api_config_read": false,
-  "max_output_tokens": 1024,
+  "max_output_tokens": 4096,
   "missing_provider_or_model_id_blocks_api": true,
   "missing_usage_cost_fields": [],
   "model_visible_levels": [
@@ -50,6 +50,8 @@
     "record_completion_tokens",
     "record_total_tokens",
     "record_provider_cost_usd",
+    "record_provider_cost_cny",
+    "record_cost_currency",
     "record_cost_source"
   ],
   "retry_policy_failures": [],

@@ -100,15 +100,20 @@ Current audit status:
 - smoke execution packet: ready, with exact G0 guard commands, post-smoke
   audit checks, G4 synthesis checks, and DeepSeek-then-Qwen execute commands;
   it explicitly does not authorize API calls by itself;
-- post-smoke audit scaffold: currently `waiting_for_execution`; after real
-  smoke, it validates tracked summaries without reading raw responses,
-  including per-evidence-level decision/count aggregates needed by G4
-  synthesis;
-- G4 smoke synthesis scaffold: currently `waiting_for_execution`; after real
-  smoke, it summarizes only tracked audit/summary fields and does not read raw
-  responses;
-- API readiness: waiting for explicit user smoke execution command;
-- current blockers before smoke: no tracked Phase 0 or local preflight blockers.
+- Phase 1 DeepSeek/Qwen smoke: executed after explicit user authorization on
+  2026-06-20 for the frozen 5-candidate x 7-level subset;
+- post-smoke audit: `passed` for DeepSeek V4 Pro and Qwen3.7 Max tracked
+  raw-output-free summaries, without reading raw responses;
+- G4 smoke synthesis: `passed`; it reports only descriptive per-level decision
+  counts from tracked summaries. In the smoke subset both models returned
+  `escalate` for all five records at every E0-E6 level;
+- cost-observability repair: DeepSeek uses controlled USD token-pricing
+  estimate after the 4096-token budget repair; Qwen uses controlled CNY
+  token-pricing estimate and does not invent USD cost or exchange-rate
+  conversion;
+- current next gate: G5 no-API first-batch full-run packet. The 686-call
+  DeepSeek/Qwen first-batch full run still requires a separate explicit user
+  authorization.
 
 This audit is intentionally no-API and does not authorize model calls, cohort
 expansion, or EVP-8 evidence-packet generation.
@@ -154,7 +159,7 @@ Before any model call:
    provider routing policy, temperature, max tokens, retry policy, and stop
    rules.
 
-Immediate next execution order:
+Historical smoke execution order, now completed through G4:
 
 1. Commit the DeepSeek/Qwen local preflight artifacts.
 2. Wait for the user to explicitly say to execute the EVP-8 Phase 1 smoke.
@@ -173,6 +178,16 @@ Immediate next execution order:
    on the frozen 5-candidate x 7-level subset.
 5. Stop after the two smoke runs and audit their raw-output-free summaries; do
    not start the 686-call full runs without a separate gate.
+
+Immediate next execution order:
+
+1. Prepare G5, a separate no-API first-batch full-run packet for DeepSeek/Qwen
+   686-call runs.
+2. Include the 4096-token output budget, USD/CNY cost observability fields,
+   expected raw-output paths, tracked summary paths, per-level aggregate
+   requirements, and full-run audit/synthesis commands.
+3. Do not run either 686-call model command until the user explicitly
+   authorizes the first-batch full run after reviewing the packet.
 
 ### Immediate DeepSeek/Qwen Follow-up Plan
 
@@ -251,9 +266,10 @@ Gate G3: Qwen3.7 Max smoke.
   as DeepSeek.
 - Stop if parse/schema validity, usage/cost observability, returned model id,
   raw-output boundary, or provider route checks fail.
-- Do not invent Qwen USD cost. If token usage is present but a controlled USD
-  cost source is not available, mark the cost gate blocked and diagnose rather
-  than reporting unsupported cost estimates.
+- Do not invent Qwen USD cost. If token usage is present and the official
+  Alibaba Cloud Model Studio qwen3.7-max pricing is used, record it as
+  controlled `cost_cny` with `cost_currency = CNY`. Do not silently convert it
+  to USD inside the smoke runner.
 
 Gate G4: two-model smoke synthesis.
 

@@ -104,24 +104,26 @@
 - `experiments/evp8_deepseek_qwen_smoke_execution_packet_v0_1.md`: Markdown
   companion for the no-API smoke execution packet.
 - `../data/protocols/evp8_deepseek_qwen_g0_guard_summary_v0_1.json`:
-  no-API one-command G0 guard summary. It records the status of protocol audit,
-  strict preflight, smoke check-only, execution packet check, post-smoke audit
-  self-test/check, expected-output absence, ignored-boundary status, and
-  no-API/no-raw-output boundary.
+  no-API one-command G0 pre-execution guard summary. It records the status of
+  protocol audit, strict preflight, smoke check-only, execution packet check,
+  post-smoke audit self-test/check, expected-output absence, ignored-boundary
+  status, and no-API/no-raw-output boundary before smoke execution. After smoke
+  outputs exist, use the post-smoke audit and G4 synthesis artifacts instead
+  of rerunning G0 as a result gate.
 - `experiments/evp8_deepseek_qwen_g0_guard_summary_v0_1.md`: Markdown
   companion for the G0 guard summary.
 - `../data/protocols/evp8_deepseek_qwen_smoke_result_audit_v0_1.json`:
-  no-API post-smoke audit scaffold. Before real execution it reports
-  `waiting_for_execution`; after execution it validates tracked summaries
+  no-API post-smoke audit. Current status is `passed` for the authorized
+  DeepSeek/Qwen 5-candidate x 7-level smoke run. It validates tracked summaries
   without reading raw responses.
 - `experiments/evp8_deepseek_qwen_smoke_result_audit_v0_1.md`: Markdown
-  companion for the post-smoke audit scaffold.
+  companion for the post-smoke audit.
 - `../data/protocols/evp8_deepseek_qwen_smoke_synthesis_v0_1.json`: no-API G4
-  smoke synthesis scaffold. Before real execution it reports
-  `waiting_for_execution`; after execution it summarizes tracked per-level
-  decision counts without reading raw responses.
+  smoke synthesis. Current status is `passed`; it summarizes tracked per-level
+  decision counts without reading raw responses and does not support full-cohort
+  or five-model claims.
 - `experiments/evp8_deepseek_qwen_smoke_synthesis_v0_1.md`: Markdown companion
-  for the G4 smoke synthesis scaffold.
+  for the G4 smoke synthesis.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.

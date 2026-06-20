@@ -43,6 +43,11 @@ DEEPSEEK_V4_PRO_USD_PER_1M_TOKENS = {
     "input_cache_miss": 0.435,
     "output": 0.87,
 }
+QWEN_PRICING_SOURCE_URL = "https://help.aliyun.com/zh/model-studio/model-pricing"
+QWEN_3_7_MAX_CNY_PER_1M_TOKENS = {
+    "input": 12.0,
+    "output": 36.0,
+}
 FORBIDDEN_MARKERS = (
     "expected_outcome",
     "candidate_type",
@@ -535,7 +540,9 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
                 "actual_model_id": response.get("model"),
                 "provider_route": model_config["provider_route"],
                 "usage": cost["usage"],
-                "cost_usd": cost["cost_usd"],
+                "cost_usd": cost.get("cost_usd"),
+                "cost_cny": cost.get("cost_cny"),
+                "cost_currency": cost.get("cost_currency"),
                 "cost_source": cost["cost_source"],
                 "cost_observability": cost["cost_observability"],
             }
@@ -624,6 +631,8 @@ def cost_summary(*, response: dict[str, Any], model_config: dict[str, Any]) -> d
         return {
             "usage": normalized_usage,
             "cost_usd": round(provider_cost, 9),
+            "cost_cny": None,
+            "cost_currency": "USD",
             "cost_source": "provider_reported_usage_cost",
             "cost_observability": "provider_reported_cost",
         }
@@ -633,6 +642,8 @@ def cost_summary(*, response: dict[str, Any], model_config: dict[str, Any]) -> d
             return {
                 "usage": normalized_usage,
                 "cost_usd": round(estimated["cost_usd"], 9),
+                "cost_cny": None,
+                "cost_currency": "USD",
                 "cost_source": "estimated_from_tokens",
                 "cost_observability": "estimated_from_provider_token_usage",
                 "cost_pricing": {
@@ -643,10 +654,30 @@ def cost_summary(*, response: dict[str, Any], model_config: dict[str, Any]) -> d
                     "input_cache_miss_fallback": estimated["input_cache_miss_fallback"],
                 },
             }
+    if model_config.get("provider_route") == "qwen_official" and model_config.get("request_model_id") == "qwen3.7-max":
+        estimated = _estimate_qwen_3_7_max_cost_cny(usage)
+        if estimated is not None:
+            return {
+                "usage": normalized_usage,
+                "cost_usd": None,
+                "cost_cny": round(estimated["cost_cny"], 9),
+                "cost_currency": "CNY",
+                "cost_source": "estimated_from_tokens_official_qwen_cny_pricing",
+                "cost_observability": "estimated_from_provider_token_usage_and_official_cny_pricing",
+                "cost_pricing": {
+                    "source": QWEN_PRICING_SOURCE_URL,
+                    "unit": "CNY per 1M tokens",
+                    "model": "qwen3.7-max",
+                    "rates": QWEN_3_7_MAX_CNY_PER_1M_TOKENS,
+                    "pricing_tier": "0<Token<=1M",
+                },
+            }
     if normalized_usage:
         return {
             "usage": normalized_usage,
             "cost_usd": None,
+            "cost_cny": None,
+            "cost_currency": None,
             "cost_source": "provider_token_usage_without_usd_cost",
             "cost_observability": "token_usage_present_cost_unknown",
         }
@@ -699,6 +730,22 @@ def _estimate_deepseek_v4_pro_cost(usage: dict[str, Any]) -> dict[str, Any] | No
     }
 
 
+def _estimate_qwen_3_7_max_cost_cny(usage: dict[str, Any]) -> dict[str, Any] | None:
+    completion_tokens = _token_count(usage.get("completion_tokens"), usage.get("output_tokens"))
+    prompt_tokens = _token_count(usage.get("prompt_tokens"), usage.get("input_tokens"))
+    if completion_tokens is None and prompt_tokens is None:
+        return None
+    prompt_cost = 0.0
+    if prompt_tokens is not None:
+        prompt_cost = prompt_tokens * QWEN_3_7_MAX_CNY_PER_1M_TOKENS["input"] / 1_000_000
+    completion_cost = 0.0
+    if completion_tokens is not None:
+        completion_cost = completion_tokens * QWEN_3_7_MAX_CNY_PER_1M_TOKENS["output"] / 1_000_000
+    return {
+        "cost_cny": prompt_cost + completion_cost,
+    }
+
+
 def _token_count(*values: Any) -> int | None:
     for value in values:
         if value is None:
@@ -723,29 +770,42 @@ def _unknown_cost(reason: str, usage: dict[str, Any] | None = None) -> dict[str,
     return {
         "usage": usage or {},
         "cost_usd": None,
+        "cost_cny": None,
+        "cost_currency": None,
         "cost_source": "unknown",
         "cost_observability": reason,
     }
 
 
 def aggregate_cost(records: list[dict[str, Any]]) -> dict[str, Any]:
-    total = 0.0
+    total_usd = 0.0
+    total_cny = 0.0
     unknown = 0
     sources: list[str] = []
     observability: list[str] = []
+    currencies: list[str] = []
     for record in records:
         sources.append(str(record.get("cost_source") or "unknown"))
         observability.append(str(record.get("cost_observability") or "unknown"))
-        cost = record.get("cost_usd")
-        if cost is None:
+        currency = record.get("cost_currency")
+        if currency:
+            currencies.append(str(currency))
+        cost_usd = record.get("cost_usd")
+        cost_cny = record.get("cost_cny")
+        if cost_usd is None and cost_cny is None:
             unknown += 1
         else:
-            total += float(cost)
+            if cost_usd is not None:
+                total_usd += float(cost_usd)
+            if cost_cny is not None:
+                total_cny += float(cost_cny)
     return {
-        "total_cost_usd": round(total, 9),
+        "total_cost_usd": round(total_usd, 9),
+        "total_cost_cny": round(total_cny, 9),
         "unknown_cost_record_count": unknown,
         "cost_source_counts": _counts(sources),
         "cost_observability_counts": _counts(observability),
+        "cost_currency_counts": _counts(currencies),
     }
 
 

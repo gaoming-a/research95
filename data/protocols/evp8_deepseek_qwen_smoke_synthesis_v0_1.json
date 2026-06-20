@@ -1,7 +1,7 @@
 {
   "allowed_claim": "After both smoke models pass, report only descriptive DeepSeek/Qwen per-level decision patterns for the frozen EVP-8 v0.1 smoke subset.",
   "api_call_attempted": false,
-  "audit_status": "waiting_for_execution",
+  "audit_status": "passed",
   "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
   "checks": [
     {
@@ -16,20 +16,39 @@
     },
     {
       "check": "audit_status_supported_for_synthesis",
-      "detail": "waiting_for_execution",
+      "detail": "passed",
       "passed": true
     },
     {
       "check": "qwen_not_present_before_deepseek_passed",
       "detail": {
-        "deepseek_status": "waiting_for_execution",
-        "qwen_summary_present": false
+        "deepseek_status": "passed",
+        "qwen_summary_present": true
       },
       "passed": true
     },
     {
       "check": "per_level_counts_available_for_present_passed_models",
-      "detail": {},
+      "detail": {
+        "deepseek/deepseek-v4-pro": [
+          "E0",
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6"
+        ],
+        "qwen/qwen3.7-max": [
+          "E0",
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6"
+        ]
+      },
       "passed": true
     }
   ],
@@ -37,35 +56,128 @@
   "forbidden_claim": "Do not report five-model journal conclusions, full-cohort generalization, LLM superiority over deterministic baselines, or final evidence-level effectiveness from this smoke synthesis.",
   "model_summaries": [
     {
-      "decision_counts_by_evidence_level": {},
+      "decision_counts_by_evidence_level": {
+        "E0": {
+          "escalate": 5
+        },
+        "E1": {
+          "escalate": 5
+        },
+        "E2": {
+          "escalate": 5
+        },
+        "E3": {
+          "escalate": 5
+        },
+        "E4": {
+          "escalate": 5
+        },
+        "E5": {
+          "escalate": 5
+        },
+        "E6": {
+          "escalate": 5
+        }
+      },
       "model_id": "deepseek/deepseek-v4-pro",
       "raw_response_path": "outputs/evp8_phase1_deepseek_qwen_smoke/deepseek_deepseek-v4-pro/raw_responses.jsonl",
-      "status": "waiting_for_execution",
+      "status": "passed",
       "summary_path": "data/reviews/evp8_deepseek_deepseek-v4-pro_smoke_summary.json",
-      "summary_present": false
+      "summary_present": true
     },
     {
-      "decision_counts_by_evidence_level": {},
+      "decision_counts_by_evidence_level": {
+        "E0": {
+          "escalate": 5
+        },
+        "E1": {
+          "escalate": 5
+        },
+        "E2": {
+          "escalate": 5
+        },
+        "E3": {
+          "escalate": 5
+        },
+        "E4": {
+          "escalate": 5
+        },
+        "E5": {
+          "escalate": 5
+        },
+        "E6": {
+          "escalate": 5
+        }
+      },
       "model_id": "qwen/qwen3.7-max",
       "raw_response_path": "outputs/evp8_phase1_deepseek_qwen_smoke/qwen_qwen3.7-max/raw_responses.jsonl",
-      "status": "waiting_for_execution",
+      "status": "passed",
       "summary_path": "data/reviews/evp8_qwen_qwen3.7-max_smoke_summary.json",
-      "summary_present": false
+      "summary_present": true
     }
   ],
   "per_level_decision_counts_by_model": {
-    "E0": {},
-    "E1": {},
-    "E2": {},
-    "E3": {},
-    "E4": {},
-    "E5": {},
-    "E6": {}
+    "E0": {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 5
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 5
+      }
+    },
+    "E1": {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 5
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 5
+      }
+    },
+    "E2": {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 5
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 5
+      }
+    },
+    "E3": {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 5
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 5
+      }
+    },
+    "E4": {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 5
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 5
+      }
+    },
+    "E5": {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 5
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 5
+      }
+    },
+    "E6": {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 5
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 5
+      }
+    }
   },
   "protocol_id": "evp8_journal_full_ladder_v0_1",
   "raw_outputs_generated_by_synthesis": false,
   "raw_outputs_read": false,
   "rendered_prompt_text_read": false,
   "synthesis_id": "evp8_deepseek_qwen_smoke_synthesis_v0_1",
-  "synthesis_status": "waiting_for_execution"
+  "synthesis_status": "passed"
 }

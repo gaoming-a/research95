@@ -357,7 +357,7 @@
     "record_actual_model_id": true,
     "record_actual_provider": true,
     "temperature": 0.0,
-    "max_output_tokens": 1024,
+    "max_output_tokens": 4096,
     "retry_policy": {
       "max_retries_per_record": 1,
       "retry_only_on_transport_or_rate_limit": true,
@@ -369,7 +369,10 @@
     "record_completion_tokens": true,
     "record_total_tokens": true,
     "record_provider_cost_usd": true,
+    "record_provider_cost_cny": true,
+    "record_cost_currency": true,
     "record_cost_source": true,
+    "allow_controlled_non_usd_cost_estimate": true,
     "exclude_deepseek_qwen_from_later_openrouter_budget_estimate": true
   },
   "stop_gates": [

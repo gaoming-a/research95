@@ -16,10 +16,10 @@
 - 当前远端已同步锚点：
   - `1d235ee Sync EVP-8 smoke packet guards`：远端已包含 G0 guard、G4
     synthesis scaffold 和 smoke execution packet guard-sync。
-- 当前本地未推送语义锚点以 `git log -1 --oneline` 为准；语义上是
-  `Plan EVP-8 staged follow-up gates`，写入 smoke 之后的 G5-G9 staged path，
-  包括 first-batch full-run packet、DeepSeek/Qwen 686-call full run、
-  later-model packet、five-model synthesis 和 paper/artifact freeze。
+- 当前本地语义锚点以 `git log -1 --oneline` 和本轮提交为准；语义上已完成
+  EVP-8 Phase 1 DeepSeek/Qwen smoke closure，并写入下一步 G5 no-API
+  first-batch full-run packet 边界。若本轮提交尚未成功 push，远端仍可能停在
+  较早的 smoke packet guards 锚点。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。最近针对
   `Plan EVP-8 staged follow-up gates` 的 push 两次失败在 network-level
@@ -99,24 +99,24 @@
    - 当前 EVP-8 smoke execution packet：
      `python scripts\write_evp8_smoke_execution_packet.py --check` 已通过，
      packet status 为 `ready`，但 `execution_authorized_by_packet=false`；
-   - 当前 EVP-8 post-smoke audit scaffold：
+   - 当前 EVP-8 post-smoke audit：
      `python scripts\audit_evp8_smoke_results.py --check` 已通过，当前状态为
-     `waiting_for_execution`，不读取 raw outputs；
-   - 当前 EVP-8 G4 smoke synthesis scaffold：
+     `passed`，不读取 raw outputs；
+   - 当前 EVP-8 G4 smoke synthesis：
      `python scripts\summarize_evp8_smoke_synthesis.py --check` 已通过，当前
-     状态为 `waiting_for_execution`，只读取 tracked audit/summary fields；
-   - 当前 EVP-8 G0 one-command guard：
+     状态为 `passed`，只读取 tracked audit/summary fields；
+   - EVP-8 G0 one-command guard：
      `python scripts\check_evp8_deepseek_qwen_g0.py --check` 已通过；该 guard
      汇总 protocol audit、strict preflight、smoke check-only、execution packet、
      post-smoke audit self-test/check、expected-output absence 和 ignored
-     boundary；
-   - 当前 expected-output absence guard 已通过：DeepSeek/Qwen 预期
-     raw-response paths 和 tracked-summary paths 均不存在，避免真实 API 执行前
-     才发现 stale outputs；
-   - 下一步不是自动 API，而是等待用户明确执行 EVP-8 DeepSeek/Qwen smoke；建议
-     使用明确语句：`按当前计划执行 EVP-8 Phase 1 DeepSeek/Qwen smoke`；
-   - 第一批模型只允许在 no-API gates 和 smoke gates 通过后执行
-     DeepSeek V4 Pro + Qwen3.7 Max；
+     boundary。注意：这是 smoke 执行前 guard；现在 smoke outputs 已存在，后续
+     不应再用 G0 作为 post-smoke 验收；
+   - EVP-8 DeepSeek/Qwen Phase 1 smoke 已执行：两个模型各 35 条 records，
+     均为 35/35 parse-valid，post-smoke audit 和 G4 synthesis 均通过；
+   - DeepSeek 使用 4096-token output budget 修复 1024-token truncation；
+     Qwen official cost 以 CNY token-pricing estimate 记录，不写成 USD bill；
+   - 下一步不是自动 API，而是 G5 no-API first-batch full-run packet；
+   - DeepSeek/Qwen 686-call first-batch full run 必须等待用户再次明确授权；
    - 后续补跑 Kimi K2.6、Devstral 2、Gemini 2.5 Flash 必须使用同一 frozen
      packets/prompts/schema，不能边跑边改协议；
    - smoke 之后的后续顺序已经写入 canonical EVP-8 plan：
@@ -208,13 +208,13 @@
   post-smoke audit check 和 G4 synthesis self-test/check。
 - `data/protocols/evp8_deepseek_qwen_smoke_result_audit_v0_1.json`、
   `docs/experiments/evp8_deepseek_qwen_smoke_result_audit_v0_1.md`：
-  EVP-8 DeepSeek/Qwen post-smoke audit scaffold；当前等待真实执行，未来审计
-  tracked summaries、执行顺序、parse/cost gates、per-evidence-level
-  decision/count aggregates 和 raw-output ignored boundary。
+  EVP-8 DeepSeek/Qwen post-smoke audit；当前已 `passed`，审计 tracked
+  summaries、执行顺序、parse/cost gates、per-evidence-level decision/count
+  aggregates 和 raw-output ignored boundary。
 - `data/protocols/evp8_deepseek_qwen_smoke_synthesis_v0_1.json`、
   `docs/experiments/evp8_deepseek_qwen_smoke_synthesis_v0_1.md`：
-  EVP-8 DeepSeek/Qwen G4 smoke synthesis scaffold；当前等待真实执行，未来只从
-  tracked audit/summary fields 汇总 two-model per-level decision patterns。
+  EVP-8 DeepSeek/Qwen G4 smoke synthesis；当前已 `passed`，只从 tracked
+  audit/summary fields 汇总 two-model per-level decision patterns。
 - `scripts/audit_evp8_protocol_spec.py`：
   检查 EVP-8 相邻差分、visible/hidden 字段边界、模型批次、routing policy、
   cost observability 和 stop gates。
@@ -242,14 +242,15 @@
   从 tracked protocol/preflight/check-only summaries 生成 no-API smoke
   execution packet；`--check` 要求 packet ready 且仍不授权 API。
 - `scripts/audit_evp8_smoke_results.py`：
-  不读取 raw outputs 的 post-smoke summary audit；当前无真实 smoke summaries
-  时输出 `waiting_for_execution`；未来会检查每个 `E0-E6` 的 per-level
-  aggregate 是否完整，避免 G4 synthesis 读取 ignored raw responses。
+  不读取 raw outputs 的 post-smoke summary audit；无真实 smoke summaries
+  时输出 `waiting_for_execution`，当前 smoke 后输出 `passed`；会检查每个
+  `E0-E6` 的 per-level aggregate 是否完整，避免 G4 synthesis 读取 ignored
+  raw responses。
 - `scripts/summarize_evp8_smoke_synthesis.py`：
-  不读取 raw outputs 的 G4 synthesis scaffold；当前无真实 smoke summaries 时
-  输出 `waiting_for_execution`，DeepSeek-only pass 时输出
-  `partial_waiting_for_qwen`，双模型均通过后只报告 tracked per-level decision
-  counts 和严格 claim boundary。
+  不读取 raw outputs 的 G4 synthesis scaffold；无真实 smoke summaries 时输出
+  `waiting_for_execution`，DeepSeek-only pass 时输出
+  `partial_waiting_for_qwen`，当前双模型均通过后只报告 tracked per-level
+  decision counts 和严格 claim boundary。
 - `docs/plans/agent_execution_plan_zh.md`、
   `docs/plans/ai_agent_experiment_execution_plan_zh.md`：
   历史执行计划，只保留溯源，不应覆盖当前路线。

@@ -15264,6 +15264,205 @@ Verify:
   通过；
 - 本轮仍未调用模型 API，未读取 raw outputs，未生成 raw outputs。
 
+## 2026-06-20 EVP-8 Phase 1 DeepSeek/Qwen smoke execution closure
+
+Inspect:
+
+- 用户已明确授权执行：`按当前计划执行 EVP-8 Phase 1 DeepSeek/Qwen smoke`；
+- 本轮范围只覆盖 EVP-8 G0-G4 smoke path，不授权 686-call full run、不授权
+  Kimi/Devstral/Gemini、不授权 five-model journal conclusion；
+- 当前本地仍为 `main...origin/main [ahead 1]`，远端停在
+  `1d235ee Sync EVP-8 smoke packet guards`，本地已有未推送 staged follow-up
+  plan commit。
+
+Plan:
+
+1. API 前先更新本计划并运行 G0 no-API guard；
+2. DeepSeek V4 Pro smoke 先执行并立刻 audit；
+3. 只有 DeepSeek audit 通过才执行 Qwen3.7 Max smoke；
+4. Qwen 后运行 post-smoke audit 和 G4 smoke synthesis；
+5. 若遇到 parse/cost/model/provider/raw-output gate 失败，先诊断和修复，不进入
+   后续模型或 full run。
+
+Execute:
+
+- G0 no-API revalidation 在 API 前通过：
+  - `guard_status = passed`；
+  - `expected_outputs_exist = false`；
+  - `post_smoke_observed_status = waiting_for_execution`；
+  - `api_call_attempted = false`；
+- 首次 DeepSeek smoke 使用 `max_output_tokens = 1024`，写出 35 条 ignored raw
+  records，但 15/35 parse invalid，runner 以 `smoke_gate = blocked` 退出；
+- 诊断确认 DeepSeek invalid records 均为 output budget failure：
+  `finish_reason = length`，大量 completion budget 用于 `reasoning_content`，
+  final content 为空或非 JSON；
+- 已将失败的 1024-token outputs 移入 ignored diagnostic path，并把 EVP-8
+  DeepSeek/Qwen routing budget 从 1024 调整为 4096；
+- 修复后重新运行 protocol audit、cost/baseline dry-run、strict preflight、
+  smoke check-only、execution packet check、post-smoke audit self-test/check、
+  G4 synthesis self-test/check 和 G0 guard，均通过；
+- 4096-budget DeepSeek smoke 通过：
+  - `review_count = 35`；
+  - `parse_valid_count = 35`；
+  - `invalid_parse_count = 0`；
+  - `usage_cost_gate = passed`；
+  - `smoke_gate = passed`；
+  - tracked summary 不存 raw response body 或 rendered prompt text；
+- DeepSeek audit 通过后执行 Qwen3.7 Max smoke。Qwen 35/35 parse valid，但官方
+  response 只返回 token usage，不返回 provider USD cost，初次 summary 因
+  `unknown_cost_record_count = 35` 阻塞；
+- 修复成本可观测性：
+  - 不发明 USD 成本、不做汇率换算；
+  - 依据阿里云百炼官方 qwen3.7-max CNY pricing，新增 `cost_cny` 和
+    `cost_currency`；
+  - 保留 `cost_usd` 给 DeepSeek/provider USD 成本；
+  - 从已有 ignored Qwen raw 的 usage 字段重建 ignored summary，没有重复调用
+    Qwen API；
+- Qwen repaired summary：
+  - `review_count = 35`；
+  - `parse_valid_count = 35`；
+  - `invalid_parse_count = 0`；
+  - `usage_cost_gate = passed`；
+  - `smoke_gate = passed`；
+  - `cost_currency_counts = {"CNY": 35}`；
+  - `total_cost_cny = 1.8813`；
+- `python scripts\audit_evp8_smoke_results.py --check` 通过，两个模型 status
+  均为 `passed`；
+- `python scripts\summarize_evp8_smoke_synthesis.py --check` 通过，G4 synthesis
+  status 为 `passed`，仅报告 frozen smoke subset 的 descriptive per-level
+  decision counts：DeepSeek/Qwen 在 E0-E6 每层均为 5 个 `escalate`。
+
+Diagnose / Repair Notes:
+
+- DeepSeek 1024-token failure 是 execution-budget bug，不是 protocol/prompt/
+  schema/candidate/evaluator-join bug，因此保留 protocol id
+  `evp8_journal_full_ladder_v0_1`；
+- Qwen cost blocker 是 non-USD cost observability gap。修复后 gate 只承认可控
+  CNY token-pricing estimate，不把它写成 provider-reported USD bill；
+- G0 guard 是执行前 guard。smoke 输出存在后，G0 的 expected-output absence
+  会按设计失败；post-smoke 验收必须使用 result audit 和 G4 synthesis。
+
+Verify:
+
+- `python -m py_compile scripts\preflight_evp8_deepseek_qwen.py scripts\run_evp8_deepseek_qwen_smoke.py scripts\audit_evp8_protocol_spec.py scripts\build_evp8_cost_baseline_dry_run.py`
+  通过；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过；
+- `python scripts\build_evp8_cost_baseline_dry_run.py --check` 通过；
+- `python scripts\audit_evp8_smoke_results.py --check` 通过：
+  `audit_status = passed`；
+- `python scripts\summarize_evp8_smoke_synthesis.py --check` 通过：
+  `synthesis_status = passed`；
+- `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
+  通过，仍不打印 key value、不调用 API；
+- `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
+  通过，仍不生成 raw outputs；
+- `python scripts\audit_evp8_smoke_results.py --self-test` 和
+  `python scripts\summarize_evp8_smoke_synthesis.py --self-test` 均通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过，仅有 Windows CRLF 工作区转换 warning；
+- 本轮真实 API 调用仅限已授权的 DeepSeek/Qwen 5-candidate x 7-level smoke；
+  没有启动 686-call full run。
+
+Next Gate:
+
+- 下一步不是继续跑模型，而是 G5：生成并审计独立 no-API first-batch
+  full-run packet；
+- 686-call DeepSeek/Qwen first-batch full run 需要用户再次明确授权；
+- 如果后续要改 protocol/prompt/schema/candidate/evaluator join，必须 bump
+  EVP-8 protocol version 并重跑受影响模型。
+
+## 2026-06-20 EVP-8 Phase 1 DeepSeek/Qwen smoke execution
+
+Inspect:
+
+- 用户已明确给出授权目标：
+  `按当前计划执行 EVP-8 Phase 1 DeepSeek/Qwen smoke`；
+- 当前工作区 clean，`main...origin/main [ahead 1]`；
+- 最新本地提交为 `17d7312 Plan EVP-8 staged follow-up gates`，远端仍停在
+  `1d235ee Sync EVP-8 smoke packet guards`；
+- 该 ahead 状态是已知 GitHub network-level sync failure，不阻塞本轮本地执行；
+- `docs/experiments/evp8_journal_scale_execution_plan_20260620.md` 明确本轮只覆盖
+  G0-G4：G0 no-API revalidation、DeepSeek smoke、DeepSeek audit、Qwen smoke、
+  two-model smoke synthesis；
+- 本轮不得启动 G5 之后的 first-batch 686-call full run，不得补 Kimi/Devstral/Gemini，
+  不得写 final five-model journal conclusion。
+
+Plan:
+
+1. 运行 G0 no-API revalidation：
+   - `python scripts\check_evp8_deepseek_qwen_g0.py --check`；
+   - 若 G0 发现 stale expected outputs、preflight/check-only/audit/self-test
+     failure 或 ignored-boundary failure，停止并诊断；
+2. 若 G0 通过，执行 DeepSeek V4 Pro smoke：
+   - `python scripts\run_evp8_deepseek_qwen_smoke.py --execute --config configs\evp8_deepseek_qwen.local.json --model-id deepseek/deepseek-v4-pro`；
+3. 立刻运行 post-smoke audit：
+   - `python scripts\audit_evp8_smoke_results.py --check`；
+4. 只有 DeepSeek audit 通过，才执行 Qwen3.7 Max smoke：
+   - `python scripts\run_evp8_deepseek_qwen_smoke.py --execute --config configs\evp8_deepseek_qwen.local.json --model-id qwen/qwen3.7-max`；
+5. 再次运行 post-smoke audit 和 G4 synthesis：
+   - `python scripts\audit_evp8_smoke_results.py --check`；
+   - `python scripts\summarize_evp8_smoke_synthesis.py --check`；
+6. 更新 raw-output-free tracked summaries、current plan、short-state、execution
+   plan、engineering notes 和 docs index；
+7. 运行 local quality gate、diff/sensitive checks；
+8. 只暂存本轮相关 tracked artifacts/docs，提交并尝试 GitHub push。若 push 仍为
+   network-level failure，记录后按用户规则继续。
+
+Acceptance:
+
+- G0 guard 通过，且 API 前 expected DeepSeek/Qwen raw-response 和 tracked-summary
+  paths 均不存在；
+- DeepSeek smoke 产生 35 条 planned review records，tracked summary 不含 raw
+  response body、rendered prompt text、API key 或 local config value；
+- Qwen smoke 只能在 DeepSeek audit 通过后执行，并使用同一 frozen EVP-8 v0.1
+  smoke subset、prompt/schema 和 evaluator joins；
+- G4 synthesis 只基于 tracked summary/audit fields，允许描述 frozen 5-candidate
+  smoke subset 的 two-model readiness 和 per-level decision pattern；
+- 不声明 full-cohort、five-model、LLM superiority 或 evidence-level effectiveness
+  final result；
+- 本轮 raw responses 只能留在 ignored `outputs/`，不得提交。
+
+Execute:
+
+- G0 no-API revalidation 已通过：
+  - `guard_status = passed`；
+  - `expected_outputs_exist = false`；
+  - `post_smoke_observed_status = waiting_for_execution`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_read = false`；
+  - `raw_outputs_generated = false`；
+- 执行 DeepSeek V4 Pro smoke：
+  `python scripts\run_evp8_deepseek_qwen_smoke.py --execute --config configs\evp8_deepseek_qwen.local.json --model-id deepseek/deepseek-v4-pro`；
+- DeepSeek smoke 写出 35 条 ignored raw records 和 ignored raw-output-free summary，
+  但 runner 以 `smoke_gate = blocked` 退出；
+- `python scripts\audit_evp8_smoke_results.py --check` 失败，正式 gate 阻止
+  Qwen 执行；
+- tracked audit 显示：
+  - `review_count = 35`；
+  - `parse_valid_count = 20`；
+  - `invalid_parse_count = 15`；
+  - `usage_cost_gate = passed`；
+  - `smoke_gate = blocked`；
+  - DeepSeek model/provider/cost observability checks 通过；
+- 受控读取 ignored raw output 仅用于失败归因，不把 raw response body 写入 tracked
+  docs：15 条 invalid 都是 `invalid_json:No JSON object found in model response`；
+  这些记录均为 `finish_reason = length`、`completion_tokens = 1024`，多数 final
+  `content` 为空且 completion budget 被 `reasoning_content` 消耗；
+- 诊断：`max_output_tokens = 1024` 对 DeepSeek V4 Pro 的 EVP-8 prompt 太低，
+  属于 execution-budget bug，不是 protocol/prompt/schema/candidate-set/evaluator
+  join bug。
+
+Repair Plan:
+
+1. 不执行 Qwen；
+2. 保留 failed 1024-token run 到 ignored diagnostic paths，释放默认 smoke 输出路径；
+3. 将 tracked example config 和 ignored local config 的 `max_output_tokens` 从
+   1024 提高到 4096；
+4. 重新运行 strict preflight、smoke check-only、execution packet 和 G0 guard；
+5. 只有 repaired G0 重新通过，才重新执行 DeepSeek smoke；
+6. 仍不改变 EVP-8 v0.1 packets、prompt、schema、candidate set 或 evaluator joins。
+
 Commit And Sync:
 
 - 已提交本轮 G0 expected-output absence guard：

@@ -150,6 +150,8 @@ def preflight(config_path: Path, allow_missing_credentials: bool = False) -> dic
             _check("record_actual_model_id", config.get("record_actual_model_id") is True, config.get("record_actual_model_id")),
             _check("record_actual_provider", config.get("record_actual_provider") is True, config.get("record_actual_provider")),
             _check("record_cost_source", config.get("record_cost_source") is True, config.get("record_cost_source")),
+            _check("record_cost_currency", config.get("record_cost_currency") is True, config.get("record_cost_currency")),
+            _check("record_provider_cost_cny", config.get("record_provider_cost_cny") is True, config.get("record_provider_cost_cny")),
             _check("record_provider_cost_usd", config.get("record_provider_cost_usd") is True, config.get("record_provider_cost_usd")),
         ]
     )

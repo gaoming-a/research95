@@ -2900,3 +2900,51 @@ This file starts fresh for the patch-verification project.
 - Later Kimi/Devstral/Gemini runs are completion of the same frozen EVP-8
   packet set, not a chance to repair prompts, change evidence fields, or swap
   candidate joins after seeing DeepSeek/Qwen behavior.
+
+## 2026-06-20 EVP-8 DeepSeek smoke output-budget repair
+
+- The first authorized EVP-8 DeepSeek smoke used `max_output_tokens = 1024`.
+  DeepSeek returned 35 responses with valid model/provider/cost observability,
+  but 15/35 were parse-invalid because the responses hit `finish_reason =
+  length`; most invalid records spent the completion budget in
+  `reasoning_content` and produced empty final content.
+- This is the same failure mode seen in earlier DeepSeek smoke work. Treat it
+  as an execution-budget bug, not a protocol, prompt, schema, candidate-set, or
+  evaluator-join bug.
+- Preserve the failed 1024-token outputs under ignored diagnostic paths, raise
+  the EVP-8 DeepSeek/Qwen smoke `max_output_tokens` to 4096, rerun no-API
+  preflight/check-only/execution-packet guards, and only then rerun DeepSeek.
+  Qwen remains gated until the repaired DeepSeek audit passes.
+
+## 2026-06-20 EVP-8 Qwen CNY cost-observability repair
+
+- Qwen3.7 Max smoke can return complete token usage without a provider USD
+  cost field. Treating that as an observed USD bill is wrong, but treating it
+  as unknown forever blocks a valid smoke run even when an official pricing
+  source exists.
+- Keep two separate concepts in summaries:
+  - `cost_usd` for provider-reported USD cost or controlled USD token-pricing
+    estimates such as DeepSeek;
+  - `cost_cny` plus `cost_currency = CNY` for Qwen official token-pricing
+    estimates from Alibaba Cloud Model Studio pricing.
+- Do not do exchange-rate conversion inside the smoke runner. The gate only
+  needs auditable usage/cost observability, not a normalized financial report.
+  If a future paper table needs all costs in USD, add a separate dated exchange
+  rate source and label it as reporting conversion, not provider billing.
+- When repairing a cost-only summary failure, do not rerun the model if raw
+  usage already exists under ignored outputs. Recompute only the aggregate
+  cost fields from existing ignored raw `response.usage`, then rerun the
+  raw-output-free smoke audit and synthesis.
+
+## 2026-06-20 EVP-8 G0 guard after smoke execution
+
+- `check_evp8_deepseek_qwen_g0.py` is a pre-execution guard. It intentionally
+  requires the expected raw-response and tracked-summary output paths to be
+  absent before real API calls.
+- After smoke execution succeeds, running G0 again will fail the
+  expected-output absence check. That is not a smoke-result failure; it means
+  the workflow has moved past G0.
+- Post-smoke validation should use `audit_evp8_smoke_results.py --check` and
+  `summarize_evp8_smoke_synthesis.py --check`. Do not overwrite the tracked
+  pre-execution G0 summary with a post-execution failure unless documenting a
+  stale-output blocker before a new run.

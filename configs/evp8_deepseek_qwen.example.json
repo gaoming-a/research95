@@ -20,7 +20,7 @@
     "output_dir": "outputs/evp8_phase1_deepseek_qwen_full",
     "planned_calls_per_model": 686
   },
-  "max_output_tokens": 1024,
+  "max_output_tokens": 4096,
   "models": [
     {
       "api_key_env": "DEEPSEEK_API_KEY",
@@ -46,6 +46,8 @@
   "record_actual_model_id": true,
   "record_actual_provider": true,
   "record_cost_source": true,
+  "record_cost_currency": true,
+  "record_provider_cost_cny": true,
   "record_provider_cost_usd": true,
   "retry_policy": {
     "max_retries_per_record": 1,
