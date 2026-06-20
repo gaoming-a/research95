@@ -9,10 +9,15 @@
 ## Guard Commands
 
 1. `git status --short --branch --untracked-files=all`
+1. `python scripts\check_evp8_deepseek_qwen_g0.py --check`
 1. `python scripts\audit_evp8_protocol_spec.py --check`
 1. `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
 1. `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
+1. `python scripts\write_evp8_smoke_execution_packet.py --check`
 1. `python scripts\audit_evp8_smoke_results.py --self-test`
+1. `python scripts\audit_evp8_smoke_results.py --check`
+1. `python scripts\summarize_evp8_smoke_synthesis.py --self-test`
+1. `python scripts\summarize_evp8_smoke_synthesis.py --check`
 1. `git status --short --ignored configs\evp8_deepseek_qwen.local.json outputs artifacts .env`
 
 ## Execute Commands After Explicit User Authorization

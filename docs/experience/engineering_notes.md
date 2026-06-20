@@ -2877,3 +2877,13 @@ This file starts fresh for the patch-verification project.
 - The allowed G4 claim is descriptive per-level decision patterns on the frozen
   5-candidate EVP-8 v0.1 smoke subset. It is not evidence for a full cohort,
   a five-model journal result, or final evidence-level effectiveness.
+
+## 2026-06-20 EVP-8 execution-packet guard drift
+
+- Whenever a new pre-execution guard is added to G0 or the execution plan,
+  update `scripts/write_evp8_smoke_execution_packet.py` and regenerate the
+  tracked packet. Otherwise a future executor following only the handoff packet
+  can skip a newer guard while still appearing to follow the plan.
+- The smoke execution packet should include both the one-command G0 guard and
+  the expanded guard commands. Duplication is acceptable here because the
+  packet is a human handoff artifact and must make missing checks visible.

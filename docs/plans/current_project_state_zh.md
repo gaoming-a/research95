@@ -196,7 +196,9 @@
 - `data/protocols/evp8_deepseek_qwen_smoke_execution_packet_v0_1.json`、
   `docs/experiments/evp8_deepseek_qwen_smoke_execution_packet_v0_1.md`：
   EVP-8 DeepSeek/Qwen smoke no-API execution packet；记录 guard commands、
-  future execute commands、expected output paths、stop gates 和非授权边界。
+  future execute commands、expected output paths、stop gates 和非授权边界。当前
+  guard commands 已包含 G0 one-command guard、execution packet self-check、
+  post-smoke audit check 和 G4 synthesis self-test/check。
 - `data/protocols/evp8_deepseek_qwen_smoke_result_audit_v0_1.json`、
   `docs/experiments/evp8_deepseek_qwen_smoke_result_audit_v0_1.md`：
   EVP-8 DeepSeek/Qwen post-smoke audit scaffold；当前等待真实执行，未来审计

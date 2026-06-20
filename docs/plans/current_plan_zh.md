@@ -15562,3 +15562,75 @@ Verify:
 - ignored boundary 确认 `.env`、`artifacts/`、
   `configs/evp8_deepseek_qwen.local.json`、`outputs/` 仍未 staged；
 - 本轮仍未调用模型 API，未读取 raw outputs，未生成 raw outputs。
+
+Commit And Sync:
+
+- 已提交并同步本轮 G4 smoke synthesis scaffold：
+  `4f1136b Add EVP-8 smoke synthesis scaffold`；
+- 远端 `origin/main` 已同步到本轮提交；
+- 工作区 clean。
+
+## 2026-06-20 EVP-8 smoke execution packet guard sync
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main`；
+- 最新提交为 `4f1136b Add EVP-8 smoke synthesis scaffold`；
+- 当前继续指令不是明确 EVP-8 Phase 1 smoke/API 授权，本轮不得执行
+  `--execute`；
+- G0 one-command guard 已加入 G4 synthesis self-test/check；
+- EVP-8 execution plan 已要求真实 smoke 前运行 synthesis self-test/check；
+- 但 `data/protocols/evp8_deepseek_qwen_smoke_execution_packet_v0_1.json` 的
+  `guard_commands_before_execute` 仍停留在旧 guard list，尚未列出
+  `summarize_evp8_smoke_synthesis.py --self-test` 和 `--check`。
+
+Plan:
+
+1. 更新 `scripts/write_evp8_smoke_execution_packet.py`，把 G4 synthesis
+   self-test/check 加入 future execution packet 的 guard commands；
+2. 重新生成 tracked execution packet JSON/Markdown；
+3. 同步 execution plan、short-state、INDEX 和 engineering notes；
+4. 运行 no-API py_compile、execution packet check、G0 guard、local quality gate
+   和 diff check；
+5. 不调用 API，不读取 raw outputs，不生成 raw outputs。
+
+Acceptance:
+
+- smoke execution packet 的 guard commands 明确包含：
+  - `python scripts\summarize_evp8_smoke_synthesis.py --self-test`；
+  - `python scripts\summarize_evp8_smoke_synthesis.py --check`；
+- `execution_authorized_by_packet` 仍为 false；
+- G0 guard 仍通过，且当前 synthesis status 为 `waiting_for_execution`。
+
+Execute:
+
+- 更新 `scripts/write_evp8_smoke_execution_packet.py` 的 `guard_commands`
+  生成逻辑；
+- 重新生成 tracked smoke execution packet JSON/Markdown；
+- 新 guard list 现在包含：
+  - `python scripts\check_evp8_deepseek_qwen_g0.py --check`；
+  - `python scripts\write_evp8_smoke_execution_packet.py --check`；
+  - `python scripts\audit_evp8_smoke_results.py --check`；
+  - `python scripts\summarize_evp8_smoke_synthesis.py --self-test`；
+  - `python scripts\summarize_evp8_smoke_synthesis.py --check`；
+- 同步 EVP-8 execution plan、short-state、INDEX 和 engineering notes。
+
+Verify:
+
+- `python -m py_compile scripts\write_evp8_smoke_execution_packet.py` 通过；
+- `python scripts\write_evp8_smoke_execution_packet.py --check` 通过：
+  - `packet_status = ready`；
+  - `execution_authorized_by_packet = false`；
+  - `api_call_attempted = false`；
+  - guard commands 包含 G0、execution-packet self-check、post-smoke audit
+    check 和 G4 synthesis checks；
+- `python scripts\check_evp8_deepseek_qwen_g0.py --check` 通过：
+  - `guard_status = passed`；
+  - `smoke_synthesis_check.synthesis_status = waiting_for_execution`；
+  - `expected_outputs_exist = false`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_read = false`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过，仅有 CRLF 工作区转换 warning；
+- 本轮仍未调用模型 API，未读取 raw outputs，未生成 raw outputs。

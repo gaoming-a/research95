@@ -114,10 +114,15 @@
   "execution_authorized_by_packet": false,
   "guard_commands": [
     "git status --short --branch --untracked-files=all",
+    "python scripts\\check_evp8_deepseek_qwen_g0.py --check",
     "python scripts\\audit_evp8_protocol_spec.py --check",
     "python scripts\\preflight_evp8_deepseek_qwen.py --config configs\\evp8_deepseek_qwen.local.json --strict-api-ready",
     "python scripts\\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\\evp8_deepseek_qwen.local.json",
+    "python scripts\\write_evp8_smoke_execution_packet.py --check",
     "python scripts\\audit_evp8_smoke_results.py --self-test",
+    "python scripts\\audit_evp8_smoke_results.py --check",
+    "python scripts\\summarize_evp8_smoke_synthesis.py --self-test",
+    "python scripts\\summarize_evp8_smoke_synthesis.py --check",
     "git status --short --ignored configs\\evp8_deepseek_qwen.local.json outputs artifacts .env"
   ],
   "local_config": "configs/evp8_deepseek_qwen.local.json",

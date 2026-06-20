@@ -97,9 +97,9 @@ Current audit status:
 - guarded smoke runner check-only: passed for 35 project-frequency-stratified
   smoke packets, including the dominant youtube-dl project, without storing
   rendered prompt text, generating raw outputs, or calling APIs;
-- smoke execution packet: ready, with exact guard commands and
-  DeepSeek-then-Qwen execute commands; it explicitly does not authorize API
-  calls by itself;
+- smoke execution packet: ready, with exact G0 guard commands, post-smoke
+  audit checks, G4 synthesis checks, and DeepSeek-then-Qwen execute commands;
+  it explicitly does not authorize API calls by itself;
 - post-smoke audit scaffold: currently `waiting_for_execution`; after real
   smoke, it validates tracked summaries without reading raw responses,
   including per-evidence-level decision/count aggregates needed by G4

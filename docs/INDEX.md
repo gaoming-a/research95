@@ -97,7 +97,9 @@
 - `../data/protocols/evp8_deepseek_qwen_smoke_execution_packet_v0_1.json`:
   no-API DeepSeek/Qwen smoke execution handoff packet. It records guard
   commands, future execute commands, expected output paths, stop gates, and the
-  boundary that this packet does not authorize API calls.
+  boundary that this packet does not authorize API calls. The guard list now
+  includes G0 one-command, execution-packet self-check, post-smoke audit, and
+  G4 synthesis checks.
 - `experiments/evp8_deepseek_qwen_smoke_execution_packet_v0_1.md`: Markdown
   companion for the no-API smoke execution packet.
 - `../data/protocols/evp8_deepseek_qwen_g0_guard_summary_v0_1.json`:
