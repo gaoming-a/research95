@@ -16168,6 +16168,36 @@ Verify:
   通过；
 - `git diff --check` 通过，仅有 CRLF 工作区转换 warning。
 
+## 2026-06-20 EVP-8 G6 DeepSeek first-batch full-run authorization
+
+Inspect:
+
+- 用户回复“授权”，结合前序明确等待的授权句“授权执行 DeepSeek G6 first-batch
+  full run”，本轮解释为授权执行 DeepSeek G6 first-batch full run；
+- `git status --short --branch` 显示 `main...origin/main`，工作区 clean；
+- `git log -1 --oneline` 显示 `93f1467 Record EVP-8 G6 sync recovery`；
+- G5 first-batch full-run packet 当前 `ready`；
+- DeepSeek full-run expected outputs 当前不存在：
+  - `outputs/evp8_phase1_deepseek_qwen_full/deepseek_deepseek-v4-pro/raw_responses.jsonl`；
+  - `data/reviews/evp8_deepseek_deepseek-v4-pro_full_summary.json`。
+
+Plan:
+
+1. 重新运行 no-API preflight and full-run guards；
+2. 若所有 guard 通过，执行 DeepSeek G6 first-batch full run：
+   `python scripts\run_evp8_deepseek_qwen_smoke.py --execute --run-scope full --config configs\evp8_deepseek_qwen.local.json --model-id deepseek/deepseek-v4-pro`；
+3. 执行后立即运行 `python scripts\audit_evp8_first_batch_full_results.py --check`；
+4. 只有 DeepSeek full audit 通过后，后续才允许考虑 Qwen first-batch full run；
+5. 本轮不得改变 protocol、prompt、schema、candidate set、evaluator joins、temperature、
+   output parser 或 evidence levels。
+
+Acceptance:
+
+- DeepSeek full summary 必须 raw-output-free；
+- ignored raw responses 只能写入 `outputs/`；
+- tracked summary 必须包含 parse/schema/usage-cost gates；
+- 若 DeepSeek full audit 失败，停止并诊断，不运行 Qwen。
+
 Commit And Sync:
 
 - 初始提交为 `8983abd Record EVP-8 G6 authorization boundary`；
