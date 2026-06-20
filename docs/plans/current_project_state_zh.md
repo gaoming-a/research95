@@ -10,19 +10,19 @@
 
 - 分支：`main`
 - 远端：`origin/main`
-- 当前 Git 状态：以 `git status --short --branch` 为准。2026-06-18 最近几轮
-  检查均为本地 `main` clean 且 ahead `origin/main`；精确 ahead 数会随本地
-  文档维护提交增加，不应写成长期 truth。
-- 最近本地语义锚点包括：
-  - `3b3865c Record no-API package rebuild`：记录 paper tables、figures、
-    IEEE draft、7-page PDF、artifact 和 local quality 的 no-API rebuild；
-  - `2b67f5e Record local completion audit boundary`：记录本地 completion /
-    plan-progress audits 已通过，同时 GitHub sync 仍未成立；
-  - `f15c621 Record GitHub sync retry failure`：记录 `git push origin main`
-    仍因 connection reset 失败，属于 network-level sync boundary。
-- GitHub sync 边界：此前 push 频繁失败，用户已允许在同步失败时跳过 GitHub
-  并继续本地计划执行；因此本地 `main` ahead `origin/main` 是已知同步状态，
-  不应解读为未完成实验或未提交工作。
+- 当前 Git 状态：以 `git status --short --branch` 为准。2026-06-20 最近检查为
+  本地 `main` clean 且 `main...origin/main [ahead 1]`。
+- 当前未同步本地语义锚点：
+  - `7426556 Plan EVP-8 DeepSeek Qwen smoke execution`：记录 EVP-8 Phase 1
+    DeepSeek/Qwen smoke 的后续执行计划、授权边界、G0 重跑顺序、DeepSeek-first
+    gate、Qwen-after-DeepSeek gate 和 stop conditions。
+- 当前远端锚点：
+  - `d94437c Check EVP-8 G0 expected output absence`：远端已包含 G0
+    expected-output absence guard；本地只剩 `7426556` 尚未推送成功。
+- GitHub sync 边界：最近多次 `git push origin main` 仍失败在 GitHub
+  network-level connection。用户已允许在连续同步失败时跳过 GitHub 并继续本地
+  计划执行；因此本地 `main` ahead `origin/main` 是已知同步状态，不应解读为
+  未完成实验或未提交工作。
 - `bugsinpy_cookiecutter_4` 已收束为 tracked blocker policy；完整 builder
   失败输出仍是本地诊断残留，不应提交。
 - ignored 本地交付物：
@@ -101,7 +101,16 @@
    - 当前 EVP-8 post-smoke audit scaffold：
      `python scripts\audit_evp8_smoke_results.py --check` 已通过，当前状态为
      `waiting_for_execution`，不读取 raw outputs；
-   - 下一步不是自动 API，而是等待用户明确执行 EVP-8 DeepSeek/Qwen smoke；
+   - 当前 EVP-8 G0 one-command guard：
+     `python scripts\check_evp8_deepseek_qwen_g0.py --check` 已通过；该 guard
+     汇总 protocol audit、strict preflight、smoke check-only、execution packet、
+     post-smoke audit self-test/check、expected-output absence 和 ignored
+     boundary；
+   - 当前 expected-output absence guard 已通过：DeepSeek/Qwen 预期
+     raw-response paths 和 tracked-summary paths 均不存在，避免真实 API 执行前
+     才发现 stale outputs；
+   - 下一步不是自动 API，而是等待用户明确执行 EVP-8 DeepSeek/Qwen smoke；建议
+     使用明确语句：`按当前计划执行 EVP-8 Phase 1 DeepSeek/Qwen smoke`；
    - 第一批模型只允许在 no-API gates 和 smoke gates 通过后执行
      DeepSeek V4 Pro + Qwen3.7 Max；
    - 后续补跑 Kimi K2.6、Devstral 2、Gemini 2.5 Flash 必须使用同一 frozen

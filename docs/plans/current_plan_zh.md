@@ -15349,3 +15349,41 @@ Next Manual Command:
 
 - 若用户接下来要真实执行，应明确说：
   `按当前计划执行 EVP-8 Phase 1 DeepSeek/Qwen smoke`。
+
+## 2026-06-20 EVP-8 short-state handoff refresh
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main [ahead 1]`；
+- 未同步本地语义提交为：
+  `7426556 Plan EVP-8 DeepSeek Qwen smoke execution`；
+- 最近 `git push origin main` 仍失败在 network-level GitHub connection；
+- 用户已允许连续 GitHub 同步失败时继续本地计划执行；
+- `docs/plans/current_project_state_zh.md` 是新会话短入口，但其 Git 同步段仍列出
+  较早的语义锚点，且 EVP-8 下一步段尚未明确记录 G0 expected-output absence
+  guard 和 `7426556` 本地计划提交；
+- 当前继续指令不是明确 EVP-8 Phase 1 smoke/API 授权，因此本轮仍不得执行
+  `--execute`。
+
+Plan:
+
+1. 刷新 `docs/plans/current_project_state_zh.md` 的当前同步状态：
+   - 记录 latest local semantic commit 为 `7426556`；
+   - 记录 `origin/main` 当前仍停在 `d94437c`；
+   - 明确 ahead 1 是 GitHub network sync failure，不是 tracked 工作区脏状态；
+2. 在 EVP-8 决策门中补充：
+   - G0 one-command guard；
+   - expected raw/summary output absence；
+   - 明确下一步人工授权语句；
+3. 不改实验协议、不调用 API、不生成 tracked model outputs；
+4. 运行 targeted 文档检查、G0 no-API guard 到 ignored `outputs/`、local quality
+   gate 和 `git diff --check`；
+5. 仅提交本轮文档刷新；GitHub push 若继续网络失败，按既定规则不阻塞。
+
+Acceptance:
+
+- `current_project_state_zh.md` 不再只停留在旧 Git 同步锚点；
+- 该短入口明确下一步不是自动 API，而是等待：
+  `按当前计划执行 EVP-8 Phase 1 DeepSeek/Qwen smoke`；
+- no-API G0 guard 仍通过，且 `expected_outputs_exist=false`；
+- 工作区不 staged `.env`、`configs/*.local.json`、`outputs/`、`artifacts/`。

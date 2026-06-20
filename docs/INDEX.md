@@ -11,7 +11,9 @@
 - `plans/current_project_state_zh.md`: short current-state entry and file map.
   Start here before reading the long execution log. It records Git sync state,
   current paper/result boundaries, experiment-decision gates, active plan roles,
-  key project files, script entry points, and forbidden misuses.
+  key project files, script entry points, and forbidden misuses. As of
+  2026-06-20, it also records the EVP-8 G0 expected-output absence guard and
+  the exact manual phrase required before DeepSeek/Qwen smoke API execution.
 - `plans/final_paper_roadmap_zh.md`: canonical final-paper route and subsequent
   research target. It upgrades the current pilot into an evidence-visibility
   empirical study with expanded data, tool-only baselines, hidden-evaluator

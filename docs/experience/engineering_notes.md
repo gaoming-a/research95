@@ -2840,3 +2840,14 @@ This file starts fresh for the patch-verification project.
 - G0 should also fail if expected smoke raw-response or tracked-summary output
   paths already exist. This catches stale outputs before the runner reaches its
   overwrite-refusal branch at real execution time.
+
+## 2026-06-20 EVP-8 short-state handoff drift
+
+- When `docs/plans/current_plan_zh.md` is updated with a new execution boundary,
+  refresh `docs/plans/current_project_state_zh.md` in the same turn if the
+  short-state page is the expected next-session entry point. Otherwise a future
+  handoff can see stale local-ahead commits or miss the latest G0 guard.
+- For EVP-8 Phase 1, the short-state page should explicitly name the latest
+  local semantic commit, the remote anchor, the G0 expected-output absence
+  guard, and the exact manual authorization phrase for real smoke execution.
+  Generic continuation still must not be treated as API authorization.
