@@ -2829,3 +2829,7 @@ This file starts fresh for the patch-verification project.
   no-rendered-prompt/no-raw-text tracked-summary boundary as the handoff
   packet. Otherwise a future run could silently drift inputs while still
   satisfying parse/count gates.
+- Because post-smoke audit must not read raw responses, the runner's tracked
+  executed summary needs aggregate request/actual model-id and provider-route
+  counts. Without those raw-output-free aggregates, actual provider/model drift
+  would only be visible in ignored raw outputs.

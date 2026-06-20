@@ -18,9 +18,13 @@
 ## Execute Commands After Explicit User Authorization
 
 - `deepseek_smoke_first`: `python scripts\run_evp8_deepseek_qwen_smoke.py --execute --config configs\evp8_deepseek_qwen.local.json --model-id deepseek/deepseek-v4-pro`
+  - request model: `deepseek-v4-pro`
+  - provider route: `deepseek_official`
   - outputs: `data/reviews/evp8_deepseek_deepseek-v4-pro_smoke_summary.json`, `outputs/evp8_phase1_deepseek_qwen_smoke/deepseek_deepseek-v4-pro/raw_responses.jsonl`
   - proceed if: tracked_summary.smoke_gate == passed and tracked_summary.usage_cost_gate == passed
 - `qwen_smoke_after_deepseek_gate`: `python scripts\run_evp8_deepseek_qwen_smoke.py --execute --config configs\evp8_deepseek_qwen.local.json --model-id qwen/qwen3.7-max`
+  - request model: `qwen3.7-max`
+  - provider route: `qwen_official`
   - outputs: `data/reviews/evp8_qwen_qwen3.7-max_smoke_summary.json`, `outputs/evp8_phase1_deepseek_qwen_smoke/qwen_qwen3.7-max/raw_responses.jsonl`
   - proceed if: DeepSeek smoke gate passed first; this Qwen summary must also pass parse and usage/cost gates.
 

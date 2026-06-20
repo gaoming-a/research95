@@ -64,6 +64,13 @@ def output_paths(config: dict[str, Any], model_id: str) -> dict[str, str]:
     }
 
 
+def configured_model(config: dict[str, Any], model_id: str) -> dict[str, Any]:
+    for model in config.get("models") or []:
+        if model.get("model_id") == model_id:
+            return model
+    raise ValueError(f"missing configured model: {model_id}")
+
+
 def build_packet() -> dict[str, Any]:
     config = read_json(CONFIG_PATH)
     protocol_audit = read_json(PROTOCOL_AUDIT_PATH)
@@ -98,10 +105,14 @@ def build_packet() -> dict[str, Any]:
         "python scripts\\audit_evp8_smoke_results.py --self-test",
         "git status --short --ignored configs\\evp8_deepseek_qwen.local.json outputs artifacts .env",
     ]
+    deepseek_model = configured_model(config, "deepseek/deepseek-v4-pro")
+    qwen_model = configured_model(config, "qwen/qwen3.7-max")
     execute_commands = [
         {
             "step": "deepseek_smoke_first",
             "model_id": "deepseek/deepseek-v4-pro",
+            "request_model_id": deepseek_model.get("request_model_id"),
+            "provider_route": deepseek_model.get("provider_route"),
             "command": "python scripts\\run_evp8_deepseek_qwen_smoke.py --execute --config configs\\evp8_deepseek_qwen.local.json --model-id deepseek/deepseek-v4-pro",
             "outputs": output_paths(config, "deepseek/deepseek-v4-pro"),
             "proceed_if": "tracked_summary.smoke_gate == passed and tracked_summary.usage_cost_gate == passed",
@@ -109,6 +120,8 @@ def build_packet() -> dict[str, Any]:
         {
             "step": "qwen_smoke_after_deepseek_gate",
             "model_id": "qwen/qwen3.7-max",
+            "request_model_id": qwen_model.get("request_model_id"),
+            "provider_route": qwen_model.get("provider_route"),
             "command": "python scripts\\run_evp8_deepseek_qwen_smoke.py --execute --config configs\\evp8_deepseek_qwen.local.json --model-id qwen/qwen3.7-max",
             "outputs": output_paths(config, "qwen/qwen3.7-max"),
             "proceed_if": "DeepSeek smoke gate passed first; this Qwen summary must also pass parse and usage/cost gates.",
@@ -165,6 +178,8 @@ def write_markdown(path: Path, packet: dict[str, Any]) -> None:
     lines.extend(["", "## Execute Commands After Explicit User Authorization", ""])
     for command in packet["execute_commands_after_explicit_user_authorization"]:
         lines.append(f"- `{command['step']}`: `{command['command']}`")
+        lines.append(f"  - request model: `{command['request_model_id']}`")
+        lines.append(f"  - provider route: `{command['provider_route']}`")
         lines.append(f"  - outputs: `{command['outputs']['tracked_summary']}`, `{command['outputs']['raw_responses']}`")
         lines.append(f"  - proceed if: {command['proceed_if']}")
     lines.extend(["", "## Stop Gates", ""])

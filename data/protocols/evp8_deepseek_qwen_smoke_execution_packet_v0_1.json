@@ -94,6 +94,8 @@
         "tracked_summary": "data/reviews/evp8_deepseek_deepseek-v4-pro_smoke_summary.json"
       },
       "proceed_if": "tracked_summary.smoke_gate == passed and tracked_summary.usage_cost_gate == passed",
+      "provider_route": "deepseek_official",
+      "request_model_id": "deepseek-v4-pro",
       "step": "deepseek_smoke_first"
     },
     {
@@ -104,6 +106,8 @@
         "tracked_summary": "data/reviews/evp8_qwen_qwen3.7-max_smoke_summary.json"
       },
       "proceed_if": "DeepSeek smoke gate passed first; this Qwen summary must also pass parse and usage/cost gates.",
+      "provider_route": "qwen_official",
+      "request_model_id": "qwen3.7-max",
       "step": "qwen_smoke_after_deepseek_gate"
     }
   ],

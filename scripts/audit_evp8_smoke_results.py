@@ -59,6 +59,8 @@ def check(name: str, passed: bool, detail: Any) -> dict[str, Any]:
 
 def audit_summary(packet: dict[str, Any], command_record: dict[str, Any], summary: dict[str, Any] | None) -> dict[str, Any]:
     model_id = command_record["model_id"]
+    request_model_id = command_record.get("request_model_id")
+    provider_route = command_record.get("provider_route")
     outputs = command_record["outputs"]
     summary_path = outputs["tracked_summary"]
     raw_path = outputs["raw_responses"]
@@ -73,11 +75,23 @@ def audit_summary(packet: dict[str, Any], command_record: dict[str, Any], summar
                 check("raw_path_under_outputs", raw_path_is_ignored_boundary(raw_path), raw_path),
             ],
         }
+    expected_request_counts = {str(request_model_id): EXPECTED_REVIEW_COUNT}
+    expected_provider_counts = {str(provider_route): EXPECTED_REVIEW_COUNT}
+    request_counts = summary.get("request_model_id_counts") or {}
+    actual_counts = summary.get("actual_model_id_counts") or {}
+    provider_counts = summary.get("provider_route_counts") or {}
     checks = [
         check("mode_executed", summary.get("mode") == "executed", summary.get("mode")),
         check("api_call_attempted_true_for_executed_summary", summary.get("api_call_attempted") is True, summary.get("api_call_attempted")),
         check("protocol_id", summary.get("protocol_id") == packet.get("protocol_id"), summary.get("protocol_id")),
         check("candidate_set_id", summary.get("candidate_set_id") == packet.get("candidate_set_id"), summary.get("candidate_set_id")),
+        check("request_model_id", summary.get("request_model_id") == request_model_id, summary.get("request_model_id")),
+        check("provider_route", summary.get("provider_route") == provider_route, summary.get("provider_route")),
+        check("request_model_id_counts", request_counts == expected_request_counts, request_counts),
+        check("provider_route_counts", provider_counts == expected_provider_counts, provider_counts),
+        check("actual_model_id_count_total", sum(int(value) for value in actual_counts.values()) == EXPECTED_REVIEW_COUNT, actual_counts),
+        check("actual_model_id_missing_count", summary.get("actual_model_id_missing_count") == 0, summary.get("actual_model_id_missing_count")),
+        check("actual_model_id_counts_no_missing", "missing" not in actual_counts, actual_counts),
         check("review_count", summary.get("review_count") == EXPECTED_REVIEW_COUNT, summary.get("review_count")),
         check("parse_valid_count", summary.get("parse_valid_count") == EXPECTED_REVIEW_COUNT, summary.get("parse_valid_count")),
         check("invalid_parse_count", summary.get("invalid_parse_count") == 0, summary.get("invalid_parse_count")),
@@ -199,6 +213,8 @@ def self_test_packet(packet_path: Path, deepseek_summary_path: Path, qwen_summar
             {
                 "step": "deepseek_smoke_first",
                 "model_id": "deepseek/deepseek-v4-pro",
+                "request_model_id": "deepseek-v4-pro",
+                "provider_route": "deepseek_official",
                 "outputs": {
                     "tracked_summary": str(deepseek_summary_path),
                     "raw_responses": "outputs/evp8_phase1_deepseek_qwen_smoke/deepseek_deepseek-v4-pro/raw_responses.jsonl",
@@ -207,6 +223,8 @@ def self_test_packet(packet_path: Path, deepseek_summary_path: Path, qwen_summar
             {
                 "step": "qwen_smoke_after_deepseek_gate",
                 "model_id": "qwen/qwen3.7-max",
+                "request_model_id": "qwen3.7-max",
+                "provider_route": "qwen_official",
                 "outputs": {
                     "tracked_summary": str(qwen_summary_path),
                     "raw_responses": "outputs/evp8_phase1_deepseek_qwen_smoke/qwen_qwen3.7-max/raw_responses.jsonl",
@@ -218,6 +236,8 @@ def self_test_packet(packet_path: Path, deepseek_summary_path: Path, qwen_summar
 
 
 def executed_summary(model_id: str, raw_responses_out: str, **overrides: Any) -> dict[str, Any]:
+    request_model_id = "deepseek-v4-pro" if model_id == "deepseek/deepseek-v4-pro" else "qwen3.7-max"
+    provider_route = "deepseek_official" if model_id == "deepseek/deepseek-v4-pro" else "qwen_official"
     summary: dict[str, Any] = {
         "mode": "executed",
         "protocol_id": "evp8_journal_full_ladder_v0_1",
@@ -229,6 +249,13 @@ def executed_summary(model_id: str, raw_responses_out: str, **overrides: Any) ->
         "smoke_gate": "passed",
         "usage_cost_gate": "passed",
         "configured_model_id": model_id,
+        "request_model_id": request_model_id,
+        "provider_route": provider_route,
+        "request_model_id_counts": {request_model_id: EXPECTED_REVIEW_COUNT},
+        "configured_model_id_counts": {model_id: EXPECTED_REVIEW_COUNT},
+        "actual_model_id_counts": {request_model_id: EXPECTED_REVIEW_COUNT},
+        "actual_model_id_missing_count": 0,
+        "provider_route_counts": {provider_route: EXPECTED_REVIEW_COUNT},
         "raw_responses_out": raw_responses_out,
         "raw_response_text_stored_in_tracked_summary": False,
         "prompt_text_stored": False,
@@ -298,6 +325,17 @@ def run_self_test() -> dict[str, Any]:
             "deepseek/deepseek-v4-pro",
             "outputs/evp8_phase1_deepseek_qwen_smoke/unexpected/raw_responses.jsonl",
         )
+        missing_actual_model = executed_summary(
+            "deepseek/deepseek-v4-pro",
+            deepseek_raw_path,
+            actual_model_id_counts={"missing": EXPECTED_REVIEW_COUNT},
+            actual_model_id_missing_count=EXPECTED_REVIEW_COUNT,
+        )
+        request_model_drift = executed_summary(
+            "deepseek/deepseek-v4-pro",
+            deepseek_raw_path,
+            request_model_id_counts={"unexpected-model": EXPECTED_REVIEW_COUNT},
+        )
         cases = [
             run_case(
                 root / "waiting_for_execution",
@@ -337,6 +375,20 @@ def run_self_test() -> dict[str, Any]:
             run_case(
                 root / "deepseek_raw_path_mismatch",
                 deepseek_summary=raw_path_mismatch,
+                qwen_summary=None,
+                expected_status="failed",
+                assert_check_passes=False,
+            ),
+            run_case(
+                root / "deepseek_actual_model_missing",
+                deepseek_summary=missing_actual_model,
+                qwen_summary=None,
+                expected_status="failed",
+                assert_check_passes=False,
+            ),
+            run_case(
+                root / "deepseek_request_model_drift",
+                deepseek_summary=request_model_drift,
                 qwen_summary=None,
                 expected_status="failed",
                 assert_check_passes=False,

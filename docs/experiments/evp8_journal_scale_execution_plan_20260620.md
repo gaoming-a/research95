@@ -210,6 +210,9 @@ Gate G2: DeepSeek smoke audit.
 - Acceptance:
   - DeepSeek summary exists and passes audit;
   - summary `protocol_id` and `candidate_set_id` match the execution packet;
+  - summary `request_model_id_counts`, `provider_route_counts`, and
+    `actual_model_id_counts` support model/provider drift checks without
+    opening raw responses;
   - `review_count=35`, `parse_valid_count=35`, `invalid_parse_count=0`;
   - raw response paths match the execution packet and stay under ignored
     `outputs/`;

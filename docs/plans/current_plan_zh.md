@@ -15020,3 +15020,96 @@ Commit And Sync:
   `fatal: unable to access 'https://github.com/gaoming-a/research95.git/': Recv failure: Connection was reset`；
 - 这是连续 network-level sync failure；按用户授权，不阻塞后续本地计划执行，且
   不继续为同一网络问题循环制造 push-failure-only 提交。
+
+## 2026-06-20 EVP-8 actual model/provider summary contract
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main [ahead 4]`；
+- 最新本地提交为 `2783545 Record EVP-8 contract audit sync failure`；
+- 这条自动续跑不是明确 API 授权，因此本轮仍只能做 no-API gate/contract work；
+- `scripts/run_evp8_deepseek_qwen_smoke.py` 的 future raw records 会写入
+  `actual_model_id`，但 tracked executed summary 当前不聚合实际返回 model id；
+- `scripts/audit_evp8_smoke_results.py` 不读取 raw outputs，因此如果 tracked
+  summary 不记录 actual model/provider aggregate，未来 audit 无法检查
+  provider/model drift；
+- execution packet 的 execute command records 当前也未显式记录 expected
+  request model id 和 provider route。
+
+Plan:
+
+1. 让 smoke runner executed summary 写入 raw-output-free model/provider
+   aggregate：
+   - `request_model_id_counts`；
+   - `actual_model_id_counts`；
+   - `actual_model_id_missing_count`；
+   - `provider_route_counts`；
+2. 让 execution packet 的 execute command records 显式记录 expected
+   `request_model_id` 和 `provider_route`；
+3. 让 post-smoke audit 在 tracked summary 上检查：
+   - expected request model id；
+   - expected provider route；
+   - actual model id 不缺失；
+   - request/provider aggregate 只包含 expected value；
+4. 扩展 no-API `--self-test`，增加 actual model missing/drift failure cases；
+5. 同步 execution plan、INDEX/engineering notes/current plan；
+6. 不调用 API，不读取 raw outputs，不生成 raw outputs。
+
+Acceptance:
+
+- `python scripts\audit_evp8_smoke_results.py --self-test` 必须覆盖 actual model
+  missing/drift 并通过；
+- `python scripts\write_evp8_smoke_execution_packet.py --check` 必须重新生成
+  packet，并包含 expected request/provider fields；
+- 当前 `python scripts\audit_evp8_smoke_results.py --check` 仍应为
+  `waiting_for_execution`；
+- G0 no-API guards 和 local quality gate 继续通过。
+
+Execute:
+
+- 修改 `scripts/run_evp8_deepseek_qwen_smoke.py`：
+  - executed parsed records 增加 `request_model_id`、`configured_model_id`、
+    `actual_model_id`、`provider_route`；
+  - executed summary 增加 `request_model_id_counts`、
+    `configured_model_id_counts`、`actual_model_id_counts`、
+    `actual_model_id_missing_count`、`provider_route_counts`；
+- 修改 `scripts/write_evp8_smoke_execution_packet.py`：
+  - execute command records 增加 expected `request_model_id` 和
+    `provider_route`；
+  - Markdown packet 输出 request model/provider route；
+- 修改 `scripts/audit_evp8_smoke_results.py`：
+  - audit summary 检查 expected request model id；
+  - audit summary 检查 expected provider route；
+  - audit summary 检查 request/provider aggregate counts；
+  - audit summary 检查 actual model id 不缺失；
+  - `--self-test` 新增 actual model missing 和 request model drift 失败用例；
+- 重新生成 execution packet JSON/Markdown；
+- 同步 EVP-8 execution plan、docs index 和 engineering notes。
+
+Verify:
+
+- `python -m py_compile scripts\run_evp8_deepseek_qwen_smoke.py scripts\write_evp8_smoke_execution_packet.py scripts\audit_evp8_smoke_results.py`
+  通过；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过；
+- `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
+  通过，API 未调用、key value 未打印；
+- `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
+  通过，`packet_count=35`、`prompt_hashes_unique_count=35`；
+- `python scripts\write_evp8_smoke_execution_packet.py --check` 通过，packet
+  execute records 包含 `request_model_id` 和 `provider_route`；
+- `python scripts\audit_evp8_smoke_results.py --self-test` 通过：
+  - `case_count = 8`；
+  - `deepseek_actual_model_missing => failed`；
+  - `deepseek_request_model_drift => failed`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_read = false`；
+  - `raw_outputs_generated = false`；
+  - `tracked_outputs_written = false`；
+- `python scripts\audit_evp8_smoke_results.py --check` 通过，当前仍为
+  `waiting_for_execution`；
+- `git status --short --branch --ignored configs\evp8_deepseek_qwen.local.json outputs artifacts .env`
+  确认 `.env`、local config、outputs、artifacts 仍为 ignored；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过，仅提示 CRLF 工作区转换 warning；
+- 本轮未调用模型 API，未读取 raw outputs，未生成 raw outputs。
