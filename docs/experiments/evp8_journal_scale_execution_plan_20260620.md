@@ -46,6 +46,9 @@ The first machine-checkable protocol artifact is:
 - `data/protocols/evp8_protocol_v0_1.json`
 - `data/protocols/evp8_candidate_set_v0_1.json`
 - `data/protocols/evp8_candidate_set_v0_1_summary.json`
+- `prompts/evp8_visible_evidence_merge_gate_v0_1.md`
+- `data/protocols/evp8_prompt_manifest_v0_1.json`
+- `data/protocols/evp8_prompt_boundary_audit_v0_1.json`
 
 It freezes the draft v0.1 ladder as a tracked protocol spec:
 
@@ -69,9 +72,10 @@ Current audit status:
 - protocol spec audit: passed;
 - candidate set: frozen for Phase 0 smoke/protocol validation at 21 tasks, 6
   projects, and 98 candidates from the tracked EVP-7 structural cohort;
+- prompt template: frozen and boundary-audited without API calls;
 - API readiness: not ready;
-- current blockers: prompt text not frozen, and packet/schema/prompt/cost/
-  baseline dry-run outputs not yet generated.
+- current blockers: packet/schema/cost/baseline dry-run outputs not yet
+  generated.
 
 This audit is intentionally no-API and does not authorize model calls, cohort
 expansion, or EVP-8 evidence-packet generation.

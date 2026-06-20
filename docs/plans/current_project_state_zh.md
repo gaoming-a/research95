@@ -73,9 +73,13 @@
    - 当前 Phase 0 smoke candidate set：
      `data/protocols/evp8_candidate_set_v0_1.json`，从 tracked EVP-7
      structural cohort 冻结为 21 tasks / 6 projects / 98 candidates；
+   - 当前 EVP-8 prompt template：
+     `prompts/evp8_visible_evidence_merge_gate_v0_1.md`，由
+     `python scripts\build_evp8_prompt_manifest.py --check` 生成 manifest 和
+     boundary audit；
    - 当前审计状态：protocol spec audit passed，candidate set blocker 已移除，
-     但 `phase0_api_readiness = not_ready`，因为 prompt text、
-     packet/schema/prompt/cost/baseline dry-run 仍未冻结或生成；
+     prompt text blocker 已移除，但 `phase0_api_readiness = not_ready`，因为
+     packet/schema/cost/baseline dry-run 仍未生成；
    - 下一步不是 API，而是 no-API protocol freeze：重新定义 `E0-E6` 七层
      adjacent-difference evidence ladder、packet schema、prompt schema、
      candidate-set policy、evaluator joins、metrics、stop gates 和 provider
@@ -136,12 +140,20 @@
   `data/protocols/evp8_candidate_set_v0_1_summary.json`：
   EVP-8 Phase 0 smoke/protocol-validation candidate set；当前为 21 tasks /
   6 projects / 98 candidates，不是最终期刊规模 full-run cohort。
+- `prompts/evp8_visible_evidence_merge_gate_v0_1.md`、
+  `data/protocols/evp8_prompt_manifest_v0_1.json`、
+  `data/protocols/evp8_prompt_boundary_audit_v0_1.json`：
+  EVP-8 prompt template、manifest 和 boundary audit；只冻结模板，不包含真实
+  rendered packet prompts。
 - `scripts/audit_evp8_protocol_spec.py`：
   检查 EVP-8 相邻差分、visible/hidden 字段边界、模型批次、routing policy、
   cost observability 和 stop gates。
 - `scripts/build_evp8_candidate_set_manifest.py`：
   从 tracked EVP-7 structural cohort 生成 EVP-8 Phase 0 candidate-set
   manifest，并检查 per-candidate records 不含 evaluator labels。
+- `scripts/build_evp8_prompt_manifest.py`：
+  审计 frozen EVP-8 prompt template，生成 no-API prompt manifest 和 boundary
+  audit。
 - `docs/plans/agent_execution_plan_zh.md`、
   `docs/plans/ai_agent_experiment_execution_plan_zh.md`：
   历史执行计划，只保留溯源，不应覆盖当前路线。

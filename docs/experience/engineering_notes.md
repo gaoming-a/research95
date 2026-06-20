@@ -2726,3 +2726,15 @@ This file starts fresh for the patch-verification project.
 - Aggregate label counts are acceptable for candidate-balance audit only when
   the summary clearly marks them as evaluator-side aggregate counts that never
   enter prompts.
+
+## 2026-06-20 EVP-8 prompt-template freeze boundary
+
+- Freezing a prompt template is not the same as freezing rendered per-packet
+  prompts. Track the template and hashes, but keep rendered prompt text out of
+  tracked artifacts until a packet manifest policy explicitly allows it.
+- Prompt audits should check both the template and a minimal visible sample
+  render. If the template uses exact evaluator-only field names, treat that as
+  a prompt-boundary problem rather than weakening the scanner.
+- A prompt-change log is required when adding or changing experiment prompts.
+  Record whether the new prompt replaces an older one or is a new protocol
+  prompt, and note the schema differences.

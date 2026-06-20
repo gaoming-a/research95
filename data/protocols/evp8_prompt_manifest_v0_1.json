@@ -1,0 +1,38 @@
+{
+  "api_call_attempted": false,
+  "claim_boundary": "This manifest freezes the EVP-8 prompt template only; it is not model-result evidence.",
+  "cohort_id": "EVP-8",
+  "decision_values": [
+    "accept",
+    "reject",
+    "escalate"
+  ],
+  "estimated_template_tokens_char_div_4": 484,
+  "evidence_packets_generated": false,
+  "output_schema_required_keys": [
+    "decision",
+    "confidence",
+    "primary_reason",
+    "evidence_used",
+    "visible_contradictions",
+    "risk_flags",
+    "human_review_needed"
+  ],
+  "prompt_id": "evp8_visible_evidence_merge_gate_v0_1",
+  "prompt_manifest_status": "passed",
+  "prompt_template_chars": 1935,
+  "prompt_template_path": "prompts\\evp8_visible_evidence_merge_gate_v0_1.md",
+  "prompt_template_sha256": "a31d23d74f5130c9ce06262c4a9f016a303da8e77683c007e7cfb142fb74066c",
+  "prompt_template_text_tracked": true,
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "rendered_prompt_text_stored": false,
+  "risk_flag_values": [
+    "patch_apply_failed",
+    "visible_test_failure",
+    "visible_regression_risk",
+    "tool_diagnostic_concern",
+    "insufficient_evidence",
+    "ambiguous_evidence"
+  ],
+  "visible_packet_placeholder": "{visible_evidence_packet_json}"
+}

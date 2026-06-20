@@ -1,0 +1,17 @@
+{
+  "api_call_attempted": false,
+  "evidence_packets_generated": false,
+  "missing_decision_values_in_template": [],
+  "missing_required_schema_keys_in_template": [],
+  "missing_risk_flag_values_in_template": [],
+  "placeholder_present": true,
+  "prompt_boundary_audit_status": "passed",
+  "prompt_id": "evp8_visible_evidence_merge_gate_v0_1",
+  "prompt_id_matches_spec": true,
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "rendered_prompt_text_stored": false,
+  "sample_render_boundary_findings": [],
+  "sample_render_chars": 4459,
+  "sample_render_sha256": "cd5e0f60f120fe96203c6840fe0903a9d84b7352e8d1c2a6df3e8dc5f28162f4",
+  "template_boundary_findings": []
+}

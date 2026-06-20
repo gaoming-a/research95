@@ -9,10 +9,9 @@
     "E6": "deterministic_visible_merge_gate_summary"
   },
   "adjacent_delta_count": 6,
-  "api_blocker_count": 2,
+  "api_blocker_count": 1,
   "api_blockers": [
-    "prompt_text_not_frozen",
-    "missing_phase0_outputs_before_api:cost_observability_dry_run,deterministic_tool_baseline_dry_run,evidence_packet_dry_run_summary,prompt_boundary_audit,prompt_manifest,schema_dry_run_summary"
+    "missing_phase0_outputs_before_api:cost_observability_dry_run,deterministic_tool_baseline_dry_run,evidence_packet_dry_run_summary,schema_dry_run_summary"
   ],
   "api_call_attempted": false,
   "candidate_set_manifest": "data/protocols/evp8_candidate_set_v0_1.json",
@@ -56,8 +55,6 @@
   ],
   "protocol_id": "evp8_journal_full_ladder_v0_1",
   "protocol_spec_audit_status": "passed",
-  "warning_count": 1,
-  "warnings": [
-    "prompt_text_not_yet_frozen"
-  ]
+  "warning_count": 0,
+  "warnings": []
 }

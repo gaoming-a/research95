@@ -267,7 +267,11 @@
   },
   "prompt_policy": {
     "prompt_id": "evp8_visible_evidence_merge_gate_v0_1",
-    "prompt_text_frozen": false,
+    "prompt_text_frozen": true,
+    "prompt_template_path": "prompts/evp8_visible_evidence_merge_gate_v0_1.md",
+    "prompt_template_sha256": "a31d23d74f5130c9ce06262c4a9f016a303da8e77683c007e7cfb142fb74066c",
+    "prompt_manifest": "data/protocols/evp8_prompt_manifest_v0_1.json",
+    "prompt_boundary_audit": "data/protocols/evp8_prompt_boundary_audit_v0_1.json",
     "prompt_text_storage_policy": "tracked manifest stores hashes and lengths; raw prompts are reproducible from packet plus template",
     "visible_payload_only": true,
     "hidden_label_instruction": "Use only model-visible fields; do not infer evaluator labels, hidden tests, hidden oracle outcomes, reference-patch provenance, or final merge labels.",

@@ -53,6 +53,15 @@
   candidate-set audit summary. It records 21 tasks, 6 projects, 98 candidates,
   aggregate evaluator-side label counts for balance audit, and
   `api_call_attempted=false`.
+- `../prompts/evp8_visible_evidence_merge_gate_v0_1.md`: frozen EVP-8
+  visible-evidence merge-gate prompt template. It stores the template text, not
+  rendered per-packet prompts.
+- `../data/protocols/evp8_prompt_manifest_v0_1.json`: no-API prompt-template
+  manifest. It records prompt id, template hash/length, output-schema keys,
+  and `api_call_attempted=false`.
+- `../data/protocols/evp8_prompt_boundary_audit_v0_1.json`: no-API prompt
+  boundary audit over the template and a minimal visible sample render. It
+  stores hashes and counts, not rendered prompt text.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.
@@ -953,6 +962,9 @@
 - `../scripts/build_evp7_g5_llm_prompt_manifest.py`: renders the G5
   evidence-visibility LLM prompt in memory, writes prompt hashes/lengths and
   readiness metadata, and verifies prompt-boundary leakage without API calls.
+- `../scripts/build_evp8_prompt_manifest.py`: audits the frozen EVP-8 prompt
+  template, writes prompt-template manifest and boundary-audit JSON, and does
+  not generate evidence packets or call model APIs.
 - `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict
@@ -979,10 +991,11 @@
 - `scripts/analyze_tool_gated_reviews.py`: oracle-gated analysis reference.
 - `experience/engineering_notes.md`: fresh operational notes for this new
   workspace.
-- `prompts/prompt_change_log.md`: fresh prompt log for patch-verification
-  prompts only.
-- `prompts/api_pilot_prompts.md`: prompt templates and label-leakage boundary
-  for the first API pilot.
+- `../prompts/prompt_change_log.md`: prompt log for patch-verification prompts
+  only. It records the EVP-8 prompt addition and the no-conflict check against
+  the historical EVP-7 prompt.
+- `../prompts/evp8_visible_evidence_merge_gate_v0_1.md`: frozen EVP-8 prompt
+  template for the full-ladder no-API protocol.
 
 ## Safety Rules
 

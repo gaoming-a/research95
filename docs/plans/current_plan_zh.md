@@ -14068,3 +14068,102 @@ Verify:
   通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   初次并行调用超时无诊断；单独重跑通过，`passed=true`。
+
+## 2026-06-20 EVP-8 Phase 0 prompt-template freeze
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main [ahead 3]`；
+- `data/protocols/evp8_protocol_v0_1_audit_summary.json` 当前
+  `protocol_spec_audit_status=passed`，`phase0_api_readiness=not_ready`；
+- 当前 blockers 为 `prompt_text_not_frozen` 以及 missing
+  packet/schema/prompt/cost/baseline dry-run outputs；
+- EVP-7 prompt builder `scripts/build_evp7_g5_llm_prompt_manifest.py` 使用
+  merge-gate verifier prompt，要求只看 visible packet，不推断 hidden labels；
+- EVP-8 protocol spec 已定义更严格 output schema：
+  `decision/confidence/primary_reason/evidence_used/visible_contradictions/
+  risk_flags/human_review_needed`；
+- `docs/INDEX.md` 已引用 `prompts/prompt_change_log.md` 和
+  `prompts/api_pilot_prompts.md`，但当前工作区没有 `prompts/` 目录，说明 prompt
+  记录入口存在漂移。
+
+Plan:
+
+1. 新增 tracked EVP-8 prompt template，冻结 `evp8_visible_evidence_merge_gate_v0_1`
+   的 prompt text；
+2. 新增 prompt manifest / boundary audit 脚本，只审计模板和 minimal sample
+   render，不生成 EVP-8 evidence packets、不调用 API；
+3. 输出 tracked `data/protocols/evp8_prompt_manifest_v0_1.json` 和
+   `data/protocols/evp8_prompt_boundary_audit_v0_1.json`；
+4. 更新 EVP-8 protocol spec，使 `prompt_text_frozen=true` 并记录 prompt template、
+   prompt manifest、boundary audit path 和 template hash；
+5. 更新 protocol audit，使 prompt template/manifest/boundary audit 存在时不再
+   报告 `prompt_text_not_frozen` 或 missing `prompt_manifest` /
+   `prompt_boundary_audit`；
+6. 创建或更新 `prompts/prompt_change_log.md`，记录本次新增 prompt 与 EVP-7
+   prompt 的关系、差异和无冲突结论；
+7. 同步 README、INDEX、EVP-8 execution plan、current project state 和
+   engineering notes。
+
+Acceptance:
+
+- prompt template 必须只要求使用 visible evidence packet；
+- prompt template 不得包含 `expected_outcome`、`candidate_type`、
+  `failure_type_label`、hidden oracle、reference provenance 或 evaluator label；
+- output schema 必须与 `data/protocols/evp8_protocol_v0_1.json` 保持一致；
+- prompt manifest / boundary audit 必须明确 `api_call_attempted=false`、
+  `evidence_packets_generated=false`；
+- protocol audit 应继续 `protocol_spec_audit_status=passed`，并保持
+  `phase0_api_readiness=not_ready`，因为 packet/schema/cost/baseline dry-run
+  还未完成；
+- 本轮不得调用模型 API，不读取 local API config，不生成 EVP-8 evidence packets。
+
+Execute:
+
+- 新增 `prompts/evp8_visible_evidence_merge_gate_v0_1.md`，冻结
+  `evp8_visible_evidence_merge_gate_v0_1` prompt template；
+- 新增 `prompts/prompt_change_log.md`，记录 EVP-8 prompt 是新协议 prompt，
+  不替换 EVP-7 `patch_verify_evidence_visibility_merge_gate_v1`，并记录 schema
+  差异和无冲突结论；
+- 新增 `scripts/build_evp8_prompt_manifest.py`；
+- 生成：
+  - `data/protocols/evp8_prompt_manifest_v0_1.json`；
+  - `data/protocols/evp8_prompt_boundary_audit_v0_1.json`；
+- 更新 `data/protocols/evp8_protocol_v0_1.json`：
+  - `prompt_text_frozen = true`；
+  - `prompt_template_path =
+    prompts/evp8_visible_evidence_merge_gate_v0_1.md`；
+  - `prompt_template_sha256 =
+    a31d23d74f5130c9ce06262c4a9f016a303da8e77683c007e7cfb142fb74066c`；
+  - prompt manifest 和 prompt boundary audit 指向 tracked protocol artifacts；
+- 更新 `scripts/audit_evp8_protocol_spec.py`，在 prompt manifest 和 boundary
+  audit 存在时不再报告 prompt blocker；
+- 同步 README、docs index、EVP-8 execution plan、final roadmap、current project
+  state 和 engineering notes；
+- 未调用模型 API，未读取 local API config，未生成 EVP-8 evidence packets。
+
+Verify:
+
+- `python scripts\build_evp8_prompt_manifest.py --check` 通过：
+  - `prompt_manifest_status = passed`；
+  - `prompt_boundary_audit_status = passed`；
+  - `template_boundary_findings = []`；
+  - `sample_render_boundary_findings = []`；
+  - `missing_required_schema_keys_in_template = []`；
+  - `api_call_attempted = false`；
+  - `evidence_packets_generated = false`；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过：
+  - `protocol_spec_audit_status = passed`；
+  - `warning_count = 0`；
+  - `api_blockers` 不再包含 `prompt_text_not_frozen`、
+    `prompt_manifest` 或 `prompt_boundary_audit`；
+  - 剩余 blocker 仅为 `cost_observability_dry_run`、
+    `deterministic_tool_baseline_dry_run`、`evidence_packet_dry_run_summary`、
+    `schema_dry_run_summary`；
+  - `phase0_api_readiness = not_ready`；
+  - `api_call_attempted = false`。
+- `git diff --check` 通过，仅有 LF/CRLF 工作区提示；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过，`passed=true`。

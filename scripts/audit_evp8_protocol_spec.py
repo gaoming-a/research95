@@ -199,6 +199,16 @@ def _audit_prompt_and_output_schema(
         errors.append("prompt_policy_must_be_visible_payload_only")
     if prompt_policy.get("prompt_text_frozen") is not True:
         warnings.append("prompt_text_not_yet_frozen")
+    template_path = prompt_policy.get("prompt_template_path")
+    if prompt_policy.get("prompt_text_frozen") is True:
+        if not isinstance(template_path, str) or not (REPO_ROOT / template_path).exists():
+            errors.append("prompt_template_missing")
+        if not prompt_policy.get("prompt_template_sha256"):
+            errors.append("prompt_template_sha256_missing")
+        for key in ("prompt_manifest", "prompt_boundary_audit"):
+            value = prompt_policy.get(key)
+            if not isinstance(value, str) or not (REPO_ROOT / value).exists():
+                errors.append(f"{key}_missing")
 
     output_schema = spec.get("output_schema") or {}
     required_keys = set(output_schema.get("required_keys") or [])
@@ -299,13 +309,23 @@ def _audit_phase0_api_blockers(spec: dict[str, Any], api_blockers: list[str]) ->
     prompt_policy = spec.get("prompt_policy") or {}
     if prompt_policy.get("prompt_text_frozen") is not True:
         api_blockers.append("prompt_text_not_frozen")
+    prompt_manifest_ready = _tracked_path_exists(prompt_policy.get("prompt_manifest"))
+    prompt_boundary_audit_ready = _tracked_path_exists(prompt_policy.get("prompt_boundary_audit"))
     required_outputs = set(spec.get("required_phase0_outputs_before_api") or [])
     already_satisfied = {"tracked_protocol_spec", "protocol_audit_summary"}
     if candidate_manifest_ready:
         already_satisfied.add("candidate_set_manifest")
+    if prompt_manifest_ready:
+        already_satisfied.add("prompt_manifest")
+    if prompt_boundary_audit_ready:
+        already_satisfied.add("prompt_boundary_audit")
     missing_outputs = sorted(required_outputs - already_satisfied)
     if missing_outputs:
         api_blockers.append("missing_phase0_outputs_before_api:" + ",".join(missing_outputs))
+
+
+def _tracked_path_exists(value: Any) -> bool:
+    return isinstance(value, str) and bool(value) and (REPO_ROOT / value).exists()
 
 
 def main() -> int:
