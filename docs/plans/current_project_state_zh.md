@@ -11,10 +11,14 @@
 - 分支：`main`
 - 远端：`origin/main`
 - 当前 Git 状态：以 `git status --short --branch` 和
-  `git log -1 --oneline` 为准。2026-06-20 本轮已产生 DeepSeek G6 结果收口
-  本地提交；若 `git status` 仍显示 ahead，待同步锚点至少包括
-  `72f1fb5 Checkpoint EVP-8 full-run raw responses` 和本轮结果收口提交。
+  `git log -1 --oneline` 为准。2026-06-20 最近检查为本地 `main...origin/main`
+  已同步，当前远端锚点为 `d9a8391 Record EVP-8 DeepSeek G6 full result`。
 - 当前远端已同步锚点：
+  - `d9a8391 Record EVP-8 DeepSeek G6 full result`：远端已包含 DeepSeek
+    686-call first-batch full-run raw-output-free summary、post-full-run
+    partial audit/synthesis 和本轮计划/索引更新；
+  - `72f1fb5 Checkpoint EVP-8 full-run raw responses`：远端已包含 full-run
+    raw-response incremental checkpointing and resume-prefix guard；
   - `d79cb1e Authorize EVP-8 DeepSeek G6 full run`：远端已包含 DeepSeek G6
     first-batch full-run 授权记录；
   - `95efbdc Record EVP-8 G6 authorization boundary`：远端已包含 G6 explicit
@@ -30,8 +34,8 @@
   packet readiness、DeepSeek G6 full-run checkpointing repair，以及 DeepSeek
   686-call first-batch full-run passed audit。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
-  在连续同步失败时跳过 GitHub 并继续本地计划执行。当前仍需再次尝试 push
-  `72f1fb5` 及本轮结果收口提交。
+  在连续同步失败时跳过 GitHub 并继续本地计划执行。2026-06-20 本轮重试后
+  `72f1fb5` 和 `d9a8391` 已成功 push，当前没有 GitHub 同步阻塞。
 - `bugsinpy_cookiecutter_4` 已收束为 tracked blocker policy；完整 builder
   失败输出仍是本地诊断残留，不应提交。
 - ignored 本地交付物：

@@ -16438,3 +16438,13 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过；
 - `git diff --check` 通过，仅有 CRLF 工作区转换 warning。
+
+Commit And Sync:
+
+- 已提交 DeepSeek full-run checkpointing 修复：
+  `72f1fb5 Checkpoint EVP-8 full-run raw responses`；
+- 已提交 DeepSeek G6 full-run 结果收口：
+  `d9a8391 Record EVP-8 DeepSeek G6 full result`；
+- `git push origin main` 成功，远端 `main` 已同步到 `d9a8391`；
+- raw JSONL、runner logs、`.env`、`configs/*.local.json`、`outputs/` 和
+  `artifacts/` 均未提交。
