@@ -92,7 +92,10 @@ passes the protocol-structure boundary and reports
 real model execution. The DeepSeek/Qwen ignored local preflight is tracked at
 `data/protocols/evp8_deepseek_qwen_preflight_summary_v0_1.json`; it passed
 structural and credential-presence checks without printing key values or
-calling APIs.
+calling APIs. The guarded smoke runner check-only summary is tracked at
+`data/protocols/evp8_deepseek_qwen_smoke_check_only_v0_1.json`; it validates
+35 project-stratified smoke packets and prompt/schema gates without API calls
+or raw outputs.
 The Phase 0 smoke/protocol-validation candidate set is frozen at
 `data/protocols/evp8_candidate_set_v0_1.json`: 21 tasks, 6 projects, and 98
 candidates from the tracked EVP-7 structural cohort. This is not the final
@@ -140,8 +143,10 @@ They should not override `final_paper_roadmap_zh.md`.
   `data/protocols/evp8_prompt_boundary_audit_v0_1.json`. Packet/schema
   dry-run, cost-observability dry-run, and deterministic-baseline dry-run
   summaries are now tracked under `data/protocols/`. The ignored local
-  DeepSeek/Qwen preflight has also passed. The next EVP-8 step is waiting for
-  an explicit user execution command before any real smoke model calls.
+  DeepSeek/Qwen preflight has also passed. The guarded smoke runner check-only
+  has passed for 5 candidates x 7 levels = 35 packets. The next EVP-8 step is
+  waiting for an explicit user execution command before any real smoke model
+  calls.
 - The prompt-only DeepSeek full run completed and produced a mixed/negative
   `stop_or_redesign` result. It is not a positive paper claim.
 - The later tool-augmented full run passed its dedicated gate, but only supports

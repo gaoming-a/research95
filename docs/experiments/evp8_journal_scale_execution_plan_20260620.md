@@ -56,6 +56,7 @@ The first machine-checkable protocol artifact is:
 - `configs/evp8_deepseek_qwen.example.json`
 - `data/protocols/evp8_deepseek_qwen_local_config_plan_v0_1.json`
 - `data/protocols/evp8_deepseek_qwen_preflight_summary_v0_1.json`
+- `data/protocols/evp8_deepseek_qwen_smoke_check_only_v0_1.json`
 
 It freezes the draft v0.1 ladder as a tracked protocol spec:
 
@@ -86,6 +87,9 @@ Current audit status:
 - deterministic-baseline dry-run: passed for 686 schema-valid placeholder
   decisions using only model-visible evidence slots;
 - DeepSeek/Qwen ignored local preflight: passed without printing key values or
+  calling APIs;
+- guarded smoke runner check-only: passed for 35 project-stratified smoke
+  packets without storing rendered prompt text, generating raw outputs, or
   calling APIs;
 - API readiness: waiting for explicit user smoke execution command;
 - current blockers before smoke: no tracked Phase 0 or local preflight blockers.
@@ -141,6 +145,7 @@ Immediate next execution order:
 3. After that command, rerun the no-API guards:
    - `python scripts\audit_evp8_protocol_spec.py --check`
    - `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
+   - `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
    - `git status --short --ignored configs\evp8_deepseek_qwen.local.json`
 4. Only if those guards pass, run DeepSeek V4 Pro smoke and Qwen3.7 Max smoke
    on the frozen 5-candidate x 7-level subset.
@@ -154,10 +159,10 @@ After Phase 0 passes and the user explicitly says to execute:
 1. Run DeepSeek V4 Pro smoke on a stratified 5-candidate x 7-level subset
    (35 planned calls).
 2. Run Qwen3.7 Max smoke on the same subset and same frozen prompt/schema.
-3. If the smoke runner is missing, add only the minimal guarded runner needed
-   for this phase: check-only by default, explicit `--execute` for API calls,
-   refusal to run against tracked example config, raw responses under ignored
-   `outputs/`, and tracked raw-output-free summaries only.
+3. Use `scripts/run_evp8_deepseek_qwen_smoke.py`, which is check-only by
+   default, requires explicit `--execute` for API calls, refuses tracked
+   example config execution, writes raw responses only under ignored `outputs/`,
+   and writes tracked raw-output-free summaries only.
 4. If either smoke fails parse, schema, usage/cost, provider/model-id, or
    raw-output policy gates, stop and diagnose before any full run.
 5. If both pass parse, usage/cost, and quality gates, run their full EVP-8

@@ -87,6 +87,10 @@
   no-secret EVP-8 DeepSeek/Qwen local preflight summary. It records structural
   checks and credential presence states without key values, raw outputs, or API
   calls.
+- `../data/protocols/evp8_deepseek_qwen_smoke_check_only_v0_1.json`: tracked
+  no-API smoke runner check-only summary. It records the deterministic
+  project-stratified 5-candidate x 7-level smoke packet gate, prompt hashes,
+  schema checks, and no-raw-output/no-API status.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.
@@ -1002,6 +1006,10 @@
 - `../scripts/preflight_evp8_deepseek_qwen.py`: validates the ignored EVP-8
   DeepSeek/Qwen local config and `.env` key presence without printing secrets
   or calling APIs.
+- `../scripts/run_evp8_deepseek_qwen_smoke.py`: guarded EVP-8 DeepSeek/Qwen
+  smoke runner. It supports check-only without API calls and refuses real smoke
+  execution unless an ignored local config, strict preflight, explicit
+  `--execute`, and a configured `--model-id` are supplied.
 - `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict

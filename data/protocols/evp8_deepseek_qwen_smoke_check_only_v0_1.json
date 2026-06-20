@@ -1,0 +1,43 @@
+{
+  "api_call_attempted": false,
+  "api_key_values_printed": false,
+  "boundary_error_count": 0,
+  "boundary_errors": [],
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "check_only_status": "passed",
+  "cohort_id": "EVP-8",
+  "config": "configs/evp8_deepseek_qwen.local.json",
+  "expected_packet_count": 35,
+  "local_config_content_stored_in_tracked_summary": false,
+  "mode": "check_only",
+  "model_visible_levels": [
+    "E0",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6"
+  ],
+  "next_step": "Wait for explicit user command before running --execute smoke.",
+  "packet_count": 35,
+  "preflight_ready_for_user_execute_command": true,
+  "preflight_structural_ready": true,
+  "prompt_chars_max": 7766,
+  "prompt_chars_min": 3346,
+  "prompt_count": 35,
+  "prompt_hashes_unique_count": 35,
+  "prompt_text_stored": false,
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "raw_outputs_generated": false,
+  "schema_error_count": 0,
+  "schema_error_counts": {},
+  "selected_candidate_ids": [
+    "evp8_smoke_candidate_0001",
+    "evp8_smoke_candidate_0011",
+    "evp8_smoke_candidate_0030",
+    "evp8_smoke_candidate_0036",
+    "evp8_smoke_candidate_0040"
+  ],
+  "selection_policy": "deterministic_project_stratified_first_candidate_per_project_until_smoke_count"
+}

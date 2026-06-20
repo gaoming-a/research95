@@ -2783,3 +2783,18 @@ This file starts fresh for the patch-verification project.
 - Keep the ignored local config under `configs/*.local.json` and raw outputs
   under `outputs/`; tracked preflight summaries should contain only model ids,
   env var names, planned call counts, check names, and boolean/state results.
+
+## 2026-06-20 EVP-8 guarded smoke runner boundary
+
+- The smoke runner check-only path may construct visible smoke packets and
+  prompt hashes in memory, but it must not store rendered prompt text, call
+  model APIs, or write raw responses.
+- The EVP-8 smoke subset should be deterministic and project-stratified, not
+  simply the first five candidate records, because the manifest begins with
+  multiple candidates from one project.
+- Real smoke execution must reject tracked example configs and require an
+  ignored local config plus explicit `--execute` and `--model-id`.
+- Do not invent USD cost for Qwen official responses. If the provider response
+  exposes tokens but no cost and no controlled pricing source is wired in,
+  record token usage and mark the USD cost gate as blocked rather than treating
+  an unsupported estimate as observed cost.

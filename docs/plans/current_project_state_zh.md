@@ -91,6 +91,9 @@
    - 当前 DeepSeek/Qwen local preflight：
      `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
      已通过；tracked summary 只记录 key presence，不包含 key value；
+   - 当前 EVP-8 smoke runner check-only：
+     `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
+     已通过，覆盖 project-stratified 5 candidates x 7 levels = 35 packets；
    - 下一步不是自动 API，而是等待用户明确执行 EVP-8 DeepSeek/Qwen smoke；
    - 第一批模型只允许在 no-API gates 和 smoke gates 通过后执行
      DeepSeek V4 Pro + Qwen3.7 Max；
@@ -168,6 +171,9 @@
   `data/protocols/evp8_deepseek_qwen_preflight_summary_v0_1.json`：
   EVP-8 DeepSeek/Qwen local config plan 和 preflight summary；只记录 local config
   boundary、key presence、planned call counts 和 no-API 状态。
+- `data/protocols/evp8_deepseek_qwen_smoke_check_only_v0_1.json`：
+  EVP-8 DeepSeek/Qwen smoke runner check-only summary；记录 35-packet smoke
+  gate、prompt hash counts、schema status 和 no-API/no-raw-output 状态。
 - `scripts/audit_evp8_protocol_spec.py`：
   检查 EVP-8 相邻差分、visible/hidden 字段边界、模型批次、routing policy、
   cost observability 和 stop gates。
@@ -186,6 +192,10 @@
 - `scripts/create_evp8_deepseek_qwen_local_config.py`、
   `scripts/preflight_evp8_deepseek_qwen.py`：
   创建 ignored EVP-8 DeepSeek/Qwen local config，并执行 no-API strict preflight。
+- `scripts/run_evp8_deepseek_qwen_smoke.py`：
+  guarded EVP-8 DeepSeek/Qwen smoke runner；check-only 不调用 API，真实执行必须
+  使用 ignored local config、strict preflight、显式 `--execute` 和单个
+  configured `--model-id`。
 - `docs/plans/agent_execution_plan_zh.md`、
   `docs/plans/ai_agent_experiment_execution_plan_zh.md`：
   历史执行计划，只保留溯源，不应覆盖当前路线。
