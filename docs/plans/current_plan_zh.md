@@ -16178,6 +16178,54 @@ Commit And Sync:
 - 将本同步状态修正 amend 进 `8983abd`，最终 hash 以 `git log -1 --oneline`
   为准。
 
+## 2026-06-20 EVP-8 G6 boundary push recovery
+
+Inspect:
+
+- `git status --short --branch` 显示 `main...origin/main [ahead 1]`；
+- `git log -1 --oneline` 显示 `95efbdc Record EVP-8 G6 authorization boundary`；
+- G5 packet 仍明确：
+  - `packet_status = ready`；
+  - `planned_calls_per_model = 686`；
+  - `execution_authorized_by_packet = false`；
+  - `requires_explicit_user_command = true`。
+
+Plan:
+
+1. 重试 GitHub push，优先清掉上一轮 network-level sync residue；
+2. 若 push 成功，修正短入口为 `main...origin/main` 已同步；
+3. 不运行 G6 `--execute --run-scope full`，因为当前仍不是明确 API 授权。
+
+Execute:
+
+- `git push origin main` 成功，将 `95efbdc` 推送到远端；
+- 修正 `docs/plans/current_project_state_zh.md`：
+  - 当前 Git 状态改为 `main...origin/main` 已同步；
+  - 当前远端同步锚点新增 `95efbdc Record EVP-8 G6 authorization boundary`；
+  - GitHub sync 边界改为当前没有同步阻塞。
+
+Decision:
+
+- GitHub 同步残留已恢复；
+- 计划没有变化：G6 仍是下一步，但仍需用户明确授权 DeepSeek 686-call
+  first-batch full run；
+- 本轮不调用 API、不读取 raw outputs、不生成 raw outputs。
+
+Verify:
+
+- `python scripts\write_evp8_first_batch_full_run_packet.py --check` 通过：
+  - `packet_status = ready`；
+  - `planned_calls_per_model = 686`；
+  - `execution_authorized_by_packet = false`；
+  - `requires_explicit_user_command = true`；
+- `python scripts\audit_evp8_first_batch_full_results.py --check` 通过：
+  - `audit_status = waiting_for_execution`；
+  - `raw_outputs_read = false`；
+- `python scripts\summarize_evp8_first_batch_full_synthesis.py --check` 通过：
+  - `synthesis_status = waiting_for_execution`；
+  - `raw_outputs_read = false`；
+- `git diff --check` 通过，仅有 CRLF 工作区转换 warning。
+
 ## 2026-06-20 EVP-8 G6 authorization boundary re-check
 
 Inspect:
