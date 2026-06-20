@@ -57,7 +57,7 @@ def check(name: str, passed: bool, detail: Any) -> dict[str, Any]:
     return {"check": name, "passed": bool(passed), "detail": detail}
 
 
-def audit_summary(command_record: dict[str, Any], summary: dict[str, Any] | None) -> dict[str, Any]:
+def audit_summary(packet: dict[str, Any], command_record: dict[str, Any], summary: dict[str, Any] | None) -> dict[str, Any]:
     model_id = command_record["model_id"]
     outputs = command_record["outputs"]
     summary_path = outputs["tracked_summary"]
@@ -76,13 +76,17 @@ def audit_summary(command_record: dict[str, Any], summary: dict[str, Any] | None
     checks = [
         check("mode_executed", summary.get("mode") == "executed", summary.get("mode")),
         check("api_call_attempted_true_for_executed_summary", summary.get("api_call_attempted") is True, summary.get("api_call_attempted")),
+        check("protocol_id", summary.get("protocol_id") == packet.get("protocol_id"), summary.get("protocol_id")),
+        check("candidate_set_id", summary.get("candidate_set_id") == packet.get("candidate_set_id"), summary.get("candidate_set_id")),
         check("review_count", summary.get("review_count") == EXPECTED_REVIEW_COUNT, summary.get("review_count")),
         check("parse_valid_count", summary.get("parse_valid_count") == EXPECTED_REVIEW_COUNT, summary.get("parse_valid_count")),
         check("invalid_parse_count", summary.get("invalid_parse_count") == 0, summary.get("invalid_parse_count")),
         check("smoke_gate", summary.get("smoke_gate") == "passed", summary.get("smoke_gate")),
         check("usage_cost_gate", summary.get("usage_cost_gate") == "passed", summary.get("usage_cost_gate")),
         check("configured_model_id", summary.get("configured_model_id") == model_id, summary.get("configured_model_id")),
+        check("raw_responses_out_matches_packet", summary.get("raw_responses_out") == raw_path, summary.get("raw_responses_out")),
         check("raw_response_text_not_stored_in_summary", summary.get("raw_response_text_stored_in_tracked_summary") is False, summary.get("raw_response_text_stored_in_tracked_summary")),
+        check("prompt_text_not_stored_in_summary", summary.get("prompt_text_stored") is False, summary.get("prompt_text_stored")),
         check("raw_outputs_generated_flag", summary.get("raw_outputs_generated") is True, summary.get("raw_outputs_generated")),
         check("raw_path_under_outputs", raw_path_is_ignored_boundary(raw_path), raw_path),
     ]
@@ -106,7 +110,7 @@ def build_audit(packet_path: Path) -> dict[str, Any]:
     model_audits = []
     for command_record in command_records:
         summary = read_json(resolve(command_record["outputs"]["tracked_summary"]))
-        model_audits.append(audit_summary(command_record, summary))
+        model_audits.append(audit_summary(packet, command_record, summary))
     present = [item for item in model_audits if item["summary_present"]]
     qwen = next((item for item in model_audits if item["model_id"] == "qwen/qwen3.7-max"), None)
     deepseek = next((item for item in model_audits if item["model_id"] == "deepseek/deepseek-v4-pro"), None)
@@ -213,9 +217,11 @@ def self_test_packet(packet_path: Path, deepseek_summary_path: Path, qwen_summar
     write_json(packet_path, packet)
 
 
-def executed_summary(model_id: str, **overrides: Any) -> dict[str, Any]:
+def executed_summary(model_id: str, raw_responses_out: str, **overrides: Any) -> dict[str, Any]:
     summary: dict[str, Any] = {
         "mode": "executed",
+        "protocol_id": "evp8_journal_full_ladder_v0_1",
+        "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
         "api_call_attempted": True,
         "review_count": EXPECTED_REVIEW_COUNT,
         "parse_valid_count": EXPECTED_REVIEW_COUNT,
@@ -223,7 +229,9 @@ def executed_summary(model_id: str, **overrides: Any) -> dict[str, Any]:
         "smoke_gate": "passed",
         "usage_cost_gate": "passed",
         "configured_model_id": model_id,
+        "raw_responses_out": raw_responses_out,
         "raw_response_text_stored_in_tracked_summary": False,
+        "prompt_text_stored": False,
         "raw_outputs_generated": True,
         "cost_summary": {"unknown_cost_record_count": 0},
     }
@@ -273,15 +281,22 @@ def run_case(
 def run_self_test() -> dict[str, Any]:
     with tempfile.TemporaryDirectory(prefix="evp8_smoke_audit_selftest_") as temp_dir:
         root = Path(temp_dir)
-        deepseek_passed = executed_summary("deepseek/deepseek-v4-pro")
-        qwen_passed = executed_summary("qwen/qwen3.7-max")
+        deepseek_raw_path = "outputs/evp8_phase1_deepseek_qwen_smoke/deepseek_deepseek-v4-pro/raw_responses.jsonl"
+        qwen_raw_path = "outputs/evp8_phase1_deepseek_qwen_smoke/qwen_qwen3.7-max/raw_responses.jsonl"
+        deepseek_passed = executed_summary("deepseek/deepseek-v4-pro", deepseek_raw_path)
+        qwen_passed = executed_summary("qwen/qwen3.7-max", qwen_raw_path)
         failed_cost = executed_summary(
             "deepseek/deepseek-v4-pro",
+            deepseek_raw_path,
             parse_valid_count=EXPECTED_REVIEW_COUNT - 1,
             invalid_parse_count=1,
             smoke_gate="failed",
             usage_cost_gate="failed",
             cost_summary={"unknown_cost_record_count": 1},
+        )
+        raw_path_mismatch = executed_summary(
+            "deepseek/deepseek-v4-pro",
+            "outputs/evp8_phase1_deepseek_qwen_smoke/unexpected/raw_responses.jsonl",
         )
         cases = [
             run_case(
@@ -315,6 +330,13 @@ def run_self_test() -> dict[str, Any]:
             run_case(
                 root / "deepseek_parse_cost_failed",
                 deepseek_summary=failed_cost,
+                qwen_summary=None,
+                expected_status="failed",
+                assert_check_passes=False,
+            ),
+            run_case(
+                root / "deepseek_raw_path_mismatch",
+                deepseek_summary=raw_path_mismatch,
                 qwen_summary=None,
                 expected_status="failed",
                 assert_check_passes=False,

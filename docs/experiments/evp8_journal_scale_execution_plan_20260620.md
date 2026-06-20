@@ -209,8 +209,10 @@ Gate G2: DeepSeek smoke audit.
   `python scripts\audit_evp8_smoke_results.py --check`
 - Acceptance:
   - DeepSeek summary exists and passes audit;
+  - summary `protocol_id` and `candidate_set_id` match the execution packet;
   - `review_count=35`, `parse_valid_count=35`, `invalid_parse_count=0`;
-  - raw response paths stay under ignored `outputs/`;
+  - raw response paths match the execution packet and stay under ignored
+    `outputs/`;
   - tracked summary contains no API key, local config value, rendered prompt
     text, or raw response body.
 - If DeepSeek does not pass, do not run Qwen. Diagnose first and record the

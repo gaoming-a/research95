@@ -2824,3 +2824,8 @@ This file starts fresh for the patch-verification project.
   real execution. The self-test should use temporary packet/summary files,
   create no raw outputs, and verify waiting, DeepSeek-only partial, both-model
   passed, Qwen-before-DeepSeek failed, and parse/cost failed states.
+- The audit must also check that an executed summary keeps the same
+  `protocol_id`, `candidate_set_id`, expected raw-response path, and
+  no-rendered-prompt/no-raw-text tracked-summary boundary as the handoff
+  packet. Otherwise a future run could silently drift inputs while still
+  satisfying parse/count gates.
