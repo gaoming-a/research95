@@ -53,6 +53,9 @@ The first machine-checkable protocol artifact is:
 - `data/protocols/evp8_schema_dry_run_summary_v0_1.json`
 - `data/protocols/evp8_cost_observability_dry_run_v0_1.json`
 - `data/protocols/evp8_deterministic_tool_baseline_dry_run_v0_1.json`
+- `configs/evp8_deepseek_qwen.example.json`
+- `data/protocols/evp8_deepseek_qwen_local_config_plan_v0_1.json`
+- `data/protocols/evp8_deepseek_qwen_preflight_summary_v0_1.json`
 
 It freezes the draft v0.1 ladder as a tracked protocol spec:
 
@@ -82,8 +85,10 @@ Current audit status:
 - cost-observability dry-run: passed for 686 planned calls per model;
 - deterministic-baseline dry-run: passed for 686 schema-valid placeholder
   decisions using only model-visible evidence slots;
-- API readiness: ready for ignored local preflight only;
-- current blockers before preflight: none in tracked Phase 0 dry-run outputs.
+- DeepSeek/Qwen ignored local preflight: passed without printing key values or
+  calling APIs;
+- API readiness: waiting for explicit user smoke execution command;
+- current blockers before smoke: no tracked Phase 0 or local preflight blockers.
 
 This audit is intentionally no-API and does not authorize model calls, cohort
 expansion, or EVP-8 evidence-packet generation.
@@ -131,11 +136,16 @@ Before any model call:
 
 Immediate next execution order:
 
-1. Commit the cost-observability and deterministic-baseline dry-run summaries.
-2. Create or validate ignored DeepSeek/Qwen local preflight configs.
-3. Treat passing preflight as permission to ask for or wait for an explicit
-   execution command, not as permission to call a model.
-4. Only after the user explicitly says to execute, run the Phase 1 smoke calls.
+1. Commit the DeepSeek/Qwen local preflight artifacts.
+2. Wait for the user to explicitly say to execute the EVP-8 Phase 1 smoke.
+3. After that command, rerun the no-API guards:
+   - `python scripts\audit_evp8_protocol_spec.py --check`
+   - `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
+   - `git status --short --ignored configs\evp8_deepseek_qwen.local.json`
+4. Only if those guards pass, run DeepSeek V4 Pro smoke and Qwen3.7 Max smoke
+   on the frozen 5-candidate x 7-level subset.
+5. Stop after the two smoke runs and audit their raw-output-free summaries; do
+   not start the 686-call full runs without a separate gate.
 
 ### Phase 1: DeepSeek + Qwen First Batch
 
@@ -144,10 +154,17 @@ After Phase 0 passes and the user explicitly says to execute:
 1. Run DeepSeek V4 Pro smoke on a stratified 5-candidate x 7-level subset
    (35 planned calls).
 2. Run Qwen3.7 Max smoke on the same subset and same frozen prompt/schema.
-3. If both pass parse, usage/cost, and quality gates, run their full EVP-8
+3. If the smoke runner is missing, add only the minimal guarded runner needed
+   for this phase: check-only by default, explicit `--execute` for API calls,
+   refusal to run against tracked example config, raw responses under ignored
+   `outputs/`, and tracked raw-output-free summaries only.
+4. If either smoke fails parse, schema, usage/cost, provider/model-id, or
+   raw-output policy gates, stop and diagnose before any full run.
+5. If both pass parse, usage/cost, and quality gates, run their full EVP-8
    evaluations on the frozen Phase 0 packet set: 98 candidates x 7 levels =
-   686 planned calls per model.
-4. Report these results only as a two-model interim result.
+   686 planned calls per model, but only after a separate explicit full-run
+   gate.
+6. Report these results only as a two-model interim result.
 
 This phase must not change evidence levels, prompt schema, candidate set, or
 evaluator joins after the first model call. If a protocol bug is found, bump the

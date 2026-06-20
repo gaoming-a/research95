@@ -1,0 +1,27 @@
+{
+  "api_call_attempted": false,
+  "api_execution_authorized_in_config": false,
+  "api_key_env_names": [
+    "DEEPSEEK_API_KEY",
+    "QWEN_API_KEY"
+  ],
+  "cohort_id": "EVP-8",
+  "config_id": "evp8_deepseek_qwen_phase1_v0_1",
+  "contains_api_key_values": false,
+  "execution_requires_explicit_execute_flag": true,
+  "full_planned_calls_per_model": 686,
+  "local_config_write_attempted": true,
+  "phase1_models": [
+    "deepseek/deepseek-v4-pro",
+    "qwen/qwen3.7-max"
+  ],
+  "provider_routes": [
+    "deepseek_official",
+    "qwen_official"
+  ],
+  "raw_outputs_generated": false,
+  "safe_next_command": "python scripts\\preflight_evp8_deepseek_qwen.py --config configs\\evp8_deepseek_qwen.local.json --strict-api-ready",
+  "smoke_planned_calls_per_model": 35,
+  "target_is_ignored_local_config": true,
+  "target_local_config": "configs/evp8_deepseek_qwen.local.json"
+}

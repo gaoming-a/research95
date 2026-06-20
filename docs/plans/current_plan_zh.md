@@ -14384,3 +14384,134 @@ Verify:
   - `phase0_api_readiness = ready_for_api_preflight`；
   - `next_step = Run ignored local DeepSeek/Qwen preflight next; this audit still does not authorize API execution.`；
   - `api_call_attempted = false`。
+
+## 2026-06-20 EVP-8 DeepSeek/Qwen local preflight
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main [ahead 6]`；
+- 最新本地提交 `5b40306 Add EVP-8 cost baseline dry-run gate`；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过，且
+  `phase0_api_readiness = ready_for_api_preflight`；
+- 下一步仍不是 API execution，而是 ignored local DeepSeek/Qwen preflight；
+- 本轮可以读取 ignored local config 和 `.env` 的 key presence，但不得输出 key
+  value，不得调用 API。
+
+Plan:
+
+1. 新增 tracked EVP-8 DeepSeek/Qwen example config，记录 exact protocol/model/
+   prompt/candidate/call-count boundary，不包含密钥；
+2. 新增 local config helper，支持 dry-run 和写入 ignored
+   `configs/evp8_deepseek_qwen.local.json`；
+3. 新增 preflight checker，验证：
+   - protocol audit 已是 `ready_for_api_preflight`；
+   - local config 是 ignored local path；
+   - Phase 1 模型严格为 DeepSeek V4 Pro 和 Qwen3.7 Max；
+   - prompt/schema/candidate set/call counts 与 frozen protocol 一致；
+   - raw-output paths 位于 ignored `outputs/`；
+   - overwrite policy、usage/cost fields 和 stop gates 已记录；
+   - `.env` 只检查 `DEEPSEEK_API_KEY` / `QWEN_API_KEY` 是否存在，不输出值；
+4. 生成 tracked preflight summary，只记录 no-secret 状态：
+   `data/protocols/evp8_deepseek_qwen_preflight_summary_v0_1.json`；
+5. 同步 README、INDEX、EVP-8 execution plan、current project state、final
+   roadmap 和 engineering notes。
+
+Acceptance:
+
+- preflight 必须明确 `api_call_attempted=false`、`raw_outputs_generated=false`；
+- tracked summary 不得包含 API key、raw prompt text、local config content 或 raw
+  outputs；
+- strict preflight 若通过，只能进入“等待用户明确执行 smoke”的状态，不得自动调用
+  DeepSeek/Qwen；
+- 若缺 key 或 local config 不成立，只记录 blocker，不降级或跳过执行边界。
+
+Execute:
+
+- 新增 `configs/evp8_deepseek_qwen.example.json`，记录 no-secret Phase 1
+  DeepSeek/Qwen preflight config；
+- 新增 `scripts/create_evp8_deepseek_qwen_local_config.py`；
+- 新增 `scripts/preflight_evp8_deepseek_qwen.py`；
+- 生成 tracked no-secret local config plan：
+  `data/protocols/evp8_deepseek_qwen_local_config_plan_v0_1.json`；
+- 写入 ignored local config：
+  `configs/evp8_deepseek_qwen.local.json`；
+- 运行 strict preflight 并生成 tracked no-secret summary：
+  `data/protocols/evp8_deepseek_qwen_preflight_summary_v0_1.json`；
+- 同步 README、docs index、EVP-8 execution plan、final roadmap、current project
+  state 和 engineering notes；
+- 未调用模型 API，未生成 raw outputs，未提交 local config。
+
+Verify:
+
+- `python -m py_compile scripts\create_evp8_deepseek_qwen_local_config.py scripts\preflight_evp8_deepseek_qwen.py`
+  通过；
+- `python scripts\create_evp8_deepseek_qwen_local_config.py --write` 通过：
+  - `target_is_ignored_local_config = true`；
+  - `local_config_write_attempted = true`；
+  - `contains_api_key_values = false`；
+  - `api_call_attempted = false`；
+- `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
+  通过：
+  - `preflight_status = passed`；
+  - `structural_ready = true`；
+  - `credential_presence_ready = true`；
+  - `ready_for_user_execute_command = true`；
+  - `api_key_values_printed = false`；
+  - `local_config_content_stored_in_tracked_summary = false`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_generated = false`；
+- `git status --short --ignored configs\evp8_deepseek_qwen.local.json` 显示
+  local config 为 ignored：`!! configs/evp8_deepseek_qwen.local.json`。
+
+## 2026-06-20 EVP-8 Phase 1 smoke follow-up plan
+
+Inspect:
+
+- DeepSeek/Qwen ignored local preflight 已通过，且明确
+  `api_call_attempted=false`、`raw_outputs_generated=false`；
+- 当前 EVP-8 Phase 0 protocol/candidate/prompt/schema/cost/baseline gates 已经
+  支持进入“等待用户明确执行 smoke”的状态；
+- 本轮用户只要求写入后续计划，不授权模型 API 调用；
+- 下一步必须先提交当前 preflight 与计划 artifacts，再等待用户明确执行命令。
+
+Plan:
+
+1. 先完成本轮 preflight/plan artifacts 的提交；GitHub 若继续同步失败，按用户
+   授权记录失败后继续，不阻塞本地计划执行；
+2. 在用户明确说“执行 EVP-8 Phase 1 smoke”之前，不运行任何 `--execute`
+   模型命令；
+3. 收到执行命令后，第一步仍是只读守卫检查：
+   - `git status --short --branch --untracked-files=all`；
+   - `python scripts\audit_evp8_protocol_spec.py --check`；
+   - `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`；
+   - `git status --short --ignored configs\evp8_deepseek_qwen.local.json`；
+4. 若发现 EVP-8 smoke runner 尚不存在，只允许补一个最小 guarded runner：
+   - 默认 check-only，不调用 API；
+   - 真实调用必须显式 `--execute`；
+   - 拒绝 tracked example config；
+   - 只读取 ignored local config；
+   - raw model responses 只写入 ignored `outputs/`；
+   - tracked summary 只保存 raw-output-free parse、usage/cost、model/provider、
+     level 和 gate 结果；
+   - 不修改 frozen protocol、prompt、candidate set 或 evidence ladder；
+5. smoke 执行顺序固定：
+   - 先 DeepSeek V4 Pro，5 candidates x 7 levels = 35 calls；
+   - DeepSeek smoke 通过 parse/schema/usage-cost/raw-output policy 后，再执行
+     Qwen3.7 Max 同一 35 calls；
+   - 任一模型 smoke 失败，立即停止，先诊断为 runner bug、API/provider 问题、
+     prompt/schema 问题、数据/证据问题或成本可观测性问题；
+6. 两个 smoke 均通过后，只更新 raw-output-free smoke summary、质量审计、
+   cost-observability summary、docs 和 claim boundary；
+7. Phase 1 full run 仍需下一道显式 gate，不因 smoke 通过自动执行。
+
+Acceptance:
+
+- 本轮计划写入后仍不得产生模型 API 调用或 raw outputs；
+- 后续 smoke 最大范围为 DeepSeek 35 calls + Qwen 35 calls，不进入 686-call
+  full run；
+- smoke 使用的 protocol id、candidate set id、prompt hash、levels 和 model ids
+  必须与 preflight summary 一致；
+- `configs/evp8_deepseek_qwen.local.json` 必须保持 ignored 且不得 staged；
+- 如果 smoke runner 需要新增，必须先通过 py_compile、check-only/preflight 和
+  secret scan，再允许真实 API；
+- smoke 结果只能写成 two-model smoke/interim readiness，不能写成五模型期刊结论。

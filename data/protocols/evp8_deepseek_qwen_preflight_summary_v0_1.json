@@ -1,0 +1,311 @@
+{
+  "api_call_attempted": false,
+  "api_key_values_printed": false,
+  "boundary": "Passing this preflight does not call or authorize API execution by itself.",
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "checks": [
+    {
+      "category": "structural",
+      "check": "config_path_is_ignored_local",
+      "detail": "configs/evp8_deepseek_qwen.local.json",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "protocol_spec_exists",
+      "detail": "data/protocols/evp8_protocol_v0_1.json",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "protocol_audit_summary_exists",
+      "detail": "data/protocols/evp8_protocol_v0_1_audit_summary.json",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "candidate_set_exists",
+      "detail": "data/protocols/evp8_candidate_set_v0_1.json",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "prompt_template_exists",
+      "detail": "prompts/evp8_visible_evidence_merge_gate_v0_1.md",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "prompt_manifest_exists",
+      "detail": "data/protocols/evp8_prompt_manifest_v0_1.json",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "prompt_boundary_audit_exists",
+      "detail": "data/protocols/evp8_prompt_boundary_audit_v0_1.json",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "packet_dry_run_summary_exists",
+      "detail": "data/protocols/evp8_evidence_packet_dry_run_summary_v0_1.json",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "schema_dry_run_summary_exists",
+      "detail": "data/protocols/evp8_schema_dry_run_summary_v0_1.json",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "cost_observability_dry_run_exists",
+      "detail": "data/protocols/evp8_cost_observability_dry_run_v0_1.json",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "deterministic_tool_baseline_dry_run_exists",
+      "detail": "data/protocols/evp8_deterministic_tool_baseline_dry_run_v0_1.json",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "protocol_audit_ready_for_preflight",
+      "detail": "ready_for_api_preflight",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "protocol_audit_no_api",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "phase1_model_ids",
+      "detail": [
+        "deepseek/deepseek-v4-pro",
+        "qwen/qwen3.7-max"
+      ],
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "api_key_env_names",
+      "detail": [
+        "DEEPSEEK_API_KEY",
+        "QWEN_API_KEY"
+      ],
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "prompt_id",
+      "detail": "evp8_visible_evidence_merge_gate_v0_1",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "prompt_template_hash",
+      "detail": "a31d23d74f5130c9ce06262c4a9f016a303da8e77683c007e7cfb142fb74066c",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "candidate_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "temperature",
+      "detail": 0.0,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "max_output_tokens",
+      "detail": 1024,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "execution_requires_explicit_execute_flag",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "api_execution_not_authorized_by_config",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "raw_output_policy",
+      "detail": "ignored_outputs_only",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "overwrite_policy",
+      "detail": "refuse_if_output_exists",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "record_actual_model_id",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "record_actual_provider",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "record_cost_source",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "record_provider_cost_usd",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "smoke_output_dir_ignored_boundary",
+      "detail": "outputs/evp8_phase1_deepseek_qwen_smoke",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "full_output_dir_ignored_boundary",
+      "detail": "outputs/evp8_phase1_deepseek_qwen_full",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "smoke_levels",
+      "detail": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6"
+      ],
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "smoke_candidate_count",
+      "detail": 5,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "smoke_planned_calls_per_model",
+      "detail": 35,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "full_levels",
+      "detail": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6"
+      ],
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "full_candidate_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "full_planned_calls_per_model",
+      "detail": 686,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "cost_dry_run_status",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "cost_planned_calls_per_model",
+      "detail": 686,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "baseline_dry_run_status",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "baseline_planned_record_count",
+      "detail": 686,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "retry_policy_max_retries_per_record",
+      "detail": 1,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "retry_policy_retry_only_on_transport_or_rate_limit",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "category": "structural",
+      "check": "retry_policy_no_silent_retry_for_parse_invalid",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "category": "credential_presence",
+      "check": "credential_key_presence",
+      "detail": {
+        "env_file_exists": true,
+        "key_states": {
+          "DEEPSEEK_API_KEY": "set",
+          "QWEN_API_KEY": "set"
+        },
+        "values_printed": false
+      },
+      "passed": true
+    }
+  ],
+  "cohort_id": "EVP-8",
+  "config": "configs/evp8_deepseek_qwen.local.json",
+  "credential_presence_ready": true,
+  "local_config_content_stored_in_tracked_summary": false,
+  "next_step": "Wait for explicit user execution command before DeepSeek/Qwen smoke.",
+  "preflight_status": "passed",
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "raw_outputs_generated": false,
+  "ready_for_user_execute_command": true,
+  "structural_ready": true
+}

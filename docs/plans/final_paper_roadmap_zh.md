@@ -1098,8 +1098,9 @@ levels = 686 planned skeletons / schema outputs。Cost-observability 和
 deterministic tool-baseline dry-run summaries 也已通过：前者验证每模型 686
 planned calls 和 usage/cost 字段，后者验证 686 条 schema-valid placeholder
 baseline decisions 且不读取 evaluator-only labels。这些仍不授权 API。当前下一步
-只能进入 ignored local DeepSeek/Qwen preflight；preflight 通过后仍必须等待用户
-明确执行命令，才允许真实模型调用。
+ignored local DeepSeek/Qwen preflight 已通过；tracked summary 只记录 credential
+presence，不包含 key value 或 raw outputs。下一步仍不是自动 API，而是等待用户
+明确执行 EVP-8 Phase 1 smoke，才允许真实模型调用。
 
 期刊版主线：
 

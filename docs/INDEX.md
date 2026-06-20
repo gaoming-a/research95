@@ -77,6 +77,16 @@
 - `../data/protocols/evp8_deterministic_tool_baseline_dry_run_v0_1.json`:
   no-API deterministic baseline schema dry-run over 686 planned records. It
   uses only model-visible evidence slots and stores no baseline decision JSONL.
+- `../configs/evp8_deepseek_qwen.example.json`: tracked no-secret example
+  config for the EVP-8 Phase 1 DeepSeek/Qwen local preflight. The ignored local
+  copy is `configs/evp8_deepseek_qwen.local.json` and must not be committed.
+- `../data/protocols/evp8_deepseek_qwen_local_config_plan_v0_1.json`:
+  no-secret summary of the ignored local config creation boundary. It records
+  paths, model ids, planned call counts, and API-key env var names only.
+- `../data/protocols/evp8_deepseek_qwen_preflight_summary_v0_1.json`: tracked
+  no-secret EVP-8 DeepSeek/Qwen local preflight summary. It records structural
+  checks and credential presence states without key values, raw outputs, or API
+  calls.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.
@@ -986,6 +996,12 @@
 - `../scripts/build_evp8_cost_baseline_dry_run.py`: validates EVP-8 planned
   cost-observability fields and deterministic baseline output schema without
   local API config reads, raw outputs, or model calls.
+- `../scripts/create_evp8_deepseek_qwen_local_config.py`: creates or dry-runs
+  the ignored EVP-8 DeepSeek/Qwen local config from the tracked no-secret
+  example config.
+- `../scripts/preflight_evp8_deepseek_qwen.py`: validates the ignored EVP-8
+  DeepSeek/Qwen local config and `.env` key presence without printing secrets
+  or calling APIs.
 - `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict

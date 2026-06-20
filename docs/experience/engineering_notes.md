@@ -2771,3 +2771,15 @@ This file starts fresh for the patch-verification project.
 - `phase0_api_readiness=ready_for_api_preflight` means all tracked no-API Phase
   0 blockers are cleared. It does not authorize API execution; local preflight
   and an explicit execution command are still required before model calls.
+
+## 2026-06-20 EVP-8 DeepSeek/Qwen local preflight boundary
+
+- Local preflight may read the ignored local config and `.env` only to validate
+  path, model, output, and credential-presence boundaries. It must never print
+  API key values or store local config contents in tracked artifacts.
+- A passed local preflight means the smoke run can be executed after an explicit
+  user command. It is not itself execution authorization and must not be used to
+  start model calls automatically.
+- Keep the ignored local config under `configs/*.local.json` and raw outputs
+  under `outputs/`; tracked preflight summaries should contain only model ids,
+  env var names, planned call counts, check names, and boolean/state results.
