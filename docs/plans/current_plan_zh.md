@@ -15195,3 +15195,12 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过；
 - 本轮未调用模型 API，未读取 raw outputs，未生成 raw outputs。
+
+Commit And Sync:
+
+- 已提交本轮 G0 guard one-command summary：
+  `6721bc4 Add EVP-8 G0 guard summary check`；
+- 尝试 `git push origin main`；
+- GitHub sync 失败：
+  `fatal: unable to access 'https://github.com/gaoming-a/research95.git/': Failed to connect to github.com port 443 after 21134 ms: Could not connect to server`；
+- 这是连续 network-level sync failure；按用户授权，不阻塞后续本地计划执行。
