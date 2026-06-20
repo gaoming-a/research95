@@ -111,9 +111,12 @@ Current audit status:
   estimate after the 4096-token budget repair; Qwen uses controlled CNY
   token-pricing estimate and does not invent USD cost or exchange-rate
   conversion;
-- current next gate: G5 no-API first-batch full-run packet. The 686-call
-  DeepSeek/Qwen first-batch full run still requires a separate explicit user
-  authorization.
+- G5 no-API first-batch full-run packet: `ready`. It records the exact
+  DeepSeek/Qwen 686-call full-run commands, expected raw/summary paths,
+  USD/CNY cost fields, per-level aggregate requirements, and post-full-run
+  audit/synthesis commands. It does not authorize API execution;
+- current next gate: user review of the G5 packet and separate explicit
+  authorization before any 686-call first-batch full run.
 
 This audit is intentionally no-API and does not authorize model calls, cohort
 expansion, or EVP-8 evidence-packet generation.
@@ -181,13 +184,17 @@ Historical smoke execution order, now completed through G4:
 
 Immediate next execution order:
 
-1. Prepare G5, a separate no-API first-batch full-run packet for DeepSeek/Qwen
-   686-call runs.
-2. Include the 4096-token output budget, USD/CNY cost observability fields,
-   expected raw-output paths, tracked summary paths, per-level aggregate
-   requirements, and full-run audit/synthesis commands.
-3. Do not run either 686-call model command until the user explicitly
-   authorizes the first-batch full run after reviewing the packet.
+1. Review the G5 no-API first-batch full-run packet:
+   `data/protocols/evp8_deepseek_qwen_first_batch_full_run_packet_v0_1.json`.
+2. If the user explicitly authorizes the first-batch full run, run only the
+   DeepSeek command first:
+   `python scripts\run_evp8_deepseek_qwen_smoke.py --execute --run-scope full --config configs\evp8_deepseek_qwen.local.json --model-id deepseek/deepseek-v4-pro`.
+3. Run `python scripts\audit_evp8_first_batch_full_results.py --check`.
+4. Run Qwen only if the DeepSeek first-batch full audit passes.
+5. Run `python scripts\summarize_evp8_first_batch_full_synthesis.py --check`
+   only after both first-batch summaries pass audit.
+6. Do not start Kimi/Devstral/Gemini or five-model synthesis from this
+   authorization.
 
 ### Immediate DeepSeek/Qwen Follow-up Plan
 
@@ -288,8 +295,10 @@ Gate G4: two-model smoke synthesis.
 
 Gate G5: post-smoke decision and first-batch full-run packet.
 
-- If both smoke audits pass, prepare a separate no-API full-run packet for the
-  first-batch DeepSeek/Qwen 686-call runs.
+- Status: `ready` as of 2026-06-20.
+- The separate no-API full-run packet for the first-batch DeepSeek/Qwen
+  686-call runs is:
+  `data/protocols/evp8_deepseek_qwen_first_batch_full_run_packet_v0_1.json`.
 - Do not start the 686-call full runs in the same step unless the user gives a
   separate full-run authorization after reviewing the smoke audit.
 - If a protocol, prompt, schema, candidate-set, or evaluator-join bug is found

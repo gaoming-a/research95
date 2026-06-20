@@ -124,6 +124,29 @@
   or five-model claims.
 - `experiments/evp8_deepseek_qwen_smoke_synthesis_v0_1.md`: Markdown companion
   for the G4 smoke synthesis.
+- `../data/protocols/evp8_deepseek_qwen_first_batch_full_check_only_v0_1.json`:
+  no-API first-batch full-run check-only summary. Current status is `passed`
+  for 98 candidates x 7 evidence levels = 686 prompts per model; it stores no
+  rendered prompts and generates no raw outputs.
+- `../data/protocols/evp8_deepseek_qwen_first_batch_full_run_packet_v0_1.json`:
+  G5 no-API first-batch full-run packet. Current status is `ready`; it records
+  DeepSeek/Qwen 686-call execute commands, expected outputs, cost fields,
+  post-full-run audit/synthesis commands, stop gates, and the boundary that it
+  does not authorize API execution.
+- `experiments/evp8_deepseek_qwen_first_batch_full_run_packet_v0_1.md`:
+  Markdown companion for the G5 first-batch full-run packet.
+- `../data/protocols/evp8_deepseek_qwen_first_batch_full_result_audit_v0_1.json`:
+  no-API first-batch full-run result audit scaffold. Current status is
+  `waiting_for_execution`; it validates tracked summaries when they exist and
+  never reads raw responses.
+- `experiments/evp8_deepseek_qwen_first_batch_full_result_audit_v0_1.md`:
+  Markdown companion for the first-batch full-run result audit.
+- `../data/protocols/evp8_deepseek_qwen_first_batch_full_synthesis_v0_1.json`:
+  no-API first-batch full-run synthesis scaffold. Current status is
+  `waiting_for_execution`; after both models pass audit it summarizes tracked
+  per-level decision counts without reading raw responses.
+- `experiments/evp8_deepseek_qwen_first_batch_full_synthesis_v0_1.md`:
+  Markdown companion for the first-batch full-run synthesis scaffold.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.

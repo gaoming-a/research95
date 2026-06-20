@@ -1,7 +1,7 @@
-"""Guarded EVP-8 DeepSeek/Qwen smoke runner.
+"""Guarded EVP-8 DeepSeek/Qwen smoke/full runner.
 
-The default path is check-only and does not call model APIs. Real smoke calls
-require an ignored local config, an explicit --execute flag, and a single
+The default path is check-only and does not call model APIs. Real calls require
+an ignored local config, an explicit --execute flag, a run scope, and a single
 configured model id.
 """
 
@@ -33,7 +33,8 @@ import preflight_evp8_deepseek_qwen as preflight_module  # noqa: E402
 
 
 DEFAULT_CONFIG = REPO_ROOT / "configs" / "evp8_deepseek_qwen.local.json"
-DEFAULT_CHECK_SUMMARY_OUT = REPO_ROOT / "data" / "protocols" / "evp8_deepseek_qwen_smoke_check_only_v0_1.json"
+DEFAULT_SMOKE_CHECK_SUMMARY_OUT = REPO_ROOT / "data" / "protocols" / "evp8_deepseek_qwen_smoke_check_only_v0_1.json"
+DEFAULT_FULL_CHECK_SUMMARY_OUT = REPO_ROOT / "data" / "protocols" / "evp8_deepseek_qwen_first_batch_full_check_only_v0_1.json"
 DEFAULT_EXEC_SUMMARY_DIR = REPO_ROOT / "data" / "reviews"
 MODEL_VISIBLE_LEVELS = ("E0", "E1", "E2", "E3", "E4", "E5", "E6")
 EVP7_CANDIDATES = REPO_ROOT / "data" / "patches" / "evp7_candidates.jsonl"
@@ -158,21 +159,28 @@ def select_smoke_candidates(candidate_set: dict[str, Any], count: int) -> list[d
     return selected
 
 
-def build_smoke_packets(config: dict[str, Any]) -> list[dict[str, Any]]:
+def build_packets(config: dict[str, Any], run_scope: str) -> list[dict[str, Any]]:
     spec = read_json(resolve(config["protocol_spec"]))
     candidate_set = read_json(resolve(config["candidate_set"]))
     source_index = load_source_candidate_index()
     levels = {level["level"]: level for level in spec.get("evidence_ladder", [])}
-    smoke = config.get("smoke") or {}
-    selected = select_smoke_candidates(candidate_set, int(smoke.get("candidate_count") or 5))
+    scope_config = config.get(run_scope) or {}
+    if run_scope == "smoke":
+        selected = select_smoke_candidates(candidate_set, int(scope_config.get("candidate_count") or 5))
+        packet_suffix = "evp8_smoke_v0_1"
+    elif run_scope == "full":
+        selected = list(candidate_set.get("records") or [])
+        packet_suffix = "evp8_first_batch_full_v0_1"
+    else:
+        raise ValueError(f"unsupported EVP-8 run scope: {run_scope}")
     packets: list[dict[str, Any]] = []
     for candidate in selected:
         source_id = str(candidate["source_candidate_id"])
         source = source_index.get(source_id)
         if source is None:
             raise ValueError(f"missing EVP-7 source candidate: {source_id}")
-        all_fields = _visible_field_groups(candidate, source)
-        for level_name in smoke.get("levels") or MODEL_VISIBLE_LEVELS:
+        all_fields = _visible_field_groups(candidate, source, run_scope)
+        for level_name in scope_config.get("levels") or MODEL_VISIBLE_LEVELS:
             level = levels[level_name]
             field_groups = list(level.get("model_visible_field_groups") or [])
             visible_fields = {group: all_fields[group] for group in field_groups if group in all_fields}
@@ -191,7 +199,7 @@ def build_smoke_packets(config: dict[str, Any]) -> list[dict[str, Any]]:
                 "visible_fields": visible_fields,
             }
             packet["evidence_packet_id"] = (
-                f"{packet['anonymous_candidate_id']}__{packet['evidence_level']}__evp8_smoke_v0_1"
+                f"{packet['anonymous_candidate_id']}__{packet['evidence_level']}__{packet_suffix}"
             )
             findings = leakage_findings(packet)
             if findings:
@@ -200,15 +208,20 @@ def build_smoke_packets(config: dict[str, Any]) -> list[dict[str, Any]]:
     return packets
 
 
-def _visible_field_groups(candidate: dict[str, Any], source: dict[str, Any]) -> dict[str, Any]:
+def build_smoke_packets(config: dict[str, Any]) -> list[dict[str, Any]]:
+    return build_packets(config, "smoke")
+
+
+def _visible_field_groups(candidate: dict[str, Any], source: dict[str, Any], run_scope: str) -> dict[str, Any]:
+    scope_tag = "phase0_smoke" if run_scope == "smoke" else "first_batch_full"
     seed = source.get("model_visible_seed") or {}
     patch_text = str(seed.get("patch_text") or "")
     touched_files = list(seed.get("touched_files") or candidate.get("touched_files") or [])
     visible_tests = list(source.get("visible_tests") or [])
     patch_applied = (source.get("validation_summary") or {}).get("patch_applied")
     patch_apply_status = "applied" if patch_applied is True else "failed" if patch_applied is False else "not_recorded"
-    f2p_outcomes = ["not_run_in_phase0_smoke" for _ in visible_tests]
-    merge_gate = _deterministic_visible_merge_gate(patch_apply_status, f2p_outcomes)
+    f2p_outcomes = [f"not_run_in_{scope_tag}" for _ in visible_tests]
+    merge_gate = _deterministic_visible_merge_gate(patch_apply_status, f2p_outcomes, scope_tag)
     return {
         "issue_patch_seed": {
             "anonymous_candidate_id": candidate["evp8_candidate_id"],
@@ -221,28 +234,28 @@ def _visible_field_groups(candidate: dict[str, Any], source: dict[str, Any]) -> 
         "patch_surface_map": _patch_surface_map(patch_text, touched_files),
         "patch_application_static_status": {
             "patch_apply_status": patch_apply_status,
-            "syntax_check_status": "not_run_in_phase0_smoke",
-            "import_smoke_status": "not_run_in_phase0_smoke",
-            "configured_static_check_status": "not_run_in_phase0_smoke",
+            "syntax_check_status": f"not_run_in_{scope_tag}",
+            "import_smoke_status": f"not_run_in_{scope_tag}",
+            "configured_static_check_status": f"not_run_in_{scope_tag}",
         },
         "visible_fail_to_pass_test_evidence": {
-            "visible_fail_to_pass_scope_id": f"{candidate['task_id']}::phase0_smoke_visible_f2p",
+            "visible_fail_to_pass_scope_id": f"{candidate['task_id']}::{scope_tag}_visible_f2p",
             "visible_fail_to_pass_test_names": visible_tests,
             "visible_fail_to_pass_outcomes": f2p_outcomes,
-            "sanitized_fail_to_pass_stdout_tail": "not_generated_in_phase0_smoke",
+            "sanitized_fail_to_pass_stdout_tail": f"not_generated_in_{scope_tag}",
             "fail_to_pass_command_fingerprint": sha256_text("\n".join(visible_tests)),
         },
         "visible_pass_to_pass_regression_evidence": {
-            "visible_pass_to_pass_scope_id": f"{candidate['task_id']}::phase0_smoke_visible_p2p_not_materialized",
+            "visible_pass_to_pass_scope_id": f"{candidate['task_id']}::{scope_tag}_visible_p2p_not_materialized",
             "visible_pass_to_pass_test_names": [],
             "visible_pass_to_pass_outcomes": [],
-            "sanitized_pass_to_pass_stdout_tail": "not_generated_in_phase0_smoke",
-            "pass_to_pass_scope_summary": "not_materialized_in_phase0_smoke",
+            "sanitized_pass_to_pass_stdout_tail": f"not_generated_in_{scope_tag}",
+            "pass_to_pass_scope_summary": f"not_materialized_in_{scope_tag}",
         },
         "broader_visible_tool_diagnostics": {
-            "lint_or_static_diagnostic_summary": "not_run_in_phase0_smoke",
+            "lint_or_static_diagnostic_summary": f"not_run_in_{scope_tag}",
             "sanitized_test_log_observations": [],
-            "environment_diagnostic_summary": "not_recorded_in_phase0_smoke",
+            "environment_diagnostic_summary": f"not_recorded_in_{scope_tag}",
             "diagnostic_tool_versions": {},
         },
         "deterministic_visible_merge_gate_summary": merge_gate,
@@ -308,13 +321,13 @@ def _symbol_name(symbol: str, keyword: str) -> str:
     return re.split(r"[\(:\s]", tail, maxsplit=1)[0]
 
 
-def _deterministic_visible_merge_gate(patch_apply_status: str, f2p_outcomes: list[str]) -> dict[str, Any]:
+def _deterministic_visible_merge_gate(patch_apply_status: str, f2p_outcomes: list[str], scope_tag: str) -> dict[str, Any]:
     counts: dict[str, int] = {}
     for outcome in f2p_outcomes:
         counts[outcome] = counts.get(outcome, 0) + 1
     contradictions: list[str] = []
     decision = "escalate"
-    reasons = ["phase0_smoke_visible_evidence_is_incomplete"]
+    reasons = [f"{scope_tag}_visible_evidence_is_incomplete"]
     if patch_apply_status == "failed":
         contradictions.append("patch_apply_failed")
         decision = "reject"
@@ -418,12 +431,15 @@ def check_only(args: argparse.Namespace) -> dict[str, Any]:
     config = read_json(args.config)
     preflight = preflight_module.preflight(args.config, allow_missing_credentials=args.allow_missing_credentials)
     if not preflight["structural_ready"]:
-        raise SystemExit("EVP-8 smoke check-only requires structural preflight readiness.")
+        raise SystemExit("EVP-8 DeepSeek/Qwen check-only requires structural preflight readiness.")
     if not args.allow_missing_credentials and not preflight["ready_for_user_execute_command"]:
-        raise SystemExit("EVP-8 smoke check-only requires strict local preflight unless --allow-missing-credentials is set.")
+        raise SystemExit("EVP-8 DeepSeek/Qwen check-only requires strict local preflight unless --allow-missing-credentials is set.")
     spec = read_json(resolve(config["protocol_spec"]))
     template = resolve(config["prompt_template"]).read_text(encoding="utf-8")
-    packets = build_smoke_packets(config)
+    scope_config = config.get(args.run_scope) or {}
+    expected_packet_count = int(scope_config.get("planned_calls_per_model") or 0)
+    expected_candidate_count = int(scope_config.get("candidate_count") or 0)
+    packets = build_packets(config, args.run_scope)
     prompt_hashes: list[str] = []
     prompt_chars: list[int] = []
     schema_errors: list[str] = []
@@ -444,10 +460,16 @@ def check_only(args: argparse.Namespace) -> dict[str, Any]:
         "protocol_id": spec.get("protocol_id"),
         "candidate_set_id": preflight.get("candidate_set_id"),
         "config": display_path(args.config),
+        "run_scope": args.run_scope,
         "selected_candidate_ids": sorted({packet["anonymous_candidate_id"] for packet in packets}),
-        "selection_policy": "deterministic_project_frequency_stratified_first_candidate_per_top_project",
+        "candidate_count": len({packet["anonymous_candidate_id"] for packet in packets}),
+        "selection_policy": (
+            "deterministic_project_frequency_stratified_first_candidate_per_top_project"
+            if args.run_scope == "smoke"
+            else "all_frozen_evp8_candidate_set_records"
+        ),
         "model_visible_levels": list(MODEL_VISIBLE_LEVELS),
-        "expected_packet_count": 35,
+        "expected_packet_count": expected_packet_count,
         "packet_count": len(packets),
         "prompt_count": len(prompt_hashes),
         "prompt_hashes_unique_count": len(set(prompt_hashes)),
@@ -463,15 +485,21 @@ def check_only(args: argparse.Namespace) -> dict[str, Any]:
         "schema_error_count": len(schema_errors),
         "schema_error_counts": _counts(schema_errors),
         "check_only_status": "passed"
-        if len(packets) == 35 and not boundary_errors and not schema_errors
+        if len(packets) == expected_packet_count
+        and len({packet["anonymous_candidate_id"] for packet in packets}) == expected_candidate_count
+        and not boundary_errors
+        and not schema_errors
         else "failed",
         "preflight_structural_ready": preflight["structural_ready"],
         "preflight_ready_for_user_execute_command": preflight["ready_for_user_execute_command"],
-        "next_step": "Wait for explicit user command before running --execute smoke.",
+        "next_step": f"Wait for explicit user command before running --execute {args.run_scope}.",
     }
-    write_json(args.summary_out or DEFAULT_CHECK_SUMMARY_OUT, summary)
+    default_summary_out = (
+        DEFAULT_SMOKE_CHECK_SUMMARY_OUT if args.run_scope == "smoke" else DEFAULT_FULL_CHECK_SUMMARY_OUT
+    )
+    write_json(args.summary_out or default_summary_out, summary)
     if summary["check_only_status"] != "passed":
-        raise SystemExit(f"EVP-8 smoke check-only failed: {summary}")
+        raise SystemExit(f"EVP-8 {args.run_scope} check-only failed: {summary}")
     return summary
 
 
@@ -481,20 +509,21 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     config = read_json(args.config)
     preflight = preflight_module.preflight(args.config)
     if not preflight["ready_for_user_execute_command"]:
-        raise SystemExit("EVP-8 smoke execute requires strict DeepSeek/Qwen preflight readiness.")
+        raise SystemExit("EVP-8 DeepSeek/Qwen execute requires strict preflight readiness.")
     model_config = _model_config(config, args.model_id)
     if model_config is None:
         raise SystemExit(f"--model-id must match one configured model: {args.model_id}")
-    output_dir = resolve((config.get("smoke") or {})["output_dir"]) / safe_name(str(model_config["model_id"]))
+    scope_config = config.get(args.run_scope) or {}
+    output_dir = resolve(scope_config["output_dir"]) / safe_name(str(model_config["model_id"]))
     raw_out = args.raw_out or output_dir / "raw_responses.jsonl"
-    summary_out = args.summary_out or DEFAULT_EXEC_SUMMARY_DIR / f"evp8_{safe_name(str(model_config['model_id']))}_smoke_summary.json"
+    summary_out = args.summary_out or DEFAULT_EXEC_SUMMARY_DIR / f"evp8_{safe_name(str(model_config['model_id']))}_{args.run_scope}_summary.json"
     if config.get("overwrite_policy") == "refuse_if_output_exists" and (raw_out.exists() or summary_out.exists()):
-        raise SystemExit(f"Refusing to overwrite existing smoke outputs: {display_path(raw_out)} or {display_path(summary_out)}")
+        raise SystemExit(f"Refusing to overwrite existing {args.run_scope} outputs: {display_path(raw_out)} or {display_path(summary_out)}")
 
     load_env_file(str(resolve(config.get("env", ".env"))))
     spec = read_json(resolve(config["protocol_spec"]))
     template = resolve(config["prompt_template"]).read_text(encoding="utf-8")
-    packets = build_smoke_packets(config)
+    packets = build_packets(config, args.run_scope)
     raw_records: list[dict[str, Any]] = []
     parsed_records: list[dict[str, Any]] = []
     for packet in packets:
@@ -557,6 +586,7 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         "protocol_id": spec.get("protocol_id"),
         "candidate_set_id": preflight.get("candidate_set_id"),
         "config": display_path(args.config),
+        "run_scope": args.run_scope,
         "configured_model_id": model_config["model_id"],
         "request_model_id": model_config["request_model_id"],
         "provider_route": model_config["provider_route"],
@@ -584,13 +614,17 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         "prompt_text_stored": False,
         "cost_summary": cost,
         "usage_cost_gate": "passed" if cost["unknown_cost_record_count"] == 0 else "blocked",
-        "smoke_gate": "passed"
+        "run_gate": "passed"
         if parse_valid_count == len(parsed_records) and cost["unknown_cost_record_count"] == 0
         else "blocked",
     }
+    if args.run_scope == "smoke":
+        summary["smoke_gate"] = summary["run_gate"]
+    else:
+        summary["first_batch_full_gate"] = summary["run_gate"]
     write_json(summary_out, summary)
-    if summary["smoke_gate"] != "passed":
-        raise SystemExit(f"EVP-8 smoke gate blocked after writing outputs: {summary['smoke_gate']}")
+    if summary["run_gate"] != "passed":
+        raise SystemExit(f"EVP-8 {args.run_scope} gate blocked after writing outputs: {summary['run_gate']}")
     return summary
 
 
@@ -841,6 +875,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument("--check-only", action="store_true")
     parser.add_argument("--execute", action="store_true")
+    parser.add_argument("--run-scope", choices=("smoke", "full"), default="smoke")
     parser.add_argument("--model-id", help="Configured model id to execute, e.g. deepseek/deepseek-v4-pro.")
     parser.add_argument("--allow-missing-credentials", action="store_true")
     parser.add_argument("--summary-out", type=Path)

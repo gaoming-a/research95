@@ -1,0 +1,245 @@
+{
+  "api_call_attempted": false,
+  "api_key_values_printed": false,
+  "candidate_count": 98,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "checks": [
+    {
+      "check": "local_config_path_boundary",
+      "detail": "configs/evp8_deepseek_qwen.local.json",
+      "passed": true
+    },
+    {
+      "check": "protocol_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "protocol_ready_for_preflight",
+      "detail": "ready_for_api_preflight",
+      "passed": true
+    },
+    {
+      "check": "preflight_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "preflight_ready_for_user_execute_command",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "preflight_no_key_values_printed",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "full_check_only_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "full_check_only_scope",
+      "detail": "full",
+      "passed": true
+    },
+    {
+      "check": "full_packet_count",
+      "detail": 686,
+      "passed": true
+    },
+    {
+      "check": "full_candidate_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "full_prompt_count",
+      "detail": 686,
+      "passed": true
+    },
+    {
+      "check": "full_prompt_hashes_unique",
+      "detail": 686,
+      "passed": true
+    },
+    {
+      "check": "full_check_no_api",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "full_check_no_raw_outputs",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "smoke_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "smoke_synthesis_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "phase1_model_ids",
+      "detail": [
+        "deepseek/deepseek-v4-pro",
+        "qwen/qwen3.7-max"
+      ],
+      "passed": true
+    },
+    {
+      "check": "expected_full_outputs_absent",
+      "detail": [
+        {
+          "exists": false,
+          "output_kind": "raw_responses",
+          "passed": true,
+          "path": "outputs/evp8_phase1_deepseek_qwen_full/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+          "step": "deepseek_first_batch_full_first"
+        },
+        {
+          "exists": false,
+          "output_kind": "tracked_summary",
+          "passed": true,
+          "path": "data/reviews/evp8_deepseek_deepseek-v4-pro_full_summary.json",
+          "step": "deepseek_first_batch_full_first"
+        },
+        {
+          "exists": false,
+          "output_kind": "raw_responses",
+          "passed": true,
+          "path": "outputs/evp8_phase1_deepseek_qwen_full/qwen_qwen3.7-max/raw_responses.jsonl",
+          "step": "qwen_first_batch_full_after_deepseek_gate"
+        },
+        {
+          "exists": false,
+          "output_kind": "tracked_summary",
+          "passed": true,
+          "path": "data/reviews/evp8_qwen_qwen3.7-max_full_summary.json",
+          "step": "qwen_first_batch_full_after_deepseek_gate"
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "claim_boundary": "This packet is a no-API first-batch full-run handoff. It is not LLM verifier evidence and does not authorize 686-call model runs without a separate explicit user command.",
+  "cohort_id": "EVP-8",
+  "cost_observability_fields": [
+    "usage.prompt_tokens",
+    "usage.completion_tokens",
+    "usage.total_tokens",
+    "cost_usd",
+    "cost_cny",
+    "cost_currency",
+    "cost_source",
+    "cost_observability"
+  ],
+  "execute_commands_after_explicit_user_authorization": [
+    {
+      "command": "python scripts\\run_evp8_deepseek_qwen_smoke.py --execute --run-scope full --config configs\\evp8_deepseek_qwen.local.json --model-id deepseek/deepseek-v4-pro",
+      "model_id": "deepseek/deepseek-v4-pro",
+      "outputs": {
+        "raw_responses": "outputs/evp8_phase1_deepseek_qwen_full/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+        "tracked_summary": "data/reviews/evp8_deepseek_deepseek-v4-pro_full_summary.json"
+      },
+      "proceed_if": "tracked_summary.first_batch_full_gate == passed and tracked_summary.usage_cost_gate == passed",
+      "provider_route": "deepseek_official",
+      "request_model_id": "deepseek-v4-pro",
+      "step": "deepseek_first_batch_full_first"
+    },
+    {
+      "command": "python scripts\\run_evp8_deepseek_qwen_smoke.py --execute --run-scope full --config configs\\evp8_deepseek_qwen.local.json --model-id qwen/qwen3.7-max",
+      "model_id": "qwen/qwen3.7-max",
+      "outputs": {
+        "raw_responses": "outputs/evp8_phase1_deepseek_qwen_full/qwen_qwen3.7-max/raw_responses.jsonl",
+        "tracked_summary": "data/reviews/evp8_qwen_qwen3.7-max_full_summary.json"
+      },
+      "proceed_if": "DeepSeek first-batch full audit passed first; this Qwen summary must also pass parse and usage/cost gates.",
+      "provider_route": "qwen_official",
+      "request_model_id": "qwen3.7-max",
+      "step": "qwen_first_batch_full_after_deepseek_gate"
+    }
+  ],
+  "execution_authorized_by_packet": false,
+  "expected_output_absence": [
+    {
+      "exists": false,
+      "output_kind": "raw_responses",
+      "passed": true,
+      "path": "outputs/evp8_phase1_deepseek_qwen_full/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+      "step": "deepseek_first_batch_full_first"
+    },
+    {
+      "exists": false,
+      "output_kind": "tracked_summary",
+      "passed": true,
+      "path": "data/reviews/evp8_deepseek_deepseek-v4-pro_full_summary.json",
+      "step": "deepseek_first_batch_full_first"
+    },
+    {
+      "exists": false,
+      "output_kind": "raw_responses",
+      "passed": true,
+      "path": "outputs/evp8_phase1_deepseek_qwen_full/qwen_qwen3.7-max/raw_responses.jsonl",
+      "step": "qwen_first_batch_full_after_deepseek_gate"
+    },
+    {
+      "exists": false,
+      "output_kind": "tracked_summary",
+      "passed": true,
+      "path": "data/reviews/evp8_qwen_qwen3.7-max_full_summary.json",
+      "step": "qwen_first_batch_full_after_deepseek_gate"
+    }
+  ],
+  "guard_commands": [
+    "git status --short --branch --untracked-files=all",
+    "python scripts\\audit_evp8_protocol_spec.py --check",
+    "python scripts\\preflight_evp8_deepseek_qwen.py --config configs\\evp8_deepseek_qwen.local.json --strict-api-ready",
+    "python scripts\\run_evp8_deepseek_qwen_smoke.py --check-only --run-scope full --config configs\\evp8_deepseek_qwen.local.json",
+    "python scripts\\write_evp8_first_batch_full_run_packet.py --check",
+    "python scripts\\audit_evp8_first_batch_full_results.py --check",
+    "python scripts\\summarize_evp8_first_batch_full_synthesis.py --check",
+    "git status --short --ignored configs\\evp8_deepseek_qwen.local.json outputs artifacts .env data\\reviews"
+  ],
+  "local_config": "configs/evp8_deepseek_qwen.local.json",
+  "max_output_tokens": 4096,
+  "model_visible_levels": [
+    "E0",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6"
+  ],
+  "packet_id": "evp8_deepseek_qwen_first_batch_full_run_packet_v0_1",
+  "packet_status": "ready",
+  "planned_calls_per_model": 686,
+  "post_full_run_commands": [
+    "python scripts\\audit_evp8_first_batch_full_results.py --check",
+    "python scripts\\summarize_evp8_first_batch_full_synthesis.py --check"
+  ],
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "raw_outputs_generated": false,
+  "rendered_prompt_text_stored": false,
+  "requires_explicit_user_command": true,
+  "run_scope": "full",
+  "stop_gates": [
+    "Any guard command fails.",
+    "Any expected first-batch full output path already exists before execution.",
+    "Local config is not ignored under configs/*.local.json.",
+    "Rendered prompt text or raw model response would be written to tracked files.",
+    "DeepSeek first-batch full run does not pass parse/schema/usage-cost gates.",
+    "Qwen first-batch full run is attempted before DeepSeek first-batch full audit passes.",
+    "Any first-batch full summary has unknown_cost_record_count > 0.",
+    "Any executed run changes protocol id, candidate set id, prompt hash policy, evidence levels, provider route, model id, temperature, or max output tokens.",
+    "Any hidden evaluator label becomes model-visible.",
+    "Any protocol, prompt, schema, candidate-set, or evaluator-join bug requires a protocol version bump and affected-model rerun."
+  ],
+  "temperature": 0.0
+}

@@ -17,9 +17,9 @@
   - `1d235ee Sync EVP-8 smoke packet guards`：远端已包含 G0 guard、G4
     synthesis scaffold 和 smoke execution packet guard-sync。
 - 当前本地语义锚点以 `git log -1 --oneline` 和本轮提交为准；语义上已完成
-  EVP-8 Phase 1 DeepSeek/Qwen smoke closure，并写入下一步 G5 no-API
-  first-batch full-run packet 边界。若本轮提交尚未成功 push，远端仍可能停在
-  较早的 smoke packet guards 锚点。
+  EVP-8 Phase 1 DeepSeek/Qwen smoke closure 和 G5 no-API first-batch
+  full-run packet readiness。若本轮提交尚未成功 push，远端仍可能停在较早的
+  smoke closure 锚点。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。最近针对
   `Plan EVP-8 staged follow-up gates` 的 push 两次失败在 network-level
@@ -115,8 +115,13 @@
      均为 35/35 parse-valid，post-smoke audit 和 G4 synthesis 均通过；
    - DeepSeek 使用 4096-token output budget 修复 1024-token truncation；
      Qwen official cost 以 CNY token-pricing estimate 记录，不写成 USD bill；
-   - 下一步不是自动 API，而是 G5 no-API first-batch full-run packet；
-   - DeepSeek/Qwen 686-call first-batch full run 必须等待用户再次明确授权；
+   - G5 no-API first-batch full-run packet 已 ready：
+     `python scripts\write_evp8_first_batch_full_run_packet.py --check`；
+   - full-run check-only 已通过，覆盖 98 candidates x 7 levels = 686 packets；
+   - first-batch full-run audit/synthesis scaffold 当前均为
+     `waiting_for_execution`，不读取 raw outputs；
+   - 下一步不是自动 API，而是等待用户审阅 G5 packet 后再次明确授权
+     DeepSeek/Qwen 686-call first-batch full run；
    - 后续补跑 Kimi K2.6、Devstral 2、Gemini 2.5 Flash 必须使用同一 frozen
      packets/prompts/schema，不能边跑边改协议；
    - smoke 之后的后续顺序已经写入 canonical EVP-8 plan：
@@ -215,6 +220,24 @@
   `docs/experiments/evp8_deepseek_qwen_smoke_synthesis_v0_1.md`：
   EVP-8 DeepSeek/Qwen G4 smoke synthesis；当前已 `passed`，只从 tracked
   audit/summary fields 汇总 two-model per-level decision patterns。
+- `data/protocols/evp8_deepseek_qwen_first_batch_full_check_only_v0_1.json`：
+  EVP-8 DeepSeek/Qwen first-batch full-run check-only summary；当前已
+  `passed`，覆盖 98 candidates x 7 levels = 686 prompts，不调用 API、不存
+  rendered prompt text、不生成 raw outputs。
+- `data/protocols/evp8_deepseek_qwen_first_batch_full_run_packet_v0_1.json`、
+  `docs/experiments/evp8_deepseek_qwen_first_batch_full_run_packet_v0_1.md`：
+  G5 no-API first-batch full-run packet；当前 `ready`，记录 DeepSeek/Qwen
+  686-call exact commands、expected outputs、cost fields、post-full-run audit/
+  synthesis commands 和非授权边界。
+- `data/protocols/evp8_deepseek_qwen_first_batch_full_result_audit_v0_1.json`、
+  `docs/experiments/evp8_deepseek_qwen_first_batch_full_result_audit_v0_1.md`：
+  first-batch full-run post-result audit；当前 `waiting_for_execution`，
+  不读取 raw outputs。
+- `data/protocols/evp8_deepseek_qwen_first_batch_full_synthesis_v0_1.json`、
+  `docs/experiments/evp8_deepseek_qwen_first_batch_full_synthesis_v0_1.md`：
+  first-batch full-run two-model synthesis scaffold；当前
+  `waiting_for_execution`，仅在两个 first-batch summaries 通过 audit 后汇总
+  tracked per-level decision counts。
 - `scripts/audit_evp8_protocol_spec.py`：
   检查 EVP-8 相邻差分、visible/hidden 字段边界、模型批次、routing policy、
   cost observability 和 stop gates。
@@ -234,10 +257,10 @@
   `scripts/preflight_evp8_deepseek_qwen.py`：
   创建 ignored EVP-8 DeepSeek/Qwen local config，并执行 no-API strict preflight。
 - `scripts/run_evp8_deepseek_qwen_smoke.py`：
-  guarded EVP-8 DeepSeek/Qwen smoke runner；check-only 不调用 API，真实执行必须
-  使用 ignored local config、strict preflight、显式 `--execute` 和单个
-  configured `--model-id`；executed tracked summary 必须保留 raw-output-free
-  per-level review/parse/decision aggregates，供 G4 synthesis 使用。
+  guarded EVP-8 DeepSeek/Qwen smoke/full runner；check-only 不调用 API，真实
+  执行必须使用 ignored local config、strict preflight、显式 `--execute`、
+  `--run-scope smoke|full` 和单个 configured `--model-id`；executed summary
+  必须保留 raw-output-free per-level review/parse/decision aggregates。
 - `scripts/write_evp8_smoke_execution_packet.py`：
   从 tracked protocol/preflight/check-only summaries 生成 no-API smoke
   execution packet；`--check` 要求 packet ready 且仍不授权 API。
@@ -251,6 +274,14 @@
   `waiting_for_execution`，DeepSeek-only pass 时输出
   `partial_waiting_for_qwen`，当前双模型均通过后只报告 tracked per-level
   decision counts 和严格 claim boundary。
+- `scripts/write_evp8_first_batch_full_run_packet.py`：
+  生成 G5 no-API first-batch full-run packet；不授权 API。
+- `scripts/audit_evp8_first_batch_full_results.py`：
+  不读取 raw outputs 的 first-batch full-run summary audit；当前无 full
+  summaries 时输出 `waiting_for_execution`。
+- `scripts/summarize_evp8_first_batch_full_synthesis.py`：
+  不读取 raw outputs 的 first-batch full-run synthesis scaffold；当前无 full
+  summaries 时输出 `waiting_for_execution`。
 - `docs/plans/agent_execution_plan_zh.md`、
   `docs/plans/ai_agent_experiment_execution_plan_zh.md`：
   历史执行计划，只保留溯源，不应覆盖当前路线。

@@ -2948,3 +2948,21 @@ This file starts fresh for the patch-verification project.
   `summarize_evp8_smoke_synthesis.py --check`. Do not overwrite the tracked
   pre-execution G0 summary with a post-execution failure unless documenting a
   stale-output blocker before a new run.
+
+## 2026-06-20 EVP-8 first-batch full-run packet boundary
+
+- Do not treat a successful two-model smoke as authorization for a 686-call
+  first-batch full run. Insert a separate no-API packet gate that proves exact
+  commands, expected output paths, cost fields, audit commands, and stop gates
+  before any larger API spend.
+- Reuse the same guarded runner for smoke and full scopes, but make the scope
+  explicit with `--run-scope smoke|full`. Keep `smoke` as the default so older
+  smoke commands remain stable; require `--run-scope full` in the G5 packet so
+  a full run is never started accidentally by a smoke command.
+- The first-batch full check-only path should prove the packet matrix before
+  execution: 98 frozen candidates x 7 evidence levels = 686 prompts per model,
+  686 unique prompt hashes, no stored rendered prompts, no raw outputs, and no
+  API calls.
+- The first-batch audit and synthesis scaffolds should report
+  `waiting_for_execution` before full summaries exist. That is the expected
+  G5 state, not a failure.

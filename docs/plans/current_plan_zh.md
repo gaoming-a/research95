@@ -15264,6 +15264,119 @@ Verify:
   通过；
 - 本轮仍未调用模型 API，未读取 raw outputs，未生成 raw outputs。
 
+## 2026-06-20 EVP-8 G5 no-API first-batch full-run packet closure
+
+Inspect:
+
+- 当前 Git 状态 clean，`main...origin/main`；
+- 最新提交为 `b596333 Close EVP-8 DeepSeek Qwen smoke`；
+- smoke audit 与 G4 synthesis 均已 `passed`；
+- canonical 下一步为 G5 no-API first-batch full-run packet，不是自动执行
+  686-call full run。
+
+Execute:
+
+- 扩展 `scripts/run_evp8_deepseek_qwen_smoke.py`：
+  - 新增 `--run-scope smoke|full`；
+  - 默认保持 `smoke`，旧 smoke 命令兼容；
+  - `full` scope 覆盖 frozen EVP-8 v0.1 的 98 candidates x 7 levels =
+    686 prompts；
+  - `execute` summary 在 full scope 写入 `run_gate` 和
+    `first_batch_full_gate`，并继续保留 per-level aggregates、model/provider
+    counts 和 USD/CNY cost observability；
+- 新增 G5 first-batch full-run check-only artifact：
+  `data/protocols/evp8_deepseek_qwen_first_batch_full_check_only_v0_1.json`；
+- 新增 G5 no-API first-batch full-run packet：
+  `data/protocols/evp8_deepseek_qwen_first_batch_full_run_packet_v0_1.json`
+  及 Markdown companion；
+- 新增 post-full-run audit scaffold：
+  `scripts/audit_evp8_first_batch_full_results.py`；
+- 新增 first-batch synthesis scaffold：
+  `scripts/summarize_evp8_first_batch_full_synthesis.py`；
+- 同步 canonical execution plan、short-state、final roadmap、INDEX 和
+  engineering notes。
+
+Verify:
+
+- `python -m py_compile scripts\run_evp8_deepseek_qwen_smoke.py scripts\write_evp8_first_batch_full_run_packet.py scripts\audit_evp8_first_batch_full_results.py scripts\summarize_evp8_first_batch_full_synthesis.py`
+  通过；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过；
+- `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
+  通过；
+- `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
+  通过，smoke scope 仍为 35 packets；
+- `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --run-scope full --config configs\evp8_deepseek_qwen.local.json`
+  通过：
+  - `packet_count = 686`；
+  - `candidate_count = 98`；
+  - `prompt_count = 686`；
+  - `prompt_hashes_unique_count = 686`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_generated = false`；
+- `python scripts\write_evp8_first_batch_full_run_packet.py --check` 通过：
+  `packet_status = ready`，`execution_authorized_by_packet = false`；
+- `python scripts\audit_evp8_first_batch_full_results.py --check` 通过：
+  `audit_status = waiting_for_execution`；
+- `python scripts\summarize_evp8_first_batch_full_synthesis.py --check` 通过：
+  `synthesis_status = waiting_for_execution`。
+
+Next Gate:
+
+- 当前 G5 已完成；下一步只有在用户再次明确授权 first-batch full run 后，才可
+  执行 DeepSeek 686-call full run；
+- Qwen 686-call full run 仍必须等待 DeepSeek full-run audit 通过；
+- 本轮没有调用模型 API，没有生成 raw outputs，没有启动 686-call full run。
+
+## 2026-06-20 EVP-8 G5 no-API first-batch full-run packet
+
+Inspect:
+
+- 当前 Git 状态 clean，`main...origin/main`；
+- 最新提交为 `b596333 Close EVP-8 DeepSeek Qwen smoke`；
+- EVP-8 Phase 1 DeepSeek/Qwen smoke 已闭合：
+  - post-smoke audit `passed`；
+  - G4 smoke synthesis `passed`；
+  - 两模型各 35/35 parse-valid；
+- canonical EVP-8 plan 的当前 next gate 是 G5：生成独立 no-API
+  first-batch full-run packet；
+- 当前 `scripts/run_evp8_deepseek_qwen_smoke.py` 只支持 smoke scope；config
+  已有 `full` planned fields，但还没有可审计的 full-scope check-only /
+  execute command。
+
+Plan:
+
+1. 扩展现有 guarded runner，使其支持 `--run-scope smoke|full`：
+   - 默认仍为 `smoke`，保持旧 smoke 命令兼容；
+   - `full` scope 只使用同一 frozen EVP-8 v0.1 candidate set、levels、
+     prompt、schema、parser、temperature、4096 output budget 和 evaluator
+     joins；
+   - 本轮只运行 `full` check-only，不执行 API；
+2. 新增 G5 no-API first-batch full-run packet：
+   - 记录 DeepSeek/Qwen 686-call full-run exact execute commands；
+   - 记录 expected raw outputs、tracked summaries、cost fields、per-level
+     aggregate requirements、audit/synthesis commands 和 stop gates；
+   - packet 本身必须 `execution_authorized_by_packet = false`；
+3. 同步 `docs/experiments/evp8_journal_scale_execution_plan_20260620.md`、
+   `docs/plans/current_project_state_zh.md`、`docs/plans/final_paper_roadmap_zh.md`、
+   `docs/INDEX.md` 和 `docs/experience/engineering_notes.md`；
+4. 运行 no-API validations、local quality gate、diff/sensitive checks；
+5. 提交并同步 GitHub。
+
+Acceptance:
+
+- `full` check-only 必须生成 tracked summary，且：
+  - `packet_count = 686`；
+  - `candidate_count = 98`；
+  - `prompt_count = 686`；
+  - `prompt_hashes_unique_count = 686`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_generated = false`；
+  - `prompt_text_stored = false`；
+- G5 packet 必须 ready，但不授权 API；
+- G5 packet 的 execute commands 必须只指向 first-batch DeepSeek/Qwen full
+  scope，不包含 Kimi/Devstral/Gemini；
+- 不启动 686-call full run；后续 full run 仍需要用户再次明确授权。
+
 ## 2026-06-20 EVP-8 Phase 1 DeepSeek/Qwen smoke execution closure
 
 Inspect:
@@ -15974,3 +16087,45 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过；
 - 本轮仍未调用模型 API，未读取 raw outputs，未生成 raw outputs。
+
+## 2026-06-20 EVP-8 G5 packet verification and next-step decision
+
+Inspect:
+
+- 当前工作区存在本轮 G5 no-API first-batch full-run packet 相关未提交改动；
+- G5 packet、post-full-run audit scaffold 和 post-full-run synthesis scaffold 已生成；
+- 用户当前问题是“下一步应该做什么、计划是否有影响”，不是明确授权 686-call
+  full run。
+
+Plan:
+
+1. 先完成本轮 no-API gate 验证、diff 检查、敏感信息检查、提交和 GitHub 同步；
+2. 若同步后继续执行实验，下一步只能是用户明确授权后的 DeepSeek first-batch
+   full run；
+3. Qwen first-batch full run 必须等待 DeepSeek full-run audit 通过；
+4. 本轮不调用模型 API，不读取 raw outputs，不生成 raw outputs。
+
+Verify:
+
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过，仅有 CRLF 工作区转换 warning；
+- `python scripts\write_evp8_first_batch_full_run_packet.py --check` 通过：
+  - `packet_status = ready`；
+  - `candidate_count = 98`；
+  - `planned_calls_per_model = 686`；
+  - `execution_authorized_by_packet = false`；
+- `python scripts\audit_evp8_first_batch_full_results.py --check` 通过：
+  - `audit_status = waiting_for_execution`；
+  - `raw_outputs_read = false`；
+- `python scripts\summarize_evp8_first_batch_full_synthesis.py --check` 通过：
+  - `synthesis_status = waiting_for_execution`；
+  - `raw_outputs_read = false`。
+
+Decision:
+
+- 计划没有被推翻；G5 的作用是把 smoke 后的 full-run 入口从“口头下一步”
+  收束为可审计的 no-API handoff packet；
+- 当前执行边界从 G4 smoke closure 前进到 G5 packet ready；
+- 真正影响成本和结论的下一步是 G6 DeepSeek/Qwen first-batch full run，仍需要用户
+  单独明确授权。

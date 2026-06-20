@@ -3,6 +3,7 @@
   "api_key_values_printed": false,
   "boundary_error_count": 0,
   "boundary_errors": [],
+  "candidate_count": 5,
   "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
   "check_only_status": "passed",
   "cohort_id": "EVP-8",
@@ -30,6 +31,7 @@
   "prompt_text_stored": false,
   "protocol_id": "evp8_journal_full_ladder_v0_1",
   "raw_outputs_generated": false,
+  "run_scope": "smoke",
   "schema_error_count": 0,
   "schema_error_counts": {},
   "selected_candidate_ids": [

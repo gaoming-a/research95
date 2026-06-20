@@ -1108,8 +1108,11 @@ DeepSeek-then-Qwen execute commands，但
 DeepSeek/Qwen Phase 1 smoke 已执行并通过 post-smoke audit 与 G4 smoke
 synthesis：两个模型各 35/35 parse-valid，tracked summaries 不含 raw response
 body 或 rendered prompt text；G4 只报告 frozen smoke subset 的 descriptive
-per-level decision counts。下一步不是自动 full run，而是生成 G5 no-API
-first-batch full-run packet。
+per-level decision counts。G5 no-API first-batch full-run packet 也已 ready：
+它覆盖 98 candidates x 7 levels = 686 prompts per model，记录 exact
+DeepSeek/Qwen full-run commands、expected outputs、cost fields、audit/synthesis
+commands 和非授权边界。下一步不是自动 full run，而是等待用户审阅 G5 packet
+后再次明确授权。
 
 期刊版主线：
 
@@ -1129,9 +1132,7 @@ first-batch full-run packet。
 后续执行顺序：
 
 1. EVP-8 Phase 1 DeepSeek/Qwen smoke 已完成并通过 G4 synthesis；
-2. 当前下一步是生成独立 no-API first-batch full-run packet，明确 686-call
-   DeepSeek/Qwen full-run commands、expected outputs、cost/usage fields、
-   per-level aggregates、audit/synthesis commands 和 stop gates；
+2. G5 no-API first-batch full-run packet 已 ready；
 3. 只有用户再明确授权 first-batch full run 后，才按 packet 执行
    再按 DeepSeek full run -> DeepSeek audit -> Qwen full run -> Qwen audit ->
    two-model first-batch synthesis 执行；
