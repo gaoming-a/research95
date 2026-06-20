@@ -1094,10 +1094,12 @@ cohort。EVP-8 prompt template 已冻结为
 `prompts/evp8_visible_evidence_merge_gate_v0_1.md`，并由
 `scripts/build_evp8_prompt_manifest.py --check` 生成 no-API manifest 与
 boundary audit。Packet/schema dry-run summaries 已覆盖 98 candidates x 7
-levels = 686 planned skeletons / schema outputs；这些仍不授权 API。当前下一步
-固定为 no-API cost-observability dry-run 和 deterministic tool-baseline
-dry-run；只有二者通过并被 protocol audit 记录后，才允许进入 DeepSeek/Qwen
-local preflight，而不是直接调用模型。
+levels = 686 planned skeletons / schema outputs。Cost-observability 和
+deterministic tool-baseline dry-run summaries 也已通过：前者验证每模型 686
+planned calls 和 usage/cost 字段，后者验证 686 条 schema-valid placeholder
+baseline decisions 且不读取 evaluator-only labels。这些仍不授权 API。当前下一步
+只能进入 ignored local DeepSeek/Qwen preflight；preflight 通过后仍必须等待用户
+明确执行命令，才允许真实模型调用。
 
 期刊版主线：
 

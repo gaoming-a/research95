@@ -9,10 +9,8 @@
     "E6": "deterministic_visible_merge_gate_summary"
   },
   "adjacent_delta_count": 6,
-  "api_blocker_count": 1,
-  "api_blockers": [
-    "missing_phase0_outputs_before_api:cost_observability_dry_run,deterministic_tool_baseline_dry_run"
-  ],
+  "api_blocker_count": 0,
+  "api_blockers": [],
   "api_call_attempted": false,
   "candidate_set_manifest": "data/protocols/evp8_candidate_set_v0_1.json",
   "candidate_set_version": "evp8_smoke_from_evp7_structural_98_v0_1",
@@ -41,9 +39,9 @@
     "E5",
     "E6"
   ],
-  "next_step": "Freeze candidate set, prompt text, packet dry-run, schema dry-run, prompt-boundary audit, cost-observability dry-run, and deterministic baseline before API.",
+  "next_step": "Run ignored local DeepSeek/Qwen preflight next; this audit still does not authorize API execution.",
   "no_api_boundary": "This audit reads only the tracked EVP-8 protocol spec and does not read credentials or call models.",
-  "phase0_api_readiness": "not_ready",
+  "phase0_api_readiness": "ready_for_api_preflight",
   "phase1_models": [
     "deepseek/deepseek-v4-pro",
     "qwen/qwen3.7-max"

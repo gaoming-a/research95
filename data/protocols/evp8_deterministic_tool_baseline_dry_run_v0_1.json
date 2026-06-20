@@ -1,0 +1,43 @@
+{
+  "api_call_attempted": false,
+  "baseline_counts_by_level": {
+    "E0": 98,
+    "E1": 98,
+    "E2": 98,
+    "E3": 98,
+    "E4": 98,
+    "E5": 98,
+    "E6": 98
+  },
+  "candidate_count": 98,
+  "candidate_labels_read": false,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "claim_boundary": "This validates deterministic baseline schema shape only; it is not tool-baseline performance evidence.",
+  "cohort_id": "EVP-8",
+  "decision_counts": {
+    "escalate": 686
+  },
+  "deterministic_tool_baseline_dry_run_status": "passed",
+  "evaluator_labels_read": false,
+  "expected_planned_baseline_record_count": 686,
+  "invalid_reason_counts": {},
+  "invalid_schema_count": 0,
+  "leakage_findings": [],
+  "leakage_findings_count": 0,
+  "local_api_config_read": false,
+  "model_visible_evidence_slots_only": true,
+  "model_visible_levels": [
+    "E0",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6"
+  ],
+  "output_records_stored": false,
+  "planned_baseline_record_count": 686,
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "raw_outputs_generated": false,
+  "valid_schema_count": 686
+}

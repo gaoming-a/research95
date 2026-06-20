@@ -2759,3 +2759,15 @@ This file starts fresh for the patch-verification project.
 - Use a unique nearby heading or the latest section-specific verification block
   as the patch anchor, then confirm with `rg -n` and a tail read that the new
   section appears exactly once at the intended end of the file.
+
+## 2026-06-20 EVP-8 cost/baseline dry-run boundary
+
+- Cost-observability dry-run is an accounting-surface check, not a cost result.
+  It can validate planned call counts and required usage/cost fields without
+  reading credentials, local configs, provider catalogues, or bills.
+- Deterministic-baseline dry-run can validate output schema using planned
+  model-visible evidence slots only. If actual evidence values or evaluator
+  labels are needed, that is a later artifact, not this Phase 0 summary.
+- `phase0_api_readiness=ready_for_api_preflight` means all tracked no-API Phase
+  0 blockers are cleared. It does not authorize API execution; local preflight
+  and an explicit execution command are still required before model calls.

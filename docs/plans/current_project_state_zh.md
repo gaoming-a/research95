@@ -81,12 +81,15 @@
      `python scripts\build_evp8_packet_schema_dry_run.py --check` 已生成
      686 planned packet skeletons 和 686 schema-valid dry-run outputs 的
      tracked summaries；
-   - 当前审计状态：protocol spec audit passed，candidate set blocker 已移除，
-     prompt text blocker 已移除，但 `phase0_api_readiness = not_ready`，因为
-     cost-observability 和 deterministic-baseline dry-run 仍未生成；
-   - 下一步不是 API，而是 no-API Phase 0 收口：先生成 cost-observability
-     dry-run 和 deterministic-baseline dry-run summary，再让 protocol audit
-     进入 `ready_for_api_preflight`；
+   - 当前 cost/baseline dry-run：
+     `python scripts\build_evp8_cost_baseline_dry_run.py --check` 已生成
+     686 planned calls per model 的 cost-observability summary，以及 686 条
+     schema-valid deterministic baseline placeholder decisions 的 summary；
+   - 当前审计状态：protocol spec audit passed，所有 Phase 0 dry-run blocker 已
+     移除，`phase0_api_readiness = ready_for_api_preflight`；这仍不是 API
+     执行授权；
+   - 下一步不是 API，而是 ignored local DeepSeek/Qwen preflight；preflight
+     通过后仍必须等待用户明确执行命令，才允许真实模型调用；
    - 第一批模型只允许在 no-API gates 和 smoke gates 通过后执行
      DeepSeek V4 Pro + Qwen3.7 Max；
    - 后续补跑 Kimi K2.6、Devstral 2、Gemini 2.5 Flash 必须使用同一 frozen
@@ -138,7 +141,8 @@
 - `data/protocols/evp8_protocol_v0_1.json`：
   EVP-8 v0.1 七层 evidence ladder 的 tracked machine spec。
 - `data/protocols/evp8_protocol_v0_1_audit_summary.json`：
-  EVP-8 protocol spec 的 no-API 审计摘要；通过结构审计但仍阻止 API。
+  EVP-8 protocol spec 的 no-API 审计摘要；当前进入
+  `ready_for_api_preflight`，但仍不授权真实 API 执行。
 - `data/protocols/evp8_candidate_set_v0_1.json`、
   `data/protocols/evp8_candidate_set_v0_1_summary.json`：
   EVP-8 Phase 0 smoke/protocol-validation candidate set；当前为 21 tasks /
@@ -152,6 +156,10 @@
   `data/protocols/evp8_schema_dry_run_summary_v0_1.json`：
   EVP-8 packet/schema dry-run summaries；验证 686 planned skeletons 和 schema
   outputs，不生成完整 evidence packet JSONL。
+- `data/protocols/evp8_cost_observability_dry_run_v0_1.json`、
+  `data/protocols/evp8_deterministic_tool_baseline_dry_run_v0_1.json`：
+  EVP-8 cost-observability 和 deterministic-baseline dry-run summaries；验证
+  planned call accounting 和 schema，不读取 local config、不调用 API。
 - `scripts/audit_evp8_protocol_spec.py`：
   检查 EVP-8 相邻差分、visible/hidden 字段边界、模型批次、routing policy、
   cost observability 和 stop gates。
@@ -164,6 +172,9 @@
 - `scripts/build_evp8_packet_schema_dry_run.py`：
   在内存验证 EVP-8 planned packet skeletons 和 output schema，生成 summary-only
   dry-run artifacts。
+- `scripts/build_evp8_cost_baseline_dry_run.py`：
+  在内存验证 EVP-8 planned usage/cost accounting 和 deterministic baseline
+  output schema，生成 summary-only dry-run artifacts。
 - `docs/plans/agent_execution_plan_zh.md`、
   `docs/plans/ai_agent_experiment_execution_plan_zh.md`：
   历史执行计划，只保留溯源，不应覆盖当前路线。

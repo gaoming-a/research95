@@ -14303,3 +14303,84 @@ Acceptance:
   usage/cost fields 和 stop gates；
 - smoke/full run 使用的 packets/prompts/schema 必须完全同版；
 - 若 GitHub push 继续失败，只记录网络事实，不改变实验计划和本地执行顺序。
+
+## 2026-06-20 EVP-8 Phase 0 cost/baseline dry-run summaries
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main [ahead 5]`；
+- 最新本地提交 `424336e Add EVP-8 packet schema dry-run plan`；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过；
+- 当前 EVP-8 blocker 仅剩：
+  `cost_observability_dry_run` 和 `deterministic_tool_baseline_dry_run`；
+- 本轮仍是 no-API Phase 0 收口，不读取 local API config、不调用模型、不生成
+  raw outputs。
+
+Plan:
+
+1. 新增 no-API cost/baseline dry-run builder；
+2. cost dry-run 只基于 frozen protocol、candidate set 和 planned E0-E6 call
+   matrix，检查 provider/model id、actual provider/model recording、token/cost
+   accounting fields、retry policy 和 planned call counts；
+3. deterministic baseline dry-run 只使用 EVP-8 model-visible evidence slots，
+   为 686 planned records 生成 schema-valid deterministic decisions summary，
+   并确认不读取 per-candidate evaluator-only labels；
+4. 输出 tracked summary-only artifacts：
+   - `data/protocols/evp8_cost_observability_dry_run_v0_1.json`；
+   - `data/protocols/evp8_deterministic_tool_baseline_dry_run_v0_1.json`；
+5. 更新 `data/protocols/evp8_protocol_v0_1.json` 和
+   `scripts/audit_evp8_protocol_spec.py`，使两项 dry-run 通过后 protocol audit
+   进入 `ready_for_api_preflight`；
+6. 同步 README、docs index、EVP-8 execution plan、final roadmap、current
+   project state 和 engineering notes。
+
+Acceptance:
+
+- cost dry-run 必须报告 686 planned calls per model、DeepSeek/Qwen 第一批模型、
+  Kimi/Devstral/Gemini 后续模型、usage/cost required fields 全部 present；
+- deterministic baseline dry-run 必须报告 686 planned records、E0-E6 每层 98、
+  0 schema invalid、0 leakage findings；
+- 两个 dry-run summary 必须明确 `api_call_attempted=false`、
+  `local_api_config_read=false`、`raw_outputs_generated=false`；
+- protocol audit 必须从 `phase0_api_readiness=not_ready` 更新为
+  `phase0_api_readiness=ready_for_api_preflight`，且仍不得表示已经执行 API；
+- 本轮不得调用模型 API，不读取 `.env` 或 local config。
+
+Execute:
+
+- 新增 `scripts/build_evp8_cost_baseline_dry_run.py`；
+- 生成：
+  - `data/protocols/evp8_cost_observability_dry_run_v0_1.json`；
+  - `data/protocols/evp8_deterministic_tool_baseline_dry_run_v0_1.json`；
+- 更新 `data/protocols/evp8_protocol_v0_1.json` 的
+  `phase0_dry_run_artifacts`，挂载 cost/baseline dry-run summaries；
+- 更新 `scripts/audit_evp8_protocol_spec.py`，要求 cost/baseline summaries
+  status passed 且 no-API/local-config/raw-output flags 为 false 后，才移除
+  blocker；
+- 将 protocol audit 的 readiness 从通用 `ready` 规范为
+  `ready_for_api_preflight`；
+- 同步 README、docs index、EVP-8 execution plan、final roadmap、current project
+  state 和 engineering notes；
+- 未调用模型 API，未读取 `.env` 或 local API config，未生成 raw outputs。
+
+Verify:
+
+- `python scripts\build_evp8_cost_baseline_dry_run.py --check` 通过：
+  - `planned_calls_per_model = 686`；
+  - `phase1_first_batch_models = deepseek/deepseek-v4-pro, qwen/qwen3.7-max`；
+  - `phase2_later_batch_models = moonshotai/kimi-k2.6, mistralai/devstral-2512,
+    google/gemini-2.5-flash`；
+  - `missing_usage_cost_fields = []`；
+  - `planned_baseline_record_count = 686`；
+  - `valid_schema_count = 686`；
+  - `invalid_schema_count = 0`；
+  - `leakage_findings_count = 0`；
+  - `api_call_attempted = false`；
+  - `local_api_config_read = false`；
+  - `raw_outputs_generated = false`；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过：
+  - `protocol_spec_audit_status = passed`；
+  - `api_blocker_count = 0`；
+  - `phase0_api_readiness = ready_for_api_preflight`；
+  - `next_step = Run ignored local DeepSeek/Qwen preflight next; this audit still does not authorize API execution.`；
+  - `api_call_attempted = false`。

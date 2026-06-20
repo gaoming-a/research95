@@ -43,8 +43,9 @@
   observability, and stop gates.
 - `../data/protocols/evp8_protocol_v0_1_audit_summary.json`: no-API audit
   summary for the EVP-8 v0.1 protocol spec. It should show
-  `protocol_spec_audit_status=passed` and `phase0_api_readiness=not_ready`
-  until the remaining Phase 0 outputs are generated.
+  `protocol_spec_audit_status=passed` and
+  `phase0_api_readiness=ready_for_api_preflight` after the Phase 0 dry-run
+  summaries are generated. This status still does not authorize API execution.
 - `../data/protocols/evp8_candidate_set_v0_1.json`: model-visible-safe
   candidate-set manifest for EVP-8 Phase 0 smoke/protocol validation. It maps
   the tracked 21-task / 98-candidate structural cohort to anonymous EVP-8
@@ -69,6 +70,13 @@
 - `../data/protocols/evp8_schema_dry_run_summary_v0_1.json`: no-API schema
   dry-run summary over 686 deterministic escalate outputs. It validates the
   EVP-8 output schema and stores no review records.
+- `../data/protocols/evp8_cost_observability_dry_run_v0_1.json`: no-API
+  summary over the planned EVP-8 model-call matrix. It validates 686 planned
+  calls per model and required usage/cost fields without reading local config
+  or calling APIs.
+- `../data/protocols/evp8_deterministic_tool_baseline_dry_run_v0_1.json`:
+  no-API deterministic baseline schema dry-run over 686 planned records. It
+  uses only model-visible evidence slots and stores no baseline decision JSONL.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.
@@ -975,6 +983,9 @@
 - `../scripts/build_evp8_packet_schema_dry_run.py`: validates planned EVP-8
   packet skeleton structure and output schema in memory, then writes summary
   artifacts without generating full packet JSONL records.
+- `../scripts/build_evp8_cost_baseline_dry_run.py`: validates EVP-8 planned
+  cost-observability fields and deterministic baseline output schema without
+  local API config reads, raw outputs, or model calls.
 - `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict

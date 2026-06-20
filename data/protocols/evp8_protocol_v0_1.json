@@ -25,6 +25,8 @@
     "post_first_model_call_mutation_policy": "forbidden_without_protocol_version_bump_and_full_rerun"
   },
   "phase0_dry_run_artifacts": {
+    "cost_observability_dry_run": "data/protocols/evp8_cost_observability_dry_run_v0_1.json",
+    "deterministic_tool_baseline_dry_run": "data/protocols/evp8_deterministic_tool_baseline_dry_run_v0_1.json",
     "evidence_packet_dry_run_summary": "data/protocols/evp8_evidence_packet_dry_run_summary_v0_1.json",
     "schema_dry_run_summary": "data/protocols/evp8_schema_dry_run_summary_v0_1.json"
   },

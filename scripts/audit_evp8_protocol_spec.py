@@ -112,7 +112,7 @@ def audit_protocol(spec: dict[str, Any]) -> dict[str, Any]:
         "candidate_set_manifest": (spec.get("candidate_set_policy") or {}).get("candidate_set_manifest"),
         "api_call_attempted": spec.get("api_call_attempted"),
         "protocol_spec_audit_status": "passed" if not errors else "failed",
-        "phase0_api_readiness": "ready" if not errors and not api_blockers else "not_ready",
+        "phase0_api_readiness": "ready_for_api_preflight" if not errors and not api_blockers else "not_ready",
         "error_count": len(errors),
         "errors": errors,
         "warning_count": len(warnings),
@@ -135,8 +135,10 @@ def audit_protocol(spec: dict[str, Any]) -> dict[str, Any]:
         "phase2_models": phase2_models,
         "no_api_boundary": "This audit reads only the tracked EVP-8 protocol spec and does not read credentials or call models.",
         "next_step": (
-            "Freeze candidate set, prompt text, packet dry-run, schema dry-run, "
-            "prompt-boundary audit, cost-observability dry-run, and deterministic baseline before API."
+            "Run ignored local DeepSeek/Qwen preflight next; this audit still does not authorize API execution."
+            if not errors and not api_blockers
+            else "Freeze candidate set, prompt text, packet dry-run, schema dry-run, prompt-boundary audit, "
+            "cost-observability dry-run, and deterministic baseline before API."
         ),
     }
     return summary
@@ -314,6 +316,14 @@ def _audit_phase0_api_blockers(spec: dict[str, Any], api_blockers: list[str]) ->
     dry_run_artifacts = spec.get("phase0_dry_run_artifacts") or {}
     packet_dry_run_ready = _tracked_path_exists(dry_run_artifacts.get("evidence_packet_dry_run_summary"))
     schema_dry_run_ready = _tracked_path_exists(dry_run_artifacts.get("schema_dry_run_summary"))
+    cost_dry_run_ready = _dry_run_summary_passed(
+        dry_run_artifacts.get("cost_observability_dry_run"),
+        "cost_observability_dry_run_status",
+    )
+    deterministic_baseline_ready = _dry_run_summary_passed(
+        dry_run_artifacts.get("deterministic_tool_baseline_dry_run"),
+        "deterministic_tool_baseline_dry_run_status",
+    )
     required_outputs = set(spec.get("required_phase0_outputs_before_api") or [])
     already_satisfied = {"tracked_protocol_spec", "protocol_audit_summary"}
     if candidate_manifest_ready:
@@ -326,6 +336,10 @@ def _audit_phase0_api_blockers(spec: dict[str, Any], api_blockers: list[str]) ->
         already_satisfied.add("evidence_packet_dry_run_summary")
     if schema_dry_run_ready:
         already_satisfied.add("schema_dry_run_summary")
+    if cost_dry_run_ready:
+        already_satisfied.add("cost_observability_dry_run")
+    if deterministic_baseline_ready:
+        already_satisfied.add("deterministic_tool_baseline_dry_run")
     missing_outputs = sorted(required_outputs - already_satisfied)
     if missing_outputs:
         api_blockers.append("missing_phase0_outputs_before_api:" + ",".join(missing_outputs))
@@ -333,6 +347,18 @@ def _audit_phase0_api_blockers(spec: dict[str, Any], api_blockers: list[str]) ->
 
 def _tracked_path_exists(value: Any) -> bool:
     return isinstance(value, str) and bool(value) and (REPO_ROOT / value).exists()
+
+
+def _dry_run_summary_passed(value: Any, status_key: str) -> bool:
+    if not _tracked_path_exists(value):
+        return False
+    summary = _load_json(REPO_ROOT / value)
+    return (
+        summary.get(status_key) == "passed"
+        and summary.get("api_call_attempted") is False
+        and summary.get("local_api_config_read") is False
+        and summary.get("raw_outputs_generated") is False
+    )
 
 
 def main() -> int:

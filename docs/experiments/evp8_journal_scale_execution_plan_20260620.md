@@ -51,6 +51,8 @@ The first machine-checkable protocol artifact is:
 - `data/protocols/evp8_prompt_boundary_audit_v0_1.json`
 - `data/protocols/evp8_evidence_packet_dry_run_summary_v0_1.json`
 - `data/protocols/evp8_schema_dry_run_summary_v0_1.json`
+- `data/protocols/evp8_cost_observability_dry_run_v0_1.json`
+- `data/protocols/evp8_deterministic_tool_baseline_dry_run_v0_1.json`
 
 It freezes the draft v0.1 ladder as a tracked protocol spec:
 
@@ -77,9 +79,11 @@ Current audit status:
 - prompt template: frozen and boundary-audited without API calls;
 - packet/schema dry-run summaries: passed for 686 planned packet skeletons and
   686 deterministic schema outputs;
-- API readiness: not ready;
-- current blockers: cost-observability and deterministic-baseline dry-run
-  outputs not yet generated.
+- cost-observability dry-run: passed for 686 planned calls per model;
+- deterministic-baseline dry-run: passed for 686 schema-valid placeholder
+  decisions using only model-visible evidence slots;
+- API readiness: ready for ignored local preflight only;
+- current blockers before preflight: none in tracked Phase 0 dry-run outputs.
 
 This audit is intentionally no-API and does not authorize model calls, cohort
 expansion, or EVP-8 evidence-packet generation.
@@ -127,17 +131,11 @@ Before any model call:
 
 Immediate next execution order:
 
-1. Close and commit the packet/schema dry-run summary changes.
-2. Add a no-API cost-observability dry-run summary for the planned
-   98-candidate x 7-level call matrix.
-3. Add a no-API deterministic tool-baseline dry-run summary that uses only
-   model-visible EVP-8 evidence slots and does not read evaluator-only labels.
-4. Update the protocol audit so passing both dry-runs changes the protocol
-   status from `not_ready` to `ready_for_api_preflight`, not directly to
-   executed.
-5. Only after that, create or validate ignored DeepSeek/Qwen local preflight
-   configs. Passing preflight still requires an explicit user execution command
-   before any real API call.
+1. Commit the cost-observability and deterministic-baseline dry-run summaries.
+2. Create or validate ignored DeepSeek/Qwen local preflight configs.
+3. Treat passing preflight as permission to ask for or wait for an explicit
+   execution command, not as permission to call a model.
+4. Only after the user explicitly says to execute, run the Phase 1 smoke calls.
 
 ### Phase 1: DeepSeek + Qwen First Batch
 

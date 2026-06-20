@@ -87,7 +87,9 @@ later on the same frozen packets and prompts.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently
-passes the protocol-structure boundary but reports API readiness as not ready.
+passes the protocol-structure boundary and reports
+`phase0_api_readiness=ready_for_api_preflight`; this still does not authorize
+real model execution.
 The Phase 0 smoke/protocol-validation candidate set is frozen at
 `data/protocols/evp8_candidate_set_v0_1.json`: 21 tasks, 6 projects, and 98
 candidates from the tracked EVP-7 structural cohort. This is not the final
@@ -127,14 +129,16 @@ They should not override `final_paper_roadmap_zh.md`.
 - The first EVP-8 protocol-spec audit is tracked at
   `data/protocols/evp8_protocol_v0_1_audit_summary.json`. It confirms the
   `E0-E6` adjacent-difference ladder and evaluator-only `E7` boundary, while
-  keeping API execution blocked until the remaining Phase 0 outputs exist. The
+  keeping API execution blocked unless ignored local preflight and an explicit
+  execution command later pass. The
   candidate set blocker is removed by
   `data/protocols/evp8_candidate_set_v0_1_summary.json`; the prompt text
   blocker is removed by `data/protocols/evp8_prompt_manifest_v0_1.json` and
   `data/protocols/evp8_prompt_boundary_audit_v0_1.json`. Packet/schema
-  dry-run summaries are now tracked under `data/protocols/`. The next EVP-8
-  step is still no-API: add cost-observability and deterministic-baseline
-  dry-run summaries before any DeepSeek/Qwen local preflight or model call.
+  dry-run, cost-observability dry-run, and deterministic-baseline dry-run
+  summaries are now tracked under `data/protocols/`. The next EVP-8 step is
+  ignored local DeepSeek/Qwen preflight; real model calls still require an
+  explicit execution command after preflight passes.
 - The prompt-only DeepSeek full run completed and produced a mixed/negative
   `stop_or_redesign` result. It is not a positive paper claim.
 - The later tool-augmented full run passed its dedicated gate, but only supports
