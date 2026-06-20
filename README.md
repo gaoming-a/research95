@@ -132,7 +132,9 @@ They should not override `final_paper_roadmap_zh.md`.
   `data/protocols/evp8_candidate_set_v0_1_summary.json`; the prompt text
   blocker is removed by `data/protocols/evp8_prompt_manifest_v0_1.json` and
   `data/protocols/evp8_prompt_boundary_audit_v0_1.json`. Packet/schema
-  dry-runs, cost observability, and deterministic baselines are still pending.
+  dry-run summaries are now tracked under `data/protocols/`. The next EVP-8
+  step is still no-API: add cost-observability and deterministic-baseline
+  dry-run summaries before any DeepSeek/Qwen local preflight or model call.
 - The prompt-only DeepSeek full run completed and produced a mixed/negative
   `stop_or_redesign` result. It is not a positive paper claim.
 - The later tool-augmented full run passed its dedicated gate, but only supports

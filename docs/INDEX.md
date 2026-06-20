@@ -62,6 +62,13 @@
 - `../data/protocols/evp8_prompt_boundary_audit_v0_1.json`: no-API prompt
   boundary audit over the template and a minimal visible sample render. It
   stores hashes and counts, not rendered prompt text.
+- `../data/protocols/evp8_evidence_packet_dry_run_summary_v0_1.json`:
+  no-API summary over 686 planned EVP-8 packet skeletons. It validates
+  cumulative field groups and leakage boundaries without writing full evidence
+  packets.
+- `../data/protocols/evp8_schema_dry_run_summary_v0_1.json`: no-API schema
+  dry-run summary over 686 deterministic escalate outputs. It validates the
+  EVP-8 output schema and stores no review records.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.
@@ -965,6 +972,9 @@
 - `../scripts/build_evp8_prompt_manifest.py`: audits the frozen EVP-8 prompt
   template, writes prompt-template manifest and boundary-audit JSON, and does
   not generate evidence packets or call model APIs.
+- `../scripts/build_evp8_packet_schema_dry_run.py`: validates planned EVP-8
+  packet skeleton structure and output schema in memory, then writes summary
+  artifacts without generating full packet JSONL records.
 - `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict

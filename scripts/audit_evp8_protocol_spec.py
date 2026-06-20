@@ -311,6 +311,9 @@ def _audit_phase0_api_blockers(spec: dict[str, Any], api_blockers: list[str]) ->
         api_blockers.append("prompt_text_not_frozen")
     prompt_manifest_ready = _tracked_path_exists(prompt_policy.get("prompt_manifest"))
     prompt_boundary_audit_ready = _tracked_path_exists(prompt_policy.get("prompt_boundary_audit"))
+    dry_run_artifacts = spec.get("phase0_dry_run_artifacts") or {}
+    packet_dry_run_ready = _tracked_path_exists(dry_run_artifacts.get("evidence_packet_dry_run_summary"))
+    schema_dry_run_ready = _tracked_path_exists(dry_run_artifacts.get("schema_dry_run_summary"))
     required_outputs = set(spec.get("required_phase0_outputs_before_api") or [])
     already_satisfied = {"tracked_protocol_spec", "protocol_audit_summary"}
     if candidate_manifest_ready:
@@ -319,6 +322,10 @@ def _audit_phase0_api_blockers(spec: dict[str, Any], api_blockers: list[str]) ->
         already_satisfied.add("prompt_manifest")
     if prompt_boundary_audit_ready:
         already_satisfied.add("prompt_boundary_audit")
+    if packet_dry_run_ready:
+        already_satisfied.add("evidence_packet_dry_run_summary")
+    if schema_dry_run_ready:
+        already_satisfied.add("schema_dry_run_summary")
     missing_outputs = sorted(required_outputs - already_satisfied)
     if missing_outputs:
         api_blockers.append("missing_phase0_outputs_before_api:" + ",".join(missing_outputs))

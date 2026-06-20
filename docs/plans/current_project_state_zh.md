@@ -77,13 +77,16 @@
      `prompts/evp8_visible_evidence_merge_gate_v0_1.md`，由
      `python scripts\build_evp8_prompt_manifest.py --check` 生成 manifest 和
      boundary audit；
+   - 当前 packet/schema dry-run：
+     `python scripts\build_evp8_packet_schema_dry_run.py --check` 已生成
+     686 planned packet skeletons 和 686 schema-valid dry-run outputs 的
+     tracked summaries；
    - 当前审计状态：protocol spec audit passed，candidate set blocker 已移除，
      prompt text blocker 已移除，但 `phase0_api_readiness = not_ready`，因为
-     packet/schema/cost/baseline dry-run 仍未生成；
-   - 下一步不是 API，而是 no-API protocol freeze：重新定义 `E0-E6` 七层
-     adjacent-difference evidence ladder、packet schema、prompt schema、
-     candidate-set policy、evaluator joins、metrics、stop gates 和 provider
-     routing policy；
+     cost-observability 和 deterministic-baseline dry-run 仍未生成；
+   - 下一步不是 API，而是 no-API Phase 0 收口：先生成 cost-observability
+     dry-run 和 deterministic-baseline dry-run summary，再让 protocol audit
+     进入 `ready_for_api_preflight`；
    - 第一批模型只允许在 no-API gates 和 smoke gates 通过后执行
      DeepSeek V4 Pro + Qwen3.7 Max；
    - 后续补跑 Kimi K2.6、Devstral 2、Gemini 2.5 Flash 必须使用同一 frozen
@@ -145,6 +148,10 @@
   `data/protocols/evp8_prompt_boundary_audit_v0_1.json`：
   EVP-8 prompt template、manifest 和 boundary audit；只冻结模板，不包含真实
   rendered packet prompts。
+- `data/protocols/evp8_evidence_packet_dry_run_summary_v0_1.json`、
+  `data/protocols/evp8_schema_dry_run_summary_v0_1.json`：
+  EVP-8 packet/schema dry-run summaries；验证 686 planned skeletons 和 schema
+  outputs，不生成完整 evidence packet JSONL。
 - `scripts/audit_evp8_protocol_spec.py`：
   检查 EVP-8 相邻差分、visible/hidden 字段边界、模型批次、routing policy、
   cost observability 和 stop gates。
@@ -154,6 +161,9 @@
 - `scripts/build_evp8_prompt_manifest.py`：
   审计 frozen EVP-8 prompt template，生成 no-API prompt manifest 和 boundary
   audit。
+- `scripts/build_evp8_packet_schema_dry_run.py`：
+  在内存验证 EVP-8 planned packet skeletons 和 output schema，生成 summary-only
+  dry-run artifacts。
 - `docs/plans/agent_execution_plan_zh.md`、
   `docs/plans/ai_agent_experiment_execution_plan_zh.md`：
   历史执行计划，只保留溯源，不应覆盖当前路线。

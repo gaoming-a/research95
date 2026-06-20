@@ -1,0 +1,26 @@
+{
+  "api_call_attempted": false,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "claim_boundary": "This validates output parser/schema shape only; it is not LLM verifier evidence.",
+  "cohort_id": "EVP-8",
+  "expected_schema_dry_run_record_count": 686,
+  "full_evidence_packets_generated": false,
+  "invalid_parse_count": 0,
+  "invalid_reason_counts": {},
+  "leakage_findings": [],
+  "leakage_findings_count": 0,
+  "output_records_stored": false,
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "schema_dry_run_counts_by_level": {
+    "E0": 98,
+    "E1": 98,
+    "E2": 98,
+    "E3": 98,
+    "E4": 98,
+    "E5": 98,
+    "E6": 98
+  },
+  "schema_dry_run_record_count": 686,
+  "schema_dry_run_status": "passed",
+  "valid_parse_count": 686
+}

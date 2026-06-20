@@ -1093,7 +1093,11 @@ cohort 的 21 tasks / 6 projects / 98 candidates；这不是最终期刊规模 f
 cohort。EVP-8 prompt template 已冻结为
 `prompts/evp8_visible_evidence_merge_gate_v0_1.md`，并由
 `scripts/build_evp8_prompt_manifest.py --check` 生成 no-API manifest 与
-boundary audit；这仍不授权 API。
+boundary audit。Packet/schema dry-run summaries 已覆盖 98 candidates x 7
+levels = 686 planned skeletons / schema outputs；这些仍不授权 API。当前下一步
+固定为 no-API cost-observability dry-run 和 deterministic tool-baseline
+dry-run；只有二者通过并被 protocol audit 记录后，才允许进入 DeepSeek/Qwen
+local preflight，而不是直接调用模型。
 
 期刊版主线：
 
@@ -1130,8 +1134,9 @@ EVP-8 当前计划模型集：
 执行边界：
 
 - DeepSeek/Qwen 可以先跑，但只能在 EVP-8 no-API protocol freeze、leakage
-  audit、prompt-boundary dry-run、cost-observability preflight 和 smoke gate
-  通过后执行；
+  audit、prompt-boundary dry-run、packet/schema dry-run、cost-observability
+  dry-run、deterministic-baseline dry-run、local preflight 和 smoke gate 通过后
+  执行；
 - Kimi/Devstral/Gemini 后续可通过 OpenRouter 统一路由补跑；若用 OpenRouter，
   必须 pin exact model id，记录 actual returned model/provider，并避免未记录的
   automatic model substitution；

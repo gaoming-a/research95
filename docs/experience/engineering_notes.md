@@ -2738,3 +2738,24 @@ This file starts fresh for the patch-verification project.
 - A prompt-change log is required when adding or changing experiment prompts.
   Record whether the new prompt replaces an older one or is a new protocol
   prompt, and note the schema differences.
+
+## 2026-06-20 EVP-8 packet/schema dry-run boundary
+
+- A packet dry-run summary can validate level counts, cumulative field groups,
+  and leakage boundaries without generating full evidence packets. Name it as a
+  skeleton dry-run and keep `full_evidence_packets_generated=false`.
+- Schema dry-runs can validate parser/output shape with deterministic placeholder
+  decisions, but they are not LLM verifier results and should not be used for
+  evidence-level claims.
+- If full packet JSONL records are later generated, treat that as a separate
+  Phase 0 artifact with its own leakage audit and protocol-version boundary.
+
+## 2026-06-20 long-plan patch anchor boundary
+
+- `docs/plans/current_plan_zh.md` is long and contains repeated verification
+  command blocks. When appending a new section, do not anchor on generic lines
+  such as local quality gate results; they can insert the new section into an
+  older historical block.
+- Use a unique nearby heading or the latest section-specific verification block
+  as the patch anchor, then confirm with `rg -n` and a tail read that the new
+  section appears exactly once at the intended end of the file.

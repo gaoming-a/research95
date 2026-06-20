@@ -1,0 +1,45 @@
+{
+  "api_call_attempted": false,
+  "candidate_count": 98,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "claim_boundary": "This validates planned EVP-8 packet skeleton structure only; it is not final evidence-packet generation.",
+  "cohort_id": "EVP-8",
+  "expected_packet_skeleton_count": 686,
+  "expected_packet_skeleton_counts_by_level": {
+    "E0": 98,
+    "E1": 98,
+    "E2": 98,
+    "E3": 98,
+    "E4": 98,
+    "E5": 98,
+    "E6": 98
+  },
+  "field_group_count_error_count": 0,
+  "field_group_count_error_sample": [],
+  "full_evidence_packets_generated": false,
+  "leakage_findings": [],
+  "leakage_findings_count": 0,
+  "missing_model_visible_levels": [],
+  "model_visible_levels": [
+    "E0",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6"
+  ],
+  "packet_dry_run_status": "passed",
+  "packet_skeleton_counts_by_level": {
+    "E0": 98,
+    "E1": 98,
+    "E2": 98,
+    "E3": 98,
+    "E4": 98,
+    "E5": 98,
+    "E6": 98
+  },
+  "planned_packet_skeleton_count": 686,
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "raw_prompt_text_stored": false
+}

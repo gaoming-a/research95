@@ -49,6 +49,8 @@ The first machine-checkable protocol artifact is:
 - `prompts/evp8_visible_evidence_merge_gate_v0_1.md`
 - `data/protocols/evp8_prompt_manifest_v0_1.json`
 - `data/protocols/evp8_prompt_boundary_audit_v0_1.json`
+- `data/protocols/evp8_evidence_packet_dry_run_summary_v0_1.json`
+- `data/protocols/evp8_schema_dry_run_summary_v0_1.json`
 
 It freezes the draft v0.1 ladder as a tracked protocol spec:
 
@@ -73,9 +75,11 @@ Current audit status:
 - candidate set: frozen for Phase 0 smoke/protocol validation at 21 tasks, 6
   projects, and 98 candidates from the tracked EVP-7 structural cohort;
 - prompt template: frozen and boundary-audited without API calls;
+- packet/schema dry-run summaries: passed for 686 planned packet skeletons and
+  686 deterministic schema outputs;
 - API readiness: not ready;
-- current blockers: packet/schema/cost/baseline dry-run outputs not yet
-  generated.
+- current blockers: cost-observability and deterministic-baseline dry-run
+  outputs not yet generated.
 
 This audit is intentionally no-API and does not authorize model calls, cohort
 expansion, or EVP-8 evidence-packet generation.
@@ -111,10 +115,9 @@ models are not obviously out of distribution.
 Before any model call:
 
 1. Define and freeze `E0-E6` field schemas and prompt wording.
-2. Decide the initial candidate set:
-   - either use the current 20-task / 94-candidate cohort for EVP-8 smoke and
-     protocol validation;
-   - or first expand to the journal-scale 30-50 bug / 100-180 candidate target.
+2. Use the current frozen Phase 0 smoke/protocol-validation candidate set:
+   21 tasks, 6 projects, and 98 candidates. This is not the final journal-scale
+   30-50 bug cohort.
 3. Generate dry-run evidence packets and prompt manifests.
 4. Run leakage, schema, prompt-boundary, cost-observability, and deterministic
    tool-baseline dry-run checks.
@@ -122,14 +125,30 @@ Before any model call:
    provider routing policy, temperature, max tokens, retry policy, and stop
    rules.
 
+Immediate next execution order:
+
+1. Close and commit the packet/schema dry-run summary changes.
+2. Add a no-API cost-observability dry-run summary for the planned
+   98-candidate x 7-level call matrix.
+3. Add a no-API deterministic tool-baseline dry-run summary that uses only
+   model-visible EVP-8 evidence slots and does not read evaluator-only labels.
+4. Update the protocol audit so passing both dry-runs changes the protocol
+   status from `not_ready` to `ready_for_api_preflight`, not directly to
+   executed.
+5. Only after that, create or validate ignored DeepSeek/Qwen local preflight
+   configs. Passing preflight still requires an explicit user execution command
+   before any real API call.
+
 ### Phase 1: DeepSeek + Qwen First Batch
 
 After Phase 0 passes and the user explicitly says to execute:
 
-1. Run DeepSeek V4 Pro smoke.
-2. Run Qwen3.7 Max smoke.
+1. Run DeepSeek V4 Pro smoke on a stratified 5-candidate x 7-level subset
+   (35 planned calls).
+2. Run Qwen3.7 Max smoke on the same subset and same frozen prompt/schema.
 3. If both pass parse, usage/cost, and quality gates, run their full EVP-8
-   evaluations on the frozen packet set.
+   evaluations on the frozen Phase 0 packet set: 98 candidates x 7 levels =
+   686 planned calls per model.
 4. Report these results only as a two-model interim result.
 
 This phase must not change evidence levels, prompt schema, candidate set, or

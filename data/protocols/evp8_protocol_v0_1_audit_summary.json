@@ -11,7 +11,7 @@
   "adjacent_delta_count": 6,
   "api_blocker_count": 1,
   "api_blockers": [
-    "missing_phase0_outputs_before_api:cost_observability_dry_run,deterministic_tool_baseline_dry_run,evidence_packet_dry_run_summary,schema_dry_run_summary"
+    "missing_phase0_outputs_before_api:cost_observability_dry_run,deterministic_tool_baseline_dry_run"
   ],
   "api_call_attempted": false,
   "candidate_set_manifest": "data/protocols/evp8_candidate_set_v0_1.json",

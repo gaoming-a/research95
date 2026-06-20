@@ -14167,3 +14167,139 @@ Verify:
   通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过，`passed=true`。
+
+## 2026-06-20 EVP-8 Phase 0 packet/schema dry-run summaries
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main [ahead 4]`；
+- 最新本地提交 `9255f65 Freeze EVP-8 prompt template`；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过；
+- 当前 EVP-8 blocker 缩小为：
+  `cost_observability_dry_run`、`deterministic_tool_baseline_dry_run`、
+  `evidence_packet_dry_run_summary`、`schema_dry_run_summary`；
+- `data/protocols/evp8_candidate_set_v0_1.json` 已冻结 98 candidates；
+- `data/protocols/evp8_protocol_v0_1.json` 已冻结 E0-E6 field groups 和 output
+  schema；
+- `prompts/evp8_visible_evidence_merge_gate_v0_1.md` 已冻结 prompt template。
+
+Plan:
+
+1. 新增 no-API packet/schema dry-run 脚本；
+2. 只在内存构造 `98 candidates x 7 model-visible levels = 686` 个 EVP-8 packet
+   skeleton，验证每个 level 的 cumulative field groups、required fields 和
+   visible/hidden 边界；
+3. 不写完整 evidence packet JSONL，不把它当作最终 EVP-8 packet generation；
+4. 生成 tracked packet dry-run summary 和 schema dry-run summary；
+5. 更新 protocol spec 和 protocol audit，使这两个 summary 存在时解除对应
+   blocker；
+6. 同步 README、INDEX、EVP-8 plan、current state、engineering notes。
+
+Acceptance:
+
+- packet dry-run summary 必须报告 686 planned packet skeletons，E0-E6 每层 98；
+- summary 必须明确 `full_evidence_packets_generated=false`、
+  `api_call_attempted=false`、`raw_prompt_text_stored=false`；
+- schema dry-run summary 必须报告 686 valid parse records、0 invalid、0 leakage；
+- 每个 dry-run output schema 必须匹配 EVP-8 protocol output schema；
+- protocol audit 剩余 blocker 应只包含 cost observability 和 deterministic
+  baseline dry-run；
+- 本轮不得调用 API，不生成真实 EVP-8 evidence packet JSONL。
+
+Execute:
+
+- 新增 `scripts/build_evp8_packet_schema_dry_run.py`；
+- 在内存构造 EVP-8 planned packet skeletons，不写完整 packet JSONL；
+- 生成：
+  - `data/protocols/evp8_evidence_packet_dry_run_summary_v0_1.json`；
+  - `data/protocols/evp8_schema_dry_run_summary_v0_1.json`；
+- 更新 `data/protocols/evp8_protocol_v0_1.json`，新增
+  `phase0_dry_run_artifacts`，指向 packet/schema dry-run summaries；
+- 更新 `scripts/audit_evp8_protocol_spec.py`，在 packet/schema dry-run summary
+  存在时不再报告对应 blocker；
+- 同步 README、docs index、EVP-8 execution plan、final roadmap、current project
+  state 和 engineering notes；
+- 未调用 API，未生成真实 EVP-8 evidence packet JSONL。
+
+Verify:
+
+- `python scripts\build_evp8_packet_schema_dry_run.py --check` 通过：
+  - `planned_packet_skeleton_count = 686`；
+  - E0-E6 每层 98 planned skeletons；
+  - `packet_dry_run_status = passed`；
+  - `schema_dry_run_record_count = 686`；
+  - `valid_parse_count = 686`；
+  - `invalid_parse_count = 0`；
+  - `leakage_findings_count = 0`；
+  - `full_evidence_packets_generated = false`；
+  - `api_call_attempted = false`；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过：
+  - `protocol_spec_audit_status = passed`；
+  - `api_blockers = missing_phase0_outputs_before_api:cost_observability_dry_run,deterministic_tool_baseline_dry_run`；
+  - `phase0_api_readiness = not_ready`；
+  - `api_call_attempted = false`。
+
+## 2026-06-20 EVP-8 next execution plan before DeepSeek/Qwen
+
+Inspect:
+
+- 用户当前要求先写入后续计划，稍后再按计划执行；
+- 当前 EVP-8 Phase 0 已完成 protocol spec、candidate set、prompt template、
+  prompt boundary audit、packet/schema dry-run summaries；
+- protocol audit 仍禁止 API：剩余 blocker 为 `cost_observability_dry_run` 和
+  `deterministic_tool_baseline_dry_run`；
+- 当前第一批可执行模型仍是 DeepSeek V4 Pro 与 Qwen3.7 Max；
+- Kimi K2.6、Devstral 2、Gemini 2.5 Flash 只能作为后续补跑模型，且必须复用
+  同一 frozen packets/prompts/schema；
+- 本轮只写计划，不调用模型 API，不读取 local API config。
+
+Plan:
+
+1. 先收口并提交当前 packet/schema dry-run 相关变更；GitHub 若继续连接失败，
+   记录事实后不阻塞后续本地执行；
+2. 新增 cost-observability dry-run：
+   - 不调用 API；
+   - 固定模型 ID、provider routing policy、temperature、max tokens、retry
+     policy 和 token/cost accounting fields；
+   - 对 `98 candidates x 7 levels = 686` 个 planned calls 输出 summary-only
+     成本可观测性检查；
+   - 明确 unknown usage 或 missing provider/model id 会阻塞 API；
+3. 新增 deterministic tool-baseline dry-run：
+   - 不调用 API；
+   - 只使用 EVP-8 model-visible evidence slots；
+   - 生成 schema-valid rule decisions 或 summary-only audit，验证不会读取
+     evaluator-only labels；
+   - 输出 tracked baseline dry-run summary；
+4. 更新 `data/protocols/evp8_protocol_v0_1.json` 和
+   `scripts/audit_evp8_protocol_spec.py`，使 cost/baseline dry-run 通过后
+   protocol audit 从 `not_ready` 进入 `ready_for_api_preflight`；
+5. 在 API 前新增 DeepSeek/Qwen local preflight：
+   - 只检查 ignored local config、`.env` key presence、模型 ID、输出目录、
+     overwrite boundary、cost budget 和 raw-output policy；
+   - preflight 通过仍不等于自动执行，必须等待用户明确说执行；
+6. Phase 1 smoke 顺序固定为 DeepSeek 后 Qwen：
+   - 每个模型先跑 stratified smoke，覆盖 5 个 candidates x 7 levels = 35 calls；
+   - smoke 必须通过 parse-valid、schema、usage/cost、quality 和 leakage gates；
+   - 任一模型 smoke 失败，先诊断并修 protocol/runner，不进入 full run；
+7. 两个 smoke 均通过后，才运行 DeepSeek/Qwen 第一批 full interim：
+   - 使用同一 frozen packet set、prompt version、schema、temperature 和
+     evaluator joins；
+   - 当前 Phase 0 cohort full interim 为 98 candidates x 7 levels = 686 calls
+     per model；
+   - 输出 raw-output-free summaries、quality audits、per-level metrics、
+     cross-model comparison、claim-boundary update 和 cost observability；
+8. DeepSeek/Qwen 第一批完成后，只能写成 two-model interim result；
+   不得写成最终五模型 journal conclusion；
+9. 后续补跑 Kimi/Devstral/Gemini 前，不改 protocol/prompt/schema/candidate set。
+   如果第一批暴露协议缺陷，必须 bump protocol version，并从头重跑受影响模型。
+
+Acceptance:
+
+- 下一轮执行的第一个 concrete task 必须仍是 no-API cost/baseline dry-run，不得
+  直接进入 DeepSeek/Qwen API；
+- protocol audit 未进入 `ready_for_api_preflight` 前，禁止真实模型调用；
+- DeepSeek/Qwen preflight 必须显式记录 provider/model id、exact prompt
+  version、expected call count、overwrite policy、raw-output ignored path、
+  usage/cost fields 和 stop gates；
+- smoke/full run 使用的 packets/prompts/schema 必须完全同版；
+- 若 GitHub push 继续失败，只记录网络事实，不改变实验计划和本地执行顺序。
