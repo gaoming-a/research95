@@ -11,8 +11,9 @@
 - 分支：`main`
 - 远端：`origin/main`
 - 当前 Git 状态：以 `git status --short --branch` 和
-  `git log -1 --oneline` 为准。2026-06-20 最近检查为本地 `main...origin/main`
-  已同步，当前远端锚点为 `d9a8391 Record EVP-8 DeepSeek G6 full result`。
+  `git log -1 --oneline` 为准。不要只依赖本文件里记录的 hash 判断是否 ahead；
+  本轮语义上要求远端至少包含 `d9a8391 Record EVP-8 DeepSeek G6 full result`
+  及后续 sync-state 文档修正。
 - 当前远端已同步锚点：
   - `d9a8391 Record EVP-8 DeepSeek G6 full result`：远端已包含 DeepSeek
     686-call first-batch full-run raw-output-free summary、post-full-run
@@ -35,7 +36,8 @@
   686-call first-batch full-run passed audit。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。2026-06-20 本轮重试后
-  `72f1fb5` 和 `d9a8391` 已成功 push，当前没有 GitHub 同步阻塞。
+  `72f1fb5` 和 `d9a8391` 已成功 push；最终是否仍 ahead 以
+  `git status --short --branch` 为准。
 - `bugsinpy_cookiecutter_4` 已收束为 tracked blocker policy；完整 builder
   失败输出仍是本地诊断残留，不应提交。
 - ignored 本地交付物：

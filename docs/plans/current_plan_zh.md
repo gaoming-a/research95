@@ -16448,3 +16448,26 @@ Commit And Sync:
 - `git push origin main` 成功，远端 `main` 已同步到 `d9a8391`；
 - raw JSONL、runner logs、`.env`、`configs/*.local.json`、`outputs/` 和
   `artifacts/` 均未提交。
+
+## 2026-06-20 EVP-8 G6 sync-state wording correction
+
+Inspect:
+
+- DeepSeek G6 result closure commit 已成功 push；
+- 随后的 sync-state 文档修正第一次 push 出现 GitHub network-level
+  `Recv failure: Connection was reset`，第二次重试成功；
+- 写死“当前远端锚点 = 某个刚提交 hash”会在下一次文档修正后再次漂移。
+
+Plan:
+
+1. 将 short-state 的 Git 状态描述改成以 `git status --short --branch` 和
+   `git log -1 --oneline` 为准；
+2. 保留语义锚点：远端至少应包含 `72f1fb5` checkpointing 修复和 `d9a8391`
+   DeepSeek G6 full-result closure；
+3. 不改变实验结果、protocol、summary 或 raw-output boundary。
+
+Decision:
+
+- 这是同步状态措辞修正，不是新实验；
+- Qwen full run 仍未执行，下一步仍是是否授权 Qwen 686-call first-batch
+  full run。
