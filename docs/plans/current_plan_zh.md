@@ -15113,3 +15113,10 @@ Verify:
   通过；
 - `git diff --check` 通过，仅提示 CRLF 工作区转换 warning；
 - 本轮未调用模型 API，未读取 raw outputs，未生成 raw outputs。
+
+Commit And Sync:
+
+- 已提交本轮 actual model/provider aggregate contract：
+  `5a1e69c Track EVP-8 smoke actual model aggregates`；
+- `git push origin main` 成功；
+- 远端 `origin/main` 已同步到本轮提交。
