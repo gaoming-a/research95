@@ -95,7 +95,12 @@ structural and credential-presence checks without printing key values or
 calling APIs. The guarded smoke runner check-only summary is tracked at
 `data/protocols/evp8_deepseek_qwen_smoke_check_only_v0_1.json`; it validates
 35 project-frequency-stratified smoke packets and prompt/schema gates without
-API calls or raw outputs.
+API calls or raw outputs. The final no-API smoke handoff packet is
+`data/protocols/evp8_deepseek_qwen_smoke_execution_packet_v0_1.json`, with a
+Markdown companion at
+`docs/experiments/evp8_deepseek_qwen_smoke_execution_packet_v0_1.md`. It records
+the exact guard commands and DeepSeek-then-Qwen execute commands, but explicitly
+does not authorize model calls by itself.
 The Phase 0 smoke/protocol-validation candidate set is frozen at
 `data/protocols/evp8_candidate_set_v0_1.json`: 21 tasks, 6 projects, and 98
 candidates from the tracked EVP-7 structural cohort. This is not the final

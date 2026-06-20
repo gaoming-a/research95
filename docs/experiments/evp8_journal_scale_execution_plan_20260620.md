@@ -57,6 +57,8 @@ The first machine-checkable protocol artifact is:
 - `data/protocols/evp8_deepseek_qwen_local_config_plan_v0_1.json`
 - `data/protocols/evp8_deepseek_qwen_preflight_summary_v0_1.json`
 - `data/protocols/evp8_deepseek_qwen_smoke_check_only_v0_1.json`
+- `data/protocols/evp8_deepseek_qwen_smoke_execution_packet_v0_1.json`
+- `docs/experiments/evp8_deepseek_qwen_smoke_execution_packet_v0_1.md`
 
 It freezes the draft v0.1 ladder as a tracked protocol spec:
 
@@ -91,6 +93,9 @@ Current audit status:
 - guarded smoke runner check-only: passed for 35 project-frequency-stratified
   smoke packets, including the dominant youtube-dl project, without storing
   rendered prompt text, generating raw outputs, or calling APIs;
+- smoke execution packet: ready, with exact guard commands and
+  DeepSeek-then-Qwen execute commands; it explicitly does not authorize API
+  calls by itself;
 - API readiness: waiting for explicit user smoke execution command;
 - current blockers before smoke: no tracked Phase 0 or local preflight blockers.
 
@@ -146,6 +151,7 @@ Immediate next execution order:
    - `python scripts\audit_evp8_protocol_spec.py --check`
    - `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
    - `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
+   - `python scripts\write_evp8_smoke_execution_packet.py --check`
    - `git status --short --ignored configs\evp8_deepseek_qwen.local.json`
 4. Only if those guards pass, run DeepSeek V4 Pro smoke and Qwen3.7 Max smoke
    on the frozen 5-candidate x 7-level subset.

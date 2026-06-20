@@ -14660,3 +14660,67 @@ Commit And Sync:
   `Failed to connect to github.com port 443 after 21079 ms`；
 - 按用户授权，GitHub 连续同步失败时不阻塞后续计划执行；本地 `main` 继续作为
   当前工作状态源。
+
+## 2026-06-20 EVP-8 smoke execution packet
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main [ahead 10]`；
+- 最新提交为 `4aca3ad Record EVP-8 smoke sync failure`；
+- EVP-8 protocol audit、DeepSeek/Qwen strict preflight、runner check-only 和
+  local quality gate 均已通过；
+- 真实 smoke 仍未获得用户明确执行授权；
+- GitHub push 仍为网络级失败，已记录为不阻塞本地计划执行。
+
+Plan:
+
+1. 新增 no-API EVP-8 smoke execution packet builder；
+2. 读取 tracked protocol/preflight/check-only summaries，输出 raw-output-free
+   JSON/Markdown packet；
+3. 明确 DeepSeek 先执行、Qwen 后执行；Qwen 只能在 DeepSeek smoke gate 通过后
+   执行；
+4. packet 必须记录 exact guard commands、execute commands、expected output
+   paths、stop gates、cost-observability gate 和 claim boundary；
+5. packet 必须明确 `api_call_attempted=false`、`raw_outputs_generated=false`，
+   且不是 API 授权；
+6. 同步 README、INDEX、EVP-8 execution plan、current project state 和
+   engineering notes。
+
+Acceptance:
+
+- execution packet status 必须为 ready，且仍不调用 API；
+- packet 中不得包含 API key value、rendered prompt text 或 raw output；
+- exact execute commands 只能使用 ignored local config；
+- `python scripts\audit_evp8_protocol_spec.py --check`、strict preflight、
+  runner check-only 和 local quality gate 继续通过；
+- staged diff 不包含 `.env`、`outputs/`、`artifacts/` 或 local config。
+
+Execute:
+
+- 新增 `scripts/write_evp8_smoke_execution_packet.py`；
+- 生成 no-API execution packet：
+  - `data/protocols/evp8_deepseek_qwen_smoke_execution_packet_v0_1.json`；
+  - `docs/experiments/evp8_deepseek_qwen_smoke_execution_packet_v0_1.md`；
+- packet 记录：
+  - guard commands；
+  - DeepSeek first execute command；
+  - Qwen after-DeepSeek-gate execute command；
+  - expected raw response paths under ignored `outputs/`；
+  - tracked raw-output-free summary paths；
+  - stop gates 和 claim boundary；
+- 同步 README、docs index、EVP-8 execution plan、final roadmap、current project
+  state 和 engineering notes；
+- 本轮未调用模型 API，未生成 raw outputs，未提交 local config。
+
+Verify:
+
+- `python -m py_compile scripts\write_evp8_smoke_execution_packet.py` 通过；
+- `python scripts\write_evp8_smoke_execution_packet.py --check` 通过：
+  - `packet_status = ready`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_generated = false`；
+  - `rendered_prompt_text_stored = false`；
+  - `execution_authorized_by_packet = false`；
+  - `requires_explicit_user_command = true`；
+  - DeepSeek command is first, Qwen command is gated after DeepSeek；
+- 下一步仍是等待用户明确执行真实 DeepSeek/Qwen smoke，不自动调用 API。

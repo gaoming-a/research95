@@ -1,0 +1,135 @@
+{
+  "api_call_attempted": false,
+  "api_key_values_printed": false,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "checks": [
+    {
+      "check": "local_config_path_boundary",
+      "detail": "configs/evp8_deepseek_qwen.local.json",
+      "passed": true
+    },
+    {
+      "check": "protocol_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "protocol_ready_for_preflight",
+      "detail": "ready_for_api_preflight",
+      "passed": true
+    },
+    {
+      "check": "protocol_audit_no_api",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "preflight_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "preflight_ready_for_user_execute_command",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "preflight_no_api",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "preflight_no_key_values_printed",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "check_only_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "check_only_packet_count",
+      "detail": 35,
+      "passed": true
+    },
+    {
+      "check": "check_only_no_api",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "check_only_no_raw_outputs",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "check_only_selection_includes_youtube_dl",
+      "detail": [
+        "evp8_smoke_candidate_0001",
+        "evp8_smoke_candidate_0011",
+        "evp8_smoke_candidate_0030",
+        "evp8_smoke_candidate_0040",
+        "evp8_smoke_candidate_0047"
+      ],
+      "passed": true
+    },
+    {
+      "check": "phase1_model_ids",
+      "detail": [
+        "deepseek/deepseek-v4-pro",
+        "qwen/qwen3.7-max"
+      ],
+      "passed": true
+    }
+  ],
+  "claim_boundary": "This packet is a no-API execution handoff. It is not LLM verifier evidence and does not authorize API calls without an explicit user command.",
+  "cohort_id": "EVP-8",
+  "execute_commands_after_explicit_user_authorization": [
+    {
+      "command": "python scripts\\run_evp8_deepseek_qwen_smoke.py --execute --config configs\\evp8_deepseek_qwen.local.json --model-id deepseek/deepseek-v4-pro",
+      "model_id": "deepseek/deepseek-v4-pro",
+      "outputs": {
+        "raw_responses": "outputs/evp8_phase1_deepseek_qwen_smoke/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+        "tracked_summary": "data/reviews/evp8_deepseek_deepseek-v4-pro_smoke_summary.json"
+      },
+      "proceed_if": "tracked_summary.smoke_gate == passed and tracked_summary.usage_cost_gate == passed",
+      "step": "deepseek_smoke_first"
+    },
+    {
+      "command": "python scripts\\run_evp8_deepseek_qwen_smoke.py --execute --config configs\\evp8_deepseek_qwen.local.json --model-id qwen/qwen3.7-max",
+      "model_id": "qwen/qwen3.7-max",
+      "outputs": {
+        "raw_responses": "outputs/evp8_phase1_deepseek_qwen_smoke/qwen_qwen3.7-max/raw_responses.jsonl",
+        "tracked_summary": "data/reviews/evp8_qwen_qwen3.7-max_smoke_summary.json"
+      },
+      "proceed_if": "DeepSeek smoke gate passed first; this Qwen summary must also pass parse and usage/cost gates.",
+      "step": "qwen_smoke_after_deepseek_gate"
+    }
+  ],
+  "execution_authorized_by_packet": false,
+  "guard_commands": [
+    "git status --short --branch --untracked-files=all",
+    "python scripts\\audit_evp8_protocol_spec.py --check",
+    "python scripts\\preflight_evp8_deepseek_qwen.py --config configs\\evp8_deepseek_qwen.local.json --strict-api-ready",
+    "python scripts\\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\\evp8_deepseek_qwen.local.json",
+    "git status --short --ignored configs\\evp8_deepseek_qwen.local.json outputs artifacts .env"
+  ],
+  "local_config": "configs/evp8_deepseek_qwen.local.json",
+  "packet_id": "evp8_deepseek_qwen_smoke_execution_packet_v0_1",
+  "packet_status": "ready",
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "raw_outputs_generated": false,
+  "rendered_prompt_text_stored": false,
+  "requires_explicit_user_command": true,
+  "stop_gates": [
+    "Any guard command fails.",
+    "Local config is not ignored under configs/*.local.json.",
+    "Rendered prompt text or raw model response would be written to tracked files.",
+    "DeepSeek smoke does not pass parse/schema/usage-cost gates.",
+    "Qwen smoke is attempted before DeepSeek smoke passes.",
+    "Any smoke summary has unknown_cost_record_count > 0.",
+    "Any executed run changes protocol id, candidate set id, prompt hash policy, evidence levels, provider route, or model id.",
+    "Any hidden evaluator label becomes model-visible."
+  ]
+}

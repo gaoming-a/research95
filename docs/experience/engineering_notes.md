@@ -2800,3 +2800,14 @@ This file starts fresh for the patch-verification project.
   exposes tokens but no cost and no controlled pricing source is wired in,
   record token usage and mark the USD cost gate as blocked rather than treating
   an unsupported estimate as observed cost.
+
+## 2026-06-20 EVP-8 smoke execution packet boundary
+
+- A smoke execution packet is a handoff artifact, not execution authorization.
+  It may contain exact future `--execute` commands only when it also records
+  `execution_authorized_by_packet=false` and `requires_explicit_user_command=true`.
+- Keep guard commands in the packet so a future executor reruns no-API checks
+  immediately before any real model call instead of relying on older summaries.
+- Record expected raw response paths under ignored `outputs/` and tracked
+  summary paths separately. The packet should never copy rendered prompts, raw
+  responses, local config contents, or API key values into tracked files.
