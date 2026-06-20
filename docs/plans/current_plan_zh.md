@@ -15205,34 +15205,6 @@ Commit And Sync:
   `fatal: unable to access 'https://github.com/gaoming-a/research95.git/': Failed to connect to github.com port 443 after 21134 ms: Could not connect to server`；
 - 这是连续 network-level sync failure；按用户授权，不阻塞后续本地计划执行。
 
-Repair:
-
-- G0 guard 首版只检查 ignored boundary，尚未提前发现 stale expected outputs；
-- 扩展 `scripts/check_evp8_deepseek_qwen_g0.py`：
-  - 读取 `data/protocols/evp8_deepseek_qwen_smoke_execution_packet_v0_1.json`；
-  - 对每个 execute command 检查 `raw_responses` 和 `tracked_summary` 当前均不存在；
-  - 将 `expected_output_absence` 写入 JSON/Markdown summary；
-  - 若任一预期输出已存在，`guard_status` 变为 `failed`；
-- 同步 EVP-8 execution plan、docs index 和 engineering notes，明确 G0 会在 API
-  前检查 stale outputs。
-
-Gate:
-
-- `python -m py_compile scripts\check_evp8_deepseek_qwen_g0.py` 通过；
-- `python scripts\check_evp8_deepseek_qwen_g0.py --check` 通过：
-  - `guard_status = passed`；
-  - `expected_outputs_exist = false`；
-  - `checked_output_count = 4`；
-  - `existing_output_count = 0`；
-  - DeepSeek/Qwen expected `raw_responses` 和 `tracked_summary` 均不存在；
-  - `api_call_attempted = false`；
-  - `raw_outputs_read = false`；
-  - `raw_outputs_generated = false`；
-  - `post_smoke_observed_status = waiting_for_execution`；
-- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
-  通过；
-- 本轮仍未调用模型 API，未读取 raw outputs，未生成 raw outputs。
-
 ## 2026-06-20 EVP-8 G0 expected-output absence guard
 
 Inspect:
@@ -15264,3 +15236,116 @@ Acceptance:
 - 若未来 expected raw/summary output 已存在，G0 应先失败并阻止 API 前进；
 - 当前 post-smoke audit 仍应为 `waiting_for_execution`；
 - ignored `.env`、local config、outputs、artifacts 不得被 staged。
+
+Execute:
+
+- 扩展 `scripts/check_evp8_deepseek_qwen_g0.py`：
+  - 读取 `data/protocols/evp8_deepseek_qwen_smoke_execution_packet_v0_1.json`；
+  - 对每个 execute command 检查 `raw_responses` 和 `tracked_summary` 当前均不存在；
+  - 将 `expected_output_absence` 写入 JSON/Markdown summary；
+  - 若任一预期输出已存在，`guard_status` 变为 `failed`；
+- 同步 EVP-8 execution plan、docs index 和 engineering notes，明确 G0 会在 API
+  前检查 stale outputs。
+
+Verify:
+
+- `python -m py_compile scripts\check_evp8_deepseek_qwen_g0.py` 通过；
+- `python scripts\check_evp8_deepseek_qwen_g0.py --check` 通过：
+  - `guard_status = passed`；
+  - `expected_outputs_exist = false`；
+  - `checked_output_count = 4`；
+  - `existing_output_count = 0`；
+  - DeepSeek/Qwen expected `raw_responses` 和 `tracked_summary` 均不存在；
+  - `api_call_attempted = false`；
+  - `raw_outputs_read = false`；
+  - `raw_outputs_generated = false`；
+  - `post_smoke_observed_status = waiting_for_execution`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- 本轮仍未调用模型 API，未读取 raw outputs，未生成 raw outputs。
+
+Commit And Sync:
+
+- 已提交本轮 G0 expected-output absence guard：
+  `d94437c Check EVP-8 G0 expected output absence`；
+- `git push origin main` 成功；
+- 远端 `origin/main` 已同步到本轮提交，并包含此前本地 ahead 的提交。
+
+## 2026-06-20 EVP-8 Phase 1 DeepSeek/Qwen smoke follow-up plan
+
+Inspect:
+
+- 当前 EVP-8 Phase 0 no-API gates 已达到真实 smoke 前的 readiness：
+  - protocol spec audit passed；
+  - strict local preflight passed；
+  - smoke runner check-only passed；
+  - execution packet ready；
+  - post-smoke audit scaffold/self-test passed；
+  - G0 one-command guard passed；
+  - expected DeepSeek/Qwen raw-response 和 tracked-summary 输出路径均不存在；
+- 当前计划仍未授权任何模型 API 调用；
+- 下一次执行必须从本段重新 Inspect 开始，不得只凭本段记录直接调用 API。
+
+Authorization Boundary:
+
+- 只有当用户明确指向本段或 EVP-8 Phase 1 DeepSeek/Qwen smoke/API 执行时，才可进入
+  真实 API 步骤；
+- 泛泛的“继续”仍只能做 no-API 检查、文档修订或执行链路修复；
+- 本阶段只允许执行 DeepSeek/Qwen 5-candidate x 7-level smoke，不允许顺手进入
+  686-call full run，也不允许补 Kimi/Devstral/Gemini。
+
+Plan:
+
+1. 重新检查 `AGENTS.md`、`docs/plans/current_plan_zh.md`、EVP-8 execution
+   plan、G0 guard summary、smoke execution packet 和 Git 状态；
+2. 运行 G0 no-API revalidation：
+   - `python scripts\check_evp8_deepseek_qwen_g0.py --check`；
+   - `git diff --check`；
+   - 检查 `.env`、`configs/*.local.json`、`outputs/`、`artifacts/` 仍未 staged；
+3. 如果 G0 重新生成 tracked summary，使工作区出现仅限 no-API guard summary 的
+   diff，则先提交并尝试同步该 no-API guard refresh，再进入真实 API；
+4. 运行 DeepSeek V4 Pro smoke：
+   - `python scripts\run_evp8_deepseek_qwen_smoke.py --execute --config configs\evp8_deepseek_qwen.local.json --model-id deepseek/deepseek-v4-pro`；
+5. 立刻运行 post-smoke audit：
+   - `python scripts\audit_evp8_smoke_results.py --check`；
+6. 只有 DeepSeek audit 通过，才运行 Qwen3.7 Max smoke：
+   - `python scripts\run_evp8_deepseek_qwen_smoke.py --execute --config configs\evp8_deepseek_qwen.local.json --model-id qwen/qwen3.7-max`；
+7. 再次运行 post-smoke audit，并更新 raw-output-free summaries、current plan、
+   engineering notes 和 docs index；
+8. 提交并同步本阶段 tracked artifacts/docs；
+9. 停在 two-model smoke synthesis，不启动 full run。
+
+Acceptance:
+
+- G0 guard 通过，且 `api_call_attempted=false`、`raw_outputs_read=false`、
+  `raw_outputs_generated=false`、`rendered_prompt_text_read=false`；
+- DeepSeek smoke 产生 35 条 planned review records，tracked summary 无 raw
+  response body、无 rendered prompt text、无 API key/local config value；
+- DeepSeek audit 通过后才允许 Qwen smoke；
+- Qwen smoke 使用完全相同的 frozen EVP-8 v0.1 smoke subset、prompt/schema 和
+  evaluator joins；
+- Qwen audit 通过后，只能声明：
+  DeepSeek/Qwen 在 EVP-8 v0.1 frozen smoke subset 上的执行、解析、边界和初步
+  evidence-level decision pattern；
+- 不得声明：
+  five-model journal conclusion、full-cohort generalization、LLM superiority over
+  deterministic baselines、E0-E6 effectiveness final result。
+
+Stop Conditions:
+
+- 任一 G0 guard/preflight/check-only/audit/self-test 失败；
+- expected raw/summary output 在 API 前已经存在；
+- smoke runner 拒绝执行、API auth/route/model id 不匹配、parse/schema invalid；
+- usage/cost observability 缺失或返回模型/provider drift 未被 tracked summary
+  记录；
+- tracked summary 出现 raw response、rendered prompt、API key 或 local config
+  value；
+- DeepSeek audit 未通过时，禁止运行 Qwen；
+- Qwen audit 未通过时，禁止写 two-model positive conclusion；
+- GitHub sync 若再次出现 network-level failure，按用户授权记录后继续本地计划，
+  不为同一网络问题反复制造 push-failure-only 提交。
+
+Next Manual Command:
+
+- 若用户接下来要真实执行，应明确说：
+  `按当前计划执行 EVP-8 Phase 1 DeepSeek/Qwen smoke`。
