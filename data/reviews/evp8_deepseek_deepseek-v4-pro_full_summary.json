@@ -1,0 +1,113 @@
+{
+  "actual_model_id_counts": {
+    "deepseek-v4-pro": 686
+  },
+  "actual_model_id_missing_count": 0,
+  "api_call_attempted": true,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "cohort_id": "EVP-8",
+  "config": "configs/evp8_deepseek_qwen.local.json",
+  "configured_model_id": "deepseek/deepseek-v4-pro",
+  "configured_model_id_counts": {
+    "deepseek/deepseek-v4-pro": 686
+  },
+  "cost_summary": {
+    "cost_currency_counts": {
+      "USD": 686
+    },
+    "cost_observability_counts": {
+      "estimated_from_provider_token_usage": 686
+    },
+    "cost_source_counts": {
+      "estimated_from_tokens": 686
+    },
+    "total_cost_cny": 0.0,
+    "total_cost_usd": 0.788808816,
+    "unknown_cost_record_count": 0
+  },
+  "decision_counts": {
+    "escalate": 501,
+    "reject": 185
+  },
+  "decision_counts_by_evidence_level": {
+    "E0": {
+      "escalate": 66,
+      "reject": 32
+    },
+    "E1": {
+      "escalate": 58,
+      "reject": 40
+    },
+    "E2": {
+      "escalate": 65,
+      "reject": 33
+    },
+    "E3": {
+      "escalate": 81,
+      "reject": 17
+    },
+    "E4": {
+      "escalate": 74,
+      "reject": 24
+    },
+    "E5": {
+      "escalate": 71,
+      "reject": 27
+    },
+    "E6": {
+      "escalate": 86,
+      "reject": 12
+    }
+  },
+  "first_batch_full_gate": "passed",
+  "invalid_parse_count": 0,
+  "invalid_parse_count_by_evidence_level": {
+    "E0": 0,
+    "E1": 0,
+    "E2": 0,
+    "E3": 0,
+    "E4": 0,
+    "E5": 0,
+    "E6": 0
+  },
+  "mode": "executed",
+  "new_api_call_count": 686,
+  "parse_valid_count": 686,
+  "parse_valid_count_by_evidence_level": {
+    "E0": 98,
+    "E1": 98,
+    "E2": 98,
+    "E3": 98,
+    "E4": 98,
+    "E5": 98,
+    "E6": 98
+  },
+  "prompt_text_stored": false,
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "provider_route": "deepseek_official",
+  "provider_route_counts": {
+    "deepseek_official": 686
+  },
+  "raw_outputs_generated": true,
+  "raw_response_text_stored_in_tracked_summary": false,
+  "raw_responses_out": "outputs/evp8_phase1_deepseek_qwen_full/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+  "request_model_id": "deepseek-v4-pro",
+  "request_model_id_counts": {
+    "deepseek-v4-pro": 686
+  },
+  "resume_enabled": false,
+  "resumed_raw_record_count": 0,
+  "review_count": 686,
+  "review_count_by_evidence_level": {
+    "E0": 98,
+    "E1": 98,
+    "E2": 98,
+    "E3": 98,
+    "E4": 98,
+    "E5": 98,
+    "E6": 98
+  },
+  "run_gate": "passed",
+  "run_scope": "full",
+  "usage_cost_gate": "passed"
+}

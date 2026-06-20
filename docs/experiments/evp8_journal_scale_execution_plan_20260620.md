@@ -115,8 +115,19 @@ Current audit status:
   DeepSeek/Qwen 686-call full-run commands, expected raw/summary paths,
   USD/CNY cost fields, per-level aggregate requirements, and post-full-run
   audit/synthesis commands. It does not authorize API execution;
-- current next gate: user review of the G5 packet and separate explicit
-  authorization before any 686-call first-batch full run.
+- DeepSeek G6 first-batch full run: executed after explicit user authorization
+  on 2026-06-20. The run produced 686 raw records under ignored `outputs/` and
+  a tracked raw-output-free summary with 686/686 parse-valid records, passed
+  first-batch full gate, passed usage/cost gate, and estimated USD cost
+  `0.788808816`;
+- post-full-run audit: `partial_waiting_for_remaining_model`; DeepSeek passed,
+  Qwen remains `waiting_for_execution`, and the audit does not read raw
+  responses;
+- first-batch synthesis: `partial_waiting_for_qwen`; it may report only
+  DeepSeek-only descriptive per-level counts until Qwen passes the same frozen
+  packet set;
+- current next gate: decide whether to authorize Qwen 686-call first-batch full
+  run on the same EVP-8 v0.1 frozen inputs.
 
 This audit is intentionally no-API and does not authorize model calls, cohort
 expansion, or EVP-8 evidence-packet generation.
@@ -318,11 +329,13 @@ Gate G6: DeepSeek/Qwen first-batch full run.
 
 - Execute only after a separate user authorization for the first-batch full
   run, not as part of the smoke step.
-- Run DeepSeek first on the frozen 98 candidates x 7 evidence levels = 686
-  calls, then run the full-run audit before Qwen.
+- DeepSeek has been run first on the frozen 98 candidates x 7 evidence levels =
+  686 calls and passed the full-run audit.
 - Run Qwen only if the DeepSeek full-run audit passes parse/schema,
   usage/cost, model/provider-route, per-level aggregate, and raw-output
-  boundary checks.
+  boundary checks. That technical condition is now satisfied; Qwen still must
+  use the same frozen configuration and should be treated as the next explicit
+  execution decision.
 - Qwen must use the same EVP-8 v0.1 frozen packets, prompt, schema, parser,
   temperature, retry policy, and evaluator joins as DeepSeek.
 - After Qwen passes audit, produce a tracked two-model first-batch synthesis.

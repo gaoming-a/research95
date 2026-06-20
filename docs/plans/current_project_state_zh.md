@@ -11,9 +11,12 @@
 - 分支：`main`
 - 远端：`origin/main`
 - 当前 Git 状态：以 `git status --short --branch` 和
-  `git log -1 --oneline` 为准。2026-06-20 最近检查为本地 `main` clean，
-  `main...origin/main` 已同步。
+  `git log -1 --oneline` 为准。2026-06-20 本轮已产生 DeepSeek G6 结果收口
+  本地提交；若 `git status` 仍显示 ahead，待同步锚点至少包括
+  `72f1fb5 Checkpoint EVP-8 full-run raw responses` 和本轮结果收口提交。
 - 当前远端已同步锚点：
+  - `d79cb1e Authorize EVP-8 DeepSeek G6 full run`：远端已包含 DeepSeek G6
+    first-batch full-run 授权记录；
   - `95efbdc Record EVP-8 G6 authorization boundary`：远端已包含 G6 explicit
     authorization boundary re-check；
   - `422f956 Fix EVP-8 post-push state entry`：远端已包含 G5 packet 后的
@@ -23,11 +26,12 @@
     synthesis scaffolds 和相关计划文档；
   - `1d235ee Sync EVP-8 smoke packet guards`：历史 smoke guard-sync 锚点。
 - 当前本地语义锚点以 `git log -1 --oneline` 和本轮提交为准；语义上已完成
-  EVP-8 Phase 1 DeepSeek/Qwen smoke closure 和 G5 no-API first-batch
-  full-run packet readiness。
+  EVP-8 Phase 1 DeepSeek/Qwen smoke closure、G5 no-API first-batch full-run
+  packet readiness、DeepSeek G6 full-run checkpointing repair，以及 DeepSeek
+  686-call first-batch full-run passed audit。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
-  在连续同步失败时跳过 GitHub 并继续本地计划执行。本轮重试后
-  `95efbdc` 已成功 push，当前没有 GitHub 同步阻塞。
+  在连续同步失败时跳过 GitHub 并继续本地计划执行。当前仍需再次尝试 push
+  `72f1fb5` 及本轮结果收口提交。
 - `bugsinpy_cookiecutter_4` 已收束为 tracked blocker policy；完整 builder
   失败输出仍是本地诊断残留，不应提交。
 - ignored 本地交付物：
@@ -45,6 +49,8 @@
   - no-API evidence packets：392 E0/E2/E4/E6 records；
   - real DeepSeek G5 verifier run：仍限定在旧 20-task / 94-candidate /
     376-packet cohort；
+  - EVP-8 DeepSeek G6 first-batch full run：98 candidates x 7 evidence
+    levels = 686 records，686/686 parse-valid，raw-output-free summary 已生成；
   - raw-output-free tracked summaries and audits。
 - 当前 evidence-level 边界：EVP-7 是 E0/E2/E4/E6 four-anchor pilot，不是
   完整 E0-E6 adjacent-difference ladder；E1/E3/E5 不应补插进当前 artifacts，
@@ -122,15 +128,19 @@
    - G5 no-API first-batch full-run packet 已 ready：
      `python scripts\write_evp8_first_batch_full_run_packet.py --check`；
    - full-run check-only 已通过，覆盖 98 candidates x 7 levels = 686 packets；
-   - first-batch full-run audit/synthesis scaffold 当前均为
-     `waiting_for_execution`，不读取 raw outputs；
-   - 下一步不是自动 API，而是等待用户审阅 G5 packet 后再次明确授权
-     DeepSeek/Qwen 686-call first-batch full run；
+   - DeepSeek G6 first-batch full run 已执行并通过 audit：
+     `data/reviews/evp8_deepseek_deepseek-v4-pro_full_summary.json` 记录
+     686/686 parse-valid，estimated USD cost `0.788808816`，不含 prompt text
+     或 raw response text；
+   - first-batch full-run audit 当前为
+     `partial_waiting_for_remaining_model`，synthesis 当前为
+     `partial_waiting_for_qwen`，二者均不读取 raw outputs；
+   - 下一步不是自动 API，而是决定是否授权 Qwen 686-call first-batch full run；
    - 后续补跑 Kimi K2.6、Devstral 2、Gemini 2.5 Flash 必须使用同一 frozen
      packets/prompts/schema，不能边跑边改协议；
    - smoke 之后的后续顺序已经写入 canonical EVP-8 plan：
      two-model smoke synthesis -> 独立 no-API full-run packet -> DeepSeek
-     686-call full run -> DeepSeek audit -> Qwen 686-call full run -> Qwen
+     686-call full run -> DeepSeek audit passed -> Qwen 686-call full run -> Qwen
      audit -> two-model first-batch synthesis -> later-model execution packet
      -> Kimi/Devstral/Gemini 补跑 -> five-model synthesis -> paper/artifact
      freeze；

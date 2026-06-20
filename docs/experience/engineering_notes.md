@@ -2995,3 +2995,16 @@ This file starts fresh for the patch-verification project.
 - If a long run becomes unobservable and has not written any raw prefix, stop
   the orphan process before restarting after the checkpointing repair. Do not
   run the next model while the first model's full audit is absent.
+
+## 2026-06-20 EVP-8 tracked summaries under ignored data paths
+
+- The repository ignores broad `data/*` paths, so a newly generated
+  raw-output-free summary under `data/reviews/` may be invisible in normal
+  `git status`.
+- Before force-adding such a summary, run the corresponding audit and confirm
+  the tracked summary does not contain rendered prompt text or raw response
+  text. Raw JSONL responses and runner logs must remain only under ignored
+  `outputs/`.
+- For EVP-8 first-batch full runs, `data/reviews/*_full_summary.json` is the
+  commit-worthy audit surface; `outputs/evp8_phase1_deepseek_qwen_full/**`
+  remains local evidence and must not be staged.

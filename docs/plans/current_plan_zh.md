@@ -16363,3 +16363,78 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过；
 - `git diff --check` 通过，仅有 CRLF 工作区转换 warning。
+
+## 2026-06-20 EVP-8 G6 DeepSeek full-run result closure
+
+Inspect:
+
+- `git status --short --branch` 显示本地 `main` 相对 `origin/main` ahead 1，
+  未推送提交为 `72f1fb5 Checkpoint EVP-8 full-run raw responses`；
+- `origin/main` 当前锚点为 `d79cb1e Authorize EVP-8 DeepSeek G6 full run`；
+- DeepSeek full raw responses 已生成 686 行：
+  `outputs/evp8_phase1_deepseek_qwen_full/deepseek_deepseek-v4-pro/raw_responses.jsonl`；
+- DeepSeek tracked summary 已生成：
+  `data/reviews/evp8_deepseek_deepseek-v4-pro_full_summary.json`；
+- 该 summary 被 `.gitignore` 的 `data/*` 规则忽略，但内容不含 prompt text 或
+  raw response text，属于本轮应强制跟踪的 raw-output-free summary；
+- post-full-run audit/synthesis 已从 `waiting_for_execution` 推进到：
+  - audit: `partial_waiting_for_remaining_model`；
+  - synthesis: `partial_waiting_for_qwen`。
+
+Plan:
+
+1. 将 DeepSeek G6 full-run passed 状态写入 short-state、EVP-8 execution plan
+   和 INDEX；
+2. 将新的 DeepSeek raw-output-free summary 强制加入 Git，继续禁止提交
+   ignored raw JSONL、runner logs、`.env`、`configs/*.local.json` 和 `outputs/`；
+3. 重新运行 first-batch full audit、synthesis、local quality gate 和 diff check；
+4. 提交并尝试 push。若 GitHub network-level push 再次失败，按用户授权继续保留
+   本地提交并在最终状态中明确。
+
+Execute:
+
+- DeepSeek G6 full run 已完成：
+  - `review_count = 686`；
+  - `parse_valid_count = 686`；
+  - `invalid_parse_count = 0`；
+  - `new_api_call_count = 686`；
+  - `resume_enabled = false`；
+  - `run_gate = passed`；
+  - `first_batch_full_gate = passed`；
+  - `usage_cost_gate = passed`；
+  - `unknown_cost_record_count = 0`；
+  - `cost_summary.total_cost_usd = 0.788808816`；
+- DeepSeek per-level decision counts:
+  - `E0`: `{"escalate": 66, "reject": 32}`；
+  - `E1`: `{"escalate": 58, "reject": 40}`；
+  - `E2`: `{"escalate": 65, "reject": 33}`；
+  - `E3`: `{"escalate": 81, "reject": 17}`；
+  - `E4`: `{"escalate": 74, "reject": 24}`；
+  - `E5`: `{"escalate": 71, "reject": 27}`；
+  - `E6`: `{"escalate": 86, "reject": 12}`；
+- Qwen full run 尚未执行；当前 synthesis 只能写成 DeepSeek-only partial，
+  不能写成 two-model first-batch result。
+
+Decision:
+
+- DeepSeek G6 first-batch full run 的执行链路、parse/schema、usage/cost、
+  model/provider-route、per-level aggregate 和 raw-output boundary 均已通过；
+- 按 canonical G6 顺序，下一技术步骤是 Qwen first-batch full run；但本轮用户
+  授权已在计划中记录为 DeepSeek G6 full run 授权，因此 Qwen 仍应作为下一步
+  明确授权/决策点处理；
+- 不改变 EVP-8 v0.1 protocol、prompt、candidate set、schema、temperature、
+  retry policy 或 evaluator joins。
+
+Verify:
+
+- `python scripts\audit_evp8_first_batch_full_results.py --check` 通过：
+  - `audit_status = partial_waiting_for_remaining_model`；
+  - DeepSeek model audit `status = passed`；
+  - Qwen `status = waiting_for_execution`；
+  - `raw_outputs_read = false`；
+- `python scripts\summarize_evp8_first_batch_full_synthesis.py --check` 通过：
+  - `synthesis_status = partial_waiting_for_qwen`；
+  - `raw_outputs_read = false`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过，仅有 CRLF 工作区转换 warning。
