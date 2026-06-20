@@ -64,7 +64,7 @@
       "name": "post_smoke_audit_self_test",
       "parsed": {
         "api_call_attempted": false,
-        "case_count": 8,
+        "case_count": 9,
         "raw_outputs_generated": false,
         "raw_outputs_read": false,
         "self_test_status": "passed",
@@ -161,5 +161,5 @@
   "raw_outputs_generated": false,
   "raw_outputs_read": false,
   "rendered_prompt_text_read": false,
-  "run_utc": "2026-06-20T05:18:22.452331+00:00"
+  "run_utc": "2026-06-20T05:40:38.390332+00:00"
 }

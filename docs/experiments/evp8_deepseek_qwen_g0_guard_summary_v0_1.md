@@ -23,7 +23,7 @@
   - parsed: `{"api_call_attempted": false, "execution_authorized_by_packet": false, "packet_status": "ready", "raw_outputs_generated": false}`
 - `post_smoke_audit_self_test`: `true`
   - command: `python scripts\audit_evp8_smoke_results.py --self-test`
-  - parsed: `{"api_call_attempted": false, "case_count": 8, "raw_outputs_generated": false, "raw_outputs_read": false, "self_test_status": "passed", "tracked_outputs_written": false}`
+  - parsed: `{"api_call_attempted": false, "case_count": 9, "raw_outputs_generated": false, "raw_outputs_read": false, "self_test_status": "passed", "tracked_outputs_written": false}`
 - `post_smoke_audit_check`: `true`
   - command: `python scripts\audit_evp8_smoke_results.py --check`
   - parsed: `{"api_call_attempted": false, "audit_status": "waiting_for_execution", "raw_outputs_generated_by_audit": false, "raw_outputs_read": false, "rendered_prompt_text_read": false}`

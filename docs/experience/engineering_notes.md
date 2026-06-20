@@ -2851,3 +2851,16 @@ This file starts fresh for the patch-verification project.
   local semantic commit, the remote anchor, the G0 expected-output absence
   guard, and the exact manual authorization phrase for real smoke execution.
   Generic continuation still must not be treated as API authorization.
+
+## 2026-06-20 EVP-8 per-level smoke summary contract
+
+- If a later synthesis needs evidence-level behavior, the executed tracked
+  summary must store per-level aggregates before any real API run starts.
+  Otherwise the synthesis step would have to read ignored raw responses, which
+  breaks the raw-output-free audit boundary.
+- For EVP-8 DeepSeek/Qwen smoke, keep `review_count_by_evidence_level`,
+  `parse_valid_count_by_evidence_level`, `invalid_parse_count_by_evidence_level`,
+  and `decision_counts_by_evidence_level` in the tracked summary. The
+  post-smoke audit should require every `E0-E6` level to have five records in
+  the 5-candidate smoke subset and should self-test per-level drift without
+  calling APIs or creating raw outputs.

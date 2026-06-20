@@ -19,6 +19,8 @@ PACKET_PATH = REPO_ROOT / "data" / "protocols" / "evp8_deepseek_qwen_smoke_execu
 DEFAULT_JSON_OUT = REPO_ROOT / "data" / "protocols" / "evp8_deepseek_qwen_smoke_result_audit_v0_1.json"
 DEFAULT_MD_OUT = REPO_ROOT / "docs" / "experiments" / "evp8_deepseek_qwen_smoke_result_audit_v0_1.md"
 EXPECTED_REVIEW_COUNT = 35
+EXPECTED_LEVELS = ("E0", "E1", "E2", "E3", "E4", "E5", "E6")
+EXPECTED_REVIEW_COUNT_PER_LEVEL = 5
 
 
 def read_json(path: Path) -> dict[str, Any] | None:
@@ -80,6 +82,15 @@ def audit_summary(packet: dict[str, Any], command_record: dict[str, Any], summar
     request_counts = summary.get("request_model_id_counts") or {}
     actual_counts = summary.get("actual_model_id_counts") or {}
     provider_counts = summary.get("provider_route_counts") or {}
+    expected_level_counts = {level: EXPECTED_REVIEW_COUNT_PER_LEVEL for level in EXPECTED_LEVELS}
+    expected_invalid_level_counts = {level: 0 for level in EXPECTED_LEVELS}
+    review_counts_by_level = summary.get("review_count_by_evidence_level") or {}
+    parse_valid_counts_by_level = summary.get("parse_valid_count_by_evidence_level") or {}
+    invalid_parse_counts_by_level = summary.get("invalid_parse_count_by_evidence_level") or {}
+    decision_counts_by_level = summary.get("decision_counts_by_evidence_level") or {}
+    decision_count_totals_by_level = {
+        level: _sum_count_values(decision_counts_by_level.get(level) or {}) for level in EXPECTED_LEVELS
+    }
     checks = [
         check("mode_executed", summary.get("mode") == "executed", summary.get("mode")),
         check("api_call_attempted_true_for_executed_summary", summary.get("api_call_attempted") is True, summary.get("api_call_attempted")),
@@ -95,6 +106,27 @@ def audit_summary(packet: dict[str, Any], command_record: dict[str, Any], summar
         check("review_count", summary.get("review_count") == EXPECTED_REVIEW_COUNT, summary.get("review_count")),
         check("parse_valid_count", summary.get("parse_valid_count") == EXPECTED_REVIEW_COUNT, summary.get("parse_valid_count")),
         check("invalid_parse_count", summary.get("invalid_parse_count") == 0, summary.get("invalid_parse_count")),
+        check("review_count_by_evidence_level", review_counts_by_level == expected_level_counts, review_counts_by_level),
+        check(
+            "parse_valid_count_by_evidence_level",
+            parse_valid_counts_by_level == expected_level_counts,
+            parse_valid_counts_by_level,
+        ),
+        check(
+            "invalid_parse_count_by_evidence_level",
+            invalid_parse_counts_by_level == expected_invalid_level_counts,
+            invalid_parse_counts_by_level,
+        ),
+        check(
+            "decision_counts_by_evidence_level_levels",
+            sorted(decision_counts_by_level) == list(EXPECTED_LEVELS),
+            sorted(decision_counts_by_level),
+        ),
+        check(
+            "decision_counts_by_evidence_level_totals",
+            decision_count_totals_by_level == expected_level_counts,
+            decision_count_totals_by_level,
+        ),
         check("smoke_gate", summary.get("smoke_gate") == "passed", summary.get("smoke_gate")),
         check("usage_cost_gate", summary.get("usage_cost_gate") == "passed", summary.get("usage_cost_gate")),
         check("configured_model_id", summary.get("configured_model_id") == model_id, summary.get("configured_model_id")),
@@ -112,8 +144,19 @@ def audit_summary(packet: dict[str, Any], command_record: dict[str, Any], summar
         "raw_response_path": raw_path,
         "summary_present": True,
         "status": "passed" if all(item["passed"] for item in checks) else "failed",
+        "decision_counts_by_evidence_level": decision_counts_by_level,
         "checks": checks,
     }
+
+
+def _sum_count_values(counts: dict[str, Any]) -> int:
+    total = 0
+    for value in counts.values():
+        try:
+            total += int(value)
+        except (TypeError, ValueError):
+            continue
+    return total
 
 
 def build_audit(packet_path: Path) -> dict[str, Any]:
@@ -246,6 +289,10 @@ def executed_summary(model_id: str, raw_responses_out: str, **overrides: Any) ->
         "review_count": EXPECTED_REVIEW_COUNT,
         "parse_valid_count": EXPECTED_REVIEW_COUNT,
         "invalid_parse_count": 0,
+        "review_count_by_evidence_level": _expected_level_counts(EXPECTED_REVIEW_COUNT_PER_LEVEL),
+        "parse_valid_count_by_evidence_level": _expected_level_counts(EXPECTED_REVIEW_COUNT_PER_LEVEL),
+        "invalid_parse_count_by_evidence_level": _expected_level_counts(0),
+        "decision_counts_by_evidence_level": _default_decision_counts_by_level("escalate"),
         "smoke_gate": "passed",
         "usage_cost_gate": "passed",
         "configured_model_id": model_id,
@@ -264,6 +311,14 @@ def executed_summary(model_id: str, raw_responses_out: str, **overrides: Any) ->
     }
     summary.update(overrides)
     return summary
+
+
+def _expected_level_counts(count: int) -> dict[str, int]:
+    return {level: count for level in EXPECTED_LEVELS}
+
+
+def _default_decision_counts_by_level(decision: str) -> dict[str, dict[str, int]]:
+    return {level: {decision: EXPECTED_REVIEW_COUNT_PER_LEVEL} for level in EXPECTED_LEVELS}
 
 
 def run_case(
@@ -336,6 +391,13 @@ def run_self_test() -> dict[str, Any]:
             deepseek_raw_path,
             request_model_id_counts={"unexpected-model": EXPECTED_REVIEW_COUNT},
         )
+        per_level_drift = executed_summary(
+            "deepseek/deepseek-v4-pro",
+            deepseek_raw_path,
+            review_count_by_evidence_level={
+                "E0": EXPECTED_REVIEW_COUNT,
+            },
+        )
         cases = [
             run_case(
                 root / "waiting_for_execution",
@@ -389,6 +451,13 @@ def run_self_test() -> dict[str, Any]:
             run_case(
                 root / "deepseek_request_model_drift",
                 deepseek_summary=request_model_drift,
+                qwen_summary=None,
+                expected_status="failed",
+                assert_check_passes=False,
+            ),
+            run_case(
+                root / "deepseek_per_level_aggregate_drift",
+                deepseek_summary=per_level_drift,
                 qwen_summary=None,
                 expected_status="failed",
                 assert_check_passes=False,

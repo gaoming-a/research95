@@ -1032,8 +1032,9 @@
   smoke runner. It supports check-only without API calls and refuses real smoke
   execution unless an ignored local config, strict preflight, explicit
   `--execute`, and a configured `--model-id` are supplied. Executed summaries
-  keep raw-output-free request/actual model and provider-route aggregate counts
-  for later audit.
+  keep raw-output-free per-evidence-level decision/count aggregates plus
+  request/actual model and provider-route aggregate counts for later audit and
+  G4 two-model smoke synthesis.
 - `../scripts/write_evp8_smoke_execution_packet.py`: writes the no-API EVP-8
   DeepSeek/Qwen smoke execution packet and Markdown companion from tracked
   protocol/preflight/check-only summaries.
@@ -1046,7 +1047,7 @@
   smoke summaries without reading raw outputs; currently reports
   `waiting_for_execution` until real smoke summaries exist and supports a
   no-API `--self-test` for waiting, partial, passed, order-failed, and
-  parse/cost/model-drift-failed states.
+  parse/cost/model/per-level-aggregate-drift-failed states.
 - `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict

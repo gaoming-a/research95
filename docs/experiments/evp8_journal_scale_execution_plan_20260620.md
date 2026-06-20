@@ -99,7 +99,9 @@ Current audit status:
   DeepSeek-then-Qwen execute commands; it explicitly does not authorize API
   calls by itself;
 - post-smoke audit scaffold: currently `waiting_for_execution`; after real
-  smoke, it validates tracked summaries without reading raw responses;
+  smoke, it validates tracked summaries without reading raw responses,
+  including per-evidence-level decision/count aggregates needed by G4
+  synthesis;
 - API readiness: waiting for explicit user smoke execution command;
 - current blockers before smoke: no tracked Phase 0 or local preflight blockers.
 
@@ -217,6 +219,11 @@ Gate G2: DeepSeek smoke audit.
   - summary `request_model_id_counts`, `provider_route_counts`, and
     `actual_model_id_counts` support model/provider drift checks without
     opening raw responses;
+  - summary `review_count_by_evidence_level`,
+    `parse_valid_count_by_evidence_level`,
+    `invalid_parse_count_by_evidence_level`, and
+    `decision_counts_by_evidence_level` cover every `E0-E6` level without
+    reading raw responses;
   - `review_count=35`, `parse_valid_count=35`, `invalid_parse_count=0`;
   - raw response paths match the execution packet and stay under ignored
     `outputs/`;
@@ -246,7 +253,8 @@ Gate G4: two-model smoke synthesis.
   notes, and index entries as needed.
 - Allowed claim:
   DeepSeek/Qwen smoke execution readiness and parse/cost/boundary status for
-  the frozen EVP-8 v0.1 smoke subset.
+  the frozen EVP-8 v0.1 smoke subset, plus descriptive evidence-level
+  decision patterns computed only from tracked per-level summary aggregates.
 - Forbidden claim:
   final five-model journal result, full-cohort generalization, LLM superiority
   over deterministic baselines, or evidence-level effectiveness beyond the

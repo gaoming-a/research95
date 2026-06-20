@@ -528,6 +528,8 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
                 "parse_status": "valid" if invalid_reason is None else "invalid",
                 "invalid_reason": invalid_reason,
                 "decision": parsed.get("decision") if parsed else None,
+                "risk_flags": parsed.get("risk_flags") if parsed else [],
+                "human_review_needed": parsed.get("human_review_needed") if parsed else None,
                 "request_model_id": model_config["request_model_id"],
                 "configured_model_id": model_config["model_id"],
                 "actual_model_id": response.get("model"),
@@ -557,6 +559,14 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         "parse_valid_count": parse_valid_count,
         "invalid_parse_count": len(parsed_records) - parse_valid_count,
         "decision_counts": _counts(record["decision"] for record in parsed_records),
+        "review_count_by_evidence_level": _level_counts(parsed_records),
+        "parse_valid_count_by_evidence_level": _level_counts(
+            record for record in parsed_records if record["parse_status"] == "valid"
+        ),
+        "invalid_parse_count_by_evidence_level": _level_counts(
+            record for record in parsed_records if record["parse_status"] != "valid"
+        ),
+        "decision_counts_by_evidence_level": _counts_by_evidence_level(parsed_records, "decision"),
         "request_model_id_counts": _counts(record["request_model_id"] for record in parsed_records),
         "configured_model_id_counts": _counts(record["configured_model_id"] for record in parsed_records),
         "actual_model_id_counts": _counts(record["actual_model_id"] or "missing" for record in parsed_records),
@@ -745,6 +755,25 @@ def _counts(values: Any) -> dict[str, int]:
         key = str(value)
         result[key] = result.get(key, 0) + 1
     return dict(sorted(result.items()))
+
+
+def _level_counts(records: Any) -> dict[str, int]:
+    result = {level: 0 for level in MODEL_VISIBLE_LEVELS}
+    for record in records:
+        level = str(record["evidence_level"])
+        result[level] = result.get(level, 0) + 1
+    return dict(sorted(result.items()))
+
+
+def _counts_by_evidence_level(records: list[dict[str, Any]], field: str) -> dict[str, dict[str, int]]:
+    result: dict[str, dict[str, int]] = {level: {} for level in MODEL_VISIBLE_LEVELS}
+    for record in records:
+        level = str(record["evidence_level"])
+        value = record.get(field)
+        key = str(value) if value is not None else "missing"
+        bucket = result.setdefault(level, {})
+        bucket[key] = bucket.get(key, 0) + 1
+    return {level: dict(sorted(counts.items())) for level, counts in sorted(result.items())}
 
 
 def parse_args() -> argparse.Namespace:

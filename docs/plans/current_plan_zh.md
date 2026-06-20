@@ -15387,3 +15387,91 @@ Acceptance:
   `按当前计划执行 EVP-8 Phase 1 DeepSeek/Qwen smoke`；
 - no-API G0 guard 仍通过，且 `expected_outputs_exist=false`；
 - 工作区不 staged `.env`、`configs/*.local.json`、`outputs/`、`artifacts/`。
+
+## 2026-06-20 EVP-8 smoke per-level summary contract
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main [ahead 2]`；
+- 当前继续指令不是明确 EVP-8 Phase 1 smoke/API 授权，本轮不得执行
+  `--execute`；
+- `scripts/run_evp8_deepseek_qwen_smoke.py` 的 executed summary 已记录整体
+  `decision_counts`、request/configured/actual model aggregates 和 provider
+  route aggregates；
+- 但 G4 two-model smoke synthesis 允许的 claim 包含 evidence-level decision
+  pattern，而当前 tracked summary 尚未记录 `E0-E6` per-level decision/count
+  aggregates；
+- 如果不在 tracked raw-output-free summary 中补齐 per-level aggregates，未来
+  smoke 后只能读取 ignored raw responses 才能做 evidence-level pattern，这违反
+  post-smoke audit 不读取 raw outputs 的边界。
+
+Plan:
+
+1. 扩展 smoke runner executed summary，加入 raw-output-free per-level aggregates：
+   - `review_count_by_evidence_level`；
+   - `parse_valid_count_by_evidence_level`；
+   - `invalid_parse_count_by_evidence_level`；
+   - `decision_counts_by_evidence_level`；
+2. 扩展 post-smoke audit：
+   - 检查每个 `E0-E6` 均有 5 条 review；
+   - 检查每个 `E0-E6` 均有 5 条 parse-valid；
+   - 检查 per-level decision counts 总和与每层 review count 一致；
+3. 扩展 `--self-test` 覆盖缺失或漂移的 per-level aggregate failure case；
+4. 同步 execution plan、short-state、INDEX 和 engineering notes；
+5. 运行 no-API py_compile、self-test、G0 guard、local quality gate 和 diff check；
+6. 不调用 API，不读取 raw outputs，不生成 raw outputs。
+
+Acceptance:
+
+- `python scripts\audit_evp8_smoke_results.py --self-test` 必须覆盖 per-level
+  aggregate drift 并通过；
+- `python scripts\check_evp8_deepseek_qwen_g0.py --check --json-out outputs\evp8_g0_guard_latest.json --md-out outputs\evp8_g0_guard_latest.md`
+  必须通过，且 `api_call_attempted=false`；
+- docs 明确未来 G4 synthesis 不需要读取 ignored raw outputs。
+
+Execute:
+
+- 修改 `scripts/run_evp8_deepseek_qwen_smoke.py`：
+  - parsed records 增加 raw-output-free `risk_flags` 和
+    `human_review_needed`；
+  - executed tracked summary 增加
+    `review_count_by_evidence_level`、
+    `parse_valid_count_by_evidence_level`、
+    `invalid_parse_count_by_evidence_level`、
+    `decision_counts_by_evidence_level`；
+  - 新增 helper 生成完整 `E0-E6` level counts，避免缺失层被误当作 0 之外的
+    状态；
+- 修改 `scripts/audit_evp8_smoke_results.py`：
+  - 检查每个 `E0-E6` 都有 5 条 review 和 5 条 parse-valid；
+  - 检查每个 `E0-E6` 的 invalid parse count 为 0；
+  - 检查 `decision_counts_by_evidence_level` 覆盖所有 `E0-E6`，且每层总数为
+    5；
+  - `--self-test` 新增 `deepseek_per_level_aggregate_drift` 失败用例；
+- 同步 EVP-8 execution plan、short-state、INDEX 和 engineering notes，明确
+  G4 synthesis 使用 tracked per-level aggregates，不读取 ignored raw outputs。
+
+Verify:
+
+- `python -m py_compile scripts\run_evp8_deepseek_qwen_smoke.py scripts\audit_evp8_smoke_results.py`
+  通过；
+- `python scripts\audit_evp8_smoke_results.py --self-test` 通过：
+  - `case_count = 9`；
+  - 新增 `deepseek_per_level_aggregate_drift => failed`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_read = false`；
+  - `raw_outputs_generated = false`；
+  - `tracked_outputs_written = false`；
+- `python scripts\check_evp8_deepseek_qwen_g0.py --check --json-out outputs\evp8_g0_guard_latest.json --md-out outputs\evp8_g0_guard_latest.md`
+  通过：
+  - `guard_status = passed`；
+  - `expected_outputs_exist = false`；
+  - `post_smoke_observed_status = waiting_for_execution`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_read = false`；
+  - `raw_outputs_generated = false`；
+- `python scripts\check_evp8_deepseek_qwen_g0.py --check` 通过，并刷新 tracked
+  G0 summary artifacts，使 post-smoke audit self-test `case_count = 9`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过，仅有 CRLF 工作区转换 warning；
+- 本轮未调用模型 API，未读取 raw outputs，未生成 raw outputs。
