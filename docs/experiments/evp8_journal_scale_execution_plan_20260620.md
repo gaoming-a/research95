@@ -163,6 +163,103 @@ Immediate next execution order:
 5. Stop after the two smoke runs and audit their raw-output-free summaries; do
    not start the 686-call full runs without a separate gate.
 
+### Immediate DeepSeek/Qwen Follow-up Plan
+
+This is the next executable sequence once the user explicitly authorizes real
+EVP-8 Phase 1 smoke/API execution. A generic "continue" is not enough; the
+authorization must clearly refer to executing the smoke/API step under this
+plan.
+
+Gate G0: no-API revalidation immediately before any model call.
+
+- Run:
+  - `python scripts\audit_evp8_protocol_spec.py --check`
+  - `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
+  - `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
+  - `python scripts\write_evp8_smoke_execution_packet.py --check`
+  - `python scripts\audit_evp8_smoke_results.py --check`
+  - `git status --short --branch --ignored configs\evp8_deepseek_qwen.local.json`
+- Acceptance:
+  - protocol audit, strict preflight, smoke check-only, execution packet, and
+    current post-smoke audit all pass;
+  - no `.env`, `configs/*.local.json`, `outputs/`, `artifacts/`, raw responses,
+    or rendered prompt text are staged;
+  - current post-smoke audit remains `waiting_for_execution` before the first
+    model call.
+- If any guard fails, stop and diagnose before API execution.
+
+Gate G1: DeepSeek V4 Pro smoke.
+
+- Run only after G0 passes:
+  `python scripts\run_evp8_deepseek_qwen_smoke.py --execute --config configs\evp8_deepseek_qwen.local.json --model-id deepseek/deepseek-v4-pro`
+- Scope:
+  project-frequency-stratified 5 candidates x 7 evidence levels = 35 planned
+  calls.
+- Expected boundary:
+  raw responses only under ignored `outputs/`; tracked output is the
+  raw-output-free smoke summary.
+- Stop if parse/schema validity, usage/cost observability, returned model id,
+  raw-output boundary, or provider route checks fail.
+
+Gate G2: DeepSeek smoke audit.
+
+- Run:
+  `python scripts\audit_evp8_smoke_results.py --check`
+- Acceptance:
+  - DeepSeek summary exists and passes audit;
+  - `review_count=35`, `parse_valid_count=35`, `invalid_parse_count=0`;
+  - raw response paths stay under ignored `outputs/`;
+  - tracked summary contains no API key, local config value, rendered prompt
+    text, or raw response body.
+- If DeepSeek does not pass, do not run Qwen. Diagnose first and record the
+  blocker.
+
+Gate G3: Qwen3.7 Max smoke.
+
+- Run only after G2 passes:
+  `python scripts\run_evp8_deepseek_qwen_smoke.py --execute --config configs\evp8_deepseek_qwen.local.json --model-id qwen/qwen3.7-max`
+- Scope:
+  the exact same 5 candidates x 7 evidence levels and same frozen prompt/schema
+  as DeepSeek.
+- Stop if parse/schema validity, usage/cost observability, returned model id,
+  raw-output boundary, or provider route checks fail.
+- Do not invent Qwen USD cost. If token usage is present but a controlled USD
+  cost source is not available, mark the cost gate blocked and diagnose rather
+  than reporting unsupported cost estimates.
+
+Gate G4: two-model smoke synthesis.
+
+- Run:
+  `python scripts\audit_evp8_smoke_results.py --check`
+- Update raw-output-free summaries, audit notes, current plan, engineering
+  notes, and index entries as needed.
+- Allowed claim:
+  DeepSeek/Qwen smoke execution readiness and parse/cost/boundary status for
+  the frozen EVP-8 v0.1 smoke subset.
+- Forbidden claim:
+  final five-model journal result, full-cohort generalization, LLM superiority
+  over deterministic baselines, or evidence-level effectiveness beyond the
+  smoke subset.
+
+Gate G5: post-smoke decision.
+
+- If both smoke audits pass, prepare a separate no-API full-run packet for the
+  first-batch DeepSeek/Qwen 686-call runs.
+- Do not start the 686-call full runs in the same step unless the user gives a
+  separate full-run authorization after reviewing the smoke audit.
+- If a protocol, prompt, schema, candidate-set, or evaluator-join bug is found
+  after any model call, bump the EVP-8 protocol version and rerun affected
+  models from scratch; do not mix v0.1 and repaired results as one experiment.
+
+Gate G6: later model completion.
+
+- Add Kimi K2.6, Devstral 2, and Gemini 2.5 Flash only after the DeepSeek/Qwen
+  first batch has a stable full-run boundary.
+- They must use the same frozen packets, prompt version, schema, evaluator
+  joins, temperature, retry policy, and output parser.
+- If using OpenRouter, require `OPENROUTER_API_KEY`, pin exact model IDs, and
+  record actual returned provider/model for every review record.
+
 ### Phase 1: DeepSeek + Qwen First Batch
 
 After Phase 0 passes and the user explicitly says to execute:

@@ -14778,3 +14778,79 @@ Verify:
   - `requires_explicit_user_command = true`；
   - DeepSeek command is first, Qwen command is gated after DeepSeek；
 - 下一步仍是等待用户明确执行真实 DeepSeek/Qwen smoke，不自动调用 API。
+
+## 2026-06-20 EVP-8 DeepSeek/Qwen 后续执行计划写入
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main [ahead 12]`；
+- 当前用户要求是“写入后续计划”，不是立即执行实验或调用 API；
+- `docs/experiments/evp8_journal_scale_execution_plan_20260620.md` 已记录
+  EVP-8 v0.1 protocol、DeepSeek/Qwen smoke runner、execution packet 和
+  post-smoke audit scaffold；
+- 真实 EVP-8 smoke 仍未执行，当前 post-smoke audit 预期状态仍是
+  `waiting_for_execution`。
+
+Plan:
+
+1. 将后续计划写成 gate-based 执行序列，避免“一会儿继续”时误把普通继续当作
+   API 授权；
+2. 明确 G0 no-API revalidation、G1 DeepSeek smoke、G2 DeepSeek audit、G3
+   Qwen smoke、G4 two-model smoke synthesis、G5 full-run decision、G6 later
+   model completion；
+3. 明确 DeepSeek 先于 Qwen，Qwen 必须等待 DeepSeek smoke audit 通过；
+4. 明确 686-call full run 需要 smoke audit 后的单独授权；
+5. 明确不发明 Qwen USD cost，不混合 protocol version，不把 two-model smoke
+   写成 final five-model journal result；
+6. 同步执行计划和索引入口，不生成 raw outputs，不读取 local config value，不调用
+   API。
+
+Acceptance:
+
+- 后续计划必须给出可执行命令、验收条件、stop gates 和禁止 claim；
+- 计划本身不得授权 API；
+- 本轮不新增实验数据，不修改 prompt/schema/candidate set；
+- `docs/experiments/evp8_journal_scale_execution_plan_20260620.md` 成为后续
+  执行的 canonical gate 入口。
+
+Execute:
+
+- 在 `docs/experiments/evp8_journal_scale_execution_plan_20260620.md` 中新增
+  `Immediate DeepSeek/Qwen Follow-up Plan`；
+- 该计划要求：
+  - G0 先重新运行 no-API guards；
+  - G1 执行 `deepseek/deepseek-v4-pro` 35-call smoke；
+  - G2 审计 DeepSeek summary，通过后才允许 Qwen；
+  - G3 执行 `qwen/qwen3.7-max` 同一 frozen subset smoke；
+  - G4 只做 two-model smoke synthesis，不写 final journal claim；
+  - G5 后才决定是否准备 first-batch 686-call full-run packet；
+  - G6 后续 Kimi/Devstral/Gemini 必须复用同一 frozen inputs；
+- 本轮不调用 API，不生成 raw outputs。
+
+Verify:
+
+- 初次 patch 命中了非唯一的“下一步仍是等待用户明确执行真实 DeepSeek/Qwen
+  smoke”锚点，新增段落一度插入到较早的 post-smoke 段前；
+- 已按 long-plan patch anchor boundary 修复，将本节移动到当前执行日志末尾；
+- `rg -n "EVP-8 DeepSeek/Qwen 后续执行计划写入|Immediate DeepSeek/Qwen Follow-up Plan"`
+  确认：
+  - execution plan 中新增 `Immediate DeepSeek/Qwen Follow-up Plan`；
+  - current plan 中本节只出现一次且位于当前日志末尾；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过，
+  `api_call_attempted=false`；
+- `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
+  通过，key value 未打印，API 未调用；
+- `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
+  通过：
+  - `packet_count = 35`；
+  - `prompt_hashes_unique_count = 35`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_generated = false`；
+- `python scripts\write_evp8_smoke_execution_packet.py --check` 通过，
+  `packet_status=ready` 且 `execution_authorized_by_packet=false`；
+- `python scripts\audit_evp8_smoke_results.py --check` 通过，
+  `audit_status=waiting_for_execution`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过，仅提示 CRLF 工作区转换 warning；
+- 本轮未调用模型 API，未生成 raw outputs，未读取 local config value。
