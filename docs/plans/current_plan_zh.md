@@ -15634,3 +15634,144 @@ Verify:
   通过；
 - `git diff --check` 通过，仅有 CRLF 工作区转换 warning；
 - 本轮仍未调用模型 API，未读取 raw outputs，未生成 raw outputs。
+
+## 2026-06-20 EVP-8 staged follow-up plan write
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main`；
+- 最新提交为 `1d235ee Sync EVP-8 smoke packet guards`；
+- 用户要求“写入后续计划，一会儿会让按计划执行”，因此本轮只写计划，不执行
+  `--execute`，不调用 API，不读取 raw outputs；
+- 当前 EVP-8 已具备 Phase 1 DeepSeek/Qwen smoke 前的 no-API readiness：
+  G0 guard、execution packet、post-smoke audit scaffold 和 G4 smoke synthesis
+  scaffold 均已存在；
+- 现有计划已经覆盖 smoke 的 G0-G4 和 smoke 后的 G5 决策，但需要把 smoke 之后
+  如何进入 first-batch full run、later-model completion 和 paper/artifact freeze
+  写成更明确的 staged gates。
+
+Plan:
+
+1. 在 canonical EVP-8 execution plan 中补充 smoke 之后的 G5-G9 后续 gate：
+   - no-API first-batch full-run packet；
+   - DeepSeek/Qwen first-batch 686-call full run；
+   - later-model completion packet；
+   - five-model journal synthesis；
+   - paper writing and artifact freeze；
+2. 在 `docs/plans/final_paper_roadmap_zh.md` 中同步期刊版路线的后续执行顺序；
+3. 在 `docs/plans/current_project_state_zh.md` 中刷新当前 Git 同步锚点，并把后续
+   执行顺序写入短入口；
+4. 同步 `docs/INDEX.md` 和 `docs/experience/engineering_notes.md`，记录 staged
+   execution boundary；
+5. 运行 no-API 文档/计划验证、G0 guard、local quality gate 和 diff check；
+6. 只提交本轮文档计划更新并尝试同步 GitHub。
+
+Acceptance:
+
+- 后续计划必须明确区分 smoke、first-batch full run、later-model completion、
+  five-model synthesis 和 paper/artifact freeze；
+- 不得把用户稍后的 smoke 执行授权自动扩展为 686-call full run 或五模型补跑；
+- 后续模型必须使用同一 frozen EVP-8 packets、prompt、schema、parser、
+  temperature、retry policy 和 evaluator joins；
+- 若 DeepSeek/Qwen 后发现协议问题，必须 bump protocol version 并从头重跑受影响
+  模型；
+- 本轮不调用 API、不读取 raw outputs、不生成 raw outputs。
+
+Execute:
+
+- 更新 `docs/experiments/evp8_journal_scale_execution_plan_20260620.md`：
+  - 将 G5 明确为 post-smoke decision and first-batch full-run packet；
+  - 新增 G6 DeepSeek/Qwen first-batch full run；
+  - 新增 G7 later model completion packet；
+  - 新增 G8 five-model journal synthesis；
+  - 新增 G9 paper writing and artifact freeze；
+- 更新 `docs/plans/final_paper_roadmap_zh.md`，同步期刊版后续执行顺序；
+- 更新 `docs/plans/current_project_state_zh.md`，刷新当前同步锚点并写入 staged
+  follow-up sequence；
+- 更新 `docs/INDEX.md`，把 EVP-8 计划索引从 immediate G0-G6 扩展为
+  G0-G4 smoke gates 与 G5-G9 staged path；
+- 更新 `docs/experience/engineering_notes.md`，记录 staged execution boundary；
+- 运行 G0 guard，刷新 tracked G0 summary 的 `run_utc`，未改变 no-API 边界。
+
+Verify:
+
+- `git diff --check` 通过，仅有 CRLF 工作区转换 warning；
+- `python scripts\check_evp8_deepseek_qwen_g0.py --check` 通过：
+  - `guard_status = passed`；
+  - `expected_outputs_exist = false`；
+  - `post_smoke_observed_status = waiting_for_execution`；
+  - `smoke_synthesis_check.synthesis_status = waiting_for_execution`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_read = false`；
+  - `raw_outputs_generated = false`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- 本轮未调用模型 API，未读取 raw outputs，未生成 raw outputs。
+
+Commit And Sync:
+
+- 已提交本轮 staged follow-up plan，初始本地 hash 为
+  `27e2d21 Plan EVP-8 staged follow-up gates`；若后续将同步状态修正 amend 进
+  该未推送提交，最终 hash 以 `git log -1 --oneline` 为准；
+- `git push origin main` 连续两次失败在 GitHub network-level connection：
+  - `Recv failure: Connection was reset`；
+  - `Could not connect to server`；
+- 按用户既定规则，该 GitHub 网络同步失败不阻塞后续本地计划执行；
+- 下一轮若仍无明确 smoke/API 授权，只能继续 no-API 审计、文档漂移修复或同步重试。
+
+## 2026-06-20 EVP-8 Git sync drift repair after staged follow-up commit
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main [ahead 1]`；
+- 最新本地提交为 `27e2d21 Plan EVP-8 staged follow-up gates`；
+- 远端仍停在 `1d235ee Sync EVP-8 smoke packet guards`；
+- 用户当前续跑指令不是明确 EVP-8 Phase 1 smoke/API 授权，本轮仍不得执行
+  `--execute`；
+- `docs/plans/current_project_state_zh.md` 的同步状态段仍可能被读成最近检查已
+  完全同步，需要修正为“以命令为准，当前有未推送 plan-only 提交”。
+
+Plan:
+
+1. 修正 `docs/plans/current_project_state_zh.md` 的当前同步状态；
+2. 将本次漂移修复记录写入 `docs/plans/current_plan_zh.md`；
+3. 运行 no-API G0 guard、local quality gate 和 diff check；
+4. 因上一提交尚未推送，将本轮文档修正 amend 进 `27e2d21`，避免制造新的
+   push-failure-only 提交；
+5. 再次尝试 GitHub push；若仍为 network-level failure，则按用户规则继续本地计划。
+
+Acceptance:
+
+- 短入口明确当前远端锚点、本地未推送 plan-only 锚点和 push network failure；
+- 本轮不调用 API，不读取 raw outputs，不生成 raw outputs；
+- amend 后仍只有一个本地 plan-only ahead 提交。
+
+Execute:
+
+- 修正 `docs/plans/current_project_state_zh.md`：
+  - 当前状态明确为本地 clean 且存在未推送 plan-only 提交；
+  - 远端已同步锚点仍为 `1d235ee Sync EVP-8 smoke packet guards`；
+  - 本地未推送语义锚点改为以 `git log -1 --oneline` 为准，避免 amend 后
+    hash 漂移；
+  - GitHub sync failure 明确为 network-level，不代表实验或工作区未完成；
+- 修正 `docs/plans/current_plan_zh.md`：
+  - 记录 `27e2d21` 是 staged follow-up plan 的初始本地 hash；
+  - 记录本轮将同步状态修正 amend 进该未推送提交，最终 hash 以 `git log -1`
+    为准；
+- 重新运行 no-API G0 guard，刷新 tracked G0 summary 的 ignored-boundary status
+  和 `run_utc`。
+
+Verify:
+
+- `git diff --check` 通过，仅有 CRLF 工作区转换 warning；
+- `python scripts\check_evp8_deepseek_qwen_g0.py --check` 通过：
+  - `guard_status = passed`；
+  - `expected_outputs_exist = false`；
+  - `post_smoke_observed_status = waiting_for_execution`；
+  - `smoke_synthesis_check.synthesis_status = waiting_for_execution`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_read = false`；
+  - `raw_outputs_generated = false`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- 本轮仍未调用模型 API，未读取 raw outputs，未生成 raw outputs。

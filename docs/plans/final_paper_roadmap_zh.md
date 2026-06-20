@@ -1123,6 +1123,22 @@ guard commands 和 DeepSeek-then-Qwen execute commands，但
 6. 如果第一批运行后发现协议问题，必须 bump protocol version 并从头重跑受影响
    模型，不能把新旧协议结果混作同一 full-ladder 结论。
 
+后续执行顺序：
+
+1. 先等待用户明确授权 EVP-8 Phase 1 DeepSeek/Qwen smoke；
+2. 运行 G0 no-API revalidation，然后按 DeepSeek-first、Qwen-after-DeepSeek
+   的顺序执行 5-candidate x 7-level smoke；
+3. smoke 通过后只生成 two-model smoke synthesis，不直接启动 686-call full
+   run；
+4. 若用户再明确授权 first-batch full run，先生成独立 no-API full-run packet，
+   再按 DeepSeek full run -> DeepSeek audit -> Qwen full run -> Qwen audit ->
+   two-model first-batch synthesis 执行；
+5. Kimi K2.6、Devstral 2 和 Gemini 2.5 Flash 只能在 DeepSeek/Qwen first
+   batch 边界稳定后补跑，且必须使用同一 frozen EVP-8 packets、prompt、
+   schema、parser、temperature、retry policy 和 evaluator joins；
+6. 五模型 synthesis 完成前，不写 final journal conclusion；若模型趋势不一致，
+   写成 robustness boundary，而不是筛选性报告。
+
 EVP-8 当前计划模型集：
 
 | Role | Model id |

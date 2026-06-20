@@ -10,19 +10,20 @@
 
 - 分支：`main`
 - 远端：`origin/main`
-- 当前 Git 状态：以 `git status --short --branch` 为准。2026-06-20 最近检查为
-  本地 `main` clean 且 `main...origin/main [ahead 1]`。
-- 当前未同步本地语义锚点：
-  - `7426556 Plan EVP-8 DeepSeek Qwen smoke execution`：记录 EVP-8 Phase 1
-    DeepSeek/Qwen smoke 的后续执行计划、授权边界、G0 重跑顺序、DeepSeek-first
-    gate、Qwen-after-DeepSeek gate 和 stop conditions。
-- 当前远端锚点：
-  - `d94437c Check EVP-8 G0 expected output absence`：远端已包含 G0
-    expected-output absence guard；本地只剩 `7426556` 尚未推送成功。
-- GitHub sync 边界：最近多次 `git push origin main` 仍失败在 GitHub
-  network-level connection。用户已允许在连续同步失败时跳过 GitHub 并继续本地
-  计划执行；因此本地 `main` ahead `origin/main` 是已知同步状态，不应解读为
-  未完成实验或未提交工作。
+- 当前 Git 状态：以 `git status --short --branch` 和
+  `git log -1 --oneline` 为准。2026-06-20 最近检查为本地 `main` clean，
+  且有未推送的 plan-only 提交。
+- 当前远端已同步锚点：
+  - `1d235ee Sync EVP-8 smoke packet guards`：远端已包含 G0 guard、G4
+    synthesis scaffold 和 smoke execution packet guard-sync。
+- 当前本地未推送语义锚点以 `git log -1 --oneline` 为准；语义上是
+  `Plan EVP-8 staged follow-up gates`，写入 smoke 之后的 G5-G9 staged path，
+  包括 first-batch full-run packet、DeepSeek/Qwen 686-call full run、
+  later-model packet、five-model synthesis 和 paper/artifact freeze。
+- GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
+  在连续同步失败时跳过 GitHub 并继续本地计划执行。最近针对
+  `Plan EVP-8 staged follow-up gates` 的 push 两次失败在 network-level
+  connection，因此该 ahead 状态不应解读为实验未完成或工作区脏状态。
 - `bugsinpy_cookiecutter_4` 已收束为 tracked blocker policy；完整 builder
   失败输出仍是本地诊断残留，不应提交。
 - ignored 本地交付物：
@@ -118,6 +119,12 @@
      DeepSeek V4 Pro + Qwen3.7 Max；
    - 后续补跑 Kimi K2.6、Devstral 2、Gemini 2.5 Flash 必须使用同一 frozen
      packets/prompts/schema，不能边跑边改协议；
+   - smoke 之后的后续顺序已经写入 canonical EVP-8 plan：
+     two-model smoke synthesis -> 独立 no-API full-run packet -> DeepSeek
+     686-call full run -> DeepSeek audit -> Qwen 686-call full run -> Qwen
+     audit -> two-model first-batch synthesis -> later-model execution packet
+     -> Kimi/Devstral/Gemini 补跑 -> five-model synthesis -> paper/artifact
+     freeze；
    - 边界：不把 EVP-7 的 E2/E4/E6 直接当作 EVP-8 full-ladder 中间层，不从
      DeepSeek+Qwen interim result 写成最终五模型结论。
 2. 论文工作量呈现强化：

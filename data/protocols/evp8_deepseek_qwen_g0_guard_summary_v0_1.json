@@ -178,7 +178,7 @@
       "parsed": {},
       "passed": true,
       "stderr_preview": "",
-      "stdout_preview": "## main...origin/main\n!! .env\n!! artifacts/\n!! configs/evp8_deepseek_qwen.local.json\n!! outputs/"
+      "stdout_preview": "## main...origin/main [ahead 1]\n!! .env\n!! artifacts/\n!! configs/evp8_deepseek_qwen.local.json\n!! outputs/"
     }
   ],
   "config": "configs/evp8_deepseek_qwen.local.json",
@@ -192,5 +192,5 @@
   "raw_outputs_generated": false,
   "raw_outputs_read": false,
   "rendered_prompt_text_read": false,
-  "run_utc": "2026-06-20T05:54:11.441765+00:00"
+  "run_utc": "2026-06-20T06:07:01.062953+00:00"
 }

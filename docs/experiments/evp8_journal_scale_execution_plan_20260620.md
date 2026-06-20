@@ -270,7 +270,7 @@ Gate G4: two-model smoke synthesis.
   over deterministic baselines, or evidence-level effectiveness beyond the
   smoke subset.
 
-Gate G5: post-smoke decision.
+Gate G5: post-smoke decision and first-batch full-run packet.
 
 - If both smoke audits pass, prepare a separate no-API full-run packet for the
   first-batch DeepSeek/Qwen 686-call runs.
@@ -279,8 +279,33 @@ Gate G5: post-smoke decision.
 - If a protocol, prompt, schema, candidate-set, or evaluator-join bug is found
   after any model call, bump the EVP-8 protocol version and rerun affected
   models from scratch; do not mix v0.1 and repaired results as one experiment.
+- The no-API full-run packet must state:
+  - protocol id, prompt id, candidate-set id, output schema id, and evaluator
+    join version;
+  - exact DeepSeek and Qwen execute commands;
+  - expected raw-response and tracked-summary paths;
+  - per-model planned call count of 686;
+  - cost/usage observability fields;
+  - post-full-run audit and synthesis commands;
+  - the boundary that the packet is not itself execution authorization.
 
-Gate G6: later model completion.
+Gate G6: DeepSeek/Qwen first-batch full run.
+
+- Execute only after a separate user authorization for the first-batch full
+  run, not as part of the smoke step.
+- Run DeepSeek first on the frozen 98 candidates x 7 evidence levels = 686
+  calls, then run the full-run audit before Qwen.
+- Run Qwen only if the DeepSeek full-run audit passes parse/schema,
+  usage/cost, model/provider-route, per-level aggregate, and raw-output
+  boundary checks.
+- Qwen must use the same EVP-8 v0.1 frozen packets, prompt, schema, parser,
+  temperature, retry policy, and evaluator joins as DeepSeek.
+- After Qwen passes audit, produce a tracked two-model first-batch synthesis.
+  This synthesis may report cross-model stability and disagreement patterns on
+  the frozen EVP-8 v0.1 packet set, but it remains a first-batch result rather
+  than the final five-model journal conclusion.
+
+Gate G7: later model completion packet.
 
 - Add Kimi K2.6, Devstral 2, and Gemini 2.5 Flash only after the DeepSeek/Qwen
   first batch has a stable full-run boundary.
@@ -288,6 +313,29 @@ Gate G6: later model completion.
   joins, temperature, retry policy, and output parser.
 - If using OpenRouter, require `OPENROUTER_API_KEY`, pin exact model IDs, and
   record actual returned provider/model for every review record.
+- Prepare a no-API execution packet before later-model API calls. The packet
+  must include provider route, model ids, expected outputs, cost ceiling, retry
+  policy, and stop gates for all three later models.
+
+Gate G8: five-model journal synthesis.
+
+- Run only after all selected model audits pass on the same frozen EVP-8 input
+  set.
+- Produce per-level metrics, model-by-level comparison, uncertainty analysis,
+  utility sensitivity, qualitative cases, and claim-boundary audit.
+- Allowed claim depends on observed results. If trends are inconsistent, write
+  a robustness-boundary result rather than selecting only favorable models or
+  levels.
+
+Gate G9: paper writing and artifact freeze.
+
+- Update the manuscript, generated tables, figures, artifact checklist, and
+  anonymous package only after the synthesis and claim-boundary audit are
+  complete.
+- Keep EVP-7 as the bounded four-anchor pilot and motivation. Do not merge its
+  E0/E2/E4/E6 artifacts with EVP-8 E0-E6 results as one dataset.
+- Before submission freeze, run local quality gate, paper readiness audit,
+  artifact audit, and Git sync checks.
 
 ### Phase 1: DeepSeek + Qwen First Batch
 

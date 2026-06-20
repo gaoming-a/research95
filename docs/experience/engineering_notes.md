@@ -2887,3 +2887,16 @@ This file starts fresh for the patch-verification project.
 - The smoke execution packet should include both the one-command G0 guard and
   the expanded guard commands. Duplication is acceptable here because the
   packet is a human handoff artifact and must make missing checks visible.
+
+## 2026-06-20 EVP-8 staged execution boundary
+
+- Do not collapse smoke, first-batch full run, later-model completion, and
+  paper writing into one authorization. Each transition needs its own gate
+  because the allowed claims and failure handling differ.
+- After DeepSeek/Qwen smoke passes, the next artifact should be a no-API
+  first-batch full-run packet, not an immediate 686-call execution. This keeps
+  cost, expected outputs, audit commands, and claim boundaries reviewable before
+  any larger API spend.
+- Later Kimi/Devstral/Gemini runs are completion of the same frozen EVP-8
+  packet set, not a chance to repair prompts, change evidence fields, or swap
+  candidate joins after seeing DeepSeek/Qwen behavior.

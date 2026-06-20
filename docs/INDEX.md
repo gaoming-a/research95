@@ -37,9 +37,10 @@
 - `experiments/evp8_journal_scale_execution_plan_20260620.md`: no-API
   execution plan for the journal-scale EVP-8 route. It defines the planned
   E0-E6 full-ladder boundary, target five-model set, phased DeepSeek/Qwen first
-  batch, the immediate G0-G6 DeepSeek/Qwen follow-up gates, later
-  OpenRouter-compatible model completion, cost-planning boundary, required
-  outputs, stop gates, and forbidden shortcuts.
+  batch, the immediate G0-G4 smoke gates, the G5-G9 staged path from
+  first-batch full-run packet through five-model synthesis and paper/artifact
+  freeze, later OpenRouter-compatible model completion, cost-planning boundary,
+  required outputs, stop gates, and forbidden shortcuts.
 - `../data/protocols/evp8_protocol_v0_1.json`: tracked EVP-8 protocol spec for
   the v0.1 full-ladder. It records the model-visible `E0-E6` field groups,
   evaluator-only `E7`, output schema, model plan, routing policy, cost
