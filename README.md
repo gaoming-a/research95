@@ -88,6 +88,10 @@ The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently
 passes the protocol-structure boundary but reports API readiness as not ready.
+The Phase 0 smoke/protocol-validation candidate set is frozen at
+`data/protocols/evp8_candidate_set_v0_1.json`: 21 tasks, 6 projects, and 98
+candidates from the tracked EVP-7 structural cohort. This is not the final
+journal-scale full-run cohort.
 
 Every concrete continuation round must first update:
 
@@ -121,7 +125,11 @@ They should not override `final_paper_roadmap_zh.md`.
 - The first EVP-8 protocol-spec audit is tracked at
   `data/protocols/evp8_protocol_v0_1_audit_summary.json`. It confirms the
   `E0-E6` adjacent-difference ladder and evaluator-only `E7` boundary, while
-  keeping API execution blocked until the remaining Phase 0 outputs exist.
+  keeping API execution blocked until the remaining Phase 0 outputs exist. The
+  candidate set blocker is removed by
+  `data/protocols/evp8_candidate_set_v0_1_summary.json`; prompt text,
+  packet/schema dry-runs, cost observability, and deterministic baselines are
+  still pending.
 - The prompt-only DeepSeek full run completed and produced a mixed/negative
   `stop_or_redesign` result. It is not a positive paper claim.
 - The later tool-augmented full run passed its dedicated gate, but only supports

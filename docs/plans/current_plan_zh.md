@@ -13988,3 +13988,83 @@ Verify:
   通过，`passed=true`；
 - `git diff --check` 初次通过，仅有 LF/CRLF 提示；最终提交前需在 `.gitignore`
   和 current plan 更新后再复跑。
+
+## 2026-06-20 EVP-8 Phase 0 candidate-set manifest
+
+Inspect:
+
+- 上一步已完成 EVP-8 protocol spec audit，本地提交 `f80fae7`；
+- GitHub push 仍因 `Could not connect to server` 失败，当前按用户授权继续本地
+  no-API 计划；
+- `data/patches/evp7_candidates.jsonl` 当前 tracked structural cohort 为
+  21 tasks / 98 candidates；
+- `data/reviews/evp7_g5_llm_376_full_summary.json` 的历史 real DeepSeek G5 run
+  是 20 tasks / 94 candidates，但 tracked raw-output-free summaries 不完整保留
+  94 个 candidate id；
+- `data/evidence/evp7_evidence_packet_summary.json` 当前已是 98 candidates /
+  392 E0/E2/E4/E6 packets。
+
+Plan:
+
+1. 将 EVP-8 Phase 0 smoke/protocol-validation candidate set 冻结为当前 tracked
+   structural 21-task / 98-candidate cohort；
+2. 明确该 candidate set 只用于 EVP-8 packet/prompt/schema dry-run 和后续 smoke
+   候选，不是期刊最终 full-scale 30-50 bug 结论；
+3. 新增 candidate-set manifest builder，只输出 model-visible safe candidate
+   selection records，不把 evaluator labels、expected outcomes、hidden oracle
+   paths 写入 model-visible records；
+4. summary 可以保留 aggregate label counts 用于 selection audit，但必须标记为
+   evaluator-side aggregate，不进入 prompt；
+5. 更新 EVP-8 protocol spec 的 `current_candidate_set_version` 与 manifest path，
+   并让 protocol audit 不再报告 `candidate_set_not_frozen`；
+6. 同步 README/INDEX/EVP-8 plan/current state/engineering notes。
+
+Acceptance:
+
+- candidate set summary 应为 21 tasks / 6 projects / 98 candidates；
+- candidate records 不得包含 `expected_outcome`、`candidate_type`、
+  `failure_type_label`、hidden oracle 或 evaluator label；
+- protocol audit 仍必须 no-API，并将 API readiness 保持为 `not_ready`，因为
+  prompt text、packets、schema、cost 和 baseline dry-run 还没完成；
+- 该步骤不得生成 EVP-8 evidence packets，不调用模型 API。
+
+Execute:
+
+- 新增 `scripts/build_evp8_candidate_set_manifest.py`；
+- 从 `data/patches/evp7_candidates.jsonl` 生成：
+  - `data/protocols/evp8_candidate_set_v0_1.json`；
+  - `data/protocols/evp8_candidate_set_v0_1_summary.json`；
+- 更新 `data/protocols/evp8_protocol_v0_1.json`：
+  - `current_candidate_set_version =
+    evp8_smoke_from_evp7_structural_98_v0_1`；
+  - candidate set scope 为 `phase0_smoke_protocol_validation_only`；
+  - manifest 指向 `data/protocols/evp8_candidate_set_v0_1.json`；
+- 更新 `scripts/audit_evp8_protocol_spec.py`，使 protocol audit 在 candidate
+  manifest 存在时不再报告 `candidate_set_not_frozen`；
+- 同步 README、docs index、EVP-8 execution plan、final roadmap、current
+  project state 和 engineering notes；
+- 未调用模型 API，未生成 EVP-8 evidence packets，未扩 cohort。
+
+Verify:
+
+- `python scripts\build_evp8_candidate_set_manifest.py --check` 通过：
+  - `candidate_count = 98`；
+  - `task_count = 21`；
+  - `project_count = 6`；
+  - `record_leakage_findings_count = 0`；
+  - `api_call_attempted = false`；
+  - `evidence_packets_generated = false`；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过：
+  - `candidate_set_version =
+    evp8_smoke_from_evp7_structural_98_v0_1`；
+  - `candidate_set_manifest = data/protocols/evp8_candidate_set_v0_1.json`；
+  - `api_blockers` 不再包含 `candidate_set_not_frozen`；
+  - `api_blocker_count = 2`，剩余 blocker 为 prompt text not frozen 和
+    packet/schema/prompt/cost/baseline dry-run outputs missing；
+  - `phase0_api_readiness = not_ready`；
+  - `api_call_attempted = false`。
+- `git diff --check` 通过，仅有 LF/CRLF 工作区提示；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  通过，`current_result_claim_ready=true`、`submission_package_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  初次并行调用超时无诊断；单独重跑通过，`passed=true`。

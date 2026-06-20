@@ -11,7 +11,10 @@
     "model_run_authorized": false
   },
   "candidate_set_policy": {
-    "current_candidate_set_version": "not_frozen",
+    "current_candidate_set_version": "evp8_smoke_from_evp7_structural_98_v0_1",
+    "candidate_set_manifest": "data/protocols/evp8_candidate_set_v0_1.json",
+    "candidate_set_summary": "data/protocols/evp8_candidate_set_v0_1_summary.json",
+    "candidate_set_scope": "phase0_smoke_protocol_validation_only",
     "allowed_phase0_choices_before_first_model_call": [
       "reuse_evp7_20_task_94_candidate_cohort_for_evp8_smoke_only",
       "expand_first_to_journal_scale_30_50_tasks_100_180_candidates"

@@ -1087,7 +1087,10 @@ EVP-8 journal-scale protocol，完整执行计划见
 第一版机器可审计协议已写入 `data/protocols/evp8_protocol_v0_1.json`，
 并由 `scripts/audit_evp8_protocol_spec.py --check` 验证相邻差分和
 visible/hidden 边界；该审计通过只说明 protocol spec 结构成立，不说明已经
-API-ready。
+API-ready。Phase 0 smoke/protocol-validation candidate set 已冻结为
+`data/protocols/evp8_candidate_set_v0_1.json`，覆盖当前 tracked structural
+cohort 的 21 tasks / 6 projects / 98 candidates；这不是最终期刊规模 full-run
+cohort。
 
 期刊版主线：
 

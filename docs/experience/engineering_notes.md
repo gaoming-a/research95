@@ -2711,3 +2711,18 @@ This file starts fresh for the patch-verification project.
 - Keep the audit strict on synonymous hidden fields. If the script requires
   both `hidden_oracle_results` and `hidden_oracle_result`, update the protocol
   spec to cover both rather than weakening the leakage boundary.
+
+## 2026-06-20 EVP-8 candidate-set freeze boundary
+
+- If historical model summaries no longer preserve every candidate id for an
+  older run, do not reconstruct a candidate set by guesswork. Freeze the
+  current tracked structural candidate manifest for Phase 0 smoke/protocol
+  validation, and explicitly state that it is not the journal-scale full-run
+  cohort.
+- Candidate-set manifests can contain anonymous candidate ids, task/project
+  identity, touched files, and patch hashes. Keep evaluator labels, hidden
+  oracle paths, expected outcomes, and per-candidate validation summaries out
+  of model-visible candidate records.
+- Aggregate label counts are acceptable for candidate-balance audit only when
+  the summary clearly marks them as evaluator-side aggregate counts that never
+  enter prompts.

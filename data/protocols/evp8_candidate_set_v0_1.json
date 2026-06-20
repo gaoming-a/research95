@@ -1,0 +1,1985 @@
+{
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "cohort_id": "EVP-8",
+  "records": [
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0001",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 2,
+      "patch_sha256": "966627c5c0870346d653949f00e094d19a8dc2bde2cc617c6a97bc0d1686be39",
+      "project": "PySnooper",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0001",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_PySnooper_1",
+      "touched_file_count": 2,
+      "touched_files": [
+        "pysnooper/tracer.py",
+        "pysnooper/pycompat.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0002",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "b3bd9b556ba0f1a8cb6e60a521ea6c0b295189991b08e37c6ab4a7192e248b82",
+      "project": "PySnooper",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0002",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_PySnooper_1",
+      "touched_file_count": 2,
+      "touched_files": [
+        "pysnooper/tracer.py",
+        "pysnooper/pycompat.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0003",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "3e4cb220b74e36c28070f2ef219fcdb297769e5050981423ff70f054fc136df2",
+      "project": "PySnooper",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0003",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_PySnooper_1",
+      "touched_file_count": 2,
+      "touched_files": [
+        "pysnooper/tracer.py",
+        "pysnooper/pycompat.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0004",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "f4649c187a0f68025007b429eccadc8242c9da47cb5bc5304925440298ed596f",
+      "project": "PySnooper",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0004",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_PySnooper_1",
+      "touched_file_count": 2,
+      "touched_files": [
+        "pysnooper/tracer.py",
+        "pysnooper/pycompat.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0005",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "652adc8d88dca2a5f28c2b2f518b752e28fc72031236fa24eadc22967475d514",
+      "project": "PySnooper",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0005",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_PySnooper_1",
+      "touched_file_count": 2,
+      "touched_files": [
+        "pysnooper/tracer.py",
+        "pysnooper/pycompat.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0006",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "4569dba7a1c8f8c490c980a13007a1fff8ee3f23e3bf9beaa4512bea89598872",
+      "project": "PySnooper",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0006",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_PySnooper_1",
+      "touched_file_count": 2,
+      "touched_files": [
+        "pysnooper/tracer.py",
+        "pysnooper/pycompat.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0007",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "0d669c8e7d049d30d2cc2f626f8b1ca5b65d876f7cceda6984812c0629921990",
+      "project": "PySnooper",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0007",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_PySnooper_3",
+      "touched_file_count": 1,
+      "touched_files": [
+        "pysnooper/pysnooper.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0008",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "3a4a7a6fb0a81d88c7692d9aa745f8ba7019695956f094d57c0dd42c44e272ec",
+      "project": "PySnooper",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0008",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_PySnooper_3",
+      "touched_file_count": 1,
+      "touched_files": [
+        "pysnooper/pysnooper.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0009",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "30ef13d369c3f4749f09520e4034fc06d0022ad6ad4ec223370cf1a9b11bda66",
+      "project": "PySnooper",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0009",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_PySnooper_3",
+      "touched_file_count": 1,
+      "touched_files": [
+        "pysnooper/pysnooper.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0010",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "6a0104eb684d149e164c26a61176288ec7c749c549f24057765ffe11486cf6ff",
+      "project": "PySnooper",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0010",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_PySnooper_3",
+      "touched_file_count": 1,
+      "touched_files": [
+        "pysnooper/pysnooper.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0011",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "f4c5d147f270e9582477ea27a47888bfec53dda3c685f77bcf864914a6e00fca",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0011",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_1",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/generate.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0012",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "bb650e2d156c7b3e88eb2a5d96ae1a4d148271f7026730bb4736f2e61747acc2",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0012",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_1",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/generate.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0013",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "5370ba35d16f1029e7086da368594fce7713e8a2aa56cd7d04336246916e3a04",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0013",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_1",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/generate.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0014",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "24b695b5bd2719b47f5f772b0be07cbf2e6e77bfbf15c78c1580464bea627aae",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0014",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_1",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/generate.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0015",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "1f24b7078ac7ac106d00d392104ba15f400f4f466e72ef0a2fe7d3c0fb8e7d74",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0015",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_2",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/hooks.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0016",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "b038ad7fb44f29793a934c1cfaf0076a304ca210e7d5a3efd6ec57b980d67510",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0016",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_2",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/hooks.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0017",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "9fed03eec2746232437f9b31eeef11d54f0e6039888b03b468e1dc56d4b5a244",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0017",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_2",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/hooks.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0018",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "e1f3d581ef9d2200091694e2a33e1cf48336fbb1ecaa5403bc83e46809f247fe",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0018",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_2",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/hooks.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0019",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "7ab7b287b16c6f44acf2e644e61f8be857821a75b1c7b0498ff257edfc31d0ca",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0019",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_2",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/hooks.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0020",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "a75079c5164e51514de37f1def59a3f3d31a3eed6752b4c85e4e1d4964d95cad",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0020",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_2",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/hooks.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0021",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "3cf5e6bbfb3fd045df52ee7056c32186d7f8b3bad78b754bc7c474b1752407dc",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0021",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_2",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/hooks.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0022",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "aeec9b99f792e69687df68df284ef6e703aeb2996053387c34af891b9324beb3",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0022",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_2",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/hooks.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0023",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "aa300d66cd67777c11f6a5dc5ca52d22846d072a00c2c7a842d06c954bb5258c",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0023",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_2",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/hooks.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0024",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "d3125529ca7f4e3f72798ace7973e672df6e994d619539b89b3f71586f918945",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0024",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_2",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/hooks.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0025",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "f129fdfaad0e572e067ed512487bddb12ef23b614b203c12cc545e7bcd94fba5",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0025",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_2",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/hooks.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0026",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "7f89bd58676f23942aa34cb4883830d6ce62e3dff3ffc2685927f07f9cca6017",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0026",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_3",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/prompt.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0027",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "d2606fb403874fa81d71c1a7809cf0f59eb422d791c3ae7f16dad7a16f1d9a42",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0027",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_3",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/prompt.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0028",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "1395105401b3f04dc55ea97c910547d1f366e6510c3ca1cb80c0d32981ee7654",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0028",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_3",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/prompt.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0029",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "f22ed81922e1286afcf52b8088c8c43af0dcca3cc6f1be5bd79d3fcce4939a79",
+      "project": "cookiecutter",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0029",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_cookiecutter_3",
+      "touched_file_count": 1,
+      "touched_files": [
+        "cookiecutter/prompt.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0030",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "743ba91c8c2a6fcff510bfb3f10bf271a9d8cb6cefe88280800304b12dc45ad5",
+      "project": "httpie",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0030",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_httpie_5",
+      "touched_file_count": 1,
+      "touched_files": [
+        "httpie/cli.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0031",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "17e481df5cc16faf4b22c42688ef62bc3351031323ff946aad1d135c8af3871f",
+      "project": "httpie",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0031",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_httpie_5",
+      "touched_file_count": 1,
+      "touched_files": [
+        "httpie/cli.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0032",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "9e68880c9c90dbcba8534727560ae78c7ddc26ff2e833ad6bd8cbe7219424366",
+      "project": "httpie",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0032",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_httpie_5",
+      "touched_file_count": 1,
+      "touched_files": [
+        "httpie/cli.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0033",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "ff0488816e9df9b5cbb9254999cd345fba8e640da867347d411ac4e599fe4306",
+      "project": "httpie",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0033",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_httpie_5",
+      "touched_file_count": 1,
+      "touched_files": [
+        "httpie/cli.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0034",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "6f3fba07b975977c54f2ae2e4d6cf84d643bc4afa493b1af4c93566744b39150",
+      "project": "httpie",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0034",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_httpie_5",
+      "touched_file_count": 1,
+      "touched_files": [
+        "httpie/cli.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0035",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "8b5501b2c03615a3cdecd19951d47dec3ceacce0f917f7707de7f06126b33b08",
+      "project": "httpie",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0035",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_httpie_5",
+      "touched_file_count": 1,
+      "touched_files": [
+        "httpie/cli.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0036",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "14d841cb0e777a5b01d8f2925a825b0e4146dbb6a1793176889d0847ca3b0712",
+      "project": "thefuck",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0036",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_thefuck_1",
+      "touched_file_count": 1,
+      "touched_files": [
+        "thefuck/rules/pip_unknown_command.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0037",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "c967eccd14c3d01a3fc76d1af9a0ff551f7af31f81b23ab7472a2754738854e7",
+      "project": "thefuck",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0037",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_thefuck_1",
+      "touched_file_count": 1,
+      "touched_files": [
+        "thefuck/rules/pip_unknown_command.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0038",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "8318c388e45ccf0653a06ab5f6edbf2f755abd8d2dccfbc9c07a29cae1acf876",
+      "project": "thefuck",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0038",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_thefuck_1",
+      "touched_file_count": 1,
+      "touched_files": [
+        "thefuck/rules/pip_unknown_command.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0039",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "76c73b69d55b929467d84498b4f8a4aa1e7e4fc2f45fa88a7acee95c4bc2d461",
+      "project": "thefuck",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0039",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_thefuck_1",
+      "touched_file_count": 1,
+      "touched_files": [
+        "thefuck/rules/pip_unknown_command.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0040",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "7e08854ff8468dab0910246fd3b774103a3cfaa7221b33dfca8f2b8ef8ea342f",
+      "project": "tqdm",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0040",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_tqdm_9",
+      "touched_file_count": 1,
+      "touched_files": [
+        "tqdm/_tqdm.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0041",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "6792111851cc32d460c578f554b6917e19a7ae20724ccab448be76ffec68b3d9",
+      "project": "tqdm",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0041",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_tqdm_9",
+      "touched_file_count": 1,
+      "touched_files": [
+        "tqdm/_tqdm.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0042",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "83e2003448ca90317ec510c22cfd496348f5daed43706e410579e0ad3b69a1fc",
+      "project": "tqdm",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0042",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_tqdm_9",
+      "touched_file_count": 1,
+      "touched_files": [
+        "tqdm/_tqdm.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0043",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "552864b175d7946fbd6492b208cfa0ba162f1eb8452796c74926c1a7646bba02",
+      "project": "tqdm",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0043",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_tqdm_9",
+      "touched_file_count": 1,
+      "touched_files": [
+        "tqdm/_tqdm.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0044",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "c01e6072b59ba0a2d1d5cbb7551e42ef941d25de4087cdd83e6e34ad3472f803",
+      "project": "tqdm",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0044",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_tqdm_9",
+      "touched_file_count": 1,
+      "touched_files": [
+        "tqdm/_tqdm.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0045",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "49a7798265934b8fd9b96720b0ee351598c1d9fe785af0ae18fb5c015639a985",
+      "project": "tqdm",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0045",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_tqdm_9",
+      "touched_file_count": 1,
+      "touched_files": [
+        "tqdm/_tqdm.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0046",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "0750936d026a3e6043a079e610f6487bf951d4ad9354e38b60d782d038d4a7ab",
+      "project": "tqdm",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0046",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_tqdm_9",
+      "touched_file_count": 1,
+      "touched_files": [
+        "tqdm/_tqdm.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0047",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "381625c1779bf68ac6cdbe0c5b2fc64608b5feecc940439c63768790dec46482",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0067",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_11",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0048",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "0d4e8c1328a02904e1eeb347d8b2c65a41fdb4a10db98f96064779c0cacb1a58",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0068",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_11",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0049",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "8ebca8f7e65a65a20433b2c05ff747f0beee3a11926145ab1b4bffefaebc9636",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0069",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_11",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0050",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "d2d1ab30d4894cb936e40c013a2fd814feaf1221fa421742be39da5d402fcbbd",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0070",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_11",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0051",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 2,
+      "patch_sha256": "860fde5fd6206acd075c21d0ceb04f3bf1c47f746174828b1564d253d64e7b5c",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0071",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_16",
+      "touched_file_count": 2,
+      "touched_files": [
+        "youtube_dl/utils.py",
+        "youtube_dl/postprocessor/ffmpeg.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0052",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "0d4e8c1328a02904e1eeb347d8b2c65a41fdb4a10db98f96064779c0cacb1a58",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0072",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_16",
+      "touched_file_count": 2,
+      "touched_files": [
+        "youtube_dl/utils.py",
+        "youtube_dl/postprocessor/ffmpeg.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0053",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "6a5d58b29911a5d3943ddf3ea573df777659cdd9f5f3e7a28c39e8183c4fd9e5",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0073",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_16",
+      "touched_file_count": 2,
+      "touched_files": [
+        "youtube_dl/utils.py",
+        "youtube_dl/postprocessor/ffmpeg.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0054",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "5ec72eb53f00596561108db0c536521d5c9222fb7f83e9eaeb51db4292193fe9",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0074",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_16",
+      "touched_file_count": 2,
+      "touched_files": [
+        "youtube_dl/utils.py",
+        "youtube_dl/postprocessor/ffmpeg.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0055",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "ce37f469c771a10226cf08e3bee04feb6bcd95f5199e63d73273b8d7e8f10044",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0075",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_17",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0056",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "0d4e8c1328a02904e1eeb347d8b2c65a41fdb4a10db98f96064779c0cacb1a58",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0076",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_17",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0057",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "0c9a7788f895e6c5acc716bd577b430849f37c1c26d64cf52e18804b994fb2f1",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0077",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_17",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0058",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "1ae356b5a9b6cb7a909c1820a67cbc7533467bef813687692c121f58600b48fd",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0078",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_17",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0059",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "a5bd55992e8ac06f6cf9c03fce46168bc07da2df8a1f01393c440625fc9c0be3",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0047",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_2",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/extractor/common.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0060",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "a8c6a6e517873622444998f6d0784a8f5086b6e619d6495316c55bae42989bc7",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0048",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_2",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/extractor/common.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0061",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "b8eac095166a23cb3bc1378574b090493000511c06b85570e108a84896ff3f19",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0049",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_2",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/extractor/common.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0062",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "d188b8fd68bb355de01eef3e22e92361830fea0aeda969b65a190e923e36aea4",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0050",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_2",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/extractor/common.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0063",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "746bd5974bf6b3ed7ff7a329bb905ff880d58d208a51206c5ea4d3bc8f2a1b52",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0079",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_20",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0064",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "0d4e8c1328a02904e1eeb347d8b2c65a41fdb4a10db98f96064779c0cacb1a58",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0080",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_20",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0065",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "c1b536ca37ce420cb00a86f4deac7370ca74375300fcf8511618e360de48f808",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0081",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_20",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0066",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "5ae1999739859e5aa71661d9599d9665efdd1d0829e17e2725812c92f121bbd3",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0082",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_20",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0067",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "3beebef83ecf684dccb9ed3f24870c8757814bf171c3ca7ebee95a117d9607b2",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0083",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_21",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0068",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "0d4e8c1328a02904e1eeb347d8b2c65a41fdb4a10db98f96064779c0cacb1a58",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0084",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_21",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0069",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "5f7f91f92b7d1d74d3a40a03d0197e73b474f3142f80e2044a5d2da06d2c631b",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0085",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_21",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0070",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "25290ea18f2bdd739168060bf0d444a34f489a771037c38bda8faf71a0d8fa9a",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0086",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_21",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0071",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "8f322f3c2b0226c68d30c51d74445fce41d037e2ea3b49d42f8c2200554183db",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0087",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_23",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0072",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "0d4e8c1328a02904e1eeb347d8b2c65a41fdb4a10db98f96064779c0cacb1a58",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0088",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_23",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0073",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "b6c4cee14b373a8312914f40e6c7fda9c48146de206d2eb62e7c9466a92218a8",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0089",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_23",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0074",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "88b9b3a65097f2bb58ea1b413f461dd12e764fb065ac07a3ac9bf2ccfb23292f",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0090",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_23",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0075",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "d2002da4eb507863acafd5c9d4e734cc8526d5eb58b54154dff79db3390cd571",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0091",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_37",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0076",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "0d4e8c1328a02904e1eeb347d8b2c65a41fdb4a10db98f96064779c0cacb1a58",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0092",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_37",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0077",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "e40679333950b239b3b4f5ce33fb696b95381167203b21c1ca7c79e9d2adb90c",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0093",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_37",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0078",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "22e59cd6f3d8ef3a8c28953c0c64198d0056eb0f5f368154b09b79916c7871f1",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0094",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_37",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0079",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "6ee5572b51e3e84161582ef1653bcaaff83a74d352ad8ff39a06f690d60a67da",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0051",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_4",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/jsinterp.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0080",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "44eb3297454ee3d87aa17d58c655c69e852633acb8d618a05556c0e07d45e37c",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0052",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_4",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/jsinterp.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0081",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "34829532472ce460283b980a788304d6cc8ac375f994a52dff9e176dfdd74a68",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0053",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_4",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/jsinterp.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0082",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "bb099974b7f16534a2dd12e87a67c7fb3c571619b156e48d01fe6684f611d470",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0054",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_4",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/jsinterp.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0083",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "71b323e6a52fea1ffa9be9d3d5988012d20e95720f8757bcc163b68f5cc6b2ac",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0095",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_43",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0084",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "0d4e8c1328a02904e1eeb347d8b2c65a41fdb4a10db98f96064779c0cacb1a58",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0096",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_43",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0085",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "ccf50e836083683d0aeda2618c687dc3ab90d8ef9e2a4dce65fb52cd0706f6d4",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0097",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_43",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0086",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "6d78517490b7bd3fefd8531b9ac47ad8fe6ee8a99024eaa61b648301069fc206",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0098",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_43",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0087",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "3f2ef13cd85d584eb4568f926c221ab5148d5b0866944aa8020137af71efcbd9",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0055",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_5",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0088",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "0d4e8c1328a02904e1eeb347d8b2c65a41fdb4a10db98f96064779c0cacb1a58",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0056",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_5",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0089",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "c97fe035685686d74f7cbf6033d622ff75d80e1c58dd2df094338bb01147cbe0",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0057",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_5",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0090",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "0729f6f3fde664325f30fe46fd0c28109bc75a8098428dd02ce63700cbbce2f3",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0058",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_5",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0091",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "57e9df6e477b41f3e5a9a466812542fd37467e88f602871e8d9695613751b7ce",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0059",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_6",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0092",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "0d4e8c1328a02904e1eeb347d8b2c65a41fdb4a10db98f96064779c0cacb1a58",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0060",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_6",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0093",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "4a00fd69a4c7e7d8b9b1e17d7392aacbb5e97eb396f5ea226ca4622f89c28eeb",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0061",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_6",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0094",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "ecd1af16d1ee458961c316fe6d4a102272a8636a1412122805d727b9d14a1723",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0062",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_6",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0095",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "f4c14aa4b66cec99ecde61ce361c0c9fa5d373166972bd36828a67248f772a9e",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0063",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_7",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0096",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 0,
+      "patch_sha256": "0d4e8c1328a02904e1eeb347d8b2c65a41fdb4a10db98f96064779c0cacb1a58",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0064",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_7",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0097",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "3b31645c3b773c413f506d65aa9722630b83ac4d479ee0bc1eedf4e34b9b8486",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0065",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_7",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    },
+    {
+      "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+      "evp8_candidate_id": "evp8_smoke_candidate_0098",
+      "has_issue_summary": true,
+      "has_patch_text_source": true,
+      "label_fields_in_record": false,
+      "model_visible_record": true,
+      "patch_file_count": 1,
+      "patch_sha256": "e2556d803fd2310ac29029829c4df095d67ba6a6ece6cfa5e741e488b6c0ee3c",
+      "project": "youtube-dl",
+      "selection_role": "evp8_phase0_smoke_protocol_validation",
+      "source_candidate_id": "evp7_candidate_0066",
+      "source_cohort_id": "EVP-7",
+      "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+      "task_id": "bugsinpy_youtube-dl_7",
+      "touched_file_count": 1,
+      "touched_files": [
+        "youtube_dl/utils.py"
+      ]
+    }
+  ],
+  "source_cohort_id": "EVP-7",
+  "summary": {
+    "candidate_count": 98,
+    "candidate_set_status": "frozen_for_phase0_smoke_protocol_validation",
+    "label_fields_in_records": false,
+    "model_visible_records": true,
+    "project_count": 6,
+    "task_count": 21
+  }
+}

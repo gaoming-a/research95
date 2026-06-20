@@ -45,6 +45,14 @@
   summary for the EVP-8 v0.1 protocol spec. It should show
   `protocol_spec_audit_status=passed` and `phase0_api_readiness=not_ready`
   until the remaining Phase 0 outputs are generated.
+- `../data/protocols/evp8_candidate_set_v0_1.json`: model-visible-safe
+  candidate-set manifest for EVP-8 Phase 0 smoke/protocol validation. It maps
+  the tracked 21-task / 98-candidate structural cohort to anonymous EVP-8
+  smoke candidate IDs without copying per-candidate evaluator labels.
+- `../data/protocols/evp8_candidate_set_v0_1_summary.json`: aggregate
+  candidate-set audit summary. It records 21 tasks, 6 projects, 98 candidates,
+  aggregate evaluator-side label counts for balance audit, and
+  `api_call_attempted=false`.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.

@@ -1,0 +1,67 @@
+{
+  "aggregate_candidate_type_counts": {
+    "buggy_noop": 21,
+    "correct_reference": 21,
+    "irrelevant_patch": 14,
+    "partial_fix": 41,
+    "regression_patch": 1
+  },
+  "aggregate_expected_outcome_counts": {
+    "correct": 21,
+    "incorrect": 21,
+    "irrelevant_or_noop": 14,
+    "partial": 41,
+    "regression": 1
+  },
+  "aggregate_label_counts_boundary": "Aggregate evaluator-side label counts are included only for candidate-set balance audit; per-candidate model-visible records do not include labels.",
+  "aggregate_label_counts_model_visible": false,
+  "aggregate_p2p_label_counts": {
+    "correct_under_f2p_and_p2p_broad": 21,
+    "incorrect_issue_not_fixed": 76,
+    "incorrect_regression": 1
+  },
+  "api_call_attempted": false,
+  "candidate_count": 98,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "candidate_set_status": "frozen_for_phase0_smoke_protocol_validation",
+  "cohort_id": "EVP-8",
+  "evidence_packets_generated": false,
+  "journal_full_scale_boundary": "This is not the final journal-scale full-run cohort. It freezes the current tracked structural cohort for EVP-8 packet/prompt/schema dry-runs and later smoke validation only.",
+  "project_candidate_counts": {
+    "PySnooper": 10,
+    "cookiecutter": 19,
+    "httpie": 6,
+    "thefuck": 4,
+    "tqdm": 7,
+    "youtube-dl": 52
+  },
+  "project_count": 6,
+  "record_leakage_findings": [],
+  "record_leakage_findings_count": 0,
+  "source_cohort_id": "EVP-7",
+  "source_manifest": "data\\patches\\evp7_candidates.jsonl",
+  "task_candidate_counts": {
+    "bugsinpy_PySnooper_1": 6,
+    "bugsinpy_PySnooper_3": 4,
+    "bugsinpy_cookiecutter_1": 4,
+    "bugsinpy_cookiecutter_2": 11,
+    "bugsinpy_cookiecutter_3": 4,
+    "bugsinpy_httpie_5": 6,
+    "bugsinpy_thefuck_1": 4,
+    "bugsinpy_tqdm_9": 7,
+    "bugsinpy_youtube-dl_11": 4,
+    "bugsinpy_youtube-dl_16": 4,
+    "bugsinpy_youtube-dl_17": 4,
+    "bugsinpy_youtube-dl_2": 4,
+    "bugsinpy_youtube-dl_20": 4,
+    "bugsinpy_youtube-dl_21": 4,
+    "bugsinpy_youtube-dl_23": 4,
+    "bugsinpy_youtube-dl_37": 4,
+    "bugsinpy_youtube-dl_4": 4,
+    "bugsinpy_youtube-dl_43": 4,
+    "bugsinpy_youtube-dl_5": 4,
+    "bugsinpy_youtube-dl_6": 4,
+    "bugsinpy_youtube-dl_7": 4
+  },
+  "task_count": 21
+}

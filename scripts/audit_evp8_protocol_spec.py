@@ -108,6 +108,8 @@ def audit_protocol(spec: dict[str, Any]) -> dict[str, Any]:
     summary = {
         "protocol_id": spec.get("protocol_id"),
         "cohort_id": spec.get("cohort_id"),
+        "candidate_set_version": (spec.get("candidate_set_policy") or {}).get("current_candidate_set_version"),
+        "candidate_set_manifest": (spec.get("candidate_set_policy") or {}).get("candidate_set_manifest"),
         "api_call_attempted": spec.get("api_call_attempted"),
         "protocol_spec_audit_status": "passed" if not errors else "failed",
         "phase0_api_readiness": "ready" if not errors and not api_blockers else "not_ready",
@@ -288,11 +290,19 @@ def _audit_phase0_api_blockers(spec: dict[str, Any], api_blockers: list[str]) ->
     candidate_policy = spec.get("candidate_set_policy") or {}
     if candidate_policy.get("current_candidate_set_version") == "not_frozen":
         api_blockers.append("candidate_set_not_frozen")
+    candidate_manifest = candidate_policy.get("candidate_set_manifest")
+    candidate_manifest_ready = False
+    if isinstance(candidate_manifest, str) and candidate_manifest:
+        candidate_manifest_ready = (REPO_ROOT / candidate_manifest).exists()
+    if not candidate_manifest_ready:
+        api_blockers.append("candidate_set_manifest_missing")
     prompt_policy = spec.get("prompt_policy") or {}
     if prompt_policy.get("prompt_text_frozen") is not True:
         api_blockers.append("prompt_text_not_frozen")
     required_outputs = set(spec.get("required_phase0_outputs_before_api") or [])
     already_satisfied = {"tracked_protocol_spec", "protocol_audit_summary"}
+    if candidate_manifest_ready:
+        already_satisfied.add("candidate_set_manifest")
     missing_outputs = sorted(required_outputs - already_satisfied)
     if missing_outputs:
         api_blockers.append("missing_phase0_outputs_before_api:" + ",".join(missing_outputs))

@@ -44,6 +44,8 @@ oracle paths, expected outcomes, and ground-truth joins are evaluator-only.
 The first machine-checkable protocol artifact is:
 
 - `data/protocols/evp8_protocol_v0_1.json`
+- `data/protocols/evp8_candidate_set_v0_1.json`
+- `data/protocols/evp8_candidate_set_v0_1_summary.json`
 
 It freezes the draft v0.1 ladder as a tracked protocol spec:
 
@@ -65,9 +67,11 @@ python scripts\audit_evp8_protocol_spec.py --check
 Current audit status:
 
 - protocol spec audit: passed;
+- candidate set: frozen for Phase 0 smoke/protocol validation at 21 tasks, 6
+  projects, and 98 candidates from the tracked EVP-7 structural cohort;
 - API readiness: not ready;
-- current blockers: candidate set not frozen, prompt text not frozen, and
-  packet/schema/prompt/cost/baseline dry-run outputs not yet generated.
+- current blockers: prompt text not frozen, and packet/schema/prompt/cost/
+  baseline dry-run outputs not yet generated.
 
 This audit is intentionally no-API and does not authorize model calls, cohort
 expansion, or EVP-8 evidence-packet generation.
