@@ -2966,3 +2966,15 @@ This file starts fresh for the patch-verification project.
 - The first-batch audit and synthesis scaffolds should report
   `waiting_for_execution` before full summaries exist. That is the expected
   G5 state, not a failure.
+
+## 2026-06-20 Post-push state-entry drift
+
+- After a push succeeds on retry, update the short state entry immediately.
+  Otherwise the next agent may treat an already-synced commit as an unresolved
+  GitHub blocker and waste a turn retrying sync.
+- Use `git status --short --branch` and `git log -1 --oneline` as the
+  authority. Plan text that says "ahead" or "un pushed" is stale once those
+  commands show `main...origin/main`.
+- This kind of drift is a documentation-state repair only. It must not be
+  interpreted as authorization to move from a no-API packet gate into a large
+  API run.

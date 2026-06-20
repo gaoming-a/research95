@@ -16129,3 +16129,41 @@ Decision:
 - 当前执行边界从 G4 smoke closure 前进到 G5 packet ready；
 - 真正影响成本和结论的下一步是 G6 DeepSeek/Qwen first-batch full run，仍需要用户
   单独明确授权。
+
+## 2026-06-20 EVP-8 post-push state correction
+
+Inspect:
+
+- `git status --short --branch` 显示 `main...origin/main`，工作区 clean；
+- `git log -1 --oneline` 显示 `930bc73 Prepare EVP-8 first batch full packet`；
+- `docs/plans/current_project_state_zh.md` 仍保留“有未推送 plan-only 提交”的旧描述，
+  与当前 Git 状态矛盾。
+
+Plan:
+
+1. 修正短入口的 Git 同步锚点为 `930bc73`；
+2. 明确当前没有 GitHub 同步阻塞；
+3. 记录本轮是 no-API 文档漂移修复，不改变 EVP-8 G6 执行门；
+4. 运行 no-API 验证、提交并同步。
+
+Decision:
+
+- 计划没有影响：canonical 下一步仍是 G6 DeepSeek first-batch full run；
+- 由于 G6 是 686-call API 实验，仍需要用户明确授权后才能执行；
+- 本轮不调用 API、不读取 raw outputs、不生成 raw outputs。
+
+Verify:
+
+- `python scripts\write_evp8_first_batch_full_run_packet.py --check` 通过：
+  - `packet_status = ready`；
+  - `planned_calls_per_model = 686`；
+  - `execution_authorized_by_packet = false`；
+- `python scripts\audit_evp8_first_batch_full_results.py --check` 通过：
+  - `audit_status = waiting_for_execution`；
+  - `raw_outputs_read = false`；
+- `python scripts\summarize_evp8_first_batch_full_synthesis.py --check` 通过：
+  - `synthesis_status = waiting_for_execution`；
+  - `raw_outputs_read = false`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过，仅有 CRLF 工作区转换 warning。
