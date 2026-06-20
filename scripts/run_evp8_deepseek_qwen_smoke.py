@@ -127,20 +127,27 @@ def load_source_candidate_index() -> dict[str, dict[str, Any]]:
 
 
 def select_smoke_candidates(candidate_set: dict[str, Any], count: int) -> list[dict[str, Any]]:
-    selected: list[dict[str, Any]] = []
-    seen_projects: set[str] = set()
     records = list(candidate_set.get("records") or [])
-    for record in records:
+    project_counts: dict[str, int] = {}
+    project_first_index: dict[str, int] = {}
+    project_first_record: dict[str, dict[str, Any]] = {}
+    for index, record in enumerate(records):
         project = str(record.get("project"))
-        if project in seen_projects:
-            continue
-        selected.append(record)
-        seen_projects.add(project)
-        if len(selected) == count:
-            return selected
+        project_counts[project] = project_counts.get(project, 0) + 1
+        project_first_index.setdefault(project, index)
+        project_first_record.setdefault(project, record)
+    ordered_projects = sorted(
+        project_counts,
+        key=lambda project: (-project_counts[project], project_first_index[project]),
+    )
+    selected = [project_first_record[project] for project in ordered_projects[:count]]
+    selected_ids = {record["evp8_candidate_id"] for record in selected}
+    if len(selected) == count:
+        return selected
     for record in records:
-        if record not in selected:
+        if record["evp8_candidate_id"] not in selected_ids:
             selected.append(record)
+            selected_ids.add(record["evp8_candidate_id"])
         if len(selected) == count:
             return selected
     return selected
@@ -433,7 +440,7 @@ def check_only(args: argparse.Namespace) -> dict[str, Any]:
         "candidate_set_id": preflight.get("candidate_set_id"),
         "config": display_path(args.config),
         "selected_candidate_ids": sorted({packet["anonymous_candidate_id"] for packet in packets}),
-        "selection_policy": "deterministic_project_stratified_first_candidate_per_project_until_smoke_count",
+        "selection_policy": "deterministic_project_frequency_stratified_first_candidate_per_top_project",
         "model_visible_levels": list(MODEL_VISIBLE_LEVELS),
         "expected_packet_count": 35,
         "packet_count": len(packets),

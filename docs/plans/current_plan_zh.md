@@ -14516,6 +14516,43 @@ Acceptance:
   secret scan，再允许真实 API；
 - smoke 结果只能写成 two-model smoke/interim readiness，不能写成五模型期刊结论。
 
+## 2026-06-20 EVP-8 smoke runner scaffold
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main [ahead 7]`；
+- 最新提交为 `f3d4805 Add EVP-8 DeepSeek Qwen preflight plan`；
+- 已存在 EVP-8 protocol、candidate set、prompt manifest、packet/schema dry-run、
+  cost/baseline dry-run 和 DeepSeek/Qwen preflight；
+- 尚未存在 EVP-8 专用 smoke runner；
+- 本轮不是 API 执行授权，不能运行任何真实模型调用。
+
+Plan:
+
+1. 新增最小 EVP-8 DeepSeek/Qwen smoke runner；
+2. runner 默认只支持 check-only，并可在未来显式 `--execute` 时执行单个模型；
+3. runner 必须拒绝 tracked example config，真实执行只能使用 ignored local config；
+4. runner 在内存中从 frozen candidate set + EVP-7 model-visible seed 构造
+   5-candidate x 7-level smoke packets；
+5. smoke subset 使用 deterministic project-frequency-stratified 选择，避免只取
+   manifest 前 5 条导致单项目 smoke，并确保主导项目进入 smoke；
+6. rendered prompt 不写入 tracked artifact；check-only summary 只记录 prompt
+   hash、packet count、selected candidate ids、schema/gate 状态；
+7. raw model responses 只允许未来写入 ignored `outputs/`，本轮不生成；
+8. 同步 README、docs index、EVP-8 execution plan、current project state 和
+   engineering notes。
+
+Acceptance:
+
+- 本轮 `api_call_attempted=false`、`raw_outputs_generated=false`；
+- `python -m py_compile` 通过；
+- runner check-only 通过，且不读取或打印 API key value；
+- `python scripts\audit_evp8_protocol_spec.py --check` 继续通过；
+- `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
+  继续通过；
+- `configs/evp8_deepseek_qwen.local.json` 保持 ignored；
+- staged diff 不包含 `.env`、`outputs/`、`artifacts/` 或 local config。
+
 Execute:
 
 - 新增 `scripts/run_evp8_deepseek_qwen_smoke.py`；
@@ -14526,8 +14563,8 @@ Execute:
   - DeepSeek official and Qwen official routes through existing clients；
   - raw responses only under ignored `outputs/` for future execution；
   - tracked raw-output-free summary for check-only/executed smoke state；
-- check-only 在内存中构造 deterministic project-stratified 5 candidates x
-  7 levels = 35 smoke packets；
+- check-only 在内存中构造 deterministic project-frequency-stratified
+  5 candidates x 7 levels = 35 smoke packets；
 - 生成 tracked no-API summary：
   `data/protocols/evp8_deepseek_qwen_smoke_check_only_v0_1.json`；
 - 同步 README、docs index、EVP-8 execution plan、final roadmap、current project
@@ -14549,43 +14586,67 @@ Verify:
   - `raw_outputs_generated = false`；
   - selected smoke candidates =
     `evp8_smoke_candidate_0001`, `evp8_smoke_candidate_0011`,
-    `evp8_smoke_candidate_0030`, `evp8_smoke_candidate_0036`,
-    `evp8_smoke_candidate_0040`；
+    `evp8_smoke_candidate_0030`, `evp8_smoke_candidate_0040`,
+    `evp8_smoke_candidate_0047`；
 - 下一步仍是等待用户明确执行真实 DeepSeek/Qwen smoke，不自动调用 API。
 
-## 2026-06-20 EVP-8 smoke runner scaffold
+## 2026-06-20 EVP-8 smoke subset selection repair
 
 Inspect:
 
-- 当前工作区 clean，`main...origin/main [ahead 7]`；
-- 最新提交为 `f3d4805 Add EVP-8 DeepSeek Qwen preflight plan`；
-- 已存在 EVP-8 protocol、candidate set、prompt manifest、packet/schema dry-run、
-  cost/baseline dry-run 和 DeepSeek/Qwen preflight；
-- 尚未存在 EVP-8 专用 smoke runner；
-- 本轮不是 API 执行授权，不能运行任何真实模型调用。
+- 当前 runner check-only 已通过，但当时的 smoke subset policy 还是旧的
+  first-project-order strategy；
+- EVP-8 candidate set project distribution 为 youtube-dl 52、cookiecutter 19、
+  PySnooper 10、tqdm 7、httpie 6、thefuck 4；
+- 现有 5-candidate smoke subset 选中了 PySnooper、cookiecutter、httpie、
+  thefuck、tqdm，漏掉占比最高的 youtube-dl；
+- 本轮仍不是 API 执行授权，不能运行任何真实模型调用。
 
 Plan:
 
-1. 新增最小 EVP-8 DeepSeek/Qwen smoke runner；
-2. runner 默认只支持 check-only，并可在未来显式 `--execute` 时执行单个模型；
-3. runner 必须拒绝 tracked example config，真实执行只能使用 ignored local config；
-4. runner 在内存中从 frozen candidate set + EVP-7 model-visible seed 构造
-   5-candidate x 7-level smoke packets；
-5. smoke subset 使用 deterministic project-stratified 选择，避免只取 manifest
-   前 5 条导致单项目 smoke；
-6. rendered prompt 不写入 tracked artifact；check-only summary 只记录 prompt
-   hash、packet count、selected candidate ids、schema/gate 状态；
-7. raw model responses 只允许未来写入 ignored `outputs/`，本轮不生成；
-8. 同步 README、docs index、EVP-8 execution plan、current project state 和
-   engineering notes。
+1. 将 smoke subset policy 改为 deterministic project-frequency stratified：
+   按项目 candidate count 降序选每个项目的首个 candidate，数量相同时按 manifest
+   首次出现顺序稳定排序；
+2. 5-candidate smoke subset 应覆盖 youtube-dl、cookiecutter、PySnooper、tqdm、
+   httpie，排除最小项目 thefuck；
+3. 重新生成 tracked check-only summary；
+4. 同步 README、EVP-8 execution plan、current project state、engineering notes
+   和当前执行日志；
+5. 只做 no-API check-only，不生成 raw outputs，不执行 `--execute`。
 
 Acceptance:
 
-- 本轮 `api_call_attempted=false`、`raw_outputs_generated=false`；
-- `python -m py_compile` 通过；
-- runner check-only 通过，且不读取或打印 API key value；
-- `python scripts\audit_evp8_protocol_spec.py --check` 继续通过；
-- `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
-  继续通过；
-- `configs/evp8_deepseek_qwen.local.json` 保持 ignored；
-- staged diff 不包含 `.env`、`outputs/`、`artifacts/` 或 local config。
+- check-only 仍为 passed；
+- `packet_count = 35`、`prompt_hashes_unique_count = 35`；
+- selected candidates 必须包含 `evp8_smoke_candidate_0047`；
+- `api_call_attempted=false`、`raw_outputs_generated=false`；
+- protocol audit、preflight 和 local quality gate 继续通过。
+
+Execute:
+
+- 修改 `scripts/run_evp8_deepseek_qwen_smoke.py` 的 smoke subset selection；
+- policy 从首次出现项目顺序改为
+  `deterministic_project_frequency_stratified_first_candidate_per_top_project`；
+- 重新生成
+  `data/protocols/evp8_deepseek_qwen_smoke_check_only_v0_1.json`；
+- 同步 README、docs index、EVP-8 execution plan、final roadmap、current project
+  state 和 engineering notes；
+- 本轮未调用模型 API，未生成 raw outputs，未提交 local config。
+
+Verify:
+
+- `python -m py_compile scripts\run_evp8_deepseek_qwen_smoke.py` 通过；
+- `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
+  通过：
+  - `check_only_status = passed`；
+  - `packet_count = 35`；
+  - `prompt_hashes_unique_count = 35`；
+  - `boundary_error_count = 0`；
+  - `schema_error_count = 0`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_generated = false`；
+  - selected smoke candidates =
+    `evp8_smoke_candidate_0001`, `evp8_smoke_candidate_0011`,
+    `evp8_smoke_candidate_0030`, `evp8_smoke_candidate_0040`,
+    `evp8_smoke_candidate_0047`；
+- 下一步仍是等待用户明确执行真实 DeepSeek/Qwen smoke，不自动调用 API。

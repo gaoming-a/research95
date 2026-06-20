@@ -93,7 +93,8 @@
      已通过；tracked summary 只记录 key presence，不包含 key value；
    - 当前 EVP-8 smoke runner check-only：
      `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
-     已通过，覆盖 project-stratified 5 candidates x 7 levels = 35 packets；
+     已通过，覆盖 project-frequency-stratified 5 candidates x 7 levels =
+     35 packets，并包含主导项目 youtube-dl；
    - 下一步不是自动 API，而是等待用户明确执行 EVP-8 DeepSeek/Qwen smoke；
    - 第一批模型只允许在 no-API gates 和 smoke gates 通过后执行
      DeepSeek V4 Pro + Qwen3.7 Max；

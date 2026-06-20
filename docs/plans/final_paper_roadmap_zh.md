@@ -1100,9 +1100,10 @@ planned calls 和 usage/cost 字段，后者验证 686 条 schema-valid placehol
 baseline decisions 且不读取 evaluator-only labels。这些仍不授权 API。当前下一步
 ignored local DeepSeek/Qwen preflight 已通过；tracked summary 只记录 credential
 presence，不包含 key value 或 raw outputs。guarded smoke runner check-only
-也已通过，覆盖 project-stratified 5 candidates x 7 levels = 35 packets，
-不保存 rendered prompt text、不生成 raw outputs、不调用 API。下一步仍不是自动
-API，而是等待用户明确执行 EVP-8 Phase 1 smoke，才允许真实模型调用。
+也已通过，覆盖 project-frequency-stratified 5 candidates x 7 levels =
+35 packets，并包含主导项目 youtube-dl；不保存 rendered prompt text、不生成
+raw outputs、不调用 API。下一步仍不是自动 API，而是等待用户明确执行 EVP-8
+Phase 1 smoke，才允许真实模型调用。
 
 期刊版主线：
 

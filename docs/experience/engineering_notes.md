@@ -2789,9 +2789,11 @@ This file starts fresh for the patch-verification project.
 - The smoke runner check-only path may construct visible smoke packets and
   prompt hashes in memory, but it must not store rendered prompt text, call
   model APIs, or write raw responses.
-- The EVP-8 smoke subset should be deterministic and project-stratified, not
-  simply the first five candidate records, because the manifest begins with
-  multiple candidates from one project.
+- The EVP-8 smoke subset should be deterministic and project-frequency
+  stratified, not simply the first five candidate records or the first five
+  distinct projects. The manifest begins with repeated PySnooper candidates and
+  youtube-dl is the dominant project, so frequency-stratified selection keeps
+  the smoke small while still covering the highest-risk project family.
 - Real smoke execution must reject tracked example configs and require an
   ignored local config plus explicit `--execute` and `--model-id`.
 - Do not invent USD cost for Qwen official responses. If the provider response

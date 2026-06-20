@@ -89,8 +89,8 @@
   calls.
 - `../data/protocols/evp8_deepseek_qwen_smoke_check_only_v0_1.json`: tracked
   no-API smoke runner check-only summary. It records the deterministic
-  project-stratified 5-candidate x 7-level smoke packet gate, prompt hashes,
-  schema checks, and no-raw-output/no-API status.
+  project-frequency-stratified 5-candidate x 7-level smoke packet gate, prompt
+  hashes, schema checks, and no-raw-output/no-API status.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.

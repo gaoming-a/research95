@@ -88,9 +88,9 @@ Current audit status:
   decisions using only model-visible evidence slots;
 - DeepSeek/Qwen ignored local preflight: passed without printing key values or
   calling APIs;
-- guarded smoke runner check-only: passed for 35 project-stratified smoke
-  packets without storing rendered prompt text, generating raw outputs, or
-  calling APIs;
+- guarded smoke runner check-only: passed for 35 project-frequency-stratified
+  smoke packets, including the dominant youtube-dl project, without storing
+  rendered prompt text, generating raw outputs, or calling APIs;
 - API readiness: waiting for explicit user smoke execution command;
 - current blockers before smoke: no tracked Phase 0 or local preflight blockers.
 

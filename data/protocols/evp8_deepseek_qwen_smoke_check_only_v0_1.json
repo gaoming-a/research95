@@ -36,8 +36,8 @@
     "evp8_smoke_candidate_0001",
     "evp8_smoke_candidate_0011",
     "evp8_smoke_candidate_0030",
-    "evp8_smoke_candidate_0036",
-    "evp8_smoke_candidate_0040"
+    "evp8_smoke_candidate_0040",
+    "evp8_smoke_candidate_0047"
   ],
-  "selection_policy": "deterministic_project_stratified_first_candidate_per_project_until_smoke_count"
+  "selection_policy": "deterministic_project_frequency_stratified_first_candidate_per_top_project"
 }
