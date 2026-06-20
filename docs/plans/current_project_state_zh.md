@@ -12,18 +12,25 @@
 - 远端：`origin/main`
 - 当前 Git 状态：以 `git status --short --branch` 和
   `git log -1 --oneline` 为准。2026-06-20 最近检查为本地 `main` clean，
-  `main...origin/main` 已同步。
+  但 `main...origin/main [ahead 1]`。
 - 当前远端已同步锚点：
+  - `422f956 Fix EVP-8 post-push state entry`：远端已包含 G5 packet 后的
+    post-push 状态修正；
   - `930bc73 Prepare EVP-8 first batch full packet`：远端已包含 G5 no-API
     first-batch full-run packet、full check-only summary、post-full-run audit/
     synthesis scaffolds 和相关计划文档；
   - `1d235ee Sync EVP-8 smoke packet guards`：历史 smoke guard-sync 锚点。
+- 当前本地未推送锚点：
+  - 以 `git log -1 --oneline` 为准；当前语义为
+    `Record EVP-8 G6 authorization boundary`，记录 G6 explicit authorization
+    boundary re-check；连续两次 GitHub push 失败在 network-level connection。
 - 当前本地语义锚点以 `git log -1 --oneline` 和本轮提交为准；语义上已完成
   EVP-8 Phase 1 DeepSeek/Qwen smoke closure 和 G5 no-API first-batch
   full-run packet readiness。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
-  在连续同步失败时跳过 GitHub 并继续本地计划执行。本轮 `930bc73` 第二次
-  push 已成功，因此当前没有 GitHub 同步阻塞。
+  在连续同步失败时跳过 GitHub 并继续本地计划执行。本轮本地 G6 boundary
+  记录提交 push 两次
+  失败在 network-level connection，因此该 ahead 状态不应解读为实验未完成。
 - `bugsinpy_cookiecutter_4` 已收束为 tracked blocker policy；完整 builder
   失败输出仍是本地诊断残留，不应提交。
 - ignored 本地交付物：

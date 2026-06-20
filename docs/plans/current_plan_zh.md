@@ -16167,3 +16167,58 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
   通过；
 - `git diff --check` 通过，仅有 CRLF 工作区转换 warning。
+
+Commit And Sync:
+
+- 初始提交为 `8983abd Record EVP-8 G6 authorization boundary`；
+- `git push origin main` 连续两次失败在 GitHub network-level connection：
+  - `Recv failure: Connection was reset`；
+  - `Could not connect to server`；
+- 按用户既定规则，该 GitHub 网络同步失败不阻塞后续本地计划执行；
+- 将本同步状态修正 amend 进 `8983abd`，最终 hash 以 `git log -1 --oneline`
+  为准。
+
+## 2026-06-20 EVP-8 G6 authorization boundary re-check
+
+Inspect:
+
+- `git status --short --branch` 显示 `main...origin/main`，工作区 clean；
+- `git log -1 --oneline` 显示 `422f956 Fix EVP-8 post-push state entry`；
+- `data/protocols/evp8_deepseek_qwen_first_batch_full_run_packet_v0_1.json`
+  明确：
+  - `packet_status = ready`；
+  - `planned_calls_per_model = 686`；
+  - `execution_authorized_by_packet = false`；
+  - `requires_explicit_user_command = true`；
+- `docs/plans/current_project_state_zh.md` 已写明下一步不是自动 API，而是等待用户审阅
+  G5 packet 后再次明确授权 DeepSeek/Qwen 686-call first-batch full run。
+
+Plan:
+
+1. 修正短入口的最新远端同步锚点到 `422f956`；
+2. 不运行 `--execute --run-scope full`，因为当前续跑信号仍不是明确的 G6 API
+   授权；
+3. 运行 no-API gate，提交并同步本轮文档状态修正。
+
+Decision:
+
+- 计划没有变化：G5 已完成，G6 的第一步仍是 DeepSeek first-batch full run；
+- 当前不能自动执行 G6，因为该步骤是 686-call API 实验，必须由用户明确授权；
+- 若用户明确说“执行 DeepSeek G6 full run”或等价命令，下一轮可以先运行
+  DeepSeek full command，然后立即运行 full-result audit。
+
+Verify:
+
+- `python scripts\write_evp8_first_batch_full_run_packet.py --check` 通过：
+  - `packet_status = ready`；
+  - `execution_authorized_by_packet = false`；
+  - `requires_explicit_user_command = true`；
+- `python scripts\audit_evp8_first_batch_full_results.py --check` 通过：
+  - `audit_status = waiting_for_execution`；
+  - `raw_outputs_read = false`；
+- `python scripts\summarize_evp8_first_batch_full_synthesis.py --check` 通过：
+  - `synthesis_status = waiting_for_execution`；
+  - `raw_outputs_read = false`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过，仅有 CRLF 工作区转换 warning。
