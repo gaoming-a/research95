@@ -15475,3 +15475,90 @@ Verify:
   通过；
 - `git diff --check` 通过，仅有 CRLF 工作区转换 warning；
 - 本轮未调用模型 API，未读取 raw outputs，未生成 raw outputs。
+
+Commit And Sync:
+
+- 已提交并同步本轮 per-level smoke aggregate contract：
+  `16cca2a Track EVP-8 smoke per-level aggregates`；
+- 远端 `origin/main` 已同步到本轮提交；
+- 工作区 clean。
+
+## 2026-06-20 EVP-8 G4 smoke synthesis scaffold
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main`；
+- 最新提交为 `16cca2a Track EVP-8 smoke per-level aggregates`；
+- 当前继续指令不是明确 EVP-8 Phase 1 smoke/API 授权，本轮不得执行
+  `--execute`；
+- `scripts/audit_evp8_smoke_results.py` 已能在 tracked summaries 上审计
+  DeepSeek/Qwen 顺序、parse/cost/model drift 和 `E0-E6` per-level aggregates；
+- 但当前还没有 G4 two-model smoke synthesis 专用入口。未来真实 smoke 后若没有
+  synthesis scaffold，容易把 audit 结果和论文 claim 边界手工混在一起，或误读
+  ignored raw outputs。
+
+Plan:
+
+1. 新增 no-API G4 synthesis scaffold：
+   - 读取 smoke execution packet 和 tracked post-smoke audit result；
+   - 不读取 ignored raw responses；
+   - 当前无真实 summaries 时输出 `waiting_for_execution`；
+   - DeepSeek-only pass 时输出 `partial_waiting_for_qwen`；
+   - 双模型均通过时输出 `passed`，并只报告 tracked per-level decision counts；
+2. 增加 `--self-test`，覆盖 waiting、DeepSeek-only、both-passed 和
+   Qwen-without-DeepSeek failed 分支；
+3. 更新 execution plan、short-state、INDEX 和 engineering notes；
+4. 运行 no-API py_compile、synthesis self-test/check、G0 guard、local quality gate
+   和 diff check；
+5. 不调用 API，不读取 raw outputs，不生成 raw outputs。
+
+Acceptance:
+
+- G4 synthesis scaffold 当前必须通过 `waiting_for_execution`；
+- `--self-test` 必须证明 partial/passed/failed 分支；
+- synthesis output 的 claim boundary 明确禁止 full-run、five-model 和
+  evidence-level effectiveness final claim；
+- G0 guard 和 local quality gate 保持通过。
+
+Execute:
+
+- 新增 `scripts/summarize_evp8_smoke_synthesis.py`：
+  - 复用 post-smoke audit 的 tracked summary 读取路径；
+  - 当前无真实 summaries 时输出 `waiting_for_execution`；
+  - DeepSeek-only pass 时输出 `partial_waiting_for_qwen`；
+  - 双模型均通过时输出 `passed`，并仅汇总 tracked per-level decision counts；
+  - `--self-test` 覆盖 waiting、DeepSeek-only、both-passed、
+    Qwen-without-DeepSeek failed；
+- 扩展 `scripts/check_evp8_deepseek_qwen_g0.py`：
+  - G0 guard 加入 `summarize_evp8_smoke_synthesis.py --self-test`；
+  - G0 guard 加入 `summarize_evp8_smoke_synthesis.py --check`；
+  - G0 summary 记录 synthesis status、audit status 和 no-raw-output boundary；
+- 生成 tracked synthesis scaffold artifacts：
+  - `data/protocols/evp8_deepseek_qwen_smoke_synthesis_v0_1.json`；
+  - `docs/experiments/evp8_deepseek_qwen_smoke_synthesis_v0_1.md`；
+- 同步 EVP-8 execution plan、short-state、INDEX 和 engineering notes。
+
+Verify:
+
+- `python -m py_compile scripts\check_evp8_deepseek_qwen_g0.py scripts\summarize_evp8_smoke_synthesis.py scripts\audit_evp8_smoke_results.py`
+  通过；
+- `python scripts\summarize_evp8_smoke_synthesis.py --self-test` 通过：
+  - `case_count = 4`；
+  - `waiting_for_execution`、`partial_waiting_for_qwen`、`passed` 分支通过；
+  - `qwen_without_deepseek` 分支失败且被 `--check` 拒绝；
+  - `api_call_attempted = false`；
+  - `raw_outputs_read = false`；
+  - `raw_outputs_generated = false`；
+- `python scripts\check_evp8_deepseek_qwen_g0.py --check` 通过：
+  - `guard_status = passed`；
+  - `smoke_synthesis_self_test.case_count = 4`；
+  - `smoke_synthesis_check.synthesis_status = waiting_for_execution`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_read = false`；
+  - `expected_outputs_exist = false`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过，仅有 CRLF 工作区转换 warning；
+- ignored boundary 确认 `.env`、`artifacts/`、
+  `configs/evp8_deepseek_qwen.local.json`、`outputs/` 仍未 staged；
+- 本轮仍未调用模型 API，未读取 raw outputs，未生成 raw outputs。

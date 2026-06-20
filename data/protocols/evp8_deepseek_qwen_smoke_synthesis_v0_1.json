@@ -1,0 +1,71 @@
+{
+  "allowed_claim": "After both smoke models pass, report only descriptive DeepSeek/Qwen per-level decision patterns for the frozen EVP-8 v0.1 smoke subset.",
+  "api_call_attempted": false,
+  "audit_status": "waiting_for_execution",
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "checks": [
+    {
+      "check": "audit_no_api",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "audit_raw_outputs_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "audit_status_supported_for_synthesis",
+      "detail": "waiting_for_execution",
+      "passed": true
+    },
+    {
+      "check": "qwen_not_present_before_deepseek_passed",
+      "detail": {
+        "deepseek_status": "waiting_for_execution",
+        "qwen_summary_present": false
+      },
+      "passed": true
+    },
+    {
+      "check": "per_level_counts_available_for_present_passed_models",
+      "detail": {},
+      "passed": true
+    }
+  ],
+  "cohort_id": "EVP-8",
+  "forbidden_claim": "Do not report five-model journal conclusions, full-cohort generalization, LLM superiority over deterministic baselines, or final evidence-level effectiveness from this smoke synthesis.",
+  "model_summaries": [
+    {
+      "decision_counts_by_evidence_level": {},
+      "model_id": "deepseek/deepseek-v4-pro",
+      "raw_response_path": "outputs/evp8_phase1_deepseek_qwen_smoke/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+      "status": "waiting_for_execution",
+      "summary_path": "data/reviews/evp8_deepseek_deepseek-v4-pro_smoke_summary.json",
+      "summary_present": false
+    },
+    {
+      "decision_counts_by_evidence_level": {},
+      "model_id": "qwen/qwen3.7-max",
+      "raw_response_path": "outputs/evp8_phase1_deepseek_qwen_smoke/qwen_qwen3.7-max/raw_responses.jsonl",
+      "status": "waiting_for_execution",
+      "summary_path": "data/reviews/evp8_qwen_qwen3.7-max_smoke_summary.json",
+      "summary_present": false
+    }
+  ],
+  "per_level_decision_counts_by_model": {
+    "E0": {},
+    "E1": {},
+    "E2": {},
+    "E3": {},
+    "E4": {},
+    "E5": {},
+    "E6": {}
+  },
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "raw_outputs_generated_by_synthesis": false,
+  "raw_outputs_read": false,
+  "rendered_prompt_text_read": false,
+  "synthesis_id": "evp8_deepseek_qwen_smoke_synthesis_v0_1",
+  "synthesis_status": "waiting_for_execution"
+}

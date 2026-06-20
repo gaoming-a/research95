@@ -113,6 +113,12 @@
   without reading raw responses.
 - `experiments/evp8_deepseek_qwen_smoke_result_audit_v0_1.md`: Markdown
   companion for the post-smoke audit scaffold.
+- `../data/protocols/evp8_deepseek_qwen_smoke_synthesis_v0_1.json`: no-API G4
+  smoke synthesis scaffold. Before real execution it reports
+  `waiting_for_execution`; after execution it summarizes tracked per-level
+  decision counts without reading raw responses.
+- `experiments/evp8_deepseek_qwen_smoke_synthesis_v0_1.md`: Markdown companion
+  for the G4 smoke synthesis scaffold.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.
@@ -1048,6 +1054,10 @@
   `waiting_for_execution` until real smoke summaries exist and supports a
   no-API `--self-test` for waiting, partial, passed, order-failed, and
   parse/cost/model/per-level-aggregate-drift-failed states.
+- `../scripts/summarize_evp8_smoke_synthesis.py`: builds the no-API G4
+  DeepSeek/Qwen smoke synthesis artifact from tracked audit/summary fields
+  only. It reports `waiting_for_execution` before real smoke, supports
+  `--self-test`, and refuses failed order/audit states under `--check`.
 - `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict

@@ -27,6 +27,12 @@
 - `post_smoke_audit_check`: `true`
   - command: `python scripts\audit_evp8_smoke_results.py --check`
   - parsed: `{"api_call_attempted": false, "audit_status": "waiting_for_execution", "raw_outputs_generated_by_audit": false, "raw_outputs_read": false, "rendered_prompt_text_read": false}`
+- `smoke_synthesis_self_test`: `true`
+  - command: `python scripts\summarize_evp8_smoke_synthesis.py --self-test`
+  - parsed: `{"api_call_attempted": false, "case_count": 4, "raw_outputs_generated": false, "raw_outputs_read": false, "self_test_status": "passed", "tracked_outputs_written": false}`
+- `smoke_synthesis_check`: `true`
+  - command: `python scripts\summarize_evp8_smoke_synthesis.py --check`
+  - parsed: `{"api_call_attempted": false, "audit_status": "waiting_for_execution", "raw_outputs_generated_by_synthesis": false, "raw_outputs_read": false, "synthesis_status": "waiting_for_execution"}`
 - `expected_output_absence`: `true`
   - command: `read data/protocols/evp8_deepseek_qwen_smoke_execution_packet_v0_1.json`
   - parsed: `{"checked_output_count": 4, "existing_output_count": 0}`

@@ -90,6 +90,37 @@
       "stdout_preview": ""
     },
     {
+      "command": "python scripts\\summarize_evp8_smoke_synthesis.py --self-test",
+      "exit_code": 0,
+      "name": "smoke_synthesis_self_test",
+      "parsed": {
+        "api_call_attempted": false,
+        "case_count": 4,
+        "raw_outputs_generated": false,
+        "raw_outputs_read": false,
+        "self_test_status": "passed",
+        "tracked_outputs_written": false
+      },
+      "passed": true,
+      "stderr_preview": "",
+      "stdout_preview": ""
+    },
+    {
+      "command": "python scripts\\summarize_evp8_smoke_synthesis.py --check",
+      "exit_code": 0,
+      "name": "smoke_synthesis_check",
+      "parsed": {
+        "api_call_attempted": false,
+        "audit_status": "waiting_for_execution",
+        "raw_outputs_generated_by_synthesis": false,
+        "raw_outputs_read": false,
+        "synthesis_status": "waiting_for_execution"
+      },
+      "passed": true,
+      "stderr_preview": "",
+      "stdout_preview": ""
+    },
+    {
       "command": "read data/protocols/evp8_deepseek_qwen_smoke_execution_packet_v0_1.json",
       "exit_code": 0,
       "expected_output_absence": [
@@ -147,7 +178,7 @@
       "parsed": {},
       "passed": true,
       "stderr_preview": "",
-      "stdout_preview": "## main...origin/main [ahead 2]\n!! .env\n!! artifacts/\n!! configs/evp8_deepseek_qwen.local.json\n!! outputs/"
+      "stdout_preview": "## main...origin/main\n!! .env\n!! artifacts/\n!! configs/evp8_deepseek_qwen.local.json\n!! outputs/"
     }
   ],
   "config": "configs/evp8_deepseek_qwen.local.json",
@@ -161,5 +192,5 @@
   "raw_outputs_generated": false,
   "raw_outputs_read": false,
   "rendered_prompt_text_read": false,
-  "run_utc": "2026-06-20T05:40:38.390332+00:00"
+  "run_utc": "2026-06-20T05:48:48.834161+00:00"
 }

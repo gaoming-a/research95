@@ -122,6 +122,23 @@ def summarize_parsed(name: str, value: dict[str, Any] | None) -> dict[str, Any]:
             "raw_outputs_generated_by_audit": value.get("raw_outputs_generated_by_audit"),
             "rendered_prompt_text_read": value.get("rendered_prompt_text_read"),
         }
+    if name == "smoke_synthesis_self_test":
+        return {
+            "self_test_status": value.get("self_test_status"),
+            "case_count": value.get("case_count"),
+            "api_call_attempted": value.get("api_call_attempted"),
+            "raw_outputs_read": value.get("raw_outputs_read"),
+            "raw_outputs_generated": value.get("raw_outputs_generated"),
+            "tracked_outputs_written": value.get("tracked_outputs_written"),
+        }
+    if name == "smoke_synthesis_check":
+        return {
+            "synthesis_status": value.get("synthesis_status"),
+            "audit_status": value.get("audit_status"),
+            "api_call_attempted": value.get("api_call_attempted"),
+            "raw_outputs_read": value.get("raw_outputs_read"),
+            "raw_outputs_generated_by_synthesis": value.get("raw_outputs_generated_by_synthesis"),
+        }
     return {}
 
 
@@ -209,6 +226,8 @@ def build_summary(config: Path) -> dict[str, Any]:
         ("execution_packet", [py, "scripts\\write_evp8_smoke_execution_packet.py", "--check"]),
         ("post_smoke_audit_self_test", [py, "scripts\\audit_evp8_smoke_results.py", "--self-test"]),
         ("post_smoke_audit_check", [py, "scripts\\audit_evp8_smoke_results.py", "--check"]),
+        ("smoke_synthesis_self_test", [py, "scripts\\summarize_evp8_smoke_synthesis.py", "--self-test"]),
+        ("smoke_synthesis_check", [py, "scripts\\summarize_evp8_smoke_synthesis.py", "--check"]),
     ]
     command_results = [run_command(name, command) for name, command in commands]
     command_results.append(expected_output_absence_result())

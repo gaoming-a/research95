@@ -2864,3 +2864,16 @@ This file starts fresh for the patch-verification project.
   post-smoke audit should require every `E0-E6` level to have five records in
   the 5-candidate smoke subset and should self-test per-level drift without
   calling APIs or creating raw outputs.
+
+## 2026-06-20 EVP-8 G4 synthesis scaffold boundary
+
+- Keep post-smoke audit and G4 synthesis separate. The audit answers whether
+  tracked smoke summaries are structurally valid; the synthesis turns those
+  already-audited summaries into a bounded two-model smoke readout.
+- The synthesis scaffold should report `waiting_for_execution` before real
+  summaries exist, `partial_waiting_for_qwen` after DeepSeek-only pass, and
+  `passed` only after both tracked summaries pass audit. It must not read raw
+  response JSONL files.
+- The allowed G4 claim is descriptive per-level decision patterns on the frozen
+  5-candidate EVP-8 v0.1 smoke subset. It is not evidence for a full cohort,
+  a five-model journal result, or final evidence-level effectiveness.
