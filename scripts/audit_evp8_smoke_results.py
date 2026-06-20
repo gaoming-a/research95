@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -181,13 +182,168 @@ def assert_audit(audit: dict[str, Any]) -> None:
         raise SystemExit(f"EVP-8 smoke order checks failed: {audit['order_checks']}")
 
 
+def self_test_packet(packet_path: Path, deepseek_summary_path: Path, qwen_summary_path: Path) -> None:
+    packet = {
+        "packet_id": "evp8_deepseek_qwen_smoke_execution_packet_v0_1_self_test",
+        "cohort_id": "EVP-8",
+        "protocol_id": "evp8_journal_full_ladder_v0_1",
+        "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+        "packet_status": "ready",
+        "api_call_attempted": False,
+        "execution_authorized_by_packet": False,
+        "execute_commands_after_explicit_user_authorization": [
+            {
+                "step": "deepseek_smoke_first",
+                "model_id": "deepseek/deepseek-v4-pro",
+                "outputs": {
+                    "tracked_summary": str(deepseek_summary_path),
+                    "raw_responses": "outputs/evp8_phase1_deepseek_qwen_smoke/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+                },
+            },
+            {
+                "step": "qwen_smoke_after_deepseek_gate",
+                "model_id": "qwen/qwen3.7-max",
+                "outputs": {
+                    "tracked_summary": str(qwen_summary_path),
+                    "raw_responses": "outputs/evp8_phase1_deepseek_qwen_smoke/qwen_qwen3.7-max/raw_responses.jsonl",
+                },
+            },
+        ],
+    }
+    write_json(packet_path, packet)
+
+
+def executed_summary(model_id: str, **overrides: Any) -> dict[str, Any]:
+    summary: dict[str, Any] = {
+        "mode": "executed",
+        "api_call_attempted": True,
+        "review_count": EXPECTED_REVIEW_COUNT,
+        "parse_valid_count": EXPECTED_REVIEW_COUNT,
+        "invalid_parse_count": 0,
+        "smoke_gate": "passed",
+        "usage_cost_gate": "passed",
+        "configured_model_id": model_id,
+        "raw_response_text_stored_in_tracked_summary": False,
+        "raw_outputs_generated": True,
+        "cost_summary": {"unknown_cost_record_count": 0},
+    }
+    summary.update(overrides)
+    return summary
+
+
+def run_case(
+    case_dir: Path,
+    *,
+    deepseek_summary: dict[str, Any] | None,
+    qwen_summary: dict[str, Any] | None,
+    expected_status: str,
+    assert_check_passes: bool,
+) -> dict[str, Any]:
+    packet_path = case_dir / "packet.json"
+    deepseek_path = case_dir / "deepseek_summary.json"
+    qwen_path = case_dir / "qwen_summary.json"
+    self_test_packet(packet_path, deepseek_path, qwen_path)
+    if deepseek_summary is not None:
+        write_json(deepseek_path, deepseek_summary)
+    if qwen_summary is not None:
+        write_json(qwen_path, qwen_summary)
+    audit = build_audit(packet_path)
+    if audit["audit_status"] != expected_status:
+        raise SystemExit(
+            f"self-test expected {expected_status} but got {audit['audit_status']} for {display_path(case_dir)}"
+        )
+    try:
+        assert_audit(audit)
+        assert_raised = False
+    except SystemExit:
+        assert_raised = True
+    if assert_check_passes and assert_raised:
+        raise SystemExit(f"self-test expected assert_audit to pass for {display_path(case_dir)}")
+    if not assert_check_passes and not assert_raised:
+        raise SystemExit(f"self-test expected assert_audit to fail for {display_path(case_dir)}")
+    return {
+        "case": case_dir.name,
+        "audit_status": audit["audit_status"],
+        "assert_check_passes": assert_check_passes,
+        "raw_outputs_read": audit["raw_outputs_read"],
+        "api_call_attempted": audit["api_call_attempted"],
+    }
+
+
+def run_self_test() -> dict[str, Any]:
+    with tempfile.TemporaryDirectory(prefix="evp8_smoke_audit_selftest_") as temp_dir:
+        root = Path(temp_dir)
+        deepseek_passed = executed_summary("deepseek/deepseek-v4-pro")
+        qwen_passed = executed_summary("qwen/qwen3.7-max")
+        failed_cost = executed_summary(
+            "deepseek/deepseek-v4-pro",
+            parse_valid_count=EXPECTED_REVIEW_COUNT - 1,
+            invalid_parse_count=1,
+            smoke_gate="failed",
+            usage_cost_gate="failed",
+            cost_summary={"unknown_cost_record_count": 1},
+        )
+        cases = [
+            run_case(
+                root / "waiting_for_execution",
+                deepseek_summary=None,
+                qwen_summary=None,
+                expected_status="waiting_for_execution",
+                assert_check_passes=True,
+            ),
+            run_case(
+                root / "deepseek_only_passed",
+                deepseek_summary=deepseek_passed,
+                qwen_summary=None,
+                expected_status="partial_waiting_for_remaining_model",
+                assert_check_passes=True,
+            ),
+            run_case(
+                root / "both_models_passed",
+                deepseek_summary=deepseek_passed,
+                qwen_summary=qwen_passed,
+                expected_status="passed",
+                assert_check_passes=True,
+            ),
+            run_case(
+                root / "qwen_without_deepseek",
+                deepseek_summary=None,
+                qwen_summary=qwen_passed,
+                expected_status="failed",
+                assert_check_passes=False,
+            ),
+            run_case(
+                root / "deepseek_parse_cost_failed",
+                deepseek_summary=failed_cost,
+                qwen_summary=None,
+                expected_status="failed",
+                assert_check_passes=False,
+            ),
+        ]
+    return {
+        "self_test_status": "passed",
+        "case_count": len(cases),
+        "cases": cases,
+        "api_call_attempted": False,
+        "raw_outputs_read": False,
+        "raw_outputs_generated": False,
+        "tracked_outputs_written": False,
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--packet", type=Path, default=PACKET_PATH)
     parser.add_argument("--json-out", type=Path, default=DEFAULT_JSON_OUT)
     parser.add_argument("--md-out", type=Path, default=DEFAULT_MD_OUT)
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--self-test", action="store_true", help="Run no-API synthetic state tests without writing tracked artifacts.")
     args = parser.parse_args()
+
+    if args.self_test:
+        result = run_self_test()
+        print(json.dumps(result, ensure_ascii=False, sort_keys=True))
+        return 0
 
     audit = build_audit(args.packet)
     write_json(args.json_out, audit)

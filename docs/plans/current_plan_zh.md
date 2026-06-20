@@ -14854,3 +14854,80 @@ Verify:
   通过；
 - `git diff --check` 通过，仅提示 CRLF 工作区转换 warning；
 - 本轮未调用模型 API，未生成 raw outputs，未读取 local config value。
+
+## 2026-06-20 EVP-8 post-smoke audit self-test gate
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main`；
+- 最新后续计划已明确普通 `continue` 不是真实 API 授权；
+- 当前 `scripts/audit_evp8_smoke_results.py --check` 只能验证现有 tracked
+  summary 状态；真实 smoke 前，它不会自然覆盖未来 summary 分支；
+- 这留下一个 no-API 执行链路风险：DeepSeek-only partial、both-model passed、
+  Qwen-before-DeepSeek order failure、parse/cost failure 等未来状态没有自测。
+
+Plan:
+
+1. 给 `scripts/audit_evp8_smoke_results.py` 增加 `--self-test`；
+2. self-test 只使用临时目录中的 packet/summary JSON，不读取 raw outputs、不写
+   tracked artifacts、不调用 API；
+3. 覆盖五类状态：
+   - no summaries => `waiting_for_execution`；
+   - only DeepSeek passed => `partial_waiting_for_remaining_model`；
+   - DeepSeek and Qwen passed => `passed`；
+   - Qwen present before DeepSeek passed => `failed`；
+   - parse/cost gate failed => `failed`；
+4. 将 `--self-test` 加入 EVP-8 G0 no-API revalidation；
+5. 同步 INDEX 和 engineering notes。
+
+Acceptance:
+
+- `python scripts\audit_evp8_smoke_results.py --self-test` 必须通过；
+- `--self-test` 不得写 tracked outputs，不得生成 raw outputs，不得调用 API；
+- `python scripts\audit_evp8_smoke_results.py --check` 当前仍应为
+  `waiting_for_execution`；
+- EVP-8 G0 no-API guards 和 local quality gate 继续通过。
+
+Execute:
+
+- 修改 `scripts/audit_evp8_smoke_results.py`，新增 `--self-test`；
+- self-test 使用系统临时目录生成 synthetic packet/summary JSON，覆盖
+  waiting、DeepSeek-only partial、both-model passed、Qwen-before-DeepSeek
+  failed、parse/cost failed 五类状态；
+- self-test 不写 tracked artifacts，不创建 raw outputs，不调用 API；
+- 修改 `scripts/write_evp8_smoke_execution_packet.py`，将
+  `python scripts\audit_evp8_smoke_results.py --self-test` 写入 future guard
+  commands；
+- 重新生成：
+  - `data/protocols/evp8_deepseek_qwen_smoke_execution_packet_v0_1.json`；
+  - `docs/experiments/evp8_deepseek_qwen_smoke_execution_packet_v0_1.md`；
+- 同步 `docs/experiments/evp8_journal_scale_execution_plan_20260620.md`、
+  `docs/INDEX.md` 和 `docs/experience/engineering_notes.md`。
+
+Verify:
+
+- `python -m py_compile scripts\audit_evp8_smoke_results.py scripts\write_evp8_smoke_execution_packet.py`
+  通过；
+- `python scripts\audit_evp8_smoke_results.py --self-test` 通过：
+  - `case_count = 5`；
+  - `waiting_for_execution`；
+  - `partial_waiting_for_remaining_model`；
+  - `passed`；
+  - `qwen_without_deepseek => failed`；
+  - `deepseek_parse_cost_failed => failed`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_read = false`；
+  - `raw_outputs_generated = false`；
+  - `tracked_outputs_written = false`；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过；
+- `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
+  通过，key value 未打印，API 未调用；
+- `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
+  通过，`packet_count = 35`，`prompt_hashes_unique_count = 35`；
+- `python scripts\write_evp8_smoke_execution_packet.py --check` 通过，guard
+  commands 已包含 self-test；
+- `python scripts\audit_evp8_smoke_results.py --check` 通过，当前仍为
+  `waiting_for_execution`；
+- `git status --short --branch --ignored configs\evp8_deepseek_qwen.local.json outputs artifacts .env`
+  确认 `.env`、local config、outputs、artifacts 仍为 ignored；
+- 本轮未调用模型 API，未生成 raw outputs，未读取 local config value。

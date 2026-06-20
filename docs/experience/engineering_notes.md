@@ -2820,3 +2820,7 @@ This file starts fresh for the patch-verification project.
   path boundaries without opening raw response JSONL files under `outputs/`.
 - Qwen summary presence is invalid unless the DeepSeek summary has already
   passed. This preserves the predeclared DeepSeek-first smoke sequence.
+- Cover future post-smoke branches with a synthetic no-API self-test before
+  real execution. The self-test should use temporary packet/summary files,
+  create no raw outputs, and verify waiting, DeepSeek-only partial, both-model
+  passed, Qwen-before-DeepSeek failed, and parse/cost failed states.

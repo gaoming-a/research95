@@ -1028,7 +1028,9 @@
   protocol/preflight/check-only summaries.
 - `../scripts/audit_evp8_smoke_results.py`: audits future EVP-8 DeepSeek/Qwen
   smoke summaries without reading raw outputs; currently reports
-  `waiting_for_execution` until real smoke summaries exist.
+  `waiting_for_execution` until real smoke summaries exist and supports a
+  no-API `--self-test` for waiting, partial, passed, order-failed, and
+  parse/cost-failed states.
 - `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict

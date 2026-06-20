@@ -95,6 +95,7 @@ def build_packet() -> dict[str, Any]:
         "python scripts\\audit_evp8_protocol_spec.py --check",
         "python scripts\\preflight_evp8_deepseek_qwen.py --config configs\\evp8_deepseek_qwen.local.json --strict-api-ready",
         "python scripts\\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\\evp8_deepseek_qwen.local.json",
+        "python scripts\\audit_evp8_smoke_results.py --self-test",
         "git status --short --ignored configs\\evp8_deepseek_qwen.local.json outputs artifacts .env",
     ]
     execute_commands = [
