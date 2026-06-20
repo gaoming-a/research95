@@ -14931,3 +14931,13 @@ Verify:
 - `git status --short --branch --ignored configs\evp8_deepseek_qwen.local.json outputs artifacts .env`
   确认 `.env`、local config、outputs、artifacts 仍为 ignored；
 - 本轮未调用模型 API，未生成 raw outputs，未读取 local config value。
+
+Commit And Sync:
+
+- 已提交本轮 no-API self-test gate：
+  `108a7b8 Add EVP-8 smoke audit self-test gate`；
+- 尝试 `git push origin main`；
+- GitHub sync 失败：
+  `fatal: unable to access 'https://github.com/gaoming-a/research95.git/': Recv failure: Connection was reset`；
+- 这是 network-level sync failure；按用户授权，GitHub 连续同步失败时不阻塞后续
+  本地计划执行。
