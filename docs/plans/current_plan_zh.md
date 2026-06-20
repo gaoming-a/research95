@@ -14855,75 +14855,6 @@ Verify:
 - `git diff --check` 通过，仅提示 CRLF 工作区转换 warning；
 - 本轮未调用模型 API，未生成 raw outputs，未读取 local config value。
 
-## 2026-06-20 EVP-8 post-smoke audit summary-contract tightening
-
-Inspect:
-
-- 当前工作区 clean，`main...origin/main [ahead 2]`；
-- 最新本地提交为 `0dead70 Record EVP-8 self-test sync failure`；
-- GitHub push 仍处于网络失败边界，用户已允许不阻塞后续；
-- `scripts/run_evp8_deepseek_qwen_smoke.py` 的 future executed summary 会写入
-  `protocol_id`、`candidate_set_id`、`raw_responses_out`、`prompt_text_stored`
-  等字段；
-- `scripts/audit_evp8_smoke_results.py` 当前检查 parse/count/cost/model id，
-  但未显式检查 protocol/candidate/raw-path/prompt-text summary contract。
-
-Plan:
-
-1. 收紧 post-smoke audit：执行后 summary 必须匹配 packet 的 `protocol_id` 和
-   `candidate_set_id`；
-2. 执行后 summary 的 `raw_responses_out` 必须等于 packet 中预声明的 raw
-   response path，且仍位于 ignored `outputs/`；
-3. 执行后 summary 必须记录 `prompt_text_stored=false`；
-4. 扩展 `--self-test`，增加 raw path mismatch 失败用例；
-5. 同步 EVP-8 execution plan 和 engineering notes。
-
-Acceptance:
-
-- `python scripts\audit_evp8_smoke_results.py --self-test` 必须通过，且新增
-  mismatch 用例应失败；
-- `python scripts\audit_evp8_smoke_results.py --check` 当前仍应为
-  `waiting_for_execution`；
-- 不调用 API，不读取 raw outputs，不生成 raw outputs；
-- G0 no-API guards 和 local quality gate 继续通过。
-
-Execute:
-
-- 修改 `scripts/audit_evp8_smoke_results.py`：
-  - executed summary 必须匹配 packet `protocol_id`；
-  - executed summary 必须匹配 packet `candidate_set_id`；
-  - executed summary `raw_responses_out` 必须匹配 packet 中预声明 raw path；
-  - executed summary 必须记录 `prompt_text_stored=false`；
-  - `--self-test` 新增 `deepseek_raw_path_mismatch` 失败用例；
-- 同步 `docs/experiments/evp8_journal_scale_execution_plan_20260620.md` 中
-  G2 DeepSeek audit 的验收条件；
-- 同步 `docs/experience/engineering_notes.md`，记录 protocol/candidate/raw-path
-  contract tightening。
-
-Verify:
-
-- `python -m py_compile scripts\audit_evp8_smoke_results.py` 通过；
-- `python scripts\audit_evp8_smoke_results.py --self-test` 通过：
-  - `case_count = 6`；
-  - `deepseek_raw_path_mismatch => failed`；
-  - `api_call_attempted = false`；
-  - `raw_outputs_read = false`；
-  - `raw_outputs_generated = false`；
-  - `tracked_outputs_written = false`；
-- `python scripts\audit_evp8_smoke_results.py --check` 通过，当前仍为
-  `waiting_for_execution`；
-- `python scripts\audit_evp8_protocol_spec.py --check` 通过；
-- `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
-  通过，API 未调用、key value 未打印；
-- `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
-  通过，`packet_count=35`、`prompt_hashes_unique_count=35`；
-- `python scripts\write_evp8_smoke_execution_packet.py --check` 通过；
-- `git status --short --branch --ignored configs\evp8_deepseek_qwen.local.json outputs artifacts .env`
-  确认 `.env`、local config、outputs、artifacts 仍为 ignored；
-- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
-  通过；
-- 本轮未调用模型 API，未读取 raw outputs，未生成 raw outputs。
-
 ## 2026-06-20 EVP-8 post-smoke audit self-test gate
 
 Inspect:
@@ -15010,3 +14941,82 @@ Commit And Sync:
   `fatal: unable to access 'https://github.com/gaoming-a/research95.git/': Recv failure: Connection was reset`；
 - 这是 network-level sync failure；按用户授权，GitHub 连续同步失败时不阻塞后续
   本地计划执行。
+
+## 2026-06-20 EVP-8 post-smoke audit summary-contract tightening
+
+Inspect:
+
+- 当前工作区 clean，`main...origin/main [ahead 2]`；
+- 最新本地提交为 `0dead70 Record EVP-8 self-test sync failure`；
+- GitHub push 仍处于网络失败边界，用户已允许不阻塞后续；
+- `scripts/run_evp8_deepseek_qwen_smoke.py` 的 future executed summary 会写入
+  `protocol_id`、`candidate_set_id`、`raw_responses_out`、`prompt_text_stored`
+  等字段；
+- `scripts/audit_evp8_smoke_results.py` 当前检查 parse/count/cost/model id，
+  但未显式检查 protocol/candidate/raw-path/prompt-text summary contract。
+
+Plan:
+
+1. 收紧 post-smoke audit：执行后 summary 必须匹配 packet 的 `protocol_id` 和
+   `candidate_set_id`；
+2. 执行后 summary 的 `raw_responses_out` 必须等于 packet 中预声明的 raw
+   response path，且仍位于 ignored `outputs/`；
+3. 执行后 summary 必须记录 `prompt_text_stored=false`；
+4. 扩展 `--self-test`，增加 raw path mismatch 失败用例；
+5. 同步 EVP-8 execution plan 和 engineering notes。
+
+Acceptance:
+
+- `python scripts\audit_evp8_smoke_results.py --self-test` 必须通过，且新增
+  mismatch 用例应失败；
+- `python scripts\audit_evp8_smoke_results.py --check` 当前仍应为
+  `waiting_for_execution`；
+- 不调用 API，不读取 raw outputs，不生成 raw outputs；
+- G0 no-API guards 和 local quality gate 继续通过。
+
+Execute:
+
+- 修改 `scripts/audit_evp8_smoke_results.py`：
+  - executed summary 必须匹配 packet `protocol_id`；
+  - executed summary 必须匹配 packet `candidate_set_id`；
+  - executed summary `raw_responses_out` 必须匹配 packet 中预声明 raw path；
+  - executed summary 必须记录 `prompt_text_stored=false`；
+  - `--self-test` 新增 `deepseek_raw_path_mismatch` 失败用例；
+- 同步 `docs/experiments/evp8_journal_scale_execution_plan_20260620.md` 中
+  G2 DeepSeek audit 的验收条件；
+- 同步 `docs/experience/engineering_notes.md`，记录 protocol/candidate/raw-path
+  contract tightening。
+
+Verify:
+
+- `python -m py_compile scripts\audit_evp8_smoke_results.py` 通过；
+- `python scripts\audit_evp8_smoke_results.py --self-test` 通过：
+  - `case_count = 6`；
+  - `deepseek_raw_path_mismatch => failed`；
+  - `api_call_attempted = false`；
+  - `raw_outputs_read = false`；
+  - `raw_outputs_generated = false`；
+  - `tracked_outputs_written = false`；
+- `python scripts\audit_evp8_smoke_results.py --check` 通过，当前仍为
+  `waiting_for_execution`；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过；
+- `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
+  通过，API 未调用、key value 未打印；
+- `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --config configs\evp8_deepseek_qwen.local.json`
+  通过，`packet_count=35`、`prompt_hashes_unique_count=35`；
+- `python scripts\write_evp8_smoke_execution_packet.py --check` 通过；
+- `git status --short --branch --ignored configs\evp8_deepseek_qwen.local.json outputs artifacts .env`
+  确认 `.env`、local config、outputs、artifacts 仍为 ignored；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- 本轮未调用模型 API，未读取 raw outputs，未生成 raw outputs。
+
+Commit And Sync:
+
+- 已提交本轮 post-smoke audit summary-contract tightening：
+  `0c9ab98 Tighten EVP-8 smoke audit summary contract`；
+- 尝试 `git push origin main`；
+- GitHub sync 失败：
+  `fatal: unable to access 'https://github.com/gaoming-a/research95.git/': Recv failure: Connection was reset`；
+- 这是连续 network-level sync failure；按用户授权，不阻塞后续本地计划执行，且
+  不继续为同一网络问题循环制造 push-failure-only 提交。
