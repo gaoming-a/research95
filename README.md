@@ -95,10 +95,13 @@ reasoning-disabled clean rerun now passes for Kimi K2.6 on 686/686 records
 after the OpenRouter top-level error retry repair, with provider-reported cost
 for every record and actual model/provider metadata present. Devstral 2 also
 passes the same later-model gate on 686/686 records, with provider-reported
-cost for every record and actual model/provider metadata present. The
-later-model audit is therefore `partial_waiting_for_remaining_later_models`:
-Kimi and Devstral have passed, while Gemini still needs execution before any
-five-model journal claim.
+cost for every record and actual model/provider metadata present. Gemini 2.5
+Flash also passes on 686/686 records, with complete provider-reported cost and
+actual model/provider metadata. The later-model audit and five-model synthesis
+are now `passed` for the frozen EVP-8 v0.1 packet set. This permits
+descriptive five-model per-level decision-pattern reporting, but it still does
+not prove LLM superiority over deterministic baselines or final
+evidence-level effectiveness.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently
@@ -168,10 +171,11 @@ They should not override `final_paper_roadmap_zh.md`.
   summaries are now tracked under `data/protocols/`. DeepSeek/Qwen smoke and
   first-batch full runs have passed, and the G7 later-model packet plus
   later-model strict preflight/check-only plus post-run audit/five-model
-  synthesis scaffolds have passed without API calls. Kimi and Devstral have
-  since passed their later-model full runs; the next EVP-8 execution gate is
-  the remaining Gemini full run on the same frozen packets before any
-  five-model claim.
+  synthesis scaffolds have passed without API calls. Kimi, Devstral, and
+  Gemini have since passed their later-model full runs, and the tracked
+  five-model synthesis is now passed for descriptive per-level decision
+  patterns on the frozen EVP-8 packet set. The next EVP-8 gate is paper/table/
+  artifact freeze, not another model run.
 - The prompt-only DeepSeek full run completed and produced a mixed/negative
   `stop_or_redesign` result. It is not a positive paper claim.
 - The later tool-augmented full run passed its dedicated gate, but only supports

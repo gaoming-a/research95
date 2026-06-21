@@ -372,10 +372,10 @@ Gate G7: later model completion packet.
   `passed` with `OPENROUTER_API_KEY` present in the ignored local environment.
   This still does not authorize API execution. Before any later-model API call,
   use an explicit per-model execution command.
-- Status as of 2026-06-21 G7.3: the later-model post-run audit scaffold and
-  five-model synthesis scaffold are implemented and checked. They currently
-  report `waiting_for_execution` / `waiting_for_later_models` because no
-  Kimi/Devstral/Gemini summaries exist yet.
+- Status as of 2026-06-22 G8: Kimi K2.6, Devstral 2, and Gemini 2.5 Flash
+  have all completed the same frozen 686-record packet set and passed the
+  later-model audit. The five-model synthesis is now `passed` for descriptive
+  per-level decision-pattern reporting on the frozen EVP-8 v0.1 packet set.
 
 Gate G8: five-model journal synthesis.
 
@@ -385,6 +385,11 @@ Gate G8: five-model journal synthesis.
   later-model audit refresh.
 - Treat five-model synthesis as result evidence only after all selected model
   audits pass on the same frozen EVP-8 input set.
+- Current status as of 2026-06-22: this gate is `passed` for the selected
+  five-model set. The allowed result is descriptive per-level decision
+  patterns; unsupported claims such as LLM superiority over deterministic
+  baselines or final evidence-level effectiveness still require separate
+  analysis.
 - Produce per-level metrics, model-by-level comparison, uncertainty analysis,
   utility sensitivity, qualitative cases, and claim-boundary audit.
 - Allowed claim depends on observed results. If trends are inconsistent, write
@@ -428,6 +433,10 @@ protocol version and rerun affected models from scratch.
 
 Kimi K2.6, Devstral 2, and Gemini 2.5 Flash can be added later. They must use
 the same frozen EVP-8 packets and prompts as Phase 1.
+
+Status as of 2026-06-22: all three later models have been added and passed the
+later-model audit. Their raw responses remain under ignored `outputs/`; tracked
+summaries under `data/reviews/` are raw-output-free.
 
 If routed through OpenRouter, separate Gemini and Devstral official API keys are
 not required; an `OPENROUTER_API_KEY` is sufficient. The runner must pin exact

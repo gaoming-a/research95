@@ -28,7 +28,7 @@
     },
     {
       "check": "later_audit_status_supported",
-      "detail": "partial_waiting_for_remaining_later_models",
+      "detail": "passed",
       "passed": true
     },
     {
@@ -52,7 +52,7 @@
     },
     {
       "check": "passed_status_requires_all_later_models",
-      "detail": 2,
+      "detail": 3,
       "passed": true
     },
     {
@@ -83,19 +83,22 @@
   ],
   "first_batch_synthesis_status": "passed",
   "forbidden_claim": "Do not report five-model journal conclusions, LLM superiority over deterministic baselines, or final evidence-level effectiveness while this scaffold is waiting or partial.",
-  "later_model_audit_status": "partial_waiting_for_remaining_later_models",
+  "later_model_audit_status": "passed",
   "later_model_ids": [
     "moonshotai/kimi-k2.6",
     "mistralai/devstral-2512",
     "google/gemini-2.5-flash"
   ],
-  "later_passed_model_count": 2,
-  "later_summary_present_count": 2,
+  "later_passed_model_count": 3,
+  "later_summary_present_count": 3,
   "per_level_decision_counts_by_model": {
     "E0": {
       "deepseek/deepseek-v4-pro": {
         "escalate": 66,
         "reject": 32
+      },
+      "google/gemini-2.5-flash": {
+        "escalate": 98
       },
       "mistralai/devstral-2512": {
         "escalate": 98
@@ -112,6 +115,9 @@
       "deepseek/deepseek-v4-pro": {
         "escalate": 58,
         "reject": 40
+      },
+      "google/gemini-2.5-flash": {
+        "escalate": 98
       },
       "mistralai/devstral-2512": {
         "escalate": 98
@@ -130,6 +136,9 @@
         "escalate": 65,
         "reject": 33
       },
+      "google/gemini-2.5-flash": {
+        "escalate": 98
+      },
       "mistralai/devstral-2512": {
         "escalate": 98
       },
@@ -147,6 +156,10 @@
         "escalate": 81,
         "reject": 17
       },
+      "google/gemini-2.5-flash": {
+        "escalate": 96,
+        "reject": 2
+      },
       "mistralai/devstral-2512": {
         "escalate": 98
       },
@@ -162,6 +175,10 @@
       "deepseek/deepseek-v4-pro": {
         "escalate": 74,
         "reject": 24
+      },
+      "google/gemini-2.5-flash": {
+        "escalate": 97,
+        "reject": 1
       },
       "mistralai/devstral-2512": {
         "escalate": 98
@@ -180,6 +197,9 @@
         "escalate": 71,
         "reject": 27
       },
+      "google/gemini-2.5-flash": {
+        "escalate": 98
+      },
       "mistralai/devstral-2512": {
         "escalate": 98
       },
@@ -195,6 +215,9 @@
       "deepseek/deepseek-v4-pro": {
         "escalate": 86,
         "reject": 12
+      },
+      "google/gemini-2.5-flash": {
+        "escalate": 98
       },
       "mistralai/devstral-2512": {
         "escalate": 98
@@ -213,5 +236,5 @@
   "raw_outputs_read": false,
   "rendered_prompt_text_read": false,
   "synthesis_id": "evp8_five_model_synthesis_v0_1",
-  "synthesis_status": "partial_waiting_for_remaining_later_models"
+  "synthesis_status": "passed"
 }

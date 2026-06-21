@@ -1,7 +1,7 @@
 {
   "api_call_attempted": false,
   "audit_id": "evp8_later_model_full_result_audit_v0_1",
-  "audit_status": "partial_waiting_for_remaining_later_models",
+  "audit_status": "passed",
   "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
   "claim_boundary": "This audit validates tracked Kimi/Devstral/Gemini later-model summaries after execution. Before execution it is a waiting scaffold, not model-result evidence, and it never reads raw responses.",
   "cohort_id": "EVP-8",
@@ -614,16 +614,285 @@
           "check": "tracked_summary_under_data_reviews",
           "detail": "data/reviews/evp8_google_gemini-2.5-flash_full_summary.json",
           "passed": true
+        },
+        {
+          "check": "mode_executed",
+          "detail": "executed",
+          "passed": true
+        },
+        {
+          "check": "run_scope_full",
+          "detail": "full",
+          "passed": true
+        },
+        {
+          "check": "api_call_attempted_true_for_executed_summary",
+          "detail": true,
+          "passed": true
+        },
+        {
+          "check": "protocol_id",
+          "detail": "evp8_journal_full_ladder_v0_1",
+          "passed": true
+        },
+        {
+          "check": "candidate_set_id",
+          "detail": "evp8_smoke_from_evp7_structural_98_v0_1",
+          "passed": true
+        },
+        {
+          "check": "configured_model_id",
+          "detail": "google/gemini-2.5-flash",
+          "passed": true
+        },
+        {
+          "check": "request_model_id",
+          "detail": "google/gemini-2.5-flash",
+          "passed": true
+        },
+        {
+          "check": "provider_route",
+          "detail": "openrouter_pinned_exact_model_id",
+          "passed": true
+        },
+        {
+          "check": "provider_allow_fallbacks_false",
+          "detail": {
+            "allow_fallbacks": false,
+            "require_parameters": true
+          },
+          "passed": true
+        },
+        {
+          "check": "provider_require_parameters_true",
+          "detail": {
+            "allow_fallbacks": false,
+            "require_parameters": true
+          },
+          "passed": true
+        },
+        {
+          "check": "configured_model_id_counts",
+          "detail": {
+            "google/gemini-2.5-flash": 686
+          },
+          "passed": true
+        },
+        {
+          "check": "request_model_id_counts",
+          "detail": {
+            "google/gemini-2.5-flash": 686
+          },
+          "passed": true
+        },
+        {
+          "check": "provider_route_counts",
+          "detail": {
+            "openrouter_pinned_exact_model_id": 686
+          },
+          "passed": true
+        },
+        {
+          "check": "actual_model_id_count_total",
+          "detail": {
+            "google/gemini-2.5-flash": 686
+          },
+          "passed": true
+        },
+        {
+          "check": "actual_model_id_missing_count",
+          "detail": 0,
+          "passed": true
+        },
+        {
+          "check": "actual_model_id_counts_no_missing",
+          "detail": {
+            "google/gemini-2.5-flash": 686
+          },
+          "passed": true
+        },
+        {
+          "check": "actual_provider_count_total",
+          "detail": {
+            "Google": 686
+          },
+          "passed": true
+        },
+        {
+          "check": "actual_provider_missing_count",
+          "detail": 0,
+          "passed": true
+        },
+        {
+          "check": "actual_provider_counts_no_missing",
+          "detail": {
+            "Google": 686
+          },
+          "passed": true
+        },
+        {
+          "check": "openrouter_metadata_present_count",
+          "detail": 686,
+          "passed": true
+        },
+        {
+          "check": "review_count",
+          "detail": 686,
+          "passed": true
+        },
+        {
+          "check": "parse_valid_count",
+          "detail": 686,
+          "passed": true
+        },
+        {
+          "check": "invalid_parse_count",
+          "detail": 0,
+          "passed": true
+        },
+        {
+          "check": "review_count_by_evidence_level",
+          "detail": {
+            "E0": 98,
+            "E1": 98,
+            "E2": 98,
+            "E3": 98,
+            "E4": 98,
+            "E5": 98,
+            "E6": 98
+          },
+          "passed": true
+        },
+        {
+          "check": "parse_valid_count_by_evidence_level",
+          "detail": {
+            "E0": 98,
+            "E1": 98,
+            "E2": 98,
+            "E3": 98,
+            "E4": 98,
+            "E5": 98,
+            "E6": 98
+          },
+          "passed": true
+        },
+        {
+          "check": "invalid_parse_count_by_evidence_level",
+          "detail": {
+            "E0": 0,
+            "E1": 0,
+            "E2": 0,
+            "E3": 0,
+            "E4": 0,
+            "E5": 0,
+            "E6": 0
+          },
+          "passed": true
+        },
+        {
+          "check": "decision_counts_by_evidence_level_levels",
+          "detail": [
+            "E0",
+            "E1",
+            "E2",
+            "E3",
+            "E4",
+            "E5",
+            "E6"
+          ],
+          "passed": true
+        },
+        {
+          "check": "decision_counts_by_evidence_level_totals",
+          "detail": {
+            "E0": 98,
+            "E1": 98,
+            "E2": 98,
+            "E3": 98,
+            "E4": 98,
+            "E5": 98,
+            "E6": 98
+          },
+          "passed": true
+        },
+        {
+          "check": "run_gate",
+          "detail": "passed",
+          "passed": true
+        },
+        {
+          "check": "later_model_full_gate",
+          "detail": "passed",
+          "passed": true
+        },
+        {
+          "check": "usage_cost_gate",
+          "detail": "passed",
+          "passed": true
+        },
+        {
+          "check": "provider_metadata_gate",
+          "detail": "passed",
+          "passed": true
+        },
+        {
+          "check": "unknown_cost_record_count",
+          "detail": 0,
+          "passed": true
+        },
+        {
+          "check": "raw_responses_out_matches_packet",
+          "detail": "outputs/evp8_phase2_later_models_full/google_gemini-2.5-flash/raw_responses.jsonl",
+          "passed": true
+        },
+        {
+          "check": "raw_response_text_not_stored_in_summary",
+          "detail": false,
+          "passed": true
+        },
+        {
+          "check": "prompt_text_not_stored_in_summary",
+          "detail": false,
+          "passed": true
+        },
+        {
+          "check": "raw_outputs_generated_flag",
+          "detail": true,
+          "passed": true
         }
       ],
-      "decision_counts_by_evidence_level": {},
+      "decision_counts_by_evidence_level": {
+        "E0": {
+          "escalate": 98
+        },
+        "E1": {
+          "escalate": 98
+        },
+        "E2": {
+          "escalate": 98
+        },
+        "E3": {
+          "escalate": 96,
+          "reject": 2
+        },
+        "E4": {
+          "escalate": 97,
+          "reject": 1
+        },
+        "E5": {
+          "escalate": 98
+        },
+        "E6": {
+          "escalate": 98
+        }
+      },
       "model_id": "google/gemini-2.5-flash",
       "provider_route": "openrouter_pinned_exact_model_id",
       "raw_response_path": "outputs/evp8_phase2_later_models_full/google_gemini-2.5-flash/raw_responses.jsonl",
       "request_model_id": "google/gemini-2.5-flash",
-      "status": "waiting_for_execution",
+      "status": "passed",
       "summary_path": "data/reviews/evp8_google_gemini-2.5-flash_full_summary.json",
-      "summary_present": false
+      "summary_present": true
     }
   ],
   "packet_checks": [
@@ -657,10 +926,10 @@
       "passed": true
     }
   ],
-  "passed_model_count": 2,
+  "passed_model_count": 3,
   "protocol_id": "evp8_journal_full_ladder_v0_1",
   "raw_outputs_generated_by_audit": false,
   "raw_outputs_read": false,
   "rendered_prompt_text_read": false,
-  "summary_present_count": 2
+  "summary_present_count": 3
 }

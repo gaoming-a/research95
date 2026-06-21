@@ -40,10 +40,11 @@
   claim. As of G7.3, later-model post-run audit and five-model synthesis
   scaffolds also pass in waiting state without API calls or raw-output reads.
   After the OpenRouter top-level error retry repair, Kimi now passes on
-  686/686 records with complete cost/model/provider metadata. Devstral 2 also
-  passes on 686/686 records with complete cost/model/provider metadata. The
-  current later-model audit is partial, with Kimi and Devstral passed and
-  Gemini still waiting.
+  686/686 records with complete cost/model/provider metadata. Devstral 2 and
+  Gemini 2.5 Flash also pass on 686/686 records with complete
+  cost/model/provider metadata. The later-model audit and five-model synthesis
+  now pass for descriptive per-level decision-pattern reporting on the frozen
+  EVP-8 v0.1 packet set.
 - `experiments/evp8_journal_scale_execution_plan_20260620.md`: no-API
   execution plan for the journal-scale EVP-8 route. It defines the planned
   E0-E6 full-ladder boundary, target five-model set, phased DeepSeek/Qwen first
@@ -185,20 +186,18 @@
   no-API later-model full check-only summary. Current status is `passed` for
   686 prompts per model and 2058 planned later-model calls, with no raw outputs.
 - `../data/protocols/evp8_later_model_full_result_audit_v0_1.json`: tracked
-  no-API later-model post-run audit. Current status is
-  `partial_waiting_for_remaining_later_models`: Kimi K2.6 and Devstral 2
-  summaries pass, while Gemini 2.5 Flash is still waiting. It validates
-  summary paths and, after execution, checks 686 records/model,
-  98 records/level, parse/cost/provider/model gates, and tracked-summary
-  raw-output boundaries without reading raw responses.
+  no-API later-model post-run audit. Current status is `passed` for Kimi K2.6,
+  Devstral 2, and Gemini 2.5 Flash. It validates summary paths and, after
+  execution, checks 686 records/model, 98 records/level,
+  parse/cost/provider/model gates, and tracked-summary raw-output boundaries
+  without reading raw responses.
 - `experiments/evp8_later_model_full_result_audit_v0_1.md`: Markdown companion
   for the later-model post-run audit scaffold.
 - `../data/protocols/evp8_five_model_synthesis_v0_1.json`: tracked no-API
-  five-model synthesis scaffold. Current status is
-  `partial_waiting_for_remaining_later_models`; it reads the passed
-  DeepSeek/Qwen first-batch synthesis and the later-model audit, but does not
-  support a final five-model result until all three later models audit as
-  passed.
+  five-model synthesis. Current status is `passed`; it reads the passed
+  DeepSeek/Qwen first-batch synthesis and the passed later-model audit, then
+  reports descriptive per-level decision patterns across all five configured
+  models without reading raw responses.
 - `experiments/evp8_five_model_synthesis_v0_1.md`: Markdown companion for the
   five-model synthesis scaffold.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
@@ -314,6 +313,12 @@
   parse-valid outputs, actual-model/provider aggregates, provider-reported
   cost USD `0.44937088`, all 686 decisions as `escalate`, and no raw model
   responses or prompt text.
+- `../data/reviews/evp8_google_gemini-2.5-flash_full_summary.json`: tracked
+  raw-output-free summary of the EVP-8 Gemini 2.5 Flash later-model full run on
+  the same frozen 98-candidate x 7-level packet set. It records 686/686
+  parse-valid outputs, actual-model/provider aggregates, provider-reported
+  cost USD `0.6294286`, decision counts `escalate=683` and `reject=3`, and no
+  raw model responses or prompt text.
 - `../data/reviews/evp7_g5_376_utility_sensitivity.json`: tracked
   raw-output-free utility sensitivity analysis over false-accept, escalation,
   and false-reject penalty grids for the frozen EVP-7 G5 run.
@@ -1194,8 +1199,9 @@
   without reading raw `outputs/`.
 - `../scripts/summarize_evp8_five_model_synthesis.py`: no-API five-model
   synthesis scaffold. It combines the passed DeepSeek/Qwen first-batch
-  synthesis with later-model audit status and remains
-  `waiting_for_later_models` until all three later models pass audit.
+  synthesis with later-model audit status. It reports waiting/partial states
+  before completion and now reports `passed` after all three later models pass
+  audit.
 - `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict

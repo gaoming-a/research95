@@ -17377,3 +17377,67 @@ Next Execute:
 - 若 GitHub 继续网络失败，按用户授权记录同步失败并继续；
 - 同步后按 packet 顺序进入 `google/gemini-2.5-flash`，先重跑 strict
   preflight/check-only 和 expected-output absence，再执行 Gemini full run。
+
+## 2026-06-22 EVP-8 Gemini later-model and five-model synthesis closure
+
+Inspect:
+
+- Devstral result 已本地提交为 `68aa683 Record EVP-8 Devstral later-model
+  result`；
+- `git push origin main` 连续出现 GitHub network-level connection failure，
+  本地 `main` 因此保持 ahead；用户已明确允许 GitHub 同步频繁失败时继续计划；
+- 无残留 later-model runner；Gemini raw/summary canonical path 起跑前不存在；
+- strict later-model preflight 重新通过，`OPENROUTER_API_KEY` presence 为 set；
+- Gemini 单模型 check-only 通过：686 prompts，schema/boundary error 为 0，
+  未生成 raw outputs。
+
+Plan:
+
+1. 使用同一 frozen EVP-8 v0.1 packets、prompt、schema、parser、temperature、
+   retry policy、OpenRouter exact model route policy 执行
+   `google/gemini-2.5-flash`；
+2. 使用 `--concurrency 2`，stderr/raw prefix 监控到进程结束；
+3. Gemini 完成后立刻检查 summary gates；
+4. 运行 later-model audit 和 five-model synthesis check；
+5. 只在 tracked summary/audit/synthesis 全部通过后更新 docs/index/state 并提交。
+
+Execute Result:
+
+- Gemini full run 正常退出，stderr 为空，ignored raw JSONL 为 686/686 lines；
+- tracked raw-output-free summary 已生成：
+  - `review_count=686`；
+  - `parse_valid_count=686`；
+  - `invalid_parse_count=0`；
+  - `later_model_full_gate=passed`；
+  - `run_gate=passed`；
+  - `usage_cost_gate=passed`；
+  - `provider_metadata_gate=passed`；
+  - `actual_model_id_counts={"google/gemini-2.5-flash":686}`；
+  - `actual_provider_counts={"Google":686}`；
+  - `cost_observability_counts={"provider_reported_cost":686}`；
+  - `total_cost_usd=0.6294286`；
+  - decision counts 为 `escalate=683`、`reject=3`。
+
+Verify:
+
+- `scripts/audit_evp8_later_model_full_results.py --check` 已通过：
+  Kimi、Devstral、Gemini 三个 later models 均 `status=passed`，
+  `passed_model_count=3`，`summary_present_count=3`；
+- `scripts/summarize_evp8_five_model_synthesis.py --check` 已通过：
+  `synthesis_status=passed`，DeepSeek/Qwen/Kimi/Devstral/Gemini 五模型
+  per-level counts 可读；
+- audit/synthesis 均不读取 raw outputs，不触发 API；
+- Gemini tracked summary 不存储 prompt text 或 raw response text；
+- 当前允许 claim：仅报告 frozen EVP-8 v0.1 packet set 上的描述性五模型
+  per-level decision patterns；
+- 当前仍禁止 claim：LLM superiority over deterministic baselines、最终
+  evidence-level effectiveness、跨规模 generalization。
+
+Next Execute:
+
+- 暂存并提交 Gemini summary、later-model audit、five-model synthesis、README、
+  INDEX、short-state、current plan、engineering notes 和 EVP-8 execution plan；
+- 尝试 GitHub sync；若继续网络失败，记录 ahead 状态并进入本地 paper/table/
+  artifact freeze；
+- 下一阶段不再补模型，先生成论文可用的 five-model tables/figures、claim
+  boundary audit 和 artifact freeze checklist。

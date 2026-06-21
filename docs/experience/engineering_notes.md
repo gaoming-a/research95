@@ -3170,9 +3170,26 @@ This file starts fresh for the patch-verification project.
   686/686 parse-valid records, zero unknown-cost records, zero provider/model
   metadata gaps, and provider-reported cost for every record.
 - Treat Devstral's all-escalate output as an observed model behavior, not a
-  final conclusion. Until Gemini also passes and the five-model synthesis gate
-  changes state, this supports only a partial later-model audit with Kimi and
-  Devstral passed.
+  final conclusion. At Devstral closure time, this supported only a partial
+  later-model audit with Kimi and Devstral passed; Gemini and the final
+  synthesis gate still had to be run separately.
 - Keep per-provider metadata in the tracked summary. The Devstral run routed
   all 686 records to `Mistral`, and the actual model id matched
   `mistralai/devstral-2512` for every record.
+
+## 2026-06-22 EVP-8 Gemini and five-model synthesis closure
+
+- Run the final later model only after strict preflight, single-model
+  check-only, expected-output absence, and no-runner inspection all pass. This
+  avoids mixing a completion run with stale partial outputs or a hidden process.
+- Gemini 2.5 Flash completed the same frozen 686-record packet set with
+  686/686 parse-valid records, zero unknown-cost records, zero provider/model
+  metadata gaps, and provider-reported cost for every record.
+- Once Kimi, Devstral, and Gemini all pass the later-model audit, the
+  five-model synthesis may become `passed`. Keep the claim narrow: it supports
+  descriptive per-level decision-pattern reporting for the frozen EVP-8 v0.1
+  packet set, not LLM superiority over deterministic baselines or final
+  evidence-level effectiveness.
+- Keep raw response files, stdout/stderr logs, `.env`, and local OpenRouter
+  config ignored. Only the raw-output-free Gemini summary and regenerated
+  audit/synthesis artifacts belong in Git.
