@@ -16556,3 +16556,65 @@ Verify:
 - `python scripts\summarize_evp8_first_batch_full_synthesis.py --check` 通过：
   - `synthesis_status = partial_waiting_for_qwen`；
   - `raw_outputs_read = false`。
+
+## 2026-06-21 EVP-8 G6 Qwen full-run result closure
+
+Inspect:
+
+- Qwen runner PID `44764` 正常退出；
+- Qwen full raw responses 已生成 686 行：
+  `outputs/evp8_phase1_deepseek_qwen_full/qwen_qwen3.7-max/raw_responses.jsonl`；
+- Qwen tracked summary 已生成：
+  `data/reviews/evp8_qwen_qwen3.7-max_full_summary.json`；
+- runner stderr 为空；
+- raw JSONL 和 runner logs 仍位于 ignored `outputs/`，不提交。
+
+Execute:
+
+- Qwen G6 full run 已完成：
+  - `review_count = 686`；
+  - `parse_valid_count = 686`；
+  - `invalid_parse_count = 0`；
+  - `new_api_call_count = 686`；
+  - `resume_enabled = false`；
+  - `run_gate = passed`；
+  - `first_batch_full_gate = passed`；
+  - `usage_cost_gate = passed`；
+  - `unknown_cost_record_count = 0`；
+  - `cost_summary.total_cost_cny = 41.119548`；
+- Qwen per-level decision counts:
+  - `E0`: `{"escalate": 75, "reject": 23}`；
+  - `E1`: `{"escalate": 70, "reject": 28}`；
+  - `E2`: `{"escalate": 71, "reject": 27}`；
+  - `E3`: `{"escalate": 79, "reject": 19}`；
+  - `E4`: `{"escalate": 80, "reject": 18}`；
+  - `E5`: `{"escalate": 78, "reject": 20}`；
+  - `E6`: `{"escalate": 91, "reject": 7}`。
+
+Verify:
+
+- `python scripts\audit_evp8_first_batch_full_results.py --check` 通过：
+  - `audit_status = passed`；
+  - DeepSeek `status = passed`；
+  - Qwen `status = passed`；
+  - `raw_outputs_read = false`；
+- `python scripts\summarize_evp8_first_batch_full_synthesis.py --check` 通过：
+  - `synthesis_status = passed`；
+  - `per_level_decision_counts_by_model` 同时包含 DeepSeek 和 Qwen；
+  - `raw_outputs_read = false`；
+- Qwen summary 明确：
+  - `prompt_text_stored = false`；
+  - `raw_response_text_stored_in_tracked_summary = false`。
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过，仅有 CRLF 工作区转换 warning；
+- Qwen ignored raw JSONL 行数确认为 686。
+
+Decision:
+
+- EVP-8 first-batch DeepSeek/Qwen two-model full run 已完成并通过 audit/synthesis；
+- 当前允许的 claim 仍是 frozen EVP-8 v0.1 98-candidate packet set 上的
+  DeepSeek/Qwen descriptive per-level decision patterns；
+- 仍禁止写成 five-model journal conclusion、LLM superiority over deterministic
+  baselines 或最终 evidence-level effectiveness；
+- 下一步按 G7：准备 later-model completion packet，再补 Kimi/Devstral/Gemini。

@@ -33,9 +33,9 @@
   2026-06-20, the user-selected journal-upgrade route is a new EVP-8
   full-ladder protocol: freeze no-API packets/prompts/schema first, run
   DeepSeek V4 Pro and Qwen3.7 Max as the first batch, then add Kimi K2.6,
-  Devstral 2, and Gemini 2.5 Flash on the same frozen inputs. DeepSeek G6
-  first-batch full run has passed on 686/686 records; Qwen full run is the next
-  explicit execution decision.
+  Devstral 2, and Gemini 2.5 Flash on the same frozen inputs. DeepSeek and
+  Qwen G6 first-batch full runs have both passed on 686/686 records; the next
+  gate is a later-model completion packet, not an immediate final claim.
 - `experiments/evp8_journal_scale_execution_plan_20260620.md`: no-API
   execution plan for the journal-scale EVP-8 route. It defines the planned
   E0-E6 full-ladder boundary, target five-model set, phased DeepSeek/Qwen first
@@ -138,17 +138,15 @@
 - `experiments/evp8_deepseek_qwen_first_batch_full_run_packet_v0_1.md`:
   Markdown companion for the G5 first-batch full-run packet.
 - `../data/protocols/evp8_deepseek_qwen_first_batch_full_result_audit_v0_1.json`:
-  no-API first-batch full-run result audit. Current status is
-  `partial_waiting_for_remaining_model`: DeepSeek passed on the 686-record full
-  run, Qwen remains `waiting_for_execution`, and the audit never reads raw
-  responses.
+  no-API first-batch full-run result audit. Current status is `passed` for
+  DeepSeek V4 Pro and Qwen3.7 Max on the 686-record full runs, and the audit
+  never reads raw responses.
 - `experiments/evp8_deepseek_qwen_first_batch_full_result_audit_v0_1.md`:
   Markdown companion for the first-batch full-run result audit.
 - `../data/protocols/evp8_deepseek_qwen_first_batch_full_synthesis_v0_1.json`:
-  no-API first-batch full-run synthesis scaffold. Current status is
-  `partial_waiting_for_qwen`; it currently reports only DeepSeek per-level
-  counts and must not be treated as a two-model first-batch result until Qwen
-  passes audit.
+  no-API first-batch full-run synthesis. Current status is `passed`; it reports
+  tracked DeepSeek/Qwen per-level decision counts for the frozen EVP-8 v0.1
+  98-candidate packet set without reading raw responses.
 - `experiments/evp8_deepseek_qwen_first_batch_full_synthesis_v0_1.md`:
   Markdown companion for the first-batch full-run synthesis scaffold.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
@@ -245,6 +243,12 @@
   frozen 98-candidate x 7-level packet set. It records 686/686 parse-valid
   outputs, per-level decision counts, actual model/provider-route aggregates,
   checkpoint/resume fields, and estimated total cost USD `0.788808816`; raw
+  model responses remain only under ignored `outputs/`.
+- `../data/reviews/evp8_qwen_qwen3.7-max_full_summary.json`: tracked
+  raw-output-free summary of the EVP-8 Qwen G6 first-batch full run on the
+  frozen 98-candidate x 7-level packet set. It records 686/686 parse-valid
+  outputs, per-level decision counts, actual model/provider-route aggregates,
+  checkpoint/resume fields, and estimated total cost CNY `41.119548`; raw
   model responses remain only under ignored `outputs/`.
 - `../data/reviews/evp7_g5_376_utility_sensitivity.json`: tracked
   raw-output-free utility sensitivity analysis over false-accept, escalation,

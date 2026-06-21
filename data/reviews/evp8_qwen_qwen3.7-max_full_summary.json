@@ -1,0 +1,113 @@
+{
+  "actual_model_id_counts": {
+    "qwen3.7-max": 686
+  },
+  "actual_model_id_missing_count": 0,
+  "api_call_attempted": true,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "cohort_id": "EVP-8",
+  "config": "configs/evp8_deepseek_qwen.local.json",
+  "configured_model_id": "qwen/qwen3.7-max",
+  "configured_model_id_counts": {
+    "qwen/qwen3.7-max": 686
+  },
+  "cost_summary": {
+    "cost_currency_counts": {
+      "CNY": 686
+    },
+    "cost_observability_counts": {
+      "estimated_from_provider_token_usage_and_official_cny_pricing": 686
+    },
+    "cost_source_counts": {
+      "estimated_from_tokens_official_qwen_cny_pricing": 686
+    },
+    "total_cost_cny": 41.119548,
+    "total_cost_usd": 0.0,
+    "unknown_cost_record_count": 0
+  },
+  "decision_counts": {
+    "escalate": 544,
+    "reject": 142
+  },
+  "decision_counts_by_evidence_level": {
+    "E0": {
+      "escalate": 75,
+      "reject": 23
+    },
+    "E1": {
+      "escalate": 70,
+      "reject": 28
+    },
+    "E2": {
+      "escalate": 71,
+      "reject": 27
+    },
+    "E3": {
+      "escalate": 79,
+      "reject": 19
+    },
+    "E4": {
+      "escalate": 80,
+      "reject": 18
+    },
+    "E5": {
+      "escalate": 78,
+      "reject": 20
+    },
+    "E6": {
+      "escalate": 91,
+      "reject": 7
+    }
+  },
+  "first_batch_full_gate": "passed",
+  "invalid_parse_count": 0,
+  "invalid_parse_count_by_evidence_level": {
+    "E0": 0,
+    "E1": 0,
+    "E2": 0,
+    "E3": 0,
+    "E4": 0,
+    "E5": 0,
+    "E6": 0
+  },
+  "mode": "executed",
+  "new_api_call_count": 686,
+  "parse_valid_count": 686,
+  "parse_valid_count_by_evidence_level": {
+    "E0": 98,
+    "E1": 98,
+    "E2": 98,
+    "E3": 98,
+    "E4": 98,
+    "E5": 98,
+    "E6": 98
+  },
+  "prompt_text_stored": false,
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "provider_route": "qwen_official",
+  "provider_route_counts": {
+    "qwen_official": 686
+  },
+  "raw_outputs_generated": true,
+  "raw_response_text_stored_in_tracked_summary": false,
+  "raw_responses_out": "outputs/evp8_phase1_deepseek_qwen_full/qwen_qwen3.7-max/raw_responses.jsonl",
+  "request_model_id": "qwen3.7-max",
+  "request_model_id_counts": {
+    "qwen3.7-max": 686
+  },
+  "resume_enabled": false,
+  "resumed_raw_record_count": 0,
+  "review_count": 686,
+  "review_count_by_evidence_level": {
+    "E0": 98,
+    "E1": 98,
+    "E2": 98,
+    "E3": 98,
+    "E4": 98,
+    "E5": 98,
+    "E6": 98
+  },
+  "run_gate": "passed",
+  "run_scope": "full",
+  "usage_cost_gate": "passed"
+}

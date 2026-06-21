@@ -33,7 +33,7 @@
 - 当前本地语义锚点以 `git log -1 --oneline` 和本轮提交为准；语义上已完成
   EVP-8 Phase 1 DeepSeek/Qwen smoke closure、G5 no-API first-batch full-run
   packet readiness、DeepSeek G6 full-run checkpointing repair，以及 DeepSeek
-  686-call first-batch full-run passed audit。
+  / Qwen 686-call first-batch full-run passed audit and synthesis。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。2026-06-20 本轮重试后
   `72f1fb5` 和 `d9a8391` 已成功 push；最终是否仍 ahead 以
@@ -57,6 +57,8 @@
     376-packet cohort；
   - EVP-8 DeepSeek G6 first-batch full run：98 candidates x 7 evidence
     levels = 686 records，686/686 parse-valid，raw-output-free summary 已生成；
+  - EVP-8 Qwen G6 first-batch full run：98 candidates x 7 evidence levels =
+    686 records，686/686 parse-valid，raw-output-free summary 已生成；
   - raw-output-free tracked summaries and audits。
 - 当前 evidence-level 边界：EVP-7 是 E0/E2/E4/E6 four-anchor pilot，不是
   完整 E0-E6 adjacent-difference ladder；E1/E3/E5 不应补插进当前 artifacts，
@@ -138,16 +140,20 @@
      `data/reviews/evp8_deepseek_deepseek-v4-pro_full_summary.json` 记录
      686/686 parse-valid，estimated USD cost `0.788808816`，不含 prompt text
      或 raw response text；
-   - first-batch full-run audit 当前为
-     `partial_waiting_for_remaining_model`，synthesis 当前为
-     `partial_waiting_for_qwen`，二者均不读取 raw outputs；
-   - 下一步不是自动 API，而是决定是否授权 Qwen 686-call first-batch full run；
+   - Qwen G6 first-batch full run 已执行并通过 audit：
+     `data/reviews/evp8_qwen_qwen3.7-max_full_summary.json` 记录 686/686
+     parse-valid，estimated CNY cost `41.119548`，不含 prompt text 或 raw
+     response text；
+   - first-batch full-run audit 当前为 `passed`，synthesis 当前为 `passed`，
+     二者均不读取 raw outputs；
+   - 下一步不是自动 API，而是按 G7 准备 later-model completion packet，
+     再补 Kimi K2.6、Devstral 2、Gemini 2.5 Flash；
    - 后续补跑 Kimi K2.6、Devstral 2、Gemini 2.5 Flash 必须使用同一 frozen
      packets/prompts/schema，不能边跑边改协议；
    - smoke 之后的后续顺序已经写入 canonical EVP-8 plan：
      two-model smoke synthesis -> 独立 no-API full-run packet -> DeepSeek
      686-call full run -> DeepSeek audit passed -> Qwen 686-call full run -> Qwen
-     audit -> two-model first-batch synthesis -> later-model execution packet
+     audit passed -> two-model first-batch synthesis passed -> later-model execution packet
      -> Kimi/Devstral/Gemini 补跑 -> five-model synthesis -> paper/artifact
      freeze；
    - 边界：不把 EVP-7 的 E2/E4/E6 直接当作 EVP-8 full-ladder 中间层，不从
@@ -251,13 +257,11 @@
   synthesis commands 和非授权边界。
 - `data/protocols/evp8_deepseek_qwen_first_batch_full_result_audit_v0_1.json`、
   `docs/experiments/evp8_deepseek_qwen_first_batch_full_result_audit_v0_1.md`：
-  first-batch full-run post-result audit；当前 `waiting_for_execution`，
-  不读取 raw outputs。
+  first-batch full-run post-result audit；当前 `passed`，不读取 raw outputs。
 - `data/protocols/evp8_deepseek_qwen_first_batch_full_synthesis_v0_1.json`、
   `docs/experiments/evp8_deepseek_qwen_first_batch_full_synthesis_v0_1.md`：
-  first-batch full-run two-model synthesis scaffold；当前
-  `waiting_for_execution`，仅在两个 first-batch summaries 通过 audit 后汇总
-  tracked per-level decision counts。
+  first-batch full-run two-model synthesis；当前 `passed`，从两个
+  raw-output-free first-batch summaries 汇总 tracked per-level decision counts。
 - `scripts/audit_evp8_protocol_spec.py`：
   检查 EVP-8 相邻差分、visible/hidden 字段边界、模型批次、routing policy、
   cost observability 和 stop gates。
@@ -297,11 +301,11 @@
 - `scripts/write_evp8_first_batch_full_run_packet.py`：
   生成 G5 no-API first-batch full-run packet；不授权 API。
 - `scripts/audit_evp8_first_batch_full_results.py`：
-  不读取 raw outputs 的 first-batch full-run summary audit；当前无 full
-  summaries 时输出 `waiting_for_execution`。
+  不读取 raw outputs 的 first-batch full-run summary audit；当前 DeepSeek 和
+  Qwen full summaries 均通过后输出 `passed`。
 - `scripts/summarize_evp8_first_batch_full_synthesis.py`：
-  不读取 raw outputs 的 first-batch full-run synthesis scaffold；当前无 full
-  summaries 时输出 `waiting_for_execution`。
+  不读取 raw outputs 的 first-batch full-run synthesis scaffold；当前 DeepSeek
+  和 Qwen full summaries 均通过后输出 `passed`。
 - `docs/plans/agent_execution_plan_zh.md`、
   `docs/plans/ai_agent_experiment_execution_plan_zh.md`：
   历史执行计划，只保留溯源，不应覆盖当前路线。
