@@ -205,7 +205,7 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
             packet for packet in packets if packet["evidence_packet_id"] not in completed_packet_ids
         ]
         if args.concurrency == 1:
-            client = OpenRouterClient()
+            client = openrouter_client_from_config(config)
             for packet in remaining_packets:
                 raw_record = fetch_raw_record(
                     packet=packet,
@@ -244,6 +244,7 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         "request_model_id": model_config["request_model_id"],
         "provider_route": model_config["provider_route"],
         "provider_preferences": model_config.get("provider_preferences"),
+        "retry_policy": config.get("retry_policy"),
         "request_reasoning": model_config.get("reasoning"),
         "request_include_reasoning": model_config.get("include_reasoning"),
         "raw_responses_out": display_path(raw_out),
@@ -304,7 +305,7 @@ def fetch_raw_record(
     findings = prompt_module._boundary_findings(prompt)  # noqa: SLF001
     if findings:
         raise RuntimeError(f"prompt boundary failed for {packet['evidence_packet_id']}: {findings}")
-    active_client = client or OpenRouterClient()
+    active_client = client or openrouter_client_from_config(config)
     response = active_client.chat_completion(
         model=str(model_config["request_model_id"]),
         prompt=prompt,
@@ -331,6 +332,13 @@ def fetch_raw_record(
         "response": response,
         "run_date_utc": datetime.now(timezone.utc).isoformat(),
     }
+
+
+def openrouter_client_from_config(config: dict[str, Any]) -> OpenRouterClient:
+    retry_policy = config.get("retry_policy") if isinstance(config.get("retry_policy"), dict) else {}
+    configured_max_retries = retry_policy.get("max_retries_per_record")
+    max_retries = int(configured_max_retries) if configured_max_retries is not None else None
+    return OpenRouterClient(max_retries=max_retries)
 
 
 def execute_concurrent(

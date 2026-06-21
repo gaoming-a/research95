@@ -40,9 +40,10 @@
   claim. As of G7.3, later-model post-run audit and five-model synthesis
   scaffolds also pass in waiting state without API calls or raw-output reads.
   Kimi K2.6 must still pass a reasoning-disabled clean rerun before
-  Devstral/Gemini: the current clean prefix is 551/686 records and stopped on
-  OpenRouter provider 429, so the next action is lower-concurrency Kimi
-  resume.
+  Devstral/Gemini: the latest clean attempt reached 682/686 parse-valid
+  records but was blocked because four records were OpenRouter top-level 429
+  error objects. The next action is the client retry repair plus a clean Kimi
+  rerun, not Devstral/Gemini.
 - `experiments/evp8_journal_scale_execution_plan_20260620.md`: no-API
   execution plan for the journal-scale EVP-8 route. It defines the planned
   E0-E6 full-ladder boundary, target five-model set, phased DeepSeek/Qwen first

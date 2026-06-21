@@ -45,6 +45,8 @@ def redact_sensitive_text(text: str, api_key: str | None = None) -> str:
         redacted = redacted.replace(api_key, "<redacted-openrouter-key>")
     key_prefix = "".join(["sk-", "or-v1-"])
     redacted = re.sub(re.escape(key_prefix) + r"[A-Za-z0-9_-]+", "<redacted-openrouter-key>", redacted)
+    redacted = re.sub(r'("user_id"\s*:\s*")[^"]+(")', r"\1<redacted-openrouter-user>\2", redacted)
+    redacted = re.sub(r"\buser_[A-Za-z0-9]+\b", "<redacted-openrouter-user>", redacted)
     return redacted
 
 
@@ -53,6 +55,18 @@ def safe_error_detail(text: str, api_key: str | None = None) -> str:
     if len(cleaned) > MAX_ERROR_DETAIL_CHARS:
         return cleaned[:MAX_ERROR_DETAIL_CHARS] + "...<truncated>"
     return cleaned
+
+
+def response_error_code(error: dict[str, Any]) -> int | None:
+    code = error.get("code")
+    if isinstance(code, int):
+        return code
+    if isinstance(code, str):
+        try:
+            return int(code)
+        except ValueError:
+            return None
+    return None
 
 
 class OpenAICompatibleChatClient:
@@ -168,6 +182,16 @@ class OpenAICompatibleChatClient:
                 data = json.loads(raw)
                 if not isinstance(data, dict):
                     raise RuntimeError("OpenRouter response JSON was not an object")
+                error = data.get("error")
+                if isinstance(error, dict):
+                    code = response_error_code(error)
+                    if code in RETRYABLE_HTTP_STATUS and attempt < attempts_allowed:
+                        time.sleep(self.retry_backoff_seconds * attempt)
+                        continue
+                    safe_details = safe_error_detail(json.dumps(data, ensure_ascii=False), api_key=self.api_key)
+                    raise RuntimeError(
+                        f"{self.provider_name} response error after {attempt} attempt(s): {safe_details}"
+                    )
                 return data, attempt
             except urllib.error.HTTPError as exc:
                 details = exc.read().decode("utf-8", errors="replace")

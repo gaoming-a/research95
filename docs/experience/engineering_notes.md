@@ -3130,3 +3130,20 @@ This file starts fresh for the patch-verification project.
   consider runner-level retry/backoff changes after documenting the rate-limit
   diagnosis and keeping request payload, frozen packets, prompt, and schema
   unchanged.
+
+## 2026-06-22 EVP-8 OpenRouter top-level error repair
+
+- OpenRouter can return an HTTP 200 JSON body with a top-level `error` object
+  whose `code` is 429. That is still a rate-limit/provider failure, not a
+  model completion. The chat client must retry it like an HTTP 429 rather than
+  returning it to the runner as a successful response.
+- If such a top-level error is written into raw JSONL, the run is polluted even
+  if the remaining records are valid. Keep that file as an ignored blocked
+  attempt and rerun the model from a clean canonical path after the client
+  repair; do not surgically edit the raw JSONL into a passed result.
+- Keep retry boundaries auditable. For EVP-8 later-model runs, instantiate the
+  OpenRouter client with the local config/protocol `max_retries_per_record`
+  and write the retry policy into the raw-output-free summary.
+- Sanitize provider error details before surfacing them. OpenRouter error
+  payloads can include a platform `user_id`; redact it alongside API keys in
+  human-facing errors and summaries.

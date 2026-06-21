@@ -17249,3 +17249,37 @@ Next Execute:
 - 若再次 provider 429，则继续按执行链路问题处理：降低并发或等待后 resume；
 - 只有当 Kimi clean rerun 生成 summary 且 later-model audit 通过后，才允许进入
   Devstral/Gemini 或 five-model synthesis。
+
+Fifth Diagnose / Repair:
+
+- `--resume --concurrency 2` 已写满 686 条 canonical ignored raw records，并生成
+  Kimi clean summary，但 final gate 仍正确阻断；
+- 结构化结果：
+  - `review_count=686`；
+  - `parse_valid_count=682`；
+  - `invalid_parse_count=4`；
+  - invalid 分布为 E0=2、E2=1、E6=1；
+  - `usage_cost_gate=blocked`、`provider_metadata_gate=blocked`；
+  - actual model/provider missing 均为 4；
+  - `request_reasoning={"enabled": false}`、`request_include_reasoning=false`
+    已记录在 summary/raw metadata；
+- 4 条 invalid raw record 的共同结构是：
+  - `raw_response_text` 为空；
+  - response 顶层只有 `error`、`latency_ms`、`request_attempts`；
+  - `error.code=429`、`error.message="Provider returned error"`；
+  - 无 choices、usage、actual model、actual provider 或 OpenRouter metadata。
+- 问题类型定位为执行链路 bug：OpenRouter 返回 HTTP 200 JSON 但顶层含 retryable
+  `error.code=429` 时，client 没有把它当作 transport/rate-limit failure 重试，
+  runner 因而把 provider error 写入 raw prefix。
+- Repair:
+  1. `src/cross_review/openrouter.py` 将顶层 JSON `error.code` 为 429/5xx
+     的 response 纳入已有 retry budget；最终失败时仍只输出 sanitized detail；
+  2. 同步 redaction，避免 OpenRouter error detail 中的 `user_id` 被写入
+     human-facing output；
+  3. `scripts/run_evp8_later_model_full.py` 用 local config/protocol 中的
+     `retry_policy.max_retries_per_record` 创建 OpenRouter client，并把
+     retry policy 写入 tracked summary；
+  4. 将本次 682/686 blocked clean attempt 移入 ignored backup；
+  5. 提交同步后，从空 canonical Kimi path 重新跑完整 reasoning-disabled Kimi。
+- 不允许修补 4 条 raw record 后把本次 run 当作 passed；该 raw 文件已经包含
+  provider error records，必须作为 ignored blocked attempt 保留。

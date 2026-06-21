@@ -19,10 +19,12 @@
 - 当前本地 ahead 状态：
   - 本轮 post-push inspection 显示 `git status --short --branch` 为
     `main...origin/main`；
-  - `7308910 Add EVP-8 Kimi reasoning clean rerun gate` 已 push 到远端；
-  - 当前没有未同步模型结果、`.env` 或 local config；ignored raw outputs 里有
-    Kimi reasoning-disabled clean rerun 的 551/686 ordered prefix，尚无 tracked
-    summary；最终仍以命令输出和 `git log -1 --oneline` 为准。
+  - 远端已包含 Kimi reasoning-disabled clean-rerun gate 和随后 429 resume
+    boundary 文档；精确 hash 以 `git log -1 --oneline` 和远端 log 为准；
+  - 当前没有 passed Kimi 模型结果、`.env` 或 local config；ignored raw outputs
+    里有 Kimi reasoning-disabled clean rerun 的 blocked attempt，686 records
+    中 682 parse-valid、4 条为 OpenRouter top-level 429 error records；最终仍以
+    命令输出和 `git log -1 --oneline` 为准。
 - 当前远端已同步锚点：
   - `7308910 Add EVP-8 Kimi reasoning clean rerun gate`：远端已包含 Kimi
     reasoning-disabled routing policy、OpenRouter request controls、preflight/
@@ -71,9 +73,11 @@
   five-model synthesis scaffold 已通过 waiting-state check；用户已授权后续模型
   API，但首个 Kimi 686-record run 被 later-model gate 正确阻断，原因是
   Kimi 默认 reasoning 导致 79 条 invalid JSON output。当前下一步是按
-  tracked Kimi reasoning-disabled policy 执行 clean full rerun；clean rerun
-  当前在 551/686 ordered raw prefix 后被 OpenRouter provider 429 中断，需先
-  lower-concurrency resume；Kimi audit 通过前不启动 Devstral/Gemini。
+  tracked Kimi reasoning-disabled policy 执行 clean full rerun；最新
+  reasoning-disabled attempt 已达到 682/686 parse-valid，但 4 条顶层
+  OpenRouter 429 error objects 被错误写入 raw，需先提交 client retry repair、
+  备份 blocked attempt 并从空 canonical path 重新跑 Kimi；Kimi audit 通过前
+  不启动 Devstral/Gemini。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。最近一次已确认
   `git push origin main` 成功；最终是否仍 ahead 仍以
@@ -104,7 +108,9 @@
     audit 当前 `all_available = true`，packet `ready`，runner/preflight
     strict checks 和 full check-only 已通过；`OPENROUTER_API_KEY` presence
     已通过；G7.3 post-run audit/five-model synthesis scaffolds 当前分别为
-    `waiting_for_execution` 和 `waiting_for_later_models`；仍不授权 API；
+    `waiting_for_execution` 和 `waiting_for_later_models`；Kimi
+    reasoning-disabled attempt 尚未通过 later-model audit，仍不得启动
+    Devstral/Gemini；
   - raw-output-free tracked summaries and audits。
 - 当前 evidence-level 边界：EVP-7 是 E0/E2/E4/E6 four-anchor pilot，不是
   完整 E0-E6 adjacent-difference ladder；E1/E3/E5 不应补插进当前 artifacts，
