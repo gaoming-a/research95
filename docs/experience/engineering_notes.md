@@ -3008,3 +3008,16 @@ This file starts fresh for the patch-verification project.
 - For EVP-8 first-batch full runs, `data/reviews/*_full_summary.json` is the
   commit-worthy audit surface; `outputs/evp8_phase1_deepseek_qwen_full/**`
   remains local evidence and must not be staged.
+
+## 2026-06-21 EVP-8 G5 packet after partial full execution
+
+- `write_evp8_first_batch_full_run_packet.py --check` is a pre-full-run handoff
+  gate. It intentionally checks that expected DeepSeek and Qwen full outputs do
+  not yet exist.
+- After DeepSeek full execution has passed and Qwen is still waiting, rerunning
+  the G5 packet check will mark the packet `blocked` because the DeepSeek raw
+  and summary outputs now exist. That is a gate-order misuse, not a model or
+  protocol failure.
+- For the pre-Qwen gate, use strict preflight, full-scope runner check-only,
+  first-batch full-result audit, and first-batch synthesis. Do not regenerate
+  the G5 packet snapshot after partial full execution.

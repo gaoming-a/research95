@@ -16471,3 +16471,88 @@ Decision:
 - 这是同步状态措辞修正，不是新实验；
 - Qwen full run 仍未执行，下一步仍是是否授权 Qwen 686-call first-batch
   full run。
+
+## 2026-06-21 EVP-8 G6 Qwen first-batch full-run authorization
+
+Inspect:
+
+- 用户回复“授权 继续”，结合上一轮最终边界“Qwen 需要单独明确授权后再执行”，
+  本轮解释为授权执行 Qwen G6 first-batch full run；
+- `git status --short --branch` 显示 `main...origin/main`，工作区 clean；
+- `git log -5 --oneline` 显示远端已包含：
+  - `9e4a756 Clarify EVP-8 G6 sync state wording`；
+  - `d9a8391 Record EVP-8 DeepSeek G6 full result`；
+  - `72f1fb5 Checkpoint EVP-8 full-run raw responses`；
+- Qwen full-run expected outputs 当前不存在：
+  - `outputs/evp8_phase1_deepseek_qwen_full/qwen_qwen3.7-max/raw_responses.jsonl`；
+  - `data/reviews/evp8_qwen_qwen3.7-max_full_summary.json`；
+- 当前 Python 进程中没有 `run_evp8_deepseek_qwen_smoke.py` 残留 runner。
+
+Plan:
+
+1. 重新运行 no-API / no-raw gates：
+   - strict local preflight；
+   - full-scope check-only；
+   - first-batch full-result audit；
+   - first-batch synthesis；
+2. 若 gates 仍保持 DeepSeek passed / Qwen waiting，则执行 Qwen G6 full run：
+   `python scripts\run_evp8_deepseek_qwen_smoke.py --execute --run-scope full --config configs\evp8_deepseek_qwen.local.json --model-id qwen/qwen3.7-max`；
+3. 使用 checkpointing 后的 runner，监控 ignored raw JSONL 行数，避免 long run
+   再次不可观测；
+4. 执行完成后立即运行 first-batch full audit 和 synthesis；
+5. 只在 audit 通过后同步更新 short-state、EVP-8 execution plan、INDEX 和
+   engineering notes；提交并同步 GitHub。
+
+Acceptance:
+
+- Qwen summary 必须 raw-output-free，不包含 prompt text 或 raw response text；
+- Qwen 必须使用同一 EVP-8 v0.1 frozen candidate set、prompt、schema、parser、
+  temperature、retry policy 和 evaluator joins；
+- audit 必须从 `partial_waiting_for_remaining_model` 推进到 `passed`；
+- synthesis 必须从 `partial_waiting_for_qwen` 推进到 first-batch two-model
+  passed status；
+- 若 Qwen parse/schema/cost/model/provider/raw-output boundary 失败，停止并诊断，
+  不启动 later-model execution。
+
+Diagnose:
+
+- 首轮 pre-Qwen gate 中误运行了
+  `python scripts\write_evp8_first_batch_full_run_packet.py --check`；
+- 该脚本是 G5 pre-full-run packet gate，要求 DeepSeek/Qwen full outputs 均不存在；
+- DeepSeek full run 已完成后再次运行它，会因为 DeepSeek raw/summary 已存在而把
+  packet 快照改写为 `blocked`，并连带使 result audit 报 `failed`；
+- 问题类型：执行链路/计划 gate 顺序问题，不是 Qwen API、protocol、prompt、
+  schema、candidate set 或 DeepSeek summary 问题。
+
+Repair:
+
+- 恢复 G5 packet 和 first-batch result audit 快照到 DeepSeek passed /
+  Qwen waiting 的 committed partial 状态；
+- Qwen 前置 gate 改为：
+  - strict local preflight；
+  - full-scope check-only；
+  - first-batch full-result audit；
+  - first-batch synthesis；
+- 不再在 DeepSeek full outputs 已存在后运行 G5 packet `--check`；
+- 同步更新 engineering notes 和 EVP-8 execution plan，避免后续会话重复误用。
+
+Verify:
+
+- `python scripts\preflight_evp8_deepseek_qwen.py --config configs\evp8_deepseek_qwen.local.json --strict-api-ready`
+  通过：
+  - `preflight_status = passed`；
+  - `credential_presence_ready = true`；
+  - `api_key_values_printed = false`；
+- `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --run-scope full --config configs\evp8_deepseek_qwen.local.json`
+  通过：
+  - `check_only_status = passed`；
+  - `packet_count = 686`；
+  - `prompt_hashes_unique_count = 686`；
+  - `api_call_attempted = false`；
+- `python scripts\audit_evp8_first_batch_full_results.py --check` 通过：
+  - `audit_status = partial_waiting_for_remaining_model`；
+  - DeepSeek `status = passed`；
+  - Qwen `status = waiting_for_execution`；
+- `python scripts\summarize_evp8_first_batch_full_synthesis.py --check` 通过：
+  - `synthesis_status = partial_waiting_for_qwen`；
+  - `raw_outputs_read = false`。

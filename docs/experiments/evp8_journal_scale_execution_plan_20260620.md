@@ -336,6 +336,11 @@ Gate G6: DeepSeek/Qwen first-batch full run.
   boundary checks. That technical condition is now satisfied; Qwen still must
   use the same frozen configuration and should be treated as the next explicit
   execution decision.
+- Do not rerun the G5 first-batch full-run packet check after DeepSeek full
+  outputs exist. That packet is the pre-full-run handoff snapshot and includes
+  an expected-output absence guard. Before Qwen, use strict preflight,
+  full-scope check-only, first-batch full-result audit, and synthesis status as
+  the gate.
 - Qwen must use the same EVP-8 v0.1 frozen packets, prompt, schema, parser,
   temperature, retry policy, and evaluator joins as DeepSeek.
 - After Qwen passes audit, produce a tracked two-model first-batch synthesis.
