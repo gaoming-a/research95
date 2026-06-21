@@ -1,0 +1,80 @@
+{
+  "api_execution_authorized": false,
+  "candidate_set": "data/protocols/evp8_candidate_set_v0_1.json",
+  "config_id": "evp8_later_models_phase2_v0_1",
+  "cost_observability_dry_run": "data/protocols/evp8_cost_observability_dry_run_v0_1.json",
+  "deterministic_tool_baseline_dry_run": "data/protocols/evp8_deterministic_tool_baseline_dry_run_v0_1.json",
+  "env": ".env",
+  "execution_requires_explicit_execute_flag": true,
+  "full": {
+    "candidate_count": 98,
+    "levels": [
+      "E0",
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "E5",
+      "E6"
+    ],
+    "output_dir": "outputs/evp8_phase2_later_models_full",
+    "planned_calls_per_model": 686
+  },
+  "max_output_tokens": 4096,
+  "models": [
+    {
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model_id": "moonshotai/kimi-k2.6",
+      "provider_preferences": {
+        "allow_fallbacks": false,
+        "require_parameters": true
+      },
+      "provider_route": "openrouter_pinned_exact_model_id",
+      "request_model_id": "moonshotai/kimi-k2.6"
+    },
+    {
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model_id": "mistralai/devstral-2512",
+      "provider_preferences": {
+        "allow_fallbacks": false,
+        "require_parameters": true
+      },
+      "provider_route": "openrouter_pinned_exact_model_id",
+      "request_model_id": "mistralai/devstral-2512"
+    },
+    {
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model_id": "google/gemini-2.5-flash",
+      "provider_preferences": {
+        "allow_fallbacks": false,
+        "require_parameters": true
+      },
+      "provider_route": "openrouter_pinned_exact_model_id",
+      "request_model_id": "google/gemini-2.5-flash"
+    }
+  ],
+  "openrouter_catalog_audit": "data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json",
+  "openrouter_metadata_header": "enabled",
+  "overwrite_policy": "refuse_if_output_exists",
+  "packet_dry_run_summary": "data/protocols/evp8_evidence_packet_dry_run_summary_v0_1.json",
+  "planning_cost_ceiling_usd": 30.0,
+  "prompt_boundary_audit": "data/protocols/evp8_prompt_boundary_audit_v0_1.json",
+  "prompt_manifest": "data/protocols/evp8_prompt_manifest_v0_1.json",
+  "prompt_template": "prompts/evp8_visible_evidence_merge_gate_v0_1.md",
+  "protocol_audit_summary": "data/protocols/evp8_protocol_v0_1_audit_summary.json",
+  "protocol_spec": "data/protocols/evp8_protocol_v0_1.json",
+  "raw_output_policy": "ignored_outputs_only",
+  "record_actual_model_id": true,
+  "record_actual_provider": true,
+  "record_cost_currency": true,
+  "record_cost_source": true,
+  "record_openrouter_metadata": true,
+  "record_provider_cost_usd": true,
+  "retry_policy": {
+    "max_retries_per_record": 1,
+    "no_silent_retry_for_parse_invalid": true,
+    "retry_only_on_transport_or_rate_limit": true
+  },
+  "schema_dry_run_summary": "data/protocols/evp8_schema_dry_run_summary_v0_1.json",
+  "temperature": 0.0
+}

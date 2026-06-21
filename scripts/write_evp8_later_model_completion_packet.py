@@ -16,6 +16,9 @@ FULL_CHECK_ONLY_PATH = REPO_ROOT / "data" / "protocols" / "evp8_deepseek_qwen_fi
 FIRST_BATCH_AUDIT_PATH = REPO_ROOT / "data" / "protocols" / "evp8_deepseek_qwen_first_batch_full_result_audit_v0_1.json"
 FIRST_BATCH_SYNTHESIS_PATH = REPO_ROOT / "data" / "protocols" / "evp8_deepseek_qwen_first_batch_full_synthesis_v0_1.json"
 CATALOG_AUDIT_PATH = REPO_ROOT / "data" / "protocols" / "evp8_later_model_openrouter_catalog_audit_v0_1.json"
+LOCAL_CONFIG_PLAN_PATH = REPO_ROOT / "data" / "protocols" / "evp8_later_model_local_config_plan_v0_1.json"
+LATER_PREFLIGHT_PATH = REPO_ROOT / "data" / "protocols" / "evp8_later_model_preflight_summary_v0_1.json"
+LATER_CHECK_ONLY_PATH = REPO_ROOT / "data" / "protocols" / "evp8_later_model_full_check_only_v0_1.json"
 DEFAULT_JSON_OUT = REPO_ROOT / "data" / "protocols" / "evp8_later_model_completion_packet_v0_1.json"
 DEFAULT_MD_OUT = REPO_ROOT / "docs" / "experiments" / "evp8_later_model_completion_packet_v0_1.md"
 
@@ -124,6 +127,9 @@ def build_packet() -> dict[str, Any]:
     first_batch_audit = read_json(FIRST_BATCH_AUDIT_PATH)
     first_batch_synthesis = read_json(FIRST_BATCH_SYNTHESIS_PATH)
     catalog_audit = read_json(CATALOG_AUDIT_PATH)
+    local_config_plan = read_json(LOCAL_CONFIG_PLAN_PATH)
+    later_preflight = read_json(LATER_PREFLIGHT_PATH)
+    later_check_only = read_json(LATER_CHECK_ONLY_PATH)
 
     model_ids = later_model_ids(protocol)
     catalog_ids = catalog_result_ids(catalog_audit)
@@ -144,6 +150,18 @@ def build_packet() -> dict[str, Any]:
         check("later_model_ids_match_protocol", model_ids == EXPECTED_LATER_MODELS, model_ids),
         check("openrouter_catalog_all_available", catalog_audit.get("all_available") is True, catalog_audit.get("all_available")),
         check("openrouter_catalog_ids_match_protocol", catalog_ids == EXPECTED_LATER_MODELS, catalog_ids),
+        check("later_local_config_target_ignored", local_config_plan.get("target_is_ignored_local_config") is True, local_config_plan.get("target_is_ignored_local_config")),
+        check("later_local_config_no_keys", local_config_plan.get("contains_api_key_values") is False, local_config_plan.get("contains_api_key_values")),
+        check("later_preflight_structural_ready", later_preflight.get("structural_ready") is True, later_preflight.get("structural_ready")),
+        check("later_preflight_no_api", later_preflight.get("api_call_attempted") is False, later_preflight.get("api_call_attempted")),
+        check("later_preflight_no_raw_outputs", later_preflight.get("raw_outputs_generated") is False, later_preflight.get("raw_outputs_generated")),
+        check("later_preflight_no_key_values", later_preflight.get("api_key_values_printed") is False, later_preflight.get("api_key_values_printed")),
+        check("later_check_only_passed", later_check_only.get("check_only_status") == "passed", later_check_only.get("check_only_status")),
+        check("later_check_only_no_api", later_check_only.get("api_call_attempted") is False, later_check_only.get("api_call_attempted")),
+        check("later_check_only_no_raw_outputs", later_check_only.get("raw_outputs_generated") is False, later_check_only.get("raw_outputs_generated")),
+        check("later_check_only_packet_count", later_check_only.get("packet_count_per_model") == 686, later_check_only.get("packet_count_per_model")),
+        check("later_check_only_total_calls", later_check_only.get("expected_total_later_model_calls") == 2058, later_check_only.get("expected_total_later_model_calls")),
+        check("later_check_only_model_ids", later_check_only.get("planned_later_model_ids") == EXPECTED_LATER_MODELS, later_check_only.get("planned_later_model_ids")),
         check("expected_later_outputs_absent", all(item["passed"] for item in output_absence), output_absence),
     ]
     packet_status = "ready" if all(item["passed"] for item in checks) else "blocked"
@@ -162,6 +180,11 @@ def build_packet() -> dict[str, Any]:
         "requires_explicit_user_command": True,
         "runner_implementation_required_before_execution": True,
         "later_model_preflight_required_before_execution": True,
+        "runner_implementation_checked": True,
+        "later_model_structural_preflight_checked": True,
+        "later_model_full_check_only_passed": later_check_only.get("check_only_status") == "passed",
+        "later_model_strict_preflight_ready_for_user_execute_command": later_preflight.get("ready_for_user_execute_command"),
+        "later_model_credential_presence_ready": later_preflight.get("credential_presence_ready"),
         "run_scope": "full",
         "planned_calls_per_later_model": planned_calls,
         "planned_later_model_count": len(model_ids),
@@ -200,6 +223,16 @@ def build_packet() -> dict[str, Any]:
             "all_available": catalog_audit.get("all_available"),
             "model_ids": catalog_ids,
         },
+        "later_model_readiness": {
+            "local_config_plan": display_path(LOCAL_CONFIG_PLAN_PATH),
+            "preflight_summary": display_path(LATER_PREFLIGHT_PATH),
+            "full_check_only_summary": display_path(LATER_CHECK_ONLY_PATH),
+            "preflight_status": later_preflight.get("preflight_status"),
+            "structural_ready": later_preflight.get("structural_ready"),
+            "credential_presence_ready": later_preflight.get("credential_presence_ready"),
+            "ready_for_user_execute_command": later_preflight.get("ready_for_user_execute_command"),
+            "check_only_status": later_check_only.get("check_only_status"),
+        },
         "models": build_model_records(model_ids),
         "expected_output_absence": output_absence,
         "checks": checks,
@@ -210,10 +243,13 @@ def build_packet() -> dict[str, Any]:
             "python scripts\\run_evp8_deepseek_qwen_smoke.py --check-only --run-scope full --config configs\\evp8_deepseek_qwen.local.json",
             "python scripts\\audit_evp8_first_batch_full_results.py --check",
             "python scripts\\summarize_evp8_first_batch_full_synthesis.py --check",
+            "python scripts\\create_evp8_later_model_local_config.py --write --force",
+            "python scripts\\preflight_evp8_later_models.py --config configs\\evp8_later_models.local.json --allow-missing-credentials",
+            "python scripts\\run_evp8_later_model_full.py --check-only --run-scope full --config configs\\evp8_later_models.local.json --allow-missing-credentials",
             "python scripts\\write_evp8_later_model_completion_packet.py --check",
         ],
         "post_later_model_requirements": [
-            "Implement and verify later-model runner/preflight before any model call.",
+            "Run strict later-model preflight before any model call.",
             "Run each later model only after explicit user authorization.",
             "Write raw responses only under ignored outputs/evp8_phase2_later_models_full/.",
             "Write tracked raw-output-free summaries under data/reviews/.",
@@ -224,7 +260,7 @@ def build_packet() -> dict[str, Any]:
             "Any G7 packet check fails.",
             "OpenRouter public catalog no longer contains one of the pinned model IDs.",
             "OPENROUTER_API_KEY is missing from ignored local environment before execution.",
-            "Later-model runner or local preflight is missing or unaudited.",
+            "Later-model runner, local config, preflight, or check-only summary is missing or unaudited.",
             "Any expected later-model output already exists before execution without an explicit resume path.",
             "Any raw response or rendered prompt text would be written to tracked files.",
             "Any model silently changes model ID or provider route without being recorded.",
@@ -247,9 +283,21 @@ def write_markdown(path: Path, packet: dict[str, Any]) -> None:
         f"- API call attempted: `{str(packet['api_call_attempted']).lower()}`",
         f"- Raw outputs generated/read: `{str(packet['raw_outputs_generated']).lower()}` / `{str(packet['raw_outputs_read']).lower()}`",
         f"- Execution authorized by this packet: `{str(packet['execution_authorized_by_packet']).lower()}`",
+        f"- Runner implementation checked: `{str(packet['runner_implementation_checked']).lower()}`",
+        f"- Later-model structural preflight checked: `{str(packet['later_model_structural_preflight_checked']).lower()}`",
+        f"- Later-model full check-only passed: `{str(packet['later_model_full_check_only_passed']).lower()}`",
+        f"- Strict preflight ready for execute: `{str(packet['later_model_strict_preflight_ready_for_user_execute_command']).lower()}`",
         f"- Planned calls per later model: `{packet['planned_calls_per_later_model']}`",
         f"- Planned total later-model calls: `{packet['planned_total_later_model_calls']}`",
         f"- Planning cost ceiling: `USD {packet['cost_policy']['planning_cost_ceiling_usd']}`",
+        "",
+        "## Later-Model Readiness",
+        "",
+        f"- Local config plan: `{packet['later_model_readiness']['local_config_plan']}`",
+        f"- Preflight summary: `{packet['later_model_readiness']['preflight_summary']}`",
+        f"- Full check-only summary: `{packet['later_model_readiness']['full_check_only_summary']}`",
+        f"- Preflight status: `{packet['later_model_readiness']['preflight_status']}`",
+        f"- Credential presence ready: `{str(packet['later_model_readiness']['credential_presence_ready']).lower()}`",
         "",
         "## Models",
         "",

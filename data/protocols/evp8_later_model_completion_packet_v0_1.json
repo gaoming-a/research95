@@ -78,6 +78,70 @@
       "passed": true
     },
     {
+      "check": "later_local_config_target_ignored",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "later_local_config_no_keys",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "later_preflight_structural_ready",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "later_preflight_no_api",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "later_preflight_no_raw_outputs",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "later_preflight_no_key_values",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "later_check_only_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "later_check_only_no_api",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "later_check_only_no_raw_outputs",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "later_check_only_packet_count",
+      "detail": 686,
+      "passed": true
+    },
+    {
+      "check": "later_check_only_total_calls",
+      "detail": 2058,
+      "passed": true
+    },
+    {
+      "check": "later_check_only_model_ids",
+      "detail": [
+        "moonshotai/kimi-k2.6",
+        "mistralai/devstral-2512",
+        "google/gemini-2.5-flash"
+      ],
+      "passed": true
+    },
+    {
       "check": "expected_later_outputs_absent",
       "detail": [
         {
@@ -195,9 +259,26 @@
     "python scripts\\run_evp8_deepseek_qwen_smoke.py --check-only --run-scope full --config configs\\evp8_deepseek_qwen.local.json",
     "python scripts\\audit_evp8_first_batch_full_results.py --check",
     "python scripts\\summarize_evp8_first_batch_full_synthesis.py --check",
+    "python scripts\\create_evp8_later_model_local_config.py --write --force",
+    "python scripts\\preflight_evp8_later_models.py --config configs\\evp8_later_models.local.json --allow-missing-credentials",
+    "python scripts\\run_evp8_later_model_full.py --check-only --run-scope full --config configs\\evp8_later_models.local.json --allow-missing-credentials",
     "python scripts\\write_evp8_later_model_completion_packet.py --check"
   ],
+  "later_model_credential_presence_ready": false,
+  "later_model_full_check_only_passed": true,
   "later_model_preflight_required_before_execution": true,
+  "later_model_readiness": {
+    "check_only_status": "passed",
+    "credential_presence_ready": false,
+    "full_check_only_summary": "data/protocols/evp8_later_model_full_check_only_v0_1.json",
+    "local_config_plan": "data/protocols/evp8_later_model_local_config_plan_v0_1.json",
+    "preflight_status": "structural_only",
+    "preflight_summary": "data/protocols/evp8_later_model_preflight_summary_v0_1.json",
+    "ready_for_user_execute_command": false,
+    "structural_ready": true
+  },
+  "later_model_strict_preflight_ready_for_user_execute_command": false,
+  "later_model_structural_preflight_checked": true,
   "max_output_tokens": 4096,
   "model_visible_levels": [
     "E0",
@@ -265,7 +346,7 @@
   "planned_later_model_count": 3,
   "planned_total_later_model_calls": 2058,
   "post_later_model_requirements": [
-    "Implement and verify later-model runner/preflight before any model call.",
+    "Run strict later-model preflight before any model call.",
     "Run each later model only after explicit user authorization.",
     "Write raw responses only under ignored outputs/evp8_phase2_later_models_full/.",
     "Write tracked raw-output-free summaries under data/reviews/.",
@@ -291,12 +372,13 @@
     "retry_only_on_transport_or_rate_limit": true
   },
   "run_scope": "full",
+  "runner_implementation_checked": true,
   "runner_implementation_required_before_execution": true,
   "stop_gates": [
     "Any G7 packet check fails.",
     "OpenRouter public catalog no longer contains one of the pinned model IDs.",
     "OPENROUTER_API_KEY is missing from ignored local environment before execution.",
-    "Later-model runner or local preflight is missing or unaudited.",
+    "Later-model runner, local config, preflight, or check-only summary is missing or unaudited.",
     "Any expected later-model output already exists before execution without an explicit resume path.",
     "Any raw response or rendered prompt text would be written to tracked files.",
     "Any model silently changes model ID or provider route without being recorded.",

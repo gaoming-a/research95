@@ -1,0 +1,30 @@
+{
+  "api_call_attempted": false,
+  "api_execution_authorized_in_config": false,
+  "api_key_env_names": [
+    "OPENROUTER_API_KEY"
+  ],
+  "cohort_id": "EVP-8",
+  "config_id": "evp8_later_models_phase2_v0_1",
+  "contains_api_key_values": false,
+  "execution_requires_explicit_execute_flag": true,
+  "full_planned_calls_per_model": 686,
+  "local_config_write_attempted": true,
+  "phase2_models": [
+    "moonshotai/kimi-k2.6",
+    "mistralai/devstral-2512",
+    "google/gemini-2.5-flash"
+  ],
+  "planned_later_model_count": 3,
+  "planned_total_later_model_calls": 2058,
+  "planning_cost_ceiling_usd": 30.0,
+  "provider_routes": [
+    "openrouter_pinned_exact_model_id",
+    "openrouter_pinned_exact_model_id",
+    "openrouter_pinned_exact_model_id"
+  ],
+  "raw_outputs_generated": false,
+  "safe_next_command": "python scripts\\preflight_evp8_later_models.py --config configs\\evp8_later_models.local.json --allow-missing-credentials",
+  "target_is_ignored_local_config": true,
+  "target_local_config": "configs/evp8_later_models.local.json"
+}

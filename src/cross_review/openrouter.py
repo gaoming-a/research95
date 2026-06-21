@@ -96,6 +96,8 @@ class OpenAICompatibleChatClient:
         temperature: float = 0.2,
         top_p: float = 1.0,
         max_tokens: int = 4096,
+        provider: dict[str, Any] | None = None,
+        metadata_enabled: bool = False,
     ) -> dict[str, Any]:
         return self.chat_completion_messages(
             model=model,
@@ -103,6 +105,8 @@ class OpenAICompatibleChatClient:
             temperature=temperature,
             top_p=top_p,
             max_tokens=max_tokens,
+            provider=provider,
+            metadata_enabled=metadata_enabled,
         )
 
     def chat_completion_messages(
@@ -112,6 +116,8 @@ class OpenAICompatibleChatClient:
         temperature: float = 0.2,
         top_p: float = 1.0,
         max_tokens: int = 4096,
+        provider: dict[str, Any] | None = None,
+        metadata_enabled: bool = False,
     ) -> dict[str, Any]:
         payload = {
             "model": model,
@@ -120,15 +126,20 @@ class OpenAICompatibleChatClient:
             "top_p": top_p,
             "max_tokens": max_tokens,
         }
+        if provider is not None:
+            payload["provider"] = provider
         body = json.dumps(payload).encode("utf-8")
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+        }
+        if metadata_enabled:
+            headers["X-OpenRouter-Metadata"] = "enabled"
         request = urllib.request.Request(
             f"{self.base_url}/chat/completions",
             data=body,
             method="POST",
-            headers={
-                "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json",
-            },
+            headers=headers,
         )
         start = time.perf_counter()
         data, attempts = self._open_json_with_retries(request)

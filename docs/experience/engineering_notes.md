@@ -3034,3 +3034,18 @@ This file starts fresh for the patch-verification project.
 - Do not run Kimi/Devstral/Gemini from command templates until the real runner
   exists, the ignored local config and `OPENROUTER_API_KEY` pass preflight, and
   each model has explicit execution authorization.
+
+## 2026-06-21 EVP-8 G7.1 OpenRouter runner/preflight boundary
+
+- Keep structural readiness and strict API readiness separate. The later-model
+  preflight can pass structurally with `--allow-missing-credentials`, but
+  `ready_for_user_execute_command` must remain false until `OPENROUTER_API_KEY`
+  is set in ignored local environment.
+- The later-model runner should use exact model IDs and OpenRouter provider
+  preferences with fallbacks disabled, and request metadata with
+  `X-OpenRouter-Metadata: enabled`. The tracked summary must record aggregate
+  actual-model/provider/cost observability, while raw responses stay only under
+  ignored `outputs/`.
+- Do not treat OpenRouter `usage` token counts as cost. If provider-reported
+  USD cost is absent, the executed summary must block on unknown cost rather
+  than silently estimating from an unrelated price sheet.

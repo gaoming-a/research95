@@ -4,9 +4,21 @@
 - API call attempted: `false`
 - Raw outputs generated/read: `false` / `false`
 - Execution authorized by this packet: `false`
+- Runner implementation checked: `true`
+- Later-model structural preflight checked: `true`
+- Later-model full check-only passed: `true`
+- Strict preflight ready for execute: `false`
 - Planned calls per later model: `686`
 - Planned total later-model calls: `2058`
 - Planning cost ceiling: `USD 30.0`
+
+## Later-Model Readiness
+
+- Local config plan: `data/protocols/evp8_later_model_local_config_plan_v0_1.json`
+- Preflight summary: `data/protocols/evp8_later_model_preflight_summary_v0_1.json`
+- Full check-only summary: `data/protocols/evp8_later_model_full_check_only_v0_1.json`
+- Preflight status: `structural_only`
+- Credential presence ready: `false`
 
 ## Models
 
@@ -24,6 +36,9 @@
 1. `python scripts\run_evp8_deepseek_qwen_smoke.py --check-only --run-scope full --config configs\evp8_deepseek_qwen.local.json`
 1. `python scripts\audit_evp8_first_batch_full_results.py --check`
 1. `python scripts\summarize_evp8_first_batch_full_synthesis.py --check`
+1. `python scripts\create_evp8_later_model_local_config.py --write --force`
+1. `python scripts\preflight_evp8_later_models.py --config configs\evp8_later_models.local.json --allow-missing-credentials`
+1. `python scripts\run_evp8_later_model_full.py --check-only --run-scope full --config configs\evp8_later_models.local.json --allow-missing-credentials`
 1. `python scripts\write_evp8_later_model_completion_packet.py --check`
 
 ## Planned Execute Command Templates
@@ -40,7 +55,7 @@
 - Any G7 packet check fails.
 - OpenRouter public catalog no longer contains one of the pinned model IDs.
 - OPENROUTER_API_KEY is missing from ignored local environment before execution.
-- Later-model runner or local preflight is missing or unaudited.
+- Later-model runner, local config, preflight, or check-only summary is missing or unaudited.
 - Any expected later-model output already exists before execution without an explicit resume path.
 - Any raw response or rendered prompt text would be written to tracked files.
 - Any model silently changes model ID or provider route without being recorded.
@@ -62,6 +77,18 @@
 - later_model_ids_match_protocol: `true`
 - openrouter_catalog_all_available: `true`
 - openrouter_catalog_ids_match_protocol: `true`
+- later_local_config_target_ignored: `true`
+- later_local_config_no_keys: `true`
+- later_preflight_structural_ready: `true`
+- later_preflight_no_api: `true`
+- later_preflight_no_raw_outputs: `true`
+- later_preflight_no_key_values: `true`
+- later_check_only_passed: `true`
+- later_check_only_no_api: `true`
+- later_check_only_no_raw_outputs: `true`
+- later_check_only_packet_count: `true`
+- later_check_only_total_calls: `true`
+- later_check_only_model_ids: `true`
 - expected_later_outputs_absent: `true`
 
 ## Claim Boundary

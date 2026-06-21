@@ -129,8 +129,9 @@ Current audit status:
   tracked summaries, without reading raw responses;
 - first-batch synthesis: `passed`; it reports only descriptive DeepSeek/Qwen
   per-level decision counts for the frozen EVP-8 v0.1 98-candidate packet set;
-- current next gate: prepare a no-API later-model completion packet before
-  Kimi K2.6, Devstral 2, and Gemini 2.5 Flash API calls.
+- current next gate: G7.1 runner/preflight is structurally ready, but strict
+  later-model API execution is blocked until `OPENROUTER_API_KEY` is present
+  and a separate per-model execution authorization is given.
 
 This audit is intentionally no-API and does not authorize model calls, cohort
 expansion, or EVP-8 evidence-packet generation.
@@ -366,10 +367,12 @@ Gate G7: later model completion packet.
   currently has `all_available = true`.
 - The G7 packet plans 686 calls per later model and 2058 later-model calls in
   total, with a USD 30 planning ceiling for the later-model batch only.
-- This packet still does not authorize API execution. Before any later-model
-  API call, implement and verify the later-model runner/preflight, confirm
-  `OPENROUTER_API_KEY` in ignored local config, and use an explicit per-model
-  execution command.
+- Status as of 2026-06-21 G7.1: the later-model runner/preflight and full
+  check-only are implemented and structurally checked. The tracked preflight is
+  `structural_only` because `OPENROUTER_API_KEY` is missing from the ignored
+  local environment. This still does not authorize API execution. Before any
+  later-model API call, rerun strict preflight with the key present and use an
+  explicit per-model execution command.
 
 Gate G8: five-model journal synthesis.
 

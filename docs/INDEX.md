@@ -162,6 +162,20 @@
   It does not authorize Kimi/Devstral/Gemini API calls.
 - `experiments/evp8_later_model_completion_packet_v0_1.md`:
   Markdown companion for the G7 later-model completion packet.
+- `../configs/evp8_later_models.example.json`: tracked no-secret example
+  config for the EVP-8 Phase 2 later-model OpenRouter runner. The ignored local
+  copy is `configs/evp8_later_models.local.json` and must not be committed.
+- `../data/protocols/evp8_later_model_local_config_plan_v0_1.json`:
+  no-secret summary of the ignored later-model local config creation boundary.
+  It records paths, pinned OpenRouter model ids, planned call counts, and the
+  `OPENROUTER_API_KEY` env var name only.
+- `../data/protocols/evp8_later_model_preflight_summary_v0_1.json`: tracked
+  no-secret later-model preflight summary. Current status is `structural_only`:
+  structural checks pass, credential presence is false, and no key values or API
+  calls are recorded.
+- `../data/protocols/evp8_later_model_full_check_only_v0_1.json`: tracked
+  no-API later-model full check-only summary. Current status is `passed` for
+  686 prompts per model and 2058 planned later-model calls, with no raw outputs.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.
@@ -1122,6 +1136,17 @@
   audit/synthesis, full check-only, and OpenRouter catalog audit artifacts. It
   writes exact model IDs and stop gates for Kimi K2.6, Devstral 2, and Gemini
   2.5 Flash, but still requires a future runner/preflight before API calls.
+- `../scripts/create_evp8_later_model_local_config.py`: creates or dry-runs the
+  ignored EVP-8 later-model OpenRouter local config from the tracked no-secret
+  example config.
+- `../scripts/preflight_evp8_later_models.py`: validates the ignored EVP-8
+  later-model local config and `.env` key presence without printing secrets or
+  calling APIs. Structural checks may pass with missing credentials; strict
+  execution readiness requires `OPENROUTER_API_KEY`.
+- `../scripts/run_evp8_later_model_full.py`: guarded EVP-8 later-model full
+  runner. It supports check-only without API calls and refuses real execution
+  unless an ignored local config, strict preflight, explicit `--execute`, and a
+  configured model id are supplied.
 - `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict

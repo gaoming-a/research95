@@ -16721,3 +16721,148 @@ Decision:
   gates，并逐模型显式执行；
 - 当前允许 claim 仍停留在 DeepSeek/Qwen first-batch descriptive patterns，
   不支持 five-model journal conclusion。
+
+## 2026-06-21 EVP-8 G7.1 later-model runner/preflight
+
+Inspect:
+
+- `git status --short --branch` 显示 `main...origin/main`，工作区 clean；
+- `git log -5 --oneline` 当前顶部为
+  `79ff382 Prepare EVP-8 later-model packet`；
+- G7 packet 当前 `ready`，但明确：
+  - `runner_implementation_required_before_execution = true`；
+  - `later_model_preflight_required_before_execution = true`；
+  - `execution_authorized_by_packet = false`；
+- `docs/plans/current_project_state_zh.md` 指向下一步：
+  先实现并验证 later-model runner/preflight，不直接运行三模型 API；
+- 已读取 DeepSeek/Qwen runner/preflight/config creator 的实现，后续应复用：
+  - ignored local config；
+  - strict preflight；
+  - `--check-only` 默认无 API；
+  - `--execute` 才能调用 API；
+  - raw responses 只进 ignored `outputs/`；
+  - tracked summary 不含 prompt text/raw response text/API key；
+  - checkpoint/resume prefix guard；
+- 已核对 OpenRouter 官方文档边界：
+  - chat completions 是 OpenAI-compatible；
+  - request body 支持 `provider` preferences；
+  - `X-OpenRouter-Metadata: enabled` 可让 response 带
+    `openrouter_metadata`；
+  - non-streaming response 有 `usage`，`usage.cost` 为可选字段；
+  - provider route/fallback 和 cost 字段必须在 runner summary 中显式审计。
+
+Plan:
+
+1. 新增 tracked no-secret `configs/evp8_later_models.example.json`；
+2. 新增 later-model local config creator，只写 ignored
+   `configs/evp8_later_models.local.json`，默认 dry-run；
+3. 新增 `scripts/preflight_evp8_later_models.py`：
+   - structural preflight 可在缺失 `OPENROUTER_API_KEY` 时通过；
+   - strict API ready 必须要求 ignored `.env` 中 key present；
+   - tracked summary 不记录 key value；
+4. 新增 `scripts/run_evp8_later_model_full.py`：
+   - `--check-only` 只验证 98 candidates x 7 levels = 686 packet matrix；
+   - `--execute` 必须使用 ignored local config、strict preflight、单个
+     model id 和 explicit flag；
+   - OpenRouter request pin exact model id，不使用 `models` fallback array；
+   - provider preferences 禁止 unrecorded fallback；
+   - raw JSONL 只写 ignored `outputs/evp8_phase2_later_models_full/`；
+   - tracked summary 记录 parse/cost/model/provider metadata aggregates；
+5. 扩展 `src/cross_review/openrouter.py`，让现有兼容客户端支持 optional
+   provider preferences 和 OpenRouter metadata header，同时不破坏
+   DeepSeek/Qwen runner；
+6. 生成 no-API local-config plan、preflight summary、later-model full
+   check-only summary；
+7. 刷新 G7 packet，使它记录 runner/preflight/check-only 已实现但仍不授权 API；
+8. 更新 short-state、canonical plan、INDEX、engineering notes；
+9. 运行 py_compile、preflight/check-only/packet checks、first-batch
+   audit/synthesis、local quality gate 和 `git diff --check`；
+10. 只提交本轮相关 tracked files 并 push。
+
+Boundary:
+
+- 本轮仍不调用 Kimi/Devstral/Gemini API；
+- 不读取或提交 later-model raw outputs；
+- 不生成 local config with secrets，除非只写 ignored placeholder config；
+- 不修改 EVP-8 protocol、prompt、candidate set、schema 或已完成的
+  DeepSeek/Qwen summaries；
+- 不把 runner readiness 写成五模型实验结果。
+
+Execute:
+
+- 扩展 `src/cross_review/openrouter.py`：
+  - `chat_completion` / `chat_completion_messages` 支持 optional
+    `provider` preferences；
+  - 支持 `metadata_enabled=True` 时发送
+    `X-OpenRouter-Metadata: enabled`；
+  - 保持现有 DeepSeek/Qwen 调用路径兼容；
+- 新增 tracked no-secret config：
+  `configs/evp8_later_models.example.json`；
+- 新增 later-model local config creator：
+  `scripts/create_evp8_later_model_local_config.py`；
+- 新增 later-model preflight：
+  `scripts/preflight_evp8_later_models.py`；
+- 新增 guarded later-model full runner：
+  `scripts/run_evp8_later_model_full.py`；
+- 生成 ignored local config：
+  `configs/evp8_later_models.local.json`；
+- 生成 tracked no-API artifacts：
+  - `data/protocols/evp8_later_model_local_config_plan_v0_1.json`；
+  - `data/protocols/evp8_later_model_preflight_summary_v0_1.json`；
+  - `data/protocols/evp8_later_model_full_check_only_v0_1.json`；
+- 刷新 G7 completion packet：
+  - `runner_implementation_checked = true`；
+  - `later_model_structural_preflight_checked = true`；
+  - `later_model_full_check_only_passed = true`；
+  - `later_model_strict_preflight_ready_for_user_execute_command = false`；
+  - `later_model_credential_presence_ready = false`；
+  - `execution_authorized_by_packet = false`。
+
+Verify:
+
+- `python -m py_compile src\cross_review\openrouter.py scripts\create_evp8_later_model_local_config.py scripts\preflight_evp8_later_models.py scripts\run_evp8_later_model_full.py scripts\write_evp8_later_model_completion_packet.py`
+  通过；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过；
+- `python scripts\create_evp8_later_model_local_config.py --write --force`
+  通过：
+  - target local config ignored；
+  - contains_api_key_values false；
+  - planned_total_later_model_calls = 2058；
+- `python scripts\preflight_evp8_later_models.py --config configs\evp8_later_models.local.json --allow-missing-credentials`
+  通过：
+  - `structural_ready = true`；
+  - `preflight_status = structural_only`；
+  - `credential_presence_ready = false`；
+  - `OPENROUTER_API_KEY` state = `missing`；
+  - `api_call_attempted = false`；
+  - `api_key_values_printed = false`；
+- `python scripts\run_evp8_later_model_full.py --check-only --run-scope full --config configs\evp8_later_models.local.json --allow-missing-credentials`
+  通过：
+  - `check_only_status = passed`；
+  - `packet_count_per_model = 686`；
+  - `expected_total_later_model_calls = 2058`；
+  - `prompt_hashes_unique_count = 686`；
+  - no API / no raw outputs；
+- `python scripts\write_evp8_later_model_completion_packet.py --check` 通过；
+- `python scripts\audit_evp8_first_batch_full_results.py --check` 通过；
+- `python scripts\summarize_evp8_first_batch_full_synthesis.py --check` 通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过，仅有 Git LF/CRLF 工作区转换 warning；
+- sensitive-boundary scan 只命中环境变量名、runner 内部 raw-output 字段名和
+  no-key boolean fields；未发现 API key value 或 tracked raw response text；
+- G7 packet 当前清楚区分：
+  - runner/preflight/check-only structural readiness；
+  - strict credential readiness false；
+  - no execution authorization。
+
+Decision:
+
+- G7.1 runner/preflight 已按计划完成到无 API structural-ready；
+- 当前不能继续执行 later-model API，因为 `OPENROUTER_API_KEY` 在 ignored
+  `.env` 中 missing，strict preflight 未通过；
+- 下一步应二选一：
+  - 用户提供/配置 `OPENROUTER_API_KEY` 后，重跑 strict preflight，再逐模型
+    显式授权执行；
+  - 在 API 前继续补 later-model post-run audit/synthesis scaffold，减少跑完后
+    缺审计脚本的风险。

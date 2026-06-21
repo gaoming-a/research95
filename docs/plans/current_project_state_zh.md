@@ -12,8 +12,8 @@
 - 远端：`origin/main`
 - 当前 Git 状态：以 `git status --short --branch` 和
   `git log -1 --oneline` 为准。不要只依赖本文件里记录的 hash 判断是否 ahead；
-  本轮语义上要求远端至少包含 EVP-8 Qwen G6 result state 和 G7
-  later-model completion packet。
+  本轮语义上要求远端至少包含 EVP-8 Qwen G6 result state、G7
+  later-model completion packet 和 G7.1 later-model runner/preflight。
 - 当前远端已同步锚点：
   - `6f3c8f0 Sync EVP-8 Qwen G6 result state`：远端已包含 DeepSeek/Qwen
     first-batch full-run passed state 的短状态修正；
@@ -39,7 +39,9 @@
   EVP-8 Phase 1 DeepSeek/Qwen smoke closure、G5 no-API first-batch full-run
   packet readiness、DeepSeek G6 full-run checkpointing repair，以及 DeepSeek
   / Qwen 686-call first-batch full-run passed audit and synthesis；G7 no-API
-  later-model completion packet 已 ready，但不授权 Kimi/Devstral/Gemini API。
+  later-model completion packet 已 ready；G7.1 later-model runner/preflight
+  结构验证已通过，但 strict API ready 仍因 `OPENROUTER_API_KEY` missing
+  而 blocked，不授权 Kimi/Devstral/Gemini API。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。2026-06-20 本轮重试后
   `72f1fb5` 和 `d9a8391` 已成功 push；最终是否仍 ahead 以
@@ -65,10 +67,11 @@
     levels = 686 records，686/686 parse-valid，raw-output-free summary 已生成；
   - EVP-8 Qwen G6 first-batch full run：98 candidates x 7 evidence levels =
     686 records，686/686 parse-valid，raw-output-free summary 已生成；
-  - EVP-8 G7 later-model completion packet：Kimi K2.6、Devstral 2、Gemini
+  - EVP-8 G7/G7.1 later-model readiness：Kimi K2.6、Devstral 2、Gemini
     2.5 Flash 计划补跑 3 x 686 = 2058 records，OpenRouter public catalog
-    audit 当前 `all_available = true`，packet `ready`，但 runner/preflight
-    尚未实现，仍不授权 API；
+    audit 当前 `all_available = true`，packet `ready`，runner/preflight
+    structural checks 和 full check-only 已通过；strict API ready 仍因
+    `OPENROUTER_API_KEY` missing 而 blocked，不授权 API；
   - raw-output-free tracked summaries and audits。
 - 当前 evidence-level 边界：EVP-7 是 E0/E2/E4/E6 four-anchor pilot，不是
   完整 E0-E6 adjacent-difference ladder；E1/E3/E5 不应补插进当前 artifacts，
@@ -158,8 +161,12 @@
      二者均不读取 raw outputs；
    - G7 later-model completion packet 已 ready：
      `python scripts\write_evp8_later_model_completion_packet.py --check`；
-   - packet 只准备 Kimi K2.6、Devstral 2、Gemini 2.5 Flash 的后续执行边界，
-     不授权 API；下一步应先实现并验证 later-model runner/preflight；
+   - G7.1 later-model local config/preflight/check-only 已 structural passed：
+     `python scripts\preflight_evp8_later_models.py --config configs\evp8_later_models.local.json --allow-missing-credentials`；
+     `python scripts\run_evp8_later_model_full.py --check-only --run-scope full --config configs\evp8_later_models.local.json --allow-missing-credentials`；
+   - 当前 strict API ready 为 false：ignored `.env` 中
+     `OPENROUTER_API_KEY` missing；下一步不是 API 执行，而是补齐 key 后重跑
+     strict preflight，或先实现 later-model post-run audit/synthesis scaffold；
    - 后续补跑 Kimi K2.6、Devstral 2、Gemini 2.5 Flash 必须使用同一 frozen
      packets/prompts/schema，不能边跑边改协议；
    - smoke 之后的后续顺序已经写入 canonical EVP-8 plan：
@@ -283,6 +290,18 @@
   G7 no-API later-model completion packet；当前 `ready`，记录 Kimi/Devstral/
   Gemini exact model IDs、expected outputs、cost ceiling、guard commands、stop
   gates 和非授权边界。
+- `configs/evp8_later_models.example.json`：
+  tracked no-secret later-model OpenRouter config template；local copy 是
+  ignored `configs/evp8_later_models.local.json`。
+- `data/protocols/evp8_later_model_local_config_plan_v0_1.json`：
+  G7.1 later-model local config plan；记录 ignored local config target、planned
+  model IDs、call counts 和 no-key boundary。
+- `data/protocols/evp8_later_model_preflight_summary_v0_1.json`：
+  G7.1 later-model preflight summary；当前 `structural_ready=true`、
+  `credential_presence_ready=false`，不打印 key value、不调用 API。
+- `data/protocols/evp8_later_model_full_check_only_v0_1.json`：
+  G7.1 later-model full check-only summary；当前 `passed`，验证 686 prompts
+  per model / 2058 planned later-model calls，不生成 raw outputs。
 - `scripts/audit_evp8_protocol_spec.py`：
   检查 EVP-8 相邻差分、visible/hidden 字段边界、模型批次、routing policy、
   cost observability 和 stop gates。
@@ -331,6 +350,16 @@
   生成 G7 no-API later-model completion packet；要求 catalog audit、first-batch
   audit/synthesis、full check-only 和 expected-output absence 均通过。它只写
   handoff packet，不调用 Kimi/Devstral/Gemini API。
+- `scripts/create_evp8_later_model_local_config.py`：
+  创建 ignored later-model local config，tracked summary 不含 API key。
+- `scripts/preflight_evp8_later_models.py`：
+  later-model OpenRouter local config preflight；`--allow-missing-credentials`
+  允许 structural check-only，`--strict-api-ready` 才要求
+  `OPENROUTER_API_KEY` present。
+- `scripts/run_evp8_later_model_full.py`：
+  later-model guarded full runner；`--check-only` 不调用 API，`--execute`
+  需要 ignored local config、strict preflight、单个 configured model id 和
+  explicit flag。
 - `docs/plans/agent_execution_plan_zh.md`、
   `docs/plans/ai_agent_experiment_execution_plan_zh.md`：
   历史执行计划，只保留溯源，不应覆盖当前路线。
@@ -350,8 +379,9 @@
   EVP-8 期刊版后续执行计划；记录 no-API 协议冻结、七层 evidence ladder、
   DeepSeek/Qwen 第一批执行和 Kimi/Devstral/Gemini 后续补跑边界。
 - `docs/experiments/evp8_later_model_completion_packet_v0_1.md`：
-  G7 later-model no-API handoff；当前状态 ready，但后续执行仍要求
-  later-model runner/preflight 和逐模型显式授权。
+  G7 later-model no-API handoff；当前状态 ready，runner/preflight/check-only
+  已 structural checked，但后续执行仍要求 `OPENROUTER_API_KEY` strict
+  preflight 和逐模型显式授权。
 - `docs/experiments/thefuck1_candidate_validation.md`：
   `bugsinpy_thefuck_1` rules-root pip-family P2P policy、candidate validation
   和 admission 记录。
