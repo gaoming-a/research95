@@ -16618,3 +16618,14 @@ Decision:
 - 仍禁止写成 five-model journal conclusion、LLM superiority over deterministic
   baselines 或最终 evidence-level effectiveness；
 - 下一步按 G7：准备 later-model completion packet，再补 Kimi/Devstral/Gemini。
+
+Commit And Sync:
+
+- 已提交 Qwen G6 first-batch full-run result closure：
+  `d59021e Record EVP-8 Qwen G6 full result`；
+- 该提交包含 Qwen raw-output-free summary、first-batch passed audit/synthesis、
+  INDEX、short-state、execution plan 和 current plan 更新；
+- raw JSONL、runner logs、`.env`、`configs/*.local.json`、`outputs/` 和
+  `artifacts/` 均未提交；
+- 本段 sync-state 文档修正将单独提交，最终远端状态以 `git status --short --branch`
+  和 `git log -1 --oneline` 为准。
