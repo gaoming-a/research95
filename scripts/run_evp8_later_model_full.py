@@ -11,6 +11,7 @@ import argparse
 import json
 import re
 import sys
+from concurrent.futures import FIRST_COMPLETED, Future, ThreadPoolExecutor, wait
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -187,42 +188,38 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         resume=args.resume,
     )
     resumed_raw_record_count = len(completed_packet_ids)
-    client = OpenRouterClient()
     metadata_enabled = config.get("openrouter_metadata_header") == "enabled"
     raw_out.parent.mkdir(parents=True, exist_ok=True)
     raw_mode = "a" if args.resume and raw_out.exists() else "x"
     with raw_out.open(raw_mode, encoding="utf-8") as raw_handle:
-        for packet in packets:
-            if packet["evidence_packet_id"] in completed_packet_ids:
-                continue
-            prompt = evp8_core.render_prompt(template, packet)
-            findings = prompt_module._boundary_findings(prompt)  # noqa: SLF001
-            if findings:
-                raise SystemExit(f"prompt boundary failed for {packet['evidence_packet_id']}: {findings}")
-            response = client.chat_completion(
-                model=str(model_config["request_model_id"]),
-                prompt=prompt,
-                temperature=float(config.get("temperature", 0.0)),
-                max_tokens=int(config.get("max_output_tokens", 4096)),
-                provider=model_config.get("provider_preferences"),
+        remaining_packets = [
+            packet for packet in packets if packet["evidence_packet_id"] not in completed_packet_ids
+        ]
+        if args.concurrency == 1:
+            client = OpenRouterClient()
+            for packet in remaining_packets:
+                raw_record = fetch_raw_record(
+                    packet=packet,
+                    template=template,
+                    config=config,
+                    model_config=model_config,
+                    metadata_enabled=metadata_enabled,
+                    client=client,
+                )
+                append_jsonl_record(raw_handle, raw_record)
+                parsed_records.append(parsed_record_from_raw(raw_record, spec, model_config))
+        else:
+            execute_concurrent(
+                raw_handle=raw_handle,
+                packets=remaining_packets,
+                template=template,
+                config=config,
+                spec=spec,
+                model_config=model_config,
                 metadata_enabled=metadata_enabled,
+                parsed_records=parsed_records,
+                concurrency=args.concurrency,
             )
-            raw_record = {
-                "evidence_packet_id": packet["evidence_packet_id"],
-                "anonymous_candidate_id": packet["anonymous_candidate_id"],
-                "evidence_level": packet["evidence_level"],
-                "requested_model_id": model_config["request_model_id"],
-                "configured_model_id": model_config["model_id"],
-                "actual_model_id": response.get("model"),
-                "actual_provider": actual_provider(response),
-                "openrouter_metadata": openrouter_metadata(response),
-                "provider_route": model_config["provider_route"],
-                "raw_response_text": response_text(response),
-                "response": response,
-                "run_date_utc": datetime.now(timezone.utc).isoformat(),
-            }
-            append_jsonl_record(raw_handle, raw_record)
-            parsed_records.append(parsed_record_from_raw(raw_record, spec, model_config))
 
     cost = aggregate_cost(parsed_records)
     parse_valid_count = sum(1 for record in parsed_records if record["parse_status"] == "valid")
@@ -241,6 +238,7 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         "raw_responses_out": display_path(raw_out),
         "raw_response_text_stored_in_tracked_summary": False,
         "review_count": len(parsed_records),
+        "concurrency": args.concurrency,
         "resume_enabled": bool(args.resume),
         "resumed_raw_record_count": resumed_raw_record_count,
         "new_api_call_count": len(parsed_records) - resumed_raw_record_count,
@@ -280,6 +278,91 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     if summary["run_gate"] != "passed":
         raise SystemExit(f"EVP-8 later-model full gate blocked after writing outputs: {summary['run_gate']}")
     return summary
+
+
+def fetch_raw_record(
+    *,
+    packet: dict[str, Any],
+    template: str,
+    config: dict[str, Any],
+    model_config: dict[str, Any],
+    metadata_enabled: bool,
+    client: OpenRouterClient | None = None,
+) -> dict[str, Any]:
+    prompt = evp8_core.render_prompt(template, packet)
+    findings = prompt_module._boundary_findings(prompt)  # noqa: SLF001
+    if findings:
+        raise RuntimeError(f"prompt boundary failed for {packet['evidence_packet_id']}: {findings}")
+    active_client = client or OpenRouterClient()
+    response = active_client.chat_completion(
+        model=str(model_config["request_model_id"]),
+        prompt=prompt,
+        temperature=float(config.get("temperature", 0.0)),
+        max_tokens=int(config.get("max_output_tokens", 4096)),
+        provider=model_config.get("provider_preferences"),
+        metadata_enabled=metadata_enabled,
+    )
+    return {
+        "evidence_packet_id": packet["evidence_packet_id"],
+        "anonymous_candidate_id": packet["anonymous_candidate_id"],
+        "evidence_level": packet["evidence_level"],
+        "requested_model_id": model_config["request_model_id"],
+        "configured_model_id": model_config["model_id"],
+        "actual_model_id": response.get("model"),
+        "actual_provider": actual_provider(response),
+        "openrouter_metadata": openrouter_metadata(response),
+        "provider_route": model_config["provider_route"],
+        "raw_response_text": response_text(response),
+        "response": response,
+        "run_date_utc": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def execute_concurrent(
+    *,
+    raw_handle: Any,
+    packets: list[dict[str, Any]],
+    template: str,
+    config: dict[str, Any],
+    spec: dict[str, Any],
+    model_config: dict[str, Any],
+    metadata_enabled: bool,
+    parsed_records: list[dict[str, Any]],
+    concurrency: int,
+) -> None:
+    pending: dict[Future[dict[str, Any]], int] = {}
+    completed: dict[int, dict[str, Any]] = {}
+    next_submit = 0
+    next_write = 0
+
+    def submit_available(executor: ThreadPoolExecutor) -> None:
+        nonlocal next_submit
+        while next_submit < len(packets) and len(pending) < concurrency:
+            packet = packets[next_submit]
+            future = executor.submit(
+                fetch_raw_record,
+                packet=packet,
+                template=template,
+                config=config,
+                model_config=model_config,
+                metadata_enabled=metadata_enabled,
+            )
+            pending[future] = next_submit
+            next_submit += 1
+
+    with ThreadPoolExecutor(max_workers=concurrency) as executor:
+        submit_available(executor)
+        while pending:
+            done, _ = wait(pending, return_when=FIRST_COMPLETED)
+            for future in done:
+                index = pending.pop(future)
+                completed[index] = future.result()
+            while next_write in completed:
+                raw_record = completed.pop(next_write)
+                append_jsonl_record(raw_handle, raw_record)
+                parsed_records.append(parsed_record_from_raw(raw_record, spec, model_config))
+                next_write += 1
+            submit_available(executor)
 
 
 def load_resume_state(
@@ -549,6 +632,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--summary-out", type=Path)
     parser.add_argument("--raw-out", type=Path)
     parser.add_argument("--resume", action="store_true", help="Resume an interrupted execute run from an existing raw JSONL prefix.")
+    parser.add_argument("--concurrency", type=int, default=1, help="Bounded execute concurrency. Raw JSONL is still written in packet order.")
     return parser.parse_args()
 
 
@@ -559,6 +643,10 @@ def main() -> int:
         raise SystemExit("Choose exactly one mode: --check-only or --execute.")
     if args.execute and not args.model_id:
         raise SystemExit("--execute requires --model-id.")
+    if args.concurrency < 1:
+        raise SystemExit("--concurrency must be >= 1.")
+    if args.check_only and args.concurrency != 1:
+        raise SystemExit("--concurrency is only valid with --execute.")
     summary = execute(args) if args.execute else check_only(args)
     print(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True))
     return 0

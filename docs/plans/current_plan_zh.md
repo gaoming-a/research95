@@ -17127,3 +17127,49 @@ Boundary:
 - tracked summaries 只能是不含 prompt/raw response text 的 aggregate JSON；
 - 若发现协议、parser、cost、provider 或 raw-boundary 问题，先停止诊断，不把
   partial run 写成 five-model result。
+
+Execute / Diagnose:
+
+- `git commit -m "Authorize EVP-8 later-model full runs"` 已创建本地提交
+  `9db3c4e`；
+- `git push origin main` 失败：
+  `Failed to connect to github.com port 443 after 21073 ms`；
+- 按用户既定规则，GitHub 网络同步失败不阻塞本地执行；
+- 已重跑 execution guards：
+  - OpenRouter public catalog audit：`all_available=true`；
+  - strict preflight：`preflight_status=passed`、
+    `credential_presence_ready=true`；
+  - later-model full check-only：`check_only_status=passed`、
+    `packet_count_per_model=686`；
+  - G7 completion packet check passed；
+  - later-model audit check：`waiting_for_execution`；
+  - five-model synthesis check：`waiting_for_later_models`；
+- 开始执行 `moonshotai/kimi-k2.6` 后，外层 2 小时命令超时；
+- 核查发现 Kimi 执行进程仍在运行，ignored raw prefix 持续增长但速度约
+  1 条 / 1-2 分钟；串行完成三模型耗时不可接受；
+- 停止 Kimi 串行进程后，ignored raw prefix 保留 99 条，tracked summary 尚未
+  生成；
+- 该问题类型定位为执行链路吞吐问题，不是 protocol/prompt/schema/candidate
+  问题。
+
+Repair:
+
+- 给 `scripts\run_evp8_later_model_full.py` 增加显式 `--concurrency` 参数；
+- 默认仍为 `--concurrency 1`，check-only 不允许使用 concurrency；
+- execute 并发模式下请求可并行完成，但 raw JSONL 仍按 frozen packet order
+  写入，保持 `--resume` 的 prefix 校验语义；
+- tracked summary 新增 `concurrency` 字段；
+- 已验证：
+  - `python -m py_compile scripts\run_evp8_later_model_full.py` 通过；
+  - `python scripts\run_evp8_later_model_full.py --check-only --run-scope full --config configs\evp8_later_models.local.json --allow-missing-credentials`
+    通过；
+  - 当前无活跃 Kimi execution process；
+  - Kimi ignored raw prefix = 99 records。
+
+Next Execute:
+
+- 提交并尝试同步本 concurrency repair；
+- 若 push 仍失败，继续本地执行；
+- 使用
+  `python scripts\run_evp8_later_model_full.py --execute --run-scope full --config configs\evp8_later_models.local.json --model-id moonshotai/kimi-k2.6 --resume --concurrency 4`
+  从 99-record prefix 继续。

@@ -3072,3 +3072,16 @@ This file starts fresh for the patch-verification project.
   later-model audit fields. While later models are missing, it must stay in a
   waiting or partial state and explicitly forbid final five-model journal
   claims.
+
+## 2026-06-21 EVP-8 G8 later-model concurrency repair
+
+- A serial OpenRouter later-model full run is too slow for the 686-record
+  packet set. If it has written a valid raw JSONL prefix but no tracked summary,
+  stop the live process, keep the ignored raw prefix, and resume with explicit
+  bounded concurrency.
+- Preserve ordered raw JSONL writes even when requests complete out of order.
+  Resume validation depends on the raw file being an exact prefix of the frozen
+  packet order.
+- Keep concurrency explicit and conservative. Start at `--concurrency 4`; if
+  provider rate limits, parse failures, unknown cost, or provider metadata
+  gaps appear, stop and diagnose before running the next model.
