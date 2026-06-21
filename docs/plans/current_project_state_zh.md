@@ -14,17 +14,20 @@
   `git log -1 --oneline` 为准。不要只依赖本文件里记录的 hash 判断是否 ahead；
   本轮语义上要求远端至少包含 EVP-8 Qwen G6 result state、G7
   later-model completion packet、G7.1 later-model runner/preflight 和 G7.2
-  OpenRouter strict preflight readiness。
+  OpenRouter strict preflight readiness；G7.3 scaffold 是否同步以最新
+  `git status` 和远端 log 为准。
 - 当前本地 ahead 状态：
-  - 本轮 Inspect 时 `git status --short --branch` 显示
-    `main...origin/main [ahead 1]`；
-  - 已成功 push 的远端锚点至少到
-    `40ae224 Record EVP-8 OpenRouter strict preflight`；
-  - 本轮 G7.3 post-run audit/synthesis scaffold 会新增本地提交；如果后续 push
-    失败，local ahead count 会增加；
-  - 无论 ahead count 如何变化，未同步内容不得包含 raw outputs、`.env` 或 local
-    config；最终以命令输出和 `git log -1 --oneline` 为准。
+  - 本轮 post-push inspection 显示 `git status --short --branch` 为
+    `main...origin/main`；
+  - `eaecfeb Add EVP-8 later-model audit scaffold` 已 push 到远端；
+  - 当前没有未同步模型结果、raw outputs、`.env` 或 local config；最终仍以命令
+    输出和 `git log -1 --oneline` 为准。
 - 当前远端已同步锚点：
+  - `eaecfeb Add EVP-8 later-model audit scaffold`：远端已包含 G7.3
+    later-model post-run audit scaffold、five-model synthesis scaffold、G7
+    completion packet guard refresh 和 no-API waiting-state artifacts；
+  - `8ceeef2 Fix EVP-8 post-push state entry`：远端已包含上一轮
+    post-push 状态修正；
   - `40ae224 Record EVP-8 OpenRouter strict preflight`：远端已包含 G7.2
     OpenRouter strict preflight passed、completion packet refresh、no-secret
     docs/state updates；
@@ -60,12 +63,13 @@
   / Qwen 686-call first-batch full-run passed audit and synthesis；G7 no-API
   later-model completion packet 已 ready；G7.1 later-model runner/preflight
   结构验证已通过；G7.2 strict preflight 已在 ignored `.env` 中确认
-  `OPENROUTER_API_KEY` presence，但仍不授权 Kimi/Devstral/Gemini API。
+  `OPENROUTER_API_KEY` presence；G7.3 later-model post-run audit 和
+  five-model synthesis scaffold 已通过 waiting-state check，但仍不授权
+  Kimi/Devstral/Gemini API。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
-  在连续同步失败时跳过 GitHub 并继续本地计划执行。本轮 strict-preflight
-  readiness 已成功 push 到 `40ae224`；post-push state repair 曾再次遇到
-  GitHub 443 连接失败。最终是否仍 ahead 仍以 `git status --short --branch`
-  为准。
+  在连续同步失败时跳过 GitHub 并继续本地计划执行。本轮最终 `git push
+  origin main` 已成功同步到 `eaecfeb`；最终是否仍 ahead 仍以
+  `git status --short --branch` 为准。
 - `bugsinpy_cookiecutter_4` 已收束为 tracked blocker policy；完整 builder
   失败输出仍是本地诊断残留，不应提交。
 - ignored 本地交付物：

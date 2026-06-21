@@ -17069,3 +17069,12 @@ Verify:
   通过；
 - `git diff --check` 通过，仅有 LF/CRLF 工作区转换 warning；
 - sensitive scan 未发现 API key pattern。
+
+Commit And Sync:
+
+- 已提交本轮 scaffold：
+  `eaecfeb Add EVP-8 later-model audit scaffold`；
+- `git push origin main` 成功，将 `40ae224..eaecfeb` 同步到远端；
+- push 后 `git status --short --branch --untracked-files=all` 显示
+  `main...origin/main`；
+- 本 post-push state repair 只修正短状态和 current plan 的同步记录。
