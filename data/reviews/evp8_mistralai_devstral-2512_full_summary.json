@@ -1,0 +1,123 @@
+{
+  "actual_model_id_counts": {
+    "mistralai/devstral-2512": 686
+  },
+  "actual_model_id_missing_count": 0,
+  "actual_provider_counts": {
+    "Mistral": 686
+  },
+  "actual_provider_missing_count": 0,
+  "api_call_attempted": true,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "cohort_id": "EVP-8",
+  "concurrency": 2,
+  "config": "configs/evp8_later_models.local.json",
+  "configured_model_id": "mistralai/devstral-2512",
+  "configured_model_id_counts": {
+    "mistralai/devstral-2512": 686
+  },
+  "cost_summary": {
+    "cost_currency_counts": {
+      "USD": 686
+    },
+    "cost_observability_counts": {
+      "provider_reported_cost": 686
+    },
+    "cost_source_counts": {
+      "provider_reported_openrouter_cost": 686
+    },
+    "total_cost_cny": 0.0,
+    "total_cost_usd": 0.44937088,
+    "unknown_cost_record_count": 0
+  },
+  "decision_counts": {
+    "escalate": 686
+  },
+  "decision_counts_by_evidence_level": {
+    "E0": {
+      "escalate": 98
+    },
+    "E1": {
+      "escalate": 98
+    },
+    "E2": {
+      "escalate": 98
+    },
+    "E3": {
+      "escalate": 98
+    },
+    "E4": {
+      "escalate": 98
+    },
+    "E5": {
+      "escalate": 98
+    },
+    "E6": {
+      "escalate": 98
+    }
+  },
+  "invalid_parse_count": 0,
+  "invalid_parse_count_by_evidence_level": {
+    "E0": 0,
+    "E1": 0,
+    "E2": 0,
+    "E3": 0,
+    "E4": 0,
+    "E5": 0,
+    "E6": 0
+  },
+  "later_model_full_gate": "passed",
+  "mode": "executed",
+  "new_api_call_count": 686,
+  "openrouter_metadata_present_count": 686,
+  "parse_valid_count": 686,
+  "parse_valid_count_by_evidence_level": {
+    "E0": 98,
+    "E1": 98,
+    "E2": 98,
+    "E3": 98,
+    "E4": 98,
+    "E5": 98,
+    "E6": 98
+  },
+  "prompt_text_stored": false,
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "provider_metadata_gate": "passed",
+  "provider_preferences": {
+    "allow_fallbacks": false,
+    "require_parameters": true
+  },
+  "provider_route": "openrouter_pinned_exact_model_id",
+  "provider_route_counts": {
+    "openrouter_pinned_exact_model_id": 686
+  },
+  "raw_outputs_generated": true,
+  "raw_response_text_stored_in_tracked_summary": false,
+  "raw_responses_out": "outputs/evp8_phase2_later_models_full/mistralai_devstral-2512/raw_responses.jsonl",
+  "request_include_reasoning": null,
+  "request_model_id": "mistralai/devstral-2512",
+  "request_model_id_counts": {
+    "mistralai/devstral-2512": 686
+  },
+  "request_reasoning": null,
+  "resume_enabled": false,
+  "resumed_raw_record_count": 0,
+  "retry_policy": {
+    "max_retries_per_record": 1,
+    "no_silent_retry_for_parse_invalid": true,
+    "retry_only_on_transport_or_rate_limit": true
+  },
+  "review_count": 686,
+  "review_count_by_evidence_level": {
+    "E0": 98,
+    "E1": 98,
+    "E2": 98,
+    "E3": 98,
+    "E4": 98,
+    "E5": 98,
+    "E6": 98
+  },
+  "run_gate": "passed",
+  "run_scope": "full",
+  "usage_cost_gate": "passed"
+}

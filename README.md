@@ -90,14 +90,15 @@ later-model OpenRouter runner/preflight are strict-ready with
 K2.6 execution attempt wrote 686 ignored raw records but was correctly blocked
 by the later-model gate because Kimi returned reasoning-heavy responses with
 79 invalid JSON outputs. The tracked protocol now records a Kimi clean-rerun
-policy with `reasoning.enabled=false` and `include_reasoning=false`; Kimi must
-pass the later-model audit before Devstral/Gemini or any five-model claim. The
+policy with `reasoning.enabled=false` and `include_reasoning=false`. The
 reasoning-disabled clean rerun now passes for Kimi K2.6 on 686/686 records
 after the OpenRouter top-level error retry repair, with provider-reported cost
-for every record and actual model/provider metadata present. The later-model
-audit is therefore `partial_waiting_for_remaining_later_models`: Kimi has
-passed, while Devstral and Gemini still need execution before any five-model
-journal claim.
+for every record and actual model/provider metadata present. Devstral 2 also
+passes the same later-model gate on 686/686 records, with provider-reported
+cost for every record and actual model/provider metadata present. The
+later-model audit is therefore `partial_waiting_for_remaining_later_models`:
+Kimi and Devstral have passed, while Gemini still needs execution before any
+five-model journal claim.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently
@@ -167,9 +168,10 @@ They should not override `final_paper_roadmap_zh.md`.
   summaries are now tracked under `data/protocols/`. DeepSeek/Qwen smoke and
   first-batch full runs have passed, and the G7 later-model packet plus
   later-model strict preflight/check-only plus post-run audit/five-model
-  synthesis scaffolds have passed without API calls. The next EVP-8 execution
-  gate is explicit per-model authorization before any Kimi/Devstral/Gemini
-  calls.
+  synthesis scaffolds have passed without API calls. Kimi and Devstral have
+  since passed their later-model full runs; the next EVP-8 execution gate is
+  the remaining Gemini full run on the same frozen packets before any
+  five-model claim.
 - The prompt-only DeepSeek full run completed and produced a mixed/negative
   `stop_or_redesign` result. It is not a positive paper claim.
 - The later tool-augmented full run passed its dedicated gate, but only supports

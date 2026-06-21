@@ -52,7 +52,7 @@
     },
     {
       "check": "passed_status_requires_all_later_models",
-      "detail": 1,
+      "detail": 2,
       "passed": true
     },
     {
@@ -89,13 +89,16 @@
     "mistralai/devstral-2512",
     "google/gemini-2.5-flash"
   ],
-  "later_passed_model_count": 1,
-  "later_summary_present_count": 1,
+  "later_passed_model_count": 2,
+  "later_summary_present_count": 2,
   "per_level_decision_counts_by_model": {
     "E0": {
       "deepseek/deepseek-v4-pro": {
         "escalate": 66,
         "reject": 32
+      },
+      "mistralai/devstral-2512": {
+        "escalate": 98
       },
       "moonshotai/kimi-k2.6": {
         "escalate": 98
@@ -109,6 +112,9 @@
       "deepseek/deepseek-v4-pro": {
         "escalate": 58,
         "reject": 40
+      },
+      "mistralai/devstral-2512": {
+        "escalate": 98
       },
       "moonshotai/kimi-k2.6": {
         "escalate": 92,
@@ -124,6 +130,9 @@
         "escalate": 65,
         "reject": 33
       },
+      "mistralai/devstral-2512": {
+        "escalate": 98
+      },
       "moonshotai/kimi-k2.6": {
         "escalate": 91,
         "reject": 7
@@ -138,6 +147,9 @@
         "escalate": 81,
         "reject": 17
       },
+      "mistralai/devstral-2512": {
+        "escalate": 98
+      },
       "moonshotai/kimi-k2.6": {
         "escalate": 98
       },
@@ -150,6 +162,9 @@
       "deepseek/deepseek-v4-pro": {
         "escalate": 74,
         "reject": 24
+      },
+      "mistralai/devstral-2512": {
+        "escalate": 98
       },
       "moonshotai/kimi-k2.6": {
         "escalate": 97,
@@ -165,6 +180,9 @@
         "escalate": 71,
         "reject": 27
       },
+      "mistralai/devstral-2512": {
+        "escalate": 98
+      },
       "moonshotai/kimi-k2.6": {
         "escalate": 98
       },
@@ -177,6 +195,9 @@
       "deepseek/deepseek-v4-pro": {
         "escalate": 86,
         "reject": 12
+      },
+      "mistralai/devstral-2512": {
+        "escalate": 98
       },
       "moonshotai/kimi-k2.6": {
         "escalate": 98

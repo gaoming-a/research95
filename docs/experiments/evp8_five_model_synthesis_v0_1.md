@@ -5,7 +5,7 @@
 - Later-model audit status: `partial_waiting_for_remaining_later_models`
 - API call attempted by synthesis: `false`
 - Raw outputs read: `false`
-- Later summaries present: `1` / `3`
+- Later summaries present: `2` / `3`
 
 ## Models
 
@@ -17,13 +17,13 @@
 
 ## Per-Level Decision Counts
 
-- `E0`: `{"deepseek/deepseek-v4-pro": {"escalate": 66, "reject": 32}, "moonshotai/kimi-k2.6": {"escalate": 98}, "qwen/qwen3.7-max": {"escalate": 75, "reject": 23}}`
-- `E1`: `{"deepseek/deepseek-v4-pro": {"escalate": 58, "reject": 40}, "moonshotai/kimi-k2.6": {"escalate": 92, "reject": 6}, "qwen/qwen3.7-max": {"escalate": 70, "reject": 28}}`
-- `E2`: `{"deepseek/deepseek-v4-pro": {"escalate": 65, "reject": 33}, "moonshotai/kimi-k2.6": {"escalate": 91, "reject": 7}, "qwen/qwen3.7-max": {"escalate": 71, "reject": 27}}`
-- `E3`: `{"deepseek/deepseek-v4-pro": {"escalate": 81, "reject": 17}, "moonshotai/kimi-k2.6": {"escalate": 98}, "qwen/qwen3.7-max": {"escalate": 79, "reject": 19}}`
-- `E4`: `{"deepseek/deepseek-v4-pro": {"escalate": 74, "reject": 24}, "moonshotai/kimi-k2.6": {"escalate": 97, "reject": 1}, "qwen/qwen3.7-max": {"escalate": 80, "reject": 18}}`
-- `E5`: `{"deepseek/deepseek-v4-pro": {"escalate": 71, "reject": 27}, "moonshotai/kimi-k2.6": {"escalate": 98}, "qwen/qwen3.7-max": {"escalate": 78, "reject": 20}}`
-- `E6`: `{"deepseek/deepseek-v4-pro": {"escalate": 86, "reject": 12}, "moonshotai/kimi-k2.6": {"escalate": 98}, "qwen/qwen3.7-max": {"escalate": 91, "reject": 7}}`
+- `E0`: `{"deepseek/deepseek-v4-pro": {"escalate": 66, "reject": 32}, "mistralai/devstral-2512": {"escalate": 98}, "moonshotai/kimi-k2.6": {"escalate": 98}, "qwen/qwen3.7-max": {"escalate": 75, "reject": 23}}`
+- `E1`: `{"deepseek/deepseek-v4-pro": {"escalate": 58, "reject": 40}, "mistralai/devstral-2512": {"escalate": 98}, "moonshotai/kimi-k2.6": {"escalate": 92, "reject": 6}, "qwen/qwen3.7-max": {"escalate": 70, "reject": 28}}`
+- `E2`: `{"deepseek/deepseek-v4-pro": {"escalate": 65, "reject": 33}, "mistralai/devstral-2512": {"escalate": 98}, "moonshotai/kimi-k2.6": {"escalate": 91, "reject": 7}, "qwen/qwen3.7-max": {"escalate": 71, "reject": 27}}`
+- `E3`: `{"deepseek/deepseek-v4-pro": {"escalate": 81, "reject": 17}, "mistralai/devstral-2512": {"escalate": 98}, "moonshotai/kimi-k2.6": {"escalate": 98}, "qwen/qwen3.7-max": {"escalate": 79, "reject": 19}}`
+- `E4`: `{"deepseek/deepseek-v4-pro": {"escalate": 74, "reject": 24}, "mistralai/devstral-2512": {"escalate": 98}, "moonshotai/kimi-k2.6": {"escalate": 97, "reject": 1}, "qwen/qwen3.7-max": {"escalate": 80, "reject": 18}}`
+- `E5`: `{"deepseek/deepseek-v4-pro": {"escalate": 71, "reject": 27}, "mistralai/devstral-2512": {"escalate": 98}, "moonshotai/kimi-k2.6": {"escalate": 98}, "qwen/qwen3.7-max": {"escalate": 78, "reject": 20}}`
+- `E6`: `{"deepseek/deepseek-v4-pro": {"escalate": 86, "reject": 12}, "mistralai/devstral-2512": {"escalate": 98}, "moonshotai/kimi-k2.6": {"escalate": 98}, "qwen/qwen3.7-max": {"escalate": 91, "reject": 7}}`
 
 ## Checks
 

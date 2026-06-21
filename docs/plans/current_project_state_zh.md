@@ -19,11 +19,13 @@
 - 当前本地 ahead 状态：
   - 本轮 post-push inspection 显示 `git status --short --branch` 为
     `main...origin/main`；
-  - 远端已包含 Kimi reasoning-disabled clean-rerun gate 和随后 429 resume
-    boundary 文档；精确 hash 以 `git log -1 --oneline` 和远端 log 为准；
-  - 当前 Kimi K2.6 reasoning-disabled clean rerun 已通过 later-model gate；
-    `.env` 和 local config 仍 ignored；raw outputs 和 blocked attempts 仍只在
-    ignored `outputs/`；最终仍以命令输出和 `git log -1 --oneline` 为准。
+  - 远端已包含 Kimi reasoning-disabled clean-rerun gate、429 resume boundary
+    文档和 OpenRouter top-level error retry repair；精确 hash 以
+    `git log -1 --oneline` 和远端 log 为准；
+  - 当前 Kimi K2.6 reasoning-disabled clean rerun 和 Devstral 2 full run 均已
+    通过 later-model gate；`.env` 和 local config 仍 ignored；raw outputs 和
+    blocked attempts 仍只在 ignored `outputs/`；最终仍以命令输出和
+    `git log -1 --oneline` 为准。
 - 当前远端已同步锚点：
   - `7308910 Add EVP-8 Kimi reasoning clean rerun gate`：远端已包含 Kimi
     reasoning-disabled routing policy、OpenRouter request controls、preflight/
@@ -71,13 +73,14 @@
   `OPENROUTER_API_KEY` presence；G7.3 later-model post-run audit 和
   five-model synthesis scaffold 已通过 waiting-state check；用户已授权后续模型
   API，但首个 Kimi 686-record run 被 later-model gate 正确阻断，原因是
-  Kimi 默认 reasoning 导致 79 条 invalid JSON output。当前下一步是按
-  tracked Kimi reasoning-disabled policy 执行 clean full rerun；OpenRouter
-  top-level 429 error retry repair 后，Kimi clean rerun 已通过：
-  686/686 parse-valid、provider-reported cost 686/686、actual model/provider
-  metadata 686/686。当前 later-model audit 为
-  `partial_waiting_for_remaining_later_models`：Kimi passed，Devstral/Gemini
-  waiting。
+  Kimi 默认 reasoning 导致 79 条 invalid JSON output。OpenRouter top-level
+  429 error retry repair 后，Kimi clean rerun 已通过：686/686 parse-valid、
+  provider-reported cost 686/686、actual model/provider metadata 686/686。
+  Devstral 2 full run 随后也已通过：686/686 parse-valid、
+  provider-reported cost 686/686、actual model/provider metadata 686/686。
+  当前 later-model audit 为
+  `partial_waiting_for_remaining_later_models`：Kimi and Devstral passed，
+  Gemini waiting。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。最近一次已确认
   `git push origin main` 成功；最终是否仍 ahead 仍以
@@ -109,8 +112,8 @@
     strict checks 和 full check-only 已通过；`OPENROUTER_API_KEY` presence
     已通过；G7.3 post-run audit/five-model synthesis scaffolds 当前分别为
     `partial_waiting_for_remaining_later_models` 和
-    `partial_waiting_for_remaining_later_models`；Kimi K2.6 已 passed，
-    Devstral/Gemini 仍 waiting；
+    `partial_waiting_for_remaining_later_models`；Kimi K2.6 和 Devstral 2
+    已 passed，Gemini 仍 waiting；
   - raw-output-free tracked summaries and audits。
 - 当前 evidence-level 边界：EVP-7 是 E0/E2/E4/E6 four-anchor pilot，不是
   完整 E0-E6 adjacent-difference ladder；E1/E3/E5 不应补插进当前 artifacts，
@@ -200,6 +203,10 @@
      `data/reviews/evp8_moonshotai_kimi-k2.6_full_summary.json` 记录 686/686
      parse-valid，provider-reported USD cost `1.02450976`，actual model/provider
      metadata 686/686，不含 prompt text 或 raw response text；
+   - Devstral 2 later-model full run 已执行并通过 partial later-model audit：
+     `data/reviews/evp8_mistralai_devstral-2512_full_summary.json` 记录
+     686/686 parse-valid，provider-reported USD cost `0.44937088`，actual
+     model/provider metadata 686/686，不含 prompt text 或 raw response text；
    - first-batch full-run audit 当前为 `passed`，synthesis 当前为 `passed`，
      二者均不读取 raw outputs；
    - G7 later-model completion packet 已 ready：
@@ -208,13 +215,13 @@
      `python scripts\preflight_evp8_later_models.py --config configs\evp8_later_models.local.json --allow-missing-credentials`；
      `python scripts\run_evp8_later_model_full.py --check-only --run-scope full --config configs\evp8_later_models.local.json --allow-missing-credentials`；
    - 当前 strict API ready 为 true：ignored `.env` 中
-     `OPENROUTER_API_KEY` presence 已通过；下一步仍不是自动 API 执行，而是
-     用户逐模型显式授权；
+     `OPENROUTER_API_KEY` presence 已通过；用户已授权后续 later-model API，
+     当前剩余执行对象是 Gemini 2.5 Flash；
   - 当前 G7.3 post-run audit/synthesis 已通过 partial-state check：
      `python scripts\audit_evp8_later_model_full_results.py --check`；
      `python scripts\summarize_evp8_five_model_synthesis.py --check`；
-   - 后续补跑 Devstral 2、Gemini 2.5 Flash 必须使用同一 frozen packets/
-     prompts/schema，不能边跑边改协议；
+   - 剩余补跑 Gemini 2.5 Flash 必须使用同一 frozen packets/prompts/schema，
+     不能边跑边改协议；
    - smoke 之后的后续顺序已经写入 canonical EVP-8 plan：
      two-model smoke synthesis -> 独立 no-API full-run packet -> DeepSeek
      686-call full run -> DeepSeek audit passed -> Qwen 686-call full run -> Qwen

@@ -17321,3 +17321,59 @@ Next Execute:
 - 下一模型按 packet 顺序为 `mistralai/devstral-2512`，但必须在 Kimi result
   commit 后执行，并复用同一 frozen EVP-8 packets、prompt、schema、parser、
   cost/provider audit 和 OpenRouter exact model route policy。
+
+## 2026-06-22 EVP-8 Devstral later-model result closure
+
+Inspect:
+
+- Kimi result commit 已同步后，工作区回到 `main...origin/main`；
+- strict later-model preflight 和 full check-only 均已通过；
+- Devstral canonical raw/summary path 起跑前不存在 tracked result；
+- 用户已给出后续 later-model API 授权，且 `OPENROUTER_API_KEY` presence 已由
+  strict preflight 记录在 no-secret summary 中。
+
+Plan:
+
+1. 按 G7/G8 frozen packet 顺序执行 `mistralai/devstral-2512` full run；
+2. 使用同一 EVP-8 v0.1 frozen candidate set、prompt、schema、parser、
+   temperature、OpenRouter exact model route policy 和 cost/provider audit；
+3. Devstral 完成后立刻运行 later-model audit 和 five-model synthesis check；
+4. 只有 Devstral summary 通过 parse/cost/provider/model/raw-boundary gates 后，
+   才允许提交并继续 Gemini；
+5. partial synthesis 仍不得写成 five-model journal conclusion。
+
+Execute Result:
+
+- Devstral full run 使用 `--concurrency 2` 正常退出，stderr 为空；
+- tracked raw-output-free summary 已生成：
+  - `review_count=686`；
+  - `parse_valid_count=686`；
+  - `invalid_parse_count=0`；
+  - `later_model_full_gate=passed`；
+  - `run_gate=passed`；
+  - `usage_cost_gate=passed`；
+  - `provider_metadata_gate=passed`；
+  - `actual_model_id_counts={"mistralai/devstral-2512":686}`；
+  - `actual_provider_counts={"Mistral":686}`；
+  - `cost_observability_counts={"provider_reported_cost":686}`；
+  - `total_cost_usd=0.44937088`；
+  - decision counts 为 `escalate=686`。
+
+Verify:
+
+- `scripts/audit_evp8_later_model_full_results.py --check` 已通过当前 partial
+  状态：Kimi 和 Devstral `status=passed`，Gemini 仍
+  `waiting_for_execution`，overall audit 为
+  `partial_waiting_for_remaining_later_models`；
+- `scripts/summarize_evp8_five_model_synthesis.py --check` 已通过 partial
+  状态：DeepSeek/Qwen/Kimi/Devstral 四模型 per-level counts 可读，但
+  forbidden claim 仍禁止 five-model journal conclusion；
+- Devstral tracked summary 不存储 prompt text 或 raw response text；
+- raw responses 和 stdout/stderr logs 仍只保留在 ignored `outputs/`。
+
+Next Execute:
+
+- 提交并尝试同步 Devstral passed result；
+- 若 GitHub 继续网络失败，按用户授权记录同步失败并继续；
+- 同步后按 packet 顺序进入 `google/gemini-2.5-flash`，先重跑 strict
+  preflight/check-only 和 expected-output absence，再执行 Gemini full run。

@@ -3155,10 +3155,24 @@ This file starts fresh for the patch-verification project.
   rather than reusing a polluted raw JSONL. The passed Kimi result had
   686/686 parse-valid records, zero unknown-cost records, zero provider/model
   metadata gaps, and provider-reported cost for every record.
-- Keep the passed Kimi result as one later-model completion only. The
-  later-model audit should move to `partial_waiting_for_remaining_later_models`
-  with Kimi passed and Devstral/Gemini waiting; five-model synthesis remains a
+- Keep the passed Kimi result as one later-model completion only. At Kimi
+  closure time, the later-model audit should move to
+  `partial_waiting_for_remaining_later_models`; five-model synthesis remains a
   partial scaffold until all later models pass.
 - Record actual provider concentration. The passed Kimi clean run routed all
   686 records to `Chutes`; this is acceptable only because the exact requested
   model and actual returned model were recorded for every record.
+
+## 2026-06-22 EVP-8 Devstral clean run closure
+
+- Devstral 2 completed the same frozen EVP-8 later-model packet set without
+  needing a model-specific prompt or routing repair. The passed summary had
+  686/686 parse-valid records, zero unknown-cost records, zero provider/model
+  metadata gaps, and provider-reported cost for every record.
+- Treat Devstral's all-escalate output as an observed model behavior, not a
+  final conclusion. Until Gemini also passes and the five-model synthesis gate
+  changes state, this supports only a partial later-model audit with Kimi and
+  Devstral passed.
+- Keep per-provider metadata in the tracked summary. The Devstral run routed
+  all 686 records to `Mistral`, and the actual model id matched
+  `mistralai/devstral-2512` for every record.
