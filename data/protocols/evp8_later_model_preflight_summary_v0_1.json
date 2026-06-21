@@ -190,6 +190,19 @@
     },
     {
       "category": "structural",
+      "check": "openrouter_model_reasoning_controls",
+      "detail": {
+        "moonshotai/kimi-k2.6": {
+          "include_reasoning": false,
+          "reasoning": {
+            "enabled": false
+          }
+        }
+      },
+      "passed": true
+    },
+    {
+      "category": "structural",
       "check": "execution_requires_explicit_execute_flag",
       "detail": true,
       "passed": true
@@ -383,6 +396,14 @@
   "credential_presence_ready": true,
   "local_config_content_stored_in_tracked_summary": false,
   "next_step": "Wait for explicit per-model execution command after strict preflight.",
+  "openrouter_model_reasoning_controls": {
+    "moonshotai/kimi-k2.6": {
+      "include_reasoning": false,
+      "reasoning": {
+        "enabled": false
+      }
+    }
+  },
   "planned_calls_per_later_model": 686,
   "planned_later_model_ids": [
     "moonshotai/kimi-k2.6",

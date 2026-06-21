@@ -30,6 +30,10 @@
         "require_parameters": true
       },
       "provider_route": "openrouter_pinned_exact_model_id",
+      "reasoning": {
+        "enabled": false
+      },
+      "include_reasoning": false,
       "request_model_id": "moonshotai/kimi-k2.6"
     },
     {

@@ -89,6 +89,14 @@ def check_only(args: argparse.Namespace) -> dict[str, Any]:
     template = resolve(config["prompt_template"]).read_text(encoding="utf-8")
     full_config = config.get("full") or {}
     model_ids = [str(model.get("model_id")) for model in config.get("models") or []]
+    planned_reasoning_controls = {
+        str(model.get("model_id")): {
+            "reasoning": model.get("reasoning"),
+            "include_reasoning": model.get("include_reasoning"),
+        }
+        for model in config.get("models") or []
+        if model.get("reasoning") is not None or model.get("include_reasoning") is not None
+    }
     expected_packet_count = int(full_config.get("planned_calls_per_model") or 0)
     expected_candidate_count = int(full_config.get("candidate_count") or 0)
     packets = evp8_core.build_packets(config, "full")
@@ -118,6 +126,7 @@ def check_only(args: argparse.Namespace) -> dict[str, Any]:
         "selection_policy": "all_frozen_evp8_candidate_set_records",
         "model_visible_levels": list(MODEL_VISIBLE_LEVELS),
         "planned_later_model_ids": model_ids,
+        "planned_model_reasoning_controls": planned_reasoning_controls,
         "planned_later_model_count": len(model_ids),
         "expected_packet_count_per_model": expected_packet_count,
         "packet_count_per_model": len(packets),
@@ -235,6 +244,8 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         "request_model_id": model_config["request_model_id"],
         "provider_route": model_config["provider_route"],
         "provider_preferences": model_config.get("provider_preferences"),
+        "request_reasoning": model_config.get("reasoning"),
+        "request_include_reasoning": model_config.get("include_reasoning"),
         "raw_responses_out": display_path(raw_out),
         "raw_response_text_stored_in_tracked_summary": False,
         "review_count": len(parsed_records),
@@ -300,6 +311,8 @@ def fetch_raw_record(
         temperature=float(config.get("temperature", 0.0)),
         max_tokens=int(config.get("max_output_tokens", 4096)),
         provider=model_config.get("provider_preferences"),
+        reasoning=model_config.get("reasoning"),
+        include_reasoning=model_config.get("include_reasoning"),
         metadata_enabled=metadata_enabled,
     )
     return {
@@ -312,6 +325,8 @@ def fetch_raw_record(
         "actual_provider": actual_provider(response),
         "openrouter_metadata": openrouter_metadata(response),
         "provider_route": model_config["provider_route"],
+        "request_reasoning": model_config.get("reasoning"),
+        "request_include_reasoning": model_config.get("include_reasoning"),
         "raw_response_text": response_text(response),
         "response": response,
         "run_date_utc": datetime.now(timezone.utc).isoformat(),

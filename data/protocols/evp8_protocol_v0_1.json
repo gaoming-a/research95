@@ -358,6 +358,14 @@
     "record_actual_provider": true,
     "temperature": 0.0,
     "max_output_tokens": 4096,
+    "openrouter_model_reasoning_controls": {
+      "moonshotai/kimi-k2.6": {
+        "include_reasoning": false,
+        "reasoning": {
+          "enabled": false
+        }
+      }
+    },
     "retry_policy": {
       "max_retries_per_record": 1,
       "retry_only_on_transport_or_rate_limit": true,

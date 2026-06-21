@@ -41,6 +41,14 @@
   ],
   "next_step": "Run ignored local DeepSeek/Qwen preflight next; this audit still does not authorize API execution.",
   "no_api_boundary": "This audit reads only the tracked EVP-8 protocol spec and does not read credentials or call models.",
+  "openrouter_model_reasoning_controls": {
+    "moonshotai/kimi-k2.6": {
+      "include_reasoning": false,
+      "reasoning": {
+        "enabled": false
+      }
+    }
+  },
   "phase0_api_readiness": "ready_for_api_preflight",
   "phase1_models": [
     "deepseek/deepseek-v4-pro",

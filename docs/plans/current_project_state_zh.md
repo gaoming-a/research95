@@ -1,6 +1,6 @@
 # 当前项目状态与文件地图
 
-日期：2026-06-21
+日期：2026-06-22
 
 本文件是短入口，用来整理当前计划文档和项目文件。它不替代
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
@@ -64,8 +64,11 @@
   later-model completion packet 已 ready；G7.1 later-model runner/preflight
   结构验证已通过；G7.2 strict preflight 已在 ignored `.env` 中确认
   `OPENROUTER_API_KEY` presence；G7.3 later-model post-run audit 和
-  five-model synthesis scaffold 已通过 waiting-state check，但仍不授权
-  Kimi/Devstral/Gemini API。
+  five-model synthesis scaffold 已通过 waiting-state check；用户已授权后续模型
+  API，但首个 Kimi 686-record run 被 later-model gate 正确阻断，原因是
+  Kimi 默认 reasoning 导致 79 条 invalid JSON output。当前下一步是按
+  tracked Kimi reasoning-disabled policy 执行 clean full rerun；Kimi audit
+  通过前不启动 Devstral/Gemini。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。本轮最终 `git push
   origin main` 已成功同步到 `eaecfeb`；最终是否仍 ahead 仍以

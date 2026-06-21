@@ -83,14 +83,15 @@ user-selected journal-upgrade route is recorded in
 `docs/experiments/evp8_journal_scale_execution_plan_20260620.md`: freeze a new
 EVP-8 full-ladder protocol first, then run DeepSeek V4 Pro and Qwen3.7 Max as
 the first model batch, with Kimi K2.6, Devstral 2, and Gemini 2.5 Flash added
-later on the same frozen packets and prompts. As of 2026-06-21, the
+later on the same frozen packets and prompts. As of 2026-06-22, the
 DeepSeek/Qwen first batch has passed on 686 records per model, and the
 later-model OpenRouter runner/preflight are strict-ready with
-`OPENROUTER_API_KEY` present in the ignored local environment. This still does
-not authorize Kimi/Devstral/Gemini API execution; each later model still needs
-an explicit per-model execute command. The later-model post-run audit and
-five-model synthesis scaffolds are in place and currently report waiting
-states because no later-model summaries exist yet.
+`OPENROUTER_API_KEY` present in the ignored local environment. The first Kimi
+K2.6 execution attempt wrote 686 ignored raw records but was correctly blocked
+by the later-model gate because Kimi returned reasoning-heavy responses with
+79 invalid JSON outputs. The tracked protocol now records a Kimi clean-rerun
+policy with `reasoning.enabled=false` and `include_reasoning=false`; Kimi must
+pass the later-model audit before Devstral/Gemini or any five-model claim.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently

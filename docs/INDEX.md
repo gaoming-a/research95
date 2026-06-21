@@ -1160,13 +1160,15 @@
 - `../scripts/preflight_evp8_later_models.py`: validates the ignored EVP-8
   later-model local config and `.env` key presence without printing secrets or
   calling APIs. Structural checks may pass with missing credentials; strict
-  execution readiness requires `OPENROUTER_API_KEY`.
+  execution readiness requires `OPENROUTER_API_KEY`. It also checks tracked
+  OpenRouter reasoning controls for later-model clean reruns.
 - `../scripts/run_evp8_later_model_full.py`: guarded EVP-8 later-model full
   runner. It supports check-only without API calls and refuses real execution
   unless an ignored local config, strict preflight, explicit `--execute`, and a
   configured model id are supplied. Real execution also supports explicit
   bounded `--concurrency` while preserving ordered raw JSONL output, so
-  interrupted runs can still resume from a prefix.
+  interrupted runs can still resume from a prefix. Execution summaries record
+  per-model reasoning/include-reasoning request controls when configured.
 - `../scripts/audit_evp8_later_model_full_results.py`: no-API later-model
   post-run audit scaffold. It reports `waiting_for_execution` before
   Kimi/Devstral/Gemini summaries exist and later validates tracked summaries

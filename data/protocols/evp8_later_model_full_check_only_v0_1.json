@@ -29,6 +29,14 @@
     "mistralai/devstral-2512",
     "google/gemini-2.5-flash"
   ],
+  "planned_model_reasoning_controls": {
+    "moonshotai/kimi-k2.6": {
+      "include_reasoning": false,
+      "reasoning": {
+        "enabled": false
+      }
+    }
+  },
   "preflight_ready_for_user_execute_command": true,
   "preflight_structural_ready": true,
   "prompt_chars_max": 7974,

@@ -108,6 +108,20 @@ def _catalog_ids(catalog: dict[str, Any]) -> list[str]:
     return [str(item.get("slug")) for item in catalog.get("results") or []]
 
 
+def _model_reasoning_controls(models: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    controls: dict[str, dict[str, Any]] = {}
+    for model in models:
+        model_id = str(model.get("model_id"))
+        control: dict[str, Any] = {}
+        if model.get("reasoning") is not None:
+            control["reasoning"] = model.get("reasoning")
+        if model.get("include_reasoning") is not None:
+            control["include_reasoning"] = model.get("include_reasoning")
+        if control:
+            controls[model_id] = control
+    return controls
+
+
 def _provider_pref_checks(models: list[dict[str, Any]]) -> list[dict[str, Any]]:
     checks: list[dict[str, Any]] = []
     for model in models:
@@ -146,6 +160,10 @@ def preflight(config_path: Path, allow_missing_credentials: bool = False) -> dic
     request_model_ids = [str(model.get("request_model_id")) for model in models]
     provider_routes = [str(model.get("provider_route")) for model in models]
     api_key_envs = sorted({str(model.get("api_key_env")) for model in models})
+    model_reasoning_controls = _model_reasoning_controls(models)
+    expected_reasoning_controls = (
+        (spec.get("routing_policy") or {}).get("openrouter_model_reasoning_controls") or {}
+    )
     protocol_later_models = _protocol_later_model_ids(spec)
 
     checks: list[dict[str, Any]] = []
@@ -185,6 +203,7 @@ def preflight(config_path: Path, allow_missing_credentials: bool = False) -> dic
             _check("candidate_count", candidate_set.get("records") and len(candidate_set["records"]) == 98, len(candidate_set.get("records") or [])),
             _check("temperature", config.get("temperature") == spec.get("routing_policy", {}).get("temperature"), config.get("temperature")),
             _check("max_output_tokens", config.get("max_output_tokens") == spec.get("routing_policy", {}).get("max_output_tokens"), config.get("max_output_tokens")),
+            _check("openrouter_model_reasoning_controls", model_reasoning_controls == expected_reasoning_controls, model_reasoning_controls),
             _check("execution_requires_explicit_execute_flag", config.get("execution_requires_explicit_execute_flag") is True, config.get("execution_requires_explicit_execute_flag")),
             _check("api_execution_not_authorized_by_config", config.get("api_execution_authorized") is False, config.get("api_execution_authorized")),
             _check("raw_output_policy", config.get("raw_output_policy") == "ignored_outputs_only", config.get("raw_output_policy")),
@@ -253,6 +272,7 @@ def preflight(config_path: Path, allow_missing_credentials: bool = False) -> dic
         "api_key_values_printed": False,
         "local_config_content_stored_in_tracked_summary": False,
         "planned_later_model_ids": model_ids,
+        "openrouter_model_reasoning_controls": model_reasoning_controls,
         "planned_calls_per_later_model": full.get("planned_calls_per_model"),
         "planned_total_later_model_calls": int(full.get("planned_calls_per_model") or 0) * len(models),
         "checks": checks,

@@ -193,6 +193,7 @@ def build_packet() -> dict[str, Any]:
         "model_visible_levels": MODEL_VISIBLE_LEVELS,
         "temperature": ((protocol.get("routing_policy") or {}).get("temperature")),
         "max_output_tokens": ((protocol.get("routing_policy") or {}).get("max_output_tokens")),
+        "openrouter_model_reasoning_controls": ((protocol.get("routing_policy") or {}).get("openrouter_model_reasoning_controls")),
         "retry_policy": (protocol.get("routing_policy") or {}).get("retry_policy"),
         "provider_route_policy": {
             "preferred_route": "openrouter_pinned_exact_model_id",

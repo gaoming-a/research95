@@ -17188,3 +17188,42 @@ Second Diagnose / Repair:
   - 最终仍失败时只输出 sanitized/truncated body，不输出 API key；
   - 不改变 request payload、prompt、schema、candidate set 或 evidence packets；
 - 下一步重新 py_compile/check-only 后提交，再从 154-record prefix resume。
+
+Third Diagnose / Repair:
+
+- Kimi clean-up resume 最终写满 686 条 ignored raw records，并生成
+  `data\reviews\evp8_moonshotai_kimi-k2.6_full_summary.json`，但 runner
+  正确阻断：`later_model_full_gate=blocked`；
+- 结构化诊断结果：
+  - `review_count=686`；
+  - `parse_valid_count=607`；
+  - `invalid_parse_count=79`；
+  - invalid 全部为 `invalid_json:No JSON object found in model response`；
+  - invalid 分布覆盖 E0-E6，不是单一 evidence 层或 candidate 的局部问题；
+  - 78/79 条仍有 provider-reported cost，1 条缺 usage/provider metadata；
+  - 主要失败形态是 Kimi `message.reasoning` 非空而 `message.content`
+    为空或不可解析，且 finish_reason 多为 `length`。
+- 问题类型定位为 later-model routing/inference setting 问题，不是
+  prompt/schema/candidate/frozen packet 问题；
+- 不允许只重跑 79 个 invalid packets，因为这会让同一个 Kimi 模型内混用
+  两套 inference settings，破坏模型内一致性；
+- OpenRouter public model catalog 显示 `moonshotai/kimi-k2.6` 的 reasoning
+  `default_enabled=true`、`mandatory=false`，并支持 `reasoning` 与
+  `include_reasoning` 参数；
+- 最短且更严谨的 repair 是：
+  1. 将本次 Kimi 686-record run 作为 ignored blocked attempt 保留；
+  2. 在 EVP-8 routing policy 中显式加入 Kimi
+     `reasoning.enabled=false`、`include_reasoning=false`；
+  3. 使用同一 frozen candidates / packets / prompt / schema 重新跑完整
+     Kimi 686 records；
+  4. clean rerun 通过 later-model audit 前，不启动 Devstral/Gemini，也不写
+     five-model claim。
+
+本轮执行边界：
+
+- 可以修改 OpenRouter client、later-model runner、preflight、protocol audit
+  和 tracked docs，使 Kimi reasoning control 成为可审计 routing policy；
+- 不改变 evidence levels、candidate set、prompt template、output schema 或
+  DeepSeek/Qwen first-batch 结果；
+- 提交同步后，移动 ignored blocked Kimi raw/summary 到 ignored backup，再用
+  canonical Kimi 路径重新执行 clean full run。

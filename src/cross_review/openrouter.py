@@ -97,6 +97,8 @@ class OpenAICompatibleChatClient:
         top_p: float = 1.0,
         max_tokens: int = 4096,
         provider: dict[str, Any] | None = None,
+        reasoning: dict[str, Any] | None = None,
+        include_reasoning: bool | None = None,
         metadata_enabled: bool = False,
     ) -> dict[str, Any]:
         return self.chat_completion_messages(
@@ -106,6 +108,8 @@ class OpenAICompatibleChatClient:
             top_p=top_p,
             max_tokens=max_tokens,
             provider=provider,
+            reasoning=reasoning,
+            include_reasoning=include_reasoning,
             metadata_enabled=metadata_enabled,
         )
 
@@ -117,6 +121,8 @@ class OpenAICompatibleChatClient:
         top_p: float = 1.0,
         max_tokens: int = 4096,
         provider: dict[str, Any] | None = None,
+        reasoning: dict[str, Any] | None = None,
+        include_reasoning: bool | None = None,
         metadata_enabled: bool = False,
     ) -> dict[str, Any]:
         payload = {
@@ -128,6 +134,10 @@ class OpenAICompatibleChatClient:
         }
         if provider is not None:
             payload["provider"] = provider
+        if reasoning is not None:
+            payload["reasoning"] = reasoning
+        if include_reasoning is not None:
+            payload["include_reasoning"] = include_reasoning
         body = json.dumps(payload).encode("utf-8")
         headers = {
             "Authorization": f"Bearer {self.api_key}",

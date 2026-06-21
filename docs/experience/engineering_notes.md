@@ -3089,3 +3089,26 @@ This file starts fresh for the patch-verification project.
   failures. They can be transient gateway pages rather than model outputs; the
   final error may include only a sanitized short body snippet and must never
   print API keys.
+
+## 2026-06-22 EVP-8 Kimi reasoning gate blocker
+
+- A full Kimi K2.6 later-model run can finish transport-wise and still be an
+  invalid experimental result. The runner must block if parse validity,
+  provider metadata, or cost observability is incomplete after writing ignored
+  raw outputs.
+- In the observed Kimi run, 686 raw records were written but only 607 parsed
+  against the EVP-8 JSON schema. The invalid records were spread across E0-E6
+  and were not tied to a single task or evidence level.
+- The dominant failure mode was OpenRouter returning nonempty
+  `message.reasoning` with empty or unusable `message.content`, often with
+  `finish_reason=length`. Treat this as a routing/inference-setting problem,
+  not a prompt, schema, candidate-set, or evidence-packet problem.
+- Do not repair this by retrying only invalid packets. Selective retry would
+  mix inference settings inside one model's 686-record result. Preserve the
+  blocked attempt as ignored output and run a full clean Kimi pass under one
+  explicit reasoning-control policy.
+- For Kimi K2.6, OpenRouter catalog reports reasoning is default-enabled but
+  not mandatory. Record `reasoning.enabled=false` and
+  `include_reasoning=false` in the protocol/config/preflight/summary path
+  before the clean rerun, then require the normal later-model audit gate before
+  starting the next model.

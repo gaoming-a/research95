@@ -342,6 +342,14 @@
     ],
     "path": "data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json"
   },
+  "openrouter_model_reasoning_controls": {
+    "moonshotai/kimi-k2.6": {
+      "include_reasoning": false,
+      "reasoning": {
+        "enabled": false
+      }
+    }
+  },
   "packet_id": "evp8_later_model_completion_packet_v0_1",
   "packet_status": "ready",
   "planned_calls_per_later_model": 686,

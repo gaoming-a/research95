@@ -25,6 +25,14 @@ EXPECTED_PHASE2_MODELS = (
     "mistralai/devstral-2512",
     "google/gemini-2.5-flash",
 )
+EXPECTED_OPENROUTER_REASONING_CONTROLS = {
+    "moonshotai/kimi-k2.6": {
+        "include_reasoning": False,
+        "reasoning": {
+            "enabled": False,
+        },
+    },
+}
 FORBIDDEN_MODEL_VISIBLE_FIELDS = {
     "expected_outcome",
     "candidate_type",
@@ -135,6 +143,7 @@ def audit_protocol(spec: dict[str, Any]) -> dict[str, Any]:
         },
         "phase1_models": phase1_models,
         "phase2_models": phase2_models,
+        "openrouter_model_reasoning_controls": (spec.get("routing_policy") or {}).get("openrouter_model_reasoning_controls"),
         "no_api_boundary": "This audit reads only the tracked EVP-8 protocol spec and does not read credentials or call models.",
         "next_step": (
             "Run ignored local DeepSeek/Qwen preflight next; this audit still does not authorize API execution."
@@ -278,6 +287,8 @@ def _audit_routing_policy(spec: dict[str, Any], errors: list[str]) -> None:
         errors.append("temperature_must_be_zero")
     if not isinstance(routing.get("max_output_tokens"), int) or routing["max_output_tokens"] <= 0:
         errors.append("max_output_tokens_must_be_positive_int")
+    if routing.get("openrouter_model_reasoning_controls") != EXPECTED_OPENROUTER_REASONING_CONTROLS:
+        errors.append("openrouter_reasoning_controls_mismatch")
     retry_policy = routing.get("retry_policy") or {}
     if retry_policy.get("no_silent_retry_for_parse_invalid") is not True:
         errors.append("parse_invalid_must_not_be_silently_retried")
