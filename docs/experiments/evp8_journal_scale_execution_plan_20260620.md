@@ -359,6 +359,17 @@ Gate G7: later model completion packet.
 - Prepare a no-API execution packet before later-model API calls. The packet
   must include provider route, model ids, expected outputs, cost ceiling, retry
   policy, and stop gates for all three later models.
+- Status as of 2026-06-21: the G7 no-API packet is ready:
+  `data/protocols/evp8_later_model_completion_packet_v0_1.json`.
+  The companion public OpenRouter catalog audit is
+  `data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json` and
+  currently has `all_available = true`.
+- The G7 packet plans 686 calls per later model and 2058 later-model calls in
+  total, with a USD 30 planning ceiling for the later-model batch only.
+- This packet still does not authorize API execution. Before any later-model
+  API call, implement and verify the later-model runner/preflight, confirm
+  `OPENROUTER_API_KEY` in ignored local config, and use an explicit per-model
+  execution command.
 
 Gate G8: five-model journal synthesis.
 

@@ -3021,3 +3021,16 @@ This file starts fresh for the patch-verification project.
 - For the pre-Qwen gate, use strict preflight, full-scope runner check-only,
   first-batch full-result audit, and first-batch synthesis. Do not regenerate
   the G5 packet snapshot after partial full execution.
+
+## 2026-06-21 EVP-8 G7 later-model packet boundary
+
+- A later-model completion packet can be ready while actual execution remains
+  blocked. For G7, `write_evp8_later_model_completion_packet.py --check`
+  validates protocol/audit/synthesis/catalog/expected-output absence, but it
+  also records that the later-model runner and preflight are still required.
+- Treat OpenRouter catalog audit as a public model-availability check only. It
+  does not prove API credentials, provider routing, returned model IDs, cost
+  fields, parse validity, or raw-output boundaries for real calls.
+- Do not run Kimi/Devstral/Gemini from command templates until the real runner
+  exists, the ignored local config and `OPENROUTER_API_KEY` pass preflight, and
+  each model has explicit execution authorization.

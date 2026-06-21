@@ -1,0 +1,29 @@
+{
+  "all_available": true,
+  "audit_date": "2026-06-21",
+  "catalog_model_count": 340,
+  "catalog_url": "https://openrouter.ai/api/v1/models",
+  "results": [
+    {
+      "available": true,
+      "context_length": 262144,
+      "created": 1776699402,
+      "name": "MoonshotAI: Kimi K2.6",
+      "slug": "moonshotai/kimi-k2.6"
+    },
+    {
+      "available": true,
+      "context_length": 262144,
+      "created": 1765285419,
+      "name": "Mistral: Devstral 2 2512",
+      "slug": "mistralai/devstral-2512"
+    },
+    {
+      "available": true,
+      "context_length": 1048576,
+      "created": 1750172488,
+      "name": "Google: Gemini 2.5 Flash",
+      "slug": "google/gemini-2.5-flash"
+    }
+  ]
+}

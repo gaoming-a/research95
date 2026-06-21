@@ -1,0 +1,307 @@
+{
+  "api_call_attempted": false,
+  "api_key_values_printed": false,
+  "candidate_count": 98,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "checks": [
+    {
+      "check": "protocol_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "protocol_ready_for_preflight",
+      "detail": "ready_for_api_preflight",
+      "passed": true
+    },
+    {
+      "check": "full_check_only_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "full_packet_count",
+      "detail": 686,
+      "passed": true
+    },
+    {
+      "check": "full_candidate_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "full_prompt_hashes_unique",
+      "detail": 686,
+      "passed": true
+    },
+    {
+      "check": "first_batch_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "first_batch_audit_no_raw_outputs_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "first_batch_synthesis_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "first_batch_synthesis_no_raw_outputs_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "later_model_ids_match_protocol",
+      "detail": [
+        "moonshotai/kimi-k2.6",
+        "mistralai/devstral-2512",
+        "google/gemini-2.5-flash"
+      ],
+      "passed": true
+    },
+    {
+      "check": "openrouter_catalog_all_available",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "openrouter_catalog_ids_match_protocol",
+      "detail": [
+        "moonshotai/kimi-k2.6",
+        "mistralai/devstral-2512",
+        "google/gemini-2.5-flash"
+      ],
+      "passed": true
+    },
+    {
+      "check": "expected_later_outputs_absent",
+      "detail": [
+        {
+          "exists": false,
+          "model_id": "moonshotai/kimi-k2.6",
+          "output_kind": "raw_responses",
+          "passed": true,
+          "path": "outputs/evp8_phase2_later_models_full/moonshotai_kimi-k2.6/raw_responses.jsonl"
+        },
+        {
+          "exists": false,
+          "model_id": "moonshotai/kimi-k2.6",
+          "output_kind": "tracked_summary",
+          "passed": true,
+          "path": "data/reviews/evp8_moonshotai_kimi-k2.6_full_summary.json"
+        },
+        {
+          "exists": false,
+          "model_id": "mistralai/devstral-2512",
+          "output_kind": "raw_responses",
+          "passed": true,
+          "path": "outputs/evp8_phase2_later_models_full/mistralai_devstral-2512/raw_responses.jsonl"
+        },
+        {
+          "exists": false,
+          "model_id": "mistralai/devstral-2512",
+          "output_kind": "tracked_summary",
+          "passed": true,
+          "path": "data/reviews/evp8_mistralai_devstral-2512_full_summary.json"
+        },
+        {
+          "exists": false,
+          "model_id": "google/gemini-2.5-flash",
+          "output_kind": "raw_responses",
+          "passed": true,
+          "path": "outputs/evp8_phase2_later_models_full/google_gemini-2.5-flash/raw_responses.jsonl"
+        },
+        {
+          "exists": false,
+          "model_id": "google/gemini-2.5-flash",
+          "output_kind": "tracked_summary",
+          "passed": true,
+          "path": "data/reviews/evp8_google_gemini-2.5-flash_full_summary.json"
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "claim_boundary": "This packet is a no-API later-model completion handoff. It does not authorize Kimi, Devstral, or Gemini API calls and does not support five-model journal conclusions until the later-model runs and audits pass.",
+  "cohort_id": "EVP-8",
+  "cost_policy": {
+    "ceiling_scope": "Kimi/Devstral/Gemini later-model batch only; excludes DeepSeek and Qwen already run.",
+    "planning_cost_ceiling_usd": 30.0,
+    "required_fields": [
+      "usage.prompt_tokens",
+      "usage.completion_tokens",
+      "usage.total_tokens",
+      "cost_usd",
+      "cost_cny",
+      "cost_currency",
+      "cost_source",
+      "cost_observability"
+    ],
+    "unknown_cost_record_count_must_equal": 0
+  },
+  "execution_authorized_by_packet": false,
+  "expected_output_absence": [
+    {
+      "exists": false,
+      "model_id": "moonshotai/kimi-k2.6",
+      "output_kind": "raw_responses",
+      "passed": true,
+      "path": "outputs/evp8_phase2_later_models_full/moonshotai_kimi-k2.6/raw_responses.jsonl"
+    },
+    {
+      "exists": false,
+      "model_id": "moonshotai/kimi-k2.6",
+      "output_kind": "tracked_summary",
+      "passed": true,
+      "path": "data/reviews/evp8_moonshotai_kimi-k2.6_full_summary.json"
+    },
+    {
+      "exists": false,
+      "model_id": "mistralai/devstral-2512",
+      "output_kind": "raw_responses",
+      "passed": true,
+      "path": "outputs/evp8_phase2_later_models_full/mistralai_devstral-2512/raw_responses.jsonl"
+    },
+    {
+      "exists": false,
+      "model_id": "mistralai/devstral-2512",
+      "output_kind": "tracked_summary",
+      "passed": true,
+      "path": "data/reviews/evp8_mistralai_devstral-2512_full_summary.json"
+    },
+    {
+      "exists": false,
+      "model_id": "google/gemini-2.5-flash",
+      "output_kind": "raw_responses",
+      "passed": true,
+      "path": "outputs/evp8_phase2_later_models_full/google_gemini-2.5-flash/raw_responses.jsonl"
+    },
+    {
+      "exists": false,
+      "model_id": "google/gemini-2.5-flash",
+      "output_kind": "tracked_summary",
+      "passed": true,
+      "path": "data/reviews/evp8_google_gemini-2.5-flash_full_summary.json"
+    }
+  ],
+  "guard_commands": [
+    "git status --short --branch --untracked-files=all",
+    "python scripts\\audit_evp8_protocol_spec.py --check",
+    "python scripts\\audit_openrouter_model_catalog.py --model moonshotai/kimi-k2.6 --model mistralai/devstral-2512 --model google/gemini-2.5-flash --out-json data\\protocols\\evp8_later_model_openrouter_catalog_audit_v0_1.json --out-md docs\\experiments\\evp8_later_model_openrouter_catalog_audit_v0_1.md",
+    "python scripts\\run_evp8_deepseek_qwen_smoke.py --check-only --run-scope full --config configs\\evp8_deepseek_qwen.local.json",
+    "python scripts\\audit_evp8_first_batch_full_results.py --check",
+    "python scripts\\summarize_evp8_first_batch_full_synthesis.py --check",
+    "python scripts\\write_evp8_later_model_completion_packet.py --check"
+  ],
+  "later_model_preflight_required_before_execution": true,
+  "max_output_tokens": 4096,
+  "model_visible_levels": [
+    "E0",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6"
+  ],
+  "models": [
+    {
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model_id": "moonshotai/kimi-k2.6",
+      "outputs": {
+        "raw_responses": "outputs/evp8_phase2_later_models_full/moonshotai_kimi-k2.6/raw_responses.jsonl",
+        "tracked_summary": "data/reviews/evp8_moonshotai_kimi-k2.6_full_summary.json"
+      },
+      "planned_execute_command_template": "python scripts\\run_evp8_later_model_full.py --execute --run-scope full --config configs\\evp8_later_models.local.json --model-id moonshotai/kimi-k2.6",
+      "proceed_if": "G7 packet passed, later-model runner/preflight are implemented and checked, OPENROUTER_API_KEY is present in ignored local env, and user explicitly authorizes this model.",
+      "provider_route": "openrouter_pinned_exact_model_id",
+      "request_model_id": "moonshotai/kimi-k2.6",
+      "step": "later_model_1"
+    },
+    {
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model_id": "mistralai/devstral-2512",
+      "outputs": {
+        "raw_responses": "outputs/evp8_phase2_later_models_full/mistralai_devstral-2512/raw_responses.jsonl",
+        "tracked_summary": "data/reviews/evp8_mistralai_devstral-2512_full_summary.json"
+      },
+      "planned_execute_command_template": "python scripts\\run_evp8_later_model_full.py --execute --run-scope full --config configs\\evp8_later_models.local.json --model-id mistralai/devstral-2512",
+      "proceed_if": "G7 packet passed, later-model runner/preflight are implemented and checked, OPENROUTER_API_KEY is present in ignored local env, and user explicitly authorizes this model.",
+      "provider_route": "openrouter_pinned_exact_model_id",
+      "request_model_id": "mistralai/devstral-2512",
+      "step": "later_model_2"
+    },
+    {
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model_id": "google/gemini-2.5-flash",
+      "outputs": {
+        "raw_responses": "outputs/evp8_phase2_later_models_full/google_gemini-2.5-flash/raw_responses.jsonl",
+        "tracked_summary": "data/reviews/evp8_google_gemini-2.5-flash_full_summary.json"
+      },
+      "planned_execute_command_template": "python scripts\\run_evp8_later_model_full.py --execute --run-scope full --config configs\\evp8_later_models.local.json --model-id google/gemini-2.5-flash",
+      "proceed_if": "G7 packet passed, later-model runner/preflight are implemented and checked, OPENROUTER_API_KEY is present in ignored local env, and user explicitly authorizes this model.",
+      "provider_route": "openrouter_pinned_exact_model_id",
+      "request_model_id": "google/gemini-2.5-flash",
+      "step": "later_model_3"
+    }
+  ],
+  "openrouter_catalog_audit": {
+    "all_available": true,
+    "audit_date": "2026-06-21",
+    "model_ids": [
+      "moonshotai/kimi-k2.6",
+      "mistralai/devstral-2512",
+      "google/gemini-2.5-flash"
+    ],
+    "path": "data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json"
+  },
+  "packet_id": "evp8_later_model_completion_packet_v0_1",
+  "packet_status": "ready",
+  "planned_calls_per_later_model": 686,
+  "planned_later_model_count": 3,
+  "planned_total_later_model_calls": 2058,
+  "post_later_model_requirements": [
+    "Implement and verify later-model runner/preflight before any model call.",
+    "Run each later model only after explicit user authorization.",
+    "Write raw responses only under ignored outputs/evp8_phase2_later_models_full/.",
+    "Write tracked raw-output-free summaries under data/reviews/.",
+    "Audit each summary without reading raw outputs.",
+    "Only after all later model audits pass, run five-model synthesis and claim-boundary audit."
+  ],
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "provider_route_policy": {
+    "allow_unrecorded_provider_fallback": false,
+    "api_key_env": "OPENROUTER_API_KEY",
+    "exact_model_id_required": true,
+    "preferred_route": "openrouter_pinned_exact_model_id",
+    "record_actual_model_id": true,
+    "record_actual_provider": true
+  },
+  "raw_outputs_generated": false,
+  "raw_outputs_read": false,
+  "rendered_prompt_text_stored": false,
+  "requires_explicit_user_command": true,
+  "retry_policy": {
+    "max_retries_per_record": 1,
+    "no_silent_retry_for_parse_invalid": true,
+    "retry_only_on_transport_or_rate_limit": true
+  },
+  "run_scope": "full",
+  "runner_implementation_required_before_execution": true,
+  "stop_gates": [
+    "Any G7 packet check fails.",
+    "OpenRouter public catalog no longer contains one of the pinned model IDs.",
+    "OPENROUTER_API_KEY is missing from ignored local environment before execution.",
+    "Later-model runner or local preflight is missing or unaudited.",
+    "Any expected later-model output already exists before execution without an explicit resume path.",
+    "Any raw response or rendered prompt text would be written to tracked files.",
+    "Any model silently changes model ID or provider route without being recorded.",
+    "Any summary has invalid parse, unknown cost, missing usage, or missing per-level aggregate.",
+    "Any protocol, prompt, schema, candidate-set, or evaluator-join bug requires a protocol version bump and affected-model rerun."
+  ],
+  "temperature": 0.0
+}

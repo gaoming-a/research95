@@ -1,6 +1,6 @@
 # 当前项目状态与文件地图
 
-日期：2026-06-20
+日期：2026-06-21
 
 本文件是短入口，用来整理当前计划文档和项目文件。它不替代
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
@@ -12,9 +12,14 @@
 - 远端：`origin/main`
 - 当前 Git 状态：以 `git status --short --branch` 和
   `git log -1 --oneline` 为准。不要只依赖本文件里记录的 hash 判断是否 ahead；
-  本轮语义上要求远端至少包含 `d9a8391 Record EVP-8 DeepSeek G6 full result`
-  及后续 sync-state 文档修正。
+  本轮语义上要求远端至少包含 EVP-8 Qwen G6 result state 和 G7
+  later-model completion packet。
 - 当前远端已同步锚点：
+  - `6f3c8f0 Sync EVP-8 Qwen G6 result state`：远端已包含 DeepSeek/Qwen
+    first-batch full-run passed state 的短状态修正；
+  - `d59021e Record EVP-8 Qwen G6 full result`：远端已包含 Qwen 686-call
+    first-batch full-run raw-output-free summary、first-batch passed audit/
+    synthesis 和本轮计划/索引更新；
   - `d9a8391 Record EVP-8 DeepSeek G6 full result`：远端已包含 DeepSeek
     686-call first-batch full-run raw-output-free summary、post-full-run
     partial audit/synthesis 和本轮计划/索引更新；
@@ -33,7 +38,8 @@
 - 当前本地语义锚点以 `git log -1 --oneline` 和本轮提交为准；语义上已完成
   EVP-8 Phase 1 DeepSeek/Qwen smoke closure、G5 no-API first-batch full-run
   packet readiness、DeepSeek G6 full-run checkpointing repair，以及 DeepSeek
-  / Qwen 686-call first-batch full-run passed audit and synthesis。
+  / Qwen 686-call first-batch full-run passed audit and synthesis；G7 no-API
+  later-model completion packet 已 ready，但不授权 Kimi/Devstral/Gemini API。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。2026-06-20 本轮重试后
   `72f1fb5` 和 `d9a8391` 已成功 push；最终是否仍 ahead 以
@@ -59,6 +65,10 @@
     levels = 686 records，686/686 parse-valid，raw-output-free summary 已生成；
   - EVP-8 Qwen G6 first-batch full run：98 candidates x 7 evidence levels =
     686 records，686/686 parse-valid，raw-output-free summary 已生成；
+  - EVP-8 G7 later-model completion packet：Kimi K2.6、Devstral 2、Gemini
+    2.5 Flash 计划补跑 3 x 686 = 2058 records，OpenRouter public catalog
+    audit 当前 `all_available = true`，packet `ready`，但 runner/preflight
+    尚未实现，仍不授权 API；
   - raw-output-free tracked summaries and audits。
 - 当前 evidence-level 边界：EVP-7 是 E0/E2/E4/E6 four-anchor pilot，不是
   完整 E0-E6 adjacent-difference ladder；E1/E3/E5 不应补插进当前 artifacts，
@@ -146,8 +156,10 @@
      response text；
    - first-batch full-run audit 当前为 `passed`，synthesis 当前为 `passed`，
      二者均不读取 raw outputs；
-   - 下一步不是自动 API，而是按 G7 准备 later-model completion packet，
-     再补 Kimi K2.6、Devstral 2、Gemini 2.5 Flash；
+   - G7 later-model completion packet 已 ready：
+     `python scripts\write_evp8_later_model_completion_packet.py --check`；
+   - packet 只准备 Kimi K2.6、Devstral 2、Gemini 2.5 Flash 的后续执行边界，
+     不授权 API；下一步应先实现并验证 later-model runner/preflight；
    - 后续补跑 Kimi K2.6、Devstral 2、Gemini 2.5 Flash 必须使用同一 frozen
      packets/prompts/schema，不能边跑边改协议；
    - smoke 之后的后续顺序已经写入 canonical EVP-8 plan：
@@ -262,6 +274,15 @@
   `docs/experiments/evp8_deepseek_qwen_first_batch_full_synthesis_v0_1.md`：
   first-batch full-run two-model synthesis；当前 `passed`，从两个
   raw-output-free first-batch summaries 汇总 tracked per-level decision counts。
+- `data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`、
+  `docs/experiments/evp8_later_model_openrouter_catalog_audit_v0_1.md`：
+  G7 later-model OpenRouter public catalog audit；当前 `all_available = true`，
+  只检查 pinned model IDs，不使用 API key、不调用模型。
+- `data/protocols/evp8_later_model_completion_packet_v0_1.json`、
+  `docs/experiments/evp8_later_model_completion_packet_v0_1.md`：
+  G7 no-API later-model completion packet；当前 `ready`，记录 Kimi/Devstral/
+  Gemini exact model IDs、expected outputs、cost ceiling、guard commands、stop
+  gates 和非授权边界。
 - `scripts/audit_evp8_protocol_spec.py`：
   检查 EVP-8 相邻差分、visible/hidden 字段边界、模型批次、routing policy、
   cost observability 和 stop gates。
@@ -306,6 +327,10 @@
 - `scripts/summarize_evp8_first_batch_full_synthesis.py`：
   不读取 raw outputs 的 first-batch full-run synthesis scaffold；当前 DeepSeek
   和 Qwen full summaries 均通过后输出 `passed`。
+- `scripts/write_evp8_later_model_completion_packet.py`：
+  生成 G7 no-API later-model completion packet；要求 catalog audit、first-batch
+  audit/synthesis、full check-only 和 expected-output absence 均通过。它只写
+  handoff packet，不调用 Kimi/Devstral/Gemini API。
 - `docs/plans/agent_execution_plan_zh.md`、
   `docs/plans/ai_agent_experiment_execution_plan_zh.md`：
   历史执行计划，只保留溯源，不应覆盖当前路线。
@@ -324,6 +349,9 @@
 - `docs/experiments/evp8_journal_scale_execution_plan_20260620.md`：
   EVP-8 期刊版后续执行计划；记录 no-API 协议冻结、七层 evidence ladder、
   DeepSeek/Qwen 第一批执行和 Kimi/Devstral/Gemini 后续补跑边界。
+- `docs/experiments/evp8_later_model_completion_packet_v0_1.md`：
+  G7 later-model no-API handoff；当前状态 ready，但后续执行仍要求
+  later-model runner/preflight 和逐模型显式授权。
 - `docs/experiments/thefuck1_candidate_validation.md`：
   `bugsinpy_thefuck_1` rules-root pip-family P2P policy、candidate validation
   和 admission 记录。

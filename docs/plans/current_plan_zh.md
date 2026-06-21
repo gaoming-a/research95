@@ -16629,3 +16629,95 @@ Commit And Sync:
   `artifacts/` 均未提交；
 - 本段 sync-state 文档修正将单独提交，最终远端状态以 `git status --short --branch`
   和 `git log -1 --oneline` 为准。
+
+## 2026-06-21 EVP-8 G7 later-model completion packet
+
+Inspect:
+
+- `git status --short --branch` 显示 `main...origin/main`，工作区 clean；
+- `git log -8 --oneline` 显示远端已包含：
+  - `6f3c8f0 Sync EVP-8 Qwen G6 result state`；
+  - `d59021e Record EVP-8 Qwen G6 full result`；
+  - `9c8f4d2 Authorize EVP-8 Qwen G6 full run`；
+- `python scripts\audit_evp8_first_batch_full_results.py --check` 已通过，
+  `audit_status = passed`；
+- `python scripts\summarize_evp8_first_batch_full_synthesis.py --check` 已通过，
+  `synthesis_status = passed`；
+- `docs/experiments/evp8_journal_scale_execution_plan_20260620.md` 的 G7 要求：
+  后续 Kimi K2.6、Devstral 2、Gemini 2.5 Flash 必须先生成 no-API execution
+  packet，且复用同一 frozen EVP-8 packets、prompt、schema、temperature、
+  retry policy 和 evaluator joins。
+
+Plan:
+
+1. 新增 `scripts/write_evp8_later_model_completion_packet.py`；
+2. 从 tracked protocol、full check-only、first-batch audit/synthesis 生成
+   G7 no-API packet：
+   - exact later-model IDs；
+   - provider route policy；
+   - expected ignored raw outputs；
+   - expected tracked raw-output-free summaries；
+   - cost/usage observability fields；
+   - guard commands、execute commands、post-run audit/synthesis placeholders；
+   - stop gates 和 claim boundary；
+3. 生成 tracked JSON/Markdown packet；
+4. 运行 `--check`、现有 first-batch audit/synthesis、local quality gate 和
+   `git diff --check`；
+5. 更新 short-state、execution plan、INDEX 和 engineering notes；
+6. 提交并同步 GitHub。
+
+Boundary:
+
+- 本轮不调用 Kimi/Devstral/Gemini API；
+- 不读取或提交 raw model responses；
+- 不把 DeepSeek/Qwen first-batch synthesis 写成 five-model journal conclusion；
+- 不修改 EVP-8 protocol、prompt、candidate set、schema、temperature、retry
+  policy 或 evaluator joins。
+
+Execute:
+
+- 已刷新 OpenRouter public catalog audit，不使用 API key、不调用模型：
+  - `moonshotai/kimi-k2.6`；
+  - `mistralai/devstral-2512`；
+  - `google/gemini-2.5-flash`；
+  - tracked 输出：
+    `data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`；
+    `docs/experiments/evp8_later_model_openrouter_catalog_audit_v0_1.md`；
+  - `all_available = true`；
+- 新增 `scripts/write_evp8_later_model_completion_packet.py`；
+- 生成 G7 no-API packet：
+  - `data/protocols/evp8_later_model_completion_packet_v0_1.json`；
+  - `docs/experiments/evp8_later_model_completion_packet_v0_1.md`；
+  - `packet_status = ready`；
+  - `planned_calls_per_later_model = 686`；
+  - `planned_total_later_model_calls = 2058`；
+  - `planning_cost_ceiling_usd = 30.0`；
+  - `execution_authorized_by_packet = false`；
+  - `runner_implementation_required_before_execution = true`；
+  - `later_model_preflight_required_before_execution = true`。
+
+Verify:
+
+- `python -m py_compile scripts\write_evp8_later_model_completion_packet.py`
+  通过；
+- `python scripts\write_evp8_later_model_completion_packet.py --check` 通过；
+- `python scripts\audit_evp8_first_batch_full_results.py --check` 通过；
+- `python scripts\summarize_evp8_first_batch_full_synthesis.py --check` 通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过，仅有 Git LF/CRLF 工作区转换 warning；
+- G7 packet 明确：
+  - 没有 Kimi/Devstral/Gemini API call；
+  - 没有生成或读取 later-model raw outputs；
+  - expected later-model raw/summary outputs 均不存在；
+  - 后续命令模板仍依赖尚未实现的 later-model runner/preflight。
+
+Decision:
+
+- G7 no-API later-model completion packet 已准备完成；
+- 下一步不是直接运行三模型 API，而是实现并验证
+  `scripts\run_evp8_later_model_full.py` 和 later-model local preflight；
+- 即使后续用户继续授权，执行前仍必须先通过 runner/preflight/no-raw-output
+  gates，并逐模型显式执行；
+- 当前允许 claim 仍停留在 DeepSeek/Qwen first-batch descriptive patterns，
+  不支持 five-model journal conclusion。

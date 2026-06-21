@@ -149,6 +149,19 @@
   98-candidate packet set without reading raw responses.
 - `experiments/evp8_deepseek_qwen_first_batch_full_synthesis_v0_1.md`:
   Markdown companion for the first-batch full-run synthesis scaffold.
+- `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:
+  no-key public OpenRouter catalog audit for the G7 later-model pinned IDs:
+  `moonshotai/kimi-k2.6`, `mistralai/devstral-2512`, and
+  `google/gemini-2.5-flash`. Current status is `all_available=true`.
+- `experiments/evp8_later_model_openrouter_catalog_audit_v0_1.md`:
+  Markdown companion for the G7 later-model catalog audit.
+- `../data/protocols/evp8_later_model_completion_packet_v0_1.json`:
+  G7 no-API later-model completion packet. Current status is `ready`; it
+  records exact model IDs, OpenRouter pinned route policy, expected ignored raw
+  outputs, tracked summary paths, cost ceiling, guard commands, and stop gates.
+  It does not authorize Kimi/Devstral/Gemini API calls.
+- `experiments/evp8_later_model_completion_packet_v0_1.md`:
+  Markdown companion for the G7 later-model completion packet.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.
@@ -1100,6 +1113,15 @@
   DeepSeek/Qwen smoke synthesis artifact from tracked audit/summary fields
   only. It reports `waiting_for_execution` before real smoke, supports
   `--self-test`, and refuses failed order/audit states under `--check`.
+- `../scripts/audit_openrouter_model_catalog.py`: checks the public
+  OpenRouter model catalog for pinned model IDs without reading API keys or
+  calling any model. The G7 later-model audit currently checks Kimi K2.6,
+  Devstral 2, and Gemini 2.5 Flash.
+- `../scripts/write_evp8_later_model_completion_packet.py`: builds the G7
+  no-API later-model completion packet from tracked protocol, first-batch
+  audit/synthesis, full check-only, and OpenRouter catalog audit artifacts. It
+  writes exact model IDs and stop gates for Kimi K2.6, Devstral 2, and Gemini
+  2.5 Flash, but still requires a future runner/preflight before API calls.
 - `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict
