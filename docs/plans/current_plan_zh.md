@@ -17078,3 +17078,52 @@ Commit And Sync:
 - push 后 `git status --short --branch --untracked-files=all` 显示
   `main...origin/main`；
 - 本 post-push state repair 只修正短状态和 current plan 的同步记录。
+
+## 2026-06-21 EVP-8 G8 later-model full execution authorization
+
+Inspect:
+
+- 用户回复“全部授权”，按上一轮 gate 解释为授权三 later models 的真实 full
+  execution：
+  - `moonshotai/kimi-k2.6`；
+  - `mistralai/devstral-2512`；
+  - `google/gemini-2.5-flash`；
+- `git status --short --branch --untracked-files=all` 显示
+  `main...origin/main`；
+- `git log -5 --oneline` 顶部为：
+  - `6973a57 Sync EVP-8 G7.3 state entry`；
+  - `eaecfeb Add EVP-8 later-model audit scaffold`；
+  - `8ceeef2 Fix EVP-8 post-push state entry`；
+  - `40ae224 Record EVP-8 OpenRouter strict preflight`；
+- G7 completion packet 当前 `packet_status=ready`，三模型 expected raw/summary
+  outputs 均 absent；strict preflight ready 为 true；
+- G7.3 audit/synthesis scaffold 当前 waiting-state passed。
+
+Plan:
+
+1. 先重跑 no-API / no-model-call guards：
+   - OpenRouter public catalog audit；
+   - strict preflight；
+   - later-model full check-only；
+   - G7 completion packet check；
+   - later-model result audit check；
+   - five-model synthesis check。
+2. 若 guards 全部通过，按 packet 顺序逐模型执行：
+   1. `moonshotai/kimi-k2.6`；
+   2. `mistralai/devstral-2512`；
+   3. `google/gemini-2.5-flash`。
+3. 每个模型执行后立刻运行 later-model audit：
+   - 若 parse/cost/provider/model/raw-boundary 任一失败，停止后续模型并诊断；
+   - 若 audit 是 partial waiting 或 passed，继续下一授权模型。
+4. 三模型均通过后运行 five-model synthesis check，刷新 docs/current state/index。
+5. 运行 local quality gate、diff check、sensitive scan，提交并同步 GitHub。
+
+Boundary:
+
+- 本轮可以调用 OpenRouter later-model API，仅限上述三 model id 和 frozen EVP-8
+  v0.1 98 candidates x 7 levels；
+- 不修改 prompt/schema/candidate set/evaluator joins；
+- raw responses 只能写入 ignored `outputs/evp8_phase2_later_models_full/`；
+- tracked summaries 只能是不含 prompt/raw response text 的 aggregate JSON；
+- 若发现协议、parser、cost、provider 或 raw-boundary 问题，先停止诊断，不把
+  partial run 写成 five-model result。
