@@ -17173,3 +17173,18 @@ Next Execute:
 - 使用
   `python scripts\run_evp8_later_model_full.py --execute --run-scope full --config configs\evp8_later_models.local.json --model-id moonshotai/kimi-k2.6 --resume --concurrency 4`
   从 99-record prefix 继续。
+
+Second Diagnose / Repair:
+
+- Kimi `--resume --concurrency 4` 从 99 条 prefix 继续后，在 154 条 raw prefix
+  处停止；
+- 失败原因为 OpenRouter 返回非 JSON body，`OpenRouter response was not valid
+  JSON`；
+- 当前无 Kimi execution 残留进程，tracked summary 仍不存在；
+- 问题类型定位为 API/transport transient response classification，不是 model
+  parse/result failure，也不是 protocol/prompt/schema 问题；
+- 修复 `src\cross_review\openrouter.py`：
+  - 将 `json.JSONDecodeError` 纳入已有 retry budget；
+  - 最终仍失败时只输出 sanitized/truncated body，不输出 API key；
+  - 不改变 request payload、prompt、schema、candidate set 或 evidence packets；
+- 下一步重新 py_compile/check-only 后提交，再从 154-record prefix resume。

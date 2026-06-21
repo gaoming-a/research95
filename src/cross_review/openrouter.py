@@ -151,6 +151,7 @@ class OpenAICompatibleChatClient:
     def _open_json_with_retries(self, request: urllib.request.Request) -> tuple[dict[str, Any], int]:
         attempts_allowed = self.max_retries + 1
         for attempt in range(1, attempts_allowed + 1):
+            raw = ""
             try:
                 with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
                     raw = response.read().decode("utf-8")
@@ -177,7 +178,14 @@ class OpenAICompatibleChatClient:
                     continue
                 raise RuntimeError(f"{self.provider_name} request timed out after {attempt} attempt(s)") from exc
             except json.JSONDecodeError as exc:
-                raise RuntimeError(f"{self.provider_name} response was not valid JSON: {exc}") from exc
+                if attempt < attempts_allowed:
+                    time.sleep(self.retry_backoff_seconds * attempt)
+                    continue
+                safe_raw = safe_error_detail(raw, api_key=self.api_key)
+                raise RuntimeError(
+                    f"{self.provider_name} response was not valid JSON after {attempt} attempt(s): "
+                    f"{exc}; body={safe_raw}"
+                ) from exc
         raise RuntimeError(f"{self.provider_name} request failed without a captured exception")
 
 

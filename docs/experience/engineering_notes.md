@@ -3085,3 +3085,7 @@ This file starts fresh for the patch-verification project.
 - Keep concurrency explicit and conservative. Start at `--concurrency 4`; if
   provider rate limits, parse failures, unknown cost, or provider metadata
   gaps appear, stop and diagnose before running the next model.
+- Treat non-JSON OpenRouter response bodies as retryable transport/provider
+  failures. They can be transient gateway pages rather than model outputs; the
+  final error may include only a sanitized short body snippet and must never
+  print API keys.
