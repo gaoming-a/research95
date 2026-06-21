@@ -1,0 +1,172 @@
+{
+  "allowed_claim": "Only after status is passed, report descriptive five-model per-level decision patterns for the frozen EVP-8 v0.1 packet set.",
+  "api_call_attempted": false,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "checks": [
+    {
+      "check": "first_batch_synthesis_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "first_batch_no_api",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "first_batch_raw_outputs_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "first_batch_models",
+      "detail": [
+        "deepseek/deepseek-v4-pro",
+        "qwen/qwen3.7-max"
+      ],
+      "passed": true
+    },
+    {
+      "check": "later_audit_status_supported",
+      "detail": "waiting_for_execution",
+      "passed": true
+    },
+    {
+      "check": "later_audit_no_api",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "later_audit_raw_outputs_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "later_models",
+      "detail": [
+        "moonshotai/kimi-k2.6",
+        "mistralai/devstral-2512",
+        "google/gemini-2.5-flash"
+      ],
+      "passed": true
+    },
+    {
+      "check": "passed_status_requires_all_later_models",
+      "detail": 0,
+      "passed": true
+    },
+    {
+      "check": "per_level_counts_have_expected_levels",
+      "detail": [
+        "E0",
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6"
+      ],
+      "passed": true
+    }
+  ],
+  "cohort_id": "EVP-8",
+  "expected_model_ids": [
+    "deepseek/deepseek-v4-pro",
+    "qwen/qwen3.7-max",
+    "moonshotai/kimi-k2.6",
+    "mistralai/devstral-2512",
+    "google/gemini-2.5-flash"
+  ],
+  "first_batch_model_ids": [
+    "deepseek/deepseek-v4-pro",
+    "qwen/qwen3.7-max"
+  ],
+  "first_batch_synthesis_status": "passed",
+  "forbidden_claim": "Do not report five-model journal conclusions, LLM superiority over deterministic baselines, or final evidence-level effectiveness while this scaffold is waiting or partial.",
+  "later_model_audit_status": "waiting_for_execution",
+  "later_model_ids": [
+    "moonshotai/kimi-k2.6",
+    "mistralai/devstral-2512",
+    "google/gemini-2.5-flash"
+  ],
+  "later_passed_model_count": 0,
+  "later_summary_present_count": 0,
+  "per_level_decision_counts_by_model": {
+    "E0": {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 66,
+        "reject": 32
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 75,
+        "reject": 23
+      }
+    },
+    "E1": {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 58,
+        "reject": 40
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 70,
+        "reject": 28
+      }
+    },
+    "E2": {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 65,
+        "reject": 33
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 71,
+        "reject": 27
+      }
+    },
+    "E3": {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 81,
+        "reject": 17
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 79,
+        "reject": 19
+      }
+    },
+    "E4": {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 74,
+        "reject": 24
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 80,
+        "reject": 18
+      }
+    },
+    "E5": {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 71,
+        "reject": 27
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 78,
+        "reject": 20
+      }
+    },
+    "E6": {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 86,
+        "reject": 12
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 91,
+        "reject": 7
+      }
+    }
+  },
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "raw_outputs_generated_by_synthesis": false,
+  "raw_outputs_read": false,
+  "rendered_prompt_text_read": false,
+  "synthesis_id": "evp8_five_model_synthesis_v0_1",
+  "synthesis_status": "waiting_for_later_models"
+}

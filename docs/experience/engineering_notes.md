@@ -3060,3 +3060,15 @@ This file starts fresh for the patch-verification project.
   length/presence, never the secret value. If the key value is valid but the
   name case is wrong, repair only the variable name in `.env`, rerun strict
   preflight, and refresh the no-secret packet/check-only summaries.
+
+## 2026-06-21 EVP-8 G7.3 later-model post-run scaffold
+
+- Add result-audit scaffolds before spending later-model API budget. The
+  later-model audit should pass as `waiting_for_execution` when tracked
+  Kimi/Devstral/Gemini summaries are absent, then become the gate that checks
+  686 records/model, per-level counts, parse validity, model/provider metadata,
+  cost observability, and tracked-summary raw-output boundaries after each run.
+- Five-model synthesis should read only tracked first-batch synthesis and
+  later-model audit fields. While later models are missing, it must stay in a
+  waiting or partial state and explicitly forbid final five-model journal
+  claims.

@@ -1,0 +1,129 @@
+{
+  "api_call_attempted": false,
+  "audit_id": "evp8_later_model_full_result_audit_v0_1",
+  "audit_status": "waiting_for_execution",
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "claim_boundary": "This audit validates tracked Kimi/Devstral/Gemini later-model summaries after execution. Before execution it is a waiting scaffold, not model-result evidence, and it never reads raw responses.",
+  "cohort_id": "EVP-8",
+  "expected_later_model_count": 3,
+  "model_audits": [
+    {
+      "checks": [
+        {
+          "check": "expected_model_id",
+          "detail": "moonshotai/kimi-k2.6",
+          "passed": true
+        },
+        {
+          "check": "raw_path_under_outputs",
+          "detail": "outputs/evp8_phase2_later_models_full/moonshotai_kimi-k2.6/raw_responses.jsonl",
+          "passed": true
+        },
+        {
+          "check": "tracked_summary_under_data_reviews",
+          "detail": "data/reviews/evp8_moonshotai_kimi-k2.6_full_summary.json",
+          "passed": true
+        }
+      ],
+      "decision_counts_by_evidence_level": {},
+      "model_id": "moonshotai/kimi-k2.6",
+      "provider_route": "openrouter_pinned_exact_model_id",
+      "raw_response_path": "outputs/evp8_phase2_later_models_full/moonshotai_kimi-k2.6/raw_responses.jsonl",
+      "request_model_id": "moonshotai/kimi-k2.6",
+      "status": "waiting_for_execution",
+      "summary_path": "data/reviews/evp8_moonshotai_kimi-k2.6_full_summary.json",
+      "summary_present": false
+    },
+    {
+      "checks": [
+        {
+          "check": "expected_model_id",
+          "detail": "mistralai/devstral-2512",
+          "passed": true
+        },
+        {
+          "check": "raw_path_under_outputs",
+          "detail": "outputs/evp8_phase2_later_models_full/mistralai_devstral-2512/raw_responses.jsonl",
+          "passed": true
+        },
+        {
+          "check": "tracked_summary_under_data_reviews",
+          "detail": "data/reviews/evp8_mistralai_devstral-2512_full_summary.json",
+          "passed": true
+        }
+      ],
+      "decision_counts_by_evidence_level": {},
+      "model_id": "mistralai/devstral-2512",
+      "provider_route": "openrouter_pinned_exact_model_id",
+      "raw_response_path": "outputs/evp8_phase2_later_models_full/mistralai_devstral-2512/raw_responses.jsonl",
+      "request_model_id": "mistralai/devstral-2512",
+      "status": "waiting_for_execution",
+      "summary_path": "data/reviews/evp8_mistralai_devstral-2512_full_summary.json",
+      "summary_present": false
+    },
+    {
+      "checks": [
+        {
+          "check": "expected_model_id",
+          "detail": "google/gemini-2.5-flash",
+          "passed": true
+        },
+        {
+          "check": "raw_path_under_outputs",
+          "detail": "outputs/evp8_phase2_later_models_full/google_gemini-2.5-flash/raw_responses.jsonl",
+          "passed": true
+        },
+        {
+          "check": "tracked_summary_under_data_reviews",
+          "detail": "data/reviews/evp8_google_gemini-2.5-flash_full_summary.json",
+          "passed": true
+        }
+      ],
+      "decision_counts_by_evidence_level": {},
+      "model_id": "google/gemini-2.5-flash",
+      "provider_route": "openrouter_pinned_exact_model_id",
+      "raw_response_path": "outputs/evp8_phase2_later_models_full/google_gemini-2.5-flash/raw_responses.jsonl",
+      "request_model_id": "google/gemini-2.5-flash",
+      "status": "waiting_for_execution",
+      "summary_path": "data/reviews/evp8_google_gemini-2.5-flash_full_summary.json",
+      "summary_present": false
+    }
+  ],
+  "packet_checks": [
+    {
+      "check": "packet_ready",
+      "detail": "ready",
+      "passed": true
+    },
+    {
+      "check": "packet_does_not_authorize_execution",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "packet_no_api",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "packet_models",
+      "detail": [
+        "moonshotai/kimi-k2.6",
+        "mistralai/devstral-2512",
+        "google/gemini-2.5-flash"
+      ],
+      "passed": true
+    },
+    {
+      "check": "raw_outputs_not_read_by_audit",
+      "detail": false,
+      "passed": true
+    }
+  ],
+  "passed_model_count": 0,
+  "protocol_id": "evp8_journal_full_ladder_v0_1",
+  "raw_outputs_generated_by_audit": false,
+  "raw_outputs_read": false,
+  "rendered_prompt_text_read": false,
+  "summary_present_count": 0
+}

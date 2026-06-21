@@ -40,6 +40,8 @@
 1. `python scripts\preflight_evp8_later_models.py --config configs\evp8_later_models.local.json --allow-missing-credentials`
 1. `python scripts\run_evp8_later_model_full.py --check-only --run-scope full --config configs\evp8_later_models.local.json --allow-missing-credentials`
 1. `python scripts\write_evp8_later_model_completion_packet.py --check`
+1. `python scripts\audit_evp8_later_model_full_results.py --check`
+1. `python scripts\summarize_evp8_five_model_synthesis.py --check`
 
 ## Planned Execute Command Templates
 

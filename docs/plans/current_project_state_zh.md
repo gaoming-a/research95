@@ -16,11 +16,14 @@
   later-model completion packet、G7.1 later-model runner/preflight 和 G7.2
   OpenRouter strict preflight readiness。
 - 当前本地 ahead 状态：
-  - 本轮 strict-preflight readiness 提交 `40ae224` 已成功 push 到远端；
-  - 之后追加的 post-push state repair 提交因 GitHub 443 连接失败暂未同步；
-  - 当前 `git status --short --branch` 显示 `main...origin/main [ahead 1]`；
-  - 该 ahead 只包含 post-push state repair 文档修正，不包含未同步模型结果或
-    raw outputs；最终以命令输出和 `git log -1 --oneline` 为准。
+  - 本轮 Inspect 时 `git status --short --branch` 显示
+    `main...origin/main [ahead 1]`；
+  - 已成功 push 的远端锚点至少到
+    `40ae224 Record EVP-8 OpenRouter strict preflight`；
+  - 本轮 G7.3 post-run audit/synthesis scaffold 会新增本地提交；如果后续 push
+    失败，local ahead count 会增加；
+  - 无论 ahead count 如何变化，未同步内容不得包含 raw outputs、`.env` 或 local
+    config；最终以命令输出和 `git log -1 --oneline` 为准。
 - 当前远端已同步锚点：
   - `40ae224 Record EVP-8 OpenRouter strict preflight`：远端已包含 G7.2
     OpenRouter strict preflight passed、completion packet refresh、no-secret
@@ -60,9 +63,9 @@
   `OPENROUTER_API_KEY` presence，但仍不授权 Kimi/Devstral/Gemini API。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。本轮 strict-preflight
-  readiness 已成功 push 到 `40ae224`；post-push state repair 再次遇到 GitHub
-  443 连接失败，当前本地 ahead 1。最终是否仍 ahead 仍以
-  `git status --short --branch` 为准。
+  readiness 已成功 push 到 `40ae224`；post-push state repair 曾再次遇到
+  GitHub 443 连接失败。最终是否仍 ahead 仍以 `git status --short --branch`
+  为准。
 - `bugsinpy_cookiecutter_4` 已收束为 tracked blocker policy；完整 builder
   失败输出仍是本地诊断残留，不应提交。
 - ignored 本地交付物：
@@ -88,7 +91,8 @@
     2.5 Flash 计划补跑 3 x 686 = 2058 records，OpenRouter public catalog
     audit 当前 `all_available = true`，packet `ready`，runner/preflight
     strict checks 和 full check-only 已通过；`OPENROUTER_API_KEY` presence
-    已通过，但不授权 API；
+    已通过；G7.3 post-run audit/five-model synthesis scaffolds 当前分别为
+    `waiting_for_execution` 和 `waiting_for_later_models`；仍不授权 API；
   - raw-output-free tracked summaries and audits。
 - 当前 evidence-level 边界：EVP-7 是 E0/E2/E4/E6 four-anchor pilot，不是
   完整 E0-E6 adjacent-difference ladder；E1/E3/E5 不应补插进当前 artifacts，
@@ -183,8 +187,10 @@
      `python scripts\run_evp8_later_model_full.py --check-only --run-scope full --config configs\evp8_later_models.local.json --allow-missing-credentials`；
    - 当前 strict API ready 为 true：ignored `.env` 中
      `OPENROUTER_API_KEY` presence 已通过；下一步仍不是自动 API 执行，而是
-     用户逐模型显式授权，或先实现 later-model post-run audit/synthesis
-     scaffold；
+     用户逐模型显式授权；
+   - 当前 G7.3 post-run audit/synthesis scaffold 已通过 waiting-state check：
+     `python scripts\audit_evp8_later_model_full_results.py --check`；
+     `python scripts\summarize_evp8_five_model_synthesis.py --check`；
    - 后续补跑 Kimi K2.6、Devstral 2、Gemini 2.5 Flash 必须使用同一 frozen
      packets/prompts/schema，不能边跑边改协议；
    - smoke 之后的后续顺序已经写入 canonical EVP-8 plan：

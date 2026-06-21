@@ -262,7 +262,9 @@
     "python scripts\\create_evp8_later_model_local_config.py --write --force",
     "python scripts\\preflight_evp8_later_models.py --config configs\\evp8_later_models.local.json --allow-missing-credentials",
     "python scripts\\run_evp8_later_model_full.py --check-only --run-scope full --config configs\\evp8_later_models.local.json --allow-missing-credentials",
-    "python scripts\\write_evp8_later_model_completion_packet.py --check"
+    "python scripts\\write_evp8_later_model_completion_packet.py --check",
+    "python scripts\\audit_evp8_later_model_full_results.py --check",
+    "python scripts\\summarize_evp8_five_model_synthesis.py --check"
   ],
   "later_model_credential_presence_ready": true,
   "later_model_full_check_only_passed": true,
@@ -350,8 +352,9 @@
     "Run each later model only after explicit user authorization.",
     "Write raw responses only under ignored outputs/evp8_phase2_later_models_full/.",
     "Write tracked raw-output-free summaries under data/reviews/.",
-    "Audit each summary without reading raw outputs.",
-    "Only after all later model audits pass, run five-model synthesis and claim-boundary audit."
+    "Run scripts/audit_evp8_later_model_full_results.py --check after any later-model summary appears.",
+    "Run scripts/summarize_evp8_five_model_synthesis.py --check after the later-model audit refresh.",
+    "Only after all later model audits pass, treat five-model synthesis as result evidence."
   ],
   "protocol_id": "evp8_journal_full_ladder_v0_1",
   "provider_route_policy": {

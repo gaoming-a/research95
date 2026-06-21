@@ -372,11 +372,19 @@ Gate G7: later model completion packet.
   `passed` with `OPENROUTER_API_KEY` present in the ignored local environment.
   This still does not authorize API execution. Before any later-model API call,
   use an explicit per-model execution command.
+- Status as of 2026-06-21 G7.3: the later-model post-run audit scaffold and
+  five-model synthesis scaffold are implemented and checked. They currently
+  report `waiting_for_execution` / `waiting_for_later_models` because no
+  Kimi/Devstral/Gemini summaries exist yet.
 
 Gate G8: five-model journal synthesis.
 
-- Run only after all selected model audits pass on the same frozen EVP-8 input
-  set.
+- Run `python scripts\audit_evp8_later_model_full_results.py --check` after
+  each later-model summary appears. Run
+  `python scripts\summarize_evp8_five_model_synthesis.py --check` after the
+  later-model audit refresh.
+- Treat five-model synthesis as result evidence only after all selected model
+  audits pass on the same frozen EVP-8 input set.
 - Produce per-level metrics, model-by-level comparison, uncertainty analysis,
   utility sensitivity, qualitative cases, and claim-boundary audit.
 - Allowed claim depends on observed results. If trends are inconsistent, write

@@ -16978,3 +16978,94 @@ Commit And Sync:
   `Failed to connect to github.com port 443 after 21082 ms`；
 - 因该提交尚未推送，已将本 post-push repair commit amend 为当前真实状态：
   `40ae224` 已远端同步，post-push state repair 本地 ahead 1。
+
+## 2026-06-21 EVP-8 G7.3 later-model post-run audit/synthesis scaffold
+
+Inspect:
+
+- 用户选择“先补”，按上一轮建议解释为先补 later-model post-run
+  audit/synthesis scaffold，而不是执行 Kimi/Devstral/Gemini API；
+- `git status --short --branch --untracked-files=all` 当前为
+  `main...origin/main [ahead 1]`；
+- 本地 ahead 1 是上一轮 post-push state repair：
+  `8ceeef2 Fix EVP-8 post-push state entry`；
+- 远端已包含 `40ae224 Record EVP-8 OpenRouter strict preflight`，即
+  G7.2 strict preflight readiness 已同步；
+- 已读取 existing first-batch full-run audit/synthesis 脚本，later-model
+  runner summary schema，以及 G7 later-model completion packet；later-model
+  packet 使用 `models` records，不同于 first-batch packet 的 execute list，
+  因此需要独立 later-model audit 脚本。
+
+Plan:
+
+1. 新增 later-model full-result audit scaffold：
+   - 读取 G7 completion packet 的三模型 expected tracked summary paths；
+   - 在 summary 不存在时返回 `waiting_for_execution` 并通过 check；
+   - 在 summary 存在时验证 686 records、98 per level、parse-valid、model/
+     provider route、actual model/provider metadata、usage/cost gate、raw-output
+     boundary 和 no prompt/raw text in tracked summary；
+   - audit 本身不读 raw JSONL、不调用 API。
+2. 新增 five-model synthesis scaffold：
+   - 读取 first-batch synthesis 和 later-model audit；
+   - 在 later models 未跑时返回 `waiting_for_later_models`；
+   - 在部分 later model 通过时返回 partial waiting；
+   - 只有 DeepSeek/Qwen first batch passed 且三 later models 均 audit passed
+     后才允许 `passed` five-model synthesis；
+   - synthesis 不读 raw outputs，不生成最终 claims。
+3. 更新 completion packet guard command list、EVP-8 canonical plan、short-state、
+   README/INDEX 和 engineering notes。
+4. 运行 py_compile、later audit check、five-model synthesis check、completion
+   packet check、later-model check-only、local quality gate、diff check。
+5. 提交本轮 scaffold；GitHub push 若继续失败则记录，不阻塞后续本地计划。
+
+Boundary:
+
+- 本轮不执行 `run_evp8_later_model_full.py --execute`；
+- 不调用 OpenRouter/Kimi/Devstral/Gemini API；
+- 不读取 ignored raw responses；
+- 不把 waiting scaffold 写成 later-model 结果或 five-model journal conclusion。
+
+Execute:
+
+- 新增 `scripts\audit_evp8_later_model_full_results.py`：
+  - 当前三 later-model tracked summaries 均不存在时，输出
+    `audit_status = waiting_for_execution`；
+  - 未来 summary 存在时检查 686 records、98 per level、parse-valid、configured/
+    request/actual model、actual provider、OpenRouter metadata、cost gate、
+    raw path 和 tracked summary 不含 raw/prompt text；
+  - audit 本身 `api_call_attempted=false`、`raw_outputs_read=false`。
+- 新增 `scripts\summarize_evp8_five_model_synthesis.py`：
+  - 读取 first-batch full synthesis 和 later-model audit；
+  - 当前输出 `synthesis_status = waiting_for_later_models`；
+  - 只有 later audit 三模型均 passed 后才允许 five-model synthesis 进入
+    `passed`；
+  - synthesis 本身 `api_call_attempted=false`、`raw_outputs_read=false`。
+- 更新 `scripts\write_evp8_later_model_completion_packet.py`，把两个新脚本加入
+  G7 guard command list 和 post-later-model requirements；
+- 刷新 G7 completion packet JSON/Markdown；
+- 新增 tracked scaffold artifacts：
+  - `data/protocols/evp8_later_model_full_result_audit_v0_1.json`；
+  - `docs/experiments/evp8_later_model_full_result_audit_v0_1.md`；
+  - `data/protocols/evp8_five_model_synthesis_v0_1.json`；
+  - `docs/experiments/evp8_five_model_synthesis_v0_1.md`；
+- 同步 README、INDEX、EVP-8 canonical execution plan、short-state 和
+  engineering notes。
+
+Verify:
+
+- `python -m py_compile scripts\audit_evp8_later_model_full_results.py scripts\summarize_evp8_five_model_synthesis.py scripts\write_evp8_later_model_completion_packet.py`
+  通过；
+- `python scripts\write_evp8_later_model_completion_packet.py --check` 通过；
+- `python scripts\audit_evp8_later_model_full_results.py --check` 通过，当前
+  `audit_status = waiting_for_execution`、summary present count = 0/3；
+- `python scripts\summarize_evp8_five_model_synthesis.py --check` 通过，当前
+  `synthesis_status = waiting_for_later_models`、later summary present count =
+  0/3；
+- 当前仍未调用 API，未读取 ignored raw outputs，未生成 later-model raw outputs。
+- `python scripts\run_evp8_later_model_full.py --check-only --run-scope full --config configs\evp8_later_models.local.json --allow-missing-credentials`
+  通过；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过，仅有 LF/CRLF 工作区转换 warning；
+- sensitive scan 未发现 API key pattern。

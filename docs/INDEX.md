@@ -37,7 +37,8 @@
   Qwen G6 first-batch full runs have both passed on 686/686 records; the G7
   later-model packet and G7.2 strict OpenRouter preflight are ready, but the
   next gate remains explicit per-model authorization, not an immediate final
-  claim.
+  claim. As of G7.3, later-model post-run audit and five-model synthesis
+  scaffolds also pass in waiting state without API calls or raw-output reads.
 - `experiments/evp8_journal_scale_execution_plan_20260620.md`: no-API
   execution plan for the journal-scale EVP-8 route. It defines the planned
   E0-E6 full-ladder boundary, target five-model set, phased DeepSeek/Qwen first
@@ -178,6 +179,21 @@
 - `../data/protocols/evp8_later_model_full_check_only_v0_1.json`: tracked
   no-API later-model full check-only summary. Current status is `passed` for
   686 prompts per model and 2058 planned later-model calls, with no raw outputs.
+- `../data/protocols/evp8_later_model_full_result_audit_v0_1.json`: tracked
+  no-API later-model post-run audit scaffold. Current status is
+  `waiting_for_execution` until Kimi K2.6, Devstral 2, and Gemini 2.5 Flash
+  tracked summaries exist. It validates summary paths and, after execution,
+  checks 686 records/model, 98 records/level, parse/cost/provider/model gates,
+  and tracked-summary raw-output boundaries without reading raw responses.
+- `experiments/evp8_later_model_full_result_audit_v0_1.md`: Markdown companion
+  for the later-model post-run audit scaffold.
+- `../data/protocols/evp8_five_model_synthesis_v0_1.json`: tracked no-API
+  five-model synthesis scaffold. Current status is `waiting_for_later_models`;
+  it reads the passed DeepSeek/Qwen first-batch synthesis and the later-model
+  audit, but does not support a final five-model result until all three later
+  models audit as passed.
+- `experiments/evp8_five_model_synthesis_v0_1.md`: Markdown companion for the
+  five-model synthesis scaffold.
 - `plans/current_plan_zh.md`: active per-turn execution log. Future agents must
   update this file before concrete experiments, API calls, data changes, paper
   edits, or Git sync work.
@@ -1149,6 +1165,14 @@
   runner. It supports check-only without API calls and refuses real execution
   unless an ignored local config, strict preflight, explicit `--execute`, and a
   configured model id are supplied.
+- `../scripts/audit_evp8_later_model_full_results.py`: no-API later-model
+  post-run audit scaffold. It reports `waiting_for_execution` before
+  Kimi/Devstral/Gemini summaries exist and later validates tracked summaries
+  without reading raw `outputs/`.
+- `../scripts/summarize_evp8_five_model_synthesis.py`: no-API five-model
+  synthesis scaffold. It combines the passed DeepSeek/Qwen first-batch
+  synthesis with later-model audit status and remains
+  `waiting_for_later_models` until all three later models pass audit.
 - `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict
