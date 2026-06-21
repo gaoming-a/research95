@@ -91,7 +91,10 @@ K2.6 execution attempt wrote 686 ignored raw records but was correctly blocked
 by the later-model gate because Kimi returned reasoning-heavy responses with
 79 invalid JSON outputs. The tracked protocol now records a Kimi clean-rerun
 policy with `reasoning.enabled=false` and `include_reasoning=false`; Kimi must
-pass the later-model audit before Devstral/Gemini or any five-model claim.
+pass the later-model audit before Devstral/Gemini or any five-model claim. The
+reasoning-disabled clean rerun currently has an ordered 551/686 raw prefix and
+stopped on OpenRouter provider 429, so the next action is a lower-concurrency
+Kimi resume, not the next model.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently

@@ -3112,3 +3112,21 @@ This file starts fresh for the patch-verification project.
   `include_reasoning=false` in the protocol/config/preflight/summary path
   before the clean rerun, then require the normal later-model audit gate before
   starting the next model.
+
+## 2026-06-22 EVP-8 Kimi OpenRouter 429 resume boundary
+
+- A reasoning-disabled clean rerun can still be interrupted by provider-side
+  OpenRouter 429 after writing an ordered raw prefix. Treat this as an
+  execution/provider-rate-limit problem, not as a protocol, prompt, candidate,
+  evidence, or parser failure.
+- If the raw JSONL is an exact ordered prefix and no tracked summary exists,
+  preserve the ignored prefix and resume the same model with lower explicit
+  concurrency. Do not delete the prefix, do not switch to the next model, and
+  do not write a partial-result claim.
+- OpenRouter 429 stderr can include provider metadata and a platform user id.
+  Keep those logs in ignored `outputs/`, redact them in any human-facing
+  summary, and do not stage runner stderr logs.
+- If 429 repeats, lower concurrency further or wait before resuming. Only
+  consider runner-level retry/backoff changes after documenting the rate-limit
+  diagnosis and keeping request payload, frozen packets, prompt, and schema
+  unchanged.

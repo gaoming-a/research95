@@ -19,10 +19,14 @@
 - 当前本地 ahead 状态：
   - 本轮 post-push inspection 显示 `git status --short --branch` 为
     `main...origin/main`；
-  - `eaecfeb Add EVP-8 later-model audit scaffold` 已 push 到远端；
-  - 当前没有未同步模型结果、raw outputs、`.env` 或 local config；最终仍以命令
-    输出和 `git log -1 --oneline` 为准。
+  - `7308910 Add EVP-8 Kimi reasoning clean rerun gate` 已 push 到远端；
+  - 当前没有未同步模型结果、`.env` 或 local config；ignored raw outputs 里有
+    Kimi reasoning-disabled clean rerun 的 551/686 ordered prefix，尚无 tracked
+    summary；最终仍以命令输出和 `git log -1 --oneline` 为准。
 - 当前远端已同步锚点：
+  - `7308910 Add EVP-8 Kimi reasoning clean rerun gate`：远端已包含 Kimi
+    reasoning-disabled routing policy、OpenRouter request controls、preflight/
+    audit/check-only refresh 和 clean rerun gate 文档；
   - `eaecfeb Add EVP-8 later-model audit scaffold`：远端已包含 G7.3
     later-model post-run audit scaffold、five-model synthesis scaffold、G7
     completion packet guard refresh 和 no-API waiting-state artifacts；
@@ -67,12 +71,13 @@
   five-model synthesis scaffold 已通过 waiting-state check；用户已授权后续模型
   API，但首个 Kimi 686-record run 被 later-model gate 正确阻断，原因是
   Kimi 默认 reasoning 导致 79 条 invalid JSON output。当前下一步是按
-  tracked Kimi reasoning-disabled policy 执行 clean full rerun；Kimi audit
-  通过前不启动 Devstral/Gemini。
+  tracked Kimi reasoning-disabled policy 执行 clean full rerun；clean rerun
+  当前在 551/686 ordered raw prefix 后被 OpenRouter provider 429 中断，需先
+  lower-concurrency resume；Kimi audit 通过前不启动 Devstral/Gemini。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
-  在连续同步失败时跳过 GitHub 并继续本地计划执行。本轮最终 `git push
-  origin main` 已成功同步到 `eaecfeb`；最终是否仍 ahead 仍以
-  `git status --short --branch` 为准。
+  在连续同步失败时跳过 GitHub 并继续本地计划执行。最近一次已确认
+  `git push origin main` 成功；最终是否仍 ahead 仍以
+  `git status --short --branch` 和远端 log 为准。
 - `bugsinpy_cookiecutter_4` 已收束为 tracked blocker policy；完整 builder
   失败输出仍是本地诊断残留，不应提交。
 - ignored 本地交付物：

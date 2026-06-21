@@ -17227,3 +17227,25 @@ Third Diagnose / Repair:
   DeepSeek/Qwen first-batch 结果；
 - 提交同步后，移动 ignored blocked Kimi raw/summary 到 ignored backup，再用
   canonical Kimi 路径重新执行 clean full run。
+
+Fourth Execute Gate:
+
+- Kimi reasoning-disabled clean full rerun 已从 canonical ignored path 重新开始；
+- 当前 canonical raw prefix 为 551 / 686 records，tracked summary 尚未生成；
+- runner 已退出，当前无活跃 `run_evp8_later_model_full.py` Python 进程；
+- 最新 stderr 显示 OpenRouter provider returned HTTP 429，message 为
+  `moonshotai/kimi-k2.6 is temporarily rate-limited upstream`；
+- 问题类型定位为 API/provider rate-limit interruption，不是
+  prompt/schema/candidate/frozen packet 或 Kimi parse validity failure；
+- ordered raw prefix 已存在且 summary absent，因此不能删除 prefix、不能切换到
+  Devstral/Gemini、不能把 partial prefix 写成 result。
+
+Next Execute:
+
+- 先提交并同步本 429 resume boundary 文档；
+- 之后使用同一 ignored local config、同一 frozen EVP-8 packet set、同一
+  Kimi reasoning-disabled request policy，从 551-record prefix 继续：
+  `python scripts\run_evp8_later_model_full.py --execute --run-scope full --config configs\evp8_later_models.local.json --model-id moonshotai/kimi-k2.6 --resume --concurrency 2`；
+- 若再次 provider 429，则继续按执行链路问题处理：降低并发或等待后 resume；
+- 只有当 Kimi clean rerun 生成 summary 且 later-model audit 通过后，才允许进入
+  Devstral/Gemini 或 five-model synthesis。
