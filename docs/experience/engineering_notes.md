@@ -3049,3 +3049,14 @@ This file starts fresh for the patch-verification project.
 - Do not treat OpenRouter `usage` token counts as cost. If provider-reported
   USD cost is absent, the executed summary must block on unknown cost rather
   than silently estimating from an unrelated price sheet.
+
+## 2026-06-21 EVP-8 G7.2 OpenRouter env-name repair
+
+- The strict later-model preflight matches `OPENROUTER_API_KEY` case
+  sensitively inside the ignored `.env` file. A lowercase
+  `openrouter_api_key` line can look present in a case-insensitive PowerShell
+  probe but still fail the Python preflight as missing.
+- Diagnose credential blockers by printing only key-name metadata and value
+  length/presence, never the secret value. If the key value is valid but the
+  name case is wrong, repair only the variable name in `.env`, rerun strict
+  preflight, and refresh the no-secret packet/check-only summaries.

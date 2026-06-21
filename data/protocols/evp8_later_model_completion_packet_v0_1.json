@@ -264,20 +264,20 @@
     "python scripts\\run_evp8_later_model_full.py --check-only --run-scope full --config configs\\evp8_later_models.local.json --allow-missing-credentials",
     "python scripts\\write_evp8_later_model_completion_packet.py --check"
   ],
-  "later_model_credential_presence_ready": false,
+  "later_model_credential_presence_ready": true,
   "later_model_full_check_only_passed": true,
   "later_model_preflight_required_before_execution": true,
   "later_model_readiness": {
     "check_only_status": "passed",
-    "credential_presence_ready": false,
+    "credential_presence_ready": true,
     "full_check_only_summary": "data/protocols/evp8_later_model_full_check_only_v0_1.json",
     "local_config_plan": "data/protocols/evp8_later_model_local_config_plan_v0_1.json",
-    "preflight_status": "structural_only",
+    "preflight_status": "passed",
     "preflight_summary": "data/protocols/evp8_later_model_preflight_summary_v0_1.json",
-    "ready_for_user_execute_command": false,
+    "ready_for_user_execute_command": true,
     "structural_ready": true
   },
-  "later_model_strict_preflight_ready_for_user_execute_command": false,
+  "later_model_strict_preflight_ready_for_user_execute_command": true,
   "later_model_structural_preflight_checked": true,
   "max_output_tokens": 4096,
   "model_visible_levels": [

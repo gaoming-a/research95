@@ -7,7 +7,7 @@
 - Runner implementation checked: `true`
 - Later-model structural preflight checked: `true`
 - Later-model full check-only passed: `true`
-- Strict preflight ready for execute: `false`
+- Strict preflight ready for execute: `true`
 - Planned calls per later model: `686`
 - Planned total later-model calls: `2058`
 - Planning cost ceiling: `USD 30.0`
@@ -17,8 +17,8 @@
 - Local config plan: `data/protocols/evp8_later_model_local_config_plan_v0_1.json`
 - Preflight summary: `data/protocols/evp8_later_model_preflight_summary_v0_1.json`
 - Full check-only summary: `data/protocols/evp8_later_model_full_check_only_v0_1.json`
-- Preflight status: `structural_only`
-- Credential presence ready: `false`
+- Preflight status: `passed`
+- Credential presence ready: `true`
 
 ## Models
 

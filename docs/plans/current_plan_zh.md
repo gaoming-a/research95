@@ -16879,3 +16879,83 @@ Commit And Sync:
   `main...origin/main [ahead 1]`；
 - 根据用户已授权的 GitHub 频繁同步失败处理规则，本轮不继续卡在 push；
   后续会话可在网络恢复后直接重试 push。
+
+## 2026-06-21 EVP-8 G7.2 OpenRouter strict preflight
+
+Inspect:
+
+- 用户说明 OpenRouter API key 已加入；
+- `git status --short --branch --untracked-files=all` 显示
+  `main...origin/main [ahead 2]`，工作区 clean；
+- `git log -5 --oneline` 当前顶部为：
+  - `b2729b9 Record EVP-8 G7.1 sync blocker`；
+  - `ddca89f Add EVP-8 later-model runner preflight`；
+  - `79ff382 Prepare EVP-8 later-model packet`；
+- 上轮 G7.1 状态是 structural preflight/check-only passed，但
+  `OPENROUTER_API_KEY` missing，因此 strict API-ready blocked；
+- 本轮用户只说明 key 已加入，不等同于三模型 API 授权。
+
+Plan:
+
+1. 重跑 `scripts\preflight_evp8_later_models.py` strict preflight；
+2. 若 strict preflight 通过，刷新 G7 completion packet，使
+   `later_model_strict_preflight_ready_for_user_execute_command=true`；
+3. 继续不调用 Kimi/Devstral/Gemini API；
+4. 更新 current plan、short-state、EVP-8 execution plan 和 INDEX 如有状态变化；
+5. 运行 completion packet check、later-model check-only、local quality gate、
+   `git diff --check`；
+6. 提交本轮 strict-preflight 状态；GitHub push 若继续失败则记录并继续。
+
+Boundary:
+
+- 本轮只验证 credential presence，不打印或提交 key value；
+- 不执行 `run_evp8_later_model_full.py --execute`；
+- 不生成 later-model raw outputs；
+- 不把 strict preflight ready 写成模型结果或五模型结论。
+
+Execute / Diagnose / Repair:
+
+- 第一次 strict preflight 仍失败，tracked summary 显示
+  `credential_presence_ready=false`、`OPENROUTER_API_KEY=missing`；
+- 安全核对 `.env` 时只打印 key metadata，不打印 key value；发现第 5 行变量名是
+  lowercase `openrouter_api_key`，PowerShell case-insensitive probe 会误判为
+  present，但 Python preflight 精确匹配 `OPENROUTER_API_KEY`；
+- 仅修正 ignored `.env` 中变量名大小写，保留密钥值不输出、不提交；
+- 重新运行 strict preflight 后通过：
+  - `preflight_status = passed`；
+  - `credential_presence_ready = true`；
+  - `ready_for_user_execute_command = true`；
+  - `api_call_attempted = false`；
+  - `api_key_values_printed = false`；
+- 运行 `python scripts\write_evp8_later_model_completion_packet.py` 刷新
+  completion packet；
+- 运行
+  `python scripts\run_evp8_later_model_full.py --check-only --run-scope full --config configs\evp8_later_models.local.json --allow-missing-credentials`
+  通过：
+  - `packet_count_per_model = 686`；
+  - `expected_total_later_model_calls = 2058`；
+  - `preflight_ready_for_user_execute_command = true`；
+  - no API / no raw outputs。
+
+Decision:
+
+- G7.2 strict OpenRouter preflight 已通过，当前可以进入“等待用户逐模型明确
+  execute 授权”的状态；
+- 这仍不等同于 Kimi/Devstral/Gemini 真实 API 授权；
+- 若继续保守推进，API 前还可以先实现 later-model post-run audit/synthesis
+  scaffold，避免跑完后缺审计闭环。
+
+Verify:
+
+- `python scripts\write_evp8_later_model_completion_packet.py --check` 通过；
+- `python scripts\run_evp8_later_model_full.py --check-only --run-scope full --config configs\evp8_later_models.local.json --allow-missing-credentials`
+  通过；
+- `python scripts\audit_evp8_protocol_spec.py --check` 通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  通过；
+- `git diff --check` 通过，仅有 LF/CRLF 工作区转换 warning；
+- completion packet、preflight summary、later-model check-only summary、
+  README、INDEX、EVP-8 execution plan、short-state 和 engineering notes 已同步到
+  strict-ready 状态；
+- 本轮未调用 OpenRouter/Kimi/Devstral/Gemini API，未生成 later-model raw
+  outputs，未输出 API key value。

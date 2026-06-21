@@ -370,7 +370,7 @@
       "detail": {
         "env_file_exists": true,
         "key_states": {
-          "OPENROUTER_API_KEY": "missing"
+          "OPENROUTER_API_KEY": "set"
         },
         "values_printed": false
       },
@@ -380,9 +380,9 @@
   "cohort_id": "EVP-8",
   "config": "configs/evp8_later_models.local.json",
   "config_id": "evp8_later_models_phase2_v0_1",
-  "credential_presence_ready": false,
+  "credential_presence_ready": true,
   "local_config_content_stored_in_tracked_summary": false,
-  "next_step": "Use structural check-only until OPENROUTER_API_KEY is available; do not call model APIs.",
+  "next_step": "Wait for explicit per-model execution command after strict preflight.",
   "planned_calls_per_later_model": 686,
   "planned_later_model_ids": [
     "moonshotai/kimi-k2.6",
@@ -390,9 +390,9 @@
     "google/gemini-2.5-flash"
   ],
   "planned_total_later_model_calls": 2058,
-  "preflight_status": "structural_only",
+  "preflight_status": "passed",
   "protocol_id": "evp8_journal_full_ladder_v0_1",
   "raw_outputs_generated": false,
-  "ready_for_user_execute_command": false,
+  "ready_for_user_execute_command": true,
   "structural_ready": true
 }

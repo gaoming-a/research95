@@ -85,10 +85,10 @@ EVP-8 full-ladder protocol first, then run DeepSeek V4 Pro and Qwen3.7 Max as
 the first model batch, with Kimi K2.6, Devstral 2, and Gemini 2.5 Flash added
 later on the same frozen packets and prompts. As of 2026-06-21, the
 DeepSeek/Qwen first batch has passed on 686 records per model, and the
-later-model OpenRouter runner/preflight are structurally ready. The later-model
-strict preflight is still blocked until `OPENROUTER_API_KEY` is present in the
-ignored local environment, so Kimi/Devstral/Gemini API execution remains
-unauthorized.
+later-model OpenRouter runner/preflight are strict-ready with
+`OPENROUTER_API_KEY` present in the ignored local environment. This still does
+not authorize Kimi/Devstral/Gemini API execution; each later model still needs
+an explicit per-model execute command.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently
@@ -157,9 +157,8 @@ They should not override `final_paper_roadmap_zh.md`.
   dry-run, cost-observability dry-run, and deterministic-baseline dry-run
   summaries are now tracked under `data/protocols/`. DeepSeek/Qwen smoke and
   first-batch full runs have passed, and the G7 later-model packet plus
-  later-model structural preflight/check-only have passed without API calls.
-  The next EVP-8 execution gate is strict later-model preflight with
-  `OPENROUTER_API_KEY`, followed by explicit per-model authorization before any
+  later-model strict preflight/check-only have passed without API calls. The
+  next EVP-8 execution gate is explicit per-model authorization before any
   Kimi/Devstral/Gemini calls.
 - The prompt-only DeepSeek full run completed and produced a mixed/negative
   `stop_or_redesign` result. It is not a positive paper claim.

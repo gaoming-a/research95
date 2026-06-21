@@ -34,8 +34,10 @@
   full-ladder protocol: freeze no-API packets/prompts/schema first, run
   DeepSeek V4 Pro and Qwen3.7 Max as the first batch, then add Kimi K2.6,
   Devstral 2, and Gemini 2.5 Flash on the same frozen inputs. DeepSeek and
-  Qwen G6 first-batch full runs have both passed on 686/686 records; the next
-  gate is a later-model completion packet, not an immediate final claim.
+  Qwen G6 first-batch full runs have both passed on 686/686 records; the G7
+  later-model packet and G7.2 strict OpenRouter preflight are ready, but the
+  next gate remains explicit per-model authorization, not an immediate final
+  claim.
 - `experiments/evp8_journal_scale_execution_plan_20260620.md`: no-API
   execution plan for the journal-scale EVP-8 route. It defines the planned
   E0-E6 full-ladder boundary, target five-model set, phased DeepSeek/Qwen first
@@ -170,8 +172,8 @@
   It records paths, pinned OpenRouter model ids, planned call counts, and the
   `OPENROUTER_API_KEY` env var name only.
 - `../data/protocols/evp8_later_model_preflight_summary_v0_1.json`: tracked
-  no-secret later-model preflight summary. Current status is `structural_only`:
-  structural checks pass, credential presence is false, and no key values or API
+  no-secret later-model preflight summary. Current status is `passed`:
+  structural checks pass, credential presence is true, and no key values or API
   calls are recorded.
 - `../data/protocols/evp8_later_model_full_check_only_v0_1.json`: tracked
   no-API later-model full check-only summary. Current status is `passed` for

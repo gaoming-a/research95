@@ -367,12 +367,11 @@ Gate G7: later model completion packet.
   currently has `all_available = true`.
 - The G7 packet plans 686 calls per later model and 2058 later-model calls in
   total, with a USD 30 planning ceiling for the later-model batch only.
-- Status as of 2026-06-21 G7.1: the later-model runner/preflight and full
-  check-only are implemented and structurally checked. The tracked preflight is
-  `structural_only` because `OPENROUTER_API_KEY` is missing from the ignored
-  local environment. This still does not authorize API execution. Before any
-  later-model API call, rerun strict preflight with the key present and use an
-  explicit per-model execution command.
+- Status as of 2026-06-21 G7.2: the later-model runner/preflight and full
+  check-only are implemented and checked. The tracked strict preflight is
+  `passed` with `OPENROUTER_API_KEY` present in the ignored local environment.
+  This still does not authorize API execution. Before any later-model API call,
+  use an explicit per-model execution command.
 
 Gate G8: five-model journal synthesis.
 

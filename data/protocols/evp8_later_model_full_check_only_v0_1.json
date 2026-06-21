@@ -29,7 +29,7 @@
     "mistralai/devstral-2512",
     "google/gemini-2.5-flash"
   ],
-  "preflight_ready_for_user_execute_command": false,
+  "preflight_ready_for_user_execute_command": true,
   "preflight_structural_ready": true,
   "prompt_chars_max": 7974,
   "prompt_chars_min": 2922,
