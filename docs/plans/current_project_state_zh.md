@@ -14,6 +14,11 @@
   `git log -1 --oneline` 为准。不要只依赖本文件里记录的 hash 判断是否 ahead；
   本轮语义上要求远端至少包含 EVP-8 Qwen G6 result state、G7
   later-model completion packet 和 G7.1 later-model runner/preflight。
+- 当前本地 ahead 状态：
+  - `ddca89f Add EVP-8 later-model runner preflight` 当前只在本地；
+  - 本轮两次 `git push origin main` 分别因 connection reset 和 GitHub 443
+    timeout 失败；
+  - 用户已允许 GitHub 频繁同步失败时先继续任务，后续网络恢复后重试 push。
 - 当前远端已同步锚点：
   - `6f3c8f0 Sync EVP-8 Qwen G6 result state`：远端已包含 DeepSeek/Qwen
     first-batch full-run passed state 的短状态修正；

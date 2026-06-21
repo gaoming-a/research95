@@ -16866,3 +16866,16 @@ Decision:
     显式授权执行；
   - 在 API 前继续补 later-model post-run audit/synthesis scaffold，减少跑完后
     缺审计脚本的风险。
+
+Commit And Sync:
+
+- 已提交本轮 G7.1 runner/preflight：
+  `ddca89f Add EVP-8 later-model runner preflight`；
+- 第一次 `git push origin main` 失败：
+  `Recv failure: Connection was reset`；
+- 第二次 `git push origin main` 失败：
+  `Failed to connect to github.com port 443 after 21102 ms`；
+- 当前 `git status --short --branch` 显示
+  `main...origin/main [ahead 1]`；
+- 根据用户已授权的 GitHub 频繁同步失败处理规则，本轮不继续卡在 push；
+  后续会话可在网络恢复后直接重试 push。
