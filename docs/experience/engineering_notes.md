@@ -3147,3 +3147,18 @@ This file starts fresh for the patch-verification project.
 - Sanitize provider error details before surfacing them. OpenRouter error
   payloads can include a platform `user_id`; redact it alongside API keys in
   human-facing errors and summaries.
+
+## 2026-06-22 EVP-8 Kimi clean run closure
+
+- After disabling Kimi reasoning output and repairing top-level OpenRouter
+  error retry classification, rerun Kimi from an empty canonical raw path
+  rather than reusing a polluted raw JSONL. The passed Kimi result had
+  686/686 parse-valid records, zero unknown-cost records, zero provider/model
+  metadata gaps, and provider-reported cost for every record.
+- Keep the passed Kimi result as one later-model completion only. The
+  later-model audit should move to `partial_waiting_for_remaining_later_models`
+  with Kimi passed and Devstral/Gemini waiting; five-model synthesis remains a
+  partial scaffold until all later models pass.
+- Record actual provider concentration. The passed Kimi clean run routed all
+  686 records to `Chutes`; this is acceptable only because the exact requested
+  model and actual returned model were recorded for every record.

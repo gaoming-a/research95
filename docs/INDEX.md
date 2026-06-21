@@ -40,10 +40,10 @@
   claim. As of G7.3, later-model post-run audit and five-model synthesis
   scaffolds also pass in waiting state without API calls or raw-output reads.
   Kimi K2.6 must still pass a reasoning-disabled clean rerun before
-  Devstral/Gemini: the latest clean attempt reached 682/686 parse-valid
-  records but was blocked because four records were OpenRouter top-level 429
-  error objects. The next action is the client retry repair plus a clean Kimi
-  rerun, not Devstral/Gemini.
+  Devstral/Gemini: after the OpenRouter top-level error retry repair, Kimi
+  now passes on 686/686 records with complete cost/model/provider metadata.
+  The current later-model audit is partial, with Kimi passed and
+  Devstral/Gemini still waiting.
 - `experiments/evp8_journal_scale_execution_plan_20260620.md`: no-API
   execution plan for the journal-scale EVP-8 route. It defines the planned
   E0-E6 full-ladder boundary, target five-model set, phased DeepSeek/Qwen first
@@ -300,6 +300,12 @@
   outputs, per-level decision counts, actual model/provider-route aggregates,
   checkpoint/resume fields, and estimated total cost CNY `41.119548`; raw
   model responses remain only under ignored `outputs/`.
+- `../data/reviews/evp8_moonshotai_kimi-k2.6_full_summary.json`: tracked
+  raw-output-free summary of the EVP-8 Kimi K2.6 later-model full run on the
+  same frozen 98-candidate x 7-level packet set. It records 686/686
+  parse-valid outputs, Kimi reasoning-disabled request controls,
+  actual-model/provider aggregates, provider-reported cost USD `1.02450976`,
+  and no raw model responses or prompt text.
 - `../data/reviews/evp7_g5_376_utility_sensitivity.json`: tracked
   raw-output-free utility sensitivity analysis over false-accept, escalation,
   and false-reject penalty grids for the frozen EVP-7 G5 run.

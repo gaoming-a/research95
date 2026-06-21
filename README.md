@@ -92,10 +92,12 @@ by the later-model gate because Kimi returned reasoning-heavy responses with
 79 invalid JSON outputs. The tracked protocol now records a Kimi clean-rerun
 policy with `reasoning.enabled=false` and `include_reasoning=false`; Kimi must
 pass the later-model audit before Devstral/Gemini or any five-model claim. The
-reasoning-disabled clean rerun improved to 682/686 parse-valid records but was
-blocked because four records were OpenRouter top-level 429 error objects, not
-model completions; the client retry repair must be committed and Kimi must be
-regenerated from a clean canonical path before the next model.
+reasoning-disabled clean rerun now passes for Kimi K2.6 on 686/686 records
+after the OpenRouter top-level error retry repair, with provider-reported cost
+for every record and actual model/provider metadata present. The later-model
+audit is therefore `partial_waiting_for_remaining_later_models`: Kimi has
+passed, while Devstral and Gemini still need execution before any five-model
+journal claim.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently

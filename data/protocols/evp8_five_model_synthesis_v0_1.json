@@ -28,7 +28,7 @@
     },
     {
       "check": "later_audit_status_supported",
-      "detail": "waiting_for_execution",
+      "detail": "partial_waiting_for_remaining_later_models",
       "passed": true
     },
     {
@@ -52,7 +52,7 @@
     },
     {
       "check": "passed_status_requires_all_later_models",
-      "detail": 0,
+      "detail": 1,
       "passed": true
     },
     {
@@ -83,19 +83,22 @@
   ],
   "first_batch_synthesis_status": "passed",
   "forbidden_claim": "Do not report five-model journal conclusions, LLM superiority over deterministic baselines, or final evidence-level effectiveness while this scaffold is waiting or partial.",
-  "later_model_audit_status": "waiting_for_execution",
+  "later_model_audit_status": "partial_waiting_for_remaining_later_models",
   "later_model_ids": [
     "moonshotai/kimi-k2.6",
     "mistralai/devstral-2512",
     "google/gemini-2.5-flash"
   ],
-  "later_passed_model_count": 0,
-  "later_summary_present_count": 0,
+  "later_passed_model_count": 1,
+  "later_summary_present_count": 1,
   "per_level_decision_counts_by_model": {
     "E0": {
       "deepseek/deepseek-v4-pro": {
         "escalate": 66,
         "reject": 32
+      },
+      "moonshotai/kimi-k2.6": {
+        "escalate": 98
       },
       "qwen/qwen3.7-max": {
         "escalate": 75,
@@ -107,6 +110,10 @@
         "escalate": 58,
         "reject": 40
       },
+      "moonshotai/kimi-k2.6": {
+        "escalate": 92,
+        "reject": 6
+      },
       "qwen/qwen3.7-max": {
         "escalate": 70,
         "reject": 28
@@ -116,6 +123,10 @@
       "deepseek/deepseek-v4-pro": {
         "escalate": 65,
         "reject": 33
+      },
+      "moonshotai/kimi-k2.6": {
+        "escalate": 91,
+        "reject": 7
       },
       "qwen/qwen3.7-max": {
         "escalate": 71,
@@ -127,6 +138,9 @@
         "escalate": 81,
         "reject": 17
       },
+      "moonshotai/kimi-k2.6": {
+        "escalate": 98
+      },
       "qwen/qwen3.7-max": {
         "escalate": 79,
         "reject": 19
@@ -136,6 +150,10 @@
       "deepseek/deepseek-v4-pro": {
         "escalate": 74,
         "reject": 24
+      },
+      "moonshotai/kimi-k2.6": {
+        "escalate": 97,
+        "reject": 1
       },
       "qwen/qwen3.7-max": {
         "escalate": 80,
@@ -147,6 +165,9 @@
         "escalate": 71,
         "reject": 27
       },
+      "moonshotai/kimi-k2.6": {
+        "escalate": 98
+      },
       "qwen/qwen3.7-max": {
         "escalate": 78,
         "reject": 20
@@ -156,6 +177,9 @@
       "deepseek/deepseek-v4-pro": {
         "escalate": 86,
         "reject": 12
+      },
+      "moonshotai/kimi-k2.6": {
+        "escalate": 98
       },
       "qwen/qwen3.7-max": {
         "escalate": 91,
@@ -168,5 +192,5 @@
   "raw_outputs_read": false,
   "rendered_prompt_text_read": false,
   "synthesis_id": "evp8_five_model_synthesis_v0_1",
-  "synthesis_status": "waiting_for_later_models"
+  "synthesis_status": "partial_waiting_for_remaining_later_models"
 }

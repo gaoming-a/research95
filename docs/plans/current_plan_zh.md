@@ -17283,3 +17283,41 @@ Fifth Diagnose / Repair:
   5. 提交同步后，从空 canonical Kimi path 重新跑完整 reasoning-disabled Kimi。
 - 不允许修补 4 条 raw record 后把本次 run 当作 passed；该 raw 文件已经包含
   provider error records，必须作为 ignored blocked attempt 保留。
+
+Sixth Execute Result:
+
+- 按 repair 后代码从空 canonical path 重跑 Kimi reasoning-disabled full run，
+  `--concurrency 2`，无 stderr，进程正常退出；
+- Kimi clean summary 已生成：
+  - `review_count=686`；
+  - `parse_valid_count=686`；
+  - `invalid_parse_count=0`；
+  - `later_model_full_gate=passed`；
+  - `usage_cost_gate=passed`；
+  - `provider_metadata_gate=passed`；
+  - `request_reasoning={"enabled": false}`；
+  - `request_include_reasoning=false`；
+  - `actual_model_id_counts={"moonshotai/kimi-k2.6-20260420":686}`；
+  - `actual_provider_counts={"Chutes":686}`；
+  - `cost_observability_counts={"provider_reported_cost":686}`；
+  - `total_cost_usd=1.02450976`；
+  - decision counts 为 `escalate=672`、`reject=14`。
+- `scripts/audit_evp8_later_model_full_results.py --check` 已通过当前 partial
+  状态：Kimi `status=passed`，Devstral/Gemini 仍 `waiting_for_execution`，
+  overall audit 为 `partial_waiting_for_remaining_later_models`；
+- `scripts/summarize_evp8_five_model_synthesis.py --check` 已通过 partial
+  状态：DeepSeek/Qwen/Kimi 三模型 per-level counts 可读，但 forbidden claim
+  仍禁止 five-model journal conclusion；
+- 本轮可提交：
+  - Kimi raw-output-free tracked summary；
+  - later-model audit JSON/Markdown partial artifact；
+  - 当前计划、README、INDEX、short-state 和 engineering notes；
+- raw responses 和 blocked attempts 仍只保留在 ignored `outputs/`。
+
+Next Execute:
+
+- 提交并尝试同步 Kimi passed result；
+- 若 GitHub 继续网络失败，按用户授权保留本地 ahead 并继续；
+- 下一模型按 packet 顺序为 `mistralai/devstral-2512`，但必须在 Kimi result
+  commit 后执行，并复用同一 frozen EVP-8 packets、prompt、schema、parser、
+  cost/provider audit 和 OpenRouter exact model route policy。
