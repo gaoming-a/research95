@@ -16,11 +16,21 @@
   later-model completion packet、G7.1 later-model runner/preflight 和 G7.2
   OpenRouter strict preflight readiness。
 - 当前本地 ahead 状态：
-  - `ddca89f Add EVP-8 later-model runner preflight` 当前只在本地；
-  - 本轮两次 `git push origin main` 分别因 connection reset 和 GitHub 443
-    timeout 失败；
-  - 用户已允许 GitHub 频繁同步失败时先继续任务，后续网络恢复后重试 push。
+  - 本轮 strict-preflight readiness 提交 `40ae224` 已成功 push 到远端；
+  - 之后追加的 post-push state repair 提交因 GitHub 443 连接失败暂未同步；
+  - 当前 `git status --short --branch` 显示 `main...origin/main [ahead 1]`；
+  - 该 ahead 只包含 post-push state repair 文档修正，不包含未同步模型结果或
+    raw outputs；最终以命令输出和 `git log -1 --oneline` 为准。
 - 当前远端已同步锚点：
+  - `40ae224 Record EVP-8 OpenRouter strict preflight`：远端已包含 G7.2
+    OpenRouter strict preflight passed、completion packet refresh、no-secret
+    docs/state updates；
+  - `b2729b9 Record EVP-8 G7.1 sync blocker`：远端已包含上一轮 GitHub
+    sync blocker 记录；
+  - `ddca89f Add EVP-8 later-model runner preflight`：远端已包含 G7.1
+    later-model runner/preflight/check-only scaffold；
+  - `79ff382 Prepare EVP-8 later-model packet`：远端已包含 G7 no-API
+    later-model completion packet；
   - `6f3c8f0 Sync EVP-8 Qwen G6 result state`：远端已包含 DeepSeek/Qwen
     first-batch full-run passed state 的短状态修正；
   - `d59021e Record EVP-8 Qwen G6 full result`：远端已包含 Qwen 686-call
@@ -49,8 +59,9 @@
   结构验证已通过；G7.2 strict preflight 已在 ignored `.env` 中确认
   `OPENROUTER_API_KEY` presence，但仍不授权 Kimi/Devstral/Gemini API。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
-  在连续同步失败时跳过 GitHub 并继续本地计划执行。2026-06-20 本轮重试后
-  `72f1fb5` 和 `d9a8391` 已成功 push；最终是否仍 ahead 以
+  在连续同步失败时跳过 GitHub 并继续本地计划执行。本轮 strict-preflight
+  readiness 已成功 push 到 `40ae224`；post-push state repair 再次遇到 GitHub
+  443 连接失败，当前本地 ahead 1。最终是否仍 ahead 仍以
   `git status --short --branch` 为准。
 - `bugsinpy_cookiecutter_4` 已收束为 tracked blocker policy；完整 builder
   失败输出仍是本地诊断残留，不应提交。

@@ -16959,3 +16959,22 @@ Verify:
   strict-ready 状态；
 - 本轮未调用 OpenRouter/Kimi/Devstral/Gemini API，未生成 later-model raw
   outputs，未输出 API key value。
+
+Commit And Sync:
+
+- 已提交 strict preflight readiness：
+  `40ae224 Record EVP-8 OpenRouter strict preflight`；
+- `git push origin main` 成功，将本地 `79ff382..40ae224` 同步到远端；
+- push 后 `git status --short --branch --untracked-files=all` 显示
+  `main...origin/main`；
+- 发现 `docs/plans/current_project_state_zh.md` 仍保留 push 前 ahead 文本，
+  因此追加本 post-push state repair，避免下一会话误判 GitHub 仍阻塞。
+- post-push repair 验证：
+  - stale-status 搜索只命中 G7.1 历史日志，不命中当前 short-state/README/INDEX；
+  - `git diff --check` 通过，仅有 LF/CRLF 工作区转换 warning；
+  - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+    通过。
+- post-push repair 提交后再次尝试 `git push origin main`，失败：
+  `Failed to connect to github.com port 443 after 21082 ms`；
+- 因该提交尚未推送，已将本 post-push repair commit amend 为当前真实状态：
+  `40ae224` 已远端同步，post-push state repair 本地 ahead 1。
