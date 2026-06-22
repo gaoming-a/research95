@@ -3244,3 +3244,19 @@ This file starts fresh for the patch-verification project.
   Generate and validate the SQJ source draft with a source-structure gate first;
   add the official Springer class/template before making PDF compilation a
   required gate.
+
+## 2026-06-22 SQJ checklist gate
+
+- Do not reuse the old IEEE submission checklist as the SQJ freeze packet. It
+  carries four-anchor EVP-7 and IEEE PDF assumptions that are now historical for
+  the SQJ route.
+- Keep SQJ submission readiness as a separate source-package gate:
+  `docs/artifact/sqj_submission_checklist.md` plus
+  `scripts/audit_sqj_submission_checklist.py`.
+- Checklist audits must allow the document to list forbidden claims. Avoid
+  naive forbidden-phrase scans that fail just because the checklist says a claim
+  is forbidden. The audit should catch positive overclaim assertions, not the
+  forbidden-claims section itself.
+- The EVP-8 cost accounting summary stores `api_freeze` under `decision` and
+  money totals under `totals`. Future audits should read those nested fields
+  instead of assuming top-level cost fields.

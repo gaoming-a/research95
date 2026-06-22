@@ -17624,3 +17624,73 @@ Verify:
   backmatter 和 bibliography 存在，且没有正向 LLM superiority 或 E6 strict
   superiority claim；
 - 本轮未调用 API，未读取 raw model responses，未生成 PDF。
+
+## 2026-06-22 SQJ submission checklist and audit gate
+
+Inspect:
+
+- 当前 `main...origin/main` 干净；
+- SQJ `sn-jnl` source draft 已生成并通过 source-structure gate；
+- 旧 `docs/artifact/submission_checklist.md` 和
+  `docs/artifact/submission_handoff_20260618.md` 仍是 IEEE / EVP-7 四层
+  投稿包语境，不能直接作为 SQJ final freeze；
+- `docs/paper/sqj_submission_framing.md` 明确要求准备 SQJ-specific artifact
+  checklist；
+- 本机仍缺少 `sn-jnl.cls`，因此本轮不做 PDF compile gate。
+
+Plan:
+
+1. 新增 SQJ 专用 submission checklist，记录 manuscript source、BibTeX、
+   generated tables、figures、claim boundary、cost boundary、school-recognition
+   confirmation gate、non-OA route 和 no-API boundary；
+2. 新增 SQJ checklist audit script，验证 required snippets、forbidden claims、
+   source draft、BibTeX、figures 和 generator/check command；
+3. 将 SQJ checklist audit 接入 local quality gate，避免后续只检查旧 IEEE
+   handoff/checklist；
+4. 同步 README、docs index、short-state 和 engineering notes；
+5. 运行 py_compile、SQJ source/checklist audits、paper readiness、local quality、
+   diff 和敏感信息检查；
+6. 提交并同步 GitHub。
+
+Boundary:
+
+- 本轮不调用模型 API，不扩量，不补 bug，不读取 raw model responses；
+- 本轮不下载或提交 Springer 模板文件；
+- SQJ 学校认定仍是投稿前人工确认门，不写成保证；
+- 本轮不把 SQJ package 标记为 final freeze，因为 PDF compile gate 仍被
+  `sn-jnl.cls` 缺失阻塞。
+
+Execute Result:
+
+- 已新增 `docs/artifact/sqj_submission_checklist.md`；
+- 已新增 `scripts/audit_sqj_submission_checklist.py`；
+- 已将 SQJ checklist audit 接入 `scripts/audit_paper_readiness.py` 和
+  `scripts/run_local_quality_gate.py`；
+- 已同步 README、docs index、short-state、final roadmap 和 engineering notes；
+- 未调用模型 API，未下载 Springer 模板，未编译 PDF。
+
+Diagnose / Repair:
+
+- 首次 SQJ checklist audit 失败属于执行链路 bug：
+  1. cost accounting 字段读取错把 `decision.api_freeze` 和 `totals.*` 当作
+     top-level 字段；
+  2. forbidden-phrase scan 误把 checklist 中的 forbidden-claims section 当作
+     正向越界声明。
+- 已修复 audit 脚本，使其读取嵌套成本字段，并只拦截 checklist 中的正向越界声明。
+
+Verify:
+
+- `python -m py_compile scripts\audit_sqj_submission_checklist.py scripts\audit_paper_readiness.py scripts\run_local_quality_gate.py`
+  通过；
+- `python scripts\write_sqj_latex_draft.py --check` 通过，`api_call_attempted=false`、
+  `compile_attempted=false`；
+- `python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\sqj_checklist.json --out-md outputs\sqj_submission_checklist_audit\sqj_checklist.md`
+  通过；
+- `python scripts\summarize_evp8_five_model_synthesis.py --check` 通过；
+- `python scripts\summarize_evp8_cost_accounting.py --check` 通过，`api_freeze=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness_audit\sqj_checklist_final.json --out-md outputs\paper_readiness_audit\sqj_checklist_final.md`
+  通过，`submission_package_ready=true`，且旧 prompt-only positive claim blocker
+  仍保留为边界；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\sqj_checklist.json --out-md outputs\local_quality_gate\sqj_checklist.md`
+  通过，`passed=true`；
+- `git diff --check` 通过，仅有 Windows LF/CRLF 提示。

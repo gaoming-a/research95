@@ -139,6 +139,7 @@
   - `docs/paper/generated_tables.md`
   - `docs/paper/generated_tables.tex`
   - `docs/artifact/submission_checklist.md`
+  - `docs/artifact/sqj_submission_checklist.md`
   - `docs/artifact/submission_handoff_20260618.md`
 - 当前下一投稿格式：不再以 IEEEtran 作为下一主稿格式；SQJ 路线要求生成
   Springer Nature `sn-jnl` LaTeX draft，并补齐 data availability、competing
@@ -147,7 +148,10 @@
   `docs/paper/sqj_submission_framing.md`。首个 generated source draft 已写入
   `docs/paper/sqj_submission_draft.tex`，参考文献文件为
   `docs/paper/sqj_references.bib`；本地 MiKTeX 缺少 `sn-jnl.cls`，因此当前只做
-  source-structure gate，不做 PDF compile gate。
+  source-structure gate，不做 PDF compile gate。SQJ-specific source-package
+  checklist 已写入 `docs/artifact/sqj_submission_checklist.md`，并由
+  `scripts/audit_sqj_submission_checklist.py` 审计；该 checklist 不是 final
+  submission freeze。
 - 当前 known non-blocker：
   - old prompt-only evidence-first gate remains `stop_or_redesign`；
   - this blocks prompt-only positive claims, not the current bounded EVP-7 claim。
@@ -498,6 +502,10 @@
   first generated Springer Nature `sn-jnl` SQJ source draft；当前未本地编译。
 - `docs/paper/sqj_references.bib`：
   generated BibTeX references for the SQJ source draft。
+- `docs/artifact/sqj_submission_checklist.md`：
+  SQJ source-package checklist；记录 non-OA route、学校认定确认门、source
+  draft/BibTeX/table/figure package、allowed/forbidden claims、no-API boundary
+  和 not-final-freeze 边界。
 - `docs/paper/ieee_submission_draft.tex`：
   historical/source IEEEtran draft；当前包含 `Workload at a Glance` 章节和
   `tab:evp7-workload-ledger`，但 SQJ 路线下不再作为下一投稿主格式。
@@ -538,6 +546,10 @@
   SQJ Springer Nature `sn-jnl` source draft generator；`--check` 生成
   `docs/paper/sqj_submission_draft.tex` 和 `docs/paper/sqj_references.bib`，
   并验证 source structure，不调用 API、不编译 PDF。
+- `scripts/audit_sqj_submission_checklist.py`：
+  SQJ source-package checklist audit；验证 source draft、BibTeX、tables、
+  figure set、five-model synthesis、cost accounting/API freeze 和 not-final-freeze
+  边界，不调用 API、不编译 PDF。
 - `scripts/generate_paper_figures.py`：
   reproducible figure generation。
 - `scripts/prepare_anonymous_artifact.py`：

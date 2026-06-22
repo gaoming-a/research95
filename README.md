@@ -116,7 +116,10 @@ SQJ framing and claim boundary packet is
 draft is `docs/paper/sqj_submission_draft.tex`, produced by
 `scripts/write_sqj_latex_draft.py`; local PDF compilation is intentionally not
 part of the current gate because `sn-jnl.cls` is not bundled in this MiKTeX
-environment.
+environment. The SQJ-specific source-package checklist is
+`docs/artifact/sqj_submission_checklist.md`, audited by
+`scripts/audit_sqj_submission_checklist.py`; it is a source/checklist gate, not
+a final submission freeze.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently
@@ -703,6 +706,15 @@ For local quality checks after edits, run:
 python scripts\run_local_quality_gate.py `
   --out-json outputs\local_quality_gate\latest.json `
   --out-md outputs\local_quality_gate\latest.md
+```
+
+For the SQJ source-package route, also run:
+
+```powershell
+python scripts\write_sqj_latex_draft.py --check
+python scripts\audit_sqj_submission_checklist.py `
+  --out-json outputs\sqj_submission_checklist_audit\latest.json `
+  --out-md outputs\sqj_submission_checklist_audit\latest.md
 ```
 
 For submission handoff and freeze-candidate boundary checks only, run:

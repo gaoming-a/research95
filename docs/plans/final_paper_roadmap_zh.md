@@ -1237,10 +1237,12 @@ SQJ no-API 执行顺序：
    论文；
 2. 将 `docs/paper/patch_verification_draft.md` 改写为 SQJ 论文结构；
 3. 生成 Springer `sn-jnl` LaTeX draft，而不是继续维护 IEEEtran 为主稿；
-4. 更新 figures/tables，使 EVP-8 five-model decision patterns 和 cost accounting
+4. 准备并审计 SQJ-specific source-package checklist，明确该 checklist 不是
+   final submission freeze；
+5. 更新 figures/tables，使 EVP-8 five-model decision patterns 和 cost accounting
    成为主要结果；
-5. 准备 artifact freeze 和 submission checklist；
-6. 在学校认定确认前不提交；在 API freeze 解除前不进行任何新模型调用。
+6. 准备 artifact freeze 和 final submission checklist；
+7. 在学校认定确认前不提交；在 API freeze 解除前不进行任何新模型调用。
 
 ## 19. 2026-06-12 EVP-7 protocol pilot 决策
 

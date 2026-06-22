@@ -461,6 +461,11 @@
   been locally compiled because `sn-jnl.cls` is not bundled in the current
   MiKTeX environment.
 - `paper/sqj_references.bib`: BibTeX file for the generated SQJ source draft.
+- `artifact/sqj_submission_checklist.md`: SQJ source-package submission
+  checklist. It records the non-OA route, school-recognition confirmation
+  gate, source draft/BibTeX/table/figure package, allowed and forbidden
+  claims, no-API boundary, and the fact that this is not a final submission
+  freeze.
 - `paper/ieee_submission_draft.tex`: historical/source anonymous IEEEtran
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
@@ -932,6 +937,10 @@
   EVP-8 five-model synthesis, cost accounting, and generated paper tables. Its
   `--check` gate validates source structure only and does not compile PDF
   because the current local MiKTeX environment lacks `sn-jnl.cls`.
+- `scripts/audit_sqj_submission_checklist.py`: validates the SQJ
+  source-package checklist, source draft, BibTeX, table sources, figure set,
+  five-model synthesis, and cost-accounting/API-freeze boundary without calling
+  APIs, compiling PDF, or marking final submission freeze complete.
 - `scripts/generate_paper_figures.py`: generates the publication figure set
   under `docs/figures/` in PDF, SVG, and PNG formats. Figures cover the
   workflow, compact E0/E2/E4/E6 evidence boundary, dataset composition,

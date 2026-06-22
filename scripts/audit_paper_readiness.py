@@ -8,9 +8,11 @@ from typing import Any
 try:
     from scripts.audit_submission_handoff import DEFAULT_HANDOFF, audit_handoff
     from scripts.audit_submission_freeze_candidate import DEFAULT_FREEZE_CANDIDATE, audit_freeze_candidate
+    from scripts.audit_sqj_submission_checklist import DEFAULT_CHECKLIST, audit_sqj_checklist
 except ModuleNotFoundError:
     from audit_submission_handoff import DEFAULT_HANDOFF, audit_handoff
     from audit_submission_freeze_candidate import DEFAULT_FREEZE_CANDIDATE, audit_freeze_candidate
+    from audit_sqj_submission_checklist import DEFAULT_CHECKLIST, audit_sqj_checklist
 
 
 DEFAULT_FULL_RUN_DIR = Path("outputs") / "patch_verification_api_pilot_002"
@@ -686,6 +688,10 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         ),
         "related_work_ris": file_state(Path("docs") / "references" / "evp7_related_work_references.ris"),
         "submission_checklist": file_state(Path("docs") / "artifact" / "submission_checklist.md"),
+        "sqj_submission_checklist": file_state(Path("docs") / "artifact" / "sqj_submission_checklist.md"),
+        "sqj_submission_framing": file_state(Path("docs") / "paper" / "sqj_submission_framing.md"),
+        "sqj_submission_draft": file_state(Path("docs") / "paper" / "sqj_submission_draft.tex"),
+        "sqj_references_bib": file_state(Path("docs") / "paper" / "sqj_references.bib"),
         "submission_handoff": file_state(DEFAULT_HANDOFF),
         "submission_freeze_candidate": file_state(
             Path("docs") / "artifact" / "submission_freeze_candidate_20260618.md"
@@ -715,6 +721,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
     final_roadmap = final_roadmap_state()
     submission_handoff = audit_handoff(DEFAULT_HANDOFF)
     submission_freeze_candidate = audit_freeze_candidate(DEFAULT_FREEZE_CANDIDATE)
+    sqj_submission_checklist = audit_sqj_checklist(DEFAULT_CHECKLIST)
 
     required_docs_ready = all(doc["exists"] for doc in required_docs.values())
     minimum_inputs_ready = required_docs_ready and all(
@@ -762,6 +769,8 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         blockers.append("Submission handoff boundary audit failed.")
     if not submission_freeze_candidate["passed"]:
         blockers.append("Submission freeze-candidate boundary audit failed.")
+    if not sqj_submission_checklist["passed"]:
+        blockers.append("SQJ submission checklist audit failed.")
 
     tool_augmented_blockers: list[str] = []
     if not required_docs["tool_augmented_full_result"]["exists"]:
@@ -801,7 +810,8 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         and protocol_pilot_report["passed"]
         and final_roadmap["passed"]
         and submission_handoff["passed"]
-        and submission_freeze_candidate["passed"],
+        and submission_freeze_candidate["passed"]
+        and sqj_submission_checklist["passed"],
         "claim_boundary": (
             "Prompt-only evidence-first remains unsupported by the old full-run gate. "
             "The old tool-augmented positive claim is limited to a conditional tool-assisted verifier. "
@@ -814,6 +824,7 @@ def build_audit(args: argparse.Namespace) -> dict[str, Any]:
         "final_roadmap": final_roadmap,
         "submission_handoff": submission_handoff,
         "submission_freeze_candidate": submission_freeze_candidate,
+        "sqj_submission_checklist": sqj_submission_checklist,
         "required_docs": required_docs,
         "pre_api_evidence": pre_api_evidence,
         "run_files": run_files,
@@ -898,6 +909,17 @@ def build_markdown(audit: dict[str, Any]) -> str:
         f"- missing required snippets: {len(audit['submission_freeze_candidate']['missing_required_snippets'])}"
     )
     lines.append(f"- forbidden snippet hits: {len(audit['submission_freeze_candidate']['forbidden_snippet_hits'])}")
+    lines.extend(["", "## SQJ Submission Checklist", ""])
+    lines.append(f"- passed: {bool_mark(audit['sqj_submission_checklist']['passed'])}")
+    lines.append(f"- checklist path: `{audit['sqj_submission_checklist']['checklist_path']}`")
+    lines.append(f"- figures complete: {bool_mark(audit['sqj_submission_checklist']['figures_complete'])}")
+    lines.append(f"- compile gate: `{audit['sqj_submission_checklist']['compile_gate']}`")
+    lines.append(
+        f"- missing required snippets: {len(audit['sqj_submission_checklist']['missing_required_snippets'])}"
+    )
+    lines.append(f"- forbidden snippet hits: {len(audit['sqj_submission_checklist']['forbidden_snippet_hits'])}")
+    lines.append(f"- source missing snippets: {len(audit['sqj_submission_checklist']['source_missing_snippets'])}")
+    lines.append(f"- source forbidden hits: {len(audit['sqj_submission_checklist']['source_forbidden_hits'])}")
     lines.extend(["", "## Pre-API Evidence", ""])
     for name, state in audit["pre_api_evidence"].items():
         lines.append(f"- `{name}`: {bool_mark(state['exists'])} (`{state['path']}`)")
