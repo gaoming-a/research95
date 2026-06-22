@@ -143,7 +143,8 @@
 - 当前下一投稿格式：不再以 IEEEtran 作为下一主稿格式；SQJ 路线要求生成
   Springer Nature `sn-jnl` LaTeX draft，并补齐 data availability、competing
   interests、author contribution、funding/acknowledgement 等 submission
-  elements。
+  elements。SQJ framing and claim-boundary packet 已写入
+  `docs/paper/sqj_submission_framing.md`。
 - 当前 known non-blocker：
   - old prompt-only evidence-first gate remains `stop_or_redesign`；
   - this blocks prompt-only positive claims, not the current bounded EVP-7 claim。
@@ -487,6 +488,9 @@
 - `docs/paper/generated_tables.md`、`docs/paper/generated_tables.tex`：
   script-generated paper tables；当前包含 EVP-7 workload ledger、EVP-8
   five-model decision patterns 和 EVP-8 cost accounting。
+- `docs/paper/sqj_submission_framing.md`：
+  SQJ no-API submission framing and claim-boundary packet；当前 `sn-jnl`
+  草稿应从这里和 Markdown draft 读取论文逻辑。
 - `docs/paper/ieee_submission_draft.tex`：
   historical/source IEEEtran draft；当前包含 `Workload at a Glance` 章节和
   `tab:evp7-workload-ledger`，但 SQJ 路线下不再作为下一投稿主格式。

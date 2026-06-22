@@ -451,6 +451,10 @@
   current IEEE draft, including the EVP-7 workload ledger, G5 376-record
   result, deterministic tool-only attribution, claim-boundary snippets,
   EVP-8 five-model decision patterns, and EVP-8 cost accounting.
+- `paper/sqj_submission_framing.md`: SQJ no-API submission framing and
+  claim-boundary packet. It fixes the target venue route, non-OA cost boundary,
+  Springer `sn-jnl` next-format requirement, working title, RQs, allowed and
+  forbidden claims, result-to-artifact mapping, and school-recognition gate.
 - `paper/ieee_submission_draft.tex`: historical/source anonymous IEEEtran
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record

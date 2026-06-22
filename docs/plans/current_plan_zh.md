@@ -17535,3 +17535,51 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\sqj_plan_update.json --out-md outputs\local_quality_gate\sqj_plan_update.md`
   已运行，`passed=true`；
 - 最终提交前仍需 staged diff、敏感信息扫描、commit 和 GitHub sync attempt。
+
+## 2026-06-22 SQJ framing and claim-boundary packet
+
+Inspect:
+
+- 当前工作区干净且 `main...origin/main`；
+- canonical final roadmap 已将下一步收敛为 SQJ no-API paper route；
+- 旧 artifact handoff/checklist/freeze-candidate 仍保留 IEEE 投稿包语境，不能直接当作
+  SQJ final freeze；
+- 当前可直接执行的最短路径是先写 SQJ framing / claim-boundary packet，再进入
+  Springer `sn-jnl` draft generation。
+
+Plan:
+
+1. 新增 `docs/paper/sqj_submission_framing.md`，明确 SQJ title、paper type、
+   contribution、RQ、allowed claims、forbidden claims、EVP-8 result mapping、
+   cost/risk framing、school-recognition gate 和 no-API boundary；
+2. 同步 README、docs index、short-state 和 engineering notes；
+3. 运行 no-API paper readiness / local quality gate，以及 targeted SQJ checks；
+4. 提交并同步 GitHub。
+
+Boundary:
+
+- 本轮不新建模型 API、实验、候选 bug 或 raw output；
+- 本轮不把旧 IEEE artifact handoff/checklist 直接改成 final SQJ freeze；
+- SQJ 认可仍需学院/科研秘书确认，文档只记录投稿路线和 claim boundary。
+
+Execute Result:
+
+- 已新增 `docs/paper/sqj_submission_framing.md`；
+- 该文档固定 SQJ target、non-OA/subscription route、Springer `sn-jnl` 下一格式、
+  working title、RQ、allowed claims、forbidden claims、EVP-8 result mapping、
+  cost/risk framing、school-recognition gate 和 no-API boundary；
+- 已同步 README、docs index、short-state 和 engineering notes；
+- 未生成 raw output，未调用任何模型 API，未改旧 IEEE artifact freeze-candidate。
+
+Verify:
+
+- `python scripts\summarize_evp8_five_model_synthesis.py --check` 已通过，
+  `synthesis_status=passed` 且 `api_call_attempted=false`；
+- `python scripts\summarize_evp8_cost_accounting.py --check` 已通过，
+  `api_freeze=true`；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness_audit\sqj_framing.json --out-md outputs\paper_readiness_audit\sqj_framing.md`
+  已运行，当前 bounded readiness 仍为 `current_result_claim_ready=true` 和
+  `submission_package_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\sqj_framing.json --out-md outputs\local_quality_gate\sqj_framing.md`
+  已运行，`passed=true`；
+- `git diff --check` 通过，仅有 Windows LF/CRLF 提示。

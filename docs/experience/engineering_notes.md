@@ -3235,3 +3235,8 @@ This file starts fresh for the patch-verification project.
   decisions across five models, but the response is model-dependent and
   non-monotonic. Do not turn this into an LLM superiority or evidence-level
   effectiveness ranking claim.
+- Before generating the Springer `sn-jnl` draft, write a venue-specific framing
+  packet. This prevents the old IEEE submission package and artifact checklist
+  from silently becoming the SQJ route, and it gives later agents one place to
+  read the allowed claims, forbidden claims, result mapping, and school
+  recognition gate.
