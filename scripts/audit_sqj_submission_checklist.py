@@ -15,16 +15,13 @@ TABLES_MD = Path("docs/paper/generated_tables.md")
 TABLES_TEX = Path("docs/paper/generated_tables.tex")
 SYNTHESIS_JSON = Path("data/protocols/evp8_five_model_synthesis_v0_1.json")
 COST_JSON = Path("data/reviews/evp8_cost_accounting_summary.json")
-FIGURE_MANIFEST = Path("docs/figures/figure_manifest.json")
+FIGURE_DIR = Path("docs/figures/sqj")
+FIGURE_MANIFEST = FIGURE_DIR / "figure_manifest.json"
 
 REQUIRED_FIGURE_IDS = [
-    "fig1_framework",
-    "fig2_evidence_visibility",
-    "fig3_dataset_composition",
-    "fig4_result_tradeoff",
-    "fig5_claim_boundary",
-    "fig6_evp7_visibility_curve",
-    "fig7_decision_metric_flow",
+    "sqj_fig1_evp8_protocol",
+    "sqj_fig2_decision_patterns",
+    "sqj_fig3_cost_boundary",
 ]
 REQUIRED_FIGURE_FORMATS = ["pdf", "svg", "png"]
 
@@ -36,6 +33,9 @@ REQUIRED_SNIPPETS = [
     "this checklist does not guarantee SQJ recognition",
     "Springer Nature `sn-jnl`",
     "PDF compile gate is pending local `sn-jnl.cls` availability.",
+    "`docs/figures/sqj/sqj_fig1_evp8_protocol.pdf`",
+    "`docs/figures/sqj/sqj_fig2_decision_patterns.pdf`",
+    "`docs/figures/sqj/sqj_fig3_cost_boundary.pdf`",
     "`docs/paper/sqj_submission_draft.tex`",
     "`docs/paper/sqj_references.bib`",
     "`scripts/write_sqj_latex_draft.py`",
@@ -65,6 +65,9 @@ SOURCE_REQUIRED_SNIPPETS = [
     "model-dependent and non-monotonic",
     "blocked Kimi attempts",
     r"\input{generated_tables.tex}",
+    "sqj_fig1_evp8_protocol.pdf",
+    "sqj_fig2_decision_patterns.pdf",
+    "sqj_fig3_cost_boundary.pdf",
     r"\bmhead{Data availability}",
     r"\bmhead{Code availability}",
     r"\bmhead{Competing interests}",
@@ -115,12 +118,16 @@ def figure_states() -> dict[str, dict[str, dict[str, Any]]]:
     for figure_id in REQUIRED_FIGURE_IDS:
         states[figure_id] = {}
         for suffix in REQUIRED_FIGURE_FORMATS:
-            states[figure_id][suffix] = file_state(Path("docs/figures") / f"{figure_id}.{suffix}")
+            states[figure_id][suffix] = file_state(FIGURE_DIR / f"{figure_id}.{suffix}")
     return states
 
 
-def all_figures_exist(states: dict[str, dict[str, dict[str, Any]]]) -> bool:
-    return all(format_state["exists"] for formats in states.values() for format_state in formats.values())
+def all_figures_ready(states: dict[str, dict[str, dict[str, Any]]]) -> bool:
+    return all(
+        format_state["exists"] and int(format_state["size_bytes"]) > 0
+        for formats in states.values()
+        for format_state in formats.values()
+    )
 
 
 def synthesis_state(path: Path) -> dict[str, Any]:
@@ -182,7 +189,7 @@ def audit_sqj_checklist(path: Path) -> dict[str, Any]:
         "source_forbidden_hits": source_forbidden_hits,
         "required_files": required_files,
         "figures": figures,
-        "figures_complete": all_figures_exist(figures),
+        "figures_complete": all_figures_ready(figures),
         "synthesis": synthesis,
         "cost_accounting": cost,
         "compile_gate": "source_structure_only_sn_jnl_cls_missing",

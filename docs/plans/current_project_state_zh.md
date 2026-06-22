@@ -151,7 +151,9 @@
   source-structure gate，不做 PDF compile gate。SQJ-specific source-package
   checklist 已写入 `docs/artifact/sqj_submission_checklist.md`，并由
   `scripts/audit_sqj_submission_checklist.py` 审计；该 checklist 不是 final
-  submission freeze。
+  submission freeze。SQJ-specific figures 已写入 `docs/figures/sqj/`，当前
+  `sqj_submission_draft.tex` 引用三张 EVP-8 主图：protocol、decision
+  patterns 和 cost boundary。
 - 当前 known non-blocker：
   - old prompt-only evidence-first gate remains `stop_or_redesign`；
   - this blocks prompt-only positive claims, not the current bounded EVP-7 claim。
@@ -499,7 +501,8 @@
   SQJ no-API submission framing and claim-boundary packet；当前 `sn-jnl`
   草稿应从这里和 Markdown draft 读取论文逻辑。
 - `docs/paper/sqj_submission_draft.tex`：
-  first generated Springer Nature `sn-jnl` SQJ source draft；当前未本地编译。
+  first generated Springer Nature `sn-jnl` SQJ source draft；当前引用
+  `docs/figures/sqj/` 的三张 SQJ figures，但未本地编译。
 - `docs/paper/sqj_references.bib`：
   generated BibTeX references for the SQJ source draft。
 - `docs/artifact/sqj_submission_checklist.md`：
@@ -516,7 +519,8 @@
   no-API freeze-candidate packet；记录当前 paper/artifact candidate 状态和
   仍需用户确认的 target venue、format、final freeze、Git sync 边界。
 - `docs/figures/`：
-  reproducible PDF/SVG/PNG paper figures。当前 draft 使用 fig1-fig7。
+  reproducible PDF/SVG/PNG paper figures。`docs/figures/fig1` through `fig7`
+  是旧 IEEE/EVP-7 可复现图集；`docs/figures/sqj/` 是当前 SQJ/EVP-8 主图集。
 - `docs/artifact/anonymous_artifact.md`：
   anonymous artifact inclusion/exclusion policy。
 - `docs/artifact/submission_checklist.md`：
@@ -545,7 +549,10 @@
 - `scripts/write_sqj_latex_draft.py`：
   SQJ Springer Nature `sn-jnl` source draft generator；`--check` 生成
   `docs/paper/sqj_submission_draft.tex` 和 `docs/paper/sqj_references.bib`，
-  并验证 source structure，不调用 API、不编译 PDF。
+  并验证 source structure 和 SQJ figure references，不调用 API、不编译 PDF。
+- `scripts/generate_sqj_figures.py`：
+  SQJ-specific EVP-8 publication figure generator；生成 `docs/figures/sqj/`
+  下的 protocol、decision-pattern 和 cost-boundary 三张 PDF/SVG/PNG 主图。
 - `scripts/audit_sqj_submission_checklist.py`：
   SQJ source-package checklist audit；验证 source draft、BibTeX、tables、
   figure set、five-model synthesis、cost accounting/API freeze 和 not-final-freeze

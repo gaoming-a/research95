@@ -1,0 +1,23 @@
+{
+  "figure_count": 3,
+  "formats": [
+    "pdf",
+    "svg",
+    "png"
+  ],
+  "core_conclusion": "EVP-8 evidence visibility changes LLM merge-gate behavior, but the response is model-dependent and non-monotonic; cost risk is tracked separately from valid results.",
+  "figures": [
+    {
+      "id": "sqj_fig1_evp8_protocol",
+      "purpose": "EVP-8 hidden-evaluator protocol and scale overview"
+    },
+    {
+      "id": "sqj_fig2_decision_patterns",
+      "purpose": "five-model per-level rejection/escalation patterns"
+    },
+    {
+      "id": "sqj_fig3_cost_boundary",
+      "purpose": "valid-result cost versus blocked-attempt cost boundary"
+    }
+  ]
+}

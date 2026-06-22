@@ -457,10 +457,13 @@
   forbidden claims, result-to-artifact mapping, and school-recognition gate.
 - `paper/sqj_submission_draft.tex`: first generated Springer Nature `sn-jnl`
   SQJ source draft. It is generated from the SQJ framing packet, EVP-8
-  five-model synthesis, cost accounting, and generated paper tables. It has not
-  been locally compiled because `sn-jnl.cls` is not bundled in the current
-  MiKTeX environment.
+  five-model synthesis, cost accounting, generated paper tables, and the
+  SQJ-specific figure set. It has not been locally compiled because
+  `sn-jnl.cls` is not bundled in the current MiKTeX environment.
 - `paper/sqj_references.bib`: BibTeX file for the generated SQJ source draft.
+- `figures/sqj/`: SQJ-specific reproducible PDF/SVG/PNG figures for the EVP-8
+  manuscript route: hidden-evaluator protocol, five-model decision patterns,
+  and cost-validity boundary.
 - `artifact/sqj_submission_checklist.md`: SQJ source-package submission
   checklist. It records the non-OA route, school-recognition confirmation
   gate, source draft/BibTeX/table/figure package, allowed and forbidden
@@ -934,9 +937,12 @@
   pre-API context.
 - `scripts/write_sqj_latex_draft.py`: generates the first SQJ Springer Nature
   `sn-jnl` source draft and `sqj_references.bib` from the SQJ framing packet,
-  EVP-8 five-model synthesis, cost accounting, and generated paper tables. Its
-  `--check` gate validates source structure only and does not compile PDF
-  because the current local MiKTeX environment lacks `sn-jnl.cls`.
+  EVP-8 five-model synthesis, cost accounting, generated paper tables, and
+  SQJ-specific figures. Its `--check` gate validates source structure only and
+  does not compile PDF because the current local MiKTeX environment lacks
+  `sn-jnl.cls`.
+- `scripts/generate_sqj_figures.py`: generates the SQJ-specific EVP-8 figure
+  set under `docs/figures/sqj/` in PDF, SVG, and PNG form.
 - `scripts/audit_sqj_submission_checklist.py`: validates the SQJ
   source-package checklist, source draft, BibTeX, table sources, figure set,
   five-model synthesis, and cost-accounting/API-freeze boundary without calling

@@ -17694,3 +17694,84 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\sqj_checklist.json --out-md outputs\local_quality_gate\sqj_checklist.md`
   通过，`passed=true`；
 - `git diff --check` 通过，仅有 Windows LF/CRLF 提示。
+
+## 2026-06-22 SQJ EVP-8 figure/layout pass
+
+Inspect:
+
+- 当前本地 `main...origin/main [ahead 1]`，ahead commit 为上一轮 SQJ checklist
+  gate；工作区无未提交改动；
+- SQJ draft 当前主结果是 EVP-8 five-model full-ladder study；
+- 现有 `scripts/generate_paper_figures.py` 和 `docs/figures/figure_manifest.json`
+  仍以旧 IEEE / EVP-7 figure set 为主；
+- `docs/artifact/sqj_submission_checklist.md` 已明确 SQJ-specific figure
+  placement and caption audit 仍待后续 layout pass；
+- 本机仍缺少 `sn-jnl.cls`，因此本轮仍只做 source/figure gate，不做 PDF compile。
+
+Plan:
+
+1. 新增 Python/matplotlib 的 SQJ 专用 figure generator；
+2. 生成 `docs/figures/sqj/` 下的三张 SQJ/EVP-8 主图：
+   - protocol schematic；
+   - five-model decision-pattern heatmap/aggregate curve；
+   - valid-result cost 与 blocked-attempt cost boundary；
+3. 将 SQJ draft generator 改为引用这三张 SQJ figures，并把 captions 绑定到
+   bounded EVP-8 claim；
+4. 将 SQJ checklist/audit 改为验证 SQJ-specific figures，而不是只验证旧
+   EVP-7 figure set；
+5. 同步 README、INDEX、short-state、figure README、engineering notes 和 current
+   plan；
+6. 运行 figure generation、SQJ source/checklist audits、paper readiness、local
+   quality、diff/sensitive checks；
+7. 提交，并尝试 GitHub sync；若 GitHub 仍连接失败，记录 ahead 状态并继续。
+
+Boundary:
+
+- 本轮不调用模型 API，不生成/读取 raw model responses，不扩量；
+- 本轮不下载 Springer 模板、不编译 PDF；
+- 不把三张 SQJ figures 解释为 LLM superiority 或 final evidence-level ranking；
+- 保留旧 `docs/figures/` EVP-7 figures 作为 historical/reproducible assets，
+  不覆盖旧 IEEE draft。
+
+Execute Result:
+
+- 已新增 `scripts/generate_sqj_figures.py`；
+- 已生成 `docs/figures/sqj/` 下三张 SQJ/EVP-8 figures：
+  `sqj_fig1_evp8_protocol`、`sqj_fig2_decision_patterns`、
+  `sqj_fig3_cost_boundary`，每张均有 PDF/SVG/PNG；
+- 已更新 `scripts/write_sqj_latex_draft.py`，使
+  `docs/paper/sqj_submission_draft.tex` 引用三张 SQJ figures；
+- 已更新 `scripts/audit_sqj_submission_checklist.py`，验证 SQJ-specific
+  figure set 和非空 figure files；
+- 已同步 README、docs index、short-state、figure README 和 engineering notes；
+- 未调用模型 API，未读取 raw model responses，未下载 Springer 模板，未编译 PDF。
+
+Diagnose / Repair:
+
+- 初次把 `generate_sqj_figures.py` 和 figure audit 并行执行时，audit 在
+  `sqj_fig2_decision_patterns.pdf` 写入过程中读到 size=0；该问题属于执行链路
+  竞态，不是数据或实验问题。
+- 已修复：
+  1. 依赖链改为顺序执行：tables -> SQJ figures -> SQJ source -> SQJ audit ->
+     paper readiness -> local quality；
+  2. SQJ checklist audit 从只检查文件存在改为检查 figure 文件存在且
+     `size_bytes > 0`；
+  3. 修复 Fig.1 底部说明文字重叠；
+  4. 修复 Fig.2 heatmap 因 `imshow` 默认等比例显示造成的水平留白。
+
+Verify:
+
+- `python -m py_compile scripts\generate_sqj_figures.py scripts\write_sqj_latex_draft.py scripts\audit_sqj_submission_checklist.py scripts\audit_paper_readiness.py scripts\run_local_quality_gate.py`
+  通过；
+- `python scripts\write_paper_tables.py` 通过；
+- `python scripts\generate_sqj_figures.py` 通过，输出 3 figures x PDF/SVG/PNG；
+- `Get-Item docs\figures\sqj\sqj_fig*.pdf,docs\figures\sqj\sqj_fig*.svg,docs\figures\sqj\sqj_fig*.png`
+  确认所有 SQJ figure files 非空；
+- `python scripts\write_sqj_latex_draft.py --check` 通过；
+- `python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\sqj_figures_final.json --out-md outputs\sqj_submission_checklist_audit\sqj_figures_final.md`
+  通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness_audit\sqj_figures_final.json --out-md outputs\paper_readiness_audit\sqj_figures_final.md`
+  通过，`submission_package_ready=true`，旧 prompt-only positive claim blocker
+  仍保留；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\sqj_figures.json --out-md outputs\local_quality_gate\sqj_figures.md`
+  通过，`passed=true`。

@@ -22,6 +22,9 @@ REQUIRED_SNIPPETS = [
     r"\bmhead{Data availability}",
     r"\bmhead{Competing interests}",
     r"\bibliography{sqj_references}",
+    "sqj_fig1_evp8_protocol.pdf",
+    "sqj_fig2_decision_patterns.pdf",
+    "sqj_fig3_cost_boundary.pdf",
     "Evidence visibility is a first-order experimental variable",
     "model-dependent and non-monotonic",
     "not valid model-result records",
@@ -251,6 +254,17 @@ this packet set; the measured behavior is therefore an escalation/rejection
 pattern. This is still informative for reliability because over-escalation and
 model saturation are deployment risks for a verifier.
 
+\begin{{figure*}}[t]
+\centering
+\includegraphics[width=\textwidth]{{docs/figures/sqj/sqj_fig1_evp8_protocol.pdf}}
+\caption{{EVP-8 hidden-evaluator study design. The protocol reviews 98
+candidate patches across seven evidence levels and five model verifiers while
+withholding evaluator-only labels until after the model decision. The figure
+also marks the raw-output-free summary boundary and the zero-observed-accept
+decision pattern.}}
+\label{{fig:sqj-evp8-protocol}}
+\end{{figure*}}
+
 \section{{Candidate Patch and Evidence Packet Construction}}
 
 The EVP-8 candidate set is derived from the project's tracked real-bug
@@ -299,6 +313,16 @@ a verifier that escalates everything may be safe in the narrow sense of not
 accepting questionable patches, but it provides little automation value as a
 merge gate.
 
+\begin{{figure*}}[t]
+\centering
+\includegraphics[width=\textwidth]{{docs/figures/sqj/sqj_fig2_decision_patterns.pdf}}
+\caption{{Five-model decision patterns on the frozen EVP-8 v0.1 packet set.
+The heatmap reports rejection counts per 98 candidate-level packets; the lower
+panel aggregates rejection and escalation counts across models. The pattern is
+model-dependent and non-monotonic across E0-E6.}}
+\label{{fig:sqj-decision-patterns}}
+\end{{figure*}}
+
 \input{{generated_tables.tex}}
 
 \section{{Software Quality Risks}}
@@ -319,6 +343,16 @@ USD {blocked_usd:.6f}, which raised the observable USD total excluding Qwen to
 USD {observable_usd:.6f}. The later-model observable USD including blocked
 attempts was USD {later_observable:.6f}. These blocked attempts are cost and
 execution-risk evidence only; they are not valid model-result records.
+
+\begin{{figure*}}[t]
+\centering
+\includegraphics[width=0.92\textwidth]{{docs/figures/sqj/sqj_fig3_cost_boundary.pdf}}
+\caption{{Cost-observability and result-validity boundary for EVP-8. Passed
+model results and blocked Kimi attempts are tracked separately. Blocked
+attempts contribute to engineering-risk and cost accounting, but are excluded
+from five-model decision-pattern synthesis.}}
+\label{{fig:sqj-cost-boundary}}
+\end{{figure*}}
 
 \section{{Threats to Validity}}
 

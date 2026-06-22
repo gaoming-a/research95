@@ -22,7 +22,27 @@ Each figure is emitted as PDF, SVG, and PNG:
 - `fig7_decision_metric_flow`: flow from evidence-level LLM decisions to
   hidden-label metric computation.
 
-The IEEE submission draft references the PDF versions.
+The IEEE submission draft references the PDF versions. Under the SQJ route,
+these remain historical/reproducible EVP-7 assets rather than the main
+manuscript-facing figure set.
+
+## SQJ Figures
+
+Generate the SQJ-specific EVP-8 figure set with:
+
+```powershell
+python scripts\generate_sqj_figures.py
+```
+
+The SQJ figures are emitted under `docs/figures/sqj/` in PDF, SVG, and PNG:
+
+- `sqj_fig1_evp8_protocol`: EVP-8 hidden-evaluator protocol and scale overview.
+- `sqj_fig2_decision_patterns`: five-model per-level rejection/escalation
+  patterns.
+- `sqj_fig3_cost_boundary`: valid-result cost versus blocked-attempt cost
+  boundary.
+
+The SQJ source draft references these PDF versions.
 
 ## Raster Visual Candidates
 

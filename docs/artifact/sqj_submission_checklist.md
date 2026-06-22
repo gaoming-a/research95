@@ -37,21 +37,17 @@ expansion, evidence-level changes, or raw model-response tracking.
   PDF compile gate is pending local `sn-jnl.cls` availability. The current
   gate validates source structure only.
 
-## Paper Figures
+## SQJ Paper Figures
 
-The current reproducible figure set is available in PDF, SVG, and PNG:
+The current SQJ-specific figure set is available in PDF, SVG, and PNG:
 
-- `docs/figures/fig1_framework.pdf`
-- `docs/figures/fig2_evidence_visibility.pdf`
-- `docs/figures/fig3_dataset_composition.pdf`
-- `docs/figures/fig4_result_tradeoff.pdf`
-- `docs/figures/fig5_claim_boundary.pdf`
-- `docs/figures/fig6_evp7_visibility_curve.pdf`
-- `docs/figures/fig7_decision_metric_flow.pdf`
+- `docs/figures/sqj/sqj_fig1_evp8_protocol.pdf`
+- `docs/figures/sqj/sqj_fig2_decision_patterns.pdf`
+- `docs/figures/sqj/sqj_fig3_cost_boundary.pdf`
 
-These figures were originally built for the earlier paper package. They are
-available as reproducible assets, but final SQJ figure placement and caption
-wording still require a later layout pass.
+The legacy `docs/figures/fig1` through `fig7` assets remain reproducible
+historical figures for the earlier IEEE/EVP-7 package. The SQJ route uses the
+`docs/figures/sqj/` figure set as the current manuscript-facing figure set.
 
 ## Supported Claims
 
@@ -79,6 +75,7 @@ The SQJ package must not claim:
 
 ```powershell
 python scripts\write_paper_tables.py
+python scripts\generate_sqj_figures.py
 python scripts\write_sqj_latex_draft.py --check
 python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md
 python scripts\summarize_evp8_five_model_synthesis.py --check
@@ -90,6 +87,7 @@ python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\l
 ## Ready For Next Gate Criteria
 
 - SQJ source draft regenerates from tracked inputs.
+- SQJ figures regenerate from tracked synthesis and cost summaries.
 - SQJ checklist audit passes.
 - EVP-8 five-model synthesis and cost accounting checks pass.
 - Paper readiness and local quality gate pass.
