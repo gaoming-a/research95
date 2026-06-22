@@ -3240,3 +3240,7 @@ This file starts fresh for the patch-verification project.
   from silently becoming the SQJ route, and it gives later agents one place to
   read the allowed claims, forbidden claims, result mapping, and school
   recognition gate.
+- The local MiKTeX environment does not currently provide `sn-jnl.cls`.
+  Generate and validate the SQJ source draft with a source-structure gate first;
+  add the official Springer class/template before making PDF compilation a
+  required gate.

@@ -17583,3 +17583,44 @@ Verify:
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\sqj_framing.json --out-md outputs\local_quality_gate\sqj_framing.md`
   已运行，`passed=true`；
 - `git diff --check` 通过，仅有 Windows LF/CRLF 提示。
+
+## 2026-06-22 SQJ sn-jnl source draft generation
+
+Inspect:
+
+- 当前 `docs/paper/sqj_submission_framing.md` 已固定 SQJ claim boundary；
+- `kpsewhich sn-jnl.cls` 未找到本地 Springer Nature class，MiKTeX 提示尚未检查更新；
+- 因此本轮只能生成 `sn-jnl` source draft 并做 source-structure gate，不做 PDF
+  compile gate。
+
+Plan:
+
+1. 新建 `scripts/write_sqj_latex_draft.py`；
+2. 从 EVP-8 five-model synthesis、cost accounting、generated tables 和 SQJ
+   framing packet 生成 `docs/paper/sqj_submission_draft.tex`；
+3. 生成 `docs/paper/sqj_references.bib`；
+4. 用脚本内 `--check` 验证 `sn-jnl` class declaration、abstract、keywords、
+   main sections、backmatter、bibliography、bounded claims 和 forbidden snippets；
+5. 同步 README、INDEX、short-state 和 engineering notes。
+
+Execute Result:
+
+- 已新增 `scripts/write_sqj_latex_draft.py`；
+- 已生成 `docs/paper/sqj_submission_draft.tex`，使用
+  `\documentclass[pdflatex,sn-basic]{sn-jnl}`；
+- 已生成 `docs/paper/sqj_references.bib`；
+- SQJ source draft 当前包含 Introduction、Background and Related Work、
+  Evidence Visibility Protocol、Candidate Patch and Evidence Packet
+  Construction、Multi-Model Study、Results、Software Quality Risks、Threats to
+  Validity、Artifact and Reproducibility、Conclusion，以及 Data availability、
+  Code availability、Competing interests、Author contributions 和 Funding。
+
+Verify:
+
+- `python -m py_compile scripts\write_sqj_latex_draft.py` 通过；
+- `python scripts\write_sqj_latex_draft.py --check` 通过，输出
+  `api_call_attempted=false`、`compile_attempted=false`、`passed=true`；
+- targeted `rg` 检查确认 `sn-jnl`、abstract、keywords、bounded claim、
+  backmatter 和 bibliography 存在，且没有正向 LLM superiority 或 E6 strict
+  superiority claim；
+- 本轮未调用 API，未读取 raw model responses，未生成 PDF。

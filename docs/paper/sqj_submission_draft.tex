@@ -1,0 +1,242 @@
+\documentclass[pdflatex,sn-basic]{sn-jnl}
+
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{xspace}
+
+\jyear{2026}
+
+\title[Evidence Visibility in LLM-Based Patch Verification]{Evidence Visibility in LLM-Based Patch Verification: A Software Quality Perspective}
+
+\author*[1]{\fnm{Anonymous} \sur{Author}}\email{anonymous@example.com}
+\affil*[1]{\orgdiv{Anonymous Department}, \orgname{Anonymous Institution}, \country{Anonymous}}
+
+\abstract{
+Large language models are increasingly used to judge candidate software
+patches, yet a verifier decision depends on the evidence that is visible at
+review time. This paper studies evidence visibility as a software quality
+variable in LLM-based patch verification. We construct a hidden-evaluator
+workflow in which candidate patches are reviewed under frozen evidence packets
+and evaluator labels are joined only after the model decision. On a frozen
+EVP-8 packet set covering 98 candidate patches and seven evidence levels, five
+LLMs each produced 686 parse-valid merge-gate decisions. The resulting decision
+patterns show that evidence visibility changes verifier behavior, but not as a
+simple monotonic curve: DeepSeek V4 Pro and Qwen3.7 Max show substantial
+level-specific variation, Kimi K2.6 and Gemini 2.5 Flash show smaller local
+differences, and Devstral 2 saturates to escalation. The aggregate decision
+totals were also non-monotonic across E0-E6. We further report cost
+observability and blocked-run accounting, separating valid model results from
+execution-risk evidence. The study supports descriptive claims about
+evidence-conditioned verifier behavior, not claims that LLM verifiers
+outperform deterministic baselines or that any evidence level is generally
+optimal.
+}
+
+\keywords{large language models, patch verification, software quality, evidence visibility, empirical software engineering, software reliability}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Candidate patches for real software tasks can appear plausible while still
+being partial, irrelevant, or unsafe to merge. This makes patch verification a
+software quality problem rather than only a patch-generation problem. A merge
+gate must decide whether to accept, reject, or escalate a patch under the
+evidence available at the time of review.
+
+Large language models (LLMs) are attractive as patch reviewers because they can
+read code, summarize changes, and produce explanations. However, the same
+model can make different decisions when the visible evidence changes. If a
+study does not control what the model sees, it becomes difficult to separate
+model capability from evidence presentation.
+
+Evidence visibility is a first-order experimental variable
+in LLM-based patch verification. We ask how verifier decisions change when the
+same candidate patches are reviewed under a frozen sequence of evidence
+levels. The study is framed for software quality: the question is not which
+model wins a leaderboard, but whether LLM-based merge gates behave reliably
+when evidence is structured, withheld, or augmented.
+
+We report an EVP-8 multi-model study over 98 candidate patches, seven evidence
+levels, and five LLMs. Each model produced 686 parse-valid decisions on the
+same frozen packet set. The observed patterns are model-dependent and
+non-monotonic, which means that more evidence did not translate into a simple
+monotone decision curve. This is the main finding and the main boundary of the
+paper.
+
+\section{Background and Related Work}
+
+Real-bug benchmarks such as Defects4J and BugsInPy support controlled testing
+and repair studies by providing reproducible failures and fixes
+\cite{just2014defects4j,widyasari2020bugsinpy}. Generate-and-validate repair
+research has also shown that plausible patches can pass available tests while
+remaining semantically wrong \cite{qi2015patchcorrectness}. Recent LLM-based
+repair and agentic software-engineering work expands the set of systems that
+can produce or evaluate patches \cite{xia2023llmapr,jimenez2024swebench}.
+
+This study focuses on a different but adjacent problem. Given a candidate
+patch, a verifier must decide whether the evidence supports accepting it. The
+contribution is therefore not another patch-generation benchmark. It is a
+controlled examination of how model-visible evidence affects merge-gate
+decisions.
+
+\section{Evidence Visibility Protocol}
+
+The experimental unit is a candidate patch reviewed under a stated evidence
+packet. Model-visible packets contain task and patch information plus a
+predefined evidence level. Evaluator-only labels, construction notes, oracle
+results, and correctness labels are withheld from the model and joined only
+after the decision.
+
+The EVP-8 protocol defines seven model-visible evidence levels, E0 through E6,
+for the same frozen 98-candidate set. The levels are designed as a full ladder
+for protocol validation and multi-model decision-pattern analysis. The protocol
+does not expose evaluator-only labels, and the tracked summaries avoid raw
+model-response text.
+
+Each verifier returns one merge-gate decision: accept, reject, or escalate. In
+the observed EVP-8 runs, the selected models did not emit accept decisions on
+this packet set; the measured behavior is therefore an escalation/rejection
+pattern. This is still informative for reliability because over-escalation and
+model saturation are deployment risks for a verifier.
+
+\section{Candidate Patch and Evidence Packet Construction}
+
+The EVP-8 candidate set is derived from the project's tracked real-bug
+candidate-patch pipeline. The frozen v0.1 packet set contains 98 candidate
+patches and seven evidence levels, for 686 planned review records per model.
+The source pipeline keeps model-visible evidence separate from evaluator-side
+correctness labels and oracle outcomes.
+
+The earlier EVP-7 four-anchor pilot remains part of the motivation and
+artifact history. It established the candidate-patch verification workflow and
+bounded claim discipline. The SQJ-facing result in this draft, however, is the
+EVP-8 five-model full-ladder decision-pattern study.
+
+\section{Multi-Model Study}
+
+We evaluated five fixed model identifiers on the same frozen EVP-8 v0.1 packet
+set: DeepSeek V4 Pro, Qwen3.7 Max, Kimi K2.6, Devstral 2, and Gemini 2.5
+Flash. Each model was run under the same prompt version, output schema, parser
+boundary, and evidence packet set. Later-model runs through OpenRouter pinned
+the requested model identifier and recorded actual provider and model metadata.
+
+The synthesis passed only after all selected model summaries were present and
+raw-output-free audits passed. The resulting synthesis supports descriptive
+per-level decision-pattern reporting for the frozen EVP-8 packet set. It does
+not support claims of LLM superiority over deterministic baselines, final
+evidence-level effectiveness, or broad scale generalization.
+
+\section{Results}
+
+Evidence visibility changed verifier behavior across the five-model set. The
+aggregate per-level totals were: E0: 435 escalate / 55 reject; E1: 416 escalate / 74 reject; E2: 423 escalate / 67 reject; E3: 452 escalate / 38 reject; E4: 446 escalate / 44 reject; E5: 443 escalate / 47 reject; E6: 471 escalate / 19 reject. These totals show a
+non-monotonic pattern rather than a simple improvement from E0 to E6.
+
+DeepSeek V4 Pro and Qwen3.7 Max showed the clearest level-specific variation.
+For example, DeepSeek produced 66 escalations and 32 rejections at E0, 58
+escalations and 40 rejections at E1, and 86 escalations and 12 rejections at
+E6. Qwen similarly shifted from 75 escalations and 23 rejections at E0 to 91
+escalations and 7 rejections at E6. These patterns indicate evidence
+sensitivity, but not a strictly monotone effectiveness ranking.
+
+The later models behaved differently. Kimi K2.6 mostly escalated, with local
+rejection differences at E1, E2, and E4. Gemini 2.5 Flash also mostly
+escalated, with only three total rejections across the full run. Devstral 2
+escalated on all 686 records. This saturation is a software-quality result:
+a verifier that escalates everything may be safe in the narrow sense of not
+accepting questionable patches, but it provides little automation value as a
+merge gate.
+
+\input{generated_tables.tex}
+
+\section{Software Quality Risks}
+
+The results expose three risks for LLM-based patch verification. First, model
+decisions are conditioned by evidence presentation, so studies that compare
+models without controlling evidence visibility may confound model behavior with
+prompt context. Second, verifier behavior is model-dependent. A protocol that
+induces useful variation in one model can produce near-total escalation in
+another. Third, more evidence does not automatically imply a better verifier
+decision. The observed E0-E6 patterns require calibrated interpretation rather
+than a single ranked evidence level.
+
+Cost observability is also part of software quality for LLM verifier pipelines.
+The passed-result cost was USD 2.892118 excluding Qwen, with Qwen
+tracked separately as CNY 41.119548. Two blocked Kimi attempts consumed
+USD 7.276121, which raised the observable USD total excluding Qwen to
+USD 10.168239. The later-model observable USD including blocked
+attempts was USD 9.379430. These blocked attempts are cost and
+execution-risk evidence only; they are not valid model-result records.
+
+\section{Threats to Validity}
+
+The main internal-validity risk is that the evidence ladder may interact with
+the prompt, output schema, or model-specific response style. We address this by
+using a frozen packet set, one prompt version, raw-output-free summaries, and
+post-run audits, but the result remains tied to this protocol version.
+
+Construct validity is limited by the merge-gate decision space. Accept,
+reject, and escalate are useful for verifier studies, but they do not capture
+all forms of developer review. In this run, no model emitted accept decisions,
+so the EVP-8 result primarily characterizes escalation and rejection behavior.
+
+External validity is bounded by the 98-candidate EVP-8 v0.1 set and by the
+five selected models. The result should be read as evidence that visibility
+matters and that models differ, not as a universal ranking of evidence levels
+or models.
+
+\section{Artifact and Reproducibility}
+
+The tracked artifacts include the frozen EVP-8 protocol summaries, five-model
+synthesis, generated paper tables, and cost accounting summaries. Raw model
+responses remain outside the tracked artifact boundary. The current draft is
+generated from docs/paper/sqj_submission_framing.md, docs/paper/generated_tables.tex,
+data/protocols/evp8_five_model_synthesis_v0_1.json,
+and data/reviews/evp8_cost_accounting_summary.json.
+
+\section{Conclusion}
+
+This study shows that evidence visibility is a first-order variable in
+LLM-based patch verification. Across five models and seven evidence levels,
+merge-gate decisions changed with evidence exposure, but the response was
+model-dependent and non-monotonic. The result supports a software quality view
+of LLM verifiers: a verifier must be evaluated together with the evidence it
+sees, the boundaries of hidden evaluator labels, and the cost and execution
+risks of the evaluation pipeline.
+
+\backmatter
+
+\bmhead{Data availability}
+
+The submission draft is generated from tracked raw-output-free summaries and
+paper tables in the project repository. Raw model responses, local API
+configuration, and ignored execution logs are excluded from the tracked
+artifact boundary.
+
+\bmhead{Code availability}
+
+The draft-generation command is \verb|python scripts\write_sqj_latex_draft.py --check|.
+The resulting source file is \verb|docs/paper/sqj_submission_draft.tex|.
+
+\bmhead{Competing interests}
+
+The authors declare no competing interests. This statement must be confirmed
+before submission.
+
+\bmhead{Author contributions}
+
+Author contribution statements are placeholders in this draft and must be
+completed before submission.
+
+\bmhead{Funding}
+
+Funding information is not specified in this draft and must be completed before
+submission.
+
+\bibliography{sqj_references}
+
+\end{document}

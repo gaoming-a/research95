@@ -455,6 +455,12 @@
   claim-boundary packet. It fixes the target venue route, non-OA cost boundary,
   Springer `sn-jnl` next-format requirement, working title, RQs, allowed and
   forbidden claims, result-to-artifact mapping, and school-recognition gate.
+- `paper/sqj_submission_draft.tex`: first generated Springer Nature `sn-jnl`
+  SQJ source draft. It is generated from the SQJ framing packet, EVP-8
+  five-model synthesis, cost accounting, and generated paper tables. It has not
+  been locally compiled because `sn-jnl.cls` is not bundled in the current
+  MiKTeX environment.
+- `paper/sqj_references.bib`: BibTeX file for the generated SQJ source draft.
 - `paper/ieee_submission_draft.tex`: historical/source anonymous IEEEtran
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
@@ -921,6 +927,11 @@
   paper-facing 20/94/376 real LLM review.
   The old `docs/paper/ieee_preapi_draft.tex` is retained only as historical
   pre-API context.
+- `scripts/write_sqj_latex_draft.py`: generates the first SQJ Springer Nature
+  `sn-jnl` source draft and `sqj_references.bib` from the SQJ framing packet,
+  EVP-8 five-model synthesis, cost accounting, and generated paper tables. Its
+  `--check` gate validates source structure only and does not compile PDF
+  because the current local MiKTeX environment lacks `sn-jnl.cls`.
 - `scripts/generate_paper_figures.py`: generates the publication figure set
   under `docs/figures/` in PDF, SVG, and PNG formats. Figures cover the
   workflow, compact E0/E2/E4/E6 evidence boundary, dataset composition,

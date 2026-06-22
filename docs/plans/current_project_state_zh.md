@@ -144,7 +144,10 @@
   Springer Nature `sn-jnl` LaTeX draft，并补齐 data availability、competing
   interests、author contribution、funding/acknowledgement 等 submission
   elements。SQJ framing and claim-boundary packet 已写入
-  `docs/paper/sqj_submission_framing.md`。
+  `docs/paper/sqj_submission_framing.md`。首个 generated source draft 已写入
+  `docs/paper/sqj_submission_draft.tex`，参考文献文件为
+  `docs/paper/sqj_references.bib`；本地 MiKTeX 缺少 `sn-jnl.cls`，因此当前只做
+  source-structure gate，不做 PDF compile gate。
 - 当前 known non-blocker：
   - old prompt-only evidence-first gate remains `stop_or_redesign`；
   - this blocks prompt-only positive claims, not the current bounded EVP-7 claim。
@@ -491,6 +494,10 @@
 - `docs/paper/sqj_submission_framing.md`：
   SQJ no-API submission framing and claim-boundary packet；当前 `sn-jnl`
   草稿应从这里和 Markdown draft 读取论文逻辑。
+- `docs/paper/sqj_submission_draft.tex`：
+  first generated Springer Nature `sn-jnl` SQJ source draft；当前未本地编译。
+- `docs/paper/sqj_references.bib`：
+  generated BibTeX references for the SQJ source draft。
 - `docs/paper/ieee_submission_draft.tex`：
   historical/source IEEEtran draft；当前包含 `Workload at a Glance` 章节和
   `tab:evp7-workload-ledger`，但 SQJ 路线下不再作为下一投稿主格式。
@@ -527,6 +534,10 @@
 - `scripts/write_ieee_latex_draft.py`：
   IEEEtran historical/source draft generator；SQJ 路线下不再作为下一投稿主格式，
   只作为内容来源和回归检查。
+- `scripts/write_sqj_latex_draft.py`：
+  SQJ Springer Nature `sn-jnl` source draft generator；`--check` 生成
+  `docs/paper/sqj_submission_draft.tex` 和 `docs/paper/sqj_references.bib`，
+  并验证 source structure，不调用 API、不编译 PDF。
 - `scripts/generate_paper_figures.py`：
   reproducible figure generation。
 - `scripts/prepare_anonymous_artifact.py`：

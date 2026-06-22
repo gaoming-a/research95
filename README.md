@@ -112,7 +112,11 @@ recognition confirmation, use the non-OA subscription route unless APC is
 explicitly approved, and convert the next main draft to Springer Nature
 `sn-jnl` LaTeX rather than continuing IEEEtran as the submission format. The
 SQJ framing and claim boundary packet is
-`docs/paper/sqj_submission_framing.md`.
+`docs/paper/sqj_submission_framing.md`. The first generated Springer source
+draft is `docs/paper/sqj_submission_draft.tex`, produced by
+`scripts/write_sqj_latex_draft.py`; local PDF compilation is intentionally not
+part of the current gate because `sn-jnl.cls` is not bundled in this MiKTeX
+environment.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently
