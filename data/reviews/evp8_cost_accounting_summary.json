@@ -1,0 +1,248 @@
+{
+  "api_call_attempted": false,
+  "audit_id": "evp8_cost_accounting_summary_v0_1",
+  "blocked_attempt_costs": [
+    {
+      "actual_model_id_counts": {
+        "missing": 1,
+        "moonshotai/kimi-k2.6-20260420": 685
+      },
+      "actual_provider_counts": {
+        "Chutes": 124,
+        "Decart": 442,
+        "Io Net": 119,
+        "missing": 1
+      },
+      "configured_model_id": "moonshotai/kimi-k2.6",
+      "cost_cny": 0,
+      "cost_observability_counts": {
+        "missing_usage": 1,
+        "provider_reported_cost": 685
+      },
+      "cost_usd": 6.22229709,
+      "decision_counts": {
+        "None": 79,
+        "escalate": 542,
+        "reject": 65
+      },
+      "invalid_parse_count": 79,
+      "later_model_full_gate": "blocked",
+      "parse_valid_count": 607,
+      "path": "outputs/evp8_phase2_later_models_full/moonshotai_kimi-k2.6/blocked_attempt_20260622_default_reasoning/evp8_moonshotai_kimi-k2.6_full_summary.blocked_default_reasoning.json",
+      "review_count": 686,
+      "run_gate": "blocked",
+      "status": "blocked_attempt",
+      "unknown_cost_record_count": 1
+    },
+    {
+      "actual_model_id_counts": {
+        "missing": 4,
+        "moonshotai/kimi-k2.6-20260420": 682
+      },
+      "actual_provider_counts": {
+        "Chutes": 448,
+        "Io Net": 234,
+        "missing": 4
+      },
+      "configured_model_id": "moonshotai/kimi-k2.6",
+      "cost_cny": 0,
+      "cost_observability_counts": {
+        "missing_usage": 4,
+        "provider_reported_cost": 682
+      },
+      "cost_usd": 1.05382344,
+      "decision_counts": {
+        "None": 4,
+        "escalate": 667,
+        "reject": 15
+      },
+      "invalid_parse_count": 4,
+      "later_model_full_gate": "blocked",
+      "parse_valid_count": 682,
+      "path": "outputs/evp8_phase2_later_models_full/moonshotai_kimi-k2.6/blocked_attempt_20260622_reasoning_disabled_top_level_429/evp8_moonshotai_kimi-k2.6_full_summary.blocked_reasoning_disabled_top_level_429.json",
+      "review_count": 686,
+      "run_gate": "blocked",
+      "status": "blocked_attempt",
+      "unknown_cost_record_count": 4
+    }
+  ],
+  "boundary": "This no-API cost accounting summary reads tracked raw-output-free passed summaries and ignored raw-output-free blocked-attempt summaries. It does not read raw model responses or prompt text.",
+  "checks": [
+    {
+      "check": "no_api_call_attempted",
+      "passed": true
+    },
+    {
+      "check": "passed_summary_count",
+      "expected": 5,
+      "observed": 5,
+      "passed": true
+    },
+    {
+      "check": "blocked_attempt_count_observed",
+      "observed": 2,
+      "passed": true
+    },
+    {
+      "ceiling": 30.0,
+      "check": "later_observable_usd_within_planning_ceiling",
+      "observed": 9.37942977,
+      "passed": true
+    },
+    {
+      "check": "blocked_attempt_cost_requires_freeze",
+      "observed": 7.27612053,
+      "passed": true
+    }
+  ],
+  "claim_boundary": "Blocked attempts are cost/engineering-risk evidence only. They are not valid model-result records and must not be included in five-model decision-pattern synthesis.",
+  "cost_status": "passed_results_complete_with_blocked_attempt_cost_overrun",
+  "decision": {
+    "api_freeze": true,
+    "next_step": "Do not run more model APIs; proceed to paper tables, figures, claim-boundary audit, and artifact freeze."
+  },
+  "ignored_blocked_summaries_read": [
+    "outputs/evp8_phase2_later_models_full/moonshotai_kimi-k2.6/blocked_attempt_20260622_default_reasoning/evp8_moonshotai_kimi-k2.6_full_summary.blocked_default_reasoning.json",
+    "outputs/evp8_phase2_later_models_full/moonshotai_kimi-k2.6/blocked_attempt_20260622_reasoning_disabled_top_level_429/evp8_moonshotai_kimi-k2.6_full_summary.blocked_reasoning_disabled_top_level_429.json"
+  ],
+  "later_model_planning_ceiling_usd": 30.0,
+  "model_response_body_read": false,
+  "passed": true,
+  "passed_result_costs": [
+    {
+      "actual_model_id_counts": {
+        "deepseek-v4-pro": 686
+      },
+      "actual_provider_counts": {},
+      "configured_model_id": "deepseek/deepseek-v4-pro",
+      "cost_cny": 0,
+      "cost_observability_counts": {
+        "estimated_from_provider_token_usage": 686
+      },
+      "cost_usd": 0.788808816,
+      "decision_counts": {
+        "escalate": 501,
+        "reject": 185
+      },
+      "invalid_parse_count": 0,
+      "later_model_full_gate": null,
+      "parse_valid_count": 686,
+      "path": "data/reviews/evp8_deepseek_deepseek-v4-pro_full_summary.json",
+      "review_count": 686,
+      "run_gate": "passed",
+      "status": "passed_result",
+      "unknown_cost_record_count": 0
+    },
+    {
+      "actual_model_id_counts": {
+        "qwen3.7-max": 686
+      },
+      "actual_provider_counts": {},
+      "configured_model_id": "qwen/qwen3.7-max",
+      "cost_cny": 41.119548,
+      "cost_observability_counts": {
+        "estimated_from_provider_token_usage_and_official_cny_pricing": 686
+      },
+      "cost_usd": 0,
+      "decision_counts": {
+        "escalate": 544,
+        "reject": 142
+      },
+      "invalid_parse_count": 0,
+      "later_model_full_gate": null,
+      "parse_valid_count": 686,
+      "path": "data/reviews/evp8_qwen_qwen3.7-max_full_summary.json",
+      "review_count": 686,
+      "run_gate": "passed",
+      "status": "passed_result",
+      "unknown_cost_record_count": 0
+    },
+    {
+      "actual_model_id_counts": {
+        "moonshotai/kimi-k2.6-20260420": 686
+      },
+      "actual_provider_counts": {
+        "Chutes": 686
+      },
+      "configured_model_id": "moonshotai/kimi-k2.6",
+      "cost_cny": 0,
+      "cost_observability_counts": {
+        "provider_reported_cost": 686
+      },
+      "cost_usd": 1.02450976,
+      "decision_counts": {
+        "escalate": 672,
+        "reject": 14
+      },
+      "invalid_parse_count": 0,
+      "later_model_full_gate": "passed",
+      "parse_valid_count": 686,
+      "path": "data/reviews/evp8_moonshotai_kimi-k2.6_full_summary.json",
+      "review_count": 686,
+      "run_gate": "passed",
+      "status": "passed_result",
+      "unknown_cost_record_count": 0
+    },
+    {
+      "actual_model_id_counts": {
+        "mistralai/devstral-2512": 686
+      },
+      "actual_provider_counts": {
+        "Mistral": 686
+      },
+      "configured_model_id": "mistralai/devstral-2512",
+      "cost_cny": 0,
+      "cost_observability_counts": {
+        "provider_reported_cost": 686
+      },
+      "cost_usd": 0.44937088,
+      "decision_counts": {
+        "escalate": 686
+      },
+      "invalid_parse_count": 0,
+      "later_model_full_gate": "passed",
+      "parse_valid_count": 686,
+      "path": "data/reviews/evp8_mistralai_devstral-2512_full_summary.json",
+      "review_count": 686,
+      "run_gate": "passed",
+      "status": "passed_result",
+      "unknown_cost_record_count": 0
+    },
+    {
+      "actual_model_id_counts": {
+        "google/gemini-2.5-flash": 686
+      },
+      "actual_provider_counts": {
+        "Google": 686
+      },
+      "configured_model_id": "google/gemini-2.5-flash",
+      "cost_cny": 0,
+      "cost_observability_counts": {
+        "provider_reported_cost": 686
+      },
+      "cost_usd": 0.6294286,
+      "decision_counts": {
+        "escalate": 683,
+        "reject": 3
+      },
+      "invalid_parse_count": 0,
+      "later_model_full_gate": "passed",
+      "parse_valid_count": 686,
+      "path": "data/reviews/evp8_google_gemini-2.5-flash_full_summary.json",
+      "review_count": 686,
+      "run_gate": "passed",
+      "status": "passed_result",
+      "unknown_cost_record_count": 0
+    }
+  ],
+  "raw_outputs_read": false,
+  "rendered_prompt_body_read": false,
+  "totals": {
+    "blocked_attempt_usd": 7.27612053,
+    "later_model_observable_usd_including_blocked": 9.37942977,
+    "later_model_passed_result_usd": 2.1033092399999997,
+    "passed_qwen_cny": 41.119548,
+    "passed_result_usd_excluding_qwen": 2.892118056,
+    "tracked_plus_blocked_observable_usd_excluding_qwen": 10.168238586000001
+  }
+}

@@ -101,7 +101,11 @@ actual model/provider metadata. The later-model audit and five-model synthesis
 are now `passed` for the frozen EVP-8 v0.1 packet set. This permits
 descriptive five-model per-level decision-pattern reporting, but it still does
 not prove LLM superiority over deterministic baselines or final
-evidence-level effectiveness.
+evidence-level effectiveness. The cost overrun is now separately tracked at
+`data/reviews/evp8_cost_accounting_summary.json`: passed-result USD excluding
+Qwen is `2.892118056`, passed Qwen cost is CNY `41.119548`, and blocked Kimi
+attempts add USD `7.27612053`. API execution is frozen; the next EVP-8 work is
+paper tables, figures, claim-boundary audit, and artifact freeze.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently
@@ -174,8 +178,9 @@ They should not override `final_paper_roadmap_zh.md`.
   synthesis scaffolds have passed without API calls. Kimi, Devstral, and
   Gemini have since passed their later-model full runs, and the tracked
   five-model synthesis is now passed for descriptive per-level decision
-  patterns on the frozen EVP-8 packet set. The next EVP-8 gate is paper/table/
-  artifact freeze, not another model run.
+  patterns on the frozen EVP-8 packet set. The cost accounting summary now
+  records the Kimi blocked-attempt overrun and sets `api_freeze=true`. The next
+  EVP-8 gate is paper/table/artifact freeze, not another model run.
 - The prompt-only DeepSeek full run completed and produced a mixed/negative
   `stop_or_redesign` result. It is not a positive paper claim.
 - The later tool-augmented full run passed its dedicated gate, but only supports

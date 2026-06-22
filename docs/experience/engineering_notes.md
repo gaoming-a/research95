@@ -3193,3 +3193,22 @@ This file starts fresh for the patch-verification project.
 - Keep raw response files, stdout/stderr logs, `.env`, and local OpenRouter
   config ignored. Only the raw-output-free Gemini summary and regenerated
   audit/synthesis artifacts belong in Git.
+
+## 2026-06-22 EVP-8 cost overrun and API freeze
+
+- Separate valid-result cost from actual consumed cost. The five passed EVP-8
+  summaries cost USD `2.892118056` excluding Qwen, with Qwen tracked separately
+  as CNY `41.119548`; the two ignored Kimi blocked attempts added USD
+  `7.27612053` but are not valid model-result records.
+- The main overrun cause was not the final five-model result. It was the Kimi
+  blocked-attempt sequence: first a default-reasoning full run with 79 invalid
+  JSON outputs, then a reasoning-disabled run polluted by top-level OpenRouter
+  429 error records before the client retry repair.
+- Future expensive models need a stricter staged rule: model-specific routing
+  controls and provider-error classification must be smoke-tested before a
+  686-record full run, especially when a provider reports default reasoning or
+  nonstandard response metadata.
+- After the cost accounting summary is generated, freeze all model API calls
+  for EVP-8. Continue only no-API paper tables, figures, claim-boundary audit,
+  and artifact packaging until the user explicitly approves a new budgeted
+  experiment.

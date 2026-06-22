@@ -13,6 +13,7 @@ BASELINE_LABELS = {
 }
 
 EVIDENCE_LEVELS = ("E0", "E2", "E4", "E6")
+EVP8_EVIDENCE_LEVELS = ("E0", "E1", "E2", "E3", "E4", "E5", "E6")
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -96,6 +97,8 @@ def build_markdown(
     evp7_statistics: dict[str, Any],
     evp7_utility: dict[str, Any],
     evp7_tool_attribution: dict[str, Any],
+    evp8_synthesis: dict[str, Any],
+    evp8_cost_accounting: dict[str, Any],
 ) -> str:
     lines = [
         "# Paper Tables",
@@ -160,6 +163,8 @@ def build_markdown(
     lines.extend(evp7_statistics_markdown(evp7_statistics))
     lines.extend(evp7_utility_markdown(evp7_utility))
     lines.extend(evp7_tool_attribution_markdown(evp7_tool_attribution))
+    lines.extend(evp8_five_model_markdown(evp8_synthesis))
+    lines.extend(evp8_cost_accounting_markdown(evp8_cost_accounting))
     lines.extend(
         [
             "",
@@ -204,6 +209,8 @@ def build_latex(
     evp7_statistics: dict[str, Any],
     evp7_utility: dict[str, Any],
     evp7_tool_attribution: dict[str, Any],
+    evp8_synthesis: dict[str, Any],
+    evp8_cost_accounting: dict[str, Any],
 ) -> str:
     parts = [
         "% Generated paper tables. Requires booktabs.",
@@ -260,6 +267,8 @@ def build_latex(
         evp7_statistics_latex_table(evp7_statistics),
         evp7_utility_latex_table(evp7_utility),
         evp7_tool_attribution_latex_table(evp7_tool_attribution),
+        evp8_five_model_latex_table(evp8_synthesis),
+        evp8_cost_accounting_latex_table(evp8_cost_accounting),
         evp7_claim_boundary_latex_table(evp7_quality),
     ]
     return "\n\n".join(parts)
@@ -631,6 +640,132 @@ def evp7_claim_boundary_latex_table(quality: dict[str, Any]) -> str:
     )
 
 
+def decision_cell(counts: dict[str, Any]) -> str:
+    if not isinstance(counts, dict) or not counts:
+        return "--"
+    ordered = []
+    for key, label in (("accept", "A"), ("escalate", "E"), ("reject", "R")):
+        value = int(counts.get(key, 0) or 0)
+        if value:
+            ordered.append(f"{label}{value}")
+    return "/".join(ordered) if ordered else "--"
+
+
+def evp8_five_model_markdown(synthesis: dict[str, Any]) -> list[str]:
+    counts_by_level = synthesis.get("per_level_decision_counts_by_model", {})
+    models = synthesis.get("expected_model_ids", [])
+    lines = [
+        "",
+        "## EVP-8 Five-Model Decision Patterns",
+        "",
+        f"- synthesis status: `{synthesis.get('synthesis_status')}`",
+        f"- protocol: `{synthesis.get('protocol_id')}`",
+        f"- candidate set: `{synthesis.get('candidate_set_id')}`",
+        f"- allowed claim: {synthesis.get('allowed_claim')}",
+        f"- forbidden claim: {synthesis.get('forbidden_claim')}",
+        "",
+        "| model | " + " | ".join(EVP8_EVIDENCE_LEVELS) + " |",
+        "|---|" + "---:|" * len(EVP8_EVIDENCE_LEVELS),
+    ]
+    for model in models:
+        cells = []
+        for level in EVP8_EVIDENCE_LEVELS:
+            level_counts = counts_by_level.get(level, {})
+            cells.append(decision_cell(level_counts.get(model, {})))
+        lines.append(f"| `{model}` | " + " | ".join(cells) + " |")
+    lines.append("")
+    return lines
+
+
+def evp8_five_model_latex_table(synthesis: dict[str, Any]) -> str:
+    counts_by_level = synthesis.get("per_level_decision_counts_by_model", {})
+    models = synthesis.get("expected_model_ids", [])
+    rows = []
+    for model in models:
+        cells = [escape_latex(str(model))]
+        for level in EVP8_EVIDENCE_LEVELS:
+            level_counts = counts_by_level.get(level, {})
+            cells.append(escape_latex(decision_cell(level_counts.get(model, {}))))
+        rows.append(" & ".join(cells) + r" \\")
+    return (
+        "\\begin{table*}[t]\n"
+        "\\centering\n"
+        "\\scriptsize\n"
+        "\\caption{EVP-8 five-model decision patterns on the frozen v0.1 98-candidate by 7-level packet set. Cells report A/E/R counts for accept, escalate, and reject.}\n"
+        "\\label{tab:evp8-five-model-patterns}\n"
+        "\\begin{tabular}{lccccccc}\n"
+        "\\toprule\n"
+        "Model & E0 & E1 & E2 & E3 & E4 & E5 & E6 \\\\\n"
+        "\\midrule\n"
+        + "\n".join(rows)
+        + "\n\\bottomrule\n"
+        "\\end{tabular}\n"
+        "\\end{table*}\n"
+    )
+
+
+def evp8_cost_accounting_markdown(costs: dict[str, Any]) -> list[str]:
+    totals = costs.get("totals", {})
+    lines = [
+        "",
+        "## EVP-8 Cost Accounting",
+        "",
+        f"- status: `{costs.get('cost_status')}`",
+        f"- API freeze: `{str(costs.get('decision', {}).get('api_freeze')).lower()}`",
+        f"- passed-result USD excluding Qwen: `{fmt(totals.get('passed_result_usd_excluding_qwen'))}`",
+        f"- passed Qwen CNY: `{fmt(totals.get('passed_qwen_cny'))}`",
+        f"- blocked-attempt USD: `{fmt(totals.get('blocked_attempt_usd'))}`",
+        f"- observable USD including blocked attempts, excluding Qwen: `{fmt(totals.get('tracked_plus_blocked_observable_usd_excluding_qwen'))}`",
+        "",
+        "| category | model | reviews | valid | invalid | USD | CNY |",
+        "|---|---|---:|---:|---:|---:|---:|",
+    ]
+    for row in costs.get("passed_result_costs", []):
+        lines.append(
+            f"| passed | `{row.get('configured_model_id')}` | {row.get('review_count')} | "
+            f"{row.get('parse_valid_count')} | {row.get('invalid_parse_count')} | "
+            f"{fmt(row.get('cost_usd'))} | {fmt(row.get('cost_cny'))} |"
+        )
+    for row in costs.get("blocked_attempt_costs", []):
+        lines.append(
+            f"| blocked | `{row.get('configured_model_id')}` | {row.get('review_count')} | "
+            f"{row.get('parse_valid_count')} | {row.get('invalid_parse_count')} | "
+            f"{fmt(row.get('cost_usd'))} | {fmt(row.get('cost_cny'))} |"
+        )
+    lines.extend(["", f"- boundary: {costs.get('claim_boundary')}", ""])
+    return lines
+
+
+def evp8_cost_accounting_latex_table(costs: dict[str, Any]) -> str:
+    rows = []
+    for category, key in (("passed", "passed_result_costs"), ("blocked", "blocked_attempt_costs")):
+        for row in costs.get(key, []):
+            values = [
+                escape_latex(category),
+                escape_latex(str(row.get("configured_model_id"))),
+                str(row.get("review_count")),
+                str(row.get("parse_valid_count")),
+                str(row.get("invalid_parse_count")),
+                fmt_latex(row.get("cost_usd")),
+                fmt_latex(row.get("cost_cny")),
+            ]
+            rows.append(" & ".join(values) + r" \\")
+    return (
+        "\\begin{table*}[t]\n"
+        "\\centering\n"
+        "\\caption{EVP-8 cost accounting. Blocked attempts are cost and execution-risk evidence only; they are not included as valid model-result records.}\n"
+        "\\label{tab:evp8-cost-accounting}\n"
+        "\\begin{tabular}{llrrrrr}\n"
+        "\\toprule\n"
+        "Category & Model & Reviews & Valid & Invalid & USD & CNY \\\\\n"
+        "\\midrule\n"
+        + "\n".join(rows)
+        + "\n\\bottomrule\n"
+        "\\end{tabular}\n"
+        "\\end{table*}\n"
+    )
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate paper-ready tables from current tracked outputs.")
     parser.add_argument("--dataset-summary", default="outputs/patch_verification_pilot_001/dataset_summary.json")
@@ -647,6 +782,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--evp7-utility-sensitivity", default="data/reviews/evp7_g5_376_utility_sensitivity.json")
     parser.add_argument("--evp7-tool-attribution", default="data/reviews/evp7_g5_376_tool_attribution.json")
     parser.add_argument("--evp7-qualitative-cases", default="data/reviews/evp7_g5_376_qualitative_cases.json")
+    parser.add_argument("--evp8-five-model-synthesis", default="data/protocols/evp8_five_model_synthesis_v0_1.json")
+    parser.add_argument("--evp8-cost-accounting", default="data/reviews/evp8_cost_accounting_summary.json")
     parser.add_argument("--out-md", default="docs/paper/generated_tables.md")
     parser.add_argument("--out-tex", default="docs/paper/generated_tables.tex")
     return parser.parse_args()
@@ -668,6 +805,8 @@ def main() -> None:
     evp7_utility = read_json(Path(args.evp7_utility_sensitivity))
     evp7_tool_attribution = read_json(Path(args.evp7_tool_attribution))
     evp7_qualitative_cases = read_json(Path(args.evp7_qualitative_cases))
+    evp8_synthesis = read_json(Path(args.evp8_five_model_synthesis))
+    evp8_cost_accounting = read_json(Path(args.evp8_cost_accounting))
     evp7_workload = build_evp7_workload(
         evp7_task_summary,
         evp7_candidate_summary,
@@ -690,6 +829,8 @@ def main() -> None:
             evp7_statistics,
             evp7_utility,
             evp7_tool_attribution,
+            evp8_synthesis,
+            evp8_cost_accounting,
         ),
     )
     write_text(
@@ -705,6 +846,8 @@ def main() -> None:
             evp7_statistics,
             evp7_utility,
             evp7_tool_attribution,
+            evp8_synthesis,
+            evp8_cost_accounting,
         ),
     )
     print(json.dumps({"out_md": args.out_md, "out_tex": args.out_tex}, ensure_ascii=False, indent=2, sort_keys=True))

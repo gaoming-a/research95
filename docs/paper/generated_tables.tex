@@ -171,6 +171,45 @@ E6 & visible\_tool\_summary & 76/94 & 0 & 4/4 & 12/19 \\
 
 \begin{table*}[t]
 \centering
+\scriptsize
+\caption{EVP-8 five-model decision patterns on the frozen v0.1 98-candidate by 7-level packet set. Cells report A/E/R counts for accept, escalate, and reject.}
+\label{tab:evp8-five-model-patterns}
+\begin{tabular}{lccccccc}
+\toprule
+Model & E0 & E1 & E2 & E3 & E4 & E5 & E6 \\
+\midrule
+deepseek/deepseek-v4-pro & E66/R32 & E58/R40 & E65/R33 & E81/R17 & E74/R24 & E71/R27 & E86/R12 \\
+qwen/qwen3.7-max & E75/R23 & E70/R28 & E71/R27 & E79/R19 & E80/R18 & E78/R20 & E91/R7 \\
+moonshotai/kimi-k2.6 & E98 & E92/R6 & E91/R7 & E98 & E97/R1 & E98 & E98 \\
+mistralai/devstral-2512 & E98 & E98 & E98 & E98 & E98 & E98 & E98 \\
+google/gemini-2.5-flash & E98 & E98 & E98 & E96/R2 & E97/R1 & E98 & E98 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
+\begin{table*}[t]
+\centering
+\caption{EVP-8 cost accounting. Blocked attempts are cost and execution-risk evidence only; they are not included as valid model-result records.}
+\label{tab:evp8-cost-accounting}
+\begin{tabular}{llrrrrr}
+\toprule
+Category & Model & Reviews & Valid & Invalid & USD & CNY \\
+\midrule
+passed & deepseek/deepseek-v4-pro & 686 & 686 & 0 & 0.7888 & 0 \\
+passed & qwen/qwen3.7-max & 686 & 686 & 0 & 0 & 41.1195 \\
+passed & moonshotai/kimi-k2.6 & 686 & 686 & 0 & 1.0245 & 0 \\
+passed & mistralai/devstral-2512 & 686 & 686 & 0 & 0.4494 & 0 \\
+passed & google/gemini-2.5-flash & 686 & 686 & 0 & 0.6294 & 0 \\
+blocked & moonshotai/kimi-k2.6 & 686 & 607 & 79 & 6.2223 & 0 \\
+blocked & moonshotai/kimi-k2.6 & 686 & 682 & 4 & 1.0538 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
+\begin{table*}[t]
+\centering
 \caption{EVP-7 G5 claim boundary.}
 \label{tab:evp7-claim-boundary}
 \begin{tabular}{p{0.45\textwidth}p{0.45\textwidth}}

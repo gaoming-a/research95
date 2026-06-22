@@ -122,6 +122,45 @@ These tables are generated from current tracked artifacts. Raw model responses a
 | E4 | `tool_only_visible_tests` | 72/94 (0.7660) | 0 | 4/4 | 18/19 |
 | E6 | `tool_only_visible_tool_summary` | 76/94 (0.8085) | 0 | 4/4 | 12/19 |
 
+## EVP-8 Five-Model Decision Patterns
+
+- synthesis status: `passed`
+- protocol: `evp8_journal_full_ladder_v0_1`
+- candidate set: `evp8_smoke_from_evp7_structural_98_v0_1`
+- allowed claim: Only after status is passed, report descriptive five-model per-level decision patterns for the frozen EVP-8 v0.1 packet set.
+- forbidden claim: Do not report five-model journal conclusions, LLM superiority over deterministic baselines, or final evidence-level effectiveness while this scaffold is waiting or partial.
+
+| model | E0 | E1 | E2 | E3 | E4 | E5 | E6 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `deepseek/deepseek-v4-pro` | E66/R32 | E58/R40 | E65/R33 | E81/R17 | E74/R24 | E71/R27 | E86/R12 |
+| `qwen/qwen3.7-max` | E75/R23 | E70/R28 | E71/R27 | E79/R19 | E80/R18 | E78/R20 | E91/R7 |
+| `moonshotai/kimi-k2.6` | E98 | E92/R6 | E91/R7 | E98 | E97/R1 | E98 | E98 |
+| `mistralai/devstral-2512` | E98 | E98 | E98 | E98 | E98 | E98 | E98 |
+| `google/gemini-2.5-flash` | E98 | E98 | E98 | E96/R2 | E97/R1 | E98 | E98 |
+
+
+## EVP-8 Cost Accounting
+
+- status: `passed_results_complete_with_blocked_attempt_cost_overrun`
+- API freeze: `true`
+- passed-result USD excluding Qwen: `2.8921`
+- passed Qwen CNY: `41.1195`
+- blocked-attempt USD: `7.2761`
+- observable USD including blocked attempts, excluding Qwen: `10.1682`
+
+| category | model | reviews | valid | invalid | USD | CNY |
+|---|---|---:|---:|---:|---:|---:|
+| passed | `deepseek/deepseek-v4-pro` | 686 | 686 | 0 | 0.7888 | 0 |
+| passed | `qwen/qwen3.7-max` | 686 | 686 | 0 | 0 | 41.1195 |
+| passed | `moonshotai/kimi-k2.6` | 686 | 686 | 0 | 1.0245 | 0 |
+| passed | `mistralai/devstral-2512` | 686 | 686 | 0 | 0.4494 | 0 |
+| passed | `google/gemini-2.5-flash` | 686 | 686 | 0 | 0.6294 | 0 |
+| blocked | `moonshotai/kimi-k2.6` | 686 | 607 | 79 | 6.2223 | 0 |
+| blocked | `moonshotai/kimi-k2.6` | 686 | 682 | 4 | 1.0538 | 0 |
+
+- boundary: Blocked attempts are cost/engineering-risk evidence only. They are not valid model-result records and must not be included in five-model decision-pattern synthesis.
+
+
 ## EVP-7 Claim Boundary
 
 | supported claims | unsupported claims |

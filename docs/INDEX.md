@@ -44,7 +44,9 @@
   Gemini 2.5 Flash also pass on 686/686 records with complete
   cost/model/provider metadata. The later-model audit and five-model synthesis
   now pass for descriptive per-level decision-pattern reporting on the frozen
-  EVP-8 v0.1 packet set.
+  EVP-8 v0.1 packet set. The cost accounting summary records the Kimi
+  blocked-attempt overrun and freezes further API execution before paper/table/
+  artifact work.
 - `experiments/evp8_journal_scale_execution_plan_20260620.md`: no-API
   execution plan for the journal-scale EVP-8 route. It defines the planned
   E0-E6 full-ladder boundary, target five-model set, phased DeepSeek/Qwen first
@@ -319,6 +321,12 @@
   parse-valid outputs, actual-model/provider aggregates, provider-reported
   cost USD `0.6294286`, decision counts `escalate=683` and `reject=3`, and no
   raw model responses or prompt text.
+- `../data/reviews/evp8_cost_accounting_summary.json`: tracked no-API
+  raw-output-free cost accounting summary for EVP-8. It separates passed-result
+  costs from ignored Kimi blocked-attempt costs, records API freeze status, and
+  forbids treating blocked attempts as valid model-result records.
+- `experiments/evp8_cost_accounting_summary.md`: Markdown companion for the
+  EVP-8 cost accounting summary.
 - `../data/reviews/evp7_g5_376_utility_sensitivity.json`: tracked
   raw-output-free utility sensitivity analysis over false-accept, escalation,
   and false-reject penalty grids for the frozen EVP-7 G5 run.
@@ -433,10 +441,12 @@
 - `paper/generated_tables.md`: generated Markdown paper tables from current
   tracked outputs, including the EVP-7 workload ledger, G5 376-record real-LLM
   result, Wilson/bootstrap intervals, utility sensitivity, deterministic
-  tool-only attribution, and claim boundary.
+  tool-only attribution, claim boundary, EVP-8 five-model decision patterns,
+  and EVP-8 cost accounting.
 - `paper/generated_tables.tex`: generated LaTeX table snippets used by the
   current IEEE draft, including the EVP-7 workload ledger, G5 376-record
-  result, deterministic tool-only attribution, and claim-boundary snippets.
+  result, deterministic tool-only attribution, claim-boundary snippets,
+  EVP-8 five-model decision patterns, and EVP-8 cost accounting.
 - `paper/ieee_submission_draft.tex`: current anonymous IEEEtran submission
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
@@ -1202,6 +1212,10 @@
   synthesis with later-model audit status. It reports waiting/partial states
   before completion and now reports `passed` after all three later models pass
   audit.
+- `../scripts/summarize_evp8_cost_accounting.py`: no-API cost accounting
+  summary builder for EVP-8. It reads raw-output-free passed summaries and
+  ignored blocked-attempt summaries, writes tracked JSON/Markdown cost ledgers,
+  and sets the API-freeze boundary after the Kimi blocked-attempt overrun.
 - `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict

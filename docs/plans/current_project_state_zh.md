@@ -84,7 +84,10 @@
   当前 later-model audit 和 five-model synthesis 均为 `passed`；允许报告
   frozen EVP-8 v0.1 packet set 上的描述性五模型 per-level decision patterns，
   但仍不支持 LLM superiority over deterministic baseline 或最终
-  evidence-level effectiveness claim。
+  evidence-level effectiveness claim。成本审计已生成：
+  `data/reviews/evp8_cost_accounting_summary.json` 记录 passed-result USD
+  excluding Qwen = `2.892118056`、passed Qwen CNY = `41.119548`、ignored Kimi
+  blocked attempts USD = `7.27612053`，并设置 `api_freeze=true`。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。最近一次已确认
   `git push origin main` 成功；最终是否仍 ahead 仍以
@@ -119,6 +122,9 @@
     strict checks 和 full check-only 已通过；`OPENROUTER_API_KEY` presence
     已通过；G7.3 post-run audit/five-model synthesis 当前均为 `passed`；
     Kimi K2.6、Devstral 2 和 Gemini 2.5 Flash 均已 passed；
+  - EVP-8 cost accounting：passed-result USD excluding Qwen = `2.892118056`，
+    Qwen passed cost = CNY `41.119548`，ignored Kimi blocked attempts =
+    USD `7.27612053`；当前 API freeze 为 true；
   - raw-output-free tracked summaries and audits。
 - 当前 evidence-level 边界：EVP-7 是 E0/E2/E4/E6 four-anchor pilot，不是
   完整 E0-E6 adjacent-difference ladder；E1/E3/E5 不应补插进当前 artifacts，
@@ -231,6 +237,9 @@
    - 后续不应继续补模型或改协议；下一步是 paper/table/artifact freeze，
      且必须继续区分 descriptive five-model pattern 和 unsupported superiority/
      final-effectiveness claims；
+   - 当前成本审计：
+     `python scripts\summarize_evp8_cost_accounting.py --check` 已通过；
+     blocked attempts 是成本/执行风险证据，不是 valid model-result records；
    - smoke 之后的后续顺序已经写入 canonical EVP-8 plan：
      two-model smoke synthesis -> 独立 no-API full-run packet -> DeepSeek
      686-call full run -> DeepSeek audit passed -> Qwen 686-call full run -> Qwen
@@ -465,7 +474,8 @@
   Markdown paper draft；当前包含 `Workload at a Glance`，把
   21/98/392 structural pipeline 与 20/94/376 real G5 run 分开呈现。
 - `docs/paper/generated_tables.md`、`docs/paper/generated_tables.tex`：
-  script-generated paper tables；当前包含 EVP-7 workload ledger。
+  script-generated paper tables；当前包含 EVP-7 workload ledger、EVP-8
+  five-model decision patterns 和 EVP-8 cost accounting。
 - `docs/paper/ieee_submission_draft.tex`：
   current IEEEtran submission draft；当前包含 `Workload at a Glance` 章节和
   `tab:evp7-workload-ledger`。
@@ -494,7 +504,11 @@
 - `scripts/audit_paper_claim_boundary.py`：
   supported/unsupported claim traceability。
 - `scripts/write_paper_tables.py`：
-  paper-ready Markdown/LaTeX tables；当前也生成 EVP-7 workload ledger。
+  paper-ready Markdown/LaTeX tables；当前也生成 EVP-7 workload ledger、
+  EVP-8 five-model decision patterns 和 EVP-8 cost accounting。
+- `scripts/summarize_evp8_cost_accounting.py`：
+  EVP-8 no-API cost accounting summary builder；读取 raw-output-free passed
+  summaries 和 ignored blocked-attempt summaries，不读取 raw responses。
 - `scripts/write_ieee_latex_draft.py`：
   IEEEtran draft generator；当前把 workload ledger 作为论文前段 reader bridge。
 - `scripts/generate_paper_figures.py`：

@@ -401,6 +401,10 @@ Gate G9: paper writing and artifact freeze.
 - Update the manuscript, generated tables, figures, artifact checklist, and
   anonymous package only after the synthesis and claim-boundary audit are
   complete.
+- Current cost boundary as of 2026-06-22: the EVP-8 cost accounting summary
+  records Kimi blocked-attempt overrun and sets API freeze. G9 must proceed
+  with no further model API calls unless a new budgeted experiment is explicitly
+  approved.
 - Keep EVP-7 as the bounded four-anchor pilot and motivation. Do not merge its
   E0/E2/E4/E6 artifacts with EVP-8 E0-E6 results as one dataset.
 - Before submission freeze, run local quality gate, paper readiness audit,

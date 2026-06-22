@@ -17441,3 +17441,39 @@ Next Execute:
   artifact freeze；
 - 下一阶段不再补模型，先生成论文可用的 five-model tables/figures、claim
   boundary audit 和 artifact freeze checklist。
+
+## 2026-06-22 EVP-8 cost overrun audit and G9 paper-table freeze
+
+Inspect:
+
+- 用户指出成本完全超预算；必须先停止所有 API 路径，不再补模型；
+- 本地 `main...origin/main [ahead 2]`，未同步提交为 Devstral result 和
+  Gemini five-model synthesis；GitHub push 已多次 connection reset；
+- tracked passed summaries 显示 EVP-8 五模型均 `686/686` valid；
+- 成本拆分：
+  - passed tracked USD，不含 Qwen：`2.892118056`；
+  - Qwen passed tracked CNY：`41.119548`；
+  - ignored Kimi blocked attempts USD：`7.27612053`；
+  - 实际可观测 USD 合计，不含 Qwen：`10.168238586`；
+- later-model completion packet 的 USD 30 planning ceiling 是 later-model
+  batch planning ceiling，不包含 DeepSeek/Qwen，也不是失败重跑的保护机制。
+
+Plan:
+
+1. 新增 no-API cost accounting summary builder，只读取 raw-output-free
+   summaries 和 ignored blocked-attempt summaries，不读取 raw response text；
+2. 生成 tracked cost accounting JSON/Markdown，明确 passed-result cost、
+   blocked-attempt cost、预算解释和 API freeze decision；
+3. 扩展 `write_paper_tables.py`，把 EVP-8 five-model decision patterns 和
+   cost accounting ledger 写入 generated paper tables；
+4. 更新 README、INDEX、short-state 和 engineering notes；
+5. 运行 cost builder、paper table builder、audit/synthesis checks、diff/sensitive
+   checks；
+6. 提交本轮 no-API G9 成本审计和表格更新；不再尝试任何模型 API。
+
+Boundary:
+
+- 本轮不得调用 OpenRouter、DeepSeek、Qwen 或任何模型 API；
+- blocked attempts 只能作为成本/执行风险审计，不得作为有效模型结果；
+- five-model synthesis 只支持 frozen EVP-8 v0.1 descriptive decision-pattern
+  reporting，不支持 deterministic-baseline superiority 或 final effectiveness。
