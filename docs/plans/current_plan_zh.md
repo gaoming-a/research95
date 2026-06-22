@@ -17477,3 +17477,61 @@ Boundary:
 - blocked attempts 只能作为成本/执行风险审计，不得作为有效模型结果；
 - five-model synthesis 只支持 frozen EVP-8 v0.1 descriptive decision-pattern
   reporting，不支持 deterministic-baseline superiority 或 final effectiveness。
+
+## 2026-06-22 SQJ low-cost submission route final-plan update
+
+Inspect:
+
+- 用户要求将 D 类及以上、低经济成本、稳定中稿和含金量尽量高的目标写入最终计划；
+- 学校文件《太原理工大学学术论文类别认定办法》显示 CCF C 类国际期刊/会议论文
+  属于 C 类，C 类高于 D 类；EI 正刊也属于 C 类，但会议论文集/增刊等口径不同；
+- 当前最短路径不是继续补模型或扩量，而是冻结 EVP-8 五模型结果，转入 SQJ
+  software quality/reliability 期刊稿；
+- Git 当前仍以 `git status --short --branch` 为准，本地 main 可能因 GitHub
+  connection reset 保持 ahead。
+
+Plan:
+
+1. 在 canonical `docs/plans/final_paper_roadmap_zh.md` 中加入 SQJ 低成本投稿
+   路线，明确学校 D 类及以上认定链路、CCF C 类确认门、非 OA / subscription
+   route、Springer `sn-jnl` LaTeX 模板和投稿前学校确认；
+2. 将 EVP-8 后续执行顺序从“继续模型/API”修正为 no-API SQJ paper route：
+   claim-boundary audit -> SQJ framing -> Springer `sn-jnl` draft ->
+   figures/tables -> artifact freeze -> school-recognition confirmation ->
+   submission；
+3. 同步 README、docs index、short-state、EVP-8 execution plan 和 engineering
+   notes，避免后续 agent 继续维护 IEEEtran 作为下一投稿主稿；
+4. 运行 targeted consistency checks、diff checks、敏感信息扫描；
+5. 提交并尝试 GitHub sync；若继续 connection reset，记录 ahead 状态并继续本地。
+
+Boundary:
+
+- 本轮不调用任何模型 API，不扩量，不补新 bug；
+- SQJ 只是当前首选低成本路线，不是学校最终认定保证；投稿前必须由学院/科研秘书
+  确认 SQJ 当前 CCF C 类、学校 C 类口径、发表当年目录和高风险/预警名单状态；
+- 不选择 Open Access，除非用户另行明确批准 APC；
+- 不把录用通知当作学校认定材料；认定以正式发表或在线发表为准；
+- 不把 `docs/paper/ieee_submission_draft.tex` 继续作为下一投稿主格式；下一主稿应
+  转为 Springer Nature `sn-jnl` LaTeX。
+
+Execute Result:
+
+- 已更新 `docs/plans/final_paper_roadmap_zh.md`，新增 `18.8 SQJ 低成本投稿路线`；
+- 已将 EVP-8 执行状态从“等待 first-batch/later-model 授权”修正为 five-model
+  synthesis passed + API freeze；
+- 已同步 README、docs index、short-state、EVP-8 execution plan 和 engineering
+  notes；
+- 已将 IEEEtran draft 降级为 historical/source draft，下一主稿格式改为 Springer
+  Nature `sn-jnl` LaTeX。
+
+Verify:
+
+- targeted `rg` 检查确认 SQJ、`sn-jnl`、non-OA/APC、学校认定确认门和 API
+  freeze 边界均已写入；
+- targeted stale-plan 检查确认后续路线已收敛为 SQJ no-API paper route；
+- `git diff --check` 通过，仅有 Windows LF/CRLF 提示；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness_audit\sqj_plan_update.json --out-md outputs\paper_readiness_audit\sqj_plan_update.md`
+  已运行，`current_result_claim_ready=true` 且 `submission_package_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\sqj_plan_update.json --out-md outputs\local_quality_gate\sqj_plan_update.md`
+  已运行，`passed=true`；
+- 最终提交前仍需 staged diff、敏感信息扫描、commit 和 GitHub sync attempt。

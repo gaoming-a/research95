@@ -481,9 +481,9 @@ This file starts fresh for the patch-verification project.
 - The Markdown paper draft already contained the real API and tool-augmented
   full-run results, but `docs/paper/ieee_preapi_draft.tex` still described a
   pending API pilot.
-- Fix: `scripts/write_ieee_latex_draft.py` now generates
-  `docs/paper/ieee_submission_draft.tex` as the current IEEEtran submission
-  draft and leaves the old pre-API file as historical context.
+- Fix at that time: `scripts/write_ieee_latex_draft.py` generated
+  `docs/paper/ieee_submission_draft.tex` as the then-current IEEEtran
+  submission draft and left the old pre-API file as historical context.
 - Initial generation bug: the prompt-only evidence-first result row was empty
   because `metrics.json` stores condition groups with provider-qualified keys
   such as `evidence_first::evidence_first__deepseek-v4-pro`.
@@ -3212,3 +3212,26 @@ This file starts fresh for the patch-verification project.
   for EVP-8. Continue only no-API paper tables, figures, claim-boundary audit,
   and artifact packaging until the user explicitly approves a new budgeted
   experiment.
+
+## 2026-06-22 SQJ low-cost submission planning
+
+- Venue choice has two different costs: paper-rewrite cost and cash cost.
+  Conferences such as EASE may be semantically convenient but usually require
+  author registration and travel; for a low-cash-cost route, prefer a
+  subscription journal path when the school recognition target is D class or
+  above.
+- SQJ is a plausible low-cost first target because it is a CCF C software
+  engineering journal and can support a software quality / reliability framing.
+  Do not present that as guaranteed school recognition. Before submission,
+  confirm the current CCF classification, the school's publication-year rule,
+  the high-risk/warning-list status, and the user's author/affiliation
+  eligibility with the department or research office.
+- Avoid accidentally choosing Open Access. The current plan is non-OA /
+  subscription publication unless the user explicitly approves APC.
+- The next main manuscript format for SQJ is Springer Nature `sn-jnl` LaTeX.
+  Keep the IEEEtran draft only as a content source or historical draft; do not
+  continue polishing it as the target submission format.
+- Keep the claim bounded for SQJ: evidence visibility affects LLM merge-gate
+  decisions across five models, but the response is model-dependent and
+  non-monotonic. Do not turn this into an LLM superiority or evidence-level
+  effectiveness ranking claim.

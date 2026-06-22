@@ -46,7 +46,11 @@
   now pass for descriptive per-level decision-pattern reporting on the frozen
   EVP-8 v0.1 packet set. The cost accounting summary records the Kimi
   blocked-attempt overrun and freezes further API execution before paper/table/
-  artifact work.
+  artifact work. As of 2026-06-22, the current low-cash-cost submission route
+  is Software Quality Journal (SQJ): confirm school/department recognition
+  before submission, use the non-OA subscription route unless APC is explicitly
+  approved, and generate a Springer Nature `sn-jnl` LaTeX main draft rather
+  than treating the IEEEtran draft as the next submission format.
 - `experiments/evp8_journal_scale_execution_plan_20260620.md`: no-API
   execution plan for the journal-scale EVP-8 route. It defines the planned
   E0-E6 full-ladder boundary, target five-model set, phased DeepSeek/Qwen first
@@ -447,7 +451,7 @@
   current IEEE draft, including the EVP-7 workload ledger, G5 376-record
   result, deterministic tool-only attribution, claim-boundary snippets,
   EVP-8 five-model decision patterns, and EVP-8 cost accounting.
-- `paper/ieee_submission_draft.tex`: current anonymous IEEEtran submission
+- `paper/ieee_submission_draft.tex`: historical/source anonymous IEEEtran
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
   evidence-visibility result, the early decision-to-metric reader-flow bridge,
@@ -455,7 +459,8 @@
   tool-only attribution, qualitative case interpretation, figures, threats,
   conclusion, and final consistency polish for `Evidence Gain`,
   unsupported-claim formatting, and bounded
-  conclusion wording.
+  conclusion wording. It is now a historical/source draft for SQJ conversion,
+  not the next target submission format.
 - `paper/advisor_workload_response_zh.md`: no-API advisor-facing explanation
   packet for the current paper package. It summarizes the 21/98/392 structural
   pipeline, the 20/94/376 real G5 run, validation/audit/artifact work, allowed
@@ -897,10 +902,12 @@
   from dataset summary, validation summary, metrics, deterministic
   reproducibility comparison, the current EVP-7 workload ledger, and the
   current EVP-7 G5 376-record summary plus claim-boundary audit.
-- `scripts/write_ieee_latex_draft.py`: generates the current IEEEtran
-  submission draft at `docs/paper/ieee_submission_draft.tex` from generated
+- `scripts/write_ieee_latex_draft.py`: generates the historical/source
+  IEEEtran draft at `docs/paper/ieee_submission_draft.tex` from generated
   dataset/no-API tables, audited prompt-only and tool-augmented metrics, and
   the current EVP-7 G5 376-record summary plus claim-boundary audit.
+  Under the SQJ route it is retained as a content source and regression check,
+  not as the next target submission format.
   It also owns the paper-facing figure captions, including the compact EVP-7
   E0/E2/E4/E6 fig2 evidence-level caption checked by paper readiness.
   The generated narrative foregrounds the frozen EVP-7 bounded result while

@@ -125,6 +125,10 @@
   - EVP-8 cost accounting：passed-result USD excluding Qwen = `2.892118056`，
     Qwen passed cost = CNY `41.119548`，ignored Kimi blocked attempts =
     USD `7.27612053`；当前 API freeze 为 true；
+  - SQJ low-cost submission route：当前首选投稿目标为 Software Quality
+    Journal，按 CCF C 类 / 学校 C 类口径作为 D 类及以上候选；投稿前必须先由
+    学院/科研秘书确认发表当年 CCF 目录、高风险/预警名单状态和学校认定口径；
+    当前成本路线为 non-OA / subscription route，不默认支付 APC；
   - raw-output-free tracked summaries and audits。
 - 当前 evidence-level 边界：EVP-7 是 E0/E2/E4/E6 four-anchor pilot，不是
   完整 E0-E6 adjacent-difference ladder；E1/E3/E5 不应补插进当前 artifacts，
@@ -136,6 +140,10 @@
   - `docs/paper/generated_tables.tex`
   - `docs/artifact/submission_checklist.md`
   - `docs/artifact/submission_handoff_20260618.md`
+- 当前下一投稿格式：不再以 IEEEtran 作为下一主稿格式；SQJ 路线要求生成
+  Springer Nature `sn-jnl` LaTeX draft，并补齐 data availability、competing
+  interests、author contribution、funding/acknowledgement 等 submission
+  elements。
 - 当前 known non-blocker：
   - old prompt-only evidence-first gate remains `stop_or_redesign`；
   - this blocks prompt-only positive claims, not the current bounded EVP-7 claim。
@@ -199,7 +207,7 @@
      均为 35/35 parse-valid，post-smoke audit 和 G4 synthesis 均通过；
    - DeepSeek 使用 4096-token output budget 修复 1024-token truncation；
      Qwen official cost 以 CNY token-pricing estimate 记录，不写成 USD bill；
-   - G5 no-API first-batch full-run packet 已 ready：
+   - 历史 G5 no-API first-batch full-run packet 已 ready：
      `python scripts\write_evp8_first_batch_full_run_packet.py --check`；
    - full-run check-only 已通过，覆盖 98 candidates x 7 levels = 686 packets；
    - DeepSeek G6 first-batch full run 已执行并通过 audit：
@@ -245,7 +253,10 @@
      686-call full run -> DeepSeek audit passed -> Qwen 686-call full run -> Qwen
      audit passed -> two-model first-batch synthesis passed -> later-model execution packet
      -> Kimi/Devstral/Gemini 补跑 -> five-model synthesis -> paper/artifact
-     freeze；
+     freeze；当前该链路已完成到 five-model synthesis passed，下一步已收敛为
+     SQJ no-API paper route：claim-boundary audit -> SQJ framing ->
+     Springer `sn-jnl` LaTeX draft -> figures/tables -> artifact freeze ->
+     school-recognition confirmation -> submission；
    - 边界：不把 EVP-7 的 E2/E4/E6 直接当作 EVP-8 full-ladder 中间层，不从
      DeepSeek+Qwen interim result 写成最终五模型结论。
 2. 论文工作量呈现强化：
@@ -477,8 +488,8 @@
   script-generated paper tables；当前包含 EVP-7 workload ledger、EVP-8
   five-model decision patterns 和 EVP-8 cost accounting。
 - `docs/paper/ieee_submission_draft.tex`：
-  current IEEEtran submission draft；当前包含 `Workload at a Glance` 章节和
-  `tab:evp7-workload-ledger`。
+  historical/source IEEEtran draft；当前包含 `Workload at a Glance` 章节和
+  `tab:evp7-workload-ledger`，但 SQJ 路线下不再作为下一投稿主格式。
 - `docs/paper/advisor_workload_response_zh.md`：
   中文导师/答辩工作量说明；集中回答当前工作量、bounded claim、不能写的
   overclaim，以及为什么当前论文不是单纯 prompt comparison。
@@ -510,7 +521,8 @@
   EVP-8 no-API cost accounting summary builder；读取 raw-output-free passed
   summaries 和 ignored blocked-attempt summaries，不读取 raw responses。
 - `scripts/write_ieee_latex_draft.py`：
-  IEEEtran draft generator；当前把 workload ledger 作为论文前段 reader bridge。
+  IEEEtran historical/source draft generator；SQJ 路线下不再作为下一投稿主格式，
+  只作为内容来源和回归检查。
 - `scripts/generate_paper_figures.py`：
   reproducible figure generation。
 - `scripts/prepare_anonymous_artifact.py`：

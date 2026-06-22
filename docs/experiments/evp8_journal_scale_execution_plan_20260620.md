@@ -405,6 +405,10 @@ Gate G9: paper writing and artifact freeze.
   records Kimi blocked-attempt overrun and sets API freeze. G9 must proceed
   with no further model API calls unless a new budgeted experiment is explicitly
   approved.
+- Current submission target as of 2026-06-22: prepare a low-cash-cost
+  Software Quality Journal (SQJ) route. This means no Open Access/APC unless
+  explicitly approved, Springer Nature `sn-jnl` LaTeX as the next main draft,
+  and a department/research-office recognition check before submission.
 - Keep EVP-7 as the bounded four-anchor pilot and motivation. Do not merge its
   E0/E2/E4/E6 artifacts with EVP-8 E0-E6 results as one dataset.
 - Before submission freeze, run local quality gate, paper readiness audit,

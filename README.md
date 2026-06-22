@@ -105,7 +105,12 @@ evidence-level effectiveness. The cost overrun is now separately tracked at
 `data/reviews/evp8_cost_accounting_summary.json`: passed-result USD excluding
 Qwen is `2.892118056`, passed Qwen cost is CNY `41.119548`, and blocked Kimi
 attempts add USD `7.27612053`. API execution is frozen; the next EVP-8 work is
-paper tables, figures, claim-boundary audit, and artifact freeze.
+paper tables, figures, claim-boundary audit, and artifact freeze. The current
+low-cash-cost submission route is Software Quality Journal (SQJ): treat it as
+the preferred CCF C / school D-or-above candidate only after school/department
+recognition confirmation, use the non-OA subscription route unless APC is
+explicitly approved, and convert the next main draft to Springer Nature
+`sn-jnl` LaTeX rather than continuing IEEEtran as the submission format.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently
@@ -799,7 +804,7 @@ and the decision-to-metric flowchart, run:
 python scripts\generate_paper_figures.py
 ```
 
-For the current IEEEtran LaTeX submission draft, run:
+For the historical IEEEtran source draft, run:
 
 ```powershell
 python scripts\write_ieee_latex_draft.py `
@@ -807,22 +812,22 @@ python scripts\write_ieee_latex_draft.py `
   --out docs\paper\ieee_submission_draft.tex
 ```
 
-The IEEE draft generator reads the current EVP-7 G5 376-record summary and
-quality audit by default, so the generated body and tables stay on the same
-claim boundary. Paper readiness also checks the IEEE fig2 caption so the
-generated draft stays aligned with the compact E0/E2/E4/E6 evidence-level
-figure. The draft foregrounds the current EVP-7 bounded result and treats the
-earlier 30-candidate API pilot as diagnostic design evidence. It also references
-the workload ledger and qualitative case audit as interpretation of pipeline
-scope and decision mechanics, not as additional scale evidence.
+The IEEE draft generator is now retained as a content-source and regression
+check for the earlier bounded EVP-7 draft. The SQJ route must create a new
+Springer Nature `sn-jnl` LaTeX main draft rather than submitting this IEEEtran
+file directly. The draft foregrounds the current EVP-7 bounded result and
+treats the earlier 30-candidate API pilot as diagnostic design evidence. It
+also references the workload ledger and qualitative case audit as
+interpretation of pipeline scope and decision mechanics, not as additional
+scale evidence.
 It includes an early `How to Read the Experiment` bridge that maps candidate
 patches to evidence packets, model decisions, hidden-label joins, and aggregate
 metrics using `fig7_decision_metric_flow`.
 
 Paper readiness also checks the current paper framing. The tracked outline,
-research definition, Markdown draft, and IEEE draft must use the
-Evidence Visibility / Candidate Patches title and preserve the bounded EVP-7
-claim boundary; stale AI-generated-patch title framing fails readiness.
+research definition, Markdown draft, historical IEEE draft, and future SQJ
+`sn-jnl` draft must preserve the evidence-visibility claim boundary; stale
+AI-generated-patch title framing fails readiness.
 It also checks that the IEEE draft contains a related-work section with the
 core field-specific citations and the boundary that Evidence Gain is a
 descriptive pilot metric, not a proposed universal benchmark score.
