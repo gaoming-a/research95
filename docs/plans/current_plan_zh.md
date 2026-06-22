@@ -17775,3 +17775,76 @@ Verify:
   仍保留；
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\sqj_figures.json --out-md outputs\local_quality_gate\sqj_figures.md`
   通过，`passed=true`。
+
+## 2026-06-22 SQJ final-freeze readiness packet
+
+Inspect:
+
+- 当前 `main...origin/main` 已同步，工作区干净；
+- SQJ source draft、BibTeX、SQJ checklist、SQJ figures 和 local quality gate
+  已在上一轮通过；
+- 本机仍缺少 `sn-jnl.cls`，因此不能把 PDF compile 作为已通过条件；
+- 学校/学院 D 类及以上认可、作者信息、基金/致谢/利益冲突文本、最终 artifact
+  package rebuild 仍是外部或后续 gate；
+- 旧 `submission_handoff_20260618` 和 `submission_freeze_candidate_20260618`
+  是历史 IEEE/EVP-7 边界，不应被当成 SQJ final freeze。
+
+Plan:
+
+1. 新增 SQJ final-freeze readiness 文档，只记录当前可提交前状态、缺口和安全重建命令；
+2. 新增 no-API audit，验证该文档没有把 readiness 误写成 final submission freeze；
+3. 将该 audit 接入 paper readiness / local quality gate，使后续代理能自动检查 SQJ
+   冻结前边界；
+4. 同步 README、INDEX、short-state、SQJ checklist、engineering notes；
+5. 运行 py_compile、SQJ checklist audit、SQJ freeze-readiness audit、paper readiness、
+   local quality gate；
+6. 只提交本轮相关文件并尝试 GitHub sync。
+
+Boundary:
+
+- 本轮不调用模型 API，不读取 ignored raw responses；
+- 本轮不下载 Springer 模板、不编译 PDF；
+- 本轮不声明学校认可、Open Access/APC 批准、final freeze complete 或 submission
+  authorized；
+- 本轮不扩 bug、不扩模型、不改 EVP-8 结果 claim。
+
+Execute Result:
+
+- 已新增 `docs/artifact/sqj_final_freeze_readiness.md`；
+- 已新增 `scripts/audit_sqj_final_freeze_readiness.py`；
+- 已将 SQJ final-freeze readiness audit 接入：
+  - `scripts/audit_paper_readiness.py`；
+  - `scripts/run_local_quality_gate.py`；
+  - `docs/artifact/sqj_submission_checklist.md` /
+    `scripts/audit_sqj_submission_checklist.py`；
+- 已同步 README、docs index、current project state、final roadmap 和 engineering
+  notes；
+- 该 readiness packet 明确记录：
+  - 当前 source package ready；
+  - 学校/学院认定、`sn-jnl.cls`/PDF compile、作者/基金/利益冲突、artifact rebuild
+    和最终用户授权仍是 blocker；
+  - `final_freeze_complete=false`；
+  - 不授权投稿、不授权新模型 API。
+
+Diagnose / Repair:
+
+- 初次 readiness audit 失败，因为文档中的
+  `This packet does not authorize submission.` 被 Markdown 自动换行拆开，导致
+  required snippet 未命中；
+- 已修复文档，将该边界句保持为单行；没有放宽审计条件。
+
+Verify:
+
+- `python -m py_compile scripts\audit_sqj_final_freeze_readiness.py scripts\audit_sqj_submission_checklist.py scripts\audit_paper_readiness.py scripts\run_local_quality_gate.py`
+  通过；
+- `python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\sqj_freeze_readiness.json --out-md outputs\sqj_submission_checklist_audit\sqj_freeze_readiness.md`
+  通过；
+- `python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\sqj_freeze_readiness.json --out-md outputs\sqj_final_freeze_readiness\sqj_freeze_readiness.md`
+  通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness_audit\sqj_freeze_readiness.json --out-md outputs\paper_readiness_audit\sqj_freeze_readiness.md`
+  通过，`submission_package_ready=true`、`sqj_freeze_readiness_ready=true`、
+  `sqj_final_freeze_complete=false`；
+- `python scripts\write_sqj_latex_draft.py --check` 通过，仍为 source-structure
+  gate，未编译 PDF；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\sqj_freeze_readiness.json --out-md outputs\local_quality_gate\sqj_freeze_readiness.md`
+  通过，`passed=true`。

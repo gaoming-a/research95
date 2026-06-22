@@ -3279,3 +3279,16 @@ This file starts fresh for the patch-verification project.
   can let the audit inspect a file while matplotlib is still writing it, causing
   a transient zero-byte PDF observation. Dependent gates should run in order:
   generate figures, confirm nonzero file sizes, then audit source/checklist.
+
+## 2026-06-22 SQJ final-freeze readiness gate
+
+- Keep SQJ source-package readiness, final-freeze readiness, and actual final
+  submission freeze as separate states. A source/checklist gate can pass while
+  school recognition, `sn-jnl.cls`/PDF compilation, author/funding/competing
+  interest text, artifact rebuild, and final user authorization are still
+  blockers.
+- The SQJ final-freeze readiness packet should be auditable and passing without
+  claiming final freeze. Its job is to prevent later agents from treating a
+  source draft plus figures as submission authorization.
+- Include the readiness audit in both paper readiness and local quality gates
+  so the route remains visible from normal verification commands.

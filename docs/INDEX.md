@@ -469,6 +469,11 @@
   gate, source draft/BibTeX/table/figure package, allowed and forbidden
   claims, no-API boundary, and the fact that this is not a final submission
   freeze.
+- `artifact/sqj_final_freeze_readiness.md`: SQJ final-freeze readiness and
+  blocker packet. It records the currently regenerable source package, the
+  school-recognition, `sn-jnl.cls`/PDF compile, author/funding/competing
+  interest, artifact rebuild, and final user-authorization blockers, and keeps
+  submission unauthorized.
 - `paper/ieee_submission_draft.tex`: historical/source anonymous IEEEtran
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
@@ -947,6 +952,9 @@
   source-package checklist, source draft, BibTeX, table sources, figure set,
   five-model synthesis, and cost-accounting/API-freeze boundary without calling
   APIs, compiling PDF, or marking final submission freeze complete.
+- `scripts/audit_sqj_final_freeze_readiness.py`: validates the SQJ
+  final-freeze readiness packet and its external-blocker boundary without
+  calling APIs, compiling PDF, or authorizing submission.
 - `scripts/generate_paper_figures.py`: generates the publication figure set
   under `docs/figures/` in PDF, SVG, and PNG formats. Figures cover the
   workflow, compact E0/E2/E4/E6 evidence boundary, dataset composition,

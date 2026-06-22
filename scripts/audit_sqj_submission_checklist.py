@@ -11,6 +11,7 @@ SOURCE_DRAFT = Path("docs/paper/sqj_submission_draft.tex")
 BIB_FILE = Path("docs/paper/sqj_references.bib")
 SOURCE_GENERATOR = Path("scripts/write_sqj_latex_draft.py")
 FRAMING_PACKET = Path("docs/paper/sqj_submission_framing.md")
+FINAL_FREEZE_READINESS = Path("docs/artifact/sqj_final_freeze_readiness.md")
 TABLES_MD = Path("docs/paper/generated_tables.md")
 TABLES_TEX = Path("docs/paper/generated_tables.tex")
 SYNTHESIS_JSON = Path("data/protocols/evp8_five_model_synthesis_v0_1.json")
@@ -40,6 +41,7 @@ REQUIRED_SNIPPETS = [
     "`docs/paper/sqj_references.bib`",
     "`scripts/write_sqj_latex_draft.py`",
     "`docs/paper/sqj_submission_framing.md`",
+    "`docs/artifact/sqj_final_freeze_readiness.md`",
     "Evidence visibility is a first-order experimental variable",
     "model-dependent and non-monotonic",
     "Blocked Kimi attempts are cost/execution-risk evidence only",
@@ -48,6 +50,7 @@ REQUIRED_SNIPPETS = [
     "that a final evidence-level ranking has been established",
     "python scripts\\write_sqj_latex_draft.py --check",
     "python scripts\\audit_sqj_submission_checklist.py",
+    "python scripts\\audit_sqj_final_freeze_readiness.py",
     "This is not a final submission freeze.",
 ]
 
@@ -176,6 +179,7 @@ def audit_sqj_checklist(path: Path) -> dict[str, Any]:
         "bib_file": file_state(BIB_FILE),
         "source_generator": file_state(SOURCE_GENERATOR),
         "framing_packet": file_state(FRAMING_PACKET),
+        "final_freeze_readiness": file_state(FINAL_FREEZE_READINESS),
         "tables_md": file_state(TABLES_MD),
         "tables_tex": file_state(TABLES_TEX),
         "figure_manifest": file_state(FIGURE_MANIFEST),

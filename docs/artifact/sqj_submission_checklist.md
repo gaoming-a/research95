@@ -28,6 +28,8 @@ expansion, evidence-level changes, or raw model-response tracking.
   `scripts/write_sqj_latex_draft.py`
 - Framing and claim boundary:
   `docs/paper/sqj_submission_framing.md`
+- Final-freeze readiness packet:
+  `docs/artifact/sqj_final_freeze_readiness.md`
 - Generated table sources:
   `docs/paper/generated_tables.md`
   `docs/paper/generated_tables.tex`
@@ -78,6 +80,7 @@ python scripts\write_paper_tables.py
 python scripts\generate_sqj_figures.py
 python scripts\write_sqj_latex_draft.py --check
 python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md
+python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md
 python scripts\summarize_evp8_five_model_synthesis.py --check
 python scripts\summarize_evp8_cost_accounting.py --check
 python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md
@@ -89,6 +92,7 @@ python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\l
 - SQJ source draft regenerates from tracked inputs.
 - SQJ figures regenerate from tracked synthesis and cost summaries.
 - SQJ checklist audit passes.
+- SQJ final-freeze readiness audit passes.
 - EVP-8 five-model synthesis and cost accounting checks pass.
 - Paper readiness and local quality gate pass.
 - No model API calls are made.

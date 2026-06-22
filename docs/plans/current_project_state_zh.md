@@ -140,6 +140,7 @@
   - `docs/paper/generated_tables.tex`
   - `docs/artifact/submission_checklist.md`
   - `docs/artifact/sqj_submission_checklist.md`
+  - `docs/artifact/sqj_final_freeze_readiness.md`
   - `docs/artifact/submission_handoff_20260618.md`
 - 当前下一投稿格式：不再以 IEEEtran 作为下一主稿格式；SQJ 路线要求生成
   Springer Nature `sn-jnl` LaTeX draft，并补齐 data availability、competing
@@ -151,7 +152,11 @@
   source-structure gate，不做 PDF compile gate。SQJ-specific source-package
   checklist 已写入 `docs/artifact/sqj_submission_checklist.md`，并由
   `scripts/audit_sqj_submission_checklist.py` 审计；该 checklist 不是 final
-  submission freeze。SQJ-specific figures 已写入 `docs/figures/sqj/`，当前
+  submission freeze。SQJ final-freeze readiness packet 已写入
+  `docs/artifact/sqj_final_freeze_readiness.md`，并由
+  `scripts/audit_sqj_final_freeze_readiness.py` 审计；该 packet 记录学校认定、
+  `sn-jnl.cls`/PDF compile、作者/基金/利益冲突、artifact rebuild 和最终用户授权
+  缺口，不授权投稿。SQJ-specific figures 已写入 `docs/figures/sqj/`，当前
   `sqj_submission_draft.tex` 引用三张 EVP-8 主图：protocol、decision
   patterns 和 cost boundary。
 - 当前 known non-blocker：
@@ -509,6 +514,10 @@
   SQJ source-package checklist；记录 non-OA route、学校认定确认门、source
   draft/BibTeX/table/figure package、allowed/forbidden claims、no-API boundary
   和 not-final-freeze 边界。
+- `docs/artifact/sqj_final_freeze_readiness.md`：
+  SQJ final-freeze readiness and blocker packet；记录当前 source package 已
+  准备内容，以及学校认定、`sn-jnl.cls`/PDF compile、作者/基金/利益冲突、artifact
+  rebuild 和最终用户授权缺口；该文件不授权投稿。
 - `docs/paper/ieee_submission_draft.tex`：
   historical/source IEEEtran draft；当前包含 `Workload at a Glance` 章节和
   `tab:evp7-workload-ledger`，但 SQJ 路线下不再作为下一投稿主格式。
@@ -557,6 +566,9 @@
   SQJ source-package checklist audit；验证 source draft、BibTeX、tables、
   figure set、five-model synthesis、cost accounting/API freeze 和 not-final-freeze
   边界，不调用 API、不编译 PDF。
+- `scripts/audit_sqj_final_freeze_readiness.py`：
+  SQJ final-freeze readiness packet audit；验证 readiness 文档和外部 blocker
+  边界，不调用 API、不编译 PDF、不授权投稿。
 - `scripts/generate_paper_figures.py`：
   reproducible figure generation。
 - `scripts/prepare_anonymous_artifact.py`：

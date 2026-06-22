@@ -97,6 +97,7 @@ def build_markdown(summary: dict[str, Any]) -> str:
         f"- submission handoff audit passed: {bool_mark(summary['submission_handoff_audit']['passed'])}",
         f"- submission freeze-candidate audit passed: {bool_mark(summary['submission_freeze_candidate_audit']['passed'])}",
         f"- SQJ submission checklist audit passed: {bool_mark(summary['sqj_submission_checklist_audit']['passed'])}",
+        f"- SQJ final-freeze readiness audit passed: {bool_mark(summary['sqj_final_freeze_readiness_audit']['passed'])}",
         f"- artifact dry-run passed: {bool_mark(summary['artifact_dry_run']['passed'])}",
         f"- artifact zip audit passed: {bool_mark(summary['artifact_zip_audit']['passed'])}",
         f"- pycache directories removed: {summary['pycache_removed']}",
@@ -126,6 +127,7 @@ def build_markdown(summary: dict[str, Any]) -> str:
             "submission_handoff_audit",
             "submission_freeze_candidate_audit",
             "sqj_submission_checklist_audit",
+            "sqj_final_freeze_readiness_audit",
             "artifact_dry_run",
             "artifact_zip_audit",
         ]:
@@ -272,6 +274,16 @@ def main() -> None:
             "outputs/sqj_submission_checklist_audit/latest.md",
         ]
     )
+    sqj_final_freeze_readiness_audit = run_command(
+        [
+            sys.executable,
+            "scripts/audit_sqj_final_freeze_readiness.py",
+            "--out-json",
+            "outputs/sqj_final_freeze_readiness/latest.json",
+            "--out-md",
+            "outputs/sqj_final_freeze_readiness/latest.md",
+        ]
+    )
     readiness_json = Path("outputs/readiness_audit/latest.json")
     readiness_md = Path("outputs/readiness_audit/latest.md")
     readiness_run = run_command(
@@ -367,6 +379,7 @@ def main() -> None:
             and submission_handoff_audit["passed"]
             and submission_freeze_candidate_audit["passed"]
             and sqj_submission_checklist_audit["passed"]
+            and sqj_final_freeze_readiness_audit["passed"]
             and artifact_dry_run["passed"]
             and artifact_zip_audit["passed"]
         ),
@@ -383,6 +396,7 @@ def main() -> None:
         "submission_handoff_audit": submission_handoff_audit,
         "submission_freeze_candidate_audit": submission_freeze_candidate_audit,
         "sqj_submission_checklist_audit": sqj_submission_checklist_audit,
+        "sqj_final_freeze_readiness_audit": sqj_final_freeze_readiness_audit,
         "readiness_run": readiness_run,
         "paper_readiness_run": paper_run,
         "plan_progress_run": plan_progress_run,

@@ -1,0 +1,96 @@
+# SQJ Final-Freeze Readiness Packet
+
+Status: SQJ final-freeze readiness packet, not final freeze.
+Date: 2026-06-22
+
+This packet records what is ready for a future Software Quality Journal (SQJ)
+submission freeze and what still blocks submission. This packet does not authorize submission.
+No model API calls are authorized.
+
+## Current Ready Source Package
+
+The current SQJ route has these tracked, regenerable source-package components:
+
+- Main source draft: `docs/paper/sqj_submission_draft.tex`
+- Bibliography: `docs/paper/sqj_references.bib`
+- SQJ framing and claim boundary: `docs/paper/sqj_submission_framing.md`
+- Generated tables: `docs/paper/generated_tables.md` and
+  `docs/paper/generated_tables.tex`
+- SQJ figure directory: `docs/figures/sqj/`
+- SQJ source-package checklist: `docs/artifact/sqj_submission_checklist.md`
+- SQJ checklist audit: `scripts/audit_sqj_submission_checklist.py`
+
+The manuscript-facing SQJ figure set is:
+
+- `docs/figures/sqj/sqj_fig1_evp8_protocol.pdf`
+- `docs/figures/sqj/sqj_fig2_decision_patterns.pdf`
+- `docs/figures/sqj/sqj_fig3_cost_boundary.pdf`
+
+## Supported Claim Boundary
+
+- Evidence visibility is a first-order experimental variable for LLM-based
+  patch verification.
+- The frozen EVP-8 v0.1 packet set supports descriptive five-model per-level
+  decision-pattern reporting.
+- The observed response is model-dependent and non-monotonic.
+- The Kimi blocked attempts are cost/execution-risk evidence only, not valid
+  model-result records.
+- API execution remains frozen after the EVP-8 cost overrun.
+
+## Still Blocking Final Freeze
+
+Final freeze is blocked until all of the following are resolved:
+
+- school/department recognition confirmation for SQJ under the publication-year
+  rules and warning-list policy;
+- local or CI PDF compilation after `sn-jnl.cls` is available;
+- final SQJ-specific figure placement and caption audit after PDF compilation;
+- author information, funding, acknowledgements, and competing-interest
+  confirmation;
+- final artifact package rebuild and audit;
+- final user authorization to submit.
+
+## Forbidden Until Those Gates Pass
+
+Do not claim:
+
+- that school recognition is guaranteed;
+- that Open Access or APC payment is approved;
+- that the PDF compile gate has passed;
+- that this packet is a final submission freeze;
+- that LLM superiority over deterministic baselines is supported;
+- that a final evidence-level ranking has been established;
+- that new model API calls can run without a new explicit budget and command.
+
+## Safe Rebuild Order
+
+Run these commands in order. Do not parallelize the figure generation and figure
+audits because audits can otherwise inspect files while matplotlib is still
+writing them.
+
+```powershell
+python scripts\write_paper_tables.py
+python scripts\generate_sqj_figures.py
+python scripts\write_sqj_latex_draft.py --check
+python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md
+python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md
+python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md
+python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md
+```
+
+## Next Human Decisions
+
+1. Confirm whether SQJ is recognized by the school/department as D class or
+   above for the relevant publication year.
+2. Confirm author names, affiliations, funding, acknowledgements, competing
+   interests, and data/code availability wording.
+3. Provide or install the official Springer Nature `sn-jnl` template/class so
+   the PDF compile gate can be added.
+4. Decide whether to freeze and rebuild the anonymous artifact package after
+   the compiled PDF layout has passed.
+
+## Boundary
+
+This is a readiness and blocker packet only. It keeps the SQJ route executable
+without treating the current source package as submitted, accepted, recognized,
+or final-frozen.

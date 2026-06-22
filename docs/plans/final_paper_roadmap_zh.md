@@ -1241,8 +1241,10 @@ SQJ no-API 执行顺序：
    final submission freeze；
 5. 更新 figures/tables，使 EVP-8 five-model decision patterns 和 cost accounting
    成为主要结果；
-6. 准备 artifact freeze 和 final submission checklist；
-7. 在学校认定确认前不提交；在 API freeze 解除前不进行任何新模型调用。
+6. 准备并审计 SQJ final-freeze readiness packet，显式记录学校认定、`sn-jnl.cls`
+   / PDF compile、作者/基金/利益冲突、artifact rebuild 和最终用户授权缺口；
+7. 在上述缺口解决后再准备 artifact freeze 和 final submission checklist；
+8. 在学校认定确认前不提交；在 API freeze 解除前不进行任何新模型调用。
 
 ## 19. 2026-06-12 EVP-7 protocol pilot 决策
 
