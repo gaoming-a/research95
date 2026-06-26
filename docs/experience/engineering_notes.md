@@ -3316,3 +3316,25 @@ This file starts fresh for the patch-verification project.
   retest had 686/686 parse-valid records for both models, with raw responses
   retained only under ignored `outputs/` and tracked summaries kept
   raw-output-free.
+
+## 2026-06-26 EVP-8 v0.3 Qwen-first main-experiment batch
+
+- A confirmatory batch should not reuse a post-hoc diagnostic branch name or
+  claim boundary. Create a new branch and a new protocol/config/packet version
+  when turning the v0.2 diagnosis into a Qwen-first main-experiment batch.
+- Qwen-first means the local config should be allowed to list only
+  `qwen/qwen3.7-max`; preflight should validate configured models as a subset
+  of the protocol model plan and should verify only the configured API-key env
+  names. Do not require unrelated DeepSeek credentials for a Qwen-only run.
+- Keep Qwen-first ordering explicit in the packet. Result audit and synthesis
+  should default to the old DeepSeek-before-Qwen dependency unless the packet
+  declares `execution_order_policy = qwen_first_no_deepseek_dependency`.
+- Long model runs can outlive the shell tool timeout. If the command times out
+  but the Python process still exists and raw JSONL rows keep increasing, do
+  not launch a concurrent resume. Inspect the process command line, wait for
+  the original process to finish, and only use `--resume` after confirming the
+  process has stopped without a tracked summary.
+- Do not run dependent post-run audit and synthesis in parallel. In this run,
+  synthesis briefly read the previous waiting audit before the passed audit was
+  rewritten. The fix is ordering, not experiment repair: run audit first, then
+  synthesis.

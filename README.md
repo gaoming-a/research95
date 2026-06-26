@@ -135,6 +135,15 @@ accepts. This supports the diagnosis that the earlier v0.1 `0 accept` result
 was materially affected by experimental evidence construction, not a
 provider-independent inability to accept patches. It remains a two-model
 accept-aware retest, not a new five-model final claim.
+Also on 2026-06-26, the EVP-8 v0.3 Qwen-first main-experiment batch passed on
+the frozen 98-candidate / E0-E6 packet set using the same frozen prompt v0.2
+text and accept-aware visible evidence construction. The Qwen-only strict
+preflight, smoke check-only, full check-only, smoke run, full run, result
+audit, and synthesis all passed. Qwen3.7 Max produced 686/686 parse-valid full
+records with decision counts `accept=86`, `escalate=230`, `reject=370` and
+estimated cost CNY `40.88994`. This is a Qwen-first v0.3 result only; it does
+not authorize or imply DeepSeek/Kimi/Devstral/Gemini v0.3 results, five-model
+main-experiment conclusions, or LLM superiority over deterministic baselines.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently

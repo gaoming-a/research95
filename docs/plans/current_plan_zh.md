@@ -17979,3 +17979,112 @@ Result Boundary:
 - 该结果仅支持 accept-aware DeepSeek/Qwen two-model retest 的描述性结论，
   不替代 EVP-8 v0.1 five-model synthesis，不支持 LLM superiority 或最终
   evidence-level effectiveness claim。
+
+## 2026-06-26 EVP-8 v0.3 main-experiment Qwen-first run
+
+Inspect:
+
+- 用户要求在讨论“主实验一如何设置”后继续执行，并明确“先只做 qwen”；
+- 当前工作从 `evp8-accept-aware-retest` 派生到新分支
+  `evp8-v03-qwen-main-exp`，避免把 v0.2 诊断性 retest 继续混作主实验；
+- v0.1 五模型结果有同一 frozen packet set 和五模型覆盖，但 visible positive
+  evidence 构造不足，不能作为确认性主实验；
+- v0.2 修复了 accept-aware visible evidence 并通过 DeepSeek/Qwen 诊断性重测，
+  但它是在观察到 v0.1 `0 accept` 后形成，不能直接写成 confirmatory
+  main experiment；
+- 因此本轮目标是冻结一个 EVP-8 v0.3 Qwen-first 主实验入口，先只执行
+  `qwen/qwen3.7-max`，后续模型必须另行授权。
+
+Plan:
+
+1. 新增 EVP-8 v0.3 protocol/prompt/config/run-packet，基于 v0.2 的
+   accept-aware visible evidence，但明确标记为 confirmatory Qwen-first
+   protocol；
+2. v0.3 必须保持 visible/hidden separation：不暴露 expected outcome、
+   candidate type、failure type、hidden oracle、reference provenance 或 final
+   evaluator label；
+3. v0.3 Qwen-first 使用当前 98-candidate / E0-E6 frozen structural cohort，
+   只支持 bounded Qwen-first 主实验描述，不支持五模型最终结论或规模泛化；
+4. 先运行 no-API gates：
+   - protocol audit；
+   - prompt manifest / boundary audit；
+   - Qwen strict preflight；
+   - smoke/full check-only；
+   - waiting-state result audit/synthesis；
+5. no-API gates 全部通过且 expected output path 不存在后，按用户本轮授权只调用
+   Qwen：
+   - smoke: 5 candidates x 7 levels = 35 calls；
+   - smoke 通过 parse/cost/model gate 后再 full；
+   - full: 98 candidates x 7 levels = 686 calls；
+6. Qwen full 结束后运行 raw-output-free audit/synthesis，更新 README、docs
+   index、current project state、engineering notes 和必要实验报告；
+7. 只暂存本轮相关文件，运行 diff/sensitive checks，提交并推送
+   `evp8-v03-qwen-main-exp`。
+
+Boundary:
+
+- 本轮不调用 DeepSeek、Kimi、Devstral、Gemini；
+- 本轮不覆盖 v0.1 或 v0.2 raw outputs / tracked summaries；
+- raw model responses 只能写入 ignored `outputs/`；
+- 如果 no-API gate、strict preflight、smoke parse gate、usage/cost gate 或
+  actual model/provider metadata gate 失败，必须先诊断修复，不能继续 full run
+  或写正向结论；
+- Qwen-first 结果只能作为 v0.3 主实验第一批结果，不能写成最终五模型主实验一；
+- 后续是否继续其他模型需要用户再次明确授权。
+
+Execute / Verify Result:
+
+- 已新建分支 `evp8-v03-qwen-main-exp`；
+- 已新增 EVP-8 v0.3 Qwen-first protocol/config/packet：
+  - `data/protocols/evp8_protocol_v0_3_qwen_first.json`；
+  - `configs/evp8_qwen_first_main_v0_3.example.json`；
+  - ignored local config `configs/evp8_qwen_first_main_v0_3.local.json`；
+  - `data/protocols/evp8_qwen_first_main_v0_3_prompt_v0_2_full_run_packet.json`；
+- v0.3 复用冻结的 prompt v0.2 文本，没有修改 prompt 正文；
+- no-API gates 已通过：
+  - prompt manifest / prompt boundary audit passed；
+  - protocol audit passed，`phase0_api_readiness=ready_for_api_preflight`；
+  - Qwen-only strict preflight passed，仅验证 `QWEN_API_KEY` presence；
+  - smoke check-only passed：35 packets，0 boundary/schema errors；
+  - full check-only passed：686 packets，0 boundary/schema errors；
+  - waiting-state result audit/synthesis passed before API execution；
+- Qwen smoke 已执行：
+  - 35/35 parse-valid；
+  - `run_gate=passed`，`usage_cost_gate=passed`；
+  - decision counts: `accept=16, escalate=15, reject=4`；
+  - estimated cost: CNY `2.130804`；
+- Qwen full 已执行：
+  - 686/686 parse-valid；
+  - `first_batch_full_gate=passed`，`usage_cost_gate=passed`；
+  - actual model id counts: `qwen3.7-max=686`；
+  - decision counts: `accept=86, escalate=230, reject=370`；
+  - per-level decision counts:
+    - E0: `escalate=74, reject=24`；
+    - E1: `escalate=74, reject=24`；
+    - E2: `escalate=73, reject=25`；
+    - E3: `accept=20, escalate=4, reject=74`；
+    - E4: `accept=21, escalate=2, reject=75`；
+    - E5: `accept=21, escalate=3, reject=74`；
+    - E6: `accept=24, reject=74`；
+  - estimated cost: CNY `40.88994`；
+- post-run raw-output-free result audit passed；
+- Qwen-first synthesis passed，不读取 raw outputs。
+
+Diagnose / Repair:
+
+- Qwen smoke 和 full 的 shell command 均先触发工具超时，但底层 Python 进程仍在
+  正常运行并继续写入 raw prefix；该问题属于长运行命令观察窗口问题，不是 API
+  或实验设计失败；
+- 处理方式：未启动并发 resume，先检查进程命令行与 raw 行数，等待原进程自然结束；
+- full 运行期间 raw prefix 从 160/686 继续增长到 686/686，最终生成 summary；
+- 一次 result audit 和 synthesis 并行运行时，synthesis 先读到旧的 waiting audit；
+  已按依赖顺序重新运行 synthesis，最终 `synthesis_status=passed`。
+
+Result Boundary:
+
+- 本轮只完成 EVP-8 v0.3 Qwen-first 主实验第一批结果；
+- 该结果可报告为 frozen 98-candidate / E0-E6 packet set 上的 Qwen 描述性
+  decision pattern；
+- 不能写成五模型主实验最终结果、DeepSeek/Qwen 对比结论、LLM superiority over
+  deterministic baseline，或最终 evidence-level effectiveness claim；
+- 后续继续 DeepSeek、Kimi、Devstral 或 Gemini 需要用户再次明确授权。

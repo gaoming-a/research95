@@ -16,8 +16,7 @@ from typing import Any
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = REPO_ROOT / "configs" / "evp8_deepseek_qwen.local.json"
 DEFAULT_OUT = REPO_ROOT / "data" / "protocols" / "evp8_deepseek_qwen_preflight_summary_v0_1.json"
-EXPECTED_MODELS = ["deepseek/deepseek-v4-pro", "qwen/qwen3.7-max"]
-EXPECTED_API_KEY_ENVS = ["DEEPSEEK_API_KEY", "QWEN_API_KEY"]
+SUPPORTED_MODELS = {"deepseek/deepseek-v4-pro", "qwen/qwen3.7-max"}
 MODEL_VISIBLE_LEVELS = ["E0", "E1", "E2", "E3", "E4", "E5", "E6"]
 
 
@@ -115,6 +114,22 @@ def _model_request_controls(models: list[dict[str, Any]]) -> dict[str, dict[str,
     return controls
 
 
+def _planned_model_ids(spec: dict[str, Any]) -> set[str]:
+    model_plan = spec.get("model_plan") or {}
+    models = list(model_plan.get("phase1_first_batch") or []) + list(model_plan.get("phase2_later_batch") or [])
+    return {str(model.get("model_id")) for model in models if model.get("model_id")}
+
+
+def _configured_controls_match_expected(
+    configured: dict[str, dict[str, Any]],
+    expected: dict[str, dict[str, Any]],
+) -> bool:
+    for model_id, controls in configured.items():
+        if controls != expected.get(model_id):
+            return False
+    return True
+
+
 def preflight(config_path: Path, allow_missing_credentials: bool = False) -> dict[str, Any]:
     config_path = config_path if config_path.is_absolute() else REPO_ROOT / config_path
     config = _load_json(config_path)
@@ -146,13 +161,15 @@ def preflight(config_path: Path, allow_missing_credentials: bool = False) -> dic
     api_key_envs = [model.get("api_key_env") for model in models]
     configured_model_controls = _model_request_controls(models)
     expected_model_controls = (spec.get("routing_policy") or {}).get("direct_provider_model_controls") or {}
+    planned_model_ids = _planned_model_ids(spec)
     checks.extend(
         [
             _check("protocol_audit_ready_for_preflight", audit.get("phase0_api_readiness") == "ready_for_api_preflight", audit.get("phase0_api_readiness")),
             _check("protocol_audit_no_api", audit.get("api_call_attempted") is False, audit.get("api_call_attempted")),
-            _check("phase1_model_ids", model_ids == EXPECTED_MODELS, model_ids),
-            _check("api_key_env_names", api_key_envs == EXPECTED_API_KEY_ENVS, api_key_envs),
-            _check("direct_provider_model_controls", configured_model_controls == expected_model_controls, configured_model_controls),
+            _check("configured_model_ids_supported", bool(model_ids) and set(model_ids).issubset(SUPPORTED_MODELS), model_ids),
+            _check("configured_model_ids_planned_by_protocol", bool(model_ids) and set(model_ids).issubset(planned_model_ids), model_ids),
+            _check("configured_api_key_env_names_present", all(isinstance(value, str) and value for value in api_key_envs), api_key_envs),
+            _check("direct_provider_model_controls", _configured_controls_match_expected(configured_model_controls, expected_model_controls), configured_model_controls),
             _check("prompt_id", prompt_manifest.get("prompt_id") == spec.get("prompt_policy", {}).get("prompt_id"), prompt_manifest.get("prompt_id")),
             _check(
                 "prompt_template_hash",
@@ -201,7 +218,7 @@ def preflight(config_path: Path, allow_missing_credentials: bool = False) -> dic
         for key in ("max_retries_per_record", "retry_only_on_transport_or_rate_limit", "no_silent_retry_for_parse_invalid")
     )
 
-    env_key_states, env_file_exists = _load_env_key_states(_resolve(config.get("env", ".env")), EXPECTED_API_KEY_ENVS)
+    env_key_states, env_file_exists = _load_env_key_states(_resolve(config.get("env", ".env")), [str(value) for value in api_key_envs])
     credentials_ready = env_file_exists and all(state == "set" for state in env_key_states.values())
     checks.append(
         _check(

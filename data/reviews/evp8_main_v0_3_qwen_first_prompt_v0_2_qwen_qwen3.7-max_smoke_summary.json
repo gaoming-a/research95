@@ -1,0 +1,119 @@
+{
+  "actual_model_id_counts": {
+    "qwen3.7-max": 35
+  },
+  "actual_model_id_missing_count": 0,
+  "api_call_attempted": true,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "cohort_id": "EVP-8",
+  "concurrency": 4,
+  "config": "configs/evp8_qwen_first_main_v0_3.local.json",
+  "configured_model_id": "qwen/qwen3.7-max",
+  "configured_model_id_counts": {
+    "qwen/qwen3.7-max": 35
+  },
+  "cost_summary": {
+    "cost_currency_counts": {
+      "CNY": 35
+    },
+    "cost_observability_counts": {
+      "estimated_from_provider_token_usage_and_official_cny_pricing": 35
+    },
+    "cost_source_counts": {
+      "estimated_from_tokens_official_qwen_cny_pricing": 35
+    },
+    "total_cost_cny": 2.130804,
+    "total_cost_usd": 0.0,
+    "unknown_cost_record_count": 0
+  },
+  "decision_counts": {
+    "accept": 16,
+    "escalate": 15,
+    "reject": 4
+  },
+  "decision_counts_by_evidence_level": {
+    "E0": {
+      "escalate": 5
+    },
+    "E1": {
+      "escalate": 5
+    },
+    "E2": {
+      "escalate": 5
+    },
+    "E3": {
+      "accept": 4,
+      "reject": 1
+    },
+    "E4": {
+      "accept": 4,
+      "reject": 1
+    },
+    "E5": {
+      "accept": 4,
+      "reject": 1
+    },
+    "E6": {
+      "accept": 4,
+      "reject": 1
+    }
+  },
+  "evidence_source_mode": "evp7_visible_artifacts",
+  "invalid_parse_count": 0,
+  "invalid_parse_count_by_evidence_level": {
+    "E0": 0,
+    "E1": 0,
+    "E2": 0,
+    "E3": 0,
+    "E4": 0,
+    "E5": 0,
+    "E6": 0
+  },
+  "mode": "executed",
+  "new_api_call_count": 35,
+  "parse_valid_count": 35,
+  "parse_valid_count_by_evidence_level": {
+    "E0": 5,
+    "E1": 5,
+    "E2": 5,
+    "E3": 5,
+    "E4": 5,
+    "E5": 5,
+    "E6": 5
+  },
+  "prompt_text_stored": false,
+  "protocol_id": "evp8_accept_aware_qwen_first_main_v0_3",
+  "provider_route": "qwen_official",
+  "provider_route_counts": {
+    "qwen_official": 35
+  },
+  "raw_outputs_generated": true,
+  "raw_response_text_stored_in_tracked_summary": false,
+  "raw_responses_out": "outputs/evp8_main_v0_3_qwen_first_prompt_v0_2_json_mode_smoke/qwen_qwen3.7-max/raw_responses.jsonl",
+  "request_include_reasoning": null,
+  "request_model_id": "qwen3.7-max",
+  "request_model_id_counts": {
+    "qwen3.7-max": 35
+  },
+  "request_reasoning": null,
+  "request_response_format": {
+    "type": "json_object"
+  },
+  "request_thinking": null,
+  "resume_enabled": false,
+  "resumed_raw_record_count": 0,
+  "review_count": 35,
+  "review_count_by_evidence_level": {
+    "E0": 5,
+    "E1": 5,
+    "E2": 5,
+    "E3": 5,
+    "E4": 5,
+    "E5": 5,
+    "E6": 5
+  },
+  "run_gate": "passed",
+  "run_scope": "smoke",
+  "smoke_gate": "passed",
+  "usage_cost_gate": "passed"
+}

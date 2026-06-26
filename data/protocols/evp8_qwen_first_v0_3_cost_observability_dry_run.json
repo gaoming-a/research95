@@ -1,0 +1,56 @@
+{
+  "all_models_planned_call_count": 686,
+  "all_planned_model_count": 1,
+  "api_call_attempted": false,
+  "candidate_count": 98,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "claim_boundary": "This validates planned usage/cost observability fields for the Qwen-first EVP-8 v0.3 main-experiment batch only; it is not a billing statement.",
+  "cohort_id": "EVP-8",
+  "cost_observability_dry_run_status": "passed",
+  "deepseek_qwen_excluded_from_later_openrouter_budget_estimate": true,
+  "expected_planned_calls_per_model": 686,
+  "local_api_config_read": false,
+  "max_output_tokens": 4096,
+  "missing_provider_or_model_id_blocks_api": true,
+  "missing_usage_cost_fields": [],
+  "model_visible_levels": [
+    "E0",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6"
+  ],
+  "phase1_first_batch_models": [
+    "qwen/qwen3.7-max"
+  ],
+  "phase1_planned_call_count": 686,
+  "phase2_later_batch_models": [],
+  "phase2_planned_call_count": 0,
+  "planned_calls_by_level": {
+    "E0": 98,
+    "E1": 98,
+    "E2": 98,
+    "E3": 98,
+    "E4": 98,
+    "E5": 98,
+    "E6": 98
+  },
+  "planned_calls_per_model": 686,
+  "protocol_id": "evp8_accept_aware_qwen_first_main_v0_3",
+  "raw_outputs_generated": false,
+  "required_usage_cost_fields": [
+    "record_prompt_tokens",
+    "record_completion_tokens",
+    "record_total_tokens",
+    "record_provider_cost_usd",
+    "record_provider_cost_cny",
+    "record_cost_currency",
+    "record_cost_source"
+  ],
+  "retry_policy_failures": [],
+  "routing_policy_failures": [],
+  "temperature": 0.0,
+  "unknown_usage_blocks_api": true
+}

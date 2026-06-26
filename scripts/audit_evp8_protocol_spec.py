@@ -28,6 +28,7 @@ EXPECTED_PHASE2_MODELS = (
 SUPPORTED_PROTOCOL_IDS = {
     "evp8_journal_full_ladder_v0_1",
     "evp8_accept_aware_full_ladder_v0_2",
+    "evp8_accept_aware_qwen_first_main_v0_3",
 }
 SUPPORTED_PROMPT_IDS = {
     "evp8_visible_evidence_merge_gate_v0_1",

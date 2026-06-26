@@ -8,7 +8,8 @@
 
 ## 当前同步状态
 
-- 分支：当前工作分支为 `evp8-accept-aware-retest`；历史主线为 `main`
+- 分支：当前工作分支为 `evp8-v03-qwen-main-exp`；上一诊断分支为
+  `evp8-accept-aware-retest`；历史主线为 `main`
 - 远端：`origin/main`
 - 当前 Git 状态：以 `git status --short --branch` 和
   `git log -1 --oneline` 为准。不要只依赖本文件里记录的 hash 判断是否 ahead；
@@ -101,6 +102,28 @@
     `accept:24, reject:74`；
   - 该结果只支持 two-model accept-aware retest 的描述性结论，不覆盖或替代
     frozen EVP-8 v0.1 five-model synthesis。
+- 本轮新增 EVP-8 v0.3 Qwen-first main-experiment batch：
+  - v0.3 复用冻结 prompt v0.2 文本和 accept-aware visible evidence
+    construction，但作为 Qwen-first 主实验第一批结果重新冻结 protocol/config/
+    packet；
+  - Qwen-only strict preflight passed，仅验证 `QWEN_API_KEY` presence；
+  - smoke check-only 和 full check-only 均 passed，full check-only 为
+    686 packets、0 boundary/schema errors，E6 deterministic branch 为
+    `accept:25, reject:73`；
+  - Qwen smoke passed：35/35 parse-valid，decision counts 为
+    `accept:16, escalate:15, reject:4`，estimated cost CNY `2.130804`；
+  - Qwen full passed：686/686 parse-valid，actual model id
+    `qwen3.7-max=686`，decision counts 为
+    `accept:86, escalate:230, reject:370`，estimated cost CNY `40.88994`；
+  - per-level full counts:
+    E0 `escalate:74, reject:24`；E1 `escalate:74, reject:24`；
+    E2 `escalate:73, reject:25`；E3 `accept:20, escalate:4, reject:74`；
+    E4 `accept:21, escalate:2, reject:75`；
+    E5 `accept:21, escalate:3, reject:74`；E6 `accept:24, reject:74`；
+  - raw-output-free result audit and synthesis 均为 `passed`；
+  - 该结果只支持 v0.3 Qwen-first 描述性 decision-pattern reporting，不支持
+    五模型最终主实验结论、DeepSeek/Qwen 对比、LLM superiority 或最终
+    evidence-level effectiveness claim。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。最近一次已确认
   `git push origin main` 成功；最终是否仍 ahead 仍以
@@ -141,6 +164,10 @@
   - EVP-8 accept-aware v0.2 retest：DeepSeek 和 Qwen 各 98 candidates x 7
     evidence levels = 686 records，均为 686/686 parse-valid；该 retest 只报告
     accept-aware two-model patterns，不是新五模型最终结果；
+  - EVP-8 v0.3 Qwen-first main-experiment batch：Qwen3.7 Max 覆盖
+    98 candidates x 7 evidence levels = 686 records，686/686 parse-valid；
+    该结果只报告 Qwen-first patterns，后续 DeepSeek/Kimi/Devstral/Gemini
+    需要另行授权；
   - SQJ low-cost submission route：当前首选投稿目标为 Software Quality
     Journal，按 CCF C 类 / 学校 C 类口径作为 D 类及以上候选；投稿前必须先由
     学院/科研秘书确认发表当年 CCF 目录、高风险/预警名单状态和学校认定口径；

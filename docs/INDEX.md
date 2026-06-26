@@ -190,6 +190,35 @@
   two-model synthesis for the accept-aware retest. Current status is `passed`;
   it supports only descriptive DeepSeek/Qwen v0.2 decision-pattern reporting,
   not a new five-model final claim.
+- `../data/protocols/evp8_protocol_v0_3_qwen_first.json`: EVP-8 v0.3
+  Qwen-first main-experiment protocol. It reuses the frozen prompt v0.2 text
+  and accept-aware visible evidence construction, but pre-registers a
+  Qwen-only first batch rather than a post-hoc diagnostic retest.
+- `../configs/evp8_qwen_first_main_v0_3.example.json`: tracked no-secret
+  Qwen-first v0.3 config. The ignored local copy is
+  `configs/evp8_qwen_first_main_v0_3.local.json`; it lists only
+  `qwen/qwen3.7-max`, uses JSON mode, and verifies only `QWEN_API_KEY`.
+- `../data/protocols/evp8_qwen_first_main_v0_3_prompt_v0_2_full_check_only.json`:
+  no-API full check-only summary for the v0.3 Qwen-first batch. Current status
+  is `passed`; deterministic E6 has `accept:25` and `reject:73`.
+- `../data/protocols/evp8_qwen_first_main_v0_3_prompt_v0_2_full_run_packet.json`:
+  no-API execution packet for the v0.3 Qwen-first full run. It records the
+  smoke/full Qwen commands, expected ignored raw-output paths, tracked summary
+  paths, Qwen-first execution-order policy, and non-authorization boundary.
+- `../data/reviews/evp8_main_v0_3_qwen_first_prompt_v0_2_qwen_qwen3.7-max_smoke_summary.json`:
+  raw-output-free summary of the v0.3 Qwen smoke run. Current status is passed:
+  35/35 parse-valid, `accept=16`, `escalate=15`, `reject=4`.
+- `../data/reviews/evp8_main_v0_3_qwen_first_prompt_v0_2_qwen_qwen3.7-max_full_summary.json`:
+  raw-output-free summary of the v0.3 Qwen full run. Current status is passed:
+  686/686 parse-valid, `accept=86`, `escalate=230`, `reject=370`, estimated
+  cost CNY `40.88994`.
+- `../data/protocols/evp8_qwen_first_main_v0_3_prompt_v0_2_full_result_audit.json`:
+  raw-output-free post-run audit for the v0.3 Qwen-first batch. Current status
+  is `passed`; it does not read ignored raw responses.
+- `../data/protocols/evp8_qwen_first_main_v0_3_prompt_v0_2_full_synthesis.json`:
+  no-API synthesis for the v0.3 Qwen-first batch. Current status is `passed`;
+  it supports only descriptive Qwen per-level decision-pattern reporting for
+  the frozen 98-candidate packet set.
 - `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:
   no-key public OpenRouter catalog audit for the G7 later-model pinned IDs:
   `moonshotai/kimi-k2.6`, `mistralai/devstral-2512`, and

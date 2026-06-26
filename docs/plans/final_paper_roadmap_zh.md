@@ -1141,6 +1141,15 @@ generalization。成本审计已将 passed-result cost 与 Kimi blocked-attempt 
 7. 当前 SQJ 低成本投稿路线冻结在已完成的 98-candidate / 7-level / 5-model
    EVP-8 v0.1 结果上，不再把 30-50 validation-stable bugs 当作投稿前硬门槛。
 
+2026-06-26 更新：在确认 v0.1 `0 accept` 与 visible evidence construction
+有关后，新增 EVP-8 v0.3 Qwen-first main-experiment batch。v0.3 复用冻结的
+prompt v0.2 文本和 accept-aware visible evidence construction，但本轮只执行
+`qwen/qwen3.7-max`：686/686 parse-valid，decision counts 为
+`accept=86, escalate=230, reject=370`。该结果只能作为 Qwen-first 主实验第一批
+描述性结果；不能替代 v0.1 五模型 synthesis，也不能写成五模型最终主实验结论、
+DeepSeek/Qwen 对比结论或 LLM superiority claim。后续是否执行其他模型必须由
+用户再次明确授权。
+
 后续执行顺序：
 
 1. EVP-8 Phase 1 DeepSeek/Qwen smoke 已完成并通过 G4 synthesis；

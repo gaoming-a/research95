@@ -1,0 +1,89 @@
+{
+  "api_call_attempted": false,
+  "api_key_values_printed": false,
+  "boundary_error_count": 0,
+  "boundary_errors": [],
+  "candidate_count": 5,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "check_only_status": "passed",
+  "cohort_id": "EVP-8",
+  "config": "configs/evp8_qwen_first_main_v0_3.local.json",
+  "deterministic_tool_baseline_dry_run_status": "passed",
+  "deterministic_visible_merge_gate_counts": {
+    "accept": 4,
+    "missing": 30,
+    "reject": 1
+  },
+  "evidence_source_mode": "evp7_visible_artifacts",
+  "expected_packet_count": 35,
+  "invalid_schema_count": 0,
+  "local_api_config_read": false,
+  "local_config_content_stored_in_tracked_summary": false,
+  "mode": "check_only",
+  "model_visible_levels": [
+    "E0",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6"
+  ],
+  "next_step": "Wait for explicit user command before running --execute smoke.",
+  "packet_count": 35,
+  "packet_dry_run_status": "passed",
+  "planned_baseline_record_count": 35,
+  "planned_packet_skeleton_count": 35,
+  "preflight_ready_for_user_execute_command": true,
+  "preflight_structural_ready": true,
+  "prompt_chars_max": 10138,
+  "prompt_chars_min": 4072,
+  "prompt_count": 35,
+  "prompt_hashes_unique_count": 35,
+  "prompt_text_stored": false,
+  "protocol_id": "evp8_accept_aware_qwen_first_main_v0_3",
+  "raw_outputs_generated": false,
+  "run_scope": "smoke",
+  "schema_dry_run_record_count": 35,
+  "schema_dry_run_status": "passed",
+  "schema_error_count": 0,
+  "schema_error_counts": {},
+  "schema_rule_decision_counts": {
+    "accept": 4,
+    "escalate": 30,
+    "reject": 1
+  },
+  "schema_rule_decision_counts_by_evidence_level": {
+    "E0": {
+      "escalate": 5
+    },
+    "E1": {
+      "escalate": 5
+    },
+    "E2": {
+      "escalate": 5
+    },
+    "E3": {
+      "escalate": 5
+    },
+    "E4": {
+      "escalate": 5
+    },
+    "E5": {
+      "escalate": 5
+    },
+    "E6": {
+      "accept": 4,
+      "reject": 1
+    }
+  },
+  "selected_candidate_ids": [
+    "evp8_smoke_candidate_0001",
+    "evp8_smoke_candidate_0011",
+    "evp8_smoke_candidate_0030",
+    "evp8_smoke_candidate_0040",
+    "evp8_smoke_candidate_0047"
+  ],
+  "selection_policy": "deterministic_project_frequency_stratified_first_candidate_per_top_project",
+  "valid_schema_count": 35
+}

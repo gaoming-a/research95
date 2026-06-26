@@ -1,0 +1,288 @@
+{
+  "api_call_attempted": false,
+  "audit_id": "evp8_qwen_first_main_v0_3_prompt_v0_2_full_result_audit",
+  "audit_status": "passed",
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "claim_boundary": "This audit validates tracked first-batch full-run summaries when they exist. It is not model-result evidence before execution and never reads raw responses.",
+  "cohort_id": "EVP-8",
+  "evidence_source_mode": "evp7_visible_artifacts",
+  "execution_order_policy": "qwen_first_no_deepseek_dependency",
+  "model_audits": [
+    {
+      "checks": [
+        {
+          "check": "mode_executed",
+          "detail": "executed",
+          "passed": true
+        },
+        {
+          "check": "run_scope_full",
+          "detail": "full",
+          "passed": true
+        },
+        {
+          "check": "api_call_attempted_true_for_executed_summary",
+          "detail": true,
+          "passed": true
+        },
+        {
+          "check": "protocol_id",
+          "detail": "evp8_accept_aware_qwen_first_main_v0_3",
+          "passed": true
+        },
+        {
+          "check": "candidate_set_id",
+          "detail": "evp8_smoke_from_evp7_structural_98_v0_1",
+          "passed": true
+        },
+        {
+          "check": "request_model_id",
+          "detail": "qwen3.7-max",
+          "passed": true
+        },
+        {
+          "check": "provider_route",
+          "detail": "qwen_official",
+          "passed": true
+        },
+        {
+          "check": "request_model_id_counts",
+          "detail": {
+            "qwen3.7-max": 686
+          },
+          "passed": true
+        },
+        {
+          "check": "provider_route_counts",
+          "detail": {
+            "qwen_official": 686
+          },
+          "passed": true
+        },
+        {
+          "check": "actual_model_id_count_total",
+          "detail": {
+            "qwen3.7-max": 686
+          },
+          "passed": true
+        },
+        {
+          "check": "actual_model_id_missing_count",
+          "detail": 0,
+          "passed": true
+        },
+        {
+          "check": "actual_model_id_counts_no_missing",
+          "detail": {
+            "qwen3.7-max": 686
+          },
+          "passed": true
+        },
+        {
+          "check": "review_count",
+          "detail": 686,
+          "passed": true
+        },
+        {
+          "check": "parse_valid_count",
+          "detail": 686,
+          "passed": true
+        },
+        {
+          "check": "invalid_parse_count",
+          "detail": 0,
+          "passed": true
+        },
+        {
+          "check": "review_count_by_evidence_level",
+          "detail": {
+            "E0": 98,
+            "E1": 98,
+            "E2": 98,
+            "E3": 98,
+            "E4": 98,
+            "E5": 98,
+            "E6": 98
+          },
+          "passed": true
+        },
+        {
+          "check": "parse_valid_count_by_evidence_level",
+          "detail": {
+            "E0": 98,
+            "E1": 98,
+            "E2": 98,
+            "E3": 98,
+            "E4": 98,
+            "E5": 98,
+            "E6": 98
+          },
+          "passed": true
+        },
+        {
+          "check": "invalid_parse_count_by_evidence_level",
+          "detail": {
+            "E0": 0,
+            "E1": 0,
+            "E2": 0,
+            "E3": 0,
+            "E4": 0,
+            "E5": 0,
+            "E6": 0
+          },
+          "passed": true
+        },
+        {
+          "check": "decision_counts_by_evidence_level_levels",
+          "detail": [
+            "E0",
+            "E1",
+            "E2",
+            "E3",
+            "E4",
+            "E5",
+            "E6"
+          ],
+          "passed": true
+        },
+        {
+          "check": "decision_counts_by_evidence_level_totals",
+          "detail": {
+            "E0": 98,
+            "E1": 98,
+            "E2": 98,
+            "E3": 98,
+            "E4": 98,
+            "E5": 98,
+            "E6": 98
+          },
+          "passed": true
+        },
+        {
+          "check": "run_gate",
+          "detail": "passed",
+          "passed": true
+        },
+        {
+          "check": "first_batch_full_gate",
+          "detail": "passed",
+          "passed": true
+        },
+        {
+          "check": "usage_cost_gate",
+          "detail": "passed",
+          "passed": true
+        },
+        {
+          "check": "unknown_cost_record_count",
+          "detail": 0,
+          "passed": true
+        },
+        {
+          "check": "configured_model_id",
+          "detail": "qwen/qwen3.7-max",
+          "passed": true
+        },
+        {
+          "check": "raw_responses_out_matches_packet",
+          "detail": "outputs/evp8_main_v0_3_qwen_first_prompt_v0_2_json_mode_full/qwen_qwen3.7-max/raw_responses.jsonl",
+          "passed": true
+        },
+        {
+          "check": "raw_response_text_not_stored_in_summary",
+          "detail": false,
+          "passed": true
+        },
+        {
+          "check": "prompt_text_not_stored_in_summary",
+          "detail": false,
+          "passed": true
+        },
+        {
+          "check": "raw_outputs_generated_flag",
+          "detail": true,
+          "passed": true
+        },
+        {
+          "check": "raw_path_under_outputs",
+          "detail": "outputs/evp8_main_v0_3_qwen_first_prompt_v0_2_json_mode_full/qwen_qwen3.7-max/raw_responses.jsonl",
+          "passed": true
+        }
+      ],
+      "decision_counts_by_evidence_level": {
+        "E0": {
+          "escalate": 74,
+          "reject": 24
+        },
+        "E1": {
+          "escalate": 74,
+          "reject": 24
+        },
+        "E2": {
+          "escalate": 73,
+          "reject": 25
+        },
+        "E3": {
+          "accept": 20,
+          "escalate": 4,
+          "reject": 74
+        },
+        "E4": {
+          "accept": 21,
+          "escalate": 2,
+          "reject": 75
+        },
+        "E5": {
+          "accept": 21,
+          "escalate": 3,
+          "reject": 74
+        },
+        "E6": {
+          "accept": 24,
+          "reject": 74
+        }
+      },
+      "model_id": "qwen/qwen3.7-max",
+      "raw_response_path": "outputs/evp8_main_v0_3_qwen_first_prompt_v0_2_json_mode_full/qwen_qwen3.7-max/raw_responses.jsonl",
+      "status": "passed",
+      "summary_path": "data/reviews/evp8_main_v0_3_qwen_first_prompt_v0_2_qwen_qwen3.7-max_full_summary.json",
+      "summary_present": true
+    }
+  ],
+  "order_checks": [
+    {
+      "check": "packet_ready",
+      "detail": "ready",
+      "passed": true
+    },
+    {
+      "check": "packet_does_not_authorize_execution",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "packet_no_api",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_outputs_not_read_by_audit",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "qwen_requires_deepseek_passed",
+      "detail": {
+        "deepseek_status": null,
+        "execution_order_policy": "qwen_first_no_deepseek_dependency",
+        "qwen_present": true
+      },
+      "passed": true
+    }
+  ],
+  "packet_id": "evp8_qwen_first_main_v0_3_prompt_v0_2_full_run_packet",
+  "protocol_id": "evp8_accept_aware_qwen_first_main_v0_3",
+  "raw_outputs_generated_by_audit": false,
+  "raw_outputs_read": false,
+  "rendered_prompt_text_read": false
+}

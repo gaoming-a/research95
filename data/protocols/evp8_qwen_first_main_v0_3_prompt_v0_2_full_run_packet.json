@@ -1,0 +1,64 @@
+{
+  "api_call_attempted": false,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "cohort_id": "EVP-8",
+  "config_example": "configs/evp8_qwen_first_main_v0_3.example.json",
+  "config_local": "configs/evp8_qwen_first_main_v0_3.local.json",
+  "evidence_source_mode": "evp7_visible_artifacts",
+  "execute_commands_after_explicit_user_authorization": [
+    {
+      "command": "python scripts\\run_evp8_deepseek_qwen_smoke.py --execute --run-scope full --config configs\\evp8_qwen_first_main_v0_3.local.json --model-id qwen/qwen3.7-max --summary-out data\\reviews\\evp8_main_v0_3_qwen_first_prompt_v0_2_qwen_qwen3.7-max_full_summary.json --concurrency 4",
+      "model_id": "qwen/qwen3.7-max",
+      "outputs": {
+        "raw_responses": "outputs/evp8_main_v0_3_qwen_first_prompt_v0_2_json_mode_full/qwen_qwen3.7-max/raw_responses.jsonl",
+        "tracked_summary": "data/reviews/evp8_main_v0_3_qwen_first_prompt_v0_2_qwen_qwen3.7-max_full_summary.json"
+      },
+      "proceed_if": "qwen smoke tracked summary run_gate == passed",
+      "provider_route": "qwen_official",
+      "request_model_id": "qwen3.7-max",
+      "step": "qwen_first_main_v0_3_prompt_v0_2_full_after_smoke_gate"
+    }
+  ],
+  "execution_authorized_by_packet": false,
+  "execution_order_policy": "qwen_first_no_deepseek_dependency",
+  "expected_calls_per_model": 686,
+  "expected_models": [
+    "qwen/qwen3.7-max"
+  ],
+  "expected_total_model_calls": 686,
+  "packet_id": "evp8_qwen_first_main_v0_3_prompt_v0_2_full_run_packet",
+  "packet_status": "ready",
+  "protocol_id": "evp8_accept_aware_qwen_first_main_v0_3",
+  "result_audit_id": "evp8_qwen_first_main_v0_3_prompt_v0_2_full_result_audit",
+  "run_scope": "full",
+  "smoke_execute_command_after_explicit_user_authorization": {
+    "command": "python scripts\\run_evp8_deepseek_qwen_smoke.py --execute --run-scope smoke --config configs\\evp8_qwen_first_main_v0_3.local.json --model-id qwen/qwen3.7-max --summary-out data\\reviews\\evp8_main_v0_3_qwen_first_prompt_v0_2_qwen_qwen3.7-max_smoke_summary.json --concurrency 4",
+    "model_id": "qwen/qwen3.7-max",
+    "outputs": {
+      "raw_responses": "outputs/evp8_main_v0_3_qwen_first_prompt_v0_2_json_mode_smoke/qwen_qwen3.7-max/raw_responses.jsonl",
+      "tracked_summary": "data/reviews/evp8_main_v0_3_qwen_first_prompt_v0_2_qwen_qwen3.7-max_smoke_summary.json"
+    },
+    "provider_route": "qwen_official",
+    "request_model_id": "qwen3.7-max",
+    "step": "qwen_first_main_v0_3_prompt_v0_2_smoke"
+  },
+  "stop_gates": [
+    "v0_3_check_only_failed",
+    "prompt_boundary_failed",
+    "schema_rule_accept_branch_absent",
+    "raw_output_path_exists_without_resume",
+    "qwen_smoke_summary_blocked",
+    "qwen_full_summary_blocked",
+    "parse_or_cost_gate_failed"
+  ],
+  "tracked_no_api_checks": [
+    "python scripts\\build_evp8_prompt_manifest.py --spec-in data\\protocols\\evp8_protocol_v0_3_qwen_first.json --template-in prompts\\evp8_visible_evidence_merge_gate_v0_2.md --manifest-out data\\protocols\\evp8_prompt_manifest_v0_3_qwen_first_prompt_v0_2.json --boundary-audit-out data\\protocols\\evp8_prompt_boundary_audit_v0_3_qwen_first_prompt_v0_2.json --check",
+    "python scripts\\audit_evp8_protocol_spec.py --spec-in data\\protocols\\evp8_protocol_v0_3_qwen_first.json --summary-out data\\protocols\\evp8_protocol_v0_3_qwen_first_audit_summary.json --check",
+    "python scripts\\preflight_evp8_deepseek_qwen.py --config configs\\evp8_qwen_first_main_v0_3.local.json --strict-api-ready --out data\\protocols\\evp8_qwen_first_main_v0_3_prompt_v0_2_preflight_summary.json",
+    "python scripts\\run_evp8_deepseek_qwen_smoke.py --check-only --run-scope smoke --config configs\\evp8_qwen_first_main_v0_3.local.json --summary-out data\\protocols\\evp8_qwen_first_main_v0_3_prompt_v0_2_smoke_check_only.json",
+    "python scripts\\run_evp8_deepseek_qwen_smoke.py --check-only --run-scope full --config configs\\evp8_qwen_first_main_v0_3.local.json --summary-out data\\protocols\\evp8_qwen_first_main_v0_3_prompt_v0_2_full_check_only.json",
+    "python scripts\\audit_evp8_first_batch_full_results.py --packet data\\protocols\\evp8_qwen_first_main_v0_3_prompt_v0_2_full_run_packet.json --json-out data\\protocols\\evp8_qwen_first_main_v0_3_prompt_v0_2_full_result_audit.json --md-out docs\\experiments\\evp8_qwen_first_main_v0_3_prompt_v0_2_full_result_audit.md --check",
+    "python scripts\\summarize_evp8_first_batch_full_synthesis.py --audit data\\protocols\\evp8_qwen_first_main_v0_3_prompt_v0_2_full_result_audit.json --json-out data\\protocols\\evp8_qwen_first_main_v0_3_prompt_v0_2_full_synthesis.json --md-out docs\\experiments\\evp8_qwen_first_main_v0_3_prompt_v0_2_full_synthesis.md --check"
+  ],
+  "version_boundary": "This v0.3 Qwen-first packet pre-registers the accept-aware visible evidence construction for one Qwen main-experiment batch. It does not overwrite EVP-8 v0.1/v0.2 summaries and does not support final five-model claims."
+}
