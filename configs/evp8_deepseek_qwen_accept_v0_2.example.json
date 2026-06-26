@@ -1,0 +1,90 @@
+{
+  "api_execution_authorized": false,
+  "candidate_set": "data/protocols/evp8_candidate_set_v0_1.json",
+  "config_id": "evp8_deepseek_qwen_accept_aware_v0_2_prompt_v0_2_json_mode",
+  "cost_observability_dry_run": "data/protocols/evp8_accept_v0_2_cost_observability_dry_run.json",
+  "deterministic_tool_baseline_dry_run": "data/protocols/evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_check_only.json",
+  "env": ".env",
+  "evidence_source_mode": "evp7_visible_artifacts",
+  "execution_requires_explicit_execute_flag": true,
+  "full": {
+    "candidate_count": 98,
+    "levels": [
+      "E0",
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "E5",
+      "E6"
+    ],
+    "output_dir": "outputs/evp8_accept_aware_v0_2_prompt_v0_2_json_mode_deepseek_qwen_full",
+    "packet_suffix": "evp8_accept_aware_full_v0_2_prompt_v0_2",
+    "planned_calls_per_model": 686
+  },
+  "max_output_tokens": 4096,
+  "models": [
+    {
+      "api_key_env": "DEEPSEEK_API_KEY",
+      "model_id": "deepseek/deepseek-v4-pro",
+      "provider_route": "deepseek_official",
+      "request_model_id": "deepseek-v4-pro",
+      "response_format": {
+        "type": "json_object"
+      },
+      "thinking": {
+        "type": "disabled"
+      }
+    },
+    {
+      "api_key_env": "QWEN_API_KEY",
+      "model_id": "qwen/qwen3.7-max",
+      "provider_route": "qwen_official",
+      "request_model_id": "qwen3.7-max",
+      "response_format": {
+        "type": "json_object"
+      }
+    }
+  ],
+  "overwrite_policy": "refuse_if_output_exists",
+  "packet_dry_run_summary": "data/protocols/evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_check_only.json",
+  "prompt_boundary_audit": "data/protocols/evp8_prompt_boundary_audit_v0_2.json",
+  "prompt_manifest": "data/protocols/evp8_prompt_manifest_v0_2.json",
+  "prompt_template": "prompts/evp8_visible_evidence_merge_gate_v0_2.md",
+  "protocol_audit_summary": "data/protocols/evp8_protocol_v0_2_audit_summary.json",
+  "protocol_spec": "data/protocols/evp8_protocol_v0_2.json",
+  "raw_output_policy": "ignored_outputs_only",
+  "record_actual_model_id": true,
+  "record_actual_provider": true,
+  "record_cost_currency": true,
+  "record_cost_source": true,
+  "record_provider_cost_cny": true,
+  "record_provider_cost_usd": true,
+  "retry_policy": {
+    "max_retries_per_record": 1,
+    "no_silent_retry_for_parse_invalid": true,
+    "retry_only_on_transport_or_rate_limit": true
+  },
+  "schema_dry_run_summary": "data/protocols/evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_check_only.json",
+  "smoke": {
+    "candidate_count": 5,
+    "levels": [
+      "E0",
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "E5",
+      "E6"
+    ],
+    "output_dir": "outputs/evp8_accept_aware_v0_2_prompt_v0_2_json_mode_deepseek_qwen_smoke",
+    "packet_suffix": "evp8_accept_aware_smoke_v0_2_prompt_v0_2",
+    "planned_calls_per_model": 35
+  },
+  "temperature": 0.0,
+  "visible_artifact_sources": {
+    "tool_only_decisions": "data/baselines/evp7_tool_only_decisions.jsonl",
+    "visible_test_outcomes": "data/evidence/evp7_visible_test_outcomes.jsonl",
+    "visible_tool_summaries": "data/evidence/evp7_visible_tool_summaries.jsonl"
+  }
+}

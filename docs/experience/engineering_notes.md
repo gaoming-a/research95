@@ -3292,3 +3292,27 @@ This file starts fresh for the patch-verification project.
   source draft plus figures as submission authorization.
 - Include the readiness audit in both paper readiness and local quality gates
   so the route remains visible from normal verification commands.
+
+## 2026-06-26 EVP-8 accept-aware retest closure
+
+- A `0 accept` result can be caused by evidence construction, not only model
+  conservatism. The original EVP-8 v0.1 full run exposed visible test/static/
+  tool slots mostly as not-run placeholders, and its E6 deterministic visible
+  merge gate had no accept branch. For an accept-aware retest, derive E3-E6
+  from already model-visible sanitized artifacts and keep hidden evaluator
+  labels out of the packet.
+- Treat prompt/schema repairs as versioned experiments. The first v0.2
+  DeepSeek diagnostic run was blocked by an invented risk flag; prompt v0.2
+  tightened the risk-flag enum without changing the decision policy. A later
+  DeepSeek diagnostic run was blocked because several responses spent tokens in
+  `reasoning_content` while `message.content` was empty. Do not parse
+  reasoning content as the result.
+- Provider request controls belong in protocol/config/preflight, not in an
+  ad hoc command. The passed retest used JSON mode for DeepSeek and Qwen, and
+  disabled DeepSeek thinking. The preflight now checks these direct-provider
+  controls against the protocol before API execution.
+- Smoke-test provider controls before another 686-call run. DeepSeek and Qwen
+  json-mode smoke runs both passed before the full reruns. The final full
+  retest had 686/686 parse-valid records for both models, with raw responses
+  retained only under ignored `outputs/` and tracked summaries kept
+  raw-output-free.

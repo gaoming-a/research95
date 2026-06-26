@@ -17848,3 +17848,134 @@ Verify:
   gate，未编译 PDF；
 - `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\sqj_freeze_readiness.json --out-md outputs\local_quality_gate\sqj_freeze_readiness.md`
   通过，`passed=true`。
+
+## 2026-06-26 EVP-8 accept-aware v0.2 DeepSeek/Qwen retest
+
+Inspect:
+
+- 用户指出 EVP-8 最终 `0 accept` 可能由实验设置造成，并要求新建分支修改后对
+  DeepSeek 和 Qwen 重新测试；
+- 当前 `main...origin/main` 干净，已新建分支
+  `evp8-accept-aware-retest`；
+- 检查发现 v0.1 prompt 允许 `accept`，但要求 visible evidence 直接支持 patch；
+- v0.1 runner 在 full scope 中把 visible fail-to-pass / static / P2P / broader
+  diagnostics 写成 `not_run_in_first_batch_full`、`not_materialized` 或
+  `not_recorded`，且 E6 deterministic visible merge-gate summary 只有默认
+  `escalate` 和失败时 `reject`，没有 `accept` 分支；
+- 因此 v0.1 的 `0 accept` 不能解释为模型自然不会接受 patch，而应视作
+  accept-evidence construction 缺失导致的保守门控现象。
+
+Plan:
+
+1. 保留 EVP-8 v0.1 结果不变，新增 accept-aware v0.2 输出路径和文档边界；
+2. 在 EVP-8 DeepSeek/Qwen runner 中加入 v0.2 可见证据构造：
+   - 从既有 model-visible EVP-7 visible-test / visible-tool-summary artifacts
+     派生 E3-E6 可见测试与工具摘要；
+   - E6 deterministic visible merge-gate summary 必须支持 `accept`、`reject`
+     和 `escalate` 三种分支；
+   - 不向模型暴露 expected outcome、candidate type、hidden oracle、reference
+     provenance 或 evaluator labels；
+3. 新增 v0.2 tracked config/example、check-only summary、DeepSeek/Qwen tracked
+   result summaries和 two-model synthesis；
+4. 先运行 no-API prompt-boundary / schema / check-only 验证，确认 v0.2 预期
+   E6 deterministic summary 中存在 accept 分支且无泄露；
+5. 在 no-API gate 通过后，按用户本轮明确要求仅重测：
+   - `deepseek/deepseek-v4-pro`；
+   - `qwen/qwen3.7-max`；
+   预计 98 candidates x 7 levels x 2 models = 1372 model calls；
+6. 重测后运行 raw-output-free result audit/synthesis，更新 README、docs index、
+   current state 和 engineering notes；
+7. 只暂存本轮相关文件，检查 diff / sensitive scan，提交并推送该分支。
+
+Boundary:
+
+- 本轮不修改 v0.1 tracked result summaries，不覆盖 v0.1 raw outputs；
+- 本轮不跑 Kimi、Devstral、Gemini；
+- 本轮不把 v0.2 结果写成最终五模型结论，只能报告 DeepSeek/Qwen two-model
+  accept-aware retest；
+- 任何 raw model response 仍只能写入 ignored `outputs/`；
+- 如果 v0.2 no-API boundary 检查发现泄露、accept 分支来自 hidden/evaluator
+  label，或 API preflight 不通过，必须暂停真实 API；
+- 如果真实 API 产生 parse/cost/model metadata 缺口，必须先诊断，不得继续写正向
+  论文结论。
+
+Execute / Diagnose Update:
+
+- 已完成 v0.2 accept-aware evidence construction 和 prompt v0.2 no-API gates：
+  - prompt manifest / boundary audit 通过；
+  - protocol audit 通过；
+  - strict preflight 通过；
+  - full check-only 通过，`schema_rule_decision_counts = accept:25,
+    escalate:588, reject:73`，E6 deterministic branch 为
+    `accept:25, reject:73`；
+- 旧 prompt v0.1 路径下的一次 DeepSeek v0.2 尝试因 1 条 invalid risk flag
+  被判定为 blocked attempt，未计入结果；
+- prompt v0.2 路径下的 DeepSeek full rerun 已完成 686 calls，但
+  `run_gate=blocked`：
+  - `parse_valid_count=683`；
+  - `invalid_parse_count=3`；
+  - `usage_cost_gate=passed`；
+  - `actual_model_id_counts.deepseek-v4-pro=686`；
+  - 3 条 invalid 均为 `message.content` 为空、无 JSON object；
+  - response metadata 显示 token 被写入 `reasoning_content`，其中 2 条
+    `finish_reason=length`。
+
+Repair Plan Before Any Further API:
+
+1. 不启动 Qwen，直到 DeepSeek 通过 parse/cost/model gate；
+2. 保留 blocked DeepSeek raw/summary 在 ignored 输出中，只作为诊断，不作为
+   passed evidence；
+3. 将 DeepSeek/Qwen runner 与 config 修为显式 JSON-mode request：
+   - DeepSeek official route: `thinking: {"type":"disabled"}`；
+   - DeepSeek/Qwen: `response_format: {"type":"json_object"}`；
+   - 不读取或解析 `reasoning_content` 作为结果；
+4. 新增干净输出路径，避免复用 blocked raw；
+5. 先跑 DeepSeek smoke 验证 JSON-mode request 与 parse gate，再跑 DeepSeek
+   full；只有 DeepSeek full audit 通过后，才启动 Qwen retest。
+
+Repair / Verify Result:
+
+- 已修复 `src/cross_review/openrouter.py`，为 OpenAI-compatible client 增加
+  `thinking` 和 `response_format` request fields；
+- 已修复 `scripts/run_evp8_deepseek_qwen_smoke.py`，从 model config 透传
+  `reasoning`、`include_reasoning`、`thinking`、`response_format`，并在 summary
+  中记录 request controls；
+- 已修复 `scripts/preflight_evp8_deepseek_qwen.py`，校验 config 中的
+  direct-provider request controls 与 protocol 一致；
+- 已更新 `data/protocols/evp8_protocol_v0_2.json` 和
+  `configs/evp8_deepseek_qwen_accept_v0_2.example.json`：
+  - DeepSeek: `response_format={"type":"json_object"}` 且
+    `thinking={"type":"disabled"}`；
+  - Qwen: `response_format={"type":"json_object"}`；
+- 已运行并通过：
+  - `python -m py_compile src\cross_review\openrouter.py scripts\preflight_evp8_deepseek_qwen.py scripts\audit_evp8_protocol_spec.py scripts\run_evp8_deepseek_qwen_smoke.py`；
+  - prompt manifest / boundary audit v0.2；
+  - protocol audit v0.2；
+  - strict preflight；
+  - full check-only；
+  - waiting-state result audit / synthesis；
+  - DeepSeek json-mode smoke：35/35 parse-valid；
+  - DeepSeek json-mode full：686/686 parse-valid，`run_gate=passed`，
+    `usage_cost_gate=passed`；
+  - Qwen json-mode smoke：35/35 parse-valid；
+  - Qwen json-mode full：686/686 parse-valid，`run_gate=passed`，
+    `usage_cost_gate=passed`；
+  - final result audit：`audit_status=passed`；
+  - final two-model synthesis：`synthesis_status=passed`。
+
+Result Boundary:
+
+- DeepSeek v0.2 json-mode full summary：
+  - total decisions: `accept=80, escalate=287, reject=319`；
+  - E6: `accept=23, reject=75`；
+  - estimated cost: USD `0.4300004`；
+- Qwen v0.2 json-mode full summary：
+  - total decisions: `accept=82, escalate=238, reject=366`；
+  - E6: `accept=24, reject=74`；
+  - estimated cost: CNY `40.96758`；
+- 结论：最终 `0 accept` 与 v0.1 实验设置有关。v0.1 缺少可见正向测试/工具
+  evidence 和 E6 accept 分支；v0.2 在不暴露 hidden labels 的前提下补齐
+  model-visible accept evidence 后，DeepSeek 和 Qwen 都产生非零 accept；
+- 该结果仅支持 accept-aware DeepSeek/Qwen two-model retest 的描述性结论，
+  不替代 EVP-8 v0.1 five-model synthesis，不支持 LLM superiority 或最终
+  evidence-level effectiveness claim。

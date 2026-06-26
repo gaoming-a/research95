@@ -1,0 +1,17 @@
+{
+  "api_call_attempted": false,
+  "evidence_packets_generated": false,
+  "missing_decision_values_in_template": [],
+  "missing_required_schema_keys_in_template": [],
+  "missing_risk_flag_values_in_template": [],
+  "placeholder_present": true,
+  "prompt_boundary_audit_status": "passed",
+  "prompt_id": "evp8_visible_evidence_merge_gate_v0_2",
+  "prompt_id_matches_spec": true,
+  "protocol_id": "evp8_accept_aware_full_ladder_v0_2",
+  "rendered_prompt_text_stored": false,
+  "sample_render_boundary_findings": [],
+  "sample_render_chars": 5101,
+  "sample_render_sha256": "b60cd4c19325b1b7be311da27c6830b2145bdc9bb8749526d00a43bd68f87333",
+  "template_boundary_findings": []
+}

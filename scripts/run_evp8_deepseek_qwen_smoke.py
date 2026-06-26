@@ -12,6 +12,7 @@ import hashlib
 import json
 import re
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -38,6 +39,9 @@ DEFAULT_FULL_CHECK_SUMMARY_OUT = REPO_ROOT / "data" / "protocols" / "evp8_deepse
 DEFAULT_EXEC_SUMMARY_DIR = REPO_ROOT / "data" / "reviews"
 MODEL_VISIBLE_LEVELS = ("E0", "E1", "E2", "E3", "E4", "E5", "E6")
 EVP7_CANDIDATES = REPO_ROOT / "data" / "patches" / "evp7_candidates.jsonl"
+EVP7_VISIBLE_TEST_OUTCOMES = REPO_ROOT / "data" / "evidence" / "evp7_visible_test_outcomes.jsonl"
+EVP7_VISIBLE_TOOL_SUMMARIES = REPO_ROOT / "data" / "evidence" / "evp7_visible_tool_summaries.jsonl"
+EVP7_TOOL_ONLY_DECISIONS = REPO_ROOT / "data" / "baselines" / "evp7_tool_only_decisions.jsonl"
 DEEPSEEK_PRICING_SOURCE_URL = "https://api-docs.deepseek.com/quick_start/pricing"
 DEEPSEEK_V4_PRO_USD_PER_1M_TOKENS = {
     "input_cache_hit": 0.003625,
@@ -137,6 +141,29 @@ def load_source_candidate_index() -> dict[str, dict[str, Any]]:
     return {str(record["evp7_candidate_id"]): record for record in records}
 
 
+def load_visible_artifact_indexes(config: dict[str, Any]) -> dict[str, Any]:
+    mode = str(config.get("evidence_source_mode") or "placeholder_not_run")
+    if mode == "placeholder_not_run":
+        return {"mode": mode}
+    if mode != "evp7_visible_artifacts":
+        raise ValueError(f"unsupported evidence_source_mode: {mode}")
+    sources = config.get("visible_artifact_sources") or {}
+    visible_tests = read_jsonl(resolve(sources.get("visible_test_outcomes") or EVP7_VISIBLE_TEST_OUTCOMES))
+    tool_summaries = read_jsonl(resolve(sources.get("visible_tool_summaries") or EVP7_VISIBLE_TOOL_SUMMARIES))
+    tool_decisions = read_jsonl(resolve(sources.get("tool_only_decisions") or EVP7_TOOL_ONLY_DECISIONS))
+    decisions_by_candidate: dict[str, dict[str, dict[str, Any]]] = {}
+    for record in tool_decisions:
+        candidate_id = str(record.get("candidate_id"))
+        condition = str(record.get("condition"))
+        decisions_by_candidate.setdefault(candidate_id, {})[condition] = record
+    return {
+        "mode": mode,
+        "visible_test_outcomes": {str(record.get("candidate_id")): record for record in visible_tests},
+        "visible_tool_summaries": {str(record.get("candidate_id")): record for record in tool_summaries},
+        "tool_only_decisions": decisions_by_candidate,
+    }
+
+
 def select_smoke_candidates(candidate_set: dict[str, Any], count: int) -> list[dict[str, Any]]:
     records = list(candidate_set.get("records") or [])
     project_counts: dict[str, int] = {}
@@ -168,14 +195,15 @@ def build_packets(config: dict[str, Any], run_scope: str) -> list[dict[str, Any]
     spec = read_json(resolve(config["protocol_spec"]))
     candidate_set = read_json(resolve(config["candidate_set"]))
     source_index = load_source_candidate_index()
+    visible_artifacts = load_visible_artifact_indexes(config)
     levels = {level["level"]: level for level in spec.get("evidence_ladder", [])}
     scope_config = config.get(run_scope) or {}
     if run_scope == "smoke":
         selected = select_smoke_candidates(candidate_set, int(scope_config.get("candidate_count") or 5))
-        packet_suffix = "evp8_smoke_v0_1"
+        packet_suffix = str(scope_config.get("packet_suffix") or "evp8_smoke_v0_1")
     elif run_scope == "full":
         selected = list(candidate_set.get("records") or [])
-        packet_suffix = "evp8_first_batch_full_v0_1"
+        packet_suffix = str(scope_config.get("packet_suffix") or "evp8_first_batch_full_v0_1")
     else:
         raise ValueError(f"unsupported EVP-8 run scope: {run_scope}")
     packets: list[dict[str, Any]] = []
@@ -184,7 +212,7 @@ def build_packets(config: dict[str, Any], run_scope: str) -> list[dict[str, Any]
         source = source_index.get(source_id)
         if source is None:
             raise ValueError(f"missing EVP-7 source candidate: {source_id}")
-        all_fields = _visible_field_groups(candidate, source, run_scope)
+        all_fields = _visible_field_groups(candidate, source, run_scope, visible_artifacts)
         for level_name in scope_config.get("levels") or MODEL_VISIBLE_LEVELS:
             level = levels[level_name]
             field_groups = list(level.get("model_visible_field_groups") or [])
@@ -200,6 +228,7 @@ def build_packets(config: dict[str, Any], run_scope: str) -> list[dict[str, Any]
                 "task_id": candidate["task_id"],
                 "project": candidate["project"],
                 "patch_sha256": candidate["patch_sha256"],
+                "evidence_source_mode": visible_artifacts["mode"],
                 "model_visible_field_groups": field_groups,
                 "visible_fields": visible_fields,
             }
@@ -217,7 +246,12 @@ def build_smoke_packets(config: dict[str, Any]) -> list[dict[str, Any]]:
     return build_packets(config, "smoke")
 
 
-def _visible_field_groups(candidate: dict[str, Any], source: dict[str, Any], run_scope: str) -> dict[str, Any]:
+def _visible_field_groups(
+    candidate: dict[str, Any],
+    source: dict[str, Any],
+    run_scope: str,
+    visible_artifacts: dict[str, Any],
+) -> dict[str, Any]:
     scope_tag = "phase0_smoke" if run_scope == "smoke" else "first_batch_full"
     seed = source.get("model_visible_seed") or {}
     patch_text = str(seed.get("patch_text") or "")
@@ -225,8 +259,36 @@ def _visible_field_groups(candidate: dict[str, Any], source: dict[str, Any], run
     visible_tests = list(source.get("visible_tests") or [])
     patch_applied = (source.get("validation_summary") or {}).get("patch_applied")
     patch_apply_status = "applied" if patch_applied is True else "failed" if patch_applied is False else "not_recorded"
-    f2p_outcomes = [f"not_run_in_{scope_tag}" for _ in visible_tests]
-    merge_gate = _deterministic_visible_merge_gate(patch_apply_status, f2p_outcomes, scope_tag)
+    source_candidate_id = str(source["evp7_candidate_id"])
+    visible_record = (visible_artifacts.get("visible_test_outcomes") or {}).get(source_candidate_id)
+    tool_summary_record = (visible_artifacts.get("visible_tool_summaries") or {}).get(source_candidate_id)
+    tool_decisions = (visible_artifacts.get("tool_only_decisions") or {}).get(source_candidate_id) or {}
+    if visible_artifacts["mode"] == "evp7_visible_artifacts" and visible_record:
+        visible_tests = list(visible_record.get("visible_tests") or visible_tests)
+        test_results = _sanitized_visible_test_results(visible_record)
+        f2p_outcomes = [str(item.get("outcome") or "unknown") for item in test_results]
+        visible_run_summary = _sanitized_visible_run_summary(visible_record, test_results)
+    else:
+        test_results = [
+            {"test_name": test_name, "outcome": f"not_run_in_{scope_tag}"}
+            for test_name in visible_tests
+        ]
+        f2p_outcomes = [str(item["outcome"]) for item in test_results]
+        visible_run_summary = {
+            "run_status": f"not_run_in_{scope_tag}",
+            "timeout": False,
+            "test_count": len(test_results),
+            "outcome_counts": _counts(item["outcome"] for item in test_results),
+        }
+    tool_summary = _sanitized_visible_tool_summary(tool_summary_record)
+    visible_tests_decision = _sanitized_tool_decision(tool_decisions.get("tool_only_visible_tests"))
+    visible_tool_decision = _sanitized_tool_decision(tool_decisions.get("tool_only_visible_tool_summary"))
+    merge_gate = _deterministic_visible_merge_gate(
+        patch_apply_status,
+        f2p_outcomes,
+        scope_tag,
+        tool_decision=visible_tool_decision,
+    )
     return {
         "issue_patch_seed": {
             "anonymous_candidate_id": candidate["evp8_candidate_id"],
@@ -246,24 +308,83 @@ def _visible_field_groups(candidate: dict[str, Any], source: dict[str, Any], run
         "visible_fail_to_pass_test_evidence": {
             "visible_fail_to_pass_scope_id": f"{candidate['task_id']}::{scope_tag}_visible_f2p",
             "visible_fail_to_pass_test_names": visible_tests,
-            "visible_fail_to_pass_outcomes": f2p_outcomes,
-            "sanitized_fail_to_pass_stdout_tail": f"not_generated_in_{scope_tag}",
+            "visible_fail_to_pass_outcomes": test_results,
+            "visible_fail_to_pass_run_summary": visible_run_summary,
+            "sanitized_fail_to_pass_stdout_tail": "not_included_in_tracked_visible_summary",
             "fail_to_pass_command_fingerprint": sha256_text("\n".join(visible_tests)),
         },
         "visible_pass_to_pass_regression_evidence": {
             "visible_pass_to_pass_scope_id": f"{candidate['task_id']}::{scope_tag}_visible_p2p_not_materialized",
             "visible_pass_to_pass_test_names": [],
             "visible_pass_to_pass_outcomes": [],
-            "sanitized_pass_to_pass_stdout_tail": f"not_generated_in_{scope_tag}",
-            "pass_to_pass_scope_summary": f"not_materialized_in_{scope_tag}",
+            "sanitized_pass_to_pass_stdout_tail": "not_included_in_tracked_visible_summary",
+            "pass_to_pass_scope_summary": (
+                "not_separately_materialized; visible test outcome evidence is reported in "
+                "visible_fail_to_pass_test_evidence"
+            ),
+            "visible_tests_rule_decision": visible_tests_decision,
         },
         "broader_visible_tool_diagnostics": {
-            "lint_or_static_diagnostic_summary": f"not_run_in_{scope_tag}",
-            "sanitized_test_log_observations": [],
+            "lint_or_static_diagnostic_summary": tool_summary.get("static_analysis", f"not_run_in_{scope_tag}"),
+            "syntax_import_check": tool_summary.get("syntax_import_check", f"not_run_in_{scope_tag}"),
+            "sanitized_test_log_observations": [tool_summary],
             "environment_diagnostic_summary": f"not_recorded_in_{scope_tag}",
             "diagnostic_tool_versions": {},
         },
         "deterministic_visible_merge_gate_summary": merge_gate,
+    }
+
+
+def _sanitized_visible_test_results(record: dict[str, Any]) -> list[dict[str, str]]:
+    results = []
+    for item in record.get("test_results") or []:
+        results.append({
+            "test_name": str(item.get("test_name") or "unknown_test"),
+            "outcome": str(item.get("outcome") or "unknown"),
+        })
+    if results:
+        return results
+    summary = record.get("visible_run_summary") or {}
+    outcome = str(summary.get("outcome") or record.get("run_status") or "unknown")
+    return [{"test_name": "visible_test_summary", "outcome": outcome}]
+
+
+def _sanitized_visible_run_summary(record: dict[str, Any], test_results: list[dict[str, str]]) -> dict[str, Any]:
+    return {
+        "run_status": str(record.get("run_status") or "unknown"),
+        "timeout": bool(record.get("timeout")),
+        "exit_code": record.get("exit_code"),
+        "elapsed_seconds": record.get("elapsed_seconds"),
+        "test_count": len(test_results),
+        "outcome_counts": _counts(item["outcome"] for item in test_results),
+    }
+
+
+def _sanitized_visible_tool_summary(record: dict[str, Any] | None) -> dict[str, Any]:
+    if not record:
+        return {}
+    summary = record.get("visible_tool_summary") or {}
+    return {
+        "patch_applies": summary.get("patch_applies"),
+        "static_analysis": summary.get("static_analysis"),
+        "syntax_import_check": summary.get("syntax_import_check"),
+        "visible_test_outcome_counts": summary.get("visible_test_outcome_counts") or {},
+        "visible_test_run_status": summary.get("visible_test_run_status"),
+        "summary_status": record.get("summary_status"),
+    }
+
+
+def _sanitized_tool_decision(record: dict[str, Any] | None) -> dict[str, Any]:
+    if not record:
+        return {}
+    return {
+        "condition": record.get("condition"),
+        "decision": record.get("decision"),
+        "confidence": record.get("confidence"),
+        "primary_reason": record.get("primary_reason"),
+        "evidence_used": record.get("evidence_used") or [],
+        "risk_flags": record.get("risk_flags") or [],
+        "human_review_needed": record.get("human_review_needed"),
     }
 
 
@@ -326,7 +447,13 @@ def _symbol_name(symbol: str, keyword: str) -> str:
     return re.split(r"[\(:\s]", tail, maxsplit=1)[0]
 
 
-def _deterministic_visible_merge_gate(patch_apply_status: str, f2p_outcomes: list[str], scope_tag: str) -> dict[str, Any]:
+def _deterministic_visible_merge_gate(
+    patch_apply_status: str,
+    f2p_outcomes: list[str],
+    scope_tag: str,
+    *,
+    tool_decision: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     counts: dict[str, int] = {}
     for outcome in f2p_outcomes:
         counts[outcome] = counts.get(outcome, 0) + 1
@@ -337,11 +464,24 @@ def _deterministic_visible_merge_gate(patch_apply_status: str, f2p_outcomes: lis
         contradictions.append("patch_apply_failed")
         decision = "reject"
         reasons = ["visible_patch_apply_status_failed"]
+    elif tool_decision and tool_decision.get("decision") in {"accept", "reject", "escalate"}:
+        decision = str(tool_decision["decision"])
+        reasons = [str(tool_decision.get("primary_reason") or "visible_tool_only_decision")]
+        if decision == "reject":
+            contradictions.append("visible_tool_summary_rejected")
+    elif f2p_outcomes and all(outcome == "passed" for outcome in f2p_outcomes):
+        decision = "accept"
+        reasons = ["all_visible_tests_passed_and_no_visible_contradiction"]
+    elif any(outcome in {"failed", "error", "timeout"} for outcome in f2p_outcomes):
+        decision = "reject"
+        contradictions.append("visible_test_failure")
+        reasons = ["visible_test_outcomes_include_failure"]
     return {
         "visible_tool_summary_counts": counts,
         "visible_tool_summary_contradictions": contradictions,
         "rule_based_visible_merge_gate_decision": decision,
         "rule_based_visible_merge_gate_reasons": reasons,
+        "source_decision": tool_decision or {},
     }
 
 
@@ -403,6 +543,15 @@ def schema_visible_rule_output(packet: dict[str, Any]) -> dict[str, Any]:
             ["visible_test_failure"],
             list(summary.get("visible_tool_summary_contradictions") or []),
         )
+    if summary.get("rule_based_visible_merge_gate_decision") == "accept":
+        return _decision(
+            "accept",
+            0.9,
+            "Visible deterministic merge-gate summary accepted the candidate.",
+            ["deterministic_visible_merge_gate_summary.rule_based_visible_merge_gate_decision"],
+            [],
+            [],
+        )
     return _decision(
         "escalate",
         0.0,
@@ -459,6 +608,15 @@ def check_only(args: argparse.Namespace) -> dict[str, Any]:
         error = validate_output_schema(schema_visible_rule_output(packet), spec.get("output_schema") or {})
         if error:
             schema_errors.append(error)
+    schema_outputs = [schema_visible_rule_output(packet) for packet in packets]
+    check_only_status = (
+        "passed"
+        if len(packets) == expected_packet_count
+        and len({packet["anonymous_candidate_id"] for packet in packets}) == expected_candidate_count
+        and not boundary_errors
+        and not schema_errors
+        else "failed"
+    )
     summary = {
         "mode": "check_only",
         "cohort_id": "EVP-8",
@@ -466,6 +624,7 @@ def check_only(args: argparse.Namespace) -> dict[str, Any]:
         "candidate_set_id": preflight.get("candidate_set_id"),
         "config": display_path(args.config),
         "run_scope": args.run_scope,
+        "evidence_source_mode": config.get("evidence_source_mode", "placeholder_not_run"),
         "selected_candidate_ids": sorted({packet["anonymous_candidate_id"] for packet in packets}),
         "candidate_count": len({packet["anonymous_candidate_id"] for packet in packets}),
         "selection_policy": (
@@ -483,18 +642,25 @@ def check_only(args: argparse.Namespace) -> dict[str, Any]:
         "prompt_text_stored": False,
         "raw_outputs_generated": False,
         "api_call_attempted": False,
+        "local_api_config_read": False,
         "api_key_values_printed": False,
         "local_config_content_stored_in_tracked_summary": False,
+        "packet_dry_run_status": check_only_status,
+        "schema_dry_run_status": check_only_status,
+        "deterministic_tool_baseline_dry_run_status": check_only_status,
+        "planned_packet_skeleton_count": len(packets),
+        "schema_dry_run_record_count": len(packets),
+        "planned_baseline_record_count": len(packets),
+        "valid_schema_count": len(packets) - len(schema_errors),
+        "invalid_schema_count": len(schema_errors),
         "boundary_error_count": len(boundary_errors),
         "boundary_errors": sorted(set(boundary_errors)),
         "schema_error_count": len(schema_errors),
         "schema_error_counts": _counts(schema_errors),
-        "check_only_status": "passed"
-        if len(packets) == expected_packet_count
-        and len({packet["anonymous_candidate_id"] for packet in packets}) == expected_candidate_count
-        and not boundary_errors
-        and not schema_errors
-        else "failed",
+        "schema_rule_decision_counts": _counts(output["decision"] for output in schema_outputs),
+        "schema_rule_decision_counts_by_evidence_level": _schema_rule_counts_by_level(packets, schema_outputs),
+        "deterministic_visible_merge_gate_counts": _deterministic_merge_gate_counts(packets),
+        "check_only_status": check_only_status,
         "preflight_structural_ready": preflight["structural_ready"],
         "preflight_ready_for_user_execute_command": preflight["ready_for_user_execute_command"],
         "next_step": f"Wait for explicit user command before running --execute {args.run_scope}.",
@@ -546,33 +712,27 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     raw_out.parent.mkdir(parents=True, exist_ok=True)
     raw_mode = "a" if args.resume and raw_out.exists() else "x"
     with raw_out.open(raw_mode, encoding="utf-8") as raw_handle:
-        for packet in packets:
-            if packet["evidence_packet_id"] in completed_packet_ids:
-                continue
-            prompt = render_prompt(template, packet)
-            findings = prompt_module._boundary_findings(prompt)  # noqa: SLF001
-            if findings:
-                raise SystemExit(f"prompt boundary failed for {packet['evidence_packet_id']}: {findings}")
-            response = _client(str(model_config["provider_route"])).chat_completion(
-                model=str(model_config["request_model_id"]),
-                prompt=prompt,
-                temperature=float(config.get("temperature", 0.0)),
-                max_tokens=int(config.get("max_output_tokens", 1024)),
-            )
-            raw_record = {
-                "evidence_packet_id": packet["evidence_packet_id"],
-                "anonymous_candidate_id": packet["anonymous_candidate_id"],
-                "evidence_level": packet["evidence_level"],
-                "requested_model_id": model_config["request_model_id"],
-                "configured_model_id": model_config["model_id"],
-                "actual_model_id": response.get("model"),
-                "provider_route": model_config["provider_route"],
-                "raw_response_text": response_text(response),
-                "response": response,
-                "run_date_utc": datetime.now(timezone.utc).isoformat(),
-            }
-            append_jsonl_record(raw_handle, raw_record)
-            parsed_records.append(parsed_record_from_raw(raw_record, spec, model_config))
+        remaining_packets = [
+            packet for packet in packets if packet["evidence_packet_id"] not in completed_packet_ids
+        ]
+        if args.concurrency == 1:
+            for packet in remaining_packets:
+                raw_record = fetch_raw_record(packet, template, config, model_config)
+                append_jsonl_record(raw_handle, raw_record)
+                parsed_records.append(parsed_record_from_raw(raw_record, spec, model_config))
+        else:
+            for batch_start in range(0, len(remaining_packets), args.concurrency):
+                batch = remaining_packets[batch_start : batch_start + args.concurrency]
+                with ThreadPoolExecutor(max_workers=args.concurrency) as executor:
+                    raw_records = list(
+                        executor.map(
+                            lambda packet: fetch_raw_record(packet, template, config, model_config),
+                            batch,
+                        )
+                    )
+                for raw_record in raw_records:
+                    append_jsonl_record(raw_handle, raw_record)
+                    parsed_records.append(parsed_record_from_raw(raw_record, spec, model_config))
 
     cost = aggregate_cost(parsed_records)
     parse_valid_count = sum(1 for record in parsed_records if record["parse_status"] == "valid")
@@ -583,12 +743,18 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         "candidate_set_id": preflight.get("candidate_set_id"),
         "config": display_path(args.config),
         "run_scope": args.run_scope,
+        "evidence_source_mode": config.get("evidence_source_mode", "placeholder_not_run"),
         "configured_model_id": model_config["model_id"],
         "request_model_id": model_config["request_model_id"],
         "provider_route": model_config["provider_route"],
+        "request_reasoning": model_config.get("reasoning"),
+        "request_include_reasoning": model_config.get("include_reasoning"),
+        "request_thinking": model_config.get("thinking"),
+        "request_response_format": model_config.get("response_format"),
         "raw_responses_out": display_path(raw_out),
         "raw_response_text_stored_in_tracked_summary": False,
         "review_count": len(parsed_records),
+        "concurrency": args.concurrency,
         "resume_enabled": bool(args.resume),
         "resumed_raw_record_count": resumed_raw_record_count,
         "new_api_call_count": len(parsed_records) - resumed_raw_record_count,
@@ -625,6 +791,44 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     if summary["run_gate"] != "passed":
         raise SystemExit(f"EVP-8 {args.run_scope} gate blocked after writing outputs: {summary['run_gate']}")
     return summary
+
+
+def fetch_raw_record(
+    packet: dict[str, Any],
+    template: str,
+    config: dict[str, Any],
+    model_config: dict[str, Any],
+) -> dict[str, Any]:
+    prompt = render_prompt(template, packet)
+    findings = prompt_module._boundary_findings(prompt)  # noqa: SLF001
+    if findings:
+        raise RuntimeError(f"prompt boundary failed for {packet['evidence_packet_id']}: {findings}")
+    response = _client(str(model_config["provider_route"])).chat_completion(
+        model=str(model_config["request_model_id"]),
+        prompt=prompt,
+        temperature=float(config.get("temperature", 0.0)),
+        max_tokens=int(config.get("max_output_tokens", 1024)),
+        reasoning=model_config.get("reasoning"),
+        include_reasoning=model_config.get("include_reasoning"),
+        thinking=model_config.get("thinking"),
+        response_format=model_config.get("response_format"),
+    )
+    return {
+        "evidence_packet_id": packet["evidence_packet_id"],
+        "anonymous_candidate_id": packet["anonymous_candidate_id"],
+        "evidence_level": packet["evidence_level"],
+        "requested_model_id": model_config["request_model_id"],
+        "configured_model_id": model_config["model_id"],
+        "actual_model_id": response.get("model"),
+        "provider_route": model_config["provider_route"],
+        "request_reasoning": model_config.get("reasoning"),
+        "request_include_reasoning": model_config.get("include_reasoning"),
+        "request_thinking": model_config.get("thinking"),
+        "request_response_format": model_config.get("response_format"),
+        "raw_response_text": response_text(response),
+        "response": response,
+        "run_date_utc": datetime.now(timezone.utc).isoformat(),
+    }
 
 
 def load_resume_state(
@@ -940,6 +1144,28 @@ def _counts_by_evidence_level(records: list[dict[str, Any]], field: str) -> dict
     return {level: dict(sorted(counts.items())) for level, counts in sorted(result.items())}
 
 
+def _schema_rule_counts_by_level(
+    packets: list[dict[str, Any]],
+    outputs: list[dict[str, Any]],
+) -> dict[str, dict[str, int]]:
+    result: dict[str, dict[str, int]] = {level: {} for level in MODEL_VISIBLE_LEVELS}
+    for packet, output in zip(packets, outputs):
+        level = str(packet["evidence_level"])
+        decision = str(output.get("decision") or "missing")
+        bucket = result.setdefault(level, {})
+        bucket[decision] = bucket.get(decision, 0) + 1
+    return {level: dict(sorted(counts.items())) for level, counts in sorted(result.items())}
+
+
+def _deterministic_merge_gate_counts(packets: list[dict[str, Any]]) -> dict[str, int]:
+    decisions: list[str] = []
+    for packet in packets:
+        fields = packet.get("visible_fields") or {}
+        summary = fields.get("deterministic_visible_merge_gate_summary") or {}
+        decisions.append(str(summary.get("rule_based_visible_merge_gate_decision") or "missing"))
+    return _counts(decisions)
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
@@ -951,6 +1177,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--summary-out", type=Path)
     parser.add_argument("--raw-out", type=Path)
     parser.add_argument("--resume", action="store_true", help="Resume an interrupted execute run from an existing raw JSONL prefix.")
+    parser.add_argument("--concurrency", type=int, default=1, help="Ordered batch concurrency for execute mode.")
     return parser.parse_args()
 
 
@@ -961,6 +1188,8 @@ def main() -> int:
         raise SystemExit("Choose exactly one mode: --check-only or --execute.")
     if args.execute and not args.model_id:
         raise SystemExit("--execute requires --model-id.")
+    if args.concurrency < 1:
+        raise SystemExit("--concurrency must be >= 1.")
     summary = execute(args) if args.execute else check_only(args)
     print(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True))
     return 0

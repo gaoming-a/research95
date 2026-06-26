@@ -99,6 +99,22 @@ def _output_path_check(config: dict[str, Any], key: str) -> dict[str, Any]:
     )
 
 
+def _model_request_controls(models: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    controls: dict[str, dict[str, Any]] = {}
+    for model in models:
+        model_id = model.get("model_id")
+        if not isinstance(model_id, str):
+            continue
+        control = {
+            key: model.get(key)
+            for key in ("reasoning", "include_reasoning", "thinking", "response_format")
+            if model.get(key) is not None
+        }
+        if control:
+            controls[model_id] = control
+    return controls
+
+
 def preflight(config_path: Path, allow_missing_credentials: bool = False) -> dict[str, Any]:
     config_path = config_path if config_path.is_absolute() else REPO_ROOT / config_path
     config = _load_json(config_path)
@@ -128,12 +144,15 @@ def preflight(config_path: Path, allow_missing_credentials: bool = False) -> dic
     models = config.get("models") or []
     model_ids = [model.get("model_id") for model in models]
     api_key_envs = [model.get("api_key_env") for model in models]
+    configured_model_controls = _model_request_controls(models)
+    expected_model_controls = (spec.get("routing_policy") or {}).get("direct_provider_model_controls") or {}
     checks.extend(
         [
             _check("protocol_audit_ready_for_preflight", audit.get("phase0_api_readiness") == "ready_for_api_preflight", audit.get("phase0_api_readiness")),
             _check("protocol_audit_no_api", audit.get("api_call_attempted") is False, audit.get("api_call_attempted")),
             _check("phase1_model_ids", model_ids == EXPECTED_MODELS, model_ids),
             _check("api_key_env_names", api_key_envs == EXPECTED_API_KEY_ENVS, api_key_envs),
+            _check("direct_provider_model_controls", configured_model_controls == expected_model_controls, configured_model_controls),
             _check("prompt_id", prompt_manifest.get("prompt_id") == spec.get("prompt_policy", {}).get("prompt_id"), prompt_manifest.get("prompt_id")),
             _check(
                 "prompt_template_hash",

@@ -164,6 +164,32 @@
   98-candidate packet set without reading raw responses.
 - `experiments/evp8_deepseek_qwen_first_batch_full_synthesis_v0_1.md`:
   Markdown companion for the first-batch full-run synthesis scaffold.
+- `../data/protocols/evp8_protocol_v0_2.json`: accept-aware EVP-8 protocol
+  variant for the 2026-06-26 DeepSeek/Qwen retest. It keeps the same frozen
+  98-candidate E0-E6 ladder but changes visible evidence construction to use
+  existing sanitized EVP-7 visible test/tool artifacts, records direct-provider
+  JSON-mode controls, and does not overwrite v0.1.
+- `../prompts/evp8_visible_evidence_merge_gate_v0_2.md`: prompt v0.2 for the
+  accept-aware retest. It keeps the visible-only decision policy and tightens
+  JSON/risk-flag enum discipline after the blocked v0.2 diagnostic attempt.
+- `../configs/evp8_deepseek_qwen_accept_v0_2.example.json`: tracked no-secret
+  accept-aware retest config. The ignored local copy is
+  `configs/evp8_deepseek_qwen_accept_v0_2.local.json`; it uses JSON mode for
+  DeepSeek and Qwen, and disables DeepSeek thinking.
+- `../data/protocols/evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_check_only.json`:
+  no-API full check-only summary for the accept-aware retest. Current status
+  is `passed`; deterministic E6 has `accept:25` and `reject:73`.
+- `../data/protocols/evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_run_packet.json`:
+  no-API full-run packet for the accept-aware DeepSeek/Qwen retest. It records
+  DeepSeek-then-Qwen execution order and json-mode output paths but does not
+  authorize API by itself.
+- `../data/protocols/evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_result_audit.json`:
+  raw-output-free audit for the accept-aware retest. Current status is
+  `passed` for DeepSeek V4 Pro and Qwen3.7 Max, both 686/686 parse-valid.
+- `../data/protocols/evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_synthesis.json`:
+  two-model synthesis for the accept-aware retest. Current status is `passed`;
+  it supports only descriptive DeepSeek/Qwen v0.2 decision-pattern reporting,
+  not a new five-model final claim.
 - `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:
   no-key public OpenRouter catalog audit for the G7 later-model pinned IDs:
   `moonshotai/kimi-k2.6`, `mistralai/devstral-2512`, and

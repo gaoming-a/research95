@@ -15,7 +15,7 @@ TEMPLATE_IN = REPO_ROOT / "prompts" / "evp8_visible_evidence_merge_gate_v0_1.md"
 MANIFEST_OUT = REPO_ROOT / "data" / "protocols" / "evp8_prompt_manifest_v0_1.json"
 BOUNDARY_AUDIT_OUT = REPO_ROOT / "data" / "protocols" / "evp8_prompt_boundary_audit_v0_1.json"
 
-PROMPT_ID = "evp8_visible_evidence_merge_gate_v0_1"
+DEFAULT_PROMPT_ID = "evp8_visible_evidence_merge_gate_v0_1"
 PLACEHOLDER = "{visible_evidence_packet_json}"
 FORBIDDEN_MARKERS = (
     "expected_outcome",
@@ -135,10 +135,13 @@ def build_prompt_artifacts(
     spec_path: Path,
     template_path: Path,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
+    spec_path = spec_path if spec_path.is_absolute() else REPO_ROOT / spec_path
+    template_path = template_path if template_path.is_absolute() else REPO_ROOT / template_path
     spec = _load_json(spec_path)
     template = template_path.read_text(encoding="utf-8")
     sample_prompt = render_prompt(template, _sample_visible_packet(spec))
     output_schema = spec.get("output_schema") or {}
+    prompt_id = (spec.get("prompt_policy") or {}).get("prompt_id") or DEFAULT_PROMPT_ID
     required_keys = output_schema.get("required_keys") or []
     decision_values = output_schema.get("decision_values") or []
     risk_values = output_schema.get("risk_flag_values") or []
@@ -149,10 +152,10 @@ def build_prompt_artifacts(
     missing_decision_values = [value for value in decision_values if value not in template]
     missing_risk_values = [value for value in risk_values if value not in template]
     placeholder_present = PLACEHOLDER in template
-    prompt_id_matches_spec = (spec.get("prompt_policy") or {}).get("prompt_id") == PROMPT_ID
+    prompt_id_matches_spec = (spec.get("prompt_policy") or {}).get("prompt_id") == prompt_id
 
     manifest = {
-        "prompt_id": PROMPT_ID,
+        "prompt_id": prompt_id,
         "cohort_id": spec.get("cohort_id"),
         "protocol_id": spec.get("protocol_id"),
         "prompt_template_path": str(template_path.relative_to(REPO_ROOT)),
@@ -179,7 +182,7 @@ def build_prompt_artifacts(
         "claim_boundary": "This manifest freezes the EVP-8 prompt template only; it is not model-result evidence.",
     }
     boundary_audit = {
-        "prompt_id": PROMPT_ID,
+        "prompt_id": prompt_id,
         "protocol_id": spec.get("protocol_id"),
         "api_call_attempted": False,
         "evidence_packets_generated": False,

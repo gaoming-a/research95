@@ -1,0 +1,63 @@
+{
+  "api_call_attempted": false,
+  "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "cohort_id": "EVP-8",
+  "config_example": "configs/evp8_deepseek_qwen_accept_v0_2.example.json",
+  "config_local": "configs/evp8_deepseek_qwen_accept_v0_2.local.json",
+  "evidence_source_mode": "evp7_visible_artifacts",
+  "execute_commands_after_explicit_user_authorization": [
+    {
+      "command": "python scripts\\run_evp8_deepseek_qwen_smoke.py --execute --run-scope full --config configs\\evp8_deepseek_qwen_accept_v0_2.local.json --model-id deepseek/deepseek-v4-pro --summary-out data\\reviews\\evp8_accept_v0_2_prompt_v0_2_json_mode_deepseek_deepseek-v4-pro_full_summary.json --concurrency 4",
+      "model_id": "deepseek/deepseek-v4-pro",
+      "outputs": {
+        "raw_responses": "outputs/evp8_accept_aware_v0_2_prompt_v0_2_json_mode_deepseek_qwen_full/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+        "tracked_summary": "data/reviews/evp8_accept_v0_2_prompt_v0_2_json_mode_deepseek_deepseek-v4-pro_full_summary.json"
+      },
+      "provider_route": "deepseek_official",
+      "request_model_id": "deepseek-v4-pro",
+      "step": "deepseek_accept_aware_v0_2_prompt_v0_2_full_first"
+    },
+    {
+      "command": "python scripts\\run_evp8_deepseek_qwen_smoke.py --execute --run-scope full --config configs\\evp8_deepseek_qwen_accept_v0_2.local.json --model-id qwen/qwen3.7-max --summary-out data\\reviews\\evp8_accept_v0_2_prompt_v0_2_json_mode_qwen_qwen3.7-max_full_summary.json --concurrency 4",
+      "model_id": "qwen/qwen3.7-max",
+      "outputs": {
+        "raw_responses": "outputs/evp8_accept_aware_v0_2_prompt_v0_2_json_mode_deepseek_qwen_full/qwen_qwen3.7-max/raw_responses.jsonl",
+        "tracked_summary": "data/reviews/evp8_accept_v0_2_prompt_v0_2_json_mode_qwen_qwen3.7-max_full_summary.json"
+      },
+      "proceed_if": "deepseek tracked summary run_gate == passed",
+      "provider_route": "qwen_official",
+      "request_model_id": "qwen3.7-max",
+      "step": "qwen_accept_aware_v0_2_prompt_v0_2_full_after_deepseek_gate"
+    }
+  ],
+  "execution_authorized_by_packet": false,
+  "expected_calls_per_model": 686,
+  "expected_models": [
+    "deepseek/deepseek-v4-pro",
+    "qwen/qwen3.7-max"
+  ],
+  "expected_total_model_calls": 1372,
+  "packet_id": "evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_run_packet",
+  "packet_status": "ready",
+  "protocol_id": "evp8_accept_aware_full_ladder_v0_2",
+  "result_audit_id": "evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_result_audit",
+  "run_scope": "full",
+  "stop_gates": [
+    "v0_2_check_only_failed",
+    "prompt_boundary_failed",
+    "schema_rule_accept_branch_absent",
+    "raw_output_path_exists_without_resume",
+    "deepseek_summary_blocked",
+    "qwen_summary_blocked",
+    "parse_or_cost_gate_failed"
+  ],
+  "tracked_no_api_checks": [
+    "python scripts\\build_evp8_prompt_manifest.py --spec-in data\\protocols\\evp8_protocol_v0_2.json --template-in prompts\\evp8_visible_evidence_merge_gate_v0_2.md --manifest-out data\\protocols\\evp8_prompt_manifest_v0_2.json --boundary-audit-out data\\protocols\\evp8_prompt_boundary_audit_v0_2.json --check",
+    "python scripts\\audit_evp8_protocol_spec.py --spec-in data\\protocols\\evp8_protocol_v0_2.json --summary-out data\\protocols\\evp8_protocol_v0_2_audit_summary.json --check",
+    "python scripts\\preflight_evp8_deepseek_qwen.py --config configs\\evp8_deepseek_qwen_accept_v0_2.local.json --strict-api-ready --out data\\protocols\\evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_preflight_summary.json",
+    "python scripts\\run_evp8_deepseek_qwen_smoke.py --check-only --run-scope full --config configs\\evp8_deepseek_qwen_accept_v0_2.local.json --summary-out data\\protocols\\evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_check_only.json",
+    "python scripts\\audit_evp8_first_batch_full_results.py --packet data\\protocols\\evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_run_packet.json --json-out data\\protocols\\evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_result_audit.json --md-out docs\\experiments\\evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_result_audit.md --check",
+    "python scripts\\summarize_evp8_first_batch_full_synthesis.py --audit data\\protocols\\evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_result_audit.json --json-out data\\protocols\\evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_synthesis.json --md-out docs\\experiments\\evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_synthesis.md --check"
+  ],
+  "version_boundary": "This v0.2 prompt-v0.2 packet changes visible evidence construction, JSON-mode request controls, and DeepSeek thinking-disabled request controls only. It does not overwrite EVP-8 v0.1 result summaries or five-model synthesis."
+}

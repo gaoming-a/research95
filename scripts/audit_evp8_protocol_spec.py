@@ -25,6 +25,14 @@ EXPECTED_PHASE2_MODELS = (
     "mistralai/devstral-2512",
     "google/gemini-2.5-flash",
 )
+SUPPORTED_PROTOCOL_IDS = {
+    "evp8_journal_full_ladder_v0_1",
+    "evp8_accept_aware_full_ladder_v0_2",
+}
+SUPPORTED_PROMPT_IDS = {
+    "evp8_visible_evidence_merge_gate_v0_1",
+    "evp8_visible_evidence_merge_gate_v0_2",
+}
 EXPECTED_OPENROUTER_REASONING_CONTROLS = {
     "moonshotai/kimi-k2.6": {
         "include_reasoning": False,
@@ -84,7 +92,7 @@ def audit_protocol(spec: dict[str, Any]) -> dict[str, Any]:
     warnings: list[str] = []
     api_blockers: list[str] = []
 
-    if spec.get("protocol_id") != "evp8_journal_full_ladder_v0_1":
+    if spec.get("protocol_id") not in SUPPORTED_PROTOCOL_IDS:
         errors.append("unexpected_protocol_id")
     if spec.get("cohort_id") != "EVP-8":
         errors.append("unexpected_cohort_id")
@@ -144,6 +152,7 @@ def audit_protocol(spec: dict[str, Any]) -> dict[str, Any]:
         "phase1_models": phase1_models,
         "phase2_models": phase2_models,
         "openrouter_model_reasoning_controls": (spec.get("routing_policy") or {}).get("openrouter_model_reasoning_controls"),
+        "direct_provider_model_controls": (spec.get("routing_policy") or {}).get("direct_provider_model_controls"),
         "no_api_boundary": "This audit reads only the tracked EVP-8 protocol spec and does not read credentials or call models.",
         "next_step": (
             "Run ignored local DeepSeek/Qwen preflight next; this audit still does not authorize API execution."
@@ -206,7 +215,7 @@ def _audit_prompt_and_output_schema(
     warnings: list[str],
 ) -> None:
     prompt_policy = spec.get("prompt_policy") or {}
-    if prompt_policy.get("prompt_id") != "evp8_visible_evidence_merge_gate_v0_1":
+    if prompt_policy.get("prompt_id") not in SUPPORTED_PROMPT_IDS:
         errors.append("unexpected_prompt_id")
     if prompt_policy.get("visible_payload_only") is not True:
         errors.append("prompt_policy_must_be_visible_payload_only")

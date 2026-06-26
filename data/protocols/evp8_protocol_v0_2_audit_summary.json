@@ -1,0 +1,81 @@
+{
+  "adds_evidence_class_by_level": {
+    "E0": "issue_patch_seed",
+    "E1": "patch_surface_map",
+    "E2": "patch_application_static_status",
+    "E3": "visible_fail_to_pass_test_evidence",
+    "E4": "visible_pass_to_pass_regression_evidence",
+    "E5": "broader_visible_tool_diagnostics",
+    "E6": "deterministic_visible_merge_gate_summary"
+  },
+  "adjacent_delta_count": 6,
+  "api_blocker_count": 0,
+  "api_blockers": [],
+  "api_call_attempted": false,
+  "candidate_set_manifest": "data/protocols/evp8_candidate_set_v0_1.json",
+  "candidate_set_version": "evp8_smoke_from_evp7_structural_98_v0_1",
+  "cohort_id": "EVP-8",
+  "direct_provider_model_controls": {
+    "deepseek/deepseek-v4-pro": {
+      "response_format": {
+        "type": "json_object"
+      },
+      "thinking": {
+        "type": "disabled"
+      }
+    },
+    "qwen/qwen3.7-max": {
+      "response_format": {
+        "type": "json_object"
+      }
+    }
+  },
+  "error_count": 0,
+  "errors": [],
+  "evaluator_only_levels": [
+    "E7"
+  ],
+  "field_group_counts_by_level": {
+    "E0": 1,
+    "E1": 2,
+    "E2": 3,
+    "E3": 4,
+    "E4": 5,
+    "E5": 6,
+    "E6": 7
+  },
+  "model_visible_level_count": 7,
+  "model_visible_levels": [
+    "E0",
+    "E1",
+    "E2",
+    "E3",
+    "E4",
+    "E5",
+    "E6"
+  ],
+  "next_step": "Run ignored local DeepSeek/Qwen preflight next; this audit still does not authorize API execution.",
+  "no_api_boundary": "This audit reads only the tracked EVP-8 protocol spec and does not read credentials or call models.",
+  "openrouter_model_reasoning_controls": {
+    "moonshotai/kimi-k2.6": {
+      "include_reasoning": false,
+      "reasoning": {
+        "enabled": false
+      }
+    }
+  },
+  "phase0_api_readiness": "ready_for_api_preflight",
+  "phase1_models": [
+    "deepseek/deepseek-v4-pro",
+    "qwen/qwen3.7-max"
+  ],
+  "phase2_models": [
+    "moonshotai/kimi-k2.6",
+    "mistralai/devstral-2512",
+    "google/gemini-2.5-flash"
+  ],
+  "protocol_id": "evp8_accept_aware_full_ladder_v0_2",
+  "protocol_spec_audit_status": "passed",
+  "warning_count": 0,
+  "warnings": []
+}

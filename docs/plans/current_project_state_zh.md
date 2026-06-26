@@ -1,6 +1,6 @@
 # 当前项目状态与文件地图
 
-日期：2026-06-22
+日期：2026-06-26
 
 本文件是短入口，用来整理当前计划文档和项目文件。它不替代
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
@@ -8,7 +8,7 @@
 
 ## 当前同步状态
 
-- 分支：`main`
+- 分支：当前工作分支为 `evp8-accept-aware-retest`；历史主线为 `main`
 - 远端：`origin/main`
 - 当前 Git 状态：以 `git status --short --branch` 和
   `git log -1 --oneline` 为准。不要只依赖本文件里记录的 hash 判断是否 ahead；
@@ -88,6 +88,19 @@
   `data/reviews/evp8_cost_accounting_summary.json` 记录 passed-result USD
   excluding Qwen = `2.892118056`、passed Qwen CNY = `41.119548`、ignored Kimi
   blocked attempts USD = `7.27612053`，并设置 `api_freeze=true`。
+- 本轮新增 accept-aware EVP-8 v0.2 DeepSeek/Qwen retest：
+  - v0.1 的 `0 accept` 与实验设置有关：full-run 可见测试/工具 evidence
+    多为 placeholder/not-run，且 E6 deterministic gate 缺少 accept 分支；
+  - v0.2 使用既有 sanitized EVP-7 visible test/tool artifacts，E6 deterministic
+    branch 在 no-API check-only 中为 `accept:25, reject:73`；
+  - DeepSeek V4 Pro json-mode full rerun 通过：686/686 parse-valid，总
+    decision counts 为 `accept:80, escalate:287, reject:319`，E6 为
+    `accept:23, reject:75`；
+  - Qwen3.7 Max json-mode full rerun 通过：686/686 parse-valid，总 decision
+    counts 为 `accept:82, escalate:238, reject:366`，E6 为
+    `accept:24, reject:74`；
+  - 该结果只支持 two-model accept-aware retest 的描述性结论，不覆盖或替代
+    frozen EVP-8 v0.1 five-model synthesis。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。最近一次已确认
   `git push origin main` 成功；最终是否仍 ahead 仍以
@@ -125,6 +138,9 @@
   - EVP-8 cost accounting：passed-result USD excluding Qwen = `2.892118056`，
     Qwen passed cost = CNY `41.119548`，ignored Kimi blocked attempts =
     USD `7.27612053`；当前 API freeze 为 true；
+  - EVP-8 accept-aware v0.2 retest：DeepSeek 和 Qwen 各 98 candidates x 7
+    evidence levels = 686 records，均为 686/686 parse-valid；该 retest 只报告
+    accept-aware two-model patterns，不是新五模型最终结果；
   - SQJ low-cost submission route：当前首选投稿目标为 Software Quality
     Journal，按 CCF C 类 / 学校 C 类口径作为 D 类及以上候选；投稿前必须先由
     学院/科研秘书确认发表当年 CCF 目录、高风险/预警名单状态和学校认定口径；
@@ -378,6 +394,20 @@
   `docs/experiments/evp8_deepseek_qwen_first_batch_full_synthesis_v0_1.md`：
   first-batch full-run two-model synthesis；当前 `passed`，从两个
   raw-output-free first-batch summaries 汇总 tracked per-level decision counts。
+- `data/protocols/evp8_protocol_v0_2.json`、
+  `prompts/evp8_visible_evidence_merge_gate_v0_2.md`、
+  `configs/evp8_deepseek_qwen_accept_v0_2.example.json`：
+  accept-aware retest 的 protocol/prompt/config；使用 existing sanitized
+  EVP-7 visible artifacts、JSON mode request controls 和 DeepSeek
+  thinking-disabled request control，不覆盖 v0.1。
+- `data/protocols/evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_check_only.json`、
+  `data/protocols/evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_run_packet.json`：
+  accept-aware retest 的 no-API check-only 与 full-run packet；check-only
+  `passed`，E6 deterministic branch 为 `accept:25, reject:73`。
+- `data/protocols/evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_result_audit.json`、
+  `data/protocols/evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_synthesis.json`：
+  accept-aware retest 的 raw-output-free result audit 和 two-model synthesis；
+  当前均为 `passed`，只支持 DeepSeek/Qwen v0.2 描述性结果。
 - `data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`、
   `docs/experiments/evp8_later_model_openrouter_catalog_audit_v0_1.md`：
   G7 later-model OpenRouter public catalog audit；当前 `all_available = true`，
