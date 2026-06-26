@@ -219,6 +219,16 @@
   no-API synthesis for the v0.3 Qwen-first batch. Current status is `passed`;
   it supports only descriptive Qwen per-level decision-pattern reporting for
   the frozen 98-candidate packet set.
+- `../data/reviews/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json`:
+  raw-output-free label-conditioned analysis of the v0.3 Qwen-first full run.
+  It joins post-execution Qwen decisions with evaluator-only labels, reports
+  correct recall, accepted precision, false accept rate, false reject rate,
+  escalation rate, and paired accept transitions, and stores no raw response
+  content or prompt text.
+- `experiments/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.md`:
+  Markdown companion for the v0.3 Qwen label-conditioned analysis. E6 accepts
+  20/21 correct patches and 4/77 non-correct patches, giving 95.24% correct
+  recall, 83.33% accepted precision, and 5.19% false accept rate.
 - `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:
   no-key public OpenRouter catalog audit for the G7 later-model pinned IDs:
   `moonshotai/kimi-k2.6`, `mistralai/devstral-2512`, and
@@ -1019,6 +1029,11 @@
   statistical analysis for the frozen EVP-7 G5 376-record run. It reads ignored
   review records structurally, joins tracked candidate labels only for aggregate
   metrics, and writes Wilson/bootstrap/paired-breakdown artifacts.
+- `scripts/analyze_evp8_qwen_first_label_conditioned.py`: generates the
+  raw-output-free label-conditioned statistics for the EVP-8 v0.3 Qwen-first
+  full run. It parses final JSON decisions from ignored Qwen raw responses,
+  joins evaluator-only labels after execution, and writes aggregate JSON/
+  Markdown summaries without raw response content or prompt text.
 - `scripts/analyze_evp7_utility_sensitivity.py`: generates the raw-output-free
   utility sensitivity analysis for EVP-7, varying false-accept, escalation, and
   false-reject penalties without changing the frozen cohort or prompt.

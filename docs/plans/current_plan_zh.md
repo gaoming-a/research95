@@ -1,6 +1,6 @@
 # 当前计划：AI 生成补丁的可验证审查
 
-最后更新：2026-06-08
+最后更新：2026-06-27
 
 ## 1. 研究转向
 
@@ -18088,3 +18088,66 @@ Result Boundary:
 - 不能写成五模型主实验最终结果、DeepSeek/Qwen 对比结论、LLM superiority over
   deterministic baseline，或最终 evidence-level effectiveness claim；
 - 后续继续 DeepSeek、Kimi、Devstral 或 Gemini 需要用户再次明确授权。
+
+## 2026-06-27 EVP-8 v0.3 Qwen label-conditioned analysis
+
+Inspect:
+
+- 当前分支为 `evp8-v03-qwen-main-exp`，已同步到
+  `origin/evp8-v03-qwen-main-exp`；
+- Qwen-first v0.3 full synthesis 已通过，聚合决策显示 E0-E2 无 accept，
+  E3-E6 accept 数逐步上升；
+- 仅凭 per-level aggregate 不能推出“正确补丁被 accept 的概率上升”，必须把
+  Qwen 决策与 evaluator-only 标签 join 后计算 label-conditioned metrics。
+
+Plan:
+
+1. 不调用任何模型 API，不改 protocol、prompt、candidate set 或已有 raw outputs；
+2. 从 tracked candidate-set manifest 读取 anonymous EVP-8 candidate id 到
+   source candidate id 的映射；
+3. 从 evaluator-only candidate metadata 读取 hidden label，仅用于本地统计；
+4. 从 ignored Qwen v0.3 full raw JSONL 解析最终 `accept/reject/escalate`
+   decision，禁止使用 `reasoning_content`；
+5. 生成 raw-output-free label-conditioned JSON/Markdown 汇总，报告：
+   correct recall、accepted precision、false accept rate、false reject rate、
+   escalation rate、correct-patch decision counts 和 paired transitions；
+6. 同步 README、docs index、current project state 和 engineering notes，
+   并提交推送本轮统计产物。
+
+Boundary:
+
+- 本轮统计只支持 Qwen v0.3 frozen 98-candidate / E0-E6 packet set 的
+  label-conditioned 描述；
+- 不写成五模型主实验结论、DeepSeek/Qwen 对比结论或最终 evidence-level
+  effectiveness claim；
+- 若 label join、raw-line count、decision parse 或 label coverage 不完整，
+  必须停止并诊断，不输出正向论文结论。
+
+Execute / Verify Result:
+
+- 新增 `scripts/analyze_evp8_qwen_first_label_conditioned.py`；
+- 已生成 raw-output-free 统计产物：
+  - `data/reviews/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json`；
+  - `docs/experiments/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.md`；
+- 统计输入覆盖 98 candidates x 7 evidence levels = 686 Qwen decisions；
+- hidden label 分布：21 correct、77 non-correct；
+- label-conditioned 结果：
+  - E0/E1/E2：correct recall = 0，false accept rate = 0；
+  - E3：correct accept = 17/21，false accept = 3/77，accepted precision =
+    17/20；
+  - E4/E5：correct accept = 18/21，false accept = 3/77，accepted precision =
+    18/21；
+  - E6：correct accept = 20/21，false accept = 4/77，accepted precision =
+    20/24；
+- 解释边界：可说 Qwen v0.3 在该 frozen batch 中随证据量增加显著提高
+  correct-patch acceptance；但 E3-E6 同时产生 partial/regression false
+  accepts，不能写成无代价的单调改进。
+
+Diagnose / Repair:
+
+- 首次脚本 check 失败，原因是 `api_call_attempted=false` 的检查项把
+  `passed` 参数也写成 `false`；
+- 问题类型：执行链路 bug，不是数据、标签或 Qwen 结果问题；
+- 修复方式：将检查项改为 `api_call_not_attempted` 且
+  `passed=true, detail=false`；
+- 修复后同一 `--check` gate 通过。

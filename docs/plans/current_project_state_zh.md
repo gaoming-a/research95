@@ -1,6 +1,6 @@
 # 当前项目状态与文件地图
 
-日期：2026-06-26
+日期：2026-06-27
 
 本文件是短入口，用来整理当前计划文档和项目文件。它不替代
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
@@ -124,6 +124,21 @@
   - 该结果只支持 v0.3 Qwen-first 描述性 decision-pattern reporting，不支持
     五模型最终主实验结论、DeepSeek/Qwen 对比、LLM superiority 或最终
     evidence-level effectiveness claim。
+- 本轮新增 EVP-8 v0.3 Qwen label-conditioned analysis：
+  - 分析脚本为 `scripts/analyze_evp8_qwen_first_label_conditioned.py`；
+  - raw-output-free JSON/Markdown 汇总为
+    `data/reviews/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json`
+    和
+    `docs/experiments/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.md`；
+  - hidden evaluator labels 只在执行后 join，不进入 prompt 或 model-visible
+    packet；决策只解析 `raw_response_text` 的最终 JSON，不使用
+    `reasoning_content`；
+  - correct-patch recall：E0/E1/E2 为 0，E3 为 17/21，E4/E5 为
+    18/21，E6 为 20/21；
+  - false accept：E3/E4/E5 为 3/77，E6 为 4/77；E6 accepted precision 为
+    20/24；
+  - 因此可以说 v0.3 Qwen 随证据量增加更能 accept 正确补丁，但不能忽略
+    E3-E6 同时出现的 partial/regression false accepts。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。最近一次已确认
   `git push origin main` 成功；最终是否仍 ahead 仍以
@@ -168,6 +183,10 @@
     98 candidates x 7 evidence levels = 686 records，686/686 parse-valid；
     该结果只报告 Qwen-first patterns，后续 DeepSeek/Kimi/Devstral/Gemini
     需要另行授权；
+  - EVP-8 v0.3 Qwen label-conditioned analysis：正确补丁 21、非正确补丁
+    77；E6 correct recall = 95.24%，accepted precision = 83.33%，false
+    accept rate = 5.19%；该分析只支持 Qwen v0.3 frozen batch 的描述性
+    label-conditioned 结论；
   - SQJ low-cost submission route：当前首选投稿目标为 Software Quality
     Journal，按 CCF C 类 / 学校 C 类口径作为 D 类及以上候选；投稿前必须先由
     学院/科研秘书确认发表当年 CCF 目录、高风险/预警名单状态和学校认定口径；
@@ -435,6 +454,11 @@
   `data/protocols/evp8_deepseek_qwen_accept_v0_2_prompt_v0_2_full_synthesis.json`：
   accept-aware retest 的 raw-output-free result audit 和 two-model synthesis；
   当前均为 `passed`，只支持 DeepSeek/Qwen v0.2 描述性结果。
+- `data/reviews/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json`、
+  `docs/experiments/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.md`：
+  EVP-8 v0.3 Qwen-first full run 的 label-conditioned raw-output-free 分析；
+  报告 correct recall、accepted precision、false accept rate、false reject
+  rate、escalation rate 和 E0-to-level paired accept transitions。
 - `data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`、
   `docs/experiments/evp8_later_model_openrouter_catalog_audit_v0_1.md`：
   G7 later-model OpenRouter public catalog audit；当前 `all_available = true`，
@@ -609,6 +633,10 @@
 - `scripts/summarize_evp8_cost_accounting.py`：
   EVP-8 no-API cost accounting summary builder；读取 raw-output-free passed
   summaries 和 ignored blocked-attempt summaries，不读取 raw responses。
+- `scripts/analyze_evp8_qwen_first_label_conditioned.py`：
+  EVP-8 v0.3 Qwen-first label-conditioned 统计脚本；只解析 ignored Qwen
+  raw responses 中的最终 JSON decision，执行后 join evaluator-only labels，
+  输出 raw-output-free JSON/Markdown 汇总。
 - `scripts/write_ieee_latex_draft.py`：
   IEEEtran historical/source draft generator；SQJ 路线下不再作为下一投稿主格式，
   只作为内容来源和回归检查。

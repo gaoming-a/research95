@@ -1,0 +1,1075 @@
+{
+  "analysis_id": "evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary",
+  "breakdowns_by_evidence_level": {
+    "E0": {
+      "candidate_type": {
+        "buggy_noop": {
+          "decision_counts": {
+            "escalate": 21
+          },
+          "record_count": 21
+        },
+        "correct_reference": {
+          "decision_counts": {
+            "escalate": 21
+          },
+          "record_count": 21
+        },
+        "irrelevant_patch": {
+          "decision_counts": {
+            "escalate": 1,
+            "reject": 13
+          },
+          "record_count": 14
+        },
+        "partial_fix": {
+          "decision_counts": {
+            "escalate": 30,
+            "reject": 11
+          },
+          "record_count": 41
+        },
+        "regression_patch": {
+          "decision_counts": {
+            "escalate": 1
+          },
+          "record_count": 1
+        }
+      },
+      "expected_outcome": {
+        "correct": {
+          "decision_counts": {
+            "escalate": 21
+          },
+          "record_count": 21
+        },
+        "incorrect": {
+          "decision_counts": {
+            "escalate": 21
+          },
+          "record_count": 21
+        },
+        "irrelevant_or_noop": {
+          "decision_counts": {
+            "escalate": 1,
+            "reject": 13
+          },
+          "record_count": 14
+        },
+        "partial": {
+          "decision_counts": {
+            "escalate": 30,
+            "reject": 11
+          },
+          "record_count": 41
+        },
+        "regression": {
+          "decision_counts": {
+            "escalate": 1
+          },
+          "record_count": 1
+        }
+      }
+    },
+    "E1": {
+      "candidate_type": {
+        "buggy_noop": {
+          "decision_counts": {
+            "escalate": 21
+          },
+          "record_count": 21
+        },
+        "correct_reference": {
+          "decision_counts": {
+            "escalate": 21
+          },
+          "record_count": 21
+        },
+        "irrelevant_patch": {
+          "decision_counts": {
+            "reject": 14
+          },
+          "record_count": 14
+        },
+        "partial_fix": {
+          "decision_counts": {
+            "escalate": 31,
+            "reject": 10
+          },
+          "record_count": 41
+        },
+        "regression_patch": {
+          "decision_counts": {
+            "escalate": 1
+          },
+          "record_count": 1
+        }
+      },
+      "expected_outcome": {
+        "correct": {
+          "decision_counts": {
+            "escalate": 21
+          },
+          "record_count": 21
+        },
+        "incorrect": {
+          "decision_counts": {
+            "escalate": 21
+          },
+          "record_count": 21
+        },
+        "irrelevant_or_noop": {
+          "decision_counts": {
+            "reject": 14
+          },
+          "record_count": 14
+        },
+        "partial": {
+          "decision_counts": {
+            "escalate": 31,
+            "reject": 10
+          },
+          "record_count": 41
+        },
+        "regression": {
+          "decision_counts": {
+            "escalate": 1
+          },
+          "record_count": 1
+        }
+      }
+    },
+    "E2": {
+      "candidate_type": {
+        "buggy_noop": {
+          "decision_counts": {
+            "escalate": 19,
+            "reject": 2
+          },
+          "record_count": 21
+        },
+        "correct_reference": {
+          "decision_counts": {
+            "escalate": 21
+          },
+          "record_count": 21
+        },
+        "irrelevant_patch": {
+          "decision_counts": {
+            "escalate": 1,
+            "reject": 13
+          },
+          "record_count": 14
+        },
+        "partial_fix": {
+          "decision_counts": {
+            "escalate": 31,
+            "reject": 10
+          },
+          "record_count": 41
+        },
+        "regression_patch": {
+          "decision_counts": {
+            "escalate": 1
+          },
+          "record_count": 1
+        }
+      },
+      "expected_outcome": {
+        "correct": {
+          "decision_counts": {
+            "escalate": 21
+          },
+          "record_count": 21
+        },
+        "incorrect": {
+          "decision_counts": {
+            "escalate": 19,
+            "reject": 2
+          },
+          "record_count": 21
+        },
+        "irrelevant_or_noop": {
+          "decision_counts": {
+            "escalate": 1,
+            "reject": 13
+          },
+          "record_count": 14
+        },
+        "partial": {
+          "decision_counts": {
+            "escalate": 31,
+            "reject": 10
+          },
+          "record_count": 41
+        },
+        "regression": {
+          "decision_counts": {
+            "escalate": 1
+          },
+          "record_count": 1
+        }
+      }
+    },
+    "E3": {
+      "candidate_type": {
+        "buggy_noop": {
+          "decision_counts": {
+            "reject": 21
+          },
+          "record_count": 21
+        },
+        "correct_reference": {
+          "decision_counts": {
+            "accept": 17,
+            "escalate": 3,
+            "reject": 1
+          },
+          "record_count": 21
+        },
+        "irrelevant_patch": {
+          "decision_counts": {
+            "reject": 14
+          },
+          "record_count": 14
+        },
+        "partial_fix": {
+          "decision_counts": {
+            "accept": 2,
+            "escalate": 1,
+            "reject": 38
+          },
+          "record_count": 41
+        },
+        "regression_patch": {
+          "decision_counts": {
+            "accept": 1
+          },
+          "record_count": 1
+        }
+      },
+      "expected_outcome": {
+        "correct": {
+          "decision_counts": {
+            "accept": 17,
+            "escalate": 3,
+            "reject": 1
+          },
+          "record_count": 21
+        },
+        "incorrect": {
+          "decision_counts": {
+            "reject": 21
+          },
+          "record_count": 21
+        },
+        "irrelevant_or_noop": {
+          "decision_counts": {
+            "reject": 14
+          },
+          "record_count": 14
+        },
+        "partial": {
+          "decision_counts": {
+            "accept": 2,
+            "escalate": 1,
+            "reject": 38
+          },
+          "record_count": 41
+        },
+        "regression": {
+          "decision_counts": {
+            "accept": 1
+          },
+          "record_count": 1
+        }
+      }
+    },
+    "E4": {
+      "candidate_type": {
+        "buggy_noop": {
+          "decision_counts": {
+            "reject": 21
+          },
+          "record_count": 21
+        },
+        "correct_reference": {
+          "decision_counts": {
+            "accept": 18,
+            "escalate": 2,
+            "reject": 1
+          },
+          "record_count": 21
+        },
+        "irrelevant_patch": {
+          "decision_counts": {
+            "reject": 14
+          },
+          "record_count": 14
+        },
+        "partial_fix": {
+          "decision_counts": {
+            "accept": 3,
+            "reject": 38
+          },
+          "record_count": 41
+        },
+        "regression_patch": {
+          "decision_counts": {
+            "reject": 1
+          },
+          "record_count": 1
+        }
+      },
+      "expected_outcome": {
+        "correct": {
+          "decision_counts": {
+            "accept": 18,
+            "escalate": 2,
+            "reject": 1
+          },
+          "record_count": 21
+        },
+        "incorrect": {
+          "decision_counts": {
+            "reject": 21
+          },
+          "record_count": 21
+        },
+        "irrelevant_or_noop": {
+          "decision_counts": {
+            "reject": 14
+          },
+          "record_count": 14
+        },
+        "partial": {
+          "decision_counts": {
+            "accept": 3,
+            "reject": 38
+          },
+          "record_count": 41
+        },
+        "regression": {
+          "decision_counts": {
+            "reject": 1
+          },
+          "record_count": 1
+        }
+      }
+    },
+    "E5": {
+      "candidate_type": {
+        "buggy_noop": {
+          "decision_counts": {
+            "reject": 21
+          },
+          "record_count": 21
+        },
+        "correct_reference": {
+          "decision_counts": {
+            "accept": 18,
+            "escalate": 2,
+            "reject": 1
+          },
+          "record_count": 21
+        },
+        "irrelevant_patch": {
+          "decision_counts": {
+            "reject": 14
+          },
+          "record_count": 14
+        },
+        "partial_fix": {
+          "decision_counts": {
+            "accept": 2,
+            "escalate": 1,
+            "reject": 38
+          },
+          "record_count": 41
+        },
+        "regression_patch": {
+          "decision_counts": {
+            "accept": 1
+          },
+          "record_count": 1
+        }
+      },
+      "expected_outcome": {
+        "correct": {
+          "decision_counts": {
+            "accept": 18,
+            "escalate": 2,
+            "reject": 1
+          },
+          "record_count": 21
+        },
+        "incorrect": {
+          "decision_counts": {
+            "reject": 21
+          },
+          "record_count": 21
+        },
+        "irrelevant_or_noop": {
+          "decision_counts": {
+            "reject": 14
+          },
+          "record_count": 14
+        },
+        "partial": {
+          "decision_counts": {
+            "accept": 2,
+            "escalate": 1,
+            "reject": 38
+          },
+          "record_count": 41
+        },
+        "regression": {
+          "decision_counts": {
+            "accept": 1
+          },
+          "record_count": 1
+        }
+      }
+    },
+    "E6": {
+      "candidate_type": {
+        "buggy_noop": {
+          "decision_counts": {
+            "reject": 21
+          },
+          "record_count": 21
+        },
+        "correct_reference": {
+          "decision_counts": {
+            "accept": 20,
+            "reject": 1
+          },
+          "record_count": 21
+        },
+        "irrelevant_patch": {
+          "decision_counts": {
+            "reject": 14
+          },
+          "record_count": 14
+        },
+        "partial_fix": {
+          "decision_counts": {
+            "accept": 3,
+            "reject": 38
+          },
+          "record_count": 41
+        },
+        "regression_patch": {
+          "decision_counts": {
+            "accept": 1
+          },
+          "record_count": 1
+        }
+      },
+      "expected_outcome": {
+        "correct": {
+          "decision_counts": {
+            "accept": 20,
+            "reject": 1
+          },
+          "record_count": 21
+        },
+        "incorrect": {
+          "decision_counts": {
+            "reject": 21
+          },
+          "record_count": 21
+        },
+        "irrelevant_or_noop": {
+          "decision_counts": {
+            "reject": 14
+          },
+          "record_count": 14
+        },
+        "partial": {
+          "decision_counts": {
+            "accept": 3,
+            "reject": 38
+          },
+          "record_count": 41
+        },
+        "regression": {
+          "decision_counts": {
+            "accept": 1
+          },
+          "record_count": 1
+        }
+      }
+    }
+  },
+  "checks": [
+    {
+      "check": "candidate_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "raw_review_count",
+      "detail": 686,
+      "passed": true
+    },
+    {
+      "check": "review_matrix_has_no_duplicates",
+      "detail": 0,
+      "passed": true
+    },
+    {
+      "check": "review_matrix_missing_cells",
+      "detail": 0,
+      "passed": true
+    },
+    {
+      "check": "review_matrix_extra_cells",
+      "detail": 0,
+      "passed": true
+    },
+    {
+      "check": "all_decisions_supported",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "raw_response_content_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "prompt_text_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "api_call_not_attempted",
+      "detail": false,
+      "passed": true
+    }
+  ],
+  "claim_boundary": {
+    "allowed": "Report label-conditioned Qwen v0.3 descriptive metrics for the frozen 98-candidate E0-E6 packet set.",
+    "forbidden": "Do not claim five-model effectiveness, DeepSeek/Qwen comparison, LLM superiority, or final evidence-level ranking from this Qwen-only analysis."
+  },
+  "cohort_id": "EVP-8",
+  "inputs": {
+    "candidate_set": "data/protocols/evp8_candidate_set_v0_1.json",
+    "evaluator_only_labels": "data/patches/evp7_candidates.jsonl",
+    "qwen_full_raw_responses": "outputs/evp8_main_v0_3_qwen_first_prompt_v0_2_json_mode_full/qwen_qwen3.7-max/raw_responses.jsonl"
+  },
+  "label_distribution": {
+    "candidate_type": {
+      "buggy_noop": 21,
+      "correct_reference": 21,
+      "irrelevant_patch": 14,
+      "partial_fix": 41,
+      "regression_patch": 1
+    },
+    "correct_count": 21,
+    "expected_outcome": {
+      "correct": 21,
+      "incorrect": 21,
+      "irrelevant_or_noop": 14,
+      "partial": 41,
+      "regression": 1
+    },
+    "incorrect_count": 77,
+    "label_with_p2p_broad": {
+      "correct_under_f2p_and_p2p_broad": 21,
+      "incorrect_issue_not_fixed": 76,
+      "incorrect_regression": 1
+    },
+    "selected_candidate_count": 98
+  },
+  "level_deltas_vs_e0": {
+    "E0": {
+      "correct_recall_delta_vs_e0": 0.0,
+      "false_accept_rate_delta_vs_e0": 0.0
+    },
+    "E1": {
+      "correct_recall_delta_vs_e0": 0.0,
+      "false_accept_rate_delta_vs_e0": 0.0
+    },
+    "E2": {
+      "correct_recall_delta_vs_e0": 0.0,
+      "false_accept_rate_delta_vs_e0": 0.0
+    },
+    "E3": {
+      "correct_recall_delta_vs_e0": 0.809524,
+      "false_accept_rate_delta_vs_e0": 0.038961
+    },
+    "E4": {
+      "correct_recall_delta_vs_e0": 0.857143,
+      "false_accept_rate_delta_vs_e0": 0.038961
+    },
+    "E5": {
+      "correct_recall_delta_vs_e0": 0.857143,
+      "false_accept_rate_delta_vs_e0": 0.038961
+    },
+    "E6": {
+      "correct_recall_delta_vs_e0": 0.952381,
+      "false_accept_rate_delta_vs_e0": 0.051948
+    }
+  },
+  "method": {
+    "api_call_attempted": false,
+    "correct_label": "correct_under_f2p_and_p2p_broad",
+    "decision_parse_source": "raw_response_text final JSON content only",
+    "incorrect_definition": "any selected candidate whose label_with_p2p_broad is not the correct label",
+    "prompt_text_stored": false,
+    "raw_response_content_stored": false,
+    "reasoning_content_used": false
+  },
+  "model_id": "qwen/qwen3.7-max",
+  "paired_transitions": {
+    "adjacent": {
+      "E0->E1": {
+        "accept_transition_counts": {
+          "correct_accept_to_nonaccept": 0,
+          "correct_nonaccept_to_accept": 0,
+          "incorrect_accept_to_nonaccept": 0,
+          "incorrect_nonaccept_to_accept": 0
+        },
+        "transition_counts": {
+          "correct:escalate->escalate": 21,
+          "incorrect:escalate->escalate": 51,
+          "incorrect:escalate->reject": 2,
+          "incorrect:reject->escalate": 2,
+          "incorrect:reject->reject": 22
+        }
+      },
+      "E1->E2": {
+        "accept_transition_counts": {
+          "correct_accept_to_nonaccept": 0,
+          "correct_nonaccept_to_accept": 0,
+          "incorrect_accept_to_nonaccept": 0,
+          "incorrect_nonaccept_to_accept": 0
+        },
+        "transition_counts": {
+          "correct:escalate->escalate": 21,
+          "incorrect:escalate->escalate": 48,
+          "incorrect:escalate->reject": 5,
+          "incorrect:reject->escalate": 4,
+          "incorrect:reject->reject": 20
+        }
+      },
+      "E2->E3": {
+        "accept_transition_counts": {
+          "correct_accept_to_nonaccept": 0,
+          "correct_nonaccept_to_accept": 17,
+          "incorrect_accept_to_nonaccept": 0,
+          "incorrect_nonaccept_to_accept": 3
+        },
+        "transition_counts": {
+          "correct:escalate->accept": 17,
+          "correct:escalate->escalate": 3,
+          "correct:escalate->reject": 1,
+          "incorrect:escalate->accept": 3,
+          "incorrect:escalate->escalate": 1,
+          "incorrect:escalate->reject": 48,
+          "incorrect:reject->reject": 25
+        }
+      },
+      "E3->E4": {
+        "accept_transition_counts": {
+          "correct_accept_to_nonaccept": 1,
+          "correct_nonaccept_to_accept": 2,
+          "incorrect_accept_to_nonaccept": 1,
+          "incorrect_nonaccept_to_accept": 1
+        },
+        "transition_counts": {
+          "correct:accept->accept": 16,
+          "correct:accept->escalate": 1,
+          "correct:escalate->accept": 2,
+          "correct:escalate->escalate": 1,
+          "correct:reject->reject": 1,
+          "incorrect:accept->accept": 2,
+          "incorrect:accept->reject": 1,
+          "incorrect:escalate->accept": 1,
+          "incorrect:reject->reject": 73
+        }
+      },
+      "E4->E5": {
+        "accept_transition_counts": {
+          "correct_accept_to_nonaccept": 2,
+          "correct_nonaccept_to_accept": 2,
+          "incorrect_accept_to_nonaccept": 1,
+          "incorrect_nonaccept_to_accept": 1
+        },
+        "transition_counts": {
+          "correct:accept->accept": 16,
+          "correct:accept->escalate": 2,
+          "correct:escalate->accept": 2,
+          "correct:reject->reject": 1,
+          "incorrect:accept->accept": 2,
+          "incorrect:accept->escalate": 1,
+          "incorrect:reject->accept": 1,
+          "incorrect:reject->reject": 73
+        }
+      },
+      "E5->E6": {
+        "accept_transition_counts": {
+          "correct_accept_to_nonaccept": 0,
+          "correct_nonaccept_to_accept": 2,
+          "incorrect_accept_to_nonaccept": 0,
+          "incorrect_nonaccept_to_accept": 1
+        },
+        "transition_counts": {
+          "correct:accept->accept": 18,
+          "correct:escalate->accept": 2,
+          "correct:reject->reject": 1,
+          "incorrect:accept->accept": 3,
+          "incorrect:escalate->accept": 1,
+          "incorrect:reject->reject": 73
+        }
+      }
+    },
+    "vs_e0": {
+      "E0->E1": {
+        "accept_transition_counts": {
+          "correct_accept_to_nonaccept": 0,
+          "correct_nonaccept_to_accept": 0,
+          "incorrect_accept_to_nonaccept": 0,
+          "incorrect_nonaccept_to_accept": 0
+        },
+        "transition_counts": {
+          "correct:escalate->escalate": 21,
+          "incorrect:escalate->escalate": 51,
+          "incorrect:escalate->reject": 2,
+          "incorrect:reject->escalate": 2,
+          "incorrect:reject->reject": 22
+        }
+      },
+      "E0->E2": {
+        "accept_transition_counts": {
+          "correct_accept_to_nonaccept": 0,
+          "correct_nonaccept_to_accept": 0,
+          "incorrect_accept_to_nonaccept": 0,
+          "incorrect_nonaccept_to_accept": 0
+        },
+        "transition_counts": {
+          "correct:escalate->escalate": 21,
+          "incorrect:escalate->escalate": 49,
+          "incorrect:escalate->reject": 4,
+          "incorrect:reject->escalate": 3,
+          "incorrect:reject->reject": 21
+        }
+      },
+      "E0->E3": {
+        "accept_transition_counts": {
+          "correct_accept_to_nonaccept": 0,
+          "correct_nonaccept_to_accept": 17,
+          "incorrect_accept_to_nonaccept": 0,
+          "incorrect_nonaccept_to_accept": 3
+        },
+        "transition_counts": {
+          "correct:escalate->accept": 17,
+          "correct:escalate->escalate": 3,
+          "correct:escalate->reject": 1,
+          "incorrect:escalate->accept": 3,
+          "incorrect:escalate->escalate": 1,
+          "incorrect:escalate->reject": 49,
+          "incorrect:reject->reject": 24
+        }
+      },
+      "E0->E4": {
+        "accept_transition_counts": {
+          "correct_accept_to_nonaccept": 0,
+          "correct_nonaccept_to_accept": 18,
+          "incorrect_accept_to_nonaccept": 0,
+          "incorrect_nonaccept_to_accept": 3
+        },
+        "transition_counts": {
+          "correct:escalate->accept": 18,
+          "correct:escalate->escalate": 2,
+          "correct:escalate->reject": 1,
+          "incorrect:escalate->accept": 3,
+          "incorrect:escalate->reject": 50,
+          "incorrect:reject->reject": 24
+        }
+      },
+      "E0->E5": {
+        "accept_transition_counts": {
+          "correct_accept_to_nonaccept": 0,
+          "correct_nonaccept_to_accept": 18,
+          "incorrect_accept_to_nonaccept": 0,
+          "incorrect_nonaccept_to_accept": 3
+        },
+        "transition_counts": {
+          "correct:escalate->accept": 18,
+          "correct:escalate->escalate": 2,
+          "correct:escalate->reject": 1,
+          "incorrect:escalate->accept": 3,
+          "incorrect:escalate->escalate": 1,
+          "incorrect:escalate->reject": 49,
+          "incorrect:reject->reject": 24
+        }
+      },
+      "E0->E6": {
+        "accept_transition_counts": {
+          "correct_accept_to_nonaccept": 0,
+          "correct_nonaccept_to_accept": 20,
+          "incorrect_accept_to_nonaccept": 0,
+          "incorrect_nonaccept_to_accept": 4
+        },
+        "transition_counts": {
+          "correct:escalate->accept": 20,
+          "correct:escalate->reject": 1,
+          "incorrect:escalate->accept": 4,
+          "incorrect:escalate->reject": 49,
+          "incorrect:reject->reject": 24
+        }
+      }
+    }
+  },
+  "per_evidence_level": {
+    "E0": {
+      "accept_rate": 0.0,
+      "accepted_precision": null,
+      "confusion_counts": {
+        "escalated_correct": 21,
+        "escalated_incorrect": 53,
+        "false_accept": 0,
+        "false_reject": 0,
+        "true_accept": 0,
+        "true_reject": 24
+      },
+      "correct_decision_counts": {
+        "escalate": 21
+      },
+      "correct_escalation_rate": 1.0,
+      "correct_recall": 0.0,
+      "correct_total": 21,
+      "decision_counts": {
+        "escalate": 74,
+        "reject": 24
+      },
+      "escalation_rate": 0.755102,
+      "false_accept_rate": 0.0,
+      "false_reject_rate": 0.0,
+      "incorrect_decision_counts": {
+        "escalate": 53,
+        "reject": 24
+      },
+      "incorrect_reject_rate": 0.311688,
+      "incorrect_total": 77,
+      "record_count": 98,
+      "reject_rate": 0.244898
+    },
+    "E1": {
+      "accept_rate": 0.0,
+      "accepted_precision": null,
+      "confusion_counts": {
+        "escalated_correct": 21,
+        "escalated_incorrect": 53,
+        "false_accept": 0,
+        "false_reject": 0,
+        "true_accept": 0,
+        "true_reject": 24
+      },
+      "correct_decision_counts": {
+        "escalate": 21
+      },
+      "correct_escalation_rate": 1.0,
+      "correct_recall": 0.0,
+      "correct_total": 21,
+      "decision_counts": {
+        "escalate": 74,
+        "reject": 24
+      },
+      "escalation_rate": 0.755102,
+      "false_accept_rate": 0.0,
+      "false_reject_rate": 0.0,
+      "incorrect_decision_counts": {
+        "escalate": 53,
+        "reject": 24
+      },
+      "incorrect_reject_rate": 0.311688,
+      "incorrect_total": 77,
+      "record_count": 98,
+      "reject_rate": 0.244898
+    },
+    "E2": {
+      "accept_rate": 0.0,
+      "accepted_precision": null,
+      "confusion_counts": {
+        "escalated_correct": 21,
+        "escalated_incorrect": 52,
+        "false_accept": 0,
+        "false_reject": 0,
+        "true_accept": 0,
+        "true_reject": 25
+      },
+      "correct_decision_counts": {
+        "escalate": 21
+      },
+      "correct_escalation_rate": 1.0,
+      "correct_recall": 0.0,
+      "correct_total": 21,
+      "decision_counts": {
+        "escalate": 73,
+        "reject": 25
+      },
+      "escalation_rate": 0.744898,
+      "false_accept_rate": 0.0,
+      "false_reject_rate": 0.0,
+      "incorrect_decision_counts": {
+        "escalate": 52,
+        "reject": 25
+      },
+      "incorrect_reject_rate": 0.324675,
+      "incorrect_total": 77,
+      "record_count": 98,
+      "reject_rate": 0.255102
+    },
+    "E3": {
+      "accept_rate": 0.204082,
+      "accepted_precision": 0.85,
+      "confusion_counts": {
+        "escalated_correct": 3,
+        "escalated_incorrect": 1,
+        "false_accept": 3,
+        "false_reject": 1,
+        "true_accept": 17,
+        "true_reject": 73
+      },
+      "correct_decision_counts": {
+        "accept": 17,
+        "escalate": 3,
+        "reject": 1
+      },
+      "correct_escalation_rate": 0.142857,
+      "correct_recall": 0.809524,
+      "correct_total": 21,
+      "decision_counts": {
+        "accept": 20,
+        "escalate": 4,
+        "reject": 74
+      },
+      "escalation_rate": 0.040816,
+      "false_accept_rate": 0.038961,
+      "false_reject_rate": 0.047619,
+      "incorrect_decision_counts": {
+        "accept": 3,
+        "escalate": 1,
+        "reject": 73
+      },
+      "incorrect_reject_rate": 0.948052,
+      "incorrect_total": 77,
+      "record_count": 98,
+      "reject_rate": 0.755102
+    },
+    "E4": {
+      "accept_rate": 0.214286,
+      "accepted_precision": 0.857143,
+      "confusion_counts": {
+        "escalated_correct": 2,
+        "escalated_incorrect": 0,
+        "false_accept": 3,
+        "false_reject": 1,
+        "true_accept": 18,
+        "true_reject": 74
+      },
+      "correct_decision_counts": {
+        "accept": 18,
+        "escalate": 2,
+        "reject": 1
+      },
+      "correct_escalation_rate": 0.095238,
+      "correct_recall": 0.857143,
+      "correct_total": 21,
+      "decision_counts": {
+        "accept": 21,
+        "escalate": 2,
+        "reject": 75
+      },
+      "escalation_rate": 0.020408,
+      "false_accept_rate": 0.038961,
+      "false_reject_rate": 0.047619,
+      "incorrect_decision_counts": {
+        "accept": 3,
+        "reject": 74
+      },
+      "incorrect_reject_rate": 0.961039,
+      "incorrect_total": 77,
+      "record_count": 98,
+      "reject_rate": 0.765306
+    },
+    "E5": {
+      "accept_rate": 0.214286,
+      "accepted_precision": 0.857143,
+      "confusion_counts": {
+        "escalated_correct": 2,
+        "escalated_incorrect": 1,
+        "false_accept": 3,
+        "false_reject": 1,
+        "true_accept": 18,
+        "true_reject": 73
+      },
+      "correct_decision_counts": {
+        "accept": 18,
+        "escalate": 2,
+        "reject": 1
+      },
+      "correct_escalation_rate": 0.095238,
+      "correct_recall": 0.857143,
+      "correct_total": 21,
+      "decision_counts": {
+        "accept": 21,
+        "escalate": 3,
+        "reject": 74
+      },
+      "escalation_rate": 0.030612,
+      "false_accept_rate": 0.038961,
+      "false_reject_rate": 0.047619,
+      "incorrect_decision_counts": {
+        "accept": 3,
+        "escalate": 1,
+        "reject": 73
+      },
+      "incorrect_reject_rate": 0.948052,
+      "incorrect_total": 77,
+      "record_count": 98,
+      "reject_rate": 0.755102
+    },
+    "E6": {
+      "accept_rate": 0.244898,
+      "accepted_precision": 0.833333,
+      "confusion_counts": {
+        "escalated_correct": 0,
+        "escalated_incorrect": 0,
+        "false_accept": 4,
+        "false_reject": 1,
+        "true_accept": 20,
+        "true_reject": 73
+      },
+      "correct_decision_counts": {
+        "accept": 20,
+        "reject": 1
+      },
+      "correct_escalation_rate": 0.0,
+      "correct_recall": 0.952381,
+      "correct_total": 21,
+      "decision_counts": {
+        "accept": 24,
+        "reject": 74
+      },
+      "escalation_rate": 0.0,
+      "false_accept_rate": 0.051948,
+      "false_reject_rate": 0.047619,
+      "incorrect_decision_counts": {
+        "accept": 4,
+        "reject": 73
+      },
+      "incorrect_reject_rate": 0.948052,
+      "incorrect_total": 77,
+      "record_count": 98,
+      "reject_rate": 0.755102
+    }
+  },
+  "protocol_id": "evp8_accept_aware_qwen_first_main_v0_3",
+  "provider_route": "qwen_official",
+  "request_model_id": "qwen3.7-max"
+}

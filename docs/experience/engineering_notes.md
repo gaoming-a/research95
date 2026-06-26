@@ -3338,3 +3338,19 @@ This file starts fresh for the patch-verification project.
   synthesis briefly read the previous waiting audit before the passed audit was
   rewritten. The fix is ordering, not experiment repair: run audit first, then
   synthesis.
+
+## 2026-06-27 EVP-8 v0.3 Qwen label-conditioned analysis
+
+- Label-conditioned claims require a post-execution join between model
+  decisions and evaluator-only labels. Aggregate accept counts alone cannot
+  establish correct-patch recall or accepted precision.
+- For Qwen v0.3, the accepted count rise is mostly useful but not risk-free:
+  E6 accepts 20/21 correct patches and 4/77 non-correct patches. Report this
+  as a safety/recall tradeoff, not as a pure monotonic improvement.
+- The label analysis script must parse only the final JSON decision stored in
+  `raw_response_text`; do not parse provider `reasoning_content` as the
+  result.
+- When writing audit-style booleans, distinguish a check result from the
+  observed value. A field such as `api_call_attempted=false` should usually be
+  recorded as `passed=true, detail=false`; otherwise a correct no-API boundary
+  is accidentally reported as a failed check.

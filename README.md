@@ -144,6 +144,15 @@ records with decision counts `accept=86`, `escalate=230`, `reject=370` and
 estimated cost CNY `40.88994`. This is a Qwen-first v0.3 result only; it does
 not authorize or imply DeepSeek/Kimi/Devstral/Gemini v0.3 results, five-model
 main-experiment conclusions, or LLM superiority over deterministic baselines.
+As of 2026-06-27, the Qwen v0.3 full run also has a label-conditioned
+raw-output-free analysis at
+`docs/experiments/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.md`.
+Using the hidden evaluator labels only after execution, correct-patch recall
+is 0% at E0/E1/E2, 80.95% at E3, 85.71% at E4/E5, and 95.24% at E6; accepted
+precision is 83.33% at E6 because Qwen accepts 20/21 correct patches and 4/77
+non-correct patches. This supports a bounded statement that more visible
+evidence increases Qwen's correct-patch acceptance in this frozen batch, while
+also introducing a small false-accept risk.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently
