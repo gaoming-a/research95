@@ -1,0 +1,81 @@
+{
+  "ablation_condition": "E6-no-verdict",
+  "actual_model_id_counts": {
+    "qwen3.7-max": 98
+  },
+  "api_call_attempted": true,
+  "api_key_values_printed": false,
+  "cohort_id": "EVP-8",
+  "config": "configs/evp8_e6_no_verdict_ablation.local.json",
+  "configured_model_id": "qwen/qwen3.7-max",
+  "cost_summary": {
+    "cost_currency_counts": {
+      "CNY": 98
+    },
+    "cost_observability_counts": {
+      "estimated_from_provider_token_usage_and_official_cny_pricing": 98
+    },
+    "cost_source_counts": {
+      "estimated_from_tokens_official_qwen_cny_pricing": 98
+    },
+    "total_cost_cny": 5.778804,
+    "total_cost_usd": 0.0,
+    "unknown_cost_record_count": 0
+  },
+  "decision_counts": {
+    "accept": 23,
+    "escalate": 1,
+    "reject": 74
+  },
+  "decision_counts_by_evidence_level": {
+    "E0": {},
+    "E1": {},
+    "E2": {},
+    "E3": {},
+    "E4": {},
+    "E5": {},
+    "E6": {
+      "accept": 23,
+      "escalate": 1,
+      "reject": 74
+    }
+  },
+  "full_gate": "passed",
+  "invalid_parse_count": 0,
+  "mode": "executed",
+  "new_api_call_count": 98,
+  "parse_valid_count": 98,
+  "prompt_text_stored": false,
+  "provider_route": "qwen_official",
+  "provider_route_counts": {
+    "qwen_official": 98
+  },
+  "raw_outputs_generated": true,
+  "raw_response_text_stored_in_tracked_summary": false,
+  "raw_responses_out": "outputs/evp8_e6_no_verdict_ablation_full/qwen_qwen3.7-max/raw_responses.jsonl",
+  "removed_verdict_fields": [
+    "rule_based_visible_merge_gate_decision",
+    "rule_based_visible_merge_gate_reasons",
+    "source_decision"
+  ],
+  "request_model_id": "qwen3.7-max",
+  "request_response_format": {
+    "type": "json_object"
+  },
+  "request_thinking": null,
+  "resume_enabled": false,
+  "resumed_raw_record_count": 0,
+  "review_count": 98,
+  "review_count_by_evidence_level": {
+    "E0": 0,
+    "E1": 0,
+    "E2": 0,
+    "E3": 0,
+    "E4": 0,
+    "E5": 0,
+    "E6": 98
+  },
+  "run_gate": "passed",
+  "run_scope": "full",
+  "usage_cost_gate": "passed"
+}

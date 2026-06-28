@@ -238,6 +238,42 @@
   This plan supersedes the SQJ paper/artifact-freeze route as the immediate
   next step; the SQJ route remains a historical backup until the ablation
   clarifies the claim boundary.
+- `../scripts/analyze_evp8_tool_headroom.py`: no-API Phase 0 headroom audit
+  script. It joins deterministic tool-only E6 decisions with evaluator-only
+  labels and writes raw-output-free opportunity-set metrics.
+- `../data/protocols/evp8_tool_headroom_audit_v0_1.json`: Phase 0 headroom
+  audit result. Current status is passed: rule-only has 25 accepts, 73 rejects,
+  5 false accepts, 1 false reject, and 6 opportunity cases.
+- `experiments/evp8_tool_headroom_audit_v0_1.md`: Markdown companion for the
+  tool-only headroom audit.
+- `../configs/evp8_e6_no_verdict_ablation.example.json`: tracked no-secret
+  example config for the Qwen/DeepSeek `E6-no-verdict` ablation. The ignored
+  local copy is `configs/evp8_e6_no_verdict_ablation.local.json`.
+- `../scripts/run_evp8_e6_no_verdict_ablation.py`: guarded runner for the
+  Qwen/DeepSeek `E6-no-verdict` ablation. It reuses existing E6 visible
+  evidence but removes `rule_based_visible_merge_gate_decision`,
+  `rule_based_visible_merge_gate_reasons`, and `source_decision` before
+  rendering prompts.
+- `../data/protocols/evp8_e6_no_verdict_ablation_smoke_check_only_v0_1.json`
+  and `../data/protocols/evp8_e6_no_verdict_ablation_full_check_only_v0_1.json`:
+  no-API packet/schema gates for 5 smoke packets and 98 full packets. Both
+  passed with the verdict fields removed and no prompt/raw storage.
+- `../data/reviews/evp8_e6_no_verdict_qwen_qwen3.7-max_full_summary.json`:
+  raw-output-free Qwen full summary for `E6-no-verdict`. Current status is
+  passed: 98/98 parse-valid, decisions `accept=23`, `reject=74`,
+  `escalate=1`, estimated cost CNY `5.778804`.
+- `../data/reviews/evp8_e6_no_verdict_deepseek_deepseek-v4-pro_full_summary.json`:
+  raw-output-free DeepSeek full summary for `E6-no-verdict`. Current status is
+  passed: 98/98 parse-valid, decisions `accept=11`, `reject=73`,
+  `escalate=14`, estimated cost USD `0.079322105`.
+- `../scripts/analyze_evp8_e6_no_verdict_ablation.py`: raw-output-free
+  comparison script for rule-only, `E6-full`, and `E6-no-verdict`.
+- `../data/reviews/evp8_e6_no_verdict_ablation_comparison.json`: comparison
+  result for Qwen and DeepSeek on the frozen 98-candidate cohort.
+- `experiments/evp8_e6_no_verdict_ablation_comparison.md`: Markdown companion
+  for the ablation comparison. It shows Qwen remains close to `E6-full`, while
+  DeepSeek removes false accepts by escalating many cases and losing correct
+  recall.
 - `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:
   no-key public OpenRouter catalog audit for the G7 later-model pinned IDs:
   `moonshotai/kimi-k2.6`, `mistralai/devstral-2512`, and

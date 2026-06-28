@@ -147,6 +147,29 @@
   - 后续 ablation 的核心比较是 `rule-only`、当前 `E6-full` 和未来
     `E6-no-verdict`；
   - 该计划不授权 API 调用、不修改 prompt、不修改 candidate set。
+- 本轮执行 EVP-8 Qwen/DeepSeek `E6-no-verdict` ablation：
+  - Phase 0 headroom audit 已通过：
+    `data/protocols/evp8_tool_headroom_audit_v0_1.json` 和
+    `docs/experiments/evp8_tool_headroom_audit_v0_1.md`；
+  - rule-only baseline 为 `accept=25, reject=73`，包含 5 个 false accepts
+    和 1 个 false reject，opportunity-set size = 6；
+  - no-verdict packet/check-only gate 已通过：
+    `data/protocols/evp8_e6_no_verdict_ablation_smoke_check_only_v0_1.json`
+    和
+    `data/protocols/evp8_e6_no_verdict_ablation_full_check_only_v0_1.json`；
+  - Qwen `E6-no-verdict` full run 通过：98/98 parse-valid，decision counts 为
+    `accept=23, reject=74, escalate=1`，estimated cost CNY `5.778804`；
+  - DeepSeek `E6-no-verdict` full run 通过：98/98 parse-valid，decision counts
+    为 `accept=11, reject=73, escalate=14`，estimated cost USD
+    `0.079322105`；
+  - comparison summary 为
+    `data/reviews/evp8_e6_no_verdict_ablation_comparison.json` 和
+    `docs/experiments/evp8_e6_no_verdict_ablation_comparison.md`；
+  - 主要结论：Qwen 去掉 verdict 后几乎保持 E6-full 模式，仍有 4/77
+    false accepts；DeepSeek 去掉 verdict 后 false accept 降为 0，但 correct
+    recall 降至 11/21，并产生 14 个 escalations；
+  - 该结果支持 model-dependent risk-control / triage 解释，不支持自动 merge
+    gate claim。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。最近一次已确认
   `git push origin main` 成功；最终是否仍 ahead 仍以
@@ -195,9 +218,10 @@
     77；E6 correct recall = 95.24%，accepted precision = 83.33%，false
     accept rate = 5.19%；该分析只支持 Qwen v0.3 frozen batch 的描述性
     label-conditioned 结论；
-  - EVP-8 LLM-vs-tool headroom / E6 ablation：当前仅有 no-API 计划，目标是
-    先区分 LLM 与工具一致到底是有效负结果、工具证据过强，还是 cohort 缺少
-    hard cases；
+  - EVP-8 LLM-vs-tool headroom / E6 ablation：Phase 0、Qwen/DeepSeek
+    `E6-no-verdict` full run 和 rule-only / E6-full / E6-no-verdict comparison
+    均已完成；当前结果显示 Qwen 不明显改正工具 false accepts，DeepSeek 用
+    escalation 消除 false accepts 但显著牺牲 correct recall；
   - SQJ low-cost submission route：当前首选投稿目标为 Software Quality
     Journal，按 CCF C 类 / 学校 C 类口径作为 D 类及以上候选；投稿前必须先由
     学院/科研秘书确认发表当年 CCF 目录、高风险/预警名单状态和学校认定口径；
@@ -246,13 +270,14 @@
 
 当前默认下一步：
 
-1. 实现 Phase 0 no-API headroom audit；
-2. join deterministic tool-only decisions 与 evaluator-only labels；
-3. 统计 tool false accepts、tool false rejects、unnecessary escalations 和
-   opportunity-set size；
-4. 只有 headroom audit 说明当前 cohort 有足够工具错误可供 LLM 改正，才进入
-   `E6-no-verdict` packet/prompt/schema dry-run；
-5. 任何 Qwen API ablation 都需要新的用户明确授权。
+1. 基于
+   `docs/experiments/evp8_e6_no_verdict_ablation_comparison.md` 写论文结果段；
+2. 明确 claim boundary：Qwen 结果显示 verdict removal 对其影响小，但不修复
+   4 个工具 false accepts；DeepSeek 结果显示更强风险控制，但代价是 correct
+   recall 大幅下降；
+3. 后续若要证明实用价值，必须新增 hard-case / real agent patch cohort 或做人类
+   review 成本/风险函数，不应继续在同一 easy cohort 上堆模型；
+4. 任何新增模型、重复 API 或 candidate-set 扩展都需要新的计划和用户授权。
 
 以下条目保留为历史/备用路线，不再覆盖当前默认下一步：
 

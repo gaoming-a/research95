@@ -1,0 +1,1416 @@
+{
+  "analysis_id": "evp8_e6_no_verdict_ablation_comparison",
+  "checks": [
+    {
+      "check": "candidate_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "tool_headroom_status",
+      "detail": "sufficient_for_ablation",
+      "passed": true
+    },
+    {
+      "check": "api_call_not_attempted_by_analysis",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_response_content_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "prompt_text_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "deepseek/deepseek-v4-pro:E6-full:record_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "deepseek/deepseek-v4-pro:E6-full:candidate_matrix",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "deepseek/deepseek-v4-pro:E6-no-verdict:record_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "deepseek/deepseek-v4-pro:E6-no-verdict:candidate_matrix",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "qwen/qwen3.7-max:E6-full:record_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "qwen/qwen3.7-max:E6-full:candidate_matrix",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "qwen/qwen3.7-max:E6-no-verdict:record_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "qwen/qwen3.7-max:E6-no-verdict:candidate_matrix",
+      "detail": 98,
+      "passed": true
+    }
+  ],
+  "claim_boundary": {
+    "allowed": "Report Qwen/DeepSeek E6-no-verdict ablation against rule-only and E6-full on the frozen 98-candidate EVP-8 cohort.",
+    "forbidden": "Do not claim reliable automatic merge, generalization to real agent patches, or superiority without the opportunity-set evidence."
+  },
+  "cohort_id": "EVP-8",
+  "inputs": {
+    "candidate_set": "data/protocols/evp8_candidate_set_v0_1.json",
+    "evaluator_only_labels": "data/patches/evp7_candidates.jsonl",
+    "raw_response_paths": {
+      "deepseek/deepseek-v4-pro": {
+        "E6-full": "outputs/evp8_accept_aware_v0_2_prompt_v0_2_json_mode_deepseek_qwen_full/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+        "E6-no-verdict": "outputs/evp8_e6_no_verdict_ablation_full/deepseek_deepseek-v4-pro/raw_responses.jsonl"
+      },
+      "qwen/qwen3.7-max": {
+        "E6-full": "outputs/evp8_accept_aware_v0_2_prompt_v0_2_json_mode_deepseek_qwen_full/qwen_qwen3.7-max/raw_responses.jsonl",
+        "E6-no-verdict": "outputs/evp8_e6_no_verdict_ablation_full/qwen_qwen3.7-max/raw_responses.jsonl"
+      }
+    },
+    "tool_headroom_audit": "data/protocols/evp8_tool_headroom_audit_v0_1.json"
+  },
+  "method": {
+    "analysis_api_call_attempted": false,
+    "conditions": [
+      "rule-only",
+      "E6-full",
+      "E6-no-verdict"
+    ],
+    "correct_label": "correct_under_f2p_and_p2p_broad",
+    "prompt_text_stored": false,
+    "raw_response_content_stored": false
+  },
+  "per_model": {
+    "deepseek/deepseek-v4-pro": {
+      "conditions": {
+        "E6-full": {
+          "breakdowns": {
+            "candidate_type": {
+              "buggy_noop": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 21
+                },
+                "decision_counts": {
+                  "reject": 21
+                },
+                "record_count": 21
+              },
+              "correct_reference": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 2,
+                  "true_accept": 19,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "accept": 19,
+                  "reject": 2
+                },
+                "record_count": 21
+              },
+              "irrelevant_patch": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 14
+                },
+                "decision_counts": {
+                  "reject": 14
+                },
+                "record_count": 14
+              },
+              "partial_fix": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 3,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 38
+                },
+                "decision_counts": {
+                  "accept": 3,
+                  "reject": 38
+                },
+                "record_count": 41
+              },
+              "regression_patch": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 1,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "accept": 1
+                },
+                "record_count": 1
+              }
+            },
+            "expected_outcome": {
+              "correct": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 2,
+                  "true_accept": 19,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "accept": 19,
+                  "reject": 2
+                },
+                "record_count": 21
+              },
+              "incorrect": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 21
+                },
+                "decision_counts": {
+                  "reject": 21
+                },
+                "record_count": 21
+              },
+              "irrelevant_or_noop": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 14
+                },
+                "decision_counts": {
+                  "reject": 14
+                },
+                "record_count": 14
+              },
+              "partial": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 3,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 38
+                },
+                "decision_counts": {
+                  "accept": 3,
+                  "reject": 38
+                },
+                "record_count": 41
+              },
+              "regression": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 1,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "accept": 1
+                },
+                "record_count": 1
+              }
+            }
+          },
+          "metrics": {
+            "accept_rate": 0.234694,
+            "accepted_precision": 0.826087,
+            "confusion_counts": {
+              "escalated_correct": 0,
+              "escalated_incorrect": 0,
+              "false_accept": 4,
+              "false_reject": 2,
+              "true_accept": 19,
+              "true_reject": 73
+            },
+            "correct_decision_counts": {
+              "accept": 19,
+              "reject": 2
+            },
+            "correct_recall": 0.904762,
+            "correct_total": 21,
+            "decision_counts": {
+              "accept": 23,
+              "reject": 75
+            },
+            "escalation_rate": 0.0,
+            "false_accept_rate": 0.051948,
+            "false_reject_rate": 0.095238,
+            "incorrect_decision_counts": {
+              "accept": 4,
+              "reject": 73
+            },
+            "incorrect_reject_rate": 0.948052,
+            "incorrect_total": 77,
+            "record_count": 98,
+            "reject_rate": 0.765306
+          },
+          "opportunity_correction": {
+            "tool_escalations_correct": {
+              "candidate_count": 0,
+              "decision_counts": {},
+              "resolved_to_accept": 0
+            },
+            "tool_escalations_incorrect": {
+              "candidate_count": 0,
+              "decision_counts": {},
+              "resolved_to_reject": 0
+            },
+            "tool_false_accepts": {
+              "candidate_count": 5,
+              "candidates": [
+                {
+                  "candidate_type": "regression_patch",
+                  "decision": "accept",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0039",
+                  "expected_outcome": "regression",
+                  "task_id": "bugsinpy_thefuck_1"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "accept",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0049",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_11"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "accept",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0053",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_16"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "accept",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0066",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_20"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "reject",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0093",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_6"
+                }
+              ],
+              "corrected_to_reject": 1,
+              "decision_counts": {
+                "accept": 4,
+                "reject": 1
+              },
+              "escalated": 0,
+              "repeated_accept": 4
+            },
+            "tool_false_rejects": {
+              "candidate_count": 1,
+              "candidates": [
+                {
+                  "candidate_type": "correct_reference",
+                  "decision": "reject",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0011",
+                  "expected_outcome": "correct",
+                  "task_id": "bugsinpy_cookiecutter_1"
+                }
+              ],
+              "corrected_to_accept": 0,
+              "decision_counts": {
+                "reject": 1
+              },
+              "escalated": 0,
+              "repeated_reject": 1
+            }
+          }
+        },
+        "E6-no-verdict": {
+          "breakdowns": {
+            "candidate_type": {
+              "buggy_noop": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 21
+                },
+                "decision_counts": {
+                  "reject": 21
+                },
+                "record_count": 21
+              },
+              "correct_reference": {
+                "confusion_counts": {
+                  "escalated_correct": 9,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 1,
+                  "true_accept": 11,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "accept": 11,
+                  "escalate": 9,
+                  "reject": 1
+                },
+                "record_count": 21
+              },
+              "irrelevant_patch": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 14
+                },
+                "decision_counts": {
+                  "reject": 14
+                },
+                "record_count": 14
+              },
+              "partial_fix": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 4,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 37
+                },
+                "decision_counts": {
+                  "escalate": 4,
+                  "reject": 37
+                },
+                "record_count": 41
+              },
+              "regression_patch": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 1,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "escalate": 1
+                },
+                "record_count": 1
+              }
+            },
+            "expected_outcome": {
+              "correct": {
+                "confusion_counts": {
+                  "escalated_correct": 9,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 1,
+                  "true_accept": 11,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "accept": 11,
+                  "escalate": 9,
+                  "reject": 1
+                },
+                "record_count": 21
+              },
+              "incorrect": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 21
+                },
+                "decision_counts": {
+                  "reject": 21
+                },
+                "record_count": 21
+              },
+              "irrelevant_or_noop": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 14
+                },
+                "decision_counts": {
+                  "reject": 14
+                },
+                "record_count": 14
+              },
+              "partial": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 4,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 37
+                },
+                "decision_counts": {
+                  "escalate": 4,
+                  "reject": 37
+                },
+                "record_count": 41
+              },
+              "regression": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 1,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "escalate": 1
+                },
+                "record_count": 1
+              }
+            }
+          },
+          "metrics": {
+            "accept_rate": 0.112245,
+            "accepted_precision": 1.0,
+            "confusion_counts": {
+              "escalated_correct": 9,
+              "escalated_incorrect": 5,
+              "false_accept": 0,
+              "false_reject": 1,
+              "true_accept": 11,
+              "true_reject": 72
+            },
+            "correct_decision_counts": {
+              "accept": 11,
+              "escalate": 9,
+              "reject": 1
+            },
+            "correct_recall": 0.52381,
+            "correct_total": 21,
+            "decision_counts": {
+              "accept": 11,
+              "escalate": 14,
+              "reject": 73
+            },
+            "escalation_rate": 0.142857,
+            "false_accept_rate": 0.0,
+            "false_reject_rate": 0.047619,
+            "incorrect_decision_counts": {
+              "escalate": 5,
+              "reject": 72
+            },
+            "incorrect_reject_rate": 0.935065,
+            "incorrect_total": 77,
+            "record_count": 98,
+            "reject_rate": 0.744898
+          },
+          "opportunity_correction": {
+            "tool_escalations_correct": {
+              "candidate_count": 0,
+              "decision_counts": {},
+              "resolved_to_accept": 0
+            },
+            "tool_escalations_incorrect": {
+              "candidate_count": 0,
+              "decision_counts": {},
+              "resolved_to_reject": 0
+            },
+            "tool_false_accepts": {
+              "candidate_count": 5,
+              "candidates": [
+                {
+                  "candidate_type": "regression_patch",
+                  "decision": "escalate",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0039",
+                  "expected_outcome": "regression",
+                  "task_id": "bugsinpy_thefuck_1"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "escalate",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0049",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_11"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "escalate",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0053",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_16"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "escalate",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0066",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_20"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "escalate",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0093",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_6"
+                }
+              ],
+              "corrected_to_reject": 0,
+              "decision_counts": {
+                "escalate": 5
+              },
+              "escalated": 5,
+              "repeated_accept": 0
+            },
+            "tool_false_rejects": {
+              "candidate_count": 1,
+              "candidates": [
+                {
+                  "candidate_type": "correct_reference",
+                  "decision": "reject",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0011",
+                  "expected_outcome": "correct",
+                  "task_id": "bugsinpy_cookiecutter_1"
+                }
+              ],
+              "corrected_to_accept": 0,
+              "decision_counts": {
+                "reject": 1
+              },
+              "escalated": 0,
+              "repeated_reject": 1
+            }
+          }
+        }
+      },
+      "transitions": {
+        "E6-full_to_E6-no-verdict": {
+          "changed_candidates": [
+            {
+              "candidate_type": "correct_reference",
+              "evp8_candidate_id": "evp8_smoke_candidate_0001",
+              "expected_outcome": "correct",
+              "from": "accept",
+              "task_id": "bugsinpy_PySnooper_1",
+              "to": "escalate"
+            },
+            {
+              "candidate_type": "correct_reference",
+              "evp8_candidate_id": "evp8_smoke_candidate_0015",
+              "expected_outcome": "correct",
+              "from": "accept",
+              "task_id": "bugsinpy_cookiecutter_2",
+              "to": "escalate"
+            },
+            {
+              "candidate_type": "correct_reference",
+              "evp8_candidate_id": "evp8_smoke_candidate_0026",
+              "expected_outcome": "correct",
+              "from": "accept",
+              "task_id": "bugsinpy_cookiecutter_3",
+              "to": "escalate"
+            },
+            {
+              "candidate_type": "regression_patch",
+              "evp8_candidate_id": "evp8_smoke_candidate_0039",
+              "expected_outcome": "regression",
+              "from": "accept",
+              "task_id": "bugsinpy_thefuck_1",
+              "to": "escalate"
+            },
+            {
+              "candidate_type": "correct_reference",
+              "evp8_candidate_id": "evp8_smoke_candidate_0040",
+              "expected_outcome": "correct",
+              "from": "accept",
+              "task_id": "bugsinpy_tqdm_9",
+              "to": "escalate"
+            },
+            {
+              "candidate_type": "correct_reference",
+              "evp8_candidate_id": "evp8_smoke_candidate_0047",
+              "expected_outcome": "correct",
+              "from": "reject",
+              "task_id": "bugsinpy_youtube-dl_11",
+              "to": "escalate"
+            },
+            {
+              "candidate_type": "partial_fix",
+              "evp8_candidate_id": "evp8_smoke_candidate_0049",
+              "expected_outcome": "partial",
+              "from": "accept",
+              "task_id": "bugsinpy_youtube-dl_11",
+              "to": "escalate"
+            },
+            {
+              "candidate_type": "partial_fix",
+              "evp8_candidate_id": "evp8_smoke_candidate_0053",
+              "expected_outcome": "partial",
+              "from": "accept",
+              "task_id": "bugsinpy_youtube-dl_16",
+              "to": "escalate"
+            },
+            {
+              "candidate_type": "correct_reference",
+              "evp8_candidate_id": "evp8_smoke_candidate_0063",
+              "expected_outcome": "correct",
+              "from": "accept",
+              "task_id": "bugsinpy_youtube-dl_20",
+              "to": "escalate"
+            },
+            {
+              "candidate_type": "partial_fix",
+              "evp8_candidate_id": "evp8_smoke_candidate_0066",
+              "expected_outcome": "partial",
+              "from": "accept",
+              "task_id": "bugsinpy_youtube-dl_20",
+              "to": "escalate"
+            },
+            {
+              "candidate_type": "correct_reference",
+              "evp8_candidate_id": "evp8_smoke_candidate_0071",
+              "expected_outcome": "correct",
+              "from": "accept",
+              "task_id": "bugsinpy_youtube-dl_23",
+              "to": "escalate"
+            },
+            {
+              "candidate_type": "correct_reference",
+              "evp8_candidate_id": "evp8_smoke_candidate_0079",
+              "expected_outcome": "correct",
+              "from": "accept",
+              "task_id": "bugsinpy_youtube-dl_4",
+              "to": "escalate"
+            },
+            {
+              "candidate_type": "correct_reference",
+              "evp8_candidate_id": "evp8_smoke_candidate_0091",
+              "expected_outcome": "correct",
+              "from": "accept",
+              "task_id": "bugsinpy_youtube-dl_6",
+              "to": "escalate"
+            },
+            {
+              "candidate_type": "partial_fix",
+              "evp8_candidate_id": "evp8_smoke_candidate_0093",
+              "expected_outcome": "partial",
+              "from": "reject",
+              "task_id": "bugsinpy_youtube-dl_6",
+              "to": "escalate"
+            }
+          ],
+          "changed_count": 14,
+          "transition_counts": {
+            "correct:accept->accept": 11,
+            "correct:accept->escalate": 8,
+            "correct:reject->escalate": 1,
+            "correct:reject->reject": 1,
+            "incorrect:accept->escalate": 4,
+            "incorrect:reject->escalate": 1,
+            "incorrect:reject->reject": 72
+          }
+        }
+      }
+    },
+    "qwen/qwen3.7-max": {
+      "conditions": {
+        "E6-full": {
+          "breakdowns": {
+            "candidate_type": {
+              "buggy_noop": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 21
+                },
+                "decision_counts": {
+                  "reject": 21
+                },
+                "record_count": 21
+              },
+              "correct_reference": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 1,
+                  "true_accept": 20,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "accept": 20,
+                  "reject": 1
+                },
+                "record_count": 21
+              },
+              "irrelevant_patch": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 14
+                },
+                "decision_counts": {
+                  "reject": 14
+                },
+                "record_count": 14
+              },
+              "partial_fix": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 3,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 38
+                },
+                "decision_counts": {
+                  "accept": 3,
+                  "reject": 38
+                },
+                "record_count": 41
+              },
+              "regression_patch": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 1,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "accept": 1
+                },
+                "record_count": 1
+              }
+            },
+            "expected_outcome": {
+              "correct": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 1,
+                  "true_accept": 20,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "accept": 20,
+                  "reject": 1
+                },
+                "record_count": 21
+              },
+              "incorrect": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 21
+                },
+                "decision_counts": {
+                  "reject": 21
+                },
+                "record_count": 21
+              },
+              "irrelevant_or_noop": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 14
+                },
+                "decision_counts": {
+                  "reject": 14
+                },
+                "record_count": 14
+              },
+              "partial": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 3,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 38
+                },
+                "decision_counts": {
+                  "accept": 3,
+                  "reject": 38
+                },
+                "record_count": 41
+              },
+              "regression": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 1,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "accept": 1
+                },
+                "record_count": 1
+              }
+            }
+          },
+          "metrics": {
+            "accept_rate": 0.244898,
+            "accepted_precision": 0.833333,
+            "confusion_counts": {
+              "escalated_correct": 0,
+              "escalated_incorrect": 0,
+              "false_accept": 4,
+              "false_reject": 1,
+              "true_accept": 20,
+              "true_reject": 73
+            },
+            "correct_decision_counts": {
+              "accept": 20,
+              "reject": 1
+            },
+            "correct_recall": 0.952381,
+            "correct_total": 21,
+            "decision_counts": {
+              "accept": 24,
+              "reject": 74
+            },
+            "escalation_rate": 0.0,
+            "false_accept_rate": 0.051948,
+            "false_reject_rate": 0.047619,
+            "incorrect_decision_counts": {
+              "accept": 4,
+              "reject": 73
+            },
+            "incorrect_reject_rate": 0.948052,
+            "incorrect_total": 77,
+            "record_count": 98,
+            "reject_rate": 0.755102
+          },
+          "opportunity_correction": {
+            "tool_escalations_correct": {
+              "candidate_count": 0,
+              "decision_counts": {},
+              "resolved_to_accept": 0
+            },
+            "tool_escalations_incorrect": {
+              "candidate_count": 0,
+              "decision_counts": {},
+              "resolved_to_reject": 0
+            },
+            "tool_false_accepts": {
+              "candidate_count": 5,
+              "candidates": [
+                {
+                  "candidate_type": "regression_patch",
+                  "decision": "accept",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0039",
+                  "expected_outcome": "regression",
+                  "task_id": "bugsinpy_thefuck_1"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "reject",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0049",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_11"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "accept",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0053",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_16"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "accept",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0066",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_20"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "accept",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0093",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_6"
+                }
+              ],
+              "corrected_to_reject": 1,
+              "decision_counts": {
+                "accept": 4,
+                "reject": 1
+              },
+              "escalated": 0,
+              "repeated_accept": 4
+            },
+            "tool_false_rejects": {
+              "candidate_count": 1,
+              "candidates": [
+                {
+                  "candidate_type": "correct_reference",
+                  "decision": "reject",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0011",
+                  "expected_outcome": "correct",
+                  "task_id": "bugsinpy_cookiecutter_1"
+                }
+              ],
+              "corrected_to_accept": 0,
+              "decision_counts": {
+                "reject": 1
+              },
+              "escalated": 0,
+              "repeated_reject": 1
+            }
+          }
+        },
+        "E6-no-verdict": {
+          "breakdowns": {
+            "candidate_type": {
+              "buggy_noop": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 21
+                },
+                "decision_counts": {
+                  "reject": 21
+                },
+                "record_count": 21
+              },
+              "correct_reference": {
+                "confusion_counts": {
+                  "escalated_correct": 1,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 1,
+                  "true_accept": 19,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "accept": 19,
+                  "escalate": 1,
+                  "reject": 1
+                },
+                "record_count": 21
+              },
+              "irrelevant_patch": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 14
+                },
+                "decision_counts": {
+                  "reject": 14
+                },
+                "record_count": 14
+              },
+              "partial_fix": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 3,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 38
+                },
+                "decision_counts": {
+                  "accept": 3,
+                  "reject": 38
+                },
+                "record_count": 41
+              },
+              "regression_patch": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 1,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "accept": 1
+                },
+                "record_count": 1
+              }
+            },
+            "expected_outcome": {
+              "correct": {
+                "confusion_counts": {
+                  "escalated_correct": 1,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 1,
+                  "true_accept": 19,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "accept": 19,
+                  "escalate": 1,
+                  "reject": 1
+                },
+                "record_count": 21
+              },
+              "incorrect": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 21
+                },
+                "decision_counts": {
+                  "reject": 21
+                },
+                "record_count": 21
+              },
+              "irrelevant_or_noop": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 0,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 14
+                },
+                "decision_counts": {
+                  "reject": 14
+                },
+                "record_count": 14
+              },
+              "partial": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 3,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 38
+                },
+                "decision_counts": {
+                  "accept": 3,
+                  "reject": 38
+                },
+                "record_count": 41
+              },
+              "regression": {
+                "confusion_counts": {
+                  "escalated_correct": 0,
+                  "escalated_incorrect": 0,
+                  "false_accept": 1,
+                  "false_reject": 0,
+                  "true_accept": 0,
+                  "true_reject": 0
+                },
+                "decision_counts": {
+                  "accept": 1
+                },
+                "record_count": 1
+              }
+            }
+          },
+          "metrics": {
+            "accept_rate": 0.234694,
+            "accepted_precision": 0.826087,
+            "confusion_counts": {
+              "escalated_correct": 1,
+              "escalated_incorrect": 0,
+              "false_accept": 4,
+              "false_reject": 1,
+              "true_accept": 19,
+              "true_reject": 73
+            },
+            "correct_decision_counts": {
+              "accept": 19,
+              "escalate": 1,
+              "reject": 1
+            },
+            "correct_recall": 0.904762,
+            "correct_total": 21,
+            "decision_counts": {
+              "accept": 23,
+              "escalate": 1,
+              "reject": 74
+            },
+            "escalation_rate": 0.010204,
+            "false_accept_rate": 0.051948,
+            "false_reject_rate": 0.047619,
+            "incorrect_decision_counts": {
+              "accept": 4,
+              "reject": 73
+            },
+            "incorrect_reject_rate": 0.948052,
+            "incorrect_total": 77,
+            "record_count": 98,
+            "reject_rate": 0.755102
+          },
+          "opportunity_correction": {
+            "tool_escalations_correct": {
+              "candidate_count": 0,
+              "decision_counts": {},
+              "resolved_to_accept": 0
+            },
+            "tool_escalations_incorrect": {
+              "candidate_count": 0,
+              "decision_counts": {},
+              "resolved_to_reject": 0
+            },
+            "tool_false_accepts": {
+              "candidate_count": 5,
+              "candidates": [
+                {
+                  "candidate_type": "regression_patch",
+                  "decision": "accept",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0039",
+                  "expected_outcome": "regression",
+                  "task_id": "bugsinpy_thefuck_1"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "reject",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0049",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_11"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "accept",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0053",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_16"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "accept",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0066",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_20"
+                },
+                {
+                  "candidate_type": "partial_fix",
+                  "decision": "accept",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0093",
+                  "expected_outcome": "partial",
+                  "task_id": "bugsinpy_youtube-dl_6"
+                }
+              ],
+              "corrected_to_reject": 1,
+              "decision_counts": {
+                "accept": 4,
+                "reject": 1
+              },
+              "escalated": 0,
+              "repeated_accept": 4
+            },
+            "tool_false_rejects": {
+              "candidate_count": 1,
+              "candidates": [
+                {
+                  "candidate_type": "correct_reference",
+                  "decision": "reject",
+                  "evp8_candidate_id": "evp8_smoke_candidate_0011",
+                  "expected_outcome": "correct",
+                  "task_id": "bugsinpy_cookiecutter_1"
+                }
+              ],
+              "corrected_to_accept": 0,
+              "decision_counts": {
+                "reject": 1
+              },
+              "escalated": 0,
+              "repeated_reject": 1
+            }
+          }
+        }
+      },
+      "transitions": {
+        "E6-full_to_E6-no-verdict": {
+          "changed_candidates": [
+            {
+              "candidate_type": "correct_reference",
+              "evp8_candidate_id": "evp8_smoke_candidate_0095",
+              "expected_outcome": "correct",
+              "from": "accept",
+              "task_id": "bugsinpy_youtube-dl_7",
+              "to": "escalate"
+            }
+          ],
+          "changed_count": 1,
+          "transition_counts": {
+            "correct:accept->accept": 19,
+            "correct:accept->escalate": 1,
+            "correct:reject->reject": 1,
+            "incorrect:accept->accept": 4,
+            "incorrect:reject->reject": 73
+          }
+        }
+      }
+    }
+  },
+  "rule_only": {
+    "metrics": {
+      "accept_rate": 0.255102,
+      "accepted_precision": 0.8,
+      "confusion_counts": {
+        "escalated_correct": 0,
+        "escalated_incorrect": 0,
+        "false_accept": 5,
+        "false_reject": 1,
+        "true_accept": 20,
+        "true_reject": 72
+      },
+      "correct_decision_counts": {
+        "accept": 20,
+        "reject": 1
+      },
+      "correct_recall": 0.952381,
+      "correct_total": 21,
+      "decision_counts": {
+        "accept": 25,
+        "reject": 73
+      },
+      "escalation_rate": 0.0,
+      "false_accept_rate": 0.064935,
+      "false_reject_rate": 0.047619,
+      "incorrect_decision_counts": {
+        "accept": 5,
+        "reject": 72
+      },
+      "incorrect_reject_rate": 0.935065,
+      "incorrect_total": 77,
+      "opportunity_set_rate": 0.061224,
+      "opportunity_set_size": 6,
+      "record_count": 98,
+      "reject_rate": 0.744898,
+      "unsafe_error_count": 6
+    },
+    "opportunity_examples": {
+      "tool_escalations_correct": [],
+      "tool_escalations_incorrect": [],
+      "tool_false_accepts": [
+        {
+          "candidate_type": "regression_patch",
+          "decision": "accept",
+          "evp8_candidate_id": "evp8_smoke_candidate_0039",
+          "expected_outcome": "regression",
+          "source_candidate_id": "evp7_candidate_0039",
+          "task_id": "bugsinpy_thefuck_1",
+          "tool_primary_reason": "Visible tool summary reports passing visible tests and no visible failures."
+        },
+        {
+          "candidate_type": "partial_fix",
+          "decision": "accept",
+          "evp8_candidate_id": "evp8_smoke_candidate_0049",
+          "expected_outcome": "partial",
+          "source_candidate_id": "evp7_candidate_0069",
+          "task_id": "bugsinpy_youtube-dl_11",
+          "tool_primary_reason": "Visible tool summary reports passing visible tests and no visible failures."
+        },
+        {
+          "candidate_type": "partial_fix",
+          "decision": "accept",
+          "evp8_candidate_id": "evp8_smoke_candidate_0053",
+          "expected_outcome": "partial",
+          "source_candidate_id": "evp7_candidate_0073",
+          "task_id": "bugsinpy_youtube-dl_16",
+          "tool_primary_reason": "Visible tool summary reports passing visible tests and no visible failures."
+        },
+        {
+          "candidate_type": "partial_fix",
+          "decision": "accept",
+          "evp8_candidate_id": "evp8_smoke_candidate_0066",
+          "expected_outcome": "partial",
+          "source_candidate_id": "evp7_candidate_0082",
+          "task_id": "bugsinpy_youtube-dl_20",
+          "tool_primary_reason": "Visible tool summary reports passing visible tests and no visible failures."
+        },
+        {
+          "candidate_type": "partial_fix",
+          "decision": "accept",
+          "evp8_candidate_id": "evp8_smoke_candidate_0093",
+          "expected_outcome": "partial",
+          "source_candidate_id": "evp7_candidate_0061",
+          "task_id": "bugsinpy_youtube-dl_6",
+          "tool_primary_reason": "Visible tool summary reports passing visible tests and no visible failures."
+        }
+      ],
+      "tool_false_rejects": [
+        {
+          "candidate_type": "correct_reference",
+          "decision": "reject",
+          "evp8_candidate_id": "evp8_smoke_candidate_0011",
+          "expected_outcome": "correct",
+          "source_candidate_id": "evp7_candidate_0011",
+          "task_id": "bugsinpy_cookiecutter_1",
+          "tool_primary_reason": "Visible tool summary reports failed, error, or timeout test outcomes."
+        }
+      ]
+    }
+  }
+}

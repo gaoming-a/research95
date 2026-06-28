@@ -1,0 +1,331 @@
+{
+  "analysis_id": "evp8_tool_headroom_audit_v0_1",
+  "breakdowns": {
+    "candidate_type": {
+      "buggy_noop": {
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 0,
+          "true_accept": 0,
+          "true_reject": 21
+        },
+        "decision_counts": {
+          "reject": 21
+        },
+        "record_count": 21
+      },
+      "correct_reference": {
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 1,
+          "true_accept": 20,
+          "true_reject": 0
+        },
+        "decision_counts": {
+          "accept": 20,
+          "reject": 1
+        },
+        "record_count": 21
+      },
+      "irrelevant_patch": {
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 0,
+          "true_accept": 0,
+          "true_reject": 14
+        },
+        "decision_counts": {
+          "reject": 14
+        },
+        "record_count": 14
+      },
+      "partial_fix": {
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 4,
+          "false_reject": 0,
+          "true_accept": 0,
+          "true_reject": 37
+        },
+        "decision_counts": {
+          "accept": 4,
+          "reject": 37
+        },
+        "record_count": 41
+      },
+      "regression_patch": {
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 1,
+          "false_reject": 0,
+          "true_accept": 0,
+          "true_reject": 0
+        },
+        "decision_counts": {
+          "accept": 1
+        },
+        "record_count": 1
+      }
+    },
+    "expected_outcome": {
+      "correct": {
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 1,
+          "true_accept": 20,
+          "true_reject": 0
+        },
+        "decision_counts": {
+          "accept": 20,
+          "reject": 1
+        },
+        "record_count": 21
+      },
+      "incorrect": {
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 0,
+          "true_accept": 0,
+          "true_reject": 21
+        },
+        "decision_counts": {
+          "reject": 21
+        },
+        "record_count": 21
+      },
+      "irrelevant_or_noop": {
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 0,
+          "false_reject": 0,
+          "true_accept": 0,
+          "true_reject": 14
+        },
+        "decision_counts": {
+          "reject": 14
+        },
+        "record_count": 14
+      },
+      "partial": {
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 4,
+          "false_reject": 0,
+          "true_accept": 0,
+          "true_reject": 37
+        },
+        "decision_counts": {
+          "accept": 4,
+          "reject": 37
+        },
+        "record_count": 41
+      },
+      "regression": {
+        "confusion_counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 1,
+          "false_reject": 0,
+          "true_accept": 0,
+          "true_reject": 0
+        },
+        "decision_counts": {
+          "accept": 1
+        },
+        "record_count": 1
+      }
+    }
+  },
+  "checks": [
+    {
+      "check": "candidate_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "source_candidate_ids_unique",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "all_decisions_supported",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "api_call_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_model_outputs_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "prompt_text_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "opportunity_set_reported",
+      "detail": 6,
+      "passed": true
+    }
+  ],
+  "cohort_id": "EVP-8",
+  "headroom_decision": {
+    "reason": "The deterministic tool baseline has at least one false accept, false reject, or escalation opportunity.",
+    "status": "sufficient_for_ablation"
+  },
+  "inputs": {
+    "candidate_set": "data/protocols/evp8_candidate_set_v0_1.json",
+    "evaluator_only_labels": "data/patches/evp7_candidates.jsonl",
+    "tool_only_decisions": "data/baselines/evp7_tool_only_decisions.jsonl"
+  },
+  "label_distribution": {
+    "candidate_type": {
+      "buggy_noop": 21,
+      "correct_reference": 21,
+      "irrelevant_patch": 14,
+      "partial_fix": 41,
+      "regression_patch": 1
+    },
+    "correct_count": 21,
+    "expected_outcome": {
+      "correct": 21,
+      "incorrect": 21,
+      "irrelevant_or_noop": 14,
+      "partial": 41,
+      "regression": 1
+    },
+    "incorrect_count": 77,
+    "label_with_p2p_broad": {
+      "correct_under_f2p_and_p2p_broad": 21,
+      "incorrect_issue_not_fixed": 76,
+      "incorrect_regression": 1
+    },
+    "selected_candidate_count": 98
+  },
+  "method": {
+    "api_call_attempted": false,
+    "correct_label": "correct_under_f2p_and_p2p_broad",
+    "incorrect_definition": "any selected candidate whose label_with_p2p_broad is not the correct label",
+    "opportunity_set_definition": "tool false accepts + tool false rejects + tool escalations on correct and incorrect candidates",
+    "prompt_text_stored": false,
+    "raw_model_outputs_read": false
+  },
+  "opportunity_examples": {
+    "tool_escalations_correct": [],
+    "tool_escalations_incorrect": [],
+    "tool_false_accepts": [
+      {
+        "candidate_type": "regression_patch",
+        "decision": "accept",
+        "evp8_candidate_id": "evp8_smoke_candidate_0039",
+        "expected_outcome": "regression",
+        "source_candidate_id": "evp7_candidate_0039",
+        "task_id": "bugsinpy_thefuck_1",
+        "tool_primary_reason": "Visible tool summary reports passing visible tests and no visible failures."
+      },
+      {
+        "candidate_type": "partial_fix",
+        "decision": "accept",
+        "evp8_candidate_id": "evp8_smoke_candidate_0049",
+        "expected_outcome": "partial",
+        "source_candidate_id": "evp7_candidate_0069",
+        "task_id": "bugsinpy_youtube-dl_11",
+        "tool_primary_reason": "Visible tool summary reports passing visible tests and no visible failures."
+      },
+      {
+        "candidate_type": "partial_fix",
+        "decision": "accept",
+        "evp8_candidate_id": "evp8_smoke_candidate_0053",
+        "expected_outcome": "partial",
+        "source_candidate_id": "evp7_candidate_0073",
+        "task_id": "bugsinpy_youtube-dl_16",
+        "tool_primary_reason": "Visible tool summary reports passing visible tests and no visible failures."
+      },
+      {
+        "candidate_type": "partial_fix",
+        "decision": "accept",
+        "evp8_candidate_id": "evp8_smoke_candidate_0066",
+        "expected_outcome": "partial",
+        "source_candidate_id": "evp7_candidate_0082",
+        "task_id": "bugsinpy_youtube-dl_20",
+        "tool_primary_reason": "Visible tool summary reports passing visible tests and no visible failures."
+      },
+      {
+        "candidate_type": "partial_fix",
+        "decision": "accept",
+        "evp8_candidate_id": "evp8_smoke_candidate_0093",
+        "expected_outcome": "partial",
+        "source_candidate_id": "evp7_candidate_0061",
+        "task_id": "bugsinpy_youtube-dl_6",
+        "tool_primary_reason": "Visible tool summary reports passing visible tests and no visible failures."
+      }
+    ],
+    "tool_false_rejects": [
+      {
+        "candidate_type": "correct_reference",
+        "decision": "reject",
+        "evp8_candidate_id": "evp8_smoke_candidate_0011",
+        "expected_outcome": "correct",
+        "source_candidate_id": "evp7_candidate_0011",
+        "task_id": "bugsinpy_cookiecutter_1",
+        "tool_primary_reason": "Visible tool summary reports failed, error, or timeout test outcomes."
+      }
+    ]
+  },
+  "rule_only_metrics": {
+    "accept_rate": 0.255102,
+    "accepted_precision": 0.8,
+    "confusion_counts": {
+      "escalated_correct": 0,
+      "escalated_incorrect": 0,
+      "false_accept": 5,
+      "false_reject": 1,
+      "true_accept": 20,
+      "true_reject": 72
+    },
+    "correct_decision_counts": {
+      "accept": 20,
+      "reject": 1
+    },
+    "correct_recall": 0.952381,
+    "correct_total": 21,
+    "decision_counts": {
+      "accept": 25,
+      "reject": 73
+    },
+    "escalation_rate": 0.0,
+    "false_accept_rate": 0.064935,
+    "false_reject_rate": 0.047619,
+    "incorrect_decision_counts": {
+      "accept": 5,
+      "reject": 72
+    },
+    "incorrect_reject_rate": 0.935065,
+    "incorrect_total": 77,
+    "opportunity_set_rate": 0.061224,
+    "opportunity_set_size": 6,
+    "record_count": 98,
+    "reject_rate": 0.744898,
+    "unsafe_error_count": 6
+  },
+  "tool_condition": "tool_only_visible_tool_summary"
+}

@@ -1,0 +1,96 @@
+{
+  "ablation_condition": "E6-no-verdict",
+  "analysis_id": "evp8_e6_no_verdict_ablation_check_only_v0_1",
+  "api_call_attempted": false,
+  "api_key_values_printed": false,
+  "candidate_count": 98,
+  "check_only_status": "passed",
+  "checks": [
+    {
+      "check": "candidate_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "packet_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "only_e6_packets",
+      "detail": [
+        "E6"
+      ],
+      "passed": true
+    },
+    {
+      "check": "removed_rule_based_visible_merge_gate_decision",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "removed_rule_based_visible_merge_gate_reasons",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "removed_source_decision",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "packet_forbidden_marker_count",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "prompt_boundary_error_count",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "schema_error_count",
+      "detail": {},
+      "passed": true
+    },
+    {
+      "check": "api_call_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_outputs_not_generated",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "prompt_text_not_stored",
+      "detail": false,
+      "passed": true
+    }
+  ],
+  "cohort_id": "EVP-8",
+  "config": "configs/evp8_e6_no_verdict_ablation.local.json",
+  "expected_packet_count": 98,
+  "mode": "check_only",
+  "model_visible_levels": [
+    "E6"
+  ],
+  "packet_count": 98,
+  "prompt_chars_max": 9657,
+  "prompt_chars_min": 7182,
+  "prompt_count": 98,
+  "prompt_hashes_unique_count": 98,
+  "prompt_text_stored": false,
+  "raw_outputs_generated": false,
+  "removed_verdict_fields": [
+    "rule_based_visible_merge_gate_decision",
+    "rule_based_visible_merge_gate_reasons",
+    "source_decision"
+  ],
+  "run_scope": "full",
+  "schema_rule_decision_counts": {
+    "accept": 25,
+    "reject": 73
+  }
+}

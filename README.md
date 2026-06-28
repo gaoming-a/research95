@@ -163,6 +163,15 @@ the rule-based verdict fields. This plan does not authorize API calls.
 The earlier SQJ paper/artifact-freeze route remains a historical backup path,
 but it is no longer the immediate next step until the headroom/ablation result
 clarifies the defensible claim boundary.
+The Qwen/DeepSeek `E6-no-verdict` ablation has now been executed after the
+Phase 0 headroom audit. The tool-only baseline has 6 opportunity cases
+(5 false accepts and 1 false reject). On the frozen 98-candidate cohort,
+Qwen `E6-no-verdict` remains close to `E6-full` with 19/21 correct accepts and
+4/77 false accepts, while DeepSeek `E6-no-verdict` becomes much more
+conservative with 11/21 correct accepts, 0/77 false accepts, and 14 escalations.
+The comparison is tracked at
+`docs/experiments/evp8_e6_no_verdict_ablation_comparison.md`; it supports a
+model-dependent risk-control interpretation, not an automatic merge-gate claim.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently

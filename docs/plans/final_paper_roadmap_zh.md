@@ -1168,6 +1168,15 @@ SQJ paper/artifact freeze。SQJ 路线保留为历史低成本投稿候选，但
 当前计划入口为
 `docs/experiments/evp8_llm_tool_headroom_ablation_plan_20260629.md`。
 
+2026-06-29 执行结果更新：Phase 0 headroom audit 和 Qwen/DeepSeek
+`E6-no-verdict` ablation 已完成。rule-only baseline 在 98-candidate cohort 上
+有 6 个 opportunity cases（5 false accepts，1 false reject）。Qwen
+`E6-no-verdict` 与 `E6-full` 很接近：correct recall 从 20/21 降到 19/21，
+false accepts 仍为 4/77。DeepSeek `E6-no-verdict` 明显更保守：false accepts
+从 4/77 降到 0/77，但 correct recall 从 19/21 降到 11/21，且 escalation
+升至 14/98。该结果应写成 model-dependent risk-control / triage 发现，
+不能写成可靠自动 merge gate。
+
 后续执行顺序：
 
 1. EVP-8 Phase 1 DeepSeek/Qwen smoke 已完成并通过 G4 synthesis；
@@ -1176,10 +1185,9 @@ SQJ paper/artifact freeze。SQJ 路线保留为历史低成本投稿候选，但
    通过 later-model audit；
 4. five-model synthesis 当前为 `passed`，但只能支持 frozen EVP-8 v0.1 packet
    set 上的 descriptive decision-pattern reporting；
-5. SQJ no-API paper route 已暂停为备用投稿路线；当前下一步是
-   `docs/experiments/evp8_llm_tool_headroom_ablation_plan_20260629.md` 中的
-   Phase 0 no-API headroom audit，然后才可能进入 `E6-no-verdict` packet
-   dry-run。
+5. SQJ no-API paper route 已暂停为备用投稿路线；当前 headroom audit 与
+   `E6-no-verdict` Qwen/DeepSeek ablation 已完成，下一步应先写结果段和
+   claim boundary，而不是继续堆模型。
 
 EVP-8 当前计划模型集：
 

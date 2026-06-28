@@ -18256,3 +18256,95 @@ Conclusion:
 - 这只说明本地凭证和结构性 preflight 就绪，不授权任何真实 API 执行；
 - 当前研究默认下一步仍是 no-API headroom audit；未来 `E6-no-verdict` 的真实
   Qwen API ablation 仍需要单独用户授权和对应 dry-run gate。
+
+## 2026-06-29 execute Qwen/DeepSeek E6-no-verdict ablation
+
+Inspect:
+
+- 用户更新目标为：按计划执行新的实验，只需要做 Qwen 和 DeepSeek；
+- 用户同时说明如果频繁 GitHub 同步失败，可忽略同步失败继续后续内容；
+- 当前原始计划的立即下一步仍是 Phase 0 no-API headroom audit，不能跳过；
+- 原计划文档只写了 future Qwen-only ablation，本轮用户授权将真实 API 范围扩展为
+  Qwen + DeepSeek，但不包括 Kimi、Devstral、Gemini 或 OpenRouter later-model；
+- 当前本地有 `177115a Record local API key readiness check` 尚未推送；这不阻塞
+  实验执行。
+
+Plan:
+
+1. 实现并运行 Phase 0 no-API headroom audit；
+2. 如果 tool-only baseline 存在足够 false accept / false reject / escalation
+   opportunity set，则继续；
+3. 新增专用 `E6-no-verdict` ablation runner/config，移除：
+   - `rule_based_visible_merge_gate_decision`；
+   - `rule_based_visible_merge_gate_reasons`；
+   - `source_decision`；
+4. 先跑 no-API check-only gate，确认 98 candidates x 1 E6-no-verdict packet、
+   无 hidden labels、无 prompt/raw 存储；
+5. 若 gate 通过，执行 Qwen 和 DeepSeek 两个模型的 full E6-no-verdict run；
+6. 汇总 rule-only、E6-full、E6-no-verdict 的 label-conditioned metrics 和
+   opportunity-set correction metrics；
+7. 更新 README、INDEX、current project state、engineering notes 和实验报告；
+8. 尝试提交/推送；如 GitHub 反复失败，记录失败但继续完成本地实验与分析。
+
+Boundary:
+
+- 本轮授权只覆盖 Qwen 和 DeepSeek 的 `E6-no-verdict` ablation；
+- 不调用 later-model / OpenRouter；
+- 不新增或变更 candidate set；
+- 不修改旧 prompt 语义；若必须修改 prompt，先做 prompt-change audit；
+- 不把 negative result 改写成 positive claim。
+
+Verify / Result:
+
+1. Phase 0 headroom audit:
+   - command: `python scripts\analyze_evp8_tool_headroom.py --check`；
+   - status: passed；
+   - rule-only baseline: `accept=25, reject=73`；
+   - tool errors: 5 false accepts、1 false reject，opportunity-set size = 6；
+2. E6-no-verdict no-API gates:
+   - smoke check-only passed: 5 packets；
+   - full check-only passed: 98 packets；
+   - removed fields verified:
+     `rule_based_visible_merge_gate_decision`、
+     `rule_based_visible_merge_gate_reasons`、`source_decision`；
+   - prompt boundary errors = 0，schema errors = 0；
+3. Qwen full:
+   - command: `python scripts\run_evp8_e6_no_verdict_ablation.py --config
+     configs\evp8_e6_no_verdict_ablation.local.json --execute --run-scope full
+     --model-id qwen/qwen3.7-max`；
+   - shell timeout occurred after 93/98 raw records, but the Python process
+     continued and completed 98/98; no concurrent resume was launched；
+   - summary:
+     `data/reviews/evp8_e6_no_verdict_qwen_qwen3.7-max_full_summary.json`；
+   - gate: passed，98/98 parse-valid；
+   - decisions: `accept=23, reject=74, escalate=1`；
+   - estimated cost: CNY `5.778804`；
+4. DeepSeek full:
+   - command: `python scripts\run_evp8_e6_no_verdict_ablation.py --config
+     configs\evp8_e6_no_verdict_ablation.local.json --execute --run-scope full
+     --model-id deepseek/deepseek-v4-pro`；
+   - summary:
+     `data/reviews/evp8_e6_no_verdict_deepseek_deepseek-v4-pro_full_summary.json`；
+   - gate: passed，98/98 parse-valid；
+   - decisions: `accept=11, reject=73, escalate=14`；
+   - estimated cost: USD `0.079322105`；
+5. Comparison:
+   - command: `python scripts\analyze_evp8_e6_no_verdict_ablation.py --check`；
+   - status: passed；
+   - tracked outputs:
+     `data/reviews/evp8_e6_no_verdict_ablation_comparison.json` and
+     `docs/experiments/evp8_e6_no_verdict_ablation_comparison.md`。
+
+Conclusion:
+
+- Qwen: `E6-no-verdict` is very close to `E6-full`; false accepts remain
+  4/77, correct recall drops from 20/21 to 19/21, and only one correct patch is
+  escalated. This suggests Qwen is not merely copying the explicit verdict
+  field, but it also does not fix the dangerous tool false accepts.
+- DeepSeek: removing the verdict makes the model substantially more
+  conservative. False accepts drop from 4/77 to 0/77, but correct recall drops
+  from 19/21 to 11/21 and escalation rises to 14/98. This is useful as
+  risk-control / triage evidence, not as automatic acceptance evidence.
+- The practical claim should be narrowed: LLMs can alter risk posture after
+  verdict removal, but this cohort does not show a clean LLM-added-value
+  verifier that both preserves correct recall and fixes tool false accepts.

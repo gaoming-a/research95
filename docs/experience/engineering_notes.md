@@ -3369,3 +3369,23 @@ This file starts fresh for the patch-verification project.
   counts, contradictions, patch application, and diagnostics; remove
   `rule_based_visible_merge_gate_decision`, rule-based reasons, and
   `source_decision` before claiming any LLM-added-value result.
+
+## 2026-06-29 EVP-8 E6-no-verdict execution
+
+- Long API runs can outlive the shell timeout. During the Qwen
+  `E6-no-verdict` full run, the shell timed out at 93/98 raw records while the
+  Python process continued writing. The correct handling is to inspect the
+  process command line and raw JSONL count, wait for the process to finish,
+  and avoid launching `--resume` concurrently.
+- The Phase 0 headroom audit is a real gate, not bureaucracy. Here it found
+  6 tool opportunity cases: 5 false accepts and 1 false reject. That justified
+  the ablation; if the count had been near zero, API execution should have
+  stopped.
+- Removing the verdict field has model-dependent effects. Qwen stayed close to
+  `E6-full`, but DeepSeek became much more conservative: false accepts fell to
+  zero while correct recall dropped sharply and escalations rose. Report this
+  as risk-control behavior, not as a better automatic accept gate.
+- Opportunity-set metrics reveal what aggregate metrics hide. DeepSeek
+  `E6-no-verdict` did not correct tool false accepts to reject; it escalated
+  all five. That is safer than accepting them, but it is triage rather than
+  independent correctness verification.
