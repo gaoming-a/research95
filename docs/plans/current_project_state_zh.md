@@ -242,7 +242,19 @@
 
 当前 no-API 下一步决策包：
 
-- `docs/experiments/evp7_next_decision_packet_20260618.md`
+- `docs/experiments/evp8_llm_tool_headroom_ablation_plan_20260629.md`
+
+当前默认下一步：
+
+1. 实现 Phase 0 no-API headroom audit；
+2. join deterministic tool-only decisions 与 evaluator-only labels；
+3. 统计 tool false accepts、tool false rejects、unnecessary escalations 和
+   opportunity-set size；
+4. 只有 headroom audit 说明当前 cohort 有足够工具错误可供 LLM 改正，才进入
+   `E6-no-verdict` packet/prompt/schema dry-run；
+5. 任何 Qwen API ablation 都需要新的用户明确授权。
+
+以下条目保留为历史/备用路线，不再覆盖当前默认下一步：
 
 1. EVP-8 期刊版 full-ladder protocol：
    - 当前用户意图：将现有 bounded EVP-7 pilot 升级为期刊版；
@@ -330,9 +342,9 @@
   - 当前 G7.3 post-run audit/synthesis 已通过 passed-state check：
      `python scripts\audit_evp8_later_model_full_results.py --check`；
      `python scripts\summarize_evp8_five_model_synthesis.py --check`；
-   - 后续不应继续补模型或改协议；下一步是 paper/table/artifact freeze，
-     且必须继续区分 descriptive five-model pattern 和 unsupported superiority/
-     final-effectiveness claims；
+   - 后续不应继续补模型或改协议；旧路线曾收敛为 paper/table/artifact freeze，
+     但 2026-06-29 起该路线暂停为备用，当前优先 headroom audit / E6
+     ablation；
    - 当前成本审计：
      `python scripts\summarize_evp8_cost_accounting.py --check` 已通过；
      blocked attempts 是成本/执行风险证据，不是 valid model-result records；
@@ -341,10 +353,9 @@
      686-call full run -> DeepSeek audit passed -> Qwen 686-call full run -> Qwen
      audit passed -> two-model first-batch synthesis passed -> later-model execution packet
      -> Kimi/Devstral/Gemini 补跑 -> five-model synthesis -> paper/artifact
-     freeze；当前该链路已完成到 five-model synthesis passed，下一步已收敛为
-     SQJ no-API paper route：claim-boundary audit -> SQJ framing ->
-     Springer `sn-jnl` LaTeX draft -> figures/tables -> artifact freeze ->
-     school-recognition confirmation -> submission；
+     freeze；当前该链路已完成到 five-model synthesis passed。旧 SQJ no-API
+     paper route 保留为备用，当前默认下一步已切换为 LLM-vs-tool headroom
+     audit；
    - 边界：不把 EVP-7 的 E2/E4/E6 直接当作 EVP-8 full-ladder 中间层，不从
      DeepSeek+Qwen interim result 写成最终五模型结论。
 2. 论文工作量呈现强化：

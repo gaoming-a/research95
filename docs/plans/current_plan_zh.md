@@ -18192,3 +18192,31 @@ Boundary:
 - 如果 tool baseline 有错但 LLM 也不改正，应写成有效负结果，不得强行改实验直到
   结果变好；
 - 若需要新增真实 agent patch cohort，必须另行制定候选生成、标签验证和成本计划。
+
+## 2026-06-29 plan-document sync for headroom target
+
+Inspect:
+
+- 用户要求同步目前文档中的计划文档，检查是否和当前目标冲突；
+- 当前分支仍为 `evp8-v03-qwen-main-exp`，本地提交
+  `c194551 Plan EVP-8 LLM tool headroom ablation` 因 GitHub 网络失败尚未推送；
+- 检查发现 `final_paper_roadmap_zh.md`、`evp8_journal_scale_execution_plan_20260620.md`
+  和 `current_project_state_zh.md` 仍把 SQJ paper/artifact freeze 写成下一步；
+- 这与当前“先做 no-API headroom audit / E6 ablation”的目标冲突。
+
+Plan:
+
+1. 不删除 SQJ 历史路线，只把它标记为暂停/备用；
+2. 将当前 canonical next step 改为
+   `docs/experiments/evp8_llm_tool_headroom_ablation_plan_20260629.md` 的
+   Phase 0 no-API headroom audit；
+3. 更新 README、INDEX、final roadmap、EVP-8 journal plan 和 current project
+   state；
+4. 本轮只同步计划文档，不调用 API、不生成 raw outputs、不修改 prompt 或
+   candidate set。
+
+Boundary:
+
+- 不把 headroom audit 写成已完成实验；
+- 不授权 `E6-no-verdict` API；
+- 不把 SQJ route 删除，只防止它继续覆盖当前下一步。

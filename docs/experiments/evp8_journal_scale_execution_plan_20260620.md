@@ -409,6 +409,12 @@ Gate G9: paper writing and artifact freeze.
   Software Quality Journal (SQJ) route. This means no Open Access/APC unless
   explicitly approved, Springer Nature `sn-jnl` LaTeX as the next main draft,
   and a department/research-office recognition check before submission.
+- Current target as of 2026-06-29: pause the SQJ paper/artifact-freeze route
+  as the immediate next step. Before any submission-oriented freeze, run the
+  no-API LLM-vs-tool headroom audit described in
+  `docs/experiments/evp8_llm_tool_headroom_ablation_plan_20260629.md`. If the
+  deterministic tool baseline leaves little opportunity for LLM improvement,
+  the current cohort should not be packaged as a practical verifier result.
 - Keep EVP-7 as the bounded four-anchor pilot and motivation. Do not merge its
   E0/E2/E4/E6 artifacts with EVP-8 E0-E6 results as one dataset.
 - Before submission freeze, run local quality gate, paper readiness audit,

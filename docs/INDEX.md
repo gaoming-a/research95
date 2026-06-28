@@ -235,6 +235,9 @@
   Phase 0 headroom audit, `E6-no-verdict` ablation, rule-only baseline
   comparison, opportunity-set metrics, and hard-case expansion criteria. It
   does not authorize model API calls.
+  This plan supersedes the SQJ paper/artifact-freeze route as the immediate
+  next step; the SQJ route remains a historical backup until the ablation
+  clarifies the claim boundary.
 - `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:
   no-key public OpenRouter catalog audit for the G7 later-model pinned IDs:
   `moonshotai/kimi-k2.6`, `mistralai/devstral-2512`, and
