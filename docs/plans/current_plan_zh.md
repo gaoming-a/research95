@@ -18220,3 +18220,39 @@ Boundary:
 - 不把 headroom audit 写成已完成实验；
 - 不授权 `E6-no-verdict` API；
 - 不把 SQJ route 删除，只防止它继续覆盖当前下一步。
+
+## 2026-06-29 local env API-key readiness check
+
+Inspect:
+
+- 用户要求检查 `.env` 中的 API key 配置是否足够；
+- 本轮只做凭证存在性和项目 preflight 检查，不调用任何模型 API；
+- `.env` 存在，并包含非占位的 `DEEPSEEK_API_KEY`、`QWEN_API_KEY` 和
+  `OPENROUTER_API_KEY`；
+- `DEEPSEEK_BASE_URL` 已设置为 `https://api.deepseek.com`；
+- `.env.example` 仍只是占位模板，不能代表真实执行凭证。
+
+Verify:
+
+1. `python scripts\preflight_evp8_deepseek_qwen.py --config
+   configs\evp8_deepseek_qwen.local.json --out
+   $env:TEMP\evp8_deepseek_qwen_preflight_env_check.json --strict-api-ready`
+   passed；
+2. `python scripts\preflight_evp8_deepseek_qwen.py --config
+   configs\evp8_qwen_first_main_v0_3.local.json --out
+   $env:TEMP\evp8_qwen_v03_preflight_env_check.json --strict-api-ready`
+   passed；
+3. `python scripts\preflight_evp8_later_models.py --config
+   configs\evp8_later_models.local.json --out
+   $env:TEMP\evp8_later_models_preflight_env_check.json --strict-api-ready`
+   passed；
+4. 三个 preflight 均报告 `api_call_attempted=false`、
+   `api_key_values_printed=false`、`credential_presence_ready=true`。
+
+Conclusion:
+
+- 对现有已配置路径而言，DeepSeek/Qwen 首批、Qwen v0.3 和 OpenRouter
+  later-model 的 key presence 已足够通过 strict preflight；
+- 这只说明本地凭证和结构性 preflight 就绪，不授权任何真实 API 执行；
+- 当前研究默认下一步仍是 no-API headroom audit；未来 `E6-no-verdict` 的真实
+  Qwen API ablation 仍需要单独用户授权和对应 dry-run gate。
