@@ -1,6 +1,6 @@
 # 当前计划：AI 生成补丁的可验证审查
 
-最后更新：2026-06-27
+最后更新：2026-06-29
 
 ## 1. 研究转向
 
@@ -18151,3 +18151,44 @@ Diagnose / Repair:
 - 修复方式：将检查项改为 `api_call_not_attempted` 且
   `passed=true, detail=false`；
 - 修复后同一 `--check` gate 通过。
+
+## 2026-06-29 EVP-8 LLM-vs-tool headroom / E6 ablation plan
+
+Inspect:
+
+- 当前分支为 `evp8-v03-qwen-main-exp`，已同步到
+  `origin/evp8-v03-qwen-main-exp`；
+- Qwen v0.3 label-conditioned analysis 已显示 E6 correct recall 高但仍有
+  partial/regression false accepts；
+- 用户指出如果 LLM 与工具基线一致，可能来自实验设置、bug 强度不足或工具证据太强；
+- 因此下一步不应直接重跑模型，而应先计划一个 no-API headroom audit 和
+  E6 no-verdict ablation，区分“有效负结果”与“实验没有增益空间”。
+
+Plan:
+
+1. 新增 no-API 计划文档
+   `docs/experiments/evp8_llm_tool_headroom_ablation_plan_20260629.md`；
+2. 计划核心研究问题改为：
+   LLM verifier 是否在 visible tool evidence 之后提供额外判断价值；
+3. 第一阶段必须是 no-API headroom audit：
+   - join deterministic tool-only decisions 与 evaluator-only labels；
+   - 统计 tool false accepts、false rejects、unnecessary escalations；
+   - 明确 opportunity set 大小；
+4. 第二阶段才设计 `E6-no-verdict`：
+   - 去掉 `rule_based_visible_merge_gate_decision`；
+   - 去掉 `rule_based_visible_merge_gate_reasons`；
+   - 去掉 `source_decision`；
+   - 保留 visible tests、tool counts、contradictions、patch apply/status 等证据；
+5. 只有 no-API packet/prompt/schema gates 通过，并且用户另行授权后，才允许
+   Qwen-only smoke/full ablation；
+6. 同步 README、docs index、current project state 和 engineering notes；
+7. 本轮只写计划，不调用 API、不生成 raw outputs、不修改 prompt 或 candidate set。
+
+Boundary:
+
+- 当前计划不授权 `E6-no-verdict` API 执行；
+- 如果 Phase 0 发现 tool baseline 已近乎无错，必须先报告当前 cohort 对
+  LLM-added-value 问题缺乏 headroom，而不是继续烧 API；
+- 如果 tool baseline 有错但 LLM 也不改正，应写成有效负结果，不得强行改实验直到
+  结果变好；
+- 若需要新增真实 agent patch cohort，必须另行制定候选生成、标签验证和成本计划。

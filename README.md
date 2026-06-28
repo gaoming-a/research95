@@ -153,6 +153,12 @@ precision is 83.33% at E6 because Qwen accepts 20/21 correct patches and 4/77
 non-correct patches. This supports a bounded statement that more visible
 evidence increases Qwen's correct-patch acceptance in this frozen batch, while
 also introducing a small false-accept risk.
+As of 2026-06-29, the next planned research step is no longer another direct
+model run. The project first needs a headroom and E6-ablation plan:
+`docs/experiments/evp8_llm_tool_headroom_ablation_plan_20260629.md`. The plan
+asks whether LLM decisions add value beyond visible tool evidence by comparing
+rule-only, current `E6-full`, and a future `E6-no-verdict` variant that removes
+the rule-based verdict fields. This plan does not authorize API calls.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently

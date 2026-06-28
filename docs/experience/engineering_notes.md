@@ -3354,3 +3354,18 @@ This file starts fresh for the patch-verification project.
   observed value. A field such as `api_call_attempted=false` should usually be
   recorded as `passed=true, detail=false`; otherwise a correct no-API boundary
   is accidentally reported as a failed check.
+
+## 2026-06-29 EVP-8 LLM-vs-tool headroom planning
+
+- If LLM decisions match a tool baseline, do not assume the experiment failed.
+  First measure headroom: how many tool false accepts, false rejects, and
+  unnecessary escalations exist for the LLM to fix.
+- A cohort where the deterministic tool baseline is nearly perfect cannot
+  answer whether an LLM adds value. In that case, stop before API calls and add
+  harder cases instead of forcing a positive result.
+- If the tool baseline has mistakes and the LLM repeats them, that is a valid
+  negative result: the LLM is not correcting the visible-tool failure modes.
+- E6 ablation should separate evidence from verdict. Keep visible tests,
+  counts, contradictions, patch application, and diagnostics; remove
+  `rule_based_visible_merge_gate_decision`, rule-based reasons, and
+  `source_decision` before claiming any LLM-added-value result.

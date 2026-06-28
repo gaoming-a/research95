@@ -229,6 +229,12 @@
   Markdown companion for the v0.3 Qwen label-conditioned analysis. E6 accepts
   20/21 correct patches and 4/77 non-correct patches, giving 95.24% correct
   recall, 83.33% accepted precision, and 5.19% false accept rate.
+- `experiments/evp8_llm_tool_headroom_ablation_plan_20260629.md`: no-API plan
+  for the next EVP-8 direction. It reframes the question as whether LLM
+  verifier decisions add value beyond visible tool evidence, and lays out
+  Phase 0 headroom audit, `E6-no-verdict` ablation, rule-only baseline
+  comparison, opportunity-set metrics, and hard-case expansion criteria. It
+  does not authorize model API calls.
 - `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:
   no-key public OpenRouter catalog audit for the G7 later-model pinned IDs:
   `moonshotai/kimi-k2.6`, `mistralai/devstral-2512`, and

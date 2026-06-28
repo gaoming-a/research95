@@ -1,6 +1,6 @@
 # 当前项目状态与文件地图
 
-日期：2026-06-27
+日期：2026-06-29
 
 本文件是短入口，用来整理当前计划文档和项目文件。它不替代
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
@@ -139,6 +139,14 @@
     20/24；
   - 因此可以说 v0.3 Qwen 随证据量增加更能 accept 正确补丁，但不能忽略
     E3-E6 同时出现的 partial/regression false accepts。
+- 本轮新增 EVP-8 LLM-vs-tool headroom / E6 ablation 计划：
+  - 计划文档为
+    `docs/experiments/evp8_llm_tool_headroom_ablation_plan_20260629.md`；
+  - 下一步不直接跑模型，而是先做 no-API headroom audit，判断 deterministic
+    tool-only baseline 是否有足够错误可供 LLM 改正；
+  - 后续 ablation 的核心比较是 `rule-only`、当前 `E6-full` 和未来
+    `E6-no-verdict`；
+  - 该计划不授权 API 调用、不修改 prompt、不修改 candidate set。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。最近一次已确认
   `git push origin main` 成功；最终是否仍 ahead 仍以
@@ -187,6 +195,9 @@
     77；E6 correct recall = 95.24%，accepted precision = 83.33%，false
     accept rate = 5.19%；该分析只支持 Qwen v0.3 frozen batch 的描述性
     label-conditioned 结论；
+  - EVP-8 LLM-vs-tool headroom / E6 ablation：当前仅有 no-API 计划，目标是
+    先区分 LLM 与工具一致到底是有效负结果、工具证据过强，还是 cohort 缺少
+    hard cases；
   - SQJ low-cost submission route：当前首选投稿目标为 Software Quality
     Journal，按 CCF C 类 / 学校 C 类口径作为 D 类及以上候选；投稿前必须先由
     学院/科研秘书确认发表当年 CCF 目录、高风险/预警名单状态和学校认定口径；
