@@ -274,6 +274,12 @@
   for the ablation comparison. It shows Qwen remains close to `E6-full`, while
   DeepSeek removes false accepts by escalating many cases and losing correct
   recall.
+- `experiments/evp8_hard_case_extension_plan_20260629.md`: next-stage plan for
+  improving external validity. It proposes a 30-50 candidate hard-case
+  extension focused on visible-test-passing hidden failures, partial fixes,
+  regressions, overfitted patches, and plausible AI-agent wrong patches. It
+  does not authorize API calls; the immediate next step is no-API confidence
+  intervals, opportunity-case analysis, and utility/risk-policy analysis.
 - `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:
   no-key public OpenRouter catalog audit for the G7 later-model pinned IDs:
   `moonshotai/kimi-k2.6`, `mistralai/devstral-2512`, and

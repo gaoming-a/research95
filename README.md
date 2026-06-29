@@ -172,6 +172,11 @@ conservative with 11/21 correct accepts, 0/77 false accepts, and 14 escalations.
 The comparison is tracked at
 `docs/experiments/evp8_e6_no_verdict_ablation_comparison.md`; it supports a
 model-dependent risk-control interpretation, not an automatic merge-gate claim.
+For a stronger paper, the next plan is
+`docs/experiments/evp8_hard_case_extension_plan_20260629.md`: first add
+no-API confidence intervals, opportunity-case analysis, and utility/risk-policy
+analysis, then build a separate 30-50 candidate hard-case extension before any
+new Qwen/DeepSeek API run.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently

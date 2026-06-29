@@ -18348,3 +18348,43 @@ Conclusion:
 - The practical claim should be narrowed: LLMs can alter risk posture after
   verdict removal, but this cohort does not show a clean LLM-added-value
   verifier that both preserves correct recall and fixes tool false accepts.
+
+## 2026-06-29 hard-case extension plan for stronger paper
+
+Inspect:
+
+- 用户希望“冲更好一点”，需要基于当前结果补全后续计划；
+- 当前主要短板不是模型数量，而是外部有效性和 opportunity-set 太小；
+- 现有 98-candidate cohort 中 tool baseline 只有 6 个 opportunity cases，
+  能支持受控诊断结论，但不足以支持更强 practical-value claim；
+- Qwen `E6-no-verdict` 仍重复 4 个 false accepts；DeepSeek `E6-no-verdict`
+  消除 false accepts 的方式是 escalation，不是直接正确 reject。
+
+Plan:
+
+1. 新增计划文档
+   `docs/experiments/evp8_hard_case_extension_plan_20260629.md`；
+2. 下一阶段不先跑 API，而是先完成 Phase A：
+   - confidence intervals；
+   - 6-case opportunity analysis；
+   - utility/risk-policy table；
+3. 之后构建 `EVP-8-HARD` 小型 hard-case extension：
+   - 30-50 candidates；
+   - visible-test-passing hidden failures；
+   - partial / overfitted fixes；
+   - regression patches；
+   - plausible AI-agent wrong patches；
+4. hard-case cohort 必须先通过 no-API candidate/label/packet/baseline gates；
+5. 只有 hard-case tool baseline 有至少 10 个 opportunity cases 或至少 20%
+   opportunity-set rate，并且用户再次授权，才运行 Qwen/DeepSeek；
+6. 后续真实 API 只跑 Qwen/DeepSeek 的 `E6-full` 和 `E6-no-verdict`，
+   不扩 Kimi/Devstral/Gemini，不重建完整 E0-E6 ladder。
+
+Boundary:
+
+- 本计划不授权 API；
+- 不把新 hard-case 与旧 98-candidate cohort 混成一个同质样本；
+- 不修改 prompt；
+- 不声称 production merge safety；
+- 若 hard-case opportunity-set 仍不足，停止 API 并报告 cohort headroom
+  不足。

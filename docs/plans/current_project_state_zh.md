@@ -170,6 +170,15 @@
     recall 降至 11/21，并产生 14 个 escalations；
   - 该结果支持 model-dependent risk-control / triage 解释，不支持自动 merge
     gate claim。
+- 本轮新增 EVP-8 hard-case extension 计划：
+  - 计划文档为
+    `docs/experiments/evp8_hard_case_extension_plan_20260629.md`；
+  - 目标是提升外部有效性和 opportunity-set 数量，而不是继续堆模型；
+  - immediate next step 是 no-API confidence intervals、6-case opportunity
+    analysis 和 utility/risk-policy table；
+  - 后续才构建单独的 `EVP-8-HARD` 30-50 candidate hard-case cohort；
+  - 任何 hard-case Qwen/DeepSeek API run 都需要先通过 no-API gates 和用户
+    再授权。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。最近一次已确认
   `git push origin main` 成功；最终是否仍 ahead 仍以
@@ -272,12 +281,16 @@
 
 1. 基于
    `docs/experiments/evp8_e6_no_verdict_ablation_comparison.md` 写论文结果段；
-2. 明确 claim boundary：Qwen 结果显示 verdict removal 对其影响小，但不修复
+2. 实现
+   `docs/experiments/evp8_hard_case_extension_plan_20260629.md` 的 Phase A：
+   confidence intervals、6-case opportunity analysis 和 utility/risk-policy
+   table；
+3. 明确 claim boundary：Qwen 结果显示 verdict removal 对其影响小，但不修复
    4 个工具 false accepts；DeepSeek 结果显示更强风险控制，但代价是 correct
    recall 大幅下降；
-3. 后续若要证明实用价值，必须新增 hard-case / real agent patch cohort 或做人类
+4. 后续若要证明实用价值，必须新增 hard-case / real agent patch cohort 或做人类
    review 成本/风险函数，不应继续在同一 easy cohort 上堆模型；
-4. 任何新增模型、重复 API 或 candidate-set 扩展都需要新的计划和用户授权。
+5. 任何新增模型、重复 API 或 candidate-set 扩展都需要新的计划和用户授权。
 
 以下条目保留为历史/备用路线，不再覆盖当前默认下一步：
 
