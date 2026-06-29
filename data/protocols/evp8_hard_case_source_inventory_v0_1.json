@@ -1,0 +1,1308 @@
+{
+  "analysis_id": "evp8_hard_case_source_inventory_v0_1",
+  "checks": [
+    {
+      "check": "api_call_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_model_outputs_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "old_evp8_cohort_not_mutated",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "hard_candidate_manifest_not_created",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "prompt_text_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "source_files_scanned",
+      "detail": 34,
+      "passed": true
+    },
+    {
+      "check": "evp7_controlled_cohort_detected",
+      "detail": 98,
+      "passed": true
+    }
+  ],
+  "date": "2026-06-29",
+  "existing_controlled_cohort": {
+    "candidate_count": 98,
+    "candidate_type_counts": {
+      "buggy_noop": 21,
+      "correct_reference": 21,
+      "irrelevant_patch": 14,
+      "partial_fix": 41,
+      "regression_patch": 1
+    },
+    "expected_outcome_counts": {
+      "correct": 21,
+      "incorrect": 21,
+      "irrelevant_or_noop": 14,
+      "partial": 41,
+      "regression": 1
+    },
+    "hard_negative_count": 41,
+    "reason": "These 98 records are the old controlled EVP-8 cohort and must not be mixed into the new hard-case extension.",
+    "rule_only_e6_opportunity_cases": {
+      "candidate_count": 6,
+      "false_accept_count": 5,
+      "false_reject_count": 1,
+      "source": "data/protocols/evp8_tool_headroom_audit_v0_1.json"
+    },
+    "source": "data/patches/evp7_candidates.jsonl",
+    "status": "already_used_in_evp8_controlled_cohort",
+    "task_count": 21,
+    "usable_for_hard_extension": "patterns_only_not_new_candidates"
+  },
+  "inventory_status": "passed",
+  "local_candidate_source_summary": {
+    "ai_or_agent_candidate_records": 38,
+    "ai_or_agent_eligible_hard_negatives": 23,
+    "candidate_records_scanned": 260,
+    "not_promoted_candidate_records": 68,
+    "not_promoted_eligible_hard_negatives": 48,
+    "source_file_count": 34,
+    "source_kind_counts": {
+      "ai_or_agent_generated": 6,
+      "constructed_or_reference": 28
+    },
+    "source_status_counts": {
+      "already_promoted_to_evp7_controlled": 22,
+      "legacy_pilot_or_duplicate_output": 3,
+      "not_promoted_to_evp7_controlled": 9
+    },
+    "unique_ai_or_agent_candidate_records": 19,
+    "unique_ai_or_agent_eligible_hard_negatives": 13,
+    "unique_not_promoted_candidate_records": 49,
+    "unique_not_promoted_eligible_hard_negatives": 20
+  },
+  "local_candidate_sources": [
+    {
+      "candidate_count": 30,
+      "candidate_file": "outputs/build_default_check/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 7,
+        "correct_reference": 7,
+        "irrelevant_patch": 7,
+        "partial_fix": 9
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 7,
+        "incorrect": 7,
+        "irrelevant_or_noop": 7,
+        "partial": 9
+      },
+      "hard_negative_count": 9,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 0,
+        "unknown": 30
+      },
+      "records_with_required_phase_b_fields": 30,
+      "records_with_validation_join": 0,
+      "retained_oracle_counts": {},
+      "source_dir": "outputs/build_default_check",
+      "source_kind": "constructed_or_reference",
+      "status": "legacy_pilot_or_duplicate_output",
+      "task_count": 7,
+      "validation_status_counts": {}
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/cookiecutter1_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 1
+      },
+      "hard_negative_count": 1,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/cookiecutter1_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 11,
+      "candidate_file": "outputs/cookiecutter2_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 8
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 8
+      },
+      "hard_negative_count": 8,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 11,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 11,
+      "records_with_validation_join": 11,
+      "retained_oracle_counts": {
+        "failed": 10,
+        "passed": 1
+      },
+      "source_dir": "outputs/cookiecutter2_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 11
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/cookiecutter3_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 1
+      },
+      "hard_negative_count": 1,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/cookiecutter3_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 6,
+      "candidate_file": "outputs/httpie5_stability_audit_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 3
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 3
+      },
+      "hard_negative_count": 3,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 0,
+        "unknown": 6
+      },
+      "records_with_required_phase_b_fields": 6,
+      "records_with_validation_join": 0,
+      "retained_oracle_counts": {},
+      "source_dir": "outputs/httpie5_stability_audit_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {}
+    },
+    {
+      "candidate_count": 1,
+      "candidate_file": "outputs/httpie_agent_patch_qwen37_httpie5_strict_001/candidates.pending.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 1
+      },
+      "eligible_new_hard_negative_count": 1,
+      "expected_outcome_counts": {
+        "incorrect": 1
+      },
+      "hard_negative_count": 1,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 1,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 1,
+      "records_with_validation_join": 1,
+      "retained_oracle_counts": {
+        "failed": 1
+      },
+      "source_dir": "outputs/httpie_agent_patch_qwen37_httpie5_strict_001",
+      "source_kind": "ai_or_agent_generated",
+      "status": "not_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 1
+      }
+    },
+    {
+      "candidate_count": 1,
+      "candidate_file": "outputs/httpie_agent_patch_qwen37_httpie5_strict_001/candidates.relabeled.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 1
+      },
+      "eligible_new_hard_negative_count": 1,
+      "expected_outcome_counts": {
+        "incorrect": 1
+      },
+      "hard_negative_count": 1,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 1,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 1,
+      "records_with_validation_join": 1,
+      "retained_oracle_counts": {
+        "failed": 1
+      },
+      "source_dir": "outputs/httpie_agent_patch_qwen37_httpie5_strict_001",
+      "source_kind": "ai_or_agent_generated",
+      "status": "not_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 1
+      }
+    },
+    {
+      "candidate_count": 8,
+      "candidate_file": "outputs/httpie_agent_patch_stage_ab_001/candidates.pending.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 8
+      },
+      "eligible_new_hard_negative_count": 8,
+      "expected_outcome_counts": {
+        "incorrect": 8
+      },
+      "hard_negative_count": 8,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 8,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 8,
+      "records_with_validation_join": 8,
+      "retained_oracle_counts": {
+        "failed": 8
+      },
+      "source_dir": "outputs/httpie_agent_patch_stage_ab_001",
+      "source_kind": "ai_or_agent_generated",
+      "status": "not_promoted_to_evp7_controlled",
+      "task_count": 4,
+      "validation_status_counts": {
+        "validated": 8
+      }
+    },
+    {
+      "candidate_count": 8,
+      "candidate_file": "outputs/httpie_agent_patch_stage_ab_001/candidates.relabeled.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 8
+      },
+      "eligible_new_hard_negative_count": 8,
+      "expected_outcome_counts": {
+        "incorrect": 8
+      },
+      "hard_negative_count": 8,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 8,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 8,
+      "records_with_validation_join": 8,
+      "retained_oracle_counts": {
+        "failed": 8
+      },
+      "source_dir": "outputs/httpie_agent_patch_stage_ab_001",
+      "source_kind": "ai_or_agent_generated",
+      "status": "not_promoted_to_evp7_controlled",
+      "task_count": 4,
+      "validation_status_counts": {
+        "validated": 8
+      }
+    },
+    {
+      "candidate_count": 10,
+      "candidate_file": "outputs/httpie_ai_patch_stage_ab_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 10
+      },
+      "eligible_new_hard_negative_count": 1,
+      "expected_outcome_counts": {
+        "correct": 3,
+        "environment_invalid": 6,
+        "incorrect": 1
+      },
+      "hard_negative_count": 7,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 6,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 10,
+      "records_with_validation_join": 10,
+      "retained_oracle_counts": {
+        "failed": 7,
+        "passed": 3
+      },
+      "source_dir": "outputs/httpie_ai_patch_stage_ab_001",
+      "source_kind": "ai_or_agent_generated",
+      "status": "not_promoted_to_evp7_controlled",
+      "task_count": 5,
+      "validation_status_counts": {
+        "label_mismatch": 3,
+        "patch_apply_failed": 6,
+        "validated": 1
+      }
+    },
+    {
+      "candidate_count": 10,
+      "candidate_file": "outputs/httpie_ai_patch_stage_ab_001/candidates.pending.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 10
+      },
+      "eligible_new_hard_negative_count": 4,
+      "expected_outcome_counts": {
+        "incorrect": 10
+      },
+      "hard_negative_count": 10,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 6,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 10,
+      "records_with_validation_join": 10,
+      "retained_oracle_counts": {
+        "failed": 7,
+        "passed": 3
+      },
+      "source_dir": "outputs/httpie_ai_patch_stage_ab_001",
+      "source_kind": "ai_or_agent_generated",
+      "status": "not_promoted_to_evp7_controlled",
+      "task_count": 5,
+      "validation_status_counts": {
+        "label_mismatch": 3,
+        "patch_apply_failed": 6,
+        "validated": 1
+      }
+    },
+    {
+      "candidate_count": 22,
+      "candidate_file": "outputs/httpie_stage_ab_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 5,
+        "correct_reference": 5,
+        "irrelevant_patch": 5,
+        "partial_fix": 7
+      },
+      "eligible_new_hard_negative_count": 7,
+      "expected_outcome_counts": {
+        "correct": 5,
+        "incorrect": 5,
+        "irrelevant_or_noop": 5,
+        "partial": 7
+      },
+      "hard_negative_count": 7,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 22,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 22,
+      "records_with_validation_join": 22,
+      "retained_oracle_counts": {
+        "failed": 17,
+        "passed": 5
+      },
+      "source_dir": "outputs/httpie_stage_ab_001",
+      "source_kind": "constructed_or_reference",
+      "status": "not_promoted_to_evp7_controlled",
+      "task_count": 5,
+      "validation_status_counts": {
+        "validated": 22
+      }
+    },
+    {
+      "candidate_count": 5,
+      "candidate_file": "outputs/luigi3_stability_audit_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 2
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 2
+      },
+      "hard_negative_count": 2,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 0,
+        "unknown": 5
+      },
+      "records_with_required_phase_b_fields": 5,
+      "records_with_validation_join": 0,
+      "retained_oracle_counts": {},
+      "source_dir": "outputs/luigi3_stability_audit_001",
+      "source_kind": "constructed_or_reference",
+      "status": "not_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {}
+    },
+    {
+      "candidate_count": 3,
+      "candidate_file": "outputs/luigi4_stability_audit_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1
+      },
+      "hard_negative_count": 0,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 0,
+        "unknown": 3
+      },
+      "records_with_required_phase_b_fields": 3,
+      "records_with_validation_join": 0,
+      "retained_oracle_counts": {},
+      "source_dir": "outputs/luigi4_stability_audit_001",
+      "source_kind": "constructed_or_reference",
+      "status": "not_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {}
+    },
+    {
+      "candidate_count": 30,
+      "candidate_file": "outputs/patch_verification_pilot_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 7,
+        "correct_reference": 7,
+        "irrelevant_patch": 7,
+        "partial_fix": 9
+      },
+      "eligible_new_hard_negative_count": 9,
+      "expected_outcome_counts": {
+        "correct": 7,
+        "incorrect": 7,
+        "irrelevant_or_noop": 7,
+        "partial": 9
+      },
+      "hard_negative_count": 9,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 30,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 30,
+      "records_with_validation_join": 30,
+      "retained_oracle_counts": {
+        "failed": 23,
+        "passed": 7
+      },
+      "source_dir": "outputs/patch_verification_pilot_001",
+      "source_kind": "constructed_or_reference",
+      "status": "legacy_pilot_or_duplicate_output",
+      "task_count": 7,
+      "validation_status_counts": {
+        "validated": 30
+      }
+    },
+    {
+      "candidate_count": 30,
+      "candidate_file": "outputs/patch_verification_pilot_repro_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 7,
+        "correct_reference": 7,
+        "irrelevant_patch": 7,
+        "partial_fix": 9
+      },
+      "eligible_new_hard_negative_count": 9,
+      "expected_outcome_counts": {
+        "correct": 7,
+        "incorrect": 7,
+        "irrelevant_or_noop": 7,
+        "partial": 9
+      },
+      "hard_negative_count": 9,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 30,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 30,
+      "records_with_validation_join": 30,
+      "retained_oracle_counts": {
+        "failed": 23,
+        "passed": 7
+      },
+      "source_dir": "outputs/patch_verification_pilot_repro_001",
+      "source_kind": "constructed_or_reference",
+      "status": "legacy_pilot_or_duplicate_output",
+      "task_count": 7,
+      "validation_status_counts": {
+        "validated": 30
+      }
+    },
+    {
+      "candidate_count": 6,
+      "candidate_file": "outputs/pysnooper1_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 3
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 3
+      },
+      "hard_negative_count": 3,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 6,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 6,
+      "records_with_validation_join": 6,
+      "retained_oracle_counts": {
+        "failed": 5,
+        "passed": 1
+      },
+      "source_dir": "outputs/pysnooper1_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 6
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/pysnooper3_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 1
+      },
+      "hard_negative_count": 1,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/pysnooper3_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/thefuck1_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "partial_fix": 1,
+        "regression_patch": 1
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "partial": 1,
+        "regression": 1
+      },
+      "hard_negative_count": 2,
+      "p2p_broad_status_counts": {
+        "failed": 1,
+        "passed": 1,
+        "skipped_issue_not_fixed": 2
+      },
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 2,
+        "passed": 2
+      },
+      "source_dir": "outputs/thefuck1_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated_or_recorded": 4
+      }
+    },
+    {
+      "candidate_count": 7,
+      "candidate_file": "outputs/tqdm9_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 4
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 4
+      },
+      "hard_negative_count": 4,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 7,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 7,
+      "records_with_validation_join": 7,
+      "retained_oracle_counts": {
+        "failed": 6,
+        "passed": 1
+      },
+      "source_dir": "outputs/tqdm9_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 7
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl11_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 1
+      },
+      "hard_negative_count": 1,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/youtubedl11_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl16_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "partial_fix": 2
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "partial": 2
+      },
+      "hard_negative_count": 2,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/youtubedl16_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl17_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "partial_fix": 2
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "partial": 2
+      },
+      "hard_negative_count": 2,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/youtubedl17_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl20_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "partial_fix": 2
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "partial": 2
+      },
+      "hard_negative_count": 2,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/youtubedl20_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl21_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "partial_fix": 2
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "partial": 2
+      },
+      "hard_negative_count": 2,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/youtubedl21_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl23_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "partial_fix": 2
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "partial": 2
+      },
+      "hard_negative_count": 2,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/youtubedl23_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl2_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 1
+      },
+      "hard_negative_count": 1,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/youtubedl2_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl37_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "partial_fix": 2
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "partial": 2
+      },
+      "hard_negative_count": 2,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/youtubedl37_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl43_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 1
+      },
+      "hard_negative_count": 1,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/youtubedl43_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl4_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 1
+      },
+      "hard_negative_count": 1,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/youtubedl4_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl5_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 1
+      },
+      "hard_negative_count": 1,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/youtubedl5_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl5_candidate_validation_001/candidates_after_format_check.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 1
+      },
+      "hard_negative_count": 1,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/youtubedl5_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl6_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 1
+      },
+      "hard_negative_count": 1,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/youtubedl6_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    },
+    {
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl7_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "eligible_new_hard_negative_count": 0,
+      "expected_outcome_counts": {
+        "correct": 1,
+        "incorrect": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 1
+      },
+      "hard_negative_count": 1,
+      "p2p_broad_status_counts": {},
+      "patch_applied_counts": {
+        "false": 0,
+        "true": 4,
+        "unknown": 0
+      },
+      "records_with_required_phase_b_fields": 4,
+      "records_with_validation_join": 4,
+      "retained_oracle_counts": {
+        "failed": 3,
+        "passed": 1
+      },
+      "source_dir": "outputs/youtubedl7_candidate_validation_001",
+      "source_kind": "constructed_or_reference",
+      "status": "already_promoted_to_evp7_controlled",
+      "task_count": 1,
+      "validation_status_counts": {
+        "validated": 4
+      }
+    }
+  ],
+  "phase_b_readiness": {
+    "candidate_manifest_created": false,
+    "current_counts": {
+      "existing_controlled_cohort_candidates": 98,
+      "existing_controlled_rule_only_opportunities": 6,
+      "fresh_ai_or_agent_eligible_hard_negatives": 13,
+      "fresh_non_promoted_eligible_hard_negatives": 20
+    },
+    "next_gate": "Construct a separate no-API EVP-8-HARD candidate draft only after adding or validating enough non-promoted hard negatives; then build a tool-only baseline and stop before API if opportunity cases remain below 10.",
+    "ready_for_phase_b_candidate_manifest": false,
+    "reason": "The local inventory finds reusable sources and reaches the minimum 20 unique non-promoted eligible hard negatives, but these have not yet been curated into a separate manifest and no hard-case tool-only opportunity baseline has been built."
+  },
+  "scope": {
+    "api_call_attempted": false,
+    "candidate_manifest_created": false,
+    "old_evp8_controlled_cohort_mutated": false,
+    "patch_text_stored_in_output": false,
+    "prompt_text_stored": false,
+    "raw_model_outputs_read": false
+  }
+}

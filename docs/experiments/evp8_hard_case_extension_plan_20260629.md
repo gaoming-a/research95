@@ -125,6 +125,19 @@ Pass condition:
 
 Goal: build a small hard-case cohort with stronger external validity.
 
+2026-06-29 source-inventory status: completed, but candidate construction is
+not complete. The tracked outputs are:
+
+- `data/protocols/evp8_hard_case_source_inventory_v0_1.json`;
+- `docs/experiments/evp8_hard_case_source_inventory_v0_1.md`.
+
+The inventory scanned 34 non-raw local candidate source files and found 20
+unique non-promoted eligible hard negatives, including 13 unique AI/agent
+eligible hard negatives. This is only a source inventory: it does not create an
+`EVP-8-HARD` manifest, does not mutate the old 98-candidate cohort, and does
+not authorize API calls. The next Phase B action is no-API candidate curation
+and a separate hard-case tool-only baseline.
+
 Candidate sources, in priority order:
 
 1. Existing local validated candidates that already have hidden oracle or P2P
@@ -241,5 +254,7 @@ Forbidden claim:
 
 Do not run more APIs next.
 
-Phase A is complete. Next inspect available local candidate sources for Phase B.
-This inspection must be no-API and must not mutate the old 98-candidate cohort.
+Phase A and the Phase B source inventory are complete. Next construct a no-API
+`EVP-8-HARD` candidate draft from the inventoried sources, then build the
+hard-case tool-only baseline. Stop before API if the new hard-case baseline has
+fewer than 10 opportunity cases.

@@ -189,6 +189,18 @@
     regression/P2P/edge-case 覆盖不足；
   - utility table 显示 DeepSeek `E6-no-verdict` 只有在 false accept 成本显著
     高于 escalation 成本时最有吸引力。
+- 本轮已完成 hard-case extension Phase B source inventory：
+  - 脚本为 `scripts/inventory_evp8_hard_case_sources.py`；
+  - 输出为 `data/protocols/evp8_hard_case_source_inventory_v0_1.json` 和
+    `docs/experiments/evp8_hard_case_source_inventory_v0_1.md`；
+  - 盘点 34 个非 raw 本地 candidate source files，检测到旧 98-candidate
+    controlled cohort 已有 6 个 rule-only E6 opportunity cases；
+  - 非 promoted 候选记录为 68 条，去重后 49 条；其中 eligible hard negatives
+    为 48 条，去重后 20 条；
+  - AI/agent candidate records 为 38 条，去重后 19 条；其中 eligible hard
+    negatives 为 23 条，去重后 13 条；
+  - 该 inventory 不生成 `EVP-8-HARD` manifest，不授权 API；下一步必须先做
+    no-API candidate curation 和 hard-case tool-only baseline。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。最近一次已确认
   `git push origin main` 成功；最终是否仍 ahead 仍以
@@ -290,15 +302,20 @@
 当前默认下一步：
 
 1. 基于
-   `docs/experiments/evp8_phase_a_paper_ready_analysis.md` 写论文结果段；
-2. no-API inspect 本地 hard-case 候选来源，准备 Phase B candidate source
-   inventory；
-3. 明确 claim boundary：Qwen 结果显示 verdict removal 对其影响小，但不修复
+   `docs/experiments/evp8_phase_a_paper_ready_analysis.md` 和
+   `docs/experiments/evp8_hard_case_source_inventory_v0_1.md` 写论文结果/
+   局限段；
+2. no-API 构造 `EVP-8-HARD` candidate draft，必须从 source inventory 中去重、
+   补齐 visible evidence、保留 evaluator-only hidden labels，并生成单独的
+   hard-case tool-only baseline；
+3. 若 hard-case tool-only opportunity cases 少于 10，则停止 API 并报告
+   headroom 不足；
+4. 明确 claim boundary：Qwen 结果显示 verdict removal 对其影响小，但不修复
    4 个工具 false accepts；DeepSeek 结果显示更强风险控制，但代价是 correct
    recall 大幅下降；
-4. 后续若要证明实用价值，必须新增 hard-case / real agent patch cohort 或做人类
+5. 后续若要证明实用价值，必须新增 hard-case / real agent patch cohort 或做人类
    review 成本/风险函数，不应继续在同一 easy cohort 上堆模型；
-5. 任何新增模型、重复 API 或 candidate-set 扩展都需要新的计划和用户授权。
+6. 任何新增模型、重复 API 或 candidate-set 扩展都需要新的计划和用户授权。
 
 以下条目保留为历史/备用路线，不再覆盖当前默认下一步：
 

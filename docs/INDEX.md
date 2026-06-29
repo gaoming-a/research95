@@ -291,6 +291,20 @@
   Phase A. It reports wide opportunity-set uncertainty, the six current
   opportunity cases, and utility costs under throughput-oriented,
   balanced-review, and safety-critical policies.
+- `../scripts/inventory_evp8_hard_case_sources.py`: no-API Phase B source
+  inventory script. It scans tracked EVP-7 labels and non-raw local candidate
+  source files, separates already-promoted controlled-cohort candidates from
+  non-promoted hard-case sources, and writes aggregate reports without patch
+  diffs, prompt text, or raw model responses.
+- `../data/protocols/evp8_hard_case_source_inventory_v0_1.json`: raw-output-free
+  Phase B source inventory result. Current status is passed: 34 local
+  candidate source files scanned, 20 unique non-promoted eligible hard
+  negatives, and 13 unique AI/agent eligible hard negatives. It does not create
+  an `EVP-8-HARD` candidate manifest.
+- `experiments/evp8_hard_case_source_inventory_v0_1.md`: Markdown companion for
+  the Phase B source inventory. It records that the next gate is no-API
+  candidate curation and a separate hard-case tool-only baseline; API execution
+  remains unauthorized.
 - `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:
   no-key public OpenRouter catalog audit for the G7 later-model pinned IDs:
   `moonshotai/kimi-k2.6`, `mistralai/devstral-2512`, and

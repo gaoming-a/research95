@@ -3402,3 +3402,17 @@ This file starts fresh for the patch-verification project.
 - Utility tables should be framed as policy weights, not measured money.
   They are useful for explaining why a conservative model may be preferable
   under safety-critical assumptions even when its correct recall is lower.
+
+## 2026-06-29 EVP-8 hard-case source inventory
+
+- Source inventory is not candidate construction. Counting local files is only
+  useful if already-promoted controlled-cohort candidates, duplicate pilot
+  outputs, pending/relabeled pairs, and fresh non-promoted sources are separated.
+- Reuse the passed headroom audit for old-cohort opportunity counts. Recomputing
+  the same count from a different label shortcut can silently drift from 6
+  opportunity cases to 5.
+- Report both raw record counts and unique counts. Pending and relabeled agent
+  files can double-count the same patch; paper-facing readiness should use the
+  unique count.
+- Do not scan or summarize raw response files in source inventory. Aggregate
+  candidate and validation metadata are enough for Phase B planning.

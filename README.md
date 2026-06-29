@@ -182,6 +182,13 @@ wide uncertainty on the 6 opportunity cases, the case table identifies the
 missing visible evidence behind current false accepts, and the utility table
 shows DeepSeek `E6-no-verdict` is favored only under safety-heavy policies that
 price false accepts much higher than escalations.
+The Phase B source inventory is now complete at
+`docs/experiments/evp8_hard_case_source_inventory_v0_1.md`. It scanned 34
+non-raw local candidate source files, found 20 unique non-promoted eligible hard
+negatives and 13 unique AI/agent eligible hard negatives, and confirmed that
+the old 98-candidate cohort remains historical controlled evidence only. It
+does not create an `EVP-8-HARD` manifest or authorize API calls; the next gate
+is no-API candidate curation plus a separate hard-case tool-only baseline.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently

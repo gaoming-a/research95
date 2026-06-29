@@ -2,6 +2,28 @@
 
 最后更新：2026-06-29
 
+## 0. 2026-06-29 本轮小目标：EVP-8-HARD Phase B 源盘点
+
+本轮目标是执行
+`docs/experiments/evp8_hard_case_extension_plan_20260629.md` 的 Phase B
+前置盘点：检查本地已有候选补丁、验证记录和 agent patch 记录是否足够支撑
+一个单独的 `EVP-8-HARD` hard-case 扩展。
+
+边界：
+
+- 不调用任何模型 API；
+- 不修改旧 98-candidate EVP-8 controlled cohort；
+- 不生成新的 hard-case candidate manifest；
+- 不保存 patch diff、prompt text 或 raw model response 到 tracked 输出；
+- 只输出候选源级别的聚合统计和是否可进入下一步的判断。
+
+验收条件：
+
+- 盘点脚本能复现候选源、验证源和 agent patch 源的数量统计；
+- 明确区分已用于旧 controlled cohort 的候选和可作为新增 hard-case 来源的候选；
+- 给出是否满足 Phase B 目标规模和 opportunity-set 前置条件的保守判断；
+- 同步更新计划、索引、经验文档和当前状态。
+
 ## 1. 研究转向
 
 旧方向试图验证 LLM cross-review 或 agent-style context 是否能让代码审查更可靠。已有结果不支持这个强假设。真正可复用的发现是：
@@ -18418,3 +18440,56 @@ Key findings:
   自动识别正确补丁；
 - Phase A 已完成。下一步应 no-API inspect 本地候选来源，准备
   `EVP-8-HARD` Phase B candidate source inventory。
+
+## 2026-06-29 EVP-8-HARD Phase B source inventory
+
+Inspect:
+
+- Phase B 要求先确认本地是否已有足够 hard-case 来源，不能直接跑 API；
+- 旧 98-candidate EVP-8 cohort 只能作为 controlled evidence，不能混入新的
+  `EVP-8-HARD` 扩展当作新样本；
+- 本地 `outputs/` 中同时存在 candidate validation、agent patch、pilot
+  duplicate 和 raw response 路径，必须分开处理。
+
+Plan:
+
+1. 新增 no-API source inventory 脚本；
+2. 只读取 tracked labels 和非 raw 的 local candidate/validation JSONL；
+3. 输出 raw-output-free 聚合 JSON/Markdown；
+4. 明确是否可以进入 hard-case manifest 和 baseline gate。
+
+Execute / Verify:
+
+1. 新增脚本 `scripts/inventory_evp8_hard_case_sources.py`；
+2. 执行：
+   - `python -m py_compile scripts\inventory_evp8_hard_case_sources.py`；
+   - `python scripts\inventory_evp8_hard_case_sources.py --check`；
+3. 输出：
+   - `data/protocols/evp8_hard_case_source_inventory_v0_1.json`；
+   - `docs/experiments/evp8_hard_case_source_inventory_v0_1.md`；
+4. gate passed：
+   - `api_call_attempted=false`；
+   - `raw_model_outputs_read=false`；
+   - `old_evp8_controlled_cohort_mutated=false`；
+   - `candidate_manifest_created=false`；
+   - `prompt_text_stored=false`；
+   - old cohort count = 98。
+
+Key findings:
+
+- 旧 controlled cohort 的 rule-only E6 opportunity cases 仍为 6：5 个 false
+  accepts 和 1 个 false reject；
+- 本地共扫描 34 个非 raw candidate source files、260 条 candidate records；
+- 非 promoted candidate records 为 68 条，去重后 49 条；
+- 非 promoted eligible hard negatives 为 48 条，去重后 20 条；
+- AI/agent candidate records 为 38 条，去重后 19 条；
+- AI/agent eligible hard negatives 为 23 条，去重后 13 条；
+- 这说明 Phase B 有可用来源，但还没有完成 hard-case cohort construction。
+
+Next:
+
+- 不调用 API；
+- 从 inventory 中去重构建 `EVP-8-HARD` no-API candidate draft；
+- 为该 draft 生成独立 tool-only baseline；
+- 如果 hard-case tool-only opportunity cases 少于 10，则停止 API 并报告
+  headroom 不足。
