@@ -20610,3 +20610,105 @@ Combined gate：
 - 下一步应二选一：
   1. 重新设计第三项目来源，例如修 Luigi generation 或扩展 runner 到其他稳定任务；
   2. 降级论文 claim，把 fresh realistic hard-negative 结果限定为 two-project cohort。
+
+## 2026-06-30 Third-project source redesign: thefuck_1 support
+
+本轮目标是在不运行 verifier API 的前提下，补足 fresh hard-negative cohort 的第三项目。
+当前最短路径不是继续 httpie，也不是修 Luigi：
+
+- httpie supplement 已显示 visible-pass cases 都是 hidden-pass，不能贡献 hard negative；
+- Luigi 只有 task-file smoke scope，项目级 P2P 仍是 pending/blocked，且生成阶段已暴露
+  edit-plan apply 失败；
+- `bugsinpy_thefuck_1` 已有项目级 official-test-root P2P policy、专用 py311 环境和
+  hidden oracle，因此更适合作为第三项目 supplement。
+
+执行边界：
+
+- 只扩展 agent generation/visible-test runner 对 `bugsinpy_thefuck_1` 的支持；
+- visible tests 只使用 model-visible 的弱 P2P/smoke 测试；
+- hidden oracle `scripts/oracles/thefuck_1_pip_unknown_command.py` 仍只在 validation/relabel
+  阶段使用，不进入 prompt；
+- 先执行 dry-run 和 prompt-boundary/result audit；
+- 只有 dry-run 通过后，才允许在用户已授权 API 的范围内运行 Qwen generation supplement；
+- 不运行 Qwen/DeepSeek verifier API；
+- 不提交 ignored raw outputs、pending candidates、relabeled candidates 或 workdirs。
+
+验收条件：
+
+- `generate_agent_patch_candidates.py --dry-run` 能为 `bugsinpy_thefuck_1` 生成预期 prompt
+  计数且 prompt boundary 无 evaluator-token 泄漏；
+- visible-test runner 能识别 thefuck 专用 Python 环境；
+- generation 后必须执行 audit、validation、relabel、visible-test 和 gate analysis；
+- combined gate 必须达到至少 30 个 visible-pass/hidden-fail 且至少 3 个项目，才允许进入
+  verifier cohort 构造；
+- 若 thefuck supplement 仍不能贡献第三项目 hard negatives，则暂停 verifier API，重新评估
+  是否降级 claim 或继续扩展到其他项目级 P2P 任务。
+
+执行结果：
+
+- `bugsinpy_thefuck_1` support 已加入 source bug definition 和 visible-test runner；
+- dry-run audit 通过：12/12 prompt hashes，label leakage checks 12/12 passed；
+- Qwen generation supplement 完成：12/12 generated candidates；
+- validation/relabel 完成：12/12 patch applied，12/12 hidden oracle passed，
+  relabel 后全部为 `correct`；
+- visible tests 完成：12/12 passed；
+- gate result：`visible_pass_hidden_fail=0`，`visible_pass_hidden_pass=12`；
+- combined gate 仍未通过：90 candidates，26 visible-pass/hidden-fail，
+  覆盖项目仍只有 `PySnooper` 和 `cookiecutter`。
+
+当前判断：
+
+- thefuck supplement 是有用的负结果：它说明第三项目不是简单靠“弱 visible test”
+  就能得到 hard negatives；当 issue summary 足够清楚时，Qwen 可能直接生成正确补丁；
+- verifier API 仍然 blocked；
+- 下一步继续扩展到已有项目级 P2P、但实现更复杂的 `bugsinpy_youtube-dl_7`。
+
+## 2026-06-30 Third-project source redesign: youtube-dl_7 support
+
+本轮目标是在 thefuck supplement 未贡献 hard negatives 后，尝试
+`bugsinpy_youtube-dl_7`。选择该任务的原因：
+
+- 已有项目级 P2P-broad manifest；
+- touched file、oracle 和 admission candidate slice 都已记录；
+- bug 行为涉及 `js_to_json` 的字符串转义语义，比 thefuck 正则替换更复杂；
+- 默认 BugsInPy workspace 中存在 checkout，不需要复用 output symlink source root。
+
+执行边界：
+
+- 只扩展 `bugsinpy_youtube-dl_7` 的 source bug definition 和 visible-test runner 的
+  unittest 调度；
+- visible test 使用 P2P-broad 中已稳定通过的弱 smoke unittest；
+- hidden oracle `scripts/oracles/youtubedl_7_js_to_json.py` 只在 validation/relabel 阶段使用；
+- 先 dry-run 和 audit，再在用户已授权 API 范围内运行 Qwen generation supplement；
+- 不运行 verifier API；
+- 不读取或提交 raw model response、prompt text 或 patch text。
+
+验收条件：
+
+- dry-run prompt-boundary audit 通过；
+- generated candidates 完成 audit、validation、relabel、visible-test 和 gate analysis；
+- combined gate 只有达到 30 个 visible-pass/hidden-fail 且至少 3 个项目后，才能进入
+  verifier cohort 构造；
+- 若 youtube-dl 仍失败，应暂停继续盲扩，转入 source-design 复盘，而不是继续消耗 API。
+
+执行结果：
+
+- `bugsinpy_youtube-dl_7` support 已加入 source bug definition；
+- visible-test runner 已支持 `youtube-dl` 的 `unittest` 调度；
+- dry-run audit 通过：12/12 prompt hashes，label leakage checks 12/12 passed；
+- Qwen generation supplement 执行到 variant 43 时失败；
+- failure type = `edit_plan_apply_failure`；
+- failure message = `find snippet not found in youtube_dl/utils.py`；
+- 失败发生在 candidate construction 前，未产生可 validation/relabel 的 candidates；
+- 已生成 raw-output-free failure audit：
+  `data/protocols/evp8_realistic_hardneg_generation_youtubedl_supplement_004_failure_audit_v0_1.json`。
+
+当前判断：
+
+- verifier API 仍然 blocked；
+- 继续对 youtube-dl 做盲 API retry 不合理，因为 exact search/replace edit-plan
+  interface 已在 Luigi 和 youtube-dl 两个较复杂任务上暴露稳定性问题；
+- 下一步应做 source-design/generation-interface 复盘：
+  1. 要么承认当前 fresh cohort 只能支持 two-project hard-negative claim；
+  2. 要么重新设计第三项目生成接口，但这会改变实验设置，必须先冻结新 protocol，
+     不能直接接在当前 supplement 后当同一实验结果。

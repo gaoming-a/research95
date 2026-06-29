@@ -3965,3 +3965,14 @@ This file starts fresh for the patch-verification project.
   has 78 generated candidates but only 26 visible-pass/hidden-fail candidates
   across 2 projects. The next work is source redesign or claim reduction, not
   another verifier run.
+- A weak visible test is not sufficient by itself to create hard negatives.
+  The Qwen `thefuck_1` supplement used a model-visible smoke/P2P test and a
+  hidden F2P oracle, but all 12 generated candidates passed both. For simple
+  single-file regex repairs, a clear issue summary can push the generator to
+  correct-like patches even when visible evidence is weak.
+- Exact search/replace edit-plan generation is fragile on more complex source
+  files. The Qwen `youtube-dl_7` supplement passed dry-run boundaries but
+  failed before candidate construction because the generated `find` snippet
+  was not present in `youtube_dl/utils.py`. Luigi had exposed the same failure
+  class earlier. Do not keep spending API on blind retries under the same edit
+  interface; redesign the source strategy or generation interface first.

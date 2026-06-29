@@ -79,6 +79,31 @@ SOURCE_BUGS = [
         "oracle_command": "python scripts/oracles/luigi_4_redshift_none_columns.py",
     },
     {
+        "task_id": "bugsinpy_thefuck_1",
+        "project": "thefuck",
+        "touched_files": ["thefuck/rules/pip_unknown_command.py"],
+        "issue_summary": (
+            "pip unknown-command suggestions should preserve command names "
+            "that contain non-letter characters such as plus signs"
+        ),
+        "visible_tests": ["tests/rules/test_pip_unknown_command.py::test_match"],
+        "hidden_oracles": ["scripts/oracles/thefuck_1_pip_unknown_command.py"],
+        "oracle_command": "python scripts/oracles/thefuck_1_pip_unknown_command.py",
+    },
+    {
+        "task_id": "bugsinpy_youtube-dl_7",
+        "project": "youtube-dl",
+        "touched_files": ["youtube_dl/utils.py"],
+        "issue_summary": (
+            "js_to_json should convert JavaScript-style quoted strings containing "
+            "escaped apostrophes into valid JSON without preserving invalid "
+            "apostrophe escapes"
+        ),
+        "visible_tests": ["test.test_utils.TestUtil.test_xpath_text"],
+        "hidden_oracles": ["scripts/oracles/youtubedl_7_js_to_json.py"],
+        "oracle_command": "python scripts/oracles/youtubedl_7_js_to_json.py",
+    },
+    {
         "task_id": "bugsinpy_cookiecutter_1",
         "project": "cookiecutter",
         "touched_files": ["cookiecutter/generate.py"],

@@ -1,0 +1,46 @@
+{
+  "audit_id": "evp8_realistic_hardneg_generation_youtubedl_supplement_004_failure_audit_v0_1",
+  "audit_status": "failed_before_candidate_construction",
+  "checks": [
+    {
+      "check": "api_call_attempted_for_generation_only",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "verifier_api_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_model_output_content_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "candidate_construction_completed",
+      "detail": false,
+      "passed": false
+    }
+  ],
+  "date": "2026-06-30",
+  "error_class": "edit_plan_apply_failure",
+  "error_message": "find snippet not found in youtube_dl/utils.py",
+  "failure_point": "apply_edit_plan_before_candidate_construction",
+  "generation_run_id": "evp8_realistic_hardneg_generation_qwen_supplement_004",
+  "model": "qwen3.7-max",
+  "next_step": "Do not continue blind API retries. Redesign source strategy or generation interface before further third-project supplement attempts.",
+  "provider": "qwen_official",
+  "raw_response_reference": {
+    "path": "outputs/evp8_realistic_hardneg_generation_qwen_supplement_004/raw/qwen3.7-max/bugsinpy_youtube-dl_7__agent_patch_43.json",
+    "sha256": "68002228c648f8d821d665a5c6c8ee2d9abc404973e142d17fb947da360efe6b"
+  },
+  "scope": {
+    "patch_text_stored": false,
+    "prompt_text_stored": false,
+    "raw_model_output_content_stored": false,
+    "verifier_api_attempted": false
+  },
+  "task_id": "bugsinpy_youtube-dl_7",
+  "variant_index": 43
+}

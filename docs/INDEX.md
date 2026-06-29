@@ -567,6 +567,13 @@
   true visible-pass/hidden-fail candidates across 2 projects
   (`PySnooper`, `cookiecutter`), so the 30-candidate/3-project verifier-API
   gate is not met.
+- `../data/protocols/evp8_realistic_hardneg_combined_generation_gate_with_thefuck_supplement_003_v0_1.json`
+  and
+  `experiments/evp8_realistic_hardneg_combined_generation_gate_with_thefuck_supplement_003_v0_1.md`:
+  combined gate after adding the Qwen `thefuck_1` supplement. Current result:
+  90 generated candidates still yield 26 visible-pass/hidden-fail candidates
+  across only 2 projects; `thefuck_1` contributed 12 visible-pass/hidden-pass
+  candidates and 0 hard negatives.
 - `../data/protocols/evp8_realistic_hardneg_generation_result_audit_v0_1.json`,
   `../data/protocols/evp8_realistic_hardneg_generation_supplement_001_result_audit_v0_1.json`,
   and
@@ -574,6 +581,20 @@
   raw-output-free generation audits for the fresh Qwen main hard-negative
   generation, Qwen httpie supplement, and DeepSeek httpie supplement. Raw
   responses remain under ignored `outputs/`.
+- `../data/protocols/evp8_realistic_hardneg_generation_thefuck_supplement_003_dry_run_audit_v0_1.json`,
+  `../data/protocols/evp8_realistic_hardneg_generation_thefuck_supplement_003_result_audit_v0_1.json`,
+  and
+  `../data/protocols/evp8_realistic_hardneg_generation_thefuck_supplement_003_gate_v0_1.json`:
+  raw-output-free audit trail for the Qwen `thefuck_1` supplement. The run
+  generated 12 candidates, all 12 passed the hidden oracle and visible test,
+  so it did not add third-project hard negatives.
+- `../data/protocols/evp8_realistic_hardneg_generation_youtubedl_supplement_004_dry_run_audit_v0_1.json`
+  and
+  `../data/protocols/evp8_realistic_hardneg_generation_youtubedl_supplement_004_failure_audit_v0_1.json`:
+  raw-output-free audit trail for the attempted Qwen `youtube-dl_7`
+  supplement. The dry-run passed, but execution failed before candidate
+  construction because the generated exact edit-plan `find` snippet was not
+  found in `youtube_dl/utils.py`.
 - `../data/protocols/evp8_realistic_hardneg_visible_test_outcomes_v0_1.json`,
   `../data/protocols/evp8_realistic_hardneg_visible_test_outcomes_supplement_001_v0_1.json`,
   and
@@ -582,6 +603,11 @@
   Qwen run completed 54/54 visible-test records; each httpie supplement
   completed 12/12 after the visible-test runner was repaired to use the httpie
   venv and legacy pytest wrapper.
+- `../data/protocols/evp8_realistic_hardneg_visible_test_outcomes_thefuck_supplement_003_v0_1.json`
+  and
+  `experiments/evp8_realistic_hardneg_visible_test_outcomes_thefuck_supplement_003_v0_1.md`:
+  visible-test summary for the `thefuck_1` supplement. All 12 generated
+  candidates completed and passed the model-visible test.
 - `../scripts/audit_evp8_realistic_agent_generation_results.py`:
   raw-output-free audit for the authorized Qwen realistic agent-patch
   generation run. It validates 54 prompt/candidate/evidence records, task

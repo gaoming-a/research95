@@ -40,6 +40,7 @@ PROJECT_PYTHONS = {
     "bugsinpy_PySnooper_3": REPO_ROOT / "outputs" / "envs" / "pysnooper3_p2p_py311" / "Scripts" / "python.exe",
     "cookiecutter": REPO_ROOT / "outputs" / "envs" / "cookiecutter_p2p_py311" / "Scripts" / "python.exe",
     "httpie": REPO_ROOT / "outputs" / "envs" / "httpie_hard_visible_py311" / "Scripts" / "python.exe",
+    "thefuck": REPO_ROOT / "outputs" / "envs" / "thefuck1_f2p_py311" / "Scripts" / "python.exe",
 }
 
 FORBIDDEN_OUTPUT_MARKERS = (
@@ -105,6 +106,8 @@ def python_for(packet: dict[str, Any]) -> tuple[str, str]:
 
 
 def pytest_command_for(packet: dict[str, Any], python_executable: str, tests: list[str]) -> list[str]:
+    if packet.get("project") == "youtube-dl":
+        return [python_executable, "-m", "unittest", "-q", *tests]
     if packet.get("project") in {"PySnooper", "httpie"}:
         return [python_executable, str(LEGACY_PY311_PYTEST), "-q", *tests]
     if packet.get("project") == "cookiecutter":
