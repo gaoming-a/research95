@@ -636,6 +636,33 @@
   construction before any verifier API.
 - `experiments/evp8_realistic_agent_cohort_manifest_v0_1.md`: Markdown
   companion for the realistic cohort manifest.
+- `../scripts/run_evp8_realistic_agent_visible_tests.py`: no-API visible-test
+  runner for the realistic agent-patch cohort. It reads model-visible seed
+  packets, recreates patched workdirs from clean buggy checkouts, runs declared
+  visible tests, and emits visible evidence without evaluator labels or oracle
+  fields.
+- `../data/evidence/evp8_realistic_agent_visible_test_outcomes_v0_1.jsonl`:
+  visible-test outcome records for 53 realistic candidates. Current run has
+  `completed=53`, no patch-apply failures, and test outcomes `passed=30,
+  failed=35` across 65 declared nodeids.
+- `experiments/evp8_realistic_agent_visible_test_outcomes_v0_1.md`: Markdown
+  companion for the visible-test outcome run.
+- `../scripts/build_evp8_realistic_agent_visible_tool_headroom.py`: no-API
+  builder for the realistic visible-tool baseline, model-visible v0.2 packets,
+  and evaluator-only headroom summary.
+- `../data/evidence/evp8_realistic_agent_model_visible_seed_v0_2.jsonl`:
+  model-visible realistic packets with actual visible-test evidence injected.
+  It is the verifier input candidate for the next Qwen/DeepSeek run.
+- `../data/baselines/evp8_realistic_agent_visible_tool_baseline_v0_1.jsonl`:
+  deterministic visible-tool baseline. It accepts iff patch apply succeeds and
+  all declared visible tests pass; current decisions are `accept=30,
+  reject=23`.
+- `../data/protocols/evp8_realistic_agent_visible_tool_headroom_v0_1.json` and
+  `experiments/evp8_realistic_agent_visible_tool_headroom_v0_1.md`: headroom
+  analysis against evaluator-only labels. It shows 29/52 wrong patches would be
+  accepted by visible tests alone, so the realistic cohort is useful for
+  false-accept reduction analysis but undermeasures correct-patch recall
+  because it contains only one correct patch.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

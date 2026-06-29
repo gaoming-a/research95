@@ -1,0 +1,93 @@
+{
+  "analysis_id": "evp8_realistic_agent_visible_tool_headroom_v0_1",
+  "api_call_attempted": false,
+  "baseline_rule": "accept iff patch applies and all declared visible tests pass; reject on visible test failure or patch apply failure; escalate on tool error/timeout/inconclusive",
+  "candidate_count": 53,
+  "cohort_id": "EVP-8-REALISTIC-AGENT",
+  "counts": {
+    "accepted_correct": 1,
+    "accepted_wrong": 29,
+    "escalated": 0,
+    "rejected_correct": 0,
+    "rejected_wrong": 23
+  },
+  "decision_by_label": {
+    "correct": {
+      "accept": 1
+    },
+    "test_passing_wrong": {
+      "accept": 29,
+      "reject": 23
+    }
+  },
+  "decision_counts": {
+    "accept": 30,
+    "reject": 23
+  },
+  "headroom_assessment": {
+    "correct_patch_acceptance_power_is_undermeasured": true,
+    "llm_false_accept_reduction_headroom_exists": true,
+    "recommended_next_step": "Run Qwen/DeepSeek verifier on model-visible v0.2 only if the paper frames this cohort primarily as false-accept reduction/headroom, not correct-patch recall.",
+    "visible_tool_is_not_sufficient_merge_gate": true
+  },
+  "label_counts": {
+    "correct": 1,
+    "test_passing_wrong": 52
+  },
+  "metrics": {
+    "accepted_precision": {
+      "successes": 1,
+      "total": 30,
+      "value": 0.0333,
+      "wilson_95": {
+        "high": 0.1667,
+        "low": 0.0059
+      }
+    },
+    "correct_recall": {
+      "successes": 1,
+      "total": 1,
+      "value": 1.0,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.2065
+      }
+    },
+    "correct_reject_rate": {
+      "successes": 0,
+      "total": 1,
+      "value": 0.0,
+      "wilson_95": {
+        "high": 0.7935,
+        "low": 0.0
+      }
+    },
+    "escalation_rate": {
+      "successes": 0,
+      "total": 53,
+      "value": 0.0,
+      "wilson_95": {
+        "high": 0.0676,
+        "low": -0.0
+      }
+    },
+    "false_accept_rate_among_wrong": {
+      "successes": 29,
+      "total": 52,
+      "value": 0.5577,
+      "wilson_95": {
+        "high": 0.6841,
+        "low": 0.4234
+      }
+    },
+    "wrong_reject_rate": {
+      "successes": 23,
+      "total": 52,
+      "value": 0.4423,
+      "wilson_95": {
+        "high": 0.5766,
+        "low": 0.3159
+      }
+    }
+  }
+}

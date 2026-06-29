@@ -3833,3 +3833,23 @@ This file starts fresh for the patch-verification project.
   deterministic decision is escalation. Do not treat `escalate=53` as evidence
   that the tool baseline is good or bad; it only says the headroom gate still
   needs visible-test execution.
+
+## 2026-06-30 Realistic visible-test/headroom gate
+
+- Run visible tests from model-visible packets, not from evaluator rows. The
+  runner only needs `candidate_id`, `task_id`, `project`, `patch_text`, and
+  declared visible tests; labels and oracle fields belong only in the later
+  headroom analysis.
+- Leakage checks should match evaluator-only field names, not substrings that
+  collide with public IDs. `evp8_realistic_agent_candidate_0001` legitimately
+  contains `agent_candidate_`, so that substring is too broad as a forbidden
+  marker.
+- PySnooper visible tests on Python 3.11 need the existing
+  `run_pytest_legacy_py311.py` wrapper. Without it, `bugsinpy_PySnooper_1`
+  fails during collection on `collections.Mapping`, which is an environment
+  compatibility error rather than candidate behavior.
+- The realistic visible-tool baseline is now a meaningful headroom check:
+  visible tests alone accept 30 candidates, but 29 of those accepts are
+  evaluator-labeled test-passing wrong patches. This cohort is therefore useful
+  for false-accept reduction experiments. It is not useful for strong
+  correct-recall claims because it currently has only one correct patch.

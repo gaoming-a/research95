@@ -19994,3 +19994,70 @@ Manifest gate：
   执行并记录结果；
 - 下一步必须运行 declared visible tests，构造 stronger visible-tool baseline/headroom gate；
 - 在 headroom gate 通过前仍不得运行 Qwen/DeepSeek verifier API。
+
+## 2026-06-30 Realistic agent-patch visible-test/headroom gate
+
+本轮目标：
+
+- 不调用 Qwen/DeepSeek verifier API；
+- 对 `EVP-8-REALISTIC-AGENT` 的 53 个 separated candidates 重新从干净 buggy
+  checkout 应用候选补丁；
+- 只运行 manifest 中声明的 visible tests；
+- 生成 model-visible 可用的 visible-test outcome artifact；
+- 基于 visible-test outcome 构造 true visible-tool baseline/headroom analysis；
+- 若 visible-tool baseline 与标签几乎完全一致，必须先分析 headroom 是否足够，再决定是否继续 LLM
+  verifier API。
+
+执行边界：
+
+- runner 可以读取 evaluator manifest 和 ignored relabeled source rows 来定位 patch 与 checkout；
+- runner 输出不得包含 hidden labels、expected outcome、oracle、source patch id、model candidate id、
+  raw response path 或 generation rationale；
+- 临时 workdirs 只能写入 ignored `outputs/`；
+- 当前阶段只允许 no-API 可见测试与工具基线，不允许顺手运行 Qwen/DeepSeek verifier。
+
+验收条件：
+
+- 53/53 candidates 生成 visible-test outcome records；
+- 每条 record 只包含 candidate id、项目、任务、visible tests、patch apply 状态、visible test
+  outcome 和截断后的 stdout/stderr；
+- leakage check 通过；
+- visible-tool baseline 覆盖 53/53 candidates；
+- headroom summary 报告 accept/reject/escalate、accepted precision、correct recall、false
+  accept rate，并明确是否值得继续 LLM verifier API。
+
+执行结果：
+
+- 新增 `scripts/run_evp8_realistic_agent_visible_tests.py`；
+- dry-run gate 通过：53/53 planned records，65 个 declared visible test nodeids；
+- 首次真实运行发现 `bugsinpy_PySnooper_1` 在 Python 3.11 下触发
+  `collections.Mapping` legacy import error；
+- 修复方式：PySnooper visible tests 使用既有
+  `scripts/run_pytest_legacy_py311.py` wrapper；
+- 修复后真实运行通过执行 gate：
+  - record_count = 53；
+  - run_status_counts = `completed=53`；
+  - patch_apply_failed_count = 0；
+  - test_outcome_counts = `passed=30, failed=35`；
+  - visible-test outcome leakage check 通过；
+- 新增 `scripts/build_evp8_realistic_agent_visible_tool_headroom.py`；
+- 生成 actual visible-test model-visible packet：
+  `data/evidence/evp8_realistic_agent_model_visible_seed_v0_2.jsonl`；
+- 生成 visible-tool baseline：
+  `data/baselines/evp8_realistic_agent_visible_tool_baseline_v0_1.jsonl`；
+- 生成 headroom summary：
+  `data/protocols/evp8_realistic_agent_visible_tool_headroom_v0_1.json`。
+
+Headroom 结论：
+
+- visible-tool baseline 决策分布：`accept=30, reject=23, escalate=0`；
+- 标签分布：`correct=1, test_passing_wrong=52`；
+- decision by label：
+  - correct: `accept=1`；
+  - test_passing_wrong: `accept=29, reject=23`；
+- accepted precision = 1/30 = 0.0333；
+- correct recall = 1/1 = 1.0，但正确补丁只有 1 个，因此 recall 不能作为强结论；
+- false accept rate among wrong = 29/52 = 0.5577；
+- 该 realistic cohort 对“减少 test-passing wrong false accept”有明确 headroom；
+- 下一步如果运行 Qwen/DeepSeek verifier，只能把该 cohort 定位为 false-accept reduction
+  / headroom 实验，不能用它证明 correct-patch recall。
