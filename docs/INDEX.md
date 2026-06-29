@@ -399,6 +399,18 @@
   analysis for the repeated false accepts. It identifies the dominant pattern
   as visible-test-passing hidden failures and motivates an evidence-only
   ablation rather than another same-prompt model run.
+- `../configs/evp8_hard_e6_evidence_only.example.json`: tracked no-secret
+  example config for the EVP-8-HARD E6 evidence-only ablation. It uses the same
+  47-candidate hard-case cohort but sets
+  `packet_variant=e6_evidence_only_no_verdict`.
+- `../data/protocols/evp8_hard_e6_evidence_only_check_only_v0_1.json`:
+  no-API check-only summary for the evidence-only ablation. Current status is
+  `passed`: 47 E6 packets, verdict-like fields removed, prompt boundary clean,
+  schema clean, and no API calls or raw outputs.
+- `experiments/evp8_hard_e6_evidence_only_ablation_plan_v0_1.md`: Markdown
+  handoff for the evidence-only ablation. It records the removed fields,
+  retained evidence, stop gates, future execute commands, and the rule that API
+  execution still requires explicit user authorization.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

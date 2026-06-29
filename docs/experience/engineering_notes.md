@@ -3610,3 +3610,20 @@ This file starts fresh for the patch-verification project.
 - If the next experiment removes verdict-like fields, keep the same nine cases
   as the primary opportunity set. Otherwise a new cohort could hide whether the
   evidence-boundary repair actually affects the known failure cases.
+
+## 2026-06-29 EVP-8-HARD evidence-only ablation boundary
+
+- Do not add ablation metadata into the model-visible packet unless it is part
+  of the intended evidence. An initial implementation added `packet_variant`
+  to all packets, which would have changed the frozen E6-full prompt boundary.
+  Keep variant metadata in config/check summaries, not inside the prompt.
+- Future evidence-only outputs must use separate summary and parsed-review
+  filenames. Otherwise a correctly guarded execute path would collide with the
+  existing Qwen/DeepSeek E6-full results and either fail late or tempt an
+  unsafe overwrite.
+- A schema dry-run that escalates all evidence-only packets is not a result.
+  It only proves that the output schema and prompt boundary remain parseable
+  after verdict fields are removed.
+- The primary opportunity set for this ablation is the nine repeated false
+  accepts, not overall accuracy. Broad escalation may be useful risk control,
+  but it is not independent correctness verification.

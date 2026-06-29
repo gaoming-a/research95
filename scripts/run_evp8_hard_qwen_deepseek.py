@@ -35,6 +35,13 @@ DEFAULT_EXEC_SUMMARY_DIR = REPO_ROOT / "data" / "reviews"
 DEFAULT_REVIEW_RECORD_DIR = REPO_ROOT / "data" / "reviews"
 COHORT_ID = "EVP-8-HARD"
 EVIDENCE_LEVEL = "E6"
+DEFAULT_PACKET_VARIANT = "e6_full_with_verdict"
+EVIDENCE_ONLY_PACKET_VARIANT = "e6_evidence_only_no_verdict"
+REMOVED_VERDICT_FIELDS = (
+    "rule_based_visible_merge_gate_decision",
+    "rule_based_visible_merge_gate_reasons",
+    "source_decision",
+)
 FORBIDDEN_PACKET_MARKERS = evp8_core.FORBIDDEN_MARKERS + (
     "expected_outcome",
     "hidden_oracles",
@@ -117,9 +124,42 @@ def model_config_by_id(config: dict[str, Any], model_id: str | None) -> dict[str
     return None
 
 
-def packet_leakage_findings(value: Any) -> list[str]:
+def packet_leakage_findings(value: Any, extra_markers: tuple[str, ...] = ()) -> list[str]:
     serialized = json.dumps(value, ensure_ascii=False).lower()
-    return sorted({marker for marker in FORBIDDEN_PACKET_MARKERS if marker.lower() in serialized})
+    markers = FORBIDDEN_PACKET_MARKERS + extra_markers
+    return sorted({marker for marker in markers if marker.lower() in serialized})
+
+
+def packet_variant(config: dict[str, Any]) -> str:
+    return str(config.get("packet_variant") or DEFAULT_PACKET_VARIANT)
+
+
+def variant_removed_fields(config: dict[str, Any]) -> tuple[str, ...]:
+    variant = packet_variant(config)
+    if variant == DEFAULT_PACKET_VARIANT:
+        return ()
+    if variant == EVIDENCE_ONLY_PACKET_VARIANT:
+        return REMOVED_VERDICT_FIELDS
+    raise ValueError(f"unsupported packet_variant: {variant}")
+
+
+def check_analysis_id(config: dict[str, Any]) -> str:
+    if packet_variant(config) == EVIDENCE_ONLY_PACKET_VARIANT:
+        return "evp8_hard_e6_evidence_only_check_only_v0_1"
+    return "evp8_hard_qwen_deepseek_check_only_v0_1"
+
+
+def execution_analysis_id(config: dict[str, Any]) -> str:
+    if packet_variant(config) == EVIDENCE_ONLY_PACKET_VARIANT:
+        return "evp8_hard_e6_evidence_only_full_summary_v0_1"
+    return "evp8_hard_qwen_deepseek_full_summary_v0_1"
+
+
+def output_prefix(config: dict[str, Any], model_id: str) -> str:
+    safe_model = evp8_core.safe_name(model_id)
+    if packet_variant(config) == EVIDENCE_ONLY_PACKET_VARIANT:
+        return f"evp8_hard_e6_evidence_only_{safe_model}_full"
+    return f"evp8_hard_{safe_model}_full"
 
 
 def build_packets(config: dict[str, Any]) -> list[dict[str, Any]]:
@@ -134,11 +174,17 @@ def build_packets(config: dict[str, Any]) -> list[dict[str, Any]]:
     for seed in seeds:
         candidate_id = str(seed["candidate_id"])
         baseline_row = baseline[candidate_id]
+        variant = packet_variant(config)
+        removed_fields = variant_removed_fields(config)
         packet = {
             "cohort_id": COHORT_ID,
             "protocol_id": spec.get("protocol_id"),
             "evidence_level": EVIDENCE_LEVEL,
-            "evidence_level_name": "deterministic_visible_tool_summary",
+            "evidence_level_name": (
+                "visible_evidence_without_tool_verdict"
+                if variant == EVIDENCE_ONLY_PACKET_VARIANT
+                else "deterministic_visible_tool_summary"
+            ),
             "anonymous_candidate_id": candidate_id,
             "task_id": seed.get("task_id"),
             "project": seed.get("project"),
@@ -153,12 +199,33 @@ def build_packets(config: dict[str, Any]) -> list[dict[str, Any]]:
             ],
             "visible_fields": visible_fields(seed, baseline_row),
         }
+        remove_verdict_fields(packet, removed_fields)
         packet["evidence_packet_id"] = f"{candidate_id}__{EVIDENCE_LEVEL}__{packet_suffix}"
-        findings = packet_leakage_findings(packet)
+        findings = packet_leakage_findings(packet, removed_fields)
         if findings:
             raise ValueError(f"forbidden packet markers for {packet['evidence_packet_id']}: {findings}")
         packets.append(packet)
     return packets
+
+
+def remove_verdict_fields(packet: dict[str, Any], removed_fields: tuple[str, ...]) -> None:
+    if not removed_fields:
+        return
+    fields = packet.get("visible_fields") or {}
+    summary = fields.get("deterministic_visible_merge_gate_summary")
+    if isinstance(summary, dict):
+        for field in removed_fields:
+            summary.pop(field, None)
+
+
+def verdict_field_check(name: str, packets: list[dict[str, Any]], removed_fields: tuple[str, ...]) -> dict[str, Any]:
+    present = name in json.dumps(packets)
+    expected_present = name not in removed_fields
+    return check(
+        f"{name}_presence_matches_packet_variant",
+        present == expected_present,
+        {"present": present, "expected_present": expected_present},
+    )
 
 
 def visible_fields(seed: dict[str, Any], baseline_row: dict[str, Any]) -> dict[str, Any]:
@@ -263,10 +330,20 @@ def check_only(args: argparse.Namespace) -> dict[str, Any]:
     key_states, env_exists = env_key_states(resolve(config.get("env", ".env")), key_names)
     credentials_ready = env_exists and all(state == "set" for state in key_states.values())
     full_config = config.get("full") or {}
+    removed_fields = variant_removed_fields(config)
+    packet_leakages = [
+        marker
+        for packet in packets
+        for marker in packet_leakage_findings(packet, removed_fields)
+    ]
     checks = [
         check("candidate_count", len({packet["anonymous_candidate_id"] for packet in packets}) == full_config.get("candidate_count"), len({packet["anonymous_candidate_id"] for packet in packets})),
         check("packet_count", len(packets) == full_config.get("planned_calls_per_model"), len(packets)),
         check("only_e6_packets", {packet["evidence_level"] for packet in packets} == {EVIDENCE_LEVEL}, sorted({packet["evidence_level"] for packet in packets})),
+        check("packet_forbidden_marker_count", not packet_leakages, sorted(set(packet_leakages))),
+        verdict_field_check("rule_based_visible_merge_gate_decision", packets, removed_fields),
+        verdict_field_check("rule_based_visible_merge_gate_reasons", packets, removed_fields),
+        verdict_field_check("source_decision", packets, removed_fields),
         check("prompt_boundary_error_count", not boundary_errors, sorted(set(boundary_errors))),
         check("schema_error_count", not schema_errors, evp8_core._counts(schema_errors)),  # noqa: SLF001
         check("credential_key_presence", credentials_ready, {"env_file_exists": env_exists, "key_states": key_states, "values_printed": False}),
@@ -276,10 +353,12 @@ def check_only(args: argparse.Namespace) -> dict[str, Any]:
     ]
     status = "passed" if all(item["passed"] for item in checks) else "blocked"
     summary = {
-        "analysis_id": "evp8_hard_qwen_deepseek_check_only_v0_1",
+        "analysis_id": check_analysis_id(config),
         "mode": "check_only",
         "cohort_id": COHORT_ID,
         "config": display_path(args.config),
+        "packet_variant": packet_variant(config),
+        "removed_verdict_fields": list(removed_fields),
         "planned_model_ids": model_ids,
         "candidate_count": len({packet["anonymous_candidate_id"] for packet in packets}),
         "packet_count_per_model": len(packets),
@@ -317,11 +396,12 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     packets = build_packets(config)
     output_dir = resolve((config.get("full") or {})["output_dir"]) / evp8_core.safe_name(str(model_config["model_id"]))
     raw_out = args.raw_out or output_dir / "raw_responses.jsonl"
-    summary_out = args.summary_out or DEFAULT_EXEC_SUMMARY_DIR / f"evp8_hard_{evp8_core.safe_name(str(model_config['model_id']))}_full_summary.json"
+    default_output_prefix = output_prefix(config, str(model_config["model_id"]))
+    summary_out = args.summary_out or DEFAULT_EXEC_SUMMARY_DIR / f"{default_output_prefix}_summary.json"
     parsed_reviews_out = (
         args.parsed_reviews_out
         if getattr(args, "parsed_reviews_out", None)
-        else DEFAULT_REVIEW_RECORD_DIR / f"evp8_hard_{evp8_core.safe_name(str(model_config['model_id']))}_full_reviews.jsonl"
+        else DEFAULT_REVIEW_RECORD_DIR / f"{default_output_prefix}_reviews.jsonl"
     )
     if config.get("overwrite_policy") == "refuse_if_output_exists":
         if summary_out.exists():
@@ -367,9 +447,11 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     parse_valid_count = sum(1 for record in parsed_records if record["parse_status"] == "valid")
     write_jsonl(parsed_reviews_out, parsed_records)
     summary = {
-        "analysis_id": "evp8_hard_qwen_deepseek_full_summary_v0_1",
+        "analysis_id": execution_analysis_id(config),
         "mode": "executed",
         "cohort_id": COHORT_ID,
+        "packet_variant": packet_variant(config),
+        "removed_verdict_fields": list(variant_removed_fields(config)),
         "configured_model_id": model_config["model_id"],
         "request_model_id": model_config["request_model_id"],
         "provider_route": model_config["provider_route"],
