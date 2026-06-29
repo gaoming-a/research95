@@ -1220,8 +1220,8 @@
   interest, artifact rebuild, and final user-authorization blockers, and keeps
   submission unauthorized. It carries the same fresh realistic two-project
   negative-result boundary as the SQJ checklist and now embeds the SQJ PDF
-  compile gate, human-input gate, and artifact candidate dry-run gate audit
-  boundaries.
+  compile gate, human-input gate, school-recognition gate, and artifact
+  candidate dry-run gate audit boundaries.
 - `paper/ieee_submission_draft.tex`: historical/source anonymous IEEEtran
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
@@ -1703,6 +1703,12 @@
   readiness/figure/generator/audit files to be present and included, and
   reports `candidate_artifact_dry_run_ready` only with `dry_run_only=true` and
   `final_artifact_rebuild_complete=false`.
+- `scripts/audit_sqj_school_recognition_gate.py`: audits the SQJ
+  school/department recognition blocker without API calls or web lookup. In
+  the current package it reports `blocked_missing_school_recognition`,
+  `recognition_confirmed=false`, and `school_policy_checked=false`, and fails
+  if the checklist/readiness packet loses the external-confirmation boundary or
+  claims recognition has already been confirmed.
 - `scripts/audit_sqj_submission_checklist.py`: validates the SQJ
   source-package checklist, source draft, BibTeX, table sources, figure set,
   five-model synthesis, and cost-accounting/API-freeze boundary without calling
@@ -1723,8 +1729,8 @@
   final-freeze readiness packet and its external-blocker boundary without
   calling APIs, compiling PDF, or authorizing submission. It now requires the
   fresh realistic two-project negative-result boundary before readiness can
-  pass and includes the SQJ PDF compile gate, human-input gate, and artifact
-  candidate dry-run gate audit states.
+  pass and includes the SQJ PDF compile gate, human-input gate,
+  school-recognition gate, and artifact candidate dry-run gate audit states.
 - `scripts/generate_paper_figures.py`: generates the publication figure set
   under `docs/figures/` in PDF, SVG, and PNG formats. Figures cover the
   workflow, compact E0/E2/E4/E6 evidence boundary, dataset composition,

@@ -21262,3 +21262,80 @@ artifact dry-run 状态。
   human inputs、`sn-jnl.cls`/PDF compile、学校认定或最终用户授权 blocker；
 - 用户已在对话中给出 API 授权，但本轮计划边界仍为 no-API artifact gate；
   若下一步要运行任何 API，必须另起 API 实验小计划并先完成 preflight。
+
+## 2026-06-30 SQJ school-recognition gate preflight
+
+本轮小目标是在不联网确认学校政策、不替用户判断期刊认定等级的前提下，把
+SQJ final-freeze 中的 school/department recognition blocker 转为可重复审计
+的机器 gate。当前缺少用户或学校层面的正式确认，因此本轮只应把状态记录为
+blocked，而不是把 SQJ 认定为已满足。
+
+执行边界：
+
+- 不运行任何 API；
+- 不联网查询或推断学校/学院期刊认定结果；
+- 不声称 SQJ 已被学校认定；
+- 不修改实验结果、prompt、tracked summary 或 raw outputs；
+- 不把 SQJ package 标记为 final freeze；
+- 只新增/接入可复现 school-recognition gate 审计。
+
+验收条件：
+
+- 新增 gate 能检测 checklist/readiness 中的 recognition blocker，并返回
+  `gate_status=blocked_missing_school_recognition`、`recognition_confirmed=false`、
+  `passed=true`；
+- SQJ final-freeze readiness 和 local quality gate 能读取或执行该审计；
+- `python -m py_compile` 覆盖新增/修改脚本；
+- school-recognition gate、SQJ final-freeze readiness、paper readiness 和
+  local quality gate 全部通过；
+- staged diff 不包含 API key、raw prompt/response、输出目录或 local config。
+
+执行结果：
+
+- 新增 `scripts/audit_sqj_school_recognition_gate.py`：
+  - 检查 SQJ checklist 和 final-freeze readiness 是否仍明确声明
+    school/department recognition 需要外部确认；
+  - 检查是否误写成 SQJ 已被学校/学院认定；
+  - 当前返回 `gate_status=blocked_missing_school_recognition`、
+    `recognition_confirmed=false`、`school_policy_checked=false`、
+    `web_lookup_attempted=false`、`passed=true`；
+  - 不联网查询、不替用户判断学校政策、不授权提交。
+- 将该 gate 接入：
+  - `docs/artifact/sqj_submission_checklist.md`；
+  - `docs/artifact/sqj_final_freeze_readiness.md`；
+  - `scripts/audit_sqj_submission_checklist.py`；
+  - `scripts/audit_sqj_final_freeze_readiness.py`；
+  - `scripts/audit_sqj_artifact_gate.py`；
+  - `scripts/run_local_quality_gate.py`。
+
+过程诊断与修复：
+
+- 首次 gate 失败有两个原因：
+  - checklist required snippet 没有包含原文前缀
+    `School requirement route:`；
+  - forbidden matching 把 readiness 中的待确认问题
+    `Confirm whether SQJ is recognized...` 误判为已确认认定；
+- 已改为匹配明确完成态 wording，并把新 gate 脚本纳入 artifact candidate
+  required files。
+
+验证结果：
+
+- `python -m py_compile scripts\audit_sqj_school_recognition_gate.py scripts\audit_sqj_artifact_gate.py scripts\audit_sqj_final_freeze_readiness.py scripts\audit_sqj_submission_checklist.py scripts\run_local_quality_gate.py`：通过；
+- `python scripts\audit_sqj_school_recognition_gate.py --out-json outputs\sqj_school_recognition_gate\latest.json --out-md outputs\sqj_school_recognition_gate\latest.md`：通过，
+  `gate_status=blocked_missing_school_recognition`；
+- `python scripts\audit_sqj_artifact_gate.py --out-json outputs\sqj_artifact_gate\latest.json --out-md outputs\sqj_artifact_gate\latest.md`：通过，
+  `gate_status=candidate_artifact_dry_run_ready`；
+- `python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md`：通过；
+- `python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md`：通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`：通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`：通过。
+
+当前判断：
+
+- SQJ final-freeze blocker 现在至少包含四个机器可读状态：
+  `blocked_missing_school_recognition`、`blocked_missing_sn_jnl_cls`、
+  `blocked_missing_human_inputs` 和 `candidate_artifact_dry_run_ready`；
+- 当前 source package 仍可作为 submission-package draft 推进，但不能标记为
+  final freeze；
+- 下一步若继续 final freeze，需要用户/学校提供 recognition 结论、作者元数据、
+  Springer Nature class，并在 PDF 编译后再做最终 artifact rebuild 和授权。

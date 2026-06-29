@@ -17,6 +17,8 @@ expansion, evidence-level changes, or raw model-response tracking.
 - Recognition boundary: this checklist does not guarantee SQJ recognition.
   Confirmation must check the publication-year CCF list, school category
   policy, and high-risk or warning-list status.
+- Current recognition gate status: `blocked_missing_school_recognition` until
+  the school/department recognition decision is provided or confirmed.
 
 ## Manuscript Source Package
 
@@ -88,6 +90,7 @@ python scripts\generate_sqj_figures.py
 python scripts\write_sqj_latex_draft.py --check
 python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md
 python scripts\audit_sqj_artifact_gate.py --out-json outputs\sqj_artifact_gate\latest.json --out-md outputs\sqj_artifact_gate\latest.md
+python scripts\audit_sqj_school_recognition_gate.py --out-json outputs\sqj_school_recognition_gate\latest.json --out-md outputs\sqj_school_recognition_gate\latest.md
 python scripts\audit_sqj_human_inputs_gate.py --out-json outputs\sqj_human_inputs_gate\latest.json --out-md outputs\sqj_human_inputs_gate\latest.md
 python scripts\audit_sqj_pdf_compile_gate.py --out-json outputs\sqj_pdf_compile_gate\latest.json --out-md outputs\sqj_pdf_compile_gate\latest.md
 python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md
@@ -104,6 +107,9 @@ python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\l
 - SQJ checklist audit passes.
 - SQJ artifact candidate gate passes as `candidate_artifact_dry_run_ready`;
   this is not a final artifact ZIP rebuild.
+- SQJ school-recognition gate audit passes while keeping recognition blocked as
+  `blocked_missing_school_recognition` until school/department confirmation is
+  provided.
 - SQJ human-input gate audit passes while keeping the human-input status blocked
   as `blocked_missing_human_inputs` until author and submission metadata are
   provided or confirmed.

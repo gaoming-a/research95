@@ -20,6 +20,7 @@ REQUIRED_SQJ_FILES = [
     Path("docs/figures/sqj/figure_manifest.json"),
     Path("scripts/write_sqj_latex_draft.py"),
     Path("scripts/audit_sqj_artifact_gate.py"),
+    Path("scripts/audit_sqj_school_recognition_gate.py"),
     Path("scripts/audit_sqj_submission_checklist.py"),
     Path("scripts/audit_sqj_final_freeze_readiness.py"),
     Path("scripts/audit_sqj_human_inputs_gate.py"),

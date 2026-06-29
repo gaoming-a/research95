@@ -4056,3 +4056,20 @@ This file starts fresh for the patch-verification project.
 - Passing this gate does not authorize API calls, PDF compilation, submission,
   or final freeze. It only proves that the current tracked SQJ source package
   can be safely enumerated and scanned as a dry-run artifact candidate.
+
+## 2026-06-30 SQJ school-recognition gate
+
+- Do not infer journal recognition from venue name, indexing, or prior
+  experience. School/department recognition is an external human/policy input,
+  so the automated gate should report
+  `blocked_missing_school_recognition` until a confirmed decision is supplied.
+- Forbidden wording checks must distinguish pending questions from completed
+  claims. The first gate version treated `Confirm whether SQJ is recognized...`
+  as if recognition had been confirmed. Match only explicit completed-state
+  phrases such as `recognition is confirmed` or `recognition is complete`.
+- Keep the gate no-web and no-API unless the task is explicitly to verify a
+  current public school policy. The current gate checks local claim boundaries,
+  not the truth of an external recognition list.
+- Include new audit gates in the artifact candidate required-file set. A source
+  package is not reproducible if it depends on a gate script that the candidate
+  artifact omits.
