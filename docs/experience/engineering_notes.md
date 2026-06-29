@@ -4089,3 +4089,29 @@ This file starts fresh for the patch-verification project.
   human decision has been made.
 - Add authorization gates to the artifact candidate required-file set so the
   future package can reproduce why it was not final-submission-ready.
+
+## 2026-06-30 SQJ figure-layout gate
+
+- Split source-level figure readiness from post-compile layout review. The gate
+  can pass while reporting `blocked_pending_pdf_compile`; that means the three
+  SQJ figures, captions, labels, and `includegraphics` references are present,
+  not that visual placement in a compiled PDF has been approved.
+- Keep PDF layout judgment downstream of the PDF compile gate. When
+  `sn-jnl.cls` is missing, the only defensible automated check is source and
+  asset completeness; final layout review requires a compiled manuscript.
+- Add new SQJ blocker gates to both local quality and artifact required-file
+  lists. Otherwise the package can silently lose the script that explains why
+  final freeze is still blocked.
+
+## 2026-06-30 SQJ human-decision packet
+
+- Keep human-decision collection separate from human-input placeholder
+  detection. The human-input gate detects unresolved text in the manuscript;
+  the human-decision packet lists every external decision needed before final
+  freeze.
+- Do not let broad API authorization satisfy submission authorization, school
+  recognition, author metadata, PDF compilation, artifact release, or final
+  freeze. These are distinct human/external decisions.
+- Forbidden-state audits should match explicit positive completion states, not
+  negated instructions such as "Do not claim...". Broad substring matching can
+  make the packet fail precisely because it documents the forbidden claim.

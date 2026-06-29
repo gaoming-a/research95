@@ -101,7 +101,9 @@ def build_markdown(summary: dict[str, Any]) -> str:
         f"- SQJ final-authorization gate passed: {bool_mark(summary['sqj_final_authorization_gate']['passed'])}",
         f"- SQJ school-recognition gate passed: {bool_mark(summary['sqj_school_recognition_gate']['passed'])}",
         f"- SQJ human-input gate passed: {bool_mark(summary['sqj_human_inputs_gate']['passed'])}",
+        f"- SQJ human-decision packet passed: {bool_mark(summary['sqj_human_decision_packet']['passed'])}",
         f"- SQJ PDF compile gate passed: {bool_mark(summary['sqj_pdf_compile_gate']['passed'])}",
+        f"- SQJ figure-layout gate passed: {bool_mark(summary['sqj_figure_layout_gate']['passed'])}",
         f"- SQJ final-freeze readiness audit passed: {bool_mark(summary['sqj_final_freeze_readiness_audit']['passed'])}",
         f"- artifact dry-run passed: {bool_mark(summary['artifact_dry_run']['passed'])}",
         f"- artifact zip audit passed: {bool_mark(summary['artifact_zip_audit']['passed'])}",
@@ -136,7 +138,9 @@ def build_markdown(summary: dict[str, Any]) -> str:
             "sqj_final_authorization_gate",
             "sqj_school_recognition_gate",
             "sqj_human_inputs_gate",
+            "sqj_human_decision_packet",
             "sqj_pdf_compile_gate",
+            "sqj_figure_layout_gate",
             "sqj_final_freeze_readiness_audit",
             "artifact_dry_run",
             "artifact_zip_audit",
@@ -324,6 +328,16 @@ def main() -> None:
             "outputs/sqj_human_inputs_gate/latest.md",
         ]
     )
+    sqj_human_decision_packet = run_command(
+        [
+            sys.executable,
+            "scripts/audit_sqj_human_decision_packet.py",
+            "--out-json",
+            "outputs/sqj_human_decision_packet/latest.json",
+            "--out-md",
+            "outputs/sqj_human_decision_packet/latest.md",
+        ]
+    )
     sqj_pdf_compile_gate = run_command(
         [
             sys.executable,
@@ -332,6 +346,16 @@ def main() -> None:
             "outputs/sqj_pdf_compile_gate/latest.json",
             "--out-md",
             "outputs/sqj_pdf_compile_gate/latest.md",
+        ]
+    )
+    sqj_figure_layout_gate = run_command(
+        [
+            sys.executable,
+            "scripts/audit_sqj_figure_layout_gate.py",
+            "--out-json",
+            "outputs/sqj_figure_layout_gate/latest.json",
+            "--out-md",
+            "outputs/sqj_figure_layout_gate/latest.md",
         ]
     )
     sqj_final_freeze_readiness_audit = run_command(
@@ -443,7 +467,9 @@ def main() -> None:
             and sqj_final_authorization_gate["passed"]
             and sqj_school_recognition_gate["passed"]
             and sqj_human_inputs_gate["passed"]
+            and sqj_human_decision_packet["passed"]
             and sqj_pdf_compile_gate["passed"]
+            and sqj_figure_layout_gate["passed"]
             and sqj_final_freeze_readiness_audit["passed"]
             and artifact_dry_run["passed"]
             and artifact_zip_audit["passed"]
@@ -465,7 +491,9 @@ def main() -> None:
         "sqj_final_authorization_gate": sqj_final_authorization_gate,
         "sqj_school_recognition_gate": sqj_school_recognition_gate,
         "sqj_human_inputs_gate": sqj_human_inputs_gate,
+        "sqj_human_decision_packet": sqj_human_decision_packet,
         "sqj_pdf_compile_gate": sqj_pdf_compile_gate,
+        "sqj_figure_layout_gate": sqj_figure_layout_gate,
         "sqj_final_freeze_readiness_audit": sqj_final_freeze_readiness_audit,
         "readiness_run": readiness_run,
         "paper_readiness_run": paper_run,

@@ -1213,7 +1213,16 @@
   `blocked_missing_human_inputs` until author and submission metadata are
   provided or confirmed, and the SQJ artifact candidate gate status as
   `candidate_artifact_dry_run_ready` without treating that as a final ZIP
-  rebuild.
+  rebuild. It records the source-level figure-layout status as
+  `blocked_pending_pdf_compile` until a compiled PDF is available for layout
+  review, and points to the SQJ human-decision packet for unresolved external
+  final-freeze inputs.
+- `artifact/sqj_human_decision_packet.md`: tracked SQJ human-decision packet.
+  It lists school recognition, author metadata, funding/acknowledgements,
+  competing interests, author contributions, Springer template, post-compile
+  layout review, final artifact rebuild, and final submission authorization as
+  human/external inputs that automation must not infer. Current status is not
+  final freeze and not submission-authorized.
 - `artifact/sqj_final_freeze_readiness.md`: SQJ final-freeze readiness and
   blocker packet. It records the currently regenerable source package, the
   school-recognition, `sn-jnl.cls`/PDF compile, author/funding/competing
@@ -1221,7 +1230,8 @@
   submission unauthorized. It carries the same fresh realistic two-project
   negative-result boundary as the SQJ checklist and now embeds the SQJ PDF
   compile gate, human-input gate, school-recognition gate, final-authorization
-  gate, and artifact candidate dry-run gate audit boundaries.
+  gate, figure-layout gate, human-decision packet gate, and artifact candidate
+  dry-run gate audit boundaries.
 - `paper/ieee_submission_draft.tex`: historical/source anonymous IEEEtran
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
@@ -1726,18 +1736,28 @@
   `blocked_missing_sn_jnl_cls`, `compile_attempted=false`, and
   `pdf_compile_passed=false`; if the official class becomes available, it runs
   two `pdflatex` passes into ignored `outputs/sqj_pdf_compile/`.
+- `scripts/audit_sqj_figure_layout_gate.py`: audits SQJ figure assets and
+  LaTeX figure references before PDF compilation. It checks the three SQJ
+  figures in PDF/SVG/PNG form plus source-level `includegraphics`, caption, and
+  label presence, then reports `blocked_pending_pdf_compile` until the PDF
+  compile gate passes and a post-compile layout review can be performed.
 - `scripts/audit_sqj_human_inputs_gate.py`: audits whether SQJ submission
   metadata is still placeholder or unconfirmed. In the current source draft it
   reports `blocked_missing_human_inputs` for anonymous author/email,
   unconfirmed competing-interest statement, placeholder author contributions,
   and unspecified funding. It never infers or fills human metadata.
+- `scripts/audit_sqj_human_decision_packet.py`: audits the tracked SQJ
+  human-decision packet. It reports `blocked_missing_human_decisions` while
+  confirming that the packet lists all required external final-freeze inputs
+  without claiming submission authorization, PDF compilation, artifact release,
+  school recognition, or final freeze completion.
 - `scripts/audit_sqj_final_freeze_readiness.py`: validates the SQJ
   final-freeze readiness packet and its external-blocker boundary without
   calling APIs, compiling PDF, or authorizing submission. It now requires the
   fresh realistic two-project negative-result boundary before readiness can
   pass and includes the SQJ PDF compile gate, human-input gate,
-  school-recognition gate, final-authorization gate, and artifact candidate
-  dry-run gate audit states.
+  school-recognition gate, final-authorization gate, figure-layout gate,
+  human-decision packet gate, and artifact candidate dry-run gate audit states.
 - `scripts/generate_paper_figures.py`: generates the publication figure set
   under `docs/figures/` in PDF, SVG, and PNG formats. Figures cover the
   workflow, compact E0/E2/E4/E6 evidence boundary, dataset composition,

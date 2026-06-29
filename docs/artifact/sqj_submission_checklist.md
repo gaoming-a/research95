@@ -35,6 +35,8 @@ final submission.
   `docs/paper/sqj_submission_framing.md`
 - Final-freeze readiness packet:
   `docs/artifact/sqj_final_freeze_readiness.md`
+- SQJ human-decision packet:
+  `docs/artifact/sqj_human_decision_packet.md`
 - Generated table sources:
   `docs/paper/generated_tables.md`
   `docs/paper/generated_tables.tex`
@@ -45,6 +47,17 @@ final submission.
   gate validates source structure and compile preflight only. The expected
   local status is `blocked_missing_sn_jnl_cls` until the official Springer
   Nature class is installed.
+- Figure-layout gate:
+  Source-level figure assets, captions, and labels are checked before PDF
+  compilation. The expected current status is `blocked_pending_pdf_compile`
+  until the PDF compile gate passes and a post-compile layout review is
+  performed.
+- Human-decision packet gate:
+  Human decisions required before final freeze are centralized in the SQJ
+  human-decision packet. The expected current status is
+  `blocked_missing_human_decisions` until school recognition, author metadata,
+  template/PDF/layout, artifact rebuild, and final submission authorization are
+  all explicitly resolved.
 
 ## SQJ Paper Figures
 
@@ -96,7 +109,9 @@ python scripts\audit_sqj_artifact_gate.py --out-json outputs\sqj_artifact_gate\l
 python scripts\audit_sqj_final_authorization_gate.py --out-json outputs\sqj_final_authorization_gate\latest.json --out-md outputs\sqj_final_authorization_gate\latest.md
 python scripts\audit_sqj_school_recognition_gate.py --out-json outputs\sqj_school_recognition_gate\latest.json --out-md outputs\sqj_school_recognition_gate\latest.md
 python scripts\audit_sqj_human_inputs_gate.py --out-json outputs\sqj_human_inputs_gate\latest.json --out-md outputs\sqj_human_inputs_gate\latest.md
+python scripts\audit_sqj_human_decision_packet.py --out-json outputs\sqj_human_decision_packet\latest.json --out-md outputs\sqj_human_decision_packet\latest.md
 python scripts\audit_sqj_pdf_compile_gate.py --out-json outputs\sqj_pdf_compile_gate\latest.json --out-md outputs\sqj_pdf_compile_gate\latest.md
+python scripts\audit_sqj_figure_layout_gate.py --out-json outputs\sqj_figure_layout_gate\latest.json --out-md outputs\sqj_figure_layout_gate\latest.md
 python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md
 python scripts\summarize_evp8_five_model_synthesis.py --check
 python scripts\summarize_evp8_cost_accounting.py --check
@@ -120,8 +135,12 @@ python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\l
 - SQJ human-input gate audit passes while keeping the human-input status blocked
   as `blocked_missing_human_inputs` until author and submission metadata are
   provided or confirmed.
+- SQJ human-decision packet audit passes while keeping final decisions blocked
+  as `blocked_missing_human_decisions`.
 - SQJ PDF compile gate audit passes while keeping the compile status blocked
   unless `sn-jnl.cls` is actually available.
+- SQJ figure-layout gate audit passes while keeping final figure layout blocked
+  as `blocked_pending_pdf_compile` until the compiled PDF exists.
 - SQJ final-freeze readiness audit passes.
 - EVP-8 five-model synthesis and cost accounting checks pass.
 - Paper readiness and local quality gate pass.
@@ -136,7 +155,11 @@ This is not a final submission freeze. The SQJ package still needs:
 - official school/department recognition confirmation;
 - local or CI LaTeX compile after `sn-jnl.cls` is available;
 - SQJ-specific figure placement and caption audit;
+- current figure-layout gate status `blocked_pending_pdf_compile` until PDF
+  compilation enables post-compile layout review;
 - author information, funding, acknowledgements, and competing-interest
   confirmation;
+- SQJ human-decision packet remains `blocked_missing_human_decisions` until all
+  external human decisions are resolved;
 - final artifact package rebuild and audit.
 - final user authorization to submit.

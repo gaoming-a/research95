@@ -8,6 +8,8 @@ from typing import Any
 try:
     from scripts.audit_sqj_artifact_gate import audit_sqj_artifact_gate
     from scripts.audit_sqj_final_authorization_gate import audit_sqj_final_authorization_gate
+    from scripts.audit_sqj_figure_layout_gate import audit_sqj_figure_layout_gate
+    from scripts.audit_sqj_human_decision_packet import audit_sqj_human_decision_packet
     from scripts.audit_sqj_human_inputs_gate import audit_sqj_human_inputs_gate
     from scripts.audit_sqj_pdf_compile_gate import audit_sqj_pdf_compile_gate
     from scripts.audit_sqj_school_recognition_gate import audit_sqj_school_recognition_gate
@@ -15,6 +17,8 @@ try:
 except ModuleNotFoundError:
     from audit_sqj_artifact_gate import audit_sqj_artifact_gate
     from audit_sqj_final_authorization_gate import audit_sqj_final_authorization_gate
+    from audit_sqj_figure_layout_gate import audit_sqj_figure_layout_gate
+    from audit_sqj_human_decision_packet import audit_sqj_human_decision_packet
     from audit_sqj_human_inputs_gate import audit_sqj_human_inputs_gate
     from audit_sqj_pdf_compile_gate import audit_sqj_pdf_compile_gate
     from audit_sqj_school_recognition_gate import audit_sqj_school_recognition_gate
@@ -26,6 +30,7 @@ DEFAULT_READINESS_PACKET = Path("docs/artifact/sqj_final_freeze_readiness.md")
 REQUIRED_FILES = {
     "readiness_packet": DEFAULT_READINESS_PACKET,
     "sqj_checklist": DEFAULT_CHECKLIST,
+    "sqj_human_decision_packet": Path("docs/artifact/sqj_human_decision_packet.md"),
     "sqj_source_draft": Path("docs/paper/sqj_submission_draft.tex"),
     "sqj_references_bib": Path("docs/paper/sqj_references.bib"),
     "sqj_framing": Path("docs/paper/sqj_submission_framing.md"),
@@ -37,7 +42,9 @@ REQUIRED_FILES = {
     "sqj_final_authorization_gate_script": Path("scripts/audit_sqj_final_authorization_gate.py"),
     "sqj_school_recognition_gate_script": Path("scripts/audit_sqj_school_recognition_gate.py"),
     "sqj_human_inputs_gate_script": Path("scripts/audit_sqj_human_inputs_gate.py"),
+    "sqj_human_decision_packet_gate_script": Path("scripts/audit_sqj_human_decision_packet.py"),
     "sqj_pdf_compile_gate_script": Path("scripts/audit_sqj_pdf_compile_gate.py"),
+    "sqj_figure_layout_gate_script": Path("scripts/audit_sqj_figure_layout_gate.py"),
     "sqj_source_generator": Path("scripts/write_sqj_latex_draft.py"),
     "sqj_figure_generator": Path("scripts/generate_sqj_figures.py"),
 }
@@ -51,19 +58,24 @@ REQUIRED_SNIPPETS = [
     "`docs/paper/sqj_references.bib`",
     "`docs/figures/sqj/`",
     "`docs/artifact/sqj_submission_checklist.md`",
+    "`docs/artifact/sqj_human_decision_packet.md`",
     "`scripts/audit_sqj_submission_checklist.py`",
     "`scripts/audit_sqj_artifact_gate.py`",
     "`scripts/audit_sqj_final_authorization_gate.py`",
     "`scripts/audit_sqj_school_recognition_gate.py`",
     "`scripts/audit_sqj_human_inputs_gate.py`",
+    "`scripts/audit_sqj_human_decision_packet.py`",
     "`scripts/audit_sqj_pdf_compile_gate.py`",
+    "`scripts/audit_sqj_figure_layout_gate.py`",
     "school/department recognition confirmation",
     "`blocked_missing_school_recognition`",
     "fresh realistic branch is a two-project source-acquisition negative result",
     "`sn-jnl.cls`",
     "`blocked_missing_sn_jnl_cls`",
+    "`blocked_pending_pdf_compile`",
     "author information, funding, acknowledgements, and competing-interest",
     "`blocked_missing_human_inputs`",
+    "`blocked_missing_human_decisions`",
     "final artifact package rebuild and audit",
     "`candidate_artifact_dry_run_ready`",
     "`blocked_missing_final_authorization`",
@@ -75,7 +87,9 @@ REQUIRED_SNIPPETS = [
     "python scripts\\audit_sqj_final_authorization_gate.py",
     "python scripts\\audit_sqj_school_recognition_gate.py",
     "python scripts\\audit_sqj_human_inputs_gate.py",
+    "python scripts\\audit_sqj_human_decision_packet.py",
     "python scripts\\audit_sqj_pdf_compile_gate.py",
+    "python scripts\\audit_sqj_figure_layout_gate.py",
     "python scripts\\audit_sqj_final_freeze_readiness.py",
     "This is a readiness and blocker packet only.",
 ]
@@ -133,7 +147,9 @@ def audit_sqj_final_freeze_readiness(path: Path) -> dict[str, Any]:
     final_authorization_gate = audit_sqj_final_authorization_gate()
     school_recognition_gate = audit_sqj_school_recognition_gate()
     human_inputs_gate = audit_sqj_human_inputs_gate()
+    human_decision_packet = audit_sqj_human_decision_packet()
     pdf_compile_gate = audit_sqj_pdf_compile_gate()
+    figure_layout_gate = audit_sqj_figure_layout_gate()
     external_blockers_declared = all(
         snippet in packet_text
         for snippet in [
@@ -141,6 +157,8 @@ def audit_sqj_final_freeze_readiness(path: Path) -> dict[str, Any]:
             "local or CI PDF compilation after `sn-jnl.cls` is available",
             "final artifact package rebuild and audit",
             "final user authorization to submit",
+            "SQJ human-decision packet",
+            "current figure-layout gate status `blocked_pending_pdf_compile`",
         ]
     )
     result = {
@@ -155,7 +173,9 @@ def audit_sqj_final_freeze_readiness(path: Path) -> dict[str, Any]:
         "sqj_final_authorization_gate": final_authorization_gate,
         "sqj_school_recognition_gate": school_recognition_gate,
         "sqj_human_inputs_gate": human_inputs_gate,
+        "sqj_human_decision_packet": human_decision_packet,
         "sqj_pdf_compile_gate": pdf_compile_gate,
+        "sqj_figure_layout_gate": figure_layout_gate,
         "external_blockers_declared": external_blockers_declared,
         "api_call_attempted": False,
         "compile_attempted": False,
@@ -172,7 +192,9 @@ def audit_sqj_final_freeze_readiness(path: Path) -> dict[str, Any]:
         and final_authorization_gate["passed"]
         and school_recognition_gate["passed"]
         and human_inputs_gate["passed"]
+        and human_decision_packet["passed"]
         and pdf_compile_gate["passed"]
+        and figure_layout_gate["passed"]
         and external_blockers_declared
     )
     return result
@@ -195,8 +217,12 @@ def build_markdown(audit: dict[str, Any]) -> str:
             f"- SQJ recognition confirmed: {bool_mark(audit['sqj_school_recognition_gate']['recognition_confirmed'])}",
             f"- SQJ human-input gate status: `{audit['sqj_human_inputs_gate']['gate_status']}`",
             f"- SQJ human inputs complete: {bool_mark(audit['sqj_human_inputs_gate']['human_inputs_complete'])}",
+            f"- SQJ human-decision packet status: `{audit['sqj_human_decision_packet']['gate_status']}`",
+            f"- SQJ human decisions complete: {bool_mark(audit['sqj_human_decision_packet']['human_decisions_complete'])}",
             f"- SQJ PDF compile gate status: `{audit['sqj_pdf_compile_gate']['gate_status']}`",
             f"- SQJ PDF compile passed: {bool_mark(audit['sqj_pdf_compile_gate']['pdf_compile_passed'])}",
+            f"- SQJ figure-layout gate status: `{audit['sqj_figure_layout_gate']['gate_status']}`",
+            f"- SQJ figure layout audit complete: {bool_mark(audit['sqj_figure_layout_gate']['figure_layout_audit_complete'])}",
             f"- external blockers declared: {bool_mark(audit['external_blockers_declared'])}",
         f"- API call attempted: {bool_mark(audit['api_call_attempted'])}",
         f"- compile attempted: {bool_mark(audit['compile_attempted'])}",

@@ -17,6 +17,7 @@ REQUIRED_SQJ_FILES = [
     Path("docs/paper/sqj_references.bib"),
     Path("docs/artifact/sqj_submission_checklist.md"),
     Path("docs/artifact/sqj_final_freeze_readiness.md"),
+    Path("docs/artifact/sqj_human_decision_packet.md"),
     Path("docs/figures/sqj/figure_manifest.json"),
     Path("scripts/write_sqj_latex_draft.py"),
     Path("scripts/audit_sqj_artifact_gate.py"),
@@ -25,7 +26,9 @@ REQUIRED_SQJ_FILES = [
     Path("scripts/audit_sqj_submission_checklist.py"),
     Path("scripts/audit_sqj_final_freeze_readiness.py"),
     Path("scripts/audit_sqj_human_inputs_gate.py"),
+    Path("scripts/audit_sqj_human_decision_packet.py"),
     Path("scripts/audit_sqj_pdf_compile_gate.py"),
+    Path("scripts/audit_sqj_figure_layout_gate.py"),
 ]
 
 

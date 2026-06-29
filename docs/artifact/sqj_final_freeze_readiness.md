@@ -18,12 +18,15 @@ The current SQJ route has these tracked, regenerable source-package components:
   `docs/paper/generated_tables.tex`
 - SQJ figure directory: `docs/figures/sqj/`
 - SQJ source-package checklist: `docs/artifact/sqj_submission_checklist.md`
+- SQJ human-decision packet: `docs/artifact/sqj_human_decision_packet.md`
 - SQJ checklist audit: `scripts/audit_sqj_submission_checklist.py`
 - SQJ artifact candidate gate audit: `scripts/audit_sqj_artifact_gate.py`
 - SQJ final-authorization gate audit: `scripts/audit_sqj_final_authorization_gate.py`
 - SQJ school-recognition gate audit: `scripts/audit_sqj_school_recognition_gate.py`
 - SQJ human-input gate audit: `scripts/audit_sqj_human_inputs_gate.py`
+- SQJ human-decision packet audit: `scripts/audit_sqj_human_decision_packet.py`
 - SQJ PDF compile gate audit: `scripts/audit_sqj_pdf_compile_gate.py`
+- SQJ figure-layout gate audit: `scripts/audit_sqj_figure_layout_gate.py`
 
 The manuscript-facing SQJ figure set is:
 
@@ -56,11 +59,17 @@ Final freeze is blocked until all of the following are resolved:
 - current local PDF compile gate status `blocked_missing_sn_jnl_cls` until the
   official Springer Nature class is installed;
 - final SQJ-specific figure placement and caption audit after PDF compilation;
+- current figure-layout gate status `blocked_pending_pdf_compile` until PDF
+  compilation enables post-compile layout review;
 - author information, funding, acknowledgements, and competing-interest
   confirmation;
 - current human-input gate status `blocked_missing_human_inputs` until author,
   affiliation, funding, competing-interest, acknowledgement, and contribution
   statements are provided or confirmed;
+- SQJ human-decision packet records all external human decisions still required
+  before final freeze;
+- current human-decision packet gate status
+  `blocked_missing_human_decisions` until those decisions are resolved;
 - final artifact package rebuild and audit;
 - current artifact candidate gate status `candidate_artifact_dry_run_ready`;
   this is not a final artifact ZIP rebuild;
@@ -99,7 +108,9 @@ python scripts\audit_sqj_artifact_gate.py --out-json outputs\sqj_artifact_gate\l
 python scripts\audit_sqj_final_authorization_gate.py --out-json outputs\sqj_final_authorization_gate\latest.json --out-md outputs\sqj_final_authorization_gate\latest.md
 python scripts\audit_sqj_school_recognition_gate.py --out-json outputs\sqj_school_recognition_gate\latest.json --out-md outputs\sqj_school_recognition_gate\latest.md
 python scripts\audit_sqj_human_inputs_gate.py --out-json outputs\sqj_human_inputs_gate\latest.json --out-md outputs\sqj_human_inputs_gate\latest.md
+python scripts\audit_sqj_human_decision_packet.py --out-json outputs\sqj_human_decision_packet\latest.json --out-md outputs\sqj_human_decision_packet\latest.md
 python scripts\audit_sqj_pdf_compile_gate.py --out-json outputs\sqj_pdf_compile_gate\latest.json --out-md outputs\sqj_pdf_compile_gate\latest.md
+python scripts\audit_sqj_figure_layout_gate.py --out-json outputs\sqj_figure_layout_gate\latest.json --out-md outputs\sqj_figure_layout_gate\latest.md
 python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md
 python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md
 python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md
