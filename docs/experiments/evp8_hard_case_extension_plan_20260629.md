@@ -83,6 +83,15 @@ This is a hard-case extension, not a new benchmark.
 
 Goal: make the current result publishable before adding new data.
 
+2026-06-29 status: completed. The tracked outputs are:
+
+- `data/reviews/evp8_phase_a_paper_ready_analysis.json`;
+- `docs/experiments/evp8_phase_a_paper_ready_analysis.md`.
+
+The analysis adds Wilson 95% confidence intervals, a 6-case opportunity table,
+and utility/risk-policy comparisons. It does not call model APIs and stores no
+raw response text or prompt text.
+
 Tasks:
 
 1. Add confidence intervals for current metrics:
@@ -232,10 +241,5 @@ Forbidden claim:
 
 Do not run more APIs next.
 
-First implement Phase A:
-
-1. confidence intervals;
-2. 6-case opportunity analysis;
-3. utility/risk-policy table.
-
-Then inspect available local candidate sources for Phase B.
+Phase A is complete. Next inspect available local candidate sources for Phase B.
+This inspection must be no-API and must not mutate the old 98-candidate cohort.

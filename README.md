@@ -176,7 +176,12 @@ For a stronger paper, the next plan is
 `docs/experiments/evp8_hard_case_extension_plan_20260629.md`: first add
 no-API confidence intervals, opportunity-case analysis, and utility/risk-policy
 analysis, then build a separate 30-50 candidate hard-case extension before any
-new Qwen/DeepSeek API run.
+new Qwen/DeepSeek API run. Phase A of this plan is now complete at
+`docs/experiments/evp8_phase_a_paper_ready_analysis.md`: Wilson intervals show
+wide uncertainty on the 6 opportunity cases, the case table identifies the
+missing visible evidence behind current false accepts, and the utility table
+shows DeepSeek `E6-no-verdict` is favored only under safety-heavy policies that
+price false accepts much higher than escalations.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently

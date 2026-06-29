@@ -280,6 +280,17 @@
   regressions, overfitted patches, and plausible AI-agent wrong patches. It
   does not authorize API calls; the immediate next step is no-API confidence
   intervals, opportunity-case analysis, and utility/risk-policy analysis.
+- `../scripts/analyze_evp8_phase_a_paper_ready.py`: no-API Phase A analysis
+  script for the hard-case extension plan. It reads the tracked ablation
+  comparison summary and writes confidence intervals, opportunity-case rows,
+  and utility/risk-policy tables without reading raw model responses.
+- `../data/reviews/evp8_phase_a_paper_ready_analysis.json`: raw-output-free
+  Phase A JSON result. Current status is passed; it uses Wilson 95%
+  confidence intervals and stores no prompt or raw response text.
+- `experiments/evp8_phase_a_paper_ready_analysis.md`: Markdown companion for
+  Phase A. It reports wide opportunity-set uncertainty, the six current
+  opportunity cases, and utility costs under throughput-oriented,
+  balanced-review, and safety-critical policies.
 - `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:
   no-key public OpenRouter catalog audit for the G7 later-model pinned IDs:
   `moonshotai/kimi-k2.6`, `mistralai/devstral-2512`, and

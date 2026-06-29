@@ -179,6 +179,16 @@
   - 后续才构建单独的 `EVP-8-HARD` 30-50 candidate hard-case cohort；
   - 任何 hard-case Qwen/DeepSeek API run 都需要先通过 no-API gates 和用户
     再授权。
+- 本轮已完成 hard-case extension Phase A：
+  - 脚本为 `scripts/analyze_evp8_phase_a_paper_ready.py`；
+  - 输出为 `data/reviews/evp8_phase_a_paper_ready_analysis.json` 和
+    `docs/experiments/evp8_phase_a_paper_ready_analysis.md`；
+  - Wilson CI 显示 opportunity-set rates 的区间很宽，原因是当前只有 6 个
+    opportunity cases；
+  - case table 明确 5 个 false accepts 的 missing visible evidence 主要是
+    regression/P2P/edge-case 覆盖不足；
+  - utility table 显示 DeepSeek `E6-no-verdict` 只有在 false accept 成本显著
+    高于 escalation 成本时最有吸引力。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。最近一次已确认
   `git push origin main` 成功；最终是否仍 ahead 仍以
@@ -275,16 +285,14 @@
 
 当前 no-API 下一步决策包：
 
-- `docs/experiments/evp8_llm_tool_headroom_ablation_plan_20260629.md`
+- `docs/experiments/evp8_hard_case_extension_plan_20260629.md`
 
 当前默认下一步：
 
 1. 基于
-   `docs/experiments/evp8_e6_no_verdict_ablation_comparison.md` 写论文结果段；
-2. 实现
-   `docs/experiments/evp8_hard_case_extension_plan_20260629.md` 的 Phase A：
-   confidence intervals、6-case opportunity analysis 和 utility/risk-policy
-   table；
+   `docs/experiments/evp8_phase_a_paper_ready_analysis.md` 写论文结果段；
+2. no-API inspect 本地 hard-case 候选来源，准备 Phase B candidate source
+   inventory；
 3. 明确 claim boundary：Qwen 结果显示 verdict removal 对其影响小，但不修复
    4 个工具 false accepts；DeepSeek 结果显示更强风险控制，但代价是 correct
    recall 大幅下降；

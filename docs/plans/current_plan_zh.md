@@ -18388,3 +18388,33 @@ Boundary:
 - 不声称 production merge safety；
 - 若 hard-case opportunity-set 仍不足，停止 API 并报告 cohort headroom
   不足。
+
+Verify / Result:
+
+1. 新增脚本 `scripts/analyze_evp8_phase_a_paper_ready.py`；
+2. 执行 `python scripts\analyze_evp8_phase_a_paper_ready.py --check`；
+3. 输出：
+   - `data/reviews/evp8_phase_a_paper_ready_analysis.json`；
+   - `docs/experiments/evp8_phase_a_paper_ready_analysis.md`；
+4. gate passed：
+   - source comparison id 正确；
+   - opportunity case count = 6；
+   - confidence intervals present；
+   - utility scenarios present；
+   - `api_call_attempted=false`；
+   - `raw_response_content_stored=false`；
+   - `prompt_text_stored=false`。
+
+Key findings:
+
+- 当前 point estimates 必须配合不确定性解释。以 opportunity-set rate 为例，
+  DeepSeek `E6-no-verdict` 对 5 个 tool false accepts 的 safe handling 为
+  5/5，但 Wilson 95% CI 仍为 56.55%-100.00%；
+- Qwen `E6-no-verdict` 对 false accepts 的 strict correction/safe handling
+  均为 1/5，Wilson 95% CI 为 3.62%-62.45%，说明当前样本不足以支撑强
+  LLM-added-value claim；
+- utility/risk-policy table 显示 DeepSeek `E6-no-verdict` 在 safety-critical
+  policy 下成本最低，但这是因为它用 escalation 避免 false accept，不是因为它
+  自动识别正确补丁；
+- Phase A 已完成。下一步应 no-API inspect 本地候选来源，准备
+  `EVP-8-HARD` Phase B candidate source inventory。

@@ -3389,3 +3389,16 @@ This file starts fresh for the patch-verification project.
   `E6-no-verdict` did not correct tool false accepts to reject; it escalated
   all five. That is safer than accepting them, but it is triage rather than
   independent correctness verification.
+
+## 2026-06-29 EVP-8 Phase A paper-ready analysis
+
+- Add uncertainty before strengthening claims. Wilson intervals make clear
+  that the current 6-case opportunity set has wide uncertainty; report this
+  openly instead of treating point estimates as stable.
+- Keep strict correction and safe handling separate. DeepSeek
+  `E6-no-verdict` has zero strict false-accept corrections to reject, but it
+  safely handles all five tool false accepts by escalation. Those support
+  different claims.
+- Utility tables should be framed as policy weights, not measured money.
+  They are useful for explaining why a conservative model may be preferable
+  under safety-critical assumptions even when its correct recall is lower.

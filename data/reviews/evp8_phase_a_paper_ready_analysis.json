@@ -1,0 +1,565 @@
+{
+  "analysis_id": "evp8_phase_a_paper_ready_analysis",
+  "checks": [
+    {
+      "check": "source_analysis_id",
+      "detail": "evp8_e6_no_verdict_ablation_comparison",
+      "passed": true
+    },
+    {
+      "check": "opportunity_case_count",
+      "detail": 6,
+      "passed": true
+    },
+    {
+      "check": "confidence_intervals_present",
+      "detail": [
+        "deepseek/deepseek-v4-pro E6-full",
+        "deepseek/deepseek-v4-pro E6-no-verdict",
+        "qwen/qwen3.7-max E6-full",
+        "qwen/qwen3.7-max E6-no-verdict",
+        "rule-only"
+      ],
+      "passed": true
+    },
+    {
+      "check": "utility_scenarios_present",
+      "detail": [
+        "balanced_review",
+        "safety_critical",
+        "throughput_oriented"
+      ],
+      "passed": true
+    },
+    {
+      "check": "api_call_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_response_content_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "prompt_text_not_stored",
+      "detail": false,
+      "passed": true
+    }
+  ],
+  "claim_boundary": {
+    "allowed": "Use this analysis to report uncertainty, case-level failure modes, and risk-policy tradeoffs for the existing EVP-8 cohort.",
+    "forbidden": "Do not claim production merge safety, external validity, or reliable LLM superiority from this Phase A analysis."
+  },
+  "cohort_id": "EVP-8",
+  "confidence_intervals": {
+    "deepseek/deepseek-v4-pro E6-full": {
+      "accepted_precision": {
+        "ci_95_high": 0.930213,
+        "ci_95_low": 0.628624,
+        "estimate": 0.826087,
+        "successes": 19,
+        "total": 23
+      },
+      "correct_recall": {
+        "ci_95_high": 0.973481,
+        "ci_95_low": 0.710859,
+        "estimate": 0.904762,
+        "successes": 19,
+        "total": 21
+      },
+      "escalation_rate": {
+        "ci_95_high": 0.03772,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 98
+      },
+      "false_accept_rate": {
+        "ci_95_high": 0.126093,
+        "ci_95_low": 0.020385,
+        "estimate": 0.051948,
+        "successes": 4,
+        "total": 77
+      },
+      "tool_false_accept_safe_handling_rate": {
+        "ci_95_high": 0.624465,
+        "ci_95_low": 0.036224,
+        "estimate": 0.2,
+        "successes": 1,
+        "total": 5
+      },
+      "tool_false_accept_strict_correction_rate": {
+        "ci_95_high": 0.624465,
+        "ci_95_low": 0.036224,
+        "estimate": 0.2,
+        "successes": 1,
+        "total": 5
+      },
+      "tool_false_reject_correction_rate": {
+        "ci_95_high": 0.793451,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 1
+      }
+    },
+    "deepseek/deepseek-v4-pro E6-no-verdict": {
+      "accepted_precision": {
+        "ci_95_high": 1.0,
+        "ci_95_low": 0.741167,
+        "estimate": 1.0,
+        "successes": 11,
+        "total": 11
+      },
+      "correct_recall": {
+        "ci_95_high": 0.71656,
+        "ci_95_low": 0.323695,
+        "estimate": 0.52381,
+        "successes": 11,
+        "total": 21
+      },
+      "escalation_rate": {
+        "ci_95_high": 0.225612,
+        "ci_95_low": 0.087045,
+        "estimate": 0.142857,
+        "successes": 14,
+        "total": 98
+      },
+      "false_accept_rate": {
+        "ci_95_high": 0.047518,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 77
+      },
+      "tool_false_accept_safe_handling_rate": {
+        "ci_95_high": 1.0,
+        "ci_95_low": 0.565518,
+        "estimate": 1.0,
+        "successes": 5,
+        "total": 5
+      },
+      "tool_false_accept_strict_correction_rate": {
+        "ci_95_high": 0.434482,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 5
+      },
+      "tool_false_reject_correction_rate": {
+        "ci_95_high": 0.793451,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 1
+      }
+    },
+    "qwen/qwen3.7-max E6-full": {
+      "accepted_precision": {
+        "ci_95_high": 0.933213,
+        "ci_95_low": 0.641469,
+        "estimate": 0.833333,
+        "successes": 20,
+        "total": 24
+      },
+      "correct_recall": {
+        "ci_95_high": 0.991544,
+        "ci_95_low": 0.773306,
+        "estimate": 0.952381,
+        "successes": 20,
+        "total": 21
+      },
+      "escalation_rate": {
+        "ci_95_high": 0.03772,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 98
+      },
+      "false_accept_rate": {
+        "ci_95_high": 0.126093,
+        "ci_95_low": 0.020385,
+        "estimate": 0.051948,
+        "successes": 4,
+        "total": 77
+      },
+      "tool_false_accept_safe_handling_rate": {
+        "ci_95_high": 0.624465,
+        "ci_95_low": 0.036224,
+        "estimate": 0.2,
+        "successes": 1,
+        "total": 5
+      },
+      "tool_false_accept_strict_correction_rate": {
+        "ci_95_high": 0.624465,
+        "ci_95_low": 0.036224,
+        "estimate": 0.2,
+        "successes": 1,
+        "total": 5
+      },
+      "tool_false_reject_correction_rate": {
+        "ci_95_high": 0.793451,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 1
+      }
+    },
+    "qwen/qwen3.7-max E6-no-verdict": {
+      "accepted_precision": {
+        "ci_95_high": 0.930213,
+        "ci_95_low": 0.628624,
+        "estimate": 0.826087,
+        "successes": 19,
+        "total": 23
+      },
+      "correct_recall": {
+        "ci_95_high": 0.973481,
+        "ci_95_low": 0.710859,
+        "estimate": 0.904762,
+        "successes": 19,
+        "total": 21
+      },
+      "escalation_rate": {
+        "ci_95_high": 0.055555,
+        "ci_95_low": 0.001804,
+        "estimate": 0.010204,
+        "successes": 1,
+        "total": 98
+      },
+      "false_accept_rate": {
+        "ci_95_high": 0.126093,
+        "ci_95_low": 0.020385,
+        "estimate": 0.051948,
+        "successes": 4,
+        "total": 77
+      },
+      "tool_false_accept_safe_handling_rate": {
+        "ci_95_high": 0.624465,
+        "ci_95_low": 0.036224,
+        "estimate": 0.2,
+        "successes": 1,
+        "total": 5
+      },
+      "tool_false_accept_strict_correction_rate": {
+        "ci_95_high": 0.624465,
+        "ci_95_low": 0.036224,
+        "estimate": 0.2,
+        "successes": 1,
+        "total": 5
+      },
+      "tool_false_reject_correction_rate": {
+        "ci_95_high": 0.793451,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 1
+      }
+    },
+    "rule-only": {
+      "accepted_precision": {
+        "ci_95_high": 0.911394,
+        "ci_95_low": 0.60869,
+        "estimate": 0.8,
+        "successes": 20,
+        "total": 25
+      },
+      "correct_recall": {
+        "ci_95_high": 0.991544,
+        "ci_95_low": 0.773306,
+        "estimate": 0.952381,
+        "successes": 20,
+        "total": 21
+      },
+      "escalation_rate": {
+        "ci_95_high": 0.03772,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 98
+      },
+      "false_accept_rate": {
+        "ci_95_high": 0.143164,
+        "ci_95_low": 0.028053,
+        "estimate": 0.064935,
+        "successes": 5,
+        "total": 77
+      }
+    }
+  },
+  "method": {
+    "api_call_attempted": false,
+    "confidence_interval": "Wilson score interval, 95%",
+    "prompt_text_stored": false,
+    "raw_response_content_stored": false,
+    "utility_model": "false_accept_cost * false_accepts + false_reject_cost * false_rejects + escalation_cost * escalations"
+  },
+  "opportunity_case_analysis": [
+    {
+      "candidate_type": "regression_patch",
+      "deepseek/deepseek-v4-pro E6-full": "accept",
+      "deepseek/deepseek-v4-pro E6-no-verdict": "escalate",
+      "evp8_candidate_id": "evp8_smoke_candidate_0039",
+      "expected_outcome": "regression",
+      "missing_visible_evidence": "Visible evidence did not include enough pass-to-pass/regression coverage to expose the regression.",
+      "qwen/qwen3.7-max E6-full": "accept",
+      "qwen/qwen3.7-max E6-no-verdict": "accept",
+      "task_id": "bugsinpy_thefuck_1",
+      "tool_decision": "accept"
+    },
+    {
+      "candidate_type": "partial_fix",
+      "deepseek/deepseek-v4-pro E6-full": "accept",
+      "deepseek/deepseek-v4-pro E6-no-verdict": "escalate",
+      "evp8_candidate_id": "evp8_smoke_candidate_0049",
+      "expected_outcome": "partial",
+      "missing_visible_evidence": "Visible tests covered the obvious path, but hidden/P2P evidence shows missed edge behavior.",
+      "qwen/qwen3.7-max E6-full": "reject",
+      "qwen/qwen3.7-max E6-no-verdict": "reject",
+      "task_id": "bugsinpy_youtube-dl_11",
+      "tool_decision": "accept"
+    },
+    {
+      "candidate_type": "partial_fix",
+      "deepseek/deepseek-v4-pro E6-full": "accept",
+      "deepseek/deepseek-v4-pro E6-no-verdict": "escalate",
+      "evp8_candidate_id": "evp8_smoke_candidate_0053",
+      "expected_outcome": "partial",
+      "missing_visible_evidence": "Visible tests covered the obvious path, but hidden/P2P evidence shows missed edge behavior.",
+      "qwen/qwen3.7-max E6-full": "accept",
+      "qwen/qwen3.7-max E6-no-verdict": "accept",
+      "task_id": "bugsinpy_youtube-dl_16",
+      "tool_decision": "accept"
+    },
+    {
+      "candidate_type": "partial_fix",
+      "deepseek/deepseek-v4-pro E6-full": "accept",
+      "deepseek/deepseek-v4-pro E6-no-verdict": "escalate",
+      "evp8_candidate_id": "evp8_smoke_candidate_0066",
+      "expected_outcome": "partial",
+      "missing_visible_evidence": "Visible tests covered the obvious path, but hidden/P2P evidence shows missed edge behavior.",
+      "qwen/qwen3.7-max E6-full": "accept",
+      "qwen/qwen3.7-max E6-no-verdict": "accept",
+      "task_id": "bugsinpy_youtube-dl_20",
+      "tool_decision": "accept"
+    },
+    {
+      "candidate_type": "partial_fix",
+      "deepseek/deepseek-v4-pro E6-full": "reject",
+      "deepseek/deepseek-v4-pro E6-no-verdict": "escalate",
+      "evp8_candidate_id": "evp8_smoke_candidate_0093",
+      "expected_outcome": "partial",
+      "missing_visible_evidence": "Visible tests covered the obvious path, but hidden/P2P evidence shows missed edge behavior.",
+      "qwen/qwen3.7-max E6-full": "accept",
+      "qwen/qwen3.7-max E6-no-verdict": "accept",
+      "task_id": "bugsinpy_youtube-dl_6",
+      "tool_decision": "accept"
+    },
+    {
+      "candidate_type": "correct_reference",
+      "deepseek/deepseek-v4-pro E6-full": "reject",
+      "deepseek/deepseek-v4-pro E6-no-verdict": "reject",
+      "evp8_candidate_id": "evp8_smoke_candidate_0011",
+      "expected_outcome": "correct",
+      "missing_visible_evidence": "Visible tool summary reported failure despite evaluator-side correctness; this needs human review.",
+      "qwen/qwen3.7-max E6-full": "reject",
+      "qwen/qwen3.7-max E6-no-verdict": "reject",
+      "task_id": "bugsinpy_cookiecutter_1",
+      "tool_decision": "reject"
+    }
+  ],
+  "source_comparison": "data/reviews/evp8_e6_no_verdict_ablation_comparison.json",
+  "utility_analysis": {
+    "deepseek/deepseek-v4-pro E6-full": {
+      "balanced_review": {
+        "cost_per_candidate": 0.44898,
+        "escalation_count": 0,
+        "false_accept_count": 4,
+        "false_reject_count": 2,
+        "total_cost": 44.0,
+        "weights": {
+          "escalation": 1.0,
+          "false_accept": 10.0,
+          "false_reject": 2.0
+        }
+      },
+      "safety_critical": {
+        "cost_per_candidate": 2.142857,
+        "escalation_count": 0,
+        "false_accept_count": 4,
+        "false_reject_count": 2,
+        "total_cost": 210.0,
+        "weights": {
+          "escalation": 1.0,
+          "false_accept": 50.0,
+          "false_reject": 5.0
+        }
+      },
+      "throughput_oriented": {
+        "cost_per_candidate": 0.244898,
+        "escalation_count": 0,
+        "false_accept_count": 4,
+        "false_reject_count": 2,
+        "total_cost": 24.0,
+        "weights": {
+          "escalation": 1.0,
+          "false_accept": 5.0,
+          "false_reject": 2.0
+        }
+      }
+    },
+    "deepseek/deepseek-v4-pro E6-no-verdict": {
+      "balanced_review": {
+        "cost_per_candidate": 0.163265,
+        "escalation_count": 14,
+        "false_accept_count": 0,
+        "false_reject_count": 1,
+        "total_cost": 16.0,
+        "weights": {
+          "escalation": 1.0,
+          "false_accept": 10.0,
+          "false_reject": 2.0
+        }
+      },
+      "safety_critical": {
+        "cost_per_candidate": 0.193878,
+        "escalation_count": 14,
+        "false_accept_count": 0,
+        "false_reject_count": 1,
+        "total_cost": 19.0,
+        "weights": {
+          "escalation": 1.0,
+          "false_accept": 50.0,
+          "false_reject": 5.0
+        }
+      },
+      "throughput_oriented": {
+        "cost_per_candidate": 0.163265,
+        "escalation_count": 14,
+        "false_accept_count": 0,
+        "false_reject_count": 1,
+        "total_cost": 16.0,
+        "weights": {
+          "escalation": 1.0,
+          "false_accept": 5.0,
+          "false_reject": 2.0
+        }
+      }
+    },
+    "qwen/qwen3.7-max E6-full": {
+      "balanced_review": {
+        "cost_per_candidate": 0.428571,
+        "escalation_count": 0,
+        "false_accept_count": 4,
+        "false_reject_count": 1,
+        "total_cost": 42.0,
+        "weights": {
+          "escalation": 1.0,
+          "false_accept": 10.0,
+          "false_reject": 2.0
+        }
+      },
+      "safety_critical": {
+        "cost_per_candidate": 2.091837,
+        "escalation_count": 0,
+        "false_accept_count": 4,
+        "false_reject_count": 1,
+        "total_cost": 205.0,
+        "weights": {
+          "escalation": 1.0,
+          "false_accept": 50.0,
+          "false_reject": 5.0
+        }
+      },
+      "throughput_oriented": {
+        "cost_per_candidate": 0.22449,
+        "escalation_count": 0,
+        "false_accept_count": 4,
+        "false_reject_count": 1,
+        "total_cost": 22.0,
+        "weights": {
+          "escalation": 1.0,
+          "false_accept": 5.0,
+          "false_reject": 2.0
+        }
+      }
+    },
+    "qwen/qwen3.7-max E6-no-verdict": {
+      "balanced_review": {
+        "cost_per_candidate": 0.438776,
+        "escalation_count": 1,
+        "false_accept_count": 4,
+        "false_reject_count": 1,
+        "total_cost": 43.0,
+        "weights": {
+          "escalation": 1.0,
+          "false_accept": 10.0,
+          "false_reject": 2.0
+        }
+      },
+      "safety_critical": {
+        "cost_per_candidate": 2.102041,
+        "escalation_count": 1,
+        "false_accept_count": 4,
+        "false_reject_count": 1,
+        "total_cost": 206.0,
+        "weights": {
+          "escalation": 1.0,
+          "false_accept": 50.0,
+          "false_reject": 5.0
+        }
+      },
+      "throughput_oriented": {
+        "cost_per_candidate": 0.234694,
+        "escalation_count": 1,
+        "false_accept_count": 4,
+        "false_reject_count": 1,
+        "total_cost": 23.0,
+        "weights": {
+          "escalation": 1.0,
+          "false_accept": 5.0,
+          "false_reject": 2.0
+        }
+      }
+    },
+    "rule-only": {
+      "balanced_review": {
+        "cost_per_candidate": 0.530612,
+        "escalation_count": 0,
+        "false_accept_count": 5,
+        "false_reject_count": 1,
+        "total_cost": 52.0,
+        "weights": {
+          "escalation": 1.0,
+          "false_accept": 10.0,
+          "false_reject": 2.0
+        }
+      },
+      "safety_critical": {
+        "cost_per_candidate": 2.602041,
+        "escalation_count": 0,
+        "false_accept_count": 5,
+        "false_reject_count": 1,
+        "total_cost": 255.0,
+        "weights": {
+          "escalation": 1.0,
+          "false_accept": 50.0,
+          "false_reject": 5.0
+        }
+      },
+      "throughput_oriented": {
+        "cost_per_candidate": 0.27551,
+        "escalation_count": 0,
+        "false_accept_count": 5,
+        "false_reject_count": 1,
+        "total_cost": 27.0,
+        "weights": {
+          "escalation": 1.0,
+          "false_accept": 5.0,
+          "false_reject": 2.0
+        }
+      }
+    }
+  }
+}
