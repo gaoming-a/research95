@@ -707,6 +707,66 @@ target matrix：
 - 只有 fresh gates 通过后，才能构造 realistic evaluator/model-visible
   cohort，更不能直接跑 verifier API。
 
+## 0.16 2026-06-29 realistic agent-patch generation dry-run
+
+本轮目标是执行 target matrix 的下一道 no-API 门：对 6 个 target tasks 运行
+agent generation dry-run，只生成 prompt manifest/hash 和 summary，不调用模型 API，
+不生成候选 patch。
+
+执行边界：
+
+- 只使用 `--dry-run`；
+- 不使用 `--execute`；
+- 不调用 API；
+- 不生成 raw responses；
+- 不生成 candidates；
+- 不提交 ignored `outputs/` dry-run 目录；
+- tracked 输出只能保存 dry-run 聚合审计，不保存 prompt text 或 patch diff。
+
+验收条件：
+
+- dry-run 覆盖 6 个 target tasks；
+- planned prompt records = 54；
+- prompt boundary check 全部通过；
+- candidates.pending.jsonl 不存在或为空；
+- raw response 目录不存在；
+- 若 dry-run 失败，先修 source workspace / prompt boundary / runner coverage，
+  不进入 API。
+
+执行结果：
+
+- 运行 `scripts/generate_agent_patch_candidates.py --dry-run`；
+- dry-run output dir：
+  `outputs/evp8_realistic_agent_generation_dryrun_primary_001`；
+- 新增 `scripts/audit_evp8_realistic_agent_generation_dry_run.py`；
+- 生成 `data/protocols/evp8_realistic_agent_generation_dry_run_audit_v0_1.json`；
+- 生成 `docs/experiments/evp8_realistic_agent_generation_dry_run_audit_v0_1.md`；
+- audit status = `passed`。
+
+dry-run 结果：
+
+- run id = `evp8_realistic_agent_generation_dryrun_primary_001`；
+- model = `qwen3.7-max`；
+- provider = `qwen_official`；
+- prompt version = `agent_edit_plan_v1`；
+- prompt count = 54；
+- candidate count = 0；
+- 每个 target task 9 条 prompt manifest；
+- label leakage checks = 54/54 passed；
+- prompt hash 和 prompt char count 均完整；
+- prompt manifest 中无 `prompt_text`、`patch_text`、`raw_response` 或
+  provider response 字段；
+- raw response 目录不存在；
+- `candidates.pending.jsonl` 和 `evidence_packets.pending.jsonl` 不存在或为空。
+
+下一步：
+
+- 如果继续推进，需要明确这是 generation API，而不是 verifier API；
+- generation API 执行后必须 validate/relabel；
+- validate/relabel 后重跑 source inventory；
+- fresh source gate 通过前，不得构造 realistic verifier cohort 或运行 Qwen/DeepSeek
+  verifier API。
+
 ## 1. 研究转向
 
 旧方向试图验证 LLM cross-review 或 agent-style context 是否能让代码审查更可靠。已有结果不支持这个强假设。真正可复用的发现是：

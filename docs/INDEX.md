@@ -512,6 +512,18 @@
   companion for the target matrix. It records the selected PySnooper,
   cookiecutter, and tqdm tasks, excludes `httpie_5` as a hard-generation/weak
   P2P case, and states that generation dry-run must precede any API use.
+- `../scripts/audit_evp8_realistic_agent_generation_dry_run.py`: raw-output-free
+  audit for the realistic agent-patch generation dry-run. It reads the ignored
+  dry-run output directory, validates prompt-manifest counts and leakage
+  boundaries, and writes tracked summaries without prompt text or patch diffs.
+- `../data/protocols/evp8_realistic_agent_generation_dry_run_audit_v0_1.json`:
+  tracked dry-run audit. Current status is `passed`: 54 prompt manifest records
+  across 6 target tasks, 0 candidates, no raw response directory, and no
+  forbidden prompt/payload fields in the prompt manifest.
+- `experiments/evp8_realistic_agent_generation_dry_run_audit_v0_1.md`:
+  Markdown companion for the dry-run audit. It records that generation API is
+  still a separate future authorization step and that validation/relabeling
+  must happen before any realistic verifier cohort is built.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

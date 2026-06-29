@@ -3748,3 +3748,16 @@ This file starts fresh for the patch-verification project.
 - A target matrix is not generation authorization. It must be followed by a
   dry-run prompt-boundary check, then explicit generation API authorization,
   then validation/relabeling before any verifier experiment.
+
+## 2026-06-29 Realistic agent generation dry-run
+
+- A generation dry-run should prove prompt coverage and leakage boundaries, not
+  candidate quality. The dry-run produced 54 prompt hashes and zero candidates,
+  which is the correct no-API behavior.
+- Keep dry-run outputs under ignored `outputs/` and commit only a tracked audit
+  summary. The audit should verify prompt count, task coverage, absent raw
+  response directory, absent candidate files, and absence of prompt/payload
+  fields in the prompt manifest.
+- Generation API and verifier API are separate gates. Passing generation
+  dry-run only authorizes the next discussion about patch generation, not Qwen
+  or DeepSeek verifier execution.
