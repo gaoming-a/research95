@@ -21709,3 +21709,43 @@ fresh realistic negative-result packet 对齐，防止投稿稿中的核心 clai
 - SQJ source-level citation/BibTeX consistency 已有独立 gate；
 - 该 gate 不联网、不新增引用、不编译 PDF，只防止引用 key 漂移；
 - 当前 package 仍不是 final freeze，仍需外部 human decisions 和 PDF compile。
+
+## 2026-06-30 broad API authorization boundary
+
+用户已在当前对话中给出“授权所有 API”的广义授权。该授权只解除
+“缺少人类 API 授权”这一类前置条件；它不等于自动执行任意 API、不等于
+SQJ final submission 授权，也不覆盖具体实验的预算、preflight、输出边界和
+论文 claim gate。
+
+本轮小目标是把授权边界记录清楚，避免后续 agent 把旧的“无 API 授权”
+理解为绝对阻塞，也避免把广义授权误用为无计划的真实 API 调用。
+
+执行边界：
+
+- 本轮不运行任何模型 API；
+- 不读取 raw model responses、raw prompts 或 patch text；
+- 不修改 EVP-8 / EVP-8-HARD 实验结果；
+- 不修改 SQJ final-freeze 的 submission authorization 状态；
+- 不把广义 API 授权解释为 final artifact release 或 ready-to-submit；
+- 后续每一次真实 API 调用仍必须有具体实验目标、命令、配置、preflight
+  和验收条件。
+
+当前状态复核：
+
+- `EVP-8-HARD E6-evidence-only` 的 Qwen 与 DeepSeek parsed reviews 均已存在；
+- `scripts/audit_evp8_hard_e6_evidence_only_results.py` 复核通过，47 个候选覆盖完整；
+- Qwen 在 9 个 tool false-accept opportunity cases 中仍重复 accept 7 个、
+  escalate 2 个、reject 0 个；
+- DeepSeek 在同一 opportunity set 中重复 accept 4 个、escalate 5 个、
+  reject 0 个；
+- 该结果支持“risk triage / escalation behavior shift”，不支持“自动正确性验证”
+  或“可靠 merge gate”。
+
+后续规则：
+
+- 如果继续跑新模型、新 cohort 或补充 ablation，必须先在本文件新增具体小节；
+- 小节必须写明模型、候选集、run scope、预计输出、预算/成本边界、
+  preflight 命令和停止条件；
+- 只有对应 preflight 通过，且命令与计划一致时，才能使用本次广义授权执行
+  真实 API；
+- 若缺少具体实验命令，默认继续做 no-API 论文包、审计 gate 或分析整理。

@@ -1,5 +1,20 @@
 # Engineering Notes
 
+## 2026-06-30 broad API authorization boundary
+
+- A broad user statement authorizing all APIs should be treated as a human
+  authorization condition, not as a concrete execute command.
+- Real API execution still needs a named experiment, candidate set, model id,
+  local config, strict preflight, output boundary, cost boundary, and stop
+  condition recorded in `docs/plans/current_plan_zh.md`.
+- Do not use broad API authorization to override SQJ final-freeze blockers,
+  submission authorization, artifact release authorization, or claim-boundary
+  gates.
+- Before any new EVP-8-HARD call, first check whether the intended Qwen/DeepSeek
+  results already exist. The current E6-evidence-only Qwen and DeepSeek parsed
+  reviews already cover 47 candidates and should be analyzed rather than rerun
+  unless a new, explicitly scoped ablation is planned.
+
 ## 2026-06-29 EVP-8-HARD evidence-only model-order gate
 
 - DeepSeek authorization alone is not sufficient for the current
