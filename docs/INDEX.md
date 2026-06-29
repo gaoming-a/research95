@@ -411,6 +411,23 @@
   handoff for the evidence-only ablation. It records the removed fields,
   retained evidence, stop gates, future execute commands, and the rule that API
   execution still requires explicit user authorization.
+- `../scripts/write_evp8_hard_e6_evidence_only_execution_packet.py`: no-API
+  execution-packet writer for the evidence-only hard-case ablation. It freezes
+  Qwen-first commands, expected output paths, stop gates, and the nine-case
+  opportunity set without authorizing API calls.
+- `../data/protocols/evp8_hard_e6_evidence_only_execution_packet_v0_1.json`:
+  tracked execution packet for the evidence-only ablation. Current status is
+  `ready`, with all expected evidence-only outputs absent and
+  `execution_authorized_by_packet=false`.
+- `experiments/evp8_hard_e6_evidence_only_execution_packet_v0_1.md`: Markdown
+  companion for the evidence-only execution packet.
+- `../scripts/audit_evp8_hard_e6_evidence_only_results.py`: raw-output-free
+  waiting/result audit for future evidence-only parsed reviews. Before model
+  execution it writes `waiting_for_model_results`; after Qwen/DeepSeek outputs
+  exist it reuses the hard-case audit metric logic on explicit parsed paths.
+- `../data/protocols/evp8_hard_e6_evidence_only_result_audit_v0_1.json`:
+  current evidence-only result audit. Status is `waiting_for_model_results`;
+  no API calls were made and no raw model outputs were read.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

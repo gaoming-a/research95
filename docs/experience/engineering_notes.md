@@ -3627,3 +3627,17 @@ This file starts fresh for the patch-verification project.
 - The primary opportunity set for this ablation is the nine repeated false
   accepts, not overall accuracy. Broad escalation may be useful risk control,
   but it is not independent correctness verification.
+
+## 2026-06-29 EVP-8-HARD evidence-only execution packet
+
+- Add the execution packet before API authorization. It freezes expected
+  output paths and stop gates while there is no result pressure.
+- The evidence-only audit should have a valid waiting state. Absence of parsed
+  reviews before authorization is not a failure; it is the correct pre-run
+  state.
+- Keep Qwen-first ordering explicit. The next authorized step is Qwen only;
+  DeepSeek should wait for Qwen evidence-only audit unless the user explicitly
+  authorizes both in one command.
+- The primary analysis target must stay the nine repeated false accepts. A
+  whole-cohort table is secondary and can hide whether the known failure mode
+  was actually affected.
