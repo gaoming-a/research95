@@ -3853,3 +3853,20 @@ This file starts fresh for the patch-verification project.
   evaluator-labeled test-passing wrong patches. This cohort is therefore useful
   for false-accept reduction experiments. It is not useful for strong
   correct-recall claims because it currently has only one correct patch.
+
+## 2026-06-30 Realistic Qwen verifier result
+
+- Do not interpret the first realistic Qwen run as LLM added value. With the
+  deterministic visible merge-gate summary present, Qwen matched the visible
+  tool baseline exactly: `accept->accept=30`, `reject->reject=23`, and no
+  baseline disagreements.
+- The accepted precision and false-accept rate are therefore identical to the
+  visible-tool baseline: accepted precision `1/30`, false accept rate among
+  wrong patches `29/52`.
+- This is still useful as a negative result. It shows that an E6 packet with an
+  explicit rule-based decision can dominate model behavior on realistic
+  agent-generated patches, just as earlier hard-cohort experiments suggested.
+- The next diagnostic should be an E6-no-verdict ablation for the realistic
+  cohort. Remove the visible merge-gate decision fields, keep raw visible test
+  outcomes, and rerun Qwen before claiming whether LLMs add semantic judgment
+  beyond tools.

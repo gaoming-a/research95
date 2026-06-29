@@ -663,6 +663,30 @@
   accepted by visible tests alone, so the realistic cohort is useful for
   false-accept reduction analysis but undermeasures correct-patch recall
   because it contains only one correct patch.
+- `../configs/evp8_realistic_agent_qwen.example.json`: no-secret config for the
+  first realistic agent-patch Qwen verifier run. The ignored local counterpart
+  is used only for execution.
+- `../scripts/run_evp8_realistic_agent_qwen.py`: guarded Qwen-only verifier
+  runner for `EVP-8-REALISTIC-AGENT`. It builds E6 visible-tool packets from
+  model-visible v0.2, performs check-only prompt/schema/credential gates, and
+  writes raw responses only under ignored `outputs/`.
+- `../data/protocols/evp8_realistic_agent_qwen_check_only_v0_1.json`: Qwen
+  preflight summary. It passed with 53 packets, no prompt-boundary/schema
+  errors, and Qwen credentials present.
+- `../data/reviews/evp8_realistic_agent_qwen_qwen_qwen3.7-max_full_summary.json`
+  and
+  `../data/reviews/evp8_realistic_agent_qwen_qwen_qwen3.7-max_full_reviews.jsonl`:
+  tracked Qwen verifier outputs without raw response text. The run gate passed:
+  53/53 valid parses, decisions `accept=30, reject=23`, estimated cost
+  2.802732 CNY.
+- `../scripts/analyze_evp8_realistic_agent_qwen.py`: label-conditioned Qwen
+  result analyzer for the realistic cohort.
+- `../data/protocols/evp8_realistic_agent_qwen_result_analysis_v0_1.json` and
+  `experiments/evp8_realistic_agent_qwen_result_analysis_v0_1.md`: Qwen result
+  analysis. Qwen exactly matches the deterministic visible-tool baseline on all
+  53 candidates (`accept->accept=30`, `reject->reject=23`), avoids 0/29
+  visible-tool false accepts, and therefore adds no measurable value in the
+  E6-full-with-verdict setting.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

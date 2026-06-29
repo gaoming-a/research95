@@ -20061,3 +20061,87 @@ Headroom 结论：
 - 该 realistic cohort 对“减少 test-passing wrong false accept”有明确 headroom；
 - 下一步如果运行 Qwen/DeepSeek verifier，只能把该 cohort 定位为 false-accept reduction
   / headroom 实验，不能用它证明 correct-patch recall。
+
+## 2026-06-30 Realistic agent-patch Qwen verifier run
+
+本轮目标：
+
+- 基于 `data/evidence/evp8_realistic_agent_model_visible_seed_v0_2.jsonl`
+  运行 Qwen verifier；
+- 只先跑 Qwen，不并行跑 DeepSeek；
+- 使用现有 merge-gate prompt/schema/client 逻辑，但输出命名必须明确属于
+  `EVP-8-REALISTIC-AGENT`；
+- 先执行 check-only preflight，确认 53 个 packets、prompt boundary、schema 和凭证状态；
+- preflight 通过后才允许调用 Qwen API；
+- API 输出必须把 raw responses 留在 ignored `outputs/`，tracked 文件只保存 parsed reviews、
+  summary、result audit 和 Markdown companion。
+
+执行边界：
+
+- 本轮不改变 prompt 内容；
+- 本轮不修改 labels、visible-test outcomes 或 visible-tool baseline；
+- verifier 只能看到 model-visible v0.2 和 visible-tool baseline，不得看到 evaluator
+  labels、oracle 字段、source ids 或 raw generation fields；
+- 结果分析重点是 false-accept reduction：Qwen 是否能拒绝 visible-tool baseline 中
+  29 个 test-passing wrong accepts，同时不要误拒唯一 correct patch；
+- 因为 correct patch 只有 1 个，不允许把该 run 写成 correct-patch recall 的强证据。
+
+验收条件：
+
+- check-only summary status 为 `passed`；
+- Qwen parsed review count = 53；
+- parse_valid_count = 53；
+- run_gate = `passed`；
+- result audit 覆盖 53/53 candidates；
+- 报告 Qwen 的 decision counts、accepted precision、false accept rate among wrong、
+  false accept reduction vs visible-tool baseline，以及唯一 correct patch 的处理结果；
+- docs/index/experience/current plan 均同步更新；
+- 提交并同步 GitHub。
+
+执行结果：
+
+- 新增 `configs/evp8_realistic_agent_qwen.example.json`；
+- 新增 `scripts/run_evp8_realistic_agent_qwen.py`；
+- check-only preflight 通过：
+  - candidate_count = 53；
+  - packet_count_per_model = 53；
+  - prompt boundary errors = 0；
+  - schema errors = 0；
+  - QWEN_API_KEY presence = set；
+  - API call attempted = false；
+- 使用 ignored local config 运行 Qwen API：
+  - model = `qwen/qwen3.7-max`；
+  - review_count = 53；
+  - parse_valid_count = 53；
+  - invalid_parse_count = 0；
+  - run_gate = `passed`；
+  - usage_cost_gate = `passed`；
+  - total_cost_cny = 2.802732；
+  - raw responses 写入 ignored
+    `outputs/evp8_realistic_agent_qwen_full/qwen_qwen3.7-max/raw_responses.jsonl`；
+  - parsed reviews 写入
+    `data/reviews/evp8_realistic_agent_qwen_qwen_qwen3.7-max_full_reviews.jsonl`。
+
+分析结果：
+
+- 新增 `scripts/analyze_evp8_realistic_agent_qwen.py`；
+- Qwen decisions = `accept=30, reject=23`；
+- visible-tool baseline decisions = `accept=30, reject=23`；
+- baseline-to-Qwen transitions = `accept->accept=30, reject->reject=23`；
+- baseline/Qwen disagreement count = 0；
+- Qwen accepted precision = 1/30 = 0.0333；
+- Qwen false accept rate among wrong = 29/52 = 0.5577；
+- false accepts avoided by Qwen = 0；
+- new false accepts introduced by Qwen = 0；
+- 唯一 correct patch 被 Qwen accept，但由于 correct 总数只有 1，不能作为 recall 强证据。
+
+本轮结论：
+
+- 在包含 deterministic visible merge-gate summary 的 E6 packet 中，Qwen 完全复现
+  visible-tool baseline；
+- 该结果没有证明 Qwen verifier 对 realistic agent patches 有独立增益；
+- 反而支持一个负结果：当可见工具摘要包含明确 merge-gate verdict 时，Qwen 更像
+  policy follower，而不是独立 semantic verifier；
+- 下一步若继续追求“LLM 是否有工具外增益”，必须做 realistic E6-no-verdict ablation：
+  去掉 `rule_based_visible_merge_gate_decision`、`rule_based_visible_merge_gate_reasons`
+  和 `source_decision` 后再跑 Qwen，比较是否仍完全贴合 visible-test outcome。
