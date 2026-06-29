@@ -20874,3 +20874,51 @@ Protocol 边界：
   `data/protocols/evp8_realistic_hardneg_full_file_outcome_review_v0_1.json`，
   结论同上：full-file interface technically succeeded，但 realistic
   three-project verifier-ready gate 仍未成立。
+
+## 2026-06-30 Paper claim decision after fresh hard-negative gate failure
+
+本轮小目标是在不调用 API 的前提下，把 realistic hard-negative 分支的论文定位
+固定下来，避免继续用 API 追一个当前证据不支持的三项目主实验。
+
+输入证据：
+
+- combined gate with full-file：
+  `data/protocols/evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json`；
+- full-file outcome review：
+  `data/protocols/evp8_realistic_hardneg_full_file_outcome_review_v0_1.json`；
+- third-project redesign review：
+  `data/protocols/evp8_realistic_hardneg_third_project_redesign_review_v0_1.json`；
+- hard-case evidence-only paper synthesis：
+  `docs/experiments/evp8_hard_e6_evidence_only_paper_synthesis_v0_1.md`；
+- 当前 SQJ framing：
+  `docs/paper/sqj_submission_framing.md`。
+
+执行结果：
+
+- 新增 paper claim decision packet：
+  `data/protocols/evp8_realistic_hardneg_paper_claim_decision_packet_v0_1.json`；
+- 新增 Markdown companion：
+  `docs/experiments/evp8_realistic_hardneg_paper_claim_decision_packet_v0_1.md`；
+- 不读取 raw model outputs；
+- 不存 prompt text；
+- 不存 patch text；
+- 不调用 verifier API。
+
+决策结论：
+
+- 不再对该 fresh realistic hard-negative 分支运行 Qwen/DeepSeek verifier API；
+- 当前分支降级为 two-project fresh hard-negative supplement 或
+  source-acquisition negative result；
+- 不能写成三项目 realistic hard-negative verifier-ready 主实验；
+- 不能声称 generation-interface repair 验证了 verifier system；
+- 现有 SQJ evidence-visibility 路线仍是主论文路线，fresh realistic 分支最多作为：
+  1. source-acquisition/gate-readiness 负结果；
+  2. threats-to-validity 证据；
+  3. generator success/failure 与 verifier-readiness 必须分开报告的动机。
+
+下一步：
+
+- 最短干净路径：冻结该分支为 two-project supplement/negative result，并将论文计划
+  调整为不再等待三项目 realistic verifier run；
+- 若还要冲更强结果，必须新开 source-acquisition protocol，换 target tasks，
+  并在任何 API 前重新定义 gate。

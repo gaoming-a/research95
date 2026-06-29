@@ -3986,3 +3986,7 @@ This file starts fresh for the patch-verification project.
   patches and all passed both visible test and hidden oracle. This is not a
   verifier opportunity set; it is evidence that the current third-project task
   is too easy or too clearly specified for Qwen under this prompt.
+- When a source gate fails after multiple protocol-compliant attempts, freeze
+  the claim boundary instead of continuing to spend API. The fresh realistic
+  branch now supports a two-project supplement/source-acquisition negative
+  result, not a three-project verifier-ready main experiment.

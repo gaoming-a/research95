@@ -643,6 +643,13 @@
   no-API outcome review after the full-file run. It records that the interface
   succeeded technically but produced 4 correct-like youtube-dl patches and 0
   third-project hard negatives, so verifier API remains blocked.
+- `../data/protocols/evp8_realistic_hardneg_paper_claim_decision_packet_v0_1.json`
+  and
+  `experiments/evp8_realistic_hardneg_paper_claim_decision_packet_v0_1.md`:
+  no-API paper-claim decision packet after the fresh hard-negative gate failed
+  despite full-file generation. It freezes this branch as a two-project
+  supplement/source-acquisition negative result and forbids verifier APIs while
+  `ready_for_verifier_api` remains false.
 - `../data/protocols/evp8_realistic_hardneg_visible_test_outcomes_v0_1.json`,
   `../data/protocols/evp8_realistic_hardneg_visible_test_outcomes_supplement_001_v0_1.json`,
   and

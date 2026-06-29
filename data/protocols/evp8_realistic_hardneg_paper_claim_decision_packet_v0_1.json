@@ -1,0 +1,75 @@
+{
+  "packet_id": "evp8_realistic_hardneg_paper_claim_decision_packet_v0_1",
+  "date": "2026-06-30",
+  "scope": {
+    "api_call_attempted": false,
+    "patch_text_stored": false,
+    "prompt_text_stored": false,
+    "raw_model_outputs_read": false,
+    "verifier_api_attempted": false
+  },
+  "inputs": [
+    "data/protocols/evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json",
+    "data/protocols/evp8_realistic_hardneg_full_file_outcome_review_v0_1.json",
+    "data/protocols/evp8_realistic_hardneg_third_project_redesign_review_v0_1.json",
+    "docs/experiments/evp8_hard_e6_evidence_only_paper_synthesis_v0_1.md",
+    "docs/paper/sqj_submission_framing.md"
+  ],
+  "current_evidence_state": {
+    "fresh_realistic_generated_candidates": 94,
+    "fresh_visible_pass_hidden_fail": 26,
+    "fresh_visible_pass_hidden_fail_projects": [
+      "PySnooper",
+      "cookiecutter"
+    ],
+    "fresh_gate_requirement": {
+      "minimum_visible_pass_hidden_fail": 30,
+      "minimum_projects": 3
+    },
+    "fresh_gate_passed": false,
+    "verifier_api_ready": false,
+    "third_project_attempts": {
+      "httpie": "0 hard negatives",
+      "thefuck": "0 hard negatives; generated candidates were correct-like",
+      "luigi": "candidate construction failed under exact edit-plan interface",
+      "youtube-dl_exact_edit": "candidate construction failed under exact edit-plan interface",
+      "youtube-dl_full_file": "0 hard negatives; generated candidates were correct-like"
+    }
+  },
+  "decision": {
+    "recommended_route": "do_not_run_more_verifier_api_for_this_branch",
+    "paper_claim_status": "downgrade_to_two_project_fresh_hard_negative_supplement_or_source_acquisition_negative_result",
+    "main_paper_role": "supporting_realistic_source_acquisition_and_gate_failure_analysis",
+    "not_ready_for": [
+      "three_project_realistic_hard_negative_main_experiment",
+      "verifier_api_run_on_fresh_realistic_hardneg_branch",
+      "claim_that_agent_patch_verifier_is_practically_reliable"
+    ]
+  },
+  "supported_claims": [
+    "The current source-acquisition protocol can produce a real visible-pass/hidden-fail opportunity set, but only across PySnooper and cookiecutter.",
+    "Third-project acquisition failed for distinct reasons: visible-failing wrong patches, correct-like generated patches, and edit materialization instability.",
+    "Changing the generation interface from exact edit-plan to full-file replacement fixed candidate materialization for youtube-dl but did not produce hard negatives.",
+    "The fresh realistic branch should be reported as a gate-controlled negative/source-acquisition result unless a new pre-registered source protocol is started."
+  ],
+  "unsupported_claims": [
+    "The fresh realistic branch is ready for Qwen or DeepSeek verifier API evaluation.",
+    "The current data supports a three-project realistic hard-negative verifier experiment.",
+    "More API calls under the same targets are likely to produce a scientifically clean opportunity set.",
+    "The generation-interface repair validates the verifier system."
+  ],
+  "paper_integration": {
+    "primary_sqj_route": "Keep the existing evidence-visibility SQJ framing as the main route unless a larger fresh realistic cohort is built.",
+    "fresh_realistic_branch_role": [
+      "Threats-to-validity evidence about source acquisition",
+      "Supplementary negative result on hard-negative gate construction",
+      "Motivation for reporting generator success/failure and gate readiness separately from verifier metrics"
+    ],
+    "recommended_wording": "Our fresh realistic agent-patch source acquisition produced 26 validated visible-pass/hidden-fail cases across two projects, but repeated third-project attempts either produced correct-like patches, visible-failing wrong patches, or failed candidate materialization. We therefore treat this branch as a source-acquisition and gate-readiness result rather than a verifier-ready main experiment."
+  },
+  "next_action": {
+    "shortest_clean_path": "Freeze this branch as a two-project supplement/negative result and update the paper plan accordingly.",
+    "optional_longer_path": "Start a separate, pre-registered source-acquisition protocol with different target tasks before any further API calls.",
+    "forbidden_next_action": "Do not run Qwen/DeepSeek verifier APIs on this branch while ready_for_verifier_api is false."
+  }
+}
