@@ -39,11 +39,11 @@ Labels:
 
 ## Tool-Only Baseline
 
-- decision counts: `{'escalate': 26, 'reject': 9}`
-- false accepts: 0
+- decision counts: `{'accept': 4, 'escalate': 26, 'reject': 5}`
+- false accepts: 4
 - false rejects: 0
-- actionable false-accept/false-reject headroom: 0
-- opportunity size including escalations: 26
+- actionable false-accept/false-reject headroom: 4
+- opportunity size including escalations: 30
 
 The deterministic baseline uses only model-visible apply and visible-test
 outcome evidence. Candidates with visible test errors are rejected; candidates
@@ -61,7 +61,7 @@ whose visible tests are blocked or only listed as hints are escalated.
 - ai_or_agent_hard_negative_count_at_least_10: passed (10)
 - model_visible_label_leakage_absent: passed ([])
 - visible_test_outcomes_available: passed (9)
-- actionable_false_accept_or_reject_headroom_at_least_10: failed (0)
+- actionable_false_accept_or_reject_headroom_at_least_10: failed (4)
 
 API readiness: `blocked`
 
@@ -73,7 +73,6 @@ Blocked reasons:
 Plain-language conclusion: the draft reaches the 30-50 candidate size and
 has enough AI/agent wrong patches, and the visible-test runner now records
 some executable outcomes. It still does not meet the 20 nontrivial-hard-
-negative gate, and the current tool-only baseline has no actionable false
-accept or false reject headroom. The next action is to add or validate harder
-non-control negatives and repair visible-test execution coverage, not to run
-Qwen or DeepSeek.
+negative gate, and the current tool-only baseline exposes 4 actionable false accept/reject cases, still below the pre-API threshold of 10.
+The next action is to add or validate harder non-control negatives and
+improve visible-test execution coverage, not to run Qwen or DeepSeek.

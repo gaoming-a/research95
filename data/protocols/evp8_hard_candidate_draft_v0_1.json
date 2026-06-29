@@ -162,7 +162,7 @@
     },
     {
       "check": "actionable_false_accept_or_reject_headroom_at_least_10",
-      "detail": 0,
+      "detail": 4,
       "passed": false
     }
   ],
@@ -180,16 +180,18 @@
   },
   "source_inventory": "data/protocols/evp8_hard_case_source_inventory_v0_1.json",
   "tool_only_baseline_summary": {
-    "actionable_false_accept_or_reject_headroom": 0,
+    "actionable_false_accept_or_reject_headroom": 4,
     "confusion_counts": {
       "escalated_correct": 8,
       "escalated_incorrect": 18,
-      "true_reject": 9
+      "false_accept": 4,
+      "true_reject": 5
     },
     "correct_total": 8,
     "decision_counts": {
+      "accept": 4,
       "escalate": 26,
-      "reject": 9
+      "reject": 5
     },
     "examples": {
       "tool_escalations_correct": [
@@ -222,14 +224,19 @@
         "evp8_hard_candidate_0034",
         "evp8_hard_candidate_0035"
       ],
-      "tool_false_accepts": [],
+      "tool_false_accepts": [
+        "evp8_hard_candidate_0004",
+        "evp8_hard_candidate_0005",
+        "evp8_hard_candidate_0006",
+        "evp8_hard_candidate_0007"
+      ],
       "tool_false_rejects": []
     },
-    "false_accept_count": 0,
+    "false_accept_count": 4,
     "false_reject_count": 0,
     "incorrect_total": 27,
-    "opportunity_set_rate_including_escalations": 0.742857,
-    "opportunity_set_size_including_escalations": 26,
+    "opportunity_set_rate_including_escalations": 0.857143,
+    "opportunity_set_size_including_escalations": 30,
     "record_count": 35
   }
 }

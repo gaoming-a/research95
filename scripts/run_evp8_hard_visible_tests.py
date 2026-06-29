@@ -23,6 +23,8 @@ EVALUATOR_IN = REPO_ROOT / "data" / "patches" / "evp8_hard_evaluator_manifest_v0
 OUTCOMES_OUT = REPO_ROOT / "data" / "evidence" / "evp8_hard_visible_test_outcomes_v0_1.jsonl"
 SUMMARY_OUT = REPO_ROOT / "data" / "protocols" / "evp8_hard_visible_test_outcome_summary_v0_1.json"
 MD_OUT = REPO_ROOT / "docs" / "experiments" / "evp8_hard_visible_test_outcomes_v0_1.md"
+HTTPIE_LEGACY_PYTEST = REPO_ROOT / "scripts" / "run_pytest_legacy_httpie.py"
+HTTPIE_VISIBLE_TEST_PYTHON = REPO_ROOT / "outputs" / "envs" / "httpie_hard_visible_py311" / "Scripts" / "python.exe"
 
 FORBIDDEN_OUTPUT_MARKERS = (
     "expected_outcome",
@@ -110,15 +112,23 @@ def workdir_for(candidate: dict[str, Any], validation: dict[str, Any] | None) ->
     return None, "missing_workdir"
 
 
-def python_for(validation: dict[str, Any] | None) -> str:
+def python_for(candidate: dict[str, Any], validation: dict[str, Any] | None) -> tuple[str, str]:
+    if candidate.get("project") == "httpie" and HTTPIE_VISIBLE_TEST_PYTHON.exists():
+        return str(HTTPIE_VISIBLE_TEST_PYTHON), "httpie_visible_py311_local_venv"
     if validation:
         for result in (validation.get("oracle_result") or {}).get("results", []):
             command = result.get("command") or []
             if command:
                 candidate = Path(str(command[0]))
                 if candidate.exists():
-                    return str(candidate)
-    return os.sys.executable
+                    return str(candidate), "validation_oracle_python"
+    return os.sys.executable, "current_process_python"
+
+
+def pytest_command_for(candidate: dict[str, Any], python_executable: str, tests: list[str]) -> list[str]:
+    if candidate.get("project") == "httpie" and Path(python_executable) == HTTPIE_VISIBLE_TEST_PYTHON:
+        return [python_executable, str(HTTPIE_LEGACY_PYTEST), "-q", *tests]
+    return [python_executable, "-m", "pytest", "-q", *tests]
 
 
 def run_command(command: list[str], cwd: Path, timeout: int) -> dict[str, Any]:
@@ -228,11 +238,16 @@ def outcome_record(candidate: dict[str, Any], run: bool, timeout: int) -> dict[s
             "test_results": [{"test_name": test, "outcome": "not_run_blocked"} for test in tests],
         }
     assert validation is not None and workdir is not None
-    command = [python_for(validation), "-m", "pytest", "-q", *tests]
+    python_executable, python_source = python_for(candidate, validation)
+    command = pytest_command_for(candidate, python_executable, tests)
     if not run:
         return base | {
             "run_status": "planned",
             "blockers": [],
+            "execution_boundary": base["execution_boundary"] | {
+                "python_source": python_source,
+                "legacy_httpie_wrapper": command[1] == str(HTTPIE_LEGACY_PYTEST),
+            },
             "test_results": [{"test_name": test, "outcome": "planned"} for test in tests],
         }
     result = run_command(command, workdir, timeout)
@@ -240,6 +255,10 @@ def outcome_record(candidate: dict[str, Any], run: bool, timeout: int) -> dict[s
     return base | {
         "run_status": run_status,
         "blockers": [],
+        "execution_boundary": base["execution_boundary"] | {
+            "python_source": python_source,
+            "legacy_httpie_wrapper": command[1] == str(HTTPIE_LEGACY_PYTEST),
+        },
         "elapsed_seconds": result["elapsed_seconds"],
         "exit_code": result["exit_code"],
         "timeout": result["timeout"],

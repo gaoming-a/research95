@@ -11,20 +11,21 @@
   "record_count": 35,
   "run_status_counts": {
     "blocked": 26,
-    "error": 9
+    "completed": 7,
+    "error": 2
   },
   "run_status_counts_by_task": {
     "bugsinpy_httpie_1": {
       "blocked": 8,
-      "error": 2
+      "completed": 2
     },
     "bugsinpy_httpie_2": {
       "blocked": 4,
-      "error": 2
+      "completed": 2
     },
     "bugsinpy_httpie_3": {
       "blocked": 4,
-      "error": 2
+      "completed": 2
     },
     "bugsinpy_httpie_4": {
       "blocked": 4,
@@ -32,11 +33,13 @@
     },
     "bugsinpy_httpie_5": {
       "blocked": 6,
-      "error": 1
+      "completed": 1
     }
   },
   "test_outcome_counts": {
-    "error": 9,
-    "not_run_blocked": 26
+    "error": 2,
+    "failed": 3,
+    "not_run_blocked": 26,
+    "passed": 4
   }
 }

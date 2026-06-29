@@ -517,6 +517,17 @@ def public_summary(summary: dict[str, Any]) -> dict[str, Any]:
 def write_markdown(path: Path, summary: dict[str, Any]) -> None:
     candidate = summary["candidate_summary"]
     baseline = summary["tool_only_baseline_summary"]
+    headroom = baseline["actionable_false_accept_or_reject_headroom"]
+    if headroom:
+        headroom_sentence = (
+            f"the current tool-only baseline exposes {headroom} actionable false "
+            "accept/reject cases, still below the pre-API threshold of 10."
+        )
+    else:
+        headroom_sentence = (
+            "the current tool-only baseline has no actionable false accept or "
+            "false reject headroom."
+        )
     lines = [
         "# EVP-8-HARD Candidate Draft v0.1",
         "",
@@ -589,10 +600,9 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
         "Plain-language conclusion: the draft reaches the 30-50 candidate size and",
         "has enough AI/agent wrong patches, and the visible-test runner now records",
         "some executable outcomes. It still does not meet the 20 nontrivial-hard-",
-        "negative gate, and the current tool-only baseline has no actionable false",
-        "accept or false reject headroom. The next action is to add or validate harder",
-        "non-control negatives and repair visible-test execution coverage, not to run",
-        "Qwen or DeepSeek.",
+        f"negative gate, and {headroom_sentence}",
+        "The next action is to add or validate harder non-control negatives and",
+        "improve visible-test execution coverage, not to run Qwen or DeepSeek.",
         "",
     ]
     path.parent.mkdir(parents=True, exist_ok=True)

@@ -18637,3 +18637,40 @@ Next:
 - 至少补 3 条 validated non-control hard negatives；
 - 只有重建 baseline 后 actionable false-accept/false-reject headroom >= 10，
   才能进入 API 授权讨论。
+
+## 2026-06-29 EVP-8-HARD visible-test environment repair
+
+本轮目标：
+
+- 不调用模型 API；
+- 不修改旧 98-candidate controlled cohort；
+- 只修复 `EVP-8-HARD` 中 HTTPie 旧测试在当前 Python 3.11 环境下的可见测试执行链路；
+- 修复后重新生成 visible outcomes 和 tool-only baseline gate。
+
+执行结果：
+
+- 新增 `scripts/run_pytest_legacy_httpie.py`，只处理旧 HTTPie 测试运行所需的
+  Python/runtime 兼容问题，不读取 evaluator labels、hidden oracles、raw model
+  responses 或 prompt；
+- `python scripts\run_evp8_hard_visible_tests.py --run --check --timeout 60`
+  重新生成 35 条 visible-test records：
+  - `completed=7`；
+  - `error=2`；
+  - `blocked=26`；
+  - test outcomes 为 `passed=4, failed=3, error=2, not_run_blocked=26`；
+- `python scripts\build_evp8_hard_candidate_draft.py --check` 重新生成 baseline：
+  - decision counts 为 `accept=4, reject=5, escalate=26`；
+  - tool false accepts = 4；
+  - tool false rejects = 0；
+  - actionable false-accept/false-reject headroom = 4。
+
+当前结论：
+
+- 执行链路问题已部分修复，visible-test 证据从全 error/blocker 推进到部分
+  pass/fail；
+- 这说明 hard-case draft 已经出现工具基线误接收错误补丁的现象，有研究价值；
+- 但当前仍不满足 API 前置门：
+  - nontrivial hard negatives = 17，低于 20；
+  - actionable headroom = 4，低于 10；
+- 因此下一步仍然不是跑 Qwen/DeepSeek，而是继续扩充或验证更难的非控制负例，
+  并优先处理剩余 `httpie_4` visible-test error 或补充其他可执行 hard cases。
