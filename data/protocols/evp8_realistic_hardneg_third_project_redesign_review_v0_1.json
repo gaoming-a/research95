@@ -1,0 +1,76 @@
+{
+  "review_id": "evp8_realistic_hardneg_third_project_redesign_review_v0_1",
+  "date": "2026-06-30",
+  "scope": {
+    "api_call_attempted": false,
+    "patch_text_stored": false,
+    "prompt_text_stored": false,
+    "raw_model_outputs_read": false,
+    "verifier_api_attempted": false
+  },
+  "current_gate_state": {
+    "candidate_count_after_thefuck": 90,
+    "visible_pass_hidden_fail_count": 26,
+    "visible_pass_hidden_fail_projects": [
+      "PySnooper",
+      "cookiecutter"
+    ],
+    "required_visible_pass_hidden_fail_count": 30,
+    "required_project_count": 3,
+    "ready_for_verifier_api": false
+  },
+  "failed_third_project_attempts": [
+    {
+      "project": "httpie",
+      "attempts": [
+        "qwen_supplement_001",
+        "deepseek_supplement_001"
+      ],
+      "result": "0 visible-pass/hidden-fail candidates; hidden-failing candidates failed visible tests"
+    },
+    {
+      "project": "thefuck",
+      "attempts": [
+        "qwen_supplement_003"
+      ],
+      "result": "12 visible-pass/hidden-pass candidates; 0 visible-pass/hidden-fail candidates"
+    },
+    {
+      "project": "luigi",
+      "attempts": [
+        "qwen_supplement_002"
+      ],
+      "result": "generation stopped before candidate construction due to exact find-snippet apply failure"
+    },
+    {
+      "project": "youtube-dl",
+      "attempts": [
+        "qwen_supplement_004"
+      ],
+      "result": "generation stopped before candidate construction due to exact find-snippet apply failure"
+    }
+  ],
+  "diagnosis": [
+    "The current fresh hard-negative gate is real but too narrow: it contains 26 useful cases across two projects.",
+    "Adding third projects by direct same-interface generation has not worked: simple third-project tasks became correct-like, while more complex tasks failed the exact search/replace edit-plan materialization step.",
+    "Continuing blind API retries under the same interface would mix execution instability with source selection and would not produce a clean paper claim."
+  ],
+  "decision_options": [
+    {
+      "option": "downgrade_claim_to_two_project_fresh_hard_negative_cohort",
+      "scientific_status": "cleanest_without_changing_protocol",
+      "tradeoff": "weaker external validity, but no post-hoc generation-interface change"
+    },
+    {
+      "option": "start_new_generation_interface_protocol",
+      "scientific_status": "possible_but_must_be_declared_as_new_protocol",
+      "tradeoff": "may improve third-project yield, but results cannot be merged silently with the exact edit-plan supplement attempts"
+    },
+    {
+      "option": "use_historical_hard_cases_as_calibration_only",
+      "scientific_status": "valid_as_appendix_or_failure_mode_examples",
+      "tradeoff": "does not solve fresh realistic third-project gate"
+    }
+  ],
+  "recommended_next_step": "Pause verifier API. Choose between a conservative two-project claim and a separately frozen new generation-interface protocol before further API calls."
+}

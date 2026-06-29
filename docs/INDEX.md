@@ -595,6 +595,13 @@
   supplement. The dry-run passed, but execution failed before candidate
   construction because the generated exact edit-plan `find` snippet was not
   found in `youtube_dl/utils.py`.
+- `../data/protocols/evp8_realistic_hardneg_third_project_redesign_review_v0_1.json`
+  and
+  `experiments/evp8_realistic_hardneg_third_project_redesign_review_v0_1.md`:
+  no-API source-design review after httpie, thefuck, Luigi, and youtube-dl
+  third-project attempts failed to pass the fresh hard-negative gate. It
+  recommends pausing verifier API and choosing either a conservative
+  two-project claim or a separately frozen new generation-interface protocol.
 - `../data/protocols/evp8_realistic_hardneg_visible_test_outcomes_v0_1.json`,
   `../data/protocols/evp8_realistic_hardneg_visible_test_outcomes_supplement_001_v0_1.json`,
   and

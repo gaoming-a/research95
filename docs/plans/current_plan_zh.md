@@ -20712,3 +20712,29 @@ Combined gate：
   1. 要么承认当前 fresh cohort 只能支持 two-project hard-negative claim；
   2. 要么重新设计第三项目生成接口，但这会改变实验设置，必须先冻结新 protocol，
      不能直接接在当前 supplement 后当同一实验结果。
+
+## 2026-06-30 Source-design review after third-project failures
+
+本轮完成 no-API source-design 复盘：
+
+- 新增
+  `data/protocols/evp8_realistic_hardneg_third_project_redesign_review_v0_1.json`；
+- 新增
+  `docs/experiments/evp8_realistic_hardneg_third_project_redesign_review_v0_1.md`；
+- 复盘不读取 raw model outputs，不存 prompt text，不存 patch text，不调用 verifier API。
+
+复盘结论：
+
+- 当前 26 个 visible-pass/hidden-fail cases 是真实机会集，但只覆盖两个项目；
+- httpie、thefuck、Luigi、youtube-dl 四类第三项目尝试都没有补足 gate；
+- 继续在同一 exact edit-plan interface 下盲跑 API 会把 source selection、
+  generation-interface instability 和实验结果混在一起；
+- 下一步必须二选一：
+  1. 保守降级为 two-project fresh hard-negative cohort；
+  2. 新开并冻结 generation-interface protocol，再重新生成第三项目候选。
+
+当前 gate 状态保持：
+
+- ready for verifier API = false；
+- 不得运行 Qwen/DeepSeek verifier API；
+- 后续 API 调用必须先明确属于新的 protocol，不能继续伪装成当前 supplement。
