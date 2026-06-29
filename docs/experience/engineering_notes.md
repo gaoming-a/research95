@@ -3819,3 +3819,17 @@ This file starts fresh for the patch-verification project.
   fresh because 8 model-candidate IDs duplicated historical IDs. supplement_002
   used separated IDs and added 5/5 fresh usable hard negatives, raising the
   source gate to 53.
+
+## 2026-06-30 Realistic cohort manifest boundary
+
+- Keep evaluator and model-visible artifacts separate from the first manifest
+  step. The evaluator manifest may contain labels, oracle summaries, source
+  IDs, and patch hashes; the model-visible seed must not contain those fields.
+- A model-visible seed can contain `patch_text` because the verifier must see
+  the candidate diff, but tracked audits and summaries should not duplicate
+  patch text.
+- A rule-only baseline over patch-apply status plus visible test names is not a
+  real headroom baseline. If visible tests have not been executed, the honest
+  deterministic decision is escalation. Do not treat `escalate=53` as evidence
+  that the tool baseline is good or bad; it only says the headroom gate still
+  needs visible-test execution.

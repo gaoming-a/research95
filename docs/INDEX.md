@@ -613,6 +613,29 @@
   hard negatives across 3 projects. It still does not authorize verifier APIs;
   the next required step is separated cohort manifest construction and
   visible-tool baseline/headroom gating.
+- `../scripts/build_evp8_realistic_agent_cohort_manifest.py`: no-API separated
+  cohort builder for the realistic agent-patch cohort. It filters the three
+  relabeled Qwen source files to fresh usable candidates, writes evaluator-only
+  labels separately from model-visible seeds, and emits a conservative
+  rule-only baseline without calling verifier APIs.
+- `../data/patches/evp8_realistic_agent_evaluator_manifest_v0_1.jsonl`:
+  evaluator-only realistic cohort manifest. Current count is 53 candidates:
+  1 correct and 52 test-passing-wrong hard negatives across PySnooper,
+  cookiecutter, and tqdm.
+- `../data/evidence/evp8_realistic_agent_model_visible_seed_v0_1.jsonl`:
+  model-visible realistic cohort seed. It contains patch diffs, visible
+  context, visible test names, patch-apply status, and no evaluator-only
+  oracle/label/raw-response fields.
+- `../data/baselines/evp8_realistic_agent_rule_only_baseline_v0_1.jsonl`:
+  conservative rule-only baseline over the model-visible seed. Current
+  decision distribution is `escalate=53` because declared visible tests have
+  not yet been executed for this cohort.
+- `../data/protocols/evp8_realistic_agent_cohort_manifest_v0_1.json`:
+  tracked manifest summary and leakage audit. Status is `passed`; the next
+  required gate is visible-test execution and visible-tool headroom baseline
+  construction before any verifier API.
+- `experiments/evp8_realistic_agent_cohort_manifest_v0_1.md`: Markdown
+  companion for the realistic cohort manifest.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

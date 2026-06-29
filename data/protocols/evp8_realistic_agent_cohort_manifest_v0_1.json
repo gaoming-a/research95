@@ -1,0 +1,92 @@
+{
+  "analysis_id": "evp8_realistic_agent_cohort_manifest_v0_1",
+  "baseline_summary": {
+    "condition": "rule_only_visible_apply_and_test_hint",
+    "decision_counts": {
+      "escalate": 53
+    },
+    "headroom_block_reason": "Visible tests have not been executed for the realistic cohort yet.",
+    "headroom_gate_ready": false
+  },
+  "candidate_summary": {
+    "candidate_count": 53,
+    "excluded_count": 16,
+    "excluded_reason_counts": {
+      "historical_duplicate": 16
+    },
+    "nontrivial_hard_negative_count": 52,
+    "normalized_label_counts": {
+      "correct": 1,
+      "test_passing_wrong": 52
+    },
+    "project_counts": {
+      "PySnooper": 11,
+      "cookiecutter": 30,
+      "tqdm": 12
+    },
+    "task_counts": {
+      "bugsinpy_PySnooper_1": 1,
+      "bugsinpy_PySnooper_3": 10,
+      "bugsinpy_cookiecutter_1": 10,
+      "bugsinpy_cookiecutter_2": 10,
+      "bugsinpy_cookiecutter_3": 10,
+      "bugsinpy_tqdm_9": 12
+    }
+  },
+  "checks": [
+    {
+      "check": "source_inventory_v0_4_phase1_ready",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "candidate_count_at_least_50",
+      "detail": 53,
+      "passed": true
+    },
+    {
+      "check": "model_visible_count_matches_evaluator",
+      "detail": 53,
+      "passed": true
+    },
+    {
+      "check": "baseline_count_matches_evaluator",
+      "detail": 53,
+      "passed": true
+    },
+    {
+      "check": "model_visible_forbidden_fields_absent",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "all_candidates_patch_applied",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "rule_only_baseline_all_escalate_until_visible_tests_run",
+      "detail": {
+        "escalate": 53
+      },
+      "passed": true
+    }
+  ],
+  "cohort_id": "EVP-8-REALISTIC-AGENT",
+  "date": "2026-06-30",
+  "next_required_step": "run declared visible tests for the realistic cohort and build the visible-tool headroom baseline",
+  "outputs": {
+    "evaluator_manifest": "data/patches/evp8_realistic_agent_evaluator_manifest_v0_1.jsonl",
+    "model_visible_seed": "data/evidence/evp8_realistic_agent_model_visible_seed_v0_1.jsonl",
+    "rule_only_baseline": "data/baselines/evp8_realistic_agent_rule_only_baseline_v0_1.jsonl"
+  },
+  "scope": {
+    "api_call_attempted": false,
+    "model_visible_evaluator_labels_stored": false,
+    "prompt_text_stored": false,
+    "raw_model_outputs_read": false,
+    "verifier_api_authorized": false,
+    "visible_test_execution_performed": false
+  },
+  "status": "passed"
+}

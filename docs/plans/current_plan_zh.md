@@ -19935,3 +19935,62 @@ Source inventory rerun：
   evaluator manifest 可以引用 relabeled candidates 和 hidden labels；
   model-visible packet 必须只包含 patch diff、visible context、visible tests 等可见证据；
   随后先做 visible-tool baseline/headroom gate，再考虑 Qwen/DeepSeek verifier。
+
+## 2026-06-30 Realistic agent-patch separated cohort manifest
+
+本轮目标：
+
+- 不调用 API；
+- 不运行 verifier；
+- 从 primary、supplement_001、supplement_002 的 relabeled outputs 中构造
+  separated cohort；
+- evaluator manifest 可以包含 hidden labels、oracle summary、source ids 和
+  patch hash/size；
+- model-visible seed 可以包含 patch diff、visible context、visible tests、patch apply
+  status 和 visible-test hint，但不得包含 expected outcome、oracle、hidden label、
+  raw response path、generation rationale 等 evaluator-only 字段；
+- 同步构造 rule-only visible baseline，用于下一步 headroom gate。
+
+验收条件：
+
+- evaluator manifest 只包含 fresh usable candidates；
+- manifest candidate count 至少 50，当前预期为 53；
+- model-visible seed 与 evaluator manifest candidate id 一一对应；
+- model-visible leakage audit 无 forbidden evaluator fields；
+- rule-only baseline 覆盖 53/53 candidates；
+- tracked outputs 不包含 raw response content、prompt text 或 provider response object。
+
+执行结果：
+
+- 新增 `scripts/build_evp8_realistic_agent_cohort_manifest.py`；
+- 生成 evaluator-only manifest：
+  `data/patches/evp8_realistic_agent_evaluator_manifest_v0_1.jsonl`；
+- 生成 model-visible seed：
+  `data/evidence/evp8_realistic_agent_model_visible_seed_v0_1.jsonl`；
+- 生成 rule-only baseline：
+  `data/baselines/evp8_realistic_agent_rule_only_baseline_v0_1.jsonl`；
+- 生成 summary：
+  `data/protocols/evp8_realistic_agent_cohort_manifest_v0_1.json`；
+- 生成 Markdown companion：
+  `docs/experiments/evp8_realistic_agent_cohort_manifest_v0_1.md`。
+
+Manifest gate：
+
+- status = `passed`；
+- candidate_count = 53；
+- normalized_label_counts = `correct=1, test_passing_wrong=52`；
+- nontrivial_hard_negative_count = 52；
+- project_counts = `PySnooper=11, cookiecutter=30, tqdm=12`；
+- excluded_count = 16，全部为 historical duplicate；
+- evaluator manifest 与 model-visible seed candidate id 一一对应；
+- model-visible forbidden evaluator fields absent；
+- rule-only baseline 覆盖 53/53 candidates。
+
+当前限制：
+
+- 当前 rule-only baseline 全部为 `escalate=53`；
+- 这不是最终 visible-tool headroom baseline；
+- 原因是 realistic cohort 目前只有 visible test names/hints，还没有对 declared visible tests
+  执行并记录结果；
+- 下一步必须运行 declared visible tests，构造 stronger visible-tool baseline/headroom gate；
+- 在 headroom gate 通过前仍不得运行 Qwen/DeepSeek verifier API。
