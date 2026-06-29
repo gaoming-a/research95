@@ -3976,3 +3976,8 @@ This file starts fresh for the patch-verification project.
   was not present in `youtube_dl/utils.py`. Luigi had exposed the same failure
   class earlier. Do not keep spending API on blind retries under the same edit
   interface; redesign the source strategy or generation interface first.
+- When changing a generation interface, declare a new protocol before any API
+  run. The full-file replacement route is now separated as
+  `agent_full_file_v1`; its dry-run only proves prompt construction and
+  leakage boundaries. Do not merge future full-file results silently with the
+  exact edit-plan supplement series.

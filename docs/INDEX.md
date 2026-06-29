@@ -602,6 +602,23 @@
   third-project attempts failed to pass the fresh hard-negative gate. It
   recommends pausing verifier API and choosing either a conservative
   two-project claim or a separately frozen new generation-interface protocol.
+- `../data/protocols/evp8_realistic_hardneg_full_file_generation_protocol_v0_1.json`
+  and
+  `experiments/evp8_realistic_hardneg_full_file_generation_protocol_v0_1.md`:
+  no-API protocol for a separately declared `agent_full_file_v1` generation
+  interface. It targets only `bugsinpy_youtube-dl_7`, replacing exact
+  search/replace snippets with complete single-file content materialization.
+- `../scripts/generate_agent_full_file_candidates.py`: single-file full-file
+  generation runner. In dry-run mode it writes prompt hashes and counts only;
+  in execute mode it materializes returned file content in a copied buggy
+  checkout and exports a normal git diff for the existing validation/relabel
+  chain.
+- `../data/protocols/evp8_realistic_hardneg_full_file_generation_dry_run_audit_v0_1.json`
+  and
+  `experiments/evp8_realistic_hardneg_full_file_generation_dry_run_audit_v0_1.md`:
+  raw-output-free dry-run audit for `agent_full_file_v1`. Current status is
+  `passed`: 4 prompt hashes for `bugsinpy_youtube-dl_7`, 0 candidates, no raw
+  response directory, and no pending candidate/evidence files.
 - `../data/protocols/evp8_realistic_hardneg_visible_test_outcomes_v0_1.json`,
   `../data/protocols/evp8_realistic_hardneg_visible_test_outcomes_supplement_001_v0_1.json`,
   and

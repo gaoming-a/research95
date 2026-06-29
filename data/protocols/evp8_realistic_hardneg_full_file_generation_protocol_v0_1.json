@@ -1,0 +1,45 @@
+{
+  "protocol_id": "evp8_realistic_hardneg_full_file_generation_protocol_v0_1",
+  "date": "2026-06-30",
+  "scope": {
+    "api_call_attempted": false,
+    "patch_text_stored": false,
+    "prompt_text_stored": false,
+    "raw_model_outputs_read": false,
+    "verifier_api_attempted": false
+  },
+  "motivation": "The exact search/replace edit-plan interface failed before candidate construction on Luigi and youtube-dl. This protocol tests a separately declared full-file replacement interface for a single third-project task before any verifier API is considered.",
+  "interface": {
+    "prompt_version": "agent_full_file_v1",
+    "target_shape": "single touched Python file",
+    "model_output_schema": {
+      "content": "complete revised file content",
+      "file_path": "relative path of the touched file",
+      "rationale": "short explanation"
+    },
+    "materialization": "overwrite copied buggy file with returned complete content, then export git diff"
+  },
+  "target": {
+    "task_id": "bugsinpy_youtube-dl_7",
+    "project": "youtube-dl",
+    "touched_file": "youtube_dl/utils.py",
+    "buggy_file_size_bytes": 76925,
+    "visible_tests": [
+      "test.test_utils.TestUtil.test_xpath_text"
+    ],
+    "hidden_oracles": [
+      "scripts/oracles/youtubedl_7_js_to_json.py"
+    ]
+  },
+  "boundaries": [
+    "This is a new generation-interface protocol, not a silent continuation of exact edit-plan supplements.",
+    "Only dry-run and prompt-boundary audit are allowed before a separate execution gate.",
+    "Verifier API remains blocked until generated candidates pass validation, relabeling, visible-test execution, and the combined hard-negative gate.",
+    "Tracked artifacts must store only prompt hashes, counts, protocol metadata, and aggregate audit results."
+  ],
+  "readiness": {
+    "ready_for_generation_api": false,
+    "ready_for_verifier_api": false,
+    "next_step": "Implement the dry-run path and audit prompt-boundary metadata before any API execution."
+  }
+}

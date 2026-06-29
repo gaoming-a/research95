@@ -20738,3 +20738,61 @@ Combined gate：
 - ready for verifier API = false；
 - 不得运行 Qwen/DeepSeek verifier API；
 - 后续 API 调用必须先明确属于新的 protocol，不能继续伪装成当前 supplement。
+
+## 2026-06-30 New protocol: full-file generation interface
+
+本轮小目标是在不调用 API 的前提下，冻结一个新的 generation-interface protocol，
+专门解决 exact search/replace edit-plan 在复杂文件上无法 materialize 的问题。
+
+第一性原理判断：
+
+- 现在真正缺的是第三项目 visible-pass/hidden-fail opportunity set；
+- 继续跑 verifier API 没有意义，因为 source gate 未过；
+- 继续用同一个 exact edit-plan 接口盲跑 generation API 也不合理，因为 Luigi 和
+  youtube-dl 已经两次失败在 candidate construction 之前；
+- 因此下一步只能是先定义新的生成接口，再做 dry-run 边界检查。
+
+Protocol 边界：
+
+- 新 protocol id：
+  `evp8_realistic_hardneg_full_file_generation_protocol_v0_1`；
+- prompt version：`agent_full_file_v1`；
+- 目标仅限单文件任务 `bugsinpy_youtube-dl_7`；
+- 模型输出完整 revised file content，而不是 exact find/replace snippets；
+- materialization 方式是覆盖 copied buggy file 后用 `git diff` 生成 patch；
+- 本轮只允许 dry-run 和 prompt-boundary audit，不调用 generation API；
+- verifier API 继续 blocked。
+
+验收条件：
+
+- 新增 protocol JSON/Markdown；
+- 新增 full-file generation dry-run 脚本；
+- dry-run 只产生 prompt hash/count metadata，不保存 prompt text；
+- dry-run audit 通过后，才能在下一轮考虑是否执行 generation API。
+
+执行结果：
+
+- 新增 protocol artifact：
+  `data/protocols/evp8_realistic_hardneg_full_file_generation_protocol_v0_1.json`；
+- 新增 protocol companion：
+  `docs/experiments/evp8_realistic_hardneg_full_file_generation_protocol_v0_1.md`；
+- 新增脚本：
+  `scripts/generate_agent_full_file_candidates.py`；
+- dry-run run id = `evp8_realistic_hardneg_full_file_qwen_001`；
+- dry-run output dir =
+  `outputs/evp8_realistic_hardneg_full_file_dryrun_qwen_001`；
+- prompt version = `agent_full_file_v1`；
+- prompt count = 4；
+- candidate count = 0；
+- dry-run audit status = `passed`；
+- label leakage checks = 4/4 passed；
+- raw response dir absent；
+- candidates/evidence pending files absent。
+
+当前判断：
+
+- 新 protocol 的 no-API 边界已经通过；
+- 这只证明 full-file prompt 能构造且不泄漏 evaluator tokens，不证明候选质量；
+- generation API 是否执行必须作为下一步单独 gate，执行后仍必须 validation、
+  relabel、visible-test 和 combined hard-negative gate；
+- verifier API 仍然 blocked。
