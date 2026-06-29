@@ -336,12 +336,22 @@
   by the visible-test runner for old HTTPie/Luigi tests under Python 3.11. It patches
   runtime/test-fixture incompatibilities only, then delegates to pytest.
 - `../data/evidence/evp8_hard_visible_test_outcomes_v0_1.jsonl`: visible-test
-  outcome records for the hard-case draft. Current run status is `completed=18`,
-  `blocked=26`; labels and hidden oracle outcomes are not emitted.
+  outcome records for the hard-case draft. Current run status is `completed=45`,
+  `timeout=2`, `blocked=0`; labels and hidden oracle outcomes are not emitted.
 - `../data/protocols/evp8_hard_visible_test_outcome_summary_v0_1.json`:
   raw-output-free visible-test run summary.
 - `experiments/evp8_hard_visible_test_outcomes_v0_1.md`: Markdown companion
   for the hard-case visible-test outcome run.
+- `../configs/evp8_hard_qwen_deepseek.example.json`: tracked no-secret
+  example config for the EVP-8-HARD Qwen/DeepSeek E6-only run. The local
+  ignored copy is `configs/evp8_hard_qwen_deepseek.local.json`.
+- `../scripts/run_evp8_hard_qwen_deepseek.py`: guarded hard-case Qwen/DeepSeek
+  runner. Default use is `--check-only`; real API execution requires an
+  ignored local config, `--execute`, and a configured model id.
+- `../data/protocols/evp8_hard_qwen_deepseek_check_only_v0_1.json`:
+  raw-output-free hard-case Qwen/DeepSeek check-only summary. Current status is
+  `passed`: 47 E6 packets per model, prompt boundary clean, schema rule clean,
+  Qwen/DeepSeek key names present in `.env`, no API calls attempted.
 - `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:
   no-key public OpenRouter catalog audit for the G7 later-model pinned IDs:
   `moonshotai/kimi-k2.6`, `mistralai/devstral-2512`, and

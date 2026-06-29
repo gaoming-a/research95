@@ -18773,3 +18773,42 @@ Next:
 - no-API 前置门已经通过；
 - 现在可以进入 Qwen/DeepSeek API 实验授权讨论；
 - 但在用户显式授权前，仍不得调用模型 API。
+
+## 2026-06-29 EVP-8-HARD Qwen/DeepSeek check-only
+
+本轮目标：
+
+- 不调用模型 API；
+- 不复用旧 98-candidate EVP-8 runner 直接跑 hard-case cohort；
+- 构造 EVP-8-HARD 专用的 E6-only Qwen/DeepSeek check-only 入口；
+- 验证 prompt boundary、schema-rule output、credential key presence 和输出路径
+  guard。
+
+执行结果：
+
+- 新增 tracked `configs/evp8_hard_qwen_deepseek.example.json`；
+- 新增 `scripts/run_evp8_hard_qwen_deepseek.py`；
+- 已创建 ignored local config
+  `configs/evp8_hard_qwen_deepseek.local.json`；
+- `python scripts\run_evp8_hard_qwen_deepseek.py --check-only --config configs\evp8_hard_qwen_deepseek.local.json --summary-out data\protocols\evp8_hard_qwen_deepseek_check_only_v0_1.json`
+  已通过；
+- check-only 摘要：
+  - candidate_count = 47；
+  - packet_count_per_model = 47；
+  - model_visible_levels = `E6`；
+  - prompt boundary errors = 0；
+  - schema errors = 0；
+  - schema rule decision counts = `accept=17, reject=30`；
+  - `.env` 中 `QWEN_API_KEY` 和 `DEEPSEEK_API_KEY` 均为 set；
+  - api_call_attempted = false；
+  - raw_outputs_generated = false；
+  - prompt_text_stored = false；
+- 负向 guard 已验证：用 tracked example config 执行
+  `--execute --model-id qwen/qwen3.7-max` 会拒绝，并且没有生成
+  `outputs/should_not_exist.json`。
+
+当前结论：
+
+- EVP-8-HARD 已完成 Qwen/DeepSeek API 授权前的本地 check-only；
+- 下一步若继续实验，需要用户明确授权模型 API；
+- 未获授权前不得执行 `--execute`。

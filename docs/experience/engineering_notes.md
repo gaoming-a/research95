@@ -3504,3 +3504,16 @@ This file starts fresh for the patch-verification project.
   all 47 visible outcomes completed or timed out, and actionable tool
   headroom 11/10. This makes the cohort API-ready, but model execution still
   requires explicit user authorization.
+
+## 2026-06-29 EVP-8-HARD API preflight boundary
+
+- Do not reuse the old 98-candidate EVP-8 runner for EVP-8-HARD. It is bound
+  to the frozen controlled candidate set and seven-level packet construction.
+  The hard-case cohort needs a separate E6-only packet path over
+  `evp8_hard_model_visible_seed_v0_1.jsonl`.
+- The hard-case runner must default to check-only. Passing check-only means
+  packets render cleanly, schema-rule outputs validate, and required key names
+  are present; it does not authorize or perform model calls.
+- The tracked example config is safe to commit and must refuse execution.
+  Execution requires the ignored local config plus explicit user authorization,
+  `--execute`, and a model id.
