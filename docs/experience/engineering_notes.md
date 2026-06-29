@@ -1,5 +1,19 @@
 # Engineering Notes
 
+## 2026-06-29 EVP-8-HARD evidence-only model-order gate
+
+- DeepSeek authorization alone is not sufficient for the current
+  `EVP-8-HARD E6-evidence-only` ablation because the execution packet requires
+  Qwen evidence-only coverage first.
+- The correct guard is to check for the tracked Qwen evidence-only parsed
+  reviews and summary before any DeepSeek execute command. Existing E6-full
+  Qwen/DeepSeek outputs cannot satisfy this precondition because the packet
+  variant and visible evidence boundary differ.
+- Do not flip ignored local config authorization or run DeepSeek directly to
+  compensate for missing Qwen evidence-only results. Pause API execution,
+  update the plan, run Qwen evidence-only first, audit coverage, then proceed
+  to DeepSeek only if the audit allows it.
+
 ## 2026-06-05 AI execution handoff plan
 
 - Added `docs/plans/ai_agent_experiment_execution_plan_zh.md` as the clean
