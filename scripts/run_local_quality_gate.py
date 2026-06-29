@@ -97,6 +97,7 @@ def build_markdown(summary: dict[str, Any]) -> str:
         f"- submission handoff audit passed: {bool_mark(summary['submission_handoff_audit']['passed'])}",
         f"- submission freeze-candidate audit passed: {bool_mark(summary['submission_freeze_candidate_audit']['passed'])}",
         f"- SQJ submission checklist audit passed: {bool_mark(summary['sqj_submission_checklist_audit']['passed'])}",
+        f"- SQJ availability boundary passed: {bool_mark(summary['sqj_availability_boundary']['passed'])}",
         f"- SQJ citation consistency passed: {bool_mark(summary['sqj_citation_consistency']['passed'])}",
         f"- SQJ claim traceability passed: {bool_mark(summary['sqj_claim_traceability']['passed'])}",
         f"- SQJ artifact gate passed: {bool_mark(summary['sqj_artifact_gate']['passed'])}",
@@ -136,6 +137,7 @@ def build_markdown(summary: dict[str, Any]) -> str:
             "submission_handoff_audit",
             "submission_freeze_candidate_audit",
             "sqj_submission_checklist_audit",
+            "sqj_availability_boundary",
             "sqj_citation_consistency",
             "sqj_claim_traceability",
             "sqj_artifact_gate",
@@ -280,6 +282,16 @@ def main() -> None:
             "outputs/submission_freeze_candidate_audit/latest.json",
             "--out-md",
             "outputs/submission_freeze_candidate_audit/latest.md",
+        ]
+    )
+    sqj_availability_boundary = run_command(
+        [
+            sys.executable,
+            "scripts/audit_sqj_availability_boundary.py",
+            "--out-json",
+            "outputs/sqj_availability_boundary/latest.json",
+            "--out-md",
+            "docs/experiments/sqj_availability_boundary.md",
         ]
     )
     sqj_submission_checklist_audit = run_command(
@@ -487,6 +499,7 @@ def main() -> None:
             and submission_handoff_audit["passed"]
             and submission_freeze_candidate_audit["passed"]
             and sqj_submission_checklist_audit["passed"]
+            and sqj_availability_boundary["passed"]
             and sqj_citation_consistency["passed"]
             and sqj_claim_traceability["passed"]
             and sqj_artifact_gate["passed"]
@@ -513,6 +526,7 @@ def main() -> None:
         "submission_handoff_audit": submission_handoff_audit,
         "submission_freeze_candidate_audit": submission_freeze_candidate_audit,
         "sqj_submission_checklist_audit": sqj_submission_checklist_audit,
+        "sqj_availability_boundary": sqj_availability_boundary,
         "sqj_citation_consistency": sqj_citation_consistency,
         "sqj_claim_traceability": sqj_claim_traceability,
         "sqj_artifact_gate": sqj_artifact_gate,

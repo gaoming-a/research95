@@ -1,5 +1,22 @@
 # Engineering Notes
 
+## 2026-06-30 SQJ availability boundary gate
+
+- Data/code availability wording is a separate submission-package boundary,
+  not a final artifact release decision.
+- The SQJ draft should say that tracked artifacts use raw-output-free
+  summaries and paper tables, while raw model responses, local API config,
+  ignored execution logs, `.env`, `outputs/`, and `artifacts/` remain outside
+  the tracked package boundary.
+- Keep this check as an executable gate because otherwise availability wording
+  can drift when final-freeze readiness, artifact dry-runs, and broad API
+  authorization are edited independently.
+- Passing `sqj_availability_boundary_ready` does not authorize submission,
+  final artifact rebuild, model API calls, or final freeze.
+- If the local gate commit succeeds but GitHub fetch/push cannot reach
+  `github.com:443`, record the sync failure explicitly and leave the local
+  commit intact for a later retry. Do not report GitHub sync as complete.
+
 ## 2026-06-30 broad API authorization boundary
 
 - A broad user statement authorizing all APIs should be treated as a human

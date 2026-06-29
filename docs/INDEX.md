@@ -1208,6 +1208,11 @@
   BibTeX consistency audit. It verifies that every `\cite{...}` key in
   `sqj_submission_draft.tex` exists in `sqj_references.bib`, that BibTeX keys
   are unique, and that the current BibTeX entries are cited.
+- `experiments/sqj_availability_boundary.md`: human-readable SQJ data/code
+  availability boundary audit. It checks that the source draft exposes Data
+  availability and Code availability sections while keeping raw model
+  responses, `.env`, local configs, ignored outputs, artifact release, and
+  submission authorization outside the tracked package boundary.
 - `../data/reviews/sqj_claim_traceability.json`: machine-readable raw-output-free
   SQJ claim traceability audit used by SQJ readiness and local quality gates.
 - `figures/sqj/`: SQJ-specific reproducible PDF/SVG/PNG figures for the EVP-8
@@ -1227,7 +1232,7 @@
   rebuild. It records the source-level figure-layout status as
   `blocked_pending_pdf_compile` until a compiled PDF is available for layout
   review, and points to the SQJ human-decision packet for unresolved external
-  final-freeze inputs.
+  final-freeze inputs. It now also records the SQJ availability boundary gate.
 - `artifact/sqj_human_decision_packet.md`: tracked SQJ human-decision packet.
   It lists school recognition, author metadata, funding/acknowledgements,
   competing interests, author contributions, Springer template, post-compile
@@ -1242,7 +1247,7 @@
   negative-result boundary as the SQJ checklist and now embeds the SQJ PDF
   compile gate, human-input gate, school-recognition gate, final-authorization
   gate, figure-layout gate, human-decision packet gate, and artifact candidate
-  dry-run gate audit boundaries.
+  dry-run gate audit boundaries, plus the SQJ availability boundary gate.
 - `paper/ieee_submission_draft.tex`: historical/source anonymous IEEEtran
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
@@ -1727,6 +1732,11 @@
   citation and BibTeX key consistency without network lookup, BibTeX execution,
   or PDF compilation. It writes a human-readable report to
   `docs/experiments/sqj_citation_consistency.md`.
+- `scripts/audit_sqj_availability_boundary.py`: audits SQJ data/code
+  availability wording and package exclusions without calling APIs, reading raw
+  model outputs, building a final artifact, or authorizing submission. It
+  writes `docs/experiments/sqj_availability_boundary.md` and reports
+  `sqj_availability_boundary_ready` when the boundary is intact.
 - `scripts/audit_sqj_artifact_gate.py`: audits the SQJ artifact candidate
   package without creating a final ZIP. It reuses the anonymous artifact
   file enumeration and safety validation, requires the SQJ source/checklist/
@@ -1749,8 +1759,8 @@
   source-package checklist, source draft, BibTeX, table sources, figure set,
   five-model synthesis, and cost-accounting/API-freeze boundary without calling
   APIs, compiling PDF, or marking final submission freeze complete. It also
-  checks the fresh realistic branch claim boundary in both the checklist and
-  generated source draft.
+  checks the SQJ availability boundary and the fresh realistic branch claim
+  boundary in both the checklist and generated source draft.
 - `scripts/audit_sqj_pdf_compile_gate.py`: audits the SQJ `sn-jnl` PDF compile
   gate. In the current local MiKTeX environment it reports
   `blocked_missing_sn_jnl_cls`, `compile_attempted=false`, and
@@ -1777,7 +1787,8 @@
   fresh realistic two-project negative-result boundary before readiness can
   pass and includes the SQJ PDF compile gate, human-input gate,
   school-recognition gate, final-authorization gate, figure-layout gate,
-  human-decision packet gate, and artifact candidate dry-run gate audit states.
+  human-decision packet gate, availability boundary gate, and artifact
+  candidate dry-run gate audit states.
 - `scripts/generate_paper_figures.py`: generates the publication figure set
   under `docs/figures/` in PDF, SVG, and PNG formats. Figures cover the
   workflow, compact E0/E2/E4/E6 evidence boundary, dataset composition,

@@ -5,6 +5,11 @@ import json
 from pathlib import Path
 from typing import Any
 
+try:
+    from scripts.audit_sqj_availability_boundary import audit_sqj_availability_boundary
+except ModuleNotFoundError:
+    from audit_sqj_availability_boundary import audit_sqj_availability_boundary
+
 
 DEFAULT_CHECKLIST = Path("docs/artifact/sqj_submission_checklist.md")
 SOURCE_DRAFT = Path("docs/paper/sqj_submission_draft.tex")
@@ -12,6 +17,7 @@ BIB_FILE = Path("docs/paper/sqj_references.bib")
 SOURCE_GENERATOR = Path("scripts/write_sqj_latex_draft.py")
 FRAMING_PACKET = Path("docs/paper/sqj_submission_framing.md")
 FINAL_FREEZE_READINESS = Path("docs/artifact/sqj_final_freeze_readiness.md")
+SQJ_AVAILABILITY_BOUNDARY_MD = Path("docs/experiments/sqj_availability_boundary.md")
 SQJ_CITATION_CONSISTENCY_MD = Path("docs/experiments/sqj_citation_consistency.md")
 CLAIM_TRACEABILITY_JSON = Path("data/reviews/sqj_claim_traceability.json")
 CLAIM_TRACEABILITY_MD = Path("docs/experiments/sqj_claim_traceability.md")
@@ -49,6 +55,7 @@ REQUIRED_SNIPPETS = [
     "`docs/paper/sqj_submission_framing.md`",
     "`docs/artifact/sqj_final_freeze_readiness.md`",
     "`docs/artifact/sqj_human_decision_packet.md`",
+    "`docs/experiments/sqj_availability_boundary.md`",
     "`data/reviews/sqj_claim_traceability.json`",
     "`docs/experiments/sqj_claim_traceability.md`",
     "Evidence visibility is a first-order experimental variable",
@@ -60,10 +67,12 @@ REQUIRED_SNIPPETS = [
     "`blocked_missing_school_recognition`",
     "`blocked_missing_human_inputs`",
     "`blocked_missing_human_decisions`",
+    "`sqj_availability_boundary`",
     "`sqj_citation_consistency`",
     "`sqj_claim_traceability`",
     "API execution remains frozen",
     "python scripts\\audit_sqj_artifact_gate.py",
+    "python scripts\\audit_sqj_availability_boundary.py",
     "python scripts\\audit_sqj_final_authorization_gate.py",
     "python scripts\\audit_sqj_school_recognition_gate.py",
     "python scripts\\audit_sqj_human_inputs_gate.py",
@@ -203,6 +212,7 @@ def audit_sqj_checklist(path: Path) -> dict[str, Any]:
     source_missing_snippets = [snippet for snippet in SOURCE_REQUIRED_SNIPPETS if snippet not in source_text]
     source_forbidden_hits = [snippet for snippet in SOURCE_FORBIDDEN_SNIPPETS if snippet in source_text]
     figures = figure_states()
+    availability_boundary = audit_sqj_availability_boundary()
     synthesis = synthesis_state(SYNTHESIS_JSON)
     cost = cost_state(COST_JSON)
     required_files = {
@@ -212,6 +222,7 @@ def audit_sqj_checklist(path: Path) -> dict[str, Any]:
         "source_generator": file_state(SOURCE_GENERATOR),
         "framing_packet": file_state(FRAMING_PACKET),
         "final_freeze_readiness": file_state(FINAL_FREEZE_READINESS),
+        "availability_boundary_md": file_state(SQJ_AVAILABILITY_BOUNDARY_MD),
         "citation_consistency_md": file_state(SQJ_CITATION_CONSISTENCY_MD),
         "claim_traceability_json": file_state(CLAIM_TRACEABILITY_JSON),
         "claim_traceability_md": file_state(CLAIM_TRACEABILITY_MD),
@@ -229,6 +240,7 @@ def audit_sqj_checklist(path: Path) -> dict[str, Any]:
         "required_files": required_files,
         "figures": figures,
         "figures_complete": all_figures_ready(figures),
+        "availability_boundary": availability_boundary,
         "synthesis": synthesis,
         "cost_accounting": cost,
         "compile_gate": "source_structure_only_sn_jnl_cls_missing",
@@ -243,6 +255,8 @@ def audit_sqj_checklist(path: Path) -> dict[str, Any]:
         and not source_forbidden_hits
         and all(state["exists"] for state in required_files.values())
         and result["figures_complete"]
+        and availability_boundary["passed"]
+        and availability_boundary["gate_status"] == "sqj_availability_boundary_ready"
         and synthesis["passed"]
         and synthesis.get("api_call_attempted") is False
         and synthesis.get("raw_outputs_read") is False
@@ -260,6 +274,8 @@ def build_markdown(audit: dict[str, Any]) -> str:
         f"- passed: {bool_mark(audit['passed'])}",
         f"- checklist exists: {bool_mark(audit['checklist_exists'])}",
         f"- figures complete: {bool_mark(audit['figures_complete'])}",
+        f"- availability boundary passed: {bool_mark(audit['availability_boundary']['passed'])}",
+        f"- availability boundary status: `{audit['availability_boundary']['gate_status']}`",
         f"- synthesis passed: {bool_mark(audit['synthesis']['passed'])}",
         f"- cost accounting passed: {bool_mark(audit['cost_accounting']['passed'])}",
         f"- compile gate: `{audit['compile_gate']}`",

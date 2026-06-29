@@ -7,6 +7,7 @@ from typing import Any
 
 try:
     from scripts.audit_sqj_artifact_gate import audit_sqj_artifact_gate
+    from scripts.audit_sqj_availability_boundary import audit_sqj_availability_boundary
     from scripts.audit_sqj_citation_consistency import audit_sqj_citation_consistency
     from scripts.audit_sqj_claim_traceability import audit_sqj_claim_traceability
     from scripts.audit_sqj_final_authorization_gate import audit_sqj_final_authorization_gate
@@ -18,6 +19,7 @@ try:
     from scripts.audit_sqj_submission_checklist import DEFAULT_CHECKLIST, audit_sqj_checklist
 except ModuleNotFoundError:
     from audit_sqj_artifact_gate import audit_sqj_artifact_gate
+    from audit_sqj_availability_boundary import audit_sqj_availability_boundary
     from audit_sqj_citation_consistency import audit_sqj_citation_consistency
     from audit_sqj_claim_traceability import audit_sqj_claim_traceability
     from audit_sqj_final_authorization_gate import audit_sqj_final_authorization_gate
@@ -40,12 +42,14 @@ REQUIRED_FILES = {
     "sqj_framing": Path("docs/paper/sqj_submission_framing.md"),
     "generated_tables_md": Path("docs/paper/generated_tables.md"),
     "generated_tables_tex": Path("docs/paper/generated_tables.tex"),
+    "sqj_availability_boundary_md": Path("docs/experiments/sqj_availability_boundary.md"),
     "sqj_citation_consistency_md": Path("docs/experiments/sqj_citation_consistency.md"),
     "sqj_claim_traceability_json": Path("data/reviews/sqj_claim_traceability.json"),
     "sqj_claim_traceability_md": Path("docs/experiments/sqj_claim_traceability.md"),
     "sqj_figure_manifest": Path("docs/figures/sqj/figure_manifest.json"),
     "sqj_checklist_audit_script": Path("scripts/audit_sqj_submission_checklist.py"),
     "sqj_artifact_gate_script": Path("scripts/audit_sqj_artifact_gate.py"),
+    "sqj_availability_boundary_script": Path("scripts/audit_sqj_availability_boundary.py"),
     "sqj_citation_consistency_script": Path("scripts/audit_sqj_citation_consistency.py"),
     "sqj_claim_traceability_script": Path("scripts/audit_sqj_claim_traceability.py"),
     "sqj_final_authorization_gate_script": Path("scripts/audit_sqj_final_authorization_gate.py"),
@@ -65,6 +69,7 @@ REQUIRED_SNIPPETS = [
     "Current Ready Source Package",
     "`docs/paper/sqj_submission_draft.tex`",
     "`docs/paper/sqj_references.bib`",
+    "`docs/experiments/sqj_availability_boundary.md`",
     "`docs/experiments/sqj_citation_consistency.md`",
     "`docs/figures/sqj/`",
     "`docs/artifact/sqj_submission_checklist.md`",
@@ -73,6 +78,7 @@ REQUIRED_SNIPPETS = [
     "`docs/experiments/sqj_claim_traceability.md`",
     "`scripts/audit_sqj_submission_checklist.py`",
     "`scripts/audit_sqj_artifact_gate.py`",
+    "`scripts/audit_sqj_availability_boundary.py`",
     "`scripts/audit_sqj_citation_consistency.py`",
     "`scripts/audit_sqj_claim_traceability.py`",
     "`scripts/audit_sqj_final_authorization_gate.py`",
@@ -92,12 +98,14 @@ REQUIRED_SNIPPETS = [
     "`blocked_missing_human_decisions`",
     "final artifact package rebuild and audit",
     "`candidate_artifact_dry_run_ready`",
+    "`sqj_availability_boundary`",
     "`sqj_citation_consistency`",
     "`sqj_claim_traceability`",
     "`blocked_missing_final_authorization`",
     "python scripts\\write_paper_tables.py",
     "python scripts\\generate_sqj_figures.py",
     "python scripts\\write_sqj_latex_draft.py --check",
+    "python scripts\\audit_sqj_availability_boundary.py",
     "python scripts\\audit_sqj_citation_consistency.py",
     "python scripts\\audit_sqj_claim_traceability.py",
     "python scripts\\audit_sqj_submission_checklist.py",
@@ -161,6 +169,7 @@ def audit_sqj_final_freeze_readiness(path: Path) -> dict[str, Any]:
         if state["exists"] and int(state["size_bytes"]) <= 0
     ]
     sqj_checklist = audit_sqj_checklist(DEFAULT_CHECKLIST)
+    availability_boundary = audit_sqj_availability_boundary()
     citation_consistency = audit_sqj_citation_consistency()
     claim_traceability = audit_sqj_claim_traceability()
     artifact_gate = audit_sqj_artifact_gate()
@@ -189,6 +198,7 @@ def audit_sqj_final_freeze_readiness(path: Path) -> dict[str, Any]:
         "forbidden_snippet_hits": forbidden_snippet_hits,
         "zero_byte_files": zero_byte_files,
         "sqj_submission_checklist": sqj_checklist,
+        "sqj_availability_boundary": availability_boundary,
         "sqj_citation_consistency": citation_consistency,
         "sqj_claim_traceability": claim_traceability,
         "sqj_artifact_gate": artifact_gate,
@@ -210,6 +220,8 @@ def audit_sqj_final_freeze_readiness(path: Path) -> dict[str, Any]:
         and not zero_byte_files
         and all(state["exists"] for state in required_files.values())
         and sqj_checklist["passed"]
+        and availability_boundary["passed"]
+        and availability_boundary["gate_status"] == "sqj_availability_boundary_ready"
         and citation_consistency["passed"]
         and claim_traceability["passed"]
         and claim_traceability["raw_output_free_check"]["passed"]
@@ -234,6 +246,8 @@ def build_markdown(audit: dict[str, Any]) -> str:
         f"- passed: {bool_mark(audit['passed'])}",
         f"- readiness packet exists: {bool_mark(audit['readiness_packet_exists'])}",
             f"- SQJ checklist passed: {bool_mark(audit['sqj_submission_checklist']['passed'])}",
+            f"- SQJ availability boundary status: `{audit['sqj_availability_boundary']['gate_status']}`",
+            f"- SQJ availability boundary passed: {bool_mark(audit['sqj_availability_boundary']['passed'])}",
             f"- SQJ citation consistency passed: {bool_mark(audit['sqj_citation_consistency']['passed'])}",
             f"- SQJ claim traceability passed: {bool_mark(audit['sqj_claim_traceability']['passed'])}",
             f"- SQJ claim traceability raw-output-free: {bool_mark(audit['sqj_claim_traceability']['raw_output_free_check']['passed'])}",

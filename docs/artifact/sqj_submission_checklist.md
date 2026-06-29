@@ -31,6 +31,8 @@ final submission.
   `docs/paper/sqj_references.bib`
 - SQJ citation consistency:
   `docs/experiments/sqj_citation_consistency.md`
+- SQJ availability boundary:
+  `docs/experiments/sqj_availability_boundary.md`
 - Manuscript generator:
   `scripts/write_sqj_latex_draft.py`
 - Framing and claim boundary:
@@ -70,6 +72,11 @@ final submission.
 - Citation consistency gate:
   SQJ source citations are checked in `sqj_citation_consistency`; this is a
   source-level BibTeX key audit and does not compile the PDF.
+- Availability boundary gate:
+  SQJ data/code availability wording and source-package exclusions are checked
+  in `sqj_availability_boundary`; this gate confirms that raw responses,
+  `.env`, local configs, ignored outputs, final artifact release, and final
+  submission authorization are outside the current tracked package boundary.
 
 ## SQJ Paper Figures
 
@@ -116,6 +123,7 @@ The SQJ package must not claim:
 python scripts\write_paper_tables.py
 python scripts\generate_sqj_figures.py
 python scripts\write_sqj_latex_draft.py --check
+python scripts\audit_sqj_availability_boundary.py --out-json outputs\sqj_availability_boundary\latest.json --out-md docs\experiments\sqj_availability_boundary.md
 python scripts\audit_sqj_citation_consistency.py --out-json outputs\sqj_citation_consistency\latest.json --out-md docs\experiments\sqj_citation_consistency.md
 python scripts\audit_sqj_claim_traceability.py --out-json data\reviews\sqj_claim_traceability.json --out-md docs\experiments\sqj_claim_traceability.md
 python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md
@@ -136,6 +144,7 @@ python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\l
 ## Ready For Next Gate Criteria
 
 - SQJ source draft regenerates from tracked inputs.
+- SQJ availability boundary audit passes as `sqj_availability_boundary_ready`.
 - SQJ citation consistency audit passes.
 - SQJ figures regenerate from tracked synthesis and cost summaries.
 - SQJ claim traceability audit passes and remains raw-output-free.
