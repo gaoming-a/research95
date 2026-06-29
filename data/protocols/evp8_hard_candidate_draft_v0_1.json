@@ -1,0 +1,241 @@
+{
+  "analysis_id": "evp8_hard_candidate_draft_v0_1",
+  "api_readiness": "blocked",
+  "blocked_reasons": [
+    "nontrivial_hard_negative_count_at_least_20",
+    "visible_test_outcomes_available",
+    "actionable_false_accept_or_reject_headroom_at_least_10"
+  ],
+  "candidate_summary": {
+    "ai_or_agent_hard_negative_count": 10,
+    "candidate_count": 35,
+    "candidate_type_counts": {
+      "agent_plausible_wrong": 10,
+      "correct_reference": 8,
+      "irrelevant_or_noop_control": 10,
+      "partial_fix": 7
+    },
+    "excluded_source_records": [
+      {
+        "patch_id": "bugsinpy_httpie_1__ai_patch_01",
+        "reason": "patch_not_applied",
+        "source": "outputs/httpie_ai_patch_stage_ab_001/candidates.jsonl"
+      },
+      {
+        "patch_id": "bugsinpy_httpie_2__ai_patch_01",
+        "reason": "patch_not_applied",
+        "source": "outputs/httpie_ai_patch_stage_ab_001/candidates.jsonl"
+      },
+      {
+        "patch_id": "bugsinpy_httpie_3__ai_patch_02",
+        "reason": "patch_not_applied",
+        "source": "outputs/httpie_ai_patch_stage_ab_001/candidates.jsonl"
+      },
+      {
+        "patch_id": "bugsinpy_httpie_4__ai_patch_01",
+        "reason": "patch_not_applied",
+        "source": "outputs/httpie_ai_patch_stage_ab_001/candidates.jsonl"
+      },
+      {
+        "patch_id": "bugsinpy_httpie_5__ai_patch_01",
+        "reason": "patch_not_applied",
+        "source": "outputs/httpie_ai_patch_stage_ab_001/candidates.jsonl"
+      },
+      {
+        "patch_id": "bugsinpy_httpie_5__ai_patch_02",
+        "reason": "patch_not_applied",
+        "source": "outputs/httpie_ai_patch_stage_ab_001/candidates.jsonl"
+      },
+      {
+        "patch_id": "bugsinpy_luigi_3__reference_fix",
+        "reason": "missing_validation_record",
+        "source": "outputs/luigi3_stability_audit_001/candidates.jsonl"
+      },
+      {
+        "patch_id": "bugsinpy_luigi_3__empty_diff_control",
+        "reason": "missing_validation_record",
+        "source": "outputs/luigi3_stability_audit_001/candidates.jsonl"
+      },
+      {
+        "patch_id": "bugsinpy_luigi_3__comment_only_patch",
+        "reason": "missing_validation_record",
+        "source": "outputs/luigi3_stability_audit_001/candidates.jsonl"
+      },
+      {
+        "patch_id": "bugsinpy_luigi_3__split_replace_1_1",
+        "reason": "missing_validation_record",
+        "source": "outputs/luigi3_stability_audit_001/candidates.jsonl"
+      },
+      {
+        "patch_id": "bugsinpy_luigi_3__split_replace_1_2",
+        "reason": "missing_validation_record",
+        "source": "outputs/luigi3_stability_audit_001/candidates.jsonl"
+      },
+      {
+        "patch_id": "bugsinpy_luigi_4__reference_fix",
+        "reason": "missing_validation_record",
+        "source": "outputs/luigi4_stability_audit_001/candidates.jsonl"
+      },
+      {
+        "patch_id": "bugsinpy_luigi_4__empty_diff_control",
+        "reason": "missing_validation_record",
+        "source": "outputs/luigi4_stability_audit_001/candidates.jsonl"
+      },
+      {
+        "patch_id": "bugsinpy_luigi_4__comment_only_patch",
+        "reason": "missing_validation_record",
+        "source": "outputs/luigi4_stability_audit_001/candidates.jsonl"
+      }
+    ],
+    "nontrivial_hard_negative_count": 17,
+    "normalized_label_counts": {
+      "agent_plausible_wrong": 10,
+      "correct": 8,
+      "irrelevant_or_noop": 10,
+      "partial": 7
+    },
+    "patch_source_kind_counts": {
+      "ai_or_agent_generated": 13,
+      "constructed_or_reference": 22
+    },
+    "project_count": 1,
+    "task_count": 5,
+    "task_counts": {
+      "bugsinpy_httpie_1": 10,
+      "bugsinpy_httpie_2": 6,
+      "bugsinpy_httpie_3": 6,
+      "bugsinpy_httpie_4": 6,
+      "bugsinpy_httpie_5": 7
+    }
+  },
+  "checks": [
+    {
+      "check": "api_call_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_model_outputs_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "rendered_prompt_not_generated",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "old_evp8_controlled_cohort_not_mutated",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "source_inventory_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "candidate_count_30_to_50",
+      "detail": 35,
+      "passed": true
+    },
+    {
+      "check": "nontrivial_hard_negative_count_at_least_20",
+      "detail": 17,
+      "passed": false
+    },
+    {
+      "check": "ai_or_agent_hard_negative_count_at_least_10",
+      "detail": 10,
+      "passed": true
+    },
+    {
+      "check": "model_visible_label_leakage_absent",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "visible_test_outcomes_available",
+      "detail": 0,
+      "passed": false
+    },
+    {
+      "check": "actionable_false_accept_or_reject_headroom_at_least_10",
+      "detail": 0,
+      "passed": false
+    }
+  ],
+  "cohort_id": "EVP-8-HARD",
+  "outputs": {
+    "evaluator_manifest": "data/patches/evp8_hard_evaluator_manifest_v0_1.jsonl",
+    "model_visible_seed_manifest": "data/evidence/evp8_hard_model_visible_seed_v0_1.jsonl",
+    "tool_only_baseline": "data/baselines/evp8_hard_tool_only_baseline_v0_1.jsonl"
+  },
+  "scope": {
+    "api_call_attempted": false,
+    "old_evp8_controlled_cohort_mutated": false,
+    "raw_model_outputs_read": false,
+    "rendered_prompt_generated": false
+  },
+  "source_inventory": "data/protocols/evp8_hard_case_source_inventory_v0_1.json",
+  "tool_only_baseline_summary": {
+    "actionable_false_accept_or_reject_headroom": 0,
+    "confusion_counts": {
+      "escalated_correct": 8,
+      "escalated_incorrect": 27
+    },
+    "correct_total": 8,
+    "decision_counts": {
+      "escalate": 35
+    },
+    "examples": {
+      "tool_escalations_correct": [
+        "evp8_hard_candidate_0011",
+        "evp8_hard_candidate_0012",
+        "evp8_hard_candidate_0013",
+        "evp8_hard_candidate_0014",
+        "evp8_hard_candidate_0021",
+        "evp8_hard_candidate_0024",
+        "evp8_hard_candidate_0027",
+        "evp8_hard_candidate_0030"
+      ],
+      "tool_escalations_incorrect": [
+        "evp8_hard_candidate_0001",
+        "evp8_hard_candidate_0002",
+        "evp8_hard_candidate_0003",
+        "evp8_hard_candidate_0004",
+        "evp8_hard_candidate_0005",
+        "evp8_hard_candidate_0006",
+        "evp8_hard_candidate_0007",
+        "evp8_hard_candidate_0008",
+        "evp8_hard_candidate_0009",
+        "evp8_hard_candidate_0010",
+        "evp8_hard_candidate_0015",
+        "evp8_hard_candidate_0016",
+        "evp8_hard_candidate_0017",
+        "evp8_hard_candidate_0018",
+        "evp8_hard_candidate_0019",
+        "evp8_hard_candidate_0020",
+        "evp8_hard_candidate_0022",
+        "evp8_hard_candidate_0023",
+        "evp8_hard_candidate_0025",
+        "evp8_hard_candidate_0026",
+        "evp8_hard_candidate_0028",
+        "evp8_hard_candidate_0029",
+        "evp8_hard_candidate_0031",
+        "evp8_hard_candidate_0032",
+        "evp8_hard_candidate_0033",
+        "evp8_hard_candidate_0034",
+        "evp8_hard_candidate_0035"
+      ],
+      "tool_false_accepts": [],
+      "tool_false_rejects": []
+    },
+    "false_accept_count": 0,
+    "false_reject_count": 0,
+    "incorrect_total": 27,
+    "opportunity_set_rate_including_escalations": 1.0,
+    "opportunity_set_size_including_escalations": 35,
+    "record_count": 35
+  }
+}

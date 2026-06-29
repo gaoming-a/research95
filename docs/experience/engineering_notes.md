@@ -3416,3 +3416,18 @@ This file starts fresh for the patch-verification project.
   unique count.
 - Do not scan or summarize raw response files in source inventory. Aggregate
   candidate and validation metadata are enough for Phase B planning.
+
+## 2026-06-29 EVP-8-HARD candidate draft gate
+
+- A candidate draft can pass structural gates while still being API-blocked.
+  Here the draft has 35 applied candidates and no model-visible label leakage,
+  but it has only 17 non-trivial hard negatives and no visible test outcomes.
+- Do not convert hidden oracle validation into visible tool evidence. If the
+  source only lists visible test hints, the deterministic baseline must
+  escalate rather than pretend tests passed.
+- Separate "opportunity including escalations" from actionable false-accept or
+  false-reject headroom. An all-escalate baseline may create triage workload,
+  but it does not test whether tools are fooled by plausible wrong patches.
+- Pending and relabeled generated-patch files should not both enter the draft.
+  Prefer relabeled files and exclude patch-apply failures and missing-validation
+  records from the API-facing candidate draft.

@@ -201,6 +201,22 @@
     negatives 为 23 条，去重后 13 条；
   - 该 inventory 不生成 `EVP-8-HARD` manifest，不授权 API；下一步必须先做
     no-API candidate curation 和 hard-case tool-only baseline。
+- 本轮已完成 `EVP-8-HARD` no-API candidate draft 和 baseline gate：
+  - 脚本为 `scripts/build_evp8_hard_candidate_draft.py`；
+  - 输出为 `data/patches/evp8_hard_evaluator_manifest_v0_1.jsonl`、
+    `data/evidence/evp8_hard_model_visible_seed_v0_1.jsonl`、
+    `data/baselines/evp8_hard_tool_only_baseline_v0_1.jsonl`、
+    `data/protocols/evp8_hard_candidate_draft_v0_1.json` 和
+    `docs/experiments/evp8_hard_candidate_draft_v0_1.md`；
+  - draft 包含 35 条 applied candidates、5 个 tasks、1 个 project；
+  - candidate labels 为 correct=8、agent_plausible_wrong=10、partial=7、
+    irrelevant_or_noop=10；
+  - model-visible seed 已通过 evaluator-label leakage 检查；
+  - API readiness 为 `blocked`，原因是 nontrivial hard negatives 只有 17 条、
+    visible test outcomes 为 0、actionable false-accept/false-reject headroom
+    为 0；
+  - tool-only baseline 因只有 visible test hints 而没有 visible outcome，
+    对 35 条全部 `escalate`；不能据此运行 Qwen/DeepSeek。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。最近一次已确认
   `git push origin main` 成功；最终是否仍 ahead 仍以
@@ -303,13 +319,14 @@
 
 1. 基于
    `docs/experiments/evp8_phase_a_paper_ready_analysis.md` 和
-   `docs/experiments/evp8_hard_case_source_inventory_v0_1.md` 写论文结果/
-   局限段；
-2. no-API 构造 `EVP-8-HARD` candidate draft，必须从 source inventory 中去重、
-   补齐 visible evidence、保留 evaluator-only hidden labels，并生成单独的
-   hard-case tool-only baseline；
-3. 若 hard-case tool-only opportunity cases 少于 10，则停止 API 并报告
-   headroom 不足；
+   `docs/experiments/evp8_hard_case_source_inventory_v0_1.md`、
+   `docs/experiments/evp8_hard_candidate_draft_v0_1.md` 写论文结果/局限段；
+2. 不运行 API；先补 hard-case cohort：
+   - 至少再增加 3 条 validated non-control hard negatives；
+   - 为 hard-case candidates 生成真实 model-visible visible test outcomes；
+   - 重新生成 tool-only baseline；
+3. 若重新生成后 actionable false-accept/false-reject headroom 少于 10，则继续
+   停止 API 并报告 headroom 不足；
 4. 明确 claim boundary：Qwen 结果显示 verdict removal 对其影响小，但不修复
    4 个工具 false accepts；DeepSeek 结果显示更强风险控制，但代价是 correct
    recall 大幅下降；

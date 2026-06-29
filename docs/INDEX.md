@@ -305,6 +305,28 @@
   the Phase B source inventory. It records that the next gate is no-API
   candidate curation and a separate hard-case tool-only baseline; API execution
   remains unauthorized.
+- `../scripts/build_evp8_hard_candidate_draft.py`: no-API EVP-8-HARD draft
+  builder and baseline gate. It writes separated evaluator-only and
+  model-visible manifests, removes evaluator labels from model-visible seed
+  records, and builds a deterministic tool-only baseline without rendering
+  prompts or calling APIs.
+- `../data/patches/evp8_hard_evaluator_manifest_v0_1.jsonl`: evaluator-only
+  hard-case draft manifest. It contains hidden labels, hidden oracle paths, and
+  validation summaries for 35 applied candidates.
+- `../data/evidence/evp8_hard_model_visible_seed_v0_1.jsonl`: model-visible
+  hard-case seed manifest. It contains task summaries, touched files, patch
+  diffs, visible static evidence, and visible test hints, but excludes hidden
+  labels, hidden oracles, source patch IDs, validation status, and raw-response
+  paths.
+- `../data/baselines/evp8_hard_tool_only_baseline_v0_1.jsonl`: deterministic
+  no-API tool-only baseline for the hard-case draft. Current decisions all
+  escalate because visible test outcomes are not available.
+- `../data/protocols/evp8_hard_candidate_draft_v0_1.json`: raw-output-free
+  summary and gate result for the hard-case draft. Current API readiness is
+  `blocked`: 35 candidates pass the size gate, but only 17 non-trivial hard
+  negatives are present and actionable false-accept/false-reject headroom is 0.
+- `experiments/evp8_hard_candidate_draft_v0_1.md`: Markdown companion for the
+  hard-case draft and baseline gate.
 - `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:
   no-key public OpenRouter catalog audit for the G7 later-model pinned IDs:
   `moonshotai/kimi-k2.6`, `mistralai/devstral-2512`, and

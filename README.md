@@ -189,6 +189,13 @@ negatives and 13 unique AI/agent eligible hard negatives, and confirmed that
 the old 98-candidate cohort remains historical controlled evidence only. It
 does not create an `EVP-8-HARD` manifest or authorize API calls; the next gate
 is no-API candidate curation plus a separate hard-case tool-only baseline.
+That no-API draft gate is now generated at
+`docs/experiments/evp8_hard_candidate_draft_v0_1.md`: it creates 35 applied
+`EVP-8-HARD` candidates with separated evaluator-only and model-visible
+manifests, but API readiness remains blocked because there are only 17
+non-trivial hard negatives and no visible test execution outcomes, so the
+tool-only baseline escalates all 35 candidates instead of producing meaningful
+false-accept/false-reject headroom.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently

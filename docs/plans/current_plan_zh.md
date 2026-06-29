@@ -24,6 +24,32 @@
 - 给出是否满足 Phase B 目标规模和 opportunity-set 前置条件的保守判断；
 - 同步更新计划、索引、经验文档和当前状态。
 
+## 0.1 2026-06-29 本轮小目标：EVP-8-HARD candidate draft 与 baseline gate
+
+本轮目标是在已完成 source inventory 的基础上，构造一个单独的 no-API
+`EVP-8-HARD` candidate draft，并生成对应的 deterministic tool-only baseline
+和 headroom gate。
+
+边界：
+
+- 不调用任何模型 API；
+- 不生成 rendered prompt；
+- 不读取 raw model responses；
+- 不修改旧 98-candidate controlled cohort；
+- 不把 source inventory 等同于最终 hard-case 实验结果；
+- 如果可见测试证据只有 test hint 而没有 outcome，不得假装工具 baseline
+  看到了 passing tests。
+
+验收条件：
+
+- 输出 evaluator-only manifest 和 model-visible seed manifest；
+- hidden labels、hidden oracles、expected outcome 不进入 model-visible seed；
+- 至少生成 30-50 条 applied candidate records，或明确 blocked 原因；
+- 计算 hard-negative、AI/agent、correct/control 分布；
+- 生成 hard-case tool-only baseline；
+- 若 false-accept/false-reject headroom 或 hard-negative gate 不足，必须把
+  API readiness 标记为 blocked。
+
 ## 1. 研究转向
 
 旧方向试图验证 LLM cross-review 或 agent-style context 是否能让代码审查更可靠。已有结果不支持这个强假设。真正可复用的发现是：
@@ -18493,3 +18519,63 @@ Next:
 - 为该 draft 生成独立 tool-only baseline；
 - 如果 hard-case tool-only opportunity cases 少于 10，则停止 API 并报告
   headroom 不足。
+
+## 2026-06-29 EVP-8-HARD candidate draft and baseline gate
+
+Inspect:
+
+- Source inventory 已完成，但还没有独立 candidate draft；
+- 非 promoted 来源里 relabeled agent 文件优先于 pending 文件；
+- Luigi stability records 缺少 validation record，不能进入 API-facing draft；
+- `httpie_ai_patch_stage_ab_001` 中有 6 条 patch apply failed，不能作为
+  applied hard-case candidates；
+- 当前来源只有 visible test hints，没有 model-visible visible test execution
+  outcomes。
+
+Plan:
+
+1. 新增 `scripts/build_evp8_hard_candidate_draft.py`；
+2. 输出 evaluator-only manifest、model-visible seed、tool-only baseline 和
+   gate summary；
+3. 检查 model-visible seed 不包含 hidden labels / hidden oracles / source
+   patch id / validation status / raw response paths；
+4. 如果 hard-negative 数量或 actionable baseline headroom 不足，明确 blocked。
+
+Execute / Verify:
+
+1. 执行：
+   - `python -m py_compile scripts\build_evp8_hard_candidate_draft.py`；
+   - `python scripts\build_evp8_hard_candidate_draft.py --check`；
+2. 输出：
+   - `data/patches/evp8_hard_evaluator_manifest_v0_1.jsonl`；
+   - `data/evidence/evp8_hard_model_visible_seed_v0_1.jsonl`；
+   - `data/baselines/evp8_hard_tool_only_baseline_v0_1.jsonl`；
+   - `data/protocols/evp8_hard_candidate_draft_v0_1.json`；
+   - `docs/experiments/evp8_hard_candidate_draft_v0_1.md`；
+3. 额外检索 model-visible seed，确认无 `expected_outcome`、`hidden_oracles`、
+   `oracle_passed`、`candidate_type`、`patch_id`、`raw_generation`、
+   `validation_status`、`model_candidate_id`、`label_confidence` 字段。
+
+Result:
+
+- Draft 生成 35 条 applied candidates，覆盖 5 个 tasks、1 个 project；
+- label 分布：
+  - correct = 8；
+  - agent_plausible_wrong = 10；
+  - partial = 7；
+  - irrelevant_or_noop = 10；
+- nontrivial hard negatives = 17，未达到 20；
+- AI/agent hard negatives = 10，达到最低目标；
+- tool-only baseline 因缺少 visible test outcomes，对 35 条全部 escalate；
+- false accepts = 0，false rejects = 0，actionable false-accept/false-reject
+  headroom = 0；
+- API readiness = `blocked`。
+
+Next:
+
+- 不运行 Qwen/DeepSeek API；
+- 至少补 3 条 validated non-control hard negatives；
+- 生成真实 model-visible visible test outcomes；
+- 重新生成 hard-case tool-only baseline；
+- 只有 actionable false-accept/false-reject headroom >= 10 时，才考虑再次请求
+  用户授权 API。

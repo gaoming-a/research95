@@ -138,6 +138,22 @@ eligible hard negatives. This is only a source inventory: it does not create an
 not authorize API calls. The next Phase B action is no-API candidate curation
 and a separate hard-case tool-only baseline.
 
+2026-06-29 candidate-draft status: generated but API-blocked. The tracked
+outputs are:
+
+- `data/patches/evp8_hard_evaluator_manifest_v0_1.jsonl`;
+- `data/evidence/evp8_hard_model_visible_seed_v0_1.jsonl`;
+- `data/baselines/evp8_hard_tool_only_baseline_v0_1.jsonl`;
+- `data/protocols/evp8_hard_candidate_draft_v0_1.json`;
+- `docs/experiments/evp8_hard_candidate_draft_v0_1.md`.
+
+The draft contains 35 applied candidates and separates evaluator-only labels
+from model-visible seed records. However, it is not ready for API execution:
+only 17 candidates are non-trivial hard negatives, visible test execution
+outcomes are not available, and the deterministic tool-only baseline escalates
+all 35 candidates. The next action is to add or validate more non-control hard
+negatives and generate model-visible visible test outcomes.
+
 Candidate sources, in priority order:
 
 1. Existing local validated candidates that already have hidden oracle or P2P
@@ -254,7 +270,8 @@ Forbidden claim:
 
 Do not run more APIs next.
 
-Phase A and the Phase B source inventory are complete. Next construct a no-API
-`EVP-8-HARD` candidate draft from the inventoried sources, then build the
-hard-case tool-only baseline. Stop before API if the new hard-case baseline has
-fewer than 10 opportunity cases.
+Phase A, the Phase B source inventory, and the first no-API candidate draft are
+complete. API execution remains blocked. Next add at least three more validated
+non-control hard negatives and generate real model-visible visible test outcomes
+for the hard-case candidates, then rebuild the tool-only baseline. Stop before
+API if actionable false-accept/false-reject headroom remains below 10.
