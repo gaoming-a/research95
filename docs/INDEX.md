@@ -1211,14 +1211,17 @@
   gate status as `blocked_missing_sn_jnl_cls` until the official Springer
   Nature class is available. It also records the human-input status as
   `blocked_missing_human_inputs` until author and submission metadata are
-  provided or confirmed.
+  provided or confirmed, and the SQJ artifact candidate gate status as
+  `candidate_artifact_dry_run_ready` without treating that as a final ZIP
+  rebuild.
 - `artifact/sqj_final_freeze_readiness.md`: SQJ final-freeze readiness and
   blocker packet. It records the currently regenerable source package, the
   school-recognition, `sn-jnl.cls`/PDF compile, author/funding/competing
   interest, artifact rebuild, and final user-authorization blockers, and keeps
   submission unauthorized. It carries the same fresh realistic two-project
   negative-result boundary as the SQJ checklist and now embeds the SQJ PDF
-  compile gate and human-input gate audit boundaries.
+  compile gate, human-input gate, and artifact candidate dry-run gate audit
+  boundaries.
 - `paper/ieee_submission_draft.tex`: historical/source anonymous IEEEtran
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
@@ -1694,6 +1697,12 @@
   two-project source-acquisition/gate-readiness negative result.
 - `scripts/generate_sqj_figures.py`: generates the SQJ-specific EVP-8 figure
   set under `docs/figures/sqj/` in PDF, SVG, and PNG form.
+- `scripts/audit_sqj_artifact_gate.py`: audits the SQJ artifact candidate
+  package without creating a final ZIP. It reuses the anonymous artifact
+  file enumeration and safety validation, requires the SQJ source/checklist/
+  readiness/figure/generator/audit files to be present and included, and
+  reports `candidate_artifact_dry_run_ready` only with `dry_run_only=true` and
+  `final_artifact_rebuild_complete=false`.
 - `scripts/audit_sqj_submission_checklist.py`: validates the SQJ
   source-package checklist, source draft, BibTeX, table sources, figure set,
   five-model synthesis, and cost-accounting/API-freeze boundary without calling
@@ -1714,7 +1723,8 @@
   final-freeze readiness packet and its external-blocker boundary without
   calling APIs, compiling PDF, or authorizing submission. It now requires the
   fresh realistic two-project negative-result boundary before readiness can
-  pass and includes the SQJ PDF compile gate and human-input gate audit states.
+  pass and includes the SQJ PDF compile gate, human-input gate, and artifact
+  candidate dry-run gate audit states.
 - `scripts/generate_paper_figures.py`: generates the publication figure set
   under `docs/figures/` in PDF, SVG, and PNG formats. Figures cover the
   workflow, compact E0/E2/E4/E6 evidence boundary, dataset composition,

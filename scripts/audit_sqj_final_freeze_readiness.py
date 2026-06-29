@@ -6,10 +6,12 @@ from pathlib import Path
 from typing import Any
 
 try:
+    from scripts.audit_sqj_artifact_gate import audit_sqj_artifact_gate
     from scripts.audit_sqj_human_inputs_gate import audit_sqj_human_inputs_gate
     from scripts.audit_sqj_pdf_compile_gate import audit_sqj_pdf_compile_gate
     from scripts.audit_sqj_submission_checklist import DEFAULT_CHECKLIST, audit_sqj_checklist
 except ModuleNotFoundError:
+    from audit_sqj_artifact_gate import audit_sqj_artifact_gate
     from audit_sqj_human_inputs_gate import audit_sqj_human_inputs_gate
     from audit_sqj_pdf_compile_gate import audit_sqj_pdf_compile_gate
     from audit_sqj_submission_checklist import DEFAULT_CHECKLIST, audit_sqj_checklist
@@ -27,6 +29,7 @@ REQUIRED_FILES = {
     "generated_tables_tex": Path("docs/paper/generated_tables.tex"),
     "sqj_figure_manifest": Path("docs/figures/sqj/figure_manifest.json"),
     "sqj_checklist_audit_script": Path("scripts/audit_sqj_submission_checklist.py"),
+    "sqj_artifact_gate_script": Path("scripts/audit_sqj_artifact_gate.py"),
     "sqj_human_inputs_gate_script": Path("scripts/audit_sqj_human_inputs_gate.py"),
     "sqj_pdf_compile_gate_script": Path("scripts/audit_sqj_pdf_compile_gate.py"),
     "sqj_source_generator": Path("scripts/write_sqj_latex_draft.py"),
@@ -43,6 +46,7 @@ REQUIRED_SNIPPETS = [
     "`docs/figures/sqj/`",
     "`docs/artifact/sqj_submission_checklist.md`",
     "`scripts/audit_sqj_submission_checklist.py`",
+    "`scripts/audit_sqj_artifact_gate.py`",
     "`scripts/audit_sqj_human_inputs_gate.py`",
     "`scripts/audit_sqj_pdf_compile_gate.py`",
     "school/department recognition confirmation",
@@ -52,10 +56,12 @@ REQUIRED_SNIPPETS = [
     "author information, funding, acknowledgements, and competing-interest",
     "`blocked_missing_human_inputs`",
     "final artifact package rebuild and audit",
+    "`candidate_artifact_dry_run_ready`",
     "python scripts\\write_paper_tables.py",
     "python scripts\\generate_sqj_figures.py",
     "python scripts\\write_sqj_latex_draft.py --check",
     "python scripts\\audit_sqj_submission_checklist.py",
+    "python scripts\\audit_sqj_artifact_gate.py",
     "python scripts\\audit_sqj_human_inputs_gate.py",
     "python scripts\\audit_sqj_pdf_compile_gate.py",
     "python scripts\\audit_sqj_final_freeze_readiness.py",
@@ -111,6 +117,7 @@ def audit_sqj_final_freeze_readiness(path: Path) -> dict[str, Any]:
         if state["exists"] and int(state["size_bytes"]) <= 0
     ]
     sqj_checklist = audit_sqj_checklist(DEFAULT_CHECKLIST)
+    artifact_gate = audit_sqj_artifact_gate()
     human_inputs_gate = audit_sqj_human_inputs_gate()
     pdf_compile_gate = audit_sqj_pdf_compile_gate()
     external_blockers_declared = all(
@@ -130,6 +137,7 @@ def audit_sqj_final_freeze_readiness(path: Path) -> dict[str, Any]:
         "forbidden_snippet_hits": forbidden_snippet_hits,
         "zero_byte_files": zero_byte_files,
         "sqj_submission_checklist": sqj_checklist,
+        "sqj_artifact_gate": artifact_gate,
         "sqj_human_inputs_gate": human_inputs_gate,
         "sqj_pdf_compile_gate": pdf_compile_gate,
         "external_blockers_declared": external_blockers_declared,
@@ -144,6 +152,7 @@ def audit_sqj_final_freeze_readiness(path: Path) -> dict[str, Any]:
         and not zero_byte_files
         and all(state["exists"] for state in required_files.values())
         and sqj_checklist["passed"]
+        and artifact_gate["passed"]
         and human_inputs_gate["passed"]
         and pdf_compile_gate["passed"]
         and external_blockers_declared
@@ -160,6 +169,8 @@ def build_markdown(audit: dict[str, Any]) -> str:
         f"- passed: {bool_mark(audit['passed'])}",
         f"- readiness packet exists: {bool_mark(audit['readiness_packet_exists'])}",
             f"- SQJ checklist passed: {bool_mark(audit['sqj_submission_checklist']['passed'])}",
+            f"- SQJ artifact gate status: `{audit['sqj_artifact_gate']['gate_status']}`",
+            f"- SQJ artifact dry-run only: {bool_mark(audit['sqj_artifact_gate']['dry_run_only'])}",
             f"- SQJ human-input gate status: `{audit['sqj_human_inputs_gate']['gate_status']}`",
             f"- SQJ human inputs complete: {bool_mark(audit['sqj_human_inputs_gate']['human_inputs_complete'])}",
             f"- SQJ PDF compile gate status: `{audit['sqj_pdf_compile_gate']['gate_status']}`",

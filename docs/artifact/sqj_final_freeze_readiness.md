@@ -19,6 +19,7 @@ The current SQJ route has these tracked, regenerable source-package components:
 - SQJ figure directory: `docs/figures/sqj/`
 - SQJ source-package checklist: `docs/artifact/sqj_submission_checklist.md`
 - SQJ checklist audit: `scripts/audit_sqj_submission_checklist.py`
+- SQJ artifact candidate gate audit: `scripts/audit_sqj_artifact_gate.py`
 - SQJ human-input gate audit: `scripts/audit_sqj_human_inputs_gate.py`
 - SQJ PDF compile gate audit: `scripts/audit_sqj_pdf_compile_gate.py`
 
@@ -57,6 +58,8 @@ Final freeze is blocked until all of the following are resolved:
   affiliation, funding, competing-interest, acknowledgement, and contribution
   statements are provided or confirmed;
 - final artifact package rebuild and audit;
+- current artifact candidate gate status `candidate_artifact_dry_run_ready`;
+  this is not a final artifact ZIP rebuild;
 - final user authorization to submit.
 
 ## Forbidden Until Those Gates Pass
@@ -86,6 +89,7 @@ python scripts\write_paper_tables.py
 python scripts\generate_sqj_figures.py
 python scripts\write_sqj_latex_draft.py --check
 python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md
+python scripts\audit_sqj_artifact_gate.py --out-json outputs\sqj_artifact_gate\latest.json --out-md outputs\sqj_artifact_gate\latest.md
 python scripts\audit_sqj_human_inputs_gate.py --out-json outputs\sqj_human_inputs_gate\latest.json --out-md outputs\sqj_human_inputs_gate\latest.md
 python scripts\audit_sqj_pdf_compile_gate.py --out-json outputs\sqj_pdf_compile_gate\latest.json --out-md outputs\sqj_pdf_compile_gate\latest.md
 python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md

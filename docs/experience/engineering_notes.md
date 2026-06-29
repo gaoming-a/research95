@@ -4039,3 +4039,20 @@ This file starts fresh for the patch-verification project.
   the current SQJ draft the audit passes while reporting
   `gate_status=blocked_missing_human_inputs`; that means the blocker is
   explicit and machine-readable.
+
+## 2026-06-30 SQJ artifact candidate gate
+
+- Separate candidate artifact safety from final artifact rebuild. The SQJ
+  artifact gate can pass with `gate_status=candidate_artifact_dry_run_ready`
+  while still reporting `dry_run_only=true` and
+  `final_artifact_rebuild_complete=false`.
+- Reuse the canonical anonymous-artifact file enumeration and validation
+  instead of maintaining a second allow/exclude implementation. This keeps the
+  SQJ gate aligned with the package builder and prevents drift in credential,
+  raw-output, local-config, and benchmark-checkout exclusions.
+- Required-file gates should include the gate script itself. Otherwise the
+  candidate package may look complete while lacking the script needed to
+  reproduce the audit.
+- Passing this gate does not authorize API calls, PDF compilation, submission,
+  or final freeze. It only proves that the current tracked SQJ source package
+  can be safely enumerated and scanned as a dry-run artifact candidate.

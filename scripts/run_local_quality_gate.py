@@ -97,6 +97,7 @@ def build_markdown(summary: dict[str, Any]) -> str:
         f"- submission handoff audit passed: {bool_mark(summary['submission_handoff_audit']['passed'])}",
         f"- submission freeze-candidate audit passed: {bool_mark(summary['submission_freeze_candidate_audit']['passed'])}",
         f"- SQJ submission checklist audit passed: {bool_mark(summary['sqj_submission_checklist_audit']['passed'])}",
+        f"- SQJ artifact gate passed: {bool_mark(summary['sqj_artifact_gate']['passed'])}",
         f"- SQJ human-input gate passed: {bool_mark(summary['sqj_human_inputs_gate']['passed'])}",
         f"- SQJ PDF compile gate passed: {bool_mark(summary['sqj_pdf_compile_gate']['passed'])}",
         f"- SQJ final-freeze readiness audit passed: {bool_mark(summary['sqj_final_freeze_readiness_audit']['passed'])}",
@@ -129,6 +130,7 @@ def build_markdown(summary: dict[str, Any]) -> str:
             "submission_handoff_audit",
             "submission_freeze_candidate_audit",
             "sqj_submission_checklist_audit",
+            "sqj_artifact_gate",
             "sqj_human_inputs_gate",
             "sqj_pdf_compile_gate",
             "sqj_final_freeze_readiness_audit",
@@ -278,6 +280,16 @@ def main() -> None:
             "outputs/sqj_submission_checklist_audit/latest.md",
         ]
     )
+    sqj_artifact_gate = run_command(
+        [
+            sys.executable,
+            "scripts/audit_sqj_artifact_gate.py",
+            "--out-json",
+            "outputs/sqj_artifact_gate/latest.json",
+            "--out-md",
+            "outputs/sqj_artifact_gate/latest.md",
+        ]
+    )
     sqj_human_inputs_gate = run_command(
         [
             sys.executable,
@@ -403,6 +415,7 @@ def main() -> None:
             and submission_handoff_audit["passed"]
             and submission_freeze_candidate_audit["passed"]
             and sqj_submission_checklist_audit["passed"]
+            and sqj_artifact_gate["passed"]
             and sqj_human_inputs_gate["passed"]
             and sqj_pdf_compile_gate["passed"]
             and sqj_final_freeze_readiness_audit["passed"]
@@ -422,6 +435,7 @@ def main() -> None:
         "submission_handoff_audit": submission_handoff_audit,
         "submission_freeze_candidate_audit": submission_freeze_candidate_audit,
         "sqj_submission_checklist_audit": sqj_submission_checklist_audit,
+        "sqj_artifact_gate": sqj_artifact_gate,
         "sqj_human_inputs_gate": sqj_human_inputs_gate,
         "sqj_pdf_compile_gate": sqj_pdf_compile_gate,
         "sqj_final_freeze_readiness_audit": sqj_final_freeze_readiness_audit,
