@@ -12,6 +12,8 @@ BIB_FILE = Path("docs/paper/sqj_references.bib")
 SOURCE_GENERATOR = Path("scripts/write_sqj_latex_draft.py")
 FRAMING_PACKET = Path("docs/paper/sqj_submission_framing.md")
 FINAL_FREEZE_READINESS = Path("docs/artifact/sqj_final_freeze_readiness.md")
+CLAIM_TRACEABILITY_JSON = Path("data/reviews/sqj_claim_traceability.json")
+CLAIM_TRACEABILITY_MD = Path("docs/experiments/sqj_claim_traceability.md")
 TABLES_MD = Path("docs/paper/generated_tables.md")
 TABLES_TEX = Path("docs/paper/generated_tables.tex")
 SYNTHESIS_JSON = Path("data/protocols/evp8_five_model_synthesis_v0_1.json")
@@ -45,6 +47,8 @@ REQUIRED_SNIPPETS = [
     "`docs/paper/sqj_submission_framing.md`",
     "`docs/artifact/sqj_final_freeze_readiness.md`",
     "`docs/artifact/sqj_human_decision_packet.md`",
+    "`data/reviews/sqj_claim_traceability.json`",
+    "`docs/experiments/sqj_claim_traceability.md`",
     "Evidence visibility is a first-order experimental variable",
     "model-dependent and non-monotonic",
     "Blocked Kimi attempts are cost/execution-risk evidence only",
@@ -54,6 +58,7 @@ REQUIRED_SNIPPETS = [
     "`blocked_missing_school_recognition`",
     "`blocked_missing_human_inputs`",
     "`blocked_missing_human_decisions`",
+    "`sqj_claim_traceability`",
     "API execution remains frozen",
     "python scripts\\audit_sqj_artifact_gate.py",
     "python scripts\\audit_sqj_final_authorization_gate.py",
@@ -64,6 +69,7 @@ REQUIRED_SNIPPETS = [
     "that a final evidence-level ranking has been established",
     "that the fresh realistic branch is a three-project verifier-ready main experiment",
     "python scripts\\write_sqj_latex_draft.py --check",
+    "python scripts\\audit_sqj_claim_traceability.py",
     "python scripts\\audit_sqj_submission_checklist.py",
     "python scripts\\audit_sqj_pdf_compile_gate.py",
     "python scripts\\audit_sqj_figure_layout_gate.py",
@@ -202,6 +208,8 @@ def audit_sqj_checklist(path: Path) -> dict[str, Any]:
         "source_generator": file_state(SOURCE_GENERATOR),
         "framing_packet": file_state(FRAMING_PACKET),
         "final_freeze_readiness": file_state(FINAL_FREEZE_READINESS),
+        "claim_traceability_json": file_state(CLAIM_TRACEABILITY_JSON),
+        "claim_traceability_md": file_state(CLAIM_TRACEABILITY_MD),
         "tables_md": file_state(TABLES_MD),
         "tables_tex": file_state(TABLES_TEX),
         "figure_manifest": file_state(FIGURE_MANIFEST),

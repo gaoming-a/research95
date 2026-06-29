@@ -33,6 +33,9 @@ final submission.
   `scripts/write_sqj_latex_draft.py`
 - Framing and claim boundary:
   `docs/paper/sqj_submission_framing.md`
+- SQJ claim traceability:
+  `data/reviews/sqj_claim_traceability.json`
+  `docs/experiments/sqj_claim_traceability.md`
 - Final-freeze readiness packet:
   `docs/artifact/sqj_final_freeze_readiness.md`
 - SQJ human-decision packet:
@@ -58,6 +61,10 @@ final submission.
   `blocked_missing_human_decisions` until school recognition, author metadata,
   template/PDF/layout, artifact rebuild, and final submission authorization are
   all explicitly resolved.
+- Claim traceability gate:
+  SQJ manuscript claims are mapped to tracked evidence in
+  `sqj_claim_traceability`. This gate is raw-output-free and does not make new
+  experimental claims.
 
 ## SQJ Paper Figures
 
@@ -104,6 +111,7 @@ The SQJ package must not claim:
 python scripts\write_paper_tables.py
 python scripts\generate_sqj_figures.py
 python scripts\write_sqj_latex_draft.py --check
+python scripts\audit_sqj_claim_traceability.py --out-json data\reviews\sqj_claim_traceability.json --out-md docs\experiments\sqj_claim_traceability.md
 python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md
 python scripts\audit_sqj_artifact_gate.py --out-json outputs\sqj_artifact_gate\latest.json --out-md outputs\sqj_artifact_gate\latest.md
 python scripts\audit_sqj_final_authorization_gate.py --out-json outputs\sqj_final_authorization_gate\latest.json --out-md outputs\sqj_final_authorization_gate\latest.md
@@ -123,6 +131,7 @@ python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\l
 
 - SQJ source draft regenerates from tracked inputs.
 - SQJ figures regenerate from tracked synthesis and cost summaries.
+- SQJ claim traceability audit passes and remains raw-output-free.
 - SQJ checklist audit passes.
 - SQJ artifact candidate gate passes as `candidate_artifact_dry_run_ready`;
   this is not a final artifact ZIP rebuild.

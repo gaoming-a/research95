@@ -4115,3 +4115,17 @@ This file starts fresh for the patch-verification project.
 - Forbidden-state audits should match explicit positive completion states, not
   negated instructions such as "Do not claim...". Broad substring matching can
   make the packet fail precisely because it documents the forbidden claim.
+
+## 2026-06-30 SQJ claim traceability
+
+- SQJ needs its own claim traceability gate because the current submission route
+  is EVP-8/five-model centered, while the older claim-boundary audit is EVP-7
+  centered. Reusing the old audit alone leaves the SQJ manuscript claims only
+  indirectly checked.
+- Forbidden-claim checks must distinguish positive assertions from forbidden
+  lists and negated explanatory text. Strip the `Forbidden Claims` section from
+  framing before positive-assertion matching and treat markers such as
+  `does not`, `must not`, and `instead of` as negation context.
+- Keep the traceability output raw-output-free: report source paths, aggregate
+  checks, keyword coverage, and claim ids, but never raw model responses,
+  prompts, or patch text.

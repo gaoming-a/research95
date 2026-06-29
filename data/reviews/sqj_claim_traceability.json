@@ -1,0 +1,309 @@
+{
+  "api_call_attempted": false,
+  "audit_id": "sqj_claim_traceability",
+  "boundary": "This audit maps SQJ manuscript claims to tracked raw-output-free evidence. It does not call model APIs, read raw model responses, infer new results, compile the manuscript, or mark final freeze complete.",
+  "checks": [
+    {
+      "check": "synthesis_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "synthesis_no_api",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "synthesis_expected_models",
+      "detail": [
+        "deepseek/deepseek-v4-pro",
+        "qwen/qwen3.7-max",
+        "moonshotai/kimi-k2.6",
+        "mistralai/devstral-2512",
+        "google/gemini-2.5-flash"
+      ],
+      "passed": true
+    },
+    {
+      "check": "synthesis_expected_levels",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "cost_passed",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "cost_api_freeze",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "blocked_attempts_not_model_results",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "fresh_gate_failed_as_expected",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "fresh_verifier_api_not_ready",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "fresh_decision_downgraded",
+      "detail": "downgrade_to_two_project_fresh_hard_negative_supplement_or_source_acquisition_negative_result",
+      "passed": true
+    },
+    {
+      "check": "all_supported_claims_covered",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "all_forbidden_claims_absent",
+      "detail": null,
+      "passed": true
+    }
+  ],
+  "final_freeze_complete": false,
+  "forbidden_claims": [
+    {
+      "claim": "LLM verifiers outperform deterministic visible-tool or test-based baselines.",
+      "forbidden_phrases": [
+        "LLM verifiers outperform deterministic",
+        "LLM superiority over deterministic",
+        "LLM outperforms deterministic"
+      ],
+      "hits": [],
+      "id": "llm_superiority",
+      "passed": true
+    },
+    {
+      "claim": "E6 is strictly or generally better than E4.",
+      "forbidden_phrases": [
+        "E6 is strictly better than E4",
+        "E6 strictly improves over E4",
+        "E6 is generally better than E4"
+      ],
+      "hits": [],
+      "id": "e6_general_optimal",
+      "passed": true
+    },
+    {
+      "claim": "Evidence levels establish a final monotonic effectiveness ranking.",
+      "forbidden_phrases": [
+        "final monotonic effectiveness ranking",
+        "monotonic improvement from E0 to E6",
+        "more evidence is always better"
+      ],
+      "hits": [],
+      "id": "monotonic_effectiveness_ranking",
+      "passed": true
+    },
+    {
+      "claim": "The 98-candidate EVP-8 set supports broad scale generalization.",
+      "forbidden_phrases": [
+        "supports broad scale generalization",
+        "scale-generalizes beyond the frozen EVP-8",
+        "universal ranking of evidence levels"
+      ],
+      "hits": [],
+      "id": "scale_generalization",
+      "passed": true
+    },
+    {
+      "claim": "The fresh realistic branch is a three-project verifier-ready main experiment.",
+      "forbidden_phrases": [
+        "three-project verifier-ready main experiment",
+        "ready for Qwen or DeepSeek verifier API evaluation",
+        "verifier-ready main experiment"
+      ],
+      "hits": [],
+      "id": "fresh_verifier_ready",
+      "passed": true
+    },
+    {
+      "claim": "The full-file generation-interface repair validates practical autonomous patch verification.",
+      "forbidden_phrases": [
+        "practical autonomous patch verification",
+        "validates the verifier system",
+        "agent patch verifier is practically reliable"
+      ],
+      "hits": [],
+      "id": "practical_autonomous_verifier",
+      "passed": true
+    }
+  ],
+  "inputs": {
+    "draft": {
+      "exists": true,
+      "path": "docs/paper/sqj_submission_draft.tex",
+      "size_bytes": 14847
+    },
+    "evp8_cost": {
+      "exists": true,
+      "path": "data/reviews/evp8_cost_accounting_summary.json",
+      "size_bytes": 8192
+    },
+    "evp8_synthesis": {
+      "exists": true,
+      "path": "data/protocols/evp8_five_model_synthesis_v0_1.json",
+      "size_bytes": 5671
+    },
+    "framing": {
+      "exists": true,
+      "path": "docs/paper/sqj_submission_framing.md",
+      "size_bytes": 6715
+    },
+    "fresh_decision": {
+      "exists": true,
+      "path": "data/protocols/evp8_realistic_hardneg_paper_claim_decision_packet_v0_1.json",
+      "size_bytes": 4415
+    },
+    "fresh_gate": {
+      "exists": true,
+      "path": "data/protocols/evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json",
+      "size_bytes": 3973
+    }
+  },
+  "passed": true,
+  "raw_output_free_check": {
+    "checked_for_raw_markers": true,
+    "passed": true
+  },
+  "raw_outputs_read": false,
+  "supported_claims": [
+    {
+      "claim": "Evidence visibility is a first-order experimental variable for LLM-based patch verification.",
+      "coverage": {
+        "draft": true,
+        "draft_keyword_groups": [
+          true,
+          true
+        ],
+        "framing": true,
+        "framing_keyword_groups": [
+          true,
+          true
+        ]
+      },
+      "evidence_sources": [
+        "evp8_synthesis"
+      ],
+      "id": "evidence_visibility_variable",
+      "passed": true
+    },
+    {
+      "claim": "The SQJ main result is a descriptive five-model EVP-8 study over 98 candidates and seven evidence levels.",
+      "coverage": {
+        "draft": true,
+        "draft_keyword_groups": [
+          true,
+          true,
+          true
+        ],
+        "framing": true,
+        "framing_keyword_groups": [
+          true,
+          true,
+          true
+        ]
+      },
+      "evidence_sources": [
+        "evp8_synthesis"
+      ],
+      "id": "frozen_evp8_scope",
+      "passed": true
+    },
+    {
+      "claim": "The observed EVP-8 decision patterns are model-dependent and non-monotonic.",
+      "coverage": {
+        "draft": true,
+        "draft_keyword_groups": [
+          true,
+          true
+        ],
+        "framing": true,
+        "framing_keyword_groups": [
+          true,
+          true
+        ]
+      },
+      "evidence_sources": [
+        "evp8_synthesis"
+      ],
+      "id": "non_monotonic_model_dependent",
+      "passed": true
+    },
+    {
+      "claim": "Devstral 2 saturation to escalation is a verifier reliability finding.",
+      "coverage": {
+        "draft": true,
+        "draft_keyword_groups": [
+          true,
+          true
+        ],
+        "framing": true,
+        "framing_keyword_groups": [
+          true,
+          true
+        ]
+      },
+      "evidence_sources": [
+        "evp8_synthesis"
+      ],
+      "id": "devstral_saturation_risk",
+      "passed": true
+    },
+    {
+      "claim": "Blocked Kimi attempts are cost and execution-risk evidence only, not valid model-result records.",
+      "coverage": {
+        "draft": true,
+        "draft_keyword_groups": [
+          true,
+          true,
+          true
+        ],
+        "framing": true,
+        "framing_keyword_groups": [
+          true,
+          true,
+          true
+        ]
+      },
+      "evidence_sources": [
+        "evp8_cost"
+      ],
+      "id": "blocked_kimi_cost_risk",
+      "passed": true
+    },
+    {
+      "claim": "The fresh realistic branch is a two-project source-acquisition negative result, not a verifier-ready main experiment.",
+      "coverage": {
+        "draft": true,
+        "draft_keyword_groups": [
+          true,
+          true,
+          true
+        ],
+        "framing": true,
+        "framing_keyword_groups": [
+          true,
+          true,
+          true
+        ]
+      },
+      "evidence_sources": [
+        "fresh_decision",
+        "fresh_gate"
+      ],
+      "id": "fresh_realistic_negative_result",
+      "passed": true
+    }
+  ]
+}

@@ -1199,6 +1199,13 @@
   the fresh realistic hard-negative branch only as a two-project
   source-acquisition/gate-readiness negative result.
 - `paper/sqj_references.bib`: BibTeX file for the generated SQJ source draft.
+- `experiments/sqj_claim_traceability.md`: human-readable SQJ
+  claim-to-evidence traceability audit. It maps SQJ supported claims and
+  forbidden claims to `sqj_submission_framing.md`, `sqj_submission_draft.tex`,
+  EVP-8 five-model synthesis, cost accounting, and the fresh realistic
+  negative-result packets without reading raw model outputs.
+- `../data/reviews/sqj_claim_traceability.json`: machine-readable raw-output-free
+  SQJ claim traceability audit used by SQJ readiness and local quality gates.
 - `figures/sqj/`: SQJ-specific reproducible PDF/SVG/PNG figures for the EVP-8
   manuscript route: hidden-evaluator protocol, five-model decision patterns,
   and cost-validity boundary.
@@ -1707,6 +1714,11 @@
   two-project source-acquisition/gate-readiness negative result.
 - `scripts/generate_sqj_figures.py`: generates the SQJ-specific EVP-8 figure
   set under `docs/figures/sqj/` in PDF, SVG, and PNG form.
+- `scripts/audit_sqj_claim_traceability.py`: audits SQJ claim-to-evidence
+  traceability for the current SQJ manuscript route. It reads only tracked
+  raw-output-free summaries and manuscript sources, checks supported/forbidden
+  claim coverage, and writes `data/reviews/sqj_claim_traceability.json` plus
+  `docs/experiments/sqj_claim_traceability.md`.
 - `scripts/audit_sqj_artifact_gate.py`: audits the SQJ artifact candidate
   package without creating a final ZIP. It reuses the anonymous artifact
   file enumeration and safety validation, requires the SQJ source/checklist/
