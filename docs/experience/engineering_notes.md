@@ -3484,3 +3484,23 @@ This file starts fresh for the patch-verification project.
   low-information escalated/control candidates with validated hard cases that
   actually pass visible tests while failing hidden correctness, or otherwise
   create tool false rejects.
+
+## 2026-06-29 EVP-8-HARD headroom gate repair
+
+- Workdir lookup must prefer the validation record's `.candidate.patch`
+  parent before generic task-level P2P workdirs. Otherwise a local candidate id
+  collision such as `candidate_0001` can silently run visible tests against the
+  wrong patched checkout and inflate false accepts.
+- Rebuilding ignored HTTPie workdirs changed the baseline again: broader
+  visible execution can reduce headroom when previously escalated wrong
+  patches become true rejects. Treat execution coverage and actionable
+  headroom as separate gates.
+- HTTPie1 exposes a useful visible-test blind spot: the visible
+  `test_unique_filename` test mocks `get_filename_max_length`, while the
+  hidden `httpie_1_errno_fallback` oracle checks the `EINVAL` pathconf
+  fallback. Distinct partials that implement visible trimming but break the
+  fallback are valid hard negatives.
+- Latest no-API gate now reaches 47 candidates, 23 nontrivial hard negatives,
+  all 47 visible outcomes completed or timed out, and actionable tool
+  headroom 11/10. This makes the cohort API-ready, but model execution still
+  requires explicit user authorization.

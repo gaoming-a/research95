@@ -312,7 +312,7 @@
   prompts or calling APIs.
 - `../data/patches/evp8_hard_evaluator_manifest_v0_1.jsonl`: evaluator-only
   hard-case draft manifest. It contains hidden labels, hidden oracle paths, and
-  validation summaries for 44 applied candidates.
+  validation summaries for 47 applied candidates.
 - `../data/evidence/evp8_hard_model_visible_seed_v0_1.jsonl`: model-visible
   hard-case seed manifest. It contains task summaries, touched files, patch
   diffs, visible static evidence, and visible test hints, but excludes hidden
@@ -320,12 +320,12 @@
   paths.
 - `../data/baselines/evp8_hard_tool_only_baseline_v0_1.jsonl`: deterministic
   no-API tool-only baseline for the hard-case draft. Current decisions are
-  `accept=9`, `reject=9`, and `escalate=26`; actionable false-accept/
-  false-reject headroom is 7.
+  `accept=17` and `reject=30`; actionable false-accept/false-reject headroom
+  is 11.
 - `../data/protocols/evp8_hard_candidate_draft_v0_1.json`: raw-output-free
   summary and gate result for the hard-case draft. Current API readiness is
-  `blocked`: 44 candidates pass the size gate, 20 non-trivial hard negatives
-  are present, but actionable false-accept/false-reject headroom is still 7.
+  `ready`: 47 candidates pass the size gate, 23 non-trivial hard negatives
+  are present, and actionable false-accept/false-reject headroom is 11.
 - `experiments/evp8_hard_candidate_draft_v0_1.md`: Markdown companion for the
   hard-case draft and baseline gate.
 - `../scripts/run_evp8_hard_visible_tests.py`: no-API visible-test runner for

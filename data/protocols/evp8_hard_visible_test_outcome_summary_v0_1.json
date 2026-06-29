@@ -1,38 +1,34 @@
 {
   "analysis_id": "evp8_hard_visible_test_outcomes_v0_1",
   "api_call_attempted": false,
-  "blocked_count": 26,
+  "blocked_count": 0,
   "cohort_id": "EVP-8-HARD",
-  "completed_or_error_or_timeout_count": 18,
+  "completed_or_error_or_timeout_count": 47,
   "evaluator_labels_emitted": false,
   "leakage_policy": "visible-test records exclude evaluator labels, hidden oracle outcomes, source patch ids, prompts, and raw model responses",
   "mode": "run",
   "raw_model_outputs_read": false,
-  "record_count": 44,
+  "record_count": 47,
   "run_status_counts": {
-    "blocked": 26,
-    "completed": 18
+    "completed": 45,
+    "timeout": 2
   },
   "run_status_counts_by_task": {
     "bugsinpy_httpie_1": {
-      "blocked": 8,
-      "completed": 2
+      "completed": 13
     },
     "bugsinpy_httpie_2": {
-      "blocked": 4,
-      "completed": 2
+      "completed": 6
     },
     "bugsinpy_httpie_3": {
-      "blocked": 4,
-      "completed": 2
+      "completed": 6
     },
     "bugsinpy_httpie_4": {
-      "blocked": 4,
-      "completed": 2
+      "completed": 4,
+      "timeout": 2
     },
     "bugsinpy_httpie_5": {
-      "blocked": 6,
-      "completed": 1
+      "completed": 7
     },
     "bugsinpy_luigi_3": {
       "completed": 5
@@ -42,8 +38,8 @@
     }
   },
   "test_outcome_counts": {
-    "failed": 9,
-    "not_run_blocked": 26,
-    "passed": 9
+    "failed": 28,
+    "passed": 17,
+    "timeout": 2
   }
 }

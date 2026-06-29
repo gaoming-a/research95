@@ -26,6 +26,7 @@ SOURCE_INVENTORY = REPO_ROOT / "data" / "protocols" / "evp8_hard_case_source_inv
 VISIBLE_OUTCOMES = REPO_ROOT / "data" / "evidence" / "evp8_hard_visible_test_outcomes_v0_1.jsonl"
 
 CURATED_SOURCE_FILES = [
+    REPO_ROOT / "data" / "patches" / "evp8_hard_extra_httpie1_errno_partials" / "candidates.jsonl",
     REPO_ROOT / "data" / "patches" / "evp8_hard_extra_luigi4_partial" / "candidates.jsonl",
     REPO_ROOT / "outputs" / "httpie_agent_patch_qwen37_httpie5_strict_001" / "candidates.relabeled.jsonl",
     REPO_ROOT / "outputs" / "httpie_agent_patch_stage_ab_001" / "candidates.relabeled.jsonl",
@@ -526,10 +527,16 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
         else f"It still does not meet the 20 nontrivial-hard-negative gate ({hard_negative_count}/20)."
     )
     if headroom:
-        headroom_sentence = (
-            f"the current tool-only baseline exposes {headroom} actionable false "
-            "accept/reject cases, still below the pre-API threshold of 10."
-        )
+        if headroom >= 10:
+            headroom_sentence = (
+                f"The current tool-only baseline exposes {headroom} actionable false "
+                "accept/reject cases, meeting the pre-API threshold of 10."
+            )
+        else:
+            headroom_sentence = (
+                f"the current tool-only baseline exposes {headroom} actionable false "
+                "accept/reject cases, still below the pre-API threshold of 10."
+            )
     else:
         headroom_sentence = (
             "the current tool-only baseline has no actionable false accept or "
@@ -607,11 +614,21 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
         "Plain-language conclusion: the draft reaches the 30-50 candidate size and",
         "has enough AI/agent wrong patches, and the visible-test runner now records",
         f"some executable outcomes. {hard_negative_sentence}",
-        f"However, {headroom_sentence}",
-        "The next action is to add or validate harder non-control negatives and",
-        "improve visible-test execution coverage, not to run Qwen or DeepSeek.",
+        headroom_sentence if headroom >= 10 else f"However, {headroom_sentence}",
+        (
+            "The next action is to request explicit API authorization before running Qwen or DeepSeek."
+            if summary["api_readiness"] == "ready"
+            else "The next action is to add or validate harder non-control negatives and"
+        ),
+        (
+            ""
+            if summary["api_readiness"] == "ready"
+            else "improve visible-test execution coverage, not to run Qwen or DeepSeek."
+        ),
         "",
     ]
+    while len(lines) > 1 and lines[-1] == "" and lines[-2] == "":
+        lines.pop()
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines), encoding="utf-8")
 

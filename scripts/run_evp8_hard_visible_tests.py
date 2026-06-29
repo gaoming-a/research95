@@ -95,12 +95,19 @@ def workdir_for(candidate: dict[str, Any], validation: dict[str, Any] | None) ->
     parent = source_path.parent
     source_patch_id = str(candidate.get("source_patch_id") or "")
     source_model_candidate_id = str(candidate.get("source_model_candidate_id") or "")
-    candidates = [
+    candidates: list[tuple[Path, str]] = []
+    if validation:
+        command = (validation.get("patch_result") or {}).get("command") or []
+        for part in command:
+            part_text = str(part)
+            if part_text.endswith(".candidate.patch"):
+                candidates.append((Path(part_text).parent, "validation_patch_command_parent"))
+    candidates.extend([
         (parent / "agent_workdirs" / source_patch_id, "source_agent_workdir_by_stable_source_key"),
         (parent / "workdirs" / source_model_candidate_id, "source_workdir_by_local_candidate_key"),
         (parent / "workdirs" / source_patch_id, "source_workdir_by_stable_source_key"),
         (parent / "p2p_workdirs" / source_model_candidate_id, "source_p2p_workdir_by_local_candidate_key"),
-    ]
+    ])
     if candidate.get("project") == "luigi" and source_model_candidate_id:
         if candidate.get("task_id") == "bugsinpy_luigi_3":
             candidates.append((
@@ -112,12 +119,6 @@ def workdir_for(candidate: dict[str, Any], validation: dict[str, Any] | None) ->
                 REPO_ROOT / "data" / "patch_verification" / "workdirs" / "luigi4_p2p_validation" / source_model_candidate_id,
                 "luigi_p2p_validation_workdir_by_local_candidate_key",
             ))
-    if validation:
-        command = (validation.get("patch_result") or {}).get("command") or []
-        for part in command:
-            part_text = str(part)
-            if part_text.endswith(".candidate.patch"):
-                candidates.append((Path(part_text).parent, "validation_patch_command_parent"))
     for path, source in candidates:
         if path and path.exists():
             return path, source

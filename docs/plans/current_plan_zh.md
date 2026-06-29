@@ -18723,3 +18723,53 @@ Next:
   candidates，引入更多 validated、visible-test-passing 但 hidden-incorrect
   的 hard cases，或能制造 tool false reject 的 correct cases；
 - 在 headroom 达到 10 前，不运行 Qwen/DeepSeek。
+
+## 2026-06-29 EVP-8-HARD headroom gate repair
+
+本轮目标：
+
+- 不调用模型 API；
+- 不修改旧 98-candidate controlled cohort；
+- 修复 visible-test workdir 选择中的候选 ID 碰撞问题；
+- 在 no-API 范围内把 actionable false-accept/false-reject headroom 提到
+  >= 10。
+
+执行结果：
+
+- `scripts/run_evp8_hard_visible_tests.py` 现在优先使用 validation 记录中
+  `.candidate.patch` 所在 workdir，再回退到 source-level 或 task-level P2P
+  workdir；
+- 重建 ignored HTTPie workdirs 后，44 条旧候选全部获得 visible outcome；
+- 发现并修复一个污染统计的问题：Luigi4 extra candidate 的
+  `candidate_0001` 曾误命中通用 Luigi4 P2P workdir，修复后不再被错误计为
+  false accept；
+- 新增 tracked
+  `data/patches/evp8_hard_extra_httpie1_errno_partials/`，包含 3 条
+  HTTPie1 EINVAL fallback partial hard negatives；
+- 这 3 条均满足：
+  - patch applied；
+  - hidden oracle ran；
+  - hidden oracle failed；
+  - visible `test_unique_filename` passed。
+
+最新 no-API gate：
+
+- candidates = 47；
+- tasks = 7；
+- projects = 2；
+- nontrivial hard negatives = 23；
+- AI/agent hard negatives = 10；
+- visible outcome records = 47；
+- visible completed/error/timeout = 47；
+- visible outcomes = `passed=17, failed=28, timeout=2`；
+- deterministic baseline decisions = `accept=17, reject=30`；
+- false accepts = 9；
+- false rejects = 2；
+- actionable false-accept/false-reject headroom = 11；
+- API readiness = `ready`。
+
+当前结论：
+
+- no-API 前置门已经通过；
+- 现在可以进入 Qwen/DeepSeek API 实验授权讨论；
+- 但在用户显式授权前，仍不得调用模型 API。

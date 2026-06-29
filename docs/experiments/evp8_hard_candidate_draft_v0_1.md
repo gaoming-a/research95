@@ -15,35 +15,35 @@ controlled cohort.
 
 ## Candidate Summary
 
-- candidates: 44
+- candidates: 47
 - tasks: 7
 - projects: 2
-- nontrivial hard negatives: 20
+- nontrivial hard negatives: 23
 - AI/agent hard negatives: 10
-- visible outcome records: 44
-- visible completed/error/timeout records: 18
+- visible outcome records: 47
+- visible completed/error/timeout records: 47
 
 Candidate types:
 
 - `agent_plausible_wrong`: 10
 - `correct_reference`: 10
 - `irrelevant_or_noop_control`: 14
-- `partial_fix`: 10
+- `partial_fix`: 13
 
 Labels:
 
 - `agent_plausible_wrong`: 10
 - `correct`: 10
 - `irrelevant_or_noop`: 14
-- `partial`: 10
+- `partial`: 13
 
 ## Tool-Only Baseline
 
-- decision counts: `{'accept': 9, 'escalate': 26, 'reject': 9}`
-- false accepts: 7
-- false rejects: 0
-- actionable false-accept/false-reject headroom: 7
-- opportunity size including escalations: 33
+- decision counts: `{'accept': 17, 'reject': 30}`
+- false accepts: 9
+- false rejects: 2
+- actionable false-accept/false-reject headroom: 11
+- opportunity size including escalations: 11
 
 The deterministic baseline uses only model-visible apply and visible-test
 outcome evidence. Candidates with visible test errors are rejected; candidates
@@ -56,22 +56,20 @@ whose visible tests are blocked or only listed as hints are escalated.
 - rendered_prompt_not_generated: passed (False)
 - old_evp8_controlled_cohort_not_mutated: passed (False)
 - source_inventory_passed: passed (passed)
-- candidate_count_30_to_50: passed (44)
-- nontrivial_hard_negative_count_at_least_20: passed (20)
+- candidate_count_30_to_50: passed (47)
+- nontrivial_hard_negative_count_at_least_20: passed (23)
 - ai_or_agent_hard_negative_count_at_least_10: passed (10)
 - model_visible_label_leakage_absent: passed ([])
-- visible_test_outcomes_available: passed (18)
-- actionable_false_accept_or_reject_headroom_at_least_10: failed (7)
+- visible_test_outcomes_available: passed (47)
+- actionable_false_accept_or_reject_headroom_at_least_10: passed (11)
 
-API readiness: `blocked`
+API readiness: `ready`
 
 Blocked reasons:
 
-- `actionable_false_accept_or_reject_headroom_at_least_10`
 
 Plain-language conclusion: the draft reaches the 30-50 candidate size and
 has enough AI/agent wrong patches, and the visible-test runner now records
-some executable outcomes. It now meets the 20 nontrivial-hard-negative gate with 20 cases.
-However, the current tool-only baseline exposes 7 actionable false accept/reject cases, still below the pre-API threshold of 10.
-The next action is to add or validate harder non-control negatives and
-improve visible-test execution coverage, not to run Qwen or DeepSeek.
+some executable outcomes. It now meets the 20 nontrivial-hard-negative gate with 23 cases.
+The current tool-only baseline exposes 11 actionable false accept/reject cases, meeting the pre-API threshold of 10.
+The next action is to request explicit API authorization before running Qwen or DeepSeek.
