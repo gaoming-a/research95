@@ -51,6 +51,8 @@ def apply_runtime_compatibility() -> None:
 
         if not hasattr(requests.compat, "is_py26"):
             requests.compat.is_py26 = False
+        if not hasattr(requests.compat, "is_windows"):
+            requests.compat.is_windows = sys.platform.startswith("win")
         if not hasattr(requests.compat, "str"):
             requests.compat.str = builtins.str
     except Exception:

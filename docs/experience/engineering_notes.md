@@ -3455,8 +3455,11 @@ This file starts fresh for the patch-verification project.
   mock, and docutils; the tracked wrapper only patches runtime incompatibilities
   and duplicate fixture decoration before calling pytest.
 - Fixing execution coverage can change the tool-only baseline qualitatively.
-  The hard-case draft moved from `error=9` to `completed=7, error=2`, producing
-  4 tool false accepts instead of zero actionable headroom.
+  The hard-case draft moved from `error=9` to `completed=9`, producing 4 tool
+  false accepts instead of zero actionable headroom.
+- Sanitize before truncating stdout/stderr tails. Truncating first can leave a
+  partial path fragment such as an agent workdir suffix that no longer matches
+  the full replacement string and fails the forbidden-marker leakage gate.
 - This is still not an API-ready cohort. The current draft has only 17
   nontrivial hard negatives and 4 actionable false-accept/false-reject cases,
   both below the planned gates of 20 and 10.

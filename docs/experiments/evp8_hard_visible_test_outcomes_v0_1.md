@@ -14,13 +14,11 @@ prompts, or raw model responses.
 Run status counts:
 
 - `blocked`: 26
-- `completed`: 7
-- `error`: 2
+- `completed`: 9
 
 Test outcome counts:
 
-- `error`: 2
-- `failed`: 3
+- `failed`: 5
 - `not_run_blocked`: 26
 - `passed`: 4
 
@@ -29,5 +27,5 @@ Task status counts:
 - `bugsinpy_httpie_1`: `{'blocked': 8, 'completed': 2}`
 - `bugsinpy_httpie_2`: `{'blocked': 4, 'completed': 2}`
 - `bugsinpy_httpie_3`: `{'blocked': 4, 'completed': 2}`
-- `bugsinpy_httpie_4`: `{'blocked': 4, 'error': 2}`
+- `bugsinpy_httpie_4`: `{'blocked': 4, 'completed': 2}`
 - `bugsinpy_httpie_5`: `{'blocked': 6, 'completed': 1}`

@@ -152,8 +152,8 @@ def run_command(command: list[str], cwd: Path, timeout: int) -> dict[str, Any]:
             "exit_code": process.returncode,
             "elapsed_seconds": round(time.monotonic() - start, 3),
             "timeout": False,
-            "stdout_tail": tail(stdout),
-            "stderr_tail": tail(stderr),
+            "stdout": stdout,
+            "stderr": stderr,
         }
     except subprocess.TimeoutExpired:
         if process is not None:
@@ -165,8 +165,8 @@ def run_command(command: list[str], cwd: Path, timeout: int) -> dict[str, Any]:
             "exit_code": None,
             "elapsed_seconds": round(time.monotonic() - start, 3),
             "timeout": True,
-            "stdout_tail": tail(stdout),
-            "stderr_tail": tail(stderr),
+            "stdout": stdout,
+            "stderr": stderr,
         }
 
 
@@ -180,10 +180,6 @@ def terminate(process: subprocess.Popen[str]) -> None:
             process.terminate()
     else:
         process.terminate()
-
-
-def tail(text: str, limit: int = 500) -> str:
-    return (text or "")[-limit:]
 
 
 def sanitized_tail(text: str, workdir: Path, limit: int = 500) -> str:
@@ -268,8 +264,8 @@ def outcome_record(candidate: dict[str, Any], run: bool, timeout: int) -> dict[s
             "test_count": len(tests),
             "passed": outcome == "passed",
         },
-        "stdout_tail": sanitized_tail(result["stdout_tail"], workdir),
-        "stderr_tail": sanitized_tail(result["stderr_tail"], workdir),
+        "stdout_tail": sanitized_tail(result["stdout"], workdir),
+        "stderr_tail": sanitized_tail(result["stderr"], workdir),
     }
 
 

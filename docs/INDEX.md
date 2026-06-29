@@ -336,8 +336,8 @@
   by the visible-test runner for old HTTPie tests under Python 3.11. It patches
   runtime/test-fixture incompatibilities only, then delegates to pytest.
 - `../data/evidence/evp8_hard_visible_test_outcomes_v0_1.jsonl`: visible-test
-  outcome records for the hard-case draft. Current run status is `completed=7`,
-  `error=2`, `blocked=26`; labels and hidden oracle outcomes are not emitted.
+  outcome records for the hard-case draft. Current run status is `completed=9`,
+  `blocked=26`; labels and hidden oracle outcomes are not emitted.
 - `../data/protocols/evp8_hard_visible_test_outcome_summary_v0_1.json`:
   raw-output-free visible-test run summary.
 - `experiments/evp8_hard_visible_test_outcomes_v0_1.md`: Markdown companion

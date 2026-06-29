@@ -18654,10 +18654,9 @@ Next:
   responses 或 prompt；
 - `python scripts\run_evp8_hard_visible_tests.py --run --check --timeout 60`
   重新生成 35 条 visible-test records：
-  - `completed=7`；
-  - `error=2`；
+  - `completed=9`；
   - `blocked=26`；
-  - test outcomes 为 `passed=4, failed=3, error=2, not_run_blocked=26`；
+  - test outcomes 为 `passed=4, failed=5, not_run_blocked=26`；
 - `python scripts\build_evp8_hard_candidate_draft.py --check` 重新生成 baseline：
   - decision counts 为 `accept=4, reject=5, escalate=26`；
   - tool false accepts = 4；
@@ -18666,8 +18665,8 @@ Next:
 
 当前结论：
 
-- 执行链路问题已部分修复，visible-test 证据从全 error/blocker 推进到部分
-  pass/fail；
+- 执行链路问题已修复到现有 workdir 范围内的 9 条可执行候选，visible-test
+  证据从全 error/blocker 推进到 pass/fail；
 - 这说明 hard-case draft 已经出现工具基线误接收错误补丁的现象，有研究价值；
 - 但当前仍不满足 API 前置门：
   - nontrivial hard negatives = 17，低于 20；
