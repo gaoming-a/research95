@@ -21016,3 +21016,52 @@ paper-facing 入口，避免后续写作继续把 fresh realistic hard-negative 
 - 修复方式是保持 `two-project source-acquisition negative result` 在生成
   LaTeX 中连续出现；
 - 这是审计实现细节问题，不改变实验结果或论文 claim。
+
+## 2026-06-30 SQJ paper readiness/local quality gate rerun
+
+本轮小目标是在不调用 API 的前提下，对上一轮 fresh realistic 边界同步后的
+SQJ package 运行更高层 paper readiness 与 local quality gate，确认局部
+checklist/readiness 通过后没有破坏全局投稿准备门禁。
+
+执行边界：
+
+- 不运行任何 API；
+- 不修改 prompt；
+- 不修改实验结果、tracked summary 或 raw outputs；
+- 不生成或提交 `outputs/`；
+- 若门禁失败，先诊断失败类型，再只做最短路径一致性修复。
+
+验收条件：
+
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md` 通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md` 通过；
+- 若发生修复，更新 `docs/experience/engineering_notes.md`、`docs/INDEX.md`
+  和本计划；
+- staged diff 不包含 API key、raw prompt/response、输出目录或 local config。
+
+执行结果：
+
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`
+  已通过；
+- paper readiness 关键状态：
+  - `submission_package_ready=true`；
+  - `sqj_freeze_readiness_ready=true`；
+  - `sqj_final_freeze_complete=false`；
+  - `prompt_only_positive_claim_ready=false`；
+  - `tool_augmented_claim_ready=true`；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`
+  已通过；
+- local quality gate 关键状态：
+  - `passed=true`；
+  - SQJ checklist audit passed；
+  - SQJ final-freeze readiness audit passed；
+  - sensitive scan passed；
+  - credential boundary passed。
+
+当前判断：
+
+- fresh realistic boundary 同步后没有破坏 paper readiness/local quality gate；
+- 当前 SQJ source package 可以继续作为 submission-package draft 推进；
+- 但仍不是 final freeze：`sn-jnl.cls`/PDF compile、学校/学院认定、作者/基金/
+  利益冲突、最终 artifact rebuild 和用户提交授权仍是外部阻断项；
+- 本轮没有修复失败项，因此不需要新增经验条目或索引入口。
