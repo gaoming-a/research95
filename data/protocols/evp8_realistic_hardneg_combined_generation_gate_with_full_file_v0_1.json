@@ -1,0 +1,147 @@
+{
+  "analysis_id": "evp8_realistic_hardneg_combined_generation_gate_v0_1",
+  "analysis_status": "passed",
+  "candidate_count": 94,
+  "checks": [
+    {
+      "check": "api_call_not_attempted_by_combiner",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_model_outputs_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "patch_text_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "input_gate_analyses_passed",
+      "detail": [
+        "passed",
+        "passed",
+        "passed",
+        "passed",
+        "passed"
+      ],
+      "passed": true
+    },
+    {
+      "check": "hard_negative_min_count_gate",
+      "detail": 26,
+      "passed": false
+    },
+    {
+      "check": "hard_negative_min_project_gate",
+      "detail": [
+        "PySnooper",
+        "cookiecutter"
+      ],
+      "passed": false
+    }
+  ],
+  "classification_by_project": {
+    "PySnooper": {
+      "visible_pass_hidden_fail": 9,
+      "visible_pass_hidden_pass": 9
+    },
+    "cookiecutter": {
+      "visible_fail_hidden_fail": 10,
+      "visible_pass_hidden_fail": 17
+    },
+    "httpie": {
+      "visible_fail_hidden_fail": 6,
+      "visible_pass_hidden_pass": 18
+    },
+    "thefuck": {
+      "visible_pass_hidden_pass": 12
+    },
+    "tqdm": {
+      "visible_fail_hidden_fail": 9
+    },
+    "youtube-dl": {
+      "visible_pass_hidden_pass": 4
+    }
+  },
+  "classification_by_task": {
+    "bugsinpy_PySnooper_1": {
+      "visible_pass_hidden_pass": 9
+    },
+    "bugsinpy_PySnooper_3": {
+      "visible_pass_hidden_fail": 9
+    },
+    "bugsinpy_cookiecutter_1": {
+      "visible_fail_hidden_fail": 9
+    },
+    "bugsinpy_cookiecutter_2": {
+      "visible_pass_hidden_fail": 9
+    },
+    "bugsinpy_cookiecutter_3": {
+      "visible_fail_hidden_fail": 1,
+      "visible_pass_hidden_fail": 8
+    },
+    "bugsinpy_httpie_1": {
+      "visible_fail_hidden_fail": 6
+    },
+    "bugsinpy_httpie_2": {
+      "visible_pass_hidden_pass": 6
+    },
+    "bugsinpy_httpie_3": {
+      "visible_pass_hidden_pass": 6
+    },
+    "bugsinpy_httpie_4": {
+      "visible_pass_hidden_pass": 6
+    },
+    "bugsinpy_thefuck_1": {
+      "visible_pass_hidden_pass": 12
+    },
+    "bugsinpy_tqdm_9": {
+      "visible_fail_hidden_fail": 9
+    },
+    "bugsinpy_youtube-dl_7": {
+      "visible_pass_hidden_pass": 4
+    }
+  },
+  "classification_counts": {
+    "visible_fail_hidden_fail": 25,
+    "visible_pass_hidden_fail": 26,
+    "visible_pass_hidden_pass": 43
+  },
+  "date": "2026-06-30",
+  "hard_negative_gate": {
+    "minimum_count": 30,
+    "minimum_projects": 3,
+    "passed": false,
+    "required_property": "patch_applied && declared_visible_tests_passed && hidden_oracle_failed",
+    "visible_pass_hidden_fail_count": 26,
+    "visible_pass_hidden_fail_projects": [
+      "PySnooper",
+      "cookiecutter"
+    ],
+    "visible_pass_hidden_fail_tasks": [
+      "bugsinpy_PySnooper_3",
+      "bugsinpy_cookiecutter_2",
+      "bugsinpy_cookiecutter_3"
+    ]
+  },
+  "inputs": [
+    "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+    "data/protocols/evp8_realistic_hardneg_generation_supplement_001_gate_v0_1.json",
+    "data/protocols/evp8_realistic_hardneg_generation_deepseek_supplement_001_gate_v0_1.json",
+    "data/protocols/evp8_realistic_hardneg_generation_thefuck_supplement_003_gate_v0_1.json",
+    "data/protocols/evp8_realistic_hardneg_full_file_generation_gate_v0_1.json"
+  ],
+  "readiness": {
+    "next_step": "Do not run verifier API. Redesign source strategy for a third project or revise the paper claim to report a two-project hard-negative cohort.",
+    "ready_for_verifier_api": false
+  },
+  "scope": {
+    "api_call_attempted": false,
+    "patch_text_stored": false,
+    "prompt_text_stored": false,
+    "raw_model_outputs_read": false
+  }
+}

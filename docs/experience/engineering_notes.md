@@ -3981,3 +3981,8 @@ This file starts fresh for the patch-verification project.
   `agent_full_file_v1`; its dry-run only proves prompt construction and
   leakage boundaries. Do not merge future full-file results silently with the
   exact edit-plan supplement series.
+- A generation interface can be technically successful while still failing the
+  source gate. `agent_full_file_v1` produced 4 applicable `youtube-dl_7`
+  patches and all passed both visible test and hidden oracle. This is not a
+  verifier opportunity set; it is evidence that the current third-project task
+  is too easy or too clearly specified for Qwen under this prompt.

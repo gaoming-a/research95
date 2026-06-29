@@ -1,0 +1,158 @@
+{
+  "audit_id": "evp8_realistic_agent_generation_result_audit_v0_1",
+  "checks": [
+    {
+      "check": "generation_error_absent",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "summary_run_id_expected",
+      "detail": "evp8_realistic_hardneg_full_file_qwen_001",
+      "passed": true
+    },
+    {
+      "check": "summary_model_expected",
+      "detail": "qwen3.7-max",
+      "passed": true
+    },
+    {
+      "check": "summary_provider_expected",
+      "detail": "qwen_official",
+      "passed": true
+    },
+    {
+      "check": "summary_not_dry_run",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "summary_prompt_count_matches_expected",
+      "detail": 4,
+      "passed": true
+    },
+    {
+      "check": "summary_candidate_count_matches_expected",
+      "detail": 4,
+      "passed": true
+    },
+    {
+      "check": "prompt_manifest_count_matches_expected",
+      "detail": 4,
+      "passed": true
+    },
+    {
+      "check": "candidate_count_matches_expected",
+      "detail": 4,
+      "passed": true
+    },
+    {
+      "check": "evidence_packet_count_matches_expected",
+      "detail": 4,
+      "passed": true
+    },
+    {
+      "check": "unique_patch_ids_match_expected",
+      "detail": 4,
+      "passed": true
+    },
+    {
+      "check": "unique_model_candidate_ids_match_expected",
+      "detail": 4,
+      "passed": true
+    },
+    {
+      "check": "evidence_candidate_ids_match_model_candidate_ids",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "candidate_task_counts_match_plan",
+      "detail": {
+        "bugsinpy_youtube-dl_7": 4
+      },
+      "passed": true
+    },
+    {
+      "check": "prompt_task_counts_match_plan",
+      "detail": {
+        "bugsinpy_youtube-dl_7": 4
+      },
+      "passed": true
+    },
+    {
+      "check": "all_labels_pending_validation",
+      "detail": {
+        "pending_validation": 4
+      },
+      "passed": true
+    },
+    {
+      "check": "raw_response_files_at_least_candidates",
+      "detail": 4,
+      "passed": true
+    },
+    {
+      "check": "candidate_raw_hashes_present",
+      "detail": 4,
+      "passed": true
+    },
+    {
+      "check": "prompt_manifest_has_no_payload_fields",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "evidence_packets_hide_evaluator_fields",
+      "detail": [],
+      "passed": true
+    }
+  ],
+  "counts": {
+    "candidate_raw_hash_count": 4,
+    "candidate_records": 4,
+    "evidence_packet_records": 4,
+    "expected_task_counts": {
+      "bugsinpy_youtube-dl_7": 4
+    },
+    "extra_raw_response_files_from_failed_attempts": 0,
+    "planned_slots": 54,
+    "prompt_manifest_records": 4,
+    "raw_response_file_count": 4,
+    "unique_model_candidate_ids": 4,
+    "unique_patch_ids": 4,
+    "unique_patch_text_hashes": 4
+  },
+  "date_utc": "2026-06-29T21:34:29.760583+00:00",
+  "field_boundary": {
+    "evidence_packet_forbidden_fields_present": [],
+    "pending_candidates_are_not_model_visible_inputs": true,
+    "pending_candidates_contain_evaluator_only_fields": true,
+    "prompt_manifest_unexpected_fields": []
+  },
+  "generation_summary": {
+    "api_provider": "qwen_official",
+    "candidate_count": 4,
+    "dry_run": false,
+    "generation_date_utc": "2026-06-29T21:34:09.030410+00:00",
+    "model": "qwen3.7-max",
+    "prompt_count": 4,
+    "prompt_version": "agent_full_file_v1",
+    "run_id": "evp8_realistic_hardneg_full_file_qwen_001"
+  },
+  "label_confidence_counts": {
+    "pending_validation": 4
+  },
+  "next_required_step": "validate generated candidates and relabel with evaluator-only outcomes before cohort construction",
+  "patch_text_stored": false,
+  "project_counts": {
+    "youtube-dl": 4
+  },
+  "prompt_text_stored": false,
+  "raw_output_content_stored": false,
+  "run_dir": "outputs/evp8_realistic_hardneg_full_file_generation_qwen_001",
+  "status": "passed",
+  "task_counts": {
+    "bugsinpy_youtube-dl_7": 4
+  }
+}

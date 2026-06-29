@@ -20796,3 +20796,81 @@ Protocol 边界：
 - generation API 是否执行必须作为下一步单独 gate，执行后仍必须 validation、
   relabel、visible-test 和 combined hard-negative gate；
 - verifier API 仍然 blocked。
+
+## 2026-06-30 Authorized full-file Qwen generation execution
+
+用户此前已授权所有 API；`agent_full_file_v1` dry-run audit 已通过。本轮目标是在
+新 protocol 边界内只执行 Qwen full-file generation API，检验该接口能否为
+`bugsinpy_youtube-dl_7` 产生可 validation 的第三项目候选。
+
+执行边界：
+
+- 只运行 `qwen3.7-max`；
+- 只运行 `bugsinpy_youtube-dl_7`；
+- prompt version 固定为 `agent_full_file_v1`；
+- output dir 固定为
+  `outputs/evp8_realistic_hardneg_full_file_generation_qwen_001`；
+- variant range = 1-4；
+- model candidate id start = 7001；
+- max output tokens = 32768；
+- 请求 timeout 临时设置为 600 秒；
+- 不运行 verifier API；
+- 不读取或提交 raw responses、prompt text、pending candidates、relabeled candidates 或 workdirs；
+- 若 generation 失败，立即生成 raw-output-free failure audit，不继续 validation。
+
+验收条件：
+
+- generation summary 存在且 run id/model/provider/prompt/candidate count 符合预期；
+- raw-output-free result audit 通过，或 failure audit 明确失败类型；
+- 若有 candidates，必须继续 validation、relabel、visible-test、gate analysis；
+- combined hard-negative gate 过之前，Qwen/DeepSeek verifier API 仍然 blocked。
+
+执行结果：
+
+- Qwen full-file generation API 已执行完成：
+  - run id = `evp8_realistic_hardneg_full_file_qwen_001`；
+  - prompt/candidate/evidence records = 4/4/4；
+  - prompt version = `agent_full_file_v1`；
+  - raw response files = 4，全部位于 ignored `outputs/`；
+  - result audit status = `passed`；
+  - unique patch ids = 4；
+  - unique model candidate ids = 4。
+- validation/relabel 已完成：
+  - validation record count = 4；
+  - patch applied = 4；
+  - hidden oracle ran = 4；
+  - hidden oracle passed = 4；
+  - relabel expected outcomes = `correct=4`；
+  - environment invalid = 0。
+- visible tests 已完成：
+  - visible-test records = 4；
+  - completed = 4；
+  - blocked = 0；
+  - patch apply failed = 0；
+  - visible outcome counts = `passed=4`。
+- full-file gate result：
+  - `visible_pass_hidden_fail=0`；
+  - `visible_pass_hidden_pass=4`。
+- combined gate with full-file result：
+  - candidates = 94；
+  - `visible_pass_hidden_fail=26`；
+  - `visible_pass_hidden_pass=43`；
+  - `visible_fail_hidden_fail=25`；
+  - hard-negative projects = `PySnooper, cookiecutter`；
+  - gate 未通过：26 < 30，2 projects < 3。
+
+当前判断：
+
+- `agent_full_file_v1` 成功解决了 exact edit-plan 的 materialization 失败；
+- 但它没有制造第三项目 hard negatives，Qwen 直接生成了 4 个 correct-like
+  youtube-dl patches；
+- 这说明问题已从“生成接口失败”转为“第三项目机会集不足/生成器修对”；
+- verifier API 仍然 blocked；
+- 继续同任务同接口扩量大概率只增加 correct-like cases，不能作为稳健的
+  false-accept opportunity set；
+- 下一步应进入论文 claim 决策：保守 two-project fresh hard-negative cohort，
+  或另开新的 source-acquisition protocol，而不是继续盲跑 verifier。
+- 已新增 no-API outcome review：
+  `data/protocols/evp8_realistic_hardneg_full_file_outcome_review_v0_1.json`，
+  结论同上：full-file interface technically succeeded，但 realistic
+  three-project verifier-ready gate 仍未成立。

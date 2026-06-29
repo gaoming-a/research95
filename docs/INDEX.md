@@ -619,6 +619,30 @@
   raw-output-free dry-run audit for `agent_full_file_v1`. Current status is
   `passed`: 4 prompt hashes for `bugsinpy_youtube-dl_7`, 0 candidates, no raw
   response directory, and no pending candidate/evidence files.
+- `../data/protocols/evp8_realistic_hardneg_full_file_generation_result_audit_v0_1.json`,
+  `../data/protocols/evp8_realistic_hardneg_full_file_generation_gate_v0_1.json`,
+  and
+  `experiments/evp8_realistic_hardneg_full_file_generation_gate_v0_1.md`:
+  raw-output-free result and gate audits for the Qwen `agent_full_file_v1`
+  run. The full-file interface produced 4 applicable youtube-dl candidates,
+  all visible-pass/hidden-pass, so it contributed 0 hard negatives.
+- `../data/protocols/evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json`
+  and
+  `experiments/evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.md`:
+  combined gate after adding the full-file youtube-dl result. Current status:
+  94 candidates, 26 visible-pass/hidden-fail candidates across 2 projects, so
+  verifier API remains blocked.
+- `../data/protocols/evp8_realistic_hardneg_full_file_visible_test_outcomes_qwen_001_v0_1.json`
+  and
+  `experiments/evp8_realistic_hardneg_full_file_visible_test_outcomes_qwen_001_v0_1.md`:
+  visible-test summary for the full-file youtube-dl run. All 4 generated
+  candidates completed and passed the model-visible unittest.
+- `../data/protocols/evp8_realistic_hardneg_full_file_outcome_review_v0_1.json`
+  and
+  `experiments/evp8_realistic_hardneg_full_file_outcome_review_v0_1.md`:
+  no-API outcome review after the full-file run. It records that the interface
+  succeeded technically but produced 4 correct-like youtube-dl patches and 0
+  third-project hard negatives, so verifier API remains blocked.
 - `../data/protocols/evp8_realistic_hardneg_visible_test_outcomes_v0_1.json`,
   `../data/protocols/evp8_realistic_hardneg_visible_test_outcomes_supplement_001_v0_1.json`,
   and

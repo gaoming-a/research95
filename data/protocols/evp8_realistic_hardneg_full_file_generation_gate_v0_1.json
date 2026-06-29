@@ -1,0 +1,99 @@
+{
+  "analysis_id": "evp8_realistic_hardneg_generation_gate_v0_1",
+  "analysis_status": "passed",
+  "candidate_count": 4,
+  "checks": [
+    {
+      "check": "api_call_not_attempted_by_analysis",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_model_outputs_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "patch_text_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "generation_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "visible_tests_completed",
+      "detail": {
+        "completed": 4
+      },
+      "passed": true
+    },
+    {
+      "check": "validation_count_matches_visible_count",
+      "detail": {
+        "validation": 4,
+        "visible": 4
+      },
+      "passed": true
+    },
+    {
+      "check": "visible_coverage_complete",
+      "detail": {
+        "extra": [],
+        "missing": []
+      },
+      "passed": true
+    },
+    {
+      "check": "hard_negative_min_count_gate",
+      "detail": 0,
+      "passed": false
+    },
+    {
+      "check": "hard_negative_min_project_gate",
+      "detail": [],
+      "passed": false
+    }
+  ],
+  "classification_by_project": {
+    "youtube-dl": {
+      "visible_pass_hidden_pass": 4
+    }
+  },
+  "classification_by_task": {
+    "bugsinpy_youtube-dl_7": {
+      "visible_pass_hidden_pass": 4
+    }
+  },
+  "classification_counts": {
+    "visible_pass_hidden_pass": 4
+  },
+  "date": "2026-06-30",
+  "hard_negative_gate": {
+    "minimum_count": 1,
+    "minimum_projects": 1,
+    "passed": false,
+    "required_property": "patch_applied && declared_visible_tests_passed && hidden_oracle_failed",
+    "visible_pass_hidden_fail_count": 0,
+    "visible_pass_hidden_fail_projects": [],
+    "visible_pass_hidden_fail_tasks": []
+  },
+  "inputs": {
+    "generation_audit": "data/protocols/evp8_realistic_hardneg_full_file_generation_result_audit_v0_1.json",
+    "validation": "outputs/evp8_realistic_hardneg_full_file_validation_qwen_001/validation.jsonl",
+    "visible_test_outcomes": "data/evidence/evp8_realistic_hardneg_full_file_visible_test_outcomes_qwen_001_v0_1.jsonl",
+    "visible_test_summary": "data/protocols/evp8_realistic_hardneg_full_file_visible_test_outcomes_qwen_001_v0_1.json"
+  },
+  "readiness": {
+    "next_step": "Add a supplement focused on missing project diversity and at least four more visible-pass/hidden-fail candidates.",
+    "ready_for_verifier_api": false
+  },
+  "scope": {
+    "api_call_attempted": false,
+    "patch_text_stored": false,
+    "prompt_text_stored": false,
+    "raw_model_outputs_read": false
+  }
+}

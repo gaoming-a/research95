@@ -1,0 +1,42 @@
+{
+  "review_id": "evp8_realistic_hardneg_full_file_outcome_review_v0_1",
+  "date": "2026-06-30",
+  "scope": {
+    "api_call_attempted": false,
+    "patch_text_stored": false,
+    "prompt_text_stored": false,
+    "raw_model_outputs_read": false,
+    "verifier_api_attempted": false
+  },
+  "inputs": [
+    "data/protocols/evp8_realistic_hardneg_full_file_generation_result_audit_v0_1.json",
+    "data/protocols/evp8_realistic_hardneg_full_file_generation_gate_v0_1.json",
+    "data/protocols/evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json"
+  ],
+  "full_file_result": {
+    "candidate_count": 4,
+    "patch_applied": 4,
+    "hidden_oracle_passed": 4,
+    "visible_test_passed": 4,
+    "visible_pass_hidden_fail": 0,
+    "visible_pass_hidden_pass": 4
+  },
+  "combined_gate_after_full_file": {
+    "candidate_count": 94,
+    "visible_pass_hidden_fail_count": 26,
+    "visible_pass_hidden_fail_projects": [
+      "PySnooper",
+      "cookiecutter"
+    ],
+    "required_visible_pass_hidden_fail_count": 30,
+    "required_project_count": 3,
+    "passed": false,
+    "ready_for_verifier_api": false
+  },
+  "interpretation": [
+    "The full-file interface solved the previous exact edit-plan materialization failure.",
+    "It did not solve the third-project opportunity problem: all generated youtube-dl candidates were correct-like.",
+    "The current evidence supports a two-project fresh hard-negative cohort plus documented source-acquisition failures, not a three-project verifier-ready realistic cohort."
+  ],
+  "recommended_next_step": "Do not run verifier API. Decide whether to downgrade the paper claim to a two-project fresh hard-negative study or start a new source-acquisition protocol with different target tasks."
+}
