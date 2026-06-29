@@ -1,0 +1,170 @@
+{
+  "audit_id": "evp8_realistic_agent_generation_result_audit_v0_1",
+  "checks": [
+    {
+      "check": "generation_error_absent",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "summary_run_id_expected",
+      "detail": "evp8_realistic_hardneg_generation_deepseek_supplement_001",
+      "passed": true
+    },
+    {
+      "check": "summary_model_expected",
+      "detail": "deepseek-v4-pro",
+      "passed": true
+    },
+    {
+      "check": "summary_provider_expected",
+      "detail": "deepseek_official",
+      "passed": true
+    },
+    {
+      "check": "summary_not_dry_run",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "summary_prompt_count_matches_expected",
+      "detail": 12,
+      "passed": true
+    },
+    {
+      "check": "summary_candidate_count_matches_expected",
+      "detail": 12,
+      "passed": true
+    },
+    {
+      "check": "prompt_manifest_count_matches_expected",
+      "detail": 12,
+      "passed": true
+    },
+    {
+      "check": "candidate_count_matches_expected",
+      "detail": 12,
+      "passed": true
+    },
+    {
+      "check": "evidence_packet_count_matches_expected",
+      "detail": 12,
+      "passed": true
+    },
+    {
+      "check": "unique_patch_ids_match_expected",
+      "detail": 12,
+      "passed": true
+    },
+    {
+      "check": "unique_model_candidate_ids_match_expected",
+      "detail": 12,
+      "passed": true
+    },
+    {
+      "check": "evidence_candidate_ids_match_model_candidate_ids",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "candidate_task_counts_match_plan",
+      "detail": {
+        "bugsinpy_httpie_1": 3,
+        "bugsinpy_httpie_2": 3,
+        "bugsinpy_httpie_3": 3,
+        "bugsinpy_httpie_4": 3
+      },
+      "passed": true
+    },
+    {
+      "check": "prompt_task_counts_match_plan",
+      "detail": {
+        "bugsinpy_httpie_1": 3,
+        "bugsinpy_httpie_2": 3,
+        "bugsinpy_httpie_3": 3,
+        "bugsinpy_httpie_4": 3
+      },
+      "passed": true
+    },
+    {
+      "check": "all_labels_pending_validation",
+      "detail": {
+        "pending_validation": 12
+      },
+      "passed": true
+    },
+    {
+      "check": "raw_response_files_at_least_candidates",
+      "detail": 12,
+      "passed": true
+    },
+    {
+      "check": "candidate_raw_hashes_present",
+      "detail": 12,
+      "passed": true
+    },
+    {
+      "check": "prompt_manifest_has_no_payload_fields",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "evidence_packets_hide_evaluator_fields",
+      "detail": [],
+      "passed": true
+    }
+  ],
+  "counts": {
+    "candidate_raw_hash_count": 12,
+    "candidate_records": 12,
+    "evidence_packet_records": 12,
+    "expected_task_counts": {
+      "bugsinpy_httpie_1": 3,
+      "bugsinpy_httpie_2": 3,
+      "bugsinpy_httpie_3": 3,
+      "bugsinpy_httpie_4": 3
+    },
+    "extra_raw_response_files_from_failed_attempts": 0,
+    "planned_slots": 54,
+    "prompt_manifest_records": 12,
+    "raw_response_file_count": 12,
+    "unique_model_candidate_ids": 12,
+    "unique_patch_ids": 12,
+    "unique_patch_text_hashes": 6
+  },
+  "date_utc": "2026-06-29T20:12:57.539064+00:00",
+  "field_boundary": {
+    "evidence_packet_forbidden_fields_present": [],
+    "pending_candidates_are_not_model_visible_inputs": true,
+    "pending_candidates_contain_evaluator_only_fields": true,
+    "prompt_manifest_unexpected_fields": []
+  },
+  "generation_summary": {
+    "api_provider": "deepseek_official",
+    "candidate_count": 12,
+    "dry_run": false,
+    "generation_date_utc": "2026-06-29T20:12:32.106271+00:00",
+    "model": "deepseek-v4-pro",
+    "prompt_count": 12,
+    "prompt_version": "agent_edit_plan_v1",
+    "run_id": "evp8_realistic_hardneg_generation_deepseek_supplement_001"
+  },
+  "label_confidence_counts": {
+    "pending_validation": 12
+  },
+  "next_required_step": "validate generated candidates and relabel with evaluator-only outcomes before cohort construction",
+  "patch_text_stored": false,
+  "project_counts": {
+    "httpie": 12
+  },
+  "prompt_text_stored": false,
+  "raw_output_content_stored": false,
+  "run_dir": "outputs/evp8_realistic_hardneg_generation_deepseek_supplement_001",
+  "status": "passed",
+  "task_counts": {
+    "bugsinpy_httpie_1": 3,
+    "bugsinpy_httpie_2": 3,
+    "bugsinpy_httpie_3": 3,
+    "bugsinpy_httpie_4": 3
+  }
+}

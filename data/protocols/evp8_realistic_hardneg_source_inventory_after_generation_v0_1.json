@@ -1,0 +1,2305 @@
+{
+  "analysis_id": "evp8_realistic_agent_source_inventory_v0_1",
+  "candidate_sources": [
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 98,
+      "candidate_file": "data/patches/evp7_candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 21,
+        "correct_reference": 21,
+        "irrelevant_patch": 14,
+        "partial_fix": 41,
+        "regression_patch": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 98,
+      "historical_duplicate_candidate_count": 98,
+      "nontrivial_hard_negative_count": 42,
+      "normalized_label_counts": {
+        "correct": 22,
+        "irrelevant_or_noop": 35,
+        "partial": 41
+      },
+      "patch_applied_counts": {
+        "true": 98
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "PySnooper": 10,
+        "cookiecutter": 19,
+        "httpie": 6,
+        "thefuck": 4,
+        "tqdm": 7,
+        "youtube-dl": 52
+      },
+      "source_category_counts": {
+        "controlled_negative": 77,
+        "human_reference": 21
+      },
+      "source_dir": "data/patches",
+      "source_status": "existing_evp8_controlled_manifest",
+      "task_counts": {
+        "bugsinpy_PySnooper_1": 6,
+        "bugsinpy_PySnooper_3": 4,
+        "bugsinpy_cookiecutter_1": 4,
+        "bugsinpy_cookiecutter_2": 11,
+        "bugsinpy_cookiecutter_3": 4,
+        "bugsinpy_httpie_5": 6,
+        "bugsinpy_thefuck_1": 4,
+        "bugsinpy_tqdm_9": 7,
+        "bugsinpy_youtube-dl_11": 4,
+        "bugsinpy_youtube-dl_16": 4,
+        "bugsinpy_youtube-dl_17": 4,
+        "bugsinpy_youtube-dl_2": 4,
+        "bugsinpy_youtube-dl_20": 4,
+        "bugsinpy_youtube-dl_21": 4,
+        "bugsinpy_youtube-dl_23": 4,
+        "bugsinpy_youtube-dl_37": 4,
+        "bugsinpy_youtube-dl_4": 4,
+        "bugsinpy_youtube-dl_43": 4,
+        "bugsinpy_youtube-dl_5": 4,
+        "bugsinpy_youtube-dl_6": 4,
+        "bugsinpy_youtube-dl_7": 4
+      },
+      "unique_candidate_count": 98,
+      "usable_candidate_count": 98,
+      "validation_join_counts": {
+        "not_joined": 98
+      },
+      "visible_evidence_candidate_count": 98
+    },
+    {
+      "agent_like_candidate_count": 13,
+      "candidate_count": 47,
+      "candidate_file": "data/patches/evp8_hard_evaluator_manifest_v0_1.jsonl",
+      "candidate_type_counts": {
+        "agent_plausible_wrong": 10,
+        "correct_reference": 10,
+        "irrelevant_or_noop_control": 14,
+        "partial_fix": 13
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 47,
+      "historical_duplicate_candidate_count": 47,
+      "nontrivial_hard_negative_count": 23,
+      "normalized_label_counts": {
+        "agent_plausible_wrong": 10,
+        "correct": 10,
+        "irrelevant_or_noop": 14,
+        "partial": 13
+      },
+      "patch_applied_counts": {
+        "true": 47
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "httpie": 38,
+        "luigi": 9
+      },
+      "source_category_counts": {
+        "agent_like_generated": 3,
+        "controlled_negative": 27,
+        "human_reference": 7,
+        "real_agent_generated": 10
+      },
+      "source_dir": "data/patches",
+      "source_status": "existing_evp8_hard_manifest",
+      "task_counts": {
+        "bugsinpy_httpie_1": 13,
+        "bugsinpy_httpie_2": 6,
+        "bugsinpy_httpie_3": 6,
+        "bugsinpy_httpie_4": 6,
+        "bugsinpy_httpie_5": 7,
+        "bugsinpy_luigi_3": 5,
+        "bugsinpy_luigi_4": 4
+      },
+      "unique_candidate_count": 47,
+      "usable_candidate_count": 0,
+      "validation_join_counts": {
+        "not_joined": 47
+      },
+      "visible_evidence_candidate_count": 47
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 3,
+      "candidate_file": "data/patches/evp8_hard_extra_httpie1_errno_partials/candidates.jsonl",
+      "candidate_type_counts": {
+        "partial_fix": 3
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 3,
+      "historical_duplicate_candidate_count": 3,
+      "nontrivial_hard_negative_count": 3,
+      "normalized_label_counts": {
+        "partial": 3
+      },
+      "patch_applied_counts": {
+        "true": 3
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "httpie": 3
+      },
+      "source_category_counts": {
+        "controlled_negative": 3
+      },
+      "source_dir": "data/patches/evp8_hard_extra_httpie1_errno_partials",
+      "source_status": "already_curated_into_evp8_hard_source",
+      "task_counts": {
+        "bugsinpy_httpie_1": 3
+      },
+      "unique_candidate_count": 3,
+      "usable_candidate_count": 3,
+      "validation_join_counts": {
+        "joined": 3
+      },
+      "visible_evidence_candidate_count": 3
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 1,
+      "candidate_file": "data/patches/evp8_hard_extra_luigi4_partial/candidates.jsonl",
+      "candidate_type_counts": {
+        "partial_fix": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 1,
+      "historical_duplicate_candidate_count": 1,
+      "nontrivial_hard_negative_count": 1,
+      "normalized_label_counts": {
+        "partial": 1
+      },
+      "patch_applied_counts": {
+        "true": 1
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "luigi": 1
+      },
+      "source_category_counts": {
+        "controlled_negative": 1
+      },
+      "source_dir": "data/patches/evp8_hard_extra_luigi4_partial",
+      "source_status": "already_curated_into_evp8_hard_source",
+      "task_counts": {
+        "bugsinpy_luigi_4": 1
+      },
+      "unique_candidate_count": 1,
+      "usable_candidate_count": 1,
+      "validation_join_counts": {
+        "joined": 1
+      },
+      "visible_evidence_candidate_count": 1
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 30,
+      "candidate_file": "outputs/build_default_check/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 7,
+        "correct_reference": 7,
+        "irrelevant_patch": 7,
+        "partial_fix": 9
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 30,
+      "historical_duplicate_candidate_count": 30,
+      "nontrivial_hard_negative_count": 9,
+      "normalized_label_counts": {
+        "correct": 7,
+        "irrelevant_or_noop": 14,
+        "partial": 9
+      },
+      "patch_applied_counts": {
+        "unknown": 30
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "httpie": 22,
+        "luigi": 8
+      },
+      "source_category_counts": {
+        "controlled_negative": 23,
+        "human_reference": 7
+      },
+      "source_dir": "outputs/build_default_check",
+      "source_status": "legacy_pilot_or_duplicate_source",
+      "task_counts": {
+        "bugsinpy_httpie_1": 7,
+        "bugsinpy_httpie_2": 3,
+        "bugsinpy_httpie_3": 3,
+        "bugsinpy_httpie_4": 3,
+        "bugsinpy_httpie_5": 6,
+        "bugsinpy_luigi_3": 5,
+        "bugsinpy_luigi_4": 3
+      },
+      "unique_candidate_count": 30,
+      "usable_candidate_count": 0,
+      "validation_join_counts": {
+        "not_joined": 30
+      },
+      "visible_evidence_candidate_count": 30
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/cookiecutter1_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 1,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 1
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "cookiecutter": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/cookiecutter1_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_cookiecutter_1": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 11,
+      "candidate_file": "outputs/cookiecutter2_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 8
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 11,
+      "historical_duplicate_candidate_count": 11,
+      "nontrivial_hard_negative_count": 8,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 8
+      },
+      "patch_applied_counts": {
+        "true": 11
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "cookiecutter": 11
+      },
+      "source_category_counts": {
+        "controlled_negative": 10,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/cookiecutter2_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_cookiecutter_2": 11
+      },
+      "unique_candidate_count": 11,
+      "usable_candidate_count": 11,
+      "validation_join_counts": {
+        "joined": 11
+      },
+      "visible_evidence_candidate_count": 11
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/cookiecutter3_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 1,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 1
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "cookiecutter": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/cookiecutter3_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_cookiecutter_3": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 54,
+      "candidate_count": 54,
+      "candidate_file": "outputs/evp8_realistic_agent_generation_qwen_primary_001/candidates.pending.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 54
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 54,
+      "historical_duplicate_candidate_count": 8,
+      "nontrivial_hard_negative_count": 54,
+      "normalized_label_counts": {
+        "test_passing_wrong": 54
+      },
+      "patch_applied_counts": {
+        "unknown": 54
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "PySnooper": 18,
+        "cookiecutter": 27,
+        "tqdm": 9
+      },
+      "source_category_counts": {
+        "real_agent_generated": 54
+      },
+      "source_dir": "outputs/evp8_realistic_agent_generation_qwen_primary_001",
+      "source_status": "pending_unvalidated_source",
+      "task_counts": {
+        "bugsinpy_PySnooper_1": 9,
+        "bugsinpy_PySnooper_3": 9,
+        "bugsinpy_cookiecutter_1": 9,
+        "bugsinpy_cookiecutter_2": 9,
+        "bugsinpy_cookiecutter_3": 9,
+        "bugsinpy_tqdm_9": 9
+      },
+      "unique_candidate_count": 54,
+      "usable_candidate_count": 0,
+      "validation_join_counts": {
+        "not_joined": 54
+      },
+      "visible_evidence_candidate_count": 54
+    },
+    {
+      "agent_like_candidate_count": 10,
+      "candidate_count": 10,
+      "candidate_file": "outputs/evp8_realistic_agent_generation_qwen_supplement_001/candidates.pending.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 10
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 10,
+      "historical_duplicate_candidate_count": 8,
+      "nontrivial_hard_negative_count": 10,
+      "normalized_label_counts": {
+        "test_passing_wrong": 10
+      },
+      "patch_applied_counts": {
+        "unknown": 10
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "PySnooper": 2,
+        "cookiecutter": 6,
+        "tqdm": 2
+      },
+      "source_category_counts": {
+        "real_agent_generated": 10
+      },
+      "source_dir": "outputs/evp8_realistic_agent_generation_qwen_supplement_001",
+      "source_status": "pending_unvalidated_source",
+      "task_counts": {
+        "bugsinpy_PySnooper_3": 2,
+        "bugsinpy_cookiecutter_1": 2,
+        "bugsinpy_cookiecutter_2": 2,
+        "bugsinpy_cookiecutter_3": 2,
+        "bugsinpy_tqdm_9": 2
+      },
+      "unique_candidate_count": 10,
+      "usable_candidate_count": 0,
+      "validation_join_counts": {
+        "not_joined": 10
+      },
+      "visible_evidence_candidate_count": 10
+    },
+    {
+      "agent_like_candidate_count": 5,
+      "candidate_count": 5,
+      "candidate_file": "outputs/evp8_realistic_agent_generation_qwen_supplement_002/candidates.pending.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 5
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 5,
+      "historical_duplicate_candidate_count": 0,
+      "nontrivial_hard_negative_count": 5,
+      "normalized_label_counts": {
+        "test_passing_wrong": 5
+      },
+      "patch_applied_counts": {
+        "unknown": 5
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "PySnooper": 1,
+        "cookiecutter": 3,
+        "tqdm": 1
+      },
+      "source_category_counts": {
+        "real_agent_generated": 5
+      },
+      "source_dir": "outputs/evp8_realistic_agent_generation_qwen_supplement_002",
+      "source_status": "pending_unvalidated_source",
+      "task_counts": {
+        "bugsinpy_PySnooper_3": 1,
+        "bugsinpy_cookiecutter_1": 1,
+        "bugsinpy_cookiecutter_2": 1,
+        "bugsinpy_cookiecutter_3": 1,
+        "bugsinpy_tqdm_9": 1
+      },
+      "unique_candidate_count": 5,
+      "usable_candidate_count": 0,
+      "validation_join_counts": {
+        "not_joined": 5
+      },
+      "visible_evidence_candidate_count": 5
+    },
+    {
+      "agent_like_candidate_count": 54,
+      "candidate_count": 54,
+      "candidate_file": "outputs/evp8_realistic_agent_validation_qwen_primary_001/candidates.relabeled.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 54
+      },
+      "fresh_agent_like_candidate_count": 46,
+      "fresh_nontrivial_hard_negative_count": 46,
+      "fresh_usable_candidate_count": 46,
+      "hidden_label_candidate_count": 54,
+      "historical_duplicate_candidate_count": 8,
+      "nontrivial_hard_negative_count": 54,
+      "normalized_label_counts": {
+        "correct": 9,
+        "test_passing_wrong": 45
+      },
+      "patch_applied_counts": {
+        "true": 54
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "PySnooper": 18,
+        "cookiecutter": 27,
+        "tqdm": 9
+      },
+      "source_category_counts": {
+        "real_agent_generated": 54
+      },
+      "source_dir": "outputs/evp8_realistic_agent_validation_qwen_primary_001",
+      "source_status": "fresh_realistic_agent_source",
+      "task_counts": {
+        "bugsinpy_PySnooper_1": 9,
+        "bugsinpy_PySnooper_3": 9,
+        "bugsinpy_cookiecutter_1": 9,
+        "bugsinpy_cookiecutter_2": 9,
+        "bugsinpy_cookiecutter_3": 9,
+        "bugsinpy_tqdm_9": 9
+      },
+      "unique_candidate_count": 54,
+      "usable_candidate_count": 54,
+      "validation_join_counts": {
+        "joined": 54
+      },
+      "visible_evidence_candidate_count": 54
+    },
+    {
+      "agent_like_candidate_count": 10,
+      "candidate_count": 10,
+      "candidate_file": "outputs/evp8_realistic_agent_validation_qwen_supplement_001/candidates.relabeled.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 10
+      },
+      "fresh_agent_like_candidate_count": 2,
+      "fresh_nontrivial_hard_negative_count": 2,
+      "fresh_usable_candidate_count": 2,
+      "hidden_label_candidate_count": 10,
+      "historical_duplicate_candidate_count": 8,
+      "nontrivial_hard_negative_count": 10,
+      "normalized_label_counts": {
+        "test_passing_wrong": 10
+      },
+      "patch_applied_counts": {
+        "true": 10
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "PySnooper": 2,
+        "cookiecutter": 6,
+        "tqdm": 2
+      },
+      "source_category_counts": {
+        "real_agent_generated": 10
+      },
+      "source_dir": "outputs/evp8_realistic_agent_validation_qwen_supplement_001",
+      "source_status": "fresh_realistic_agent_source",
+      "task_counts": {
+        "bugsinpy_PySnooper_3": 2,
+        "bugsinpy_cookiecutter_1": 2,
+        "bugsinpy_cookiecutter_2": 2,
+        "bugsinpy_cookiecutter_3": 2,
+        "bugsinpy_tqdm_9": 2
+      },
+      "unique_candidate_count": 10,
+      "usable_candidate_count": 10,
+      "validation_join_counts": {
+        "joined": 10
+      },
+      "visible_evidence_candidate_count": 10
+    },
+    {
+      "agent_like_candidate_count": 5,
+      "candidate_count": 5,
+      "candidate_file": "outputs/evp8_realistic_agent_validation_qwen_supplement_002/candidates.relabeled.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 5
+      },
+      "fresh_agent_like_candidate_count": 5,
+      "fresh_nontrivial_hard_negative_count": 5,
+      "fresh_usable_candidate_count": 5,
+      "hidden_label_candidate_count": 5,
+      "historical_duplicate_candidate_count": 0,
+      "nontrivial_hard_negative_count": 5,
+      "normalized_label_counts": {
+        "test_passing_wrong": 5
+      },
+      "patch_applied_counts": {
+        "true": 5
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "PySnooper": 1,
+        "cookiecutter": 3,
+        "tqdm": 1
+      },
+      "source_category_counts": {
+        "real_agent_generated": 5
+      },
+      "source_dir": "outputs/evp8_realistic_agent_validation_qwen_supplement_002",
+      "source_status": "fresh_realistic_agent_source",
+      "task_counts": {
+        "bugsinpy_PySnooper_3": 1,
+        "bugsinpy_cookiecutter_1": 1,
+        "bugsinpy_cookiecutter_2": 1,
+        "bugsinpy_cookiecutter_3": 1,
+        "bugsinpy_tqdm_9": 1
+      },
+      "unique_candidate_count": 5,
+      "usable_candidate_count": 5,
+      "validation_join_counts": {
+        "joined": 5
+      },
+      "visible_evidence_candidate_count": 5
+    },
+    {
+      "agent_like_candidate_count": 54,
+      "candidate_count": 54,
+      "candidate_file": "outputs/evp8_realistic_hardneg_generation_qwen_001/candidates.pending.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 54
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 54,
+      "historical_duplicate_candidate_count": 0,
+      "nontrivial_hard_negative_count": 54,
+      "normalized_label_counts": {
+        "test_passing_wrong": 54
+      },
+      "patch_applied_counts": {
+        "unknown": 54
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "PySnooper": 18,
+        "cookiecutter": 27,
+        "tqdm": 9
+      },
+      "source_category_counts": {
+        "real_agent_generated": 54
+      },
+      "source_dir": "outputs/evp8_realistic_hardneg_generation_qwen_001",
+      "source_status": "pending_unvalidated_source",
+      "task_counts": {
+        "bugsinpy_PySnooper_1": 9,
+        "bugsinpy_PySnooper_3": 9,
+        "bugsinpy_cookiecutter_1": 9,
+        "bugsinpy_cookiecutter_2": 9,
+        "bugsinpy_cookiecutter_3": 9,
+        "bugsinpy_tqdm_9": 9
+      },
+      "unique_candidate_count": 54,
+      "usable_candidate_count": 0,
+      "validation_join_counts": {
+        "not_joined": 54
+      },
+      "visible_evidence_candidate_count": 54
+    },
+    {
+      "agent_like_candidate_count": 54,
+      "candidate_count": 54,
+      "candidate_file": "outputs/evp8_realistic_hardneg_validation_qwen_001/candidates.relabeled.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 54
+      },
+      "fresh_agent_like_candidate_count": 54,
+      "fresh_nontrivial_hard_negative_count": 54,
+      "fresh_usable_candidate_count": 54,
+      "hidden_label_candidate_count": 54,
+      "historical_duplicate_candidate_count": 0,
+      "nontrivial_hard_negative_count": 54,
+      "normalized_label_counts": {
+        "correct": 9,
+        "test_passing_wrong": 45
+      },
+      "patch_applied_counts": {
+        "true": 54
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "PySnooper": 18,
+        "cookiecutter": 27,
+        "tqdm": 9
+      },
+      "source_category_counts": {
+        "real_agent_generated": 54
+      },
+      "source_dir": "outputs/evp8_realistic_hardneg_validation_qwen_001",
+      "source_status": "fresh_realistic_agent_source",
+      "task_counts": {
+        "bugsinpy_PySnooper_1": 9,
+        "bugsinpy_PySnooper_3": 9,
+        "bugsinpy_cookiecutter_1": 9,
+        "bugsinpy_cookiecutter_2": 9,
+        "bugsinpy_cookiecutter_3": 9,
+        "bugsinpy_tqdm_9": 9
+      },
+      "unique_candidate_count": 54,
+      "usable_candidate_count": 54,
+      "validation_join_counts": {
+        "joined": 54
+      },
+      "visible_evidence_candidate_count": 54
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 6,
+      "candidate_file": "outputs/httpie5_stability_audit_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 3
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 6,
+      "historical_duplicate_candidate_count": 6,
+      "nontrivial_hard_negative_count": 3,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 3
+      },
+      "patch_applied_counts": {
+        "true": 6
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "httpie": 6
+      },
+      "source_category_counts": {
+        "controlled_negative": 5,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/httpie5_stability_audit_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_httpie_5": 6
+      },
+      "unique_candidate_count": 6,
+      "usable_candidate_count": 6,
+      "validation_join_counts": {
+        "joined": 6
+      },
+      "visible_evidence_candidate_count": 6
+    },
+    {
+      "agent_like_candidate_count": 1,
+      "candidate_count": 1,
+      "candidate_file": "outputs/httpie_agent_patch_qwen37_httpie5_strict_001/candidates.pending.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 1,
+      "historical_duplicate_candidate_count": 1,
+      "nontrivial_hard_negative_count": 1,
+      "normalized_label_counts": {
+        "test_passing_wrong": 1
+      },
+      "patch_applied_counts": {
+        "true": 1
+      },
+      "pending_agent_like_candidate_count": 1,
+      "pending_nontrivial_hard_negative_count": 1,
+      "pending_usable_candidate_count": 1,
+      "project_counts": {
+        "httpie": 1
+      },
+      "source_category_counts": {
+        "real_agent_generated": 1
+      },
+      "source_dir": "outputs/httpie_agent_patch_qwen37_httpie5_strict_001",
+      "source_status": "pending_unvalidated_source",
+      "task_counts": {
+        "bugsinpy_httpie_5": 1
+      },
+      "unique_candidate_count": 1,
+      "usable_candidate_count": 1,
+      "validation_join_counts": {
+        "joined": 1
+      },
+      "visible_evidence_candidate_count": 1
+    },
+    {
+      "agent_like_candidate_count": 1,
+      "candidate_count": 1,
+      "candidate_file": "outputs/httpie_agent_patch_qwen37_httpie5_strict_001/candidates.relabeled.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 1,
+      "historical_duplicate_candidate_count": 1,
+      "nontrivial_hard_negative_count": 1,
+      "normalized_label_counts": {
+        "test_passing_wrong": 1
+      },
+      "patch_applied_counts": {
+        "true": 1
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "httpie": 1
+      },
+      "source_category_counts": {
+        "real_agent_generated": 1
+      },
+      "source_dir": "outputs/httpie_agent_patch_qwen37_httpie5_strict_001",
+      "source_status": "already_curated_into_evp8_hard_source",
+      "task_counts": {
+        "bugsinpy_httpie_5": 1
+      },
+      "unique_candidate_count": 1,
+      "usable_candidate_count": 1,
+      "validation_join_counts": {
+        "joined": 1
+      },
+      "visible_evidence_candidate_count": 1
+    },
+    {
+      "agent_like_candidate_count": 8,
+      "candidate_count": 8,
+      "candidate_file": "outputs/httpie_agent_patch_stage_ab_001/candidates.pending.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 8
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 8,
+      "historical_duplicate_candidate_count": 8,
+      "nontrivial_hard_negative_count": 8,
+      "normalized_label_counts": {
+        "test_passing_wrong": 8
+      },
+      "patch_applied_counts": {
+        "true": 8
+      },
+      "pending_agent_like_candidate_count": 8,
+      "pending_nontrivial_hard_negative_count": 8,
+      "pending_usable_candidate_count": 8,
+      "project_counts": {
+        "httpie": 8
+      },
+      "source_category_counts": {
+        "real_agent_generated": 8
+      },
+      "source_dir": "outputs/httpie_agent_patch_stage_ab_001",
+      "source_status": "pending_unvalidated_source",
+      "task_counts": {
+        "bugsinpy_httpie_1": 2,
+        "bugsinpy_httpie_2": 2,
+        "bugsinpy_httpie_3": 2,
+        "bugsinpy_httpie_4": 2
+      },
+      "unique_candidate_count": 8,
+      "usable_candidate_count": 8,
+      "validation_join_counts": {
+        "joined": 8
+      },
+      "visible_evidence_candidate_count": 8
+    },
+    {
+      "agent_like_candidate_count": 8,
+      "candidate_count": 8,
+      "candidate_file": "outputs/httpie_agent_patch_stage_ab_001/candidates.relabeled.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 8
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 8,
+      "historical_duplicate_candidate_count": 8,
+      "nontrivial_hard_negative_count": 8,
+      "normalized_label_counts": {
+        "test_passing_wrong": 8
+      },
+      "patch_applied_counts": {
+        "true": 8
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "httpie": 8
+      },
+      "source_category_counts": {
+        "real_agent_generated": 8
+      },
+      "source_dir": "outputs/httpie_agent_patch_stage_ab_001",
+      "source_status": "already_curated_into_evp8_hard_source",
+      "task_counts": {
+        "bugsinpy_httpie_1": 2,
+        "bugsinpy_httpie_2": 2,
+        "bugsinpy_httpie_3": 2,
+        "bugsinpy_httpie_4": 2
+      },
+      "unique_candidate_count": 8,
+      "usable_candidate_count": 8,
+      "validation_join_counts": {
+        "joined": 8
+      },
+      "visible_evidence_candidate_count": 8
+    },
+    {
+      "agent_like_candidate_count": 10,
+      "candidate_count": 10,
+      "candidate_file": "outputs/httpie_ai_patch_stage_ab_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 10
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 10,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 10,
+      "normalized_label_counts": {
+        "correct": 3,
+        "test_passing_wrong": 7
+      },
+      "patch_applied_counts": {
+        "false": 6,
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "httpie": 10
+      },
+      "source_category_counts": {
+        "agent_like_generated": 10
+      },
+      "source_dir": "outputs/httpie_ai_patch_stage_ab_001",
+      "source_status": "already_curated_into_evp8_hard_source",
+      "task_counts": {
+        "bugsinpy_httpie_1": 2,
+        "bugsinpy_httpie_2": 2,
+        "bugsinpy_httpie_3": 2,
+        "bugsinpy_httpie_4": 2,
+        "bugsinpy_httpie_5": 2
+      },
+      "unique_candidate_count": 10,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 10
+      },
+      "visible_evidence_candidate_count": 10
+    },
+    {
+      "agent_like_candidate_count": 10,
+      "candidate_count": 10,
+      "candidate_file": "outputs/httpie_ai_patch_stage_ab_001/candidates.pending.jsonl",
+      "candidate_type_counts": {
+        "model_generated_patch": 10
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 10,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 10,
+      "normalized_label_counts": {
+        "correct": 3,
+        "test_passing_wrong": 7
+      },
+      "patch_applied_counts": {
+        "false": 6,
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 4,
+      "pending_nontrivial_hard_negative_count": 4,
+      "pending_usable_candidate_count": 4,
+      "project_counts": {
+        "httpie": 10
+      },
+      "source_category_counts": {
+        "agent_like_generated": 10
+      },
+      "source_dir": "outputs/httpie_ai_patch_stage_ab_001",
+      "source_status": "pending_unvalidated_source",
+      "task_counts": {
+        "bugsinpy_httpie_1": 2,
+        "bugsinpy_httpie_2": 2,
+        "bugsinpy_httpie_3": 2,
+        "bugsinpy_httpie_4": 2,
+        "bugsinpy_httpie_5": 2
+      },
+      "unique_candidate_count": 10,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 10
+      },
+      "visible_evidence_candidate_count": 10
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 22,
+      "candidate_file": "outputs/httpie_stage_ab_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 5,
+        "correct_reference": 5,
+        "irrelevant_patch": 5,
+        "partial_fix": 7
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 22,
+      "historical_duplicate_candidate_count": 22,
+      "nontrivial_hard_negative_count": 7,
+      "normalized_label_counts": {
+        "correct": 5,
+        "irrelevant_or_noop": 10,
+        "partial": 7
+      },
+      "patch_applied_counts": {
+        "true": 22
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "httpie": 22
+      },
+      "source_category_counts": {
+        "controlled_negative": 17,
+        "human_reference": 5
+      },
+      "source_dir": "outputs/httpie_stage_ab_001",
+      "source_status": "already_curated_into_evp8_hard_source",
+      "task_counts": {
+        "bugsinpy_httpie_1": 7,
+        "bugsinpy_httpie_2": 3,
+        "bugsinpy_httpie_3": 3,
+        "bugsinpy_httpie_4": 3,
+        "bugsinpy_httpie_5": 6
+      },
+      "unique_candidate_count": 22,
+      "usable_candidate_count": 22,
+      "validation_join_counts": {
+        "joined": 22
+      },
+      "visible_evidence_candidate_count": 22
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 5,
+      "candidate_file": "outputs/luigi3_stability_audit_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 2
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 5,
+      "historical_duplicate_candidate_count": 5,
+      "nontrivial_hard_negative_count": 2,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 2
+      },
+      "patch_applied_counts": {
+        "true": 5
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "luigi": 5
+      },
+      "source_category_counts": {
+        "controlled_negative": 4,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/luigi3_stability_audit_001",
+      "source_status": "already_curated_into_evp8_hard_source",
+      "task_counts": {
+        "bugsinpy_luigi_3": 5
+      },
+      "unique_candidate_count": 5,
+      "usable_candidate_count": 5,
+      "validation_join_counts": {
+        "joined": 5
+      },
+      "visible_evidence_candidate_count": 5
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 3,
+      "candidate_file": "outputs/luigi4_stability_audit_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 3,
+      "historical_duplicate_candidate_count": 3,
+      "nontrivial_hard_negative_count": 0,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2
+      },
+      "patch_applied_counts": {
+        "true": 3
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "luigi": 3
+      },
+      "source_category_counts": {
+        "controlled_negative": 2,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/luigi4_stability_audit_001",
+      "source_status": "already_curated_into_evp8_hard_source",
+      "task_counts": {
+        "bugsinpy_luigi_4": 3
+      },
+      "unique_candidate_count": 3,
+      "usable_candidate_count": 3,
+      "validation_join_counts": {
+        "joined": 3
+      },
+      "visible_evidence_candidate_count": 3
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 30,
+      "candidate_file": "outputs/patch_verification_pilot_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 7,
+        "correct_reference": 7,
+        "irrelevant_patch": 7,
+        "partial_fix": 9
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 30,
+      "historical_duplicate_candidate_count": 30,
+      "nontrivial_hard_negative_count": 9,
+      "normalized_label_counts": {
+        "correct": 7,
+        "irrelevant_or_noop": 14,
+        "partial": 9
+      },
+      "patch_applied_counts": {
+        "true": 30
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "httpie": 22,
+        "luigi": 8
+      },
+      "source_category_counts": {
+        "controlled_negative": 23,
+        "human_reference": 7
+      },
+      "source_dir": "outputs/patch_verification_pilot_001",
+      "source_status": "legacy_pilot_or_duplicate_source",
+      "task_counts": {
+        "bugsinpy_httpie_1": 7,
+        "bugsinpy_httpie_2": 3,
+        "bugsinpy_httpie_3": 3,
+        "bugsinpy_httpie_4": 3,
+        "bugsinpy_httpie_5": 6,
+        "bugsinpy_luigi_3": 5,
+        "bugsinpy_luigi_4": 3
+      },
+      "unique_candidate_count": 30,
+      "usable_candidate_count": 30,
+      "validation_join_counts": {
+        "joined": 30
+      },
+      "visible_evidence_candidate_count": 30
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 30,
+      "candidate_file": "outputs/patch_verification_pilot_repro_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 7,
+        "correct_reference": 7,
+        "irrelevant_patch": 7,
+        "partial_fix": 9
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 30,
+      "historical_duplicate_candidate_count": 30,
+      "nontrivial_hard_negative_count": 9,
+      "normalized_label_counts": {
+        "correct": 7,
+        "irrelevant_or_noop": 14,
+        "partial": 9
+      },
+      "patch_applied_counts": {
+        "true": 30
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "httpie": 22,
+        "luigi": 8
+      },
+      "source_category_counts": {
+        "controlled_negative": 23,
+        "human_reference": 7
+      },
+      "source_dir": "outputs/patch_verification_pilot_repro_001",
+      "source_status": "legacy_pilot_or_duplicate_source",
+      "task_counts": {
+        "bugsinpy_httpie_1": 7,
+        "bugsinpy_httpie_2": 3,
+        "bugsinpy_httpie_3": 3,
+        "bugsinpy_httpie_4": 3,
+        "bugsinpy_httpie_5": 6,
+        "bugsinpy_luigi_3": 5,
+        "bugsinpy_luigi_4": 3
+      },
+      "unique_candidate_count": 30,
+      "usable_candidate_count": 30,
+      "validation_join_counts": {
+        "joined": 30
+      },
+      "visible_evidence_candidate_count": 30
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 6,
+      "candidate_file": "outputs/pysnooper1_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 3
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 6,
+      "historical_duplicate_candidate_count": 6,
+      "nontrivial_hard_negative_count": 3,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 3
+      },
+      "patch_applied_counts": {
+        "true": 6
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "PySnooper": 6
+      },
+      "source_category_counts": {
+        "controlled_negative": 5,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/pysnooper1_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_PySnooper_1": 6
+      },
+      "unique_candidate_count": 6,
+      "usable_candidate_count": 6,
+      "validation_join_counts": {
+        "joined": 6
+      },
+      "visible_evidence_candidate_count": 6
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/pysnooper3_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 1,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 1
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "PySnooper": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/pysnooper3_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_PySnooper_3": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/thefuck1_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "partial_fix": 1,
+        "regression_patch": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 2,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 1,
+        "regression": 1
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "thefuck": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/thefuck1_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_thefuck_1": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 7,
+      "candidate_file": "outputs/tqdm9_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 4
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 7,
+      "historical_duplicate_candidate_count": 7,
+      "nontrivial_hard_negative_count": 4,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 4
+      },
+      "patch_applied_counts": {
+        "true": 7
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "tqdm": 7
+      },
+      "source_category_counts": {
+        "controlled_negative": 6,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/tqdm9_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_tqdm_9": 7
+      },
+      "unique_candidate_count": 7,
+      "usable_candidate_count": 7,
+      "validation_join_counts": {
+        "joined": 7
+      },
+      "visible_evidence_candidate_count": 7
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl11_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 1,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 1
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "youtube-dl": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/youtubedl11_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_youtube-dl_11": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl16_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "partial_fix": 2
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 2,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 2
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "youtube-dl": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/youtubedl16_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_youtube-dl_16": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl17_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "partial_fix": 2
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 2,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 2
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "youtube-dl": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/youtubedl17_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_youtube-dl_17": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl20_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "partial_fix": 2
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 2,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 2
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "youtube-dl": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/youtubedl20_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_youtube-dl_20": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl21_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "partial_fix": 2
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 2,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 2
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "youtube-dl": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/youtubedl21_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_youtube-dl_21": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl23_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "partial_fix": 2
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 2,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 2
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "youtube-dl": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/youtubedl23_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_youtube-dl_23": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl2_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 1,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 1
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "youtube-dl": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/youtubedl2_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_youtube-dl_2": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl37_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "partial_fix": 2
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 2,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 1,
+        "partial": 2
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "youtube-dl": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/youtubedl37_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_youtube-dl_37": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl43_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 1,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 1
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "youtube-dl": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/youtubedl43_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_youtube-dl_43": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl4_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 1,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 1
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "youtube-dl": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/youtubedl4_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_youtube-dl_4": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl5_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 1,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 1
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "youtube-dl": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/youtubedl5_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_youtube-dl_5": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl5_candidate_validation_001/candidates_after_format_check.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 1,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 1
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "youtube-dl": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/youtubedl5_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_youtube-dl_5": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl6_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 1,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 1
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "youtube-dl": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/youtubedl6_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_youtube-dl_6": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    },
+    {
+      "agent_like_candidate_count": 0,
+      "candidate_count": 4,
+      "candidate_file": "outputs/youtubedl7_candidate_validation_001/candidates.jsonl",
+      "candidate_type_counts": {
+        "buggy_noop": 1,
+        "correct_reference": 1,
+        "irrelevant_patch": 1,
+        "partial_fix": 1
+      },
+      "fresh_agent_like_candidate_count": 0,
+      "fresh_nontrivial_hard_negative_count": 0,
+      "fresh_usable_candidate_count": 0,
+      "hidden_label_candidate_count": 4,
+      "historical_duplicate_candidate_count": 4,
+      "nontrivial_hard_negative_count": 1,
+      "normalized_label_counts": {
+        "correct": 1,
+        "irrelevant_or_noop": 2,
+        "partial": 1
+      },
+      "patch_applied_counts": {
+        "true": 4
+      },
+      "pending_agent_like_candidate_count": 0,
+      "pending_nontrivial_hard_negative_count": 0,
+      "pending_usable_candidate_count": 0,
+      "project_counts": {
+        "youtube-dl": 4
+      },
+      "source_category_counts": {
+        "controlled_negative": 3,
+        "human_reference": 1
+      },
+      "source_dir": "outputs/youtubedl7_candidate_validation_001",
+      "source_status": "already_promoted_to_evp8_controlled_source",
+      "task_counts": {
+        "bugsinpy_youtube-dl_7": 4
+      },
+      "unique_candidate_count": 4,
+      "usable_candidate_count": 4,
+      "validation_join_counts": {
+        "joined": 4
+      },
+      "visible_evidence_candidate_count": 4
+    }
+  ],
+  "checks": [
+    {
+      "check": "api_call_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_model_outputs_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "candidate_manifest_not_created",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "prompt_text_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "patch_diff_not_stored_in_output",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "candidate_source_files_scanned",
+      "detail": 46,
+      "passed": true
+    },
+    {
+      "check": "existing_evp8_controlled_manifest_detected",
+      "detail": "data/patches/evp7_candidates.jsonl",
+      "passed": true
+    },
+    {
+      "check": "existing_evp8_hard_manifest_detected",
+      "detail": "data/patches/evp8_hard_evaluator_manifest_v0_1.jsonl",
+      "passed": true
+    }
+  ],
+  "date": "2026-06-30",
+  "input_boundaries": {
+    "excluded_raw_file_markers": [
+      "raw",
+      "response",
+      "reviews"
+    ],
+    "excluded_raw_path_markers": [
+      "inputs",
+      "raw"
+    ],
+    "existing_evp8_controlled_manifest": "data/patches/evp7_candidates.jsonl",
+    "existing_evp8_hard_manifest": "data/patches/evp8_hard_evaluator_manifest_v0_1.jsonl"
+  },
+  "inventory_status": "passed",
+  "readiness": {
+    "api_block_reason": "Phase 0 inventory cannot authorize model execution; visible-tool baseline gate has not been built.",
+    "current_counts": {
+      "fresh_agent_like_candidates": 107,
+      "fresh_nontrivial_hard_negatives": 107,
+      "fresh_project_count": 3,
+      "fresh_usable_candidates": 107,
+      "pending_agent_like_candidates": 13,
+      "pending_nontrivial_hard_negatives": 13,
+      "pending_usable_candidates": 13
+    },
+    "next_step": "If Phase 1 count gate passes, curate a separate evaluator/model-visible manifest without API. If it fails, add new realistic agent-like candidates or validate pending sources before any LLM run.",
+    "phase0_source_gate": {
+      "fresh_usable_candidates": 107,
+      "passed": true,
+      "requirement": "at least 50 fresh usable sources, or at least 30 plus a no-API path to generate more"
+    },
+    "phase1_count_gate": {
+      "passed": true,
+      "requirements": {
+        "fresh_agent_like_candidates_at_least_30": true,
+        "fresh_nontrivial_hard_negatives_at_least_25": true,
+        "fresh_projects_at_least_3": true,
+        "fresh_usable_candidates_at_least_50": true
+      }
+    },
+    "ready_for_api": false,
+    "ready_for_phase1_candidate_curation": true
+  },
+  "scope": {
+    "api_call_attempted": false,
+    "candidate_manifest_created": false,
+    "old_evp8_cohort_mutated": false,
+    "old_evp8_hard_cohort_mutated": false,
+    "patch_text_stored_in_output": false,
+    "prompt_text_stored": false,
+    "provider_response_object_stored": false,
+    "raw_model_outputs_read": false
+  },
+  "source_summary": {
+    "agent_like_candidate_count": 297,
+    "candidate_count": 655,
+    "fresh_agent_like_candidate_count": 107,
+    "fresh_nontrivial_hard_negative_count": 107,
+    "fresh_project_count": 3,
+    "fresh_projects": [
+      "PySnooper",
+      "cookiecutter",
+      "tqdm"
+    ],
+    "fresh_usable_candidate_count": 107,
+    "nontrivial_hard_negative_count": 432,
+    "normalized_label_counts": {
+      "agent_plausible_wrong": 10,
+      "correct": 106,
+      "irrelevant_or_noop": 142,
+      "partial": 136,
+      "regression": 1,
+      "test_passing_wrong": 260
+    },
+    "pending_agent_like_candidate_count": 13,
+    "pending_nontrivial_hard_negative_count": 13,
+    "pending_usable_candidate_count": 13,
+    "project_counts": {
+      "PySnooper": 98,
+      "cookiecutter": 164,
+      "httpie": 179,
+      "luigi": 42,
+      "thefuck": 8,
+      "tqdm": 56,
+      "youtube-dl": 108
+    },
+    "source_category_counts": {
+      "agent_like_generated": 23,
+      "controlled_negative": 280,
+      "human_reference": 78,
+      "real_agent_generated": 274
+    },
+    "source_file_count": 46,
+    "source_status_counts": {
+      "already_curated_into_evp8_hard_source": 8,
+      "already_promoted_to_evp8_controlled_source": 22,
+      "existing_evp8_controlled_manifest": 1,
+      "existing_evp8_hard_manifest": 1,
+      "fresh_realistic_agent_source": 4,
+      "legacy_pilot_or_duplicate_source": 3,
+      "pending_unvalidated_source": 7
+    },
+    "unique_candidate_count": 655,
+    "unique_fresh_agent_like_candidates": 107,
+    "unique_fresh_nontrivial_hard_negatives": 107,
+    "unique_fresh_usable_candidates": 107,
+    "unique_pending_agent_like_candidates": 13,
+    "unique_pending_nontrivial_hard_negatives": 13,
+    "unique_pending_usable_candidates": 13,
+    "usable_candidate_count": 443
+  }
+}

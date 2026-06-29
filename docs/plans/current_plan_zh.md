@@ -1,6 +1,6 @@
 # 当前计划：AI 生成补丁的可验证审查
 
-最后更新：2026-06-29
+最后更新：2026-06-30
 
 ## 0. 2026-06-29 本轮小目标：EVP-8-HARD Phase B 源盘点
 
@@ -20389,3 +20389,224 @@ visible-tool baseline 完全分开，因此直接继续调用 Qwen/DeepSeek veri
 - 目标候选必须满足：patch applies、declared visible tests pass、hidden oracle fails；
 - 在至少 3 个项目上达到约 30 个 validated visible-pass/hidden-fail candidates
   前，不再运行 Qwen/DeepSeek verifier API。
+
+## 2026-06-30 Fresh realistic hard-negative generation/validation packet
+
+本轮目标是在上一轮 opportunity inventory 的基础上，构造新的 no-API
+`EVP-8-REALISTIC-HARD-NEGATIVE` generation/validation packet。用户已授权 API，
+但本轮仍不调用 API；授权只作为后续 packet readiness 的一个条件记录。
+
+本轮边界：
+
+- 不调用任何模型 API；
+- 不运行 verifier API；
+- 不读取 ignored raw responses；
+- 不提交 ignored generation output；
+- 不把旧 primary/supplement generation 的 stale hard-negative 计数继续当作当前结论；
+- 新 generation run 必须使用新的 run id、output dir、variant 起点和
+  model-candidate 起点，避免与旧候选碰撞。
+
+验收条件：
+
+- 冻结新的 dry-run 命令、future execute 命令和 validation/relabel 命令；
+- dry-run 只写 prompt hash/count，不写 rendered prompt text、candidate patch 或 raw response；
+- packet 必须明确 post-generation hard-negative filter：
+  `patch applies + declared visible tests pass + hidden oracle fails`；
+- packet 必须把 verifier API readiness 设为 blocked，直到至少约 30 个
+  validated visible-pass/hidden-fail candidates 覆盖至少 3 个项目；
+- docs/index/experience/current plan 同步；
+- 通过 `py_compile`、JSON 解析和敏感/raw/prompt 字段检查；
+- 提交并同步 GitHub。
+
+执行结果：
+
+- 执行新的 no-API generation dry-run：
+  - run id = `evp8_realistic_hardneg_generation_dryrun_qwen_001`；
+  - model/provider = `qwen3.7-max` / `qwen_official`；
+  - variant start index = 13；
+  - model candidate start index = 3001；
+  - prompt count = 54；
+  - candidate count = 0；
+  - API call attempted = false；
+  - raw response dir absent；
+  - candidates/evidence pending absent or empty。
+- 生成 dry-run audit：
+  `data/protocols/evp8_realistic_hardneg_generation_dry_run_audit_v0_1.json`；
+- 新增 packet writer：
+  `scripts/write_evp8_realistic_hardneg_generation_validation_packet.py`；
+- 生成 execution/validation packet：
+  `data/protocols/evp8_realistic_hardneg_generation_validation_packet_v0_1.json`；
+- 生成 Markdown companion：
+  `docs/experiments/evp8_realistic_hardneg_generation_validation_packet_v0_1.md`。
+
+Packet 状态：
+
+- status = `ready_for_generation_api`；
+- credential presence ready = true；
+- generation execution output dir absent；
+- validation output dir absent；
+- user broad API authorization recorded = true；
+- generation API authorized by packet = false；
+- verifier API ready = false；
+- verifier API authorized by packet = false。
+
+冻结的后续命令：
+
+1. Qwen generation execute；
+2. generation result audit；
+3. `validate_patch_candidates.py` apply + hidden oracle validation；
+4. `relabel_ai_patch_candidates.py` relabel；
+5. source inventory rerun。
+
+后续 hard-negative gate：
+
+- 必须满足 `patch_applies && declared_visible_tests_pass && hidden_oracle_fails`；
+- 至少约 30 个 visible-pass/hidden-fail candidates；
+- 至少覆盖 3 个项目；
+- 该 gate 通过前，不得运行 Qwen/DeepSeek verifier API。
+
+## 2026-06-30 Authorized fresh hard-negative Qwen generation execution
+
+用户此前已授权所有 API；上一轮 packet 已达到 `ready_for_generation_api`。
+本轮目标是在该 packet 边界内只执行 Qwen patch generation API，并立即完成
+raw-output-free generation audit、local apply/oracle validation 和 relabel。
+
+执行边界：
+
+- 只运行 `qwen3.7-max` patch generation；
+- 不运行 Qwen/DeepSeek verifier API；
+- 不读取或提交 ignored raw responses；
+- 不提交 `outputs/` 下的 pending candidates、relabeled candidates、workdirs 或 raw files；
+- 如果出现 `generation_error.json`，立即停止并诊断，不继续 validation/relabel；
+- validation/relabel 后仍不能直接构造 verifier cohort，必须先统计
+  `patch_applies && declared_visible_tests_pass && hidden_oracle_fails` 是否达到 gate。
+
+验收条件：
+
+- generation summary 存在且 run id、model、provider、prompt/candidate count 符合 packet；
+- generation result audit 通过；
+- validation 产生 54 条记录，patch apply 和 hidden oracle 执行状态可统计；
+- relabel summary 产生 correct/incorrect/environment_invalid 统计；
+- 不读取 raw response 内容，不把 patch text 写入 tracked artifacts；
+- 根据结果明确下一步是否进入 corrected oracle/visible-test/headroom gate；
+- docs/index/experience/current plan 同步；
+- 提交并同步 GitHub。
+
+执行结果：
+
+- Qwen generation API 已执行完成：
+  - run id = `evp8_realistic_hardneg_generation_qwen_001`；
+  - prompt/candidate/evidence records = 54/54/54；
+  - raw response files = 54，全部位于 ignored `outputs/`；
+  - generation result audit status = `passed`；
+  - unique patch ids = 54；
+  - unique model candidate ids = 54。
+- validation/relabel 已完成：
+  - validation record count = 54；
+  - patch applied = 54；
+  - hidden oracle ran = 54；
+  - hidden oracle passed = 9；
+  - relabel expected outcomes = `correct=9, incorrect=45`；
+  - environment invalid = 0。
+- 首次 visible-test runner 使用 relabeled evidence packets 时全部 blocked；
+  诊断为执行链路 bug：runner 只读取 `visible_test_evidence.listed_tests`，
+  而 relabeled agent packets 使用顶层 `visible_tests`。
+- 已最短路径修复 `scripts/run_evp8_realistic_agent_visible_tests.py`：
+  `listed_tests()` 同时支持 `visible_test_evidence.listed_tests` 和
+  顶层 `visible_tests`。
+- 修复后 visible tests 真实执行完成：
+  - visible-test records = 54；
+  - completed = 54；
+  - blocked = 0；
+  - patch apply failed = 0；
+  - test outcome counts = `passed=35, failed=28`。
+- 新增 hard-negative gate analysis：
+  `data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json`；
+  classification counts：
+  - `visible_pass_hidden_fail=26`；
+  - `visible_pass_hidden_pass=9`；
+  - `visible_fail_hidden_fail=19`。
+
+Gate 结论：
+
+- 当前 fresh Qwen generation 产生 26 个真正的
+  `patch_applied && visible_pass && hidden_oracle_fail`；
+- 覆盖项目只有 2 个：`PySnooper` 和 `cookiecutter`；
+- 未达到预设 gate：至少 30 个 visible-pass/hidden-fail 且至少 3 个项目；
+- verifier API 仍然 blocked；
+- 下一步需要 supplement，目标是至少补 4 个 visible-pass/hidden-fail，并补足第三项目。
+
+## 2026-06-30 Hard-negative supplement for third-project diversity
+
+本轮目标是在当前 26 个 fresh hard negatives 的基础上，做小规模 supplement，
+优先补第三项目多样性。选择 `httpie` 是因为历史 EVP-8-HARD 已显示它有
+visible-pass/hidden-fail 风险模式，但本 supplement 必须使用新的 generated
+candidates、独立 run id 和独立 validation/visible-test gate，不能复用历史 hard
+cohort 结果。
+
+执行边界：
+
+- 只执行 Qwen patch generation supplement；
+- 不运行 verifier API；
+- 不提交 ignored raw outputs、pending candidates、relabeled candidates 或 workdirs；
+- supplement 结果必须单独 audit、validation、relabel、visible-test；
+- 只有 combined gate 达到 30 个 hard negatives 和 3 个项目后，才允许进入
+  separated cohort/headroom 构造。
+
+执行结果：
+
+- Qwen httpie supplement：
+  - run id = `evp8_realistic_hardneg_generation_qwen_supplement_001`；
+  - generation records = 12；
+  - validation patch applied = 12；
+  - hidden oracle passed = 9；
+  - hidden oracle failed = 3；
+  - visible tests completed = 12；
+  - visible passed = 9；
+  - visible failed = 3；
+  - gate result：`visible_pass_hidden_fail=0`。
+- Luigi supplement 尝试：
+  - run id = `evp8_realistic_hardneg_generation_qwen_supplement_002`；
+  - 在 `bugsinpy_luigi_3` variant 25 生成阶段失败；
+  - failure reason = `find snippet not found in luigi/parameter.py`；
+  - 未产生候选，未进入 validation。
+- DeepSeek httpie supplement：
+  - run id = `evp8_realistic_hardneg_generation_deepseek_supplement_001`；
+  - generation records = 12；
+  - validation patch applied = 12；
+  - hidden oracle passed = 9；
+  - hidden oracle failed = 3；
+  - visible tests completed = 12；
+  - visible passed = 9；
+  - visible failed = 3；
+  - gate result：`visible_pass_hidden_fail=0`。
+
+执行链路修复：
+
+- `scripts/run_evp8_realistic_agent_visible_tests.py` 修复两处：
+  1. `listed_tests()` 支持 relabeled agent packet 的顶层 `visible_tests` 字段；
+  2. `httpie` visible tests 使用 `outputs/envs/httpie_hard_visible_py311`
+     和 legacy pytest wrapper，避免 `pytest_httpbin` fixture/environment error。
+
+Combined gate：
+
+- 新增 `scripts/analyze_evp8_realistic_hardneg_generation_gate.py`；
+- 新增 `scripts/combine_evp8_realistic_hardneg_generation_gates.py`；
+- combined candidates = 78；
+- classification counts：
+  - `visible_pass_hidden_fail=26`；
+  - `visible_pass_hidden_pass=27`；
+  - `visible_fail_hidden_fail=25`；
+- visible-pass/hidden-fail projects = `PySnooper, cookiecutter`；
+- combined gate 未通过：
+  - count gate：26 < 30；
+  - project gate：2 < 3。
+
+当前判断：
+
+- 不得运行 verifier API；
+- httpie supplement 没有贡献 third-project hard negatives；
+- Luigi generation path 需要单独修复 edit-plan apply 稳定性后才能继续；
+- 下一步应二选一：
+  1. 重新设计第三项目来源，例如修 Luigi generation 或扩展 runner 到其他稳定任务；
+  2. 降级论文 claim，把 fresh realistic hard-negative 结果限定为 two-project cohort。

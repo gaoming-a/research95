@@ -537,6 +537,51 @@
   Markdown companion for the execution packet, including the future command,
   stop gates, and required validate/relabel/source-inventory steps after
   generation.
+- `../data/protocols/evp8_realistic_hardneg_generation_dry_run_audit_v0_1.json`
+  and
+  `experiments/evp8_realistic_hardneg_generation_dry_run_audit_v0_1.md`:
+  no-API dry-run audit for the next fresh realistic hard-negative generation
+  attempt. It uses a new run id, variant start index 13, model-candidate start
+  index 3001, produces 54 prompt hashes, 0 candidates, no raw responses, and
+  no rendered prompt text.
+- `../scripts/write_evp8_realistic_hardneg_generation_validation_packet.py`,
+  `../data/protocols/evp8_realistic_hardneg_generation_validation_packet_v0_1.json`,
+  and
+  `experiments/evp8_realistic_hardneg_generation_validation_packet_v0_1.md`:
+  no-API generation/validation packet for the fresh hard-negative route after
+  corrected labels. Current status is `ready_for_generation_api`, but the
+  packet itself does not authorize API execution and keeps verifier API blocked
+  until at least about 30 validated visible-pass/hidden-fail candidates across
+  at least 3 projects exist.
+- `../scripts/analyze_evp8_realistic_hardneg_generation_gate.py`:
+  raw-output-free gate analyzer that joins local validation records with
+  visible-test outcomes and classifies generated candidates into
+  visible-pass/hidden-fail, visible-pass/hidden-pass, visible-fail/hidden-fail,
+  and related buckets without writing patch text or raw responses.
+- `../scripts/combine_evp8_realistic_hardneg_generation_gates.py`,
+  `../data/protocols/evp8_realistic_hardneg_combined_generation_gate_v0_1.json`,
+  and
+  `experiments/evp8_realistic_hardneg_combined_generation_gate_v0_1.md`:
+  combined gate over the fresh Qwen generation, Qwen httpie supplement, and
+  DeepSeek httpie supplement. Current result: 78 generated candidates yield 26
+  true visible-pass/hidden-fail candidates across 2 projects
+  (`PySnooper`, `cookiecutter`), so the 30-candidate/3-project verifier-API
+  gate is not met.
+- `../data/protocols/evp8_realistic_hardneg_generation_result_audit_v0_1.json`,
+  `../data/protocols/evp8_realistic_hardneg_generation_supplement_001_result_audit_v0_1.json`,
+  and
+  `../data/protocols/evp8_realistic_hardneg_generation_deepseek_supplement_001_result_audit_v0_1.json`:
+  raw-output-free generation audits for the fresh Qwen main hard-negative
+  generation, Qwen httpie supplement, and DeepSeek httpie supplement. Raw
+  responses remain under ignored `outputs/`.
+- `../data/protocols/evp8_realistic_hardneg_visible_test_outcomes_v0_1.json`,
+  `../data/protocols/evp8_realistic_hardneg_visible_test_outcomes_supplement_001_v0_1.json`,
+  and
+  `../data/protocols/evp8_realistic_hardneg_visible_test_outcomes_deepseek_supplement_001_v0_1.json`:
+  visible-test summaries for the generated hard-negative attempts. The main
+  Qwen run completed 54/54 visible-test records; each httpie supplement
+  completed 12/12 after the visible-test runner was repaired to use the httpie
+  venv and legacy pytest wrapper.
 - `../scripts/audit_evp8_realistic_agent_generation_results.py`:
   raw-output-free audit for the authorized Qwen realistic agent-patch
   generation run. It validates 54 prompt/candidate/evidence records, task

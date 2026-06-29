@@ -1,0 +1,226 @@
+{
+  "checks": [
+    {
+      "check": "api_call_not_attempted_by_packet",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "execution_authorized_by_packet_false",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "opportunity_inventory_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "current_verifier_api_not_ready",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "target_matrix_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "dry_run_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "dry_run_uses_expected_run_id",
+      "detail": "evp8_realistic_hardneg_generation_dryrun_qwen_001",
+      "passed": true
+    },
+    {
+      "check": "dry_run_prompt_count_expected",
+      "detail": 54,
+      "passed": true
+    },
+    {
+      "check": "dry_run_candidate_count_zero",
+      "detail": 0,
+      "passed": true
+    },
+    {
+      "check": "generation_execution_output_dir_absent",
+      "detail": "outputs/evp8_realistic_hardneg_generation_qwen_001",
+      "passed": true
+    },
+    {
+      "check": "validation_output_dir_absent",
+      "detail": "outputs/evp8_realistic_hardneg_validation_qwen_001",
+      "passed": true
+    },
+    {
+      "check": "credential_presence_ready",
+      "detail": "QWEN_API_KEY",
+      "passed": true
+    }
+  ],
+  "date": "2026-06-30",
+  "expected_output_paths": {
+    "generation_dir": "outputs/evp8_realistic_hardneg_generation_qwen_001",
+    "generation_error": "outputs/evp8_realistic_hardneg_generation_qwen_001/generation_error.json",
+    "generation_summary": "outputs/evp8_realistic_hardneg_generation_qwen_001/generation_summary.json",
+    "pending_candidates": "outputs/evp8_realistic_hardneg_generation_qwen_001/candidates.pending.jsonl",
+    "raw_response_dir": "outputs/evp8_realistic_hardneg_generation_qwen_001/raw",
+    "relabel_summary": "outputs/evp8_realistic_hardneg_validation_qwen_001/relabel_summary.json",
+    "relabeled_candidates": "outputs/evp8_realistic_hardneg_validation_qwen_001/candidates.relabeled.jsonl",
+    "validation_dir": "outputs/evp8_realistic_hardneg_validation_qwen_001",
+    "validation_jsonl": "outputs/evp8_realistic_hardneg_validation_qwen_001/validation.jsonl",
+    "validation_summary": "outputs/evp8_realistic_hardneg_validation_qwen_001/validation_summary.json"
+  },
+  "generation_plan": {
+    "api_provider": "qwen_official",
+    "execute_command": [
+      "python",
+      "scripts\\generate_agent_patch_candidates.py",
+      "--execute",
+      "--out-dir",
+      "outputs/evp8_realistic_hardneg_generation_qwen_001",
+      "--run-id",
+      "evp8_realistic_hardneg_generation_qwen_001",
+      "--api-provider",
+      "qwen_official",
+      "--model",
+      "qwen3.7-max",
+      "--patches-per-task",
+      "9",
+      "--variant-start-index",
+      "13",
+      "--model-candidate-start-index",
+      "3001",
+      "--task-id",
+      "bugsinpy_PySnooper_1",
+      "--task-id",
+      "bugsinpy_PySnooper_3",
+      "--task-id",
+      "bugsinpy_cookiecutter_1",
+      "--task-id",
+      "bugsinpy_cookiecutter_2",
+      "--task-id",
+      "bugsinpy_cookiecutter_3",
+      "--task-id",
+      "bugsinpy_tqdm_9"
+    ],
+    "model": "qwen3.7-max",
+    "model_candidate_start_index": 3001,
+    "patches_per_task": 9,
+    "planned_slots": 54,
+    "run_id": "evp8_realistic_hardneg_generation_qwen_001",
+    "target_tasks": [
+      "bugsinpy_PySnooper_1",
+      "bugsinpy_PySnooper_3",
+      "bugsinpy_cookiecutter_1",
+      "bugsinpy_cookiecutter_2",
+      "bugsinpy_cookiecutter_3",
+      "bugsinpy_tqdm_9"
+    ],
+    "variant_start_index": 13
+  },
+  "hard_negative_filter_gate": {
+    "minimum_projects": 3,
+    "minimum_visible_pass_hidden_fail_candidates": 30,
+    "required_candidate_property": "patch_applies && declared_visible_tests_pass && hidden_oracle_fails",
+    "verifier_api_blocked_until_gate_passes": true
+  },
+  "inputs": {
+    "api_key_value_printed": false,
+    "dry_run_audit": "data/protocols/evp8_realistic_hardneg_generation_dry_run_audit_v0_1.json",
+    "env_key_checked": "QWEN_API_KEY",
+    "env_path": ".env",
+    "opportunity_inventory": "data/protocols/evp8_realistic_hard_negative_opportunity_inventory_v0_1.json",
+    "target_matrix": "data/protocols/evp8_realistic_agent_source_target_matrix_v0_1.json"
+  },
+  "packet_id": "evp8_realistic_hardneg_generation_validation_packet_v0_1",
+  "post_generation_commands": {
+    "generation_result_audit": [
+      "python",
+      "scripts\\audit_evp8_realistic_agent_generation_results.py",
+      "--run-dir",
+      "outputs/evp8_realistic_hardneg_generation_qwen_001",
+      "--out-json",
+      "data\\protocols\\evp8_realistic_hardneg_generation_result_audit_v0_1.json",
+      "--out-md",
+      "docs\\experiments\\evp8_realistic_hardneg_generation_result_audit_v0_1.md",
+      "--expected-run-id",
+      "evp8_realistic_hardneg_generation_qwen_001",
+      "--expected-model",
+      "qwen3.7-max",
+      "--expected-provider",
+      "qwen_official",
+      "--expected-slots",
+      "54",
+      "--expected-task-count",
+      "bugsinpy_PySnooper_1=9",
+      "--expected-task-count",
+      "bugsinpy_PySnooper_3=9",
+      "--expected-task-count",
+      "bugsinpy_cookiecutter_1=9",
+      "--expected-task-count",
+      "bugsinpy_cookiecutter_2=9",
+      "--expected-task-count",
+      "bugsinpy_cookiecutter_3=9",
+      "--expected-task-count",
+      "bugsinpy_tqdm_9=9",
+      "--check"
+    ],
+    "relabel_generated_candidates": [
+      "python",
+      "scripts\\relabel_ai_patch_candidates.py",
+      "--pending-candidates",
+      "outputs/evp8_realistic_hardneg_generation_qwen_001/candidates.pending.jsonl",
+      "--validation",
+      "outputs/evp8_realistic_hardneg_validation_qwen_001/validation.jsonl",
+      "--out-candidates",
+      "outputs/evp8_realistic_hardneg_validation_qwen_001/candidates.relabeled.jsonl",
+      "--out-evidence-packets",
+      "outputs/evp8_realistic_hardneg_validation_qwen_001/evidence_packets.relabeled.jsonl",
+      "--summary-out",
+      "outputs/evp8_realistic_hardneg_validation_qwen_001/relabel_summary.json"
+    ],
+    "source_inventory_after_generation": [
+      "python",
+      "scripts\\inventory_evp8_realistic_agent_sources.py",
+      "--out-json",
+      "data\\protocols\\evp8_realistic_hardneg_source_inventory_after_generation_v0_1.json",
+      "--out-md",
+      "docs\\experiments\\evp8_realistic_hardneg_source_inventory_after_generation_v0_1.md",
+      "--check"
+    ],
+    "validate_generated_candidates": [
+      "python",
+      "scripts\\validate_patch_candidates.py",
+      "--candidates",
+      "outputs/evp8_realistic_hardneg_generation_qwen_001/candidates.pending.jsonl",
+      "--workdir-root",
+      "outputs/evp8_realistic_hardneg_validation_qwen_001/workdirs",
+      "--out",
+      "outputs/evp8_realistic_hardneg_validation_qwen_001/validation.jsonl",
+      "--summary-out",
+      "outputs/evp8_realistic_hardneg_validation_qwen_001/validation_summary.json"
+    ]
+  },
+  "scope": {
+    "api_call_attempted": false,
+    "generation_api_authorized_by_packet": false,
+    "patch_text_stored_in_packet": false,
+    "raw_model_outputs_read": false,
+    "rendered_prompt_text_stored": false,
+    "user_broad_api_authorization_recorded": true,
+    "verifier_api_authorized_by_packet": false,
+    "verifier_api_ready": false
+  },
+  "status": "ready_for_generation_api",
+  "stop_gates": [
+    "This packet does not authorize API execution by itself.",
+    "If generation_error.json appears, stop and diagnose before retrying or resuming.",
+    "Do not commit outputs/ raw responses, workdirs, pending candidates, or relabeled local candidate files.",
+    "Do not construct a verifier cohort from relabel output until corrected oracle and visible-test consistency are audited.",
+    "Do not run Qwen/DeepSeek verifier APIs until the hard-negative filter gate passes."
+  ]
+}

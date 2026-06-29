@@ -1,0 +1,35 @@
+{
+  "analysis_id": "evp8_realistic_agent_visible_test_outcomes_v0_1",
+  "api_call_attempted": false,
+  "blocked_count": 0,
+  "cohort_id": "EVP-8-REALISTIC-AGENT",
+  "completed_or_error_or_timeout_count": 12,
+  "hidden_labels_read": false,
+  "leakage_policy": "visible-test records exclude evaluator labels, oracle outcomes, source ids, prompts, and raw model responses",
+  "mode": "run",
+  "oracle_fields_read": false,
+  "patch_apply_failed_count": 0,
+  "raw_model_outputs_read": false,
+  "record_count": 12,
+  "run_status_counts": {
+    "completed": 12
+  },
+  "run_status_counts_by_task": {
+    "bugsinpy_httpie_1": {
+      "completed": 3
+    },
+    "bugsinpy_httpie_2": {
+      "completed": 3
+    },
+    "bugsinpy_httpie_3": {
+      "completed": 3
+    },
+    "bugsinpy_httpie_4": {
+      "completed": 3
+    }
+  },
+  "test_outcome_counts": {
+    "failed": 3,
+    "passed": 9
+  }
+}

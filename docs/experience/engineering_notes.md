@@ -3922,3 +3922,46 @@ This file starts fresh for the patch-verification project.
   hard-negative counts as locator metadata only. Recompute visible-pass/
   hidden-fail counts after corrected oracle execution before making any
   headroom or API-readiness claim.
+
+## 2026-06-30 Fresh hard-negative generation packet
+
+- A new hard-negative generation attempt must not reuse old primary/supplement
+  identifiers. The next packet uses run id
+  `evp8_realistic_hardneg_generation_qwen_001`, variant start index 13, and
+  model-candidate start index 3001 because earlier realistic generation runs
+  already used variants through 12 and model-candidate ids through 2005.
+- Dry-run evidence is only prompt-boundary evidence. The new hard-negative
+  dry-run has 54 prompt hashes and 0 candidates; it proves task coverage and
+  leakage boundaries, not candidate quality.
+- Keep generation API readiness separate from verifier API readiness. The
+  packet can be ready for future Qwen patch generation while verifier API
+  remains blocked until the generated candidates pass apply, visible tests,
+  and hidden-oracle filtering.
+- The next validated hard-negative gate should be expressed as a property,
+  not as a stale label name: `patch applies`, declared visible tests pass, and
+  hidden oracle fails. Only that property creates tool-headroom cases for the
+  paper's realistic-agent claim.
+
+## 2026-06-30 Fresh hard-negative generation outcome
+
+- Generated labels are not enough. The fresh Qwen run produced 45
+  hidden-oracle failures, but only 26 also passed declared visible tests. The
+  paper-facing hard-negative unit must be the joined property
+  visible-pass/hidden-fail, not `incorrect` from relabel alone.
+- Keep schema adapters explicit. Relabeled agent evidence packets expose
+  visible tests as top-level `visible_tests`, while the later realistic
+  verifier seed uses `visible_test_evidence.listed_tests`. The visible-test
+  runner now accepts both model-visible shapes; otherwise it silently reports
+  blocked records.
+- Project-specific visible-test environments matter. `httpie` visible tests
+  need `outputs/envs/httpie_hard_visible_py311` plus the legacy pytest wrapper;
+  using the current Python misses `pytest_httpbin`, and using plain pytest in
+  the venv hits duplicate fixture registration.
+- Supplement generation can fail to improve the actual gate even when it
+  validates cleanly. Qwen and DeepSeek httpie supplements each generated 12
+  applicable candidates, but all hidden-failing httpie candidates failed the
+  visible tests, so they contributed 0 visible-pass/hidden-fail cases.
+- Do not run verifier API after a failed source gate. The combined fresh set
+  has 78 generated candidates but only 26 visible-pass/hidden-fail candidates
+  across 2 projects. The next work is source redesign or claim reduction, not
+  another verifier run.

@@ -39,6 +39,7 @@ PROJECT_PYTHONS = {
     "bugsinpy_PySnooper_1": REPO_ROOT / "outputs" / "envs" / "pysnooper_p2p_py311" / "Scripts" / "python.exe",
     "bugsinpy_PySnooper_3": REPO_ROOT / "outputs" / "envs" / "pysnooper3_p2p_py311" / "Scripts" / "python.exe",
     "cookiecutter": REPO_ROOT / "outputs" / "envs" / "cookiecutter_p2p_py311" / "Scripts" / "python.exe",
+    "httpie": REPO_ROOT / "outputs" / "envs" / "httpie_hard_visible_py311" / "Scripts" / "python.exe",
 }
 
 FORBIDDEN_OUTPUT_MARKERS = (
@@ -104,7 +105,7 @@ def python_for(packet: dict[str, Any]) -> tuple[str, str]:
 
 
 def pytest_command_for(packet: dict[str, Any], python_executable: str, tests: list[str]) -> list[str]:
-    if packet.get("project") == "PySnooper":
+    if packet.get("project") in {"PySnooper", "httpie"}:
         return [python_executable, str(LEGACY_PY311_PYTEST), "-q", *tests]
     if packet.get("project") == "cookiecutter":
         return [python_executable, "-m", "pytest", "-q", "-o", "addopts=", *tests]
@@ -188,6 +189,9 @@ def outcome_from_result(result: dict[str, Any]) -> tuple[str, str]:
 def listed_tests(packet: dict[str, Any]) -> list[str]:
     evidence = packet.get("visible_test_evidence") or {}
     tests = evidence.get("listed_tests")
+    if isinstance(tests, list):
+        return [str(test) for test in tests if str(test)]
+    tests = packet.get("visible_tests")
     if isinstance(tests, list):
         return [str(test) for test in tests if str(test)]
     return []
