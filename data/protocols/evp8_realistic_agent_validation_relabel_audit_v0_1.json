@@ -1,0 +1,136 @@
+{
+  "audit_id": "evp8_realistic_agent_validation_relabel_audit_v0_1",
+  "checks": [
+    {
+      "check": "generation_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "validation_record_count_54",
+      "detail": 54,
+      "passed": true
+    },
+    {
+      "check": "validation_all_patches_applied",
+      "detail": 54,
+      "passed": true
+    },
+    {
+      "check": "validation_all_oracles_ran",
+      "detail": 54,
+      "passed": true
+    },
+    {
+      "check": "relabel_candidate_count_54",
+      "detail": 54,
+      "passed": true
+    },
+    {
+      "check": "relabel_no_environment_invalid",
+      "detail": 0,
+      "passed": true
+    },
+    {
+      "check": "relabel_ready_for_revalidation",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "source_inventory_v0_2_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "fresh_agent_like_at_least_30",
+      "detail": {
+        "fresh_agent_like_candidates": 46,
+        "fresh_nontrivial_hard_negatives": 46,
+        "fresh_project_count": 3,
+        "fresh_usable_candidates": 46,
+        "pending_agent_like_candidates": 13,
+        "pending_nontrivial_hard_negatives": 13,
+        "pending_usable_candidates": 13
+      },
+      "passed": true
+    },
+    {
+      "check": "fresh_hard_negatives_at_least_25",
+      "detail": {
+        "fresh_agent_like_candidates": 46,
+        "fresh_nontrivial_hard_negatives": 46,
+        "fresh_project_count": 3,
+        "fresh_usable_candidates": 46,
+        "pending_agent_like_candidates": 13,
+        "pending_nontrivial_hard_negatives": 13,
+        "pending_usable_candidates": 13
+      },
+      "passed": true
+    },
+    {
+      "check": "fresh_projects_at_least_3",
+      "detail": {
+        "fresh_agent_like_candidates": 46,
+        "fresh_nontrivial_hard_negatives": 46,
+        "fresh_project_count": 3,
+        "fresh_usable_candidates": 46,
+        "pending_agent_like_candidates": 13,
+        "pending_nontrivial_hard_negatives": 13,
+        "pending_usable_candidates": 13
+      },
+      "passed": true
+    }
+  ],
+  "date_utc": "2026-06-29T16:16:58.955103+00:00",
+  "inputs": {
+    "generation_audit": "data/protocols/evp8_realistic_agent_generation_result_audit_v0_1.json",
+    "relabel_summary": "outputs/evp8_realistic_agent_validation_qwen_primary_001/relabel_summary.json",
+    "source_inventory": "data/protocols/evp8_realistic_agent_source_inventory_v0_2.json",
+    "validation_summary": "outputs/evp8_realistic_agent_validation_qwen_primary_001/validation_summary.json"
+  },
+  "next_required_step": "add at least four fresh usable realistic candidates or revise the predeclared Phase 1 count gate before constructing the verifier cohort",
+  "patch_text_stored": false,
+  "prompt_text_stored": false,
+  "raw_output_content_stored": false,
+  "relabel_summary": {
+    "candidate_count": 54,
+    "environment_invalid_count": 0,
+    "expected_outcome_counts": {
+      "correct": 9,
+      "incorrect": 45
+    },
+    "oracle_passed_count": 9,
+    "oracle_ran_count": 54,
+    "patch_applied_count": 54,
+    "ready_for_revalidation": true
+  },
+  "source_readiness_after_relabel": {
+    "fresh_agent_like_candidates": 46,
+    "fresh_nontrivial_hard_negatives": 46,
+    "fresh_project_count": 3,
+    "fresh_usable_candidates": 46,
+    "phase1_count_gate": {
+      "passed": false,
+      "requirements": {
+        "fresh_agent_like_candidates_at_least_30": true,
+        "fresh_nontrivial_hard_negatives_at_least_25": true,
+        "fresh_projects_at_least_3": true,
+        "fresh_usable_candidates_at_least_50": false
+      }
+    },
+    "ready_for_api": false,
+    "ready_for_phase1_candidate_curation": false
+  },
+  "status": "passed_needs_more_sources",
+  "validation_summary": {
+    "all_validated_against_initial_label": false,
+    "oracle_all_passed_count": 9,
+    "oracle_ran_count": 54,
+    "patch_applied_count": 54,
+    "record_count": 54,
+    "validation_status_counts": {
+      "label_mismatch": 9,
+      "validated": 45
+    }
+  }
+}

@@ -3773,3 +3773,27 @@ This file starts fresh for the patch-verification project.
 - Generation output is not verifier input yet. After API generation, the next
   mandatory steps are validation, relabeling, source inventory rerun, and only
   then separated cohort construction and visible-tool baseline gating.
+
+## 2026-06-29 Realistic agent generation and validation on Windows
+
+- Copying whole historical checkouts can fail on Windows even when the target
+  patch only touches one source file. The cookiecutter checkout contains docs
+  and templated test paths that triggered invalid-argument and long-path
+  errors during generation.
+- For generation, the shortest safe repair is to copy only `.git` plus
+  `touched_files`, then use `git diff -- <touched_files>` to materialize the
+  candidate patch. This preserves the patch baseline without copying unrelated
+  long paths.
+- Failed generation attempts can leave read-only `.git/objects/pack` files in
+  ignored workdirs. Any resume-capable runner that deletes workdirs on Windows
+  should chmod failed paths writable before retrying `shutil.rmtree`.
+- Validation has a different boundary from generation: oracles need importable
+  project packages, so do not reduce validation workdirs to touched files only.
+  For this cohort, ignoring `docs` and the known cookiecutter
+  `test-generate-binaries` long-path fixture preserved oracle execution while
+  avoiding Windows copy failure.
+- A completed generation run is still not a verifier-ready cohort. The Qwen
+  run produced 54 pending candidates, but validation/relabel yielded 9 correct
+  and 45 incorrect; source inventory then counted only 46 fresh usable
+  candidates after duplicate/existing-cohort filtering. Keep the Phase 1 gate
+  separate from the generation count.

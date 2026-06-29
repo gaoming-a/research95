@@ -547,8 +547,9 @@ def write_markdown(path: Path, inventory: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     summary = inventory["source_summary"]
     ready = inventory["readiness"]
+    version = "v0.2" if "_v0_2" in path.name else "v0.1"
     lines = [
-        "# EVP-8 Realistic Agent-Patch Source Inventory v0.1",
+        f"# EVP-8 Realistic Agent-Patch Source Inventory {version}",
         "",
         "Date: 2026-06-29",
         "",

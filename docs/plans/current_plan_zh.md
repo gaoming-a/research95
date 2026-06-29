@@ -19767,3 +19767,96 @@ Label-conditioned audit result：
 - 下一步若要判断 Qwen 负向结果是否 model-specific，必须由用户明确授权：
   “授权运行 EVP-8-HARD DeepSeek API”；
 - 未授权前不得执行 DeepSeek `--execute`。
+
+## 2026-06-29 Realistic agent-patch Qwen generation authorized
+
+本轮目标：
+
+- 用户已给出广义授权：“授权你所有的api”；
+- 按当前 realistic/agent patch 计划，优先解除
+  `evp8_realistic_agent_generation_execution_packet_v0_1` 的 API gate；
+- 只执行已冻结的 Qwen agent-patch generation 命令；
+- 本轮不把 generated candidates 当作最终实验标签；
+- 如出现 `generation_error.json`，立即停止并诊断，不继续 verifier API；
+- 生成后先做最小输出审计，再进入 validation/relabel。
+
+本轮边界：
+
+- 允许调用 `qwen_official` / `qwen3.7-max` 生成 54 个 planned slots；
+- 不允许从 generation packet 直接运行 Qwen/DeepSeek verifier APIs；
+- 不允许提交 `outputs/` 下的 raw responses、agent workdirs 或 pending JSONL；
+- tracked 文档只记录 raw-output-free 的审计结果、数量、gate 状态和下一步。
+
+验收条件：
+
+- `generation_summary.json` 存在；
+- planned prompt count 为 54；
+- 若无 `generation_error.json`，检查 `candidates.pending.jsonl` 与
+  `evidence_packets.pending.jsonl` 的数量一致；
+- 若 candidate count 小于 54，需要在审计中明确是生成失败、解析失败还是去重/恢复导致；
+- 生成结果只能进入后续 validation/relabel 阶段，不能直接作为论文主结果。
+
+执行结果：
+
+- 已执行授权后的 Qwen realistic agent-patch generation；
+- 第一次失败类型为执行链路 bug：Windows 上复制完整 cookiecutter checkout 时触发
+  docs/模板长路径问题；
+- 修复 `scripts/generate_agent_patch_candidates.py`：
+  - generation workdir 只复制 `.git` 与 `touched_files`；
+  - 删除旧 workdir 时处理 Windows 只读 `.git` pack 文件；
+- 恢复同一 run 后完成 54 个 planned slots；
+- 生成输出仍保留在 ignored
+  `outputs/evp8_realistic_agent_generation_qwen_primary_001/`；
+- raw response 文件数为 56，其中 2 个来自失败尝试，均不进入 tracked artifact；
+- 新增 generation result audit：
+  `data/protocols/evp8_realistic_agent_generation_result_audit_v0_1.json`；
+- generation result audit 状态为 `passed`：
+  - prompt manifest records = 54；
+  - candidates.pending records = 54；
+  - evidence_packets.pending records = 54；
+  - unique patch ids = 54；
+  - unique patch-text hashes = 19；
+  - pending candidates 仍为 `pending_validation`；
+  - evidence packets 不含 forbidden evaluator fields。
+
+Validation/relabel 结果：
+
+- 修复 `scripts/validate_patch_candidates.py`：
+  - 删除旧 workdir 时处理只读文件；
+  - 复制 validation checkout 时忽略 `docs` 与 cookiecutter 的
+    `test-generate-binaries` 长路径目录；
+- 本地 validation 已完成：
+  - record_count = 54；
+  - patch_applied_count = 54；
+  - oracle_ran_count = 54；
+  - oracle_all_passed_count = 9；
+  - 初始 label mismatch = 9，这是 pending 默认 `incorrect` 与 oracle pass
+    的预期冲突；
+- relabel 已完成：
+  - correct = 9；
+  - incorrect = 45；
+  - environment_invalid = 0；
+  - ready_for_revalidation = true；
+- 新增 validation/relabel audit：
+  `data/protocols/evp8_realistic_agent_validation_relabel_audit_v0_1.json`；
+- audit 状态为 `passed_needs_more_sources`。
+
+Source inventory rerun：
+
+- 生成 `data/protocols/evp8_realistic_agent_source_inventory_v0_2.json`；
+- 生成 `docs/experiments/evp8_realistic_agent_source_inventory_v0_2.md`；
+- rerun 后 fresh pool：
+  - fresh usable candidates = 46；
+  - fresh agent-like candidates = 46；
+  - fresh non-trivial hard negatives = 46；
+  - fresh projects = 3；
+- Phase 1 count gate 当前仍未通过：`fresh_usable_candidates_at_least_50=false`。
+
+当前结论：
+
+- 真实 agent-patch source 已经从 0 提升到 46 个 fresh usable hard negatives；
+- 这一步有实质意义，因为它解决了此前“系统凭空、候选不真实”的核心问题之一；
+- 但现在仍不能跑 verifier API：还差至少 4 个 fresh usable candidates，且还没有构造
+  separated evaluator/model-visible cohort 与 visible-tool baseline；
+- 下一步应先补足 fresh usable gate 或经审计修改 Phase 1 count gate，然后构造 realistic
+  cohort manifest。

@@ -537,6 +537,42 @@
   Markdown companion for the execution packet, including the future command,
   stop gates, and required validate/relabel/source-inventory steps after
   generation.
+- `../scripts/audit_evp8_realistic_agent_generation_results.py`:
+  raw-output-free audit for the authorized Qwen realistic agent-patch
+  generation run. It validates 54 prompt/candidate/evidence records, task
+  coverage, pending-label boundary, and raw-response retry counts without
+  storing prompt text, patch text, or raw response content.
+- `../data/protocols/evp8_realistic_agent_generation_result_audit_v0_1.json`:
+  tracked generation-result audit. Current status is `passed`: 54 pending
+  candidates and 54 model-visible evidence packets were produced across 6
+  tasks; 56 raw response files remain ignored because two failed attempts were
+  retained under `outputs/`.
+- `experiments/evp8_realistic_agent_generation_result_audit_v0_1.md`:
+  Markdown companion for the generation-result audit. It records that pending
+  candidates contain evaluator-only fields and must not be used directly as
+  verifier input before validation/relabeling.
+- `../scripts/audit_evp8_realistic_agent_validation_relabel.py`:
+  raw-output-free audit for the local validation and relabel step. It reads
+  ignored validation summaries, relabel summaries, and the rerun source
+  inventory, then writes tracked counts without patch text or raw outputs.
+- `../data/protocols/evp8_realistic_agent_validation_relabel_audit_v0_1.json`:
+  tracked validation/relabel audit. Current status is
+  `passed_needs_more_sources`: 54/54 patches applied, 54/54 oracles ran, 9
+  candidates relabeled `correct`, 45 relabeled `incorrect`, and no
+  environment-invalid candidates remain.
+- `experiments/evp8_realistic_agent_validation_relabel_audit_v0_1.md`:
+  Markdown companion for the validation/relabel audit. It records that the
+  post-relabel source pool has 46 fresh usable agent-like hard negatives
+  across 3 projects, so Phase 1 still needs at least 4 more fresh usable
+  candidates or a predeclared count-gate revision before verifier APIs.
+- `../data/protocols/evp8_realistic_agent_source_inventory_v0_2.json`:
+  rerun source-inventory result after Qwen generation validation/relabel. It
+  passes the no-API inventory checks and reports 46 unique fresh usable
+  candidates, 46 fresh agent-like candidates, 46 fresh non-trivial hard
+  negatives, and 3 fresh projects; Phase 1 curation remains not ready because
+  the 50 fresh-usable gate is not met.
+- `experiments/evp8_realistic_agent_source_inventory_v0_2.md`: Markdown
+  companion for the post-relabel source inventory rerun.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

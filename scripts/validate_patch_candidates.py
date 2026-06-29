@@ -45,12 +45,20 @@ def bug_checkout_root(source_root: Path, candidate: dict[str, Any]) -> Path:
     return source_root / bug_dir / "buggy" / candidate["project"]
 
 
+def remove_tree(path: Path) -> None:
+    def make_writable_and_retry(func: Any, failed_path: str, _exc_info: Any) -> None:
+        os.chmod(failed_path, stat.S_IWRITE)
+        func(failed_path)
+
+    shutil.rmtree(path, onerror=make_writable_and_retry)
+
+
 def copy_checkout(source_root: Path, candidate: dict[str, Any], workdir: Path) -> None:
     source = bug_checkout_root(source_root, candidate)
     if not source.exists():
         raise FileNotFoundError(f"missing buggy checkout: {source}")
     if workdir.exists():
-        shutil.rmtree(workdir)
+        remove_tree(workdir)
 
     def ignore_checkout_entries(directory: str, names: list[str]) -> set[str]:
         ignored = set(
@@ -60,6 +68,8 @@ def copy_checkout(source_root: Path, candidate: dict[str, Any], workdir: Path) -
                 ".tox",
                 ".pytest_cache",
                 "__pycache__",
+                "docs",
+                "test-generate-binaries",
                 "*.pyc",
             )(directory, names)
         )
@@ -218,7 +228,7 @@ def validate_candidate(
         "oracle_result": oracle_result,
     }
     if not keep_workdirs:
-        shutil.rmtree(workdir, ignore_errors=True)
+        remove_tree(workdir)
     return record
 
 

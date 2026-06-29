@@ -3,8 +3,10 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import shutil
+import stat
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -81,17 +83,35 @@ def checkout_root(source_root: Path, source_bug: dict[str, Any]) -> Path:
     return source_root / bug_dir / "buggy" / source_bug["project"]
 
 
+def remove_tree(path: Path) -> None:
+    def make_writable_and_retry(func: Any, failed_path: str, _exc_info: Any) -> None:
+        os.chmod(failed_path, stat.S_IWRITE)
+        func(failed_path)
+
+    shutil.rmtree(path, onerror=make_writable_and_retry)
+
+
 def copy_buggy_checkout(source_root: Path, source_bug: dict[str, Any], workdir: Path) -> None:
     source = checkout_root(source_root, source_bug)
     if not source.exists():
         raise FileNotFoundError(f"missing buggy checkout: {source}")
     if workdir.exists():
-        shutil.rmtree(workdir)
-    shutil.copytree(
-        source,
-        workdir,
-        ignore=shutil.ignore_patterns("env", ".tox", ".pytest_cache", "__pycache__", "*.pyc"),
-    )
+        remove_tree(workdir)
+    workdir.mkdir(parents=True, exist_ok=True)
+    git_dir = source / ".git"
+    if not git_dir.exists():
+        raise FileNotFoundError(f"missing .git directory in buggy checkout: {source}")
+    shutil.copytree(git_dir, workdir / ".git")
+    for file_path in source_bug["touched_files"]:
+        rel = Path(file_path)
+        if rel.is_absolute() or ".." in rel.parts:
+            raise ValueError(f"unsafe touched file path: {file_path}")
+        src = source / rel
+        dst = workdir / rel
+        if not src.exists():
+            raise FileNotFoundError(f"missing touched file in buggy checkout: {file_path}")
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, dst)
 
 
 def read_buggy_file(source_root: Path, source_bug: dict[str, Any], file_path: str, max_chars: int) -> str:
