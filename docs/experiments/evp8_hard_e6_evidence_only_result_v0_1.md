@@ -48,6 +48,25 @@ accepted by the tool baseline, Qwen E6-full, and DeepSeek E6-full.
 | qwen/qwen3.7-max | 7 | 2 | 0 | 2 | 2 |
 | deepseek/deepseek-v4-pro | 4 | 5 | 0 | 5 | 5 |
 
+## Statistical Boundary
+
+Wilson 95% intervals are wide on this 47-candidate hard-case cohort. For false
+accept rate, the tool-only baseline is 0.243 [0.134, 0.401], Qwen is 0.189
+[0.095, 0.342], and DeepSeek is 0.108 [0.043, 0.247]. These intervals overlap,
+so the result should be interpreted as a descriptive hard-case behavior shift,
+not a stable safety-rate estimate.
+
+On the nine-case opportunity set, safe handling Wilson 95% intervals are:
+
+| Model | Safe handling | Repeated accept | Strict reject |
+|---|---:|---:|---:|
+| qwen/qwen3.7-max | 0.222 [0.063, 0.547] | 0.778 [0.453, 0.937] | 0.000 [0.000, 0.299] |
+| deepseek/deepseek-v4-pro | 0.556 [0.267, 0.811] | 0.444 [0.189, 0.733] | 0.000 [0.000, 0.299] |
+
+DeepSeek-minus-Qwen paired bootstrap delta for safe handling is 0.333
+[0.000, 0.667]. This supports a more conservative DeepSeek tendency on this
+opportunity set, but not a strong superiority claim.
+
 ## Interpretation
 
 Removing verdict-like tool summary fields changed model behavior, so the
@@ -75,6 +94,8 @@ accepts.
 - Audit: `data/protocols/evp8_hard_e6_evidence_only_result_audit_v0_1.json`
 - Opportunity analysis:
   `data/reviews/evp8_hard_e6_evidence_only_opportunity_analysis_v0_1.json`
+- Statistical boundary:
+  `data/reviews/evp8_hard_e6_evidence_only_statistical_boundary_v0_1.json`
 - Qwen summary:
   `data/reviews/evp8_hard_e6_evidence_only_qwen_qwen3.7-max_full_summary.json`
 - Qwen parsed reviews:

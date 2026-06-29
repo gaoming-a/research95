@@ -1,0 +1,331 @@
+{
+  "analysis_id": "evp8_hard_e6_evidence_only_statistical_boundary_v0_1",
+  "checks": [
+    {
+      "check": "audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "opportunity_analysis_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "api_call_not_attempted_by_statistics",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_model_outputs_not_read",
+      "detail": false,
+      "passed": true
+    }
+  ],
+  "claim_boundary": "Intervals are wide because the hard-case cohort has 47 candidates and the primary opportunity set has only nine known false accepts. Use these results as evidence of behavior shift and triage tradeoff, not as a reliability guarantee.",
+  "cohort_id": "EVP-8-HARD",
+  "inputs": {
+    "audit": "data/protocols/evp8_hard_e6_evidence_only_result_audit_v0_1.json",
+    "opportunity": "data/reviews/evp8_hard_e6_evidence_only_opportunity_analysis_v0_1.json"
+  },
+  "method": {
+    "api_call_attempted": false,
+    "bootstrap_confidence_level": 0.95,
+    "bootstrap_samples": 2000,
+    "bootstrap_seed": 9508,
+    "bootstrap_unit": "opportunity_candidate",
+    "raw_model_outputs_read": false,
+    "wilson_confidence_level": 0.95
+  },
+  "opportunity_paired_delta_deepseek_minus_qwen_bootstrap_ci_95": {
+    "repeated_accept_rate": {
+      "high": 0.0,
+      "low": -0.666667,
+      "n": 9,
+      "point": -0.333333
+    },
+    "risk_flag_rate": {
+      "high": 0.666667,
+      "low": 0.0,
+      "n": 9,
+      "point": 0.333333
+    },
+    "safe_handling_rate": {
+      "high": 0.666667,
+      "low": 0.0,
+      "n": 9,
+      "point": 0.333333
+    },
+    "strict_reject_rate": {
+      "high": 0.0,
+      "low": 0.0,
+      "n": 9,
+      "point": 0.0
+    }
+  },
+  "opportunity_paired_delta_vs_tool_bootstrap_ci_95": {
+    "deepseek/deepseek-v4-pro": {
+      "repeated_accept_rate": {
+        "high": -0.222222,
+        "low": -0.888889,
+        "n": 9,
+        "point": -0.555556
+      },
+      "risk_flag_rate": {
+        "high": 0.888889,
+        "low": 0.222222,
+        "n": 9,
+        "point": 0.555556
+      },
+      "safe_handling_rate": {
+        "high": 0.888889,
+        "low": 0.222222,
+        "n": 9,
+        "point": 0.555556
+      },
+      "strict_reject_rate": {
+        "high": 0.0,
+        "low": 0.0,
+        "n": 9,
+        "point": 0.0
+      }
+    },
+    "qwen/qwen3.7-max": {
+      "repeated_accept_rate": {
+        "high": 0.0,
+        "low": -0.555556,
+        "n": 9,
+        "point": -0.222222
+      },
+      "risk_flag_rate": {
+        "high": 0.555556,
+        "low": 0.0,
+        "n": 9,
+        "point": 0.222222
+      },
+      "safe_handling_rate": {
+        "high": 0.555556,
+        "low": 0.0,
+        "n": 9,
+        "point": 0.222222
+      },
+      "strict_reject_rate": {
+        "high": 0.0,
+        "low": 0.0,
+        "n": 9,
+        "point": 0.0
+      }
+    }
+  },
+  "opportunity_set_wilson_and_bootstrap_ci_95": {
+    "deepseek/deepseek-v4-pro": {
+      "bootstrap_ci_95": {
+        "repeated_accept_rate": {
+          "high": 0.777778,
+          "low": 0.111111,
+          "n": 9,
+          "point": 0.444444
+        },
+        "risk_flag_rate": {
+          "high": 0.888889,
+          "low": 0.222222,
+          "n": 9,
+          "point": 0.555556
+        },
+        "safe_handling_rate": {
+          "high": 0.888889,
+          "low": 0.222222,
+          "n": 9,
+          "point": 0.555556
+        },
+        "strict_reject_rate": {
+          "high": 0.0,
+          "low": 0.0,
+          "n": 9,
+          "point": 0.0
+        }
+      },
+      "wilson_ci_95": {
+        "repeated_accept_rate": {
+          "high": 0.733349,
+          "low": 0.188779,
+          "n": 9,
+          "point": 0.444444,
+          "successes": 4
+        },
+        "risk_flag_rate": {
+          "high": 0.811221,
+          "low": 0.266651,
+          "n": 9,
+          "point": 0.555556,
+          "successes": 5
+        },
+        "safe_handling_rate": {
+          "high": 0.811221,
+          "low": 0.266651,
+          "n": 9,
+          "point": 0.555556,
+          "successes": 5
+        },
+        "strict_reject_rate": {
+          "high": 0.299145,
+          "low": 0.0,
+          "n": 9,
+          "point": 0.0,
+          "successes": 0
+        }
+      }
+    },
+    "qwen/qwen3.7-max": {
+      "bootstrap_ci_95": {
+        "repeated_accept_rate": {
+          "high": 1.0,
+          "low": 0.444444,
+          "n": 9,
+          "point": 0.777778
+        },
+        "risk_flag_rate": {
+          "high": 0.555556,
+          "low": 0.0,
+          "n": 9,
+          "point": 0.222222
+        },
+        "safe_handling_rate": {
+          "high": 0.555556,
+          "low": 0.0,
+          "n": 9,
+          "point": 0.222222
+        },
+        "strict_reject_rate": {
+          "high": 0.0,
+          "low": 0.0,
+          "n": 9,
+          "point": 0.0
+        }
+      },
+      "wilson_ci_95": {
+        "repeated_accept_rate": {
+          "high": 0.936775,
+          "low": 0.452589,
+          "n": 9,
+          "point": 0.777778,
+          "successes": 7
+        },
+        "risk_flag_rate": {
+          "high": 0.547411,
+          "low": 0.063225,
+          "n": 9,
+          "point": 0.222222,
+          "successes": 2
+        },
+        "safe_handling_rate": {
+          "high": 0.547411,
+          "low": 0.063225,
+          "n": 9,
+          "point": 0.222222,
+          "successes": 2
+        },
+        "strict_reject_rate": {
+          "high": 0.299145,
+          "low": 0.0,
+          "n": 9,
+          "point": 0.0,
+          "successes": 0
+        }
+      }
+    }
+  },
+  "packet_variant": "e6_evidence_only_no_verdict",
+  "whole_cohort_wilson_ci_95": {
+    "deepseek/deepseek-v4-pro": {
+      "accepted_precision": {
+        "high": 0.700007,
+        "low": 0.096771,
+        "n": 6,
+        "point": 0.333333,
+        "successes": 2
+      },
+      "correct_recall": {
+        "high": 0.509838,
+        "low": 0.056682,
+        "n": 10,
+        "point": 0.2,
+        "successes": 2
+      },
+      "escalation_rate": {
+        "high": 0.372243,
+        "low": 0.136033,
+        "n": 47,
+        "point": 0.234043,
+        "successes": 11
+      },
+      "false_accept_rate": {
+        "high": 0.247085,
+        "low": 0.042852,
+        "n": 37,
+        "point": 0.108108,
+        "successes": 4
+      }
+    },
+    "qwen/qwen3.7-max": {
+      "accepted_precision": {
+        "high": 0.751905,
+        "low": 0.30117,
+        "n": 15,
+        "point": 0.533333,
+        "successes": 8
+      },
+      "correct_recall": {
+        "high": 0.943318,
+        "low": 0.490162,
+        "n": 10,
+        "point": 0.8,
+        "successes": 8
+      },
+      "escalation_rate": {
+        "high": 0.142485,
+        "low": 0.011748,
+        "n": 47,
+        "point": 0.042553,
+        "successes": 2
+      },
+      "false_accept_rate": {
+        "high": 0.342047,
+        "low": 0.0948,
+        "n": 37,
+        "point": 0.189189,
+        "successes": 7
+      }
+    },
+    "tool-only baseline": {
+      "accepted_precision": {
+        "high": 0.690368,
+        "low": 0.261651,
+        "n": 17,
+        "point": 0.470588,
+        "successes": 8
+      },
+      "correct_recall": {
+        "high": 0.943318,
+        "low": 0.490162,
+        "n": 10,
+        "point": 0.8,
+        "successes": 8
+      },
+      "escalation_rate": {
+        "high": 0.075558,
+        "low": 0.0,
+        "n": 47,
+        "point": 0.0,
+        "successes": 0
+      },
+      "false_accept_rate": {
+        "high": 0.401173,
+        "low": 0.133614,
+        "n": 37,
+        "point": 0.243243,
+        "successes": 9
+      }
+    }
+  }
+}

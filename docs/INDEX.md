@@ -438,7 +438,8 @@
 - `experiments/evp8_hard_e6_evidence_only_result_v0_1.md`: Markdown result
   report for the authorized evidence-only ablation. It records whole-cohort
   metrics, nine-case opportunity-set transitions, cost, and the claim boundary
-  that the result supports risk triage rather than automatic merge gating.
+  that the result supports risk triage rather than automatic merge gating. It
+  now includes the statistical boundary from the Wilson/bootstrap analysis.
 - `../data/reviews/evp8_hard_e6_evidence_only_qwen_qwen3.7-max_full_summary.json`:
   tracked raw-output-free Qwen evidence-only summary. Current run gate is
   `passed`; decisions are accept 15, reject 30, escalate 2.
@@ -464,6 +465,16 @@
 - `experiments/evp8_hard_e6_evidence_only_opportunity_analysis_v0_1.md`:
   Markdown companion for the evidence-only opportunity analysis. It documents
   the post-run nine-case transition table.
+- `../scripts/analyze_evp8_hard_e6_evidence_only_statistics.py`: no-API,
+  raw-output-free statistical-boundary analyzer for the evidence-only result.
+  It computes Wilson 95% intervals over whole-cohort metrics and paired
+  bootstrap intervals over the nine opportunity cases.
+- `../data/reviews/evp8_hard_e6_evidence_only_statistical_boundary_v0_1.json`:
+  tracked statistical-boundary artifact. It records overlapping whole-cohort
+  false-accept intervals and wide nine-case opportunity-set intervals, keeping
+  the claim descriptive rather than confirmatory.
+- `experiments/evp8_hard_e6_evidence_only_statistical_boundary_v0_1.md`:
+  Markdown companion for the statistical-boundary artifact.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

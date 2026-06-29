@@ -24,6 +24,10 @@
 - DeepSeek reduced false accepts more than Qwen, but did so by broad
   escalation, including six correct patches. Report this tradeoff explicitly
   instead of presenting lower false-accept rate as a free safety improvement.
+- Add statistical intervals before making any paper claim from the hard-case
+  evidence-only result. The nine-case opportunity set yields wide Wilson and
+  bootstrap intervals; DeepSeek-minus-Qwen safe-handling delta is descriptive,
+  not enough for a strong superiority claim.
 
 ## 2026-06-05 AI execution handoff plan
 
