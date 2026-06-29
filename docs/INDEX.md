@@ -428,6 +428,18 @@
 - `../data/protocols/evp8_hard_e6_evidence_only_result_audit_v0_1.json`:
   current evidence-only result audit. Status is `waiting_for_model_results`;
   no API calls were made and no raw model outputs were read.
+- `../scripts/analyze_evp8_hard_e6_evidence_only_opportunity.py`:
+  raw-output-free opportunity-set analyzer for future evidence-only results.
+  It focuses on the nine false accepts repeated by tool, Qwen E6-full, and
+  DeepSeek E6-full, then reports repeated accept, reject, escalation, and risk
+  flags after evidence-only execution.
+- `../data/reviews/evp8_hard_e6_evidence_only_opportunity_analysis_v0_1.json`:
+  current opportunity-set analysis artifact. Status is
+  `waiting_for_model_results`; it fixes the nine candidate IDs and expected
+  evidence-only parsed review paths before API execution.
+- `experiments/evp8_hard_e6_evidence_only_opportunity_analysis_v0_1.md`:
+  Markdown companion for the evidence-only opportunity analysis. It documents
+  the waiting state and the exact post-run question.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

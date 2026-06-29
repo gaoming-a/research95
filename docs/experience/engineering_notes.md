@@ -3641,3 +3641,17 @@ This file starts fresh for the patch-verification project.
 - The primary analysis target must stay the nine repeated false accepts. A
   whole-cohort table is secondary and can hide whether the known failure mode
   was actually affected.
+
+## 2026-06-29 EVP-8-HARD evidence-only opportunity analysis
+
+- Add opportunity-set analysis before executing the ablation. Waiting state is
+  useful because it fixes the exact post-run question before model outputs can
+  influence the analysis design.
+- The key quantities are repeated accept, corrected reject, escalation, and
+  non-empty risk flags on the nine known false accepts. Overall accepted
+  precision is secondary for this ablation.
+- Treat reject and escalate separately. Reject is a strict correction; escalate
+  is safe handling or triage. Combining them is useful only when explicitly
+  labeled as risk handling.
+- Do not parse ignored raw responses for this analysis. Parsed review schema
+  fields are enough to evaluate the opportunity-set decision transitions.
