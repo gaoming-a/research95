@@ -1,0 +1,42 @@
+{
+  "analysis_id": "evp8_hard_visible_test_outcomes_v0_1",
+  "api_call_attempted": false,
+  "blocked_count": 26,
+  "cohort_id": "EVP-8-HARD",
+  "completed_or_error_or_timeout_count": 9,
+  "evaluator_labels_emitted": false,
+  "leakage_policy": "visible-test records exclude evaluator labels, hidden oracle outcomes, source patch ids, prompts, and raw model responses",
+  "mode": "run",
+  "raw_model_outputs_read": false,
+  "record_count": 35,
+  "run_status_counts": {
+    "blocked": 26,
+    "error": 9
+  },
+  "run_status_counts_by_task": {
+    "bugsinpy_httpie_1": {
+      "blocked": 8,
+      "error": 2
+    },
+    "bugsinpy_httpie_2": {
+      "blocked": 4,
+      "error": 2
+    },
+    "bugsinpy_httpie_3": {
+      "blocked": 4,
+      "error": 2
+    },
+    "bugsinpy_httpie_4": {
+      "blocked": 4,
+      "error": 2
+    },
+    "bugsinpy_httpie_5": {
+      "blocked": 6,
+      "error": 1
+    }
+  },
+  "test_outcome_counts": {
+    "error": 9,
+    "not_run_blocked": 26
+  }
+}

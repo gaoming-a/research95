@@ -3,7 +3,6 @@
   "api_readiness": "blocked",
   "blocked_reasons": [
     "nontrivial_hard_negative_count_at_least_20",
-    "visible_test_outcomes_available",
     "actionable_false_accept_or_reject_headroom_at_least_10"
   ],
   "candidate_summary": {
@@ -106,7 +105,9 @@
       "bugsinpy_httpie_3": 6,
       "bugsinpy_httpie_4": 6,
       "bugsinpy_httpie_5": 7
-    }
+    },
+    "visible_completed_or_error_or_timeout_count": 9,
+    "visible_outcome_record_count": 35
   },
   "checks": [
     {
@@ -156,8 +157,8 @@
     },
     {
       "check": "visible_test_outcomes_available",
-      "detail": 0,
-      "passed": false
+      "detail": 9,
+      "passed": true
     },
     {
       "check": "actionable_false_accept_or_reject_headroom_at_least_10",
@@ -182,11 +183,13 @@
     "actionable_false_accept_or_reject_headroom": 0,
     "confusion_counts": {
       "escalated_correct": 8,
-      "escalated_incorrect": 27
+      "escalated_incorrect": 18,
+      "true_reject": 9
     },
     "correct_total": 8,
     "decision_counts": {
-      "escalate": 35
+      "escalate": 26,
+      "reject": 9
     },
     "examples": {
       "tool_escalations_correct": [
@@ -200,15 +203,6 @@
         "evp8_hard_candidate_0030"
       ],
       "tool_escalations_incorrect": [
-        "evp8_hard_candidate_0001",
-        "evp8_hard_candidate_0002",
-        "evp8_hard_candidate_0003",
-        "evp8_hard_candidate_0004",
-        "evp8_hard_candidate_0005",
-        "evp8_hard_candidate_0006",
-        "evp8_hard_candidate_0007",
-        "evp8_hard_candidate_0008",
-        "evp8_hard_candidate_0009",
         "evp8_hard_candidate_0010",
         "evp8_hard_candidate_0015",
         "evp8_hard_candidate_0016",
@@ -234,8 +228,8 @@
     "false_accept_count": 0,
     "false_reject_count": 0,
     "incorrect_total": 27,
-    "opportunity_set_rate_including_escalations": 1.0,
-    "opportunity_set_size_including_escalations": 35,
+    "opportunity_set_rate_including_escalations": 0.742857,
+    "opportunity_set_size_including_escalations": 26,
     "record_count": 35
   }
 }

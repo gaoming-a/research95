@@ -20,6 +20,8 @@ controlled cohort.
 - projects: 1
 - nontrivial hard negatives: 17
 - AI/agent hard negatives: 10
+- visible outcome records: 35
+- visible completed/error/timeout records: 9
 
 Candidate types:
 
@@ -37,16 +39,15 @@ Labels:
 
 ## Tool-Only Baseline
 
-- decision counts: `{'escalate': 35}`
+- decision counts: `{'escalate': 26, 'reject': 9}`
 - false accepts: 0
 - false rejects: 0
 - actionable false-accept/false-reject headroom: 0
-- opportunity size including escalations: 35
+- opportunity size including escalations: 26
 
-The deterministic baseline escalates these candidates because the current
-source files provide visible test hints but not model-visible test execution
-outcomes. This is intentionally conservative: the draft must not pretend
-that visible tests passed when only hidden oracle validation is available.
+The deterministic baseline uses only model-visible apply and visible-test
+outcome evidence. Candidates with visible test errors are rejected; candidates
+whose visible tests are blocked or only listed as hints are escalated.
 
 ## Gate Checks
 
@@ -59,7 +60,7 @@ that visible tests passed when only hidden oracle validation is available.
 - nontrivial_hard_negative_count_at_least_20: failed (17)
 - ai_or_agent_hard_negative_count_at_least_10: passed (10)
 - model_visible_label_leakage_absent: passed ([])
-- visible_test_outcomes_available: failed (0)
+- visible_test_outcomes_available: passed (9)
 - actionable_false_accept_or_reject_headroom_at_least_10: failed (0)
 
 API readiness: `blocked`
@@ -67,12 +68,12 @@ API readiness: `blocked`
 Blocked reasons:
 
 - `nontrivial_hard_negative_count_at_least_20`
-- `visible_test_outcomes_available`
 - `actionable_false_accept_or_reject_headroom_at_least_10`
 
 Plain-language conclusion: the draft reaches the 30-50 candidate size and
-has enough AI/agent wrong patches, but it does not yet meet the 20
-nontrivial-hard-negative gate and lacks visible test outcomes that could
-create meaningful tool false accepts or false rejects. The next action is
-to add or validate harder non-control negatives and visible test outcomes,
-not to run Qwen or DeepSeek.
+has enough AI/agent wrong patches, and the visible-test runner now records
+some executable outcomes. It still does not meet the 20 nontrivial-hard-
+negative gate, and the current tool-only baseline has no actionable false
+accept or false reject headroom. The next action is to add or validate harder
+non-control negatives and repair visible-test execution coverage, not to run
+Qwen or DeepSeek.

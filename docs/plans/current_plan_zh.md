@@ -18566,7 +18566,7 @@ Result:
   - irrelevant_or_noop = 10；
 - nontrivial hard negatives = 17，未达到 20；
 - AI/agent hard negatives = 10，达到最低目标；
-- tool-only baseline 因缺少 visible test outcomes，对 35 条全部 escalate；
+- 第一版 tool-only baseline 因缺少 visible test outcomes，对 35 条全部 escalate；
 - false accepts = 0，false rejects = 0，actionable false-accept/false-reject
   headroom = 0；
 - API readiness = `blocked`。
@@ -18579,3 +18579,61 @@ Next:
 - 重新生成 hard-case tool-only baseline；
 - 只有 actionable false-accept/false-reject headroom >= 10 时，才考虑再次请求
   用户授权 API。
+
+## 2026-06-29 EVP-8-HARD visible-test outcome run
+
+Inspect:
+
+- Candidate draft 的 model-visible seed 仍只有 visible test hints；
+- 需要生成真实 visible test outcomes 后才能重建 baseline；
+- 本地只有 agent workdirs 可用，构造型 httpie_stage_ab 和 direct AI patch
+  workdirs 缺失或为空；
+- 不能把 hidden oracle validation 当作 visible test outcome。
+
+Plan:
+
+1. 新增 `scripts/run_evp8_hard_visible_tests.py`；
+2. 从 evaluator manifest 解析 source candidate file，只用于定位 workdir；
+3. 输出 model-visible visible-test outcome records；
+4. 禁止输出 hidden labels、hidden oracle outcomes、source patch id、prompt
+   或 raw model response；
+5. 将 visible outcomes 接入 `build_evp8_hard_candidate_draft.py`，重建 baseline。
+
+Execute / Verify:
+
+1. `python -m py_compile scripts\run_evp8_hard_visible_tests.py`；
+2. `python scripts\run_evp8_hard_visible_tests.py --check`：
+   - dry-run records = 35；
+   - planned = 9；
+   - blocked = 26；
+3. `python scripts\run_evp8_hard_visible_tests.py --run --check --timeout 60`：
+   - run records = 35；
+   - error = 9；
+   - blocked = 26；
+4. `python scripts\build_evp8_hard_candidate_draft.py --check` 重建 baseline；
+5. model-visible outcome 泄漏扫描无 forbidden marker 命中。
+
+Result:
+
+- visible-test 真实运行没有得到 passed/failed 业务结果；
+- 9 条 error 主要是环境/collection error：
+  - 缺少 `pytest_httpbin`；
+  - 当前 `requests.compat` 缺少旧 HTTPie 测试期望的 `is_py26` /
+    `is_windows`；
+- 26 条因 missing candidate workdir blocked；
+- 重建 baseline 后：
+  - reject = 9；
+  - escalate = 26；
+  - false accepts = 0；
+  - false rejects = 0；
+  - actionable false-accept/false-reject headroom = 0；
+- API readiness 仍为 `blocked`。
+
+Next:
+
+- 不运行 Qwen/DeepSeek API；
+- 修复 hard-case visible-test execution environment 或重新构建可执行
+  candidate workdirs；
+- 至少补 3 条 validated non-control hard negatives；
+- 只有重建 baseline 后 actionable false-accept/false-reject headroom >= 10，
+  才能进入 API 授权讨论。

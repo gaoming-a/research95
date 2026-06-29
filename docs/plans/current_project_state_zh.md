@@ -212,11 +212,23 @@
   - candidate labels 为 correct=8、agent_plausible_wrong=10、partial=7、
     irrelevant_or_noop=10；
   - model-visible seed 已通过 evaluator-label leakage 检查；
-  - API readiness 为 `blocked`，原因是 nontrivial hard negatives 只有 17 条、
-    visible test outcomes 为 0、actionable false-accept/false-reject headroom
-    为 0；
-  - tool-only baseline 因只有 visible test hints 而没有 visible outcome，
-    对 35 条全部 `escalate`；不能据此运行 Qwen/DeepSeek。
+  - 第一版 draft gate 的 API readiness 为 `blocked`，原因是 nontrivial hard
+    negatives 只有 17 条、visible test outcomes 为 0、actionable
+    false-accept/false-reject headroom 为 0；
+  - 该第一版 baseline 因只有 visible test hints 而没有 visible outcome，对
+    35 条全部 `escalate`；随后已由 visible-test runner 更新。
+- 本轮已运行 `EVP-8-HARD` no-API visible-test runner：
+  - 脚本为 `scripts/run_evp8_hard_visible_tests.py`；
+  - 输出为 `data/evidence/evp8_hard_visible_test_outcomes_v0_1.jsonl`、
+    `data/protocols/evp8_hard_visible_test_outcome_summary_v0_1.json` 和
+    `docs/experiments/evp8_hard_visible_test_outcomes_v0_1.md`；
+  - dry-run 显示 9 条 planned、26 条 blocked；真实 run 后 9 条为 error、
+    26 条仍 blocked；
+  - error 主要来自 HTTPie 测试环境/collection 问题，例如缺少
+    `pytest_httpbin` 或当前 `requests.compat` 不含旧版兼容符号；
+  - 重建 hard-case baseline 后 decision counts 为 `reject=9, escalate=26`；
+  - false accepts = 0、false rejects = 0、actionable false-accept/false-reject
+    headroom = 0；API readiness 仍为 `blocked`。
 - GitHub sync 边界：此前出现过 GitHub network-level connection failure；用户已允许
   在连续同步失败时跳过 GitHub 并继续本地计划执行。最近一次已确认
   `git push origin main` 成功；最终是否仍 ahead 仍以
@@ -323,7 +335,8 @@
    `docs/experiments/evp8_hard_candidate_draft_v0_1.md` 写论文结果/局限段；
 2. 不运行 API；先补 hard-case cohort：
    - 至少再增加 3 条 validated non-control hard negatives；
-   - 为 hard-case candidates 生成真实 model-visible visible test outcomes；
+   - 修复或重建 hard-case visible-test execution coverage，使 visible tests
+     能产生 passed/failed 而不是 environment/collection error；
    - 重新生成 tool-only baseline；
 3. 若重新生成后 actionable false-accept/false-reject headroom 少于 10，则继续
    停止 API 并报告 headroom 不足；

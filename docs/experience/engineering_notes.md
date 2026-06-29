@@ -3431,3 +3431,19 @@ This file starts fresh for the patch-verification project.
 - Pending and relabeled generated-patch files should not both enter the draft.
   Prefer relabeled files and exclude patch-apply failures and missing-validation
   records from the API-facing candidate draft.
+
+## 2026-06-29 EVP-8-HARD visible-test execution
+
+- Missing workdirs are a data-availability blocker, not a test result. Record
+  them as `blocked` and do not convert them into pass/fail evidence.
+- Environment or collection errors are model-visible tool evidence, but they do
+  not create useful LLM-added-value headroom by themselves. In the hard-case
+  draft, 9 visible tests errored and 26 were blocked, so the tool baseline has
+  no false accepts or false rejects to correct.
+- Keep visible-test outcome records free of source patch IDs, evaluator labels,
+  hidden oracle outcomes, prompt text, and raw model responses. Even execution
+  metadata should use neutral source names rather than labels such as
+  `patch_id`.
+- Do not run Qwen/DeepSeek merely because visible-test records now exist. The
+  gate still requires enough non-trivial hard negatives and actionable
+  false-accept/false-reject headroom.

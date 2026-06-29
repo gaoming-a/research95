@@ -23,6 +23,7 @@ DEFAULT_BASELINE_OUT = REPO_ROOT / "data" / "baselines" / "evp8_hard_tool_only_b
 DEFAULT_SUMMARY_OUT = REPO_ROOT / "data" / "protocols" / "evp8_hard_candidate_draft_v0_1.json"
 DEFAULT_MD_OUT = REPO_ROOT / "docs" / "experiments" / "evp8_hard_candidate_draft_v0_1.md"
 SOURCE_INVENTORY = REPO_ROOT / "data" / "protocols" / "evp8_hard_case_source_inventory_v0_1.json"
+VISIBLE_OUTCOMES = REPO_ROOT / "data" / "evidence" / "evp8_hard_visible_test_outcomes_v0_1.jsonl"
 
 CURATED_SOURCE_FILES = [
     REPO_ROOT / "outputs" / "httpie_agent_patch_qwen37_httpie5_strict_001" / "candidates.relabeled.jsonl",
@@ -242,11 +243,46 @@ def evaluator_row(index: int, item: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def model_visible_row(index: int, item: dict[str, Any]) -> dict[str, Any]:
+def aggregate_visible_outcome(visible_record: dict[str, Any] | None) -> dict[str, Any]:
+    if not visible_record:
+        return {
+            "run_status": "not_run_hint_only",
+            "observed_outcome": "not_run_hint_only",
+            "outcome_counts": {},
+            "test_results": None,
+        }
+    results = list(visible_record.get("test_results") or [])
+    counts = Counter(str(result.get("outcome") or "unknown") for result in results)
+    if any(result.get("outcome") in {"failed", "error", "timeout"} for result in results):
+        observed = next(
+            str(result.get("outcome"))
+            for result in results
+            if result.get("outcome") in {"failed", "error", "timeout"}
+        )
+    elif results and all(result.get("outcome") == "passed" for result in results):
+        observed = "passed"
+    else:
+        observed = str(visible_record.get("run_status") or "not_run_hint_only")
+    return {
+        "run_status": visible_record.get("run_status"),
+        "observed_outcome": observed,
+        "outcome_counts": dict(sorted(counts.items())),
+        "test_results": [
+            {"test_name": result.get("test_name"), "outcome": result.get("outcome")}
+            for result in results
+        ],
+    }
+
+
+def model_visible_row(index: int, item: dict[str, Any], visible_record: dict[str, Any] | None) -> dict[str, Any]:
     row = item["candidate"]
     validation = item["validation"]
     patch_text = row["patch_text"]
     size = patch_size(patch_text)
+    visible = aggregate_visible_outcome(visible_record)
+    test_results = visible["test_results"]
+    if test_results is None:
+        test_results = [{"test_name": test, "outcome": "not_run_hint_only"} for test in row.get("visible_tests", [])]
     return {
         "cohort_id": COHORT_ID,
         "candidate_id": f"evp8_hard_candidate_{index:04d}",
@@ -262,12 +298,20 @@ def model_visible_row(index: int, item: dict[str, Any]) -> dict[str, Any]:
         },
         "visible_test_evidence": {
             "listed_tests": row.get("visible_tests", []),
-            "observed_outcome": "not_run_hint_only",
-            "outcome_counts": {"not_run_hint_only": len(row.get("visible_tests", []))},
+            "run_status": visible["run_status"],
+            "observed_outcome": visible["observed_outcome"],
+            "outcome_counts": visible["outcome_counts"] or {"not_run_hint_only": len(row.get("visible_tests", []))},
+            "test_results": test_results,
         },
         "visible_tool_evidence": {
-            "tool_summary_available": False,
-            "reason": "No model-visible visible-test execution outcome is available in the inventoried local source.",
+            "tool_summary_available": visible_record is not None,
+            "visible_test_run_status": visible["run_status"],
+            "visible_test_outcome_counts": visible["outcome_counts"] or {"not_run_hint_only": len(row.get("visible_tests", []))},
+            "reason": (
+                "Visible test outcomes are available from the no-API hard-case runner."
+                if visible_record is not None
+                else "No model-visible visible-test execution outcome is available in the inventoried local source."
+            ),
         },
     }
 
@@ -381,7 +425,14 @@ def build_outputs() -> dict[str, Any]:
     inventory = read_json(SOURCE_INVENTORY)
     selected, excluded = collect_candidates()
     evaluator_rows = [evaluator_row(index, item) for index, item in enumerate(selected, start=1)]
-    model_visible_rows = [model_visible_row(index, item) for index, item in enumerate(selected, start=1)]
+    visible_records = {
+        row.get("candidate_id"): row
+        for row in read_jsonl(VISIBLE_OUTCOMES)
+    } if VISIBLE_OUTCOMES.exists() else {}
+    model_visible_rows = [
+        model_visible_row(index, item, visible_records.get(f"evp8_hard_candidate_{index:04d}"))
+        for index, item in enumerate(selected, start=1)
+    ]
     baseline_rows = [baseline_decision(row) for row in model_visible_rows]
     leakage_hits = [hit for row in model_visible_rows for hit in forbidden_key_hits(row)]
     candidate_type_counts = Counter(row["candidate_type"] for row in evaluator_rows)
@@ -395,8 +446,11 @@ def build_outputs() -> dict[str, Any]:
         if row["patch_source_kind"] == "ai_or_agent_generated" and row["nontrivial_hard_negative"]
     )
     metrics = baseline_metrics(evaluator_rows, baseline_rows)
-    visible_outcome_count = sum(
-        1 for row in model_visible_rows if row["visible_test_evidence"]["observed_outcome"] != "not_run_hint_only"
+    visible_outcome_count = sum(1 for row in model_visible_rows if row["candidate_id"] in visible_records)
+    visible_completed_count = sum(
+        1
+        for row in model_visible_rows
+        if row["visible_test_evidence"].get("run_status") in {"completed", "error", "timeout"}
     )
     checks = [
         check("api_call_not_attempted", True, False),
@@ -408,7 +462,7 @@ def build_outputs() -> dict[str, Any]:
         check("nontrivial_hard_negative_count_at_least_20", hard_negative_count >= 20, hard_negative_count),
         check("ai_or_agent_hard_negative_count_at_least_10", ai_agent_hard_negative_count >= 10, ai_agent_hard_negative_count),
         check("model_visible_label_leakage_absent", not leakage_hits, leakage_hits[:20]),
-        check("visible_test_outcomes_available", visible_outcome_count > 0, visible_outcome_count),
+        check("visible_test_outcomes_available", visible_completed_count > 0, visible_completed_count),
         check(
             "actionable_false_accept_or_reject_headroom_at_least_10",
             metrics["actionable_false_accept_or_reject_headroom"] >= 10,
@@ -430,6 +484,7 @@ def build_outputs() -> dict[str, Any]:
             "evaluator_manifest": display_path(DEFAULT_EVALUATOR_OUT),
             "model_visible_seed_manifest": display_path(DEFAULT_MODEL_VISIBLE_OUT),
             "tool_only_baseline": display_path(DEFAULT_BASELINE_OUT),
+            "visible_test_outcomes": display_path(VISIBLE_OUTCOMES) if VISIBLE_OUTCOMES.exists() else None,
         },
         "candidate_summary": {
             "candidate_count": len(evaluator_rows),
@@ -442,6 +497,8 @@ def build_outputs() -> dict[str, Any]:
             "nontrivial_hard_negative_count": hard_negative_count,
             "ai_or_agent_hard_negative_count": ai_agent_hard_negative_count,
             "excluded_source_records": excluded,
+            "visible_outcome_record_count": visible_outcome_count,
+            "visible_completed_or_error_or_timeout_count": visible_completed_count,
         },
         "tool_only_baseline_summary": metrics,
         "checks": checks,
@@ -484,6 +541,8 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
         f"- projects: {candidate['project_count']}",
         f"- nontrivial hard negatives: {candidate['nontrivial_hard_negative_count']}",
         f"- AI/agent hard negatives: {candidate['ai_or_agent_hard_negative_count']}",
+        f"- visible outcome records: {candidate['visible_outcome_record_count']}",
+        f"- visible completed/error/timeout records: {candidate['visible_completed_or_error_or_timeout_count']}",
         "",
         "Candidate types:",
         "",
@@ -507,10 +566,9 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
         f"- actionable false-accept/false-reject headroom: {baseline['actionable_false_accept_or_reject_headroom']}",
         f"- opportunity size including escalations: {baseline['opportunity_set_size_including_escalations']}",
         "",
-        "The deterministic baseline escalates these candidates because the current",
-        "source files provide visible test hints but not model-visible test execution",
-        "outcomes. This is intentionally conservative: the draft must not pretend",
-        "that visible tests passed when only hidden oracle validation is available.",
+        "The deterministic baseline uses only model-visible apply and visible-test",
+        "outcome evidence. Candidates with visible test errors are rejected; candidates",
+        "whose visible tests are blocked or only listed as hints are escalated.",
         "",
         "## Gate Checks",
         "",
@@ -529,11 +587,12 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
     lines += [
         "",
         "Plain-language conclusion: the draft reaches the 30-50 candidate size and",
-        "has enough AI/agent wrong patches, but it does not yet meet the 20",
-        "nontrivial-hard-negative gate and lacks visible test outcomes that could",
-        "create meaningful tool false accepts or false rejects. The next action is",
-        "to add or validate harder non-control negatives and visible test outcomes,",
-        "not to run Qwen or DeepSeek.",
+        "has enough AI/agent wrong patches, and the visible-test runner now records",
+        "some executable outcomes. It still does not meet the 20 nontrivial-hard-",
+        "negative gate, and the current tool-only baseline has no actionable false",
+        "accept or false reject headroom. The next action is to add or validate harder",
+        "non-control negatives and repair visible-test execution coverage, not to run",
+        "Qwen or DeepSeek.",
         "",
     ]
     path.parent.mkdir(parents=True, exist_ok=True)

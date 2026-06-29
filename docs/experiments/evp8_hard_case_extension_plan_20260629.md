@@ -149,10 +149,23 @@ outputs are:
 
 The draft contains 35 applied candidates and separates evaluator-only labels
 from model-visible seed records. However, it is not ready for API execution:
-only 17 candidates are non-trivial hard negatives, visible test execution
-outcomes are not available, and the deterministic tool-only baseline escalates
-all 35 candidates. The next action is to add or validate more non-control hard
-negatives and generate model-visible visible test outcomes.
+only 17 candidates are non-trivial hard negatives, and the first draft did not
+yet have visible test execution outcomes. This initial state was updated by the
+visible-test attempt below.
+
+2026-06-29 visible-test status: attempted but still API-blocked. The tracked
+outputs are:
+
+- `data/evidence/evp8_hard_visible_test_outcomes_v0_1.jsonl`;
+- `data/protocols/evp8_hard_visible_test_outcome_summary_v0_1.json`;
+- `docs/experiments/evp8_hard_visible_test_outcomes_v0_1.md`.
+
+The dry-run found 9 executable candidates and 26 blocked by missing local
+workdirs. The real no-API run produced 9 visible-test errors and 26 blocked
+records. These errors are environment/collection failures, not successful
+visible-test pass/fail evidence. After rebuilding the baseline, the
+deterministic decisions are `reject=9` and `escalate=26`, with 0 false accepts,
+0 false rejects, and 0 actionable false-accept/false-reject headroom.
 
 Candidate sources, in priority order:
 
@@ -270,8 +283,9 @@ Forbidden claim:
 
 Do not run more APIs next.
 
-Phase A, the Phase B source inventory, and the first no-API candidate draft are
-complete. API execution remains blocked. Next add at least three more validated
-non-control hard negatives and generate real model-visible visible test outcomes
-for the hard-case candidates, then rebuild the tool-only baseline. Stop before
+Phase A, the Phase B source inventory, the first no-API candidate draft, and
+the first visible-test attempt are complete. API execution remains blocked.
+Next add at least three more validated non-control hard negatives and repair or
+rebuild visible-test execution coverage so hard-case candidates produce
+meaningful pass/fail outcomes, then rebuild the tool-only baseline. Stop before
 API if actionable false-accept/false-reject headroom remains below 10.

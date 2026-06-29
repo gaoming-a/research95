@@ -193,9 +193,13 @@ That no-API draft gate is now generated at
 `docs/experiments/evp8_hard_candidate_draft_v0_1.md`: it creates 35 applied
 `EVP-8-HARD` candidates with separated evaluator-only and model-visible
 manifests, but API readiness remains blocked because there are only 17
-non-trivial hard negatives and no visible test execution outcomes, so the
-tool-only baseline escalates all 35 candidates instead of producing meaningful
-false-accept/false-reject headroom.
+non-trivial hard negatives and the first draft lacked visible test execution
+outcomes.
+After running the no-API hard-case visible-test runner, 9 candidates have
+visible test execution errors and 26 remain blocked due missing local workdirs.
+The rebuilt tool-only baseline rejects those 9 error cases and escalates 26,
+but still has 0 actionable false-accept/false-reject headroom, so API readiness
+remains blocked.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently

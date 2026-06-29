@@ -319,14 +319,27 @@
   labels, hidden oracles, source patch IDs, validation status, and raw-response
   paths.
 - `../data/baselines/evp8_hard_tool_only_baseline_v0_1.jsonl`: deterministic
-  no-API tool-only baseline for the hard-case draft. Current decisions all
-  escalate because visible test outcomes are not available.
+  no-API tool-only baseline for the hard-case draft. Current decisions are
+  `reject=9` and `escalate=26`; actionable false-accept/false-reject headroom
+  remains 0.
 - `../data/protocols/evp8_hard_candidate_draft_v0_1.json`: raw-output-free
   summary and gate result for the hard-case draft. Current API readiness is
   `blocked`: 35 candidates pass the size gate, but only 17 non-trivial hard
   negatives are present and actionable false-accept/false-reject headroom is 0.
 - `experiments/evp8_hard_candidate_draft_v0_1.md`: Markdown companion for the
   hard-case draft and baseline gate.
+- `../scripts/run_evp8_hard_visible_tests.py`: no-API visible-test runner for
+  the hard-case draft. It records model-visible test outcomes only and excludes
+  evaluator labels, hidden oracle outcomes, source patch IDs, prompts, and raw
+  model responses.
+- `../data/evidence/evp8_hard_visible_test_outcomes_v0_1.jsonl`: visible-test
+  outcome records for the hard-case draft. Current run status is `error=9`,
+  `blocked=26`; the errors are environment/collection errors, not evidence of
+  successful visible-test execution.
+- `../data/protocols/evp8_hard_visible_test_outcome_summary_v0_1.json`:
+  raw-output-free visible-test run summary.
+- `experiments/evp8_hard_visible_test_outcomes_v0_1.md`: Markdown companion
+  for the hard-case visible-test outcome run.
 - `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:
   no-key public OpenRouter catalog audit for the G7 later-model pinned IDs:
   `moonshotai/kimi-k2.6`, `mistralai/devstral-2512`, and
