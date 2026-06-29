@@ -25,6 +25,11 @@
       "check": "parsed_reviews_do_not_contain_raw_fields",
       "detail": {},
       "passed": true
+    },
+    {
+      "check": "model_review_candidate_coverage_complete",
+      "detail": {},
+      "passed": true
     }
   ],
   "cohort_id": "EVP-8-HARD",

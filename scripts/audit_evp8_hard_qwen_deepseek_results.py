@@ -155,11 +155,11 @@ def joined_model_rows(evaluator: dict[str, dict[str, Any]], reviews: list[dict[s
     rows = []
     for record in reviews:
         candidate_id = str(record["anonymous_candidate_id"])
-        label_row = evaluator[candidate_id]
+        label_row = evaluator.get(candidate_id, {})
         rows.append(
             {
                 "candidate_id": candidate_id,
-                "is_correct": is_correct(label_row),
+                "is_correct": bool(label_row) and is_correct(label_row),
                 "normalized_label": label_row.get("normalized_label"),
                 "candidate_type": label_row.get("candidate_type"),
                 "decision_normalized": normalize_decision(record),
@@ -239,16 +239,37 @@ def build_summary(args: argparse.Namespace) -> dict[str, Any]:
 
     model_summaries: dict[str, Any] = {}
     raw_findings: dict[str, list[str]] = {}
+    model_integrity_errors: dict[str, Any] = {}
+    expected_candidate_ids = set(evaluator)
     for path in review_paths:
         reviews = read_jsonl(path)
         findings = raw_field_findings(reviews)
         raw_findings[display_path(path)] = findings
         rows = joined_model_rows(evaluator, reviews)
         model_id = model_name_from_reviews(path, reviews)
+        observed_candidate_ids = [row["candidate_id"] for row in rows]
+        observed_unique_ids = set(observed_candidate_ids)
+        missing_ids = sorted(expected_candidate_ids - observed_unique_ids)
+        extra_ids = sorted(observed_unique_ids - expected_candidate_ids)
+        duplicate_ids = sorted(
+            candidate_id
+            for candidate_id, count in count_values(observed_candidate_ids).items()
+            if count > 1
+        )
+        if len(rows) != len(evaluator) or missing_ids or extra_ids or duplicate_ids:
+            model_integrity_errors[model_id] = {
+                "review_count": len(rows),
+                "expected_count": len(evaluator),
+                "missing_candidate_ids": missing_ids,
+                "extra_candidate_ids": extra_ids,
+                "duplicate_candidate_ids": duplicate_ids,
+            }
         model_confusion = confusion(rows)
         model_summaries[model_id] = {
             "parsed_reviews_path": display_path(path),
             "review_count": len(reviews),
+            "expected_review_count": len(evaluator),
+            "complete_candidate_coverage": model_id not in model_integrity_errors,
             "decision_counts": count_values(row["decision_normalized"] for row in rows),
             "label_counts": count_values(row["normalized_label"] for row in rows),
             "confusion": model_confusion,
@@ -268,7 +289,7 @@ def build_summary(args: argparse.Namespace) -> dict[str, Any]:
 
     raw_field_errors = {path: findings for path, findings in raw_findings.items() if findings}
     status = "waiting_for_model_results" if not model_summaries else "passed"
-    if raw_field_errors:
+    if raw_field_errors or model_integrity_errors:
         status = "blocked"
     return {
         "analysis_id": "evp8_hard_qwen_deepseek_result_audit_v0_1",
@@ -304,6 +325,7 @@ def build_summary(args: argparse.Namespace) -> dict[str, Any]:
                 },
             },
             {"check": "parsed_reviews_do_not_contain_raw_fields", "passed": not raw_field_errors, "detail": raw_field_errors},
+            {"check": "model_review_candidate_coverage_complete", "passed": not model_integrity_errors, "detail": model_integrity_errors},
         ],
         "next_step": (
             "Run authorized Qwen/DeepSeek executions, then rerun this audit."

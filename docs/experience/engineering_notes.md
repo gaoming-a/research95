@@ -3533,3 +3533,19 @@ This file starts fresh for the patch-verification project.
   as an execution failure.
 - CLI option names with hyphens become underscore attributes in `argparse`.
   Use `args.parsed_reviews_out`, not `args.parsed-reviews-out`.
+
+## 2026-06-29 EVP-8-HARD execution packet and coverage gate
+
+- Add the execution packet before API authorization, not after. It freezes the
+  exact Qwen-first command sequence, expected outputs, post-run audit command,
+  and stop gates while there is still no model-result pressure.
+- A parsed review file is not complete merely because it exists. The audit
+  must require exactly one parsed decision for each of the 47 hard-case
+  candidate ids per executed model; missing, duplicate, or extra ids should
+  block the result.
+- Negative execution guards should include the new parsed-review output path.
+  A tracked example config must refuse `--execute` before either summary or
+  parsed-review sentinel files can be created.
+- The execution packet remains a handoff artifact, not permission. Keep
+  `execution_authorized_by_packet=false` and require a separate explicit user
+  command before model API calls.

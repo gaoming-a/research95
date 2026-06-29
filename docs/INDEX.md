@@ -357,12 +357,25 @@
 - `../scripts/audit_evp8_hard_qwen_deepseek_results.py`: raw-output-free
   result audit for future EVP-8-HARD Qwen/DeepSeek parsed reviews. Before
   model execution it writes a waiting summary; after execution it joins parsed
-  decisions with evaluator-only labels and the tool-only baseline.
+  decisions with evaluator-only labels and the tool-only baseline. It also
+  blocks incomplete parsed-review files that do not contain exactly 47 unique
+  hard-case candidate decisions for an executed model.
 - `../data/protocols/evp8_hard_qwen_deepseek_result_audit_v0_1.json`:
   current hard-case result audit. Status is `waiting_for_model_results`; the
   audit itself makes no API calls, reads no raw responses, and currently
   reports the tool-only baseline as 17 accepts, 30 rejects, 9 false accepts,
   and 2 false rejects.
+- `../scripts/write_evp8_hard_qwen_deepseek_execution_packet.py`: no-API
+  execution-packet writer for the EVP-8-HARD Qwen/DeepSeek run. It records the
+  Qwen-first execute command, post-Qwen audit command, optional DeepSeek
+  second execute command, expected outputs, stop gates, and non-authorization
+  boundary.
+- `../data/protocols/evp8_hard_qwen_deepseek_execution_packet_v0_1.json`:
+  tracked no-API execution packet. Current status is `ready`; it confirms 47
+  planned E6 calls per model, expected output absence, local config ignore
+  boundary, Qwen-first execution order, and no API calls.
+- `experiments/evp8_hard_qwen_deepseek_execution_packet_v0_1.md`: Markdown
+  companion for the hard-case Qwen/DeepSeek execution packet.
 - `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:
   no-key public OpenRouter catalog audit for the G7 later-model pinned IDs:
   `moonshotai/kimi-k2.6`, `mistralai/devstral-2512`, and

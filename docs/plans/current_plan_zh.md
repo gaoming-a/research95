@@ -18853,3 +18853,49 @@ Next:
   结果入口；
 - 下一步如要产生 Qwen/DeepSeek 真实结果，仍必须由用户明确授权 API；
 - 授权后建议先跑 Qwen，再 rerun 审计；DeepSeek 可作为第二个模型复现。
+
+## 2026-06-29 EVP-8-HARD execution packet and coverage gate
+
+本轮目标：
+
+- 不调用模型 API；
+- 为 EVP-8-HARD Qwen/DeepSeek 真实执行前新增一个 no-API execution packet；
+- 固定 Qwen-first 执行顺序、post-Qwen audit、DeepSeek second run 和
+  post-DeepSeek audit；
+- 增强 result audit，防止部分 parsed review 被误判为完整模型结果。
+
+执行结果：
+
+- 新增 `scripts/write_evp8_hard_qwen_deepseek_execution_packet.py`；
+- 新增 tracked JSON：
+  `data/protocols/evp8_hard_qwen_deepseek_execution_packet_v0_1.json`；
+- 新增 Markdown companion：
+  `docs/experiments/evp8_hard_qwen_deepseek_execution_packet_v0_1.md`；
+- execution packet 当前状态为 `ready`：
+  - planned calls per model = 47；
+  - model-visible level = `E6`；
+  - Qwen-first execution order = true；
+  - expected model outputs absent = true；
+  - local config remains ignored and `api_execution_authorized=false`；
+  - execution packet itself does not authorize API calls；
+- `scripts/audit_evp8_hard_qwen_deepseek_results.py` 现在检查每个已执行模型是否
+  恰好有 47 条 unique candidate decisions；缺失、重复或 extra candidate id
+  会使 audit `blocked`；
+- tracked example config 的负向 guard 已重新验证：使用 example config 执行
+  `--execute --model-id qwen/qwen3.7-max` 会拒绝，且没有生成
+  `outputs/should_not_exist.json` 或
+  `outputs/should_not_exist_reviews.jsonl`。
+
+最小验证：
+
+- `python -m py_compile scripts\run_evp8_hard_qwen_deepseek.py scripts\audit_evp8_hard_qwen_deepseek_results.py scripts\write_evp8_hard_qwen_deepseek_execution_packet.py`
+- `python scripts\run_evp8_hard_qwen_deepseek.py --check-only --config configs\evp8_hard_qwen_deepseek.local.json --summary-out data\protocols\evp8_hard_qwen_deepseek_check_only_v0_1.json`
+- `python scripts\audit_evp8_hard_qwen_deepseek_results.py --out data\protocols\evp8_hard_qwen_deepseek_result_audit_v0_1.json`
+- `python scripts\write_evp8_hard_qwen_deepseek_execution_packet.py --check`
+
+当前结论：
+
+- EVP-8-HARD 的 API 前置链路已经完整到可以安全接收显式授权；
+- 真实实验结果仍未产生；
+- 下一步必须由用户明确授权，例如“授权运行 EVP-8-HARD Qwen API”，才能执行
+  Qwen 的 47-call hard-case run。
