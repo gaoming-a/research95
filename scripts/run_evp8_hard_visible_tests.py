@@ -23,7 +23,7 @@ EVALUATOR_IN = REPO_ROOT / "data" / "patches" / "evp8_hard_evaluator_manifest_v0
 OUTCOMES_OUT = REPO_ROOT / "data" / "evidence" / "evp8_hard_visible_test_outcomes_v0_1.jsonl"
 SUMMARY_OUT = REPO_ROOT / "data" / "protocols" / "evp8_hard_visible_test_outcome_summary_v0_1.json"
 MD_OUT = REPO_ROOT / "docs" / "experiments" / "evp8_hard_visible_test_outcomes_v0_1.md"
-HTTPIE_LEGACY_PYTEST = REPO_ROOT / "scripts" / "run_pytest_legacy_httpie.py"
+LEGACY_PY311_PYTEST = REPO_ROOT / "scripts" / "run_pytest_legacy_py311.py"
 HTTPIE_VISIBLE_TEST_PYTHON = REPO_ROOT / "outputs" / "envs" / "httpie_hard_visible_py311" / "Scripts" / "python.exe"
 
 FORBIDDEN_OUTPUT_MARKERS = (
@@ -72,7 +72,7 @@ def display_path(path: Path) -> str:
 def validation_rows(source_candidate_file: str) -> list[dict[str, Any]]:
     source_path = REPO_ROOT / source_candidate_file
     rows: list[dict[str, Any]] = []
-    for name in ("validation.jsonl", "p2p_validation.jsonl", "oracle_validation.jsonl"):
+    for name in ("validation.jsonl", "p2p_validation.jsonl", "oracle_validation.jsonl", "validation_run1.jsonl"):
         path = source_path.parent / name
         if path.exists():
             rows.extend(read_jsonl(path))
@@ -99,7 +99,19 @@ def workdir_for(candidate: dict[str, Any], validation: dict[str, Any] | None) ->
         (parent / "agent_workdirs" / source_patch_id, "source_agent_workdir_by_stable_source_key"),
         (parent / "workdirs" / source_model_candidate_id, "source_workdir_by_local_candidate_key"),
         (parent / "workdirs" / source_patch_id, "source_workdir_by_stable_source_key"),
+        (parent / "p2p_workdirs" / source_model_candidate_id, "source_p2p_workdir_by_local_candidate_key"),
     ]
+    if candidate.get("project") == "luigi" and source_model_candidate_id:
+        if candidate.get("task_id") == "bugsinpy_luigi_3":
+            candidates.append((
+                REPO_ROOT / "data" / "patch_verification" / "workdirs" / "luigi3_p2p_validation" / source_model_candidate_id,
+                "luigi_p2p_validation_workdir_by_local_candidate_key",
+            ))
+        if candidate.get("task_id") == "bugsinpy_luigi_4":
+            candidates.append((
+                REPO_ROOT / "data" / "patch_verification" / "workdirs" / "luigi4_p2p_validation" / source_model_candidate_id,
+                "luigi_p2p_validation_workdir_by_local_candidate_key",
+            ))
     if validation:
         command = (validation.get("patch_result") or {}).get("command") or []
         for part in command:
@@ -126,8 +138,10 @@ def python_for(candidate: dict[str, Any], validation: dict[str, Any] | None) -> 
 
 
 def pytest_command_for(candidate: dict[str, Any], python_executable: str, tests: list[str]) -> list[str]:
-    if candidate.get("project") == "httpie" and Path(python_executable) == HTTPIE_VISIBLE_TEST_PYTHON:
-        return [python_executable, str(HTTPIE_LEGACY_PYTEST), "-q", *tests]
+    if candidate.get("project") in {"httpie", "luigi"}:
+        return [python_executable, str(LEGACY_PY311_PYTEST), "-q", *tests]
+    if candidate.get("project") == "cookiecutter":
+        return [python_executable, "-m", "pytest", "-q", "-o", "addopts=", *tests]
     return [python_executable, "-m", "pytest", "-q", *tests]
 
 
@@ -242,7 +256,7 @@ def outcome_record(candidate: dict[str, Any], run: bool, timeout: int) -> dict[s
             "blockers": [],
             "execution_boundary": base["execution_boundary"] | {
                 "python_source": python_source,
-                "legacy_httpie_wrapper": command[1] == str(HTTPIE_LEGACY_PYTEST),
+                "legacy_py311_wrapper": command[1] == str(LEGACY_PY311_PYTEST),
             },
             "test_results": [{"test_name": test, "outcome": "planned"} for test in tests],
         }
@@ -253,7 +267,7 @@ def outcome_record(candidate: dict[str, Any], run: bool, timeout: int) -> dict[s
         "blockers": [],
         "execution_boundary": base["execution_boundary"] | {
             "python_source": python_source,
-            "legacy_httpie_wrapper": command[1] == str(HTTPIE_LEGACY_PYTEST),
+            "legacy_py311_wrapper": command[1] == str(LEGACY_PY311_PYTEST),
         },
         "elapsed_seconds": result["elapsed_seconds"],
         "exit_code": result["exit_code"],

@@ -312,7 +312,7 @@
   prompts or calling APIs.
 - `../data/patches/evp8_hard_evaluator_manifest_v0_1.jsonl`: evaluator-only
   hard-case draft manifest. It contains hidden labels, hidden oracle paths, and
-  validation summaries for 35 applied candidates.
+  validation summaries for 44 applied candidates.
 - `../data/evidence/evp8_hard_model_visible_seed_v0_1.jsonl`: model-visible
   hard-case seed manifest. It contains task summaries, touched files, patch
   diffs, visible static evidence, and visible test hints, but excludes hidden
@@ -320,23 +320,23 @@
   paths.
 - `../data/baselines/evp8_hard_tool_only_baseline_v0_1.jsonl`: deterministic
   no-API tool-only baseline for the hard-case draft. Current decisions are
-  `accept=4`, `reject=5`, and `escalate=26`; actionable false-accept/
-  false-reject headroom is 4.
+  `accept=9`, `reject=9`, and `escalate=26`; actionable false-accept/
+  false-reject headroom is 7.
 - `../data/protocols/evp8_hard_candidate_draft_v0_1.json`: raw-output-free
   summary and gate result for the hard-case draft. Current API readiness is
-  `blocked`: 35 candidates pass the size gate, but only 17 non-trivial hard
-  negatives are present and actionable false-accept/false-reject headroom is 4.
+  `blocked`: 44 candidates pass the size gate, 20 non-trivial hard negatives
+  are present, but actionable false-accept/false-reject headroom is still 7.
 - `experiments/evp8_hard_candidate_draft_v0_1.md`: Markdown companion for the
   hard-case draft and baseline gate.
 - `../scripts/run_evp8_hard_visible_tests.py`: no-API visible-test runner for
   the hard-case draft. It records model-visible test outcomes only and excludes
   evaluator labels, hidden oracle outcomes, source patch IDs, prompts, and raw
   model responses.
-- `../scripts/run_pytest_legacy_httpie.py`: narrow compatibility wrapper used
-  by the visible-test runner for old HTTPie tests under Python 3.11. It patches
+- `../scripts/run_pytest_legacy_py311.py`: narrow compatibility wrapper used
+  by the visible-test runner for old HTTPie/Luigi tests under Python 3.11. It patches
   runtime/test-fixture incompatibilities only, then delegates to pytest.
 - `../data/evidence/evp8_hard_visible_test_outcomes_v0_1.jsonl`: visible-test
-  outcome records for the hard-case draft. Current run status is `completed=9`,
+  outcome records for the hard-case draft. Current run status is `completed=18`,
   `blocked=26`; labels and hidden oracle outcomes are not emitted.
 - `../data/protocols/evp8_hard_visible_test_outcome_summary_v0_1.json`:
   raw-output-free visible-test run summary.

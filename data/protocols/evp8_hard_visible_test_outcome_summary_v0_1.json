@@ -3,15 +3,15 @@
   "api_call_attempted": false,
   "blocked_count": 26,
   "cohort_id": "EVP-8-HARD",
-  "completed_or_error_or_timeout_count": 9,
+  "completed_or_error_or_timeout_count": 18,
   "evaluator_labels_emitted": false,
   "leakage_policy": "visible-test records exclude evaluator labels, hidden oracle outcomes, source patch ids, prompts, and raw model responses",
   "mode": "run",
   "raw_model_outputs_read": false,
-  "record_count": 35,
+  "record_count": 44,
   "run_status_counts": {
     "blocked": 26,
-    "completed": 9
+    "completed": 18
   },
   "run_status_counts_by_task": {
     "bugsinpy_httpie_1": {
@@ -33,11 +33,17 @@
     "bugsinpy_httpie_5": {
       "blocked": 6,
       "completed": 1
+    },
+    "bugsinpy_luigi_3": {
+      "completed": 5
+    },
+    "bugsinpy_luigi_4": {
+      "completed": 4
     }
   },
   "test_outcome_counts": {
-    "failed": 5,
+    "failed": 9,
     "not_run_blocked": 26,
-    "passed": 4
+    "passed": 9
   }
 }

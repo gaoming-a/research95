@@ -26,6 +26,7 @@ SOURCE_INVENTORY = REPO_ROOT / "data" / "protocols" / "evp8_hard_case_source_inv
 VISIBLE_OUTCOMES = REPO_ROOT / "data" / "evidence" / "evp8_hard_visible_test_outcomes_v0_1.jsonl"
 
 CURATED_SOURCE_FILES = [
+    REPO_ROOT / "data" / "patches" / "evp8_hard_extra_luigi4_partial" / "candidates.jsonl",
     REPO_ROOT / "outputs" / "httpie_agent_patch_qwen37_httpie5_strict_001" / "candidates.relabeled.jsonl",
     REPO_ROOT / "outputs" / "httpie_agent_patch_stage_ab_001" / "candidates.relabeled.jsonl",
     REPO_ROOT / "outputs" / "httpie_ai_patch_stage_ab_001" / "candidates.jsonl",
@@ -107,7 +108,7 @@ def record_key(row: dict[str, Any]) -> str:
 
 def validation_index_for_dir(directory: Path) -> dict[str, dict[str, Any]]:
     rows: list[dict[str, Any]] = []
-    for name in ("validation.jsonl", "p2p_validation.jsonl", "oracle_validation.jsonl"):
+    for name in ("validation.jsonl", "p2p_validation.jsonl", "oracle_validation.jsonl", "validation_run1.jsonl"):
         rows.extend(read_jsonl(directory / name))
     return {record_key(row): row for row in rows if record_key(row)}
 
@@ -518,6 +519,12 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
     candidate = summary["candidate_summary"]
     baseline = summary["tool_only_baseline_summary"]
     headroom = baseline["actionable_false_accept_or_reject_headroom"]
+    hard_negative_count = candidate["nontrivial_hard_negative_count"]
+    hard_negative_sentence = (
+        f"It now meets the 20 nontrivial-hard-negative gate with {hard_negative_count} cases."
+        if hard_negative_count >= 20
+        else f"It still does not meet the 20 nontrivial-hard-negative gate ({hard_negative_count}/20)."
+    )
     if headroom:
         headroom_sentence = (
             f"the current tool-only baseline exposes {headroom} actionable false "
@@ -599,8 +606,8 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
         "",
         "Plain-language conclusion: the draft reaches the 30-50 candidate size and",
         "has enough AI/agent wrong patches, and the visible-test runner now records",
-        "some executable outcomes. It still does not meet the 20 nontrivial-hard-",
-        f"negative gate, and {headroom_sentence}",
+        f"some executable outcomes. {hard_negative_sentence}",
+        f"However, {headroom_sentence}",
         "The next action is to add or validate harder non-control negatives and",
         "improve visible-test execution coverage, not to run Qwen or DeepSeek.",
         "",

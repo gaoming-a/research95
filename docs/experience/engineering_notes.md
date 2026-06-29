@@ -3463,3 +3463,24 @@ This file starts fresh for the patch-verification project.
 - This is still not an API-ready cohort. The current draft has only 17
   nontrivial hard negatives and 4 actionable false-accept/false-reject cases,
   both below the planned gates of 20 and 10.
+
+## 2026-06-29 EVP-8-HARD Luigi hard-case ingestion
+
+- Existing validation outputs can be usable even when their filenames differ
+  from the initial builder assumptions. `validation_run1.jsonl` promoted Luigi
+  stability-audit candidates into the hard-case draft.
+- Visible-test execution must locate the actual candidate workdir, not just the
+  oracle patch command parent. Luigi used tracked local P2P workdirs under
+  `data/patch_verification/workdirs/*_p2p_validation`.
+- Do not reuse `already_promoted_to_evp7_controlled` sources for the hard-case
+  extension. When Cookiecutter3 was found to be old-cohort material, replace it
+  with a tracked extra Luigi4 partial candidate instead of keeping the easier
+  source.
+- Passing the hard-negative count gate is not enough. After adding Luigi and
+  the extra Luigi4 partial, the hard-case draft reached 44 candidates, 20
+  nontrivial hard negatives, and 18 completed visible-test records, but
+  actionable tool headroom remained 7/10 after the latest visible-test rerun.
+- Therefore the next repair is cohort composition, not API execution: replace
+  low-information escalated/control candidates with validated hard cases that
+  actually pass visible tests while failing hidden correctness, or otherwise
+  create tool false rejects.

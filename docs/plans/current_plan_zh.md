@@ -18649,7 +18649,8 @@ Next:
 
 执行结果：
 
-- 新增 `scripts/run_pytest_legacy_httpie.py`，只处理旧 HTTPie 测试运行所需的
+- 新增 legacy pytest wrapper，随后泛化为
+  `scripts/run_pytest_legacy_py311.py`，只处理旧测试运行所需的
   Python/runtime 兼容问题，不读取 evaluator labels、hidden oracles、raw model
   responses 或 prompt；
 - `python scripts\run_evp8_hard_visible_tests.py --run --check --timeout 60`
@@ -18673,3 +18674,52 @@ Next:
   - actionable headroom = 4，低于 10；
 - 因此下一步仍然不是跑 Qwen/DeepSeek，而是继续扩充或验证更难的非控制负例，
   并优先处理剩余 `httpie_4` visible-test error 或补充其他可执行 hard cases。
+
+## 2026-06-29 EVP-8-HARD Luigi ingestion and gate update
+
+本轮目标：
+
+- 不调用模型 API；
+- 不修改旧 98-candidate controlled cohort；
+- 接入已有 Luigi validation outputs，并补一个 tracked Luigi4 extra partial；
+- 重新生成 hard-case manifest、visible outcomes 和 tool-only baseline。
+
+执行结果：
+
+- `scripts/build_evp8_hard_candidate_draft.py` 现在读取
+  `validation_run1.jsonl`，使 Luigi stability-audit candidates 进入 draft；
+- `scripts/run_evp8_hard_visible_tests.py` 现在能定位：
+  - Luigi `*_p2p_validation/candidate_000N` workdirs；
+  - source-level `p2p_workdirs/candidate_000N`；
+- legacy pytest wrapper 泛化为 `scripts/run_pytest_legacy_py311.py`；
+- 新增 tracked `data/patches/evp8_hard_extra_luigi4_partial/`，记录一个
+  not-promoted Luigi4 wrong-guard partial candidate 及其 oracle-failing
+  validation summary；
+- 未使用 `cookiecutter3_candidate_validation_001`，因为 inventory 标明它已进入
+  旧 EVP-7/EVP-8 controlled cohort。
+
+最新 no-API gate：
+
+- candidates = 44；
+- tasks = 7；
+- projects = 2；
+- nontrivial hard negatives = 20，已达到门槛；
+- AI/agent hard negatives = 10；
+- visible outcome records = 44；
+- visible completed/error/timeout = 18；
+- visible outcomes = `passed=9, failed=9, not_run_blocked=26`；
+- deterministic baseline decisions = `accept=9, reject=9, escalate=26`；
+- false accepts = 7；
+- false rejects = 0；
+- actionable false-accept/false-reject headroom = 7。
+
+当前结论：
+
+- hard-negative 数量门已通过；
+- API readiness 仍为 `blocked`，唯一剩余 blocker 是
+  `actionable_false_accept_or_reject_headroom_at_least_10`；
+- 由于当前 headroom 只有 7/10，单纯追加少量候选不一定能解决问题；
+- 下一步应做 cohort composition repair：替换低信息量 escalated/control
+  candidates，引入更多 validated、visible-test-passing 但 hidden-incorrect
+  的 hard cases，或能制造 tool false reject 的 correct cases；
+- 在 headroom 达到 10 前，不运行 Qwen/DeepSeek。

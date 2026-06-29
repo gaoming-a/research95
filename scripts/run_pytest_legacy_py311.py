@@ -1,6 +1,6 @@
-"""Run legacy HTTPie pytest nodes under the current Python runtime.
+"""Run legacy pytest nodes under the current Python runtime.
 
-The EVP-8-HARD visible-test gate uses old HTTPie test suites as visible
+The EVP-8-HARD visible-test gate uses old project test suites as visible
 evidence only. This wrapper keeps the compatibility surface narrow: it patches
 Python/runtime incompatibilities before handing control to pytest, but it does
 not inspect evaluator labels, hidden oracles, or candidate metadata.
@@ -12,6 +12,7 @@ import builtins
 import collections
 import collections.abc
 import inspect
+import os
 import sys
 import types
 import unittest.mock as _unittest_mock
@@ -92,6 +93,7 @@ def allow_reused_fixture_decorator() -> None:
 def main(argv: list[str]) -> int:
     apply_runtime_compatibility()
     allow_reused_fixture_decorator()
+    sys.path.insert(0, os.getcwd())
 
     import pytest
 
