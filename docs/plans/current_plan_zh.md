@@ -20957,3 +20957,62 @@ paper-facing 入口，避免后续写作继续把 fresh realistic hard-negative 
 - fresh realistic hard-negative 分支已成为 paper 的 gate-readiness negative
   result，而不是阻塞主论文继续写作的条件；
 - 下一步应做 manuscript/table/claim-boundary 对齐，而不是继续 API。
+
+## 2026-06-30 SQJ manuscript/table/claim-boundary alignment
+
+本轮小目标是在不调用 API 的前提下，把上轮确定的 fresh realistic hard-negative
+论文边界同步到 SQJ manuscript package，避免 `sqj_submission_framing.md` 与
+实际 LaTeX 草稿/生成脚本/审计门禁不一致。
+
+输入证据：
+
+- `docs/paper/sqj_submission_framing.md` 已要求 fresh realistic 分支只能作为
+  supplementary gate-readiness/source-acquisition negative result；
+- `docs/paper/sqj_submission_draft.tex` 当前未包含该小节；
+- `scripts/write_sqj_latex_draft.py` 当前生成的 SQJ 草稿也未包含该边界；
+- `scripts/audit_sqj_submission_checklist.py` 当前尚未检查该边界。
+
+执行边界：
+
+- 不运行任何 API；
+- 不修改 prompt；
+- 不修改实验结果和 tracked summary；
+- 不把 fresh realistic 分支写成三项目 verifier-ready 主实验；
+- 不声称 LLM verifier 相比 deterministic/tool-only baseline 有优越性；
+- 只更新 manuscript/package 生成与审计所需文档和脚本。
+
+验收条件：
+
+- `scripts/write_sqj_latex_draft.py --check` 通过；
+- `scripts/audit_sqj_submission_checklist.py` 通过；
+- `scripts/audit_sqj_final_freeze_readiness.py` 通过；
+- staged diff 不包含 API key、raw prompt/response、输出目录或 local config。
+
+执行结果：
+
+- 更新 `scripts/write_sqj_latex_draft.py`，生成的
+  `docs/paper/sqj_submission_draft.tex` 新增
+  `Fresh Realistic Hard-Negative Acquisition` 小节；
+- 该小节只把 fresh realistic 分支写成 two-project
+  source-acquisition/gate-readiness negative result；
+- 明确该分支不是主 verifier 实验，且在
+  `ready_for_verifier_api=false` 时不授权 Qwen/DeepSeek verifier calls；
+- 更新 `docs/artifact/sqj_submission_checklist.md` 与
+  `docs/artifact/sqj_final_freeze_readiness.md`，同步 supported/forbidden
+  claim 边界；
+- 更新 `scripts/audit_sqj_submission_checklist.py` 与
+  `scripts/audit_sqj_final_freeze_readiness.py`，让审计门禁覆盖该边界；
+- 更新 `docs/experience/engineering_notes.md` 与 `docs/INDEX.md`。
+
+验证结果：
+
+- `python scripts\write_sqj_latex_draft.py --check`：通过；
+- `python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md`：通过；
+- `python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md`：通过。
+
+过程诊断：
+
+- 首次 draft check 因 required snippet 被 LaTeX 行换行拆开而失败；
+- 修复方式是保持 `two-project source-acquisition negative result` 在生成
+  LaTeX 中连续出现；
+- 这是审计实现细节问题，不改变实验结果或论文 claim。

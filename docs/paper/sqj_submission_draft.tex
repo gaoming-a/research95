@@ -174,6 +174,25 @@ model-dependent and non-monotonic across E0-E6.}
 
 \input{generated_tables.tex}
 
+\subsection{Fresh Realistic Hard-Negative Acquisition}
+
+We also attempted to acquire a fresh realistic hard-negative cohort for a
+possible verifier follow-up. That branch is not part of the five-model
+EVP-8 main result. It generated 94 candidate records, including 26 validated
+visible-pass/hidden-fail cases, but those hard negatives covered only two
+projects. Multiple third-project attempts failed the predeclared readiness
+gate because generated patches were correct-like, visibly failing, or failed
+candidate materialization before validation.
+
+We therefore report this branch only as a two-project source-acquisition negative result
+and gate-readiness lesson. It is not treated as a main verifier experiment,
+and it does not authorize Qwen or DeepSeek verifier calls while
+\verb|ready_for_verifier_api=false|. The finding is useful for software-quality
+methodology because it separates generator-interface success from verifier
+readiness: a source-acquisition protocol can produce real hard-negative
+opportunities while still failing the cohort-balance gate needed for a clean
+multi-project verifier experiment.
+
 \section{Software Quality Risks}
 
 The results expose three risks for LLM-based patch verification. First, model

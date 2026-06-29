@@ -3990,3 +3990,22 @@ This file starts fresh for the patch-verification project.
   the claim boundary instead of continuing to spend API. The fresh realistic
   branch now supports a two-project supplement/source-acquisition negative
   result, not a three-project verifier-ready main experiment.
+
+## 2026-06-30 SQJ package claim-boundary audit
+
+- Keep manuscript generators aligned with paper-facing framing. After the
+  fresh realistic branch was downgraded, the SQJ framing was correct but the
+  generated LaTeX draft still omitted the gate-readiness/source-acquisition
+  negative-result subsection. Treat generator output as the authoritative
+  manuscript surface; otherwise regenerated drafts can silently drop claim
+  boundaries.
+- Required-snippet checks are exact string checks. The first SQJ draft
+  regeneration failed because `two-project source-acquisition negative result`
+  was split by a line break in the generated LaTeX source. When adding a
+  boundary phrase to a snippet gate, keep that exact phrase contiguous in the
+  generated artifact or make the audit explicitly token-aware.
+- Checklist/readiness audits should verify both allowed and forbidden fresh
+  realistic claims. It is not enough for `sqj_submission_framing.md` to forbid
+  three-project verifier-ready claims; the source-package checklist and
+  final-freeze readiness audit must also require the two-project negative
+  result boundary and forbid practical-autonomous-verifier wording.

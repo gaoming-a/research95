@@ -17,6 +17,7 @@ REQUIRED_SNIPPETS = [
     r"\section{Evidence Visibility Protocol}",
     r"\section{Multi-Model Study}",
     r"\section{Results}",
+    r"\subsection{Fresh Realistic Hard-Negative Acquisition}",
     r"\section{Software Quality Risks}",
     r"\section{Threats to Validity}",
     r"\bmhead{Data availability}",
@@ -28,6 +29,8 @@ REQUIRED_SNIPPETS = [
     "Evidence visibility is a first-order experimental variable",
     "model-dependent and non-monotonic",
     "not valid model-result records",
+    "two-project source-acquisition negative result",
+    "ready_for_verifier_api=false",
 ]
 
 FORBIDDEN_SNIPPETS = [
@@ -37,6 +40,8 @@ FORBIDDEN_SNIPPETS = [
     "scale-generalized",
     "guaranteed school recognition",
     "Open Access route by default",
+    "three-project verifier-ready main experiment",
+    "practical autonomous patch verification",
 ]
 
 
@@ -324,6 +329,25 @@ model-dependent and non-monotonic across E0-E6.}}
 \end{{figure*}}
 
 \input{{generated_tables.tex}}
+
+\subsection{{Fresh Realistic Hard-Negative Acquisition}}
+
+We also attempted to acquire a fresh realistic hard-negative cohort for a
+possible verifier follow-up. That branch is not part of the five-model
+EVP-8 main result. It generated 94 candidate records, including 26 validated
+visible-pass/hidden-fail cases, but those hard negatives covered only two
+projects. Multiple third-project attempts failed the predeclared readiness
+gate because generated patches were correct-like, visibly failing, or failed
+candidate materialization before validation.
+
+We therefore report this branch only as a two-project source-acquisition negative result
+and gate-readiness lesson. It is not treated as a main verifier experiment,
+and it does not authorize Qwen or DeepSeek verifier calls while
+\verb|ready_for_verifier_api=false|. The finding is useful for software-quality
+methodology because it separates generator-interface success from verifier
+readiness: a source-acquisition protocol can produce real hard-negative
+opportunities while still failing the cohort-balance gate needed for a clean
+multi-project verifier experiment.
 
 \section{{Software Quality Risks}}
 

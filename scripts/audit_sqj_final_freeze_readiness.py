@@ -38,6 +38,7 @@ REQUIRED_SNIPPETS = [
     "`docs/artifact/sqj_submission_checklist.md`",
     "`scripts/audit_sqj_submission_checklist.py`",
     "school/department recognition confirmation",
+    "fresh realistic branch is a two-project source-acquisition negative result",
     "`sn-jnl.cls`",
     "author information, funding, acknowledgements, and competing-interest",
     "final artifact package rebuild and audit",
@@ -58,6 +59,8 @@ FORBIDDEN_SNIPPETS = [
     "PDF compile gate has passed.",
     "sn-jnl.cls is available locally.",
     "new model API calls can run now",
+    "fresh realistic branch is a three-project verifier-ready main experiment",
+    "full-file generation repair demonstrates practical autonomous patch verification",
 ]
 
 

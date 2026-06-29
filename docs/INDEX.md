@@ -1195,7 +1195,9 @@
   SQJ source draft. It is generated from the SQJ framing packet, EVP-8
   five-model synthesis, cost accounting, generated paper tables, and the
   SQJ-specific figure set. It has not been locally compiled because
-  `sn-jnl.cls` is not bundled in the current MiKTeX environment.
+  `sn-jnl.cls` is not bundled in the current MiKTeX environment. It now includes
+  the fresh realistic hard-negative branch only as a two-project
+  source-acquisition/gate-readiness negative result.
 - `paper/sqj_references.bib`: BibTeX file for the generated SQJ source draft.
 - `figures/sqj/`: SQJ-specific reproducible PDF/SVG/PNG figures for the EVP-8
   manuscript route: hidden-evaluator protocol, five-model decision patterns,
@@ -1204,12 +1206,14 @@
   checklist. It records the non-OA route, school-recognition confirmation
   gate, source draft/BibTeX/table/figure package, allowed and forbidden
   claims, no-API boundary, and the fact that this is not a final submission
-  freeze.
+  freeze. It now explicitly forbids treating the fresh realistic branch as a
+  three-project verifier-ready main experiment.
 - `artifact/sqj_final_freeze_readiness.md`: SQJ final-freeze readiness and
   blocker packet. It records the currently regenerable source package, the
   school-recognition, `sn-jnl.cls`/PDF compile, author/funding/competing
   interest, artifact rebuild, and final user-authorization blockers, and keeps
-  submission unauthorized.
+  submission unauthorized. It carries the same fresh realistic two-project
+  negative-result boundary as the SQJ checklist.
 - `paper/ieee_submission_draft.tex`: historical/source anonymous IEEEtran
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
@@ -1681,16 +1685,21 @@
   EVP-8 five-model synthesis, cost accounting, generated paper tables, and
   SQJ-specific figures. Its `--check` gate validates source structure only and
   does not compile PDF because the current local MiKTeX environment lacks
-  `sn-jnl.cls`.
+  `sn-jnl.cls`. The generator now emits the fresh realistic branch only as a
+  two-project source-acquisition/gate-readiness negative result.
 - `scripts/generate_sqj_figures.py`: generates the SQJ-specific EVP-8 figure
   set under `docs/figures/sqj/` in PDF, SVG, and PNG form.
 - `scripts/audit_sqj_submission_checklist.py`: validates the SQJ
   source-package checklist, source draft, BibTeX, table sources, figure set,
   five-model synthesis, and cost-accounting/API-freeze boundary without calling
-  APIs, compiling PDF, or marking final submission freeze complete.
+  APIs, compiling PDF, or marking final submission freeze complete. It also
+  checks the fresh realistic branch claim boundary in both the checklist and
+  generated source draft.
 - `scripts/audit_sqj_final_freeze_readiness.py`: validates the SQJ
   final-freeze readiness packet and its external-blocker boundary without
-  calling APIs, compiling PDF, or authorizing submission.
+  calling APIs, compiling PDF, or authorizing submission. It now requires the
+  fresh realistic two-project negative-result boundary before readiness can
+  pass.
 - `scripts/generate_paper_figures.py`: generates the publication figure set
   under `docs/figures/` in PDF, SVG, and PNG formats. Figures cover the
   workflow, compact E0/E2/E4/E6 evidence boundary, dataset composition,

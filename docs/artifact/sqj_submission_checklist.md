@@ -1,7 +1,7 @@
 # SQJ Submission Checklist
 
 Status: SQJ source package checklist, not final freeze.
-Date: 2026-06-22
+Date: 2026-06-30
 
 This checklist records the current Software Quality Journal (SQJ) submission
 route. It does not authorize new experiments, model API calls, cohort
@@ -60,6 +60,8 @@ historical figures for the earlier IEEE/EVP-7 package. The SQJ route uses the
 - The observed patterns are model-dependent and non-monotonic.
 - Blocked Kimi attempts are cost/execution-risk evidence only and are not valid
   model-result records.
+- The fresh realistic branch is a two-project source-acquisition negative result,
+  not a verifier-ready main experiment.
 - API execution remains frozen after the EVP-8 cost overrun.
 
 ## Forbidden Claims
@@ -70,6 +72,9 @@ The SQJ package must not claim:
 - that a final evidence-level ranking has been established;
 - that E6 strictly improves over E4 as a general result;
 - that the result scale-generalizes beyond the frozen EVP-8 v0.1 packet set;
+- that the fresh realistic branch is a three-project verifier-ready main experiment;
+- that the full-file generation repair demonstrates practical autonomous patch
+  verification;
 - that SQJ recognition is guaranteed before school/department confirmation;
 - that Open Access or APC payment is approved.
 

@@ -1,7 +1,7 @@
 # SQJ Final-Freeze Readiness Packet
 
 Status: SQJ final-freeze readiness packet, not final freeze.
-Date: 2026-06-22
+Date: 2026-06-30
 
 This packet records what is ready for a future Software Quality Journal (SQJ)
 submission freeze and what still blocks submission. This packet does not authorize submission.
@@ -35,6 +35,8 @@ The manuscript-facing SQJ figure set is:
 - The observed response is model-dependent and non-monotonic.
 - The Kimi blocked attempts are cost/execution-risk evidence only, not valid
   model-result records.
+- The fresh realistic branch is a two-project source-acquisition negative result,
+  not a verifier-ready main experiment.
 - API execution remains frozen after the EVP-8 cost overrun.
 
 ## Still Blocking Final Freeze
@@ -60,6 +62,10 @@ Do not claim:
 - that this packet is a final submission freeze;
 - that LLM superiority over deterministic baselines is supported;
 - that a final evidence-level ranking has been established;
+- that the fresh realistic branch is a three-project verifier-ready main
+  experiment;
+- that the full-file generation repair demonstrates practical autonomous patch
+  verification;
 - that new model API calls can run without a new explicit budget and command.
 
 ## Safe Rebuild Order

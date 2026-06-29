@@ -45,9 +45,11 @@ REQUIRED_SNIPPETS = [
     "Evidence visibility is a first-order experimental variable",
     "model-dependent and non-monotonic",
     "Blocked Kimi attempts are cost/execution-risk evidence only",
+    "fresh realistic branch is a two-project source-acquisition negative result",
     "API execution remains frozen",
     "that LLM superiority over deterministic baselines is supported",
     "that a final evidence-level ranking has been established",
+    "that the fresh realistic branch is a three-project verifier-ready main experiment",
     "python scripts\\write_sqj_latex_draft.py --check",
     "python scripts\\audit_sqj_submission_checklist.py",
     "python scripts\\audit_sqj_final_freeze_readiness.py",
@@ -67,6 +69,9 @@ SOURCE_REQUIRED_SNIPPETS = [
     "Evidence visibility is a first-order experimental variable",
     "model-dependent and non-monotonic",
     "blocked Kimi attempts",
+    r"\subsection{Fresh Realistic Hard-Negative Acquisition}",
+    "two-project source-acquisition negative result",
+    "ready_for_verifier_api=false",
     r"\input{generated_tables.tex}",
     "sqj_fig1_evp8_protocol.pdf",
     "sqj_fig2_decision_patterns.pdf",
@@ -85,6 +90,8 @@ SOURCE_FORBIDDEN_SNIPPETS = [
     "E6 strictly improves over E4",
     "the optimal evidence level",
     "scale-generalized conclusion",
+    "three-project verifier-ready main experiment",
+    "practical autonomous patch verification",
 ]
 
 
