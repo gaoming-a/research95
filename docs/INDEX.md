@@ -50,7 +50,10 @@
   is Software Quality Journal (SQJ): confirm school/department recognition
   before submission, use the non-OA subscription route unless APC is explicitly
   approved, and generate a Springer Nature `sn-jnl` LaTeX main draft rather
-  than treating the IEEEtran draft as the next submission format.
+  than treating the IEEEtran draft as the next submission format. As of
+  2026-06-30, the fresh realistic hard-negative branch is explicitly scoped as
+  a two-project supplement/source-acquisition negative result, not a
+  three-project verifier-ready main experiment.
 - `experiments/evp8_journal_scale_execution_plan_20260620.md`: no-API
   execution plan for the journal-scale EVP-8 route. It defines the planned
   E0-E6 full-ladder boundary, target five-model set, phased DeepSeek/Qwen first
@@ -1186,6 +1189,8 @@
   claim-boundary packet. It fixes the target venue route, non-OA cost boundary,
   Springer `sn-jnl` next-format requirement, working title, RQs, allowed and
   forbidden claims, result-to-artifact mapping, and school-recognition gate.
+  It now includes the fresh realistic hard-negative branch only as a
+  supplementary gate-readiness/source-acquisition negative result.
 - `paper/sqj_submission_draft.tex`: first generated Springer Nature `sn-jnl`
   SQJ source draft. It is generated from the SQJ framing packet, EVP-8
   five-model synthesis, cost accounting, generated paper tables, and the

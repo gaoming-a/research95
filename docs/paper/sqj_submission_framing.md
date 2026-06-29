@@ -1,6 +1,6 @@
 # SQJ Submission Framing and Claim Boundary
 
-Status: no-API SQJ framing packet, 2026-06-22.
+Status: no-API SQJ framing packet, updated 2026-06-30.
 
 This document fixes the paper-facing route for Software Quality Journal (SQJ).
 It is not a final submission package and does not authorize new experiments.
@@ -45,6 +45,10 @@ The SQJ-facing contribution is therefore:
    behavior instead of a simple "more evidence is always better" curve.
 5. A cost and execution-risk accounting ledger for real multi-model verifier
    experiments.
+6. A supplementary source-acquisition/gate-readiness analysis showing that a
+   fresh realistic agent-patch branch produced a real two-project hard-negative
+   opportunity set but failed a predeclared three-project verifier-readiness
+   gate.
 
 ## Research Questions
 
@@ -79,6 +83,11 @@ The paper may report these results:
 - Aggregated five-model decisions are non-monotonic across E0-E6.
 - Blocked Kimi attempts are cost and engineering-risk evidence, not valid model
   results.
+- The fresh realistic hard-negative branch may be reported only as a
+  supplementary gate-readiness result: 94 generated candidates yielded 26
+  validated visible-pass/hidden-fail cases across two projects, while third
+  project attempts failed because generated patches were correct-like,
+  visible-failing, or failed materialization before validation.
 
 ## Forbidden Claims
 
@@ -92,6 +101,12 @@ The SQJ manuscript must not claim:
 - Runner-estimated or provider-reported costs are complete external billing
   statements.
 - A guarantee of SQJ recognition before school or department confirmation.
+- The fresh realistic hard-negative branch is a three-project verifier-ready
+  main experiment.
+- Qwen or DeepSeek verifier APIs should be run on the fresh realistic branch
+  while `ready_for_verifier_api=false`.
+- The full-file generation-interface repair validates the verifier system or
+  demonstrates practical autonomous patch verification.
 
 ## Result Mapping
 
@@ -105,6 +120,8 @@ The SQJ manuscript must not claim:
 | Protocol plan | `docs/experiments/evp8_journal_scale_execution_plan_20260620.md` |
 | Canonical route | `docs/plans/final_paper_roadmap_zh.md` |
 | Historical EVP-7 motivation | `docs/paper/patch_verification_draft.md` |
+| Fresh realistic branch boundary | `data/protocols/evp8_realistic_hardneg_paper_claim_decision_packet_v0_1.json` |
+| Fresh realistic gate result | `data/protocols/evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json` |
 
 ## Suggested SQJ Structure
 
@@ -118,6 +135,12 @@ The SQJ manuscript must not claim:
 8. Threats to Validity
 9. Artifact and Reproducibility
 10. Conclusion
+
+The fresh realistic hard-negative branch should appear in Results or Threats
+as a gate-readiness/source-acquisition subsection, not as the main verifier
+experiment. Suggested subsection title:
+
+> Fresh Realistic Hard-Negative Acquisition: A Gate-Readiness Negative Result
 
 ## Submission Readiness Gates
 

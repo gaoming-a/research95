@@ -24,6 +24,13 @@
   当前 EVP-7 artifacts 中直接补插 E1/E3/E5。完整相邻差分 E0-E6 ladder
   只能作为 EVP-8 或 EVP-7-v2 新协议，从层级定义、packets、prompts、
   baselines、LLM runs 和统计分析整体重做。
+- 2026-06-30 起，fresh realistic hard-negative 分支已被降级为
+  **two-project supplement / source-acquisition negative result**。该分支
+  产生 26 个 validated visible-pass/hidden-fail cases，但只覆盖
+  `PySnooper` 和 `cookiecutter` 两个项目；多次第三项目尝试没有通过
+  30-candidate/3-project gate。因此该分支不得作为三项目 realistic
+  verifier-ready 主实验，也不得触发 Qwen/DeepSeek verifier API。论文中只能将其
+  用作 source-acquisition/gate-readiness 负结果和威胁分析。
 
 ## 1. 论文主线
 
@@ -63,6 +70,11 @@
 - 不能把“某个 bug 没有生成出正确 AI patch”解释为课题失败。只有 ground
   truth 不稳定、reference patch 无法验证、环境不可复现时，任务才应从主实验
   排除。
+- fresh realistic agent-patch source acquisition 的当前结果不支持
+  三项目 verifier-ready 主实验。该分支应报告为“生成/来源获取与 gate-readiness
+  负结果”：生成器能产生真实 two-project hard-negative opportunity set，但第三项目
+  acquisition 会因为 visible-failing wrong patches、correct-like generated patches
+  或 candidate materialization failure 而失败。
 
 ## 2. 核心研究问题
 

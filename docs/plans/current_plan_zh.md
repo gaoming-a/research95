@@ -20922,3 +20922,38 @@ Protocol 边界：
   调整为不再等待三项目 realistic verifier run；
 - 若还要冲更强结果，必须新开 source-acquisition protocol，换 target tasks，
   并在任何 API 前重新定义 gate。
+
+## 2026-06-30 Paper-facing roadmap/framing update
+
+本轮小目标是在不调用 API 的前提下，把 paper claim decision packet 落到两个
+paper-facing 入口，避免后续写作继续把 fresh realistic hard-negative 分支当成
+三项目主实验前置条件。
+
+执行边界：
+
+- 不运行任何 API；
+- 不修改模型 prompt；
+- 不修改实验结果；
+- 只更新 paper roadmap/framing 和文档索引；
+- 不把 fresh realistic 分支改写为正向 verifier 结果。
+
+执行结果：
+
+- 更新 `docs/plans/final_paper_roadmap_zh.md`：
+  - 明确 fresh realistic hard-negative 分支已降级为 two-project supplement /
+    source-acquisition negative result；
+  - 明确该分支不得触发 Qwen/DeepSeek verifier API；
+  - 明确该分支只可作为 source-acquisition/gate-readiness 负结果和威胁分析。
+- 更新 `docs/paper/sqj_submission_framing.md`：
+  - 增加 supplementary source-acquisition/gate-readiness contribution；
+  - 增加 fresh realistic gate 结果可报告边界；
+  - 增加禁止 claim：不能称其为三项目 verifier-ready 主实验，不能在
+    `ready_for_verifier_api=false` 时运行 verifier API；
+  - 增加 result mapping 到 paper claim decision packet 和 combined gate。
+
+当前判断：
+
+- SQJ evidence-visibility 路线仍是主线；
+- fresh realistic hard-negative 分支已成为 paper 的 gate-readiness negative
+  result，而不是阻塞主论文继续写作的条件；
+- 下一步应做 manuscript/table/claim-boundary 对齐，而不是继续 API。
