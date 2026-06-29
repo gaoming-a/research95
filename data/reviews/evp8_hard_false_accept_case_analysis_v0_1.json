@@ -1,0 +1,590 @@
+{
+  "analysis_boundary": {
+    "claim": "case analysis of repeated false accepts, not a new model run",
+    "stores_patch_diff": false,
+    "uses_evaluator_labels": true,
+    "uses_model_visible_seed": true,
+    "uses_parsed_review_schema_fields": true,
+    "uses_raw_response_text": false
+  },
+  "analysis_id": "evp8_hard_false_accept_case_analysis_v0_1",
+  "api_call_attempted": false,
+  "candidate_count": 47,
+  "cases": [
+    {
+      "candidate_id": "evp8_hard_candidate_0001",
+      "decisions": {
+        "deepseek": "accept",
+        "qwen": "accept",
+        "tool": "accept"
+      },
+      "deepseek_primary_reason": "Visible tests passed and no visible failures are reported.",
+      "deepseek_risk_flags": [],
+      "generation_model": null,
+      "hidden_evaluator_evidence": {
+        "candidate_type": "partial_fix",
+        "hidden_oracles": [
+          "scripts/oracles/httpie_1_unique_filename.py",
+          "scripts/oracles/httpie_1_errno_fallback.py"
+        ],
+        "hidden_validation_summary": {
+          "oracle_passed": false,
+          "oracle_ran": true,
+          "p2p_broad_status": null,
+          "retained_oracle_passed": null,
+          "retained_oracle_ran": null
+        },
+        "label_confidence": "high",
+        "nontrivial_hard_negative": true,
+        "normalized_label": "partial"
+      },
+      "patch_source_kind": "constructed_or_reference",
+      "project": "httpie",
+      "qwen_primary_reason": "Patch applied successfully and the visible fail-to-pass test passed with no reported failures or contradictions.",
+      "qwen_risk_flags": [],
+      "source_patch_id": "evp8_hard_httpie1_wrong_errno_code",
+      "task_id": "bugsinpy_httpie_1",
+      "theme": "partial_httpie1_errno_fallback_blind_spot",
+      "tool_reason": "Visible tests passed and no visible failures are reported.",
+      "visible_evidence": {
+        "patch_applies": true,
+        "patch_size": {
+          "added_lines": 34,
+          "deleted_lines": 2,
+          "files_changed": 1
+        },
+        "visible_observed_outcome": "passed",
+        "visible_outcome_counts": {
+          "passed": 1
+        },
+        "visible_run_status": "completed",
+        "visible_tests": [
+          "tests/test_downloads.py::TestDownloadUtils::test_unique_filename"
+        ]
+      }
+    },
+    {
+      "candidate_id": "evp8_hard_candidate_0002",
+      "decisions": {
+        "deepseek": "accept",
+        "qwen": "accept",
+        "tool": "accept"
+      },
+      "deepseek_primary_reason": "Visible tests passed and no visible failures are reported.",
+      "deepseek_risk_flags": [],
+      "generation_model": null,
+      "hidden_evaluator_evidence": {
+        "candidate_type": "partial_fix",
+        "hidden_oracles": [
+          "scripts/oracles/httpie_1_unique_filename.py",
+          "scripts/oracles/httpie_1_errno_fallback.py"
+        ],
+        "hidden_validation_summary": {
+          "oracle_passed": false,
+          "oracle_ran": true,
+          "p2p_broad_status": null,
+          "retained_oracle_passed": null,
+          "retained_oracle_ran": null
+        },
+        "label_confidence": "high",
+        "nontrivial_hard_negative": true,
+        "normalized_label": "partial"
+      },
+      "patch_source_kind": "constructed_or_reference",
+      "project": "httpie",
+      "qwen_primary_reason": "Visible fail-to-pass test passed and deterministic merge-gate summary recommends acceptance with no visible contradictions.",
+      "qwen_risk_flags": [],
+      "source_patch_id": "evp8_hard_httpie1_missing_errno_fallback",
+      "task_id": "bugsinpy_httpie_1",
+      "theme": "partial_httpie1_errno_fallback_blind_spot",
+      "tool_reason": "Visible tests passed and no visible failures are reported.",
+      "visible_evidence": {
+        "patch_applies": true,
+        "patch_size": {
+          "added_lines": 26,
+          "deleted_lines": 2,
+          "files_changed": 1
+        },
+        "visible_observed_outcome": "passed",
+        "visible_outcome_counts": {
+          "passed": 1
+        },
+        "visible_run_status": "completed",
+        "visible_tests": [
+          "tests/test_downloads.py::TestDownloadUtils::test_unique_filename"
+        ]
+      }
+    },
+    {
+      "candidate_id": "evp8_hard_candidate_0003",
+      "decisions": {
+        "deepseek": "accept",
+        "qwen": "accept",
+        "tool": "accept"
+      },
+      "deepseek_primary_reason": "Visible tests passed and no visible failures are reported.",
+      "deepseek_risk_flags": [],
+      "generation_model": null,
+      "hidden_evaluator_evidence": {
+        "candidate_type": "partial_fix",
+        "hidden_oracles": [
+          "scripts/oracles/httpie_1_unique_filename.py",
+          "scripts/oracles/httpie_1_errno_fallback.py"
+        ],
+        "hidden_validation_summary": {
+          "oracle_passed": false,
+          "oracle_ran": true,
+          "p2p_broad_status": null,
+          "retained_oracle_passed": null,
+          "retained_oracle_ran": null
+        },
+        "label_confidence": "high",
+        "nontrivial_hard_negative": true,
+        "normalized_label": "partial"
+      },
+      "patch_source_kind": "constructed_or_reference",
+      "project": "httpie",
+      "qwen_primary_reason": "Visible fail-to-pass test passed, patch applied successfully, and deterministic merge-gate summary recommends acceptance without visible contradictions.",
+      "qwen_risk_flags": [],
+      "source_patch_id": "evp8_hard_httpie1_wrong_errno_predicate",
+      "task_id": "bugsinpy_httpie_1",
+      "theme": "partial_httpie1_errno_fallback_blind_spot",
+      "tool_reason": "Visible tests passed and no visible failures are reported.",
+      "visible_evidence": {
+        "patch_applies": true,
+        "patch_size": {
+          "added_lines": 34,
+          "deleted_lines": 2,
+          "files_changed": 1
+        },
+        "visible_observed_outcome": "passed",
+        "visible_outcome_counts": {
+          "passed": 1
+        },
+        "visible_run_status": "completed",
+        "visible_tests": [
+          "tests/test_downloads.py::TestDownloadUtils::test_unique_filename"
+        ]
+      }
+    },
+    {
+      "candidate_id": "evp8_hard_candidate_0008",
+      "decisions": {
+        "deepseek": "accept",
+        "qwen": "accept",
+        "tool": "accept"
+      },
+      "deepseek_primary_reason": "Visible tests passed and no visible failures are reported.",
+      "deepseek_risk_flags": [],
+      "generation_model": "deepseek-v4-pro",
+      "hidden_evaluator_evidence": {
+        "candidate_type": "agent_plausible_wrong",
+        "hidden_oracles": [
+          "scripts/oracles/httpie_2_max_redirects.py"
+        ],
+        "hidden_validation_summary": {
+          "oracle_passed": false,
+          "oracle_ran": true,
+          "p2p_broad_status": null,
+          "retained_oracle_passed": null,
+          "retained_oracle_ran": null
+        },
+        "label_confidence": "high",
+        "nontrivial_hard_negative": true,
+        "normalized_label": "agent_plausible_wrong"
+      },
+      "patch_source_kind": "ai_or_agent_generated",
+      "project": "httpie",
+      "qwen_primary_reason": "The patch correctly implements the requested feature to assign max redirects to the requests session, and the visible fail-to-pass test for max redirects passes successfully.",
+      "qwen_risk_flags": [],
+      "source_patch_id": "bugsinpy_httpie_2__agent_patch_01",
+      "task_id": "bugsinpy_httpie_2",
+      "theme": "agent_plausible_wrong_httpie_2",
+      "tool_reason": "Visible tests passed and no visible failures are reported.",
+      "visible_evidence": {
+        "patch_applies": true,
+        "patch_size": {
+          "added_lines": 2,
+          "deleted_lines": 0,
+          "files_changed": 1
+        },
+        "visible_observed_outcome": "passed",
+        "visible_outcome_counts": {
+          "passed": 1
+        },
+        "visible_run_status": "completed",
+        "visible_tests": [
+          "tests/test_redirects.py::TestRedirects::test_max_redirects"
+        ]
+      }
+    },
+    {
+      "candidate_id": "evp8_hard_candidate_0009",
+      "decisions": {
+        "deepseek": "accept",
+        "qwen": "accept",
+        "tool": "accept"
+      },
+      "deepseek_primary_reason": "Visible tests passed and no visible failures are reported.",
+      "deepseek_risk_flags": [],
+      "generation_model": "deepseek-v4-pro",
+      "hidden_evaluator_evidence": {
+        "candidate_type": "agent_plausible_wrong",
+        "hidden_oracles": [
+          "scripts/oracles/httpie_2_max_redirects.py"
+        ],
+        "hidden_validation_summary": {
+          "oracle_passed": false,
+          "oracle_ran": true,
+          "p2p_broad_status": null,
+          "retained_oracle_passed": null,
+          "retained_oracle_ran": null
+        },
+        "label_confidence": "high",
+        "nontrivial_hard_negative": true,
+        "normalized_label": "agent_plausible_wrong"
+      },
+      "patch_source_kind": "ai_or_agent_generated",
+      "project": "httpie",
+      "qwen_primary_reason": "The patch applies cleanly, directly addresses the issue by assigning max_redirects to the requests session, and passes the visible fail-to-pass test.",
+      "qwen_risk_flags": [],
+      "source_patch_id": "bugsinpy_httpie_2__agent_patch_02",
+      "task_id": "bugsinpy_httpie_2",
+      "theme": "agent_plausible_wrong_httpie_2",
+      "tool_reason": "Visible tests passed and no visible failures are reported.",
+      "visible_evidence": {
+        "patch_applies": true,
+        "patch_size": {
+          "added_lines": 1,
+          "deleted_lines": 0,
+          "files_changed": 1
+        },
+        "visible_observed_outcome": "passed",
+        "visible_outcome_counts": {
+          "passed": 1
+        },
+        "visible_run_status": "completed",
+        "visible_tests": [
+          "tests/test_redirects.py::TestRedirects::test_max_redirects"
+        ]
+      }
+    },
+    {
+      "candidate_id": "evp8_hard_candidate_0010",
+      "decisions": {
+        "deepseek": "accept",
+        "qwen": "accept",
+        "tool": "accept"
+      },
+      "deepseek_primary_reason": "Visible tests passed and no visible failures are reported.",
+      "deepseek_risk_flags": [],
+      "generation_model": "deepseek-v4-pro",
+      "hidden_evaluator_evidence": {
+        "candidate_type": "agent_plausible_wrong",
+        "hidden_oracles": [
+          "scripts/oracles/httpie_3_session_headers.py"
+        ],
+        "hidden_validation_summary": {
+          "oracle_passed": false,
+          "oracle_ran": true,
+          "p2p_broad_status": null,
+          "retained_oracle_passed": null,
+          "retained_oracle_ran": null
+        },
+        "label_confidence": "high",
+        "nontrivial_hard_negative": true,
+        "normalized_label": "agent_plausible_wrong"
+      },
+      "patch_source_kind": "ai_or_agent_generated",
+      "project": "httpie",
+      "qwen_primary_reason": "Patch applies cleanly, visible fail-to-pass test passes, diff correctly addresses the issue, and deterministic merge-gate summary recommends acceptance with no contradictions.",
+      "qwen_risk_flags": [],
+      "source_patch_id": "bugsinpy_httpie_3__agent_patch_01",
+      "task_id": "bugsinpy_httpie_3",
+      "theme": "agent_plausible_wrong_httpie_3",
+      "tool_reason": "Visible tests passed and no visible failures are reported.",
+      "visible_evidence": {
+        "patch_applies": true,
+        "patch_size": {
+          "added_lines": 2,
+          "deleted_lines": 0,
+          "files_changed": 1
+        },
+        "visible_observed_outcome": "passed",
+        "visible_outcome_counts": {
+          "passed": 1
+        },
+        "visible_run_status": "completed",
+        "visible_tests": [
+          "tests/test_sessions.py::TestSession::test_download_in_session"
+        ]
+      }
+    },
+    {
+      "candidate_id": "evp8_hard_candidate_0011",
+      "decisions": {
+        "deepseek": "accept",
+        "qwen": "accept",
+        "tool": "accept"
+      },
+      "deepseek_primary_reason": "Visible tests passed and no visible failures are reported.",
+      "deepseek_risk_flags": [],
+      "generation_model": "deepseek-v4-pro",
+      "hidden_evaluator_evidence": {
+        "candidate_type": "agent_plausible_wrong",
+        "hidden_oracles": [
+          "scripts/oracles/httpie_3_session_headers.py"
+        ],
+        "hidden_validation_summary": {
+          "oracle_passed": false,
+          "oracle_ran": true,
+          "p2p_broad_status": null,
+          "retained_oracle_passed": null,
+          "retained_oracle_ran": null
+        },
+        "label_confidence": "high",
+        "nontrivial_hard_negative": true,
+        "normalized_label": "agent_plausible_wrong"
+      },
+      "patch_source_kind": "ai_or_agent_generated",
+      "project": "httpie",
+      "qwen_primary_reason": "Patch applies cleanly, correctly implements the requested None-value skip logic for session headers, and the visible fail-to-pass test passes.",
+      "qwen_risk_flags": [],
+      "source_patch_id": "bugsinpy_httpie_3__agent_patch_02",
+      "task_id": "bugsinpy_httpie_3",
+      "theme": "agent_plausible_wrong_httpie_3",
+      "tool_reason": "Visible tests passed and no visible failures are reported.",
+      "visible_evidence": {
+        "patch_applies": true,
+        "patch_size": {
+          "added_lines": 2,
+          "deleted_lines": 0,
+          "files_changed": 1
+        },
+        "visible_observed_outcome": "passed",
+        "visible_outcome_counts": {
+          "passed": 1
+        },
+        "visible_run_status": "completed",
+        "visible_tests": [
+          "tests/test_sessions.py::TestSession::test_download_in_session"
+        ]
+      }
+    },
+    {
+      "candidate_id": "evp8_hard_candidate_0012",
+      "decisions": {
+        "deepseek": "accept",
+        "qwen": "accept",
+        "tool": "accept"
+      },
+      "deepseek_primary_reason": "Visible tests passed and no visible failures are reported.",
+      "deepseek_risk_flags": [],
+      "generation_model": "deepseek-v4-pro",
+      "hidden_evaluator_evidence": {
+        "candidate_type": "agent_plausible_wrong",
+        "hidden_oracles": [
+          "scripts/oracles/httpie_4_host_header.py"
+        ],
+        "hidden_validation_summary": {
+          "oracle_passed": false,
+          "oracle_ran": true,
+          "p2p_broad_status": null,
+          "retained_oracle_passed": null,
+          "retained_oracle_ran": null
+        },
+        "label_confidence": "high",
+        "nontrivial_hard_negative": true,
+        "normalized_label": "agent_plausible_wrong"
+      },
+      "patch_source_kind": "ai_or_agent_generated",
+      "project": "httpie",
+      "qwen_primary_reason": "The patch successfully applies, correctly implements a case-insensitive check for the Host header to prevent duplication, and the visible fail-to-pass test passes without any reported regressions or contradictions.",
+      "qwen_risk_flags": [],
+      "source_patch_id": "bugsinpy_httpie_4__agent_patch_01",
+      "task_id": "bugsinpy_httpie_4",
+      "theme": "agent_plausible_wrong_httpie_4",
+      "tool_reason": "Visible tests passed and no visible failures are reported.",
+      "visible_evidence": {
+        "patch_applies": true,
+        "patch_size": {
+          "added_lines": 1,
+          "deleted_lines": 1,
+          "files_changed": 1
+        },
+        "visible_observed_outcome": "passed",
+        "visible_outcome_counts": {
+          "passed": 1
+        },
+        "visible_run_status": "completed",
+        "visible_tests": [
+          "tests/test_regressions.py::test_Host_header_overwrite"
+        ]
+      }
+    },
+    {
+      "candidate_id": "evp8_hard_candidate_0022",
+      "decisions": {
+        "deepseek": "accept",
+        "qwen": "accept",
+        "tool": "accept"
+      },
+      "deepseek_primary_reason": "Visible tests passed and no visible failures are reported.",
+      "deepseek_risk_flags": [],
+      "generation_model": null,
+      "hidden_evaluator_evidence": {
+        "candidate_type": "partial_fix",
+        "hidden_oracles": [
+          "scripts/oracles/httpie_1_unique_filename.py",
+          "scripts/oracles/httpie_1_errno_fallback.py"
+        ],
+        "hidden_validation_summary": {
+          "oracle_passed": false,
+          "oracle_ran": true,
+          "p2p_broad_status": null,
+          "retained_oracle_passed": null,
+          "retained_oracle_ran": null
+        },
+        "label_confidence": "high",
+        "nontrivial_hard_negative": true,
+        "normalized_label": "partial"
+      },
+      "patch_source_kind": "constructed_or_reference",
+      "project": "httpie",
+      "qwen_primary_reason": "Visible fail-to-pass test passed, patch applied successfully, and the deterministic merge-gate summary recommends acceptance with no visible contradictions.",
+      "qwen_risk_flags": [],
+      "source_patch_id": "bugsinpy_httpie_1__missing_change_1",
+      "task_id": "bugsinpy_httpie_1",
+      "theme": "partial_httpie1_unique_filename_blind_spot",
+      "tool_reason": "Visible tests passed and no visible failures are reported.",
+      "visible_evidence": {
+        "patch_applies": true,
+        "patch_size": {
+          "added_lines": 33,
+          "deleted_lines": 2,
+          "files_changed": 1
+        },
+        "visible_observed_outcome": "passed",
+        "visible_outcome_counts": {
+          "passed": 1
+        },
+        "visible_run_status": "completed",
+        "visible_tests": [
+          "tests/test_downloads.py::TestDownloadUtils::test_unique_filename"
+        ]
+      }
+    }
+  ],
+  "checks": [
+    {
+      "check": "tool_false_accepts_repeated_by_both_models",
+      "detail": {
+        "repeated_by_both_count": 9,
+        "tool_false_accept_count": 9
+      },
+      "passed": true
+    },
+    {
+      "check": "raw_model_outputs_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "patch_text_not_stored_in_analysis",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "all_repeated_false_accepts_have_visible_pass",
+      "detail": {
+        "passed": 9
+      },
+      "passed": true
+    },
+    {
+      "check": "all_repeated_false_accepts_have_hidden_failure",
+      "detail": {
+        "evp8_hard_candidate_0001": false,
+        "evp8_hard_candidate_0002": false,
+        "evp8_hard_candidate_0003": false,
+        "evp8_hard_candidate_0008": false,
+        "evp8_hard_candidate_0009": false,
+        "evp8_hard_candidate_0010": false,
+        "evp8_hard_candidate_0011": false,
+        "evp8_hard_candidate_0012": false,
+        "evp8_hard_candidate_0022": false
+      },
+      "passed": true
+    }
+  ],
+  "cohort_id": "EVP-8-HARD",
+  "patch_text_stored": false,
+  "raw_model_outputs_read": false,
+  "rendered_prompt_read": false,
+  "repeated_false_accept_count": 9,
+  "summary": {
+    "generation_model_counts": {
+      "None": 4,
+      "deepseek-v4-pro": 5
+    },
+    "grouped_candidate_ids": {
+      "agent_plausible_wrong_httpie_2": [
+        "evp8_hard_candidate_0008",
+        "evp8_hard_candidate_0009"
+      ],
+      "agent_plausible_wrong_httpie_3": [
+        "evp8_hard_candidate_0010",
+        "evp8_hard_candidate_0011"
+      ],
+      "agent_plausible_wrong_httpie_4": [
+        "evp8_hard_candidate_0012"
+      ],
+      "partial_httpie1_errno_fallback_blind_spot": [
+        "evp8_hard_candidate_0001",
+        "evp8_hard_candidate_0002",
+        "evp8_hard_candidate_0003"
+      ],
+      "partial_httpie1_unique_filename_blind_spot": [
+        "evp8_hard_candidate_0022"
+      ]
+    },
+    "hidden_oracle_counts": {
+      "scripts/oracles/httpie_1_errno_fallback.py": 4,
+      "scripts/oracles/httpie_1_unique_filename.py": 4,
+      "scripts/oracles/httpie_2_max_redirects.py": 2,
+      "scripts/oracles/httpie_3_session_headers.py": 2,
+      "scripts/oracles/httpie_4_host_header.py": 1
+    },
+    "label_counts": {
+      "agent_plausible_wrong": 5,
+      "partial": 4
+    },
+    "risk_flag_counts": {
+      "deepseek_nonempty": 0,
+      "qwen_nonempty": 0
+    },
+    "source_kind_counts": {
+      "ai_or_agent_generated": 5,
+      "constructed_or_reference": 4
+    },
+    "task_counts": {
+      "bugsinpy_httpie_1": 4,
+      "bugsinpy_httpie_2": 2,
+      "bugsinpy_httpie_3": 2,
+      "bugsinpy_httpie_4": 1
+    },
+    "theme_counts": {
+      "agent_plausible_wrong_httpie_2": 2,
+      "agent_plausible_wrong_httpie_3": 2,
+      "agent_plausible_wrong_httpie_4": 1,
+      "partial_httpie1_errno_fallback_blind_spot": 3,
+      "partial_httpie1_unique_filename_blind_spot": 1
+    },
+    "visible_observed_outcome_counts": {
+      "passed": 9
+    },
+    "visible_run_status_counts": {
+      "completed": 9
+    }
+  }
+}

@@ -97,6 +97,45 @@ hard-case 结果的基础上，只执行 DeepSeek E6 full run，并用 raw-outpu
 - 若仍与工具一致，则说明当前 prompt/evidence 不足以诱导独立语义验证，需要把
   论文主张收缩为“结构化工具证据主导 LLM verifier 行为”的实证研究。
 
+## 0.3 2026-06-29 本轮小目标：EVP-8-HARD repeated false accept 案例分析
+
+本轮目标是在不调用新 API、不读取 raw responses 的前提下，对 Qwen 和
+DeepSeek 共同重复的 9 个 tool false accept 做案例分析，判断它们是否代表一个
+有论文价值的失败模式。
+
+执行边界：
+
+- 只读取 tracked evaluator manifest、model-visible seed、tool baseline 和
+  parsed review schema fields；
+- 不读取 ignored raw model responses；
+- 不输出 patch diff 或 rendered prompt；
+- 不把该分析写成新模型实验；
+- 使用 evaluator-only labels 只做 post-execution analysis，不能回灌到
+  model-visible prompt。
+
+执行结果：
+
+- 新增 `scripts/analyze_evp8_hard_false_accept_cases.py`；
+- 生成 `data/reviews/evp8_hard_false_accept_case_analysis_v0_1.json`；
+- 生成 `docs/experiments/evp8_hard_false_accept_case_analysis_v0_1.md`；
+- 自检通过：
+  - 9/9 tool false accepts 被 Qwen 和 DeepSeek 同时重复 accept；
+  - 9/9 都是 visible outcome `passed`；
+  - 9/9 hidden evaluator oracle failed；
+  - Qwen risk flags 非空数 = 0/9；
+  - DeepSeek risk flags 非空数 = 0/9；
+  - 分析过程没有读取 raw model outputs，也没有保存 patch text。
+
+研究判断：
+
+- 这 9 个 false accept 不是随机错误，而是清晰的 merge-gate 风险模式：
+  visible test 通过、hidden oracle 失败、工具 accept、两个 LLM 也 accept；
+- false accepts 集中在 `httpie`：
+  - 4 个 `httpie_1` partial fixes；
+  - 5 个 `httpie_2` 到 `httpie_4` 的 agent-plausible wrong patches；
+- 当前 E6 evidence/prompt 没有把 hidden risk 转化为 uncertainty 或 escalation；
+- 下一步应设计 evidence-only ablation，而不是继续增加同 prompt 模型。
+
 ## 1. 研究转向
 
 旧方向试图验证 LLM cross-review 或 agent-style context 是否能让代码审查更可靠。已有结果不支持这个强假设。真正可复用的发现是：

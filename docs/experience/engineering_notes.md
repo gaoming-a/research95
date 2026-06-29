@@ -3593,3 +3593,20 @@ This file starts fresh for the patch-verification project.
   verification value from these runs.
 - The next repair should target evidence/verdict separation and qualitative
   false-accept analysis, not another same-prompt model run.
+
+## 2026-06-29 EVP-8-HARD false-accept case analysis
+
+- Post-execution false-accept analysis may join evaluator-only labels with
+  parsed model decisions, but the generated artifact must say it is not
+  model-visible input and must not store patch diffs or raw responses.
+- The repeated false accepts form a useful failure pattern: visible tests pass,
+  hidden oracles fail, the deterministic tool accepts, and both LLMs accept
+  without risk flags. That is stronger evidence for merge-gate risk than an
+  aggregate false-accept count alone.
+- Case concentration matters. Here all repeated false accepts are `httpie`,
+  with four partial fixes and five agent-plausible wrong patches. Report this
+  concentration as an external-validity limit instead of implying the pattern
+  is already broad across projects.
+- If the next experiment removes verdict-like fields, keep the same nine cases
+  as the primary opportunity set. Otherwise a new cohort could hide whether the
+  evidence-boundary repair actually affects the known failure cases.

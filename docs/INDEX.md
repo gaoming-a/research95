@@ -386,6 +386,19 @@
   comparison for the authorized Qwen and DeepSeek hard-case runs. It reports
   that both models reproduce the tool-only baseline candidate by candidate and
   correct 0/11 opportunity cases.
+- `../scripts/analyze_evp8_hard_false_accept_cases.py`: raw-output-free
+  post-execution analyzer for the nine EVP-8-HARD false accepts repeated by
+  both Qwen and DeepSeek. It joins evaluator labels with model-visible evidence
+  and parsed review schema fields, but does not read raw model responses or
+  store patch diffs.
+- `../data/reviews/evp8_hard_false_accept_case_analysis_v0_1.json`: structured
+  case-analysis artifact for the repeated false accepts. Current status:
+  9/9 visible-passed hidden-failed cases were accepted by tool, Qwen, and
+  DeepSeek; both models emitted zero non-empty risk flags on these cases.
+- `experiments/evp8_hard_false_accept_case_analysis_v0_1.md`: Markdown case
+  analysis for the repeated false accepts. It identifies the dominant pattern
+  as visible-test-passing hidden failures and motivates an evidence-only
+  ablation rather than another same-prompt model run.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still
