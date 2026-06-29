@@ -485,6 +485,20 @@
   candidate curation, visible-tool headroom gates, leakage boundaries,
   Qwen-first execution order, and Wilson/bootstrap analysis requirements. It
   does not authorize API calls or modify existing cohorts.
+- `../scripts/inventory_evp8_realistic_agent_sources.py`: no-API source
+  inventory script for the realistic/agent-patch follow-up cohort. It scans
+  tracked manifests and non-raw local candidate outputs, excludes old EVP-8 and
+  EVP-8-HARD material from fresh-readiness counts, and writes aggregate reports
+  without patch diffs, prompts, or raw model responses.
+- `../data/protocols/evp8_realistic_agent_source_inventory_v0_1.json`:
+  structured source-inventory result. Current status is `passed`, but Phase 1
+  curation is not ready: unique fresh usable candidates, fresh agent-like
+  candidates, and fresh non-trivial hard negatives are all 0; only 13 pending
+  agent-like hard negatives are available as short-term source work.
+- `experiments/evp8_realistic_agent_source_inventory_v0_1.md`: Markdown
+  companion for the realistic/agent source inventory. It records the no-API
+  boundary, source status counts, readiness gates, and the block on further API
+  execution until new or validated fresh sources exist.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

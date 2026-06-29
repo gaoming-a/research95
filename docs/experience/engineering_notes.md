@@ -3716,3 +3716,19 @@ This file starts fresh for the patch-verification project.
   pressure appears. If a candidate can only be judged by exposing hidden oracle
   results to the model-visible packet, it is not valid evidence for a
   realistic merge-gate claim.
+
+## 2026-06-29 Realistic agent-patch source inventory
+
+- Do not count historical EVP-8 or EVP-8-HARD candidates as fresh realistic
+  cohort material. They remain useful for motivation and failure-mode analysis,
+  but reusing them as "new" data would overstate external validity.
+- A large raw source count can hide zero fresh readiness. The first realistic
+  inventory scanned 409 candidate records and 51 agent-like records, but the
+  strict fresh-cohort count was still 0 because all usable material was already
+  promoted, curated into EVP-8-HARD, legacy duplicate, or pending.
+- Pending agent-like records are not enough for model execution. They can guide
+  the next no-API validation/generation step, but the visible-tool headroom
+  baseline cannot be built until a separate curated manifest exists.
+- Inventory artifacts should store source paths and aggregate counts only.
+  Keeping patch diffs and raw responses out of source-readiness reports avoids
+  accidental leakage before the model-visible/evaluator-only split is designed.
