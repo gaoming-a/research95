@@ -418,7 +418,9 @@
 - `../data/protocols/evp8_hard_e6_evidence_only_execution_packet_v0_1.json`:
   tracked execution packet for the evidence-only ablation. Current status is
   `ready`, with all expected evidence-only outputs absent and
-  `execution_authorized_by_packet=false`.
+  `execution_authorized_by_packet=false`. The ignored local config
+  `configs/evp8_hard_e6_evidence_only.local.json` exists locally and is not
+  committed.
 - `experiments/evp8_hard_e6_evidence_only_execution_packet_v0_1.md`: Markdown
   companion for the evidence-only execution packet.
 - `../scripts/audit_evp8_hard_e6_evidence_only_results.py`: raw-output-free

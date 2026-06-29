@@ -90,7 +90,7 @@
     }
   ],
   "cohort_id": "EVP-8-HARD",
-  "config": "configs/evp8_hard_e6_evidence_only.example.json",
+  "config": "configs/evp8_hard_e6_evidence_only.local.json",
   "credential_presence_ready": true,
   "mode": "check_only",
   "model_visible_levels": [

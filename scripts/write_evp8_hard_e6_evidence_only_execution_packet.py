@@ -74,6 +74,7 @@ def output_absence(outputs_by_model: dict[str, dict[str, str]]) -> list[dict[str
 
 def build_packet() -> dict[str, Any]:
     example_config = read_json(EXAMPLE_CONFIG_PATH)
+    local_config = read_json(CONFIG_PATH) if CONFIG_PATH.exists() else {}
     check_only = read_json(CHECK_ONLY_PATH)
     false_accept_analysis = read_json(FALSE_ACCEPT_ANALYSIS_PATH)
     outputs_by_model = {
@@ -88,8 +89,11 @@ def build_packet() -> dict[str, Any]:
     ]
     checks = [
         check("example_config_exists", EXAMPLE_CONFIG_PATH.exists(), display_path(EXAMPLE_CONFIG_PATH)),
+        check("local_config_exists", CONFIG_PATH.exists(), display_path(CONFIG_PATH)),
         check("local_config_path_boundary", local_config_is_ignored_boundary(CONFIG_PATH), display_path(CONFIG_PATH)),
         check("example_config_not_authorized", example_config.get("api_execution_authorized") is False, example_config.get("api_execution_authorized")),
+        check("local_config_not_authorized", local_config.get("api_execution_authorized") is False, local_config.get("api_execution_authorized") if local_config else "missing"),
+        check("local_config_packet_variant", local_config.get("packet_variant") == "e6_evidence_only_no_verdict", local_config.get("packet_variant") if local_config else "missing"),
         check("check_only_passed", check_only.get("check_only_status") == "passed", check_only.get("check_only_status")),
         check("packet_variant_is_evidence_only", check_only.get("packet_variant") == "e6_evidence_only_no_verdict", check_only.get("packet_variant")),
         check("candidate_count_47", check_only.get("candidate_count") == 47, check_only.get("candidate_count")),
@@ -157,6 +161,7 @@ def build_packet() -> dict[str, Any]:
         "checks": checks,
         "stop_gates": [
             "User has not explicitly authorized EVP-8-HARD E6-evidence-only Qwen API.",
+            "Ignored local config configs/evp8_hard_e6_evidence_only.local.json is missing.",
             "Tracked example config is used for --execute.",
             "Any expected evidence-only output already exists before execution.",
             "Existing E6-full Qwen/DeepSeek summaries would be overwritten.",

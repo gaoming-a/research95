@@ -8,6 +8,11 @@
       "passed": true
     },
     {
+      "check": "local_config_exists",
+      "detail": "configs/evp8_hard_e6_evidence_only.local.json",
+      "passed": true
+    },
+    {
       "check": "local_config_path_boundary",
       "detail": "configs/evp8_hard_e6_evidence_only.local.json",
       "passed": true
@@ -15,6 +20,16 @@
     {
       "check": "example_config_not_authorized",
       "detail": false,
+      "passed": true
+    },
+    {
+      "check": "local_config_not_authorized",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "local_config_packet_variant",
+      "detail": "e6_evidence_only_no_verdict",
       "passed": true
     },
     {
@@ -214,6 +229,7 @@
   ],
   "stop_gates": [
     "User has not explicitly authorized EVP-8-HARD E6-evidence-only Qwen API.",
+    "Ignored local config configs/evp8_hard_e6_evidence_only.local.json is missing.",
     "Tracked example config is used for --execute.",
     "Any expected evidence-only output already exists before execution.",
     "Existing E6-full Qwen/DeepSeek summaries would be overwritten.",

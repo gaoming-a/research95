@@ -40,6 +40,7 @@
 ## Stop Gates
 
 - User has not explicitly authorized EVP-8-HARD E6-evidence-only Qwen API.
+- Ignored local config configs/evp8_hard_e6_evidence_only.local.json is missing.
 - Tracked example config is used for --execute.
 - Any expected evidence-only output already exists before execution.
 - Existing E6-full Qwen/DeepSeek summaries would be overwritten.
@@ -50,8 +51,11 @@
 ## Checks
 
 - example_config_exists: `true`
+- local_config_exists: `true`
 - local_config_path_boundary: `true`
 - example_config_not_authorized: `true`
+- local_config_not_authorized: `true`
+- local_config_packet_variant: `true`
 - check_only_passed: `true`
 - packet_variant_is_evidence_only: `true`
 - candidate_count_47: `true`

@@ -3655,3 +3655,16 @@ This file starts fresh for the patch-verification project.
   labeled as risk handling.
 - Do not parse ignored raw responses for this analysis. Parsed review schema
   fields are enough to evaluate the opportunity-set decision transitions.
+
+## 2026-06-29 EVP-8-HARD evidence-only local config readiness
+
+- An execution packet that names a local config should check that the ignored
+  local config actually exists. Checking only the path boundary can produce a
+  misleading `ready` packet that fails immediately after authorization.
+- Creating a local config by copying the tracked example is acceptable as a
+  no-API readiness action only when it remains ignored, contains no secrets,
+  and keeps `api_execution_authorized=false`.
+- After creating or refreshing a local config, rerun check-only using that
+  local path so the tracked summary reflects the actual execute command path.
+- Do not submit `configs/*.local.json`; verify it appears as ignored before
+  committing readiness artifacts.
