@@ -29,6 +29,8 @@ final submission.
   `docs/paper/sqj_submission_draft.tex`
 - Bibliography:
   `docs/paper/sqj_references.bib`
+- SQJ citation consistency:
+  `docs/experiments/sqj_citation_consistency.md`
 - Manuscript generator:
   `scripts/write_sqj_latex_draft.py`
 - Framing and claim boundary:
@@ -65,6 +67,9 @@ final submission.
   SQJ manuscript claims are mapped to tracked evidence in
   `sqj_claim_traceability`. This gate is raw-output-free and does not make new
   experimental claims.
+- Citation consistency gate:
+  SQJ source citations are checked in `sqj_citation_consistency`; this is a
+  source-level BibTeX key audit and does not compile the PDF.
 
 ## SQJ Paper Figures
 
@@ -111,6 +116,7 @@ The SQJ package must not claim:
 python scripts\write_paper_tables.py
 python scripts\generate_sqj_figures.py
 python scripts\write_sqj_latex_draft.py --check
+python scripts\audit_sqj_citation_consistency.py --out-json outputs\sqj_citation_consistency\latest.json --out-md docs\experiments\sqj_citation_consistency.md
 python scripts\audit_sqj_claim_traceability.py --out-json data\reviews\sqj_claim_traceability.json --out-md docs\experiments\sqj_claim_traceability.md
 python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md
 python scripts\audit_sqj_artifact_gate.py --out-json outputs\sqj_artifact_gate\latest.json --out-md outputs\sqj_artifact_gate\latest.md
@@ -130,6 +136,7 @@ python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\l
 ## Ready For Next Gate Criteria
 
 - SQJ source draft regenerates from tracked inputs.
+- SQJ citation consistency audit passes.
 - SQJ figures regenerate from tracked synthesis and cost summaries.
 - SQJ claim traceability audit passes and remains raw-output-free.
 - SQJ checklist audit passes.

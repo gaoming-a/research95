@@ -1204,6 +1204,10 @@
   forbidden claims to `sqj_submission_framing.md`, `sqj_submission_draft.tex`,
   EVP-8 five-model synthesis, cost accounting, and the fresh realistic
   negative-result packets without reading raw model outputs.
+- `experiments/sqj_citation_consistency.md`: human-readable SQJ citation and
+  BibTeX consistency audit. It verifies that every `\cite{...}` key in
+  `sqj_submission_draft.tex` exists in `sqj_references.bib`, that BibTeX keys
+  are unique, and that the current BibTeX entries are cited.
 - `../data/reviews/sqj_claim_traceability.json`: machine-readable raw-output-free
   SQJ claim traceability audit used by SQJ readiness and local quality gates.
 - `figures/sqj/`: SQJ-specific reproducible PDF/SVG/PNG figures for the EVP-8
@@ -1719,6 +1723,10 @@
   raw-output-free summaries and manuscript sources, checks supported/forbidden
   claim coverage, and writes `data/reviews/sqj_claim_traceability.json` plus
   `docs/experiments/sqj_claim_traceability.md`.
+- `scripts/audit_sqj_citation_consistency.py`: audits source-level SQJ
+  citation and BibTeX key consistency without network lookup, BibTeX execution,
+  or PDF compilation. It writes a human-readable report to
+  `docs/experiments/sqj_citation_consistency.md`.
 - `scripts/audit_sqj_artifact_gate.py`: audits the SQJ artifact candidate
   package without creating a final ZIP. It reuses the anonymous artifact
   file enumeration and safety validation, requires the SQJ source/checklist/

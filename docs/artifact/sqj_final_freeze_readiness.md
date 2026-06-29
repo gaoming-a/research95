@@ -13,6 +13,8 @@ The current SQJ route has these tracked, regenerable source-package components:
 
 - Main source draft: `docs/paper/sqj_submission_draft.tex`
 - Bibliography: `docs/paper/sqj_references.bib`
+- SQJ citation consistency (`sqj_citation_consistency`):
+  `docs/experiments/sqj_citation_consistency.md`
 - SQJ framing and claim boundary: `docs/paper/sqj_submission_framing.md`
 - Generated tables: `docs/paper/generated_tables.md` and
   `docs/paper/generated_tables.tex`
@@ -23,6 +25,7 @@ The current SQJ route has these tracked, regenerable source-package components:
 - SQJ source-package checklist: `docs/artifact/sqj_submission_checklist.md`
 - SQJ human-decision packet: `docs/artifact/sqj_human_decision_packet.md`
 - SQJ checklist audit: `scripts/audit_sqj_submission_checklist.py`
+- SQJ citation consistency audit: `scripts/audit_sqj_citation_consistency.py`
 - SQJ claim traceability audit: `scripts/audit_sqj_claim_traceability.py`
 - SQJ artifact candidate gate audit: `scripts/audit_sqj_artifact_gate.py`
 - SQJ final-authorization gate audit: `scripts/audit_sqj_final_authorization_gate.py`
@@ -107,6 +110,7 @@ writing them.
 python scripts\write_paper_tables.py
 python scripts\generate_sqj_figures.py
 python scripts\write_sqj_latex_draft.py --check
+python scripts\audit_sqj_citation_consistency.py --out-json outputs\sqj_citation_consistency\latest.json --out-md docs\experiments\sqj_citation_consistency.md
 python scripts\audit_sqj_claim_traceability.py --out-json data\reviews\sqj_claim_traceability.json --out-md docs\experiments\sqj_claim_traceability.md
 python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md
 python scripts\audit_sqj_artifact_gate.py --out-json outputs\sqj_artifact_gate\latest.json --out-md outputs\sqj_artifact_gate\latest.md

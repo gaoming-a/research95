@@ -4129,3 +4129,15 @@ This file starts fresh for the patch-verification project.
 - Keep the traceability output raw-output-free: report source paths, aggregate
   checks, keyword coverage, and claim ids, but never raw model responses,
   prompts, or patch text.
+
+## 2026-06-30 SQJ citation consistency
+
+- A source-structure check that only looks for `\bibliography{sqj_references}`
+  is too weak for submission maintenance. Add a separate citation/BibTeX key
+  audit so missing citation keys are caught before PDF compilation.
+- Keep citation consistency local and mechanical. Do not use this gate to add
+  or validate external references; it only checks that current `\cite{...}`
+  keys and current BibTeX entries agree.
+- Treat repeated citations as informational, not a failure. Missing cite keys,
+  duplicate BibTeX keys, and uncited BibTeX entries are failures for the current
+  compact SQJ bibliography.

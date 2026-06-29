@@ -21642,3 +21642,70 @@ fresh realistic negative-result packet 对齐，防止投稿稿中的核心 clai
 - 该 gate 只增强投稿包可审计性，不改变实验结论，不代表 final freeze；
 - 当前 package 仍被学校认定、作者元数据、Springer class/PDF、layout review、
   final artifact rebuild 和最终提交授权阻塞。
+
+## 2026-06-30 SQJ citation/BibTeX consistency gate
+
+本轮小目标是在不编译 PDF 的前提下，补齐 SQJ LaTeX draft 的 citation/BibTeX
+一致性审计：确认 `sqj_submission_draft.tex` 中所有 `\cite{...}` keys 均存在于
+`sqj_references.bib`，且 `.bib` 中没有重复 key 或未引用条目，避免后续 PDF
+编译阶段才暴露引用错误。
+
+执行边界：
+
+- 不运行任何 API；
+- 不联网查引用、不新增文献；
+- 不修改论文实验结果、prompt、tracked summary 或 raw outputs；
+- 不安装或下载 Springer Nature class；
+- 不编译 PDF；
+- 不把 citation gate 通过解释为 final freeze 或 ready-to-submit；
+- 只新增/接入 SQJ citation/BibTeX consistency gate。
+
+验收条件：
+
+- 新增审计能解析 `\cite{...}` 中的多个 key；
+- 新增审计能解析 `sqj_references.bib` 中的 BibTeX entry keys；
+- 审计能报告 missing cite keys、uncited bib keys、duplicate bib keys；
+- 当前返回 `citation_consistency_passed=true`、`passed=true`；
+- SQJ checklist、final-freeze readiness、artifact gate 和 local quality gate
+  能读取或执行该审计；
+- `python -m py_compile` 覆盖新增/修改脚本；
+- citation gate、SQJ final-freeze readiness、paper readiness 和 local quality
+  gate 全部通过；
+- staged diff 不包含 API key、raw prompt/response、输出目录或 local config。
+
+执行结果：
+
+- 新增 `scripts/audit_sqj_citation_consistency.py`：
+  - 解析 `docs/paper/sqj_submission_draft.tex` 中所有 `\cite{...}` keys；
+  - 支持单个 `\cite{}` 中多个 comma-separated keys；
+  - 解析 `docs/paper/sqj_references.bib` 中的 BibTeX entry keys；
+  - 报告 missing cite keys、uncited BibTeX keys、duplicate BibTeX keys 和
+    duplicate cite keys；
+  - 当前返回 `citation_consistency_passed=true`、`passed=true`。
+- 新增 `docs/experiments/sqj_citation_consistency.md` 作为 tracked
+  human-readable citation consistency report；JSON 输出保留在 ignored
+  `outputs/sqj_citation_consistency/latest.json`。
+- 将该 gate 接入：
+  - `docs/artifact/sqj_submission_checklist.md`；
+  - `docs/artifact/sqj_final_freeze_readiness.md`；
+  - `scripts/audit_sqj_submission_checklist.py`；
+  - `scripts/audit_sqj_final_freeze_readiness.py`；
+  - `scripts/audit_sqj_artifact_gate.py`；
+  - `scripts/run_local_quality_gate.py`；
+  - `docs/INDEX.md` 和 `docs/experience/engineering_notes.md`。
+
+验证结果：
+
+- `python -m py_compile scripts\audit_sqj_citation_consistency.py scripts\audit_sqj_artifact_gate.py scripts\audit_sqj_final_freeze_readiness.py scripts\audit_sqj_submission_checklist.py scripts\run_local_quality_gate.py`：通过；
+- `python scripts\audit_sqj_citation_consistency.py --out-json outputs\sqj_citation_consistency\latest.json --out-md docs\experiments\sqj_citation_consistency.md`：通过；
+- `python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md`：通过；
+- `python scripts\audit_sqj_artifact_gate.py --out-json outputs\sqj_artifact_gate\latest.json --out-md outputs\sqj_artifact_gate\latest.md`：通过；
+- `python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md`：通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`：通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`：通过。
+
+当前判断：
+
+- SQJ source-level citation/BibTeX consistency 已有独立 gate；
+- 该 gate 不联网、不新增引用、不编译 PDF，只防止引用 key 漂移；
+- 当前 package 仍不是 final freeze，仍需外部 human decisions 和 PDF compile。

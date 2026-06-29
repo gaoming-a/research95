@@ -12,6 +12,7 @@ BIB_FILE = Path("docs/paper/sqj_references.bib")
 SOURCE_GENERATOR = Path("scripts/write_sqj_latex_draft.py")
 FRAMING_PACKET = Path("docs/paper/sqj_submission_framing.md")
 FINAL_FREEZE_READINESS = Path("docs/artifact/sqj_final_freeze_readiness.md")
+SQJ_CITATION_CONSISTENCY_MD = Path("docs/experiments/sqj_citation_consistency.md")
 CLAIM_TRACEABILITY_JSON = Path("data/reviews/sqj_claim_traceability.json")
 CLAIM_TRACEABILITY_MD = Path("docs/experiments/sqj_claim_traceability.md")
 TABLES_MD = Path("docs/paper/generated_tables.md")
@@ -43,6 +44,7 @@ REQUIRED_SNIPPETS = [
     "`docs/figures/sqj/sqj_fig3_cost_boundary.pdf`",
     "`docs/paper/sqj_submission_draft.tex`",
     "`docs/paper/sqj_references.bib`",
+    "`docs/experiments/sqj_citation_consistency.md`",
     "`scripts/write_sqj_latex_draft.py`",
     "`docs/paper/sqj_submission_framing.md`",
     "`docs/artifact/sqj_final_freeze_readiness.md`",
@@ -58,6 +60,7 @@ REQUIRED_SNIPPETS = [
     "`blocked_missing_school_recognition`",
     "`blocked_missing_human_inputs`",
     "`blocked_missing_human_decisions`",
+    "`sqj_citation_consistency`",
     "`sqj_claim_traceability`",
     "API execution remains frozen",
     "python scripts\\audit_sqj_artifact_gate.py",
@@ -69,6 +72,7 @@ REQUIRED_SNIPPETS = [
     "that a final evidence-level ranking has been established",
     "that the fresh realistic branch is a three-project verifier-ready main experiment",
     "python scripts\\write_sqj_latex_draft.py --check",
+    "python scripts\\audit_sqj_citation_consistency.py",
     "python scripts\\audit_sqj_claim_traceability.py",
     "python scripts\\audit_sqj_submission_checklist.py",
     "python scripts\\audit_sqj_pdf_compile_gate.py",
@@ -208,6 +212,7 @@ def audit_sqj_checklist(path: Path) -> dict[str, Any]:
         "source_generator": file_state(SOURCE_GENERATOR),
         "framing_packet": file_state(FRAMING_PACKET),
         "final_freeze_readiness": file_state(FINAL_FREEZE_READINESS),
+        "citation_consistency_md": file_state(SQJ_CITATION_CONSISTENCY_MD),
         "claim_traceability_json": file_state(CLAIM_TRACEABILITY_JSON),
         "claim_traceability_md": file_state(CLAIM_TRACEABILITY_MD),
         "tables_md": file_state(TABLES_MD),
