@@ -3578,3 +3578,18 @@ This file starts fresh for the patch-verification project.
   packet pass, or running DeepSeek without a fresh authorization-specific gate.
 - The post-Qwen packet should still keep `execution_authorized_by_packet=false`;
   readiness is not permission.
+
+## 2026-06-29 EVP-8-HARD DeepSeek hard-case result
+
+- DeepSeek repeated the exact Qwen/tool decision boundary on all 47 hard-case
+  candidates: 17 accepts, 30 rejects, zero escalations, nine repeated tool
+  false accepts, and two repeated tool false rejects.
+- When two different models exactly match the deterministic baseline candidate
+  by candidate, treat it as a design signal, not as random model behavior. The
+  current E6 evidence likely contains enough verdict-like structure to dominate
+  model decisions.
+- This negative result is useful only if reported honestly: the hard-case
+  cohort has tool headroom, but neither model used it. Do not claim LLM-added
+  verification value from these runs.
+- The next repair should target evidence/verdict separation and qualitative
+  false-accept analysis, not another same-prompt model run.

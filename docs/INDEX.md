@@ -362,9 +362,9 @@
   hard-case candidate decisions for an executed model.
 - `../data/protocols/evp8_hard_qwen_deepseek_result_audit_v0_1.json`:
   current hard-case result audit. Status is `passed` after the authorized Qwen
-  run; the audit itself makes no API calls and reads no raw responses. Qwen
-  matches the tool-only baseline exactly: 17 accepts, 30 rejects, 9 false
-  accepts, and 2 false rejects.
+  and DeepSeek runs; the audit itself makes no API calls and reads no raw
+  responses. Both models match the tool-only baseline exactly: 17 accepts, 30
+  rejects, 9 false accepts, and 2 false rejects.
 - `../data/reviews/evp8_hard_qwen_qwen3.7-max_full_summary.json`: tracked
   raw-output-free summary for the authorized EVP-8-HARD Qwen run. Current
   status is `passed`: 47/47 parse-valid, decisions `accept=17`, `reject=30`,
@@ -375,13 +375,26 @@
 - `experiments/evp8_hard_qwen_result_v0_1.md`: Markdown analysis for the
   authorized Qwen hard-case run. It reports that Qwen reproduced the tool-only
   baseline and corrected 0/11 opportunity cases.
+- `../data/reviews/evp8_hard_deepseek_deepseek-v4-pro_full_summary.json`:
+  tracked raw-output-free summary for the authorized EVP-8-HARD DeepSeek run.
+  Current status is `passed`: 47/47 parse-valid, decisions `accept=17`,
+  `reject=30`, total estimated cost USD `0.035463607`.
+- `../data/reviews/evp8_hard_deepseek_deepseek-v4-pro_full_reviews.jsonl`:
+  tracked parsed DeepSeek review records for EVP-8-HARD. It contains 47
+  structured records and no raw response text or provider response objects.
+- `experiments/evp8_hard_deepseek_qwen_comparison_v0_1.md`: Markdown
+  comparison for the authorized Qwen and DeepSeek hard-case runs. It reports
+  that both models reproduce the tool-only baseline candidate by candidate and
+  correct 0/11 opportunity cases.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still
   requires explicit user authorization.
 - `../data/protocols/evp8_hard_deepseek_after_qwen_packet_v0_1.json`: tracked
-  no-API DeepSeek-after-Qwen packet. Current status is `ready`: Qwen is passed,
-  DeepSeek expected outputs are absent, and no DeepSeek API calls were made.
+  no-API DeepSeek-after-Qwen packet. Historical status before execution was
+  `ready`: Qwen passed, DeepSeek expected outputs were absent, and no DeepSeek
+  API calls had been made. The subsequent DeepSeek API run was separately
+  authorized by the user and is now summarized in the DeepSeek result files.
 - `experiments/evp8_hard_deepseek_after_qwen_packet_v0_1.md`: Markdown
   companion for the post-Qwen DeepSeek authorization packet.
 - `../scripts/write_evp8_hard_qwen_deepseek_execution_packet.py`: no-API

@@ -50,6 +50,53 @@
 - 若 false-accept/false-reject headroom 或 hard-negative gate 不足，必须把
   API readiness 标记为 blocked。
 
+## 0.2 2026-06-29 本轮小目标：EVP-8-HARD DeepSeek 授权执行与两模型收尾
+
+用户已明确授权运行 `EVP-8-HARD` DeepSeek API。本轮目标是在已完成 Qwen
+hard-case 结果的基础上，只执行 DeepSeek E6 full run，并用 raw-output-free
+审计比较 DeepSeek、Qwen 和 deterministic tool-only baseline。
+
+执行边界：
+
+- 只运行 `deepseek/deepseek-v4-pro` 的 `EVP-8-HARD` E6 full run；
+- 不重新运行 Qwen；
+- 不读取或提交 ignored raw responses；
+- 不把 parsed review 文件中的 schema 字段扩展为 raw response 存档；
+- 不把“模型重复工具基线”写成正向系统提升。
+
+执行结果：
+
+- DeepSeek 47/47 candidate decisions 已完成，parse-valid 47/47；
+- DeepSeek summary run gate 与 usage/cost gate 均为 `passed`；
+- combined audit `data/protocols/evp8_hard_qwen_deepseek_result_audit_v0_1.json`
+  为 `passed`；
+- DeepSeek、Qwen 和工具基线逐候选完全一致：
+  - `accept = 17`；
+  - `reject = 30`；
+  - `escalate = 0`；
+  - accepted precision = 47.06%；
+  - correct recall = 80.00%；
+  - false accept rate = 24.32%；
+  - false reject rate = 20.00%。
+
+研究判断：
+
+- 当前 hard-case cohort 有 11 个工具机会案例：9 个 false accept，2 个
+  false reject；
+- Qwen 与 DeepSeek 均未纠正任何机会案例；
+- 这不是执行失败，而是负结果：当前 E6 结构化工具摘要强到足以支配两个模型的
+  accept/reject 边界；
+- 后续论文应把该结果写成 LLM-added-value failure / tool-verdict dominance，
+  而不是写成自动 patch verifier 的有效性证明。
+
+下一步：
+
+- 做九个 repeated false accept 的案例分析；
+- 设计 `E6-evidence-only` 或类似 ablation，去掉 verdict-like tool-summary
+  字段，只保留低层证据；
+- 若仍与工具一致，则说明当前 prompt/evidence 不足以诱导独立语义验证，需要把
+  论文主张收缩为“结构化工具证据主导 LLM verifier 行为”的实证研究。
+
 ## 1. 研究转向
 
 旧方向试图验证 LLM cross-review 或 agent-style context 是否能让代码审查更可靠。已有结果不支持这个强假设。真正可复用的发现是：

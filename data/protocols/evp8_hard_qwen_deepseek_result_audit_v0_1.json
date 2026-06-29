@@ -16,7 +16,7 @@
     {
       "check": "parsed_reviews_status_is_explicit",
       "detail": {
-        "parsed_review_model_count": 1,
+        "parsed_review_model_count": 2,
         "status": "present"
       },
       "passed": true
@@ -36,11 +36,102 @@
   "inputs": {
     "evaluator_manifest": "data/patches/evp8_hard_evaluator_manifest_v0_1.jsonl",
     "parsed_review_files": [
+      "data/reviews/evp8_hard_deepseek_deepseek-v4-pro_full_reviews.jsonl",
       "data/reviews/evp8_hard_qwen_qwen3.7-max_full_reviews.jsonl"
     ],
     "tool_only_baseline": "data/baselines/evp8_hard_tool_only_baseline_v0_1.jsonl"
   },
   "models": {
+    "deepseek/deepseek-v4-pro": {
+      "complete_candidate_coverage": true,
+      "confusion": {
+        "counts": {
+          "escalated_correct": 0,
+          "escalated_incorrect": 0,
+          "false_accept": 9,
+          "false_reject": 2,
+          "invalid_correct": 0,
+          "invalid_incorrect": 0,
+          "true_accept": 8,
+          "true_reject": 28
+        },
+        "examples": {
+          "escalated_correct": [],
+          "escalated_incorrect": [],
+          "false_accepts": [
+            "evp8_hard_candidate_0001",
+            "evp8_hard_candidate_0002",
+            "evp8_hard_candidate_0003",
+            "evp8_hard_candidate_0008",
+            "evp8_hard_candidate_0009",
+            "evp8_hard_candidate_0010",
+            "evp8_hard_candidate_0011",
+            "evp8_hard_candidate_0012",
+            "evp8_hard_candidate_0022"
+          ],
+          "false_rejects": [
+            "evp8_hard_candidate_0017",
+            "evp8_hard_candidate_0031"
+          ],
+          "invalid_outputs": []
+        },
+        "metrics": {
+          "accepted_precision": 0.470588,
+          "accepted_total": 17,
+          "correct_recall": 0.8,
+          "correct_total": 10,
+          "escalation_rate": 0.0,
+          "false_accept_rate": 0.243243,
+          "false_reject_rate": 0.2,
+          "incorrect_total": 37,
+          "invalid_output_rate": 0.0,
+          "record_count": 47
+        }
+      },
+      "decision_counts": {
+        "accept": 17,
+        "reject": 30
+      },
+      "delta_vs_tool": {
+        "accepted_total": 0,
+        "escalated_total": 0,
+        "false_accept_count": 0,
+        "false_reject_count": 0
+      },
+      "expected_review_count": 47,
+      "label_counts": {
+        "agent_plausible_wrong": 10,
+        "correct": 10,
+        "irrelevant_or_noop": 14,
+        "partial": 13
+      },
+      "opportunity_correction_vs_tool": {
+        "tool_false_accepts": {
+          "candidate_count": 9,
+          "corrected_to_reject": 0,
+          "decision_counts": {
+            "accept": 9
+          },
+          "escalated": 0,
+          "invalid_output": 0,
+          "model_record_count": 9,
+          "repeated_accept": 9
+        },
+        "tool_false_rejects": {
+          "candidate_count": 2,
+          "corrected_to_accept": 0,
+          "decision_counts": {
+            "reject": 2
+          },
+          "escalated": 0,
+          "invalid_output": 0,
+          "model_record_count": 2,
+          "repeated_reject": 2
+        }
+      },
+      "parsed_reviews_path": "data/reviews/evp8_hard_deepseek_deepseek-v4-pro_full_reviews.jsonl",
+      "review_count": 47
+    },
     "qwen/qwen3.7-max": {
       "complete_candidate_coverage": true,
       "confusion": {

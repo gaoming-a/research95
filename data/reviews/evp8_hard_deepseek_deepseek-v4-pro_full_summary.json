@@ -1,0 +1,47 @@
+{
+  "analysis_id": "evp8_hard_qwen_deepseek_full_summary_v0_1",
+  "api_call_attempted": true,
+  "cohort_id": "EVP-8-HARD",
+  "configured_model_id": "deepseek/deepseek-v4-pro",
+  "cost_summary": {
+    "cost_currency_counts": {
+      "USD": 47
+    },
+    "cost_observability_counts": {
+      "estimated_from_provider_token_usage": 47
+    },
+    "cost_source_counts": {
+      "estimated_from_tokens": 47
+    },
+    "total_cost_cny": 0.0,
+    "total_cost_usd": 0.035463607,
+    "unknown_cost_record_count": 0
+  },
+  "decision_counts": {
+    "accept": 17,
+    "reject": 30
+  },
+  "invalid_parse_count": 0,
+  "mode": "executed",
+  "parse_valid_count": 47,
+  "parsed_reviews_out": "data/reviews/evp8_hard_deepseek_deepseek-v4-pro_full_reviews.jsonl",
+  "prompt_text_stored": false,
+  "provider_route": "deepseek_official",
+  "raw_outputs_generated": true,
+  "raw_response_text_stored_in_parsed_reviews": false,
+  "raw_response_text_stored_in_tracked_summary": false,
+  "raw_responses_out": "outputs/evp8_hard_qwen_deepseek_full/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+  "request_model_id": "deepseek-v4-pro",
+  "review_count": 47,
+  "review_count_by_evidence_level": {
+    "E0": 0,
+    "E1": 0,
+    "E2": 0,
+    "E3": 0,
+    "E4": 0,
+    "E5": 0,
+    "E6": 47
+  },
+  "run_gate": "passed",
+  "usage_cost_gate": "passed"
+}
