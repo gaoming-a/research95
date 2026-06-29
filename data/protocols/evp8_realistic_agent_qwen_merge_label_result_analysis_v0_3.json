@@ -1,0 +1,354 @@
+{
+  "analysis_id": "evp8_realistic_agent_qwen_merge_label_result_analysis_v0_3",
+  "baseline_qwen_disagreement_count": 0,
+  "baseline_qwen_disagreements": [],
+  "baseline_to_qwen_transition_counts": {
+    "accept->accept": 30,
+    "reject->reject": 23
+  },
+  "cohort_id": "EVP-8-REALISTIC-AGENT",
+  "configured_model_id": "qwen/qwen3.7-max",
+  "correct_patch_outcomes": [
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0001",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "All declared visible tests passed and the patch applied successfully without visible contradictions.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0002",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "Patch applies successfully and the declared fail-to-pass test passes, directly addressing the issue.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0003",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "The patch correctly replaces the undefined 'output_path' variable with the 'output' parameter to fix the file output bug, applies cleanly, and passes the declared fail-to-pass test.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0004",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "Patch applies successfully and the declared fail-to-pass test passes, aligning with the deterministic merge-gate summary.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0005",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "All declared visible fail-to-pass tests passed and the patch logically fixes the issue by using the correct function parameter instead of an undefined variable.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0006",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "The patch correctly fixes the variable name from output_path to output, applies cleanly, and passes the declared fail-to-pass test.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0007",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "Patch correctly fixes the undefined variable reference and all declared visible fail-to-pass tests passed without contradictions.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0008",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "Patch applies cleanly and the declared fail-to-pass test passes, confirming the fix for the file output path variable.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0009",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "The patch applies cleanly, correctly resolves the issue by using the valid function parameter 'output' instead of the undefined 'output_path', and all declared visible fail-to-pass tests pass.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0010",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "The patch applies cleanly, correctly addresses the issue by using the defined 'output' variable instead of the undefined 'output_path', and the declared fail-to-pass test passes.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0020",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "The patch correctly implements the requested behavior to execute all matching hook scripts, and the declared visible fail-to-pass test passes.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0021",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "The patch correctly updates find_hook to return a sorted list of all matching hooks and run_hook to execute each of them, directly addressing the issue, and the declared fail-to-pass test passes.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0022",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "All declared visible fail-to-pass tests passed and the patch correctly implements the requested feature to execute all matching hook scripts.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0023",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "The patch correctly modifies the hook discovery and execution logic to run all matching scripts instead of just the first, and the declared visible fail-to-pass test passes.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0024",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "All declared visible tests passed and the patch correctly implements the requested behavior to execute all matching hook scripts.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0025",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "All declared visible tests passed and the patch correctly implements the requested behavior to execute all matching hook scripts.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0026",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "The patch correctly modifies the hook execution logic to run all matching scripts instead of just the first, and the declared visible fail-to-pass test passes without contradictions.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0027",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "All declared visible tests passed and the patch correctly implements the requested behavior to execute all matching hook scripts.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0028",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "Patch correctly modifies hook discovery and execution to run all matching scripts, and the declared fail-to-pass test passes with no visible contradictions.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0029",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "The patch successfully applies, logically resolves the issue by disabling duplicate choice rendering in Click, and all declared visible fail-to-pass tests pass with no visible contradictions.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0030",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "The patch applies cleanly and the declared fail-to-pass test passes, aligning with the deterministic merge-gate summary.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0032",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "Patch applies cleanly, directly addresses the issue by disabling duplicate choice rendering in click.prompt, and the declared fail-to-pass test passes with no visible contradictions.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0033",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "Patch applies cleanly, logically resolves the issue by disabling Click's default choice display, and all declared visible fail-to-pass tests pass without contradictions.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0034",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "Patch applies successfully and all declared visible fail-to-pass tests pass.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0035",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "Patch applies successfully, directly addresses the issue by adding show_choices=False to click.prompt, and the declared visible fail-to-pass test passes with no visible contradictions.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0036",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "Patch applies cleanly, logically resolves the issue by adding show_choices=False to prevent duplicate rendering, and all declared visible fail-to-pass tests pass with no visible contradictions.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0037",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "The patch applies cleanly and the declared fail-to-pass test passes, confirming the fix to prevent Click from duplicating choices in prompts.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0049",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "The patch successfully applies, correctly fixes the variable name to use the user-provided file path, and all declared visible fail-to-pass tests pass.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0051",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "Patch applies cleanly, correctly addresses the issue by executing all matching hooks, and all declared visible fail-to-pass tests pass.",
+      "visible_tool_decision": "accept"
+    },
+    {
+      "candidate_id": "evp8_realistic_agent_candidate_0052",
+      "qwen_decision": "accept",
+      "qwen_primary_reason": "Patch applies successfully and the visible fail-to-pass test passes with no visible contradictions, aligning with the deterministic merge-gate summary.",
+      "visible_tool_decision": "accept"
+    }
+  ],
+  "corrected_label_set": true,
+  "evaluator_source": "data/patches/evp8_realistic_agent_evaluator_manifest_v0_3.jsonl",
+  "false_accept_reduction": {
+    "avoided_false_accept_candidate_ids": [],
+    "avoided_false_accepts": 0,
+    "new_false_accept_candidate_ids": [],
+    "new_false_accepts": 0,
+    "qwen_false_accepts": 0,
+    "relative_reduction": null,
+    "visible_tool_false_accepts": 0
+  },
+  "interpretation": {
+    "claim_boundary": "Merge labels require patch apply, declared visible-test pass, and hidden-oracle pass; this v0.3 analysis supersedes v0.1 false-accept and v0.2 hidden-oracle-only labels.",
+    "qwen_added_value_over_visible_tool": false,
+    "qwen_matches_visible_tool_exactly": true
+  },
+  "label_counts": {
+    "correct": 30,
+    "visible_test_failing_wrong": 23
+  },
+  "merge_label_set": true,
+  "packet_variant": "e6_full_with_verdict",
+  "parse_valid_count": 53,
+  "qwen_by_label": {
+    "correct": {
+      "accept": 30
+    },
+    "visible_test_failing_wrong": {
+      "reject": 23
+    }
+  },
+  "qwen_decision_counts": {
+    "accept": 30,
+    "reject": 23
+  },
+  "qwen_metrics": {
+    "accepted_precision": {
+      "successes": 30,
+      "total": 30,
+      "value": 1.0,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.8865
+      }
+    },
+    "correct_recall": {
+      "successes": 30,
+      "total": 30,
+      "value": 1.0,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.8865
+      }
+    },
+    "correct_reject_rate": {
+      "successes": 0,
+      "total": 30,
+      "value": 0.0,
+      "wilson_95": {
+        "high": 0.1135,
+        "low": -0.0
+      }
+    },
+    "escalation_rate": {
+      "successes": 0,
+      "total": 53,
+      "value": 0.0,
+      "wilson_95": {
+        "high": 0.0676,
+        "low": -0.0
+      }
+    },
+    "false_accept_rate_among_wrong": {
+      "successes": 0,
+      "total": 23,
+      "value": 0.0,
+      "wilson_95": {
+        "high": 0.1431,
+        "low": 0.0
+      }
+    },
+    "wrong_reject_rate": {
+      "successes": 23,
+      "total": 23,
+      "value": 1.0,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.8569
+      }
+    }
+  },
+  "review_count": 53,
+  "run_gate": "passed",
+  "visible_tool_by_label": {
+    "correct": {
+      "accept": 30
+    },
+    "visible_test_failing_wrong": {
+      "reject": 23
+    }
+  },
+  "visible_tool_decision_counts": {
+    "accept": 30,
+    "reject": 23
+  },
+  "visible_tool_metrics": {
+    "accepted_precision": {
+      "successes": 30,
+      "total": 30,
+      "value": 1.0,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.8865
+      }
+    },
+    "correct_recall": {
+      "successes": 30,
+      "total": 30,
+      "value": 1.0,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.8865
+      }
+    },
+    "correct_reject_rate": {
+      "successes": 0,
+      "total": 30,
+      "value": 0.0,
+      "wilson_95": {
+        "high": 0.1135,
+        "low": -0.0
+      }
+    },
+    "escalation_rate": {
+      "successes": 0,
+      "total": 53,
+      "value": 0.0,
+      "wilson_95": {
+        "high": 0.0676,
+        "low": -0.0
+      }
+    },
+    "false_accept_rate_among_wrong": {
+      "successes": 0,
+      "total": 23,
+      "value": 0.0,
+      "wilson_95": {
+        "high": 0.1431,
+        "low": 0.0
+      }
+    },
+    "wrong_reject_rate": {
+      "successes": 23,
+      "total": 23,
+      "value": 1.0,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.8569
+      }
+    }
+  }
+}

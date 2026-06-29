@@ -3879,3 +3879,26 @@ This file starts fresh for the patch-verification project.
   the 29 false accepts to learn what evidence is missing, add realistic visible
   evidence that could expose those faults, or use DeepSeek only as cross-model
   replication of this negative result.
+
+## 2026-06-30 Realistic label validity repair
+
+- False-accept inspection exposed a label-validity bug, not a model behavior
+  insight. Original hidden-oracle failures for PySnooper and cookiecutter were
+  caused by running oracles under the wrong Python environment
+  (`future`, `slugify`, and `past` missing), so many candidates were falsely
+  labeled `test_passing_wrong`.
+- Revalidating hidden oracles under the task/project venvs changed the label
+  distribution from `correct=1, test_passing_wrong=52` to hidden-oracle-only
+  `correct=40, test_passing_wrong=13`, with 0 dependency errors.
+- Hidden-oracle-only correctness is still not a merge-gate label. If a patch
+  fails declared visible fail-to-pass tests, it should not be considered
+  merge-correct even when the hidden oracle passes. The final v0.3 merge label
+  therefore requires patch apply, visible-test pass, and hidden-oracle pass.
+- Under v0.3 merge labels, the realistic cohort is fully separated by visible
+  tests: `correct=30`, `visible_test_failing_wrong=23`; visible-tool and Qwen
+  both achieve accepted precision `30/30` and false accept rate `0/23`.
+- This supersedes the earlier 29-false-accept interpretation. The usable
+  lesson is methodological: dependency-correct oracle execution and merge-label
+  definition are first-order threats. Do not build paper claims on hidden-oracle
+  labels until the oracle environment and visible-test consistency have been
+  audited.

@@ -711,6 +711,32 @@
   comparison between full-with-verdict and no-verdict Qwen variants. Removing
   the explicit merge-gate verdict changes 0/53 decisions; Qwen still follows
   visible test pass/fail outcomes.
+- `../scripts/revalidate_evp8_realistic_agent_oracles.py`: evaluator-side
+  corrected oracle revalidation runner. It reruns hidden oracles under
+  task/project Python environments after the false-accept inspection exposed
+  dependency failures in the original validation tails.
+- `../data/patches/evp8_realistic_agent_oracle_revalidation_v0_1.jsonl`,
+  `../data/patches/evp8_realistic_agent_evaluator_manifest_v0_2.jsonl`,
+  `../data/protocols/evp8_realistic_agent_corrected_oracle_revalidation_v0_1.json`,
+  and `experiments/evp8_realistic_agent_corrected_oracle_revalidation_v0_1.md`:
+  corrected hidden-oracle revalidation artifacts. The old labels
+  `correct=1, test_passing_wrong=52` changed to hidden-oracle-only labels
+  `correct=40, test_passing_wrong=13` with 0 dependency errors, proving the
+  original false-accept count was label-contaminated.
+- `../scripts/build_evp8_realistic_agent_merge_labels.py`,
+  `../data/patches/evp8_realistic_agent_evaluator_manifest_v0_3.jsonl`,
+  `../data/protocols/evp8_realistic_agent_merge_label_manifest_v0_3.json`,
+  and `experiments/evp8_realistic_agent_merge_label_manifest_v0_3.md`: final
+  merge-label manifest for the realistic cohort. A patch is `correct` only if
+  it applies, declared visible tests pass, and hidden oracles pass. Final labels
+  are `correct=30, visible_test_failing_wrong=23`.
+- `../data/protocols/evp8_realistic_agent_qwen_merge_label_result_analysis_v0_3.json`,
+  `../data/protocols/evp8_realistic_agent_qwen_no_verdict_merge_label_result_analysis_v0_3.json`,
+  `../data/protocols/evp8_realistic_agent_qwen_merge_label_variant_comparison_v0_3.json`,
+  and their Markdown companions under `experiments/`: final Qwen analyses using
+  v0.3 merge labels. Qwen and the visible-tool baseline both exactly match the
+  merge labels: accepted precision 30/30, correct recall 30/30, false accept
+  rate 0/23. This supersedes the earlier v0.1 false-accept interpretation.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

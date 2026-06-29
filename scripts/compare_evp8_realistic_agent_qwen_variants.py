@@ -81,9 +81,20 @@ def build_summary(
     no_verdict_false_accepts = [
         candidate_id for candidate_id in wrong_ids if no_verdict[candidate_id]["decision"] == "accept"
     ]
+    corrected_label_set = any(str(row.get("hidden_validation_summary", {}).get("corrected_revalidation_id", "")) for row in evaluator_rows)
+    merge_label_set = any(str(row.get("hidden_validation_summary", {}).get("merge_label_manifest_id", "")) for row in evaluator_rows)
     return {
-        "analysis_id": "evp8_realistic_agent_qwen_variant_comparison_v0_1",
+        "analysis_id": (
+            "evp8_realistic_agent_qwen_merge_label_variant_comparison_v0_3"
+            if merge_label_set
+            else
+            "evp8_realistic_agent_qwen_corrected_label_variant_comparison_v0_2"
+            if corrected_label_set
+            else "evp8_realistic_agent_qwen_variant_comparison_v0_1"
+        ),
         "cohort_id": "EVP-8-REALISTIC-AGENT",
+        "corrected_label_set": corrected_label_set,
+        "merge_label_set": merge_label_set,
         "candidate_count": len(ids),
         "full_decision_counts": dict(sorted(Counter(row["decision"] for row in full_rows).items())),
         "no_verdict_decision_counts": dict(sorted(Counter(row["decision"] for row in no_verdict_rows).items())),
@@ -104,12 +115,22 @@ def build_summary(
 
 
 def write_markdown(path: Path, summary: dict[str, Any]) -> None:
+    title = (
+        "EVP-8 Realistic Agent Qwen Merge-Label Variant Comparison v0.3"
+        if summary.get("merge_label_set")
+        else
+        "EVP-8 Realistic Agent Qwen Corrected-Label Variant Comparison v0.2"
+        if summary.get("corrected_label_set")
+        else "EVP-8 Realistic Agent Qwen Variant Comparison v0.1"
+    )
     lines = [
-        "# EVP-8 Realistic Agent Qwen Variant Comparison v0.1",
+        f"# {title}",
         "",
         "Date: 2026-06-30",
         "",
         f"- candidates: {summary['candidate_count']}",
+        f"- corrected label set: `{summary['corrected_label_set']}`",
+        f"- merge label set: `{summary['merge_label_set']}`",
         f"- full decisions: `{summary['full_decision_counts']}`",
         f"- no-verdict decisions: `{summary['no_verdict_decision_counts']}`",
         f"- visible-tool decisions: `{summary['visible_tool_decision_counts']}`",

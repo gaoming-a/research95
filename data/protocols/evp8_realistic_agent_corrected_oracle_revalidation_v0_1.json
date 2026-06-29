@@ -1,0 +1,71 @@
+{
+  "analysis_id": "evp8_realistic_agent_corrected_oracle_revalidation_v0_1",
+  "candidate_count": 53,
+  "changed_candidate_ids": [
+    "evp8_realistic_agent_candidate_0002",
+    "evp8_realistic_agent_candidate_0003",
+    "evp8_realistic_agent_candidate_0004",
+    "evp8_realistic_agent_candidate_0005",
+    "evp8_realistic_agent_candidate_0006",
+    "evp8_realistic_agent_candidate_0007",
+    "evp8_realistic_agent_candidate_0008",
+    "evp8_realistic_agent_candidate_0009",
+    "evp8_realistic_agent_candidate_0010",
+    "evp8_realistic_agent_candidate_0011",
+    "evp8_realistic_agent_candidate_0012",
+    "evp8_realistic_agent_candidate_0013",
+    "evp8_realistic_agent_candidate_0014",
+    "evp8_realistic_agent_candidate_0015",
+    "evp8_realistic_agent_candidate_0016",
+    "evp8_realistic_agent_candidate_0017",
+    "evp8_realistic_agent_candidate_0018",
+    "evp8_realistic_agent_candidate_0019",
+    "evp8_realistic_agent_candidate_0020",
+    "evp8_realistic_agent_candidate_0021",
+    "evp8_realistic_agent_candidate_0022",
+    "evp8_realistic_agent_candidate_0023",
+    "evp8_realistic_agent_candidate_0024",
+    "evp8_realistic_agent_candidate_0025",
+    "evp8_realistic_agent_candidate_0026",
+    "evp8_realistic_agent_candidate_0027",
+    "evp8_realistic_agent_candidate_0028",
+    "evp8_realistic_agent_candidate_0029",
+    "evp8_realistic_agent_candidate_0030",
+    "evp8_realistic_agent_candidate_0032",
+    "evp8_realistic_agent_candidate_0033",
+    "evp8_realistic_agent_candidate_0034",
+    "evp8_realistic_agent_candidate_0035",
+    "evp8_realistic_agent_candidate_0036",
+    "evp8_realistic_agent_candidate_0037",
+    "evp8_realistic_agent_candidate_0049",
+    "evp8_realistic_agent_candidate_0050",
+    "evp8_realistic_agent_candidate_0051",
+    "evp8_realistic_agent_candidate_0052"
+  ],
+  "corrected_label_counts": {
+    "correct": 40,
+    "test_passing_wrong": 13
+  },
+  "dependency_error_count": 0,
+  "label_changed_by_task": {
+    "bugsinpy_PySnooper_3": 10,
+    "bugsinpy_cookiecutter_1": 10,
+    "bugsinpy_cookiecutter_2": 10,
+    "bugsinpy_cookiecutter_3": 9
+  },
+  "label_changed_count": 39,
+  "oracle_passed_count": 40,
+  "oracle_ran_count": 53,
+  "patch_applied_count": 53,
+  "previous_label_counts": {
+    "correct": 1,
+    "test_passing_wrong": 52
+  },
+  "python_source_counts": {
+    "current_process_python": 12,
+    "outputs/envs/cookiecutter_p2p_py311/Scripts/python.exe": 30,
+    "outputs/envs/pysnooper3_p2p_py311/Scripts/python.exe": 10,
+    "outputs/envs/pysnooper_p2p_py311/Scripts/python.exe": 1
+  },
+  "ready_for_recomputed_metrics": true
+}

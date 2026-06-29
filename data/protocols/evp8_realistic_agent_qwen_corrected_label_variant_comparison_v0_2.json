@@ -1,0 +1,33 @@
+{
+  "analysis_id": "evp8_realistic_agent_qwen_corrected_label_variant_comparison_v0_2",
+  "candidate_count": 53,
+  "cohort_id": "EVP-8-REALISTIC-AGENT",
+  "corrected_label_set": true,
+  "full_decision_counts": {
+    "accept": 30,
+    "reject": 23
+  },
+  "full_to_no_verdict_transition_counts": {
+    "accept->accept": 30,
+    "reject->reject": 23
+  },
+  "full_vs_no_verdict_change_count": 0,
+  "full_vs_no_verdict_changes": [],
+  "interpretation": {
+    "claim": "Removing the explicit merge-gate verdict did not change Qwen decisions; Qwen still follows visible test pass/fail outcomes on this cohort.",
+    "no_verdict_still_matches_visible_tool": true,
+    "verdict_removal_changed_qwen_decisions": false
+  },
+  "no_verdict_decision_counts": {
+    "accept": 30,
+    "reject": 23
+  },
+  "no_verdict_false_accepts_among_wrong": 0,
+  "no_verdict_vs_visible_tool_change_count": 0,
+  "no_verdict_vs_visible_tool_changes": [],
+  "visible_tool_decision_counts": {
+    "accept": 30,
+    "reject": 23
+  },
+  "wrong_candidate_count": 13
+}

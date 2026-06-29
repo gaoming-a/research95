@@ -20223,3 +20223,108 @@ Headroom 结论：
   1. 对这 29 个 false accepts 做案例分析，确认它们为什么 visible tests 过但 oracle 错；
   2. 设计更强但仍真实可见的 evidence，而不是继续重复同一模型/同一证据；
   3. 若跑 DeepSeek，也应作为 cross-model replication of negative result，而不是期待它自然解决问题。
+
+## 2026-06-30 Realistic agent-patch false-accept case analysis
+
+本轮目标：
+
+- 不调用 API；
+- 不修改 verifier prompt；
+- 对 Qwen full/no-verdict 与 visible-tool baseline 共同接受的 29 个
+  `test_passing_wrong` candidates 做 evaluator-side 失效分析；
+- 统计这些 false accepts 的 task/project 分布、unique patch hash、visible tests、
+  hidden oracle、patch size、Qwen reason 和可见证据缺口；
+- 产出论文可用的“为什么 visible tests/LLM 都会误收”的分类，而不是只报总表。
+
+执行边界：
+
+- false-accept analysis 可以读取 evaluator manifest 和 hidden labels；
+- 输出必须明确标注为 evaluator-side post-hoc analysis，不能作为 model-visible evidence；
+- tracked summary/Markdown 不保存 raw provider response、API key、prompt text 或 raw generation
+  response；
+- 允许引用 parsed Qwen reason，因为 parsed reviews 已去除 raw response text；
+- 不把 source ids、oracle stdout/stderr 或 raw generation rationale 注入后续 verifier packet。
+
+验收条件：
+
+- false accept count = 29；
+- full/no-verdict/visible-tool 三者共同 accept 的 wrong candidate 覆盖 29/29；
+- 输出 task/project/hash 分布和 failure taxonomy；
+- 至少列出每个 task 的 representative false accept；
+- docs/index/experience/current plan 同步；
+- 提交并同步 GitHub。
+
+执行中止诊断：
+
+- 在抽查 29 个 false accepts 时发现 evaluator hidden-oracle 失败尾部包含
+  `ModuleNotFoundError`，例如：
+  - `bugsinpy_PySnooper_3` oracle 缺少 `future`；
+  - `bugsinpy_cookiecutter_2` oracle 缺少 `slugify`；
+  - `bugsinpy_cookiecutter_3` oracle 缺少 `past`；
+- 这说明部分 `test_passing_wrong` 标签可能来自 wrong Python environment，而不是
+  真实语义错误；
+- 因此本轮 false-accept case analysis 暂停；
+- 在 corrected oracle revalidation 完成前，不能继续把 29 个 accepted wrong 当作可靠结论；
+- 必须先使用各项目对应 venv 重新运行 hidden oracles，修正 evaluator labels 和后续分析。
+
+修复目标：
+
+- 新增 evaluator-side revalidation runner；
+- 对 53 个 realistic candidates 从干净 buggy checkout 重新应用 patch；
+- 使用与 visible tests 相同的项目 venv 运行 hidden oracles；
+- 输出 corrected evaluator manifest 和 label correction summary；
+- 重新构造 visible-tool/Qwen label-conditioned metrics；
+- 若 corrected labels 大幅改变，必须降级或撤回此前 false-accept/headroom 结论。
+
+修复执行结果：
+
+- 新增 `scripts/revalidate_evp8_realistic_agent_oracles.py`；
+- 使用 task/project venv 重新运行 53 个 hidden oracles；
+- corrected oracle revalidation 通过：
+  - candidate_count = 53；
+  - patch_applied_count = 53；
+  - oracle_ran_count = 53；
+  - dependency_error_count = 0；
+  - previous labels = `correct=1, test_passing_wrong=52`；
+  - hidden-oracle-only corrected labels = `correct=40, test_passing_wrong=13`；
+  - label_changed_count = 39；
+- 这证明此前 29 个 false accepts 主要是原始 oracle 运行环境错误导致的假标签，
+  不能作为可靠 false-accept 结论。
+
+进一步逻辑修正：
+
+- hidden oracle pass 但 declared visible fail-to-pass test 失败的候选，不能作为 merge-correct；
+- 新增 `scripts/build_evp8_realistic_agent_merge_labels.py`；
+- 生成 merge-label evaluator manifest：
+  `data/patches/evp8_realistic_agent_evaluator_manifest_v0_3.jsonl`；
+- merge-correct label policy：
+  `correct iff patch applies, declared visible tests pass, and hidden oracle passes`；
+- v0.3 merge labels：
+  - `correct=30`；
+  - `visible_test_failing_wrong=23`；
+  - `environment_invalid=0`；
+  - visible_passed_count = 30；
+  - oracle_passed_count = 40。
+
+重算 Qwen / visible-tool 结果：
+
+- 使用 v0.3 merge labels 后：
+  - visible-tool baseline = `accept=30, reject=23`；
+  - Qwen full = `accept=30, reject=23`；
+  - Qwen no-verdict = `accept=30, reject=23`；
+  - full-vs-no-verdict decision changes = 0；
+  - Qwen-vs-visible-tool disagreement count = 0；
+  - accepted precision = 30/30 = 1.0；
+  - correct recall = 30/30 = 1.0；
+  - false accept rate among wrong = 0/23 = 0.0；
+  - wrong reject rate = 23/23 = 1.0。
+
+最终修正结论：
+
+- realistic cohort 当前不再支持“Qwen/visible tools 有 29 个 false accepts”的说法；
+- 当前 realistic cohort 也不能证明 LLM 有工具外增益，因为 visible-tool baseline 已经完全分开
+  v0.3 merge labels；
+- 该阶段真正有价值的发现变成：label/oracle environment 是关键威胁；
+  使用错误 Python 环境会把大量正确补丁误标为 wrong，从而制造虚假的 false-accept 结论；
+- 下一步若要继续冲论文质量，应先构造新的、更难的 realistic test-passing-wrong cohort，
+  或把本阶段作为“label validity audit”纳入威胁与方法章节。

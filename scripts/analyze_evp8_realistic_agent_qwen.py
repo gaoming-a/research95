@@ -98,6 +98,7 @@ def build_summary(
     baseline_rows: list[dict[str, Any]],
     review_rows: list[dict[str, Any]],
     run_summary: dict[str, Any],
+    evaluator_source: str,
 ) -> dict[str, Any]:
     evaluator = index_by_id(evaluator_rows, "candidate_id", "evaluator")
     baseline = index_by_id(baseline_rows, "candidate_id", "baseline")
@@ -144,10 +145,27 @@ def build_summary(
     new_false_accepts = sorted(qwen_false_accepts - baseline_false_accepts)
     correct_ids = [candidate_id for candidate_id in ids if labels[candidate_id] == "correct"]
     packet_variant = str(run_summary.get("packet_variant") or "e6_full_with_verdict")
-    analysis_id = (
-        "evp8_realistic_agent_qwen_no_verdict_result_analysis_v0_1"
-        if packet_variant == "e6_no_verdict"
-        else "evp8_realistic_agent_qwen_result_analysis_v0_1"
+    corrected_label_set = "v0_2" in evaluator_source or "v0_3" in evaluator_source
+    merge_label_set = "v0_3" in evaluator_source
+    if merge_label_set and packet_variant == "e6_no_verdict":
+        analysis_id = "evp8_realistic_agent_qwen_no_verdict_merge_label_result_analysis_v0_3"
+    elif merge_label_set:
+        analysis_id = "evp8_realistic_agent_qwen_merge_label_result_analysis_v0_3"
+    elif corrected_label_set and packet_variant == "e6_no_verdict":
+        analysis_id = "evp8_realistic_agent_qwen_no_verdict_corrected_label_result_analysis_v0_2"
+    elif corrected_label_set:
+        analysis_id = "evp8_realistic_agent_qwen_corrected_label_result_analysis_v0_2"
+    elif packet_variant == "e6_no_verdict":
+        analysis_id = "evp8_realistic_agent_qwen_no_verdict_result_analysis_v0_1"
+    else:
+        analysis_id = "evp8_realistic_agent_qwen_result_analysis_v0_1"
+    claim_boundary = (
+        "Merge labels require patch apply, declared visible-test pass, and hidden-oracle pass; this v0.3 analysis supersedes v0.1 false-accept and v0.2 hidden-oracle-only labels."
+        if merge_label_set
+        else
+        "Corrected oracle revalidation changed the cohort to 40 correct and 13 test-passing-wrong candidates; this analysis supersedes the original v0.1 label-conditioned false-accept claim."
+        if corrected_label_set
+        else "This run measures whether Qwen reduces visible-tool false accepts on realistic agent patches; it cannot support a strong correct-recall claim because the cohort has one correct patch."
     )
 
     return {
@@ -155,6 +173,9 @@ def build_summary(
         "cohort_id": "EVP-8-REALISTIC-AGENT",
         "configured_model_id": run_summary.get("configured_model_id"),
         "packet_variant": packet_variant,
+        "evaluator_source": evaluator_source,
+        "corrected_label_set": corrected_label_set,
+        "merge_label_set": merge_label_set,
         "review_count": len(review_rows),
         "parse_valid_count": run_summary.get("parse_valid_count"),
         "run_gate": run_summary.get("run_gate"),
@@ -193,7 +214,7 @@ def build_summary(
         "interpretation": {
             "qwen_added_value_over_visible_tool": len(disagreements) > 0,
             "qwen_matches_visible_tool_exactly": len(disagreements) == 0,
-            "claim_boundary": "This run measures whether Qwen reduces visible-tool false accepts on realistic agent patches; it cannot support a strong correct-recall claim because the cohort has one correct patch.",
+            "claim_boundary": claim_boundary,
         },
     }
 
@@ -202,11 +223,18 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
     qwen = summary["qwen_metrics"]
     tool = summary["visible_tool_metrics"]
     reduction = summary["false_accept_reduction"]
-    title = (
-        "EVP-8 Realistic Agent Qwen No-Verdict Result Analysis v0.1"
-        if summary.get("packet_variant") == "e6_no_verdict"
-        else "EVP-8 Realistic Agent Qwen Result Analysis v0.1"
-    )
+    if summary.get("merge_label_set") and summary.get("packet_variant") == "e6_no_verdict":
+        title = "EVP-8 Realistic Agent Qwen No-Verdict Merge-Label Result Analysis v0.3"
+    elif summary.get("merge_label_set"):
+        title = "EVP-8 Realistic Agent Qwen Merge-Label Result Analysis v0.3"
+    elif summary.get("corrected_label_set") and summary.get("packet_variant") == "e6_no_verdict":
+        title = "EVP-8 Realistic Agent Qwen No-Verdict Corrected-Label Result Analysis v0.2"
+    elif summary.get("corrected_label_set"):
+        title = "EVP-8 Realistic Agent Qwen Corrected-Label Result Analysis v0.2"
+    elif summary.get("packet_variant") == "e6_no_verdict":
+        title = "EVP-8 Realistic Agent Qwen No-Verdict Result Analysis v0.1"
+    else:
+        title = "EVP-8 Realistic Agent Qwen Result Analysis v0.1"
     lines = [
         f"# {title}",
         "",
@@ -214,6 +242,9 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
         "",
         f"- model: `{summary['configured_model_id']}`",
         f"- packet variant: `{summary['packet_variant']}`",
+        f"- evaluator source: `{summary['evaluator_source']}`",
+        f"- corrected label set: `{summary['corrected_label_set']}`",
+        f"- merge label set: `{summary['merge_label_set']}`",
         f"- reviews: `{summary['review_count']}`",
         f"- parse valid: `{summary['parse_valid_count']}`",
         f"- run gate: `{summary['run_gate']}`",
@@ -230,7 +261,8 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
         f"- Qwen false accept rate among wrong: `{qwen['false_accept_rate_among_wrong']['successes']}/{qwen['false_accept_rate_among_wrong']['total']}` = `{qwen['false_accept_rate_among_wrong']['value']}`",
         f"- false accepts avoided by Qwen: `{reduction['avoided_false_accepts']}`",
         f"- new false accepts introduced by Qwen: `{reduction['new_false_accepts']}`",
-        f"- correct patch outcomes: `{summary['correct_patch_outcomes']}`",
+        f"- correct patch accepted by Qwen: `{summary['qwen_metrics']['correct_recall']['successes']}/{summary['qwen_metrics']['correct_recall']['total']}`",
+        f"- correct patch rejected by Qwen: `{summary['qwen_metrics']['correct_reject_rate']['successes']}/{summary['qwen_metrics']['correct_reject_rate']['total']}`",
         "",
         "Interpretation:",
         "",
@@ -275,6 +307,7 @@ def main() -> int:
         baseline_rows=read_jsonl(args.baseline_in),
         review_rows=read_jsonl(args.reviews_in),
         run_summary=read_json(args.run_summary_in),
+        evaluator_source=display_path(args.evaluator_in),
     )
     if args.check:
         if summary["review_count"] != args.expected_count:
