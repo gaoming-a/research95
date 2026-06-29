@@ -28,6 +28,9 @@
   evidence-only result. The nine-case opportunity set yields wide Wilson and
   bootstrap intervals; DeepSeek-minus-Qwen safe-handling delta is descriptive,
   not enough for a strong superiority claim.
+- Keep a paper-facing synthesis separate from raw result tables. The supported
+  claim is evidence-aware triage under a controlled hard-case ablation; the
+  unsupported claim is any reliable automatic verifier or autonomous merge gate.
 
 ## 2026-06-05 AI execution handoff plan
 

@@ -475,6 +475,10 @@
   the claim descriptive rather than confirmatory.
 - `experiments/evp8_hard_e6_evidence_only_statistical_boundary_v0_1.md`:
   Markdown companion for the statistical-boundary artifact.
+- `experiments/evp8_hard_e6_evidence_only_paper_synthesis_v0_1.md`: paper-facing
+  synthesis for the evidence-only ablation. It records the supported claims,
+  unsupported claims, statistical and external-validity limits, and the next
+  paper-strengthening step.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still
