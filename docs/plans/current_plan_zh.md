@@ -18965,3 +18965,34 @@ Label-conditioned audit result：
   baseline 的 accept/reject 边界，并继承了所有已知工具错误；
 - DeepSeek 尚未运行，需要单独授权后才能判断这是 Qwen 特有现象，还是 E6
   evidence construction 导致的普遍现象。
+
+## 2026-06-29 EVP-8-HARD DeepSeek-after-Qwen no-API packet
+
+本轮目标：
+
+- 不运行 DeepSeek；
+- 在 Qwen 已完成并通过审计后，生成 DeepSeek 授权前执行包；
+- 明确 DeepSeek 输出仍不存在、Qwen 前置结果已 passed、DeepSeek 仍需单独授权。
+
+执行结果：
+
+- 新增脚本：
+  `scripts/write_evp8_hard_deepseek_after_qwen_packet.py`；
+- 新增 tracked JSON：
+  `data/protocols/evp8_hard_deepseek_after_qwen_packet_v0_1.json`；
+- 新增 Markdown companion：
+  `docs/experiments/evp8_hard_deepseek_after_qwen_packet_v0_1.md`；
+- packet 当前状态为 `ready`：
+  - Qwen summary run_gate = `passed`；
+  - Qwen audit status = `passed`；
+  - DeepSeek expected outputs absent = true；
+  - planned DeepSeek calls = 47；
+  - model-visible level = `E6`；
+  - execution_authorized_by_packet = false。
+
+当前结论：
+
+- DeepSeek-after-Qwen 的 no-API 前置门已经 ready；
+- 下一步若要判断 Qwen 负向结果是否 model-specific，必须由用户明确授权：
+  “授权运行 EVP-8-HARD DeepSeek API”；
+- 未授权前不得执行 DeepSeek `--execute`。

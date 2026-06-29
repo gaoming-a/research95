@@ -3567,3 +3567,14 @@ This file starts fresh for the patch-verification project.
 - `data/reviews` is ignored by the broad `data/*` rule. Force-add only
   raw-output-free summaries and parsed review JSONL files after scanning for
   raw fields; keep ignored raw responses and runner logs under `outputs/`.
+
+## 2026-06-29 EVP-8-HARD post-Qwen packet boundary
+
+- After Qwen outputs exist, the original combined Qwen/DeepSeek execution
+  packet is no longer the right current gate because its expected-output
+  absence checks included Qwen paths. Create a post-Qwen packet that treats
+  Qwen passed results as preconditions and checks only DeepSeek output absence.
+- This avoids two bad shortcuts: deleting valid Qwen results to make an old
+  packet pass, or running DeepSeek without a fresh authorization-specific gate.
+- The post-Qwen packet should still keep `execution_authorized_by_packet=false`;
+  readiness is not permission.

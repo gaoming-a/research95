@@ -1,0 +1,137 @@
+{
+  "api_call_attempted": false,
+  "api_key_values_printed": false,
+  "checks": [
+    {
+      "check": "local_config_path_boundary",
+      "detail": "configs/evp8_hard_qwen_deepseek.local.json",
+      "passed": true
+    },
+    {
+      "check": "local_config_execution_not_pre_authorized",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "check_only_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "credential_presence_ready",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "qwen_summary_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "qwen_parse_complete",
+      "detail": {
+        "parse_valid_count": 47,
+        "review_count": 47
+      },
+      "passed": true
+    },
+    {
+      "check": "qwen_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "qwen_audit_complete",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "deepseek_outputs_absent",
+      "detail": [
+        {
+          "exists": false,
+          "output_kind": "ignored_raw_responses",
+          "passed": true,
+          "path": "outputs/evp8_hard_qwen_deepseek_full/deepseek_deepseek-v4-pro/raw_responses.jsonl"
+        },
+        {
+          "exists": false,
+          "output_kind": "tracked_summary",
+          "passed": true,
+          "path": "data/reviews/evp8_hard_deepseek_deepseek-v4-pro_full_summary.json"
+        },
+        {
+          "exists": false,
+          "output_kind": "tracked_parsed_reviews",
+          "passed": true,
+          "path": "data/reviews/evp8_hard_deepseek_deepseek-v4-pro_full_reviews.jsonl"
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "claim_boundary": "This is a no-API DeepSeek-after-Qwen handoff. It records that Qwen has passed and DeepSeek outputs are absent; it does not authorize DeepSeek API execution.",
+  "cohort_id": "EVP-8-HARD",
+  "deepseek_execute_command_after_explicit_user_authorization": {
+    "command": "python scripts\\run_evp8_hard_qwen_deepseek.py --execute --config configs\\evp8_hard_qwen_deepseek.local.json --model-id deepseek/deepseek-v4-pro",
+    "model_id": "deepseek/deepseek-v4-pro",
+    "outputs": {
+      "ignored_raw_responses": "outputs/evp8_hard_qwen_deepseek_full/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+      "tracked_parsed_reviews": "data/reviews/evp8_hard_deepseek_deepseek-v4-pro_full_reviews.jsonl",
+      "tracked_summary": "data/reviews/evp8_hard_deepseek_deepseek-v4-pro_full_summary.json"
+    },
+    "proceed_if": "summary.run_gate == passed and parsed reviews contain exactly 47 candidate decisions",
+    "provider_route": "deepseek_official",
+    "request_model_id": "deepseek-v4-pro"
+  },
+  "execution_authorized_by_packet": false,
+  "expected_deepseek_output_absence": [
+    {
+      "exists": false,
+      "output_kind": "ignored_raw_responses",
+      "passed": true,
+      "path": "outputs/evp8_hard_qwen_deepseek_full/deepseek_deepseek-v4-pro/raw_responses.jsonl"
+    },
+    {
+      "exists": false,
+      "output_kind": "tracked_summary",
+      "passed": true,
+      "path": "data/reviews/evp8_hard_deepseek_deepseek-v4-pro_full_summary.json"
+    },
+    {
+      "exists": false,
+      "output_kind": "tracked_parsed_reviews",
+      "passed": true,
+      "path": "data/reviews/evp8_hard_deepseek_deepseek-v4-pro_full_reviews.jsonl"
+    }
+  ],
+  "model_visible_levels": [
+    "E6"
+  ],
+  "packet_id": "evp8_hard_deepseek_after_qwen_packet_v0_1",
+  "packet_status": "ready",
+  "planned_deepseek_calls": 47,
+  "post_deepseek_audit_command": "python scripts\\audit_evp8_hard_qwen_deepseek_results.py --out data\\protocols\\evp8_hard_qwen_deepseek_result_audit_v0_1.json",
+  "precondition_qwen_result": {
+    "audit": "data/protocols/evp8_hard_qwen_deepseek_result_audit_v0_1.json",
+    "qwen_decision_counts": {
+      "accept": 17,
+      "reject": 30
+    },
+    "qwen_run_gate": "passed",
+    "summary": "data/reviews/evp8_hard_qwen_qwen3.7-max_full_summary.json"
+  },
+  "raw_outputs_generated": false,
+  "rendered_prompt_text_stored": false,
+  "requires_explicit_user_command": true,
+  "stop_gates": [
+    "User has not explicitly authorized EVP-8-HARD DeepSeek API execution.",
+    "Any DeepSeek expected output path already exists before execution.",
+    "Qwen summary or Qwen audit is not passed.",
+    "Local config is not ignored under configs/*.local.json.",
+    "Tracked example config is used for --execute.",
+    "DeepSeek run_gate or usage_cost_gate is not passed.",
+    "DeepSeek parsed reviews do not contain exactly 47 unique candidate decisions.",
+    "Tracked DeepSeek parsed reviews contain raw response text or provider response objects."
+  ]
+}

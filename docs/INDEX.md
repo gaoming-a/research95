@@ -375,6 +375,15 @@
 - `experiments/evp8_hard_qwen_result_v0_1.md`: Markdown analysis for the
   authorized Qwen hard-case run. It reports that Qwen reproduced the tool-only
   baseline and corrected 0/11 opportunity cases.
+- `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
+  post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
+  DeepSeek outputs are absent, local config remains ignored, and DeepSeek still
+  requires explicit user authorization.
+- `../data/protocols/evp8_hard_deepseek_after_qwen_packet_v0_1.json`: tracked
+  no-API DeepSeek-after-Qwen packet. Current status is `ready`: Qwen is passed,
+  DeepSeek expected outputs are absent, and no DeepSeek API calls were made.
+- `experiments/evp8_hard_deepseek_after_qwen_packet_v0_1.md`: Markdown
+  companion for the post-Qwen DeepSeek authorization packet.
 - `../scripts/write_evp8_hard_qwen_deepseek_execution_packet.py`: no-API
   execution-packet writer for the EVP-8-HARD Qwen/DeepSeek run. It records the
   Qwen-first execute command, post-Qwen audit command, optional DeepSeek
