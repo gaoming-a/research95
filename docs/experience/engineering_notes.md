@@ -3700,3 +3700,19 @@ This file starts fresh for the patch-verification project.
   local path so the tracked summary reflects the actual execute command path.
 - Do not submit `configs/*.local.json`; verify it appears as ignored before
   committing readiness artifacts.
+
+## 2026-06-29 Realistic agent-patch cohort planning
+
+- Broad API authorization is not a reason to keep running same-prompt models.
+  After the EVP-8-HARD evidence-only result, the bottleneck is external
+  validity and opportunity-set size, not API access.
+- A stronger paper needs more realistic tool-failure cases. If the visible
+  tool baseline has few mistakes, LLM-added value cannot be measured no matter
+  how many models are run.
+- Treat the next cohort as a separate no-API construction problem first:
+  inventory sources, curate candidates, run visible-tool baseline gates, and
+  scan leakage before model execution.
+- Hidden evaluator separation must be designed before candidate curation
+  pressure appears. If a candidate can only be judged by exposing hidden oracle
+  results to the model-visible packet, it is not valid evidence for a
+  realistic merge-gate claim.

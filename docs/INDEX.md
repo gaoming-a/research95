@@ -479,6 +479,12 @@
   synthesis for the evidence-only ablation. It records the supported claims,
   unsupported claims, statistical and external-validity limits, and the next
   paper-strengthening step.
+- `experiments/evp8_realistic_agent_patch_cohort_plan_20260629.md`: no-API
+  next-cohort execution plan. It translates the evidence-only hard-case
+  conclusion into a realistic/agent-patch cohort route with source inventory,
+  candidate curation, visible-tool headroom gates, leakage boundaries,
+  Qwen-first execution order, and Wilson/bootstrap analysis requirements. It
+  does not authorize API calls or modify existing cohorts.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still
