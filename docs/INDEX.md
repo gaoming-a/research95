@@ -737,6 +737,15 @@
   v0.3 merge labels. Qwen and the visible-tool baseline both exactly match the
   merge labels: accepted precision 30/30, correct recall 30/30, false accept
   rate 0/23. This supersedes the earlier v0.1 false-accept interpretation.
+- `../scripts/inventory_evp8_realistic_hard_negative_opportunities.py`,
+  `../data/protocols/evp8_realistic_hard_negative_opportunity_inventory_v0_1.json`,
+  and `experiments/evp8_realistic_hard_negative_opportunity_inventory_v0_1.md`:
+  no-API opportunity inventory after corrected realistic labels. It records
+  that broad API authorization exists but should not be used for the current
+  corrected realistic cohort: visible-pass/hidden-fail count is 0/53 and
+  visible-tool accepted wrong count is 0. The historical hard cohort still has
+  9 visible-tool false accepts, all in `httpie`, so it is calibration material
+  rather than a fresh realistic external-validity cohort.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

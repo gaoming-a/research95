@@ -20328,3 +20328,64 @@ Headroom 结论：
   使用错误 Python 环境会把大量正确补丁误标为 wrong，从而制造虚假的 false-accept 结论；
 - 下一步若要继续冲论文质量，应先构造新的、更难的 realistic test-passing-wrong cohort，
   或把本阶段作为“label validity audit”纳入威胁与方法章节。
+
+## 2026-06-30 Hard realistic test-passing-wrong opportunity inventory
+
+用户已授权所有 API，但当前 corrected realistic cohort 的 v0.3 merge labels 已被
+visible-tool baseline 完全分开，因此直接继续调用 Qwen/DeepSeek verifier API
+不会产生新的科学信息。本轮目标是先做 no-API hard-negative 机会盘点，判断本地
+已有数据中是否存在真正的 `visible tests pass + hidden oracle fails` 来源，以及
+下一阶段应该优先补哪些任务。
+
+本轮边界：
+
+- 不调用任何模型 API；
+- 不生成 rendered prompt；
+- 不读取 ignored raw responses；
+- 不修改 verifier prompt、cohort labels 或已有模型输出；
+- 不把 stale v0.1 headroom 结论继续当作当前结论；
+- 只输出聚合统计、任务级目标矩阵和是否进入新 cohort 构造的保守判断。
+
+验收条件：
+
+- 盘点脚本必须同时读取 corrected realistic v0.3 merge labels、当前 visible-test
+  outcome、EVP-8-HARD manifest/baseline 和已有 source inventory；
+- 明确区分“当前 realistic cohort 已被 visible tests 完全分开”和“历史 hard
+  cohort 存在机会但外部有效性不足”；
+- 输出 `EVP-8-REALISTIC-HARD-NEGATIVE` 下一阶段 target matrix；
+- docs/index/experience/current plan 同步；
+- 通过 JSON 解析和 `py_compile` 最小验证；
+- 提交并同步 GitHub。
+
+执行结果：
+
+- 新增 `scripts/inventory_evp8_realistic_hard_negative_opportunities.py`；
+- 生成
+  `data/protocols/evp8_realistic_hard_negative_opportunity_inventory_v0_1.json`；
+- 生成
+  `docs/experiments/evp8_realistic_hard_negative_opportunity_inventory_v0_1.md`；
+- 脚本运行 gate 通过，且未调用 API、未读取 raw model outputs、未写出 patch text。
+
+关键结论：
+
+- corrected realistic cohort：
+  - candidate count = 53；
+  - v0.3 labels = `correct=30, visible_test_failing_wrong=23`；
+  - visible-tool decisions = `accept=30, reject=23`；
+  - visible-pass/hidden-fail = 0；
+  - visible-tool accepted wrong = 0；
+  - 因此当前 corrected realistic cohort 不适合继续直接跑 verifier API。
+- historical EVP-8-HARD cohort：
+  - candidate count = 47；
+  - visible-tool false accepts = 9；
+  - 9/9 都集中在 `httpie`；
+  - Qwen evidence-only 对 9 个机会案例重复 accept 7 个、escalate 2 个；
+  - DeepSeek evidence-only 重复 accept 4 个、escalate 5 个；
+  - 这些案例适合做失败模式校准，但不能作为新的 realistic external-validity 主结果。
+
+下一步：
+
+- 构造 fresh realistic hard-negative generation/validation packet；
+- 目标候选必须满足：patch applies、declared visible tests pass、hidden oracle fails；
+- 在至少 3 个项目上达到约 30 个 validated visible-pass/hidden-fail candidates
+  前，不再运行 Qwen/DeepSeek verifier API。

@@ -3902,3 +3902,23 @@ This file starts fresh for the patch-verification project.
   definition are first-order threats. Do not build paper claims on hidden-oracle
   labels until the oracle environment and visible-test consistency have been
   audited.
+
+## 2026-06-30 Realistic hard-negative opportunity gate
+
+- Broad API authorization is not an experiment-design gate. After corrected
+  v0.3 merge labels, the realistic 53-candidate cohort has 0
+  visible-pass/hidden-fail candidates and 0 visible-tool accepted wrong
+  candidates, so more verifier API calls on the same packets would mostly
+  retest a dataset already separated by visible tests.
+- Keep historical EVP-8-HARD opportunity cases in their proper role. They are
+  useful calibration cases because the visible-tool baseline false-accepts 9
+  candidates, but all 9 are `httpie`, so they cannot carry the external
+  validity burden for a stronger realistic-agent paper.
+- A future verifier run should require a fresh opportunity-set gate: patches
+  must apply, declared visible tests must pass, hidden oracle must fail, and
+  the cases should span at least 3 projects before Qwen/DeepSeek verifier API
+  calls are scientifically useful.
+- When a source inventory was created before label repair, treat its
+  hard-negative counts as locator metadata only. Recompute visible-pass/
+  hidden-fail counts after corrected oracle execution before making any
+  headroom or API-readiness claim.
