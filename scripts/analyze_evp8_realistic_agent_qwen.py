@@ -143,11 +143,18 @@ def build_summary(
     avoided_false_accepts = sorted(baseline_false_accepts - qwen_false_accepts)
     new_false_accepts = sorted(qwen_false_accepts - baseline_false_accepts)
     correct_ids = [candidate_id for candidate_id in ids if labels[candidate_id] == "correct"]
+    packet_variant = str(run_summary.get("packet_variant") or "e6_full_with_verdict")
+    analysis_id = (
+        "evp8_realistic_agent_qwen_no_verdict_result_analysis_v0_1"
+        if packet_variant == "e6_no_verdict"
+        else "evp8_realistic_agent_qwen_result_analysis_v0_1"
+    )
 
     return {
-        "analysis_id": "evp8_realistic_agent_qwen_result_analysis_v0_1",
+        "analysis_id": analysis_id,
         "cohort_id": "EVP-8-REALISTIC-AGENT",
         "configured_model_id": run_summary.get("configured_model_id"),
+        "packet_variant": packet_variant,
         "review_count": len(review_rows),
         "parse_valid_count": run_summary.get("parse_valid_count"),
         "run_gate": run_summary.get("run_gate"),
@@ -195,12 +202,18 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
     qwen = summary["qwen_metrics"]
     tool = summary["visible_tool_metrics"]
     reduction = summary["false_accept_reduction"]
+    title = (
+        "EVP-8 Realistic Agent Qwen No-Verdict Result Analysis v0.1"
+        if summary.get("packet_variant") == "e6_no_verdict"
+        else "EVP-8 Realistic Agent Qwen Result Analysis v0.1"
+    )
     lines = [
-        "# EVP-8 Realistic Agent Qwen Result Analysis v0.1",
+        f"# {title}",
         "",
         "Date: 2026-06-30",
         "",
         f"- model: `{summary['configured_model_id']}`",
+        f"- packet variant: `{summary['packet_variant']}`",
         f"- reviews: `{summary['review_count']}`",
         f"- parse valid: `{summary['parse_valid_count']}`",
         f"- run gate: `{summary['run_gate']}`",

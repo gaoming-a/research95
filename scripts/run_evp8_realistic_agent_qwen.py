@@ -31,6 +31,13 @@ DEFAULT_CONFIG = REPO_ROOT / "configs" / "evp8_realistic_agent_qwen.example.json
 DEFAULT_CHECK_SUMMARY_OUT = REPO_ROOT / "data" / "protocols" / "evp8_realistic_agent_qwen_check_only_v0_1.json"
 DEFAULT_EXEC_SUMMARY_DIR = REPO_ROOT / "data" / "reviews"
 DEFAULT_REVIEW_RECORD_DIR = REPO_ROOT / "data" / "reviews"
+DEFAULT_PACKET_VARIANT = "e6_full_with_verdict"
+NO_VERDICT_PACKET_VARIANT = "e6_no_verdict"
+REMOVED_VERDICT_FIELDS = (
+    "rule_based_visible_merge_gate_decision",
+    "rule_based_visible_merge_gate_reasons",
+    "source_decision",
+)
 FORBIDDEN_PACKET_MARKERS = evp8_core.FORBIDDEN_MARKERS + (
     "expected_outcome",
     "hidden_oracles",
@@ -112,8 +119,22 @@ def safe_model_name(model_id: str) -> str:
     return evp8_core.safe_name(model_id)
 
 
-def output_prefix(model_id: str) -> str:
-    return f"evp8_realistic_agent_qwen_{safe_model_name(model_id)}_full"
+def packet_variant(config: dict[str, Any]) -> str:
+    return str(config.get("packet_variant") or DEFAULT_PACKET_VARIANT)
+
+
+def variant_removed_fields(config: dict[str, Any]) -> tuple[str, ...]:
+    variant = packet_variant(config)
+    if variant == DEFAULT_PACKET_VARIANT:
+        return ()
+    if variant == NO_VERDICT_PACKET_VARIANT:
+        return REMOVED_VERDICT_FIELDS
+    raise ValueError(f"unsupported packet_variant: {variant}")
+
+
+def output_prefix(config: dict[str, Any], model_id: str) -> str:
+    suffix = "no_verdict" if packet_variant(config) == NO_VERDICT_PACKET_VARIANT else "full"
+    return f"evp8_realistic_agent_qwen_{safe_model_name(model_id)}_{suffix}"
 
 
 def model_config_by_id(config: dict[str, Any], model_id: str | None) -> dict[str, Any] | None:
@@ -128,6 +149,26 @@ def model_config_by_id(config: dict[str, Any], model_id: str | None) -> dict[str
 def packet_leakage_findings(value: Any) -> list[str]:
     serialized = json.dumps(value, ensure_ascii=False).lower()
     return sorted({marker for marker in FORBIDDEN_PACKET_MARKERS if marker.lower() in serialized})
+
+
+def remove_verdict_fields(packet: dict[str, Any], removed_fields: tuple[str, ...]) -> None:
+    if not removed_fields:
+        return
+    summary = ((packet.get("visible_fields") or {}).get("deterministic_visible_merge_gate_summary"))
+    if not isinstance(summary, dict):
+        return
+    for field in removed_fields:
+        summary.pop(field, None)
+
+
+def verdict_field_check(name: str, packets: list[dict[str, Any]], removed_fields: tuple[str, ...]) -> dict[str, Any]:
+    present = name in json.dumps(packets)
+    expected_present = name not in removed_fields
+    return check(
+        f"{name}_presence_matches_packet_variant",
+        present == expected_present,
+        {"present": present, "expected_present": expected_present},
+    )
 
 
 def build_packets(config: dict[str, Any]) -> list[dict[str, Any]]:
@@ -161,6 +202,7 @@ def build_packets(config: dict[str, Any]) -> list[dict[str, Any]]:
             ],
             "visible_fields": visible_fields(seed, baseline_row),
         }
+        remove_verdict_fields(packet, variant_removed_fields(config))
         packet["evidence_packet_id"] = f"{candidate_id}__{EVIDENCE_LEVEL}__{packet_suffix}"
         findings = packet_leakage_findings(packet)
         if findings:
@@ -277,11 +319,15 @@ def check_only(args: argparse.Namespace) -> dict[str, Any]:
     key_states, env_exists = env_key_states(resolve(config.get("env", ".env")), key_names)
     credentials_ready = env_exists and all(state == "set" for state in key_states.values())
     packet_leakages = [marker for packet in packets for marker in packet_leakage_findings(packet)]
+    removed_fields = variant_removed_fields(config)
     checks = [
         check("candidate_count", len({packet["anonymous_candidate_id"] for packet in packets}) == full_config.get("candidate_count"), len({packet["anonymous_candidate_id"] for packet in packets})),
         check("packet_count", len(packets) == full_config.get("planned_calls_per_model"), len(packets)),
         check("only_e6_packets", {packet["evidence_level"] for packet in packets} == {EVIDENCE_LEVEL}, sorted({packet["evidence_level"] for packet in packets})),
         check("packet_forbidden_marker_count", not packet_leakages, sorted(set(packet_leakages))),
+        verdict_field_check("rule_based_visible_merge_gate_decision", packets, removed_fields),
+        verdict_field_check("rule_based_visible_merge_gate_reasons", packets, removed_fields),
+        verdict_field_check("source_decision", packets, removed_fields),
         check("prompt_boundary_error_count", not boundary_errors, sorted(set(boundary_errors))),
         check("schema_error_count", not schema_errors, evp8_core._counts(schema_errors)),  # noqa: SLF001
         check("credential_key_presence", credentials_ready, {"env_file_exists": env_exists, "key_states": key_states, "values_printed": False}),
@@ -295,6 +341,8 @@ def check_only(args: argparse.Namespace) -> dict[str, Any]:
         "mode": "check_only",
         "cohort_id": COHORT_ID,
         "config": display_path(args.config),
+        "packet_variant": packet_variant(config),
+        "removed_verdict_fields": list(removed_fields),
         "planned_model_ids": model_ids,
         "candidate_count": len({packet["anonymous_candidate_id"] for packet in packets}),
         "packet_count_per_model": len(packets),
@@ -334,7 +382,7 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     packets = build_packets(config)
     output_dir = resolve((config.get("full") or {})["output_dir"]) / safe_model_name(str(model_config["model_id"]))
     raw_out = args.raw_out or output_dir / "raw_responses.jsonl"
-    default_output_prefix = output_prefix(str(model_config["model_id"]))
+    default_output_prefix = output_prefix(config, str(model_config["model_id"]))
     summary_out = args.summary_out or DEFAULT_EXEC_SUMMARY_DIR / f"{default_output_prefix}_summary.json"
     parsed_reviews_out = args.parsed_reviews_out or DEFAULT_REVIEW_RECORD_DIR / f"{default_output_prefix}_reviews.jsonl"
     if config.get("overwrite_policy") == "refuse_if_output_exists":
@@ -380,6 +428,8 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         "analysis_id": "evp8_realistic_agent_qwen_full_summary_v0_1",
         "mode": "executed",
         "cohort_id": COHORT_ID,
+        "packet_variant": packet_variant(config),
+        "removed_verdict_fields": list(variant_removed_fields(config)),
         "configured_model_id": model_config["model_id"],
         "request_model_id": model_config["request_model_id"],
         "provider_route": model_config["provider_route"],

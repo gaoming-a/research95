@@ -20145,3 +20145,81 @@ Headroom 结论：
 - 下一步若继续追求“LLM 是否有工具外增益”，必须做 realistic E6-no-verdict ablation：
   去掉 `rule_based_visible_merge_gate_decision`、`rule_based_visible_merge_gate_reasons`
   和 `source_decision` 后再跑 Qwen，比较是否仍完全贴合 visible-test outcome。
+
+## 2026-06-30 Realistic agent-patch Qwen E6-no-verdict ablation
+
+本轮目标：
+
+- 针对上一轮 Qwen 完全复现 visible-tool baseline 的问题，做最小诊断；
+- 不改 prompt、不改 cohort、不改 labels、不改 visible-test outcomes；
+- 只从 E6 packet 中删除 verdict-like fields：
+  `rule_based_visible_merge_gate_decision`、
+  `rule_based_visible_merge_gate_reasons`、`source_decision`；
+- 继续只跑 Qwen，暂不跑 DeepSeek；
+- 比较 no-verdict Qwen 与 full-with-verdict Qwen、visible-tool baseline 是否一致。
+
+执行边界：
+
+- no-verdict 仍可见 raw visible test outcomes 和 tool diagnostics；
+- no-verdict 不可见 deterministic merge-gate verdict；
+- raw responses 继续只写 ignored `outputs/`；
+- tracked outputs 只保存 parsed reviews、summary、analysis 和文档；
+- 若 no-verdict 仍完全贴合 visible outcome，则结论应收缩为：
+  Qwen 在该 cohort 中主要复述可见测试结果，而非发现 test-passing wrong semantic errors。
+
+验收条件：
+
+- check-only preflight 通过，且三个 verdict-like fields 均按 variant 被移除；
+- Qwen no-verdict review_count = 53；
+- parse_valid_count = 53；
+- run_gate = `passed`；
+- analysis 报告 no-verdict 对 29 个 visible-tool false accepts 的 avoided count；
+- 对比 full-with-verdict 与 no-verdict 是否存在 decision change；
+- 文档、索引、经验记录同步；
+- 提交并同步 GitHub。
+
+执行结果：
+
+- 扩展 `scripts/run_evp8_realistic_agent_qwen.py`，新增 `packet_variant` 支持；
+- 新增 `configs/evp8_realistic_agent_qwen_no_verdict.example.json`；
+- check-only preflight 通过：
+  - candidate_count = 53；
+  - packet_count_per_model = 53；
+  - `rule_based_visible_merge_gate_decision` present = false；
+  - `rule_based_visible_merge_gate_reasons` present = false；
+  - `source_decision` present = false；
+  - prompt boundary errors = 0；
+  - schema errors = 0；
+  - QWEN_API_KEY presence = set；
+- Qwen no-verdict API run 通过：
+  - review_count = 53；
+  - parse_valid_count = 53；
+  - invalid_parse_count = 0；
+  - run_gate = `passed`；
+  - usage_cost_gate = `passed`；
+  - total_cost_cny = 3.128256；
+  - decisions = `accept=30, reject=23`；
+- no-verdict label-conditioned analysis：
+  - baseline-to-Qwen transitions = `accept->accept=30, reject->reject=23`；
+  - baseline/Qwen disagreement count = 0；
+  - false accepts avoided = 0；
+  - no-verdict Qwen false accept rate among wrong = 29/52 = 0.5577；
+- full-vs-no-verdict comparison：
+  - full decisions = `accept=30, reject=23`；
+  - no-verdict decisions = `accept=30, reject=23`；
+  - full->no-verdict transitions = `accept->accept=30, reject->reject=23`；
+  - full-vs-no-verdict decision changes = 0；
+  - no-verdict-vs-visible-tool decision changes = 0。
+
+本轮结论：
+
+- 删除显式 deterministic merge-gate verdict 没有改变 Qwen 任何决策；
+- Qwen 在 realistic cohort 上不是只复述 `rule_based_visible_merge_gate_decision`，
+  而是更直接地按 visible test pass/fail outcome 做 accept/reject；
+- 这仍然没有解决 test-passing wrong：29/52 wrong patches 在 visible tests pass
+  时仍被 Qwen accept；
+- 当前 evidence setting 下，Qwen 对工具外 semantic correctness 没有可测增益；
+- 下一步如果要继续提升论文价值，应转向：
+  1. 对这 29 个 false accepts 做案例分析，确认它们为什么 visible tests 过但 oracle 错；
+  2. 设计更强但仍真实可见的 evidence，而不是继续重复同一模型/同一证据；
+  3. 若跑 DeepSeek，也应作为 cross-model replication of negative result，而不是期待它自然解决问题。

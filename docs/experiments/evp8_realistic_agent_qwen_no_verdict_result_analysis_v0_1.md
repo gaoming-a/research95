@@ -1,9 +1,9 @@
-# EVP-8 Realistic Agent Qwen Result Analysis v0.1
+# EVP-8 Realistic Agent Qwen No-Verdict Result Analysis v0.1
 
 Date: 2026-06-30
 
 - model: `qwen/qwen3.7-max`
-- packet variant: `e6_full_with_verdict`
+- packet variant: `e6_no_verdict`
 - reviews: `53`
 - parse valid: `53`
 - run gate: `passed`
@@ -20,7 +20,7 @@ Metric comparison:
 - Qwen false accept rate among wrong: `29/52` = `0.5577`
 - false accepts avoided by Qwen: `0`
 - new false accepts introduced by Qwen: `0`
-- correct patch outcomes: `[{'candidate_id': 'evp8_realistic_agent_candidate_0001', 'visible_tool_decision': 'accept', 'qwen_decision': 'accept', 'qwen_primary_reason': 'All declared visible tests passed and the patch applied successfully without visible contradictions.'}]`
+- correct patch outcomes: `[{'candidate_id': 'evp8_realistic_agent_candidate_0001', 'visible_tool_decision': 'accept', 'qwen_decision': 'accept', 'qwen_primary_reason': 'The patch applies cleanly and passes the visible fail-to-pass test (test_chinese) which directly validates the UTF-8 encoding fix for non-ASCII text, with no visible contradictions in the merge-gate summary.'}]`
 
 Interpretation:
 

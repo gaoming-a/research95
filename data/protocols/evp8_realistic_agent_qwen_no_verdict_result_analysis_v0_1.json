@@ -1,5 +1,5 @@
 {
-  "analysis_id": "evp8_realistic_agent_qwen_result_analysis_v0_1",
+  "analysis_id": "evp8_realistic_agent_qwen_no_verdict_result_analysis_v0_1",
   "baseline_qwen_disagreement_count": 0,
   "baseline_qwen_disagreements": [],
   "baseline_to_qwen_transition_counts": {
@@ -12,7 +12,7 @@
     {
       "candidate_id": "evp8_realistic_agent_candidate_0001",
       "qwen_decision": "accept",
-      "qwen_primary_reason": "All declared visible tests passed and the patch applied successfully without visible contradictions.",
+      "qwen_primary_reason": "The patch applies cleanly and passes the visible fail-to-pass test (test_chinese) which directly validates the UTF-8 encoding fix for non-ASCII text, with no visible contradictions in the merge-gate summary.",
       "visible_tool_decision": "accept"
     }
   ],
@@ -34,7 +34,7 @@
     "correct": 1,
     "test_passing_wrong": 52
   },
-  "packet_variant": "e6_full_with_verdict",
+  "packet_variant": "e6_no_verdict",
   "parse_valid_count": 53,
   "qwen_by_label": {
     "correct": {

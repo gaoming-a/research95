@@ -1,0 +1,38 @@
+{
+  "api_execution_authorized": false,
+  "config_id": "evp8_realistic_agent_qwen_no_verdict_v0_1",
+  "env": ".env",
+  "execution_requires_explicit_execute_flag": true,
+  "full": {
+    "candidate_count": 53,
+    "levels": [
+      "E6"
+    ],
+    "output_dir": "outputs/evp8_realistic_agent_qwen_no_verdict",
+    "packet_suffix": "realistic_agent_visible_tool_no_verdict_v0_1",
+    "planned_calls_per_model": 53
+  },
+  "max_output_tokens": 4096,
+  "model_visible_seed_manifest": "data/evidence/evp8_realistic_agent_model_visible_seed_v0_2.jsonl",
+  "models": [
+    {
+      "api_key_env": "QWEN_API_KEY",
+      "model_id": "qwen/qwen3.7-max",
+      "provider_route": "qwen_official",
+      "request_model_id": "qwen3.7-max",
+      "response_format": {
+        "type": "json_object"
+      }
+    }
+  ],
+  "overwrite_policy": "refuse_if_output_exists",
+  "packet_variant": "e6_no_verdict",
+  "prompt_template": "prompts/evp8_visible_evidence_merge_gate_v0_2.md",
+  "protocol_spec": "data/protocols/evp8_protocol_v0_3_qwen_first.json",
+  "raw_output_policy": "ignored_outputs_only",
+  "record_actual_model_id": true,
+  "record_cost_currency": true,
+  "record_cost_source": true,
+  "temperature": 0.0,
+  "tool_only_baseline": "data/baselines/evp8_realistic_agent_visible_tool_baseline_v0_1.jsonl"
+}

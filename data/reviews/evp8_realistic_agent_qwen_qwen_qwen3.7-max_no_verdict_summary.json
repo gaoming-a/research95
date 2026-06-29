@@ -1,0 +1,53 @@
+{
+  "analysis_id": "evp8_realistic_agent_qwen_full_summary_v0_1",
+  "api_call_attempted": true,
+  "cohort_id": "EVP-8-REALISTIC-AGENT",
+  "configured_model_id": "qwen/qwen3.7-max",
+  "cost_summary": {
+    "cost_currency_counts": {
+      "CNY": 53
+    },
+    "cost_observability_counts": {
+      "estimated_from_provider_token_usage_and_official_cny_pricing": 53
+    },
+    "cost_source_counts": {
+      "estimated_from_tokens_official_qwen_cny_pricing": 53
+    },
+    "total_cost_cny": 3.128256,
+    "total_cost_usd": 0.0,
+    "unknown_cost_record_count": 0
+  },
+  "decision_counts": {
+    "accept": 30,
+    "reject": 23
+  },
+  "invalid_parse_count": 0,
+  "mode": "executed",
+  "packet_variant": "e6_no_verdict",
+  "parse_valid_count": 53,
+  "parsed_reviews_out": "data/reviews/evp8_realistic_agent_qwen_qwen_qwen3.7-max_no_verdict_reviews.jsonl",
+  "prompt_text_stored": false,
+  "provider_route": "qwen_official",
+  "raw_outputs_generated": true,
+  "raw_response_text_stored_in_parsed_reviews": false,
+  "raw_response_text_stored_in_tracked_summary": false,
+  "raw_responses_out": "outputs/evp8_realistic_agent_qwen_no_verdict/qwen_qwen3.7-max/raw_responses.jsonl",
+  "removed_verdict_fields": [
+    "rule_based_visible_merge_gate_decision",
+    "rule_based_visible_merge_gate_reasons",
+    "source_decision"
+  ],
+  "request_model_id": "qwen3.7-max",
+  "review_count": 53,
+  "review_count_by_evidence_level": {
+    "E0": 0,
+    "E1": 0,
+    "E2": 0,
+    "E3": 0,
+    "E4": 0,
+    "E5": 0,
+    "E6": 53
+  },
+  "run_gate": "passed",
+  "usage_cost_gate": "passed"
+}

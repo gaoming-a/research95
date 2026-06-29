@@ -687,6 +687,30 @@
   53 candidates (`accept->accept=30`, `reject->reject=23`), avoids 0/29
   visible-tool false accepts, and therefore adds no measurable value in the
   E6-full-with-verdict setting.
+- `../configs/evp8_realistic_agent_qwen_no_verdict.example.json`: no-secret
+  config for the Qwen E6-no-verdict ablation on the realistic cohort. It keeps
+  visible test outcomes but removes `rule_based_visible_merge_gate_decision`,
+  `rule_based_visible_merge_gate_reasons`, and `source_decision`.
+- `../data/protocols/evp8_realistic_agent_qwen_no_verdict_check_only_v0_1.json`:
+  no-verdict preflight summary. It passed with 53 packets, absent verdict-like
+  fields, no prompt-boundary/schema errors, and Qwen credentials present.
+- `../data/reviews/evp8_realistic_agent_qwen_qwen_qwen3.7-max_no_verdict_summary.json`
+  and
+  `../data/reviews/evp8_realistic_agent_qwen_qwen_qwen3.7-max_no_verdict_reviews.jsonl`:
+  tracked no-verdict Qwen outputs without raw response text. The run gate
+  passed: 53/53 valid parses, decisions `accept=30, reject=23`, estimated cost
+  3.128256 CNY.
+- `../data/protocols/evp8_realistic_agent_qwen_no_verdict_result_analysis_v0_1.json`
+  and
+  `experiments/evp8_realistic_agent_qwen_no_verdict_result_analysis_v0_1.md`:
+  no-verdict label-conditioned analysis. Qwen still exactly matches the
+  visible-tool baseline and avoids 0/29 false accepts.
+- `../scripts/compare_evp8_realistic_agent_qwen_variants.py`,
+  `../data/protocols/evp8_realistic_agent_qwen_variant_comparison_v0_1.json`,
+  and `experiments/evp8_realistic_agent_qwen_variant_comparison_v0_1.md`:
+  comparison between full-with-verdict and no-verdict Qwen variants. Removing
+  the explicit merge-gate verdict changes 0/53 decisions; Qwen still follows
+  visible test pass/fail outcomes.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

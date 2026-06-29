@@ -3870,3 +3870,12 @@ This file starts fresh for the patch-verification project.
   cohort. Remove the visible merge-gate decision fields, keep raw visible test
   outcomes, and rerun Qwen before claiming whether LLMs add semantic judgment
   beyond tools.
+- The no-verdict ablation produced the same decisions as the full packet:
+  `accept=30`, `reject=23`, with 0/53 full-vs-no-verdict decision changes.
+  This means Qwen is not merely copying the explicit verdict field; it is still
+  following visible test pass/fail outcomes and failing to identify
+  test-passing wrong semantic errors.
+- The next useful work is not another same-evidence Qwen run. Either inspect
+  the 29 false accepts to learn what evidence is missing, add realistic visible
+  evidence that could expose those faults, or use DeepSeek only as cross-model
+  replication of this negative result.

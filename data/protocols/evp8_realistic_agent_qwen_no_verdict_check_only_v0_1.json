@@ -1,0 +1,118 @@
+{
+  "analysis_id": "evp8_realistic_agent_qwen_check_only_v0_1",
+  "api_call_attempted": false,
+  "api_key_values_printed": false,
+  "candidate_count": 53,
+  "check_only_status": "passed",
+  "checks": [
+    {
+      "check": "candidate_count",
+      "detail": 53,
+      "passed": true
+    },
+    {
+      "check": "packet_count",
+      "detail": 53,
+      "passed": true
+    },
+    {
+      "check": "only_e6_packets",
+      "detail": [
+        "E6"
+      ],
+      "passed": true
+    },
+    {
+      "check": "packet_forbidden_marker_count",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "rule_based_visible_merge_gate_decision_presence_matches_packet_variant",
+      "detail": {
+        "expected_present": false,
+        "present": false
+      },
+      "passed": true
+    },
+    {
+      "check": "rule_based_visible_merge_gate_reasons_presence_matches_packet_variant",
+      "detail": {
+        "expected_present": false,
+        "present": false
+      },
+      "passed": true
+    },
+    {
+      "check": "source_decision_presence_matches_packet_variant",
+      "detail": {
+        "expected_present": false,
+        "present": false
+      },
+      "passed": true
+    },
+    {
+      "check": "prompt_boundary_error_count",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "schema_error_count",
+      "detail": {},
+      "passed": true
+    },
+    {
+      "check": "credential_key_presence",
+      "detail": {
+        "env_file_exists": true,
+        "key_states": {
+          "QWEN_API_KEY": "set"
+        },
+        "values_printed": false
+      },
+      "passed": true
+    },
+    {
+      "check": "api_call_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_outputs_not_generated",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "prompt_text_not_stored",
+      "detail": false,
+      "passed": true
+    }
+  ],
+  "cohort_id": "EVP-8-REALISTIC-AGENT",
+  "config": "configs/evp8_realistic_agent_qwen_no_verdict.example.json",
+  "credential_presence_ready": true,
+  "mode": "check_only",
+  "model_visible_levels": [
+    "E6"
+  ],
+  "next_step": "Run Qwen with --execute after this check-only gate passes.",
+  "packet_count_per_model": 53,
+  "packet_variant": "e6_no_verdict",
+  "planned_model_ids": [
+    "qwen/qwen3.7-max"
+  ],
+  "prompt_chars_max": 8229,
+  "prompt_chars_min": 7276,
+  "prompt_count_per_model": 53,
+  "prompt_hashes_unique_count": 53,
+  "prompt_text_stored": false,
+  "raw_outputs_generated": false,
+  "removed_verdict_fields": [
+    "rule_based_visible_merge_gate_decision",
+    "rule_based_visible_merge_gate_reasons",
+    "source_decision"
+  ],
+  "schema_rule_decision_counts": {
+    "escalate": 53
+  }
+}
