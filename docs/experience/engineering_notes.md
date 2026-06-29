@@ -13,6 +13,10 @@
   compensate for missing Qwen evidence-only results. Pause API execution,
   update the plan, run Qwen evidence-only first, audit coverage, then proceed
   to DeepSeek only if the audit allows it.
+- The runner now enforces this for evidence-only DeepSeek execution before
+  environment loading or client construction: it requires the Qwen evidence-only
+  summary and parsed reviews to exist, pass run/parse gates, cover 47 unique
+  candidates, and match the evidence-only packet variant.
 
 ## 2026-06-05 AI execution handoff plan
 

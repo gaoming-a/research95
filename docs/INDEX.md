@@ -349,7 +349,10 @@
   runner. Default use is `--check-only`; real API execution requires an
   ignored local config, `--execute`, and a configured model id. Executed runs
   write ignored raw responses plus tracked raw-output-free parsed review JSONL
-  records for later analysis.
+  records for later analysis. For `e6_evidence_only_no_verdict`, DeepSeek
+  execution is additionally blocked until Qwen evidence-only summary and parsed
+  reviews exist, pass run/parse gates, cover 47 unique candidates, and match
+  the evidence-only packet variant.
 - `../data/protocols/evp8_hard_qwen_deepseek_check_only_v0_1.json`:
   raw-output-free hard-case Qwen/DeepSeek check-only summary. Current status is
   `passed`: 47 E6 packets per model, prompt boundary clean, schema rule clean,

@@ -37,6 +37,10 @@ COHORT_ID = "EVP-8-HARD"
 EVIDENCE_LEVEL = "E6"
 DEFAULT_PACKET_VARIANT = "e6_full_with_verdict"
 EVIDENCE_ONLY_PACKET_VARIANT = "e6_evidence_only_no_verdict"
+QWEN_EVIDENCE_ONLY_MODEL_ID = "qwen/qwen3.7-max"
+DEEPSEEK_EVIDENCE_ONLY_MODEL_ID = "deepseek/deepseek-v4-pro"
+QWEN_EVIDENCE_ONLY_SUMMARY = REPO_ROOT / "data" / "reviews" / "evp8_hard_e6_evidence_only_qwen_qwen3.7-max_full_summary.json"
+QWEN_EVIDENCE_ONLY_REVIEWS = REPO_ROOT / "data" / "reviews" / "evp8_hard_e6_evidence_only_qwen_qwen3.7-max_full_reviews.jsonl"
 REMOVED_VERDICT_FIELDS = (
     "rule_based_visible_merge_gate_decision",
     "rule_based_visible_merge_gate_reasons",
@@ -160,6 +164,37 @@ def output_prefix(config: dict[str, Any], model_id: str) -> str:
     if packet_variant(config) == EVIDENCE_ONLY_PACKET_VARIANT:
         return f"evp8_hard_e6_evidence_only_{safe_model}_full"
     return f"evp8_hard_{safe_model}_full"
+
+
+def enforce_evidence_only_model_order(config: dict[str, Any], model_id: str) -> None:
+    if packet_variant(config) != EVIDENCE_ONLY_PACKET_VARIANT:
+        return
+    if model_id != DEEPSEEK_EVIDENCE_ONLY_MODEL_ID:
+        return
+    if not QWEN_EVIDENCE_ONLY_SUMMARY.exists():
+        raise SystemExit(
+            "Evidence-only DeepSeek execution requires completed Qwen summary first: "
+            f"{display_path(QWEN_EVIDENCE_ONLY_SUMMARY)}"
+        )
+    if not QWEN_EVIDENCE_ONLY_REVIEWS.exists():
+        raise SystemExit(
+            "Evidence-only DeepSeek execution requires completed Qwen parsed reviews first: "
+            f"{display_path(QWEN_EVIDENCE_ONLY_REVIEWS)}"
+        )
+    summary = read_json(QWEN_EVIDENCE_ONLY_SUMMARY)
+    reviews = read_jsonl(QWEN_EVIDENCE_ONLY_REVIEWS)
+    candidate_ids = {str(record.get("anonymous_candidate_id")) for record in reviews}
+    checks = {
+        "qwen_run_gate": summary.get("run_gate") == "passed",
+        "qwen_review_count": summary.get("review_count") == 47 and len(reviews) == 47,
+        "qwen_parse_valid_count": summary.get("parse_valid_count") == 47,
+        "qwen_unique_candidate_count": len(candidate_ids) == 47,
+        "qwen_configured_model_id": summary.get("configured_model_id") == QWEN_EVIDENCE_ONLY_MODEL_ID,
+        "qwen_packet_variant": summary.get("packet_variant") == EVIDENCE_ONLY_PACKET_VARIANT,
+        "qwen_parsed_records_valid": all(record.get("parse_status") == "valid" for record in reviews),
+    }
+    if not all(checks.values()):
+        raise SystemExit(f"Evidence-only DeepSeek execution blocked by Qwen precondition: {checks}")
 
 
 def build_packets(config: dict[str, Any]) -> list[dict[str, Any]]:
@@ -390,6 +425,7 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     model_config = model_config_by_id(config, args.model_id)
     if model_config is None:
         raise SystemExit(f"--model-id must match one configured model: {args.model_id}")
+    enforce_evidence_only_model_order(config, str(model_config["model_id"]))
     load_env_file(str(resolve(config.get("env", ".env"))))
     spec = read_json(resolve(config["protocol_spec"]))
     template = resolve(config["prompt_template"]).read_text(encoding="utf-8")
