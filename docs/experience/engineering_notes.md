@@ -3761,3 +3761,15 @@ This file starts fresh for the patch-verification project.
 - Generation API and verifier API are separate gates. Passing generation
   dry-run only authorizes the next discussion about patch generation, not Qwen
   or DeepSeek verifier execution.
+
+## 2026-06-29 Realistic agent generation execution packet
+
+- An execution packet can be `ready` while still not authorizing execution.
+  Keep `execution_authorized_by_packet=false` even when credentials are present
+  and the output directory is absent.
+- Use a separate execution output directory from the dry-run directory. This
+  prevents a dry-run prompt manifest from being mistaken for real generated
+  candidates and keeps raw responses contained under a single ignored path.
+- Generation output is not verifier input yet. After API generation, the next
+  mandatory steps are validation, relabeling, source inventory rerun, and only
+  then separated cohort construction and visible-tool baseline gating.

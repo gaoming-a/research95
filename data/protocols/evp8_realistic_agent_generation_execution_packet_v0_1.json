@@ -1,0 +1,152 @@
+{
+  "checks": [
+    {
+      "check": "api_call_not_attempted_by_packet",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "execution_authorized_by_packet_false",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "target_matrix_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "dry_run_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "planned_generation_slots_54",
+      "detail": 54,
+      "passed": true
+    },
+    {
+      "check": "execute_command_uses_execute",
+      "detail": [
+        "python",
+        "scripts\\generate_agent_patch_candidates.py",
+        "--execute",
+        "--out-dir",
+        "outputs\\evp8_realistic_agent_generation_qwen_primary_001",
+        "--run-id",
+        "evp8_realistic_agent_generation_qwen_primary_001",
+        "--api-provider",
+        "qwen_official",
+        "--model",
+        "qwen3.7-max",
+        "--patches-per-task",
+        "9",
+        "--task-id",
+        "bugsinpy_PySnooper_1",
+        "--task-id",
+        "bugsinpy_PySnooper_3",
+        "--task-id",
+        "bugsinpy_cookiecutter_1",
+        "--task-id",
+        "bugsinpy_cookiecutter_2",
+        "--task-id",
+        "bugsinpy_cookiecutter_3",
+        "--task-id",
+        "bugsinpy_tqdm_9"
+      ],
+      "passed": true
+    },
+    {
+      "check": "execution_output_dir_absent",
+      "detail": "outputs/evp8_realistic_agent_generation_qwen_primary_001",
+      "passed": true
+    },
+    {
+      "check": "credential_presence_ready",
+      "detail": "QWEN_API_KEY",
+      "passed": true
+    }
+  ],
+  "date": "2026-06-29",
+  "expected_outputs": {
+    "candidates_pending": "outputs/evp8_realistic_agent_generation_qwen_primary_001/candidates.pending.jsonl",
+    "evidence_packets_pending": "outputs/evp8_realistic_agent_generation_qwen_primary_001/evidence_packets.pending.jsonl",
+    "generation_error": "outputs/evp8_realistic_agent_generation_qwen_primary_001/generation_error.json",
+    "generation_summary": "outputs/evp8_realistic_agent_generation_qwen_primary_001/generation_summary.json",
+    "output_dir": "outputs/evp8_realistic_agent_generation_qwen_primary_001",
+    "prompt_manifest": "outputs/evp8_realistic_agent_generation_qwen_primary_001/prompt_manifest.jsonl",
+    "raw_response_dir": "outputs/evp8_realistic_agent_generation_qwen_primary_001/raw"
+  },
+  "generation_request": {
+    "api_provider": "qwen_official",
+    "execute_command": [
+      "python",
+      "scripts\\generate_agent_patch_candidates.py",
+      "--execute",
+      "--out-dir",
+      "outputs\\evp8_realistic_agent_generation_qwen_primary_001",
+      "--run-id",
+      "evp8_realistic_agent_generation_qwen_primary_001",
+      "--api-provider",
+      "qwen_official",
+      "--model",
+      "qwen3.7-max",
+      "--patches-per-task",
+      "9",
+      "--task-id",
+      "bugsinpy_PySnooper_1",
+      "--task-id",
+      "bugsinpy_PySnooper_3",
+      "--task-id",
+      "bugsinpy_cookiecutter_1",
+      "--task-id",
+      "bugsinpy_cookiecutter_2",
+      "--task-id",
+      "bugsinpy_cookiecutter_3",
+      "--task-id",
+      "bugsinpy_tqdm_9"
+    ],
+    "model": "qwen3.7-max",
+    "planned_generation_slots": 54,
+    "run_id": "evp8_realistic_agent_generation_qwen_primary_001",
+    "target_tasks": [
+      "bugsinpy_PySnooper_1",
+      "bugsinpy_PySnooper_3",
+      "bugsinpy_cookiecutter_1",
+      "bugsinpy_cookiecutter_2",
+      "bugsinpy_cookiecutter_3",
+      "bugsinpy_tqdm_9"
+    ]
+  },
+  "inputs": {
+    "api_key_value_printed": false,
+    "dry_run_audit": "data/protocols/evp8_realistic_agent_generation_dry_run_audit_v0_1.json",
+    "env_key_checked": "QWEN_API_KEY",
+    "env_path": ".env",
+    "target_matrix": "data/protocols/evp8_realistic_agent_source_target_matrix_v0_1.json"
+  },
+  "packet_id": "evp8_realistic_agent_generation_execution_packet_v0_1",
+  "post_generation_required_steps": [
+    "validate generated candidates",
+    "relabel with evaluator-only hidden outcomes",
+    "rerun realistic source inventory",
+    "construct separated evaluator/model-visible cohort only if fresh gates pass",
+    "build visible-tool baseline before verifier APIs"
+  ],
+  "scope": {
+    "api_call_attempted": false,
+    "execution_authorized_by_packet": false,
+    "patch_generation_attempted": false,
+    "prompt_text_stored": false,
+    "raw_model_outputs_read": false,
+    "verifier_api_authorized": false
+  },
+  "status": "ready",
+  "stop_gates": [
+    "Do not run this command unless the user explicitly authorizes realistic agent-patch generation API execution.",
+    "If generation_error.json is created, stop and diagnose generation failure before retrying.",
+    "Do not commit raw responses or ignored output directories.",
+    "After generation, validate and relabel candidates before constructing any realistic verifier cohort.",
+    "Do not run Qwen/DeepSeek verifier APIs from this generation packet."
+  ]
+}

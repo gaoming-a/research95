@@ -767,6 +767,60 @@ dry-run 结果：
 - fresh source gate 通过前，不得构造 realistic verifier cohort 或运行 Qwen/DeepSeek
   verifier API。
 
+## 0.17 2026-06-29 realistic agent-patch generation execution packet
+
+本轮目标是在 dry-run audit 通过后，生成 no-API execution packet，冻结 future
+generation API 的命令、输出路径、凭证存在性检查和停止条件。
+
+执行边界：
+
+- 不调用 API；
+- 不把 packet 当成授权；
+- 不生成 candidates；
+- 不读取或提交 raw responses；
+- 不修改 generation prompt；
+- packet 必须明确本步骤是 patch generation API，不是 verifier API；
+- execution output dir 必须与 dry-run output dir 分离。
+
+验收条件：
+
+- target matrix status = `passed`；
+- dry-run audit status = `passed`；
+- planned generation slots = 54；
+- execution command 使用 `--execute` 且不使用 `--dry-run`；
+- expected output dir 当前不存在；
+- `.env` 中只检查 `QWEN_API_KEY` presence，不输出 key value；
+- `execution_authorized_by_packet = false`；
+- packet 明确生成后必须 validate/relabel，不能直接进入 verifier API。
+
+执行结果：
+
+- 新增 `scripts/write_evp8_realistic_agent_generation_execution_packet.py`；
+- 生成 `data/protocols/evp8_realistic_agent_generation_execution_packet_v0_1.json`；
+- 生成 `docs/experiments/evp8_realistic_agent_generation_execution_packet_v0_1.md`；
+- packet status = `ready`；
+- api_call_attempted = false；
+- execution_authorized_by_packet = false；
+- verifier_api_authorized = false；
+- planned generation slots = 54；
+- execution output dir 当前不存在：
+  `outputs/evp8_realistic_agent_generation_qwen_primary_001`；
+- `.env` 中 `QWEN_API_KEY` presence check 通过，未输出 key value。
+
+冻结的 future command：
+
+```powershell
+python scripts\generate_agent_patch_candidates.py --execute --out-dir outputs\evp8_realistic_agent_generation_qwen_primary_001 --run-id evp8_realistic_agent_generation_qwen_primary_001 --api-provider qwen_official --model qwen3.7-max --patches-per-task 9 --task-id bugsinpy_PySnooper_1 --task-id bugsinpy_PySnooper_3 --task-id bugsinpy_cookiecutter_1 --task-id bugsinpy_cookiecutter_2 --task-id bugsinpy_cookiecutter_3 --task-id bugsinpy_tqdm_9
+```
+
+下一步：
+
+- 若继续，需要明确授权“运行 realistic agent-patch generation Qwen API”；
+- 执行后如果出现 `generation_error.json`，必须停止诊断；
+- 生成出的 candidates 只能进入 validate/relabel；
+- validate/relabel 和 fresh source inventory 通过前，不允许构造 realistic verifier
+  cohort 或运行 verifier API。
+
 ## 1. 研究转向
 
 旧方向试图验证 LLM cross-review 或 agent-style context 是否能让代码审查更可靠。已有结果不支持这个强假设。真正可复用的发现是：

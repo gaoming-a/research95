@@ -524,6 +524,19 @@
   Markdown companion for the dry-run audit. It records that generation API is
   still a separate future authorization step and that validation/relabeling
   must happen before any realistic verifier cohort is built.
+- `../scripts/write_evp8_realistic_agent_generation_execution_packet.py`:
+  no-API execution-packet writer for future realistic agent-patch generation.
+  It checks target-matrix and dry-run audit status, verifies `QWEN_API_KEY`
+  presence without printing values, freezes the `--execute` command, and keeps
+  `execution_authorized_by_packet=false`.
+- `../data/protocols/evp8_realistic_agent_generation_execution_packet_v0_1.json`:
+  tracked execution packet. Current status is `ready`; it plans 54 Qwen
+  generation slots across 6 target tasks, confirms the output directory is
+  absent, and explicitly does not authorize verifier API execution.
+- `experiments/evp8_realistic_agent_generation_execution_packet_v0_1.md`:
+  Markdown companion for the execution packet, including the future command,
+  stop gates, and required validate/relabel/source-inventory steps after
+  generation.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still
