@@ -4073,3 +4073,19 @@ This file starts fresh for the patch-verification project.
 - Include new audit gates in the artifact candidate required-file set. A source
   package is not reproducible if it depends on a gate script that the candidate
   artifact omits.
+
+## 2026-06-30 SQJ final-authorization gate
+
+- Keep final submission authorization separate from API authorization. The user
+  has broadly authorized API usage in the thread, but that does not authorize
+  SQJ final submission, final artifact rebuild, or access to a submission
+  system.
+- A final-authorization gate should fail only on explicit completion wording,
+  such as `authorized to submit`, `ready-to-submit`, or `final freeze complete`.
+  It should pass while reporting `blocked_missing_final_authorization` when the
+  documents clearly say the package is not final.
+- Do not use local quality success as a proxy for submit readiness. Local gates
+  can prove the blocker is explicit and machine-readable, not that the external
+  human decision has been made.
+- Add authorization gates to the artifact candidate required-file set so the
+  future package can reproduce why it was not final-submission-ready.

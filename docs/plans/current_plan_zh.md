@@ -21339,3 +21339,72 @@ blocked，而不是把 SQJ 认定为已满足。
   final freeze；
 - 下一步若继续 final freeze，需要用户/学校提供 recognition 结论、作者元数据、
   Springer Nature class，并在 PDF 编译后再做最终 artifact rebuild 和授权。
+
+## 2026-06-30 SQJ final-authorization gate preflight
+
+本轮小目标是在不提交论文、不生成 final submission package 的前提下，把 SQJ
+final-freeze 中的 final user authorization blocker 转为可重复审计的机器
+gate。当前用户尚未明确授权“提交 SQJ 最终稿”，因此本轮只能记录为 blocked，
+不能把 source package 标记为 final freeze 或 ready-to-submit。
+
+执行边界：
+
+- 不运行任何 API；
+- 不提交论文、不访问投稿系统；
+- 不生成或提交最终 artifact ZIP；
+- 不把 SQJ package 标记为 final freeze；
+- 不修改实验结果、prompt、tracked summary 或 raw outputs；
+- 只新增/接入可复现 final-authorization gate 审计。
+
+验收条件：
+
+- 新增 gate 能检测 checklist/readiness 中的 submission-authorization blocker，
+  并返回 `gate_status=blocked_missing_final_authorization`、
+  `submission_authorized=false`、`passed=true`；
+- SQJ final-freeze readiness 和 local quality gate 能读取或执行该审计；
+- `python -m py_compile` 覆盖新增/修改脚本；
+- final-authorization gate、SQJ final-freeze readiness、paper readiness 和
+  local quality gate 全部通过；
+- staged diff 不包含 API key、raw prompt/response、输出目录或 local config。
+
+执行结果：
+
+- 新增 `scripts/audit_sqj_final_authorization_gate.py`：
+  - 检查 SQJ checklist 和 final-freeze readiness 是否仍明确声明当前不是
+    final freeze、未授权 submission；
+  - 检查是否误写成 ready-to-submit、authorized to submit 或 final freeze
+    complete；
+  - 当前返回 `gate_status=blocked_missing_final_authorization`、
+    `submission_authorized=false`、`submission_system_accessed=false`、
+    `final_artifact_rebuild_complete=false`、`final_freeze_complete=false`、
+    `passed=true`；
+  - 不访问投稿系统、不生成最终 artifact、不推断用户授权。
+- 将该 gate 接入：
+  - `docs/artifact/sqj_submission_checklist.md`；
+  - `docs/artifact/sqj_final_freeze_readiness.md`；
+  - `scripts/audit_sqj_submission_checklist.py`；
+  - `scripts/audit_sqj_final_freeze_readiness.py`；
+  - `scripts/audit_sqj_artifact_gate.py`；
+  - `scripts/run_local_quality_gate.py`。
+
+验证结果：
+
+- `python -m py_compile scripts\audit_sqj_final_authorization_gate.py scripts\audit_sqj_artifact_gate.py scripts\audit_sqj_final_freeze_readiness.py scripts\audit_sqj_submission_checklist.py scripts\run_local_quality_gate.py`：通过；
+- `python scripts\audit_sqj_final_authorization_gate.py --out-json outputs\sqj_final_authorization_gate\latest.json --out-md outputs\sqj_final_authorization_gate\latest.md`：通过，
+  `gate_status=blocked_missing_final_authorization`；
+- `python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md`：通过；
+- `python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md`：通过；
+- `python scripts\audit_sqj_artifact_gate.py --out-json outputs\sqj_artifact_gate\latest.json --out-md outputs\sqj_artifact_gate\latest.md`：通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`：通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`：通过。
+
+当前判断：
+
+- SQJ final-freeze blocker 现在至少包含五个机器可读状态：
+  `blocked_missing_final_authorization`、
+  `blocked_missing_school_recognition`、`blocked_missing_sn_jnl_cls`、
+  `blocked_missing_human_inputs` 和 `candidate_artifact_dry_run_ready`；
+- 当前 source package 仍可作为 submission-package draft 推进，但不能标记为
+  final freeze 或 ready-to-submit；
+- 真正 final freeze 仍需要外部输入：用户最终提交授权、学校认定结论、作者元
+  数据、Springer Nature class/PDF 编译，以及 PDF 之后的最终 artifact rebuild。

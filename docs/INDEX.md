@@ -1220,8 +1220,8 @@
   interest, artifact rebuild, and final user-authorization blockers, and keeps
   submission unauthorized. It carries the same fresh realistic two-project
   negative-result boundary as the SQJ checklist and now embeds the SQJ PDF
-  compile gate, human-input gate, school-recognition gate, and artifact
-  candidate dry-run gate audit boundaries.
+  compile gate, human-input gate, school-recognition gate, final-authorization
+  gate, and artifact candidate dry-run gate audit boundaries.
 - `paper/ieee_submission_draft.tex`: historical/source anonymous IEEEtran
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
@@ -1703,6 +1703,12 @@
   readiness/figure/generator/audit files to be present and included, and
   reports `candidate_artifact_dry_run_ready` only with `dry_run_only=true` and
   `final_artifact_rebuild_complete=false`.
+- `scripts/audit_sqj_final_authorization_gate.py`: audits the SQJ final
+  user-authorization blocker without submitting the paper or generating a final
+  artifact. In the current package it reports
+  `blocked_missing_final_authorization`, `submission_authorized=false`, and
+  `final_freeze_complete=false`, and fails if the checklist/readiness packet
+  claims final submission has been authorized.
 - `scripts/audit_sqj_school_recognition_gate.py`: audits the SQJ
   school/department recognition blocker without API calls or web lookup. In
   the current package it reports `blocked_missing_school_recognition`,
@@ -1730,7 +1736,8 @@
   calling APIs, compiling PDF, or authorizing submission. It now requires the
   fresh realistic two-project negative-result boundary before readiness can
   pass and includes the SQJ PDF compile gate, human-input gate,
-  school-recognition gate, and artifact candidate dry-run gate audit states.
+  school-recognition gate, final-authorization gate, and artifact candidate
+  dry-run gate audit states.
 - `scripts/generate_paper_figures.py`: generates the publication figure set
   under `docs/figures/` in PDF, SVG, and PNG formats. Figures cover the
   workflow, compact E0/E2/E4/E6 evidence boundary, dataset composition,

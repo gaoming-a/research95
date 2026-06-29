@@ -6,6 +6,9 @@ Date: 2026-06-30
 This checklist records the current Software Quality Journal (SQJ) submission
 route. It does not authorize new experiments, model API calls, cohort
 expansion, evidence-level changes, or raw model-response tracking.
+Current final-authorization gate status:
+`blocked_missing_final_authorization` until the user explicitly authorizes SQJ
+final submission.
 
 ## Venue And Cost Route
 
@@ -90,6 +93,7 @@ python scripts\generate_sqj_figures.py
 python scripts\write_sqj_latex_draft.py --check
 python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md
 python scripts\audit_sqj_artifact_gate.py --out-json outputs\sqj_artifact_gate\latest.json --out-md outputs\sqj_artifact_gate\latest.md
+python scripts\audit_sqj_final_authorization_gate.py --out-json outputs\sqj_final_authorization_gate\latest.json --out-md outputs\sqj_final_authorization_gate\latest.md
 python scripts\audit_sqj_school_recognition_gate.py --out-json outputs\sqj_school_recognition_gate\latest.json --out-md outputs\sqj_school_recognition_gate\latest.md
 python scripts\audit_sqj_human_inputs_gate.py --out-json outputs\sqj_human_inputs_gate\latest.json --out-md outputs\sqj_human_inputs_gate\latest.md
 python scripts\audit_sqj_pdf_compile_gate.py --out-json outputs\sqj_pdf_compile_gate\latest.json --out-md outputs\sqj_pdf_compile_gate\latest.md
@@ -107,6 +111,9 @@ python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\l
 - SQJ checklist audit passes.
 - SQJ artifact candidate gate passes as `candidate_artifact_dry_run_ready`;
   this is not a final artifact ZIP rebuild.
+- SQJ final-authorization gate audit passes while keeping submission blocked as
+  `blocked_missing_final_authorization` until the user explicitly authorizes
+  SQJ final submission.
 - SQJ school-recognition gate audit passes while keeping recognition blocked as
   `blocked_missing_school_recognition` until school/department confirmation is
   provided.
@@ -132,3 +139,4 @@ This is not a final submission freeze. The SQJ package still needs:
 - author information, funding, acknowledgements, and competing-interest
   confirmation;
 - final artifact package rebuild and audit.
+- final user authorization to submit.

@@ -20,6 +20,7 @@ The current SQJ route has these tracked, regenerable source-package components:
 - SQJ source-package checklist: `docs/artifact/sqj_submission_checklist.md`
 - SQJ checklist audit: `scripts/audit_sqj_submission_checklist.py`
 - SQJ artifact candidate gate audit: `scripts/audit_sqj_artifact_gate.py`
+- SQJ final-authorization gate audit: `scripts/audit_sqj_final_authorization_gate.py`
 - SQJ school-recognition gate audit: `scripts/audit_sqj_school_recognition_gate.py`
 - SQJ human-input gate audit: `scripts/audit_sqj_human_inputs_gate.py`
 - SQJ PDF compile gate audit: `scripts/audit_sqj_pdf_compile_gate.py`
@@ -64,6 +65,8 @@ Final freeze is blocked until all of the following are resolved:
 - current artifact candidate gate status `candidate_artifact_dry_run_ready`;
   this is not a final artifact ZIP rebuild;
 - final user authorization to submit.
+- current final-authorization gate status `blocked_missing_final_authorization`
+  until the user explicitly authorizes SQJ final submission.
 
 ## Forbidden Until Those Gates Pass
 
@@ -93,6 +96,7 @@ python scripts\generate_sqj_figures.py
 python scripts\write_sqj_latex_draft.py --check
 python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md
 python scripts\audit_sqj_artifact_gate.py --out-json outputs\sqj_artifact_gate\latest.json --out-md outputs\sqj_artifact_gate\latest.md
+python scripts\audit_sqj_final_authorization_gate.py --out-json outputs\sqj_final_authorization_gate\latest.json --out-md outputs\sqj_final_authorization_gate\latest.md
 python scripts\audit_sqj_school_recognition_gate.py --out-json outputs\sqj_school_recognition_gate\latest.json --out-md outputs\sqj_school_recognition_gate\latest.md
 python scripts\audit_sqj_human_inputs_gate.py --out-json outputs\sqj_human_inputs_gate\latest.json --out-md outputs\sqj_human_inputs_gate\latest.md
 python scripts\audit_sqj_pdf_compile_gate.py --out-json outputs\sqj_pdf_compile_gate\latest.json --out-md outputs\sqj_pdf_compile_gate\latest.md
