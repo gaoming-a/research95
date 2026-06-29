@@ -16,6 +16,9 @@
 - If the local gate commit succeeds but GitHub fetch/push cannot reach
   `github.com:443`, record the sync failure explicitly and leave the local
   commit intact for a later retry. Do not report GitHub sync as complete.
+- A later direct tree-sync push can succeed even if an earlier fetch failed.
+  After any such push, fetch again and compare local `HEAD^{tree}` with the
+  remote branch tree before treating GitHub sync as complete.
 
 ## 2026-06-30 broad API authorization boundary
 

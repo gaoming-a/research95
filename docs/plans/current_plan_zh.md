@@ -21826,5 +21826,6 @@ submission authorization 混入可用性声明。
   final freeze；
 - 当前 package 仍被学校认定、作者元数据、Springer class/PDF、layout review、
   final artifact rebuild 和最终提交授权阻塞。
-- 本轮本地提交已创建，但 GitHub fetch/push 因无法连接 `github.com:443`
-  失败；远端同步仍需网络恢复后重试。
+- 初次 GitHub fetch/push 曾因无法连接 `github.com:443` 失败；后续重试
+  tree-sync push 成功，并已验证本地 `HEAD^{tree}` 与
+  `origin/evp8-v03-qwen-main-exp^{tree}` 一致。
