@@ -361,19 +361,30 @@
   blocks incomplete parsed-review files that do not contain exactly 47 unique
   hard-case candidate decisions for an executed model.
 - `../data/protocols/evp8_hard_qwen_deepseek_result_audit_v0_1.json`:
-  current hard-case result audit. Status is `waiting_for_model_results`; the
-  audit itself makes no API calls, reads no raw responses, and currently
-  reports the tool-only baseline as 17 accepts, 30 rejects, 9 false accepts,
-  and 2 false rejects.
+  current hard-case result audit. Status is `passed` after the authorized Qwen
+  run; the audit itself makes no API calls and reads no raw responses. Qwen
+  matches the tool-only baseline exactly: 17 accepts, 30 rejects, 9 false
+  accepts, and 2 false rejects.
+- `../data/reviews/evp8_hard_qwen_qwen3.7-max_full_summary.json`: tracked
+  raw-output-free summary for the authorized EVP-8-HARD Qwen run. Current
+  status is `passed`: 47/47 parse-valid, decisions `accept=17`, `reject=30`,
+  total estimated cost CNY `2.42502`.
+- `../data/reviews/evp8_hard_qwen_qwen3.7-max_full_reviews.jsonl`: tracked
+  parsed Qwen review records for EVP-8-HARD. It contains 47 structured records
+  and no raw response text or provider response objects.
+- `experiments/evp8_hard_qwen_result_v0_1.md`: Markdown analysis for the
+  authorized Qwen hard-case run. It reports that Qwen reproduced the tool-only
+  baseline and corrected 0/11 opportunity cases.
 - `../scripts/write_evp8_hard_qwen_deepseek_execution_packet.py`: no-API
   execution-packet writer for the EVP-8-HARD Qwen/DeepSeek run. It records the
   Qwen-first execute command, post-Qwen audit command, optional DeepSeek
   second execute command, expected outputs, stop gates, and non-authorization
   boundary.
 - `../data/protocols/evp8_hard_qwen_deepseek_execution_packet_v0_1.json`:
-  tracked no-API execution packet. Current status is `ready`; it confirms 47
-  planned E6 calls per model, expected output absence, local config ignore
-  boundary, Qwen-first execution order, and no API calls.
+  tracked no-API pre-execution packet. It was `ready` before the authorized
+  Qwen run and records 47 planned E6 calls per model, expected output absence,
+  local config ignore boundary, and Qwen-first execution order. After Qwen
+  outputs exist, use the result audit as the current status artifact.
 - `experiments/evp8_hard_qwen_deepseek_execution_packet_v0_1.md`: Markdown
   companion for the hard-case Qwen/DeepSeek execution packet.
 - `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:

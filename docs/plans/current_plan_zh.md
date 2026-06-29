@@ -18899,3 +18899,69 @@ Next:
 - 真实实验结果仍未产生；
 - 下一步必须由用户明确授权，例如“授权运行 EVP-8-HARD Qwen API”，才能执行
   Qwen 的 47-call hard-case run。
+
+## 2026-06-29 EVP-8-HARD authorized Qwen run
+
+本轮目标：
+
+- 只执行用户明确授权的 EVP-8-HARD Qwen API；
+- 不运行 DeepSeek；
+- Qwen 执行完成后立刻运行 raw-output-free result audit；
+- 将 Qwen 结果写成单独 Markdown 分析并同步索引、计划和经验文档。
+
+执行结果：
+
+- 用户已明确授权：“授权运行 EVP-8-HARD Qwen API”；
+- 执行命令：
+  `python scripts\run_evp8_hard_qwen_deepseek.py --execute --config configs\evp8_hard_qwen_deepseek.local.json --model-id qwen/qwen3.7-max`；
+- Qwen run 输出：
+  - ignored raw responses:
+    `outputs/evp8_hard_qwen_deepseek_full/qwen_qwen3.7-max/raw_responses.jsonl`；
+  - tracked summary:
+    `data/reviews/evp8_hard_qwen_qwen3.7-max_full_summary.json`；
+  - tracked parsed reviews:
+    `data/reviews/evp8_hard_qwen_qwen3.7-max_full_reviews.jsonl`；
+- raw-output-free audit:
+  `data/protocols/evp8_hard_qwen_deepseek_result_audit_v0_1.json`；
+- Markdown analysis:
+  `docs/experiments/evp8_hard_qwen_result_v0_1.md`。
+
+Qwen run gate：
+
+- review_count = 47；
+- parse_valid_count = 47；
+- invalid_parse_count = 0；
+- decision_counts = `accept=17, reject=30`；
+- run_gate = `passed`；
+- usage_cost_gate = `passed`；
+- total_cost_cny = 2.42502；
+- tracked summary and parsed reviews do not store raw response text.
+
+Label-conditioned audit result：
+
+- Qwen accepted precision = 47.06%；
+- Qwen correct recall = 80.00%；
+- Qwen false accept rate = 24.32%；
+- Qwen false reject rate = 20.00%；
+- Qwen false accepts = 9；
+- Qwen false rejects = 2；
+- Qwen exactly matches tool-only baseline:
+  - delta false accepts vs tool = 0；
+  - delta false rejects vs tool = 0；
+  - delta accepted total vs tool = 0；
+  - delta escalated total vs tool = 0；
+- opportunity correction:
+  - tool false accepts corrected to reject = 0/9；
+  - tool false accepts repeated as accept = 9/9；
+  - tool false rejects corrected to accept = 0/2；
+  - tool false rejects repeated as reject = 2/2。
+
+当前结论：
+
+- 这是 Qwen 在 EVP-8-HARD E6 上的负向结果；
+- Qwen 没有提供超出 deterministic tool-only baseline 的独立纠错能力；
+- 论文中不能把该结果写成 LLM verifier 改善 hard-case patch verification；
+- 更稳妥的说法是：在当前强结构化 E6 tool-summary evidence 下，Qwen 复制了工具
+  baseline 的 accept/reject 边界，并继承了所有已知工具错误；
+- DeepSeek 尚未运行，需要单独授权后才能判断这是 Qwen 特有现象，还是 E6
+  evidence construction 导致的普遍现象。

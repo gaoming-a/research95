@@ -3549,3 +3549,21 @@ This file starts fresh for the patch-verification project.
 - The execution packet remains a handoff artifact, not permission. Keep
   `execution_authorized_by_packet=false` and require a separate explicit user
   command before model API calls.
+
+## 2026-06-29 EVP-8-HARD Qwen hard-case result
+
+- A hard-case cohort can expose lack of LLM-added value. Here the tool baseline
+  had 11 actionable opportunity cases, but Qwen repeated all 9 tool false
+  accepts and both tool false rejects.
+- Matching the tool baseline is not a failed execution; it is a negative
+  experimental result. Report it as evidence that Qwen did not act as an
+  independent verifier under the current E6 tool-summary construction.
+- Keep "run gate passed" separate from "research claim supported." The Qwen
+  run was complete and parse-valid, but it does not support a claim that LLM
+  verification improves hard-case patch acceptance.
+- After one model exactly mirrors the tool boundary, the next scientific
+  question is model dependence: run DeepSeek only with explicit authorization
+  and compare whether it escalates/corrects tool opportunity cases.
+- `data/reviews` is ignored by the broad `data/*` rule. Force-add only
+  raw-output-free summaries and parsed review JSONL files after scanning for
+  raw fields; keep ignored raw responses and runner logs under `outputs/`.
