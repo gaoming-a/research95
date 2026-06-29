@@ -19,6 +19,7 @@ The current SQJ route has these tracked, regenerable source-package components:
 - SQJ figure directory: `docs/figures/sqj/`
 - SQJ source-package checklist: `docs/artifact/sqj_submission_checklist.md`
 - SQJ checklist audit: `scripts/audit_sqj_submission_checklist.py`
+- SQJ human-input gate audit: `scripts/audit_sqj_human_inputs_gate.py`
 - SQJ PDF compile gate audit: `scripts/audit_sqj_pdf_compile_gate.py`
 
 The manuscript-facing SQJ figure set is:
@@ -52,6 +53,9 @@ Final freeze is blocked until all of the following are resolved:
 - final SQJ-specific figure placement and caption audit after PDF compilation;
 - author information, funding, acknowledgements, and competing-interest
   confirmation;
+- current human-input gate status `blocked_missing_human_inputs` until author,
+  affiliation, funding, competing-interest, acknowledgement, and contribution
+  statements are provided or confirmed;
 - final artifact package rebuild and audit;
 - final user authorization to submit.
 
@@ -82,6 +86,7 @@ python scripts\write_paper_tables.py
 python scripts\generate_sqj_figures.py
 python scripts\write_sqj_latex_draft.py --check
 python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md
+python scripts\audit_sqj_human_inputs_gate.py --out-json outputs\sqj_human_inputs_gate\latest.json --out-md outputs\sqj_human_inputs_gate\latest.md
 python scripts\audit_sqj_pdf_compile_gate.py --out-json outputs\sqj_pdf_compile_gate\latest.json --out-md outputs\sqj_pdf_compile_gate\latest.md
 python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md
 python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md

@@ -87,6 +87,7 @@ python scripts\write_paper_tables.py
 python scripts\generate_sqj_figures.py
 python scripts\write_sqj_latex_draft.py --check
 python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md
+python scripts\audit_sqj_human_inputs_gate.py --out-json outputs\sqj_human_inputs_gate\latest.json --out-md outputs\sqj_human_inputs_gate\latest.md
 python scripts\audit_sqj_pdf_compile_gate.py --out-json outputs\sqj_pdf_compile_gate\latest.json --out-md outputs\sqj_pdf_compile_gate\latest.md
 python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md
 python scripts\summarize_evp8_five_model_synthesis.py --check
@@ -100,6 +101,9 @@ python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\l
 - SQJ source draft regenerates from tracked inputs.
 - SQJ figures regenerate from tracked synthesis and cost summaries.
 - SQJ checklist audit passes.
+- SQJ human-input gate audit passes while keeping the human-input status blocked
+  as `blocked_missing_human_inputs` until author and submission metadata are
+  provided or confirmed.
 - SQJ PDF compile gate audit passes while keeping the compile status blocked
   unless `sn-jnl.cls` is actually available.
 - SQJ final-freeze readiness audit passes.

@@ -4024,3 +4024,18 @@ This file starts fresh for the patch-verification project.
 - The same gate should become the real compile gate once the class is available:
   run two `pdflatex` passes into ignored `outputs/sqj_pdf_compile/` and require
   a non-empty PDF before any final-freeze claim.
+
+## 2026-06-30 SQJ human-input gate preflight
+
+- Do not fill submission metadata from inference. Author names, affiliations,
+  email, funding, acknowledgements, competing-interest confirmation, and author
+  contributions are human inputs. The safe automated action is to detect
+  placeholders and keep final freeze blocked.
+- Placeholder detection in LaTeX sources must normalize whitespace. The first
+  human-input gate missed the competing-interest confirmation sentence because
+  LaTeX wrapped `confirmed` and `before submission` across a newline. Normalize
+  whitespace before matching blocker snippets.
+- A passing human-input gate audit does not mean human inputs are complete. In
+  the current SQJ draft the audit passes while reporting
+  `gate_status=blocked_missing_human_inputs`; that means the blocker is
+  explicit and machine-readable.
