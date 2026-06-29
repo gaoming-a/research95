@@ -32,6 +32,7 @@ import run_evp8_deepseek_qwen_smoke as evp8_core  # noqa: E402
 DEFAULT_CONFIG = REPO_ROOT / "configs" / "evp8_hard_qwen_deepseek.example.json"
 DEFAULT_CHECK_SUMMARY_OUT = REPO_ROOT / "data" / "protocols" / "evp8_hard_qwen_deepseek_check_only_v0_1.json"
 DEFAULT_EXEC_SUMMARY_DIR = REPO_ROOT / "data" / "reviews"
+DEFAULT_REVIEW_RECORD_DIR = REPO_ROOT / "data" / "reviews"
 COHORT_ID = "EVP-8-HARD"
 EVIDENCE_LEVEL = "E6"
 FORBIDDEN_PACKET_MARKERS = evp8_core.FORBIDDEN_MARKERS + (
@@ -61,6 +62,14 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
 def write_json(path: Path, value: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        "".join(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in rows),
+        encoding="utf-8",
+    )
 
 
 def append_jsonl_record(handle: Any, record: dict[str, Any]) -> None:
@@ -309,11 +318,18 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
     output_dir = resolve((config.get("full") or {})["output_dir"]) / evp8_core.safe_name(str(model_config["model_id"]))
     raw_out = args.raw_out or output_dir / "raw_responses.jsonl"
     summary_out = args.summary_out or DEFAULT_EXEC_SUMMARY_DIR / f"evp8_hard_{evp8_core.safe_name(str(model_config['model_id']))}_full_summary.json"
+    parsed_reviews_out = (
+        args.parsed_reviews_out
+        if getattr(args, "parsed_reviews_out", None)
+        else DEFAULT_REVIEW_RECORD_DIR / f"evp8_hard_{evp8_core.safe_name(str(model_config['model_id']))}_full_reviews.jsonl"
+    )
     if config.get("overwrite_policy") == "refuse_if_output_exists":
         if summary_out.exists():
             raise SystemExit(f"Refusing to overwrite summary: {display_path(summary_out)}")
         if raw_out.exists():
             raise SystemExit(f"Refusing to overwrite raw output: {display_path(raw_out)}")
+        if parsed_reviews_out.exists():
+            raise SystemExit(f"Refusing to overwrite parsed reviews: {display_path(parsed_reviews_out)}")
     client = client_for(str(model_config["provider_route"]))
     parsed_records: list[dict[str, Any]] = []
     raw_out.parent.mkdir(parents=True, exist_ok=True)
@@ -349,6 +365,7 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
             parsed_records.append(parsed_record_from_raw(raw_record, spec, model_config))
     cost = evp8_core.aggregate_cost(parsed_records)
     parse_valid_count = sum(1 for record in parsed_records if record["parse_status"] == "valid")
+    write_jsonl(parsed_reviews_out, parsed_records)
     summary = {
         "analysis_id": "evp8_hard_qwen_deepseek_full_summary_v0_1",
         "mode": "executed",
@@ -357,7 +374,9 @@ def execute(args: argparse.Namespace) -> dict[str, Any]:
         "request_model_id": model_config["request_model_id"],
         "provider_route": model_config["provider_route"],
         "raw_responses_out": display_path(raw_out),
+        "parsed_reviews_out": display_path(parsed_reviews_out),
         "raw_response_text_stored_in_tracked_summary": False,
+        "raw_response_text_stored_in_parsed_reviews": False,
         "review_count": len(parsed_records),
         "parse_valid_count": parse_valid_count,
         "invalid_parse_count": len(parsed_records) - parse_valid_count,
@@ -395,6 +414,10 @@ def parsed_record_from_raw(raw_record: dict[str, Any], spec: dict[str, Any], mod
         "decision": parsed.get("decision"),
         "risk_flags": parsed.get("risk_flags") or [],
         "human_review_needed": parsed.get("human_review_needed"),
+        "confidence": parsed.get("confidence"),
+        "primary_reason": parsed.get("primary_reason"),
+        "evidence_used": parsed.get("evidence_used") or [],
+        "visible_contradictions": parsed.get("visible_contradictions") or [],
         "request_model_id": model_config["request_model_id"],
         "configured_model_id": model_config["model_id"],
         "actual_model_id": raw_record.get("actual_model_id") or response.get("model"),
@@ -428,6 +451,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model-id")
     parser.add_argument("--summary-out", type=Path)
     parser.add_argument("--raw-out", type=Path)
+    parser.add_argument("--parsed-reviews-out", type=Path)
     return parser.parse_args()
 
 

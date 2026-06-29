@@ -347,11 +347,22 @@
   ignored copy is `configs/evp8_hard_qwen_deepseek.local.json`.
 - `../scripts/run_evp8_hard_qwen_deepseek.py`: guarded hard-case Qwen/DeepSeek
   runner. Default use is `--check-only`; real API execution requires an
-  ignored local config, `--execute`, and a configured model id.
+  ignored local config, `--execute`, and a configured model id. Executed runs
+  write ignored raw responses plus tracked raw-output-free parsed review JSONL
+  records for later analysis.
 - `../data/protocols/evp8_hard_qwen_deepseek_check_only_v0_1.json`:
   raw-output-free hard-case Qwen/DeepSeek check-only summary. Current status is
   `passed`: 47 E6 packets per model, prompt boundary clean, schema rule clean,
   Qwen/DeepSeek key names present in `.env`, no API calls attempted.
+- `../scripts/audit_evp8_hard_qwen_deepseek_results.py`: raw-output-free
+  result audit for future EVP-8-HARD Qwen/DeepSeek parsed reviews. Before
+  model execution it writes a waiting summary; after execution it joins parsed
+  decisions with evaluator-only labels and the tool-only baseline.
+- `../data/protocols/evp8_hard_qwen_deepseek_result_audit_v0_1.json`:
+  current hard-case result audit. Status is `waiting_for_model_results`; the
+  audit itself makes no API calls, reads no raw responses, and currently
+  reports the tool-only baseline as 17 accepts, 30 rejects, 9 false accepts,
+  and 2 false rejects.
 - `../data/protocols/evp8_later_model_openrouter_catalog_audit_v0_1.json`:
   no-key public OpenRouter catalog audit for the G7 later-model pinned IDs:
   `moonshotai/kimi-k2.6`, `mistralai/devstral-2512`, and

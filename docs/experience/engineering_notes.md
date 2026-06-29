@@ -3517,3 +3517,19 @@ This file starts fresh for the patch-verification project.
 - The tracked example config is safe to commit and must refuse execution.
   Execution requires the ignored local config plus explicit user authorization,
   `--execute`, and a model id.
+
+## 2026-06-29 EVP-8-HARD parsed-review audit boundary
+
+- Do not wait until after API execution to design the analysis artifact. If the
+  runner only writes aggregate summaries and ignored raw responses, later
+  label-conditioned analysis is forced to read raw outputs.
+- The execution path should write a separate parsed review JSONL containing
+  only schema fields and usage/cost metadata. Keep `raw_response_text`,
+  provider response objects, rendered prompts, hidden labels, and hidden oracle
+  outcomes out of this tracked file.
+- A result audit can be useful before model execution. It should report
+  `waiting_for_model_results` and still verify the tool baseline, evaluator
+  labels, and no-raw-output boundary instead of treating absent model results
+  as an execution failure.
+- CLI option names with hyphens become underscore attributes in `argparse`.
+  Use `args.parsed_reviews_out`, not `args.parsed-reviews-out`.

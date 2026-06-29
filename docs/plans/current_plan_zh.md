@@ -18812,3 +18812,44 @@ Next:
 - EVP-8-HARD 已完成 Qwen/DeepSeek API 授权前的本地 check-only；
 - 下一步若继续实验，需要用户明确授权模型 API；
 - 未获授权前不得执行 `--execute`。
+
+## 2026-06-29 EVP-8-HARD parsed-review audit boundary
+
+本轮目标：
+
+- 不调用模型 API；
+- 修复 hard-case runner，使真实执行后除 ignored raw responses 外，还写出
+  tracked、raw-output-free 的 parsed review JSONL；
+- 新增结果审计脚本，使后续 Qwen/DeepSeek 结果能直接和 evaluator-only
+  labels、tool-only baseline 对齐；
+- 在模型结果尚未生成时，审计脚本必须输出明确的
+  `waiting_for_model_results`，不能误报为实验失败。
+
+执行结果：
+
+- `scripts/run_evp8_hard_qwen_deepseek.py` 现在支持
+  `--parsed-reviews-out`，默认写入
+  `data/reviews/evp8_hard_<model>_full_reviews.jsonl`；
+- parsed review 只包含结构化字段，例如 decision、risk flags、confidence、
+  primary reason、evidence used、visible contradictions、model/cost/usage metadata；
+- parsed review 明确不保存 `raw_response_text`、provider response object 或
+  rendered prompt；
+- 新增 `scripts/audit_evp8_hard_qwen_deepseek_results.py`；
+- 当前审计输出为
+  `data/protocols/evp8_hard_qwen_deepseek_result_audit_v0_1.json`，
+  状态为 `waiting_for_model_results`；
+- 审计脚本在 waiting 状态下复现 tool-only baseline：
+  `accept=17, reject=30`，false accepts = 9，false rejects = 2，
+  accepted precision = 47.06%，correct recall = 80.00%，false accept rate =
+  24.32%；
+- 最小验证已通过：
+  - `python -m py_compile scripts\run_evp8_hard_qwen_deepseek.py scripts\audit_evp8_hard_qwen_deepseek_results.py`
+  - `python scripts\run_evp8_hard_qwen_deepseek.py --check-only --config configs\evp8_hard_qwen_deepseek.local.json --summary-out data\protocols\evp8_hard_qwen_deepseek_check_only_v0_1.json`
+  - `python scripts\audit_evp8_hard_qwen_deepseek_results.py --out data\protocols\evp8_hard_qwen_deepseek_result_audit_v0_1.json`
+
+当前结论：
+
+- EVP-8-HARD 的 no-API 执行链路已经具备后续统计所需的 raw-output-free
+  结果入口；
+- 下一步如要产生 Qwen/DeepSeek 真实结果，仍必须由用户明确授权 API；
+- 授权后建议先跑 Qwen，再 rerun 审计；DeepSeek 可作为第二个模型复现。
