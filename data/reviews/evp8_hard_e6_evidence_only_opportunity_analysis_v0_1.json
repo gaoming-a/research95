@@ -1,6 +1,6 @@
 {
   "analysis_id": "evp8_hard_e6_evidence_only_opportunity_analysis_v0_1",
-  "analysis_status": "waiting_for_model_results",
+  "analysis_status": "passed",
   "api_call_attempted": false,
   "checks": [
     {
@@ -30,14 +30,280 @@
     }
   ],
   "cohort_id": "EVP-8-HARD",
-  "existing_parsed_reviews": [],
+  "existing_parsed_reviews": [
+    "data/reviews/evp8_hard_e6_evidence_only_qwen_qwen3.7-max_full_reviews.jsonl",
+    "data/reviews/evp8_hard_e6_evidence_only_deepseek_deepseek-v4-pro_full_reviews.jsonl"
+  ],
   "expected_parsed_reviews": [
     "data/reviews/evp8_hard_e6_evidence_only_qwen_qwen3.7-max_full_reviews.jsonl",
     "data/reviews/evp8_hard_e6_evidence_only_deepseek_deepseek-v4-pro_full_reviews.jsonl"
   ],
   "false_accept_analysis": "data/reviews/evp8_hard_false_accept_case_analysis_v0_1.json",
-  "models": {},
-  "next_step": "Run authorized EVP-8-HARD E6-evidence-only Qwen API, then rerun this analysis.",
+  "models": {
+    "deepseek/deepseek-v4-pro": {
+      "cases": [
+        {
+          "candidate_id": "evp8_hard_candidate_0001",
+          "human_review_needed": true,
+          "new_decision": "escalate",
+          "old_decision": "accept",
+          "primary_reason": "Visible evidence is insufficient to confirm correctness: only one test passed, no regression tests, and no static analysis or broader diagnostics were run.",
+          "risk_flags": [
+            "insufficient_evidence"
+          ],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_errno_fallback_blind_spot",
+          "transition": "accept->escalate"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0002",
+          "human_review_needed": true,
+          "new_decision": "escalate",
+          "old_decision": "accept",
+          "primary_reason": "Visible evidence shows only one test passed, but no regression tests or static checks were run, making the evidence insufficient to confirm the patch is safe.",
+          "risk_flags": [
+            "insufficient_evidence"
+          ],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_errno_fallback_blind_spot",
+          "transition": "accept->escalate"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0003",
+          "human_review_needed": true,
+          "new_decision": "escalate",
+          "old_decision": "accept",
+          "primary_reason": "Visible evidence is insufficient: only one fail-to-pass test passed, no pass-to-pass regression tests were run, and no static analysis or broader diagnostics were performed.",
+          "risk_flags": [
+            "insufficient_evidence"
+          ],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_errno_fallback_blind_spot",
+          "transition": "accept->escalate"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0008",
+          "human_review_needed": false,
+          "new_decision": "accept",
+          "old_decision": "accept",
+          "primary_reason": "Patch applies cleanly, the single fail-to-pass test passes, and no visible contradictions or failures are present.",
+          "risk_flags": [],
+          "task_id": "bugsinpy_httpie_2",
+          "theme": "agent_plausible_wrong_httpie_2",
+          "transition": "accept->accept"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0009",
+          "human_review_needed": false,
+          "new_decision": "accept",
+          "old_decision": "accept",
+          "primary_reason": "Patch applied cleanly and the single visible fail-to-pass test passed with no visible contradictions.",
+          "risk_flags": [],
+          "task_id": "bugsinpy_httpie_2",
+          "theme": "agent_plausible_wrong_httpie_2",
+          "transition": "accept->accept"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0010",
+          "human_review_needed": false,
+          "new_decision": "accept",
+          "old_decision": "accept",
+          "primary_reason": "Patch applies cleanly, the single fail-to-pass test passes, and no visible contradictions or failures exist.",
+          "risk_flags": [],
+          "task_id": "bugsinpy_httpie_3",
+          "theme": "agent_plausible_wrong_httpie_3",
+          "transition": "accept->accept"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0011",
+          "human_review_needed": true,
+          "new_decision": "escalate",
+          "old_decision": "accept",
+          "primary_reason": "Visible evidence is insufficient for a safe merge decision: only one fail-to-pass test is visible, no pass-to-pass regression tests are materialized, and broader tool diagnostics are not run, leaving potential regressions unverified.",
+          "risk_flags": [
+            "insufficient_evidence"
+          ],
+          "task_id": "bugsinpy_httpie_3",
+          "theme": "agent_plausible_wrong_httpie_3",
+          "transition": "accept->escalate"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0012",
+          "human_review_needed": false,
+          "new_decision": "accept",
+          "old_decision": "accept",
+          "primary_reason": "Patch applies cleanly, the single fail-to-pass test passes, and no visible contradictions or failures exist.",
+          "risk_flags": [],
+          "task_id": "bugsinpy_httpie_4",
+          "theme": "agent_plausible_wrong_httpie_4",
+          "transition": "accept->accept"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0022",
+          "human_review_needed": true,
+          "new_decision": "escalate",
+          "old_decision": "accept",
+          "primary_reason": "Visible evidence is insufficient to confirm correctness: only one test passed, no regression tests, no static checks, and the patch introduces new functions without visible validation of edge cases or integration.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "visible_regression_risk"
+          ],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_unique_filename_blind_spot",
+          "transition": "accept->escalate"
+        }
+      ],
+      "decision_counts_on_opportunity_set": {
+        "accept": 4,
+        "escalate": 5
+      },
+      "escalated": 5,
+      "invalid_or_missing": 0,
+      "missing_opportunity_ids": [],
+      "model_id": "deepseek/deepseek-v4-pro",
+      "nonempty_risk_flags": 5,
+      "opportunity_record_count": 9,
+      "parsed_reviews_path": "data/reviews/evp8_hard_e6_evidence_only_deepseek_deepseek-v4-pro_full_reviews.jsonl",
+      "raw_field_findings": [],
+      "repeated_accept": 4,
+      "review_count": 47,
+      "safe_handled_by_reject_or_escalate": 5,
+      "strict_corrected_to_reject": 0,
+      "transition_counts": {
+        "accept->accept": 4,
+        "accept->escalate": 5
+      }
+    },
+    "qwen/qwen3.7-max": {
+      "cases": [
+        {
+          "candidate_id": "evp8_hard_candidate_0001",
+          "human_review_needed": false,
+          "new_decision": "accept",
+          "old_decision": "accept",
+          "primary_reason": "The patch applies cleanly, implements a logical solution for filename trimming and unique filename generation to resolve the issue, and the visible fail-to-pass test passes without any contradictions.",
+          "risk_flags": [],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_errno_fallback_blind_spot",
+          "transition": "accept->accept"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0002",
+          "human_review_needed": true,
+          "new_decision": "escalate",
+          "old_decision": "accept",
+          "primary_reason": "Pass-to-pass regression evidence is not materialized, leaving potential regressions unverified.",
+          "risk_flags": [
+            "insufficient_evidence"
+          ],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_errno_fallback_blind_spot",
+          "transition": "accept->escalate"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0003",
+          "human_review_needed": true,
+          "new_decision": "escalate",
+          "old_decision": "accept",
+          "primary_reason": "Pass-to-pass regression tests are not materialized, and the patch introduces a potential cross-platform crash by using the Unix-only os.pathconf without catching AttributeError, along with an unused errno import.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "visible_regression_risk"
+          ],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_errno_fallback_blind_spot",
+          "transition": "accept->escalate"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0008",
+          "human_review_needed": false,
+          "new_decision": "accept",
+          "old_decision": "accept",
+          "primary_reason": "The patch applies cleanly and the visible fail-to-pass test verifying the max redirects behavior passes, directly resolving the reported issue without any visible contradictions.",
+          "risk_flags": [],
+          "task_id": "bugsinpy_httpie_2",
+          "theme": "agent_plausible_wrong_httpie_2",
+          "transition": "accept->accept"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0009",
+          "human_review_needed": false,
+          "new_decision": "accept",
+          "old_decision": "accept",
+          "primary_reason": "The patch applies cleanly, directly addresses the issue by assigning max_redirects to the requests session, and the visible fail-to-pass test passes without any contradictions.",
+          "risk_flags": [],
+          "task_id": "bugsinpy_httpie_2",
+          "theme": "agent_plausible_wrong_httpie_2",
+          "transition": "accept->accept"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0010",
+          "human_review_needed": false,
+          "new_decision": "accept",
+          "old_decision": "accept",
+          "primary_reason": "The patch correctly adds a None check to ignore explicitly unset header values, applies cleanly, and the visible fail-to-pass test passes with no visible contradictions.",
+          "risk_flags": [],
+          "task_id": "bugsinpy_httpie_3",
+          "theme": "agent_plausible_wrong_httpie_3",
+          "transition": "accept->accept"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0011",
+          "human_review_needed": false,
+          "new_decision": "accept",
+          "old_decision": "accept",
+          "primary_reason": "The patch applies successfully, directly resolves the issue by skipping None values in request headers, and the visible fail-to-pass test passes with no contradictions in the merge-gate summary.",
+          "risk_flags": [],
+          "task_id": "bugsinpy_httpie_3",
+          "theme": "agent_plausible_wrong_httpie_3",
+          "transition": "accept->accept"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0012",
+          "human_review_needed": false,
+          "new_decision": "accept",
+          "old_decision": "accept",
+          "primary_reason": "The patch applies successfully, correctly implements a case-insensitive check for the Host header to prevent duplication, and the visible fail-to-pass test passes without contradictions.",
+          "risk_flags": [],
+          "task_id": "bugsinpy_httpie_4",
+          "theme": "agent_plausible_wrong_httpie_4",
+          "transition": "accept->accept"
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0022",
+          "human_review_needed": false,
+          "new_decision": "accept",
+          "old_decision": "accept",
+          "primary_reason": "The patch applies successfully and the visible fail-to-pass test passes with no visible contradictions or diagnostic failures.",
+          "risk_flags": [],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_unique_filename_blind_spot",
+          "transition": "accept->accept"
+        }
+      ],
+      "decision_counts_on_opportunity_set": {
+        "accept": 7,
+        "escalate": 2
+      },
+      "escalated": 2,
+      "invalid_or_missing": 0,
+      "missing_opportunity_ids": [],
+      "model_id": "qwen/qwen3.7-max",
+      "nonempty_risk_flags": 2,
+      "opportunity_record_count": 9,
+      "parsed_reviews_path": "data/reviews/evp8_hard_e6_evidence_only_qwen_qwen3.7-max_full_reviews.jsonl",
+      "raw_field_findings": [],
+      "repeated_accept": 7,
+      "review_count": 47,
+      "safe_handled_by_reject_or_escalate": 2,
+      "strict_corrected_to_reject": 0,
+      "transition_counts": {
+        "accept->accept": 7,
+        "accept->escalate": 2
+      }
+    }
+  },
+  "next_step": "Interpret reject/escalate on the nine cases as risk handling, not automatic correctness proof.",
   "opportunity_candidate_ids": [
     "evp8_hard_candidate_0001",
     "evp8_hard_candidate_0002",

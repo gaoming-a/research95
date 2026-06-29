@@ -420,8 +420,9 @@
   opportunity set without authorizing API calls.
 - `../data/protocols/evp8_hard_e6_evidence_only_execution_packet_v0_1.json`:
   tracked execution packet for the evidence-only ablation. Current status is
-  `ready`, with all expected evidence-only outputs absent and
-  `execution_authorized_by_packet=false`. The ignored local config
+  historical `ready`; the authorized Qwen and DeepSeek evidence-only outputs
+  now exist in their separate tracked summary/parsed-review paths, while raw
+  responses remain ignored under `outputs/`. The ignored local config
   `configs/evp8_hard_e6_evidence_only.local.json` exists locally and is not
   committed.
 - `experiments/evp8_hard_e6_evidence_only_execution_packet_v0_1.md`: Markdown
@@ -431,8 +432,25 @@
   execution it writes `waiting_for_model_results`; after Qwen/DeepSeek outputs
   exist it reuses the hard-case audit metric logic on explicit parsed paths.
 - `../data/protocols/evp8_hard_e6_evidence_only_result_audit_v0_1.json`:
-  current evidence-only result audit. Status is `waiting_for_model_results`;
-  no API calls were made and no raw model outputs were read.
+  current evidence-only result audit. Status is `passed` for Qwen and DeepSeek:
+  both models have 47/47 parsed reviews, complete candidate coverage, no raw
+  fields in parsed reviews, and the audit did not read ignored raw outputs.
+- `experiments/evp8_hard_e6_evidence_only_result_v0_1.md`: Markdown result
+  report for the authorized evidence-only ablation. It records whole-cohort
+  metrics, nine-case opportunity-set transitions, cost, and the claim boundary
+  that the result supports risk triage rather than automatic merge gating.
+- `../data/reviews/evp8_hard_e6_evidence_only_qwen_qwen3.7-max_full_summary.json`:
+  tracked raw-output-free Qwen evidence-only summary. Current run gate is
+  `passed`; decisions are accept 15, reject 30, escalate 2.
+- `../data/reviews/evp8_hard_e6_evidence_only_qwen_qwen3.7-max_full_reviews.jsonl`:
+  tracked parsed Qwen evidence-only review records. It contains 47 structured
+  records with no raw response text or provider response object.
+- `../data/reviews/evp8_hard_e6_evidence_only_deepseek_deepseek-v4-pro_full_summary.json`:
+  tracked raw-output-free DeepSeek evidence-only summary. Current run gate is
+  `passed`; decisions are accept 6, reject 30, escalate 11.
+- `../data/reviews/evp8_hard_e6_evidence_only_deepseek_deepseek-v4-pro_full_reviews.jsonl`:
+  tracked parsed DeepSeek evidence-only review records. It contains 47
+  structured records with no raw response text or provider response object.
 - `../scripts/analyze_evp8_hard_e6_evidence_only_opportunity.py`:
   raw-output-free opportunity-set analyzer for future evidence-only results.
   It focuses on the nine false accepts repeated by tool, Qwen E6-full, and
@@ -440,11 +458,12 @@
   flags after evidence-only execution.
 - `../data/reviews/evp8_hard_e6_evidence_only_opportunity_analysis_v0_1.json`:
   current opportunity-set analysis artifact. Status is
-  `waiting_for_model_results`; it fixes the nine candidate IDs and expected
-  evidence-only parsed review paths before API execution.
+  `passed`; Qwen repeats 7/9 known false accepts and escalates 2/9, while
+  DeepSeek repeats 4/9 and escalates 5/9. Neither model strictly rejects any
+  of the nine known false accepts.
 - `experiments/evp8_hard_e6_evidence_only_opportunity_analysis_v0_1.md`:
   Markdown companion for the evidence-only opportunity analysis. It documents
-  the waiting state and the exact post-run question.
+  the post-run nine-case transition table.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

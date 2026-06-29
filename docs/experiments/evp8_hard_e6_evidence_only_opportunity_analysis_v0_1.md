@@ -1,6 +1,6 @@
 # EVP-8-HARD E6 Evidence-Only Opportunity Analysis v0.1
 
-- Status: `waiting_for_model_results`
+- Status: `passed`
 - Opportunity set size: `9`
 - API call attempted: `false`
 - Raw model outputs read: `false`
@@ -12,15 +12,12 @@ Qwen E6-full, and DeepSeek E6-full all falsely accepted. It checks whether
 the evidence-only ablation changes those accept decisions to reject or
 escalate.
 
-## Waiting State
+## Model Results
 
-No evidence-only parsed reviews exist yet. This is the expected
-pre-authorization state.
-
-Expected parsed review files:
-
-- `data/reviews/evp8_hard_e6_evidence_only_qwen_qwen3.7-max_full_reviews.jsonl`
-- `data/reviews/evp8_hard_e6_evidence_only_deepseek_deepseek-v4-pro_full_reviews.jsonl`
+| Model | repeated accept | reject | escalate | safe handled | risk flags |
+|---|---:|---:|---:|---:|---:|
+| deepseek/deepseek-v4-pro | 4 | 0 | 5 | 5 | 5 |
+| qwen/qwen3.7-max | 7 | 0 | 2 | 2 | 2 |
 
 ## Checks
 

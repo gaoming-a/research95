@@ -17,6 +17,13 @@
   environment loading or client construction: it requires the Qwen evidence-only
   summary and parsed reviews to exist, pass run/parse gates, cover 47 unique
   candidates, and match the evidence-only packet variant.
+- After the authorized evidence-only run, Qwen changed 2/9 repeated false
+  accepts to `escalate` and DeepSeek changed 5/9 to `escalate`, but neither
+  model changed any of the nine to `reject`. Treat this as risk triage evidence,
+  not correctness-verification evidence.
+- DeepSeek reduced false accepts more than Qwen, but did so by broad
+  escalation, including six correct patches. Report this tradeoff explicitly
+  instead of presenting lower false-accept rate as a free safety improvement.
 
 ## 2026-06-05 AI execution handoff plan
 
