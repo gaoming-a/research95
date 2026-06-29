@@ -499,6 +499,19 @@
   companion for the realistic/agent source inventory. It records the no-API
   boundary, source status counts, readiness gates, and the block on further API
   execution until new or validated fresh sources exist.
+- `../scripts/plan_evp8_realistic_agent_source_targets.py`: no-API target
+  matrix builder for fresh realistic/agent patch source construction. It reads
+  the stable task registry, current source inventory, and runner-supported
+  source-bug definitions, then selects future generation targets without
+  calling APIs or storing prompt text.
+- `../data/protocols/evp8_realistic_agent_source_target_matrix_v0_1.json`:
+  structured target matrix. Current status is `passed`: 6 non-httpie stable
+  tasks across 3 projects provide 54 planned generation slots, with no patch
+  generation attempted and no candidate manifest created.
+- `experiments/evp8_realistic_agent_source_target_matrix_v0_1.md`: Markdown
+  companion for the target matrix. It records the selected PySnooper,
+  cookiecutter, and tqdm tasks, excludes `httpie_5` as a hard-generation/weak
+  P2P case, and states that generation dry-run must precede any API use.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

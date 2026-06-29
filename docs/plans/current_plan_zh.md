@@ -637,6 +637,76 @@ fresh realistic/agent cohort 前置计数：
   validation，目标是补足至少 50 个 fresh usable candidates、30 个 agent-like
   candidates、25 个 non-trivial hard negatives 和 3 个项目来源。
 
+## 0.15 2026-06-29 realistic agent-patch source target matrix
+
+本轮目标是在 source inventory 发现 fresh candidate 为 0 后，生成一个 no-API
+target matrix：从已完成 project-level P2P-broad 的任务中选择后续 agent-like
+patch generation 的候选任务、项目分布和生成预算。
+
+执行边界：
+
+- 不调用模型 API；
+- 不生成 agent patches；
+- 不构造 realistic cohort manifest；
+- 不修改 generation prompt；
+- 只读取 tracked cohort registry、EVP-7 task manifest 和 source inventory；
+- 输出只包含任务级目标、预算和门禁，不包含 patch diff、prompt text 或 raw
+  response。
+
+验收条件：
+
+- target matrix 覆盖至少 3 个项目；
+- planned generation slots 至少 50；
+- 明确排除或降权已知 hard-generation / weak P2P 任务；
+- 给出后续执行顺序：先 dry-run prompt-boundary，再用户授权真实 generation API，
+  然后 validation/relabel，最后才构造 fresh cohort。
+
+执行结果：
+
+- 新增 `scripts/plan_evp8_realistic_agent_source_targets.py`；
+- 生成 `data/protocols/evp8_realistic_agent_source_target_matrix_v0_1.json`；
+- 生成 `docs/experiments/evp8_realistic_agent_source_target_matrix_v0_1.md`；
+- target matrix status = `passed`；
+- API call attempted = false；
+- patch generation attempted = false；
+- candidate manifest created = false；
+- prompt text stored = false。
+
+target matrix：
+
+- target tasks = 6；
+- target projects = 3；
+- planned generation slots = 54；
+- primary non-httpie slots = 54；
+- secondary httpie slots = 0；
+- project slot counts：
+  - PySnooper = 18；
+  - cookiecutter = 27；
+  - tqdm = 9。
+
+纳入任务：
+
+- `bugsinpy_PySnooper_1`；
+- `bugsinpy_PySnooper_3`；
+- `bugsinpy_cookiecutter_1`；
+- `bugsinpy_cookiecutter_2`；
+- `bugsinpy_cookiecutter_3`；
+- `bugsinpy_tqdm_9`。
+
+排除/暂不纳入：
+
+- `bugsinpy_httpie_5`：known hard-generation case 且 P2P broad size 只有 3；
+- `thefuck`、`youtube-dl` 稳定任务：当前 agent generation runner 未覆盖，
+  不在本轮短路径中扩 runner。
+
+下一步：
+
+- 运行 generation dry-run，只生成 prompt hash/manifest，不调用 API；
+- dry-run 通过后，才可请求或使用用户授权运行 generation API；
+- generation 后必须 validate/relabel，再 rerun source inventory；
+- 只有 fresh gates 通过后，才能构造 realistic evaluator/model-visible
+  cohort，更不能直接跑 verifier API。
+
 ## 1. 研究转向
 
 旧方向试图验证 LLM cross-review 或 agent-style context 是否能让代码审查更可靠。已有结果不支持这个强假设。真正可复用的发现是：

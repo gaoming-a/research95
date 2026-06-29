@@ -1,0 +1,269 @@
+{
+  "analysis_id": "evp8_realistic_agent_source_target_matrix_v0_1",
+  "checks": [
+    {
+      "check": "api_call_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "patch_generation_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "candidate_manifest_not_created",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "prompt_text_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "source_inventory_detected",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "target_project_count_at_least_3",
+      "detail": 3,
+      "passed": true
+    },
+    {
+      "check": "planned_generation_slots_at_least_50",
+      "detail": 54,
+      "passed": true
+    },
+    {
+      "check": "primary_non_httpie_slots_at_least_40",
+      "detail": 54,
+      "passed": true
+    }
+  ],
+  "date": "2026-06-29",
+  "excluded_stable_tasks": [
+    {
+      "project": "httpie",
+      "reason": "known_hard_generation_case_and_p2p_broad_size_3",
+      "runner_supported": true,
+      "task_id": "bugsinpy_httpie_5"
+    },
+    {
+      "project": "thefuck",
+      "reason": "not_supported_by_current_agent_generation_runner",
+      "runner_supported": false,
+      "task_id": "bugsinpy_thefuck_1"
+    },
+    {
+      "project": "youtube-dl",
+      "reason": "not_supported_by_current_agent_generation_runner",
+      "runner_supported": false,
+      "task_id": "bugsinpy_youtube-dl_2"
+    },
+    {
+      "project": "youtube-dl",
+      "reason": "not_supported_by_current_agent_generation_runner",
+      "runner_supported": false,
+      "task_id": "bugsinpy_youtube-dl_4"
+    },
+    {
+      "project": "youtube-dl",
+      "reason": "not_supported_by_current_agent_generation_runner",
+      "runner_supported": false,
+      "task_id": "bugsinpy_youtube-dl_5"
+    },
+    {
+      "project": "youtube-dl",
+      "reason": "not_supported_by_current_agent_generation_runner",
+      "runner_supported": false,
+      "task_id": "bugsinpy_youtube-dl_6"
+    },
+    {
+      "project": "youtube-dl",
+      "reason": "not_supported_by_current_agent_generation_runner",
+      "runner_supported": false,
+      "task_id": "bugsinpy_youtube-dl_7"
+    },
+    {
+      "project": "youtube-dl",
+      "reason": "not_supported_by_current_agent_generation_runner",
+      "runner_supported": false,
+      "task_id": "bugsinpy_youtube-dl_11"
+    },
+    {
+      "project": "youtube-dl",
+      "reason": "not_supported_by_current_agent_generation_runner",
+      "runner_supported": false,
+      "task_id": "bugsinpy_youtube-dl_16"
+    },
+    {
+      "project": "youtube-dl",
+      "reason": "not_supported_by_current_agent_generation_runner",
+      "runner_supported": false,
+      "task_id": "bugsinpy_youtube-dl_17"
+    },
+    {
+      "project": "youtube-dl",
+      "reason": "not_supported_by_current_agent_generation_runner",
+      "runner_supported": false,
+      "task_id": "bugsinpy_youtube-dl_20"
+    },
+    {
+      "project": "youtube-dl",
+      "reason": "not_supported_by_current_agent_generation_runner",
+      "runner_supported": false,
+      "task_id": "bugsinpy_youtube-dl_21"
+    },
+    {
+      "project": "youtube-dl",
+      "reason": "not_supported_by_current_agent_generation_runner",
+      "runner_supported": false,
+      "task_id": "bugsinpy_youtube-dl_23"
+    },
+    {
+      "project": "youtube-dl",
+      "reason": "not_supported_by_current_agent_generation_runner",
+      "runner_supported": false,
+      "task_id": "bugsinpy_youtube-dl_37"
+    },
+    {
+      "project": "youtube-dl",
+      "reason": "not_supported_by_current_agent_generation_runner",
+      "runner_supported": false,
+      "task_id": "bugsinpy_youtube-dl_43"
+    }
+  ],
+  "future_execution_boundary": {
+    "dry_run_required_before_api": true,
+    "next_step": "Run generator dry-run commands first, then seek explicit API authorization for generation only.",
+    "post_generation_required_steps": [
+      "validate generated candidates",
+      "relabel with evaluator-only hidden outcomes",
+      "rerun realistic source inventory",
+      "construct separated evaluator/model-visible cohort only if fresh gates pass"
+    ]
+  },
+  "inputs": {
+    "source_bug_definitions": "scripts/build_patch_verification_dataset.py",
+    "source_inventory": "data/protocols/evp8_realistic_agent_source_inventory_v0_1.json",
+    "task_registry": "data/cohorts/task_cohort_registry.json"
+  },
+  "scope": {
+    "api_call_attempted": false,
+    "candidate_manifest_created": false,
+    "patch_generation_attempted": false,
+    "prompt_text_stored": false,
+    "raw_model_outputs_read": false
+  },
+  "source_inventory_current_counts": {
+    "fresh_agent_like_candidates": 0,
+    "fresh_nontrivial_hard_negatives": 0,
+    "fresh_project_count": 0,
+    "fresh_usable_candidates": 0,
+    "pending_agent_like_candidates": 13,
+    "pending_nontrivial_hard_negatives": 13,
+    "pending_usable_candidates": 13
+  },
+  "strategy": {
+    "primary_patches_per_task": 9,
+    "primary_projects": [
+      "PySnooper",
+      "cookiecutter",
+      "luigi",
+      "tqdm"
+    ],
+    "rationale": "Use non-httpie stable P2P tasks as the main source of new agent-like patches, then add a capped httpie slice only if the non-httpie runner-supported pool cannot reach the 50-slot source target. The current shortest path uses a larger bounded variant budget on the six runner-supported non-httpie tasks instead of expanding the generation runner in this step.",
+    "secondary_patches_per_task": 3,
+    "secondary_projects": [
+      "httpie"
+    ]
+  },
+  "target_matrix_status": "passed",
+  "target_summary": {
+    "planned_generation_slots": 54,
+    "primary_non_httpie_slots": 54,
+    "project_slot_counts": {
+      "PySnooper": 18,
+      "cookiecutter": 27,
+      "tqdm": 9
+    },
+    "project_task_counts": {
+      "PySnooper": 2,
+      "cookiecutter": 3,
+      "tqdm": 1
+    },
+    "secondary_httpie_slots": 0,
+    "target_project_count": 3,
+    "target_task_count": 6
+  },
+  "targets": [
+    {
+      "existing_candidate_count": 6,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_PySnooper_1_p2p_broad.json",
+      "p2p_broad_size": 24,
+      "patches_per_task": 9,
+      "planned_generation_slots": 9,
+      "priority": "primary_non_httpie",
+      "project": "PySnooper",
+      "task_id": "bugsinpy_PySnooper_1",
+      "test_framework": "pytest"
+    },
+    {
+      "existing_candidate_count": 4,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_PySnooper_3_p2p_broad.json",
+      "p2p_broad_size": 4,
+      "patches_per_task": 9,
+      "planned_generation_slots": 9,
+      "priority": "primary_non_httpie",
+      "project": "PySnooper",
+      "task_id": "bugsinpy_PySnooper_3",
+      "test_framework": "pytest"
+    },
+    {
+      "existing_candidate_count": 4,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_1_p2p_broad.json",
+      "p2p_broad_size": 290,
+      "patches_per_task": 9,
+      "planned_generation_slots": 9,
+      "priority": "primary_non_httpie",
+      "project": "cookiecutter",
+      "task_id": "bugsinpy_cookiecutter_1",
+      "test_framework": "pytest"
+    },
+    {
+      "existing_candidate_count": 11,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_2_p2p_broad.json",
+      "p2p_broad_size": 278,
+      "patches_per_task": 9,
+      "planned_generation_slots": 9,
+      "priority": "primary_non_httpie",
+      "project": "cookiecutter",
+      "task_id": "bugsinpy_cookiecutter_2",
+      "test_framework": "pytest"
+    },
+    {
+      "existing_candidate_count": 4,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_cookiecutter_3_p2p_broad.json",
+      "p2p_broad_size": 255,
+      "patches_per_task": 9,
+      "planned_generation_slots": 9,
+      "priority": "primary_non_httpie",
+      "project": "cookiecutter",
+      "task_id": "bugsinpy_cookiecutter_3",
+      "test_framework": "pytest"
+    },
+    {
+      "existing_candidate_count": 7,
+      "p2p_broad_manifest": "data/p2p_scopes/bugsinpy_tqdm_9_p2p_broad.json",
+      "p2p_broad_size": 12,
+      "patches_per_task": 9,
+      "planned_generation_slots": 9,
+      "priority": "primary_non_httpie",
+      "project": "tqdm",
+      "task_id": "bugsinpy_tqdm_9",
+      "test_framework": "pytest"
+    }
+  ]
+}

@@ -3732,3 +3732,19 @@ This file starts fresh for the patch-verification project.
 - Inventory artifacts should store source paths and aggregate counts only.
   Keeping patch diffs and raw responses out of source-readiness reports avoids
   accidental leakage before the model-visible/evaluator-only split is designed.
+
+## 2026-06-29 Realistic agent-patch target matrix
+
+- When the current generation runner supports only a subset of stable tasks,
+  the target matrix must distinguish "stable in registry" from "executable by
+  this runner." Otherwise the plan can silently depend on unsupported tasks.
+- Avoid letting `httpie` dominate the next realistic cohort again. The first
+  target matrix uses six non-httpie runner-supported tasks across PySnooper,
+  cookiecutter, and tqdm for 54 planned slots, and keeps httpie at zero slots.
+- Raising the bounded variant budget on existing runner-supported tasks is the
+  shortest no-API path to a 50-slot generation plan. Extending the runner to
+  thefuck/youtube-dl is a separate task and should only be done if dry-run or
+  generation diversity is inadequate.
+- A target matrix is not generation authorization. It must be followed by a
+  dry-run prompt-boundary check, then explicit generation API authorization,
+  then validation/relabeling before any verifier experiment.
