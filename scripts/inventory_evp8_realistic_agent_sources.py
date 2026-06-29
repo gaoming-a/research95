@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 from collections import Counter, defaultdict
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -75,6 +76,13 @@ def display_path(path: Path) -> str:
         return absolute.relative_to(REPO_ROOT).as_posix()
     except ValueError:
         return str(absolute)
+
+
+def version_from_path(path: Path) -> str:
+    if "_v0_" in path.stem:
+        suffix = path.stem.rsplit("_v0_", 1)[1].split("_", 1)[0]
+        return f"v0.{suffix}"
+    return "v0.1"
 
 
 def check(name: str, passed: bool, detail: Any) -> dict[str, Any]:
@@ -518,7 +526,7 @@ def build_inventory() -> dict[str, Any]:
     ]
     return {
         "analysis_id": "evp8_realistic_agent_source_inventory_v0_1",
-        "date": "2026-06-29",
+        "date": datetime.now().date().isoformat(),
         "scope": {
             "api_call_attempted": False,
             "raw_model_outputs_read": False,
@@ -547,11 +555,11 @@ def write_markdown(path: Path, inventory: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     summary = inventory["source_summary"]
     ready = inventory["readiness"]
-    version = "v0.2" if "_v0_2" in path.name else "v0.1"
+    version = version_from_path(path)
     lines = [
         f"# EVP-8 Realistic Agent-Patch Source Inventory {version}",
         "",
-        "Date: 2026-06-29",
+        f"Date: {inventory['date']}",
         "",
         "This is a no-API Phase 0 inventory for the realistic/agent-patch",
         "follow-up cohort. It scans candidate source files and writes aggregate",

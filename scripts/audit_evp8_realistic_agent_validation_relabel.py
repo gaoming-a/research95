@@ -27,6 +27,13 @@ def display_path(path: Path) -> str:
         return str(path)
 
 
+def version_from_path(path: Path) -> str:
+    if "_v0_" in path.stem:
+        suffix = path.stem.rsplit("_v0_", 1)[1].split("_", 1)[0]
+        return f"v0.{suffix}"
+    return "v0.1"
+
+
 def read_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
@@ -43,10 +50,17 @@ def check(name: str, passed: bool, detail: Any) -> dict[str, Any]:
     return {"check": name, "passed": bool(passed), "detail": detail}
 
 
-def build_audit() -> dict[str, Any]:
+def build_audit(
+    generation_audit_path: Path = GENERATION_AUDIT,
+    validation_dir: Path = VALIDATION_DIR,
+    source_inventory_path: Path = SOURCE_INVENTORY,
+    expected_count: int = EXPECTED_COUNT,
+) -> dict[str, Any]:
+    validation_summary_path = validation_dir / "validation_summary.json"
+    relabel_summary_path = validation_dir / "relabel_summary.json"
     missing = [
         display_path(path)
-        for path in (GENERATION_AUDIT, VALIDATION_SUMMARY, RELABEL_SUMMARY, SOURCE_INVENTORY)
+        for path in (generation_audit_path, validation_summary_path, relabel_summary_path, source_inventory_path)
         if not path.exists()
     ]
     if missing:
@@ -62,21 +76,21 @@ def build_audit() -> dict[str, Any]:
             "next_required_step": "finish validation and relabel before source inventory rerun",
         }
 
-    generation_audit = read_json(GENERATION_AUDIT)
-    validation = read_json(VALIDATION_SUMMARY)
-    relabel = read_json(RELABEL_SUMMARY)
-    inventory = read_json(SOURCE_INVENTORY)
+    generation_audit = read_json(generation_audit_path)
+    validation = read_json(validation_summary_path)
+    relabel = read_json(relabel_summary_path)
+    inventory = read_json(source_inventory_path)
     readiness = inventory["readiness"]
     current_counts = readiness["current_counts"]
     checks = [
         check("generation_audit_passed", generation_audit.get("status") == "passed", generation_audit.get("status")),
-        check("validation_record_count_54", validation.get("record_count") == EXPECTED_COUNT, validation.get("record_count")),
-        check("validation_all_patches_applied", validation.get("patch_applied_count") == EXPECTED_COUNT, validation.get("patch_applied_count")),
-        check("validation_all_oracles_ran", validation.get("oracle_ran_count") == EXPECTED_COUNT, validation.get("oracle_ran_count")),
-        check("relabel_candidate_count_54", relabel.get("candidate_count") == EXPECTED_COUNT, relabel.get("candidate_count")),
+        check("validation_record_count_matches_expected", validation.get("record_count") == expected_count, validation.get("record_count")),
+        check("validation_all_patches_applied", validation.get("patch_applied_count") == expected_count, validation.get("patch_applied_count")),
+        check("validation_all_oracles_ran", validation.get("oracle_ran_count") == expected_count, validation.get("oracle_ran_count")),
+        check("relabel_candidate_count_matches_expected", relabel.get("candidate_count") == expected_count, relabel.get("candidate_count")),
         check("relabel_no_environment_invalid", relabel.get("environment_invalid_count") == 0, relabel.get("environment_invalid_count")),
         check("relabel_ready_for_revalidation", relabel.get("ready_for_revalidation") is True, relabel.get("ready_for_revalidation")),
-        check("source_inventory_v0_2_passed", inventory.get("inventory_status") == "passed", inventory.get("inventory_status")),
+        check("source_inventory_passed", inventory.get("inventory_status") == "passed", inventory.get("inventory_status")),
         check("fresh_agent_like_at_least_30", current_counts.get("fresh_agent_like_candidates", 0) >= 30, current_counts),
         check("fresh_hard_negatives_at_least_25", current_counts.get("fresh_nontrivial_hard_negatives", 0) >= 25, current_counts),
         check("fresh_projects_at_least_3", current_counts.get("fresh_project_count", 0) >= 3, current_counts),
@@ -91,10 +105,10 @@ def build_audit() -> dict[str, Any]:
         "date_utc": datetime.now(timezone.utc).isoformat(),
         "status": status,
         "inputs": {
-            "generation_audit": display_path(GENERATION_AUDIT),
-            "validation_summary": display_path(VALIDATION_SUMMARY),
-            "relabel_summary": display_path(RELABEL_SUMMARY),
-            "source_inventory": display_path(SOURCE_INVENTORY),
+            "generation_audit": display_path(generation_audit_path),
+            "validation_summary": display_path(validation_summary_path),
+            "relabel_summary": display_path(relabel_summary_path),
+            "source_inventory": display_path(source_inventory_path),
         },
         "validation_summary": {
             "record_count": validation.get("record_count"),
@@ -127,16 +141,18 @@ def build_audit() -> dict[str, Any]:
         "prompt_text_stored": False,
         "checks": checks,
         "next_required_step": (
-            "add at least four fresh usable realistic candidates or revise the predeclared Phase 1 count gate "
-            "before constructing the verifier cohort"
+            "construct a separated evaluator/model-visible realistic cohort manifest and visible-tool baseline"
+            if status == "passed"
+            else "add at least four fresh usable realistic candidates or revise the predeclared Phase 1 count gate before constructing the verifier cohort"
         ),
     }
 
 
 def write_markdown(path: Path, audit: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
+    version = version_from_path(path)
     lines = [
-        "# EVP-8 Realistic Agent Validation/Relabel Audit v0.1",
+        f"# EVP-8 Realistic Agent Validation/Relabel Audit {version}",
         "",
         f"- status: `{audit['status']}`",
         f"- raw output content stored: `{str(audit.get('raw_output_content_stored')).lower()}`",
@@ -195,13 +211,22 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out-json", type=Path, default=DEFAULT_JSON_OUT)
     parser.add_argument("--out-md", type=Path, default=DEFAULT_MD_OUT)
+    parser.add_argument("--generation-audit", type=Path, default=GENERATION_AUDIT)
+    parser.add_argument("--validation-dir", type=Path, default=VALIDATION_DIR)
+    parser.add_argument("--source-inventory", type=Path, default=SOURCE_INVENTORY)
+    parser.add_argument("--expected-count", type=int, default=EXPECTED_COUNT)
     parser.add_argument("--check", action="store_true")
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
-    audit = build_audit()
+    audit = build_audit(
+        generation_audit_path=args.generation_audit,
+        validation_dir=args.validation_dir,
+        source_inventory_path=args.source_inventory,
+        expected_count=args.expected_count,
+    )
     write_json(args.out_json, audit)
     write_markdown(args.out_md, audit)
     if args.check and audit["status"] not in {"passed", "passed_needs_more_sources"}:

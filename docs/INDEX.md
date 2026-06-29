@@ -573,6 +573,46 @@
   the 50 fresh-usable gate is not met.
 - `experiments/evp8_realistic_agent_source_inventory_v0_2.md`: Markdown
   companion for the post-relabel source inventory rerun.
+- `../data/protocols/evp8_realistic_agent_generation_dry_run_audit_v0_2.json`
+  and `experiments/evp8_realistic_agent_generation_dry_run_audit_v0_2.md`:
+  no-API supplement_001 dry-run audit for 10 additional Qwen prompts using
+  variant indices 10-11 on five non-`PySnooper_1` tasks.
+- `../data/protocols/evp8_realistic_agent_generation_result_audit_v0_2.json`
+  and `experiments/evp8_realistic_agent_generation_result_audit_v0_2.md`:
+  raw-output-free supplement_001 generation audit. It passed on 10 generated
+  candidates, but later source inventory showed only 2 fresh usable additions
+  because 8 `model_candidate_id` values duplicated historical hard-cohort IDs.
+- `../data/protocols/evp8_realistic_agent_validation_relabel_audit_v0_2.json`
+  and `experiments/evp8_realistic_agent_validation_relabel_audit_v0_2.md`:
+  supplement_001 validation/relabel audit. Status is
+  `passed_needs_more_sources`: 10/10 patches applied, 10/10 oracles ran, all
+  10 relabeled `incorrect`, and source inventory v0.3 reached 48 fresh usable
+  candidates.
+- `../data/protocols/evp8_realistic_agent_source_inventory_v0_3.json` and
+  `experiments/evp8_realistic_agent_source_inventory_v0_3.md`: source
+  inventory after supplement_001. It passes inventory checks but still fails
+  the 50 fresh-usable Phase 1 gate with 48 fresh usable candidates.
+- `../data/protocols/evp8_realistic_agent_generation_dry_run_audit_v0_3.json`
+  and `experiments/evp8_realistic_agent_generation_dry_run_audit_v0_3.md`:
+  no-API supplement_002 dry-run audit for 5 additional Qwen prompts using
+  variant index 12 and globally separated model candidate IDs.
+- `../data/protocols/evp8_realistic_agent_generation_result_audit_v0_3.json`
+  and `experiments/evp8_realistic_agent_generation_result_audit_v0_3.md`:
+  raw-output-free supplement_002 generation audit. It passed on 5 generated
+  candidates after a timed-out API attempt was resumed from the four candidates
+  already written under ignored `outputs/`.
+- `../data/protocols/evp8_realistic_agent_validation_relabel_audit_v0_3.json`
+  and `experiments/evp8_realistic_agent_validation_relabel_audit_v0_3.md`:
+  supplement_002 validation/relabel audit. Current status is `passed`: 5/5
+  patches applied, 5/5 oracles ran, all 5 relabeled `incorrect`, and source
+  inventory v0.4 reaches 53 fresh usable candidates.
+- `../data/protocols/evp8_realistic_agent_source_inventory_v0_4.json` and
+  `experiments/evp8_realistic_agent_source_inventory_v0_4.md`: current
+  realistic source-readiness artifact. Status is `passed`; Phase 1 count gate
+  now passes with 53 fresh usable, 53 fresh agent-like, 53 fresh non-trivial
+  hard negatives across 3 projects. It still does not authorize verifier APIs;
+  the next required step is separated cohort manifest construction and
+  visible-tool baseline/headroom gating.
 - `../scripts/write_evp8_hard_deepseek_after_qwen_packet.py`: no-API
   post-Qwen DeepSeek packet writer. It checks that Qwen summary/audit passed,
   DeepSeek outputs are absent, local config remains ignored, and DeepSeek still

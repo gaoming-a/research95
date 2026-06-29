@@ -63,11 +63,34 @@ def display_path(path: Path) -> str:
         return str(path)
 
 
+def version_from_path(path: Path) -> str:
+    if "_v0_" in path.stem:
+        suffix = path.stem.rsplit("_v0_", 1)[1].split("_", 1)[0]
+        return f"v0.{suffix}"
+    return "v0.1"
+
+
 def check(name: str, passed: bool, detail: Any) -> dict[str, Any]:
     return {"check": name, "passed": bool(passed), "detail": detail}
 
 
-def audit(dry_run_dir: Path) -> dict[str, Any]:
+def parse_expected_task_counts(values: list[str] | None) -> dict[str, int] | None:
+    if not values:
+        return None
+    counts: dict[str, int] = {}
+    for value in values:
+        if "=" not in value:
+            raise ValueError(f"expected task count must use task_id=count format: {value}")
+        task_id, raw_count = value.split("=", 1)
+        counts[task_id] = int(raw_count)
+    return dict(sorted(counts.items()))
+
+
+def audit(
+    dry_run_dir: Path,
+    expected_prompt_count_override: int | None = None,
+    expected_task_counts_override: dict[str, int] | None = None,
+) -> dict[str, Any]:
     target_matrix = read_json(TARGET_MATRIX)
     summary_path = dry_run_dir / "generation_summary.json"
     prompt_manifest_path = dry_run_dir / "prompt_manifest.jsonl"
@@ -80,8 +103,10 @@ def audit(dry_run_dir: Path) -> dict[str, Any]:
     label_checks = Counter(str(row.get("label_leakage_check") or "missing") for row in prompts)
     prompt_hash_missing = sum(1 for row in prompts if not row.get("prompt_sha256"))
     prompt_chars_missing = sum(1 for row in prompts if not row.get("prompt_chars"))
-    expected_prompt_count = int(target_matrix["target_summary"]["planned_generation_slots"])
-    expected_task_counts = {task_id: int(row["planned_generation_slots"]) for task_id, row in target_tasks.items()}
+    expected_prompt_count = expected_prompt_count_override or int(target_matrix["target_summary"]["planned_generation_slots"])
+    expected_task_counts = expected_task_counts_override or {
+        task_id: int(row["planned_generation_slots"]) for task_id, row in target_tasks.items()
+    }
     raw_dir = dry_run_dir / "raw"
     candidates_pending = dry_run_dir / "candidates.pending.jsonl"
     evidence_pending = dry_run_dir / "evidence_packets.pending.jsonl"
@@ -140,8 +165,9 @@ def audit(dry_run_dir: Path) -> dict[str, Any]:
 def write_markdown(path: Path, result: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     summary = result["summary"]
+    version = version_from_path(path)
     lines = [
-        "# EVP-8 Realistic Agent Generation Dry-Run Audit v0.1",
+        f"# EVP-8 Realistic Agent Generation Dry-Run Audit {version}",
         "",
         "Date: 2026-06-29",
         "",
@@ -186,13 +212,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dry-run-dir", type=Path, default=DEFAULT_DRY_RUN_DIR)
     parser.add_argument("--out-json", type=Path, default=DEFAULT_JSON_OUT)
     parser.add_argument("--out-md", type=Path, default=DEFAULT_MD_OUT)
+    parser.add_argument("--expected-prompt-count", type=int, default=None)
+    parser.add_argument("--expected-task-count", action="append", default=None)
     parser.add_argument("--check", action="store_true")
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
-    result = audit(args.dry_run_dir)
+    result = audit(
+        args.dry_run_dir,
+        expected_prompt_count_override=args.expected_prompt_count,
+        expected_task_counts_override=parse_expected_task_counts(args.expected_task_count),
+    )
     write_json(args.out_json, result)
     write_markdown(args.out_md, result)
     if args.check and result["audit_status"] != "passed":

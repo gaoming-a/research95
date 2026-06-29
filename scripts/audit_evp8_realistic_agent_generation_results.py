@@ -56,6 +56,13 @@ def display_path(path: Path) -> str:
         return str(path)
 
 
+def version_from_path(path: Path) -> str:
+    if "_v0_" in path.stem:
+        suffix = path.stem.rsplit("_v0_", 1)[1].split("_", 1)[0]
+        return f"v0.{suffix}"
+    return "v0.1"
+
+
 def read_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
@@ -97,7 +104,26 @@ def field_union(rows: list[dict[str, Any]]) -> set[str]:
     return fields
 
 
-def build_audit(run_dir: Path) -> dict[str, Any]:
+def parse_expected_task_counts(values: list[str] | None) -> dict[str, int] | None:
+    if not values:
+        return None
+    counts: dict[str, int] = {}
+    for value in values:
+        if "=" not in value:
+            raise ValueError(f"expected task count must use task_id=count format: {value}")
+        task_id, raw_count = value.split("=", 1)
+        counts[task_id] = int(raw_count)
+    return dict(sorted(counts.items()))
+
+
+def build_audit(
+    run_dir: Path,
+    expected_run_id: str = EXPECTED_RUN_ID,
+    expected_model: str = EXPECTED_MODEL,
+    expected_provider: str = EXPECTED_PROVIDER,
+    expected_slots: int = PLANNED_SLOTS,
+    expected_task_counts: dict[str, int] | None = None,
+) -> dict[str, Any]:
     run_dir = run_dir.resolve()
     summary_path = run_dir / "generation_summary.json"
     candidate_path = run_dir / "candidates.pending.jsonl"
@@ -108,7 +134,7 @@ def build_audit(run_dir: Path) -> dict[str, Any]:
 
     target_matrix = read_json(TARGET_MATRIX)
     planned_tasks = [target["task_id"] for target in target_matrix["targets"]]
-    planned_task_counts = {task_id: PATCHES_PER_TASK for task_id in planned_tasks}
+    planned_task_counts = expected_task_counts or {task_id: PATCHES_PER_TASK for task_id in planned_tasks}
 
     missing_required_files = [
         display_path(path)
@@ -158,17 +184,17 @@ def build_audit(run_dir: Path) -> dict[str, Any]:
 
     checks = [
         check("generation_error_absent", not error_path.exists(), error_path.exists()),
-        check("summary_run_id_expected", summary.get("run_id") == EXPECTED_RUN_ID, summary.get("run_id")),
-        check("summary_model_expected", summary.get("model") == EXPECTED_MODEL, summary.get("model")),
-        check("summary_provider_expected", summary.get("api_provider") == EXPECTED_PROVIDER, summary.get("api_provider")),
+        check("summary_run_id_expected", summary.get("run_id") == expected_run_id, summary.get("run_id")),
+        check("summary_model_expected", summary.get("model") == expected_model, summary.get("model")),
+        check("summary_provider_expected", summary.get("api_provider") == expected_provider, summary.get("api_provider")),
         check("summary_not_dry_run", summary.get("dry_run") is False, summary.get("dry_run")),
-        check("summary_prompt_count_54", summary.get("prompt_count") == PLANNED_SLOTS, summary.get("prompt_count")),
-        check("summary_candidate_count_54", summary.get("candidate_count") == PLANNED_SLOTS, summary.get("candidate_count")),
-        check("prompt_manifest_count_54", len(prompt_manifest) == PLANNED_SLOTS, len(prompt_manifest)),
-        check("candidate_count_54", len(candidates) == PLANNED_SLOTS, len(candidates)),
-        check("evidence_packet_count_54", len(evidence_packets) == PLANNED_SLOTS, len(evidence_packets)),
-        check("unique_patch_ids_54", len(set(candidate_patch_ids)) == PLANNED_SLOTS, len(set(candidate_patch_ids))),
-        check("unique_model_candidate_ids_54", len(set(model_candidate_ids)) == PLANNED_SLOTS, len(set(model_candidate_ids))),
+        check("summary_prompt_count_matches_expected", summary.get("prompt_count") == expected_slots, summary.get("prompt_count")),
+        check("summary_candidate_count_matches_expected", summary.get("candidate_count") == expected_slots, summary.get("candidate_count")),
+        check("prompt_manifest_count_matches_expected", len(prompt_manifest) == expected_slots, len(prompt_manifest)),
+        check("candidate_count_matches_expected", len(candidates) == expected_slots, len(candidates)),
+        check("evidence_packet_count_matches_expected", len(evidence_packets) == expected_slots, len(evidence_packets)),
+        check("unique_patch_ids_match_expected", len(set(candidate_patch_ids)) == expected_slots, len(set(candidate_patch_ids))),
+        check("unique_model_candidate_ids_match_expected", len(set(model_candidate_ids)) == expected_slots, len(set(model_candidate_ids))),
         check(
             "evidence_candidate_ids_match_model_candidate_ids",
             set(evidence_candidate_ids) == set(model_candidate_ids),
@@ -176,7 +202,7 @@ def build_audit(run_dir: Path) -> dict[str, Any]:
         ),
         check("candidate_task_counts_match_plan", candidate_task_counts == planned_task_counts, candidate_task_counts),
         check("prompt_task_counts_match_plan", prompt_task_counts == planned_task_counts, prompt_task_counts),
-        check("all_labels_pending_validation", label_confidence_counts == {"pending_validation": PLANNED_SLOTS}, label_confidence_counts),
+        check("all_labels_pending_validation", label_confidence_counts == {"pending_validation": expected_slots}, label_confidence_counts),
         check("raw_response_files_at_least_candidates", raw_response_file_count >= len(candidates), raw_response_file_count),
         check("candidate_raw_hashes_present", candidate_raw_ref_count == len(candidates), candidate_raw_ref_count),
         check("prompt_manifest_has_no_payload_fields", not unexpected_prompt_fields, unexpected_prompt_fields),
@@ -200,6 +226,7 @@ def build_audit(run_dir: Path) -> dict[str, Any]:
         },
         "counts": {
             "planned_slots": PLANNED_SLOTS,
+            "expected_task_counts": planned_task_counts,
             "prompt_manifest_records": len(prompt_manifest),
             "candidate_records": len(candidates),
             "evidence_packet_records": len(evidence_packets),
@@ -229,8 +256,9 @@ def build_audit(run_dir: Path) -> dict[str, Any]:
 
 def write_markdown(path: Path, audit: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
+    version = version_from_path(path)
     lines = [
-        "# EVP-8 Realistic Agent Generation Result Audit v0.1",
+        f"# EVP-8 Realistic Agent Generation Result Audit {version}",
         "",
         f"- status: `{audit['status']}`",
         f"- run dir: `{audit['run_dir']}`",
@@ -298,13 +326,25 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--run-dir", type=Path, default=DEFAULT_RUN_DIR)
     parser.add_argument("--out-json", type=Path, default=DEFAULT_JSON_OUT)
     parser.add_argument("--out-md", type=Path, default=DEFAULT_MD_OUT)
+    parser.add_argument("--expected-run-id", default=EXPECTED_RUN_ID)
+    parser.add_argument("--expected-model", default=EXPECTED_MODEL)
+    parser.add_argument("--expected-provider", default=EXPECTED_PROVIDER)
+    parser.add_argument("--expected-slots", type=int, default=PLANNED_SLOTS)
+    parser.add_argument("--expected-task-count", action="append", default=None)
     parser.add_argument("--check", action="store_true")
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
-    audit = build_audit(args.run_dir)
+    audit = build_audit(
+        args.run_dir,
+        expected_run_id=args.expected_run_id,
+        expected_model=args.expected_model,
+        expected_provider=args.expected_provider,
+        expected_slots=args.expected_slots,
+        expected_task_counts=parse_expected_task_counts(args.expected_task_count),
+    )
     write_json(args.out_json, audit)
     write_markdown(args.out_md, audit)
     if args.check and audit["status"] != "passed":

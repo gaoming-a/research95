@@ -363,6 +363,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--source-workspace-root", default=str(source_root_default()))
     parser.add_argument("--task-id", action="append", default=None)
     parser.add_argument("--patches-per-task", type=int, default=2)
+    parser.add_argument("--variant-start-index", type=int, default=1)
+    parser.add_argument("--model-candidate-start-index", type=int, default=None)
     parser.add_argument("--temperature", type=float, default=0.2)
     parser.add_argument("--max-tokens", type=int, default=4096)
     parser.add_argument("--max-source-chars", type=int, default=12000)
@@ -397,9 +399,18 @@ def main() -> None:
     if args.execute:
         load_env_file(args.env)
         client = build_client(args.api_provider)
-    candidate_index = len(candidates) + 1
+    if args.variant_start_index < 1:
+        raise SystemExit("--variant-start-index must be >= 1")
+    if args.model_candidate_start_index is not None and args.model_candidate_start_index < 1:
+        raise SystemExit("--model-candidate-start-index must be >= 1")
+    candidate_index = (
+        args.model_candidate_start_index + len(candidates)
+        if args.model_candidate_start_index is not None
+        else len(candidates) + 1
+    )
     for source_bug in source_bugs:
-        for variant_index in range(1, args.patches_per_task + 1):
+        variant_stop = args.variant_start_index + args.patches_per_task
+        for variant_index in range(args.variant_start_index, variant_stop):
             patch_id = f"{source_bug['task_id']}__agent_patch_{variant_index:02d}"
             if patch_id in existing_patch_ids:
                 continue

@@ -19860,3 +19860,78 @@ Source inventory rerun：
   separated evaluator/model-visible cohort 与 visible-tool baseline；
 - 下一步应先补足 fresh usable gate 或经审计修改 Phase 1 count gate，然后构造 realistic
   cohort manifest。
+
+## 2026-06-30 Realistic agent-patch supplement source gate
+
+本轮目标：
+
+- 不运行 verifier API；
+- 不放宽 Phase 1 gate；
+- 通过少量补充 Qwen agent-patch generation，把 fresh usable candidates 从 46
+  补到至少 50；
+- 补充候选必须使用新的 `patch_id`，不能复用已被 EVP-8-HARD 计入 historical
+  duplicate 的 `bugsinpy_PySnooper_1__agent_patch_01` 到 `08`；
+- 补充生成后必须 validation/relabel，再 rerun source inventory；
+- 只有 source inventory 的 Phase 1 count gate 通过后，才能进入 separated
+  evaluator/model-visible cohort construction。
+
+执行边界：
+
+- 允许在 generation runner 中新增 `--variant-start-index`，默认值保持 1；
+- 补充 run 使用 variant index 10 起步；
+- 优先选择上一轮主要产生 incorrect/hard-negative 的非 `PySnooper_1` 任务；
+- raw responses、workdirs、pending/relabeled candidate JSONL 继续留在 ignored
+  `outputs/`；
+- tracked artifact 只保存 raw-output-free audit、aggregate counts 和 gate 状态。
+
+验收条件：
+
+- supplement generation 完成且无 `generation_error.json`；
+- supplement validation 中 patch apply 和 oracle run 均完成；
+- supplement relabel 无 environment-invalid；
+- source inventory v0.3 的 `fresh_usable_candidates_at_least_50=true`；
+- 若补充后仍不足 50，停止诊断原因，不运行 verifier API。
+
+执行结果：
+
+- 新增 `--variant-start-index` 支持，避免补充 run 复用旧 `patch_id`；
+- 新增 `--model-candidate-start-index` 支持，并修复恢复运行时应按已存在
+  candidates 偏移编号；
+- supplement_001：
+  - dry-run prompt count = 10；
+  - Qwen generation candidates = 10；
+  - validation patch_applied = 10；
+  - oracle_ran = 10；
+  - relabel 后 10 条均为 `incorrect`；
+  - source inventory v0.3 只从 46 提升到 48，因为 `agent_candidate_0001`
+    到 `0008` 与历史 hard cohort 冲突，被 duplicate 规则过滤；
+- supplement_002：
+  - 使用 variant index 12；
+  - 使用 model candidate id 起点 2001；
+  - 首次执行在第 5 个 API 请求超时，已落盘 4 条；
+  - 修复 resume 编号后恢复同一 run，最终 candidates = 5；
+  - validation patch_applied = 5；
+  - oracle_ran = 5；
+  - relabel 后 5 条均为 `incorrect`；
+  - source inventory v0.4 通过 Phase 1 count gate。
+
+最终 gate：
+
+- `data/protocols/evp8_realistic_agent_source_inventory_v0_4.json` 状态为
+  `passed`；
+- fresh usable candidates = 53；
+- fresh agent-like candidates = 53；
+- fresh non-trivial hard negatives = 53；
+- fresh projects = 3；
+- `ready_for_phase1_candidate_curation=true`；
+- `ready_for_api=false`，因为 realistic cohort manifest 和 visible-tool baseline
+  仍未构造。
+
+当前结论：
+
+- Phase 1 source count gate 已达成；
+- 现在不能直接跑 verifier API；
+- 下一步是构造 separated evaluator/model-visible realistic cohort manifest：
+  evaluator manifest 可以引用 relabeled candidates 和 hidden labels；
+  model-visible packet 必须只包含 patch diff、visible context、visible tests 等可见证据；
+  随后先做 visible-tool baseline/headroom gate，再考虑 Qwen/DeepSeek verifier。

@@ -31,13 +31,13 @@
 ## Checks
 
 - generation_audit_passed: passed (passed)
-- validation_record_count_54: passed (54)
+- validation_record_count_matches_expected: passed (54)
 - validation_all_patches_applied: passed (54)
 - validation_all_oracles_ran: passed (54)
-- relabel_candidate_count_54: passed (54)
+- relabel_candidate_count_matches_expected: passed (54)
 - relabel_no_environment_invalid: passed (0)
 - relabel_ready_for_revalidation: passed (True)
-- source_inventory_v0_2_passed: passed (passed)
+- source_inventory_passed: passed (passed)
 - fresh_agent_like_at_least_30: passed ({'fresh_agent_like_candidates': 46, 'fresh_nontrivial_hard_negatives': 46, 'fresh_project_count': 3, 'fresh_usable_candidates': 46, 'pending_agent_like_candidates': 13, 'pending_nontrivial_hard_negatives': 13, 'pending_usable_candidates': 13})
 - fresh_hard_negatives_at_least_25: passed ({'fresh_agent_like_candidates': 46, 'fresh_nontrivial_hard_negatives': 46, 'fresh_project_count': 3, 'fresh_usable_candidates': 46, 'pending_agent_like_candidates': 13, 'pending_nontrivial_hard_negatives': 13, 'pending_usable_candidates': 13})
 - fresh_projects_at_least_3: passed ({'fresh_agent_like_candidates': 46, 'fresh_nontrivial_hard_negatives': 46, 'fresh_project_count': 3, 'fresh_usable_candidates': 46, 'pending_agent_like_candidates': 13, 'pending_nontrivial_hard_negatives': 13, 'pending_usable_candidates': 13})

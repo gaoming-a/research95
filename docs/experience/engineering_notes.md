@@ -3797,3 +3797,25 @@ This file starts fresh for the patch-verification project.
   and 45 incorrect; source inventory then counted only 46 fresh usable
   candidates after duplicate/existing-cohort filtering. Keep the Phase 1 gate
   separate from the generation count.
+
+## 2026-06-30 Realistic agent supplement generation
+
+- Supplement runs need globally unique `patch_id` and `model_candidate_id`
+  values. Reusing a new output directory is not enough, because the inventory
+  duplicate guard checks `model_candidate_id` against historical hard-cohort
+  IDs as well as patch IDs.
+- `--variant-start-index` prevents patch-id collisions, while
+  `--model-candidate-start-index` prevents model-candidate-id collisions.
+  On resume, the model-candidate start must be offset by the number of already
+  persisted candidates; otherwise the resumed candidate can reuse the first
+  ID in the supplement run.
+- API timeouts can occur after some candidates have already been persisted.
+  Before retrying, inspect `prompt_manifest.jsonl`, `candidates.pending.jsonl`,
+  `evidence_packets.pending.jsonl`, and raw-file counts. Resume the same run
+  only after confirming the script will skip existing patch IDs and continue
+  with non-colliding candidate IDs.
+- A supplement generation count is not the same as fresh-source count.
+  supplement_001 generated and validated 10 candidates, but only 2 counted as
+  fresh because 8 model-candidate IDs duplicated historical IDs. supplement_002
+  used separated IDs and added 5/5 fresh usable hard negatives, raising the
+  source gate to 53.

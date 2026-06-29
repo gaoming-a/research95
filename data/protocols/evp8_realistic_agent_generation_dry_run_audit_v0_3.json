@@ -1,0 +1,133 @@
+{
+  "analysis_id": "evp8_realistic_agent_generation_dry_run_audit_v0_1",
+  "audit_status": "passed",
+  "checks": [
+    {
+      "check": "target_matrix_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "dry_run_summary_declares_dry_run",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "api_call_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "patch_generation_not_attempted",
+      "detail": 0,
+      "passed": true
+    },
+    {
+      "check": "prompt_count_matches_target",
+      "detail": {
+        "actual": 5,
+        "expected": 5
+      },
+      "passed": true
+    },
+    {
+      "check": "summary_prompt_count_matches_manifest",
+      "detail": 5,
+      "passed": true
+    },
+    {
+      "check": "target_task_coverage_complete",
+      "detail": [
+        "bugsinpy_PySnooper_3",
+        "bugsinpy_cookiecutter_1",
+        "bugsinpy_cookiecutter_2",
+        "bugsinpy_cookiecutter_3",
+        "bugsinpy_tqdm_9"
+      ],
+      "passed": true
+    },
+    {
+      "check": "per_task_variant_counts_match",
+      "detail": {
+        "bugsinpy_PySnooper_3": 1,
+        "bugsinpy_cookiecutter_1": 1,
+        "bugsinpy_cookiecutter_2": 1,
+        "bugsinpy_cookiecutter_3": 1,
+        "bugsinpy_tqdm_9": 1
+      },
+      "passed": true
+    },
+    {
+      "check": "variant_pairs_unique",
+      "detail": 5,
+      "passed": true
+    },
+    {
+      "check": "label_leakage_checks_passed",
+      "detail": {
+        "passed": 5
+      },
+      "passed": true
+    },
+    {
+      "check": "prompt_hash_present_for_all",
+      "detail": 0,
+      "passed": true
+    },
+    {
+      "check": "prompt_char_count_present_for_all",
+      "detail": 0,
+      "passed": true
+    },
+    {
+      "check": "forbidden_prompt_manifest_keys_absent",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "raw_response_dir_absent",
+      "detail": "outputs\\evp8_realistic_agent_generation_dryrun_supplement_002\\raw",
+      "passed": true
+    },
+    {
+      "check": "candidates_pending_absent_or_empty",
+      "detail": "outputs\\evp8_realistic_agent_generation_dryrun_supplement_002\\candidates.pending.jsonl",
+      "passed": true
+    },
+    {
+      "check": "evidence_packets_pending_absent_or_empty",
+      "detail": "outputs\\evp8_realistic_agent_generation_dryrun_supplement_002\\evidence_packets.pending.jsonl",
+      "passed": true
+    }
+  ],
+  "date": "2026-06-29",
+  "inputs": {
+    "dry_run_dir": "outputs\\evp8_realistic_agent_generation_dryrun_supplement_002",
+    "generation_summary": "outputs\\evp8_realistic_agent_generation_dryrun_supplement_002\\generation_summary.json",
+    "prompt_manifest": "outputs\\evp8_realistic_agent_generation_dryrun_supplement_002\\prompt_manifest.jsonl",
+    "target_matrix": "data/protocols/evp8_realistic_agent_source_target_matrix_v0_1.json"
+  },
+  "next_gate": "Explicit generation API authorization is required before replacing --dry-run with --execute. Generated candidates must then be validated and relabeled before any realistic verifier cohort is built.",
+  "scope": {
+    "api_call_attempted": false,
+    "candidate_manifest_created": false,
+    "patch_text_stored": false,
+    "prompt_text_stored": false,
+    "raw_model_outputs_read": false
+  },
+  "summary": {
+    "api_provider": "qwen_official",
+    "candidate_count": 0,
+    "model": "qwen3.7-max",
+    "prompt_count": 5,
+    "prompt_version": "agent_edit_plan_v1",
+    "run_id": "evp8_realistic_agent_generation_dryrun_supplement_002",
+    "task_counts": {
+      "bugsinpy_PySnooper_3": 1,
+      "bugsinpy_cookiecutter_1": 1,
+      "bugsinpy_cookiecutter_2": 1,
+      "bugsinpy_cookiecutter_3": 1,
+      "bugsinpy_tqdm_9": 1
+    }
+  }
+}
