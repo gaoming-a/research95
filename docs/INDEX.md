@@ -1207,13 +1207,16 @@
   gate, source draft/BibTeX/table/figure package, allowed and forbidden
   claims, no-API boundary, and the fact that this is not a final submission
   freeze. It now explicitly forbids treating the fresh realistic branch as a
-  three-project verifier-ready main experiment.
+  three-project verifier-ready main experiment and records the SQJ PDF compile
+  gate status as `blocked_missing_sn_jnl_cls` until the official Springer
+  Nature class is available.
 - `artifact/sqj_final_freeze_readiness.md`: SQJ final-freeze readiness and
   blocker packet. It records the currently regenerable source package, the
   school-recognition, `sn-jnl.cls`/PDF compile, author/funding/competing
   interest, artifact rebuild, and final user-authorization blockers, and keeps
   submission unauthorized. It carries the same fresh realistic two-project
-  negative-result boundary as the SQJ checklist.
+  negative-result boundary as the SQJ checklist and now embeds the SQJ PDF
+  compile gate audit boundary.
 - `paper/ieee_submission_draft.tex`: historical/source anonymous IEEEtran
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
@@ -1695,11 +1698,16 @@
   APIs, compiling PDF, or marking final submission freeze complete. It also
   checks the fresh realistic branch claim boundary in both the checklist and
   generated source draft.
+- `scripts/audit_sqj_pdf_compile_gate.py`: audits the SQJ `sn-jnl` PDF compile
+  gate. In the current local MiKTeX environment it reports
+  `blocked_missing_sn_jnl_cls`, `compile_attempted=false`, and
+  `pdf_compile_passed=false`; if the official class becomes available, it runs
+  two `pdflatex` passes into ignored `outputs/sqj_pdf_compile/`.
 - `scripts/audit_sqj_final_freeze_readiness.py`: validates the SQJ
   final-freeze readiness packet and its external-blocker boundary without
   calling APIs, compiling PDF, or authorizing submission. It now requires the
   fresh realistic two-project negative-result boundary before readiness can
-  pass.
+  pass and includes the SQJ PDF compile gate audit state.
 - `scripts/generate_paper_figures.py`: generates the publication figure set
   under `docs/figures/` in PDF, SVG, and PNG formats. Figures cover the
   workflow, compact E0/E2/E4/E6 evidence boundary, dataset composition,

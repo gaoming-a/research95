@@ -34,6 +34,7 @@ REQUIRED_SNIPPETS = [
     "this checklist does not guarantee SQJ recognition",
     "Springer Nature `sn-jnl`",
     "PDF compile gate is pending local `sn-jnl.cls` availability.",
+    "`blocked_missing_sn_jnl_cls`",
     "`docs/figures/sqj/sqj_fig1_evp8_protocol.pdf`",
     "`docs/figures/sqj/sqj_fig2_decision_patterns.pdf`",
     "`docs/figures/sqj/sqj_fig3_cost_boundary.pdf`",
@@ -52,6 +53,7 @@ REQUIRED_SNIPPETS = [
     "that the fresh realistic branch is a three-project verifier-ready main experiment",
     "python scripts\\write_sqj_latex_draft.py --check",
     "python scripts\\audit_sqj_submission_checklist.py",
+    "python scripts\\audit_sqj_pdf_compile_gate.py",
     "python scripts\\audit_sqj_final_freeze_readiness.py",
     "This is not a final submission freeze.",
 ]

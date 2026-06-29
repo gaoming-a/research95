@@ -37,7 +37,9 @@ expansion, evidence-level changes, or raw model-response tracking.
   Springer Nature `sn-jnl`
 - PDF compile gate:
   PDF compile gate is pending local `sn-jnl.cls` availability. The current
-  gate validates source structure only.
+  gate validates source structure and compile preflight only. The expected
+  local status is `blocked_missing_sn_jnl_cls` until the official Springer
+  Nature class is installed.
 
 ## SQJ Paper Figures
 
@@ -85,6 +87,7 @@ python scripts\write_paper_tables.py
 python scripts\generate_sqj_figures.py
 python scripts\write_sqj_latex_draft.py --check
 python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md
+python scripts\audit_sqj_pdf_compile_gate.py --out-json outputs\sqj_pdf_compile_gate\latest.json --out-md outputs\sqj_pdf_compile_gate\latest.md
 python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md
 python scripts\summarize_evp8_five_model_synthesis.py --check
 python scripts\summarize_evp8_cost_accounting.py --check
@@ -97,6 +100,8 @@ python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\l
 - SQJ source draft regenerates from tracked inputs.
 - SQJ figures regenerate from tracked synthesis and cost summaries.
 - SQJ checklist audit passes.
+- SQJ PDF compile gate audit passes while keeping the compile status blocked
+  unless `sn-jnl.cls` is actually available.
 - SQJ final-freeze readiness audit passes.
 - EVP-8 five-model synthesis and cost accounting checks pass.
 - Paper readiness and local quality gate pass.

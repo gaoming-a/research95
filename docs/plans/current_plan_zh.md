@@ -21065,3 +21065,69 @@ checklist/readiness 通过后没有破坏全局投稿准备门禁。
 - 但仍不是 final freeze：`sn-jnl.cls`/PDF compile、学校/学院认定、作者/基金/
   利益冲突、最终 artifact rebuild 和用户提交授权仍是外部阻断项；
 - 本轮没有修复失败项，因此不需要新增经验条目或索引入口。
+
+## 2026-06-30 SQJ PDF compile gate preflight
+
+本轮小目标是在不调用 API、不下载或安装 LaTeX 模板的前提下，把 SQJ PDF
+compile gate 从“人工文档说明”推进为可重复执行的机器审计：当前本机
+`kpsewhich sn-jnl.cls` 仍找不到 Springer Nature class，因此本轮只能把该状态
+审计为 `blocked_missing_sn_jnl_cls`，不能声称 PDF compile passed。
+
+执行边界：
+
+- 不运行任何 API；
+- 不下载、安装或替换 `sn-jnl.cls`；
+- 不修改论文实验结果、prompt、tracked summary 或 raw outputs；
+- 不把 PDF compile gate 标记为通过；
+- 不把 SQJ package 标记为 final freeze；
+- 只新增/接入可复现 preflight/compile gate 审计。
+
+验收条件：
+
+- 新增 SQJ PDF compile gate 脚本能在缺少 `sn-jnl.cls` 时返回
+  `gate_status=blocked_missing_sn_jnl_cls` 且 `passed=true`；
+- SQJ checklist/readiness/local quality gate 能读取或执行该审计；
+- `python -m py_compile` 覆盖新增/修改脚本；
+- `python scripts\audit_sqj_pdf_compile_gate.py ...` 通过并明确
+  `compile_attempted=false`；
+- `python scripts\audit_sqj_final_freeze_readiness.py ...` 通过；
+- `python scripts\audit_paper_readiness.py ...` 通过；
+- `python scripts\run_local_quality_gate.py ...` 通过；
+- staged diff 不包含 API key、raw prompt/response、输出目录或 local config。
+
+执行结果：
+
+- 新增 `scripts/audit_sqj_pdf_compile_gate.py`：
+  - 检查 `docs/paper/sqj_submission_draft.tex` 是否存在；
+  - 检查 `pdflatex` 是否可用；
+  - 用 `kpsewhich sn-jnl.cls` 检查 Springer Nature class；
+  - 当前缺少 `sn-jnl.cls` 时返回
+    `gate_status=blocked_missing_sn_jnl_cls`、`compile_attempted=false`、
+    `pdf_compile_passed=false`、`passed=true`；
+  - 若未来 `sn-jnl.cls` 可用，则同一脚本会连续运行两遍 `pdflatex` 并检查
+    输出 PDF。
+- 将该 gate 接入：
+  - `docs/artifact/sqj_submission_checklist.md`；
+  - `docs/artifact/sqj_final_freeze_readiness.md`；
+  - `scripts/audit_sqj_submission_checklist.py`；
+  - `scripts/audit_sqj_final_freeze_readiness.py`；
+  - `scripts/run_local_quality_gate.py`。
+
+验证结果：
+
+- `python -m py_compile scripts\audit_sqj_pdf_compile_gate.py scripts\audit_sqj_final_freeze_readiness.py scripts\audit_sqj_submission_checklist.py scripts\run_local_quality_gate.py`：通过；
+- `python scripts\audit_sqj_pdf_compile_gate.py --out-json outputs\sqj_pdf_compile_gate\latest.json --out-md outputs\sqj_pdf_compile_gate\latest.md`：通过，
+  `gate_status=blocked_missing_sn_jnl_cls`、`compile_attempted=false`、
+  `pdf_compile_passed=false`；
+- `python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md`：通过；
+- `python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md`：通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`：通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`：通过。
+
+当前判断：
+
+- SQJ PDF compile gate 已从人工说明升级为可重复审计；
+- 当前状态不是 compile passed，而是明确 blocked by missing `sn-jnl.cls`；
+- 这让 final-freeze blocker 更可验证，但仍不能进入 final freeze；
+- 下一步如果继续推进 final-freeze，只能在用户提供/安装官方 Springer Nature
+  `sn-jnl.cls` 后重跑该 gate，或转向非外部依赖的 manuscript quality polish。

@@ -6,8 +6,10 @@ from pathlib import Path
 from typing import Any
 
 try:
+    from scripts.audit_sqj_pdf_compile_gate import audit_sqj_pdf_compile_gate
     from scripts.audit_sqj_submission_checklist import DEFAULT_CHECKLIST, audit_sqj_checklist
 except ModuleNotFoundError:
+    from audit_sqj_pdf_compile_gate import audit_sqj_pdf_compile_gate
     from audit_sqj_submission_checklist import DEFAULT_CHECKLIST, audit_sqj_checklist
 
 
@@ -23,6 +25,7 @@ REQUIRED_FILES = {
     "generated_tables_tex": Path("docs/paper/generated_tables.tex"),
     "sqj_figure_manifest": Path("docs/figures/sqj/figure_manifest.json"),
     "sqj_checklist_audit_script": Path("scripts/audit_sqj_submission_checklist.py"),
+    "sqj_pdf_compile_gate_script": Path("scripts/audit_sqj_pdf_compile_gate.py"),
     "sqj_source_generator": Path("scripts/write_sqj_latex_draft.py"),
     "sqj_figure_generator": Path("scripts/generate_sqj_figures.py"),
 }
@@ -37,15 +40,18 @@ REQUIRED_SNIPPETS = [
     "`docs/figures/sqj/`",
     "`docs/artifact/sqj_submission_checklist.md`",
     "`scripts/audit_sqj_submission_checklist.py`",
+    "`scripts/audit_sqj_pdf_compile_gate.py`",
     "school/department recognition confirmation",
     "fresh realistic branch is a two-project source-acquisition negative result",
     "`sn-jnl.cls`",
+    "`blocked_missing_sn_jnl_cls`",
     "author information, funding, acknowledgements, and competing-interest",
     "final artifact package rebuild and audit",
     "python scripts\\write_paper_tables.py",
     "python scripts\\generate_sqj_figures.py",
     "python scripts\\write_sqj_latex_draft.py --check",
     "python scripts\\audit_sqj_submission_checklist.py",
+    "python scripts\\audit_sqj_pdf_compile_gate.py",
     "python scripts\\audit_sqj_final_freeze_readiness.py",
     "This is a readiness and blocker packet only.",
 ]
@@ -99,6 +105,7 @@ def audit_sqj_final_freeze_readiness(path: Path) -> dict[str, Any]:
         if state["exists"] and int(state["size_bytes"]) <= 0
     ]
     sqj_checklist = audit_sqj_checklist(DEFAULT_CHECKLIST)
+    pdf_compile_gate = audit_sqj_pdf_compile_gate()
     external_blockers_declared = all(
         snippet in packet_text
         for snippet in [
@@ -116,6 +123,7 @@ def audit_sqj_final_freeze_readiness(path: Path) -> dict[str, Any]:
         "forbidden_snippet_hits": forbidden_snippet_hits,
         "zero_byte_files": zero_byte_files,
         "sqj_submission_checklist": sqj_checklist,
+        "sqj_pdf_compile_gate": pdf_compile_gate,
         "external_blockers_declared": external_blockers_declared,
         "api_call_attempted": False,
         "compile_attempted": False,
@@ -128,6 +136,7 @@ def audit_sqj_final_freeze_readiness(path: Path) -> dict[str, Any]:
         and not zero_byte_files
         and all(state["exists"] for state in required_files.values())
         and sqj_checklist["passed"]
+        and pdf_compile_gate["passed"]
         and external_blockers_declared
     )
     return result
@@ -141,8 +150,10 @@ def build_markdown(audit: dict[str, Any]) -> str:
         "",
         f"- passed: {bool_mark(audit['passed'])}",
         f"- readiness packet exists: {bool_mark(audit['readiness_packet_exists'])}",
-        f"- SQJ checklist passed: {bool_mark(audit['sqj_submission_checklist']['passed'])}",
-        f"- external blockers declared: {bool_mark(audit['external_blockers_declared'])}",
+            f"- SQJ checklist passed: {bool_mark(audit['sqj_submission_checklist']['passed'])}",
+            f"- SQJ PDF compile gate status: `{audit['sqj_pdf_compile_gate']['gate_status']}`",
+            f"- SQJ PDF compile passed: {bool_mark(audit['sqj_pdf_compile_gate']['pdf_compile_passed'])}",
+            f"- external blockers declared: {bool_mark(audit['external_blockers_declared'])}",
         f"- API call attempted: {bool_mark(audit['api_call_attempted'])}",
         f"- compile attempted: {bool_mark(audit['compile_attempted'])}",
         f"- final freeze complete: {bool_mark(audit['final_freeze_complete'])}",

@@ -4009,3 +4009,18 @@ This file starts fresh for the patch-verification project.
   three-project verifier-ready claims; the source-package checklist and
   final-freeze readiness audit must also require the two-project negative
   result boundary and forbid practical-autonomous-verifier wording.
+
+## 2026-06-30 SQJ PDF compile gate preflight
+
+- Do not conflate audit pass with PDF compile pass. The SQJ PDF compile gate can
+  pass as an audit while reporting `gate_status=blocked_missing_sn_jnl_cls` and
+  `pdf_compile_passed=false`; that means the blocker is explicit and
+  machine-readable, not that final-freeze compilation succeeded.
+- Keep `sn-jnl.cls` acquisition outside automated repair unless explicitly
+  approved. The current local MiKTeX environment has `pdflatex`, but
+  `kpsewhich sn-jnl.cls` fails and reports that MiKTeX updates have not been
+  checked. The safe project action is to record the blocker and require the
+  official Springer Nature class before PDF compilation.
+- The same gate should become the real compile gate once the class is available:
+  run two `pdflatex` passes into ignored `outputs/sqj_pdf_compile/` and require
+  a non-empty PDF before any final-freeze claim.
