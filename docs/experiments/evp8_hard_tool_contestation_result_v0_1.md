@@ -97,6 +97,24 @@ The defensible claim is:
 > but this works as risk triage rather than autonomous patch correctness
 > verification.
 
+## Policy Utility Follow-up
+
+A no-API policy/case analysis compares tool-only, evidence-only, and
+tool-contestation decisions under explicit utility assumptions. Under strict
+merge-gate and balanced-triage settings, where false accepts are much more
+expensive than manual escalation, DeepSeek tool-contestation ranks highest.
+Across a 20-cell sensitivity grid, DeepSeek tool-contestation wins 16 cells,
+Qwen evidence-only wins 3 cells, and Qwen evidence-only ties tool-only once.
+
+This does not convert the experiment into a correctness-verification success.
+The policy gain comes from reducing unsafe autonomous accepts through
+escalation. On the nine tool false accepts, Qwen tool-contestation repeats one
+accept, DeepSeek repeats zero accepts, and neither model strictly rejects any
+of the nine. The practical claim is therefore a risk/automation tradeoff:
+tool-contestation is useful when false accepts are expensive and human review
+capacity exists, but it is too conservative for a high-recall automatic merge
+gate.
+
 ## Evidence Files
 
 - Check-only:
@@ -107,6 +125,10 @@ The defensible claim is:
   `data/reviews/evp8_hard_tool_contestation_opportunity_analysis_v0_1.json`
 - Opportunity Markdown:
   `docs/experiments/evp8_hard_tool_contestation_opportunity_analysis_v0_1.md`
+- Policy/case analysis:
+  `data/reviews/evp8_hard_tool_contestation_policy_case_analysis_v0_1.json`
+- Policy/case Markdown:
+  `docs/experiments/evp8_hard_tool_contestation_policy_case_analysis_v0_1.md`
 - Qwen summary:
   `data/reviews/evp8_hard_tool_contestation_qwen_qwen3.7-max_full_summary.json`
 - Qwen parsed reviews:

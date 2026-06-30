@@ -1,0 +1,1703 @@
+{
+  "analysis_id": "evp8_hard_tool_contestation_policy_case_analysis_v0_1",
+  "cohort_id": "evp8_hard_v0_1",
+  "candidate_count": 47,
+  "boundary": {
+    "api_call_attempted": false,
+    "raw_outputs_read": false,
+    "patch_diff_saved": false,
+    "prompt_modified": false,
+    "raw_field_violations": {}
+  },
+  "inputs": {
+    "evaluator_manifest": "data\\patches\\evp8_hard_evaluator_manifest_v0_1.jsonl",
+    "systems": {
+      "tool_only_baseline": "data\\baselines\\evp8_hard_tool_only_baseline_v0_1.jsonl",
+      "qwen_evidence_only": "data\\reviews\\evp8_hard_e6_evidence_only_qwen_qwen3.7-max_full_reviews.jsonl",
+      "deepseek_evidence_only": "data\\reviews\\evp8_hard_e6_evidence_only_deepseek_deepseek-v4-pro_full_reviews.jsonl",
+      "qwen_tool_contestation": "data\\reviews\\evp8_hard_tool_contestation_qwen_qwen3.7-max_full_reviews.jsonl",
+      "deepseek_tool_contestation": "data\\reviews\\evp8_hard_tool_contestation_deepseek_deepseek-v4-pro_full_reviews.jsonl"
+    }
+  },
+  "systems": {
+    "tool_only_baseline": {
+      "counts": {
+        "true_accept": 8,
+        "false_accept": 9,
+        "true_reject": 28,
+        "false_reject": 2,
+        "escalated_correct": 0,
+        "escalated_incorrect": 0,
+        "invalid_correct": 0,
+        "invalid_incorrect": 0
+      },
+      "decision_counts": {
+        "accept": 17,
+        "reject": 30
+      },
+      "metrics": {
+        "record_count": 47,
+        "correct_total": 10,
+        "incorrect_total": 37,
+        "accepted_total": 17,
+        "accepted_precision": 0.470588,
+        "correct_recall": 0.8,
+        "false_accept_rate": 0.243243,
+        "false_reject_rate": 0.2,
+        "escalation_rate": 0.0,
+        "automation_accept_rate": 0.361702,
+        "wrong_patch_safe_handling_rate": 0.756757,
+        "invalid_output_rate": 0.0
+      },
+      "examples": {
+        "false_accept": [
+          "evp8_hard_candidate_0001",
+          "evp8_hard_candidate_0002",
+          "evp8_hard_candidate_0003",
+          "evp8_hard_candidate_0008",
+          "evp8_hard_candidate_0009",
+          "evp8_hard_candidate_0010",
+          "evp8_hard_candidate_0011",
+          "evp8_hard_candidate_0012",
+          "evp8_hard_candidate_0022"
+        ],
+        "false_reject": [
+          "evp8_hard_candidate_0017",
+          "evp8_hard_candidate_0031"
+        ],
+        "true_accept": [
+          "evp8_hard_candidate_0015",
+          "evp8_hard_candidate_0016",
+          "evp8_hard_candidate_0018",
+          "evp8_hard_candidate_0025",
+          "evp8_hard_candidate_0028",
+          "evp8_hard_candidate_0034",
+          "evp8_hard_candidate_0040",
+          "evp8_hard_candidate_0045"
+        ],
+        "true_reject": [
+          "evp8_hard_candidate_0004",
+          "evp8_hard_candidate_0005",
+          "evp8_hard_candidate_0006",
+          "evp8_hard_candidate_0007",
+          "evp8_hard_candidate_0013",
+          "evp8_hard_candidate_0014",
+          "evp8_hard_candidate_0019",
+          "evp8_hard_candidate_0020",
+          "evp8_hard_candidate_0021",
+          "evp8_hard_candidate_0023",
+          "evp8_hard_candidate_0024",
+          "evp8_hard_candidate_0026",
+          "evp8_hard_candidate_0027",
+          "evp8_hard_candidate_0029",
+          "evp8_hard_candidate_0030",
+          "evp8_hard_candidate_0032",
+          "evp8_hard_candidate_0033",
+          "evp8_hard_candidate_0035",
+          "evp8_hard_candidate_0036",
+          "evp8_hard_candidate_0037",
+          "evp8_hard_candidate_0038",
+          "evp8_hard_candidate_0039",
+          "evp8_hard_candidate_0041",
+          "evp8_hard_candidate_0042",
+          "evp8_hard_candidate_0043",
+          "evp8_hard_candidate_0044",
+          "evp8_hard_candidate_0046",
+          "evp8_hard_candidate_0047"
+        ]
+      }
+    },
+    "qwen_evidence_only": {
+      "counts": {
+        "true_accept": 8,
+        "false_accept": 7,
+        "true_reject": 28,
+        "false_reject": 2,
+        "escalated_correct": 0,
+        "escalated_incorrect": 2,
+        "invalid_correct": 0,
+        "invalid_incorrect": 0
+      },
+      "decision_counts": {
+        "accept": 15,
+        "escalate": 2,
+        "reject": 30
+      },
+      "metrics": {
+        "record_count": 47,
+        "correct_total": 10,
+        "incorrect_total": 37,
+        "accepted_total": 15,
+        "accepted_precision": 0.533333,
+        "correct_recall": 0.8,
+        "false_accept_rate": 0.189189,
+        "false_reject_rate": 0.2,
+        "escalation_rate": 0.042553,
+        "automation_accept_rate": 0.319149,
+        "wrong_patch_safe_handling_rate": 0.810811,
+        "invalid_output_rate": 0.0
+      },
+      "examples": {
+        "escalated_incorrect": [
+          "evp8_hard_candidate_0002",
+          "evp8_hard_candidate_0003"
+        ],
+        "false_accept": [
+          "evp8_hard_candidate_0001",
+          "evp8_hard_candidate_0008",
+          "evp8_hard_candidate_0009",
+          "evp8_hard_candidate_0010",
+          "evp8_hard_candidate_0011",
+          "evp8_hard_candidate_0012",
+          "evp8_hard_candidate_0022"
+        ],
+        "false_reject": [
+          "evp8_hard_candidate_0017",
+          "evp8_hard_candidate_0031"
+        ],
+        "true_accept": [
+          "evp8_hard_candidate_0015",
+          "evp8_hard_candidate_0016",
+          "evp8_hard_candidate_0018",
+          "evp8_hard_candidate_0025",
+          "evp8_hard_candidate_0028",
+          "evp8_hard_candidate_0034",
+          "evp8_hard_candidate_0040",
+          "evp8_hard_candidate_0045"
+        ],
+        "true_reject": [
+          "evp8_hard_candidate_0004",
+          "evp8_hard_candidate_0005",
+          "evp8_hard_candidate_0006",
+          "evp8_hard_candidate_0007",
+          "evp8_hard_candidate_0013",
+          "evp8_hard_candidate_0014",
+          "evp8_hard_candidate_0019",
+          "evp8_hard_candidate_0020",
+          "evp8_hard_candidate_0021",
+          "evp8_hard_candidate_0023",
+          "evp8_hard_candidate_0024",
+          "evp8_hard_candidate_0026",
+          "evp8_hard_candidate_0027",
+          "evp8_hard_candidate_0029",
+          "evp8_hard_candidate_0030",
+          "evp8_hard_candidate_0032",
+          "evp8_hard_candidate_0033",
+          "evp8_hard_candidate_0035",
+          "evp8_hard_candidate_0036",
+          "evp8_hard_candidate_0037",
+          "evp8_hard_candidate_0038",
+          "evp8_hard_candidate_0039",
+          "evp8_hard_candidate_0041",
+          "evp8_hard_candidate_0042",
+          "evp8_hard_candidate_0043",
+          "evp8_hard_candidate_0044",
+          "evp8_hard_candidate_0046",
+          "evp8_hard_candidate_0047"
+        ]
+      }
+    },
+    "deepseek_evidence_only": {
+      "counts": {
+        "true_accept": 2,
+        "false_accept": 4,
+        "true_reject": 28,
+        "false_reject": 2,
+        "escalated_correct": 6,
+        "escalated_incorrect": 5,
+        "invalid_correct": 0,
+        "invalid_incorrect": 0
+      },
+      "decision_counts": {
+        "escalate": 11,
+        "reject": 30,
+        "accept": 6
+      },
+      "metrics": {
+        "record_count": 47,
+        "correct_total": 10,
+        "incorrect_total": 37,
+        "accepted_total": 6,
+        "accepted_precision": 0.333333,
+        "correct_recall": 0.2,
+        "false_accept_rate": 0.108108,
+        "false_reject_rate": 0.2,
+        "escalation_rate": 0.234043,
+        "automation_accept_rate": 0.12766,
+        "wrong_patch_safe_handling_rate": 0.891892,
+        "invalid_output_rate": 0.0
+      },
+      "examples": {
+        "escalated_correct": [
+          "evp8_hard_candidate_0015",
+          "evp8_hard_candidate_0016",
+          "evp8_hard_candidate_0018",
+          "evp8_hard_candidate_0025",
+          "evp8_hard_candidate_0028",
+          "evp8_hard_candidate_0040"
+        ],
+        "escalated_incorrect": [
+          "evp8_hard_candidate_0001",
+          "evp8_hard_candidate_0002",
+          "evp8_hard_candidate_0003",
+          "evp8_hard_candidate_0011",
+          "evp8_hard_candidate_0022"
+        ],
+        "false_accept": [
+          "evp8_hard_candidate_0008",
+          "evp8_hard_candidate_0009",
+          "evp8_hard_candidate_0010",
+          "evp8_hard_candidate_0012"
+        ],
+        "false_reject": [
+          "evp8_hard_candidate_0017",
+          "evp8_hard_candidate_0031"
+        ],
+        "true_accept": [
+          "evp8_hard_candidate_0034",
+          "evp8_hard_candidate_0045"
+        ],
+        "true_reject": [
+          "evp8_hard_candidate_0004",
+          "evp8_hard_candidate_0005",
+          "evp8_hard_candidate_0006",
+          "evp8_hard_candidate_0007",
+          "evp8_hard_candidate_0013",
+          "evp8_hard_candidate_0014",
+          "evp8_hard_candidate_0019",
+          "evp8_hard_candidate_0020",
+          "evp8_hard_candidate_0021",
+          "evp8_hard_candidate_0023",
+          "evp8_hard_candidate_0024",
+          "evp8_hard_candidate_0026",
+          "evp8_hard_candidate_0027",
+          "evp8_hard_candidate_0029",
+          "evp8_hard_candidate_0030",
+          "evp8_hard_candidate_0032",
+          "evp8_hard_candidate_0033",
+          "evp8_hard_candidate_0035",
+          "evp8_hard_candidate_0036",
+          "evp8_hard_candidate_0037",
+          "evp8_hard_candidate_0038",
+          "evp8_hard_candidate_0039",
+          "evp8_hard_candidate_0041",
+          "evp8_hard_candidate_0042",
+          "evp8_hard_candidate_0043",
+          "evp8_hard_candidate_0044",
+          "evp8_hard_candidate_0046",
+          "evp8_hard_candidate_0047"
+        ]
+      }
+    },
+    "qwen_tool_contestation": {
+      "counts": {
+        "true_accept": 0,
+        "false_accept": 1,
+        "true_reject": 28,
+        "false_reject": 2,
+        "escalated_correct": 8,
+        "escalated_incorrect": 8,
+        "invalid_correct": 0,
+        "invalid_incorrect": 0
+      },
+      "decision_counts": {
+        "escalate": 16,
+        "reject": 30,
+        "accept": 1
+      },
+      "metrics": {
+        "record_count": 47,
+        "correct_total": 10,
+        "incorrect_total": 37,
+        "accepted_total": 1,
+        "accepted_precision": 0.0,
+        "correct_recall": 0.0,
+        "false_accept_rate": 0.027027,
+        "false_reject_rate": 0.2,
+        "escalation_rate": 0.340426,
+        "automation_accept_rate": 0.021277,
+        "wrong_patch_safe_handling_rate": 0.972973,
+        "invalid_output_rate": 0.0
+      },
+      "examples": {
+        "escalated_correct": [
+          "evp8_hard_candidate_0015",
+          "evp8_hard_candidate_0016",
+          "evp8_hard_candidate_0018",
+          "evp8_hard_candidate_0025",
+          "evp8_hard_candidate_0028",
+          "evp8_hard_candidate_0034",
+          "evp8_hard_candidate_0040",
+          "evp8_hard_candidate_0045"
+        ],
+        "escalated_incorrect": [
+          "evp8_hard_candidate_0001",
+          "evp8_hard_candidate_0002",
+          "evp8_hard_candidate_0003",
+          "evp8_hard_candidate_0008",
+          "evp8_hard_candidate_0009",
+          "evp8_hard_candidate_0010",
+          "evp8_hard_candidate_0011",
+          "evp8_hard_candidate_0022"
+        ],
+        "false_accept": [
+          "evp8_hard_candidate_0012"
+        ],
+        "false_reject": [
+          "evp8_hard_candidate_0017",
+          "evp8_hard_candidate_0031"
+        ],
+        "true_reject": [
+          "evp8_hard_candidate_0004",
+          "evp8_hard_candidate_0005",
+          "evp8_hard_candidate_0006",
+          "evp8_hard_candidate_0007",
+          "evp8_hard_candidate_0013",
+          "evp8_hard_candidate_0014",
+          "evp8_hard_candidate_0019",
+          "evp8_hard_candidate_0020",
+          "evp8_hard_candidate_0021",
+          "evp8_hard_candidate_0023",
+          "evp8_hard_candidate_0024",
+          "evp8_hard_candidate_0026",
+          "evp8_hard_candidate_0027",
+          "evp8_hard_candidate_0029",
+          "evp8_hard_candidate_0030",
+          "evp8_hard_candidate_0032",
+          "evp8_hard_candidate_0033",
+          "evp8_hard_candidate_0035",
+          "evp8_hard_candidate_0036",
+          "evp8_hard_candidate_0037",
+          "evp8_hard_candidate_0038",
+          "evp8_hard_candidate_0039",
+          "evp8_hard_candidate_0041",
+          "evp8_hard_candidate_0042",
+          "evp8_hard_candidate_0043",
+          "evp8_hard_candidate_0044",
+          "evp8_hard_candidate_0046",
+          "evp8_hard_candidate_0047"
+        ]
+      }
+    },
+    "deepseek_tool_contestation": {
+      "counts": {
+        "true_accept": 0,
+        "false_accept": 0,
+        "true_reject": 27,
+        "false_reject": 2,
+        "escalated_correct": 8,
+        "escalated_incorrect": 10,
+        "invalid_correct": 0,
+        "invalid_incorrect": 0
+      },
+      "decision_counts": {
+        "escalate": 18,
+        "reject": 29
+      },
+      "metrics": {
+        "record_count": 47,
+        "correct_total": 10,
+        "incorrect_total": 37,
+        "accepted_total": 0,
+        "accepted_precision": null,
+        "correct_recall": 0.0,
+        "false_accept_rate": 0.0,
+        "false_reject_rate": 0.2,
+        "escalation_rate": 0.382979,
+        "automation_accept_rate": 0.0,
+        "wrong_patch_safe_handling_rate": 1.0,
+        "invalid_output_rate": 0.0
+      },
+      "examples": {
+        "escalated_correct": [
+          "evp8_hard_candidate_0015",
+          "evp8_hard_candidate_0016",
+          "evp8_hard_candidate_0018",
+          "evp8_hard_candidate_0025",
+          "evp8_hard_candidate_0028",
+          "evp8_hard_candidate_0034",
+          "evp8_hard_candidate_0040",
+          "evp8_hard_candidate_0045"
+        ],
+        "escalated_incorrect": [
+          "evp8_hard_candidate_0001",
+          "evp8_hard_candidate_0002",
+          "evp8_hard_candidate_0003",
+          "evp8_hard_candidate_0008",
+          "evp8_hard_candidate_0009",
+          "evp8_hard_candidate_0010",
+          "evp8_hard_candidate_0011",
+          "evp8_hard_candidate_0012",
+          "evp8_hard_candidate_0013",
+          "evp8_hard_candidate_0022"
+        ],
+        "false_reject": [
+          "evp8_hard_candidate_0017",
+          "evp8_hard_candidate_0031"
+        ],
+        "true_reject": [
+          "evp8_hard_candidate_0004",
+          "evp8_hard_candidate_0005",
+          "evp8_hard_candidate_0006",
+          "evp8_hard_candidate_0007",
+          "evp8_hard_candidate_0014",
+          "evp8_hard_candidate_0019",
+          "evp8_hard_candidate_0020",
+          "evp8_hard_candidate_0021",
+          "evp8_hard_candidate_0023",
+          "evp8_hard_candidate_0024",
+          "evp8_hard_candidate_0026",
+          "evp8_hard_candidate_0027",
+          "evp8_hard_candidate_0029",
+          "evp8_hard_candidate_0030",
+          "evp8_hard_candidate_0032",
+          "evp8_hard_candidate_0033",
+          "evp8_hard_candidate_0035",
+          "evp8_hard_candidate_0036",
+          "evp8_hard_candidate_0037",
+          "evp8_hard_candidate_0038",
+          "evp8_hard_candidate_0039",
+          "evp8_hard_candidate_0041",
+          "evp8_hard_candidate_0042",
+          "evp8_hard_candidate_0043",
+          "evp8_hard_candidate_0044",
+          "evp8_hard_candidate_0046",
+          "evp8_hard_candidate_0047"
+        ]
+      }
+    }
+  },
+  "utility": {
+    "scenarios": {
+      "merge_gate_strict": {
+        "parameters": {
+          "true_accept_reward": 1.0,
+          "false_accept_penalty": 20.0,
+          "false_reject_penalty": 1.0,
+          "escalation_cost": 0.25,
+          "invalid_penalty": 20.0
+        },
+        "rows": [
+          {
+            "system_id": "deepseek_tool_contestation",
+            "score": -6.5,
+            "score_per_candidate": -0.138298,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 20.0,
+              "false_reject_penalty": 1.0,
+              "escalation_cost": 0.25,
+              "invalid_penalty": 20.0
+            },
+            "rank": 1
+          },
+          {
+            "system_id": "qwen_tool_contestation",
+            "score": -26.0,
+            "score_per_candidate": -0.553191,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 20.0,
+              "false_reject_penalty": 1.0,
+              "escalation_cost": 0.25,
+              "invalid_penalty": 20.0
+            },
+            "rank": 2
+          },
+          {
+            "system_id": "deepseek_evidence_only",
+            "score": -82.75,
+            "score_per_candidate": -1.760638,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 20.0,
+              "false_reject_penalty": 1.0,
+              "escalation_cost": 0.25,
+              "invalid_penalty": 20.0
+            },
+            "rank": 3
+          },
+          {
+            "system_id": "qwen_evidence_only",
+            "score": -134.5,
+            "score_per_candidate": -2.861702,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 20.0,
+              "false_reject_penalty": 1.0,
+              "escalation_cost": 0.25,
+              "invalid_penalty": 20.0
+            },
+            "rank": 4
+          },
+          {
+            "system_id": "tool_only_baseline",
+            "score": -174.0,
+            "score_per_candidate": -3.702128,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 20.0,
+              "false_reject_penalty": 1.0,
+              "escalation_cost": 0.25,
+              "invalid_penalty": 20.0
+            },
+            "rank": 5
+          }
+        ],
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ]
+      },
+      "balanced_triage": {
+        "parameters": {
+          "true_accept_reward": 1.0,
+          "false_accept_penalty": 5.0,
+          "false_reject_penalty": 1.0,
+          "escalation_cost": 0.25,
+          "invalid_penalty": 10.0
+        },
+        "rows": [
+          {
+            "system_id": "deepseek_tool_contestation",
+            "score": -6.5,
+            "score_per_candidate": -0.138298,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 5.0,
+              "false_reject_penalty": 1.0,
+              "escalation_cost": 0.25,
+              "invalid_penalty": 10.0
+            },
+            "rank": 1
+          },
+          {
+            "system_id": "qwen_tool_contestation",
+            "score": -11.0,
+            "score_per_candidate": -0.234043,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 5.0,
+              "false_reject_penalty": 1.0,
+              "escalation_cost": 0.25,
+              "invalid_penalty": 10.0
+            },
+            "rank": 2
+          },
+          {
+            "system_id": "deepseek_evidence_only",
+            "score": -22.75,
+            "score_per_candidate": -0.484043,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 5.0,
+              "false_reject_penalty": 1.0,
+              "escalation_cost": 0.25,
+              "invalid_penalty": 10.0
+            },
+            "rank": 3
+          },
+          {
+            "system_id": "qwen_evidence_only",
+            "score": -29.5,
+            "score_per_candidate": -0.62766,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 5.0,
+              "false_reject_penalty": 1.0,
+              "escalation_cost": 0.25,
+              "invalid_penalty": 10.0
+            },
+            "rank": 4
+          },
+          {
+            "system_id": "tool_only_baseline",
+            "score": -39.0,
+            "score_per_candidate": -0.829787,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 5.0,
+              "false_reject_penalty": 1.0,
+              "escalation_cost": 0.25,
+              "invalid_penalty": 10.0
+            },
+            "rank": 5
+          }
+        ],
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ]
+      },
+      "review_cost_sensitive": {
+        "parameters": {
+          "true_accept_reward": 1.0,
+          "false_accept_penalty": 5.0,
+          "false_reject_penalty": 1.0,
+          "escalation_cost": 1.0,
+          "invalid_penalty": 10.0
+        },
+        "rows": [
+          {
+            "system_id": "deepseek_tool_contestation",
+            "score": -20.0,
+            "score_per_candidate": -0.425532,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 5.0,
+              "false_reject_penalty": 1.0,
+              "escalation_cost": 1.0,
+              "invalid_penalty": 10.0
+            },
+            "rank": 1
+          },
+          {
+            "system_id": "qwen_tool_contestation",
+            "score": -23.0,
+            "score_per_candidate": -0.489362,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 5.0,
+              "false_reject_penalty": 1.0,
+              "escalation_cost": 1.0,
+              "invalid_penalty": 10.0
+            },
+            "rank": 2
+          },
+          {
+            "system_id": "qwen_evidence_only",
+            "score": -31.0,
+            "score_per_candidate": -0.659574,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 5.0,
+              "false_reject_penalty": 1.0,
+              "escalation_cost": 1.0,
+              "invalid_penalty": 10.0
+            },
+            "rank": 3
+          },
+          {
+            "system_id": "deepseek_evidence_only",
+            "score": -31.0,
+            "score_per_candidate": -0.659574,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 5.0,
+              "false_reject_penalty": 1.0,
+              "escalation_cost": 1.0,
+              "invalid_penalty": 10.0
+            },
+            "rank": 4
+          },
+          {
+            "system_id": "tool_only_baseline",
+            "score": -39.0,
+            "score_per_candidate": -0.829787,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 5.0,
+              "false_reject_penalty": 1.0,
+              "escalation_cost": 1.0,
+              "invalid_penalty": 10.0
+            },
+            "rank": 5
+          }
+        ],
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ]
+      },
+      "automation_recall": {
+        "parameters": {
+          "true_accept_reward": 1.0,
+          "false_accept_penalty": 5.0,
+          "false_reject_penalty": 2.0,
+          "escalation_cost": 0.5,
+          "invalid_penalty": 10.0
+        },
+        "rows": [
+          {
+            "system_id": "deepseek_tool_contestation",
+            "score": -13.0,
+            "score_per_candidate": -0.276596,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 5.0,
+              "false_reject_penalty": 2.0,
+              "escalation_cost": 0.5,
+              "invalid_penalty": 10.0
+            },
+            "rank": 1
+          },
+          {
+            "system_id": "qwen_tool_contestation",
+            "score": -17.0,
+            "score_per_candidate": -0.361702,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 5.0,
+              "false_reject_penalty": 2.0,
+              "escalation_cost": 0.5,
+              "invalid_penalty": 10.0
+            },
+            "rank": 2
+          },
+          {
+            "system_id": "deepseek_evidence_only",
+            "score": -27.5,
+            "score_per_candidate": -0.585106,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 5.0,
+              "false_reject_penalty": 2.0,
+              "escalation_cost": 0.5,
+              "invalid_penalty": 10.0
+            },
+            "rank": 3
+          },
+          {
+            "system_id": "qwen_evidence_only",
+            "score": -32.0,
+            "score_per_candidate": -0.680851,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 5.0,
+              "false_reject_penalty": 2.0,
+              "escalation_cost": 0.5,
+              "invalid_penalty": 10.0
+            },
+            "rank": 4
+          },
+          {
+            "system_id": "tool_only_baseline",
+            "score": -41.0,
+            "score_per_candidate": -0.87234,
+            "parameters": {
+              "true_accept_reward": 1.0,
+              "false_accept_penalty": 5.0,
+              "false_reject_penalty": 2.0,
+              "escalation_cost": 0.5,
+              "invalid_penalty": 10.0
+            },
+            "rank": 5
+          }
+        ],
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ]
+      }
+    },
+    "sensitivity_grid": [
+      {
+        "false_accept_penalty": 2.0,
+        "escalation_cost": 0.0,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -2.0,
+        "scores": {
+          "tool_only_baseline": -12.0,
+          "qwen_evidence_only": -8.0,
+          "deepseek_evidence_only": -8.0,
+          "qwen_tool_contestation": -4.0,
+          "deepseek_tool_contestation": -2.0
+        }
+      },
+      {
+        "false_accept_penalty": 2.0,
+        "escalation_cost": 0.25,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -6.5,
+        "scores": {
+          "tool_only_baseline": -12.0,
+          "qwen_evidence_only": -8.5,
+          "deepseek_evidence_only": -10.75,
+          "qwen_tool_contestation": -8.0,
+          "deepseek_tool_contestation": -6.5
+        }
+      },
+      {
+        "false_accept_penalty": 2.0,
+        "escalation_cost": 0.5,
+        "best_systems": [
+          "qwen_evidence_only"
+        ],
+        "best_score": -9.0,
+        "scores": {
+          "tool_only_baseline": -12.0,
+          "qwen_evidence_only": -9.0,
+          "deepseek_evidence_only": -13.5,
+          "qwen_tool_contestation": -12.0,
+          "deepseek_tool_contestation": -11.0
+        }
+      },
+      {
+        "false_accept_penalty": 2.0,
+        "escalation_cost": 1.0,
+        "best_systems": [
+          "qwen_evidence_only"
+        ],
+        "best_score": -10.0,
+        "scores": {
+          "tool_only_baseline": -12.0,
+          "qwen_evidence_only": -10.0,
+          "deepseek_evidence_only": -19.0,
+          "qwen_tool_contestation": -20.0,
+          "deepseek_tool_contestation": -20.0
+        }
+      },
+      {
+        "false_accept_penalty": 2.0,
+        "escalation_cost": 2.0,
+        "best_systems": [
+          "qwen_evidence_only",
+          "tool_only_baseline"
+        ],
+        "best_score": -12.0,
+        "scores": {
+          "tool_only_baseline": -12.0,
+          "qwen_evidence_only": -12.0,
+          "deepseek_evidence_only": -30.0,
+          "qwen_tool_contestation": -36.0,
+          "deepseek_tool_contestation": -38.0
+        }
+      },
+      {
+        "false_accept_penalty": 5.0,
+        "escalation_cost": 0.0,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -2.0,
+        "scores": {
+          "tool_only_baseline": -39.0,
+          "qwen_evidence_only": -29.0,
+          "deepseek_evidence_only": -20.0,
+          "qwen_tool_contestation": -7.0,
+          "deepseek_tool_contestation": -2.0
+        }
+      },
+      {
+        "false_accept_penalty": 5.0,
+        "escalation_cost": 0.25,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -6.5,
+        "scores": {
+          "tool_only_baseline": -39.0,
+          "qwen_evidence_only": -29.5,
+          "deepseek_evidence_only": -22.75,
+          "qwen_tool_contestation": -11.0,
+          "deepseek_tool_contestation": -6.5
+        }
+      },
+      {
+        "false_accept_penalty": 5.0,
+        "escalation_cost": 0.5,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -11.0,
+        "scores": {
+          "tool_only_baseline": -39.0,
+          "qwen_evidence_only": -30.0,
+          "deepseek_evidence_only": -25.5,
+          "qwen_tool_contestation": -15.0,
+          "deepseek_tool_contestation": -11.0
+        }
+      },
+      {
+        "false_accept_penalty": 5.0,
+        "escalation_cost": 1.0,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -20.0,
+        "scores": {
+          "tool_only_baseline": -39.0,
+          "qwen_evidence_only": -31.0,
+          "deepseek_evidence_only": -31.0,
+          "qwen_tool_contestation": -23.0,
+          "deepseek_tool_contestation": -20.0
+        }
+      },
+      {
+        "false_accept_penalty": 5.0,
+        "escalation_cost": 2.0,
+        "best_systems": [
+          "qwen_evidence_only"
+        ],
+        "best_score": -33.0,
+        "scores": {
+          "tool_only_baseline": -39.0,
+          "qwen_evidence_only": -33.0,
+          "deepseek_evidence_only": -42.0,
+          "qwen_tool_contestation": -39.0,
+          "deepseek_tool_contestation": -38.0
+        }
+      },
+      {
+        "false_accept_penalty": 10.0,
+        "escalation_cost": 0.0,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -2.0,
+        "scores": {
+          "tool_only_baseline": -84.0,
+          "qwen_evidence_only": -64.0,
+          "deepseek_evidence_only": -40.0,
+          "qwen_tool_contestation": -12.0,
+          "deepseek_tool_contestation": -2.0
+        }
+      },
+      {
+        "false_accept_penalty": 10.0,
+        "escalation_cost": 0.25,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -6.5,
+        "scores": {
+          "tool_only_baseline": -84.0,
+          "qwen_evidence_only": -64.5,
+          "deepseek_evidence_only": -42.75,
+          "qwen_tool_contestation": -16.0,
+          "deepseek_tool_contestation": -6.5
+        }
+      },
+      {
+        "false_accept_penalty": 10.0,
+        "escalation_cost": 0.5,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -11.0,
+        "scores": {
+          "tool_only_baseline": -84.0,
+          "qwen_evidence_only": -65.0,
+          "deepseek_evidence_only": -45.5,
+          "qwen_tool_contestation": -20.0,
+          "deepseek_tool_contestation": -11.0
+        }
+      },
+      {
+        "false_accept_penalty": 10.0,
+        "escalation_cost": 1.0,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -20.0,
+        "scores": {
+          "tool_only_baseline": -84.0,
+          "qwen_evidence_only": -66.0,
+          "deepseek_evidence_only": -51.0,
+          "qwen_tool_contestation": -28.0,
+          "deepseek_tool_contestation": -20.0
+        }
+      },
+      {
+        "false_accept_penalty": 10.0,
+        "escalation_cost": 2.0,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -38.0,
+        "scores": {
+          "tool_only_baseline": -84.0,
+          "qwen_evidence_only": -68.0,
+          "deepseek_evidence_only": -62.0,
+          "qwen_tool_contestation": -44.0,
+          "deepseek_tool_contestation": -38.0
+        }
+      },
+      {
+        "false_accept_penalty": 20.0,
+        "escalation_cost": 0.0,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -2.0,
+        "scores": {
+          "tool_only_baseline": -174.0,
+          "qwen_evidence_only": -134.0,
+          "deepseek_evidence_only": -80.0,
+          "qwen_tool_contestation": -22.0,
+          "deepseek_tool_contestation": -2.0
+        }
+      },
+      {
+        "false_accept_penalty": 20.0,
+        "escalation_cost": 0.25,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -6.5,
+        "scores": {
+          "tool_only_baseline": -174.0,
+          "qwen_evidence_only": -134.5,
+          "deepseek_evidence_only": -82.75,
+          "qwen_tool_contestation": -26.0,
+          "deepseek_tool_contestation": -6.5
+        }
+      },
+      {
+        "false_accept_penalty": 20.0,
+        "escalation_cost": 0.5,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -11.0,
+        "scores": {
+          "tool_only_baseline": -174.0,
+          "qwen_evidence_only": -135.0,
+          "deepseek_evidence_only": -85.5,
+          "qwen_tool_contestation": -30.0,
+          "deepseek_tool_contestation": -11.0
+        }
+      },
+      {
+        "false_accept_penalty": 20.0,
+        "escalation_cost": 1.0,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -20.0,
+        "scores": {
+          "tool_only_baseline": -174.0,
+          "qwen_evidence_only": -136.0,
+          "deepseek_evidence_only": -91.0,
+          "qwen_tool_contestation": -38.0,
+          "deepseek_tool_contestation": -20.0
+        }
+      },
+      {
+        "false_accept_penalty": 20.0,
+        "escalation_cost": 2.0,
+        "best_systems": [
+          "deepseek_tool_contestation"
+        ],
+        "best_score": -38.0,
+        "scores": {
+          "tool_only_baseline": -174.0,
+          "qwen_evidence_only": -138.0,
+          "deepseek_evidence_only": -102.0,
+          "qwen_tool_contestation": -54.0,
+          "deepseek_tool_contestation": -38.0
+        }
+      }
+    ],
+    "sensitivity_winner_counts": {
+      "deepseek_tool_contestation": 16,
+      "qwen_evidence_only": 3,
+      "qwen_evidence_only + tool_only_baseline": 1
+    }
+  },
+  "case_analysis": {
+    "tool_false_accept_opportunity_ids": [
+      "evp8_hard_candidate_0001",
+      "evp8_hard_candidate_0002",
+      "evp8_hard_candidate_0003",
+      "evp8_hard_candidate_0008",
+      "evp8_hard_candidate_0009",
+      "evp8_hard_candidate_0010",
+      "evp8_hard_candidate_0011",
+      "evp8_hard_candidate_0012",
+      "evp8_hard_candidate_0022"
+    ],
+    "opportunity_summary": {
+      "qwen_evidence_only": {
+        "decision_counts_on_tool_false_accepts": {
+          "accept": 7,
+          "escalate": 2
+        },
+        "strict_reject_count": 0,
+        "safe_handled_count": 2,
+        "repeated_accept_count": 7
+      },
+      "deepseek_evidence_only": {
+        "decision_counts_on_tool_false_accepts": {
+          "escalate": 5,
+          "accept": 4
+        },
+        "strict_reject_count": 0,
+        "safe_handled_count": 5,
+        "repeated_accept_count": 4
+      },
+      "qwen_tool_contestation": {
+        "decision_counts_on_tool_false_accepts": {
+          "escalate": 8,
+          "accept": 1
+        },
+        "strict_reject_count": 0,
+        "safe_handled_count": 8,
+        "repeated_accept_count": 1
+      },
+      "deepseek_tool_contestation": {
+        "decision_counts_on_tool_false_accepts": {
+          "escalate": 9
+        },
+        "strict_reject_count": 0,
+        "safe_handled_count": 9,
+        "repeated_accept_count": 0
+      }
+    },
+    "opportunity_cases": [
+      {
+        "candidate_id": "evp8_hard_candidate_0001",
+        "task_id": "bugsinpy_httpie_1",
+        "project": "httpie",
+        "normalized_label": "partial",
+        "candidate_type": "partial_fix",
+        "expected_outcome": "partial",
+        "systems": {
+          "qwen_evidence_only": {
+            "decision": "accept",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "The patch applies cleanly, implements a logical solution for filename trimming and unique filename generation to resolve the issue, and the visible fail-to-pass test passes without any contradictions.",
+            "challenge_reason": null
+          },
+          "deepseek_evidence_only": {
+            "decision": "escalate",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "Visible evidence is insufficient to confirm correctness: only one test passed, no regression tests, and no static analysis or broader diagnostics were run.",
+            "challenge_reason": null
+          },
+          "qwen_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Only one fail-to-pass test is visible and no regression tests or static diagnostics were run, leaving the broader impact of the filename trimming logic unverified.",
+            "challenge_reason": "The patch introduces complex filename trimming logic but is only validated by a single fail-to-pass test with no regression tests or static analysis to ensure it doesn't break standard download behaviors."
+          },
+          "deepseek_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Only one visible fail-to-pass test passed, no regression tests or broader diagnostics visible, insufficient evidence to confirm patch correctness or absence of regressions.",
+            "challenge_reason": "Single passing test does not validate filename trimming logic, edge cases, or regression on existing download functionality."
+          }
+        }
+      },
+      {
+        "candidate_id": "evp8_hard_candidate_0002",
+        "task_id": "bugsinpy_httpie_1",
+        "project": "httpie",
+        "normalized_label": "partial",
+        "candidate_type": "partial_fix",
+        "expected_outcome": "partial",
+        "systems": {
+          "qwen_evidence_only": {
+            "decision": "escalate",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "Pass-to-pass regression evidence is not materialized, leaving potential regressions unverified.",
+            "challenge_reason": null
+          },
+          "deepseek_evidence_only": {
+            "decision": "escalate",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "Visible evidence shows only one test passed, but no regression tests or static checks were run, making the evidence insufficient to confirm the patch is safe.",
+            "challenge_reason": null
+          },
+          "qwen_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Only a single fail-to-pass test is visible with no pass-to-pass regression tests or broader diagnostics to verify the new OS-dependent filename trimming logic.",
+            "challenge_reason": "A single fail-to-pass test without regression tests or broader diagnostics is insufficient to verify the new OS-dependent filename trimming logic."
+          },
+          "deepseek_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Only one visible fail-to-pass test passed, no regression tests or broader diagnostics visible, insufficient evidence to confirm correctness or absence of regressions.",
+            "challenge_reason": "Single passing test without regression tests or broader diagnostics does not sufficiently validate the patch's correctness or guard against regressions."
+          }
+        }
+      },
+      {
+        "candidate_id": "evp8_hard_candidate_0003",
+        "task_id": "bugsinpy_httpie_1",
+        "project": "httpie",
+        "normalized_label": "partial",
+        "candidate_type": "partial_fix",
+        "expected_outcome": "partial",
+        "systems": {
+          "qwen_evidence_only": {
+            "decision": "escalate",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "Pass-to-pass regression tests are not materialized, and the patch introduces a potential cross-platform crash by using the Unix-only os.pathconf without catching AttributeError, along with an unused errno import.",
+            "challenge_reason": null
+          },
+          "deepseek_evidence_only": {
+            "decision": "escalate",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "Visible evidence is insufficient: only one fail-to-pass test passed, no pass-to-pass regression tests were run, and no static analysis or broader diagnostics were performed.",
+            "challenge_reason": null
+          },
+          "qwen_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Patch uses Unix-only os.pathconf which will raise an unhandled AttributeError on Windows, and lacks pass-to-pass regression tests to verify cross-platform compatibility.",
+            "challenge_reason": "The single passing test does not cover cross-platform execution where os.pathconf would raise an unhandled AttributeError on Windows."
+          },
+          "deepseek_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Only one visible fail-to-pass test passed, no regression tests visible, and no broader diagnostics to confirm correctness or absence of regressions.",
+            "challenge_reason": "Only a single fail-to-pass test passed; no regression tests or broader diagnostics to ensure the patch does not break other functionality."
+          }
+        }
+      },
+      {
+        "candidate_id": "evp8_hard_candidate_0008",
+        "task_id": "bugsinpy_httpie_2",
+        "project": "httpie",
+        "normalized_label": "agent_plausible_wrong",
+        "candidate_type": "agent_plausible_wrong",
+        "expected_outcome": "incorrect",
+        "systems": {
+          "qwen_evidence_only": {
+            "decision": "accept",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "The patch applies cleanly and the visible fail-to-pass test verifying the max redirects behavior passes, directly resolving the reported issue without any visible contradictions.",
+            "challenge_reason": null
+          },
+          "deepseek_evidence_only": {
+            "decision": "accept",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "Patch applies cleanly, the single fail-to-pass test passes, and no visible contradictions or failures are present.",
+            "challenge_reason": null
+          },
+          "qwen_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Patch passes the single fail-to-pass test but lacks visible regression tests and broader diagnostics.",
+            "challenge_reason": "Validation relies solely on one narrow fail-to-pass test without regression coverage or static checks."
+          },
+          "deepseek_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Only one visible fail-to-pass test passed, with no regression tests or broader diagnostics to confirm the patch does not break other functionality or handle edge cases.",
+            "challenge_reason": "A single passing fail-to-pass test without any regression tests or broader diagnostics is insufficient to validate the patch's correctness and safety."
+          }
+        }
+      },
+      {
+        "candidate_id": "evp8_hard_candidate_0009",
+        "task_id": "bugsinpy_httpie_2",
+        "project": "httpie",
+        "normalized_label": "agent_plausible_wrong",
+        "candidate_type": "agent_plausible_wrong",
+        "expected_outcome": "incorrect",
+        "systems": {
+          "qwen_evidence_only": {
+            "decision": "accept",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "The patch applies cleanly, directly addresses the issue by assigning max_redirects to the requests session, and the visible fail-to-pass test passes without any contradictions.",
+            "challenge_reason": null
+          },
+          "deepseek_evidence_only": {
+            "decision": "accept",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "Patch applied cleanly and the single visible fail-to-pass test passed with no visible contradictions.",
+            "challenge_reason": null
+          },
+          "qwen_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "The patch passes the single fail-to-pass test but lacks pass-to-pass regression tests and broader diagnostics, making the evidence insufficient for a safe merge.",
+            "challenge_reason": "A visible-test-only accept is challenged because the single passing fail-to-pass test does not guarantee the absence of regressions without pass-to-pass tests or static diagnostics."
+          },
+          "deepseek_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Only one visible fail-to-pass test passed, with no regression tests or broader diagnostics to confirm correctness or absence of side effects.",
+            "challenge_reason": "A single passing fail-to-pass test without any regression tests or broader diagnostics is insufficient to validate the patch, especially given the change affects a core function (get_response) that could impact many b..."
+          }
+        }
+      },
+      {
+        "candidate_id": "evp8_hard_candidate_0010",
+        "task_id": "bugsinpy_httpie_3",
+        "project": "httpie",
+        "normalized_label": "agent_plausible_wrong",
+        "candidate_type": "agent_plausible_wrong",
+        "expected_outcome": "incorrect",
+        "systems": {
+          "qwen_evidence_only": {
+            "decision": "accept",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "The patch correctly adds a None check to ignore explicitly unset header values, applies cleanly, and the visible fail-to-pass test passes with no visible contradictions.",
+            "challenge_reason": null
+          },
+          "deepseek_evidence_only": {
+            "decision": "accept",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "Patch applies cleanly, the single fail-to-pass test passes, and no visible contradictions or failures exist.",
+            "challenge_reason": null
+          },
+          "qwen_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Patch passes a single fail-to-pass test but lacks pass-to-pass regression tests and broader diagnostics to verify no regressions.",
+            "challenge_reason": "Only one fail-to-pass test passed with zero regression tests and no static diagnostics, leaving broader session handling unverified."
+          },
+          "deepseek_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Only one visible fail-to-pass test passed, no regression tests or broader diagnostics available, insufficient evidence to confirm patch correctness or absence of regressions.",
+            "challenge_reason": "Single passing test does not sufficiently cover session header update behavior for None values across different scenarios; no regression tests or broader diagnostics confirm patch safety."
+          }
+        }
+      },
+      {
+        "candidate_id": "evp8_hard_candidate_0011",
+        "task_id": "bugsinpy_httpie_3",
+        "project": "httpie",
+        "normalized_label": "agent_plausible_wrong",
+        "candidate_type": "agent_plausible_wrong",
+        "expected_outcome": "incorrect",
+        "systems": {
+          "qwen_evidence_only": {
+            "decision": "accept",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "The patch applies successfully, directly resolves the issue by skipping None values in request headers, and the visible fail-to-pass test passes with no contradictions in the merge-gate summary.",
+            "challenge_reason": null
+          },
+          "deepseek_evidence_only": {
+            "decision": "escalate",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "Visible evidence is insufficient for a safe merge decision: only one fail-to-pass test is visible, no pass-to-pass regression tests are materialized, and broader tool diagnostics are not run, leaving potential regress...",
+            "challenge_reason": null
+          },
+          "qwen_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Visible evidence is limited to a single fail-to-pass test with no regression tests or broader diagnostics to verify the patch's safety.",
+            "challenge_reason": "The patch is validated only by a single fail-to-pass test, lacking pass-to-pass regression tests and broader diagnostics to confirm no unintended side effects."
+          },
+          "deepseek_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Only one visible fail-to-pass test passed, with no regression tests or broader diagnostics to confirm correctness or absence of side effects.",
+            "challenge_reason": "A single passing fail-to-pass test without regression tests or broader diagnostics does not sufficiently validate the patch's correctness or guard against regressions."
+          }
+        }
+      },
+      {
+        "candidate_id": "evp8_hard_candidate_0012",
+        "task_id": "bugsinpy_httpie_4",
+        "project": "httpie",
+        "normalized_label": "agent_plausible_wrong",
+        "candidate_type": "agent_plausible_wrong",
+        "expected_outcome": "incorrect",
+        "systems": {
+          "qwen_evidence_only": {
+            "decision": "accept",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "The patch applies successfully, correctly implements a case-insensitive check for the Host header to prevent duplication, and the visible fail-to-pass test passes without contradictions.",
+            "challenge_reason": null
+          },
+          "deepseek_evidence_only": {
+            "decision": "accept",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "Patch applies cleanly, the single fail-to-pass test passes, and no visible contradictions or failures exist.",
+            "challenge_reason": null
+          },
+          "qwen_tool_contestation": {
+            "decision": "accept",
+            "coverage_concern": "none",
+            "visible_tests_sufficient": true,
+            "tool_evidence_reliability": "sufficient_for_accept",
+            "would_challenge_visible_test_only_accept": false,
+            "primary_reason": "The patch correctly implements a case-insensitive check for the Host header, directly resolving the duplication issue, and the visible fail-to-pass test confirms the fix.",
+            "challenge_reason": ""
+          },
+          "deepseek_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Only one visible fail-to-pass test passed, with no regression tests or broader diagnostics to confirm the patch does not introduce regressions or handle edge cases.",
+            "challenge_reason": "Single passing test does not guarantee the patch handles all cases (e.g., mixed-case headers, multiple Host headers, or other header interactions) and lacks regression coverage."
+          }
+        }
+      },
+      {
+        "candidate_id": "evp8_hard_candidate_0022",
+        "task_id": "bugsinpy_httpie_1",
+        "project": "httpie",
+        "normalized_label": "partial",
+        "candidate_type": "partial_fix",
+        "expected_outcome": "partial",
+        "systems": {
+          "qwen_evidence_only": {
+            "decision": "accept",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "The patch applies successfully and the visible fail-to-pass test passes with no visible contradictions or diagnostic failures.",
+            "challenge_reason": null
+          },
+          "deepseek_evidence_only": {
+            "decision": "escalate",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "Visible evidence is insufficient to confirm correctness: only one test passed, no regression tests, no static checks, and the patch introduces new functions without visible validation of edge cases or integration.",
+            "challenge_reason": null
+          },
+          "qwen_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Patch introduces OS-specific os.pathconf without handling AttributeError for non-Unix systems, and lacks visible regression tests.",
+            "challenge_reason": "A single fail-to-pass test is insufficient to verify the OS-specific pathconf logic and ensure no regressions in download filename handling."
+          },
+          "deepseek_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Only one visible fail-to-pass test passed, with no regression tests or broader diagnostics to confirm correctness or absence of side effects.",
+            "challenge_reason": "Single passing test does not validate filename trimming logic, edge cases, or regression on existing download functionality."
+          }
+        }
+      }
+    ],
+    "qwen_residual_false_accept_cases": [
+      {
+        "candidate_id": "evp8_hard_candidate_0012",
+        "task_id": "bugsinpy_httpie_4",
+        "project": "httpie",
+        "normalized_label": "agent_plausible_wrong",
+        "candidate_type": "agent_plausible_wrong",
+        "expected_outcome": "incorrect",
+        "systems": {
+          "qwen_evidence_only": {
+            "decision": "accept",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "The patch applies successfully, correctly implements a case-insensitive check for the Host header to prevent duplication, and the visible fail-to-pass test passes without contradictions.",
+            "challenge_reason": null
+          },
+          "deepseek_evidence_only": {
+            "decision": "accept",
+            "coverage_concern": null,
+            "visible_tests_sufficient": null,
+            "tool_evidence_reliability": null,
+            "would_challenge_visible_test_only_accept": null,
+            "primary_reason": "Patch applies cleanly, the single fail-to-pass test passes, and no visible contradictions or failures exist.",
+            "challenge_reason": null
+          },
+          "qwen_tool_contestation": {
+            "decision": "accept",
+            "coverage_concern": "none",
+            "visible_tests_sufficient": true,
+            "tool_evidence_reliability": "sufficient_for_accept",
+            "would_challenge_visible_test_only_accept": false,
+            "primary_reason": "The patch correctly implements a case-insensitive check for the Host header, directly resolving the duplication issue, and the visible fail-to-pass test confirms the fix.",
+            "challenge_reason": ""
+          },
+          "deepseek_tool_contestation": {
+            "decision": "escalate",
+            "coverage_concern": "high",
+            "visible_tests_sufficient": false,
+            "tool_evidence_reliability": "insufficient_for_accept",
+            "would_challenge_visible_test_only_accept": true,
+            "primary_reason": "Only one visible fail-to-pass test passed, with no regression tests or broader diagnostics to confirm the patch does not introduce regressions or handle edge cases.",
+            "challenge_reason": "Single passing test does not guarantee the patch handles all cases (e.g., mixed-case headers, multiple Host headers, or other header interactions) and lacks regression coverage."
+          }
+        }
+      }
+    ],
+    "deepseek_escalated_correct_cases": [
+      {
+        "candidate_id": "evp8_hard_candidate_0015",
+        "task_id": "bugsinpy_httpie_2",
+        "project": "httpie",
+        "candidate_type": "correct_reference",
+        "deepseek_decision": "escalate",
+        "qwen_decision": "escalate",
+        "deepseek_primary_reason": "Only one visible fail-to-pass test passed, with no regression tests or broader diagnostics to confirm correctness or absence of side effects.",
+        "deepseek_challenge_reason": "The patch passes only a single fail-to-pass test without any regression tests or broader diagnostics, making a test-only accept premise unreliable."
+      },
+      {
+        "candidate_id": "evp8_hard_candidate_0016",
+        "task_id": "bugsinpy_httpie_3",
+        "project": "httpie",
+        "candidate_type": "correct_reference",
+        "deepseek_decision": "escalate",
+        "qwen_decision": "escalate",
+        "deepseek_primary_reason": "Only one visible fail-to-pass test passed, with no regression tests or broader diagnostics to confirm the patch does not introduce side effects.",
+        "deepseek_challenge_reason": "A single passing fail-to-pass test without any regression tests or broader diagnostics is insufficient to validate a patch that modifies a core session header update method."
+      },
+      {
+        "candidate_id": "evp8_hard_candidate_0018",
+        "task_id": "bugsinpy_httpie_1",
+        "project": "httpie",
+        "candidate_type": "correct_reference",
+        "deepseek_decision": "escalate",
+        "qwen_decision": "escalate",
+        "deepseek_primary_reason": "Only one visible fail-to-pass test passed, no regression tests or broader diagnostics are visible, and the patch introduces new functions with potential edge cases (e.g., filename trimming logic, OS-specific pathconf ...",
+        "deepseek_challenge_reason": "The single visible test does not cover the new filename trimming logic under various conditions (e.g., different max lengths, edge cases in trim_filename, OS-specific pathconf errors), and no regression tests are visi..."
+      },
+      {
+        "candidate_id": "evp8_hard_candidate_0025",
+        "task_id": "bugsinpy_httpie_2",
+        "project": "httpie",
+        "candidate_type": "correct_reference",
+        "deepseek_decision": "escalate",
+        "qwen_decision": "escalate",
+        "deepseek_primary_reason": "Only one visible fail-to-pass test passed, with no regression tests or broader diagnostics to confirm correctness or absence of side effects.",
+        "deepseek_challenge_reason": "Single passing test without regression coverage or diagnostics is insufficient to validate a patch in a core client module."
+      },
+      {
+        "candidate_id": "evp8_hard_candidate_0028",
+        "task_id": "bugsinpy_httpie_3",
+        "project": "httpie",
+        "candidate_type": "correct_reference",
+        "deepseek_decision": "escalate",
+        "qwen_decision": "escalate",
+        "deepseek_primary_reason": "Only one visible fail-to-pass test passed, no regression tests or broader diagnostics available, insufficient evidence to confirm patch correctness or absence of regressions.",
+        "deepseek_challenge_reason": "Single passing fail-to-pass test without regression tests or broader diagnostics is insufficient to accept the patch; risk of undetected regressions in session handling."
+      },
+      {
+        "candidate_id": "evp8_hard_candidate_0034",
+        "task_id": "bugsinpy_httpie_5",
+        "project": "httpie",
+        "candidate_type": "correct_reference",
+        "deepseek_decision": "escalate",
+        "qwen_decision": "escalate",
+        "deepseek_primary_reason": "Only one visible test passes, no regression tests are visible, and the patch changes parsing logic without broader diagnostics or coverage evidence.",
+        "deepseek_challenge_reason": "Single passing test without regression coverage or diagnostics is insufficient to validate a parsing logic change."
+      },
+      {
+        "candidate_id": "evp8_hard_candidate_0040",
+        "task_id": "bugsinpy_luigi_3",
+        "project": "luigi",
+        "candidate_type": "correct_reference",
+        "deepseek_decision": "escalate",
+        "qwen_decision": "escalate",
+        "deepseek_primary_reason": "Only one visible fail-to-pass test passed, no regression tests or broader diagnostics visible, insufficient evidence to confirm patch correctness or absence of regressions.",
+        "deepseek_challenge_reason": "Single passing test without regression coverage or broader diagnostics is insufficient to accept a patch that changes exception handling and return type wrapping."
+      },
+      {
+        "candidate_id": "evp8_hard_candidate_0045",
+        "task_id": "bugsinpy_luigi_4",
+        "project": "luigi",
+        "candidate_type": "correct_reference",
+        "deepseek_decision": "escalate",
+        "qwen_decision": "escalate",
+        "deepseek_primary_reason": "Only one visible fail-to-pass test passes, no regression tests are materialized, and no broader diagnostics are available, leaving insufficient evidence to confirm the patch does not introduce regressions.",
+        "deepseek_challenge_reason": "The patch passes only a single targeted fail-to-pass test without any regression tests or broader diagnostics, making a test-only accept premise unreliable."
+      }
+    ],
+    "interpretation": {
+      "strict_correction": "Neither model strictly rejected the nine tool false accepts under tool-contestation.",
+      "risk_triage": "Tool-contestation mainly converts repeated false accepts into escalation.",
+      "automation_tradeoff": "The same prompt sharply reduces autonomous correct-patch acceptance."
+    }
+  },
+  "validation": {
+    "status": "passed",
+    "errors": []
+  }
+}

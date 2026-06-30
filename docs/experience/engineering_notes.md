@@ -4238,3 +4238,53 @@ This file starts fresh for the patch-verification project.
   verification. `would_challenge_visible_test_only_accept=true` and
   `insufficient_for_accept` are risk-triage signals; only `reject` would be a
   strict correction of a known false accept.
+
+## 2026-06-30 PowerShell tree-sync refspec safety
+
+- Quote Git revision expressions with braces in PowerShell, for example
+  `git rev-parse "HEAD^{tree}"`. Unquoted `HEAD^{tree}` can be mangled by the
+  shell and produce an invalid tree value.
+- Never push a variable refspec unless the variable has been checked as
+  non-empty. An empty left side in `$newCommit:refs/heads/branch` can become a
+  delete refspec. Use `"$($newCommit):refs/heads/branch"` and explicitly throw
+  if `$newCommit` is empty.
+- If a tree-sync push accidentally deletes a remote branch, recover by using
+  the already fetched remote parent commit and the local `HEAD` tree:
+  create `git commit-tree "<local-tree>" -p "<remote-parent>" -m "<message>"`,
+  push `"$($newCommit):refs/heads/<branch>"`, fetch, and verify
+  `origin/<branch>^{tree}` equals `HEAD^{tree}`.
+
+## 2026-06-30 EVP-8-HARD policy utility interpretation
+
+- Keep policy-utility analysis separate from correctness-verification claims.
+  A system can win a utility scenario by escalating risky cases when false
+  accepts are expensive; that does not mean it semantically identified the
+  patch as wrong.
+- Report the cost assumptions beside every utility rank. Without the false
+  accept penalty and escalation cost, a policy table is easy to misread as an
+  unconditional model ranking.
+- For tool-contestation, the key distinction is strict correction versus safe
+  handling. `reject` is a strict correction of a known tool false accept;
+  `escalate` is risk triage. The current EVP-8-HARD result improves safe
+  handling but has 0/9 strict rejects on the opportunity set.
+- Preserve the automation-recall tradeoff in summaries. Tool-contestation
+  lowers unsafe accepts, but it also drives correct recall to zero in this
+  cohort, so it cannot be presented as a high-recall automatic merge gate.
+
+## 2026-06-30 EVP-8-HARD claim traceability scaffold
+
+- Build paper-facing claims from tracked aggregate audits, not from memory or
+  raw outputs. The claim audit should map every allowed claim to named files
+  and should list forbidden claims explicitly enough that later writing cannot
+  drift into them.
+- Keep `strict correction` and `safe handling` as separate table columns.
+  Escalating a known tool false accept is useful risk triage, but it is not
+  evidence that the model semantically rejected the wrong patch.
+- Raw-boundary checks should not fail just because an aggregate audit records
+  `prompt_text_read=false`, `raw_response_text_allowed=false`, or
+  `patch_diff_saved=false`. Treat false boundary booleans as safety evidence;
+  fail only on actual raw-like content or true raw-read/save indicators.
+- The final results table scaffold is a writing scaffold, not a new
+  experiment. It should preserve source variants (`tool-only`, `with-verdict`,
+  `evidence-only`, `tool-contestation`) so readers can see which result
+  supports which claim.

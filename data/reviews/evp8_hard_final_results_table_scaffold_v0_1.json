@@ -1,0 +1,247 @@
+{
+  "analysis_id": "evp8_hard_final_results_table_scaffold_v0_1",
+  "boundary": {
+    "api_call_attempted": false,
+    "patch_diff_saved": false,
+    "prompt_modified": false,
+    "raw_outputs_read": false
+  },
+  "opportunity_set_rows": [
+    {
+      "escalate": 0,
+      "interpretation": "defines the nine-case false-accept opportunity set",
+      "repeated_accept": 9,
+      "safe_handled": 0,
+      "strict_reject": 0,
+      "system_id": "tool_only_baseline",
+      "variant": "tool_only_baseline"
+    },
+    {
+      "escalate": 0,
+      "interpretation": "repeats tool-only false accepts",
+      "repeated_accept": 9,
+      "safe_handled": 0,
+      "strict_reject": 0,
+      "system_id": "qwen_with_verdict",
+      "variant": "with_verdict"
+    },
+    {
+      "escalate": 0,
+      "interpretation": "repeats tool-only false accepts",
+      "repeated_accept": 9,
+      "safe_handled": 0,
+      "strict_reject": 0,
+      "system_id": "deepseek_with_verdict",
+      "variant": "with_verdict"
+    },
+    {
+      "escalate": 2,
+      "interpretation": "safe handling is escalation-driven",
+      "repeated_accept": 7,
+      "safe_handled": 2,
+      "strict_reject": 0,
+      "system_id": "qwen_evidence_only",
+      "variant": "evidence_only"
+    },
+    {
+      "escalate": 5,
+      "interpretation": "safe handling is escalation-driven",
+      "repeated_accept": 4,
+      "safe_handled": 5,
+      "strict_reject": 0,
+      "system_id": "deepseek_evidence_only",
+      "variant": "evidence_only"
+    },
+    {
+      "escalate": 8,
+      "interpretation": "safe handling is escalation-driven",
+      "repeated_accept": 1,
+      "safe_handled": 8,
+      "strict_reject": 0,
+      "system_id": "qwen_tool_contestation",
+      "variant": "tool_contestation"
+    },
+    {
+      "escalate": 9,
+      "interpretation": "safe handling is escalation-driven",
+      "repeated_accept": 0,
+      "safe_handled": 9,
+      "strict_reject": 0,
+      "system_id": "deepseek_tool_contestation",
+      "variant": "tool_contestation"
+    }
+  ],
+  "sensitivity_winner_counts": {
+    "deepseek_tool_contestation": 16,
+    "qwen_evidence_only": 3,
+    "qwen_evidence_only + tool_only_baseline": 1
+  },
+  "table_notes": [
+    "Use with-verdict rows for tool-verdict dominance, not LLM-added-value claims.",
+    "Use tool-contestation rows for risk-triage claims, not semantic correctness claims.",
+    "Report accepted precision as n/a when accepted_total is zero."
+  ],
+  "utility_rows": [
+    {
+      "best_score": -6.5,
+      "best_system": "deepseek_tool_contestation",
+      "claim_use": "conditional policy ranking, not correctness proof",
+      "escalation_cost": 0.25,
+      "false_accept_penalty": 20.0,
+      "false_reject_penalty": 1.0,
+      "scenario": "merge_gate_strict"
+    },
+    {
+      "best_score": -6.5,
+      "best_system": "deepseek_tool_contestation",
+      "claim_use": "conditional policy ranking, not correctness proof",
+      "escalation_cost": 0.25,
+      "false_accept_penalty": 5.0,
+      "false_reject_penalty": 1.0,
+      "scenario": "balanced_triage"
+    },
+    {
+      "best_score": -20.0,
+      "best_system": "deepseek_tool_contestation",
+      "claim_use": "conditional policy ranking, not correctness proof",
+      "escalation_cost": 1.0,
+      "false_accept_penalty": 5.0,
+      "false_reject_penalty": 1.0,
+      "scenario": "review_cost_sensitive"
+    },
+    {
+      "best_score": -13.0,
+      "best_system": "deepseek_tool_contestation",
+      "claim_use": "conditional policy ranking, not correctness proof",
+      "escalation_cost": 0.5,
+      "false_accept_penalty": 5.0,
+      "false_reject_penalty": 2.0,
+      "scenario": "automation_recall"
+    }
+  ],
+  "validation": {
+    "linked_claim_traceability": "data/reviews/evp8_hard_paper_claim_traceability_v0_1.json",
+    "status": "passed"
+  },
+  "whole_cohort_rows": [
+    {
+      "accept": 17,
+      "accepted_precision": 0.470588,
+      "claim_use": "baseline risk and opportunity-set definition",
+      "correct_recall": 0.8,
+      "escalate": 0,
+      "escalation_rate": 0.0,
+      "false_accept": 9,
+      "false_accept_rate": 0.243243,
+      "false_reject": 2,
+      "false_reject_rate": 0.2,
+      "model": "deterministic",
+      "reject": 30,
+      "system_id": "tool_only_baseline",
+      "true_accept": 8,
+      "variant": "tool_only_baseline"
+    },
+    {
+      "accept": 17,
+      "accepted_precision": 0.470588,
+      "claim_use": "tool-verdict dominance",
+      "correct_recall": 0.8,
+      "escalate": 0,
+      "escalation_rate": 0.0,
+      "false_accept": 9,
+      "false_accept_rate": 0.243243,
+      "false_reject": 2,
+      "false_reject_rate": 0.2,
+      "model": "deepseek/deepseek-v4-pro",
+      "reject": 30,
+      "system_id": "deepseek/deepseek-v4-pro::with_verdict",
+      "true_accept": 8,
+      "variant": "with_verdict"
+    },
+    {
+      "accept": 17,
+      "accepted_precision": 0.470588,
+      "claim_use": "tool-verdict dominance",
+      "correct_recall": 0.8,
+      "escalate": 0,
+      "escalation_rate": 0.0,
+      "false_accept": 9,
+      "false_accept_rate": 0.243243,
+      "false_reject": 2,
+      "false_reject_rate": 0.2,
+      "model": "qwen/qwen3.7-max",
+      "reject": 30,
+      "system_id": "qwen/qwen3.7-max::with_verdict",
+      "true_accept": 8,
+      "variant": "with_verdict"
+    },
+    {
+      "accept": 6,
+      "accepted_precision": 0.333333,
+      "claim_use": "verdict removal ablation",
+      "correct_recall": 0.2,
+      "escalate": 11,
+      "escalation_rate": 0.234043,
+      "false_accept": 4,
+      "false_accept_rate": 0.108108,
+      "false_reject": 2,
+      "false_reject_rate": 0.2,
+      "model": "deepseek/deepseek-v4-pro",
+      "reject": 30,
+      "system_id": "deepseek/deepseek-v4-pro::evidence_only",
+      "true_accept": 2,
+      "variant": "evidence_only"
+    },
+    {
+      "accept": 15,
+      "accepted_precision": 0.533333,
+      "claim_use": "verdict removal ablation",
+      "correct_recall": 0.8,
+      "escalate": 2,
+      "escalation_rate": 0.042553,
+      "false_accept": 7,
+      "false_accept_rate": 0.189189,
+      "false_reject": 2,
+      "false_reject_rate": 0.2,
+      "model": "qwen/qwen3.7-max",
+      "reject": 30,
+      "system_id": "qwen/qwen3.7-max::evidence_only",
+      "true_accept": 8,
+      "variant": "evidence_only"
+    },
+    {
+      "accept": 0,
+      "accepted_precision": null,
+      "claim_use": "risk triage under explicit contestation",
+      "correct_recall": 0.0,
+      "escalate": 18,
+      "escalation_rate": 0.382979,
+      "false_accept": 0,
+      "false_accept_rate": 0.0,
+      "false_reject": 2,
+      "false_reject_rate": 0.2,
+      "model": "deepseek/deepseek-v4-pro",
+      "reject": 29,
+      "system_id": "deepseek/deepseek-v4-pro::tool_contestation",
+      "true_accept": 0,
+      "variant": "tool_contestation"
+    },
+    {
+      "accept": 1,
+      "accepted_precision": 0.0,
+      "claim_use": "risk triage under explicit contestation",
+      "correct_recall": 0.0,
+      "escalate": 16,
+      "escalation_rate": 0.340426,
+      "false_accept": 1,
+      "false_accept_rate": 0.027027,
+      "false_reject": 2,
+      "false_reject_rate": 0.2,
+      "model": "qwen/qwen3.7-max",
+      "reject": 30,
+      "system_id": "qwen/qwen3.7-max::tool_contestation",
+      "true_accept": 0,
+      "variant": "tool_contestation"
+    }
+  ]
+}

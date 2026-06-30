@@ -70,6 +70,27 @@
   and
   `../docs/experiments/evp8_hard_tool_contestation_opportunity_analysis_v0_1.md`:
   opportunity-set analysis over the nine repeated false accepts.
+- `../scripts/analyze_evp8_hard_tool_contestation_policy.py`:
+  no-API utility and case-analysis script comparing tool-only, evidence-only,
+  and tool-contestation policies without raw-output reads.
+- `../data/reviews/evp8_hard_tool_contestation_policy_case_analysis_v0_1.json`
+  and
+  `../docs/experiments/evp8_hard_tool_contestation_policy_case_analysis_v0_1.md`:
+  policy-utility and compact case analysis. It shows that tool-contestation
+  has value as conservative risk triage when false accepts are expensive, but
+  still does not strictly reject the nine known tool false accepts.
+- `../scripts/audit_evp8_hard_paper_claims.py`: no-API paper-facing claim
+  traceability and final-results-table scaffold generator for EVP-8-HARD.
+  It reads only tracked aggregate audits and analysis JSON files.
+- `../data/reviews/evp8_hard_paper_claim_traceability_v0_1.json` and
+  `../docs/experiments/evp8_hard_paper_claim_traceability_v0_1.md`:
+  machine-readable and human-readable claim boundary audit for the EVP-8-HARD
+  paper route. It freezes supported, qualified, and forbidden claims.
+- `../data/reviews/evp8_hard_final_results_table_scaffold_v0_1.json` and
+  `../docs/experiments/evp8_hard_final_results_table_scaffold_v0_1.md`:
+  paper-facing final result table scaffold covering tool-only baseline,
+  with-verdict, evidence-only, tool-contestation, opportunity-set handling,
+  and policy-utility winners.
 - `experiments/evp8_journal_scale_execution_plan_20260620.md`: no-API
   execution plan for the journal-scale EVP-8 route. It defines the planned
   E0-E6 full-ladder boundary, target five-model set, phased DeepSeek/Qwen first

@@ -2,6 +2,148 @@
 
 最后更新：2026-06-30
 
+## 0.14 2026-06-30 EVP-8-HARD paper claim traceability and final table scaffold
+
+本轮目标是冻结 EVP-8-HARD 论文主张边界，并生成最终结果表脚手架，用于把
+`with-verdict`、`evidence-only`、`tool-contestation` 和 tool-only baseline
+放入同一组 paper-facing 表格。
+
+执行边界：
+
+- 不调用任何模型 API；
+- 不读取 ignored raw responses；
+- 不读取或保存 patch diff、rendered prompt 或 raw model response；
+- 不修改 prompt、schema、候选集或实验结果；
+- 只读取 tracked audit、policy/case analysis 和 parsed aggregate JSON；
+- 输出机器可读 claim traceability JSON、Markdown 审计文档和 final table
+  scaffold；
+- 不把 utility ranking 写成 LLM correctness superiority。
+
+验收条件：
+
+- 明确 supported claims、qualified claims、forbidden claims；
+- 每条 supported/qualified claim 都映射到 tracked evidence source；
+- final results table scaffold 至少覆盖：
+  - tool-only baseline；
+  - Qwen/DeepSeek with-verdict；
+  - Qwen/DeepSeek evidence-only；
+  - Qwen/DeepSeek tool-contestation；
+  - policy utility winner summary；
+  - opportunity-set strict correction vs safe handling；
+- 脚本自检必须确认所有输入存在、audit passed、候选数一致、无 raw-like
+  tracked 字段；
+- 同步更新索引和经验文档。
+
+执行结果：
+
+- 新增 `scripts/audit_evp8_hard_paper_claims.py`；
+- 生成
+  `data/reviews/evp8_hard_paper_claim_traceability_v0_1.json`；
+- 生成
+  `docs/experiments/evp8_hard_paper_claim_traceability_v0_1.md`；
+- 生成
+  `data/reviews/evp8_hard_final_results_table_scaffold_v0_1.json`；
+- 生成
+  `docs/experiments/evp8_hard_final_results_table_scaffold_v0_1.md`；
+- 自检通过：
+  - `full_with_verdict_audit_passed=true`；
+  - `evidence_only_audit_passed=true`；
+  - `tool_contestation_audit_passed=true`；
+  - `policy_case_analysis_passed=true`；
+  - `candidate_count_consistent=true`；
+  - `raw_like_keys_absent=true`；
+  - `with_verdict_models_match_tool=true`；
+  - `tool_contestation_strict_reject_zero=true`。
+
+冻结的论文一句话主张：
+
+> In controlled candidate patch verification, EVP-8-HARD shows that
+> verdict-like tool evidence can dominate LLM decisions, while explicit
+> tool-contestation can reduce unsafe autonomous accepts through escalation,
+> but the evidence supports risk triage rather than autonomous correctness
+> verification.
+
+当前允许主张：
+
+- controlled 47-candidate hard-case cohort；
+- with-verdict 下 Qwen/DeepSeek 复现 deterministic baseline；
+- evidence-only 会改变决策，但没有 strict correction known false accepts；
+- tool-contestation 主要通过 escalation 降低 unsafe autonomous accepts；
+- policy utility ranking 只在 false accept 成本高于 escalation 成本的假设下成立。
+
+当前禁止主张：
+
+- 可靠自动 patch correctness verifier；
+- LLM 作为 automatic merge gate 优于 deterministic tool-only baseline；
+- LLM 语义识别了 opportunity-set wrong patches；
+- 47-candidate controlled cohort 支持真实 agent patch distribution 外推；
+- more evidence monotonically improves verifier quality。
+
+## 0.13 2026-06-30 EVP-8-HARD tool-contestation policy/case analysis
+
+本轮目标是在已完成 tool-contestation ablation 后，补一个无 API 的策略效用与
+关键案例分析，用来回答：
+
+> 这次实验到底在实际 merge policy 中有什么意义？它是降低风险，还是只是把
+> accept 改成 escalate？
+
+执行边界：
+
+- 不调用任何模型 API；
+- 不读取 ignored raw responses；
+- 不保存 patch diff、rendered prompt 或 raw model response；
+- 不修改 prompt、schema 或候选集；
+- 只读取 tracked evaluator labels、deterministic baseline、parsed review
+  schema fields 和已有 raw-output-free audit；
+- 只输出聚合效用表、敏感性分析和紧凑案例摘要；
+- 不把 tool-contestation 写成 semantic correctness verifier。
+
+验收条件：
+
+- 生成 tool-only、evidence-only、tool-contestation 的统一 policy/utility
+  对照；
+- 分析不同 false-accept penalty 和 escalation cost 下哪个策略更优；
+- 提取 Qwen 残余 false accept 与 DeepSeek 过度保守案例；
+- 结论必须区分：
+  - risk triage value；
+  - strict correctness correction；
+  - automation recall loss；
+- 同步更新计划、索引、经验文档和结果报告。
+
+执行结果：
+
+- 新增 `scripts/analyze_evp8_hard_tool_contestation_policy.py`；
+- 生成
+  `data/reviews/evp8_hard_tool_contestation_policy_case_analysis_v0_1.json`；
+- 生成
+  `docs/experiments/evp8_hard_tool_contestation_policy_case_analysis_v0_1.md`；
+- 自检通过：47 个候选覆盖完整，tracked 输入未发现 raw-like 字段；
+- 统一对照了 tool-only、evidence-only、tool-contestation 三类策略。
+
+核心结果：
+
+- 在严格 merge-gate 和 balanced-triage 效用设定下，DeepSeek
+  tool-contestation 排名最高，因为 false accept 成本被设为高于升级成本；
+- 在 20 个敏感性网格中，DeepSeek tool-contestation 赢 16 个，Qwen
+  evidence-only 赢 3 个，Qwen evidence-only 与 tool-only baseline 并列 1 个；
+- 9 个 tool false accept 中：
+  - Qwen evidence-only 重复 accept 7 个；
+  - DeepSeek evidence-only 重复 accept 4 个；
+  - Qwen tool-contestation 重复 accept 1 个；
+  - DeepSeek tool-contestation 重复 accept 0 个；
+  - 两个 tool-contestation 模型 strict reject 都是 0 个。
+
+研究判断：
+
+- 这一步补强的是 policy/risk-triage 价值，而不是 correctness-verification
+  价值；
+- 如果 false accept 很贵、人工升级成本可接受，tool-contestation 是更稳的
+  合并前风险控制层；
+- 如果目标是高自动化 accept 正确补丁，tool-contestation 过度保守，不能作为
+  最终主实验成功结论；
+- 论文应把该结果写成“可调 merge policy 的风险-召回权衡”，而不是“LLM
+  击败工具基线”。
+
 ## 0.12 2026-06-30 EVP-8-HARD tool-contestation ablation
 
 本轮目标是在已完成 `E6-full-with-verdict` 与 `E6-evidence-only` 的基础上，

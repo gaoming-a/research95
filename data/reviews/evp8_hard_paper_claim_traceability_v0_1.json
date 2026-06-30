@@ -1,0 +1,238 @@
+{
+  "audit_id": "evp8_hard_paper_claim_traceability_v0_1",
+  "boundary": "This audit maps EVP-8-HARD paper claims to tracked aggregate evidence. It does not call model APIs, read raw model responses, read patch diffs, modify prompts, or infer new model outputs.",
+  "checks": [
+    {
+      "check": "full_with_verdict_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "evidence_only_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "tool_contestation_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "policy_case_analysis_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "candidate_count_consistent",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "raw_like_keys_absent",
+      "detail": {},
+      "passed": true
+    },
+    {
+      "check": "with_verdict_models_match_tool",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "tool_contestation_strict_reject_zero",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "table_scaffold_has_required_rows",
+      "detail": null,
+      "passed": true
+    }
+  ],
+  "forbidden_claims": [
+    {
+      "claim": "The EVP-8-HARD system is a reliable automatic patch correctness verifier.",
+      "id": "automatic_correctness_verifier",
+      "reason": "Tool-contestation does not strictly reject the nine known tool false accepts."
+    },
+    {
+      "claim": "Qwen or DeepSeek outperforms the deterministic tool-only baseline as an automatic merge gate.",
+      "id": "llm_beats_tools_as_merge_gate",
+      "reason": "With verdict, both models match the tool baseline; without verdict, gains are mostly escalation and correct recall collapses under tool-contestation."
+    },
+    {
+      "claim": "The LLM semantically identifies the wrong patches in the opportunity set.",
+      "id": "semantic_error_detection",
+      "reason": "Strict reject is 0/9 for both tool-contestation models."
+    },
+    {
+      "claim": "The 47-candidate controlled cohort proves performance on real agent patch distributions.",
+      "id": "broad_external_validity",
+      "reason": "The cohort is controlled and small; realistic hard-negative acquisition remains a separate boundary."
+    },
+    {
+      "claim": "More visible evidence monotonically improves verifier quality.",
+      "id": "monotonic_more_evidence_better",
+      "reason": "E6 with verdict repeats tool false accepts; tool-contestation improves safety by escalation but loses recall."
+    }
+  ],
+  "inputs": {
+    "evidence_only_audit": {
+      "exists": true,
+      "path": "data/protocols/evp8_hard_e6_evidence_only_result_audit_v0_1.json",
+      "size_bytes": 9219
+    },
+    "full_with_verdict_audit": {
+      "exists": true,
+      "path": "data/protocols/evp8_hard_qwen_deepseek_result_audit_v0_1.json",
+      "size_bytes": 8469
+    },
+    "policy_case_analysis": {
+      "exists": true,
+      "path": "data/reviews/evp8_hard_tool_contestation_policy_case_analysis_v0_1.json",
+      "size_bytes": 69383
+    },
+    "statistical_boundary": {
+      "exists": true,
+      "path": "data/reviews/evp8_hard_e6_evidence_only_statistical_boundary_v0_1.json",
+      "size_bytes": 7976
+    },
+    "tool_contestation_audit": {
+      "exists": true,
+      "path": "data/protocols/evp8_hard_tool_contestation_result_audit_v0_1.json",
+      "size_bytes": 9878
+    }
+  },
+  "linked_table_scaffold": {
+    "json": "data/reviews/evp8_hard_final_results_table_scaffold_v0_1.json",
+    "markdown": "docs/experiments/evp8_hard_final_results_table_scaffold_v0_1.md"
+  },
+  "one_sentence_argument": "In controlled candidate patch verification, EVP-8-HARD shows that verdict-like tool evidence can dominate LLM decisions, while explicit tool-contestation can reduce unsafe autonomous accepts through escalation, but the evidence supports risk triage rather than autonomous correctness verification.",
+  "paper_section_scaffold": [
+    {
+      "job": "Show that Qwen and DeepSeek match tool-only under with-verdict.",
+      "primary_table": "whole_cohort_rows",
+      "section": "Results 1: Tool-verdict dominance"
+    },
+    {
+      "job": "Show decision shifts after removing verdict fields and adding contestation.",
+      "primary_table": "opportunity_set_rows",
+      "section": "Results 2: Verdict removal and tool-contestation"
+    },
+    {
+      "job": "Show when conservative escalation is useful and when automation recall is lost.",
+      "primary_table": "utility_rows",
+      "section": "Results 3: Policy utility"
+    },
+    {
+      "job": "Interpret the result as risk triage, not autonomous verification.",
+      "primary_table": "claim_traceability",
+      "section": "Discussion"
+    }
+  ],
+  "passed": true,
+  "qualified_claims": [
+    {
+      "claim": "The system can be positioned as an evidence-aware risk controller, not as an autonomous merge gate.",
+      "condition": "Only valid when escalation is treated as human-review routing and not as automatic correctness verification.",
+      "id": "risk_controller_not_merge_gate"
+    },
+    {
+      "claim": "The observed LLM-added value is policy behavior over evidence, not semantic proof.",
+      "condition": "Supported because known false accepts become escalations, while strict reject remains zero on the primary opportunity set.",
+      "id": "llm_added_value_is_policy_behavior"
+    }
+  ],
+  "statistical_boundary": "Intervals are wide because the hard-case cohort has 47 candidates and the primary opportunity set has only nine known false accepts. Use these results as evidence of behavior shift and triage tradeoff, not as a reliability guarantee.",
+  "supported_claims": [
+    {
+      "allowed_wording": "We study a controlled 47-candidate hard-case cohort with hidden evaluator labels.",
+      "claim": "EVP-8-HARD is a controlled 47-candidate hard-case cohort with 10 correct and 37 incorrect candidates.",
+      "evidence_sources": [
+        "full_with_verdict_audit",
+        "policy_case_analysis"
+      ],
+      "evidence_summary": "All audited systems report 47 records, 10 correct candidates, and 37 incorrect candidates.",
+      "id": "hard_cohort_scope",
+      "paper_use": "Dataset and experimental setup.",
+      "status": "supported"
+    },
+    {
+      "allowed_wording": "With a visible verdict-like tool summary, both models reproduced the deterministic baseline.",
+      "claim": "When the verdict-like deterministic merge-gate summary is visible, Qwen and DeepSeek reproduce the tool-only baseline decisions on this cohort.",
+      "evidence_sources": [
+        "full_with_verdict_audit"
+      ],
+      "evidence_summary": "Tool-only, Qwen with-verdict, and DeepSeek with-verdict all have accept=17, reject=30, false_accept=9, false_reject=2, and no escalation.",
+      "id": "verdict_like_summary_dominance",
+      "paper_use": "Core result for tool-verdict dominance.",
+      "status": "supported"
+    },
+    {
+      "allowed_wording": "Removing verdict-like fields changed decisions but did not produce strict corrections of known false accepts.",
+      "claim": "Removing verdict-like fields partially decouples LLM decisions from the tool baseline, but does not yield strict correction of known false accepts.",
+      "evidence_sources": [
+        "evidence_only_audit",
+        "policy_case_analysis"
+      ],
+      "evidence_summary": "On the nine tool false accepts, Qwen evidence-only repeats seven accepts and DeepSeek evidence-only repeats four; strict reject remains 0.",
+      "id": "evidence_only_partial_decoupling",
+      "paper_use": "Ablation result and limitation.",
+      "status": "supported"
+    },
+    {
+      "allowed_wording": "Tool-contestation shifted known false accepts primarily from accept to escalation.",
+      "claim": "Explicit tool-contestation reduces unsafe autonomous accepts mainly by routing known tool false accepts to escalation.",
+      "evidence_sources": [
+        "tool_contestation_audit",
+        "policy_case_analysis"
+      ],
+      "evidence_summary": "On the nine tool false accepts, Qwen tool-contestation escalates eight and repeats one accept; DeepSeek escalates all nine. Strict reject is 0/9.",
+      "id": "tool_contestation_risk_triage",
+      "paper_use": "Main positive, bounded result.",
+      "status": "supported"
+    },
+    {
+      "allowed_wording": "Under policies where false accepts are costly, contestation can be useful as a conservative triage layer.",
+      "claim": "Tool-contestation is useful under policies where false accepts are much more expensive than human escalation, but this utility is conditional.",
+      "evidence_sources": [
+        "policy_case_analysis"
+      ],
+      "evidence_summary": "DeepSeek tool-contestation wins 16/20 sensitivity cells, but correct recall is 0 because all correct accepted-by-tool patches are escalated or rejected.",
+      "id": "policy_utility_tradeoff",
+      "paper_use": "Discussion and practical implications.",
+      "status": "supported"
+    }
+  ],
+  "terminology_ledger": [
+    {
+      "definition": "The 47-candidate controlled hard-case cohort used in this branch.",
+      "term": "EVP-8-HARD",
+      "usage": "Use as cohort name, not as a general benchmark claim."
+    },
+    {
+      "definition": "The E6 setting where a verdict-like deterministic merge-gate summary is visible.",
+      "term": "with-verdict",
+      "usage": "Use for tool-dominance analysis."
+    },
+    {
+      "definition": "The ablation removing verdict-like fields while preserving lower-level visible evidence.",
+      "term": "evidence-only",
+      "usage": "Use for verdict removal analysis."
+    },
+    {
+      "definition": "The prompt variant asking the model to challenge visible-test-only accept premises.",
+      "term": "tool-contestation",
+      "usage": "Use for conservative risk-triage analysis."
+    },
+    {
+      "definition": "Rejecting a known tool false accept.",
+      "term": "strict correction",
+      "usage": "Do not conflate with escalation."
+    },
+    {
+      "definition": "Rejecting or escalating a known tool false accept.",
+      "term": "safe handling",
+      "usage": "Report separately from strict correction."
+    }
+  ]
+}
