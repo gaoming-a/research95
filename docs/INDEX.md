@@ -54,6 +54,22 @@
   2026-06-30, the fresh realistic hard-negative branch is explicitly scoped as
   a two-project supplement/source-acquisition negative result, not a
   three-project verifier-ready main experiment.
+- As of 2026-06-30, `EVP-8-HARD tool-contestation` is complete for Qwen and
+  DeepSeek on the 47-candidate hard-case cohort. It removes verdict-like tool
+  fields and asks models to challenge a visible-test-only accept premise. The
+  result supports a risk-triage claim: Qwen escalated 8/9 repeated false
+  accepts and DeepSeek escalated 9/9, but neither model strictly rejected those
+  known false accepts and both reduced correct recall to zero.
+- `../docs/experiments/evp8_hard_tool_contestation_result_v0_1.md`: concise
+  result report for the tool-contestation ablation, including run gates,
+  whole-cohort metrics, opportunity-set outcomes, and claim boundary.
+- `../data/protocols/evp8_hard_tool_contestation_result_audit_v0_1.json`:
+  raw-output-free combined audit for Qwen/DeepSeek tool-contestation parsed
+  reviews.
+- `../data/reviews/evp8_hard_tool_contestation_opportunity_analysis_v0_1.json`
+  and
+  `../docs/experiments/evp8_hard_tool_contestation_opportunity_analysis_v0_1.md`:
+  opportunity-set analysis over the nine repeated false accepts.
 - `experiments/evp8_journal_scale_execution_plan_20260620.md`: no-API
   execution plan for the journal-scale EVP-8 route. It defines the planned
   E0-E6 full-ladder boundary, target five-model set, phased DeepSeek/Qwen first
@@ -2131,6 +2147,18 @@
   summary builder for EVP-8. It reads raw-output-free passed summaries and
   ignored blocked-attempt summaries, writes tracked JSON/Markdown cost ledgers,
   and sets the API-freeze boundary after the Kimi blocked-attempt overrun.
+- `../prompts/evp8_tool_contestation_merge_gate_v0_1.md`: EVP-8-HARD
+  tool-contestation prompt. It keeps the visible-only boundary, removes final
+  tool verdict fields, and asks for explicit coverage/reliability/challenge
+  fields.
+- `../configs/evp8_hard_tool_contestation.example.json`: tracked no-secret
+  config template for the tool-contestation ablation.
+- `../scripts/run_evp8_hard_tool_contestation.py`: guarded tool-contestation
+  runner with check-only and ordered Qwen-before-DeepSeek execution.
+- `../scripts/audit_evp8_hard_tool_contestation_results.py`: raw-output-free
+  combined result audit for tool-contestation parsed reviews.
+- `../scripts/analyze_evp8_hard_tool_contestation_opportunity.py`: raw-output-free
+  analysis of challenge/escalation behavior on the nine repeated false accepts.
 - `../configs/evp7_g5_llm.example.json`: tracked template for the G5 LLM
   run. It intentionally contains placeholders and is not API-ready.
 - `../scripts/preflight_evp7_g5_llm_run.py`: no-API structural and strict

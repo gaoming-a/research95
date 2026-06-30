@@ -1,0 +1,114 @@
+{
+  "analysis_id": "evp8_hard_tool_contestation_check_only_v0_1",
+  "api_call_attempted": false,
+  "api_key_values_printed": false,
+  "candidate_count": 47,
+  "check_only_status": "passed",
+  "checks": [
+    {
+      "check": "candidate_count",
+      "detail": 47,
+      "passed": true
+    },
+    {
+      "check": "packet_count",
+      "detail": 47,
+      "passed": true
+    },
+    {
+      "check": "only_e6_packets",
+      "detail": [
+        "E6"
+      ],
+      "passed": true
+    },
+    {
+      "check": "packet_forbidden_marker_count",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "rule_based_visible_merge_gate_decision_absent",
+      "detail": {
+        "present": false
+      },
+      "passed": true
+    },
+    {
+      "check": "rule_based_visible_merge_gate_reasons_absent",
+      "detail": {
+        "present": false
+      },
+      "passed": true
+    },
+    {
+      "check": "source_decision_absent",
+      "detail": {
+        "present": false
+      },
+      "passed": true
+    },
+    {
+      "check": "prompt_boundary_error_count",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "tool_contestation_schema_sample",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "credential_key_presence",
+      "detail": {
+        "env_file_exists": true,
+        "key_states": {
+          "DEEPSEEK_API_KEY": "set",
+          "QWEN_API_KEY": "set"
+        },
+        "values_printed": false
+      },
+      "passed": true
+    },
+    {
+      "check": "api_call_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_outputs_not_generated",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "prompt_text_not_stored",
+      "detail": false,
+      "passed": true
+    }
+  ],
+  "cohort_id": "EVP-8-HARD",
+  "config": "configs/evp8_hard_tool_contestation.local.json",
+  "credential_presence_ready": true,
+  "mode": "check_only",
+  "model_visible_levels": [
+    "E6"
+  ],
+  "next_step": "Run Qwen first with --execute, audit, then run DeepSeek if Qwen coverage passes.",
+  "packet_count_per_model": 47,
+  "packet_variant": "e6_tool_contestation_no_verdict",
+  "planned_model_ids": [
+    "qwen/qwen3.7-max",
+    "deepseek/deepseek-v4-pro"
+  ],
+  "prompt_chars_max": 8996,
+  "prompt_chars_min": 7287,
+  "prompt_count_per_model": 47,
+  "prompt_hashes_unique_count": 47,
+  "prompt_text_stored": false,
+  "raw_outputs_generated": false,
+  "removed_verdict_fields": [
+    "rule_based_visible_merge_gate_decision",
+    "rule_based_visible_merge_gate_reasons",
+    "source_decision"
+  ]
+}

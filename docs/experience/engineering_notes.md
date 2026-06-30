@@ -4219,3 +4219,22 @@ This file starts fresh for the patch-verification project.
 - Treat repeated citations as informational, not a failure. Missing cite keys,
   duplicate BibTeX keys, and uncited BibTeX entries are failures for the current
   compact SQJ bibliography.
+
+## 2026-06-30 EVP-8-HARD tool-contestation API execution
+
+- Long Qwen runs can outlive the shell tool timeout. In the tool-contestation
+  run, the shell command timed out at 15 minutes while the Python child process
+  continued writing `outputs/evp8_hard_tool_contestation_full/.../raw_responses.jsonl`.
+  Do not immediately rerun in this state; first inspect the child process and
+  raw-response line count.
+- If raw responses are still increasing and no tracked summary exists, treat
+  the state as in-progress, not failed. Wait for the process to finish, then
+  run the raw-output-free audit on the generated parsed reviews and summary.
+- Never duplicate API calls against a partially written raw prefix unless a
+  resume/recovery path has been implemented and verified. The safe sequence is
+  process check, raw count check, tracked summary/review existence check, then
+  audit.
+- Tool-contestation outputs must be interpreted separately from correctness
+  verification. `would_challenge_visible_test_only_accept=true` and
+  `insufficient_for_accept` are risk-triage signals; only `reject` would be a
+  strict correction of a known false accept.

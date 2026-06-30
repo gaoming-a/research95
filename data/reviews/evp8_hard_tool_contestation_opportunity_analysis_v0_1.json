@@ -1,0 +1,440 @@
+{
+  "analysis_id": "evp8_hard_tool_contestation_opportunity_analysis_v0_1",
+  "analysis_status": "passed",
+  "api_call_attempted": false,
+  "checks": [
+    {
+      "check": "api_call_not_attempted_by_analysis",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_model_outputs_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "opportunity_set_size_is_9",
+      "detail": 9,
+      "passed": true
+    },
+    {
+      "check": "parsed_reviews_do_not_contain_raw_fields",
+      "detail": {},
+      "passed": true
+    },
+    {
+      "check": "opportunity_coverage_complete_for_existing_models",
+      "detail": {},
+      "passed": true
+    }
+  ],
+  "claim_boundary": "Challenge, insufficient-evidence, or escalation outcomes are risk-triage signals; they are not automatic proof that the model identified semantic incorrectness.",
+  "cohort_id": "EVP-8-HARD",
+  "existing_parsed_reviews": [
+    "data/reviews/evp8_hard_tool_contestation_qwen_qwen3.7-max_full_reviews.jsonl",
+    "data/reviews/evp8_hard_tool_contestation_deepseek_deepseek-v4-pro_full_reviews.jsonl"
+  ],
+  "expected_parsed_reviews": [
+    "data/reviews/evp8_hard_tool_contestation_qwen_qwen3.7-max_full_reviews.jsonl",
+    "data/reviews/evp8_hard_tool_contestation_deepseek_deepseek-v4-pro_full_reviews.jsonl"
+  ],
+  "false_accept_analysis": "data/reviews/evp8_hard_false_accept_case_analysis_v0_1.json",
+  "models": {
+    "deepseek/deepseek-v4-pro": {
+      "accept_but_challenged": 0,
+      "accept_without_challenge": 0,
+      "cases": [
+        {
+          "candidate_id": "evp8_hard_candidate_0001",
+          "challenge_reason": "Single passing test does not validate filename trimming logic, edge cases, or regression on existing download functionality.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Only one visible fail-to-pass test passed, no regression tests or broader diagnostics visible, insufficient evidence to confirm patch correctness or absence of regressions.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern",
+            "visible_regression_risk"
+          ],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_errno_fallback_blind_spot",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0002",
+          "challenge_reason": "Single passing test without regression tests or broader diagnostics does not sufficiently validate the patch's correctness or guard against regressions.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Only one visible fail-to-pass test passed, no regression tests or broader diagnostics visible, insufficient evidence to confirm correctness or absence of regressions.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern"
+          ],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_errno_fallback_blind_spot",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0003",
+          "challenge_reason": "Only a single fail-to-pass test passed; no regression tests or broader diagnostics to ensure the patch does not break other functionality.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Only one visible fail-to-pass test passed, no regression tests visible, and no broader diagnostics to confirm correctness or absence of regressions.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern"
+          ],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_errno_fallback_blind_spot",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0008",
+          "challenge_reason": "A single passing fail-to-pass test without any regression tests or broader diagnostics is insufficient to validate the patch's correctness and safety.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Only one visible fail-to-pass test passed, with no regression tests or broader diagnostics to confirm the patch does not break other functionality or handle edge cases.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern"
+          ],
+          "task_id": "bugsinpy_httpie_2",
+          "theme": "agent_plausible_wrong_httpie_2",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0009",
+          "challenge_reason": "A single passing fail-to-pass test without any regression tests or broader diagnostics is insufficient to validate the patch, especially given the change affects a core function (get_response) that could impact many behaviors.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Only one visible fail-to-pass test passed, with no regression tests or broader diagnostics to confirm correctness or absence of side effects.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern"
+          ],
+          "task_id": "bugsinpy_httpie_2",
+          "theme": "agent_plausible_wrong_httpie_2",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0010",
+          "challenge_reason": "Single passing test does not sufficiently cover session header update behavior for None values across different scenarios; no regression tests or broader diagnostics confirm patch safety.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Only one visible fail-to-pass test passed, no regression tests or broader diagnostics available, insufficient evidence to confirm patch correctness or absence of regressions.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern",
+            "visible_regression_risk"
+          ],
+          "task_id": "bugsinpy_httpie_3",
+          "theme": "agent_plausible_wrong_httpie_3",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0011",
+          "challenge_reason": "A single passing fail-to-pass test without regression tests or broader diagnostics does not sufficiently validate the patch's correctness or guard against regressions.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Only one visible fail-to-pass test passed, with no regression tests or broader diagnostics to confirm correctness or absence of side effects.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern"
+          ],
+          "task_id": "bugsinpy_httpie_3",
+          "theme": "agent_plausible_wrong_httpie_3",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0012",
+          "challenge_reason": "Single passing test does not guarantee the patch handles all cases (e.g., mixed-case headers, multiple Host headers, or other header interactions) and lacks regression coverage.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Only one visible fail-to-pass test passed, with no regression tests or broader diagnostics to confirm the patch does not introduce regressions or handle edge cases.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern"
+          ],
+          "task_id": "bugsinpy_httpie_4",
+          "theme": "agent_plausible_wrong_httpie_4",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0022",
+          "challenge_reason": "Single passing test does not validate filename trimming logic, edge cases, or regression on existing download functionality.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Only one visible fail-to-pass test passed, with no regression tests or broader diagnostics to confirm correctness or absence of side effects.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern",
+            "ambiguous_evidence"
+          ],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_unique_filename_blind_spot",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        }
+      ],
+      "challenge_true": 9,
+      "challenge_visible_test_only_accept_counts": {
+        "True": 9
+      },
+      "coverage_concern_counts": {
+        "high": 9
+      },
+      "decision_counts_on_opportunity_set": {
+        "escalate": 9
+      },
+      "escalated": 9,
+      "insufficient_or_challenged": 9,
+      "missing_opportunity_ids": [],
+      "model_id": "deepseek/deepseek-v4-pro",
+      "opportunity_record_count": 9,
+      "parsed_reviews_path": "data/reviews/evp8_hard_tool_contestation_deepseek_deepseek-v4-pro_full_reviews.jsonl",
+      "raw_field_findings": [],
+      "repeated_accept": 0,
+      "review_count": 47,
+      "safe_handled_by_reject_or_escalate": 9,
+      "strict_corrected_to_reject": 0,
+      "tool_evidence_reliability_counts": {
+        "insufficient_for_accept": 9
+      },
+      "visible_tests_sufficient_counts": {
+        "False": 9
+      }
+    },
+    "qwen/qwen3.7-max": {
+      "accept_but_challenged": 0,
+      "accept_without_challenge": 1,
+      "cases": [
+        {
+          "candidate_id": "evp8_hard_candidate_0001",
+          "challenge_reason": "The patch introduces complex filename trimming logic but is only validated by a single fail-to-pass test with no regression tests or static analysis to ensure it doesn't break standard download behaviors.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Only one fail-to-pass test is visible and no regression tests or static diagnostics were run, leaving the broader impact of the filename trimming logic unverified.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern"
+          ],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_errno_fallback_blind_spot",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0002",
+          "challenge_reason": "A single fail-to-pass test without regression tests or broader diagnostics is insufficient to verify the new OS-dependent filename trimming logic.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Only a single fail-to-pass test is visible with no pass-to-pass regression tests or broader diagnostics to verify the new OS-dependent filename trimming logic.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern"
+          ],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_errno_fallback_blind_spot",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0003",
+          "challenge_reason": "The single passing test does not cover cross-platform execution where os.pathconf would raise an unhandled AttributeError on Windows.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Patch uses Unix-only os.pathconf which will raise an unhandled AttributeError on Windows, and lacks pass-to-pass regression tests to verify cross-platform compatibility.",
+          "risk_flags": [
+            "visible_regression_risk",
+            "insufficient_evidence",
+            "test_coverage_concern"
+          ],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_errno_fallback_blind_spot",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0008",
+          "challenge_reason": "Validation relies solely on one narrow fail-to-pass test without regression coverage or static checks.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Patch passes the single fail-to-pass test but lacks visible regression tests and broader diagnostics.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern"
+          ],
+          "task_id": "bugsinpy_httpie_2",
+          "theme": "agent_plausible_wrong_httpie_2",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0009",
+          "challenge_reason": "A visible-test-only accept is challenged because the single passing fail-to-pass test does not guarantee the absence of regressions without pass-to-pass tests or static diagnostics.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "The patch passes the single fail-to-pass test but lacks pass-to-pass regression tests and broader diagnostics, making the evidence insufficient for a safe merge.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern"
+          ],
+          "task_id": "bugsinpy_httpie_2",
+          "theme": "agent_plausible_wrong_httpie_2",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0010",
+          "challenge_reason": "Only one fail-to-pass test passed with zero regression tests and no static diagnostics, leaving broader session handling unverified.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Patch passes a single fail-to-pass test but lacks pass-to-pass regression tests and broader diagnostics to verify no regressions.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern"
+          ],
+          "task_id": "bugsinpy_httpie_3",
+          "theme": "agent_plausible_wrong_httpie_3",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0011",
+          "challenge_reason": "The patch is validated only by a single fail-to-pass test, lacking pass-to-pass regression tests and broader diagnostics to confirm no unintended side effects.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Visible evidence is limited to a single fail-to-pass test with no regression tests or broader diagnostics to verify the patch's safety.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern"
+          ],
+          "task_id": "bugsinpy_httpie_3",
+          "theme": "agent_plausible_wrong_httpie_3",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0012",
+          "challenge_reason": "",
+          "coverage_concern": "none",
+          "new_decision": "accept",
+          "primary_reason": "The patch correctly implements a case-insensitive check for the Host header, directly resolving the duplication issue, and the visible fail-to-pass test confirms the fix.",
+          "risk_flags": [],
+          "task_id": "bugsinpy_httpie_4",
+          "theme": "agent_plausible_wrong_httpie_4",
+          "tool_evidence_reliability": "sufficient_for_accept",
+          "transition": "accept->accept",
+          "visible_tests_sufficient": true,
+          "would_challenge_visible_test_only_accept": false
+        },
+        {
+          "candidate_id": "evp8_hard_candidate_0022",
+          "challenge_reason": "A single fail-to-pass test is insufficient to verify the OS-specific pathconf logic and ensure no regressions in download filename handling.",
+          "coverage_concern": "high",
+          "new_decision": "escalate",
+          "primary_reason": "Patch introduces OS-specific os.pathconf without handling AttributeError for non-Unix systems, and lacks visible regression tests.",
+          "risk_flags": [
+            "insufficient_evidence",
+            "test_coverage_concern",
+            "visible_regression_risk"
+          ],
+          "task_id": "bugsinpy_httpie_1",
+          "theme": "partial_httpie1_unique_filename_blind_spot",
+          "tool_evidence_reliability": "insufficient_for_accept",
+          "transition": "accept->escalate",
+          "visible_tests_sufficient": false,
+          "would_challenge_visible_test_only_accept": true
+        }
+      ],
+      "challenge_true": 8,
+      "challenge_visible_test_only_accept_counts": {
+        "False": 1,
+        "True": 8
+      },
+      "coverage_concern_counts": {
+        "high": 8,
+        "none": 1
+      },
+      "decision_counts_on_opportunity_set": {
+        "accept": 1,
+        "escalate": 8
+      },
+      "escalated": 8,
+      "insufficient_or_challenged": 8,
+      "missing_opportunity_ids": [],
+      "model_id": "qwen/qwen3.7-max",
+      "opportunity_record_count": 9,
+      "parsed_reviews_path": "data/reviews/evp8_hard_tool_contestation_qwen_qwen3.7-max_full_reviews.jsonl",
+      "raw_field_findings": [],
+      "repeated_accept": 1,
+      "review_count": 47,
+      "safe_handled_by_reject_or_escalate": 8,
+      "strict_corrected_to_reject": 0,
+      "tool_evidence_reliability_counts": {
+        "insufficient_for_accept": 8,
+        "sufficient_for_accept": 1
+      },
+      "visible_tests_sufficient_counts": {
+        "False": 8,
+        "True": 1
+      }
+    }
+  },
+  "next_step": "Interpret tool-contestation signals separately from strict reject corrections.",
+  "opportunity_candidate_ids": [
+    "evp8_hard_candidate_0001",
+    "evp8_hard_candidate_0002",
+    "evp8_hard_candidate_0003",
+    "evp8_hard_candidate_0008",
+    "evp8_hard_candidate_0009",
+    "evp8_hard_candidate_0010",
+    "evp8_hard_candidate_0011",
+    "evp8_hard_candidate_0012",
+    "evp8_hard_candidate_0022"
+  ],
+  "opportunity_set_size": 9,
+  "packet_variant": "e6_tool_contestation_no_verdict",
+  "prompt_text_read": false,
+  "raw_model_outputs_read": false
+}

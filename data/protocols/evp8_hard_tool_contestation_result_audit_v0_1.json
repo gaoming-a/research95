@@ -1,0 +1,326 @@
+{
+  "analysis_id": "evp8_hard_tool_contestation_result_audit_v0_1",
+  "audit_status": "passed",
+  "candidate_count": 47,
+  "checks": [
+    {
+      "check": "api_call_not_attempted_by_audit",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_model_outputs_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "parsed_reviews_status_is_explicit",
+      "detail": {
+        "parsed_review_model_count": 2,
+        "status": "present"
+      },
+      "passed": true
+    },
+    {
+      "check": "parsed_reviews_do_not_contain_raw_fields",
+      "detail": {},
+      "passed": true
+    },
+    {
+      "check": "model_review_candidate_coverage_complete",
+      "detail": {},
+      "passed": true
+    }
+  ],
+  "cohort_id": "EVP-8-HARD",
+  "inputs": {
+    "evaluator_manifest": "data/patches/evp8_hard_evaluator_manifest_v0_1.jsonl",
+    "parsed_review_files": [
+      "data/reviews/evp8_hard_tool_contestation_qwen_qwen3.7-max_full_reviews.jsonl",
+      "data/reviews/evp8_hard_tool_contestation_deepseek_deepseek-v4-pro_full_reviews.jsonl"
+    ],
+    "tool_only_baseline": "data/baselines/evp8_hard_tool_only_baseline_v0_1.jsonl"
+  },
+  "models": {
+    "deepseek/deepseek-v4-pro": {
+      "complete_candidate_coverage": true,
+      "confusion": {
+        "counts": {
+          "escalated_correct": 8,
+          "escalated_incorrect": 10,
+          "false_accept": 0,
+          "false_reject": 2,
+          "invalid_correct": 0,
+          "invalid_incorrect": 0,
+          "true_accept": 0,
+          "true_reject": 27
+        },
+        "examples": {
+          "escalated_correct": [
+            "evp8_hard_candidate_0015",
+            "evp8_hard_candidate_0016",
+            "evp8_hard_candidate_0018",
+            "evp8_hard_candidate_0025",
+            "evp8_hard_candidate_0028",
+            "evp8_hard_candidate_0034",
+            "evp8_hard_candidate_0040",
+            "evp8_hard_candidate_0045"
+          ],
+          "escalated_incorrect": [
+            "evp8_hard_candidate_0001",
+            "evp8_hard_candidate_0002",
+            "evp8_hard_candidate_0003",
+            "evp8_hard_candidate_0008",
+            "evp8_hard_candidate_0009",
+            "evp8_hard_candidate_0010",
+            "evp8_hard_candidate_0011",
+            "evp8_hard_candidate_0012",
+            "evp8_hard_candidate_0013",
+            "evp8_hard_candidate_0022"
+          ],
+          "false_accepts": [],
+          "false_rejects": [
+            "evp8_hard_candidate_0017",
+            "evp8_hard_candidate_0031"
+          ],
+          "invalid_outputs": []
+        },
+        "metrics": {
+          "accepted_precision": null,
+          "accepted_total": 0,
+          "correct_recall": 0.0,
+          "correct_total": 10,
+          "escalation_rate": 0.382979,
+          "false_accept_rate": 0.0,
+          "false_reject_rate": 0.2,
+          "incorrect_total": 37,
+          "invalid_output_rate": 0.0,
+          "record_count": 47
+        }
+      },
+      "decision_counts": {
+        "escalate": 18,
+        "reject": 29
+      },
+      "delta_vs_tool": {
+        "accepted_total": -17,
+        "escalated_total": 18,
+        "false_accept_count": -9,
+        "false_reject_count": 0
+      },
+      "expected_review_count": 47,
+      "label_counts": {
+        "agent_plausible_wrong": 10,
+        "correct": 10,
+        "irrelevant_or_noop": 14,
+        "partial": 13
+      },
+      "opportunity_correction_vs_tool": {
+        "tool_false_accepts": {
+          "candidate_count": 9,
+          "corrected_to_reject": 0,
+          "decision_counts": {
+            "escalate": 9
+          },
+          "escalated": 9,
+          "invalid_output": 0,
+          "model_record_count": 9,
+          "repeated_accept": 0
+        },
+        "tool_false_rejects": {
+          "candidate_count": 2,
+          "corrected_to_accept": 0,
+          "decision_counts": {
+            "reject": 2
+          },
+          "escalated": 0,
+          "invalid_output": 0,
+          "model_record_count": 2,
+          "repeated_reject": 2
+        }
+      },
+      "parsed_reviews_path": "data/reviews/evp8_hard_tool_contestation_deepseek_deepseek-v4-pro_full_reviews.jsonl",
+      "review_count": 47
+    },
+    "qwen/qwen3.7-max": {
+      "complete_candidate_coverage": true,
+      "confusion": {
+        "counts": {
+          "escalated_correct": 8,
+          "escalated_incorrect": 8,
+          "false_accept": 1,
+          "false_reject": 2,
+          "invalid_correct": 0,
+          "invalid_incorrect": 0,
+          "true_accept": 0,
+          "true_reject": 28
+        },
+        "examples": {
+          "escalated_correct": [
+            "evp8_hard_candidate_0015",
+            "evp8_hard_candidate_0016",
+            "evp8_hard_candidate_0018",
+            "evp8_hard_candidate_0025",
+            "evp8_hard_candidate_0028",
+            "evp8_hard_candidate_0034",
+            "evp8_hard_candidate_0040",
+            "evp8_hard_candidate_0045"
+          ],
+          "escalated_incorrect": [
+            "evp8_hard_candidate_0001",
+            "evp8_hard_candidate_0002",
+            "evp8_hard_candidate_0003",
+            "evp8_hard_candidate_0008",
+            "evp8_hard_candidate_0009",
+            "evp8_hard_candidate_0010",
+            "evp8_hard_candidate_0011",
+            "evp8_hard_candidate_0022"
+          ],
+          "false_accepts": [
+            "evp8_hard_candidate_0012"
+          ],
+          "false_rejects": [
+            "evp8_hard_candidate_0017",
+            "evp8_hard_candidate_0031"
+          ],
+          "invalid_outputs": []
+        },
+        "metrics": {
+          "accepted_precision": 0.0,
+          "accepted_total": 1,
+          "correct_recall": 0.0,
+          "correct_total": 10,
+          "escalation_rate": 0.340426,
+          "false_accept_rate": 0.027027,
+          "false_reject_rate": 0.2,
+          "incorrect_total": 37,
+          "invalid_output_rate": 0.0,
+          "record_count": 47
+        }
+      },
+      "decision_counts": {
+        "accept": 1,
+        "escalate": 16,
+        "reject": 30
+      },
+      "delta_vs_tool": {
+        "accepted_total": -16,
+        "escalated_total": 16,
+        "false_accept_count": -8,
+        "false_reject_count": 0
+      },
+      "expected_review_count": 47,
+      "label_counts": {
+        "agent_plausible_wrong": 10,
+        "correct": 10,
+        "irrelevant_or_noop": 14,
+        "partial": 13
+      },
+      "opportunity_correction_vs_tool": {
+        "tool_false_accepts": {
+          "candidate_count": 9,
+          "corrected_to_reject": 0,
+          "decision_counts": {
+            "accept": 1,
+            "escalate": 8
+          },
+          "escalated": 8,
+          "invalid_output": 0,
+          "model_record_count": 9,
+          "repeated_accept": 1
+        },
+        "tool_false_rejects": {
+          "candidate_count": 2,
+          "corrected_to_accept": 0,
+          "decision_counts": {
+            "reject": 2
+          },
+          "escalated": 0,
+          "invalid_output": 0,
+          "model_record_count": 2,
+          "repeated_reject": 2
+        }
+      },
+      "parsed_reviews_path": "data/reviews/evp8_hard_tool_contestation_qwen_qwen3.7-max_full_reviews.jsonl",
+      "review_count": 47
+    }
+  },
+  "next_step": "Use this raw-output-free audit for label-conditioned EVP-8-HARD analysis.",
+  "packet_variant": "e6_tool_contestation_no_verdict",
+  "primary_opportunity_set": {
+    "metric": "tool-contestation behavior on nine repeated false accepts",
+    "repeated_false_accept_count": 9,
+    "source": "data/reviews/evp8_hard_false_accept_case_analysis_v0_1.json"
+  },
+  "scope": {
+    "api_call_attempted": false,
+    "prompt_text_read": false,
+    "raw_model_outputs_read": false,
+    "raw_response_text_allowed_in_parsed_reviews": false
+  },
+  "tool_contestation_fields": {
+    "required_in_parsed_reviews": [
+      "coverage_concern",
+      "visible_tests_sufficient",
+      "tool_evidence_reliability",
+      "would_challenge_visible_test_only_accept",
+      "challenge_reason"
+    ]
+  },
+  "tool_only_baseline": {
+    "confusion": {
+      "counts": {
+        "escalated_correct": 0,
+        "escalated_incorrect": 0,
+        "false_accept": 9,
+        "false_reject": 2,
+        "invalid_correct": 0,
+        "invalid_incorrect": 0,
+        "true_accept": 8,
+        "true_reject": 28
+      },
+      "examples": {
+        "escalated_correct": [],
+        "escalated_incorrect": [],
+        "false_accepts": [
+          "evp8_hard_candidate_0001",
+          "evp8_hard_candidate_0002",
+          "evp8_hard_candidate_0003",
+          "evp8_hard_candidate_0008",
+          "evp8_hard_candidate_0009",
+          "evp8_hard_candidate_0010",
+          "evp8_hard_candidate_0011",
+          "evp8_hard_candidate_0012",
+          "evp8_hard_candidate_0022"
+        ],
+        "false_rejects": [
+          "evp8_hard_candidate_0017",
+          "evp8_hard_candidate_0031"
+        ],
+        "invalid_outputs": []
+      },
+      "metrics": {
+        "accepted_precision": 0.470588,
+        "accepted_total": 17,
+        "correct_recall": 0.8,
+        "correct_total": 10,
+        "escalation_rate": 0.0,
+        "false_accept_rate": 0.243243,
+        "false_reject_rate": 0.2,
+        "incorrect_total": 37,
+        "invalid_output_rate": 0.0,
+        "record_count": 47
+      }
+    },
+    "decision_counts": {
+      "accept": 17,
+      "reject": 30
+    },
+    "label_counts": {
+      "agent_plausible_wrong": 10,
+      "correct": 10,
+      "irrelevant_or_noop": 14,
+      "partial": 13
+    }
+  }
+}

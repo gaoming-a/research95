@@ -6,6 +6,26 @@
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
 `docs/plans/final_paper_roadmap_zh.md` 的研究路线。
 
+## 2026-06-30 快速状态增量
+
+- 当前分支仍为 `evp8-v03-qwen-main-exp`，精确同步状态以
+  `git status --short --branch` 为准。
+- `EVP-8-HARD tool-contestation` 已完成 Qwen 和 DeepSeek：
+  - cohort: 47 candidates；
+  - prompt: `prompts/evp8_tool_contestation_merge_gate_v0_1.md`；
+  - runner: `scripts/run_evp8_hard_tool_contestation.py`；
+  - result report:
+    `docs/experiments/evp8_hard_tool_contestation_result_v0_1.md`；
+  - combined audit:
+    `data/protocols/evp8_hard_tool_contestation_result_audit_v0_1.json`。
+- 核心结果：Qwen 在 9 个 repeated false accepts 中 8 个转为
+  escalation、1 个仍 accept；DeepSeek 9/9 转为 escalation；两者 strict reject
+  均为 0。
+- 论文解释边界：该结果支持 tool-evidence reliability / risk-triage claim，
+  不支持 autonomous merge gate 或 LLM strict correctness verification。
+- 注意：新增 `data/` 结果受 `.gitignore` 默认规则影响，提交时必须只对本轮
+  需要追踪的 JSON/JSONL 结果使用精确 `git add -f`。
+
 ## 当前同步状态
 
 - 分支：当前工作分支为 `evp8-v03-qwen-main-exp`；上一诊断分支为

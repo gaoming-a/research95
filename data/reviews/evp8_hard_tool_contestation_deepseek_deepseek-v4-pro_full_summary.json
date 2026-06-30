@@ -1,0 +1,56 @@
+{
+  "analysis_id": "evp8_hard_tool_contestation_full_summary_v0_1",
+  "api_call_attempted": true,
+  "challenge_visible_test_only_accept_counts": {
+    "False": 1,
+    "True": 46
+  },
+  "cohort_id": "EVP-8-HARD",
+  "configured_model_id": "deepseek/deepseek-v4-pro",
+  "cost_summary": {
+    "cost_currency_counts": {
+      "USD": 47
+    },
+    "cost_observability_counts": {
+      "estimated_from_provider_token_usage": 47
+    },
+    "cost_source_counts": {
+      "estimated_from_tokens": 47
+    },
+    "total_cost_cny": 0.0,
+    "total_cost_usd": 0.0386889,
+    "unknown_cost_record_count": 0
+  },
+  "coverage_concern_counts": {
+    "high": 46,
+    "none": 1
+  },
+  "decision_counts": {
+    "escalate": 18,
+    "reject": 29
+  },
+  "invalid_parse_count": 0,
+  "mode": "executed",
+  "packet_variant": "e6_tool_contestation_no_verdict",
+  "parse_valid_count": 47,
+  "parsed_reviews_out": "data/reviews/evp8_hard_tool_contestation_deepseek_deepseek-v4-pro_full_reviews.jsonl",
+  "prompt_text_stored": false,
+  "provider_route": "deepseek_official",
+  "raw_outputs_generated": true,
+  "raw_response_text_stored_in_parsed_reviews": false,
+  "raw_response_text_stored_in_tracked_summary": false,
+  "raw_responses_out": "outputs/evp8_hard_tool_contestation_full/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+  "removed_verdict_fields": [
+    "rule_based_visible_merge_gate_decision",
+    "rule_based_visible_merge_gate_reasons",
+    "source_decision"
+  ],
+  "request_model_id": "deepseek-v4-pro",
+  "review_count": 47,
+  "run_gate": "passed",
+  "tool_evidence_reliability_counts": {
+    "contradicts_accept": 29,
+    "insufficient_for_accept": 18
+  },
+  "usage_cost_gate": "passed"
+}

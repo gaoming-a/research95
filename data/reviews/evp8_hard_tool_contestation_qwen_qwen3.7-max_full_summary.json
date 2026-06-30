@@ -1,0 +1,60 @@
+{
+  "analysis_id": "evp8_hard_tool_contestation_full_summary_v0_1",
+  "api_call_attempted": true,
+  "challenge_visible_test_only_accept_counts": {
+    "False": 31,
+    "True": 16
+  },
+  "cohort_id": "EVP-8-HARD",
+  "configured_model_id": "qwen/qwen3.7-max",
+  "cost_summary": {
+    "cost_currency_counts": {
+      "CNY": 47
+    },
+    "cost_observability_counts": {
+      "estimated_from_provider_token_usage_and_official_cny_pricing": 47
+    },
+    "cost_source_counts": {
+      "estimated_from_tokens_official_qwen_cny_pricing": 47
+    },
+    "total_cost_cny": 3.479676,
+    "total_cost_usd": 0.0,
+    "unknown_cost_record_count": 0
+  },
+  "coverage_concern_counts": {
+    "high": 28,
+    "low": 1,
+    "medium": 4,
+    "none": 14
+  },
+  "decision_counts": {
+    "accept": 1,
+    "escalate": 16,
+    "reject": 30
+  },
+  "invalid_parse_count": 0,
+  "mode": "executed",
+  "packet_variant": "e6_tool_contestation_no_verdict",
+  "parse_valid_count": 47,
+  "parsed_reviews_out": "data/reviews/evp8_hard_tool_contestation_qwen_qwen3.7-max_full_reviews.jsonl",
+  "prompt_text_stored": false,
+  "provider_route": "qwen_official",
+  "raw_outputs_generated": true,
+  "raw_response_text_stored_in_parsed_reviews": false,
+  "raw_response_text_stored_in_tracked_summary": false,
+  "raw_responses_out": "outputs/evp8_hard_tool_contestation_full/qwen_qwen3.7-max/raw_responses.jsonl",
+  "removed_verdict_fields": [
+    "rule_based_visible_merge_gate_decision",
+    "rule_based_visible_merge_gate_reasons",
+    "source_decision"
+  ],
+  "request_model_id": "qwen3.7-max",
+  "review_count": 47,
+  "run_gate": "passed",
+  "tool_evidence_reliability_counts": {
+    "contradicts_accept": 30,
+    "insufficient_for_accept": 16,
+    "sufficient_for_accept": 1
+  },
+  "usage_cost_gate": "passed"
+}

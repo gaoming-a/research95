@@ -2,6 +2,97 @@
 
 最后更新：2026-06-30
 
+## 0.12 2026-06-30 EVP-8-HARD tool-contestation ablation
+
+本轮目标是在已完成 `E6-full-with-verdict` 与 `E6-evidence-only` 的基础上，
+补一个最小化的 `tool-contestation` 消融，专门回答：
+
+> LLM 是否会独立质疑“可见测试通过即可接受”的工具前提，而不是只因为
+> verdict-like 工具结论被移除后变保守？
+
+执行边界：
+
+- 使用同一个 `EVP-8-HARD` 47-candidate cohort；
+- 只运行 Qwen 和 DeepSeek；
+- 不注入 `rule_based_visible_merge_gate_decision`、
+  `rule_based_visible_merge_gate_reasons` 或 `source_decision`；
+- 不注入 hidden evaluator labels、hidden oracle outcomes、expected outcome、
+  reference provenance 或最终 merge label；
+- 不保存 rendered prompt text 到 tracked 输出；
+- parsed reviews 只保存 schema 字段，不保存 raw response text 或 provider
+  response object；
+- 若 check-only、prompt-boundary、schema 或 credential gate 失败，停止 API；
+- 主分析只看 9 个 repeated false accept 是否被
+  `would_challenge_visible_test_only_accept`、`coverage_concern`、
+  `visible_tests_sufficient=false`、`reject/escalate` 捕捉；
+- 不把该消融写成自动 correctness verification 或 LLM 优于工具基线。
+
+验收条件：
+
+- 新增 prompt、runner/config、check-only summary、result audit 和机会集分析；
+- check-only 证明 verdict-like 字段不存在，hidden labels 不泄漏；
+- Qwen 47/47 parse-valid 后再允许 DeepSeek；
+- DeepSeek 47/47 parse-valid 后生成 raw-output-free combined audit；
+- 输出论文可用的 claim boundary：
+  - 若模型 challenge 机会案例，只能写成 tool-evidence reliability / triage
+    信号；
+  - 若模型仍 accept，则写成即使显式要求 contest 工具前提，LLM 仍无法稳定
+    发现 visible-pass hidden-fail 风险。
+
+执行结果：
+
+- 新增 `prompts/evp8_tool_contestation_merge_gate_v0_1.md`；
+- 新增 `configs/evp8_hard_tool_contestation.example.json`；
+- 新增 `scripts/run_evp8_hard_tool_contestation.py`；
+- 新增 `scripts/audit_evp8_hard_tool_contestation_results.py`；
+- 新增 `scripts/analyze_evp8_hard_tool_contestation_opportunity.py`；
+- 生成 `data/protocols/evp8_hard_tool_contestation_check_only_v0_1.json`；
+- 生成 `data/protocols/evp8_hard_tool_contestation_result_audit_v0_1.json`；
+- 生成 `data/reviews/evp8_hard_tool_contestation_opportunity_analysis_v0_1.json`；
+- 生成 `docs/experiments/evp8_hard_tool_contestation_opportunity_analysis_v0_1.md`；
+- 生成 `docs/experiments/evp8_hard_tool_contestation_result_v0_1.md`。
+
+API 执行结果：
+
+- Qwen:
+  - 47/47 reviews；
+  - parse-valid 47/47；
+  - run gate = `passed`；
+  - decisions = accept 1, reject 30, escalate 16；
+  - cost = CNY 3.479676。
+- DeepSeek:
+  - 47/47 reviews；
+  - parse-valid 47/47；
+  - run gate = `passed`；
+  - decisions = accept 0, reject 29, escalate 18；
+  - cost = USD 0.0386889。
+
+核心机会集结果：
+
+| Model | repeated accept | escalate | strict reject | safe handled | challenge true |
+|---|---:|---:|---:|---:|---:|
+| Qwen tool-contestation | 1/9 | 8/9 | 0/9 | 8/9 | 8/9 |
+| DeepSeek tool-contestation | 0/9 | 9/9 | 0/9 | 9/9 | 9/9 |
+
+研究判断：
+
+- tool-contestation prompt 明显改变了模型行为，说明 LLM 不只是固定跟随
+  低层证据；当任务要求它挑战 visible-test-only accept premise 时，它会把多数
+  known false accepts 转为 escalation；
+- 该结果补强了“verdict-like summary 支配模型”的因果解释；
+- 但这仍然不是 correctness verifier：两个模型都没有把 9 个 known false accepts
+  strict reject，提升主要来自 `accept -> escalate`；
+- Qwen 仍 false accept 1 个机会案例；DeepSeek 更保守但 whole-cohort correct
+  recall 为 0；
+- 论文应把该消融写成 tool-evidence reliability / triage 结果，而不是自动
+  merge gate 成功。
+
+执行链路记录：
+
+- Qwen 单次 shell 命令在 15 分钟处超时，但子进程继续运行并自然完成 47/47；
+- 未重复调用 API；完成后使用生成的 tracked summary/reviews 进入审计；
+- raw responses 仍只位于 ignored `outputs/evp8_hard_tool_contestation_full/`。
+
 ## 0. 2026-06-29 本轮小目标：EVP-8-HARD Phase B 源盘点
 
 本轮目标是执行
