@@ -71,6 +71,16 @@ def latex_count_table(caption: str, label: str, counts: dict[str, Any], key_labe
     )
 
 
+def fit_width_table(tabular: str) -> str:
+    return "\n".join(
+        [
+            r"\resizebox{\textwidth}{!}{%",
+            tabular,
+            "}",
+        ]
+    )
+
+
 def escape_latex(text: str) -> str:
     replacements = {
         "&": r"\&",
@@ -237,16 +247,19 @@ def build_latex(
         "\\centering\n"
         "\\caption{No-API baseline metrics. These baselines validate metric behavior but are not model-review results.}\n"
         "\\label{tab:no-api-baselines}\n"
-        "\\begin{tabular}{lrrrrrr}\n"
-        "\\toprule\n"
-        "Baseline & Accepted precision & False accept & Correct recall & False reject & Escalation & Invalid output \\\\\n"
-        "\\midrule\n"
-        + "\n".join(
-            baseline_latex_row(BASELINE_LABELS.get(key, key), metrics["groups"][key])
-            for key in sorted(metrics["groups"])
+        + fit_width_table(
+            "\\begin{tabular}{lrrrrrr}\n"
+            "\\toprule\n"
+            "Baseline & Accepted precision & False accept & Correct recall & False reject & Escalation & Invalid output \\\\\n"
+            "\\midrule\n"
+            + "\n".join(
+                baseline_latex_row(BASELINE_LABELS.get(key, key), metrics["groups"][key])
+                for key in sorted(metrics["groups"])
+            )
+            + "\n\\bottomrule\n"
+            "\\end{tabular}"
         )
-        + "\n\\bottomrule\n"
-        "\\end{tabular}\n"
+        + "\n"
         "\\end{table*}\n",
         "\\begin{table}[t]\n"
         "\\centering\n"
@@ -405,13 +418,16 @@ def evp7_latex_table(summary: dict[str, Any]) -> str:
         "\\centering\n"
         + caption
         + "\\label{tab:evp7-g5-results}\n"
-        "\\begin{tabular}{lrrrrrrr}\n"
-        "\\toprule\n"
-        "Evidence & Records & Accept & Escalate & Reject & False accept & Correct recall & Evidence Gain \\\\\n"
-        "\\midrule\n"
-        + rows
-        + "\n\\bottomrule\n"
-        "\\end{tabular}\n"
+        + fit_width_table(
+            "\\begin{tabular}{lrrrrrrr}\n"
+            "\\toprule\n"
+            "Evidence & Records & Accept & Escalate & Reject & False accept & Correct recall & Evidence Gain \\\\\n"
+            "\\midrule\n"
+            + rows
+            + "\n\\bottomrule\n"
+            "\\end{tabular}"
+        )
+        + "\n"
         "\\end{table*}\n"
     )
 
@@ -483,13 +499,16 @@ def evp7_statistics_latex_table(statistics: dict[str, Any]) -> str:
         + str(samples)
         + " deterministic resamples.}\n"
         "\\label{tab:evp7-statistical-intervals}\n"
-        "\\begin{tabular}{lrrrr}\n"
-        "\\toprule\n"
-        "Evidence & False accept Wilson 95\\% CI & Correct recall Wilson 95\\% CI & Escalation bootstrap 95\\% CI & Utility delta bootstrap 95\\% CI \\\\\n"
-        "\\midrule\n"
-        + "\n".join(rows)
-        + "\n\\bottomrule\n"
-        "\\end{tabular}\n"
+        + fit_width_table(
+            "\\begin{tabular}{lrrrr}\n"
+            "\\toprule\n"
+            "Evidence & False accept Wilson 95\\% CI & Correct recall Wilson 95\\% CI & Escalation bootstrap 95\\% CI & Utility delta bootstrap 95\\% CI \\\\\n"
+            "\\midrule\n"
+            + "\n".join(rows)
+            + "\n\\bottomrule\n"
+            "\\end{tabular}"
+        )
+        + "\n"
         "\\end{table*}\n"
     )
 
@@ -598,13 +617,16 @@ def evp7_tool_attribution_latex_table(attribution: dict[str, Any]) -> str:
         "\\centering\n"
         "\\caption{EVP-7 deterministic tool-only attribution. LLM decisions are compared with the matched visible-test or visible-tool-summary baseline at the same evidence level.}\n"
         "\\label{tab:evp7-tool-attribution}\n"
-        "\\begin{tabular}{llrrrr}\n"
-        "\\toprule\n"
-        "Evidence & Tool condition & Agreement & LLM accept outside tool & Recovered tool false accepts & Downgraded tool true accepts \\\\\n"
-        "\\midrule\n"
-        + "\n".join(rows)
-        + "\n\\bottomrule\n"
-        "\\end{tabular}\n"
+        + fit_width_table(
+            "\\begin{tabular}{llrrrr}\n"
+            "\\toprule\n"
+            "Evidence & Tool condition & Agreement & LLM accept outside tool & Recovered tool false accepts & Downgraded tool true accepts \\\\\n"
+            "\\midrule\n"
+            + "\n".join(rows)
+            + "\n\\bottomrule\n"
+            "\\end{tabular}"
+        )
+        + "\n"
         "\\end{table*}\n"
     )
 
@@ -693,13 +715,16 @@ def evp8_five_model_latex_table(synthesis: dict[str, Any]) -> str:
         "\\scriptsize\n"
         "\\caption{EVP-8 five-model decision patterns on the frozen v0.1 98-candidate by 7-level packet set. Cells report A/E/R counts for accept, escalate, and reject.}\n"
         "\\label{tab:evp8-five-model-patterns}\n"
-        "\\begin{tabular}{lccccccc}\n"
-        "\\toprule\n"
-        "Model & E0 & E1 & E2 & E3 & E4 & E5 & E6 \\\\\n"
-        "\\midrule\n"
-        + "\n".join(rows)
-        + "\n\\bottomrule\n"
-        "\\end{tabular}\n"
+        + fit_width_table(
+            "\\begin{tabular}{lccccccc}\n"
+            "\\toprule\n"
+            "Model & E0 & E1 & E2 & E3 & E4 & E5 & E6 \\\\\n"
+            "\\midrule\n"
+            + "\n".join(rows)
+            + "\n\\bottomrule\n"
+            "\\end{tabular}"
+        )
+        + "\n"
         "\\end{table*}\n"
     )
 
@@ -755,13 +780,16 @@ def evp8_cost_accounting_latex_table(costs: dict[str, Any]) -> str:
         "\\centering\n"
         "\\caption{EVP-8 cost accounting. Blocked attempts are cost and execution-risk evidence only; they are not included as valid model-result records.}\n"
         "\\label{tab:evp8-cost-accounting}\n"
-        "\\begin{tabular}{llrrrrr}\n"
-        "\\toprule\n"
-        "Category & Model & Reviews & Valid & Invalid & USD & CNY \\\\\n"
-        "\\midrule\n"
-        + "\n".join(rows)
-        + "\n\\bottomrule\n"
-        "\\end{tabular}\n"
+        + fit_width_table(
+            "\\begin{tabular}{llrrrrr}\n"
+            "\\toprule\n"
+            "Category & Model & Reviews & Valid & Invalid & USD & CNY \\\\\n"
+            "\\midrule\n"
+            + "\n".join(rows)
+            + "\n\\bottomrule\n"
+            "\\end{tabular}"
+        )
+        + "\n"
         "\\end{table*}\n"
     )
 

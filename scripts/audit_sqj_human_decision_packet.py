@@ -23,17 +23,18 @@ REQUIRED_DECISION_IDS = [
 REQUIRED_SNIPPETS = [
     "Status: SQJ human-decision packet, not final freeze.",
     "This packet lists the human decisions and external inputs still required",
-    "It does not authorize submission, model API calls, PDF compilation, or",
+    "It does not authorize submission, model API calls, or artifact release.",
     "`blocked_missing_school_recognition`",
     "`blocked_missing_human_inputs`",
-    "`blocked_missing_sn_jnl_cls`",
-    "`blocked_pending_pdf_compile`",
+    "`springer_template_cached_compile_passed`",
+    "`post_compile_layout_review_passed`",
     "`candidate_artifact_dry_run_ready`",
     "`blocked_missing_final_authorization`",
     "Submission authorized: `false`.",
     "Human decisions complete: `false`.",
     "Final freeze complete: `false`.",
-    "PDF compile passed: `false`.",
+    "PDF compile passed: `true`.",
+    "Post-compile layout review complete: `true`.",
     "Model API calls authorized by this packet: `false`.",
     "Artifact release authorized by this packet: `false`.",
     "Do not use broad API authorization as submission authorization.",
@@ -44,7 +45,6 @@ FORBIDDEN_SNIPPETS = [
     "Submission authorized: `true`",
     "Human decisions complete: `true`",
     "Final freeze complete: `true`",
-    "PDF compile passed: `true`",
     "Model API calls authorized by this packet: `true`",
     "Artifact release authorized by this packet: `true`",
     "Status: SQJ human-decision packet, final freeze complete.",
@@ -77,8 +77,8 @@ def audit_sqj_human_decision_packet(path: Path = DEFAULT_PACKET) -> dict[str, An
         "audit_id": "sqj_human_decision_packet",
         "boundary": (
             "This gate checks that the SQJ human-decision packet lists required "
-            "external inputs without claiming that submission, PDF compilation, "
-            "artifact release, school recognition, or final freeze is complete."
+            "external inputs without claiming that submission, artifact release, "
+            "school recognition, or final freeze is complete."
         ),
         "packet": path.as_posix(),
         "packet_exists": path.exists(),
@@ -89,7 +89,8 @@ def audit_sqj_human_decision_packet(path: Path = DEFAULT_PACKET) -> dict[str, An
         "forbidden_snippet_hits": forbidden_snippet_hits,
         "human_decisions_complete": False,
         "submission_authorized": False,
-        "pdf_compile_passed": False,
+        "pdf_compile_passed": True,
+        "post_compile_layout_review_complete": True,
         "artifact_release_authorized": False,
         "api_call_attempted": False,
         "final_freeze_complete": False,
@@ -110,6 +111,7 @@ def build_markdown(audit: dict[str, Any]) -> str:
         f"- human decisions complete: {bool_mark(audit['human_decisions_complete'])}",
         f"- submission authorized: {bool_mark(audit['submission_authorized'])}",
         f"- PDF compile passed: {bool_mark(audit['pdf_compile_passed'])}",
+        f"- post-compile layout review complete: {bool_mark(audit['post_compile_layout_review_complete'])}",
         f"- artifact release authorized: {bool_mark(audit['artifact_release_authorized'])}",
         f"- API call attempted: {bool_mark(audit['api_call_attempted'])}",
         f"- final freeze complete: {bool_mark(audit['final_freeze_complete'])}",

@@ -143,7 +143,7 @@
     "draft": {
       "exists": true,
       "path": "docs/paper/sqj_submission_draft.tex",
-      "size_bytes": 14847
+      "size_bytes": 14881
     },
     "evp8_cost": {
       "exists": true,

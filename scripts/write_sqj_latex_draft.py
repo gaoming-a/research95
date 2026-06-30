@@ -68,6 +68,10 @@ def repo_relative(path: Path) -> str:
         return path.as_posix()
 
 
+def latex_verb_path(path: Path) -> str:
+    return rf"\verb|{repo_relative(path)}|"
+
+
 def per_level_totals(synthesis: dict[str, Any]) -> list[dict[str, int | str]]:
     by_level = synthesis.get("per_level_decision_counts_by_model", {})
     if not isinstance(by_level, dict):
@@ -156,12 +160,11 @@ def build_draft(
 
     return rf"""\documentclass[pdflatex,sn-basic]{{sn-jnl}}
 
+\usepackage{{amsmath}}
 \usepackage{{booktabs}}
 \usepackage{{graphicx}}
 \usepackage{{url}}
 \usepackage{{xspace}}
-
-\jyear{{2026}}
 
 \title[Evidence Visibility in LLM-Based Patch Verification]{{Evidence Visibility in LLM-Based Patch Verification: A Software Quality Perspective}}
 
@@ -400,9 +403,9 @@ or models.
 The tracked artifacts include the frozen EVP-8 protocol summaries, five-model
 synthesis, generated paper tables, and cost accounting summaries. Raw model
 responses remain outside the tracked artifact boundary. The current draft is
-generated from {repo_relative(framing_path)}, {repo_relative(tables_tex_path)},
-{repo_relative(REPO_ROOT / "data" / "protocols" / "evp8_five_model_synthesis_v0_1.json")},
-and {repo_relative(REPO_ROOT / "data" / "reviews" / "evp8_cost_accounting_summary.json")}.
+generated from {latex_verb_path(framing_path)}, {latex_verb_path(tables_tex_path)},
+{latex_verb_path(REPO_ROOT / "data" / "protocols" / "evp8_five_model_synthesis_v0_1.json")},
+and {latex_verb_path(REPO_ROOT / "data" / "reviews" / "evp8_cost_accounting_summary.json")}.
 
 \section{{Conclusion}}
 
@@ -501,7 +504,7 @@ def main() -> None:
                 "compile_attempted": False,
                 "out": args.out,
                 "passed": True,
-                "reason": "sn-jnl.cls is not bundled locally; this check validates source structure only.",
+                "reason": "SQJ source regenerated; PDF compilation is handled by scripts/audit_sqj_pdf_compile_gate.py.",
             },
             ensure_ascii=False,
             sort_keys=True,

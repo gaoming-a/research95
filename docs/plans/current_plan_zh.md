@@ -21829,3 +21829,208 @@ submission authorization 混入可用性声明。
 - 初次 GitHub fetch/push 曾因无法连接 `github.com:443` 失败；后续重试
   tree-sync push 成功，并已验证本地 `HEAD^{tree}` 与
   `origin/evp8-v03-qwen-main-exp^{tree}` 一致。
+
+## 2026-06-30 SQJ official Springer template local compile gate
+
+本轮小目标是在不改变论文结论、不提交第三方模板文件的前提下，尝试消除
+`blocked_missing_sn_jnl_cls`：从 Springer Nature 官方 LaTeX author support
+页面记录的 journal article template ZIP 下载 `sn-jnl.cls` 到 ignored
+`outputs/` 本地缓存，并让 SQJ PDF compile gate 能显式使用该本地缓存进行
+两轮 `pdflatex` 编译。
+
+执行边界：
+
+- 不运行任何模型 API；
+- 不读取 raw model responses、raw prompts 或 patch text；
+- 不修改 EVP-8 / EVP-8-HARD 实验结果；
+- 不提交下载的 Springer ZIP、`sn-jnl.cls` 或生成的 PDF；
+- 不把 PDF compile 通过解释为 final freeze、submission authorization、
+  school recognition、artifact release 或版面审查通过；
+- 若官方模板下载失败或编译失败，记录为 gate blocker，不做非官方替代。
+
+验收条件：
+
+- 新增模板获取脚本，下载源固定为 Springer Nature 官方 LaTeX author support
+  页面给出的 journal article template ZIP；
+- 下载和解压输出位于 ignored `outputs/sqj_springer_template/`；
+- 脚本输出 raw-output-free 的 tracked Markdown 报告，记录 source URL、
+  ZIP sha256、是否找到 `sn-jnl.cls`；
+- `scripts/audit_sqj_pdf_compile_gate.py` 能检测 `kpsewhich` 或本地模板缓存；
+- 当本地缓存中存在 `sn-jnl.cls` 时，compile gate 使用该缓存运行两轮
+  `pdflatex` 到 ignored `outputs/sqj_pdf_compile/`；
+- checklist、final-freeze readiness、local quality gate 和 INDEX 同步说明该
+  gate 只解决本地编译条件，不解决最终外部 blocker；
+- staged diff 不包含下载的 ZIP、class、PDF、API key、raw prompt/response、
+  输出目录或 local config。
+
+执行结果：
+
+- 新增 `scripts/fetch_sqj_springer_template.py`：
+  - 从 Springer Nature 官方 LaTeX author support 页面记录的 journal article
+    template ZIP URL 下载模板包；
+  - 下载、解压和 JSON 输出均位于 ignored
+    `outputs/sqj_springer_template/`；
+  - 生成 tracked raw-output-free 报告
+    `docs/experiments/sqj_springer_template_fetch.md`，记录 source URL、
+    ZIP sha256、文件数和本地 `sn-jnl.cls` 缓存路径；
+  - 不读取 raw model outputs，不调用模型 API，不提交第三方模板文件。
+- 更新 `scripts/audit_sqj_pdf_compile_gate.py`：
+  - 优先检查 `kpsewhich sn-jnl.cls`；
+  - 当系统 TeX 未安装该 class 时，使用 ignored
+    `outputs/sqj_springer_template/extracted/` 本地缓存；
+  - 为 `pdflatex` 设置包含模板缓存和 `docs/paper/` 的 `TEXINPUTS`；
+  - 两轮编译输出到 ignored `outputs/sqj_pdf_compile/`；
+  - 当前 `gate_status=compiled`、`pdf_compile_passed=true`。
+- 更新 `scripts/write_sqj_latex_draft.py` 和生成稿：
+  - 移除当前 Springer template 下不可用的 `\jyear{2026}`；
+  - 增加 `amsmath` 以支持 `\allowdisplaybreaks`；
+  - 将 availability/reproducibility 段落中的路径用 `\verb|...|` 包裹，
+    避免下划线触发 LaTeX 错误。
+- 更新 checklist、final-freeze readiness、human-decision packet、artifact
+  gate、local quality gate、INDEX 和工程经验文档：
+  - PDF compile blocker 从 `blocked_missing_sn_jnl_cls` 变为已本地编译；
+  - figure-layout blocker 从 `blocked_pending_pdf_compile` 变为
+    `blocked_pending_post_compile_layout_review`；
+  - final freeze 仍被学校认定、人类元数据、post-compile layout review、
+    final artifact rebuild 和最终提交授权阻塞。
+
+验证结果：
+
+- `python -m py_compile scripts\fetch_sqj_springer_template.py scripts\audit_sqj_pdf_compile_gate.py scripts\audit_sqj_figure_layout_gate.py scripts\audit_sqj_human_decision_packet.py scripts\audit_sqj_submission_checklist.py scripts\audit_sqj_artifact_gate.py scripts\audit_sqj_final_freeze_readiness.py scripts\run_local_quality_gate.py scripts\write_sqj_latex_draft.py`：通过；
+- `python scripts\fetch_sqj_springer_template.py --out-json outputs\sqj_springer_template\latest.json --out-md docs\experiments\sqj_springer_template_fetch.md`：通过，`gate_status=springer_template_cached`；
+- `python scripts\write_sqj_latex_draft.py --check`：通过；
+- `python scripts\audit_sqj_pdf_compile_gate.py --out-json outputs\sqj_pdf_compile_gate\latest.json --out-md outputs\sqj_pdf_compile_gate\latest.md`：通过，`gate_status=compiled`；
+- `python scripts\audit_sqj_figure_layout_gate.py --out-json outputs\sqj_figure_layout_gate\latest.json --out-md outputs\sqj_figure_layout_gate\latest.md`：通过，`gate_status=blocked_pending_post_compile_layout_review`；
+- `python scripts\audit_sqj_human_decision_packet.py --out-json outputs\sqj_human_decision_packet\latest.json --out-md outputs\sqj_human_decision_packet\latest.md`：通过；
+- `python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md`：通过；
+- `python scripts\audit_sqj_artifact_gate.py --out-json outputs\sqj_artifact_gate\latest.json --out-md outputs\sqj_artifact_gate\latest.md`：通过；
+- `python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md`：通过；
+- `python scripts\audit_paper_readiness.py --out-json outputs\paper_readiness\latest.json --out-md outputs\paper_readiness\latest.md`：通过；
+- `python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\latest.json --out-md outputs\local_quality_gate\latest.md`：通过。
+
+当前判断：
+
+- SQJ 本地 PDF 编译链路已经可重复：官方模板缓存、源码生成、PDF compile gate、
+  checklist/final-freeze/local-quality gate 均已接通；
+- 本轮没有调用模型 API，也没有读取 raw prompt/response/patch text；
+- 下载的 ZIP、`sn-jnl.cls` 和生成 PDF 均留在 ignored `outputs/`，不进入 Git；
+- 这只解决本地编译 blocker，不解决 post-compile layout review、学校认定、
+  作者/基金/利益冲突/贡献声明、最终 artifact rebuild 和最终提交授权。
+
+## 2026-06-30 SQJ local compile gate GitHub sync retry
+
+本轮小目标是在不改动实验结果、不调用 API 的前提下，继续完成上一节
+`SQJ official Springer template local compile gate` 的 GitHub 同步闭环。
+
+执行边界：
+
+- 不运行模型 API；
+- 不修改 EVP-8 / EVP-8-HARD 结果；
+- 不提交 downloaded Springer ZIP、`sn-jnl.cls`、生成 PDF、`.env`、local
+  config、ignored outputs 或 raw responses；
+- 不把 GitHub 同步失败解释为本地编译 gate 失败；
+- 若 GitHub 443 仍无法连接，只记录可恢复状态，不改远端历史。
+
+当前状态：
+
+- 本地提交已存在：`d6e78b2 Enable SQJ local PDF compile gate`；
+- 工作区在重试前为 clean；
+- 本地分支状态为 `ahead 36, behind 35`，仍需要按本仓库 tree-sync 流程接到
+  远端历史并 push；
+- `git fetch origin evp8-v03-qwen-main-exp` 重试失败：
+  `Failed to connect to github.com port 443 after 21096 ms`；
+- 因远端不可达，本轮不能证明 GitHub 同步完成。
+
+恢复步骤：
+
+1. 网络恢复后运行 `git fetch origin evp8-v03-qwen-main-exp`；
+2. 验证 `git rev-parse "HEAD~1^{tree}"` 与
+   `git rev-parse "origin/evp8-v03-qwen-main-exp^{tree}"` 一致；
+3. 若一致，用当前 `HEAD^{tree}` 和远端 commit 作为 parent 执行
+   `git commit-tree`；
+4. push 到 `refs/heads/evp8-v03-qwen-main-exp`；
+5. fetch 后验证本地 `HEAD^{tree}` 与远端 branch tree 一致。
+
+## 2026-06-30 SQJ post-compile PDF layout and reference review gate
+
+本轮小目标是在 GitHub 仍不可达时继续推进本地 SQJ 投稿包：基于已经生成的
+`outputs/sqj_pdf_compile/sqj_submission_draft.pdf`，新增 post-compile PDF
+layout/references 审计，检查页面是否可渲染、图是否进入 PDF、caption/引用是否
+可见，以及参考文献/citations 是否已解析。
+
+执行边界：
+
+- 不运行模型 API；
+- 不读取 raw model responses、raw prompts 或 patch text；
+- 不修改 EVP-8 / EVP-8-HARD 实验结果；
+- 不提交渲染 PNG、生成 PDF、LaTeX aux/log/bbl 或 Springer 模板文件；
+- 不把 layout review 通过解释为 final freeze、submission authorization、
+  school recognition、artifact release 或学校认定完成；
+- 如果发现 unresolved citations、缺失 references 或可视布局缺陷，先记录为
+  gate blocker，再按最短路径修复生成/编译链路。
+
+验收条件：
+
+- 新增可重复运行的 PDF layout/references 审计脚本；
+- 审计脚本使用 compiled PDF 和编译日志，不调用 API；
+- 渲染页面输出位于 ignored `outputs/sqj_pdf_layout_review/`；
+- 审计至少检查 page count、rendered PNG 是否非空、三张 SQJ 图/caption 是否
+  可从 PDF 文本或页面渲染中追踪、是否存在 undefined citations/references；
+- 如果 PDF 仍存在 unresolved citations，则 gate 不得报告 layout review complete；
+- checklist、final-freeze readiness、human-decision packet、INDEX、local
+  quality gate 和经验文档同步该 gate 的结果；
+- staged diff 不包含 rendered PNG、PDF、ZIP、class、`.env`、raw
+  prompt/response 或 ignored outputs。
+
+执行结果：
+
+- 新增 `scripts/audit_sqj_pdf_layout_review.py`：
+  - 使用 Poppler `pdfinfo` / `pdftoppm` 和 `pdftotext` 检查 compiled PDF；
+  - 渲染页面和抽取文本均输出到 ignored
+    `outputs/sqj_pdf_layout_review/`；
+  - tracked 报告写入 `docs/experiments/sqj_pdf_layout_review.md`；
+  - 检查 10 页 A4 PDF、rendered page count、blank pages、page-edge overflow、
+    三张 SQJ figure/caption 文本、References 文本、undefined
+    citations/references 和 `Overfull \hbox`。
+- 修复 `scripts/audit_sqj_pdf_compile_gate.py`：
+  - 编译链路从两轮 `pdflatex` 升级为
+    `pdflatex -> bibtex -> pdflatex -> pdflatex`；
+  - `TEXINPUTS`、`BIBINPUTS`、`BSTINPUTS` 覆盖 manuscript source、
+    local Springer template cache 和 `sn-basic.bst`；
+  - 当前要求 PDF 和 BBL 均存在且非空。
+- 修复 `scripts/write_paper_tables.py`：
+  - 对会溢出页面宽度的 wide `table*` 使用
+    `\resizebox{\textwidth}{!}{...}`；
+  - 修复了 Table 5、Table 7、Table 8、Table 10、Table 11、Table 12 的
+    overfull/page-edge 风险。
+- 更新 `scripts/audit_sqj_figure_layout_gate.py`：
+  - 在 source-level figure asset/caption/label 检查通过后，委托
+    `audit_sqj_pdf_layout_review.py` 检查 compiled PDF；
+  - 当前 gate status 从 `blocked_pending_post_compile_layout_review` 变为
+    `post_compile_layout_review_passed`。
+- 更新 checklist、final-freeze readiness、human-decision packet、artifact
+  gate、local quality gate、INDEX 和工程经验文档，明确：
+  - local PDF compile 和 post-compile layout/reference review 已通过；
+  - final freeze 仍被学校认定、人类元数据、final artifact rebuild 和最终提交
+    授权阻塞；
+  - rendered PNG、PDF、BBL、log、template ZIP/class 仍留在 ignored outputs。
+
+验证结果：
+
+- `python -m py_compile scripts\write_paper_tables.py scripts\audit_sqj_pdf_compile_gate.py scripts\audit_sqj_pdf_layout_review.py scripts\audit_sqj_figure_layout_gate.py scripts\audit_sqj_human_decision_packet.py scripts\audit_sqj_submission_checklist.py scripts\audit_sqj_artifact_gate.py scripts\audit_sqj_final_freeze_readiness.py scripts\run_local_quality_gate.py`：通过；
+- `python scripts\write_paper_tables.py --out-md docs\paper\generated_tables.md --out-tex docs\paper\generated_tables.tex`：通过；
+- `python scripts\write_sqj_latex_draft.py --check`：通过；
+- `python scripts\audit_sqj_pdf_compile_gate.py --out-json outputs\sqj_pdf_compile_gate\latest.json --out-md outputs\sqj_pdf_compile_gate\latest.md`：通过，`gate_status=compiled`，BBL 存在；
+- `python scripts\audit_sqj_pdf_layout_review.py --out-json outputs\sqj_pdf_layout_review\latest.json --out-md docs\experiments\sqj_pdf_layout_review.md`：通过，`gate_status=post_compile_layout_review_passed`；
+- `python scripts\audit_sqj_figure_layout_gate.py --out-json outputs\sqj_figure_layout_gate\latest.json --out-md outputs\sqj_figure_layout_gate\latest.md`：通过，`gate_status=post_compile_layout_review_passed`；
+- `python scripts\audit_sqj_human_decision_packet.py --out-json outputs\sqj_human_decision_packet\latest.json --out-md outputs\sqj_human_decision_packet\latest.md`：通过；
+- `python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md`：通过。
+
+当前判断：
+
+- SQJ PDF compile、BibTeX reference resolution、rendered-page layout review 和
+  figure-layout gate 均已通过；
+- 本轮未调用模型 API，未读取 raw prompt/response/patch text；
+- 当前仍不能 final freeze 或提交：学校/部门认定、人类作者/基金/利益冲突/贡献
+  信息、final artifact rebuild 和最终提交授权仍未解决；
+- GitHub fetch 仍因 `github.com:443` 不可达而未同步远端。

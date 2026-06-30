@@ -4060,6 +4060,49 @@ This file starts fresh for the patch-verification project.
   run two `pdflatex` passes into ignored `outputs/sqj_pdf_compile/` and require
   a non-empty PDF before any final-freeze claim.
 
+## 2026-06-30 SQJ official template cache and PDF compile
+
+- Keep third-party template assets out of Git. The official Springer Nature
+  journal article template can be downloaded and extracted into ignored
+  `outputs/sqj_springer_template/`; the tracked artifact should record only the
+  source URLs, ZIP sha256, file counts, and `sn-jnl.cls` cache path.
+- PDF compilation needs both the template path and the manuscript directory in
+  `TEXINPUTS`. The first local-cache compile path found `sn-jnl.cls` but would
+  not be robust for `\input{generated_tables.tex}` unless `docs/paper/` was
+  also included.
+- Treat LaTeX command failures as source-generation issues, not template
+  issues, after the class is found. The local compile exposed three draft
+  problems: obsolete `\jyear{2026}` for the current template, missing
+  `amsmath` for `\allowdisplaybreaks`, and bare paths with underscores in prose.
+  Fix these in `write_sqj_latex_draft.py` so regeneration preserves the fix.
+- A successful PDF compile is not a final-freeze signal. The compile gate should
+  run `pdflatex -> bibtex -> pdflatex -> pdflatex`, require a non-empty PDF and
+  BBL, and still keep final freeze blocked by school recognition, human
+  metadata, artifact rebuild, and final submission authorization.
+- Do not run compile-dependent SQJ gates in parallel. `audit_sqj_pdf_compile_gate`,
+  `audit_sqj_pdf_layout_review`, `audit_sqj_figure_layout_gate`, and
+  `audit_sqj_final_freeze_readiness` can write or inspect the same ignored
+  `outputs/sqj_pdf_compile/` directory, so running them concurrently can create
+  transient false failures.
+- Fix layout defects at the generator source. The post-compile layout review
+  exposed clipped wide tables and unresolved citations; the durable fix was to
+  resize wide generated `table*` tabulars in `write_paper_tables.py` and make
+  the compile gate run BibTeX, not to edit generated `.tex` output by hand.
+
+## 2026-06-30 GitHub sync retry after local SQJ compile commit
+
+- Treat GitHub 443 connection failures as external sync blockers, not as local
+  validation failures. The SQJ local compile commit can be valid and the working
+  tree can be clean while `git fetch origin evp8-v03-qwen-main-exp` still fails
+  with `Could not connect to server`.
+- Preserve the local commit hash and branch divergence state in the plan before
+  retrying later. For this branch, the next sync must still use the established
+  tree-sync flow because local and remote histories intentionally diverge.
+- Do not create workaround remotes, force-push, or rewrite local history to
+  "fix" a transient GitHub connection failure. The safe recovery is to retry
+  fetch, verify the expected parent tree, create a commit-tree commit on the
+  remote parent, push that commit to the branch, and verify remote tree equality.
+
 ## 2026-06-30 SQJ human-input gate preflight
 
 - Do not fill submission metadata from inference. Author names, affiliations,

@@ -18,6 +18,8 @@ SOURCE_GENERATOR = Path("scripts/write_sqj_latex_draft.py")
 FRAMING_PACKET = Path("docs/paper/sqj_submission_framing.md")
 FINAL_FREEZE_READINESS = Path("docs/artifact/sqj_final_freeze_readiness.md")
 SQJ_AVAILABILITY_BOUNDARY_MD = Path("docs/experiments/sqj_availability_boundary.md")
+SQJ_TEMPLATE_FETCH_MD = Path("docs/experiments/sqj_springer_template_fetch.md")
+SQJ_PDF_LAYOUT_REVIEW_MD = Path("docs/experiments/sqj_pdf_layout_review.md")
 SQJ_CITATION_CONSISTENCY_MD = Path("docs/experiments/sqj_citation_consistency.md")
 CLAIM_TRACEABILITY_JSON = Path("data/reviews/sqj_claim_traceability.json")
 CLAIM_TRACEABILITY_MD = Path("docs/experiments/sqj_claim_traceability.md")
@@ -42,9 +44,10 @@ REQUIRED_SNIPPETS = [
     "school/department recognition confirmation",
     "this checklist does not guarantee SQJ recognition",
     "Springer Nature `sn-jnl`",
-    "PDF compile gate is pending local `sn-jnl.cls` availability.",
-    "`blocked_missing_sn_jnl_cls`",
-    "`blocked_pending_pdf_compile`",
+    "PDF compile gate has passed locally",
+    "`compiled`",
+    "`post_compile_layout_review_passed`",
+    "`docs/experiments/sqj_pdf_layout_review.md`",
     "`docs/figures/sqj/sqj_fig1_evp8_protocol.pdf`",
     "`docs/figures/sqj/sqj_fig2_decision_patterns.pdf`",
     "`docs/figures/sqj/sqj_fig3_cost_boundary.pdf`",
@@ -56,6 +59,7 @@ REQUIRED_SNIPPETS = [
     "`docs/artifact/sqj_final_freeze_readiness.md`",
     "`docs/artifact/sqj_human_decision_packet.md`",
     "`docs/experiments/sqj_availability_boundary.md`",
+    "`docs/experiments/sqj_springer_template_fetch.md`",
     "`data/reviews/sqj_claim_traceability.json`",
     "`docs/experiments/sqj_claim_traceability.md`",
     "Evidence visibility is a first-order experimental variable",
@@ -73,6 +77,7 @@ REQUIRED_SNIPPETS = [
     "API execution remains frozen",
     "python scripts\\audit_sqj_artifact_gate.py",
     "python scripts\\audit_sqj_availability_boundary.py",
+    "python scripts\\fetch_sqj_springer_template.py",
     "python scripts\\audit_sqj_final_authorization_gate.py",
     "python scripts\\audit_sqj_school_recognition_gate.py",
     "python scripts\\audit_sqj_human_inputs_gate.py",
@@ -85,6 +90,7 @@ REQUIRED_SNIPPETS = [
     "python scripts\\audit_sqj_claim_traceability.py",
     "python scripts\\audit_sqj_submission_checklist.py",
     "python scripts\\audit_sqj_pdf_compile_gate.py",
+    "python scripts\\audit_sqj_pdf_layout_review.py",
     "python scripts\\audit_sqj_figure_layout_gate.py",
     "python scripts\\audit_sqj_final_freeze_readiness.py",
     "This is not a final submission freeze.",
@@ -223,6 +229,8 @@ def audit_sqj_checklist(path: Path) -> dict[str, Any]:
         "framing_packet": file_state(FRAMING_PACKET),
         "final_freeze_readiness": file_state(FINAL_FREEZE_READINESS),
         "availability_boundary_md": file_state(SQJ_AVAILABILITY_BOUNDARY_MD),
+        "springer_template_fetch_md": file_state(SQJ_TEMPLATE_FETCH_MD),
+        "pdf_layout_review_md": file_state(SQJ_PDF_LAYOUT_REVIEW_MD),
         "citation_consistency_md": file_state(SQJ_CITATION_CONSISTENCY_MD),
         "claim_traceability_json": file_state(CLAIM_TRACEABILITY_JSON),
         "claim_traceability_md": file_state(CLAIM_TRACEABILITY_MD),
@@ -243,7 +251,7 @@ def audit_sqj_checklist(path: Path) -> dict[str, Any]:
         "availability_boundary": availability_boundary,
         "synthesis": synthesis,
         "cost_accounting": cost,
-        "compile_gate": "source_structure_only_sn_jnl_cls_missing",
+        "compile_gate": "compiled_local_template_cache",
         "api_call_attempted": False,
     }
     result["passed"] = bool(

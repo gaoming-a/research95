@@ -74,6 +74,7 @@ All validated & true \\
 \centering
 \caption{No-API baseline metrics. These baselines validate metric behavior but are not model-review results.}
 \label{tab:no-api-baselines}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lrrrrrr}
 \toprule
 Baseline & Accepted precision & False accept & Correct recall & False reject & Escalation & Invalid output \\
@@ -83,6 +84,7 @@ oracle upper bound & 1.0000 & 0.0000 & 1.0000 & 0.0000 & 0.0000 & 0.0000 \\
 reject-all & -- & 0.0000 & 0.0000 & 1.0000 & 0.0000 & 0.0000 \\
 \bottomrule
 \end{tabular}
+}
 \end{table*}
 
 
@@ -107,6 +109,7 @@ Missing & 0 \\
 \centering
 \caption{EVP-7 G5 evidence-visibility results on the 376-packet frozen cohort. Runner-estimated total cost was 0.3274 USD.}
 \label{tab:evp7-g5-results}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lrrrrrrr}
 \toprule
 Evidence & Records & Accept & Escalate & Reject & False accept & Correct recall & Evidence Gain \\
@@ -117,6 +120,7 @@ E4 & 94 & 1 & 21 & 72 & 0.0000 & 0.0500 & 7.0000 \\
 E6 & 94 & 7 & 16 & 71 & 0.0000 & 0.3500 & 14.2500 \\
 \bottomrule
 \end{tabular}
+}
 \end{table*}
 
 
@@ -124,6 +128,7 @@ E6 & 94 & 7 & 16 & 71 & 0.0000 & 0.3500 & 14.2500 \\
 \centering
 \caption{EVP-7 G5 statistical intervals. Wilson intervals are used for binomial rates; candidate-level bootstrap intervals use 2000 deterministic resamples.}
 \label{tab:evp7-statistical-intervals}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lrrrr}
 \toprule
 Evidence & False accept Wilson 95\% CI & Correct recall Wilson 95\% CI & Escalation bootstrap 95\% CI & Utility delta bootstrap 95\% CI \\
@@ -134,6 +139,7 @@ E4 & [0.0000, 0.0493] & [0.0089, 0.2361] & [0.1383, 0.3085] & [2.5000, 11.7500] 
 E6 & [0.0000, 0.0493] & [0.1812, 0.5671] & [0.0957, 0.2553] & [7.7500, 21.5063] \\
 \bottomrule
 \end{tabular}
+}
 \end{table*}
 
 
@@ -158,6 +164,7 @@ E6 & 27 \\
 \centering
 \caption{EVP-7 deterministic tool-only attribution. LLM decisions are compared with the matched visible-test or visible-tool-summary baseline at the same evidence level.}
 \label{tab:evp7-tool-attribution}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{llrrrr}
 \toprule
 Evidence & Tool condition & Agreement & LLM accept outside tool & Recovered tool false accepts & Downgraded tool true accepts \\
@@ -166,6 +173,7 @@ E4 & visible\_tests & 72/94 & 0 & 4/4 & 18/19 \\
 E6 & visible\_tool\_summary & 76/94 & 0 & 4/4 & 12/19 \\
 \bottomrule
 \end{tabular}
+}
 \end{table*}
 
 
@@ -174,6 +182,7 @@ E6 & visible\_tool\_summary & 76/94 & 0 & 4/4 & 12/19 \\
 \scriptsize
 \caption{EVP-8 five-model decision patterns on the frozen v0.1 98-candidate by 7-level packet set. Cells report A/E/R counts for accept, escalate, and reject.}
 \label{tab:evp8-five-model-patterns}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{lccccccc}
 \toprule
 Model & E0 & E1 & E2 & E3 & E4 & E5 & E6 \\
@@ -185,6 +194,7 @@ mistralai/devstral-2512 & E98 & E98 & E98 & E98 & E98 & E98 & E98 \\
 google/gemini-2.5-flash & E98 & E98 & E98 & E96/R2 & E97/R1 & E98 & E98 \\
 \bottomrule
 \end{tabular}
+}
 \end{table*}
 
 
@@ -192,6 +202,7 @@ google/gemini-2.5-flash & E98 & E98 & E98 & E96/R2 & E97/R1 & E98 & E98 \\
 \centering
 \caption{EVP-8 cost accounting. Blocked attempts are cost and execution-risk evidence only; they are not included as valid model-result records.}
 \label{tab:evp8-cost-accounting}
+\resizebox{\textwidth}{!}{%
 \begin{tabular}{llrrrrr}
 \toprule
 Category & Model & Reviews & Valid & Invalid & USD & CNY \\
@@ -205,6 +216,7 @@ blocked & moonshotai/kimi-k2.6 & 686 & 607 & 79 & 6.2223 & 0 \\
 blocked & moonshotai/kimi-k2.6 & 686 & 682 & 4 & 1.0538 & 0 \\
 \bottomrule
 \end{tabular}
+}
 \end{table*}
 
 

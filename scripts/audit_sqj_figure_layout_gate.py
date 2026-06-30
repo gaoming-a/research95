@@ -7,8 +7,10 @@ from typing import Any
 
 try:
     from scripts.audit_sqj_pdf_compile_gate import audit_sqj_pdf_compile_gate
+    from scripts.audit_sqj_pdf_layout_review import audit_sqj_pdf_layout_review
 except ModuleNotFoundError:
     from audit_sqj_pdf_compile_gate import audit_sqj_pdf_compile_gate
+    from audit_sqj_pdf_layout_review import audit_sqj_pdf_layout_review
 
 
 SOURCE_DRAFT = Path("docs/paper/sqj_submission_draft.tex")
@@ -91,6 +93,7 @@ def audit_sqj_figure_layout_gate(source: Path = SOURCE_DRAFT) -> dict[str, Any]:
         )
     ]
     pdf_compile_gate = audit_sqj_pdf_compile_gate()
+    pdf_layout_review = audit_sqj_pdf_layout_review() if pdf_compile_gate["pdf_compile_passed"] else None
     figure_source_ready = bool(source.exists() and not missing_or_incomplete)
 
     if not source.exists():
@@ -102,8 +105,11 @@ def audit_sqj_figure_layout_gate(source: Path = SOURCE_DRAFT) -> dict[str, Any]:
     elif not pdf_compile_gate["pdf_compile_passed"]:
         gate_status = "blocked_pending_pdf_compile"
         passed = True
+    elif not pdf_layout_review or not pdf_layout_review["passed"]:
+        gate_status = "failed_post_compile_layout_review"
+        passed = False
     else:
-        gate_status = "blocked_pending_post_compile_layout_review"
+        gate_status = "post_compile_layout_review_passed"
         passed = True
 
     return {
@@ -111,8 +117,8 @@ def audit_sqj_figure_layout_gate(source: Path = SOURCE_DRAFT) -> dict[str, Any]:
         "boundary": (
             "This gate verifies SQJ figure assets and LaTeX figure references at "
             "source level. It does not compile the PDF or complete the visual "
-            "layout review; post-compile figure placement remains blocked until "
-            "the PDF compile gate passes."
+            "layout review itself; after the PDF compile gate passes, it delegates "
+            "the compiled-PDF layout and reference checks to sqj_pdf_layout_review."
         ),
         "source": source.as_posix(),
         "source_exists": source.exists(),
@@ -121,7 +127,8 @@ def audit_sqj_figure_layout_gate(source: Path = SOURCE_DRAFT) -> dict[str, Any]:
         "figure_source_ready": figure_source_ready,
         "pdf_compile_gate_status": pdf_compile_gate["gate_status"],
         "pdf_compile_passed": pdf_compile_gate["pdf_compile_passed"],
-        "figure_layout_audit_complete": False,
+        "pdf_layout_review": pdf_layout_review,
+        "figure_layout_audit_complete": gate_status == "post_compile_layout_review_passed",
         "api_call_attempted": False,
         "compile_attempted": False,
         "final_freeze_complete": False,
@@ -142,6 +149,7 @@ def build_markdown(audit: dict[str, Any]) -> str:
         f"- figure source ready: {bool_mark(audit['figure_source_ready'])}",
         f"- PDF compile gate status: `{audit['pdf_compile_gate_status']}`",
         f"- PDF compile passed: {bool_mark(audit['pdf_compile_passed'])}",
+        f"- PDF layout review passed: {bool_mark(audit['pdf_layout_review'] and audit['pdf_layout_review']['passed'])}",
         f"- figure layout audit complete: {bool_mark(audit['figure_layout_audit_complete'])}",
         f"- API call attempted: {bool_mark(audit['api_call_attempted'])}",
         f"- compile attempted: {bool_mark(audit['compile_attempted'])}",

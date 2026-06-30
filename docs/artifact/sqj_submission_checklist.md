@@ -33,6 +33,10 @@ final submission.
   `docs/experiments/sqj_citation_consistency.md`
 - SQJ availability boundary:
   `docs/experiments/sqj_availability_boundary.md`
+- SQJ Springer template fetch:
+  `docs/experiments/sqj_springer_template_fetch.md`
+- SQJ PDF layout/reference review:
+  `docs/experiments/sqj_pdf_layout_review.md`
 - Manuscript generator:
   `scripts/write_sqj_latex_draft.py`
 - Framing and claim boundary:
@@ -50,21 +54,19 @@ final submission.
 - Current LaTeX class target:
   Springer Nature `sn-jnl`
 - PDF compile gate:
-  PDF compile gate is pending local `sn-jnl.cls` availability. The current
-  gate validates source structure and compile preflight only. The expected
-  local status is `blocked_missing_sn_jnl_cls` until the official Springer
-  Nature class is installed.
+  PDF compile gate has passed locally using the ignored official Springer
+  Nature template cache. The expected local status is `compiled`; generated
+  PDF and template files remain under ignored `outputs/`.
 - Figure-layout gate:
-  Source-level figure assets, captions, and labels are checked before PDF
-  compilation. The expected current status is `blocked_pending_pdf_compile`
-  until the PDF compile gate passes and a post-compile layout review is
-  performed.
+  Source-level figure assets, captions, labels, compiled PDF rendering,
+  references, and page-edge overflow are checked. The expected current status
+  is `post_compile_layout_review_passed`.
 - Human-decision packet gate:
   Human decisions required before final freeze are centralized in the SQJ
   human-decision packet. The expected current status is
   `blocked_missing_human_decisions` until school recognition, author metadata,
-  template/PDF/layout, artifact rebuild, and final submission authorization are
-  all explicitly resolved.
+  artifact rebuild, and final submission authorization are all explicitly
+  resolved.
 - Claim traceability gate:
   SQJ manuscript claims are mapped to tracked evidence in
   `sqj_claim_traceability`. This gate is raw-output-free and does not make new
@@ -124,6 +126,7 @@ python scripts\write_paper_tables.py
 python scripts\generate_sqj_figures.py
 python scripts\write_sqj_latex_draft.py --check
 python scripts\audit_sqj_availability_boundary.py --out-json outputs\sqj_availability_boundary\latest.json --out-md docs\experiments\sqj_availability_boundary.md
+python scripts\fetch_sqj_springer_template.py --out-json outputs\sqj_springer_template\latest.json --out-md docs\experiments\sqj_springer_template_fetch.md
 python scripts\audit_sqj_citation_consistency.py --out-json outputs\sqj_citation_consistency\latest.json --out-md docs\experiments\sqj_citation_consistency.md
 python scripts\audit_sqj_claim_traceability.py --out-json data\reviews\sqj_claim_traceability.json --out-md docs\experiments\sqj_claim_traceability.md
 python scripts\audit_sqj_submission_checklist.py --out-json outputs\sqj_submission_checklist_audit\latest.json --out-md outputs\sqj_submission_checklist_audit\latest.md
@@ -133,6 +136,7 @@ python scripts\audit_sqj_school_recognition_gate.py --out-json outputs\sqj_schoo
 python scripts\audit_sqj_human_inputs_gate.py --out-json outputs\sqj_human_inputs_gate\latest.json --out-md outputs\sqj_human_inputs_gate\latest.md
 python scripts\audit_sqj_human_decision_packet.py --out-json outputs\sqj_human_decision_packet\latest.json --out-md outputs\sqj_human_decision_packet\latest.md
 python scripts\audit_sqj_pdf_compile_gate.py --out-json outputs\sqj_pdf_compile_gate\latest.json --out-md outputs\sqj_pdf_compile_gate\latest.md
+python scripts\audit_sqj_pdf_layout_review.py --out-json outputs\sqj_pdf_layout_review\latest.json --out-md docs\experiments\sqj_pdf_layout_review.md
 python scripts\audit_sqj_figure_layout_gate.py --out-json outputs\sqj_figure_layout_gate\latest.json --out-md outputs\sqj_figure_layout_gate\latest.md
 python scripts\audit_sqj_final_freeze_readiness.py --out-json outputs\sqj_final_freeze_readiness\latest.json --out-md outputs\sqj_final_freeze_readiness\latest.md
 python scripts\summarize_evp8_five_model_synthesis.py --check
@@ -145,6 +149,8 @@ python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\l
 
 - SQJ source draft regenerates from tracked inputs.
 - SQJ availability boundary audit passes as `sqj_availability_boundary_ready`.
+- SQJ Springer template fetch records the official template ZIP source and
+  caches `sn-jnl.cls` under ignored `outputs/`.
 - SQJ citation consistency audit passes.
 - SQJ figures regenerate from tracked synthesis and cost summaries.
 - SQJ claim traceability audit passes and remains raw-output-free.
@@ -162,10 +168,9 @@ python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\l
   provided or confirmed.
 - SQJ human-decision packet audit passes while keeping final decisions blocked
   as `blocked_missing_human_decisions`.
-- SQJ PDF compile gate audit passes while keeping the compile status blocked
-  unless `sn-jnl.cls` is actually available.
-- SQJ figure-layout gate audit passes while keeping final figure layout blocked
-  as `blocked_pending_pdf_compile` until the compiled PDF exists.
+- SQJ PDF compile gate audit passes with local status `compiled`.
+- SQJ PDF layout/reference review passes as `post_compile_layout_review_passed`.
+- SQJ figure-layout gate audit passes as `post_compile_layout_review_passed`.
 - SQJ final-freeze readiness audit passes.
 - EVP-8 five-model synthesis and cost accounting checks pass.
 - Paper readiness and local quality gate pass.
@@ -178,10 +183,6 @@ python scripts\run_local_quality_gate.py --out-json outputs\local_quality_gate\l
 This is not a final submission freeze. The SQJ package still needs:
 
 - official school/department recognition confirmation;
-- local or CI LaTeX compile after `sn-jnl.cls` is available;
-- SQJ-specific figure placement and caption audit;
-- current figure-layout gate status `blocked_pending_pdf_compile` until PDF
-  compilation enables post-compile layout review;
 - author information, funding, acknowledgements, and competing-interest
   confirmation;
 - SQJ human-decision packet remains `blocked_missing_human_decisions` until all

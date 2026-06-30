@@ -1194,9 +1194,12 @@
 - `paper/sqj_submission_draft.tex`: first generated Springer Nature `sn-jnl`
   SQJ source draft. It is generated from the SQJ framing packet, EVP-8
   five-model synthesis, cost accounting, generated paper tables, and the
-  SQJ-specific figure set. It has not been locally compiled because
-  `sn-jnl.cls` is not bundled in the current MiKTeX environment. It now includes
-  the fresh realistic hard-negative branch only as a two-project
+  SQJ-specific figure set. It now compiles locally through the SQJ PDF compile
+  gate by using the official Springer Nature template cached under ignored
+  `outputs/`; the compile gate now also runs BibTeX before final pdflatex
+  passes. The generated PDF is ignored, and the tracked post-compile
+  layout/reference review has passed without authorizing final freeze. It now
+  includes the fresh realistic hard-negative branch only as a two-project
   source-acquisition/gate-readiness negative result.
 - `paper/sqj_references.bib`: BibTeX file for the generated SQJ source draft.
 - `experiments/sqj_claim_traceability.md`: human-readable SQJ
@@ -1213,6 +1216,16 @@
   availability and Code availability sections while keeping raw model
   responses, `.env`, local configs, ignored outputs, artifact release, and
   submission authorization outside the tracked package boundary.
+- `experiments/sqj_springer_template_fetch.md`: human-readable SQJ Springer
+  Nature template fetch audit. It records the official author-support URL,
+  template ZIP URL, ZIP sha256, extracted file count, and local `sn-jnl.cls`
+  cache path while keeping the downloaded ZIP, extracted template files, and
+  generated PDF under ignored `outputs/`.
+- `experiments/sqj_pdf_layout_review.md`: human-readable SQJ post-compile PDF
+  layout/reference audit. It records the rendered page count, blank-page
+  check, page-edge overflow check, required figure/caption/reference text
+  checks, and LaTeX log blocker scan while keeping rendered PNGs, extracted
+  text, PDF, BBL, and logs under ignored `outputs/`.
 - `../data/reviews/sqj_claim_traceability.json`: machine-readable raw-output-free
   SQJ claim traceability audit used by SQJ readiness and local quality gates.
 - `figures/sqj/`: SQJ-specific reproducible PDF/SVG/PNG figures for the EVP-8
@@ -1224,30 +1237,34 @@
   claims, no-API boundary, and the fact that this is not a final submission
   freeze. It now explicitly forbids treating the fresh realistic branch as a
   three-project verifier-ready main experiment and records the SQJ PDF compile
-  gate status as `blocked_missing_sn_jnl_cls` until the official Springer
-  Nature class is available. It also records the human-input status as
+  gate status as locally compiled through the official Springer Nature template
+  cache and the layout/reference review status as
+  `post_compile_layout_review_passed`. It also records the human-input status as
   `blocked_missing_human_inputs` until author and submission metadata are
   provided or confirmed, and the SQJ artifact candidate gate status as
   `candidate_artifact_dry_run_ready` without treating that as a final ZIP
-  rebuild. It records the source-level figure-layout status as
-  `blocked_pending_pdf_compile` until a compiled PDF is available for layout
-  review, and points to the SQJ human-decision packet for unresolved external
-  final-freeze inputs. It now also records the SQJ availability boundary gate.
+  rebuild. It points to the SQJ human-decision packet for unresolved external
+  final-freeze inputs. It now also records the SQJ availability boundary gate,
+  Springer template fetch gate, and PDF layout/reference review gate.
 - `artifact/sqj_human_decision_packet.md`: tracked SQJ human-decision packet.
   It lists school recognition, author metadata, funding/acknowledgements,
-  competing interests, author contributions, Springer template, post-compile
-  layout review, final artifact rebuild, and final submission authorization as
-  human/external inputs that automation must not infer. Current status is not
-  final freeze and not submission-authorized.
+  competing interests, author contributions, Springer template status,
+  post-compile layout review status, final artifact rebuild, and final
+  submission authorization. The template and layout review items are now
+  resolved by local gates; the remaining human/external blockers are still not
+  inferred. Current status is not final freeze and not submission-authorized.
 - `artifact/sqj_final_freeze_readiness.md`: SQJ final-freeze readiness and
   blocker packet. It records the currently regenerable source package, the
-  school-recognition, `sn-jnl.cls`/PDF compile, author/funding/competing
-  interest, artifact rebuild, and final user-authorization blockers, and keeps
-  submission unauthorized. It carries the same fresh realistic two-project
+  school-recognition, author/funding/competing interest, artifact rebuild, and
+  final user-authorization blockers, and keeps submission unauthorized. It also
+  records that local PDF compilation and post-compile PDF layout/reference
+  review have passed using ignored outputs.
+  It carries the same fresh realistic two-project
   negative-result boundary as the SQJ checklist and now embeds the SQJ PDF
   compile gate, human-input gate, school-recognition gate, final-authorization
   gate, figure-layout gate, human-decision packet gate, and artifact candidate
-  dry-run gate audit boundaries, plus the SQJ availability boundary gate.
+  dry-run gate audit boundaries, plus the SQJ availability boundary and
+  Springer template fetch gates.
 - `paper/ieee_submission_draft.tex`: historical/source anonymous IEEEtran
   draft. It includes the prompt-only mixed/negative result, the separate
   tool-augmented full-run result, the bounded EVP-7 G5 376-record
@@ -1758,19 +1775,33 @@
 - `scripts/audit_sqj_submission_checklist.py`: validates the SQJ
   source-package checklist, source draft, BibTeX, table sources, figure set,
   five-model synthesis, and cost-accounting/API-freeze boundary without calling
-  APIs, compiling PDF, or marking final submission freeze complete. It also
-  checks the SQJ availability boundary and the fresh realistic branch claim
-  boundary in both the checklist and generated source draft.
+  APIs or marking final submission freeze complete. It also checks the SQJ
+  availability boundary, local PDF compile status, Springer template fetch
+  report, and the fresh realistic branch claim boundary in both the checklist
+  and generated source draft.
+- `scripts/fetch_sqj_springer_template.py`: downloads the official Springer
+  Nature journal article template ZIP into ignored
+  `outputs/sqj_springer_template/`, safely extracts it, records the ZIP sha256,
+  and writes the tracked raw-output-free template-fetch report.
 - `scripts/audit_sqj_pdf_compile_gate.py`: audits the SQJ `sn-jnl` PDF compile
-  gate. In the current local MiKTeX environment it reports
-  `blocked_missing_sn_jnl_cls`, `compile_attempted=false`, and
-  `pdf_compile_passed=false`; if the official class becomes available, it runs
-  two `pdflatex` passes into ignored `outputs/sqj_pdf_compile/`.
+  gate. It first checks `kpsewhich sn-jnl.cls`, then falls back to the ignored
+  official Springer template cache under `outputs/sqj_springer_template/`. When
+  the class is available through either route, it runs
+  `pdflatex -> bibtex -> pdflatex -> pdflatex` into ignored
+  `outputs/sqj_pdf_compile/` and requires a non-empty PDF and BBL while keeping
+  final freeze blocked.
+- `scripts/audit_sqj_pdf_layout_review.py`: audits the compiled SQJ PDF by
+  rendering pages to ignored `outputs/sqj_pdf_layout_review/`, extracting PDF
+  text, checking required figure/caption/reference text, scanning for blank
+  pages and page-edge overflow, and rejecting unresolved citations/references
+  or overfull hboxes in the LaTeX log.
 - `scripts/audit_sqj_figure_layout_gate.py`: audits SQJ figure assets and
   LaTeX figure references before PDF compilation. It checks the three SQJ
   figures in PDF/SVG/PNG form plus source-level `includegraphics`, caption, and
-  label presence, then reports `blocked_pending_pdf_compile` until the PDF
-  compile gate passes and a post-compile layout review can be performed.
+  label presence, then delegates the compiled-PDF layout/reference review to
+  `audit_sqj_pdf_layout_review.py` and reports
+  `post_compile_layout_review_passed` when both source and rendered PDF checks
+  pass.
 - `scripts/audit_sqj_human_inputs_gate.py`: audits whether SQJ submission
   metadata is still placeholder or unconfirmed. In the current source draft it
   reports `blocked_missing_human_inputs` for anonymous author/email,
@@ -1779,8 +1810,8 @@
 - `scripts/audit_sqj_human_decision_packet.py`: audits the tracked SQJ
   human-decision packet. It reports `blocked_missing_human_decisions` while
   confirming that the packet lists all required external final-freeze inputs
-  without claiming submission authorization, PDF compilation, artifact release,
-  school recognition, or final freeze completion.
+  without claiming submission authorization, artifact release, school
+  recognition, or final freeze completion.
 - `scripts/audit_sqj_final_freeze_readiness.py`: validates the SQJ
   final-freeze readiness packet and its external-blocker boundary without
   calling APIs, compiling PDF, or authorizing submission. It now requires the

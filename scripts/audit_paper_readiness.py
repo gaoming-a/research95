@@ -1073,7 +1073,22 @@ def main() -> None:
     out_md = Path(args.out_md)
     out_md.parent.mkdir(parents=True, exist_ok=True)
     out_md.write_text(build_markdown(audit), encoding="utf-8")
-    print(json.dumps(audit, ensure_ascii=False, indent=2, sort_keys=True))
+    print(
+        json.dumps(
+            {
+                "out_json": args.out_json,
+                "out_md": args.out_md,
+                "current_result_claim_ready": audit["current_result_claim_ready"],
+                "tool_augmented_claim_ready": audit["tool_augmented_claim_ready"],
+                "sqj_final_freeze_complete": audit.get("sqj_final_freeze_complete"),
+                "sqj_freeze_readiness_ready": audit.get("sqj_freeze_readiness_ready"),
+                "blocker_count": len(audit["blockers"]),
+            },
+            ensure_ascii=True,
+            indent=2,
+            sort_keys=True,
+        )
+    )
 
 
 if __name__ == "__main__":

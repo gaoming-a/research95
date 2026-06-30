@@ -19,12 +19,15 @@ REQUIRED_SQJ_FILES = [
     Path("docs/artifact/sqj_final_freeze_readiness.md"),
     Path("docs/artifact/sqj_human_decision_packet.md"),
     Path("docs/experiments/sqj_availability_boundary.md"),
+    Path("docs/experiments/sqj_springer_template_fetch.md"),
+    Path("docs/experiments/sqj_pdf_layout_review.md"),
     Path("docs/experiments/sqj_citation_consistency.md"),
     Path("docs/experiments/sqj_claim_traceability.md"),
     Path("docs/figures/sqj/figure_manifest.json"),
     Path("scripts/write_sqj_latex_draft.py"),
     Path("scripts/audit_sqj_artifact_gate.py"),
     Path("scripts/audit_sqj_availability_boundary.py"),
+    Path("scripts/fetch_sqj_springer_template.py"),
     Path("scripts/audit_sqj_citation_consistency.py"),
     Path("scripts/audit_sqj_claim_traceability.py"),
     Path("scripts/audit_sqj_final_authorization_gate.py"),
@@ -34,6 +37,7 @@ REQUIRED_SQJ_FILES = [
     Path("scripts/audit_sqj_human_inputs_gate.py"),
     Path("scripts/audit_sqj_human_decision_packet.py"),
     Path("scripts/audit_sqj_pdf_compile_gate.py"),
+    Path("scripts/audit_sqj_pdf_layout_review.py"),
     Path("scripts/audit_sqj_figure_layout_gate.py"),
 ]
 

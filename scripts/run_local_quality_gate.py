@@ -98,6 +98,7 @@ def build_markdown(summary: dict[str, Any]) -> str:
         f"- submission freeze-candidate audit passed: {bool_mark(summary['submission_freeze_candidate_audit']['passed'])}",
         f"- SQJ submission checklist audit passed: {bool_mark(summary['sqj_submission_checklist_audit']['passed'])}",
         f"- SQJ availability boundary passed: {bool_mark(summary['sqj_availability_boundary']['passed'])}",
+        f"- SQJ Springer template fetch passed: {bool_mark(summary['sqj_springer_template_fetch']['passed'])}",
         f"- SQJ citation consistency passed: {bool_mark(summary['sqj_citation_consistency']['passed'])}",
         f"- SQJ claim traceability passed: {bool_mark(summary['sqj_claim_traceability']['passed'])}",
         f"- SQJ artifact gate passed: {bool_mark(summary['sqj_artifact_gate']['passed'])}",
@@ -106,6 +107,7 @@ def build_markdown(summary: dict[str, Any]) -> str:
         f"- SQJ human-input gate passed: {bool_mark(summary['sqj_human_inputs_gate']['passed'])}",
         f"- SQJ human-decision packet passed: {bool_mark(summary['sqj_human_decision_packet']['passed'])}",
         f"- SQJ PDF compile gate passed: {bool_mark(summary['sqj_pdf_compile_gate']['passed'])}",
+        f"- SQJ PDF layout review passed: {bool_mark(summary['sqj_pdf_layout_review']['passed'])}",
         f"- SQJ figure-layout gate passed: {bool_mark(summary['sqj_figure_layout_gate']['passed'])}",
         f"- SQJ final-freeze readiness audit passed: {bool_mark(summary['sqj_final_freeze_readiness_audit']['passed'])}",
         f"- artifact dry-run passed: {bool_mark(summary['artifact_dry_run']['passed'])}",
@@ -138,6 +140,7 @@ def build_markdown(summary: dict[str, Any]) -> str:
             "submission_freeze_candidate_audit",
             "sqj_submission_checklist_audit",
             "sqj_availability_boundary",
+            "sqj_springer_template_fetch",
             "sqj_citation_consistency",
             "sqj_claim_traceability",
             "sqj_artifact_gate",
@@ -146,6 +149,7 @@ def build_markdown(summary: dict[str, Any]) -> str:
             "sqj_human_inputs_gate",
             "sqj_human_decision_packet",
             "sqj_pdf_compile_gate",
+            "sqj_pdf_layout_review",
             "sqj_figure_layout_gate",
             "sqj_final_freeze_readiness_audit",
             "artifact_dry_run",
@@ -294,6 +298,16 @@ def main() -> None:
             "docs/experiments/sqj_availability_boundary.md",
         ]
     )
+    sqj_springer_template_fetch = run_command(
+        [
+            sys.executable,
+            "scripts/fetch_sqj_springer_template.py",
+            "--out-json",
+            "outputs/sqj_springer_template/latest.json",
+            "--out-md",
+            "docs/experiments/sqj_springer_template_fetch.md",
+        ]
+    )
     sqj_submission_checklist_audit = run_command(
         [
             sys.executable,
@@ -382,6 +396,16 @@ def main() -> None:
             "outputs/sqj_pdf_compile_gate/latest.json",
             "--out-md",
             "outputs/sqj_pdf_compile_gate/latest.md",
+        ]
+    )
+    sqj_pdf_layout_review = run_command(
+        [
+            sys.executable,
+            "scripts/audit_sqj_pdf_layout_review.py",
+            "--out-json",
+            "outputs/sqj_pdf_layout_review/latest.json",
+            "--out-md",
+            "docs/experiments/sqj_pdf_layout_review.md",
         ]
     )
     sqj_figure_layout_gate = run_command(
@@ -500,6 +524,7 @@ def main() -> None:
             and submission_freeze_candidate_audit["passed"]
             and sqj_submission_checklist_audit["passed"]
             and sqj_availability_boundary["passed"]
+            and sqj_springer_template_fetch["passed"]
             and sqj_citation_consistency["passed"]
             and sqj_claim_traceability["passed"]
             and sqj_artifact_gate["passed"]
@@ -508,6 +533,7 @@ def main() -> None:
             and sqj_human_inputs_gate["passed"]
             and sqj_human_decision_packet["passed"]
             and sqj_pdf_compile_gate["passed"]
+            and sqj_pdf_layout_review["passed"]
             and sqj_figure_layout_gate["passed"]
             and sqj_final_freeze_readiness_audit["passed"]
             and artifact_dry_run["passed"]
@@ -527,6 +553,7 @@ def main() -> None:
         "submission_freeze_candidate_audit": submission_freeze_candidate_audit,
         "sqj_submission_checklist_audit": sqj_submission_checklist_audit,
         "sqj_availability_boundary": sqj_availability_boundary,
+        "sqj_springer_template_fetch": sqj_springer_template_fetch,
         "sqj_citation_consistency": sqj_citation_consistency,
         "sqj_claim_traceability": sqj_claim_traceability,
         "sqj_artifact_gate": sqj_artifact_gate,
@@ -535,6 +562,7 @@ def main() -> None:
         "sqj_human_inputs_gate": sqj_human_inputs_gate,
         "sqj_human_decision_packet": sqj_human_decision_packet,
         "sqj_pdf_compile_gate": sqj_pdf_compile_gate,
+        "sqj_pdf_layout_review": sqj_pdf_layout_review,
         "sqj_figure_layout_gate": sqj_figure_layout_gate,
         "sqj_final_freeze_readiness_audit": sqj_final_freeze_readiness_audit,
         "readiness_run": readiness_run,

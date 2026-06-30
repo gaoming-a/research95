@@ -19,9 +19,9 @@
 
 ## Sources
 
-- `source_draft`: exists=yes, size=14847, path=`docs/paper/sqj_submission_draft.tex`
-- `checklist`: exists=yes, size=9982, path=`docs/artifact/sqj_submission_checklist.md`
-- `final_freeze_readiness`: exists=yes, size=8257, path=`docs/artifact/sqj_final_freeze_readiness.md`
+- `source_draft`: exists=yes, size=14881, path=`docs/paper/sqj_submission_draft.tex`
+- `checklist`: exists=yes, size=10184, path=`docs/artifact/sqj_submission_checklist.md`
+- `final_freeze_readiness`: exists=yes, size=8588, path=`docs/artifact/sqj_final_freeze_readiness.md`
 
 ## Boundary
 
