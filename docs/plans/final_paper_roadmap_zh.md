@@ -36,7 +36,8 @@
   调 prompt。最小提升目标是达到至少 30 个 validated visible-pass/hidden-fail
   cases、至少 3 个 projects；只有该 gate 通过后，才允许另行计划 Qwen/DeepSeek
   的最小 verifier 对照实验。若 gate 仍失败，论文应继续把该分支写成
-  source-acquisition / gate-readiness negative result。
+  source-acquisition / gate-readiness negative result。本文档后文保留的更大
+  规模路线和旧“下一步”是长期/历史路线，不得覆盖该当前最短提升路径。
 
 ## 1. 论文主线
 

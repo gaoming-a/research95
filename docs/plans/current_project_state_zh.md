@@ -1,10 +1,18 @@
 # 当前项目状态与文件地图
 
-日期：2026-06-29
+日期：2026-07-02
 
 本文件是短入口，用来整理当前计划文档和项目文件。它不替代
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
 `docs/plans/final_paper_roadmap_zh.md` 的研究路线。
+
+当前权威性规则：
+
+- 本文件顶部的快速状态和“当前同步状态”优先于后文历史记录。
+- 后文保留的旧分支、旧 hash、旧“下一步”只作为审计追溯，不得覆盖当前
+  realistic hard-negative gate 路线。
+- 当前唯一实验下一步是 no-API third-project source-selection packet；在
+  `ready_for_verifier_api=false` 时不得运行 Qwen/DeepSeek verifier API。
 
 ## 2026-07-02 快速状态增量
 
@@ -27,9 +35,10 @@
   `data/protocols/evp8_realistic_hardneg_uplift_packet_v0_1.json`。它记录当前
   gate 状态为 `blocked_needs_more_cases_and_third_project`：26/30
   visible-pass/hidden-fail cases，2/3 projects，`ready_for_verifier_api=false`。
-- GitHub 同步已通过非 force tree-sync 完成：远端分支
-  `evp8-v03-qwen-main-exp` 快进到 `588cd88`，本地和远端 tree 相同，当前
-  `git status --short --branch` 无 ahead/behind。
+- GitHub 同步已完成：远端分支 `evp8-v03-qwen-main-exp` 至少包含
+  `f3c6238 Record paper uplift sync completion`，当前
+  `git status --short --branch` 显示本地相对
+  `origin/evp8-v03-qwen-main-exp` 无 ahead/behind。
 
 ## 2026-06-30 快速状态增量
 
@@ -53,9 +62,22 @@
 
 ## 当前同步状态
 
+当前状态：
+
+- 分支：`evp8-v03-qwen-main-exp`
+- 远端：`origin/evp8-v03-qwen-main-exp`
+- 最新本地语义锚点：`f3c6238 Record paper uplift sync completion`
+- 同步判断：以 `git status --short --branch`、`git log -1 --oneline` 和
+  `origin/evp8-v03-qwen-main-exp` 为准；不得再用旧 `origin/main` 段落判断
+  当前分支是否同步。
+- 当前执行入口：no-API third-project source-selection packet，用于补
+  realistic hard-negative gate 的第三项目和至少 4 个缺口 cases。
+
+以下历史同步锚点只保留为旧 EVP-8 主线审计记录，不再代表当前分支状态：
+
 - 分支：当前工作分支为 `evp8-v03-qwen-main-exp`；上一诊断分支为
   `evp8-accept-aware-retest`；历史主线为 `main`
-- 远端：`origin/main`
+- 历史远端：`origin/main`
 - 当前 Git 状态：以 `git status --short --branch` 和
   `git log -1 --oneline` 为准。不要只依赖本文件里记录的 hash 判断是否 ahead；
   本轮语义上要求远端至少包含 EVP-8 Qwen G6 result state、G7

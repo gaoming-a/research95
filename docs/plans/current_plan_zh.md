@@ -2,6 +2,46 @@
 
 最后更新：2026-07-02
 
+## 0.18 2026-07-02 plan logic audit and de-stacking
+
+本轮目标是检查 2026-07-02 论文提升计划是否前后矛盾，并修正文档层的历史
+堆叠风险。该轮不改变实验设计，不调用 API，不修改 prompt/schema/candidate
+set，也不读取 ignored raw outputs。
+
+审计结论：
+
+- 核心逻辑有效：当前结果支持 evidence visibility / risk behavior 论文定位，
+  不支持 reliable autonomous patch verifier 结论。
+- 当前论文提升的最短路径仍是 realistic hard-negative verifier-readiness gate：
+  至少 30 个 validated visible-pass/hidden-fail cases，至少 3 个 projects。
+- 现有 uplift packet 显示该 gate 未通过：26/30 cases、2/3 projects、
+  `ready_for_verifier_api=false`。
+- 因此当前唯一实验下一步是 no-API third-project source-selection packet；
+  gate 未通过前不得运行 Qwen/DeepSeek verifier API。
+
+发现的问题：
+
+- `docs/plans/current_project_state_zh.md` 的同步状态仍保留旧 `origin/main`
+  大段历史锚点，容易和当前 `evp8-v03-qwen-main-exp` 分支混读。
+- `docs/plans/current_plan_zh.md` 是长期追加式日志，存在大量旧“下一步”。
+  这些记录可作为审计追溯，但不得覆盖顶部最新计划。
+- `docs/plans/final_paper_roadmap_zh.md` 同时保存长期路线和当前最短提升路线；
+  当前执行必须以 2026-07-02 realistic hard-negative gate 段落为准。
+
+本轮修订边界：
+
+- 只更新计划入口、状态说明、索引/README 和经验文档；
+- 不删除历史实验记录；
+- 将旧同步锚点显式标记为历史审计记录；
+- 明确当前唯一下一步和 forbidden action。
+
+验收条件：
+
+- 短状态入口写明当前分支、远端、最新同步锚点和唯一下一步；
+- README / `docs/INDEX.md` 不再暗示旧 `origin/main` 是当前同步来源；
+- `docs/experience/engineering_notes.md` 记录本次计划堆叠问题和处理方式；
+- 运行最小文本检查、`git diff --check` 和敏感信息扫描后提交并同步 GitHub。
+
 ## 0.15 2026-07-02 论文提升路线：realistic hard-negative gate 与风险控制主线
 
 本轮目标是根据根目录研究课题与结果评估，更新下一阶段提升计划。当前判断是：

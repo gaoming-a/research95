@@ -1,5 +1,22 @@
 # Engineering Notes
 
+## 2026-07-02 plan de-stacking audit
+
+- Append-only plan logs can become logically unsafe even when every individual
+  entry is true. Old branch names, sync hashes, and "next step" statements must
+  be demoted to historical audit records once the active branch or research
+  route changes.
+- The short state file must name the active branch, remote branch, latest
+  semantic commit, and unique next action at the top. Future agents should not
+  infer current execution state from older `origin/main` entries in the long
+  plan log.
+- A boundary packet passing is not the same as an experiment gate passing. The
+  current realistic hard-negative route remains blocked until the tracked gate
+  reaches at least 30 visible-pass/hidden-fail cases across at least 3 projects.
+- Do not solve plan clutter by deleting experiment history. Keep provenance,
+  but add explicit hierarchy: current authority, active next action, historical
+  audit records, and long-term alternatives.
+
 ## 2026-07-02 paper-uplift planning boundary
 
 - The current paper should be positioned as an evidence visibility and risk
