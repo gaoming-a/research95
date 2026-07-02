@@ -1,0 +1,164 @@
+{
+  "allowed_next_work": [
+    "write a no-API Luigi source-acquisition/materialization protocol",
+    "define dry-run materialization checks and validation commands without calling APIs",
+    "run only protocol/check-only gates before asking for any generation API authorization",
+    "after any future generated candidates, rerun validation and the combined hard-negative gate"
+  ],
+  "checks": [
+    {
+      "check": "api_call_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_model_outputs_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "prompt_text_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "patch_text_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "combined_gate_passed_as_analysis",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "current_gate_not_ready_for_verifier_api",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "current_hard_negative_gate_failed",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "selected_project_not_already_gate_passing",
+      "detail": [
+        "PySnooper",
+        "cookiecutter"
+      ],
+      "passed": true
+    },
+    {
+      "check": "selected_tasks_in_source_bug_definitions",
+      "detail": [
+        "bugsinpy_luigi_3",
+        "bugsinpy_luigi_4"
+      ],
+      "passed": true
+    },
+    {
+      "check": "selected_project_previous_failure_before_candidate_construction",
+      "detail": "generation stopped before candidate construction due to exact find-snippet apply failure",
+      "passed": true
+    },
+    {
+      "check": "source_target_matrix_does_not_already_solve_third_project",
+      "detail": {
+        "PySnooper": 18,
+        "cookiecutter": 27,
+        "tqdm": 9
+      },
+      "passed": true
+    }
+  ],
+  "current_gate": {
+    "minimum_count": 30,
+    "minimum_projects": 3,
+    "ready_for_verifier_api": false,
+    "visible_pass_hidden_fail_count": 26,
+    "visible_pass_hidden_fail_projects": [
+      "PySnooper",
+      "cookiecutter"
+    ]
+  },
+  "date": "2026-07-02",
+  "forbidden_actions": [
+    "run Qwen or DeepSeek verifier API while ready_for_verifier_api is false",
+    "run generation API from this packet alone",
+    "retry the same exact search/replace interface for Luigi without a new protocol",
+    "count Luigi task-file smoke artifacts as a passed realistic third-project gate",
+    "reuse failed third-project attempts as successful verifier-ready evidence"
+  ],
+  "inputs": {
+    "combined_gate": "data/protocols/evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json",
+    "source_bug_definitions": "scripts/build_patch_verification_dataset.py",
+    "source_target_matrix": "data/protocols/evp8_realistic_agent_source_target_matrix_v0_1.json",
+    "third_project_redesign_review": "data/protocols/evp8_realistic_hardneg_third_project_redesign_review_v0_1.json"
+  },
+  "packet_id": "evp8_realistic_hardneg_third_project_source_selection_packet_v0_1",
+  "packet_status": "passed",
+  "rejected_sources": [
+    {
+      "decision": "do_not_reuse_as_next_source",
+      "observed_gate_counts": {
+        "visible_fail_hidden_fail": 6,
+        "visible_pass_hidden_pass": 18
+      },
+      "project": "httpie",
+      "reason": "observed hidden-failing candidates failed visible tests; direct repeats do not target visible-pass/hidden-fail."
+    },
+    {
+      "decision": "do_not_reuse_as_next_source",
+      "observed_gate_counts": {
+        "visible_pass_hidden_pass": 12
+      },
+      "project": "thefuck",
+      "reason": "observed candidates were visible-pass/hidden-pass; this project behaved as correct-like under the current setup."
+    },
+    {
+      "decision": "do_not_reuse_as_next_source",
+      "observed_gate_counts": {
+        "visible_fail_hidden_fail": 9
+      },
+      "project": "tqdm",
+      "reason": "observed wrong candidates failed visible tests, so the current source does not create false-accept opportunity cases."
+    },
+    {
+      "decision": "do_not_reuse_as_next_source",
+      "observed_gate_counts": {
+        "visible_pass_hidden_pass": 4
+      },
+      "project": "youtube-dl",
+      "reason": "one supplement failed before candidate construction and the later full-file attempt produced visible-pass/hidden-pass cases."
+    }
+  ],
+  "scope": {
+    "api_call_attempted": false,
+    "generation_api_authorized": false,
+    "patch_text_read": false,
+    "prompt_text_read": false,
+    "raw_model_outputs_read": false,
+    "verifier_api_authorized": false
+  },
+  "selected_source": {
+    "minimum_success_gate_after_future_validation": {
+      "new_project_needed": "luigi",
+      "new_visible_pass_hidden_fail_cases_needed": 4,
+      "required_property": "patch_applied && declared_visible_tests_passed && hidden_oracle_failed"
+    },
+    "project": "luigi",
+    "required_protocol_change": "Freeze a separate source-acquisition/materialization protocol before generation. Do not silently retry the exact search/replace edit-plan interface.",
+    "selection_status": "selected_for_new_source_acquisition_protocol",
+    "tasks": [
+      "bugsinpy_luigi_3",
+      "bugsinpy_luigi_4"
+    ],
+    "why_selected": [
+      "The current gate needs a third project; existing visible-pass/hidden-fail projects are only PySnooper and cookiecutter.",
+      "Luigi is not already counted as a gate-passing project, so it can add genuine project diversity if validation succeeds.",
+      "The previous Luigi supplement failed before candidate construction, so its blocker is materialization/interface design rather than an observed visible-pass/hidden-fail yield failure.",
+      "Both selected Luigi tasks exist in tracked source-bug definitions, enabling a no-API protocol to be written before any generation call."
+    ]
+  }
+}

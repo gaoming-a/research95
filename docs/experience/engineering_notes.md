@@ -1,5 +1,25 @@
 # Engineering Notes
 
+## 2026-07-02 third-project source selection
+
+- The third-project gate should be repaired by source selection and
+  materialization design, not by blind repeats of the same generation API
+  interface.
+- Projects with observed no-yield outcomes should not be reused as if they
+  were promising by default: `httpie` produced hidden-failing candidates that
+  failed visible tests, `thefuck` produced visible-pass/hidden-pass candidates,
+  `tqdm` produced visible-fail/hidden-fail candidates, and the later
+  `youtube-dl` full-file attempt produced visible-pass/hidden-pass candidates.
+- Luigi remains a defensible next source only because the prior Luigi attempt
+  failed before candidate construction. That makes the blocker a
+  materialization/protocol problem, not evidence that Luigi has already failed
+  the visible-pass/hidden-fail yield gate.
+- Selecting Luigi does not authorize generation or verifier APIs. The next
+  artifact must be a no-API Luigi source-acquisition/materialization protocol
+  with dry-run, validation, and leakage gates. If that protocol cannot be made
+  coherent, the paper should keep the fresh realistic branch as a two-project
+  source-acquisition negative result.
+
 ## 2026-07-02 plan de-stacking audit
 
 - Append-only plan logs can become logically unsafe even when every individual

@@ -13,9 +13,9 @@
   current paper/result boundaries, experiment-decision gates, active plan roles,
   key project files, script entry points, and forbidden misuses. As of
   2026-07-02, its top section is the authority for the current active branch
-  and unique next action: no-API third-project source selection for the
-  realistic hard-negative gate; historical `origin/main` entries retained
-  later in plan logs are audit records only. As of
+  and unique next action: the no-API Luigi source-acquisition/materialization
+  protocol for the realistic hard-negative gate; historical `origin/main`
+  entries retained later in plan logs are audit records only. As of
   2026-06-20, it also records the EVP-8 G0 expected-output absence guard and
   the exact manual phrase required before DeepSeek/Qwen smoke API execution.
 - `plans/final_paper_roadmap_zh.md`: canonical final-paper route and subsequent
@@ -74,6 +74,18 @@
   uplift packet. Status is `blocked_needs_more_cases_and_third_project`:
   26/30 visible-pass/hidden-fail cases, 2/3 projects, and
   `ready_for_verifier_api=false`.
+- `../scripts/write_evp8_realistic_hardneg_third_project_source_selection_packet.py`:
+  no-API source-selection packet writer for the third-project gate repair.
+  It reads tracked aggregate gates and source definitions only, then selects
+  Luigi as the next source-acquisition/materialization target without
+  authorizing generation or verifier APIs.
+- `../data/protocols/evp8_realistic_hardneg_third_project_source_selection_packet_v0_1.json`
+  and
+  `../docs/experiments/evp8_realistic_hardneg_third_project_source_selection_packet_v0_1.md`:
+  current no-API third-project source-selection packet. Status is `passed`;
+  selected source is `luigi` with `bugsinpy_luigi_3` and
+  `bugsinpy_luigi_4`. The next action is a no-API Luigi
+  source-acquisition/materialization protocol, not generation or verifier API.
 - As of 2026-06-30, `EVP-8-HARD tool-contestation` is complete for Qwen and
   DeepSeek on the 47-candidate hard-case cohort. It removes verdict-like tool
   fields and asks models to challenge a visible-test-only accept premise. The

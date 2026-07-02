@@ -38,6 +38,11 @@
   的最小 verifier 对照实验。若 gate 仍失败，论文应继续把该分支写成
   source-acquisition / gate-readiness negative result。本文档后文保留的更大
   规模路线和旧“下一步”是长期/历史路线，不得覆盖该当前最短提升路径。
+- 2026-07-02 source-selection packet 已将第三项目下一步收敛为 `luigi`
+  (`bugsinpy_luigi_3`, `bugsinpy_luigi_4`) 的 no-API
+  source-acquisition/materialization protocol。该选择不授权 generation API 或
+  verifier API；如果 Luigi protocol 无法通过 check-only gate，则不得改用盲目
+  第三项目 API 重试来维持论文强 claim。
 
 ## 1. 论文主线
 

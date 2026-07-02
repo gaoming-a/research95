@@ -11,7 +11,8 @@
 - 本文件顶部的快速状态和“当前同步状态”优先于后文历史记录。
 - 后文保留的旧分支、旧 hash、旧“下一步”只作为审计追溯，不得覆盖当前
   realistic hard-negative gate 路线。
-- 当前唯一实验下一步是 no-API third-project source-selection packet；在
+- 当前 third-project source-selection packet 已完成；新的唯一实验下一步是
+  no-API Luigi source-acquisition/materialization protocol。在
   `ready_for_verifier_api=false` 时不得运行 Qwen/DeepSeek verifier API。
 
 ## 2026-07-02 快速状态增量
@@ -35,6 +36,13 @@
   `data/protocols/evp8_realistic_hardneg_uplift_packet_v0_1.json`。它记录当前
   gate 状态为 `blocked_needs_more_cases_and_third_project`：26/30
   visible-pass/hidden-fail cases，2/3 projects，`ready_for_verifier_api=false`。
+- 本地已新增 no-API third-project source-selection packet：
+  `docs/experiments/evp8_realistic_hardneg_third_project_source_selection_packet_v0_1.md`
+  和
+  `data/protocols/evp8_realistic_hardneg_third_project_source_selection_packet_v0_1.json`。
+  packet 选择 `luigi`，任务为 `bugsinpy_luigi_3` 和
+  `bugsinpy_luigi_4`；它不授权 generation API 或 verifier API，只把下一步
+  收敛为 no-API Luigi source-acquisition/materialization protocol。
 - GitHub 同步已完成：远端分支 `evp8-v03-qwen-main-exp` 至少包含
   `f3c6238 Record paper uplift sync completion`，当前
   `git status --short --branch` 显示本地相对
@@ -66,12 +74,14 @@
 
 - 分支：`evp8-v03-qwen-main-exp`
 - 远端：`origin/evp8-v03-qwen-main-exp`
-- 最新本地语义锚点：`f3c6238 Record paper uplift sync completion`
+- 最新本地语义锚点：以 `git log -1 --oneline` 为准；当前语义上必须包含
+  paper uplift sync、plan de-stacking 和 third-project source-selection packet。
 - 同步判断：以 `git status --short --branch`、`git log -1 --oneline` 和
   `origin/evp8-v03-qwen-main-exp` 为准；不得再用旧 `origin/main` 段落判断
   当前分支是否同步。
-- 当前执行入口：no-API third-project source-selection packet，用于补
-  realistic hard-negative gate 的第三项目和至少 4 个缺口 cases。
+- 当前执行入口：no-API Luigi source-acquisition/materialization protocol，用于
+  在不重试旧 exact search/replace interface 的前提下，定义第三项目候选生成
+  materialization、dry-run、validation 和 leakage gates。
 
 以下历史同步锚点只保留为旧 EVP-8 主线审计记录，不再代表当前分支状态：
 

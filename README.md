@@ -213,6 +213,11 @@ The current no-API uplift packet is
 branch as `blocked_needs_more_cases_and_third_project`, with 26/30
 visible-pass/hidden-fail cases, 2/3 projects, and
 `ready_for_verifier_api=false`.
+The follow-up no-API third-project source-selection packet is
+`docs/experiments/evp8_realistic_hardneg_third_project_source_selection_packet_v0_1.md`.
+It selects `luigi` (`bugsinpy_luigi_3`, `bugsinpy_luigi_4`) for a separately
+frozen source-acquisition/materialization protocol and does not authorize
+generation or verifier APIs.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently
@@ -257,9 +262,10 @@ They should not override `final_paper_roadmap_zh.md`.
   current active branch is `evp8-v03-qwen-main-exp`; check it against
   `origin/evp8-v03-qwen-main-exp`, not the historical `origin/main` entries
   retained in older plan logs.
-- The current experimental next step is a no-API third-project
-  source-selection packet for the realistic hard-negative gate. Do not run
-  Qwen/DeepSeek verifier APIs while `ready_for_verifier_api=false`.
+- The current experimental next step is a no-API Luigi
+  source-acquisition/materialization protocol for the realistic hard-negative
+  gate. Do not run generation APIs from the source-selection packet, and do not
+  run Qwen/DeepSeek verifier APIs while `ready_for_verifier_api=false`.
 - The short project/file map is `docs/plans/current_project_state_zh.md`.
 - The current submission handoff is
   `docs/artifact/submission_handoff_20260618.md`; it records the latest

@@ -2,6 +2,52 @@
 
 最后更新：2026-07-02
 
+## 0.19 2026-07-02 third-project source-selection packet
+
+本轮目标是完成 0.18 收敛后的当前唯一实验下一步：写出 no-API
+third-project source-selection packet。该轮不调用 API，不读取 ignored raw
+outputs，不读取 prompt text 或 patch text，不修改候选集、schema 或实验结果。
+
+执行结果：
+
+- 新增脚本
+  `scripts/write_evp8_realistic_hardneg_third_project_source_selection_packet.py`；
+- 生成
+  `data/protocols/evp8_realistic_hardneg_third_project_source_selection_packet_v0_1.json`；
+- 生成
+  `docs/experiments/evp8_realistic_hardneg_third_project_source_selection_packet_v0_1.md`。
+
+packet 决策：
+
+- 当前 gate 仍为 26/30 visible-pass/hidden-fail cases，projects 仍只有
+  `PySnooper` 和 `cookiecutter`，`ready_for_verifier_api=false`；
+- 直接复用已尝试第三项目不可取：
+  - `httpie`：hidden-failing candidates failed visible tests；
+  - `thefuck`：12 个 visible-pass/hidden-pass，0 个 hard negatives；
+  - `tqdm`：9 个 visible-fail/hidden-fail，visible tests 已能拦截；
+  - `youtube-dl`：一次 exact materialization failure，后续 full-file 结果为
+    visible-pass/hidden-pass；
+- 选择 `luigi` 作为下一第三项目 source，因为它不是现有 gate-passing project，
+  且历史失败点是 candidate construction 前的 materialization/interface 问题，
+  不是已观察到的 hard-negative yield failure；
+- 选定任务为 `bugsinpy_luigi_3` 和 `bugsinpy_luigi_4`，二者存在于 tracked
+  source-bug definitions 中。
+
+当前新的唯一下一步：
+
+- 写 no-API Luigi source-acquisition/materialization protocol；
+- 在该 protocol 中定义 materialization interface、dry-run checks、validation
+  commands 和 leakage boundaries；
+- protocol/check-only gate 通过前不得请求或运行 generation API；
+- `ready_for_verifier_api=false` 时仍不得运行 Qwen/DeepSeek verifier API。
+
+验收：
+
+- `python -m py_compile scripts\write_evp8_realistic_hardneg_third_project_source_selection_packet.py` 通过；
+- `python scripts\write_evp8_realistic_hardneg_third_project_source_selection_packet.py --check` 通过；
+- packet status 为 `passed`，但这只表示 source-selection 决策可审计，不表示
+  realistic hard-negative gate 已通过。
+
 ## 0.18 2026-07-02 plan logic audit and de-stacking
 
 本轮目标是检查 2026-07-02 论文提升计划是否前后矛盾，并修正文档层的历史
