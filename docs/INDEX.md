@@ -53,7 +53,23 @@
   than treating the IEEEtran draft as the next submission format. As of
   2026-06-30, the fresh realistic hard-negative branch is explicitly scoped as
   a two-project supplement/source-acquisition negative result, not a
-  three-project verifier-ready main experiment.
+  three-project verifier-ready main experiment. As of 2026-07-02, the next
+  paper-uplift route is to repair that verifier-readiness gap first: at least
+  30 validated visible-pass/hidden-fail cases across at least 3 projects before
+  any Qwen/DeepSeek verifier API is planned for the realistic branch.
+- `plans/current_plan_zh.md`: current execution log. The 2026-07-02 entry
+  records the paper-uplift plan: keep the manuscript framed as evidence
+  visibility / risk behavior rather than autonomous correctness verification,
+  then prioritize the realistic hard-negative gate before any new model calls.
+- `../scripts/write_evp8_realistic_hardneg_uplift_packet.py`: no-API boundary
+  packet writer for the realistic hard-negative uplift route. It reads the
+  tracked combined generation gate only and writes the current missing
+  case/project counts plus allowed and forbidden next actions.
+- `../data/protocols/evp8_realistic_hardneg_uplift_packet_v0_1.json` and
+  `../docs/experiments/evp8_realistic_hardneg_uplift_packet_v0_1.md`: current
+  uplift packet. Status is `blocked_needs_more_cases_and_third_project`:
+  26/30 visible-pass/hidden-fail cases, 2/3 projects, and
+  `ready_for_verifier_api=false`.
 - As of 2026-06-30, `EVP-8-HARD tool-contestation` is complete for Qwen and
   DeepSeek on the 47-candidate hard-case cohort. It removes verdict-like tool
   fields and asks models to challenge a visible-test-only accept premise. The

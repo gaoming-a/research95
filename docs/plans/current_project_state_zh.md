@@ -6,6 +6,28 @@
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
 `docs/plans/final_paper_roadmap_zh.md` 的研究路线。
 
+## 2026-07-02 快速状态增量
+
+- 根目录研究课题评估后的论文定位：当前结果适合写成 evidence visibility /
+  risk behavior / software quality empirical study，不适合写成 reliable
+  autonomous patch correctness verifier。
+- 若要明显提升论文档次，下一步不是继续堆模型或 prompt 调参，而是补
+  realistic hard-negative verifier-readiness gate：
+  - 至少 30 个 validated visible-pass/hidden-fail cases；
+  - 至少 3 个 projects；
+  - 每个 case 必须满足 visible tests pass、hidden evaluator fail；
+  - gate 未通过前不得运行 Qwen/DeepSeek verifier API。
+- 若 gate 通过，后续只允许另行计划最小 Qwen/DeepSeek 对照实验，比较
+  tool-only、with-verdict、evidence-only 和 tool-contestation，并分开报告
+  strict correction、safe handling、correct recall 和 escalation rate。
+- 若 gate 仍失败，fresh realistic branch 继续作为 two-project
+  source-acquisition / gate-readiness negative result，不升级为主实验。
+- 本地已新增 no-API uplift packet：
+  `docs/experiments/evp8_realistic_hardneg_uplift_packet_v0_1.md` 和
+  `data/protocols/evp8_realistic_hardneg_uplift_packet_v0_1.json`。它记录当前
+  gate 状态为 `blocked_needs_more_cases_and_third_project`：26/30
+  visible-pass/hidden-fail cases，2/3 projects，`ready_for_verifier_api=false`。
+
 ## 2026-06-30 快速状态增量
 
 - 当前分支仍为 `evp8-v03-qwen-main-exp`，精确同步状态以

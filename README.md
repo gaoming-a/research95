@@ -200,6 +200,19 @@ visible test execution errors and 26 remain blocked due missing local workdirs.
 The rebuilt tool-only baseline rejects those 9 error cases and escalates 26,
 but still has 0 actionable false-accept/false-reject headroom, so API readiness
 remains blocked.
+As of 2026-07-02, the paper-uplift plan is to keep the manuscript framed as an
+evidence-visibility and risk-behavior study rather than a reliable autonomous
+patch verifier. The next experimental improvement, if pursued, is a realistic
+hard-negative verifier-readiness gate: at least 30 validated
+visible-pass/hidden-fail cases across at least 3 projects before any new
+Qwen/DeepSeek verifier API is planned for that branch. If the gate remains
+blocked, the fresh realistic branch stays a source-acquisition / gate-readiness
+negative result.
+The current no-API uplift packet is
+`docs/experiments/evp8_realistic_hardneg_uplift_packet_v0_1.md`: it records the
+branch as `blocked_needs_more_cases_and_third_project`, with 26/30
+visible-pass/hidden-fail cases, 2/3 projects, and
+`ready_for_verifier_api=false`.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently

@@ -1,6 +1,118 @@
 # 当前计划：AI 生成补丁的可验证审查
 
-最后更新：2026-06-30
+最后更新：2026-07-02
+
+## 0.15 2026-07-02 论文提升路线：realistic hard-negative gate 与风险控制主线
+
+本轮目标是根据根目录研究课题与结果评估，更新下一阶段提升计划。当前判断是：
+论文已经达到扎实硕士论文 / CCF C 或普通软件工程期刊候选水平，但若要明显抬
+一档，不能继续堆模型或调 prompt，而应补强 realistic agent patch 的外部有效性
+和 tool false-accept opportunity set。
+
+执行边界：
+
+- 不调用任何模型 API；
+- 不修改 prompt、schema、候选集或实验结果；
+- 不读取 ignored raw responses、rendered prompts 或 patch text；
+- 不把当前计划写成 API 授权；
+- 不把 escalation 解释为 correctness verification；
+- 只更新计划、路线、索引和经验文档。
+
+提升路线：
+
+1. 先冻结写作定位：
+   - 当前论文定位为 evidence visibility / risk behavior / software quality
+     empirical study；
+   - 主张应写成 LLM verifier 的风险行为和 conservative triage，而不是 reliable
+     autonomous patch correctness verifier；
+   - 标题和摘要避免 `effective verifier`、`reliable verifier`、
+     `improves correctness` 等强有效性措辞。
+2. 补 realistic hard-negative gate，而不是继续堆模型：
+   - 目标是把 fresh realistic branch 从 two-project supplement 提升为
+     verifier-ready 小扩展；
+   - predeclared gate 仍为至少 30 个 visible-pass/hidden-fail cases、至少 3 个
+     projects；
+   - 每个 case 必须满足 patch applies、declared visible tests pass、hidden
+     evaluator fails；
+   - gate 未通过时不得运行 Qwen/DeepSeek verifier API。
+3. gate 通过后只做最小模型实验：
+   - 只跑 Qwen3.7 Max 和 DeepSeek V4 Pro；
+   - 只比较 tool-only、with-verdict、evidence-only 和 tool-contestation；
+   - 核心问题只问：LLM 是否减少 visible-tool false accepts，还是主要转为
+     escalation；
+   - 指标必须分开报告 strict correction、safe handling、correct recall 和
+     escalation rate。
+4. 压缩论文叙事：
+   - 正文只保留 EVP-8 five-model descriptive result、EVP-8-HARD
+     tool-contestation mechanism result、fresh realistic source-acquisition /
+     gate-readiness result；
+   - EVP-7、EVP-8 v0.2/v0.3、历史 smoke/full/check-only 只作为方法背景、
+     appendix 或溯源材料；
+   - 禁止把版本演进写成多个同等主实验。
+
+验收条件：
+
+- `docs/plans/final_paper_roadmap_zh.md` 记录该提升路线和禁止动作；
+- `docs/plans/current_project_state_zh.md` 的短状态入口提示下一步是
+  realistic hard-negative gate，而不是新模型 API；
+- `docs/INDEX.md` 增加该提升计划入口；
+- `docs/experience/engineering_notes.md` 记录本次评估经验；
+- README 的当前路线说明同步更新；
+- 本轮只暂存相关文档并提交，随后尝试 GitHub 同步；若分支分叉或网络失败，
+  必须报告未同步状态。
+
+## 0.16 2026-07-02 realistic hard-negative uplift packet
+
+本轮目标是在 GitHub 网络同步仍失败的情况下，继续执行本地 no-API 计划推进：
+把 2026-07-02 论文提升路线落成机器可审计的 uplift packet，明确 realistic
+hard-negative branch 当前离 verifier-ready 还差什么，以及哪些后续动作被禁止。
+
+执行边界：
+
+- 不调用任何模型 API；
+- 不读取 ignored raw responses、rendered prompt 或 patch text；
+- 不修改 prompt、schema、候选集或实验结果；
+- 只读取 tracked combined generation gate；
+- 只输出 no-API planning gate JSON/Markdown；
+- 不把 boundary packet 通过解释为 realistic branch 已经 verifier-ready。
+
+执行结果：
+
+- 新增 `scripts/write_evp8_realistic_hardneg_uplift_packet.py`；
+- 生成 `data/protocols/evp8_realistic_hardneg_uplift_packet_v0_1.json`；
+- 生成 `docs/experiments/evp8_realistic_hardneg_uplift_packet_v0_1.md`；
+- 自检通过：
+  - `api_call_not_attempted=true`；
+  - `raw_model_outputs_not_read=true`；
+  - `prompt_text_not_read=true`；
+  - `patch_text_not_read=true`；
+  - input combined gate analysis status = `passed`；
+  - boundary packet `passed=true`；
+  - current status = `blocked_needs_more_cases_and_third_project`。
+
+当前 gate 缺口：
+
+- required property:
+  `patch_applied && declared_visible_tests_passed && hidden_oracle_failed`；
+- 当前 visible-pass/hidden-fail cases = 26 / 30；
+- 仍缺至少 4 个 cases；
+- 当前 projects = `PySnooper`, `cookiecutter`；
+- 仍缺至少 1 个 project；
+- `ready_for_verifier_api=false`。
+
+允许的下一步：
+
+- 写一个新的 no-API third-project source-selection packet；
+- 在任何 generation API 前冻结 source-acquisition protocol；
+- generation / validation 必须先通过 prompt、schema 和 leakage gates；
+- validation 后重新运行 combined hard-negative gate。
+
+禁止的下一步：
+
+- 在 `ready_for_verifier_api=false` 时运行 Qwen/DeepSeek verifier API；
+- 把该 branch 合并为三项目 verifier-ready 主实验；
+- 把 escalation 当成 strict correctness correction；
+- 把失败的第三项目尝试复用为成功的 verifier-ready evidence。
 
 ## 0.14 2026-06-30 EVP-8-HARD paper claim traceability and final table scaffold
 

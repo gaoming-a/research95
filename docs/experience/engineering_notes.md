@@ -1,5 +1,31 @@
 # Engineering Notes
 
+## 2026-07-02 paper-uplift planning boundary
+
+- The current paper should be positioned as an evidence visibility and risk
+  behavior study, not as a reliable autonomous patch correctness verifier.
+- The strongest current EVP-8-HARD improvement is escalation-driven safe
+  handling, not semantic strict correction: strict reject remains zero on the
+  known false-accept opportunity set. Keep `strict correction` and
+  `safe handling` separate in all future tables.
+- Do not improve the paper by adding more models under the same evidence
+  boundary. The current bottleneck is external validity and opportunity-set
+  size, especially the failed fresh realistic 30-case / 3-project
+  verifier-readiness gate.
+- A future realistic verifier experiment must first pass the source gate:
+  patch applies, declared visible tests pass, hidden evaluator fails, at least
+  30 cases, and at least 3 projects. Until then, Qwen/DeepSeek verifier API
+  calls on that branch would only create unsupported results.
+- If the gate passes, run the smallest useful model comparison: Qwen and
+  DeepSeek only, with tool-only, with-verdict, evidence-only, and
+  tool-contestation rows. The core question is whether LLMs reduce visible-tool
+  false accepts or merely route them to escalation.
+- A boundary packet can pass while the experimental gate fails. For the
+  realistic hard-negative uplift packet, `passed=true` means the blocker is
+  explicit and machine-readable; it does not mean the branch is verifier-ready.
+  The current blocker is concrete: 26/30 visible-pass/hidden-fail cases and 2/3
+  projects.
+
 ## 2026-06-30 SQJ availability boundary gate
 
 - Data/code availability wording is a separate submission-package boundary,

@@ -31,6 +31,12 @@
   30-candidate/3-project gate。因此该分支不得作为三项目 realistic
   verifier-ready 主实验，也不得触发 Qwen/DeepSeek verifier API。论文中只能将其
   用作 source-acquisition/gate-readiness 负结果和威胁分析。
+- 2026-07-02 起，若目标是明显提升论文档次，下一步必须优先补
+  **realistic hard-negative verifier-readiness gate**，而不是继续增加模型或
+  调 prompt。最小提升目标是达到至少 30 个 validated visible-pass/hidden-fail
+  cases、至少 3 个 projects；只有该 gate 通过后，才允许另行计划 Qwen/DeepSeek
+  的最小 verifier 对照实验。若 gate 仍失败，论文应继续把该分支写成
+  source-acquisition / gate-readiness negative result。
 
 ## 1. 论文主线
 
@@ -75,6 +81,10 @@
   负结果”：生成器能产生真实 two-project hard-negative opportunity set，但第三项目
   acquisition 会因为 visible-failing wrong patches、correct-like generated patches
   或 candidate materialization failure 而失败。
+- 当前提升路线不以“证明 LLM 自动验证补丁正确性”为目标。若后续 fresh
+  realistic gate 通过，模型实验也只能检验 LLM 是否减少 visible-tool false
+  accepts，还是把风险 case 转为 escalation；strict correction、safe handling、
+  correct recall 和 escalation rate 必须分开报告。
 
 ## 2. 核心研究问题
 
