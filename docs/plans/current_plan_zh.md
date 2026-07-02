@@ -2,6 +2,55 @@
 
 最后更新：2026-07-03
 
+## 0.21 2026-07-03 final manuscript claim map and CCF-C body rewrite
+
+本轮目标是在不继续实验、不调用 API、不读取 ignored raw outputs 的前提下，把
+0.20 的 final experiment-setting validity boundary 落到论文写作层：生成
+manuscript claim map、threats-to-validity 边界和稳定 CCF-C 正文 v0.1。
+
+执行边界：
+
+- 只使用 tracked aggregate audits / synthesis / gate summaries；
+- 不读取 raw model responses、prompt text、patch diff text；
+- 不改实验结果、不改 candidate set、不改 prompt；
+- 不默认选择论文配图后端。配图执行必须等待用户明确回答 Python 或 R。
+
+执行结果：
+
+- 新增脚本 `scripts/write_final_manuscript_claim_map.py`；
+- 生成 `data/reviews/final_manuscript_claim_map_v0_1.json`；
+- 生成 `docs/paper/final_manuscript_claim_map_v0_1.md`；
+- 生成 `docs/paper/ccfc_manuscript_rewrite_v0_1.md`。
+
+论文写作结论：
+
+- 主线 claim 固定为：evidence visibility shapes LLM merge-gate risk behavior
+  in candidate patch verification；
+- 结果章节分离 five-model decision pattern、accept-aware repair、
+  no-verdict ablation、tool-contestation 和 realistic hard-negative negative
+  boundary；
+- threats-to-validity 明确写入 prompt/evidence formatting、decision-space
+  construct validity、cohort/model external validity 和 historical protocol
+  artifact；
+- 禁止 claim 仍然包括 reliable autonomous correctness verification、
+  monotonic evidence-level correctness improvement、escalation 等同 strict
+  correction，以及 realistic branch 已达到 three-project verifier readiness。
+
+当前新的唯一下一步：
+
+- 先由用户明确选择配图后端：Python 或 R；
+- 然后生成 Fig. 1 hidden-evaluator protocol、Fig. 2 five-model evidence-level
+  decision patterns、Fig. 3 claim-boundary / setting-validity map；
+- 配图完成后再决定是否把 Markdown 正文同步转换到最终投稿 LaTeX 模板。
+
+验收结果：
+
+- `python -m py_compile scripts\write_final_manuscript_claim_map.py`：通过；
+- `python scripts\write_final_manuscript_claim_map.py --check`：通过；
+- `python -m json.tool data\reviews\final_manuscript_claim_map_v0_1.json`：通过；
+- 正文 overclaim 扫描只命中否定/边界语境，没有正向 unsupported claim；
+- `git diff --check`：通过，仅有既有行尾转换提示。
+
 ## 0.20 2026-07-03 final experiment-setting validity audit
 
 本轮目标是回答用户确认的核心问题：现有实验设置是否足够可靠，当前结果是否可以

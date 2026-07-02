@@ -12,12 +12,13 @@
   Start here before reading the long execution log. It records Git sync state,
   current paper/result boundaries, experiment-decision gates, active plan roles,
   key project files, script entry points, and forbidden misuses. As of
-  2026-07-03, its top section is the authority for the current active branch
-  and unique next action: manuscript claim-map and threats-to-validity
-  consolidation for the stable CCF-C route. The no-API Luigi
-  source-acquisition/materialization protocol is now optional future work, not
-  the current blocker. Historical `origin/main` entries retained later in plan
-  logs are audit records only. As of
+  2026-07-03, its top section is the authority for the current active branch.
+  The manuscript claim-map, threats-to-validity consolidation, and CCF-C body
+  rewrite v0.1 are now tracked; the unique next action is manuscript figure
+  generation after an explicit Python/R backend choice. The no-API Luigi
+  source-acquisition/materialization protocol is optional future work, not the
+  current blocker. Historical `origin/main` entries retained later in plan logs
+  are audit records only. As of
   2026-06-20, it also records the EVP-8 G0 expected-output absence guard and
   the exact manual phrase required before DeepSeek/Qwen smoke API execution.
 - `plans/final_paper_roadmap_zh.md`: canonical final-paper route and subsequent
@@ -63,10 +64,11 @@
   paper-uplift route is to repair that verifier-readiness gap first: at least
   30 validated visible-pass/hidden-fail cases across at least 3 projects before
   any Qwen/DeepSeek verifier API is planned for the realistic branch.
-- `plans/current_plan_zh.md`: current execution log. The 2026-07-02 entry
-  records the paper-uplift plan: keep the manuscript framed as evidence
-  visibility / risk behavior rather than autonomous correctness verification,
-  then prioritize the realistic hard-negative gate before any new model calls.
+- `plans/current_plan_zh.md`: current execution log. The 2026-07-03 0.21 entry
+  records the final manuscript claim map and CCF-C body rewrite: keep the
+  manuscript framed as evidence visibility / risk behavior rather than
+  autonomous correctness verification, and generate figures only after the user
+  explicitly chooses Python or R.
 - `../scripts/write_evp8_realistic_hardneg_uplift_packet.py`: no-API boundary
   packet writer for the realistic hard-negative uplift route. It reads the
   tracked combined generation gate only and writes the current missing
@@ -100,6 +102,17 @@
   `passed_with_bounded_claims`; it supports current results as real bounded
   evidence for evidence-conditioned risk behavior and lists remaining threats
   and forbidden claims.
+- `../scripts/write_final_manuscript_claim_map.py`: no-API manuscript-claim
+  map and CCF-C body rewrite generator. It reads tracked aggregate audits only
+  and writes raw-output-free claim, threat, terminology, and figure-plan
+  artifacts.
+- `../data/reviews/final_manuscript_claim_map_v0_1.json` and
+  `paper/final_manuscript_claim_map_v0_1.md`: final manuscript claim map.
+  Status is `passed`; it maps supported claims, forbidden claims, terminology,
+  and planned figures to the final setting-validity boundary.
+- `paper/ccfc_manuscript_rewrite_v0_1.md`: stable CCF-C body rewrite v0.1.
+  It presents the study as bounded evidence-conditioned risk behavior in
+  candidate patch verification, not autonomous patch correctness verification.
 - As of 2026-06-30, `EVP-8-HARD tool-contestation` is complete for Qwen and
   DeepSeek on the 47-candidate hard-case cohort. It removes verdict-like tool
   fields and asks models to challenge a visible-test-only accept premise. The

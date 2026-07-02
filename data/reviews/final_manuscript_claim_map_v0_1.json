@@ -1,0 +1,440 @@
+{
+  "artifact_id": "final_manuscript_claim_map_v0_1",
+  "checks": [
+    {
+      "check": "validity_audit_passed_with_bounded_claims",
+      "detail": "passed_with_bounded_claims",
+      "passed": true
+    },
+    {
+      "check": "five_model_synthesis_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "no_verdict_comparison_checks_present",
+      "detail": 13,
+      "passed": true
+    },
+    {
+      "check": "hard_tool_contestation_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "realistic_gate_not_verifier_ready",
+      "detail": {
+        "minimum_count": 30,
+        "minimum_projects": 3,
+        "passed": false,
+        "required_property": "patch_applied && declared_visible_tests_passed && hidden_oracle_failed",
+        "visible_pass_hidden_fail_count": 26,
+        "visible_pass_hidden_fail_projects": [
+          "PySnooper",
+          "cookiecutter"
+        ],
+        "visible_pass_hidden_fail_tasks": [
+          "bugsinpy_PySnooper_3",
+          "bugsinpy_cookiecutter_2",
+          "bugsinpy_cookiecutter_3"
+        ]
+      },
+      "passed": true
+    }
+  ],
+  "claims": [
+    {
+      "allowed_wording": "Evidence visibility changed verifier behavior across models and levels.",
+      "boundary": "Descriptive decision-pattern result, not a claim of better correctness.",
+      "claim": "Evidence visibility changes LLM merge-gate behavior on a frozen candidate-patch packet set.",
+      "evidence": [
+        "evp8_five_model_synthesis_v0_1",
+        "final_experiment_setting_validity_audit_v0_1"
+      ],
+      "id": "C1",
+      "paper_location": "Results: Evidence visibility changes merge-gate decisions",
+      "status": "supported"
+    },
+    {
+      "allowed_wording": "The five-model synthesis showed model-dependent and non-monotonic escalation/rejection patterns.",
+      "boundary": "Do not rank evidence levels as universally better.",
+      "claim": "The observed evidence effect is model-dependent and non-monotonic.",
+      "evidence": [
+        "per-level five-model decision counts"
+      ],
+      "id": "C2",
+      "paper_location": "Results: Model-dependent, non-monotonic patterns",
+      "status": "supported"
+    },
+    {
+      "allowed_wording": "Accept-aware analyses repair a protocol artifact and allow bounded recall/false-accept analysis.",
+      "boundary": "Historical v0.1 zero-accept behavior should remain protocol history.",
+      "claim": "Accept-aware protocol repairs are necessary to avoid over-interpreting earlier zero-accept artifacts.",
+      "evidence": [
+        "v0_2_accept_aware_synthesis",
+        "v0_3_qwen_label_conditioned_summary"
+      ],
+      "id": "C3",
+      "paper_location": "Methods/Validity: Protocol repair and label-conditioned analysis",
+      "status": "supported_as_setting_repair"
+    },
+    {
+      "allowed_wording": "Verdict removal and tool-contestation produced model-dependent risk-control tradeoffs.",
+      "boundary": "Measured as policy behavior, not semantic proof.",
+      "claim": "Verdict-like tool summaries can anchor model decisions; removing or contesting them changes behavior.",
+      "evidence": [
+        "evp8_e6_no_verdict_ablation_comparison",
+        "evp8_hard_tool_contestation_result_audit"
+      ],
+      "id": "C4",
+      "paper_location": "Results: Verdict dependence and contestation",
+      "status": "supported_qualified"
+    },
+    {
+      "allowed_wording": "Known false accepts were mostly shifted to escalation, so the supported contribution is risk triage.",
+      "boundary": "Strict correction remains separate and limited.",
+      "claim": "Tool-contestation primarily improves safe handling through escalation rather than strict correction.",
+      "evidence": [
+        "EVP-8-HARD tool-contestation audit"
+      ],
+      "id": "C5",
+      "paper_location": "Results: Tool-contestation as risk triage",
+      "status": "supported"
+    },
+    {
+      "allowed_wording": "The branch yielded a two-project hard-negative opportunity set but failed the three-project readiness gate.",
+      "boundary": "Do not use it as three-project verifier evidence.",
+      "claim": "The fresh realistic hard-negative branch is a source-acquisition negative result, not a verifier-ready main experiment.",
+      "evidence": [
+        "evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1"
+      ],
+      "id": "C6",
+      "paper_location": "Threats/Discussion: Realistic hard-negative acquisition",
+      "status": "supported_negative_boundary"
+    }
+  ],
+  "date": "2026-07-03",
+  "decision_totals_by_level": {
+    "E0": {
+      "escalate": 435,
+      "reject": 55
+    },
+    "E1": {
+      "escalate": 416,
+      "reject": 74
+    },
+    "E2": {
+      "escalate": 423,
+      "reject": 67
+    },
+    "E3": {
+      "escalate": 452,
+      "reject": 38
+    },
+    "E4": {
+      "escalate": 446,
+      "reject": 44
+    },
+    "E5": {
+      "escalate": 443,
+      "reject": 47
+    },
+    "E6": {
+      "escalate": 471,
+      "reject": 19
+    }
+  },
+  "figure_plan": [
+    {
+      "conclusion": "Model-visible evidence and evaluator-only labels are separated until post-decision analysis.",
+      "id": "Fig. 1",
+      "panels": [
+        "workflow from candidate patch to evidence packet",
+        "model decision",
+        "post-execution label join"
+      ],
+      "status": "planned_requires_backend",
+      "title": "Hidden-evaluator evidence-visibility protocol"
+    },
+    {
+      "conclusion": "Escalation/rejection patterns vary by model and are non-monotonic across E0-E6.",
+      "id": "Fig. 2",
+      "panels": [
+        "heatmap of rejection counts by model and level",
+        "stacked aggregate decision totals by level"
+      ],
+      "status": "planned_requires_backend",
+      "title": "Five-model evidence-level decision patterns"
+    },
+    {
+      "conclusion": "Supported findings are bounded by leakage controls, protocol repairs, and remaining external-validity threats.",
+      "id": "Fig. 3",
+      "panels": [
+        "supported claims vs evidence sources",
+        "controlled artifacts vs remaining threats"
+      ],
+      "status": "planned_requires_backend",
+      "title": "Claim boundary and setting-validity map"
+    }
+  ],
+  "forbidden_claims": [
+    "LLMs are reliable autonomous patch correctness verifiers.",
+    "More visible evidence monotonically improves correctness verification.",
+    "Escalation is equivalent to strict correction.",
+    "The fresh realistic hard-negative branch is verifier-ready across three projects.",
+    "The controlled EVP-8 or EVP-8-HARD cohorts prove broad external validity for real agent patch distributions."
+  ],
+  "hard_tool_contestation_summary": {
+    "deepseek_opportunity": {
+      "candidate_count": 9,
+      "corrected_to_reject": 0,
+      "decision_counts": {
+        "escalate": 9
+      },
+      "escalated": 9,
+      "invalid_output": 0,
+      "model_record_count": 9,
+      "repeated_accept": 0
+    },
+    "qwen_opportunity": {
+      "candidate_count": 9,
+      "corrected_to_reject": 0,
+      "decision_counts": {
+        "accept": 1,
+        "escalate": 8
+      },
+      "escalated": 8,
+      "invalid_output": 0,
+      "model_record_count": 9,
+      "repeated_accept": 1
+    }
+  },
+  "inputs": {
+    "five_model_synthesis": "data/protocols/evp8_five_model_synthesis_v0_1.json",
+    "hard_tool_contestation": "data/protocols/evp8_hard_tool_contestation_result_audit_v0_1.json",
+    "no_verdict_comparison": "data/reviews/evp8_e6_no_verdict_ablation_comparison.json",
+    "realistic_gate": "data/protocols/evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json",
+    "validity_audit": "data/reviews/final_experiment_setting_validity_audit_v0_1.json"
+  },
+  "manuscript_argument": "In candidate patch verification, we show that evidence visibility shapes LLM merge-gate risk behavior using frozen hidden-evaluator evidence packets, supported by five-model decision-pattern synthesis, no-verdict and tool-contestation ablations, and a realistic source-acquisition gate audit, with claims bounded away from autonomous correctness verification.",
+  "paper_target": "stable CCF-C submission",
+  "per_model_level_counts": [
+    {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 66,
+        "reject": 32
+      },
+      "google/gemini-2.5-flash": {
+        "escalate": 98
+      },
+      "level": "E0",
+      "mistralai/devstral-2512": {
+        "escalate": 98
+      },
+      "moonshotai/kimi-k2.6": {
+        "escalate": 98
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 75,
+        "reject": 23
+      }
+    },
+    {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 58,
+        "reject": 40
+      },
+      "google/gemini-2.5-flash": {
+        "escalate": 98
+      },
+      "level": "E1",
+      "mistralai/devstral-2512": {
+        "escalate": 98
+      },
+      "moonshotai/kimi-k2.6": {
+        "escalate": 92,
+        "reject": 6
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 70,
+        "reject": 28
+      }
+    },
+    {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 65,
+        "reject": 33
+      },
+      "google/gemini-2.5-flash": {
+        "escalate": 98
+      },
+      "level": "E2",
+      "mistralai/devstral-2512": {
+        "escalate": 98
+      },
+      "moonshotai/kimi-k2.6": {
+        "escalate": 91,
+        "reject": 7
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 71,
+        "reject": 27
+      }
+    },
+    {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 81,
+        "reject": 17
+      },
+      "google/gemini-2.5-flash": {
+        "escalate": 96,
+        "reject": 2
+      },
+      "level": "E3",
+      "mistralai/devstral-2512": {
+        "escalate": 98
+      },
+      "moonshotai/kimi-k2.6": {
+        "escalate": 98
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 79,
+        "reject": 19
+      }
+    },
+    {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 74,
+        "reject": 24
+      },
+      "google/gemini-2.5-flash": {
+        "escalate": 97,
+        "reject": 1
+      },
+      "level": "E4",
+      "mistralai/devstral-2512": {
+        "escalate": 98
+      },
+      "moonshotai/kimi-k2.6": {
+        "escalate": 97,
+        "reject": 1
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 80,
+        "reject": 18
+      }
+    },
+    {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 71,
+        "reject": 27
+      },
+      "google/gemini-2.5-flash": {
+        "escalate": 98
+      },
+      "level": "E5",
+      "mistralai/devstral-2512": {
+        "escalate": 98
+      },
+      "moonshotai/kimi-k2.6": {
+        "escalate": 98
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 78,
+        "reject": 20
+      }
+    },
+    {
+      "deepseek/deepseek-v4-pro": {
+        "escalate": 86,
+        "reject": 12
+      },
+      "google/gemini-2.5-flash": {
+        "escalate": 98
+      },
+      "level": "E6",
+      "mistralai/devstral-2512": {
+        "escalate": 98
+      },
+      "moonshotai/kimi-k2.6": {
+        "escalate": 98
+      },
+      "qwen/qwen3.7-max": {
+        "escalate": 91,
+        "reject": 7
+      }
+    }
+  ],
+  "realistic_gate_summary": {
+    "minimum_count": 30,
+    "minimum_projects": 3,
+    "passed": false,
+    "visible_pass_hidden_fail_count": 26,
+    "visible_pass_hidden_fail_projects": [
+      "PySnooper",
+      "cookiecutter"
+    ]
+  },
+  "remaining_threats": [
+    {
+      "required_paper_response": "Scope the claim to candidate patch verification and report project/task counts explicitly.",
+      "severity": "medium_for_ccf_c_high_for_ccf_b",
+      "threat": "Cohort size and project diversity remain limited for broad generalization."
+    },
+    {
+      "required_paper_response": "Use it as a source-acquisition negative result, not as main verifier evidence.",
+      "severity": "medium",
+      "threat": "Realistic hard-negative third-project gate remains blocked."
+    },
+    {
+      "required_paper_response": "Present results as evidence-conditioned risk behavior, not intrinsic semantic proof.",
+      "severity": "medium",
+      "threat": "Prompt and evidence formatting can influence model policy behavior."
+    },
+    {
+      "required_paper_response": "Keep historical versions in appendix/method provenance and avoid mixing them into main claims.",
+      "severity": "low_if_claim_map_is_followed",
+      "threat": "Some historical experiments are diagnostic rather than paper-facing."
+    }
+  ],
+  "scope": {
+    "api_call_attempted": false,
+    "figure_backend_selected": false,
+    "patch_text_read": false,
+    "prompt_text_read": false,
+    "raw_model_outputs_read": false
+  },
+  "status": "passed",
+  "terminology_ledger": [
+    {
+      "decision": "Use as the manuscript's central task name.",
+      "definition": "the task of deciding accept/reject/escalate for a proposed patch under visible evidence",
+      "term": "candidate patch verification"
+    },
+    {
+      "decision": "Use as the main explanatory variable.",
+      "definition": "the evidence fields available to the verifier at review time",
+      "term": "evidence visibility"
+    },
+    {
+      "decision": "Spell out on first use; emphasize non-visibility to models.",
+      "definition": "the evaluator-only label and oracle layer joined after model decisions",
+      "term": "hidden evaluator"
+    },
+    {
+      "decision": "Use instead of generic review decision when discussing outputs.",
+      "definition": "one of accept, reject, or escalate",
+      "term": "merge-gate decision"
+    },
+    {
+      "decision": "Keep separate from escalation.",
+      "definition": "rejecting a known tool false accept",
+      "term": "strict correction"
+    },
+    {
+      "decision": "Use only when escalation is explicitly treated as human-review routing.",
+      "definition": "rejecting or escalating a known tool false accept",
+      "term": "safe handling"
+    }
+  ]
+}

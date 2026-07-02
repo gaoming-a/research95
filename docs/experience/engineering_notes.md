@@ -4370,3 +4370,19 @@ This file starts fresh for the patch-verification project.
   experiment. It should preserve source variants (`tool-only`, `with-verdict`,
   `evidence-only`, `tool-contestation`) so readers can see which result
   supports which claim.
+
+## 2026-07-03 Final manuscript claim map and body rewrite
+
+- Do not let a completed writing step remain the documented "unique next
+  action." After the claim map and threats-to-validity boundary are generated,
+  the current next action must move to the actual remaining blocker: figure
+  generation after an explicit Python/R backend choice.
+- Generate manuscript prose from a claim map, not directly from scattered
+  experiment summaries. The claim map should bind every supported result to its
+  evidence source and list forbidden claims before the body draft is written.
+- Keep "strict correction" and "safe handling" separated in the manuscript.
+  Escalation can support risk triage and human-review routing, but it must not
+  be described as semantic rejection of a wrong patch.
+- Figure generation has a backend gate. If no backend is explicitly selected,
+  do not write plotting scripts, generate mock figures, or default to Python/R;
+  record the figure plan and ask for the backend instead.

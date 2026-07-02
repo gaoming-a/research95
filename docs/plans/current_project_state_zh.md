@@ -12,8 +12,9 @@
 - 后文保留的旧分支、旧 hash、旧“下一步”只作为审计追溯，不得覆盖当前
   realistic hard-negative gate 路线。
 - 当前研究目标已收敛为“稳妥写完并面向 CCF-C”。final
-  experiment-setting validity audit 已通过 bounded-claim gate；新的唯一下一步是
-  将 validity boundary 写入 manuscript claim map 和 threats-to-validity。
+  experiment-setting validity audit 已通过 bounded-claim gate；manuscript claim
+  map / threats-to-validity 收束和正文 v0.1 已完成。当前下一步是按用户明确选择
+  的绘图后端生成论文配图，并在此之前不得默认选择 Python/R。
   在 `ready_for_verifier_api=false` 时仍不得运行 Qwen/DeepSeek verifier API。
 
 ## 2026-07-03 快速状态增量
@@ -28,8 +29,17 @@
   evidence-conditioned risk behavior。
 - 禁止的结论：LLM 是 reliable autonomous patch correctness verifier，或
   escalation 等同于 strict correction。
-- 当前唯一下一步：将该 validity boundary 写入 manuscript claim map 和
-  threats-to-validity；不继续实验。
+- 新增 final manuscript claim map：
+  `docs/paper/final_manuscript_claim_map_v0_1.md` 和
+  `data/reviews/final_manuscript_claim_map_v0_1.json`。其状态为 `passed`，
+  将 supported claims、forbidden claims、terminology ledger 和 figure plan
+  绑定到最终 validity boundary。
+- 新增稳定 CCF-C 正文重写稿：
+  `docs/paper/ccfc_manuscript_rewrite_v0_1.md`。该稿把结果写成
+  evidence-conditioned risk behavior，而不是 autonomous correctness
+  verification。
+- 当前唯一下一步：确认论文配图后端（Python 或 R）后生成 Fig. 1--3；在确认前
+  不写绘图脚本、不生成 mock figure、不默认选择后端。
 
 ## 2026-07-02 快速状态增量
 
@@ -95,7 +105,8 @@
 - 同步判断：以 `git status --short --branch`、`git log -1 --oneline` 和
   `origin/evp8-v03-qwen-main-exp` 为准；不得再用旧 `origin/main` 段落判断
   当前分支是否同步。
-- 当前执行入口：manuscript claim map / threats-to-validity 收束。Luigi
+- 当前执行入口：论文配图后端确认与 Fig. 1--3 生成。Manuscript claim map /
+  threats-to-validity 收束和正文 v0.1 已完成。Luigi
   source-acquisition/materialization protocol 已降级为可选未来工作，不再是稳妥
   CCF-C 路线的当前 blocker。
 
