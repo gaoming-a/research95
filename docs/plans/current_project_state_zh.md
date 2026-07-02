@@ -27,6 +27,9 @@
   `data/protocols/evp8_realistic_hardneg_uplift_packet_v0_1.json`。它记录当前
   gate 状态为 `blocked_needs_more_cases_and_third_project`：26/30
   visible-pass/hidden-fail cases，2/3 projects，`ready_for_verifier_api=false`。
+- GitHub 同步已通过非 force tree-sync 完成：远端分支
+  `evp8-v03-qwen-main-exp` 快进到 `588cd88`，本地和远端 tree 相同，当前
+  `git status --short --branch` 无 ahead/behind。
 
 ## 2026-06-30 快速状态增量
 

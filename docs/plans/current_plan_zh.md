@@ -114,6 +114,17 @@ hard-negative branch 当前离 verifier-ready 还差什么，以及哪些后续�
 - 把 escalation 当成 strict correctness correction；
 - 把失败的第三项目尝试复用为成功的 verifier-ready evidence。
 
+GitHub 同步结果：
+
+- 普通 push 因 non-fast-forward 被拒绝；
+- 随后 fetch 成功，确认远端 parent 为 `c2d278a`；
+- 使用远端 parent 和本地文件树创建 tree-sync commit `588cd88`；
+- 非 force refspec push 成功，将远端 `evp8-v03-qwen-main-exp` 快进到
+  `588cd88`；
+- fetch 后确认本地 `HEAD^{tree}` 与
+  `origin/evp8-v03-qwen-main-exp^{tree}` 相同；
+- 本地分支指针已对齐远端，`git status --short --branch` 无 ahead/behind。
+
 ## 0.14 2026-06-30 EVP-8-HARD paper claim traceability and final table scaffold
 
 本轮目标是冻结 EVP-8-HARD 论文主张边界，并生成最终结果表脚手架，用于把
