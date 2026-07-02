@@ -12,10 +12,12 @@
   Start here before reading the long execution log. It records Git sync state,
   current paper/result boundaries, experiment-decision gates, active plan roles,
   key project files, script entry points, and forbidden misuses. As of
-  2026-07-02, its top section is the authority for the current active branch
-  and unique next action: the no-API Luigi source-acquisition/materialization
-  protocol for the realistic hard-negative gate; historical `origin/main`
-  entries retained later in plan logs are audit records only. As of
+  2026-07-03, its top section is the authority for the current active branch
+  and unique next action: manuscript claim-map and threats-to-validity
+  consolidation for the stable CCF-C route. The no-API Luigi
+  source-acquisition/materialization protocol is now optional future work, not
+  the current blocker. Historical `origin/main` entries retained later in plan
+  logs are audit records only. As of
   2026-06-20, it also records the EVP-8 G0 expected-output absence guard and
   the exact manual phrase required before DeepSeek/Qwen smoke API execution.
 - `plans/final_paper_roadmap_zh.md`: canonical final-paper route and subsequent
@@ -84,8 +86,20 @@
   `../docs/experiments/evp8_realistic_hardneg_third_project_source_selection_packet_v0_1.md`:
   current no-API third-project source-selection packet. Status is `passed`;
   selected source is `luigi` with `bugsinpy_luigi_3` and
-  `bugsinpy_luigi_4`. The next action is a no-API Luigi
-  source-acquisition/materialization protocol, not generation or verifier API.
+  `bugsinpy_luigi_4`. For the stable CCF-C route this is optional future
+  work, not the current blocker; it still does not authorize generation or
+  verifier API.
+- `../scripts/audit_final_experiment_setting_validity.py`: no-API,
+  raw-output-free final setting-validity auditor for the stable CCF-C paper
+  route. It checks tracked aggregate audits across five-model synthesis,
+  accept-aware repair, label-conditioned analysis, no-verdict ablation,
+  tool-contestation, prompt boundary, and realistic hard-negative gates.
+- `../data/reviews/final_experiment_setting_validity_audit_v0_1.json` and
+  `../docs/experiments/final_experiment_setting_validity_audit_v0_1.md`:
+  final experiment-setting validity packet. Status:
+  `passed_with_bounded_claims`; it supports current results as real bounded
+  evidence for evidence-conditioned risk behavior and lists remaining threats
+  and forbidden claims.
 - As of 2026-06-30, `EVP-8-HARD tool-contestation` is complete for Qwen and
   DeepSeek on the 47-candidate hard-case cohort. It removes verdict-like tool
   fields and asks models to challenge a visible-test-only accept premise. The

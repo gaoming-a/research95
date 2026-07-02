@@ -43,6 +43,12 @@
   source-acquisition/materialization protocol。该选择不授权 generation API 或
   verifier API；如果 Luigi protocol 无法通过 check-only gate，则不得改用盲目
   第三项目 API 重试来维持论文强 claim。
+- 2026-07-03 起，用户目标明确为“稳妥写完并面向 CCF-C”。在该目标下，Luigi
+  third-project repair 不再是当前 blocker。final experiment-setting validity
+  audit 已通过 `passed_with_bounded_claims`：现有结果可作为真实 bounded
+  evidence 支撑 evidence-conditioned risk behavior，但不能支撑 reliable
+  autonomous correctness verification。当前下一步应是 manuscript claim map 和
+  threats-to-validity 收束。
 
 ## 1. 论文主线
 

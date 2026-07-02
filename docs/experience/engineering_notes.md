@@ -1,5 +1,24 @@
 # Engineering Notes
 
+## 2026-07-03 final experiment-setting validity audit
+
+- For a stable CCF-C paper route, the immediate risk is no longer whether a
+  third realistic project can be repaired; it is whether existing results are
+  artifacts of prompt setup, label leakage, parser loss, or post-hoc mixing.
+- The final validity audit should pass only with bounded claims. A pass means
+  the current results are usable as real bounded evidence for
+  evidence-conditioned risk behavior, not that the system is a reliable
+  autonomous correctness verifier.
+- Treat v0.1 zero-accept behavior as a controlled setup artifact unless it is
+  explicitly framed as protocol history. Paper-facing behavioral claims should
+  come from accept-aware repaired analyses and their label-conditioned checks.
+- Hidden evaluator labels may be used only after execution for analysis. The
+  manuscript must state this separation rather than assuming readers infer it
+  from artifact names.
+- Luigi source acquisition is now optional future work for a higher-ambition
+  route. It should not block the CCF-C manuscript unless the claim is upgraded
+  beyond the bounded risk-behavior framing.
+
 ## 2026-07-02 third-project source selection
 
 - The third-project gate should be repaired by source selection and

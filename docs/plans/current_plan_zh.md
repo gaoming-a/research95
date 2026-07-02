@@ -1,6 +1,51 @@
 # 当前计划：AI 生成补丁的可验证审查
 
-最后更新：2026-07-02
+最后更新：2026-07-03
+
+## 0.20 2026-07-03 final experiment-setting validity audit
+
+本轮目标是回答用户确认的核心问题：现有实验设置是否足够可靠，当前结果是否可以
+作为真实 bounded evidence，而不是 prompt、label、leakage、parser 或 post-hoc
+设置错误造成的假象。该轮不调用 API，不读取 ignored raw outputs，不读取 prompt
+text 或 patch text，不修改任何实验结果。
+
+执行结果：
+
+- 新增脚本 `scripts/audit_final_experiment_setting_validity.py`；
+- 生成 `data/reviews/final_experiment_setting_validity_audit_v0_1.json`；
+- 生成 `docs/experiments/final_experiment_setting_validity_audit_v0_1.md`；
+- audit status = `passed_with_bounded_claims`。
+
+核心结论：
+
+- 当前结果可作为真实的 bounded evidence，支撑 evidence-conditioned risk
+  behavior；
+- 该结论成立的前提是论文不声称 reliable autonomous correctness
+  verification；
+- v0.1 zero-accept artifact 已通过 v0.2/v0.3 accept-aware repair 和 claim
+  boundary 控制，不能作为主结论；
+- hidden evaluator leakage 通过 packet boundary、post-execution label join 和
+  prompt-boundary checks 控制；
+- verdict anchoring 已被 no-verdict / tool-contestation ablation 测量，但不是
+  消除；
+- escalation 与 strict correction 已分开，不能把 escalation 写成语义纠错；
+- fresh realistic hard-negative third-project gate 仍未通过，必须写成 threat /
+  source-acquisition negative result。
+
+当前新的唯一下一步：
+
+- 不继续实验；
+- 把本 validity boundary 写进 manuscript claim map 和 threats-to-validity；
+- paper-facing 主张只写：
+  evidence visibility 改变 candidate patch verification 中的 risk behavior；
+  不写 LLM 是可靠自动补丁正确性 verifier。
+
+验收：
+
+- `python -m py_compile scripts\audit_final_experiment_setting_validity.py` 通过；
+- `python scripts\audit_final_experiment_setting_validity.py --check` 通过；
+- `python -m json.tool data\reviews\final_experiment_setting_validity_audit_v0_1.json`
+  通过。
 
 ## 0.19 2026-07-02 third-project source-selection packet
 

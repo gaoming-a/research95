@@ -1,6 +1,6 @@
 # 当前项目状态与文件地图
 
-日期：2026-07-02
+日期：2026-07-03
 
 本文件是短入口，用来整理当前计划文档和项目文件。它不替代
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
@@ -11,9 +11,25 @@
 - 本文件顶部的快速状态和“当前同步状态”优先于后文历史记录。
 - 后文保留的旧分支、旧 hash、旧“下一步”只作为审计追溯，不得覆盖当前
   realistic hard-negative gate 路线。
-- 当前 third-project source-selection packet 已完成；新的唯一实验下一步是
-  no-API Luigi source-acquisition/materialization protocol。在
-  `ready_for_verifier_api=false` 时不得运行 Qwen/DeepSeek verifier API。
+- 当前研究目标已收敛为“稳妥写完并面向 CCF-C”。final
+  experiment-setting validity audit 已通过 bounded-claim gate；新的唯一下一步是
+  将 validity boundary 写入 manuscript claim map 和 threats-to-validity。
+  在 `ready_for_verifier_api=false` 时仍不得运行 Qwen/DeepSeek verifier API。
+
+## 2026-07-03 快速状态增量
+
+- 用户目标已明确：稳定写完，目标 CCF-C；核心不是继续冲更高档次，而是确认
+  实验设置没有污染现有结果。
+- 新增 final experiment-setting validity audit：
+  `docs/experiments/final_experiment_setting_validity_audit_v0_1.md` 和
+  `data/reviews/final_experiment_setting_validity_audit_v0_1.json`。
+- 审计状态：`passed_with_bounded_claims`。
+- 允许的结论：当前结果可作为真实 bounded evidence，支撑
+  evidence-conditioned risk behavior。
+- 禁止的结论：LLM 是 reliable autonomous patch correctness verifier，或
+  escalation 等同于 strict correction。
+- 当前唯一下一步：将该 validity boundary 写入 manuscript claim map 和
+  threats-to-validity；不继续实验。
 
 ## 2026-07-02 快速状态增量
 
@@ -79,9 +95,9 @@
 - 同步判断：以 `git status --short --branch`、`git log -1 --oneline` 和
   `origin/evp8-v03-qwen-main-exp` 为准；不得再用旧 `origin/main` 段落判断
   当前分支是否同步。
-- 当前执行入口：no-API Luigi source-acquisition/materialization protocol，用于
-  在不重试旧 exact search/replace interface 的前提下，定义第三项目候选生成
-  materialization、dry-run、validation 和 leakage gates。
+- 当前执行入口：manuscript claim map / threats-to-validity 收束。Luigi
+  source-acquisition/materialization protocol 已降级为可选未来工作，不再是稳妥
+  CCF-C 路线的当前 blocker。
 
 以下历史同步锚点只保留为旧 EVP-8 主线审计记录，不再代表当前分支状态：
 
