@@ -69,9 +69,12 @@
   manuscript framed as evidence visibility / risk behavior rather than
   autonomous correctness verification. The 2026-07-03 0.22 entry records the
   Python/matplotlib figure generation pass for CCF-C Fig. 1--3. The 2026-07-03
-  0.24 entry records the critique-driven v0.2 rewrite: RQ1--RQ5 structure,
+  0.24 entry records the critique-driven v0.2 rewrite: RQ structure,
   Qwen v0.3 label-conditioned metrics, E6 rule-only/no-verdict metrics, and
-  explicit remaining baseline/citation risks.
+  explicit remaining baseline/citation risks. The 2026-07-03 0.25 entry
+  repairs the experiment logic again: legacy v0.1 five-model zero-accept
+  synthesis is excluded from the main result chain, and Fig. 2 is redrawn as
+  accept-aware/no-verdict metric evidence.
 - `../scripts/write_evp8_realistic_hardneg_uplift_packet.py`: no-API boundary
   packet writer for the realistic hard-negative uplift route. It reads the
   tracked combined generation gate only and writes the current missing
@@ -118,8 +121,10 @@
   study as bounded evidence-conditioned risk behavior in candidate patch
   verification, not autonomous patch correctness verification; it also includes
   E0-E6 evidence-level definitions, Qwen v0.3 label-conditioned metrics, and
-  E6 rule-only/no-verdict baseline metrics. CCF-C Fig. 1--3 are placed inline
-  in the protocol, results, and discussion/threat-boundary locations.
+  E6 rule-only/no-verdict baseline metrics. The legacy v0.1 five-model
+  zero-accept setting is excluded from the main results and appears only as
+  diagnostic protocol history. CCF-C Fig. 1--3 are placed inline in the
+  protocol, results, and discussion/threat-boundary locations.
 - `paper/ccfc_revision_response_v0_2.md`: critique-to-action record for the
   CCF-C manuscript. It identifies which external review criticisms were
   addressed in v0.2 and which remain deferred submission risks, especially
@@ -131,6 +136,8 @@
   `ccfc_fig1_protocol`, `ccfc_fig2_decision_patterns`, and
   `ccfc_fig3_claim_boundary` in PDF/SVG/PNG formats, plus
   `figure_manifest.json`, `figure_source_data.json`, and `figure_qa.md`.
+  Current Fig. 2 content is accept-aware/no-verdict metric evidence, not the
+  excluded v0.1 five-model decision-pattern result.
 - `../scripts/audit_ccfc_figure_placement.py`: validates that CCF-C Fig. 1--3
   are placed in the expected manuscript sections, appear in order, have
   captions after the image references, and point to existing non-empty assets.

@@ -26,9 +26,9 @@ EXPECTED = [
     },
     {
         "id": "Fig. 2",
-        "section": "### 5.1 RQ1: Evidence visibility changed five-model decision patterns",
+        "section": "### 5.1 RQ1: Accept-aware evidence changed Qwen label-conditioned behavior",
         "image": "../figures/ccfc/ccfc_fig2_decision_patterns.png",
-        "caption_marker": "**Figure 2. Five-model evidence-level decision patterns.**",
+        "caption_marker": "**Figure 2. Accept-aware and no-verdict metric evidence.**",
         "assets": [
             "docs/figures/ccfc/ccfc_fig2_decision_patterns.pdf",
             "docs/figures/ccfc/ccfc_fig2_decision_patterns.svg",

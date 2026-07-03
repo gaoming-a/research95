@@ -1,51 +1,4 @@
 {
-  "accept_matrix": [
-    [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ]
-  ],
   "backend": "python/matplotlib",
   "checks": [
     {
@@ -87,43 +40,42 @@
         ]
       },
       "passed": true
+    },
+    {
+      "check": "qwen_label_conditioned_checks_passed",
+      "detail": 9,
+      "passed": true
+    },
+    {
+      "check": "phase_a_analysis_checks_passed",
+      "detail": 7,
+      "passed": true
     }
   ],
   "claims": [
     {
-      "allowed_wording": "Evidence visibility changed verifier behavior across models and levels.",
-      "boundary": "Descriptive decision-pattern result, not a claim of better correctness.",
-      "claim": "Evidence visibility changes LLM merge-gate behavior on a frozen candidate-patch packet set.",
+      "allowed_wording": "EVP-8 separates model-visible evidence from evaluator-only labels and supports post-decision metric joins.",
+      "boundary": "Protocol validity, not model effectiveness.",
+      "claim": "EVP-8 defines a valid hidden-evaluator evidence boundary for candidate patch verification.",
       "evidence": [
-        "evp8_five_model_synthesis_v0_1",
+        "evp8_protocol_v0_3_qwen_first",
         "final_experiment_setting_validity_audit_v0_1"
       ],
       "id": "C1",
-      "paper_location": "Results: Evidence visibility changes merge-gate decisions",
+      "paper_location": "Methods: Evidence-visibility protocol",
       "status": "supported"
     },
     {
-      "allowed_wording": "The five-model synthesis showed model-dependent and non-monotonic escalation/rejection patterns.",
-      "boundary": "Do not rank evidence levels as universally better.",
-      "claim": "The observed evidence effect is model-dependent and non-monotonic.",
-      "evidence": [
-        "per-level five-model decision counts"
-      ],
-      "id": "C2",
-      "paper_location": "Results: Model-dependent, non-monotonic patterns",
-      "status": "supported"
-    },
-    {
-      "allowed_wording": "Accept-aware analyses repair a protocol artifact and allow bounded recall/false-accept analysis.",
-      "boundary": "Historical v0.1 zero-accept behavior should remain protocol history.",
-      "claim": "Accept-aware protocol repairs are necessary to avoid over-interpreting earlier zero-accept artifacts.",
+      "allowed_wording": "For Qwen v0.3 on the frozen 98-candidate packet set, E3-E6 shifted many correct patches from non-accept to accept, with 3-4 false accepts depending on level.",
+      "boundary": "Qwen-only v0.3 descriptive result; not a five-model effectiveness claim or final evidence-level ranking.",
+      "claim": "In the Qwen v0.3 accept-aware run, visible executable and tool evidence changed correct-patch acceptance while introducing bounded false-accept risk.",
       "evidence": [
         "v0_2_accept_aware_synthesis",
         "v0_3_qwen_label_conditioned_summary"
       ],
-      "id": "C3",
-      "paper_location": "Methods/Validity: Protocol repair and label-conditioned analysis",
-      "status": "supported_as_setting_repair"
+      "id": "C2",
+      "paper_location": "Results: Accept-aware label-conditioned behavior",
+      "status": "supported_qwen_only"
     },
     {
       "allowed_wording": "Verdict removal and tool-contestation produced model-dependent risk-control tradeoffs.",
@@ -133,7 +85,7 @@
         "evp8_e6_no_verdict_ablation_comparison",
         "evp8_hard_tool_contestation_result_audit"
       ],
-      "id": "C4",
+      "id": "C3",
       "paper_location": "Results: Verdict dependence and contestation",
       "status": "supported_qualified"
     },
@@ -144,7 +96,7 @@
       "evidence": [
         "EVP-8-HARD tool-contestation audit"
       ],
-      "id": "C5",
+      "id": "C4",
       "paper_location": "Results: Tool-contestation as risk triage",
       "status": "supported"
     },
@@ -155,9 +107,21 @@
       "evidence": [
         "evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1"
       ],
-      "id": "C6",
+      "id": "C5",
       "paper_location": "Threats/Discussion: Realistic hard-negative acquisition",
       "status": "supported_negative_boundary"
+    },
+    {
+      "allowed_wording": "The v0.1 five-model setting motivated protocol repair but is not reported as a main result.",
+      "boundary": "Do not use v0.1 five-model decision counts as evidence for the paper's primary empirical claims.",
+      "claim": "Legacy v0.1 five-model zero-accept settings are diagnostic protocol history and are excluded from the main experimental evidence chain.",
+      "evidence": [
+        "v0_1_zero_accept_artifact",
+        "accept_aware_v0_2_v0_3_repair"
+      ],
+      "id": "C6",
+      "paper_location": "Threats/Validity: Excluded diagnostic history",
+      "status": "excluded_diagnostic_history"
     }
   ],
   "decision_totals_by_level": {
@@ -190,57 +154,189 @@
       "reject": 19
     }
   },
-  "escalate_matrix": [
-    [
-      66,
-      58,
-      65,
-      81,
-      74,
-      71,
-      86
-    ],
-    [
-      75,
-      70,
-      71,
-      79,
-      80,
-      78,
-      91
-    ],
-    [
-      98,
-      92,
-      91,
-      98,
-      97,
-      98,
-      98
-    ],
-    [
-      98,
-      98,
-      98,
-      98,
-      98,
-      98,
-      98
-    ],
-    [
-      98,
-      98,
-      98,
-      96,
-      97,
-      98,
-      98
-    ]
+  "e6_ablation_metrics": [
+    {
+      "accept_rate": 0.255102,
+      "accepted_precision": 0.8,
+      "condition": "rule-only",
+      "confusion_counts": {
+        "escalated_correct": 0,
+        "escalated_incorrect": 0,
+        "false_accept": 5,
+        "false_reject": 1,
+        "true_accept": 20,
+        "true_reject": 72
+      },
+      "correct_decision_counts": {
+        "accept": 20,
+        "reject": 1
+      },
+      "correct_recall": 0.952381,
+      "correct_total": 21,
+      "decision_counts": {
+        "accept": 25,
+        "reject": 73
+      },
+      "escalation_rate": 0.0,
+      "false_accept_rate": 0.064935,
+      "false_reject_rate": 0.047619,
+      "incorrect_decision_counts": {
+        "accept": 5,
+        "reject": 72
+      },
+      "incorrect_reject_rate": 0.935065,
+      "incorrect_total": 77,
+      "opportunity_set_rate": 0.061224,
+      "opportunity_set_size": 6,
+      "record_count": 98,
+      "reject_rate": 0.744898,
+      "unsafe_error_count": 6
+    },
+    {
+      "accept_rate": 0.234694,
+      "accepted_precision": 0.826087,
+      "condition": "deepseek/deepseek-v4-pro E6-full",
+      "confusion_counts": {
+        "escalated_correct": 0,
+        "escalated_incorrect": 0,
+        "false_accept": 4,
+        "false_reject": 2,
+        "true_accept": 19,
+        "true_reject": 73
+      },
+      "correct_decision_counts": {
+        "accept": 19,
+        "reject": 2
+      },
+      "correct_recall": 0.904762,
+      "correct_total": 21,
+      "decision_counts": {
+        "accept": 23,
+        "reject": 75
+      },
+      "escalation_rate": 0.0,
+      "false_accept_rate": 0.051948,
+      "false_reject_rate": 0.095238,
+      "incorrect_decision_counts": {
+        "accept": 4,
+        "reject": 73
+      },
+      "incorrect_reject_rate": 0.948052,
+      "incorrect_total": 77,
+      "record_count": 98,
+      "reject_rate": 0.765306
+    },
+    {
+      "accept_rate": 0.112245,
+      "accepted_precision": 1.0,
+      "condition": "deepseek/deepseek-v4-pro E6-no-verdict",
+      "confusion_counts": {
+        "escalated_correct": 9,
+        "escalated_incorrect": 5,
+        "false_accept": 0,
+        "false_reject": 1,
+        "true_accept": 11,
+        "true_reject": 72
+      },
+      "correct_decision_counts": {
+        "accept": 11,
+        "escalate": 9,
+        "reject": 1
+      },
+      "correct_recall": 0.52381,
+      "correct_total": 21,
+      "decision_counts": {
+        "accept": 11,
+        "escalate": 14,
+        "reject": 73
+      },
+      "escalation_rate": 0.142857,
+      "false_accept_rate": 0.0,
+      "false_reject_rate": 0.047619,
+      "incorrect_decision_counts": {
+        "escalate": 5,
+        "reject": 72
+      },
+      "incorrect_reject_rate": 0.935065,
+      "incorrect_total": 77,
+      "record_count": 98,
+      "reject_rate": 0.744898
+    },
+    {
+      "accept_rate": 0.244898,
+      "accepted_precision": 0.833333,
+      "condition": "qwen/qwen3.7-max E6-full",
+      "confusion_counts": {
+        "escalated_correct": 0,
+        "escalated_incorrect": 0,
+        "false_accept": 4,
+        "false_reject": 1,
+        "true_accept": 20,
+        "true_reject": 73
+      },
+      "correct_decision_counts": {
+        "accept": 20,
+        "reject": 1
+      },
+      "correct_recall": 0.952381,
+      "correct_total": 21,
+      "decision_counts": {
+        "accept": 24,
+        "reject": 74
+      },
+      "escalation_rate": 0.0,
+      "false_accept_rate": 0.051948,
+      "false_reject_rate": 0.047619,
+      "incorrect_decision_counts": {
+        "accept": 4,
+        "reject": 73
+      },
+      "incorrect_reject_rate": 0.948052,
+      "incorrect_total": 77,
+      "record_count": 98,
+      "reject_rate": 0.755102
+    },
+    {
+      "accept_rate": 0.234694,
+      "accepted_precision": 0.826087,
+      "condition": "qwen/qwen3.7-max E6-no-verdict",
+      "confusion_counts": {
+        "escalated_correct": 1,
+        "escalated_incorrect": 0,
+        "false_accept": 4,
+        "false_reject": 1,
+        "true_accept": 19,
+        "true_reject": 73
+      },
+      "correct_decision_counts": {
+        "accept": 19,
+        "escalate": 1,
+        "reject": 1
+      },
+      "correct_recall": 0.904762,
+      "correct_total": 21,
+      "decision_counts": {
+        "accept": 23,
+        "escalate": 1,
+        "reject": 74
+      },
+      "escalation_rate": 0.010204,
+      "false_accept_rate": 0.051948,
+      "false_reject_rate": 0.047619,
+      "incorrect_decision_counts": {
+        "accept": 4,
+        "reject": 73
+      },
+      "incorrect_reject_rate": 0.948052,
+      "incorrect_total": 77,
+      "record_count": 98,
+      "reject_rate": 0.755102
+    }
   ],
   "figure_contract": {
     "archetypes": {
       "ccfc_fig1_protocol": "schematic-led composite",
-      "ccfc_fig2_decision_patterns": "quantitative grid",
+      "ccfc_fig2_decision_patterns": "quantitative grid for repaired main evidence",
       "ccfc_fig3_claim_boundary": "asymmetric mixed-modality figure"
     },
     "backend": "Python",
@@ -258,7 +354,8 @@
     "More visible evidence monotonically improves correctness verification.",
     "Escalation is equivalent to strict correction.",
     "The fresh realistic hard-negative branch is verifier-ready across three projects.",
-    "The controlled EVP-8 or EVP-8-HARD cohorts prove broad external validity for real agent patch distributions."
+    "The controlled EVP-8 or EVP-8-HARD cohorts prove broad external validity for real agent patch distributions.",
+    "Legacy v0.1 five-model zero-accept settings are main experimental results."
   ],
   "levels": [
     "E0",
@@ -269,59 +366,32 @@
     "E5",
     "E6"
   ],
-  "models": [
-    "deepseek/deepseek-v4-pro",
-    "qwen/qwen3.7-max",
-    "moonshotai/kimi-k2.6",
-    "mistralai/devstral-2512",
-    "google/gemini-2.5-flash"
+  "qwen_v0_3_correct_recall": [
+    0.0,
+    0.0,
+    0.0,
+    80.9524,
+    85.7143,
+    85.7143,
+    95.2381
   ],
-  "reject_matrix": [
-    [
-      32,
-      40,
-      33,
-      17,
-      24,
-      27,
-      12
-    ],
-    [
-      23,
-      28,
-      27,
-      19,
-      18,
-      20,
-      7
-    ],
-    [
-      0,
-      6,
-      7,
-      0,
-      1,
-      0,
-      0
-    ],
-    [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    ],
-    [
-      0,
-      0,
-      0,
-      2,
-      1,
-      0,
-      0
-    ]
+  "qwen_v0_3_escalation_rate": [
+    75.51020000000001,
+    75.51020000000001,
+    74.48979999999999,
+    4.0816,
+    2.0408,
+    3.0612,
+    0.0
+  ],
+  "qwen_v0_3_false_accept_rate": [
+    0.0,
+    0.0,
+    0.0,
+    3.8961,
+    3.8961,
+    3.8961,
+    5.1948
   ],
   "source": "data/reviews/final_manuscript_claim_map_v0_1.json"
 }

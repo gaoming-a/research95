@@ -10,8 +10,8 @@
     },
     {
       "id": "ccfc_fig2_decision_patterns",
-      "purpose": "show model-dependent non-monotonic rejection/escalation patterns",
-      "title": "Five-model evidence-level decision patterns"
+      "purpose": "show repaired Qwen label-conditioned metrics and E6 verdict-field ablation",
+      "title": "Accept-aware and no-verdict metric evidence"
     },
     {
       "id": "ccfc_fig3_claim_boundary",

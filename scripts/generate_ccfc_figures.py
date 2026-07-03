@@ -179,6 +179,45 @@ def model_level_matrices(claim_map: dict[str, Any]) -> tuple[np.ndarray, np.ndar
     return reject, escalate, accept
 
 
+def qwen_metric_series(claim_map: dict[str, Any]) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    rows = claim_map.get("qwen_label_conditioned_metrics")
+    if not isinstance(rows, list):
+        raise ValueError("claim map missing qwen_label_conditioned_metrics")
+    by_level = {row.get("level"): row for row in rows if isinstance(row, dict)}
+    recall: list[float] = []
+    false_accept: list[float] = []
+    escalation: list[float] = []
+    for level in LEVELS:
+        row = by_level.get(level)
+        if not isinstance(row, dict):
+            raise ValueError(f"claim map missing Qwen metrics at {level}")
+        recall.append(float(row.get("correct_recall") or 0.0) * 100.0)
+        false_accept.append(float(row.get("false_accept_rate") or 0.0) * 100.0)
+        escalation.append(float(row.get("escalation_rate") or 0.0) * 100.0)
+    return np.array(recall), np.array(false_accept), np.array(escalation)
+
+
+def e6_ablation_rows(claim_map: dict[str, Any]) -> list[dict[str, Any]]:
+    rows = claim_map.get("e6_ablation_metrics")
+    if not isinstance(rows, list):
+        raise ValueError("claim map missing e6_ablation_metrics")
+    wanted = [
+        "rule-only",
+        "deepseek/deepseek-v4-pro E6-full",
+        "deepseek/deepseek-v4-pro E6-no-verdict",
+        "qwen/qwen3.7-max E6-full",
+        "qwen/qwen3.7-max E6-no-verdict",
+    ]
+    by_condition = {row.get("condition"): row for row in rows if isinstance(row, dict)}
+    selected: list[dict[str, Any]] = []
+    for condition in wanted:
+        row = by_condition.get(condition)
+        if not isinstance(row, dict):
+            raise ValueError(f"claim map missing E6 ablation row {condition}")
+        selected.append(row)
+    return selected
+
+
 def fig1_protocol(claim_map: dict[str, Any]) -> None:
     fig = plt.figure(figsize=(7.3, 4.05))
     grid = fig.add_gridspec(2, 1, height_ratios=[1.25, 0.8], hspace=0.18)
@@ -234,79 +273,69 @@ def fig1_protocol(claim_map: dict[str, Any]) -> None:
 
 
 def fig2_decision_patterns(claim_map: dict[str, Any]) -> None:
-    reject, escalate, accept = model_level_matrices(claim_map)
-    aggregate_reject = reject.sum(axis=0)
-    aggregate_escalate = escalate.sum(axis=0)
-    aggregate_accept = accept.sum(axis=0)
+    qwen_recall, qwen_false_accept, qwen_escalation = qwen_metric_series(claim_map)
+    ablation_rows = e6_ablation_rows(claim_map)
+    condition_labels = ["rule-only", "DS full", "DS no\nverdict", "Qwen full", "Qwen no\nverdict"]
+    ablation_recall = np.array([float(row.get("correct_recall") or 0.0) * 100.0 for row in ablation_rows])
+    ablation_false_accept = np.array([float(row.get("false_accept_rate") or 0.0) * 100.0 for row in ablation_rows])
+    ablation_escalation = np.array([float(row.get("escalation_rate") or 0.0) * 100.0 for row in ablation_rows])
 
     fig = plt.figure(figsize=(7.4, 4.65))
-    grid = fig.add_gridspec(2, 2, height_ratios=[1.25, 0.90], width_ratios=[1.2, 0.8], hspace=0.50, wspace=0.38)
-    ax_heat = fig.add_subplot(grid[0, :])
-    ax_stack = fig.add_subplot(grid[1, 0])
+    grid = fig.add_gridspec(2, 2, height_ratios=[1.10, 0.95], width_ratios=[1.18, 0.82], hspace=0.46, wspace=0.36)
+    ax_line = fig.add_subplot(grid[0, :])
+    ax_ablation = fig.add_subplot(grid[1, 0])
     ax_note = fig.add_subplot(grid[1, 1])
-    fig.suptitle("Five-model evidence-level decision patterns", x=0.02, y=0.995, ha="left", fontsize=10.5, weight="bold")
+    fig.suptitle("Accept-aware and no-verdict metric evidence", x=0.02, y=0.995, ha="left", fontsize=10.5, weight="bold")
 
-    add_panel_label(ax_heat, "a", y=1.07)
-    max_reject = max(40.0, float(reject.max()))
-    im = ax_heat.imshow(reject, cmap="YlOrRd", vmin=0, vmax=max_reject, aspect="auto")
-    for r in range(reject.shape[0]):
-        for c in range(reject.shape[1]):
-            val = int(reject[r, c])
-            ax_heat.text(c, r, f"{val}", ha="center", va="center", fontsize=6.7, color=COLORS["ink"])
-    ax_heat.set_xticks(np.arange(len(LEVELS)), LEVELS)
-    ax_heat.set_yticks(np.arange(len(MODEL_ORDER)), [MODEL_LABELS[m] for m in MODEL_ORDER])
-    ax_heat.set_title("Reject decisions per 98 packets; escalation dominates most cells", loc="left", fontsize=8.2, weight="bold")
-    ax_heat.tick_params(length=0)
-    for spine in ax_heat.spines.values():
-        spine.set_visible(False)
-    cbar = fig.colorbar(im, ax=ax_heat, fraction=0.028, pad=0.015)
-    cbar.set_label("reject count", fontsize=6.5)
-    cbar.ax.tick_params(labelsize=6.2)
-
-    add_panel_label(ax_stack, "b", x=-0.055, y=1.10)
+    add_panel_label(ax_line, "a", y=1.08)
     x = np.arange(len(LEVELS))
-    ax_stack.bar(x, aggregate_escalate, color=COLORS["gray_2"], width=0.64, label="escalate")
-    ax_stack.bar(x, aggregate_reject, bottom=aggregate_escalate, color=COLORS["red"], width=0.64, label="reject")
-    if aggregate_accept.any():
-        ax_stack.bar(
-            x,
-            aggregate_accept,
-            bottom=aggregate_escalate + aggregate_reject,
-            color=COLORS["green"],
-            width=0.64,
-            label="accept",
-        )
-    ax_stack.set_xticks(x, LEVELS)
-    ax_stack.set_ylabel("aggregate decisions")
-    ax_stack.set_ylim(0, 515)
-    ax_stack.grid(axis="y", color=COLORS["grid"], linewidth=0.65)
-    ax_stack.set_title("Aggregate pattern is not monotonic", loc="left", fontsize=8.2, weight="bold")
-    ax_stack.legend(ncol=2, loc="upper center", bbox_to_anchor=(0.50, -0.22))
-    for idx, val in enumerate(aggregate_reject):
-        ax_stack.text(idx, aggregate_escalate[idx] + val + 8, f"R{int(val)}", ha="center", fontsize=6.5, color=COLORS["red"])
+    ax_line.plot(x, qwen_recall, marker="o", color=COLORS["green"], linewidth=1.8, label="correct recall")
+    ax_line.plot(x, qwen_false_accept, marker="s", color=COLORS["red"], linewidth=1.5, label="false accept rate")
+    ax_line.plot(x, qwen_escalation, marker="^", color=COLORS["gray_3"], linewidth=1.5, label="escalation rate")
+    ax_line.axvspan(-0.35, 2.35, color=COLORS["gray"], alpha=0.62, zorder=-1)
+    ax_line.text(1.0, 92, "no accept at E0-E2", ha="center", fontsize=6.6, color=COLORS["muted"])
+    ax_line.set_xticks(x, LEVELS)
+    ax_line.set_ylim(-2, 102)
+    ax_line.set_ylabel("rate (%)")
+    ax_line.grid(axis="y", color=COLORS["grid"], linewidth=0.65)
+    ax_line.set_title("Repaired Qwen v0.3 evidence ladder: acceptance emerges after visible tests", loc="left", fontsize=8.2, weight="bold")
+    ax_line.legend(ncol=3, loc="upper center", bbox_to_anchor=(0.55, -0.16))
+
+    add_panel_label(ax_ablation, "b", x=-0.055, y=1.10)
+    xi = np.arange(len(condition_labels))
+    width = 0.25
+    ax_ablation.bar(xi - width, ablation_recall, width=width, color=COLORS["green"], label="correct recall")
+    ax_ablation.bar(xi, ablation_false_accept, width=width, color=COLORS["red"], label="false accept rate")
+    ax_ablation.bar(xi + width, ablation_escalation, width=width, color=COLORS["gray_3"], label="escalation rate")
+    ax_ablation.set_xticks(xi, condition_labels)
+    ax_ablation.set_ylim(0, 105)
+    ax_ablation.set_ylabel("rate (%)")
+    ax_ablation.grid(axis="y", color=COLORS["grid"], linewidth=0.65)
+    ax_ablation.set_title("E6 ablation: no-verdict changes risk policy, not proof", loc="left", fontsize=8.2, weight="bold")
+    ax_ablation.legend(ncol=1, loc="upper left", bbox_to_anchor=(0.00, -0.30))
 
     add_panel_label(ax_note, "c", x=-0.055, y=1.10)
     ax_note.axis("off")
-    ax_note.set_title("Interpretation boundary", loc="left", fontsize=8.2, weight="bold")
+    ax_note.set_title("Experiment logic boundary", loc="left", fontsize=8.2, weight="bold")
     notes = [
-        ("Supported", "evidence visibility changes behavior"),
-        ("Qualified", "model-dependent and non-monotonic"),
-        ("Not shown", "autonomous correctness verification"),
+        ("Main evidence", "Qwen v0.3 label-conditioned metrics"),
+        ("Ablation", "rule-only / E6-full / no-verdict"),
+        ("Excluded", "legacy v0.1 zero-accept"),
     ]
     for idx, (head, body) in enumerate(notes):
         y = 0.82 - idx * 0.31
         color = [COLORS["green_soft"], COLORS["orange_soft"], COLORS["red_soft"]][idx]
         edge = [COLORS["green"], COLORS["orange"], COLORS["red"]][idx]
-        ax_note.add_patch(Rectangle((0.02, y - 0.16), 0.94, 0.22, linewidth=0.85, edgecolor=edge, facecolor=color))
+        ax_note.add_patch(Rectangle((0.02, y - 0.17), 0.94, 0.24, linewidth=0.85, edgecolor=edge, facecolor=color))
         ax_note.text(0.06, y + 0.010, head, fontsize=7.0, weight="bold", va="center")
-        text_block(ax_note, 0.06, y - 0.045, body, width=42, fontsize=6.15, va="top", color=COLORS["ink"])
+        text_block(ax_note, 0.06, y - 0.050, body, width=36, fontsize=6.0, va="top", color=COLORS["ink"])
 
     save_figure(fig, "ccfc_fig2_decision_patterns")
 
 
 def claim_source_matrix(claims: list[dict[str, Any]]) -> tuple[list[str], np.ndarray]:
     sources = [
-        "five-model\nsynthesis",
+        "EVP-8\nprotocol",
         "accept-aware\nrepair",
         "no-verdict /\ncontestation",
         "realistic\ngate",
@@ -316,7 +345,7 @@ def claim_source_matrix(claims: list[dict[str, Any]]) -> tuple[list[str], np.nda
     for idx, claim in enumerate(claims):
         evidence = " ".join(str(x) for x in claim.get("evidence", []))
         claim_id = str(claim.get("id", ""))
-        if "five_model" in evidence or "per-level" in evidence:
+        if "protocol" in evidence or claim_id == "C1":
             matrix[idx, 0] = 1
         if "accept_aware" in evidence or "label_conditioned" in evidence or claim_id == "C3":
             matrix[idx, 1] = 1
@@ -336,9 +365,10 @@ def fig3_claim_boundary(claim_map: dict[str, Any]) -> None:
         raise ValueError("claim map missing claims/checks/forbidden_claims")
     status_labels = {
         "supported": "supported",
-        "supported_as_setting_repair": "repair",
+        "supported_qwen_only": "Qwen only",
         "supported_qualified": "qualified",
         "supported_negative_boundary": "negative boundary",
+        "excluded_diagnostic_history": "excluded",
     }
     claim_rows = [
         f"{claim.get('id')}: {status_labels.get(str(claim.get('status')), str(claim.get('status')))}"
@@ -373,7 +403,7 @@ def fig3_claim_boundary(claim_map: dict[str, Any]) -> None:
     ax_checks.set_title("Validity gates", loc="left", fontsize=8.2, weight="bold")
     compact_checks = [
         ("validity audit", "passed with bounded claims"),
-        ("five-model synthesis", "passed"),
+        ("v0.1 diagnostics", "excluded from main results"),
         ("tool-contestation", "risk triage, not strict correction"),
         ("realistic gate", "26/30 cases; 2/3 projects"),
     ]
@@ -404,15 +434,16 @@ def fig3_claim_boundary(claim_map: dict[str, Any]) -> None:
 
 
 def export_source_data(claim_map: dict[str, Any]) -> None:
-    reject, escalate, accept = model_level_matrices(claim_map)
+    qwen_recall, qwen_false_accept, qwen_escalation = qwen_metric_series(claim_map)
+    ablation_rows = e6_ablation_rows(claim_map)
     source_data = {
         "source": str(CLAIM_MAP_PATH.relative_to(ROOT)).replace("\\", "/"),
         "backend": "python/matplotlib",
         "levels": list(LEVELS),
-        "models": list(MODEL_ORDER),
-        "reject_matrix": reject.astype(int).tolist(),
-        "escalate_matrix": escalate.astype(int).tolist(),
-        "accept_matrix": accept.astype(int).tolist(),
+        "qwen_v0_3_correct_recall": qwen_recall.tolist(),
+        "qwen_v0_3_false_accept_rate": qwen_false_accept.tolist(),
+        "qwen_v0_3_escalation_rate": qwen_escalation.tolist(),
+        "e6_ablation_metrics": ablation_rows,
         "decision_totals_by_level": claim_map.get("decision_totals_by_level", {}),
         "claims": claim_map.get("claims", []),
         "checks": claim_map.get("checks", []),
@@ -422,7 +453,7 @@ def export_source_data(claim_map: dict[str, Any]) -> None:
             "backend": "Python",
             "archetypes": {
                 "ccfc_fig1_protocol": "schematic-led composite",
-                "ccfc_fig2_decision_patterns": "quantitative grid",
+                "ccfc_fig2_decision_patterns": "quantitative grid for repaired main evidence",
                 "ccfc_fig3_claim_boundary": "asymmetric mixed-modality figure",
             },
             "export_formats": list(FORMATS),
@@ -448,8 +479,8 @@ def write_manifest() -> None:
             },
             {
                 "id": "ccfc_fig2_decision_patterns",
-                "title": "Five-model evidence-level decision patterns",
-                "purpose": "show model-dependent non-monotonic rejection/escalation patterns",
+                "title": "Accept-aware and no-verdict metric evidence",
+                "purpose": "show repaired Qwen label-conditioned metrics and E6 verdict-field ablation",
             },
             {
                 "id": "ccfc_fig3_claim_boundary",
@@ -469,7 +500,7 @@ Backend: Python / matplotlib only.
 Generated figures:
 
 - `ccfc_fig1_protocol`: schematic-led composite for the hidden-evaluator protocol.
-- `ccfc_fig2_decision_patterns`: quantitative grid for five-model evidence-level patterns.
+- `ccfc_fig2_decision_patterns`: quantitative grid for repaired Qwen label-conditioned metrics and E6 ablations.
 - `ccfc_fig3_claim_boundary`: asymmetric mixed-modality map for claim and validity boundaries.
 
 Export contract:
@@ -482,7 +513,7 @@ Export contract:
 
 Review boundary:
 
-- These figures support bounded evidence-conditioned risk-behavior claims.
+- These figures support bounded evidence-conditioned risk-behavior claims after excluding the legacy v0.1 diagnostic setting from the main evidence chain.
 - They do not support autonomous patch correctness verification, monotonic correctness improvement, or escalation-as-strict-correction claims.
 """
     (OUT_DIR / "figure_qa.md").write_text(note, encoding="utf-8")

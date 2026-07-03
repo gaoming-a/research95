@@ -24,10 +24,11 @@ verification.
 | --- | --- | --- |
 | The draft reads like an audit report rather than a paper. | Rewrote the abstract, experimental design, results, discussion, and conclusion around a methods-and-measurement contribution. | addressed |
 | The contribution is unclear. | Fixed the contribution as EVP-8 plus hidden-evaluator evidence visibility, label-conditioned metrics, and risk-triage boundary. | addressed |
-| The zero-accept five-model result is too weak as the main result. | Kept the five-model synthesis as RQ1 descriptive behavior evidence, then promoted Qwen v0.3 label-conditioned metrics to RQ2. | addressed |
+| The zero-accept five-model result is too weak as the main result. | Removed the legacy v0.1 five-model synthesis from the main results. It is now explicit diagnostic history only. | addressed |
 | Accept-aware v0.2/v0.3 results should become main evidence. | Added a Qwen v0.3 table with accept, correct accept, false accept, accepted precision, correct recall, false accept rate, and escalation rate. | addressed |
 | E0-E6 evidence levels need transparent definition. | Added an E0-E6 protocol table generated from `data/protocols/evp8_protocol_v0_3_qwen_first.json`. | addressed |
 | Metrics need FAR, accepted precision, correct recall, false reject, escalation, and invalid-output boundary. | Main tables now include accepted precision, correct recall, false accept rate, escalation rate; claim map also records checks for parse/run coverage and raw-output-free summaries. | partially addressed |
+| The figure package still risks carrying v0.1 back into the paper. | Replaced Fig. 2 with an accept-aware/no-verdict metric figure based on Qwen v0.3 and E6 ablation metrics. | addressed |
 | Verdict-like tool summaries may anchor behavior. | Added RQ3 with rule-only, E6-full, and E6-no-verdict metrics. | addressed |
 | Tool-contestation should be interpreted as triage, not correction. | RQ4 states that known false accepts moved mainly to escalation and not strict rejection. | addressed |
 | Realistic hard-negative branch should not be a main result if the gate failed. | RQ5 and Discussion classify it as source-acquisition/gate-readiness boundary evidence. | addressed |
@@ -45,6 +46,9 @@ verification.
   them in supporting evidence rather than a full statistics subsection.
 - The realistic hard-negative branch remains below the predeclared
   three-project verifier-readiness gate.
+- The legacy v0.1 zero-accept setting is excluded from the main result chain;
+  it may only be mentioned as protocol history explaining why accept-aware
+  repair was required.
 - The final venue choice and template requirements still need external
   confirmation before producing a submission package.
 

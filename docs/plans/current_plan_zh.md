@@ -2,6 +2,63 @@
 
 最后更新：2026-07-03
 
+## 0.25 2026-07-03 Experiment-logic repair after v0.1 exclusion
+
+本轮目标是回应用户对实验逻辑的关键质疑：如果 v0.1 已被判定为错误/不可靠的
+实验设置 artifact，就不应该继续把 v0.1 five-model zero-accept synthesis 搬到主
+结果里。该质疑成立，因此本轮不是继续解释 v0.1，而是将其从主证据链中移除。
+
+执行边界：
+
+- 不新增实验；
+- 不调用 API；
+- 不读取 ignored raw outputs；
+- 不改变 v0.3、E6 ablation、tool-contestation 或 realistic gate 的结果；
+- 只修论文实验逻辑、claim map、Fig. 2、placement audit 和文档索引。
+
+修订后的实验逻辑：
+
+1. `EVP-8 protocol`：定义 hidden-evaluator evidence boundary 和 E0-E6
+   evidence ladder；
+2. `legacy v0.1`：只作为 diagnostic protocol history，说明为什么需要
+   accept-aware repair；不得作为主结果、不得用于证明 evidence effect；
+3. `Qwen v0.3 accept-aware`：作为主实验起点，报告 E0-E6 label-conditioned
+   accepted precision、correct recall、false accept rate、false reject rate 和
+   escalation rate；
+4. `E6 rule-only / E6-full / E6-no-verdict`：作为 baseline/ablation，测量
+   verdict-like tool fields 的 anchoring 和风险策略变化；
+5. `EVP-8-HARD tool-contestation`：只支持 risk triage / safe handling，不支持
+   strict semantic correction；
+6. `realistic hard-negative branch`：因为 three-project gate 未过，只作为
+   source-acquisition boundary，不作为 main verifier experiment。
+
+执行结果：
+
+- 更新 `scripts/write_final_manuscript_claim_map.py`：
+  - manuscript argument 改为 v0.3 起算；
+  - C6 新增 `excluded_diagnostic_history`，明确 legacy v0.1 不进主结果；
+  - forbidden claims 增加“Legacy v0.1 five-model zero-accept settings are main
+    experimental results.”；
+  - Results 由四个 RQ 组成，不再含 five-model v0.1 RQ；
+  - Fig. 2 caption 改为 accept-aware/no-verdict metric evidence。
+- 更新 `scripts/generate_ccfc_figures.py`：
+  - Fig. 2 从 five-model v0.1 decision pattern 改为 Qwen v0.3 label-conditioned
+    metric + E6 ablation metric 图；
+  - figure manifest/source-data/QA 同步移除 five-model 主证据定位。
+- 更新 `scripts/audit_ccfc_figure_placement.py` 的 Fig. 2 section/caption
+  期望。
+
+验收结果：
+
+- `python -m py_compile scripts\write_final_manuscript_claim_map.py scripts\generate_ccfc_figures.py scripts\audit_ccfc_figure_placement.py`：通过；
+- `python scripts\write_final_manuscript_claim_map.py --check`：通过；
+- `python scripts\generate_ccfc_figures.py`：通过；
+- `python scripts\generate_ccfc_figures.py --check`：通过；
+- `python scripts\audit_ccfc_figure_placement.py --check`：通过；
+- `python -m json.tool data\reviews\final_manuscript_claim_map_v0_1.json`：通过；
+- 视觉检查确认新的 Fig. 2 已是 accept-aware/no-verdict metric evidence，不再是
+  five-model v0.1 图。
+
 ## 0.24 2026-07-03 CCF-C manuscript critique-driven v0.2 revision
 
 本轮目标是根据用户附件中的严厉评审意见，检查当前 CCF-C 稿件是否仍像
