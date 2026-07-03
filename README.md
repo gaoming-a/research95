@@ -66,6 +66,15 @@ Use the current short status entry first:
 
 - `docs/plans/current_project_state_zh.md`
 
+As of 2026-07-04, the stable CCF-C route has two additional paper-facing
+support artifacts: `docs/paper/ccfc_citation_support_bank_v0_1.md` for
+claim-to-citation mapping, and
+`docs/paper/ccfc_baseline_feasibility_audit_v0_1.md` for deterministic
+baseline boundaries. The completed deterministic baseline is rule-only
+visible-tool; always-escalate, always-reject, and always-accept are reference
+policies only. Majority vote and a separate E0/no-tool deterministic verifier
+must not be described as completed results.
+
 The final-paper route is:
 
 - `docs/plans/final_paper_roadmap_zh.md`

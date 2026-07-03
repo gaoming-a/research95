@@ -1,6 +1,75 @@
 # 当前计划：AI 生成补丁的可验证审查
 
-最后更新：2026-07-03
+最后更新：2026-07-04
+
+## 0.28 2026-07-04 CCF-C citation support bank and baseline feasibility audit
+
+本轮目标是完成 PaperSpine-style assessment 给出的下一步 P1：先补
+verified citation support bank，并把 deterministic baseline 能否基于当前结果
+诚实报告这件事审清楚。该轮不重跑实验、不调用 API、不读取 ignored raw outputs、
+不读取 rendered prompt text 或 patch diff，也不把早期无效设置重新放回论文。
+
+执行边界：
+
+- 不新增模型实验；
+- 不调用 API；
+- 不读取 raw model outputs、rendered prompt text 或 patch diff；
+- 只使用 tracked aggregate JSON 和当前论文规划文档；
+- 引用支撑库使用 claim segmentation 思路，但面向 CCF-C 计算机论文选择
+  field-specific CS/SE/ML primary sources，不强套 Nature/CNS-only 范围；
+- majority-vote、完整 E0/no-tool deterministic verifier 若没有 candidate-level
+  raw-output-free 审计，不得写成已完成 baseline。
+
+执行结果：
+
+- 新增 `docs/paper/ccfc_citation_support_bank_v0_1.md`：
+  - 按 claim segment 建立 introduction / related work / method / discussion /
+    threats 的引用支撑；
+  - 明确 patch plausibility、oracle problem、APR/LLM-APR、code review、
+    reject option / selective classification、LLM-as-judge、automation reliance
+    对应的 citation role；
+  - 明确这些引用不能支撑 autonomous correctness verification 或 LLM
+    superiority over deterministic baselines。
+- 新增 `scripts/audit_ccfc_baseline_feasibility.py`；
+- 生成 `data/reviews/ccfc_baseline_feasibility_audit_v0_1.json`；
+- 生成 `docs/paper/ccfc_baseline_feasibility_audit_v0_1.md`。
+
+baseline 审计结论：
+
+- 可诚实报告的 deterministic reference：
+  - `always_escalate`：accept 0 / reject 0 / escalate 98；
+  - `always_reject`：accept 0 / reject 98 / escalate 0；
+  - `always_accept`：accept 98 / reject 0 / escalate 0；
+  - 这些只作为 reference policy，不能写成成功 verifier。
+- 已完成的 deterministic baseline：
+  - `rule_only_visible_tool`：accept 25 / reject 73 / accepted precision 80.00% /
+    correct recall 95.24% / false accept rate 6.49%。
+- 已完成可对照的 E6 model condition：
+  - Qwen E6-full：accept 24 / reject 74 / accepted precision 83.33% /
+    correct recall 95.24% / false accept rate 5.19%；
+  - DeepSeek E6-full：accept 23 / reject 75 / accepted precision 82.61% /
+    correct recall 90.48% / false accept rate 5.19%。
+- 不得写成已完成：
+  - `majority_vote_across_models`：当前 aggregate-only boundary 不足以计算；
+  - `separate_no_tool_e0_deterministic_verifier`：只有 Qwen E0 行为和
+    always-escalate reference，不是单独实现的 non-LLM E0 verifier。
+
+验收结果：
+
+- `python -m py_compile scripts\audit_ccfc_baseline_feasibility.py`：通过；
+- `python scripts\audit_ccfc_baseline_feasibility.py`：通过；
+- `python scripts\audit_ccfc_baseline_feasibility.py --check`：通过；
+- baseline audit checks 当前均应为 passed，且记录
+  `api_call_attempted=false`、`raw_outputs_read=false`、
+  `prompt_or_patch_text_read=false`。
+
+下一步：
+
+- 把 citation support bank 和 baseline feasibility audit 反映到正文生成器或正文
+  related work / baseline subsection；
+- 同步 Phase A uncertainty summary 到主文表格或结果段；
+- 再进行一轮 reviewer-style audit，检查是否仍有 overclaim、citation gap 或
+  baseline gap。
 
 ## 0.27 2026-07-03 PaperSpine-style current spine assessment
 

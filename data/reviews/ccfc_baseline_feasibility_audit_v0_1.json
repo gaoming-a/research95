@@ -1,0 +1,419 @@
+{
+  "audit_id": "ccfc_baseline_feasibility_audit_v0_1",
+  "status": "passed",
+  "cohort_id": "EVP-8",
+  "scope": {
+    "purpose": "determine which baseline rows can be honestly reported in the current CCF-C manuscript route.",
+    "api_call_attempted": false,
+    "raw_outputs_read": false,
+    "prompt_or_patch_text_read": false,
+    "inputs": [
+      "data\\reviews\\evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json",
+      "data\\reviews\\evp8_e6_no_verdict_ablation_comparison.json",
+      "data\\reviews\\evp8_phase_a_paper_ready_analysis.json"
+    ]
+  },
+  "cohort_totals": {
+    "record_count": 98,
+    "correct_total": 21,
+    "incorrect_total": 77
+  },
+  "feasibility": {
+    "always_escalate": {
+      "status": "calculable_from_label_totals",
+      "reason": "Uses only aggregate correct/incorrect counts; no candidate text, prompt text, raw model output, or API call is needed.",
+      "paper_role": "conservative abstention reference, not a useful verifier."
+    },
+    "always_reject": {
+      "status": "calculable_from_label_totals",
+      "reason": "Uses only aggregate correct/incorrect counts.",
+      "paper_role": "safety-heavy lower-bound reference exposing recall collapse."
+    },
+    "always_accept": {
+      "status": "calculable_from_label_totals",
+      "reason": "Uses only aggregate correct/incorrect counts.",
+      "paper_role": "unsafe throughput reference exposing base-rate risk."
+    },
+    "rule_only_visible_tool": {
+      "status": "completed_existing_tracked_result",
+      "source": "data\\reviews\\evp8_e6_no_verdict_ablation_comparison.json",
+      "paper_role": "main deterministic baseline for E6 full/no-verdict comparison."
+    },
+    "qwen_e6_full": {
+      "status": "completed_existing_tracked_result",
+      "source": "data\\reviews\\evp8_e6_no_verdict_ablation_comparison.json",
+      "paper_role": "model condition to compare against rule-only and no-verdict ablations."
+    },
+    "deepseek_e6_full": {
+      "status": "completed_existing_tracked_result",
+      "source": "data\\reviews\\evp8_e6_no_verdict_ablation_comparison.json",
+      "paper_role": "secondary model condition in the E6 ablation package."
+    },
+    "majority_vote_across_models": {
+      "status": "not_feasible_from_current_aggregate_boundary",
+      "reason": "Requires candidate-level aligned decisions across models and hidden labels. The current paper-facing boundary for this audit uses aggregate summaries only.",
+      "paper_role": "do not report as completed unless a separate candidate-level, raw-output-free audit is built."
+    },
+    "separate_no_tool_e0_deterministic_verifier": {
+      "status": "partial_only",
+      "reason": "Qwen E0 behavior exists, and always-escalate is calculable as a no-evidence conservative reference. A separate non-LLM E0 verifier policy has not been implemented as a tracked result.",
+      "paper_role": "report Qwen E0 and always-escalate separately; do not call this a completed deterministic E0 verifier."
+    }
+  },
+  "completed_or_calculable_metrics": {
+    "always_escalate": {
+      "record_count": 98,
+      "decision_counts": {
+        "accept": 0,
+        "reject": 0,
+        "escalate": 98
+      },
+      "confusion_counts": {
+        "true_accept": 0,
+        "false_accept": 0,
+        "false_reject": 0,
+        "true_reject": 0,
+        "escalated_correct": 21,
+        "escalated_incorrect": 77
+      },
+      "accepted_precision": null,
+      "correct_recall": 0.0,
+      "false_accept_rate": 0.0,
+      "false_reject_rate": 0.0,
+      "escalation_rate": 1.0
+    },
+    "always_reject": {
+      "record_count": 98,
+      "decision_counts": {
+        "accept": 0,
+        "reject": 98,
+        "escalate": 0
+      },
+      "confusion_counts": {
+        "true_accept": 0,
+        "false_accept": 0,
+        "false_reject": 21,
+        "true_reject": 77,
+        "escalated_correct": 0,
+        "escalated_incorrect": 0
+      },
+      "accepted_precision": null,
+      "correct_recall": 0.0,
+      "false_accept_rate": 0.0,
+      "false_reject_rate": 1.0,
+      "escalation_rate": 0.0
+    },
+    "always_accept": {
+      "record_count": 98,
+      "decision_counts": {
+        "accept": 98,
+        "reject": 0,
+        "escalate": 0
+      },
+      "confusion_counts": {
+        "true_accept": 21,
+        "false_accept": 77,
+        "false_reject": 0,
+        "true_reject": 0,
+        "escalated_correct": 0,
+        "escalated_incorrect": 0
+      },
+      "accepted_precision": 0.21428571428571427,
+      "correct_recall": 1.0,
+      "false_accept_rate": 1.0,
+      "false_reject_rate": 0.0,
+      "escalation_rate": 0.0
+    },
+    "rule_only_visible_tool": {
+      "accept_rate": 0.255102,
+      "accepted_precision": 0.8,
+      "confusion_counts": {
+        "escalated_correct": 0,
+        "escalated_incorrect": 0,
+        "false_accept": 5,
+        "false_reject": 1,
+        "true_accept": 20,
+        "true_reject": 72
+      },
+      "correct_decision_counts": {
+        "accept": 20,
+        "reject": 1
+      },
+      "correct_recall": 0.952381,
+      "correct_total": 21,
+      "decision_counts": {
+        "accept": 25,
+        "reject": 73
+      },
+      "escalation_rate": 0.0,
+      "false_accept_rate": 0.064935,
+      "false_reject_rate": 0.047619,
+      "incorrect_decision_counts": {
+        "accept": 5,
+        "reject": 72
+      },
+      "incorrect_reject_rate": 0.935065,
+      "incorrect_total": 77,
+      "opportunity_set_rate": 0.061224,
+      "opportunity_set_size": 6,
+      "record_count": 98,
+      "reject_rate": 0.744898,
+      "unsafe_error_count": 6
+    },
+    "qwen_e6_full": {
+      "accept_rate": 0.244898,
+      "accepted_precision": 0.833333,
+      "confusion_counts": {
+        "escalated_correct": 0,
+        "escalated_incorrect": 0,
+        "false_accept": 4,
+        "false_reject": 1,
+        "true_accept": 20,
+        "true_reject": 73
+      },
+      "correct_decision_counts": {
+        "accept": 20,
+        "reject": 1
+      },
+      "correct_recall": 0.952381,
+      "correct_total": 21,
+      "decision_counts": {
+        "accept": 24,
+        "reject": 74
+      },
+      "escalation_rate": 0.0,
+      "false_accept_rate": 0.051948,
+      "false_reject_rate": 0.047619,
+      "incorrect_decision_counts": {
+        "accept": 4,
+        "reject": 73
+      },
+      "incorrect_reject_rate": 0.948052,
+      "incorrect_total": 77,
+      "record_count": 98,
+      "reject_rate": 0.755102
+    },
+    "deepseek_e6_full": {
+      "accept_rate": 0.234694,
+      "accepted_precision": 0.826087,
+      "confusion_counts": {
+        "escalated_correct": 0,
+        "escalated_incorrect": 0,
+        "false_accept": 4,
+        "false_reject": 2,
+        "true_accept": 19,
+        "true_reject": 73
+      },
+      "correct_decision_counts": {
+        "accept": 19,
+        "reject": 2
+      },
+      "correct_recall": 0.904762,
+      "correct_total": 21,
+      "decision_counts": {
+        "accept": 23,
+        "reject": 75
+      },
+      "escalation_rate": 0.0,
+      "false_accept_rate": 0.051948,
+      "false_reject_rate": 0.095238,
+      "incorrect_decision_counts": {
+        "accept": 4,
+        "reject": 73
+      },
+      "incorrect_reject_rate": 0.948052,
+      "incorrect_total": 77,
+      "record_count": 98,
+      "reject_rate": 0.765306
+    }
+  },
+  "uncertainty_available": {
+    "rule-only": {
+      "accepted_precision": {
+        "ci_95_high": 0.911394,
+        "ci_95_low": 0.60869,
+        "estimate": 0.8,
+        "successes": 20,
+        "total": 25
+      },
+      "correct_recall": {
+        "ci_95_high": 0.991544,
+        "ci_95_low": 0.773306,
+        "estimate": 0.952381,
+        "successes": 20,
+        "total": 21
+      },
+      "escalation_rate": {
+        "ci_95_high": 0.03772,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 98
+      },
+      "false_accept_rate": {
+        "ci_95_high": 0.143164,
+        "ci_95_low": 0.028053,
+        "estimate": 0.064935,
+        "successes": 5,
+        "total": 77
+      }
+    },
+    "qwen/qwen3.7-max E6-full": {
+      "accepted_precision": {
+        "ci_95_high": 0.933213,
+        "ci_95_low": 0.641469,
+        "estimate": 0.833333,
+        "successes": 20,
+        "total": 24
+      },
+      "correct_recall": {
+        "ci_95_high": 0.991544,
+        "ci_95_low": 0.773306,
+        "estimate": 0.952381,
+        "successes": 20,
+        "total": 21
+      },
+      "escalation_rate": {
+        "ci_95_high": 0.03772,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 98
+      },
+      "false_accept_rate": {
+        "ci_95_high": 0.126093,
+        "ci_95_low": 0.020385,
+        "estimate": 0.051948,
+        "successes": 4,
+        "total": 77
+      },
+      "tool_false_accept_safe_handling_rate": {
+        "ci_95_high": 0.624465,
+        "ci_95_low": 0.036224,
+        "estimate": 0.2,
+        "successes": 1,
+        "total": 5
+      },
+      "tool_false_accept_strict_correction_rate": {
+        "ci_95_high": 0.624465,
+        "ci_95_low": 0.036224,
+        "estimate": 0.2,
+        "successes": 1,
+        "total": 5
+      },
+      "tool_false_reject_correction_rate": {
+        "ci_95_high": 0.793451,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 1
+      }
+    },
+    "deepseek/deepseek-v4-pro E6-full": {
+      "accepted_precision": {
+        "ci_95_high": 0.930213,
+        "ci_95_low": 0.628624,
+        "estimate": 0.826087,
+        "successes": 19,
+        "total": 23
+      },
+      "correct_recall": {
+        "ci_95_high": 0.973481,
+        "ci_95_low": 0.710859,
+        "estimate": 0.904762,
+        "successes": 19,
+        "total": 21
+      },
+      "escalation_rate": {
+        "ci_95_high": 0.03772,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 98
+      },
+      "false_accept_rate": {
+        "ci_95_high": 0.126093,
+        "ci_95_low": 0.020385,
+        "estimate": 0.051948,
+        "successes": 4,
+        "total": 77
+      },
+      "tool_false_accept_safe_handling_rate": {
+        "ci_95_high": 0.624465,
+        "ci_95_low": 0.036224,
+        "estimate": 0.2,
+        "successes": 1,
+        "total": 5
+      },
+      "tool_false_accept_strict_correction_rate": {
+        "ci_95_high": 0.624465,
+        "ci_95_low": 0.036224,
+        "estimate": 0.2,
+        "successes": 1,
+        "total": 5
+      },
+      "tool_false_reject_correction_rate": {
+        "ci_95_high": 0.793451,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 1
+      }
+    }
+  },
+  "claim_boundary": {
+    "allowed": [
+      "Report always-escalate/always-reject/always-accept as deterministic reference policies calculated from label totals.",
+      "Report rule-only visible-tool as the completed deterministic E6 baseline.",
+      "Use Phase A confidence intervals for rule-only and E6 model conditions."
+    ],
+    "forbidden": [
+      "Do not claim a completed majority-vote baseline from aggregate-only files.",
+      "Do not call always-escalate a successful verifier.",
+      "Do not claim LLM superiority over deterministic baselines as the paper's main result."
+    ]
+  },
+  "checks": [
+    {
+      "check": "input_files_exist",
+      "passed": true
+    },
+    {
+      "check": "label_totals_match_record_count",
+      "passed": true,
+      "detail": {
+        "correct_total": 21,
+        "incorrect_total": 77,
+        "record_count": 98
+      }
+    },
+    {
+      "check": "no_verdict_comparison_checks_pass",
+      "passed": true
+    },
+    {
+      "check": "phase_a_checks_pass",
+      "passed": true
+    },
+    {
+      "check": "rule_only_record_count_matches",
+      "passed": true,
+      "detail": 98
+    },
+    {
+      "check": "audit_api_call_attempted",
+      "passed": true,
+      "detail": false
+    },
+    {
+      "check": "raw_outputs_read_by_this_audit",
+      "passed": true,
+      "detail": false
+    },
+    {
+      "check": "prompt_or_patch_text_read_by_this_audit",
+      "passed": true,
+      "detail": false
+    }
+  ]
+}

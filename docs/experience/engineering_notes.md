@@ -4462,3 +4462,23 @@ This file starts fresh for the patch-verification project.
   feasibility, and uncertainty presentation. Expanding API experiments should
   be a later, explicit decision because it can reopen execution and validity
   risks.
+
+## 2026-07-04 Citation and baseline support boundary
+
+- A citation support bank should map claims to sources before editing the
+  manuscript. Dropping references directly into prose can hide whether the
+  cited work supports motivation, method framing, or an actual result claim.
+- For this CCF-C route, the citation workflow can borrow claim segmentation
+  from `nature-citation`, but the source pool must be CS/SE/ML primary sources.
+  Nature/CNS-only filtering is not appropriate for a software-engineering CCF-C
+  manuscript.
+- A baseline that is calculable from label totals is not the same as a completed
+  verifier experiment. Always-escalate, always-reject, and always-accept are
+  valid reference policies; only the tracked rule-only visible-tool result is
+  the current completed deterministic baseline.
+- Majority vote needs candidate-level aligned model decisions and hidden-label
+  joins under a raw-output-free audit. Aggregate summaries alone are not enough
+  to report it as a completed baseline.
+- Check fields must distinguish "the bad event did not happen" from "the check
+  failed." In `ccfc_baseline_feasibility_audit_v0_1`, no API/raw/prompt reads
+  are recorded as `passed=true` with `detail=false`.

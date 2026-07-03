@@ -1,6 +1,6 @@
 # 当前项目状态与文件地图
 
-日期：2026-07-03
+日期：2026-07-04
 
 本文件是短入口，用来整理当前计划文档和项目文件。它不替代
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
@@ -23,7 +23,32 @@
   always-escalate、random、majority、完整 E0/no-tool baseline 仍不得写成已完成结果。
   2026-07-03 追加实验逻辑清理：当前论文包不再携带早期无效设置作为正文内容；
   新的 Fig. 2 保持为 Qwen v0.3 accept-aware + E6 ablation metric evidence。
+  2026-07-04 追加 PaperSpine 下一步产物：citation support bank 和 baseline
+  feasibility audit 已完成；rule-only visible-tool 是当前已完成 deterministic
+  baseline，always-escalate/always-reject/always-accept 只能作为 reference
+  policies，majority vote 和单独 E0/no-tool deterministic verifier 仍不得写成已完成。
   在 `ready_for_verifier_api=false` 时仍不得运行 Qwen/DeepSeek verifier API。
+
+## 2026-07-04 快速状态增量
+
+- 新增 CCF-C citation support bank：
+  `docs/paper/ccfc_citation_support_bank_v0_1.md`。它按 claim segment 组织
+  introduction、related work、method、discussion 和 threats 的引用支撑，并明确
+  引用不能支撑 autonomous correctness verification 或 LLM superiority over
+  deterministic baselines。
+- 新增 CCF-C baseline feasibility audit：
+  `docs/paper/ccfc_baseline_feasibility_audit_v0_1.md` 和
+  `data/reviews/ccfc_baseline_feasibility_audit_v0_1.json`，由
+  `scripts/audit_ccfc_baseline_feasibility.py` 生成。
+- 当前可写入论文的 baseline 边界：
+  - deterministic reference policies：always-escalate、always-reject、
+    always-accept；
+  - completed deterministic baseline：rule-only visible-tool；
+  - completed E6 model conditions：Qwen E6-full 和 DeepSeek E6-full；
+  - 不可写成已完成：majority-vote across models、单独 E0/no-tool deterministic
+    verifier。
+- 下一步论文工作应把 citation bank / baseline audit / Phase A uncertainty
+  summary 合入正文相关小节，然后做 reviewer-style audit。
 
 ## 2026-07-03 快速状态增量
 

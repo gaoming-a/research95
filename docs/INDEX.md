@@ -12,10 +12,13 @@
   Start here before reading the long execution log. It records Git sync state,
   current paper/result boundaries, experiment-decision gates, active plan roles,
   key project files, script entry points, and forbidden misuses. As of
-  2026-07-03, its top section is the authority for the current active branch.
+  2026-07-04, its top section is the authority for the current active branch.
   The manuscript claim-map, threats-to-validity consolidation, CCF-C body
   rewrite file, CCF-C Fig. 1--3, and inline figure placement audit are now
-  tracked. The no-API Luigi
+  tracked. The CCF-C citation support bank and baseline feasibility audit are
+  also tracked; `rule-only visible-tool` is the completed deterministic
+  baseline, while majority-vote and a separate E0/no-tool deterministic
+  verifier remain unimplemented. The no-API Luigi
   source-acquisition/materialization protocol is optional future work, not the
   current blocker. Historical `origin/main` entries retained later in plan logs
   are audit records only. As of
@@ -74,7 +77,8 @@
   explicit remaining baseline/citation risks. The 2026-07-03 0.26 entry
   removes the earlier invalid setting from the manuscript-facing package and
   leaves Fig. 2 as accept-aware/no-verdict metric evidence for the current
-  result chain.
+  result chain. The 2026-07-04 0.28 entry records the citation support bank and
+  deterministic baseline feasibility audit.
 - `../scripts/write_evp8_realistic_hardneg_uplift_packet.py`: no-API boundary
   packet writer for the realistic hard-negative uplift route. It reads the
   tracked combined generation gate only and writes the current missing
@@ -131,6 +135,20 @@
   spine assessment for the CCF-C route. It fixes the confirmed contribution,
   result-to-claim matrix, readiness risks, and next-direction priority without
   running new experiments or reading raw outputs.
+- `paper/ccfc_citation_support_bank_v0_1.md`: CCF-C citation support bank. It
+  maps claim segments to CS/SE/ML primary-source citations for motivation,
+  related work, method framing, discussion, and threats, while marking
+  unsupported over-strong uses.
+- `../scripts/audit_ccfc_baseline_feasibility.py`: raw-output-free baseline
+  feasibility auditor for the CCF-C route. It reads tracked aggregate result
+  summaries only and writes calculable deterministic reference policies plus
+  completed rule-only/model E6 baseline rows.
+- `../data/reviews/ccfc_baseline_feasibility_audit_v0_1.json` and
+  `paper/ccfc_baseline_feasibility_audit_v0_1.md`: baseline feasibility audit.
+  Status is `passed`; always-escalate/always-reject/always-accept are
+  reference policies, rule-only visible-tool is the completed deterministic
+  baseline, and majority-vote / separate E0 no-tool verifier are not completed
+  under the current aggregate-only boundary.
 - `../scripts/generate_ccfc_figures.py`: Python/matplotlib generator for the
   CCF-C manuscript figure set. It reads the tracked final manuscript claim map
   only and outputs PDF/SVG/PNG figures plus manifest, source-data, and QA notes.
