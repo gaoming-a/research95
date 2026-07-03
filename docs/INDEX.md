@@ -68,7 +68,10 @@
   records the final manuscript claim map and CCF-C body rewrite: keep the
   manuscript framed as evidence visibility / risk behavior rather than
   autonomous correctness verification. The 2026-07-03 0.22 entry records the
-  Python/matplotlib figure generation pass for CCF-C Fig. 1--3.
+  Python/matplotlib figure generation pass for CCF-C Fig. 1--3. The 2026-07-03
+  0.24 entry records the critique-driven v0.2 rewrite: RQ1--RQ5 structure,
+  Qwen v0.3 label-conditioned metrics, E6 rule-only/no-verdict metrics, and
+  explicit remaining baseline/citation risks.
 - `../scripts/write_evp8_realistic_hardneg_uplift_packet.py`: no-API boundary
   packet writer for the realistic hard-negative uplift route. It reads the
   tracked combined generation gate only and writes the current missing
@@ -111,10 +114,16 @@
   Status is `passed`; it maps supported claims, forbidden claims, terminology,
   and planned figures to the final setting-validity boundary.
 - `paper/ccfc_manuscript_rewrite_v0_1.md`: stable CCF-C body rewrite v0.1.
-  It presents the study as bounded evidence-conditioned risk behavior in
-  candidate patch verification, not autonomous patch correctness verification.
-  CCF-C Fig. 1--3 are placed inline in the protocol, results, and
-  discussion/threat-boundary locations.
+  The current content is the critique-driven v0.2 rewrite. It presents the
+  study as bounded evidence-conditioned risk behavior in candidate patch
+  verification, not autonomous patch correctness verification; it also includes
+  E0-E6 evidence-level definitions, Qwen v0.3 label-conditioned metrics, and
+  E6 rule-only/no-verdict baseline metrics. CCF-C Fig. 1--3 are placed inline
+  in the protocol, results, and discussion/threat-boundary locations.
+- `paper/ccfc_revision_response_v0_2.md`: critique-to-action record for the
+  CCF-C manuscript. It identifies which external review criticisms were
+  addressed in v0.2 and which remain deferred submission risks, especially
+  verified citations and unimplemented baselines.
 - `../scripts/generate_ccfc_figures.py`: Python/matplotlib generator for the
   CCF-C manuscript figure set. It reads the tracked final manuscript claim map
   only and outputs PDF/SVG/PNG figures plus manifest, source-data, and QA notes.

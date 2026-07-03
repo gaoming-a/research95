@@ -26,7 +26,7 @@ EXPECTED = [
     },
     {
         "id": "Fig. 2",
-        "section": "### 5.1 Evidence visibility changed five-model decision patterns",
+        "section": "### 5.1 RQ1: Evidence visibility changed five-model decision patterns",
         "image": "../figures/ccfc/ccfc_fig2_decision_patterns.png",
         "caption_marker": "**Figure 2. Five-model evidence-level decision patterns.**",
         "assets": [

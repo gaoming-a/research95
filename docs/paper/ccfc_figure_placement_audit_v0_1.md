@@ -16,6 +16,6 @@
 
 | figure | section line | image line | caption line | passed |
 | --- | ---: | ---: | ---: | ---: |
-| Fig. 1 | 27 | 31 | 33 | true |
-| Fig. 2 | 47 | 51 | 53 | true |
-| Fig. 3 | 73 | 81 | 83 | true |
+| Fig. 1 | 29 | 33 | 35 | true |
+| Fig. 2 | 63 | 67 | 69 | true |
+| Fig. 3 | 111 | 123 | 125 | true |

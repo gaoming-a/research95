@@ -26,15 +26,15 @@
         }
       ],
       "caption_after_image": true,
-      "caption_line": 33,
+      "caption_line": 35,
       "id": "Fig. 1",
       "image_exists": true,
-      "image_line": 31,
+      "image_line": 33,
       "image_ref": "../figures/ccfc/ccfc_fig1_protocol.png",
       "passed": true,
       "section": "## 3. Evidence-Visibility Protocol",
       "section_before_image": true,
-      "section_line": 27
+      "section_line": 29
     },
     {
       "assets": [
@@ -55,15 +55,15 @@
         }
       ],
       "caption_after_image": true,
-      "caption_line": 53,
+      "caption_line": 69,
       "id": "Fig. 2",
       "image_exists": true,
-      "image_line": 51,
+      "image_line": 67,
       "image_ref": "../figures/ccfc/ccfc_fig2_decision_patterns.png",
       "passed": true,
-      "section": "### 5.1 Evidence visibility changed five-model decision patterns",
+      "section": "### 5.1 RQ1: Evidence visibility changed five-model decision patterns",
       "section_before_image": true,
-      "section_line": 47
+      "section_line": 63
     },
     {
       "assets": [
@@ -84,15 +84,15 @@
         }
       ],
       "caption_after_image": true,
-      "caption_line": 83,
+      "caption_line": 125,
       "id": "Fig. 3",
       "image_exists": true,
-      "image_line": 81,
+      "image_line": 123,
       "image_ref": "../figures/ccfc/ccfc_fig3_claim_boundary.png",
       "passed": true,
       "section": "## 6. Discussion",
       "section_before_image": true,
-      "section_line": 73
+      "section_line": 111
     }
   ],
   "manuscript": "docs/paper/ccfc_manuscript_rewrite_v0_1.md",

@@ -2,6 +2,58 @@
 
 最后更新：2026-07-03
 
+## 0.24 2026-07-03 CCF-C manuscript critique-driven v0.2 revision
+
+本轮目标是根据用户附件中的严厉评审意见，检查当前 CCF-C 稿件是否仍像
+“实验审计报告 + 克制版技术总结”，并在不新增实验、不调用 API、不读取 ignored
+raw outputs 的前提下，把已有证据重排成更像 CCF-C 方法型实证论文的正文结构。
+
+执行边界：
+
+- 不调用任何模型 API；
+- 不读取 raw response / rendered prompt / patch diff 原文；
+- 不把未完成 baseline 写成已完成结果；
+- 不改变实验结果，只改变论文结构、claim map 和文档索引；
+- 仍保持 forbidden claim：不声称 reliable autonomous patch correctness
+  verification，不把 escalation 写成 strict correction。
+
+执行结果：
+
+- 更新 `scripts/write_final_manuscript_claim_map.py`：
+  - 接入 `data/reviews/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json`；
+  - 接入 `data/reviews/evp8_phase_a_paper_ready_analysis.json`；
+  - 接入 `data/protocols/evp8_protocol_v0_3_qwen_first.json` 的 E0-E6 evidence ladder；
+  - 将正文状态提升为 `stable CCF-C manuscript rewrite v0.2`；
+  - 结果结构改为 RQ1--RQ5；
+  - 将 Qwen v0.3 label-conditioned metrics 和 E6 rule-only/no-verdict
+    baseline table 放入主文；
+  - 明确 always-escalate、random、majority、完整 E0/no-tool baseline 尚未作为
+    tracked completed result。
+- 重新生成：
+  - `data/reviews/final_manuscript_claim_map_v0_1.json`；
+  - `docs/paper/final_manuscript_claim_map_v0_1.md`；
+  - `docs/paper/ccfc_manuscript_rewrite_v0_1.md`。
+- 新增 `docs/paper/ccfc_revision_response_v0_2.md`，逐项映射附件批评、已修内容和
+  投稿前剩余风险。
+
+当前结论：
+
+- v0.2 的论文主线比 v0.1 更稳：EVP-8 是 hidden-evaluator evidence-visibility
+  protocol，贡献是方法/测量和风险行为证据链，不是新 repair algorithm；
+- 五模型零 accept/高 escalation 结果只能作为 RQ1 行为变化证据，不能作为主效果；
+- Qwen v0.3 accept-aware label-conditioned 结果是当前最强主证据；
+- realistic hard-negative branch 只能留在 source-acquisition/gate-readiness
+  boundary，不能升级为主实验；
+- 相关工作引用和更多 baseline 仍是正式投稿前的风险点。
+
+验收结果：
+
+- `python -m py_compile scripts\write_final_manuscript_claim_map.py`：通过；
+- `python scripts\write_final_manuscript_claim_map.py --check`：通过；
+- `python -m json.tool data\reviews\final_manuscript_claim_map_v0_1.json`：通过；
+- 手动检索确认正文包含 v0.2、RQ1--RQ5、E0-E6 evidence ladder、Qwen v0.3
+  label-conditioned table、E6 rule-only/no-verdict table 和未完成 baseline 边界。
+
 ## 0.23 2026-07-03 CCF-C manuscript inline figure placement
 
 本轮目标是完成用户要求的“论文中配图放置”：不是重新生成图，而是把已有 CCF-C

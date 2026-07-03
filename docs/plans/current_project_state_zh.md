@@ -13,11 +13,14 @@
   realistic hard-negative gate 路线。
 - 当前研究目标已收敛为“稳妥写完并面向 CCF-C”。final
   experiment-setting validity audit 已通过 bounded-claim gate；manuscript claim
-  map / threats-to-validity 收束、正文 v0.1 和 CCF-C 专用 Fig. 1--3 均已完成。
+  map / threats-to-validity 收束、正文 v0.2 和 CCF-C 专用 Fig. 1--3 均已完成。
   配图后端按用户询问后的推荐路径选择 Python/matplotlib，图集位于
   `docs/figures/ccfc/`。Fig. 1--3 已插入
   `docs/paper/ccfc_manuscript_rewrite_v0_1.md` 的对应正文位置，并通过
   `scripts/audit_ccfc_figure_placement.py` 审计。
+  附件评审意见触发的 v0.2 修订已把 Qwen v0.3 label-conditioned metrics、
+  E6 rule-only/no-verdict baseline 和 E0-E6 evidence ladder 放入主文；未完成的
+  always-escalate、random、majority、完整 E0/no-tool baseline 仍不得写成已完成结果。
   在 `ready_for_verifier_api=false` 时仍不得运行 Qwen/DeepSeek verifier API。
 
 ## 2026-07-03 快速状态增量
@@ -48,8 +51,13 @@
 - 新增 CCF-C figure placement audit：
   `docs/paper/ccfc_figure_placement_audit_v0_1.md` 和
   `data/reviews/ccfc_figure_placement_audit_v0_1.json`，状态为 `passed`。
-- 当前本轮写作/配图/正文插图目标已完成；若继续投稿准备，下一步应是把 Markdown 正文和
-  CCF-C 图集整合到目标投稿 LaTeX/Word 模板，而不是继续实验或 API。
+- 新增附件评审响应文档：
+  `docs/paper/ccfc_revision_response_v0_2.md`。它逐项记录“审计报告化”、
+  zero-accept 主结果过弱、accept-aware 结果应成为主证据、baseline 缺口、
+  related-work 缺口和 realistic branch 边界等问题的处理状态。
+- 当前本轮写作/配图/正文插图目标已完成；若继续投稿准备，下一步应优先补 verified
+  related-work citations 和缺失 baseline，或在目标模板确定后整合到 LaTeX/Word
+  投稿格式，而不是继续无边界实验或 API。
 
 ## 2026-07-02 快速状态增量
 
@@ -115,8 +123,9 @@
 - 同步判断：以 `git status --short --branch`、`git log -1 --oneline` 和
   `origin/evp8-v03-qwen-main-exp` 为准；不得再用旧 `origin/main` 段落判断
   当前分支是否同步。
-- 当前执行入口：CCF-C 稿件包后续格式整合。Manuscript claim map /
-  threats-to-validity 收束、正文 v0.1、Fig. 1--3 和正文内配图放置均已完成。
+- 当前执行入口：CCF-C 稿件包后续审稿/格式整合。Manuscript claim map /
+  threats-to-validity 收束、正文 v0.2、Fig. 1--3、正文内配图放置和
+  `docs/paper/ccfc_revision_response_v0_2.md` 均已完成。
   Luigi
   source-acquisition/materialization protocol 已降级为可选未来工作，不再是稳妥
   CCF-C 路线的当前 blocker。

@@ -4415,3 +4415,21 @@ This file starts fresh for the patch-verification project.
 - Add a placement audit when figure position matters. File-existence checks
   prove assets exist; they do not prove figures are in the right section, in the
   right order, or paired with captions.
+
+## 2026-07-03 Critique-driven CCF-C manuscript rewrite
+
+- When a reviewer says the draft reads like an audit report, do not merely add
+  stronger wording. Rebuild the paper around contribution, RQs, main evidence,
+  baselines, and boundaries. The audit artifacts should support the argument,
+  not be the argument.
+- Promote repaired evidence only when the tracked metrics justify it. In this
+  revision, Qwen v0.3 label-conditioned metrics became main evidence because
+  they contain accept, correct accept, false accept, accepted precision, correct
+  recall, false accept rate, and escalation rate over the frozen 98-candidate
+  matrix.
+- Do not launder missing baselines into prose. If always-escalate, random,
+  majority, or full E0/no-tool baselines are not tracked completed artifacts,
+  list them as submission risks or future work, not as results.
+- Keep failed source-acquisition gates out of the main verifier claim. The
+  realistic hard-negative branch is useful boundary evidence, but a failed
+  three-project gate cannot support a main verifier-ready experiment.

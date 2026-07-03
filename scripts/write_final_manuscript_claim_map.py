@@ -19,6 +19,9 @@ FIVE_MODEL_SYNTHESIS = REPO_ROOT / "data" / "protocols" / "evp8_five_model_synth
 NO_VERDICT_COMPARISON = REPO_ROOT / "data" / "reviews" / "evp8_e6_no_verdict_ablation_comparison.json"
 HARD_TOOL_CONTESTATION = REPO_ROOT / "data" / "protocols" / "evp8_hard_tool_contestation_result_audit_v0_1.json"
 REALISTIC_GATE = REPO_ROOT / "data" / "protocols" / "evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json"
+QWEN_LABEL_CONDITIONED = REPO_ROOT / "data" / "reviews" / "evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json"
+PHASE_A_ANALYSIS = REPO_ROOT / "data" / "reviews" / "evp8_phase_a_paper_ready_analysis.json"
+EVP8_PROTOCOL_V03 = REPO_ROOT / "data" / "protocols" / "evp8_protocol_v0_3_qwen_first.json"
 
 DEFAULT_JSON_OUT = REPO_ROOT / "data" / "reviews" / "final_manuscript_claim_map_v0_1.json"
 DEFAULT_CLAIM_MD_OUT = REPO_ROOT / "docs" / "paper" / "final_manuscript_claim_map_v0_1.md"
@@ -81,12 +84,68 @@ def compact_level_counts(five: dict[str, Any]) -> list[dict[str, Any]]:
     return rows
 
 
+def percent(value: Any) -> str:
+    if value is None:
+        return "n/a"
+    return f"{float(value) * 100:.2f}%"
+
+
+def evidence_ladder_rows(protocol: dict[str, Any]) -> list[dict[str, str]]:
+    rows: list[dict[str, str]] = []
+    for item in protocol.get("evidence_ladder") or []:
+        level = str(item.get("level", ""))
+        if level == "E7":
+            continue
+        rows.append(
+            {
+                "level": level,
+                "name": str(item.get("level_name", "")),
+                "adds": str(item.get("adds_evidence_class", "")),
+                "field_groups": ", ".join(str(group) for group in item.get("model_visible_field_groups", [])),
+            }
+        )
+    return rows
+
+
+def qwen_label_metric_rows(label_conditioned: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for level, metrics in sorted((label_conditioned.get("per_evidence_level") or {}).items()):
+        confusion = metrics.get("confusion_counts") or {}
+        rows.append(
+            {
+                "level": level,
+                "accept": (metrics.get("decision_counts") or {}).get("accept", 0),
+                "correct_accept": confusion.get("true_accept", 0),
+                "false_accept": confusion.get("false_accept", 0),
+                "accepted_precision": metrics.get("accepted_precision"),
+                "correct_recall": metrics.get("correct_recall"),
+                "false_accept_rate": metrics.get("false_accept_rate"),
+                "false_reject_rate": metrics.get("false_reject_rate"),
+                "escalation_rate": metrics.get("escalation_rate"),
+            }
+        )
+    return rows
+
+
+def e6_ablation_metric_rows(no_verdict: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    rule_metrics = (no_verdict.get("rule_only") or {}).get("metrics") or {}
+    rows.append({"condition": "rule-only", **rule_metrics})
+    for model, model_data in sorted((no_verdict.get("per_model") or {}).items()):
+        for condition, condition_data in sorted((model_data.get("conditions") or {}).items()):
+            rows.append({"condition": f"{model} {condition}", **(condition_data.get("metrics") or {})})
+    return rows
+
+
 def build_claim_map() -> dict[str, Any]:
     validity = read_json(VALIDITY_AUDIT)
     five = read_json(FIVE_MODEL_SYNTHESIS)
     no_verdict = read_json(NO_VERDICT_COMPARISON)
     hard = read_json(HARD_TOOL_CONTESTATION)
     realistic = read_json(REALISTIC_GATE)
+    qwen_label = read_json(QWEN_LABEL_CONDITIONED)
+    phase_a = read_json(PHASE_A_ANALYSIS)
+    protocol_v03 = read_json(EVP8_PROTOCOL_V03)
 
     hard_gate = realistic.get("hard_negative_gate") or {}
     hard_models = hard.get("models") or {}
@@ -154,12 +213,12 @@ def build_claim_map() -> dict[str, Any]:
         },
         {
             "id": "C3",
-            "claim": "Accept-aware protocol repairs are necessary to avoid over-interpreting earlier zero-accept artifacts.",
-            "status": "supported_as_setting_repair",
+            "claim": "In the Qwen v0.3 accept-aware run, visible executable and tool evidence changed correct-patch acceptance while introducing bounded false-accept risk.",
+            "status": "supported_qwen_only",
             "evidence": ["v0_2_accept_aware_synthesis", "v0_3_qwen_label_conditioned_summary"],
-            "paper_location": "Methods/Validity: Protocol repair and label-conditioned analysis",
-            "allowed_wording": "Accept-aware analyses repair a protocol artifact and allow bounded recall/false-accept analysis.",
-            "boundary": "Historical v0.1 zero-accept behavior should remain protocol history.",
+            "paper_location": "Results: Accept-aware label-conditioned behavior",
+            "allowed_wording": "For Qwen v0.3 on the frozen 98-candidate packet set, E3-E6 shifted many correct patches from non-accept to accept, with 3-4 false accepts depending on level.",
+            "boundary": "Qwen-only v0.3 descriptive result; not a five-model effectiveness claim or final evidence-level ranking.",
         },
         {
             "id": "C4",
@@ -227,6 +286,8 @@ def build_claim_map() -> dict[str, Any]:
         check("no_verdict_comparison_checks_present", len(no_verdict.get("checks", [])) >= 1, len(no_verdict.get("checks", []))),
         check("hard_tool_contestation_audit_passed", hard.get("audit_status") == "passed", hard.get("audit_status")),
         check("realistic_gate_not_verifier_ready", hard_gate.get("passed") is False, hard_gate),
+        check("qwen_label_conditioned_checks_passed", all(item.get("passed") for item in qwen_label.get("checks", [])), len(qwen_label.get("checks", []))),
+        check("phase_a_analysis_checks_passed", all(item.get("passed") for item in phase_a.get("checks", [])), len(phase_a.get("checks", []))),
     ]
 
     return {
@@ -247,6 +308,9 @@ def build_claim_map() -> dict[str, Any]:
             "no_verdict_comparison": "data/reviews/evp8_e6_no_verdict_ablation_comparison.json",
             "hard_tool_contestation": "data/protocols/evp8_hard_tool_contestation_result_audit_v0_1.json",
             "realistic_gate": "data/protocols/evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json",
+            "qwen_label_conditioned": "data/reviews/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json",
+            "phase_a_analysis": "data/reviews/evp8_phase_a_paper_ready_analysis.json",
+            "evp8_protocol_v0_3": "data/protocols/evp8_protocol_v0_3_qwen_first.json",
         },
         "manuscript_argument": manuscript_argument,
         "terminology_ledger": terminology,
@@ -255,6 +319,11 @@ def build_claim_map() -> dict[str, Any]:
         "remaining_threats": read_json(VALIDITY_AUDIT).get("remaining_threats", []),
         "decision_totals_by_level": decision_totals_by_level(five),
         "per_model_level_counts": compact_level_counts(five),
+        "evidence_ladder": evidence_ladder_rows(protocol_v03),
+        "qwen_label_conditioned_metrics": qwen_label_metric_rows(qwen_label),
+        "e6_ablation_metrics": e6_ablation_metric_rows(no_verdict),
+        "phase_a_confidence_intervals": phase_a.get("confidence_intervals") or {},
+        "phase_a_boundary": phase_a.get("claim_boundary") or {},
         "hard_tool_contestation_summary": {
             "deepseek_opportunity": (deepseek_contest.get("opportunity_correction_vs_tool") or {}).get("tool_false_accepts"),
             "qwen_opportunity": (qwen_contest.get("opportunity_correction_vs_tool") or {}).get("tool_false_accepts"),
@@ -304,6 +373,43 @@ def write_claim_markdown(path: Path, claim_map: dict[str, Any]) -> None:
             f"| `{row['id']}` | {row['claim']} | `{row['status']}` | "
             f"{', '.join(row['evidence'])} | {row['paper_location']} | {row['boundary']} |"
         )
+    lines += [
+        "",
+        "## Evidence Ladder",
+        "",
+        "| level | name | added evidence class | model-visible field groups |",
+        "| --- | --- | --- | --- |",
+    ]
+    for row in claim_map["evidence_ladder"]:
+        lines.append(f"| {row['level']} | {row['name']} | {row['adds']} | {row['field_groups']} |")
+    lines += [
+        "",
+        "## Qwen v0.3 Label-Conditioned Metrics",
+        "",
+        "| level | accept | correct accept | false accept | accepted precision | correct recall | false accept rate | escalation rate |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for row in claim_map["qwen_label_conditioned_metrics"]:
+        lines.append(
+            f"| {row['level']} | {row['accept']} | {row['correct_accept']} | {row['false_accept']} | "
+            f"{percent(row['accepted_precision'])} | {percent(row['correct_recall'])} | "
+            f"{percent(row['false_accept_rate'])} | {percent(row['escalation_rate'])} |"
+        )
+    lines += [
+        "",
+        "## E6 Baseline And No-Verdict Metrics",
+        "",
+        "| condition | accept | reject | escalate | accepted precision | correct recall | false accept rate | escalation rate |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for row in claim_map["e6_ablation_metrics"]:
+        decisions = row.get("decision_counts") or {}
+        lines.append(
+            f"| {row['condition']} | {decisions.get('accept', 0)} | {decisions.get('reject', 0)} | "
+            f"{decisions.get('escalate', 0)} | {percent(row.get('accepted_precision'))} | "
+            f"{percent(row.get('correct_recall'))} | {percent(row.get('false_accept_rate'))} | "
+            f"{percent(row.get('escalation_rate'))} |"
+        )
     lines += ["", "## Forbidden Claims", ""]
     for claim in claim_map["forbidden_claims"]:
         lines.append(f"- {claim}")
@@ -344,14 +450,42 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
     fig1 = figure_assets["Fig. 1"]
     fig2 = figure_assets["Fig. 2"]
     fig3 = figure_assets["Fig. 3"]
+    evidence_table_lines = [
+        "| level | added model-visible evidence | role in the protocol |",
+        "| --- | --- | --- |",
+    ]
+    for row in claim_map["evidence_ladder"]:
+        evidence_table_lines.append(f"| {row['level']} | {row['adds']} | {row['name']} |")
+    qwen_table_lines = [
+        "| level | accept | correct accept | false accept | accepted precision | correct recall | false accept rate | escalation rate |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for row in claim_map["qwen_label_conditioned_metrics"]:
+        qwen_table_lines.append(
+            f"| {row['level']} | {row['accept']} | {row['correct_accept']} | {row['false_accept']} | "
+            f"{percent(row['accepted_precision'])} | {percent(row['correct_recall'])} | "
+            f"{percent(row['false_accept_rate'])} | {percent(row['escalation_rate'])} |"
+        )
+    e6_table_lines = [
+        "| condition | accept | reject | escalate | accepted precision | correct recall | false accept rate | escalation rate |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for row in claim_map["e6_ablation_metrics"]:
+        decisions = row.get("decision_counts") or {}
+        e6_table_lines.append(
+            f"| {row['condition']} | {decisions.get('accept', 0)} | {decisions.get('reject', 0)} | "
+            f"{decisions.get('escalate', 0)} | {percent(row.get('accepted_precision'))} | "
+            f"{percent(row.get('correct_recall'))} | {percent(row.get('false_accept_rate'))} | "
+            f"{percent(row.get('escalation_rate'))} |"
+        )
     lines = [
         "# Evidence Visibility Shapes Risk Behavior in LLM-Based Candidate Patch Verification",
         "",
-        "Draft status: stable CCF-C manuscript rewrite v0.1, 2026-07-03.",
+        "Draft status: stable CCF-C manuscript rewrite v0.2, 2026-07-03.",
         "",
         "## Abstract",
         "",
-        "Large language models (LLMs) are increasingly used to review software patches, but a patch-verification decision depends on the evidence visible at review time. We study candidate patch verification as an evidence-conditioned merge-gate task, where a verifier must accept, reject, or escalate a candidate patch while hidden evaluator labels remain withheld until after the decision. Using a frozen EVP-8 packet set with 98 candidate patches, seven evidence levels, and five LLMs, we find that evidence visibility changes decision patterns, but not as a monotonic correctness curve. The five-model synthesis passed run, parse, and coverage checks, and aggregate decisions varied across evidence levels. Accept-aware analyses further show why an earlier zero-accept setting should be treated as a protocol artifact rather than a main behavioral finding. In ablations, removing verdict-like fields and adding tool-contestation changed model behavior, but the strongest supported effect was risk triage through escalation rather than strict semantic correction. A fresh realistic hard-negative branch produced 26 visible-pass/hidden-fail cases across two projects, but failed the predeclared three-project verifier-readiness gate. The results support bounded claims about evidence-conditioned risk behavior in LLM-based patch verification, not reliable autonomous correctness verification.",
+        "Large language models (LLMs) are increasingly used to inspect software patches, but a merge decision is only meaningful relative to the evidence available at review time. We formulate candidate patch verification as an evidence-conditioned merge-gate task: given a candidate patch and model-visible evidence, a verifier must accept, reject, or escalate while evaluator-only correctness labels remain hidden until post-decision analysis. We introduce the Evidence-Visibility Protocol (EVP-8), a frozen 98-candidate packet set with seven cumulative evidence levels and tracked hidden-evaluator joins. The five-model synthesis shows that evidence visibility changes decision patterns, but often through conservative escalation rather than autonomous correction. The repaired Qwen v0.3 accept-aware run provides the strongest label-conditioned signal: correct recall is 0.00% at E0-E2, 80.95% at E3, 85.71% at E4-E5, and 95.24% at E6, while E6 accepted precision is 83.33% with 4 false accepts among 77 non-correct candidates. E6 rule-only and no-verdict ablations further show that verdict-like tool summaries can anchor behavior, and tool-contestation shifts known false accepts mainly to escalation, not strict rejection. These results support a bounded methodological contribution: evidence visibility should be controlled and reported when evaluating LLM patch verifiers. They do not establish reliable autonomous patch correctness verification.",
         "",
         "## 1. Introduction",
         "",
@@ -365,11 +499,13 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "## 2. Background and Related Work",
         "",
-        "Patch correctness has long been a central concern in automated program repair and software testing. Generate-and-validate systems can produce plausible patches that pass available tests while failing broader semantic expectations. LLM-based coding agents expand this problem because they can generate fluent explanations and plausible edits, but plausibility is not equivalent to merge readiness.",
+        "Patch correctness has long been a central concern in automated program repair and software testing. Generate-and-validate repair systems can produce plausible patches that pass available tests while failing broader semantic expectations, a problem commonly discussed as plausible or overfitting patches. This paper studies the downstream verification side of that problem: after a candidate patch exists, what evidence is sufficient for a merge-gate decision?",
         "",
-        "Existing repair benchmarks primarily evaluate whether a system can resolve a task. The verification problem studied here is adjacent but distinct: given a candidate patch, what decision should a verifier make under a stated evidence boundary? This distinction matters for software quality because a patch-review system may be useful as a triage layer even when it cannot prove correctness.",
+        "Testing and semantic-equivalence work provide the technical basis for exposing the limits of visible evidence. Visible fail-to-pass tests, pass-to-pass regression checks, static diagnostics, and broader tool summaries can each support a reviewer, but none is identical to a hidden evaluator label. The EVP-8 design therefore separates model-visible evidence from evaluator-only outcomes rather than asking an LLM to see or infer the final label.",
         "",
-        "Prior experiments in this repository also showed that prompt-only or verdict-like settings can create misleading interpretations. We therefore separate paper-facing results from diagnostic protocol history. The manuscript uses accept-aware repaired analyses, no-verdict ablations, tool-contestation audits, and final setting-validity checks to avoid overclaiming from a single prompt or protocol version.",
+        "LLM-as-reviewer and LLM-as-judge studies further motivate the evidence-boundary question. LLMs can summarize code context and produce structured rationales, but their decisions may be shaped by prompt framing, output schema, and authoritative-looking tool verdicts. We therefore evaluate LLM patch verification as a selective decision problem with an explicit escalation option, closer to human-in-the-loop triage and abstention than to proof of semantic correctness.",
+        "",
+        "The distinction from prior benchmark-style repair evaluation is methodological. Existing benchmarks primarily ask whether a system resolves a task. EVP-8 asks how a verifier behaves under controlled evidence visibility after a candidate patch is already available. The contribution is not a new repair algorithm; it is a reproducible protocol and evidence chain for measuring evidence-conditioned risk behavior.",
         "",
         "## 3. Evidence-Visibility Protocol",
         "",
@@ -381,17 +517,23 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "The EVP-8 packet set contains 98 candidate patches reviewed across seven evidence levels, E0 through E6. Five selected models produced 686 parse-valid decisions each on the frozen packet set. The synthesis supports descriptive per-level decision-pattern reporting for the packet set; it does not support broad claims that one evidence level is universally optimal or that LLMs outperform deterministic baselines.",
         "",
+        "The evidence levels are cumulative and intentionally transparent:",
+        "",
+        *evidence_table_lines,
+        "",
         "The protocol also distinguishes paper-facing evidence from diagnostic history. Earlier settings that produced zero accept decisions are treated as protocol artifacts unless repaired by accept-aware construction and label-conditioned analysis. This separation is necessary because otherwise a setting artifact could be mistaken for a general property of LLM patch verification.",
         "",
         "## 4. Experimental Design",
         "",
-        "We organize the study around five evidence sources. First, the five-model EVP-8 synthesis measures descriptive decision patterns across seven evidence levels. Second, accept-aware v0.2/v0.3 analyses repair the earlier zero-accept artifact and allow bounded recall and false-accept analysis. Third, E6 no-verdict ablations test whether verdict-like tool summaries anchor model behavior. Fourth, EVP-8-HARD tool-contestation asks whether models challenge visible-test-only accept premises or route risk to escalation. Fifth, the realistic hard-negative branch evaluates whether a fresh source-acquisition pipeline can produce a verifier-ready three-project hard-negative cohort.",
+        "The study is organized around five research questions. RQ1 asks whether evidence visibility changes merge-gate decision patterns across models. RQ2 asks whether repaired accept-aware evidence changes label-conditioned Qwen decisions. RQ3 asks whether verdict-like deterministic tool summaries anchor E6 behavior. RQ4 asks whether explicit tool-contestation can make models challenge visible-test-only accept premises. RQ5 asks whether a fresh realistic hard-negative source-acquisition branch is ready to support a main verifier experiment.",
         "",
-        "All paper-facing claims are constrained by a final setting-validity audit. That audit verifies run and parse coverage, raw-output-free summaries, post-execution label joins, prompt-boundary checks, and the non-overclaiming of the realistic hard-negative branch. It passed only with bounded claims: the results are usable as real evidence for evidence-conditioned risk behavior, not as proof of autonomous correctness verification.",
+        "The evaluated evidence sources match those questions. First, the five-model EVP-8 synthesis measures descriptive decision patterns across E0-E6. Second, the accept-aware Qwen v0.3 analysis computes label-conditioned accepted precision, correct recall, false accept rate, false reject rate, and escalation rate after post-execution label join. Third, E6 full, rule-only, and E6 no-verdict comparisons test the effect of verdict-like tool fields. Fourth, EVP-8-HARD tool-contestation evaluates known false-accept opportunities. Fifth, the realistic hard-negative branch is treated as a source-acquisition gate rather than a main verifier result because it failed the predeclared three-project readiness threshold.",
+        "",
+        "All paper-facing claims are constrained by a final setting-validity audit. That audit verifies run and parse coverage, raw-output-free summaries, post-execution label joins, prompt-boundary checks, and the non-overclaiming of the realistic hard-negative branch. It passed only with bounded claims: the results are usable as real evidence for evidence-conditioned risk behavior, not as proof of autonomous correctness verification. Baselines not yet implemented in tracked artifacts, such as always-escalate, random, and majority policies, are therefore not reported as completed results.",
         "",
         "## 5. Results",
         "",
-        "### 5.1 Evidence visibility changed five-model decision patterns",
+        "### 5.1 RQ1: Evidence visibility changed five-model decision patterns",
         "",
         f"Across the frozen EVP-8 packet set, aggregate decisions varied by evidence level: {totals_text}. These totals show that the decision pattern was not a simple monotonic curve from less evidence to more evidence.",
         "",
@@ -399,21 +541,29 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         f"**Figure 2. {fig2['title']}.** {fig2['conclusion']} Panel a reports per-model rejection counts across E0--E6; panel b shows aggregate escalation/rejection totals; panel c states the interpretation boundary. Source assets: `docs/figures/ccfc/ccfc_fig2_decision_patterns.pdf`, `.svg`, and `.png`.",
         "",
-        "The variation was also model-dependent. DeepSeek V4 Pro and Qwen3.7 Max showed visible level-specific changes, whereas Devstral 2 saturated to escalation across the full packet set. Kimi K2.6 and Gemini 2.5 Flash mostly escalated, with limited local rejection differences. This spread is a software-quality result: a verifier can avoid unsafe accepts by escalating, but a system that escalates nearly everything provides limited automation value.",
+        "The variation was also model-dependent. DeepSeek V4 Pro and Qwen3.7 Max showed visible level-specific changes, whereas Devstral 2 saturated to escalation across the full packet set. Kimi K2.6 and Gemini 2.5 Flash mostly escalated, with limited local rejection differences. This result is important but limited: it shows that evidence visibility affects behavior, while also showing that the five-model setting alone is too conservative to demonstrate useful autonomous verification.",
         "",
-        "### 5.2 Accept-aware analyses controlled a protocol artifact",
+        "### 5.2 RQ2: Accept-aware evidence changed Qwen label-conditioned behavior",
         "",
-        "The earlier zero-accept behavior is not used as a main behavioral claim. Accept-aware v0.2/v0.3 analyses repair this setting and support bounded label-conditioned interpretation. In the final validity audit, the Qwen label-conditioned matrix had complete candidate-level coverage, no missing or duplicate cells, and hidden labels joined only after execution. This supports the claim that the repaired analyses are interpretable, while the historical zero-accept behavior remains protocol history.",
+        "The earlier zero-accept behavior is not used as a main behavioral claim. The repaired Qwen v0.3 accept-aware run provides a direct label-conditioned result on the frozen 98-candidate packet set. Hidden labels were joined only after execution, and the matrix had complete candidate-level coverage with no missing or duplicate cells.",
         "",
-        "### 5.3 Verdict-like evidence changed policy behavior",
+        *qwen_table_lines,
         "",
-        "The E6 no-verdict ablation shows that verdict-like tool summaries affect model policy behavior. Removing verdict-like fields did not turn the models into reliable semantic verifiers. Instead, it exposed model-dependent tradeoffs between accepting correct patches, rejecting wrong patches, and escalating uncertain cases. This is why the paper reports verdict-full, no-verdict, and tool-contestation conditions separately.",
+        "This table changes the paper's main interpretation. At E0-E2, Qwen accepted no correct patches, so the setting mainly measured caution. At E3-E6, executable and tool evidence enabled many correct-patch accepts: correct recall rose to 80.95% at E3 and 95.24% at E6. The improvement was not free. E6 accepted 20 of 21 correct patches but also accepted 4 of 77 non-correct patches, giving 83.33% accepted precision and 5.19% false accept rate. The supported claim is therefore not that more evidence monotonically proves correctness; it is that visible evidence can unlock acceptance behavior while exposing a measurable false-accept tradeoff.",
         "",
-        "### 5.4 Tool-contestation supported risk triage, not strict correction",
+        "### 5.3 RQ3: Verdict-like evidence changed policy behavior",
+        "",
+        "The E6 no-verdict ablation compares a deterministic rule-only baseline, the E6-full setting with verdict-like tool fields, and E6-no-verdict variants that remove those fields. This directly tests whether the model is adding value beyond following a visible tool verdict.",
+        "",
+        *e6_table_lines,
+        "",
+        "The comparison is model-dependent. Qwen E6-no-verdict remains close to Qwen E6-full, preserving high correct recall but repeating four false accepts. DeepSeek E6-no-verdict removes false accepts on this cohort, but its correct recall drops to 52.38% and escalation rises to 14.29%. The result supports a risk-policy interpretation: removing verdict-like fields can reduce unsafe accepts for some models, but the gain may come from abstention rather than semantic discrimination.",
+        "",
+        "### 5.4 RQ4: Tool-contestation supported risk triage, not strict correction",
         "",
         f"On EVP-8-HARD, tool-contestation covered 47 candidates for both Qwen and DeepSeek. For the known tool false-accept opportunity set, DeepSeek shifted {deepseek_opp.get('candidate_count')} tool false accepts to {deepseek_opp.get('escalated')} escalations and {deepseek_opp.get('corrected_to_reject')} strict rejects. Qwen shifted {qwen_opp.get('candidate_count')} tool false accepts to {qwen_opp.get('escalated')} escalations, with {qwen_opp.get('corrected_to_reject')} strict rejects and {qwen_opp.get('repeated_accept')} repeated accept. The supported interpretation is therefore risk triage through escalation, not semantic correction of wrong patches.",
         "",
-        "### 5.5 Realistic hard-negative acquisition remained a boundary",
+        "### 5.5 RQ5: Realistic hard-negative acquisition remained a boundary",
         "",
         f"The fresh realistic branch produced {realistic.get('visible_pass_hidden_fail_count')} visible-pass/hidden-fail cases, below the predeclared target of {realistic.get('minimum_count')}, and covered {len(realistic.get('visible_pass_hidden_fail_projects') or [])} projects rather than the required {realistic.get('minimum_projects')}. It is therefore a source-acquisition and gate-readiness negative result, not a verifier-ready main experiment.",
         "",
@@ -421,7 +571,11 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "The results support a bounded but practically important interpretation. LLM-based patch verifiers are not only functions of model identity; they are functions of the evidence boundary. A model may become conservative, tool-dependent, or saturated depending on how patch evidence is presented. This matters for software quality because a deployment pipeline must decide whether escalation is acceptable, whether tool summaries should be trusted, and when a patch should remain under human review.",
         "",
+        "The strongest contribution is methodological rather than algorithmic. EVP-8 makes evidence visibility explicit, separates model-visible information from evaluator-only labels, and forces each result to state whether it measures acceptance, false acceptance, strict rejection, or escalation. This structure prevents a common overclaim: treating fewer false accepts as semantic correction when the actual behavior is abstention.",
+        "",
         "The most important rival explanation is that the observed behavior is a setup artifact. The final setting-validity audit reduces this risk but does not erase all limitations. It shows that run coverage, parse validity, post-execution label joins, prompt-boundary checks, and claim boundaries are in place. It also identifies remaining threats: cohort diversity is limited, prompt formatting can influence behavior, and the realistic three-project hard-negative gate remains blocked.",
+        "",
+        "The realistic hard-negative branch should be read as a boundary result. It demonstrates that constructing fresh visible-pass/hidden-fail cases is feasible but not yet ready as a main verifier experiment because the predeclared three-project gate failed. This negative result is valuable for reproducibility and source-acquisition planning, but it should not be used to strengthen the verifier claim.",
         "",
         "The paper should therefore avoid a stronger interpretation. It does not show that LLMs reliably verify patch correctness. It shows that evidence visibility shapes risk behavior in candidate patch verification and that some apparent improvements are better understood as conservative routing rather than correctness proof.",
         "",
@@ -441,7 +595,7 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "## 8. Conclusion",
         "",
-        "This study shows that evidence visibility is a first-order variable in LLM-based candidate patch verification. Across frozen evidence packets, repaired analyses, no-verdict ablations, and tool-contestation audits, the strongest supported conclusion is that LLM verifier behavior is evidence-conditioned, model-dependent, and often conservative. These findings are useful for software-quality evaluation of LLM review pipelines, but they do not establish reliable autonomous patch correctness verification. A stable CCF-C manuscript should therefore present the work as a bounded empirical study of risk behavior under controlled evidence visibility.",
+        "This study introduces EVP-8 as a hidden-evaluator protocol for measuring evidence-conditioned LLM patch-verification behavior. Across frozen evidence packets, repaired Qwen label-conditioned analysis, E6 rule-only/no-verdict ablations, and tool-contestation audits, the strongest supported conclusion is that verifier behavior is evidence-conditioned, model-dependent, and often conservative. The practical value is risk triage under explicit evidence boundaries, not reliable autonomous patch correctness verification. A stable CCF-C manuscript should therefore present the work as a bounded methods-and-measurement contribution with transparent metrics, baselines, and threat boundaries.",
         "",
         "## Figure Asset Summary" if figures_generated else "## Planned Figures",
         "",
