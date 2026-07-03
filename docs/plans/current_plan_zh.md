@@ -2,6 +2,71 @@
 
 最后更新：2026-07-03
 
+## 0.22 2026-07-03 CCF-C manuscript figure generation
+
+本轮目标是在用户询问“哪个好一些呢”后，按 figure backend-selection 规则推荐并
+选择绘图后端，然后生成当前 CCF-C 正文对应的 Fig. 1--3。该轮不调用 API，不读取
+ignored raw outputs，不改变实验结果和论文主张。
+
+后端选择：
+
+- 选择 `Python`，使用 matplotlib / numpy；
+- 理由：当前仓库的数据处理、aggregate JSON、既有 `generate_sqj_figures.py`
+  和 figure 输出链路均为 Python；本轮三张图需要自定义 workflow schematic、
+  quantitative grid 和 claim-boundary map，不依赖 R/ggplot/ComplexHeatmap
+  专用生态；
+- Backend exclusivity：本轮所有绘图、preview、PDF/SVG/PNG export 和 QA 都只用
+  Python，不使用 R 生成任何替代图。
+
+Figure contract：
+
+- Fig. 1：Hidden-evaluator evidence-visibility protocol；
+  archetype = `schematic-led composite`；结论是 model-visible evidence 与
+  evaluator-only labels 在决策前隔离，labels 只在 post-decision analysis 中 join。
+- Fig. 2：Five-model evidence-level decision patterns；
+  archetype = `quantitative grid`；结论是 five-model escalation/rejection pattern
+  随 evidence level 和 model 改变，但不是 monotonic correctness curve。
+- Fig. 3：Claim boundary and setting-validity map；
+  archetype = `asymmetric mixed-modality figure`；结论是 supported claims 必须被
+  final setting-validity gate、accept-aware repair、no-verdict/tool-contestation
+  和 realistic hard-negative boundary 限定。
+
+验收要求：
+
+- 新增 CCF-C 专用 figure generator；
+- `docs/figures/ccfc/` 下生成 Fig. 1--3 的 PDF/SVG/PNG；
+- 输出 manifest 和 source-data/QA 说明；
+- 正文和 claim map 中的 figure plan 不再显示 `planned_requires_backend`；
+- 同步 README、docs index、figure README、current project state 和 engineering notes；
+- 运行脚本语法、figure generation、文件存在/非空、SVG editable-text、PNG dimension
+  和 `git diff --check` 验证。
+
+执行结果：
+
+- 新增 `scripts/generate_ccfc_figures.py`；
+- 生成 `docs/figures/ccfc/ccfc_fig1_protocol.{pdf,svg,png}`；
+- 生成 `docs/figures/ccfc/ccfc_fig2_decision_patterns.{pdf,svg,png}`；
+- 生成 `docs/figures/ccfc/ccfc_fig3_claim_boundary.{pdf,svg,png}`；
+- 生成 `docs/figures/ccfc/figure_manifest.json`、
+  `docs/figures/ccfc/figure_source_data.json` 和
+  `docs/figures/ccfc/figure_qa.md`；
+- `scripts/write_final_manuscript_claim_map.py` 已同步检测 CCF-C 图集并将
+  figure status 写为 `generated_python`；
+- 正文 `docs/paper/ccfc_manuscript_rewrite_v0_1.md` 已从 `Planned Figures`
+  更新为 `Generated Figures`。
+
+验收结果：
+
+- `python -m py_compile scripts\write_final_manuscript_claim_map.py scripts\generate_ccfc_figures.py`：通过；
+- `python scripts\generate_ccfc_figures.py`：通过；
+- `python scripts\generate_ccfc_figures.py --check`：通过；
+- `python scripts\write_final_manuscript_claim_map.py --check`：通过；
+- PNG 预览已人工检查并修复标题/标签/说明框重叠；
+- SVG text node 检查通过；
+- PNG dimension 检查通过：Fig. 1 为 2149x1243，Fig. 2/3 为 2509x1721；
+- `git diff --check`：通过，仅有既有 Windows LF/CRLF 提示；
+- staged sensitive scan 在提交前执行。
+
 ## 0.21 2026-07-03 final manuscript claim map and CCF-C body rewrite
 
 本轮目标是在不继续实验、不调用 API、不读取 ignored raw outputs 的前提下，把

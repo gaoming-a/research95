@@ -84,10 +84,10 @@ Historical protocol versions are treated as diagnostic material. In particular, 
 
 This study shows that evidence visibility is a first-order variable in LLM-based candidate patch verification. Across frozen evidence packets, repaired analyses, no-verdict ablations, and tool-contestation audits, the strongest supported conclusion is that LLM verifier behavior is evidence-conditioned, model-dependent, and often conservative. These findings are useful for software-quality evaluation of LLM review pipelines, but they do not establish reliable autonomous patch correctness verification. A stable CCF-C manuscript should therefore present the work as a bounded empirical study of risk behavior under controlled evidence visibility.
 
-## Planned Figures
+## Generated Figures
 
-Figure generation is pending backend selection. The current figure plan is:
+Figures were generated with the Python/matplotlib backend under `docs/figures/ccfc/`.
 
-- Fig. 1: Hidden-evaluator evidence-visibility protocol — Model-visible evidence and evaluator-only labels are separated until post-decision analysis.
-- Fig. 2: Five-model evidence-level decision patterns — Escalation/rejection patterns vary by model and are non-monotonic across E0-E6.
-- Fig. 3: Claim boundary and setting-validity map — Supported findings are bounded by leakage controls, protocol repairs, and remaining external-validity threats.
+- Fig. 1: Hidden-evaluator evidence-visibility protocol — Model-visible evidence and evaluator-only labels are separated until post-decision analysis. Outputs: docs/figures/ccfc/ccfc_fig1_protocol.pdf, docs/figures/ccfc/ccfc_fig1_protocol.svg, docs/figures/ccfc/ccfc_fig1_protocol.png.
+- Fig. 2: Five-model evidence-level decision patterns — Escalation/rejection patterns vary by model and are non-monotonic across E0-E6. Outputs: docs/figures/ccfc/ccfc_fig2_decision_patterns.pdf, docs/figures/ccfc/ccfc_fig2_decision_patterns.svg, docs/figures/ccfc/ccfc_fig2_decision_patterns.png.
+- Fig. 3: Claim boundary and setting-validity map — Supported findings are bounded by leakage controls, protocol repairs, and remaining external-validity threats. Outputs: docs/figures/ccfc/ccfc_fig3_claim_boundary.pdf, docs/figures/ccfc/ccfc_fig3_claim_boundary.svg, docs/figures/ccfc/ccfc_fig3_claim_boundary.png.

@@ -13,9 +13,8 @@
   current paper/result boundaries, experiment-decision gates, active plan roles,
   key project files, script entry points, and forbidden misuses. As of
   2026-07-03, its top section is the authority for the current active branch.
-  The manuscript claim-map, threats-to-validity consolidation, and CCF-C body
-  rewrite v0.1 are now tracked; the unique next action is manuscript figure
-  generation after an explicit Python/R backend choice. The no-API Luigi
+  The manuscript claim-map, threats-to-validity consolidation, CCF-C body
+  rewrite v0.1, and CCF-C Fig. 1--3 are now tracked. The no-API Luigi
   source-acquisition/materialization protocol is optional future work, not the
   current blocker. Historical `origin/main` entries retained later in plan logs
   are audit records only. As of
@@ -67,8 +66,8 @@
 - `plans/current_plan_zh.md`: current execution log. The 2026-07-03 0.21 entry
   records the final manuscript claim map and CCF-C body rewrite: keep the
   manuscript framed as evidence visibility / risk behavior rather than
-  autonomous correctness verification, and generate figures only after the user
-  explicitly chooses Python or R.
+  autonomous correctness verification. The 2026-07-03 0.22 entry records the
+  Python/matplotlib figure generation pass for CCF-C Fig. 1--3.
 - `../scripts/write_evp8_realistic_hardneg_uplift_packet.py`: no-API boundary
   packet writer for the realistic hard-negative uplift route. It reads the
   tracked combined generation gate only and writes the current missing
@@ -113,6 +112,13 @@
 - `paper/ccfc_manuscript_rewrite_v0_1.md`: stable CCF-C body rewrite v0.1.
   It presents the study as bounded evidence-conditioned risk behavior in
   candidate patch verification, not autonomous patch correctness verification.
+- `../scripts/generate_ccfc_figures.py`: Python/matplotlib generator for the
+  CCF-C manuscript figure set. It reads the tracked final manuscript claim map
+  only and outputs PDF/SVG/PNG figures plus manifest, source-data, and QA notes.
+- `figures/ccfc/`: CCF-C manuscript-facing figure set. It contains
+  `ccfc_fig1_protocol`, `ccfc_fig2_decision_patterns`, and
+  `ccfc_fig3_claim_boundary` in PDF/SVG/PNG formats, plus
+  `figure_manifest.json`, `figure_source_data.json`, and `figure_qa.md`.
 - As of 2026-06-30, `EVP-8-HARD tool-contestation` is complete for Qwen and
   DeepSeek on the 47-candidate hard-case cohort. It removes verdict-like tool
   fields and asks models to challenge a visible-test-only accept premise. The

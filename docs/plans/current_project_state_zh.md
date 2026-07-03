@@ -13,8 +13,9 @@
   realistic hard-negative gate 路线。
 - 当前研究目标已收敛为“稳妥写完并面向 CCF-C”。final
   experiment-setting validity audit 已通过 bounded-claim gate；manuscript claim
-  map / threats-to-validity 收束和正文 v0.1 已完成。当前下一步是按用户明确选择
-  的绘图后端生成论文配图，并在此之前不得默认选择 Python/R。
+  map / threats-to-validity 收束、正文 v0.1 和 CCF-C 专用 Fig. 1--3 均已完成。
+  配图后端按用户询问后的推荐路径选择 Python/matplotlib，图集位于
+  `docs/figures/ccfc/`。
   在 `ready_for_verifier_api=false` 时仍不得运行 Qwen/DeepSeek verifier API。
 
 ## 2026-07-03 快速状态增量
@@ -38,8 +39,12 @@
   `docs/paper/ccfc_manuscript_rewrite_v0_1.md`。该稿把结果写成
   evidence-conditioned risk behavior，而不是 autonomous correctness
   verification。
-- 当前唯一下一步：确认论文配图后端（Python 或 R）后生成 Fig. 1--3；在确认前
-  不写绘图脚本、不生成 mock figure、不默认选择后端。
+- 新增 CCF-C 专用 Python 图集：
+  `docs/figures/ccfc/ccfc_fig1_protocol.*`、
+  `docs/figures/ccfc/ccfc_fig2_decision_patterns.*`、
+  `docs/figures/ccfc/ccfc_fig3_claim_boundary.*`，每张图均输出 PDF/SVG/PNG。
+- 当前本轮写作/配图目标已完成；若继续投稿准备，下一步应是把 Markdown 正文和
+  CCF-C 图集整合到目标投稿 LaTeX/Word 模板，而不是继续实验或 API。
 
 ## 2026-07-02 快速状态增量
 
@@ -105,8 +110,8 @@
 - 同步判断：以 `git status --short --branch`、`git log -1 --oneline` 和
   `origin/evp8-v03-qwen-main-exp` 为准；不得再用旧 `origin/main` 段落判断
   当前分支是否同步。
-- 当前执行入口：论文配图后端确认与 Fig. 1--3 生成。Manuscript claim map /
-  threats-to-validity 收束和正文 v0.1 已完成。Luigi
+- 当前执行入口：CCF-C 稿件包后续格式整合。Manuscript claim map /
+  threats-to-validity 收束、正文 v0.1 和 Fig. 1--3 已完成。Luigi
   source-acquisition/materialization protocol 已降级为可选未来工作，不再是稳妥
   CCF-C 路线的当前 blocker。
 

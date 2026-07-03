@@ -23,6 +23,8 @@ REALISTIC_GATE = REPO_ROOT / "data" / "protocols" / "evp8_realistic_hardneg_comb
 DEFAULT_JSON_OUT = REPO_ROOT / "data" / "reviews" / "final_manuscript_claim_map_v0_1.json"
 DEFAULT_CLAIM_MD_OUT = REPO_ROOT / "docs" / "paper" / "final_manuscript_claim_map_v0_1.md"
 DEFAULT_MANUSCRIPT_MD_OUT = REPO_ROOT / "docs" / "paper" / "ccfc_manuscript_rewrite_v0_1.md"
+CCFC_FIGURE_DIR = REPO_ROOT / "docs" / "figures" / "ccfc"
+FIGURE_FORMATS = ("pdf", "svg", "png")
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -39,6 +41,17 @@ def write_json(path: Path, value: dict[str, Any]) -> None:
 
 def check(name: str, passed: bool, detail: Any) -> dict[str, Any]:
     return {"check": name, "passed": bool(passed), "detail": detail}
+
+
+def figure_output_status(stem: str) -> dict[str, Any]:
+    outputs = [f"docs/figures/ccfc/{stem}.{suffix}" for suffix in FIGURE_FORMATS]
+    complete = all((REPO_ROOT / output).exists() for output in outputs)
+    return {
+        "backend": "python" if complete else None,
+        "output_stem": stem,
+        "outputs": outputs if complete else [],
+        "status": "generated_python" if complete else "planned_requires_backend",
+    }
 
 
 def decision_totals_by_level(five: dict[str, Any]) -> dict[str, dict[str, int]]:
@@ -200,6 +213,13 @@ def build_claim_map() -> dict[str, Any]:
             "status": "planned_requires_backend",
         },
     ]
+    for figure, stem in zip(
+        figures,
+        ("ccfc_fig1_protocol", "ccfc_fig2_decision_patterns", "ccfc_fig3_claim_boundary"),
+        strict=True,
+    ):
+        figure.update(figure_output_status(stem))
+    figures_generated = all(figure["status"] == "generated_python" for figure in figures)
 
     checks = [
         check("validity_audit_passed_with_bounded_claims", validity.get("overall_status") == "passed_with_bounded_claims", validity.get("overall_status")),
@@ -218,7 +238,8 @@ def build_claim_map() -> dict[str, Any]:
             "raw_model_outputs_read": False,
             "prompt_text_read": False,
             "patch_text_read": False,
-            "figure_backend_selected": False,
+            "figure_backend": "python" if figures_generated else None,
+            "figure_backend_selected": figures_generated,
         },
         "inputs": {
             "validity_audit": "data/reviews/final_experiment_setting_validity_audit_v0_1.json",
@@ -318,6 +339,7 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
     realistic = claim_map["realistic_gate_summary"]
     deepseek_opp = claim_map["hard_tool_contestation_summary"]["deepseek_opportunity"] or {}
     qwen_opp = claim_map["hard_tool_contestation_summary"]["qwen_opportunity"] or {}
+    figures_generated = all(figure["status"] == "generated_python" for figure in claim_map["figure_plan"])
     lines = [
         "# Evidence Visibility Shapes Risk Behavior in LLM-Based Candidate Patch Verification",
         "",
@@ -405,13 +427,20 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "This study shows that evidence visibility is a first-order variable in LLM-based candidate patch verification. Across frozen evidence packets, repaired analyses, no-verdict ablations, and tool-contestation audits, the strongest supported conclusion is that LLM verifier behavior is evidence-conditioned, model-dependent, and often conservative. These findings are useful for software-quality evaluation of LLM review pipelines, but they do not establish reliable autonomous patch correctness verification. A stable CCF-C manuscript should therefore present the work as a bounded empirical study of risk behavior under controlled evidence visibility.",
         "",
-        "## Planned Figures",
+        "## Generated Figures" if figures_generated else "## Planned Figures",
         "",
-        "Figure generation is pending backend selection. The current figure plan is:",
+        (
+            "Figures were generated with the Python/matplotlib backend under `docs/figures/ccfc/`."
+            if figures_generated
+            else "Figure generation is pending backend selection. The current figure plan is:"
+        ),
         "",
     ]
     for figure in claim_map["figure_plan"]:
-        lines.append(f"- {figure['id']}: {figure['title']} — {figure['conclusion']}")
+        outputs = figure.get("outputs") or []
+        output_text = f" Outputs: {', '.join(outputs)}." if outputs else ""
+        conclusion = str(figure["conclusion"]).rstrip(".")
+        lines.append(f"- {figure['id']}: {figure['title']} — {conclusion}.{output_text}")
     lines.append("")
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines), encoding="utf-8")

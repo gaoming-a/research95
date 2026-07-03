@@ -146,34 +146,55 @@
   },
   "figure_plan": [
     {
+      "backend": "python",
       "conclusion": "Model-visible evidence and evaluator-only labels are separated until post-decision analysis.",
       "id": "Fig. 1",
+      "output_stem": "ccfc_fig1_protocol",
+      "outputs": [
+        "docs/figures/ccfc/ccfc_fig1_protocol.pdf",
+        "docs/figures/ccfc/ccfc_fig1_protocol.svg",
+        "docs/figures/ccfc/ccfc_fig1_protocol.png"
+      ],
       "panels": [
         "workflow from candidate patch to evidence packet",
         "model decision",
         "post-execution label join"
       ],
-      "status": "planned_requires_backend",
+      "status": "generated_python",
       "title": "Hidden-evaluator evidence-visibility protocol"
     },
     {
+      "backend": "python",
       "conclusion": "Escalation/rejection patterns vary by model and are non-monotonic across E0-E6.",
       "id": "Fig. 2",
+      "output_stem": "ccfc_fig2_decision_patterns",
+      "outputs": [
+        "docs/figures/ccfc/ccfc_fig2_decision_patterns.pdf",
+        "docs/figures/ccfc/ccfc_fig2_decision_patterns.svg",
+        "docs/figures/ccfc/ccfc_fig2_decision_patterns.png"
+      ],
       "panels": [
         "heatmap of rejection counts by model and level",
         "stacked aggregate decision totals by level"
       ],
-      "status": "planned_requires_backend",
+      "status": "generated_python",
       "title": "Five-model evidence-level decision patterns"
     },
     {
+      "backend": "python",
       "conclusion": "Supported findings are bounded by leakage controls, protocol repairs, and remaining external-validity threats.",
       "id": "Fig. 3",
+      "output_stem": "ccfc_fig3_claim_boundary",
+      "outputs": [
+        "docs/figures/ccfc/ccfc_fig3_claim_boundary.pdf",
+        "docs/figures/ccfc/ccfc_fig3_claim_boundary.svg",
+        "docs/figures/ccfc/ccfc_fig3_claim_boundary.png"
+      ],
       "panels": [
         "supported claims vs evidence sources",
         "controlled artifacts vs remaining threats"
       ],
-      "status": "planned_requires_backend",
+      "status": "generated_python",
       "title": "Claim boundary and setting-validity map"
     }
   ],
@@ -399,7 +420,8 @@
   ],
   "scope": {
     "api_call_attempted": false,
-    "figure_backend_selected": false,
+    "figure_backend": "python",
+    "figure_backend_selected": true,
     "patch_text_read": false,
     "prompt_text_read": false,
     "raw_model_outputs_read": false

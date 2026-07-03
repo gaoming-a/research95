@@ -1,0 +1,27 @@
+{
+  "backend": "python/matplotlib",
+  "core_conclusion": "Evidence visibility shapes LLM merge-gate risk behavior, with claims bounded by the final setting-validity audit.",
+  "figure_count": 3,
+  "figures": [
+    {
+      "id": "ccfc_fig1_protocol",
+      "purpose": "show model-visible/evaluator-only separation and post-decision label join",
+      "title": "Hidden-evaluator evidence-visibility protocol"
+    },
+    {
+      "id": "ccfc_fig2_decision_patterns",
+      "purpose": "show model-dependent non-monotonic rejection/escalation patterns",
+      "title": "Five-model evidence-level decision patterns"
+    },
+    {
+      "id": "ccfc_fig3_claim_boundary",
+      "purpose": "show supported claims, validity gates, and forbidden overclaims",
+      "title": "Claim boundary and setting-validity map"
+    }
+  ],
+  "formats": [
+    "pdf",
+    "svg",
+    "png"
+  ]
+}

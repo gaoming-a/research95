@@ -4386,3 +4386,20 @@ This file starts fresh for the patch-verification project.
 - Figure generation has a backend gate. If no backend is explicitly selected,
   do not write plotting scripts, generate mock figures, or default to Python/R;
   record the figure plan and ask for the backend instead.
+
+## 2026-07-03 CCF-C figure generation
+
+- When the user asks which backend is better, that is a valid backend-selection
+  request. Use the backend-selection rules, state the reason, then proceed with
+  the chosen backend as exclusive for drawing, previews, exports, and QA.
+- For this repository, Python is the lower-risk figure backend because the
+  source data are tracked aggregate JSON files and the existing manuscript
+  figure pipeline is matplotlib-based. R would add a second plotting stack
+  without improving the required workflow schematic, heatmap/bar grid, or
+  claim-boundary map.
+- Visual QA must inspect the generated PNGs, not just file existence. The first
+  CCF-C figure pass had text collisions in Fig. 1--3; fixing layout before
+  committing prevented a technically passing but manuscript-weak figure set.
+- Keep generated manuscript status synchronized with figure status. After
+  Fig. 1--3 are generated, `planned_requires_backend` must become
+  `generated_python` in the claim map and manuscript figure section.

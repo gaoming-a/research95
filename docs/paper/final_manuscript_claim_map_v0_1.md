@@ -43,9 +43,9 @@ In candidate patch verification, we show that evidence visibility shapes LLM mer
 
 | figure | title | conclusion | status |
 | --- | --- | --- | --- |
-| Fig. 1 | Hidden-evaluator evidence-visibility protocol | Model-visible evidence and evaluator-only labels are separated until post-decision analysis. | `planned_requires_backend` |
-| Fig. 2 | Five-model evidence-level decision patterns | Escalation/rejection patterns vary by model and are non-monotonic across E0-E6. | `planned_requires_backend` |
-| Fig. 3 | Claim boundary and setting-validity map | Supported findings are bounded by leakage controls, protocol repairs, and remaining external-validity threats. | `planned_requires_backend` |
+| Fig. 1 | Hidden-evaluator evidence-visibility protocol | Model-visible evidence and evaluator-only labels are separated until post-decision analysis. | `generated_python` |
+| Fig. 2 | Five-model evidence-level decision patterns | Escalation/rejection patterns vary by model and are non-monotonic across E0-E6. | `generated_python` |
+| Fig. 3 | Claim boundary and setting-validity map | Supported findings are bounded by leakage controls, protocol repairs, and remaining external-validity threats. | `generated_python` |
 
 ## Checks
 

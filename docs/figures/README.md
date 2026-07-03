@@ -44,6 +44,26 @@ The SQJ figures are emitted under `docs/figures/sqj/` in PDF, SVG, and PNG:
 
 The SQJ source draft references these PDF versions.
 
+## CCF-C Figures
+
+Generate the stable CCF-C manuscript figure set with:
+
+```powershell
+python scripts\generate_ccfc_figures.py
+```
+
+The CCF-C figures are emitted under `docs/figures/ccfc/` in PDF, SVG, and PNG:
+
+- `ccfc_fig1_protocol`: hidden-evaluator evidence-visibility protocol.
+- `ccfc_fig2_decision_patterns`: five-model evidence-level decision patterns.
+- `ccfc_fig3_claim_boundary`: claim-boundary and setting-validity map.
+
+The same directory also contains `figure_manifest.json`,
+`figure_source_data.json`, and `figure_qa.md`. These figures are generated from
+tracked aggregate claim-map data only and preserve the bounded CCF-C claim:
+evidence visibility shapes risk behavior, not autonomous correctness
+verification.
+
 ## Raster Visual Candidates
 
 The `imagegen/` subdirectory contains four generated PNG candidates and their

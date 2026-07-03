@@ -230,8 +230,10 @@ The manuscript-level follow-up is now tracked at
 `scripts/write_final_manuscript_claim_map.py`. The claim map status is `passed`
 and the CCF-C body rewrite v0.1 preserves the bounded interpretation:
 evidence visibility shapes risk behavior in candidate patch verification.
-Actual manuscript figure generation is pending an explicit plotting-backend
-choice, Python or R; do not default to either backend.
+The CCF-C figure set is generated with Python/matplotlib by
+`scripts/generate_ccfc_figures.py` under `docs/figures/ccfc/` in PDF, SVG, and
+PNG form. It includes the hidden-evaluator protocol, five-model decision
+patterns, and claim-boundary/setting-validity map.
 The first tracked EVP-8 machine spec is
 `data/protocols/evp8_protocol_v0_1.json`, checked by
 `python scripts\audit_evp8_protocol_spec.py --check`. That audit currently
@@ -276,11 +278,10 @@ They should not override `final_paper_roadmap_zh.md`.
   current active branch is `evp8-v03-qwen-main-exp`; check it against
   `origin/evp8-v03-qwen-main-exp`, not the historical `origin/main` entries
   retained in older plan logs.
-- The current CCF-C next step is manuscript figure generation after the user
-  explicitly selects Python or R as the plotting backend. The manuscript claim
-  map, threats-to-validity boundary, and CCF-C body rewrite v0.1 are already
-  tracked. Do not run generation APIs from the source-selection packet, and do
-  not run Qwen/DeepSeek verifier APIs while `ready_for_verifier_api=false`.
+- The current CCF-C writing package has the manuscript claim map,
+  threats-to-validity boundary, body rewrite v0.1, and Python-generated figure
+  set tracked. Do not run generation APIs from the source-selection packet, and
+  do not run Qwen/DeepSeek verifier APIs while `ready_for_verifier_api=false`.
 - The short project/file map is `docs/plans/current_project_state_zh.md`.
 - The current submission handoff is
   `docs/artifact/submission_handoff_20260618.md`; it records the latest
