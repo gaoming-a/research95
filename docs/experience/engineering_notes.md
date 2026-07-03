@@ -4403,3 +4403,15 @@ This file starts fresh for the patch-verification project.
 - Keep generated manuscript status synchronized with figure status. After
   Fig. 1--3 are generated, `planned_requires_backend` must become
   `generated_python` in the claim map and manuscript figure section.
+
+## 2026-07-03 CCF-C inline figure placement
+
+- A generated figure set is not the same as figures being placed in the paper.
+  The manuscript should carry each figure at the paragraph where it supports the
+  argument: protocol figure in Methods/Protocol, decision-pattern figure in
+  Results, and claim-boundary figure before Threats to Validity.
+- Update the manuscript generator, not only the rendered Markdown. Otherwise a
+  later regeneration will silently move figures back to a terminal asset list.
+- Add a placement audit when figure position matters. File-existence checks
+  prove assets exist; they do not prove figures are in the right section, in the
+  right order, or paired with captions.

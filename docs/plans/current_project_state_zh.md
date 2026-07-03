@@ -15,7 +15,9 @@
   experiment-setting validity audit 已通过 bounded-claim gate；manuscript claim
   map / threats-to-validity 收束、正文 v0.1 和 CCF-C 专用 Fig. 1--3 均已完成。
   配图后端按用户询问后的推荐路径选择 Python/matplotlib，图集位于
-  `docs/figures/ccfc/`。
+  `docs/figures/ccfc/`。Fig. 1--3 已插入
+  `docs/paper/ccfc_manuscript_rewrite_v0_1.md` 的对应正文位置，并通过
+  `scripts/audit_ccfc_figure_placement.py` 审计。
   在 `ready_for_verifier_api=false` 时仍不得运行 Qwen/DeepSeek verifier API。
 
 ## 2026-07-03 快速状态增量
@@ -43,7 +45,10 @@
   `docs/figures/ccfc/ccfc_fig1_protocol.*`、
   `docs/figures/ccfc/ccfc_fig2_decision_patterns.*`、
   `docs/figures/ccfc/ccfc_fig3_claim_boundary.*`，每张图均输出 PDF/SVG/PNG。
-- 当前本轮写作/配图目标已完成；若继续投稿准备，下一步应是把 Markdown 正文和
+- 新增 CCF-C figure placement audit：
+  `docs/paper/ccfc_figure_placement_audit_v0_1.md` 和
+  `data/reviews/ccfc_figure_placement_audit_v0_1.json`，状态为 `passed`。
+- 当前本轮写作/配图/正文插图目标已完成；若继续投稿准备，下一步应是把 Markdown 正文和
   CCF-C 图集整合到目标投稿 LaTeX/Word 模板，而不是继续实验或 API。
 
 ## 2026-07-02 快速状态增量
@@ -111,7 +116,8 @@
   `origin/evp8-v03-qwen-main-exp` 为准；不得再用旧 `origin/main` 段落判断
   当前分支是否同步。
 - 当前执行入口：CCF-C 稿件包后续格式整合。Manuscript claim map /
-  threats-to-validity 收束、正文 v0.1 和 Fig. 1--3 已完成。Luigi
+  threats-to-validity 收束、正文 v0.1、Fig. 1--3 和正文内配图放置均已完成。
+  Luigi
   source-acquisition/materialization protocol 已降级为可选未来工作，不再是稳妥
   CCF-C 路线的当前 blocker。
 

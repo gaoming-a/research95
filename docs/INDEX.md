@@ -14,7 +14,8 @@
   key project files, script entry points, and forbidden misuses. As of
   2026-07-03, its top section is the authority for the current active branch.
   The manuscript claim-map, threats-to-validity consolidation, CCF-C body
-  rewrite v0.1, and CCF-C Fig. 1--3 are now tracked. The no-API Luigi
+  rewrite v0.1, CCF-C Fig. 1--3, and inline figure placement audit are now
+  tracked. The no-API Luigi
   source-acquisition/materialization protocol is optional future work, not the
   current blocker. Historical `origin/main` entries retained later in plan logs
   are audit records only. As of
@@ -112,6 +113,8 @@
 - `paper/ccfc_manuscript_rewrite_v0_1.md`: stable CCF-C body rewrite v0.1.
   It presents the study as bounded evidence-conditioned risk behavior in
   candidate patch verification, not autonomous patch correctness verification.
+  CCF-C Fig. 1--3 are placed inline in the protocol, results, and
+  discussion/threat-boundary locations.
 - `../scripts/generate_ccfc_figures.py`: Python/matplotlib generator for the
   CCF-C manuscript figure set. It reads the tracked final manuscript claim map
   only and outputs PDF/SVG/PNG figures plus manifest, source-data, and QA notes.
@@ -119,6 +122,12 @@
   `ccfc_fig1_protocol`, `ccfc_fig2_decision_patterns`, and
   `ccfc_fig3_claim_boundary` in PDF/SVG/PNG formats, plus
   `figure_manifest.json`, `figure_source_data.json`, and `figure_qa.md`.
+- `../scripts/audit_ccfc_figure_placement.py`: validates that CCF-C Fig. 1--3
+  are placed in the expected manuscript sections, appear in order, have
+  captions after the image references, and point to existing non-empty assets.
+- `paper/ccfc_figure_placement_audit_v0_1.md` and
+  `../data/reviews/ccfc_figure_placement_audit_v0_1.json`: raw-output-free
+  figure-placement audit. Status is `passed`.
 - As of 2026-06-30, `EVP-8-HARD tool-contestation` is complete for Qwen and
   DeepSeek on the 47-candidate hard-case cohort. It removes verdict-like tool
   fields and asks models to challenge a visible-test-only accept premise. The

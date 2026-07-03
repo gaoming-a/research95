@@ -28,6 +28,10 @@ Prior experiments in this repository also showed that prompt-only or verdict-lik
 
 The unit of analysis is a candidate patch reviewed under a predefined evidence packet. Each packet contains only model-visible information for its evidence level, while hidden evaluator labels and oracle outcomes remain unavailable to the model. After the model decision, evaluator-only labels are joined to compute false accepts, correct recall, escalation, and other bounded metrics.
 
+![Figure 1. Hidden-evaluator evidence-visibility protocol.](../figures/ccfc/ccfc_fig1_protocol.png)
+
+**Figure 1. Hidden-evaluator evidence-visibility protocol.** Model-visible evidence and evaluator-only labels are separated until post-decision analysis. The figure defines the paper's evidence boundary: candidate patches and level-specific evidence are visible to the model, whereas evaluator labels are withheld until post-decision analysis. Source assets: `docs/figures/ccfc/ccfc_fig1_protocol.pdf`, `.svg`, and `.png`.
+
 The EVP-8 packet set contains 98 candidate patches reviewed across seven evidence levels, E0 through E6. Five selected models produced 686 parse-valid decisions each on the frozen packet set. The synthesis supports descriptive per-level decision-pattern reporting for the packet set; it does not support broad claims that one evidence level is universally optimal or that LLMs outperform deterministic baselines.
 
 The protocol also distinguishes paper-facing evidence from diagnostic history. Earlier settings that produced zero accept decisions are treated as protocol artifacts unless repaired by accept-aware construction and label-conditioned analysis. This separation is necessary because otherwise a setting artifact could be mistaken for a general property of LLM patch verification.
@@ -43,6 +47,10 @@ All paper-facing claims are constrained by a final setting-validity audit. That 
 ### 5.1 Evidence visibility changed five-model decision patterns
 
 Across the frozen EVP-8 packet set, aggregate decisions varied by evidence level: E0: escalate=435, reject=55; E1: escalate=416, reject=74; E2: escalate=423, reject=67; E3: escalate=452, reject=38; E4: escalate=446, reject=44; E5: escalate=443, reject=47; E6: escalate=471, reject=19. These totals show that the decision pattern was not a simple monotonic curve from less evidence to more evidence.
+
+![Figure 2. Five-model evidence-level decision patterns.](../figures/ccfc/ccfc_fig2_decision_patterns.png)
+
+**Figure 2. Five-model evidence-level decision patterns.** Escalation/rejection patterns vary by model and are non-monotonic across E0-E6. Panel a reports per-model rejection counts across E0--E6; panel b shows aggregate escalation/rejection totals; panel c states the interpretation boundary. Source assets: `docs/figures/ccfc/ccfc_fig2_decision_patterns.pdf`, `.svg`, and `.png`.
 
 The variation was also model-dependent. DeepSeek V4 Pro and Qwen3.7 Max showed visible level-specific changes, whereas Devstral 2 saturated to escalation across the full packet set. Kimi K2.6 and Gemini 2.5 Flash mostly escalated, with limited local rejection differences. This spread is a software-quality result: a verifier can avoid unsafe accepts by escalating, but a system that escalates nearly everything provides limited automation value.
 
@@ -70,6 +78,10 @@ The most important rival explanation is that the observed behavior is a setup ar
 
 The paper should therefore avoid a stronger interpretation. It does not show that LLMs reliably verify patch correctness. It shows that evidence visibility shapes risk behavior in candidate patch verification and that some apparent improvements are better understood as conservative routing rather than correctness proof.
 
+![Figure 3. Claim boundary and setting-validity map.](../figures/ccfc/ccfc_fig3_claim_boundary.png)
+
+**Figure 3. Claim boundary and setting-validity map.** Supported findings are bounded by leakage controls, protocol repairs, and remaining external-validity threats. The map connects each supported claim to tracked aggregate evidence, separates passed validity gates from the blocked realistic gate, and lists overclaims that the manuscript must not make. Source assets: `docs/figures/ccfc/ccfc_fig3_claim_boundary.pdf`, `.svg`, and `.png`.
+
 ## 7. Threats to Validity
 
 Internal validity may be affected by prompt wording, output schema, and evidence formatting. We mitigate this by using frozen packet sets, tracked prompt-boundary audits, raw-output-free summaries, and post-run matrix checks, but the findings remain tied to the evaluated protocol versions.
@@ -84,9 +96,9 @@ Historical protocol versions are treated as diagnostic material. In particular, 
 
 This study shows that evidence visibility is a first-order variable in LLM-based candidate patch verification. Across frozen evidence packets, repaired analyses, no-verdict ablations, and tool-contestation audits, the strongest supported conclusion is that LLM verifier behavior is evidence-conditioned, model-dependent, and often conservative. These findings are useful for software-quality evaluation of LLM review pipelines, but they do not establish reliable autonomous patch correctness verification. A stable CCF-C manuscript should therefore present the work as a bounded empirical study of risk behavior under controlled evidence visibility.
 
-## Generated Figures
+## Figure Asset Summary
 
-Figures were generated with the Python/matplotlib backend under `docs/figures/ccfc/`.
+Figures are placed inline above and generated with the Python/matplotlib backend under `docs/figures/ccfc/`.
 
 - Fig. 1: Hidden-evaluator evidence-visibility protocol — Model-visible evidence and evaluator-only labels are separated until post-decision analysis. Outputs: docs/figures/ccfc/ccfc_fig1_protocol.pdf, docs/figures/ccfc/ccfc_fig1_protocol.svg, docs/figures/ccfc/ccfc_fig1_protocol.png.
 - Fig. 2: Five-model evidence-level decision patterns — Escalation/rejection patterns vary by model and are non-monotonic across E0-E6. Outputs: docs/figures/ccfc/ccfc_fig2_decision_patterns.pdf, docs/figures/ccfc/ccfc_fig2_decision_patterns.svg, docs/figures/ccfc/ccfc_fig2_decision_patterns.png.

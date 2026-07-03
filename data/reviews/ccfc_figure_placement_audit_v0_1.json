@@ -1,0 +1,100 @@
+{
+  "artifact_id": "ccfc_figure_placement_audit_v0_1",
+  "checks": {
+    "all_figures_present": true,
+    "asset_summary_present": true,
+    "figures_in_expected_order": true,
+    "no_extra_markdown_images": true
+  },
+  "figures": [
+    {
+      "assets": [
+        {
+          "exists": true,
+          "non_empty": true,
+          "path": "docs/figures/ccfc/ccfc_fig1_protocol.pdf"
+        },
+        {
+          "exists": true,
+          "non_empty": true,
+          "path": "docs/figures/ccfc/ccfc_fig1_protocol.svg"
+        },
+        {
+          "exists": true,
+          "non_empty": true,
+          "path": "docs/figures/ccfc/ccfc_fig1_protocol.png"
+        }
+      ],
+      "caption_after_image": true,
+      "caption_line": 33,
+      "id": "Fig. 1",
+      "image_exists": true,
+      "image_line": 31,
+      "image_ref": "../figures/ccfc/ccfc_fig1_protocol.png",
+      "passed": true,
+      "section": "## 3. Evidence-Visibility Protocol",
+      "section_before_image": true,
+      "section_line": 27
+    },
+    {
+      "assets": [
+        {
+          "exists": true,
+          "non_empty": true,
+          "path": "docs/figures/ccfc/ccfc_fig2_decision_patterns.pdf"
+        },
+        {
+          "exists": true,
+          "non_empty": true,
+          "path": "docs/figures/ccfc/ccfc_fig2_decision_patterns.svg"
+        },
+        {
+          "exists": true,
+          "non_empty": true,
+          "path": "docs/figures/ccfc/ccfc_fig2_decision_patterns.png"
+        }
+      ],
+      "caption_after_image": true,
+      "caption_line": 53,
+      "id": "Fig. 2",
+      "image_exists": true,
+      "image_line": 51,
+      "image_ref": "../figures/ccfc/ccfc_fig2_decision_patterns.png",
+      "passed": true,
+      "section": "### 5.1 Evidence visibility changed five-model decision patterns",
+      "section_before_image": true,
+      "section_line": 47
+    },
+    {
+      "assets": [
+        {
+          "exists": true,
+          "non_empty": true,
+          "path": "docs/figures/ccfc/ccfc_fig3_claim_boundary.pdf"
+        },
+        {
+          "exists": true,
+          "non_empty": true,
+          "path": "docs/figures/ccfc/ccfc_fig3_claim_boundary.svg"
+        },
+        {
+          "exists": true,
+          "non_empty": true,
+          "path": "docs/figures/ccfc/ccfc_fig3_claim_boundary.png"
+        }
+      ],
+      "caption_after_image": true,
+      "caption_line": 83,
+      "id": "Fig. 3",
+      "image_exists": true,
+      "image_line": 81,
+      "image_ref": "../figures/ccfc/ccfc_fig3_claim_boundary.png",
+      "passed": true,
+      "section": "## 6. Discussion",
+      "section_before_image": true,
+      "section_line": 73
+    }
+  ],
+  "manuscript": "docs/paper/ccfc_manuscript_rewrite_v0_1.md",
+  "status": "passed"
+}

@@ -2,6 +2,46 @@
 
 最后更新：2026-07-03
 
+## 0.23 2026-07-03 CCF-C manuscript inline figure placement
+
+本轮目标是完成用户要求的“论文中配图放置”：不是重新生成图，而是把已有 CCF-C
+Fig. 1--3 放进正文的论证位置，并提供可重复审计，避免图只停留在末尾资产清单。
+
+执行边界：
+
+- 不调用 API；
+- 不读取 ignored raw outputs；
+- 不修改实验结果、claim 边界或图像数据；
+- 只更新 CCF-C Markdown 正文生成器、正文输出和 placement audit。
+
+执行结果：
+
+- 更新 `scripts/write_final_manuscript_claim_map.py`：
+  - Fig. 1 插入 `## 3. Evidence-Visibility Protocol`，紧跟 evidence boundary
+    说明；
+  - Fig. 2 插入 `### 5.1 Evidence visibility changed five-model decision
+    patterns`，紧跟 aggregate decision pattern 结果；
+  - Fig. 3 插入 `## 6. Discussion` 末尾、`## 7. Threats to Validity` 之前，
+    用于连接 claim boundary 与 threats；
+  - 末尾章节从 `Generated Figures` 调整为 `Figure Asset Summary`，避免把图
+    只当作附录清单。
+- 新增 `scripts/audit_ccfc_figure_placement.py`；
+- 生成 `data/reviews/ccfc_figure_placement_audit_v0_1.json` 和
+  `docs/paper/ccfc_figure_placement_audit_v0_1.md`。
+
+验收结果：
+
+- `python -m py_compile scripts\write_final_manuscript_claim_map.py scripts\audit_ccfc_figure_placement.py`：通过；
+- `python scripts\write_final_manuscript_claim_map.py --check`：通过；
+- `python scripts\audit_ccfc_figure_placement.py --check`：通过；
+- placement audit status = `passed`；
+- 审计确认：
+  - Fig. 1 section line 27、image line 31、caption line 33；
+  - Fig. 2 section line 47、image line 51、caption line 53；
+  - Fig. 3 section line 73、image line 81、caption line 83；
+  - no extra markdown images；
+  - asset summary present。
+
 ## 0.22 2026-07-03 CCF-C manuscript figure generation
 
 本轮目标是在用户询问“哪个好一些呢”后，按 figure backend-selection 规则推荐并

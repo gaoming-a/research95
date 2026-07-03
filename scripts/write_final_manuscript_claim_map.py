@@ -340,6 +340,10 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
     deepseek_opp = claim_map["hard_tool_contestation_summary"]["deepseek_opportunity"] or {}
     qwen_opp = claim_map["hard_tool_contestation_summary"]["qwen_opportunity"] or {}
     figures_generated = all(figure["status"] == "generated_python" for figure in claim_map["figure_plan"])
+    figure_assets = {figure["id"]: figure for figure in claim_map["figure_plan"]}
+    fig1 = figure_assets["Fig. 1"]
+    fig2 = figure_assets["Fig. 2"]
+    fig3 = figure_assets["Fig. 3"]
     lines = [
         "# Evidence Visibility Shapes Risk Behavior in LLM-Based Candidate Patch Verification",
         "",
@@ -371,6 +375,10 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "The unit of analysis is a candidate patch reviewed under a predefined evidence packet. Each packet contains only model-visible information for its evidence level, while hidden evaluator labels and oracle outcomes remain unavailable to the model. After the model decision, evaluator-only labels are joined to compute false accepts, correct recall, escalation, and other bounded metrics.",
         "",
+        "![Figure 1. Hidden-evaluator evidence-visibility protocol.](../figures/ccfc/ccfc_fig1_protocol.png)",
+        "",
+        f"**Figure 1. {fig1['title']}.** {fig1['conclusion']} The figure defines the paper's evidence boundary: candidate patches and level-specific evidence are visible to the model, whereas evaluator labels are withheld until post-decision analysis. Source assets: `docs/figures/ccfc/ccfc_fig1_protocol.pdf`, `.svg`, and `.png`.",
+        "",
         "The EVP-8 packet set contains 98 candidate patches reviewed across seven evidence levels, E0 through E6. Five selected models produced 686 parse-valid decisions each on the frozen packet set. The synthesis supports descriptive per-level decision-pattern reporting for the packet set; it does not support broad claims that one evidence level is universally optimal or that LLMs outperform deterministic baselines.",
         "",
         "The protocol also distinguishes paper-facing evidence from diagnostic history. Earlier settings that produced zero accept decisions are treated as protocol artifacts unless repaired by accept-aware construction and label-conditioned analysis. This separation is necessary because otherwise a setting artifact could be mistaken for a general property of LLM patch verification.",
@@ -386,6 +394,10 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "### 5.1 Evidence visibility changed five-model decision patterns",
         "",
         f"Across the frozen EVP-8 packet set, aggregate decisions varied by evidence level: {totals_text}. These totals show that the decision pattern was not a simple monotonic curve from less evidence to more evidence.",
+        "",
+        "![Figure 2. Five-model evidence-level decision patterns.](../figures/ccfc/ccfc_fig2_decision_patterns.png)",
+        "",
+        f"**Figure 2. {fig2['title']}.** {fig2['conclusion']} Panel a reports per-model rejection counts across E0--E6; panel b shows aggregate escalation/rejection totals; panel c states the interpretation boundary. Source assets: `docs/figures/ccfc/ccfc_fig2_decision_patterns.pdf`, `.svg`, and `.png`.",
         "",
         "The variation was also model-dependent. DeepSeek V4 Pro and Qwen3.7 Max showed visible level-specific changes, whereas Devstral 2 saturated to escalation across the full packet set. Kimi K2.6 and Gemini 2.5 Flash mostly escalated, with limited local rejection differences. This spread is a software-quality result: a verifier can avoid unsafe accepts by escalating, but a system that escalates nearly everything provides limited automation value.",
         "",
@@ -413,6 +425,10 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "The paper should therefore avoid a stronger interpretation. It does not show that LLMs reliably verify patch correctness. It shows that evidence visibility shapes risk behavior in candidate patch verification and that some apparent improvements are better understood as conservative routing rather than correctness proof.",
         "",
+        "![Figure 3. Claim boundary and setting-validity map.](../figures/ccfc/ccfc_fig3_claim_boundary.png)",
+        "",
+        f"**Figure 3. {fig3['title']}.** {fig3['conclusion']} The map connects each supported claim to tracked aggregate evidence, separates passed validity gates from the blocked realistic gate, and lists overclaims that the manuscript must not make. Source assets: `docs/figures/ccfc/ccfc_fig3_claim_boundary.pdf`, `.svg`, and `.png`.",
+        "",
         "## 7. Threats to Validity",
         "",
         "Internal validity may be affected by prompt wording, output schema, and evidence formatting. We mitigate this by using frozen packet sets, tracked prompt-boundary audits, raw-output-free summaries, and post-run matrix checks, but the findings remain tied to the evaluated protocol versions.",
@@ -427,10 +443,10 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "This study shows that evidence visibility is a first-order variable in LLM-based candidate patch verification. Across frozen evidence packets, repaired analyses, no-verdict ablations, and tool-contestation audits, the strongest supported conclusion is that LLM verifier behavior is evidence-conditioned, model-dependent, and often conservative. These findings are useful for software-quality evaluation of LLM review pipelines, but they do not establish reliable autonomous patch correctness verification. A stable CCF-C manuscript should therefore present the work as a bounded empirical study of risk behavior under controlled evidence visibility.",
         "",
-        "## Generated Figures" if figures_generated else "## Planned Figures",
+        "## Figure Asset Summary" if figures_generated else "## Planned Figures",
         "",
         (
-            "Figures were generated with the Python/matplotlib backend under `docs/figures/ccfc/`."
+            "Figures are placed inline above and generated with the Python/matplotlib backend under `docs/figures/ccfc/`."
             if figures_generated
             else "Figure generation is pending backend selection. The current figure plan is:"
         ),
