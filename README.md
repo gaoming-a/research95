@@ -234,17 +234,16 @@ promotes Qwen v0.3 label-conditioned metrics into the main evidence chain,
 reports the E6 rule-only/no-verdict baseline table, and keeps unimplemented
 baselines as submission risks rather than completed results. The revision response is
 `docs/paper/ccfc_revision_response_v0_2.md`.
-After the follow-up experiment-logic repair on 2026-07-03, the legacy v0.1
-five-model zero-accept synthesis is excluded from the main result chain and is
-retained only as diagnostic protocol history. The main evidence now starts from
-the repaired Qwen v0.3 accept-aware label-conditioned analysis, followed by E6
-rule-only/no-verdict ablations and tool-contestation.
+After the final experiment-logic cleanup on 2026-07-03, the manuscript-facing
+package no longer carries the earlier invalid setting as paper content. The
+main evidence starts from the repaired Qwen v0.3 accept-aware label-conditioned
+analysis, followed by E6 rule-only/no-verdict ablations and tool-contestation.
 The CCF-C figure set is generated with Python/matplotlib by
 `scripts/generate_ccfc_figures.py` under `docs/figures/ccfc/` in PDF, SVG, and
- PNG form. It includes the hidden-evaluator protocol, accept-aware/no-verdict
+PNG form. It includes the hidden-evaluator protocol, accept-aware/no-verdict
 metric evidence, and claim-boundary/setting-validity map. Fig. 2 has been
-redrawn as accept-aware/no-verdict metric evidence rather than a v0.1
-five-model decision-pattern figure. The figures are now placed inline in
+redrawn as accept-aware/no-verdict metric evidence for the current result
+chain. The figures are now placed inline in
 `docs/paper/ccfc_manuscript_rewrite_v0_1.md`, with placement audited by
 `scripts/audit_ccfc_figure_placement.py`.
 The first tracked EVP-8 machine spec is
@@ -294,9 +293,10 @@ They should not override `final_paper_roadmap_zh.md`.
 - The current CCF-C writing package has the manuscript claim map,
   threats-to-validity boundary, critique-driven body rewrite v0.2,
   Python-generated figure set, inline figure placement audit, and v0.2 revision
-  response tracked. The v0.1 five-model zero-accept setting is excluded from
-  main results and must not be reintroduced as evidence. Do not run generation
-  APIs from the source-selection packet, and do not run Qwen/DeepSeek verifier APIs while
+  response tracked. The current manuscript package starts from the repaired
+  Qwen v0.3 label-conditioned evidence chain and must not reintroduce invalid
+  earlier settings as evidence. Do not run generation APIs from the
+  source-selection packet, and do not run Qwen/DeepSeek verifier APIs while
   `ready_for_verifier_api=false`. Before submission, related-work citations and
   additional baselines such as always-escalate/random/majority remain explicit
   risks unless separately implemented and verified.

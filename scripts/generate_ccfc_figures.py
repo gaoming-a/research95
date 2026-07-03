@@ -320,7 +320,7 @@ def fig2_decision_patterns(claim_map: dict[str, Any]) -> None:
     notes = [
         ("Main evidence", "Qwen v0.3 label-conditioned metrics"),
         ("Ablation", "rule-only / E6-full / no-verdict"),
-        ("Excluded", "legacy v0.1 zero-accept"),
+        ("Boundary", "realistic gate is source acquisition"),
     ]
     for idx, (head, body) in enumerate(notes):
         y = 0.82 - idx * 0.31
@@ -368,7 +368,6 @@ def fig3_claim_boundary(claim_map: dict[str, Any]) -> None:
         "supported_qwen_only": "Qwen only",
         "supported_qualified": "qualified",
         "supported_negative_boundary": "negative boundary",
-        "excluded_diagnostic_history": "excluded",
     }
     claim_rows = [
         f"{claim.get('id')}: {status_labels.get(str(claim.get('status')), str(claim.get('status')))}"
@@ -403,7 +402,7 @@ def fig3_claim_boundary(claim_map: dict[str, Any]) -> None:
     ax_checks.set_title("Validity gates", loc="left", fontsize=8.2, weight="bold")
     compact_checks = [
         ("validity audit", "passed with bounded claims"),
-        ("v0.1 diagnostics", "excluded from main results"),
+        ("claim scope", "evidence-conditioned risk behavior"),
         ("tool-contestation", "risk triage, not strict correction"),
         ("realistic gate", "26/30 cases; 2/3 projects"),
     ]
@@ -513,7 +512,7 @@ Export contract:
 
 Review boundary:
 
-- These figures support bounded evidence-conditioned risk-behavior claims after excluding the legacy v0.1 diagnostic setting from the main evidence chain.
+- These figures support bounded evidence-conditioned risk-behavior claims from the current repaired evidence chain.
 - They do not support autonomous patch correctness verification, monotonic correctness improvement, or escalation-as-strict-correction claims.
 """
     (OUT_DIR / "figure_qa.md").write_text(note, encoding="utf-8")

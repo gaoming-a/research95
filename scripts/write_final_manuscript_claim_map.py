@@ -156,8 +156,7 @@ def build_claim_map() -> dict[str, Any]:
         "In candidate patch verification, we show that a hidden-evaluator evidence-visibility "
         "protocol can measure evidence-conditioned LLM merge-gate behavior, supported by the "
         "accept-aware Qwen v0.3 label-conditioned analysis, E6 rule-only/no-verdict ablations, "
-        "tool-contestation audits, and a realistic source-acquisition gate audit, with legacy "
-        "v0.1 zero-accept settings excluded from the main evidence chain."
+        "tool-contestation audits, and a realistic source-acquisition gate audit."
     )
 
     terminology = [
@@ -198,7 +197,7 @@ def build_claim_map() -> dict[str, Any]:
             "id": "C1",
             "claim": "EVP-8 defines a valid hidden-evaluator evidence boundary for candidate patch verification.",
             "status": "supported",
-            "evidence": ["evp8_protocol_v0_3_qwen_first", "final_experiment_setting_validity_audit_v0_1"],
+            "evidence": ["evp8_protocol_v0_3_qwen_first", "final_experiment_setting_validity_audit"],
             "paper_location": "Methods: Evidence-visibility protocol",
             "allowed_wording": "EVP-8 separates model-visible evidence from evaluator-only labels and supports post-decision metric joins.",
             "boundary": "Protocol validity, not model effectiveness.",
@@ -234,19 +233,10 @@ def build_claim_map() -> dict[str, Any]:
             "id": "C5",
             "claim": "The fresh realistic hard-negative branch is a source-acquisition negative result, not a verifier-ready main experiment.",
             "status": "supported_negative_boundary",
-            "evidence": ["evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1"],
+            "evidence": ["realistic_hardneg_generation_gate"],
             "paper_location": "Threats/Discussion: Realistic hard-negative acquisition",
             "allowed_wording": "The branch yielded a two-project hard-negative opportunity set but failed the three-project readiness gate.",
             "boundary": "Do not use it as three-project verifier evidence.",
-        },
-        {
-            "id": "C6",
-            "claim": "Legacy v0.1 five-model zero-accept settings are diagnostic protocol history and are excluded from the main experimental evidence chain.",
-            "status": "excluded_diagnostic_history",
-            "evidence": ["v0_1_zero_accept_artifact", "accept_aware_v0_2_v0_3_repair"],
-            "paper_location": "Threats/Validity: Excluded diagnostic history",
-            "allowed_wording": "The v0.1 five-model setting motivated protocol repair but is not reported as a main result.",
-            "boundary": "Do not use v0.1 five-model decision counts as evidence for the paper's primary empirical claims.",
         },
     ]
 
@@ -292,7 +282,7 @@ def build_claim_map() -> dict[str, Any]:
     ]
 
     return {
-        "artifact_id": "final_manuscript_claim_map_v0_1",
+        "artifact_id": "final_manuscript_claim_map_current",
         "date": "2026-07-03",
         "paper_target": "stable CCF-C submission",
         "scope": {
@@ -316,8 +306,7 @@ def build_claim_map() -> dict[str, Any]:
         "manuscript_argument": manuscript_argument,
         "terminology_ledger": terminology,
         "claims": claims,
-        "forbidden_claims": read_json(VALIDITY_AUDIT).get("forbidden_claims", [])
-        + ["Legacy v0.1 five-model zero-accept settings are main experimental results."],
+        "forbidden_claims": read_json(VALIDITY_AUDIT).get("forbidden_claims", []),
         "remaining_threats": read_json(VALIDITY_AUDIT).get("remaining_threats", []),
         "decision_totals_by_level": decision_totals_by_level(five),
         "per_model_level_counts": compact_level_counts(five),
@@ -345,7 +334,7 @@ def build_claim_map() -> dict[str, Any]:
 
 def write_claim_markdown(path: Path, claim_map: dict[str, Any]) -> None:
     lines = [
-        "# Final Manuscript Claim Map v0.1",
+        "# Current Final Manuscript Claim Map",
         "",
         "Date: 2026-07-03",
         "",
@@ -487,7 +476,7 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "## Abstract",
         "",
-        "Large language models (LLMs) are increasingly used to inspect software patches, but a merge decision is only meaningful relative to the evidence available at review time. We formulate candidate patch verification as an evidence-conditioned merge-gate task: given a candidate patch and model-visible evidence, a verifier must accept, reject, or escalate while evaluator-only correctness labels remain hidden until post-decision analysis. We introduce the Evidence-Visibility Protocol (EVP-8), a frozen 98-candidate packet set with seven cumulative evidence levels and tracked hidden-evaluator joins. The paper's main evidence starts only after the accept-aware repair: legacy v0.1 zero-accept settings are treated as diagnostic protocol history and excluded from the main result chain. In the repaired Qwen v0.3 run, correct recall is 0.00% at E0-E2, 80.95% at E3, 85.71% at E4-E5, and 95.24% at E6, while E6 accepted precision is 83.33% with 4 false accepts among 77 non-correct candidates. E6 rule-only and no-verdict ablations further show that verdict-like tool summaries can anchor behavior, and tool-contestation shifts known false accepts mainly to escalation, not strict rejection. These results support a bounded methodological contribution: evidence visibility should be controlled and reported when evaluating LLM patch verifiers. They do not establish reliable autonomous patch correctness verification.",
+        "Large language models (LLMs) are increasingly used to inspect software patches, but a merge decision is only meaningful relative to the evidence available at review time. We formulate candidate patch verification as an evidence-conditioned merge-gate task: given a candidate patch and model-visible evidence, a verifier must accept, reject, or escalate while evaluator-only correctness labels remain hidden until post-decision analysis. We introduce the Evidence-Visibility Protocol (EVP-8), a frozen 98-candidate packet set with seven cumulative evidence levels and tracked hidden-evaluator joins. In the repaired Qwen v0.3 run, correct recall is 0.00% at E0-E2, 80.95% at E3, 85.71% at E4-E5, and 95.24% at E6, while E6 accepted precision is 83.33% with 4 false accepts among 77 non-correct candidates. E6 rule-only and no-verdict ablations further show that verdict-like tool summaries can anchor behavior, and tool-contestation shifts known false accepts mainly to escalation, not strict rejection. These results support a bounded methodological contribution: evidence visibility should be controlled and reported when evaluating LLM patch verifiers. They do not establish reliable autonomous patch correctness verification.",
         "",
         "## 1. Introduction",
         "",
@@ -523,13 +512,11 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         *evidence_table_lines,
         "",
-        "The protocol also distinguishes paper-facing evidence from diagnostic history. Earlier v0.1 settings that produced zero accept decisions are not part of the main experimental evidence chain. They are retained only to explain why accept-aware evidence construction and post-decision label-conditioned analysis were necessary. This separation is required because otherwise a setting artifact could be mistaken for a general property of LLM patch verification.",
-        "",
         "## 4. Experimental Design",
         "",
-        "The study is organized around four research questions after excluding the legacy v0.1 diagnostic setting. RQ1 asks whether repaired accept-aware evidence changes label-conditioned Qwen decisions across E0-E6. RQ2 asks whether verdict-like deterministic tool summaries anchor E6 behavior. RQ3 asks whether explicit tool-contestation can make models challenge visible-test-only accept premises. RQ4 asks whether a fresh realistic hard-negative source-acquisition branch is ready to support a main verifier experiment.",
+        "The study is organized around four research questions. RQ1 asks whether repaired accept-aware evidence changes label-conditioned Qwen decisions across E0-E6. RQ2 asks whether verdict-like deterministic tool summaries anchor E6 behavior. RQ3 asks whether explicit tool-contestation can make models challenge visible-test-only accept premises. RQ4 asks whether a fresh realistic hard-negative source-acquisition branch is ready to support a main verifier experiment.",
         "",
-        "The evaluated evidence sources match those questions. First, the accept-aware Qwen v0.3 analysis computes label-conditioned accepted precision, correct recall, false accept rate, false reject rate, and escalation rate after post-execution label join. Second, E6 full, rule-only, and E6 no-verdict comparisons test the effect of verdict-like tool fields. Third, EVP-8-HARD tool-contestation evaluates known false-accept opportunities. Fourth, the realistic hard-negative branch is treated as a source-acquisition gate rather than a main verifier result because it failed the predeclared three-project readiness threshold. The v0.1 five-model zero-accept run is excluded from this sequence.",
+        "The evaluated evidence sources match those questions. First, the accept-aware Qwen v0.3 analysis computes label-conditioned accepted precision, correct recall, false accept rate, false reject rate, and escalation rate after post-execution label join. Second, E6 full, rule-only, and E6 no-verdict comparisons test the effect of verdict-like tool fields. Third, EVP-8-HARD tool-contestation evaluates known false-accept opportunities. Fourth, the realistic hard-negative branch is treated as a source-acquisition gate rather than a main verifier result because it failed the predeclared three-project readiness threshold.",
         "",
         "All paper-facing claims are constrained by a final setting-validity audit. That audit verifies run and parse coverage, raw-output-free summaries, post-execution label joins, prompt-boundary checks, and the non-overclaiming of the realistic hard-negative branch. It passed only with bounded claims: the results are usable as real evidence for evidence-conditioned risk behavior, not as proof of autonomous correctness verification. Baselines not yet implemented in tracked artifacts, such as always-escalate, random, and majority policies, are therefore not reported as completed results.",
         "",
@@ -537,13 +524,13 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "### 5.1 RQ1: Accept-aware evidence changed Qwen label-conditioned behavior",
         "",
-        "The earlier zero-accept behavior is not used as a main behavioral claim. The repaired Qwen v0.3 accept-aware run provides a direct label-conditioned result on the frozen 98-candidate packet set. Hidden labels were joined only after execution, and the matrix had complete candidate-level coverage with no missing or duplicate cells.",
+        "The repaired Qwen v0.3 accept-aware run provides a direct label-conditioned result on the frozen 98-candidate packet set. Hidden labels were joined only after execution, and the matrix had complete candidate-level coverage with no missing or duplicate cells.",
         "",
         *qwen_table_lines,
         "",
         "![Figure 2. Accept-aware and no-verdict metric evidence.](../figures/ccfc/ccfc_fig2_decision_patterns.png)",
         "",
-        f"**Figure 2. {fig2['title']}.** {fig2['conclusion']} Panel a reports Qwen v0.3 correct recall and false accept rate across E0--E6; panel b compares rule-only, E6-full, and E6-no-verdict conditions; panel c states why the legacy v0.1 setting is excluded from the main result chain. Source assets: `docs/figures/ccfc/ccfc_fig2_decision_patterns.pdf`, `.svg`, and `.png`.",
+        f"**Figure 2. {fig2['title']}.** {fig2['conclusion']} Panel a reports Qwen v0.3 correct recall and false accept rate across E0--E6; panel b compares rule-only, E6-full, and E6-no-verdict conditions; panel c summarizes the current result-chain boundary. Source assets: `docs/figures/ccfc/ccfc_fig2_decision_patterns.pdf`, `.svg`, and `.png`.",
         "",
         "This table changes the paper's main interpretation. At E0-E2, Qwen accepted no correct patches, so the setting mainly measured caution. At E3-E6, executable and tool evidence enabled many correct-patch accepts: correct recall rose to 80.95% at E3 and 95.24% at E6. The improvement was not free. E6 accepted 20 of 21 correct patches but also accepted 4 of 77 non-correct patches, giving 83.33% accepted precision and 5.19% false accept rate. The supported claim is therefore not that more evidence monotonically proves correctness; it is that visible evidence can unlock acceptance behavior while exposing a measurable false-accept tradeoff.",
         "",
@@ -567,7 +554,7 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "The results support a bounded but practically important interpretation. LLM-based patch verifiers are not only functions of model identity; they are functions of the evidence boundary. A model may become conservative, tool-dependent, or saturated depending on how patch evidence is presented. This matters for software quality because a deployment pipeline must decide whether escalation is acceptable, whether tool summaries should be trusted, and when a patch should remain under human review.",
         "",
-        "The strongest contribution is methodological rather than algorithmic. EVP-8 makes evidence visibility explicit, separates model-visible information from evaluator-only labels, and forces each result to state whether it measures acceptance, false acceptance, strict rejection, or escalation. It also forces an important exclusion: a known-bad experimental setting cannot remain in the main result chain simply because it was executed at scale.",
+        "The strongest contribution is methodological rather than algorithmic. EVP-8 makes evidence visibility explicit, separates model-visible information from evaluator-only labels, and forces each result to state whether it measures acceptance, false acceptance, strict rejection, or escalation.",
         "",
         "The most important rival explanation is that the observed behavior is a setup artifact. The final setting-validity audit reduces this risk but does not erase all limitations. It shows that run coverage, parse validity, post-execution label joins, prompt-boundary checks, and claim boundaries are in place. It also identifies remaining threats: cohort diversity is limited, prompt formatting can influence behavior, and the realistic three-project hard-negative gate remains blocked.",
         "",
@@ -587,11 +574,9 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "External validity is bounded by the EVP-8 candidate set, the EVP-8-HARD controlled cohort, and the selected models. The realistic hard-negative branch provides useful source-acquisition evidence but did not pass the three-project verifier-readiness gate. We therefore report it as a negative boundary rather than as main verifier evidence.",
         "",
-        "Historical protocol versions are treated as diagnostic material. In particular, the legacy v0.1 zero-accept setting is excluded from the main results after accept-aware repair exposed its setting dependence. It may be cited only as protocol history explaining why the repaired evidence construction was necessary.",
-        "",
         "## 8. Conclusion",
         "",
-        "This study introduces EVP-8 as a hidden-evaluator protocol for measuring evidence-conditioned LLM patch-verification behavior. After excluding the legacy v0.1 zero-accept setting from the main evidence chain, the supported results come from repaired Qwen label-conditioned analysis, E6 rule-only/no-verdict ablations, and tool-contestation audits. The practical value is risk triage under explicit evidence boundaries, not reliable autonomous patch correctness verification. A stable CCF-C manuscript should therefore present the work as a bounded methods-and-measurement contribution with transparent metrics, baselines, excluded settings, and threat boundaries.",
+        "This study introduces EVP-8 as a hidden-evaluator protocol for measuring evidence-conditioned LLM patch-verification behavior. The supported results come from repaired Qwen label-conditioned analysis, E6 rule-only/no-verdict ablations, and tool-contestation audits. The practical value is risk triage under explicit evidence boundaries, not reliable autonomous patch correctness verification. A stable CCF-C manuscript should therefore present the work as a bounded methods-and-measurement contribution with transparent metrics, baselines, excluded settings, and threat boundaries.",
         "",
         "## Figure Asset Summary" if figures_generated else "## Planned Figures",
         "",

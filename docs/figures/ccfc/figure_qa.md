@@ -18,5 +18,5 @@ Export contract:
 
 Review boundary:
 
-- These figures support bounded evidence-conditioned risk-behavior claims after excluding the legacy v0.1 diagnostic setting from the main evidence chain.
+- These figures support bounded evidence-conditioned risk-behavior claims from the current repaired evidence chain.
 - They do not support autonomous patch correctness verification, monotonic correctness improvement, or escalation-as-strict-correction claims.

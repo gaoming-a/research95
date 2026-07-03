@@ -59,7 +59,7 @@
       "claim": "EVP-8 defines a valid hidden-evaluator evidence boundary for candidate patch verification.",
       "evidence": [
         "evp8_protocol_v0_3_qwen_first",
-        "final_experiment_setting_validity_audit_v0_1"
+        "final_experiment_setting_validity_audit"
       ],
       "id": "C1",
       "paper_location": "Methods: Evidence-visibility protocol",
@@ -105,23 +105,11 @@
       "boundary": "Do not use it as three-project verifier evidence.",
       "claim": "The fresh realistic hard-negative branch is a source-acquisition negative result, not a verifier-ready main experiment.",
       "evidence": [
-        "evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1"
+        "realistic_hardneg_generation_gate"
       ],
       "id": "C5",
       "paper_location": "Threats/Discussion: Realistic hard-negative acquisition",
       "status": "supported_negative_boundary"
-    },
-    {
-      "allowed_wording": "The v0.1 five-model setting motivated protocol repair but is not reported as a main result.",
-      "boundary": "Do not use v0.1 five-model decision counts as evidence for the paper's primary empirical claims.",
-      "claim": "Legacy v0.1 five-model zero-accept settings are diagnostic protocol history and are excluded from the main experimental evidence chain.",
-      "evidence": [
-        "v0_1_zero_accept_artifact",
-        "accept_aware_v0_2_v0_3_repair"
-      ],
-      "id": "C6",
-      "paper_location": "Threats/Validity: Excluded diagnostic history",
-      "status": "excluded_diagnostic_history"
     }
   ],
   "decision_totals_by_level": {
@@ -354,8 +342,7 @@
     "More visible evidence monotonically improves correctness verification.",
     "Escalation is equivalent to strict correction.",
     "The fresh realistic hard-negative branch is verifier-ready across three projects.",
-    "The controlled EVP-8 or EVP-8-HARD cohorts prove broad external validity for real agent patch distributions.",
-    "Legacy v0.1 five-model zero-accept settings are main experimental results."
+    "The controlled EVP-8 or EVP-8-HARD cohorts prove broad external validity for real agent patch distributions."
   ],
   "levels": [
     "E0",

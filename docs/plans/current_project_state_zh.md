@@ -21,9 +21,8 @@
   附件评审意见触发的 v0.2 修订已把 Qwen v0.3 label-conditioned metrics、
   E6 rule-only/no-verdict baseline 和 E0-E6 evidence ladder 放入主文；未完成的
   always-escalate、random、majority、完整 E0/no-tool baseline 仍不得写成已完成结果。
-  2026-07-03 追加实验逻辑修复：legacy v0.1 five-model zero-accept synthesis 已从
-  主结果中移除，只能作为 diagnostic protocol history；新的 Fig. 2 已重画为
-  Qwen v0.3 accept-aware + E6 ablation metric evidence。
+  2026-07-03 追加实验逻辑清理：当前论文包不再携带早期无效设置作为正文内容；
+  新的 Fig. 2 保持为 Qwen v0.3 accept-aware + E6 ablation metric evidence。
   在 `ready_for_verifier_api=false` 时仍不得运行 Qwen/DeepSeek verifier API。
 
 ## 2026-07-03 快速状态增量
@@ -56,11 +55,11 @@
   `data/reviews/ccfc_figure_placement_audit_v0_1.json`，状态为 `passed`。
 - 新增附件评审响应文档：
   `docs/paper/ccfc_revision_response_v0_2.md`。它逐项记录“审计报告化”、
-  zero-accept 主结果过弱、accept-aware 结果应成为主证据、baseline 缺口、
+  早期无效设置不应作为论文内容、accept-aware 结果应成为主证据、baseline 缺口、
   related-work 缺口和 realistic branch 边界等问题的处理状态。
-- 已完成实验逻辑二次修复：v0.1 five-model zero-accept 不再是 RQ 或主结果；
-  当前主证据链从 Qwen v0.3 accept-aware label-conditioned metrics 开始，并通过
-  E6 rule-only/no-verdict ablation 与 tool-contestation 继续收束。
+- 已完成实验逻辑二次清理：当前论文包不再把早期无效设置作为 RQ、主结果或
+  解释性段落；当前主证据链从 Qwen v0.3 accept-aware label-conditioned metrics
+  开始，并通过 E6 rule-only/no-verdict ablation 与 tool-contestation 继续收束。
 - 当前本轮写作/配图/正文插图目标已完成；若继续投稿准备，下一步应优先补 verified
   related-work citations 和缺失 baseline，或在目标模板确定后整合到 LaTeX/Word
   投稿格式，而不是继续无边界实验或 API。
@@ -132,7 +131,7 @@
 - 当前执行入口：CCF-C 稿件包后续审稿/格式整合。Manuscript claim map /
   threats-to-validity 收束、正文 v0.2、Fig. 1--3、正文内配图放置和
   `docs/paper/ccfc_revision_response_v0_2.md` 均已完成。当前实验逻辑以
-  v0.3 accept-aware 为主证据起点，legacy v0.1 仅作为排除的诊断历史。
+  Qwen v0.3 accept-aware label-conditioned metrics 为主证据起点。
   Luigi
   source-acquisition/materialization protocol 已降级为可选未来工作，不再是稳妥
   CCF-C 路线的当前 blocker。

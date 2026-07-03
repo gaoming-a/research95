@@ -9,9 +9,10 @@
   the current results are usable as real bounded evidence for
   evidence-conditioned risk behavior, not that the system is a reliable
   autonomous correctness verifier.
-- Treat v0.1 zero-accept behavior as a controlled setup artifact unless it is
-  explicitly framed as protocol history. Paper-facing behavioral claims should
-  come from accept-aware repaired analyses and their label-conditioned checks.
+- Paper-facing behavioral claims should come from accept-aware repaired
+  analyses and their label-conditioned checks. Invalid earlier settings should
+  not be kept in the manuscript as results or as a standalone explanatory
+  storyline.
 - Hidden evaluator labels may be used only after execution for analysis. The
   manuscript must state this separation rather than assuming readers infer it
   from artifact names.
@@ -4437,16 +4438,14 @@ This file starts fresh for the patch-verification project.
 ## 2026-07-03 Excluding invalid experiment settings from main results
 
 - If an earlier setting is diagnosed as an experimental artifact, executing it
-  at larger scale does not make it paper evidence. It can explain why the
-  protocol was repaired, but it must not appear as an RQ, main figure, or
-  positive/negative empirical finding.
-- For this manuscript, the legacy v0.1 five-model zero-accept synthesis is
-  diagnostic history only. The main chain starts after accept-aware repair:
+  at larger scale does not make it paper evidence. It should not appear as an
+  RQ, main figure, explanatory subsection, or positive/negative
+  empirical finding.
+- For this manuscript, the main chain starts from the repaired evidence:
   Qwen v0.3 label-conditioned metrics, E6 rule-only/no-verdict ablation, and
   tool-contestation.
 - Figures must follow the same exclusion rule as prose. A figure can
-  reintroduce an invalid experiment even if the text says it is excluded; Fig.
-  2 therefore had to be redrawn from Qwen v0.3 and E6 ablation metrics.
-- Add the exclusion as a forbidden claim, not only as a paragraph. Future
-  writing passes should fail review if they describe legacy v0.1 zero-accept
-  settings as main experimental results.
+  reintroduce an invalid experiment even if the text avoids it; Fig. 2
+  therefore had to be redrawn from Qwen v0.3 and E6 ablation metrics.
+- Future writing passes should fail review if they describe invalid earlier
+  settings as paper-facing experimental evidence.

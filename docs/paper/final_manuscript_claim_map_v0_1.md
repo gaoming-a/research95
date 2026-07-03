@@ -1,4 +1,4 @@
-# Final Manuscript Claim Map v0.1
+# Current Final Manuscript Claim Map
 
 Date: 2026-07-03
 
@@ -7,7 +7,7 @@ Date: 2026-07-03
 
 ## One-Sentence Argument
 
-In candidate patch verification, we show that a hidden-evaluator evidence-visibility protocol can measure evidence-conditioned LLM merge-gate behavior, supported by the accept-aware Qwen v0.3 label-conditioned analysis, E6 rule-only/no-verdict ablations, tool-contestation audits, and a realistic source-acquisition gate audit, with legacy v0.1 zero-accept settings excluded from the main evidence chain.
+In candidate patch verification, we show that a hidden-evaluator evidence-visibility protocol can measure evidence-conditioned LLM merge-gate behavior, supported by the accept-aware Qwen v0.3 label-conditioned analysis, E6 rule-only/no-verdict ablations, tool-contestation audits, and a realistic source-acquisition gate audit.
 
 ## Terminology Ledger
 
@@ -24,12 +24,11 @@ In candidate patch verification, we show that a hidden-evaluator evidence-visibi
 
 | id | claim | status | evidence | paper location | boundary |
 | --- | --- | --- | --- | --- | --- |
-| `C1` | EVP-8 defines a valid hidden-evaluator evidence boundary for candidate patch verification. | `supported` | evp8_protocol_v0_3_qwen_first, final_experiment_setting_validity_audit_v0_1 | Methods: Evidence-visibility protocol | Protocol validity, not model effectiveness. |
+| `C1` | EVP-8 defines a valid hidden-evaluator evidence boundary for candidate patch verification. | `supported` | evp8_protocol_v0_3_qwen_first, final_experiment_setting_validity_audit | Methods: Evidence-visibility protocol | Protocol validity, not model effectiveness. |
 | `C2` | In the Qwen v0.3 accept-aware run, visible executable and tool evidence changed correct-patch acceptance while introducing bounded false-accept risk. | `supported_qwen_only` | v0_2_accept_aware_synthesis, v0_3_qwen_label_conditioned_summary | Results: Accept-aware label-conditioned behavior | Qwen-only v0.3 descriptive result; not a five-model effectiveness claim or final evidence-level ranking. |
 | `C3` | Verdict-like tool summaries can anchor model decisions; removing or contesting them changes behavior. | `supported_qualified` | evp8_e6_no_verdict_ablation_comparison, evp8_hard_tool_contestation_result_audit | Results: Verdict dependence and contestation | Measured as policy behavior, not semantic proof. |
 | `C4` | Tool-contestation primarily improves safe handling through escalation rather than strict correction. | `supported` | EVP-8-HARD tool-contestation audit | Results: Tool-contestation as risk triage | Strict correction remains separate and limited. |
-| `C5` | The fresh realistic hard-negative branch is a source-acquisition negative result, not a verifier-ready main experiment. | `supported_negative_boundary` | evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1 | Threats/Discussion: Realistic hard-negative acquisition | Do not use it as three-project verifier evidence. |
-| `C6` | Legacy v0.1 five-model zero-accept settings are diagnostic protocol history and are excluded from the main experimental evidence chain. | `excluded_diagnostic_history` | v0_1_zero_accept_artifact, accept_aware_v0_2_v0_3_repair | Threats/Validity: Excluded diagnostic history | Do not use v0.1 five-model decision counts as evidence for the paper's primary empirical claims. |
+| `C5` | The fresh realistic hard-negative branch is a source-acquisition negative result, not a verifier-ready main experiment. | `supported_negative_boundary` | realistic_hardneg_generation_gate | Threats/Discussion: Realistic hard-negative acquisition | Do not use it as three-project verifier evidence. |
 
 ## Evidence Ladder
 
@@ -72,7 +71,6 @@ In candidate patch verification, we show that a hidden-evaluator evidence-visibi
 - Escalation is equivalent to strict correction.
 - The fresh realistic hard-negative branch is verifier-ready across three projects.
 - The controlled EVP-8 or EVP-8-HARD cohorts prove broad external validity for real agent patch distributions.
-- Legacy v0.1 five-model zero-accept settings are main experimental results.
 
 ## Figure Plan
 

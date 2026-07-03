@@ -2,11 +2,65 @@
 
 最后更新：2026-07-03
 
-## 0.25 2026-07-03 Experiment-logic repair after v0.1 exclusion
+## 0.26 2026-07-03 Manuscript cleanup after invalid-setting removal
 
-本轮目标是回应用户对实验逻辑的关键质疑：如果 v0.1 已被判定为错误/不可靠的
-实验设置 artifact，就不应该继续把 v0.1 five-model zero-accept synthesis 搬到主
-结果里。该质疑成立，因此本轮不是继续解释 v0.1，而是将其从主证据链中移除。
+本轮目标是执行用户要求：把当前论文包中有关早期无效设置的内容删掉。上一轮
+已经把它从主结果中排除，但仍在正文、claim map、图和文档入口中保留了
+“诊断历史/排除项”的影子；这会让论文逻辑继续围绕错误设置打转，不利于
+稳妥 CCF-C 写作。因此本轮以当前修复后证据链为唯一论文-facing 叙事。
+
+执行边界：
+
+- 不新增实验；
+- 不调用 API；
+- 不读取 ignored raw outputs；
+- 不改变 Qwen v0.3、E6 ablation、tool-contestation 或 realistic gate 的结果；
+- 只删除当前论文包、生成脚本、图源数据、README/INDEX/当前状态/经验文档中的
+  旧设置论文-facing 表述。
+
+修订后的当前实验目标：
+
+1. `EVP-8 protocol`：定义 hidden-evaluator evidence boundary 和 E0-E6
+   evidence ladder；
+2. `Qwen v0.3 accept-aware`：作为主实验起点，报告 E0-E6 label-conditioned
+   accepted precision、correct recall、false accept rate、false reject rate 和
+   escalation rate；
+3. `E6 rule-only / E6-full / E6-no-verdict`：作为 baseline/ablation，测量
+   verdict-like tool fields 的 anchoring 和风险策略变化；
+4. `EVP-8-HARD tool-contestation`：只支持 risk triage / safe handling，不支持
+   strict semantic correction；
+5. `realistic hard-negative branch`：因为 three-project gate 未过，只作为
+   source-acquisition boundary，不作为 main verifier experiment。
+
+执行结果：
+
+- 更新 `scripts/write_final_manuscript_claim_map.py`：
+  - manuscript argument 只保留当前修复后证据链；
+  - 删除旧设置相关 claim、forbidden claim、正文段落和 Figure 2 caption 表述；
+  - Results 保持四个 RQ，不再把旧设置作为论文内容解释。
+- 更新 `scripts/generate_ccfc_figures.py`：
+  - Fig. 2 panel c 改为当前 result-chain boundary；
+  - Fig. 3 validity gates 改为当前 claim scope；
+  - figure QA 改为“current repaired evidence chain”。
+- 更新 `README.md`、`docs/INDEX.md`、`docs/plans/current_project_state_zh.md`、
+  `docs/paper/ccfc_revision_response_v0_2.md` 和
+  `docs/experience/engineering_notes.md` 的当前入口描述。
+
+验收结果：
+
+- `python -m py_compile scripts\write_final_manuscript_claim_map.py scripts\generate_ccfc_figures.py scripts\audit_ccfc_figure_placement.py`：通过；
+- `python scripts\write_final_manuscript_claim_map.py --check`：通过；
+- `python scripts\generate_ccfc_figures.py`：通过；
+- `python scripts\generate_ccfc_figures.py --check`：通过；
+- `python scripts\audit_ccfc_figure_placement.py --check`：通过；
+- 当前 manuscript/claim map/figure source/SVG/figure QA/生成脚本扫描未发现旧设置
+  论文-facing 表述。
+
+## 0.25 2026-07-03 Experiment-logic repair after invalid-setting exclusion
+
+本轮目标是回应用户对实验逻辑的关键质疑：如果早期设置已被判定为错误/不可靠的
+实验设置 artifact，就不应该继续把它搬到主结果里。该质疑成立，因此本轮不是
+继续解释旧设置，而是将其从主证据链中移除。
 
 执行边界：
 
@@ -20,29 +74,24 @@
 
 1. `EVP-8 protocol`：定义 hidden-evaluator evidence boundary 和 E0-E6
    evidence ladder；
-2. `legacy v0.1`：只作为 diagnostic protocol history，说明为什么需要
-   accept-aware repair；不得作为主结果、不得用于证明 evidence effect；
-3. `Qwen v0.3 accept-aware`：作为主实验起点，报告 E0-E6 label-conditioned
+2. `Qwen v0.3 accept-aware`：作为主实验起点，报告 E0-E6 label-conditioned
    accepted precision、correct recall、false accept rate、false reject rate 和
    escalation rate；
-4. `E6 rule-only / E6-full / E6-no-verdict`：作为 baseline/ablation，测量
+3. `E6 rule-only / E6-full / E6-no-verdict`：作为 baseline/ablation，测量
    verdict-like tool fields 的 anchoring 和风险策略变化；
-5. `EVP-8-HARD tool-contestation`：只支持 risk triage / safe handling，不支持
+4. `EVP-8-HARD tool-contestation`：只支持 risk triage / safe handling，不支持
    strict semantic correction；
-6. `realistic hard-negative branch`：因为 three-project gate 未过，只作为
+5. `realistic hard-negative branch`：因为 three-project gate 未过，只作为
    source-acquisition boundary，不作为 main verifier experiment。
 
 执行结果：
 
 - 更新 `scripts/write_final_manuscript_claim_map.py`：
   - manuscript argument 改为 v0.3 起算；
-  - C6 新增 `excluded_diagnostic_history`，明确 legacy v0.1 不进主结果；
-  - forbidden claims 增加“Legacy v0.1 five-model zero-accept settings are main
-    experimental results.”；
-  - Results 由四个 RQ 组成，不再含 five-model v0.1 RQ；
+  - Results 由四个 RQ 组成，不再含旧设置 RQ；
   - Fig. 2 caption 改为 accept-aware/no-verdict metric evidence。
 - 更新 `scripts/generate_ccfc_figures.py`：
-  - Fig. 2 从 five-model v0.1 decision pattern 改为 Qwen v0.3 label-conditioned
+  - Fig. 2 从旧 decision pattern 改为 Qwen v0.3 label-conditioned
     metric + E6 ablation metric 图；
   - figure manifest/source-data/QA 同步移除 five-model 主证据定位。
 - 更新 `scripts/audit_ccfc_figure_placement.py` 的 Fig. 2 section/caption
@@ -57,7 +106,7 @@
 - `python scripts\audit_ccfc_figure_placement.py --check`：通过；
 - `python -m json.tool data\reviews\final_manuscript_claim_map_v0_1.json`：通过；
 - 视觉检查确认新的 Fig. 2 已是 accept-aware/no-verdict metric evidence，不再是
-  five-model v0.1 图。
+  旧 decision-pattern 图。
 
 ## 0.24 2026-07-03 CCF-C manuscript critique-driven v0.2 revision
 
@@ -95,7 +144,7 @@ raw outputs 的前提下，把已有证据重排成更像 CCF-C 方法型实证�
 
 当前结论：
 
-- v0.2 的论文主线比 v0.1 更稳：EVP-8 是 hidden-evaluator evidence-visibility
+- 修订后的论文主线更稳：EVP-8 是 hidden-evaluator evidence-visibility
   protocol，贡献是方法/测量和风险行为证据链，不是新 repair algorithm；
 - 五模型零 accept/高 escalation 结果只能作为 RQ1 行为变化证据，不能作为主效果；
 - Qwen v0.3 accept-aware label-conditioned 结果是当前最强主证据；
@@ -220,7 +269,7 @@ Figure contract：
 
 本轮目标是在不继续实验、不调用 API、不读取 ignored raw outputs 的前提下，把
 0.20 的 final experiment-setting validity boundary 落到论文写作层：生成
-manuscript claim map、threats-to-validity 边界和稳定 CCF-C 正文 v0.1。
+manuscript claim map、threats-to-validity 边界和稳定 CCF-C 正文。
 
 执行边界：
 
@@ -240,12 +289,10 @@ manuscript claim map、threats-to-validity 边界和稳定 CCF-C 正文 v0.1。
 
 - 主线 claim 固定为：evidence visibility shapes LLM merge-gate risk behavior
   in candidate patch verification；
-- 结果章节分离 five-model decision pattern、accept-aware repair、
-  no-verdict ablation、tool-contestation 和 realistic hard-negative negative
-  boundary；
+- 结果章节分离 accept-aware repair、no-verdict ablation、tool-contestation 和
+  realistic hard-negative negative boundary；
 - threats-to-validity 明确写入 prompt/evidence formatting、decision-space
-  construct validity、cohort/model external validity 和 historical protocol
-  artifact；
+  construct validity、cohort/model external validity；
 - 禁止 claim 仍然包括 reliable autonomous correctness verification、
   monotonic evidence-level correctness improvement、escalation 等同 strict
   correction，以及 realistic branch 已达到 three-project verifier readiness。
@@ -253,8 +300,8 @@ manuscript claim map、threats-to-validity 边界和稳定 CCF-C 正文 v0.1。
 当前新的唯一下一步：
 
 - 先由用户明确选择配图后端：Python 或 R；
-- 然后生成 Fig. 1 hidden-evaluator protocol、Fig. 2 five-model evidence-level
-  decision patterns、Fig. 3 claim-boundary / setting-validity map；
+- 然后生成 Fig. 1 hidden-evaluator protocol、Fig. 2 accept-aware/no-verdict
+  metric evidence、Fig. 3 claim-boundary / setting-validity map；
 - 配图完成后再决定是否把 Markdown 正文同步转换到最终投稿 LaTeX 模板。
 
 验收结果：
@@ -285,8 +332,7 @@ text 或 patch text，不修改任何实验结果。
   behavior；
 - 该结论成立的前提是论文不声称 reliable autonomous correctness
   verification；
-- v0.1 zero-accept artifact 已通过 v0.2/v0.3 accept-aware repair 和 claim
-  boundary 控制，不能作为主结论；
+- 早期无效设置已从当前论文-facing 结果链中移除，不能作为主结论；
 - hidden evaluator leakage 通过 packet boundary、post-execution label join 和
   prompt-boundary checks 控制；
 - verdict anchoring 已被 no-verdict / tool-contestation ablation 测量，但不是
