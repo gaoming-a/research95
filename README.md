@@ -72,13 +72,18 @@ claim-to-citation mapping, and
 `docs/paper/ccfc_baseline_feasibility_audit_v0_1.md` for deterministic
 baseline boundaries. The completed deterministic baseline is rule-only
 visible-tool; always-escalate, always-reject, and always-accept are reference
-policies only. Majority vote and a separate E0/no-tool deterministic verifier
-must not be described as completed results.
+policies only. Uniform random three-way is now included only as an expected
+reference policy over aggregate label totals, not as a stochastic experiment or
+completed verifier. Majority vote and a separate E0/no-tool deterministic
+verifier must not be described as completed results.
 
 The current CCF-C manuscript is now the v0.3 rewrite at
 `docs/paper/ccfc_manuscript_rewrite_v0_1.md`. It integrates citation keys,
 reference support records, baseline policy boundaries, and Wilson 95%
-confidence intervals. The reviewer-style audit is
+confidence intervals, including tool-contestation opportunity-set intervals for
+safe handling, strict correction, and repeated accept. The manuscript structure
+has been compressed into Methods / Results / Discussion / Threats. The
+reviewer-style audit is
 `docs/paper/ccfc_manuscript_v0_3_reviewer_audit.md`, with machine-readable
 output at `data/reviews/ccfc_manuscript_v0_3_reviewer_audit.json`; its status
 is `passed`.

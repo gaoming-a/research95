@@ -14,6 +14,7 @@
 | always_escalate | calculable_from_label_totals | 0 | 0 | 98 | NA | 0.00% | 0.00% | 100.00% |
 | always_reject | calculable_from_label_totals | 0 | 98 | 0 | NA | 0.00% | 0.00% | 0.00% |
 | always_accept | calculable_from_label_totals | 98 | 0 | 0 | 21.43% | 100.00% | 100.00% | 0.00% |
+| uniform_random_three_way_expected | calculable_expected_reference_from_label_totals | 32.666666666666664 | 32.666666666666664 | 32.666666666666664 | 21.43% | 33.33% | 33.33% | 33.33% |
 | rule_only_visible_tool | completed_existing_tracked_result | 25 | 73 | 0 | 80.00% | 95.24% | 6.49% | 0.00% |
 | qwen_e6_full | completed_existing_tracked_result | 24 | 74 | 0 | 83.33% | 95.24% | 5.19% | 0.00% |
 | deepseek_e6_full | completed_existing_tracked_result | 23 | 75 | 0 | 82.61% | 90.48% | 5.19% | 0.00% |
@@ -25,6 +26,7 @@
 | `always_escalate` | calculable_from_label_totals | conservative abstention reference, not a useful verifier. | Uses only aggregate correct/incorrect counts; no candidate text, prompt text, raw model output, or API call is needed. |
 | `always_reject` | calculable_from_label_totals | safety-heavy lower-bound reference exposing recall collapse. | Uses only aggregate correct/incorrect counts. |
 | `always_accept` | calculable_from_label_totals | unsafe throughput reference exposing base-rate risk. | Uses only aggregate correct/incorrect counts. |
+| `uniform_random_three_way_expected` | calculable_expected_reference_from_label_totals | sanity-check reference for the decision space, not a completed verifier or a reported stochastic experiment. | Uses the expected value of a uniform random accept/reject/escalate policy over aggregate correct/incorrect counts; no stochastic simulation or candidate-level decisions are required. |
 | `rule_only_visible_tool` | completed_existing_tracked_result | main deterministic baseline for E6 full/no-verdict comparison. | data\reviews\evp8_e6_no_verdict_ablation_comparison.json |
 | `qwen_e6_full` | completed_existing_tracked_result | model condition to compare against rule-only and no-verdict ablations. | data\reviews\evp8_e6_no_verdict_ablation_comparison.json |
 | `deepseek_e6_full` | completed_existing_tracked_result | secondary model condition in the E6 ablation package. | data\reviews\evp8_e6_no_verdict_ablation_comparison.json |
@@ -36,6 +38,7 @@
 Allowed:
 
 - Report always-escalate/always-reject/always-accept as deterministic reference policies calculated from label totals.
+- Report uniform-random three-way only as an expected reference policy, not as a completed stochastic baseline run.
 - Report rule-only visible-tool as the completed deterministic E6 baseline.
 - Use Phase A confidence intervals for rule-only and E6 model conditions.
 
@@ -43,6 +46,7 @@ Forbidden:
 
 - Do not claim a completed majority-vote baseline from aggregate-only files.
 - Do not call always-escalate a successful verifier.
+- Do not present the uniform-random expected reference as a real randomized experiment.
 - Do not claim LLM superiority over deterministic baselines as the paper's main result.
 
 ## Checks

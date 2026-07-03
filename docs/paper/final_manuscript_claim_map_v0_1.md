@@ -102,6 +102,7 @@ In candidate patch verification, we show that a hidden-evaluator evidence-visibi
 | `always_escalate` | `calculable_from_label_totals` | 0 | 0 | 98 | conservative abstention reference, not a useful verifier. |
 | `always_reject` | `calculable_from_label_totals` | 0 | 98 | 0 | safety-heavy lower-bound reference exposing recall collapse. |
 | `always_accept` | `calculable_from_label_totals` | 98 | 0 | 0 | unsafe throughput reference exposing base-rate risk. |
+| `uniform_random_three_way_expected` | `calculable_expected_reference_from_label_totals` | 32.666666666666664 | 32.666666666666664 | 32.666666666666664 | sanity-check reference for the decision space, not a completed verifier or a reported stochastic experiment. |
 | `rule_only_visible_tool` | `completed_existing_tracked_result` | 25 | 73 | 0 | main deterministic baseline for E6 full/no-verdict comparison. |
 
 ## Phase A Uncertainty Summary
@@ -113,6 +114,13 @@ In candidate patch verification, we show that a hidden-evaluator evidence-visibi
 | qwen/qwen3.7-max E6-no-verdict | 82.61% [62.86%, 93.02%] | 90.48% [71.09%, 97.35%] | 5.19% [2.04%, 12.61%] | 1.02% [0.18%, 5.56%] |
 | deepseek/deepseek-v4-pro E6-full | 82.61% [62.86%, 93.02%] | 90.48% [71.09%, 97.35%] | 5.19% [2.04%, 12.61%] | 0.00% [0.00%, 3.77%] |
 | deepseek/deepseek-v4-pro E6-no-verdict | 100.00% [74.12%, 100.00%] | 52.38% [32.37%, 71.66%] | 0.00% [0.00%, 4.75%] | 14.29% [8.70%, 22.56%] |
+
+## Tool-Contestation Opportunity Uncertainty
+
+| model | opportunity cases | safe handling 95% CI | strict correction 95% CI | repeated accept 95% CI |
+| --- | ---: | ---: | ---: | ---: |
+| deepseek/deepseek-v4-pro | 9 | 100.00% [70.09%, 100.00%] | 0.00% [0.00%, 29.91%] | 0.00% [0.00%, 29.91%] |
+| qwen/qwen3.7-max | 9 | 88.89% [56.50%, 98.01%] | 0.00% [0.00%, 29.91%] | 11.11% [1.99%, 43.50%] |
 
 ## Forbidden Claims
 

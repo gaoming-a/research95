@@ -47,6 +47,11 @@
       "passed": true
     },
     {
+      "check": "random_policy_expected_reference_present",
+      "detail": "",
+      "passed": true
+    },
+    {
       "check": "majority_vote_not_completed",
       "detail": "",
       "passed": true
@@ -59,6 +64,36 @@
     {
       "check": "all_expected_uncertainty_conditions_present",
       "detail": [],
+      "passed": true
+    },
+    {
+      "check": "tool_contestation_ci_present",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "methods_protocol_section_present",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "methods_data_metrics_section_present",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "results_section_present",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "discussion_section_present",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "threats_section_present",
+      "detail": "",
       "passed": true
     },
     {
@@ -94,7 +129,7 @@
       "status": "bounded_accept_risk"
     },
     {
-      "mitigation": "Wilson 95% CIs are now shown in the Results section and used to avoid superiority claims.",
+      "mitigation": "Wilson 95% CIs are now shown for E6 conditions and tool-contestation opportunity-set rates, and are used to avoid superiority claims.",
       "risk": "Small cohort creates wide uncertainty intervals.",
       "status": "bounded_accept_risk"
     },

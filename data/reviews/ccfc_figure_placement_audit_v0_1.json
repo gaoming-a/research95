@@ -32,7 +32,7 @@
       "image_line": 33,
       "image_ref": "../figures/ccfc/ccfc_fig1_protocol.png",
       "passed": true,
-      "section": "## 3. Evidence-Visibility Protocol",
+      "section": "## 3. Methods: Evidence-Visibility Protocol",
       "section_before_image": true,
       "section_line": 29
     },
@@ -55,15 +55,15 @@
         }
       ],
       "caption_after_image": true,
-      "caption_line": 86,
+      "caption_line": 87,
       "id": "Fig. 2",
       "image_exists": true,
-      "image_line": 84,
+      "image_line": 85,
       "image_ref": "../figures/ccfc/ccfc_fig2_decision_patterns.png",
       "passed": true,
       "section": "### 5.1 RQ1: Accept-aware evidence changed Qwen label-conditioned behavior",
       "section_before_image": true,
-      "section_line": 70
+      "section_line": 71
     },
     {
       "assets": [
@@ -84,15 +84,15 @@
         }
       ],
       "caption_after_image": true,
-      "caption_line": 136,
+      "caption_line": 144,
       "id": "Fig. 3",
       "image_exists": true,
-      "image_line": 134,
+      "image_line": 142,
       "image_ref": "../figures/ccfc/ccfc_fig3_claim_boundary.png",
       "passed": true,
       "section": "## 6. Discussion",
       "section_before_image": true,
-      "section_line": 122
+      "section_line": 130
     }
   ],
   "manuscript": "docs/paper/ccfc_manuscript_rewrite_v0_1.md",

@@ -3,12 +3,14 @@
   "baseline_feasibility_boundary": {
     "allowed": [
       "Report always-escalate/always-reject/always-accept as deterministic reference policies calculated from label totals.",
+      "Report uniform-random three-way only as an expected reference policy, not as a completed stochastic baseline run.",
       "Report rule-only visible-tool as the completed deterministic E6 baseline.",
       "Use Phase A confidence intervals for rule-only and E6 model conditions."
     ],
     "forbidden": [
       "Do not claim a completed majority-vote baseline from aggregate-only files.",
       "Do not call always-escalate a successful verifier.",
+      "Do not present the uniform-random expected reference as a real randomized experiment.",
       "Do not claim LLM superiority over deterministic baselines as the paper's main result."
     ]
   },
@@ -45,6 +47,17 @@
       "policy": "always_accept",
       "reject": 0,
       "status": "calculable_from_label_totals"
+    },
+    {
+      "accept": 32.666666666666664,
+      "accepted_precision": 0.2142857142857143,
+      "correct_recall": 0.3333333333333333,
+      "escalate": 32.666666666666664,
+      "false_accept_rate": 0.3333333333333333,
+      "paper_role": "sanity-check reference for the decision space, not a completed verifier or a reported stochastic experiment.",
+      "policy": "uniform_random_three_way_expected",
+      "reject": 32.666666666666664,
+      "status": "calculable_expected_reference_from_label_totals"
     },
     {
       "accept": 25,
@@ -1342,6 +1355,66 @@
       "decision": "Use as the current completed deterministic baseline.",
       "definition": "the completed deterministic E6 baseline using visible tool evidence",
       "term": "rule-only visible-tool baseline"
+    }
+  ],
+  "tool_contestation_uncertainty_summary": [
+    {
+      "candidate_count": 9,
+      "escalated": 9,
+      "model": "deepseek/deepseek-v4-pro",
+      "repeated_accept": 0,
+      "repeated_accept_ci": {
+        "ci_95_high": 0.299145,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 9
+      },
+      "safe_handled": 9,
+      "safe_handling_ci": {
+        "ci_95_high": 1.0,
+        "ci_95_low": 0.700855,
+        "estimate": 1.0,
+        "successes": 9,
+        "total": 9
+      },
+      "strict_corrected_to_reject": 0,
+      "strict_correction_ci": {
+        "ci_95_high": 0.299145,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 9
+      }
+    },
+    {
+      "candidate_count": 9,
+      "escalated": 8,
+      "model": "qwen/qwen3.7-max",
+      "repeated_accept": 1,
+      "repeated_accept_ci": {
+        "ci_95_high": 0.435,
+        "ci_95_low": 0.019891,
+        "estimate": 0.111111,
+        "successes": 1,
+        "total": 9
+      },
+      "safe_handled": 8,
+      "safe_handling_ci": {
+        "ci_95_high": 0.980109,
+        "ci_95_low": 0.565,
+        "estimate": 0.888889,
+        "successes": 8,
+        "total": 9
+      },
+      "strict_corrected_to_reject": 0,
+      "strict_correction_ci": {
+        "ci_95_high": 0.299145,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 9
+      }
     }
   ]
 }

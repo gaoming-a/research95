@@ -15,7 +15,7 @@ DEFAULT_OUT_MD = REPO_ROOT / "docs" / "paper" / "ccfc_figure_placement_audit_v0_
 EXPECTED = [
     {
         "id": "Fig. 1",
-        "section": "## 3. Evidence-Visibility Protocol",
+        "section": "## 3. Methods: Evidence-Visibility Protocol",
         "image": "../figures/ccfc/ccfc_fig1_protocol.png",
         "caption_marker": "**Figure 1. Hidden-evaluator evidence-visibility protocol.**",
         "assets": [

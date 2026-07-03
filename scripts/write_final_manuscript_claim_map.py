@@ -14,6 +14,7 @@ from typing import Any
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+Z_95 = 1.959963984540054
 VALIDITY_AUDIT = REPO_ROOT / "data" / "reviews" / "final_experiment_setting_validity_audit_v0_1.json"
 FIVE_MODEL_SYNTHESIS = REPO_ROOT / "data" / "protocols" / "evp8_five_model_synthesis_v0_1.json"
 NO_VERDICT_COMPARISON = REPO_ROOT / "data" / "reviews" / "evp8_e6_no_verdict_ablation_comparison.json"
@@ -99,6 +100,28 @@ def ci_percent(interval: dict[str, Any] | None) -> str:
         f"{percent(interval.get('estimate'))} "
         f"[{percent(interval.get('ci_95_low'))}, {percent(interval.get('ci_95_high'))}]"
     )
+
+
+def wilson_interval(successes: int, total: int, z: float = Z_95) -> dict[str, Any]:
+    if total == 0:
+        return {
+            "successes": successes,
+            "total": total,
+            "estimate": None,
+            "ci_95_low": None,
+            "ci_95_high": None,
+        }
+    p = successes / total
+    denominator = 1 + z**2 / total
+    center = (p + z**2 / (2 * total)) / denominator
+    margin = z * ((p * (1 - p) + z**2 / (4 * total)) / total) ** 0.5 / denominator
+    return {
+        "successes": successes,
+        "total": total,
+        "estimate": round(p, 6),
+        "ci_95_low": round(max(0.0, center - margin), 6),
+        "ci_95_high": round(min(1.0, center + margin), 6),
+    }
 
 
 def citation_support_rows() -> list[dict[str, str]]:
@@ -219,6 +242,7 @@ def baseline_policy_rows(baseline: dict[str, Any]) -> list[dict[str, Any]]:
         "always_escalate",
         "always_reject",
         "always_accept",
+        "uniform_random_three_way_expected",
         "rule_only_visible_tool",
     ]:
         row_metrics = metrics.get(key) or {}
@@ -234,6 +258,34 @@ def baseline_policy_rows(baseline: dict[str, Any]) -> list[dict[str, Any]]:
                 "accepted_precision": row_metrics.get("accepted_precision"),
                 "correct_recall": row_metrics.get("correct_recall"),
                 "false_accept_rate": row_metrics.get("false_accept_rate"),
+            }
+        )
+    return rows
+
+
+def tool_contestation_ci_rows(hard: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for model_id, model in sorted((hard.get("models") or {}).items()):
+        opportunity = (
+            (model.get("opportunity_correction_vs_tool") or {})
+            .get("tool_false_accepts")
+            or {}
+        )
+        total = int(opportunity.get("candidate_count") or 0)
+        strict = int(opportunity.get("corrected_to_reject") or 0)
+        escalated = int(opportunity.get("escalated") or 0)
+        repeated = int(opportunity.get("repeated_accept") or 0)
+        rows.append(
+            {
+                "model": model_id,
+                "candidate_count": total,
+                "safe_handled": strict + escalated,
+                "strict_corrected_to_reject": strict,
+                "escalated": escalated,
+                "repeated_accept": repeated,
+                "safe_handling_ci": wilson_interval(strict + escalated, total),
+                "strict_correction_ci": wilson_interval(strict, total),
+                "repeated_accept_ci": wilson_interval(repeated, total),
             }
         )
     return rows
@@ -505,6 +557,7 @@ def build_claim_map() -> dict[str, Any]:
         "baseline_policy_boundaries": baseline_policy_rows(baseline_feasibility),
         "baseline_feasibility_boundary": baseline_feasibility.get("claim_boundary") or {},
         "phase_a_uncertainty_summary": uncertainty_rows(phase_a),
+        "tool_contestation_uncertainty_summary": tool_contestation_ci_rows(hard),
         "phase_a_confidence_intervals": phase_a.get("confidence_intervals") or {},
         "phase_a_boundary": phase_a.get("claim_boundary") or {},
         "hard_tool_contestation_summary": {
@@ -639,6 +692,18 @@ def write_claim_markdown(path: Path, claim_map: dict[str, Any]) -> None:
             f"{ci_percent(row.get('correct_recall'))} | {ci_percent(row.get('false_accept_rate'))} | "
             f"{ci_percent(row.get('escalation_rate'))} |"
         )
+    lines += [
+        "",
+        "## Tool-Contestation Opportunity Uncertainty",
+        "",
+        "| model | opportunity cases | safe handling 95% CI | strict correction 95% CI | repeated accept 95% CI |",
+        "| --- | ---: | ---: | ---: | ---: |",
+    ]
+    for row in claim_map["tool_contestation_uncertainty_summary"]:
+        lines.append(
+            f"| {row['model']} | {row['candidate_count']} | {ci_percent(row['safe_handling_ci'])} | "
+            f"{ci_percent(row['strict_correction_ci'])} | {ci_percent(row['repeated_accept_ci'])} |"
+        )
     lines += ["", "## Forbidden Claims", ""]
     for claim in claim_map["forbidden_claims"]:
         lines.append(f"- {claim}")
@@ -726,6 +791,15 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
             f"{ci_percent(row.get('correct_recall'))} | {ci_percent(row.get('false_accept_rate'))} | "
             f"{ci_percent(row.get('escalation_rate'))} |"
         )
+    tool_contestation_ci_table_lines = [
+        "| model | opportunity cases | safe handling 95% CI | strict correction 95% CI | repeated accept 95% CI |",
+        "| --- | ---: | ---: | ---: | ---: |",
+    ]
+    for row in claim_map["tool_contestation_uncertainty_summary"]:
+        tool_contestation_ci_table_lines.append(
+            f"| {row['model']} | {row['candidate_count']} | {ci_percent(row['safe_handling_ci'])} | "
+            f"{ci_percent(row['strict_correction_ci'])} | {ci_percent(row['repeated_accept_ci'])} |"
+        )
     lines = [
         "# Evidence Visibility Shapes Risk Behavior in LLM-Based Candidate Patch Verification",
         "",
@@ -755,7 +829,7 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "The distinction from prior benchmark-style repair evaluation is methodological. Existing benchmarks primarily ask whether a system resolves a task. Code review work, by contrast, emphasizes that a merge decision is embedded in a review process rather than reducible to a single test outcome [bacchelli_bird_icse_2013_code_review]. EVP-8 asks how a verifier behaves under controlled evidence visibility after a candidate patch is already available. The contribution is not a new repair algorithm; it is a reproducible protocol and evidence chain for measuring evidence-conditioned risk behavior.",
         "",
-        "## 3. Evidence-Visibility Protocol",
+        "## 3. Methods: Evidence-Visibility Protocol",
         "",
         "The unit of analysis is a candidate patch reviewed under a predefined evidence packet. Each packet contains only model-visible information for its evidence level, while hidden evaluator labels and oracle outcomes remain unavailable to the model. After the model decision, evaluator-only labels are joined to compute false accepts, correct recall, escalation, and other bounded metrics.",
         "",
@@ -769,15 +843,15 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         *evidence_table_lines,
         "",
-        "## 4. Experimental Design",
+        "## 4. Methods: Data, Metrics, and Validity Gates",
         "",
         "The study is organized around four research questions. RQ1 asks whether repaired accept-aware evidence changes label-conditioned Qwen decisions across E0-E6. RQ2 asks whether verdict-like deterministic tool summaries anchor E6 behavior. RQ3 asks whether explicit tool-contestation can make models challenge visible-test-only accept premises. RQ4 asks whether a fresh realistic hard-negative source-acquisition branch is ready to support a main verifier experiment.",
         "",
         "The evaluated evidence sources match those questions. First, the accept-aware Qwen v0.3 analysis computes label-conditioned accepted precision, correct recall, false accept rate, false reject rate, and escalation rate after post-execution label join. Second, E6 full, rule-only, and E6 no-verdict comparisons test the effect of verdict-like tool fields. Third, EVP-8-HARD tool-contestation evaluates known false-accept opportunities. Fourth, the realistic hard-negative branch is treated as a source-acquisition gate rather than a main verifier result because it failed the predeclared three-project readiness threshold.",
         "",
-        "All paper-facing claims are constrained by a final setting-validity audit. That audit verifies run and parse coverage, raw-output-free summaries, post-execution label joins, prompt-boundary checks, and the non-overclaiming of the realistic hard-negative branch. It passed only with bounded claims: the results are usable as real evidence for evidence-conditioned risk behavior, not as proof of autonomous correctness verification. Baselines not yet implemented in tracked artifacts, such as always-escalate, random, and majority policies, are therefore not reported as completed results.",
+        "All paper-facing claims are constrained by a final setting-validity audit. That audit verifies run and parse coverage, raw-output-free summaries, post-execution label joins, prompt-boundary checks, and the non-overclaiming of the realistic hard-negative branch. It passed only with bounded claims: the results are usable as real evidence for evidence-conditioned risk behavior, not as proof of autonomous correctness verification. Reference policies calculated from aggregate labels are therefore reported only as decision-space boundaries, while candidate-level baselines that require aligned decisions, such as majority voting, are not reported as completed results.",
         "",
-        "The baseline policy boundary is explicit. Always-escalate, always-reject, and always-accept are deterministic reference policies calculated from aggregate label totals; they orient the decision space but are not successful verifier results. The completed deterministic baseline is the rule-only visible-tool policy. Majority voting across models and a separate E0/no-tool deterministic verifier require candidate-level aligned audits and are not reported as completed baselines.",
+        "The baseline policy boundary is explicit. Always-escalate, always-reject, and always-accept are deterministic reference policies calculated from aggregate label totals; they orient the decision space but are not successful verifier results. Uniform random three-way is reported only as an expected reference policy over accept, reject, and escalate, not as a stochastic experiment. The completed deterministic baseline is the rule-only visible-tool policy. Majority voting across models and a separate E0/no-tool deterministic verifier require candidate-level aligned audits and are not reported as completed baselines.",
         "",
         *baseline_policy_table_lines,
         "",
@@ -810,6 +884,10 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "### 5.3 RQ3: Tool-contestation supported risk triage, not strict correction",
         "",
         f"On EVP-8-HARD, tool-contestation covered 47 candidates for both Qwen and DeepSeek. For the known tool false-accept opportunity set, DeepSeek shifted {deepseek_opp.get('candidate_count')} tool false accepts to {deepseek_opp.get('escalated')} escalations and {deepseek_opp.get('corrected_to_reject')} strict rejects. Qwen shifted {qwen_opp.get('candidate_count')} tool false accepts to {qwen_opp.get('escalated')} escalations, with {qwen_opp.get('corrected_to_reject')} strict rejects and {qwen_opp.get('repeated_accept')} repeated accept. The supported interpretation is therefore risk triage through escalation, not semantic correction of wrong patches.",
+        "",
+        "Opportunity-set uncertainty is also large. Safe handling was high because most tool false accepts moved to escalation, but strict correction remained zero for both models. The Wilson intervals therefore support the weaker claim that tool-contestation can route known risky accepts away from autonomous acceptance; they do not support a claim that it reliably identifies semantic incorrectness.",
+        "",
+        *tool_contestation_ci_table_lines,
         "",
         "### 5.4 RQ4: Realistic hard-negative acquisition remained a boundary",
         "",

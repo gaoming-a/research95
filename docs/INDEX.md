@@ -17,11 +17,13 @@
   rewrite file, CCF-C Fig. 1--3, and inline figure placement audit are now
   tracked. The CCF-C citation support bank and baseline feasibility audit are
   also tracked; `rule-only visible-tool` is the completed deterministic
-  baseline, while majority-vote and a separate E0/no-tool deterministic
-  verifier remain unimplemented. The v0.3 manuscript integration and
-  reviewer-style audit are tracked as well; citation keys, reference support
-  records, baseline policy boundaries, and Wilson 95% CIs are now in the
-  manuscript. The no-API Luigi
+  baseline, while always-escalate/always-reject/always-accept and uniform
+  random three-way are reference policies only, and majority-vote plus a
+  separate E0/no-tool deterministic verifier remain unimplemented. The v0.3
+  manuscript integration and reviewer-style audit are tracked as well;
+  citation keys, reference support records, baseline policy boundaries, Phase A
+  Wilson 95% CIs, tool-contestation opportunity-set Wilson 95% CIs, and the
+  Methods/Results/Discussion/Threats structure are now in the manuscript. The no-API Luigi
   source-acquisition/materialization protocol is optional future work, not the
   current blocker. Historical `origin/main` entries retained later in plan logs
   are audit records only. As of
@@ -82,7 +84,10 @@
   leaves Fig. 2 as accept-aware/no-verdict metric evidence for the current
   result chain. The 2026-07-04 0.28 entry records the citation support bank and
   deterministic baseline feasibility audit. The 2026-07-04 0.29 entry records
-  the v0.3 manuscript integration and reviewer-style audit.
+  the v0.3 manuscript integration and reviewer-style audit. The 2026-07-04
+  0.30 entry records the remaining five-step completion: random expected
+  reference policy, tool-contestation opportunity-set CIs, structure
+  compression, and rerun reviewer-aware audit.
 - `../scripts/write_evp8_realistic_hardneg_uplift_packet.py`: no-API boundary
   packet writer for the realistic hard-negative uplift route. It reads the
   tracked combined generation gate only and writes the current missing
@@ -130,9 +135,10 @@
   verification, not autonomous patch correctness verification; it also includes
   E0-E6 evidence-level definitions, Qwen v0.3 label-conditioned metrics, E6
   rule-only/no-verdict baseline metrics, citation-keyed related work, baseline
-  policy boundaries, Wilson 95% confidence intervals, and reference support
-  records. CCF-C Fig. 1--3 are placed inline in the protocol, results, and
-  discussion/threat-boundary locations.
+  policy boundaries, Phase A Wilson 95% confidence intervals,
+  tool-contestation opportunity-set Wilson 95% confidence intervals, and
+  reference support records. CCF-C Fig. 1--3 are placed inline in the protocol,
+  results, and discussion/threat-boundary locations.
 - `paper/ccfc_revision_response_v0_2.md`: critique-to-action record for the
   CCF-C manuscript. It identifies which external review criticisms were
   addressed in v0.2 and which remain deferred submission risks, especially
@@ -152,12 +158,14 @@
 - `../data/reviews/ccfc_baseline_feasibility_audit_v0_1.json` and
   `paper/ccfc_baseline_feasibility_audit_v0_1.md`: baseline feasibility audit.
   Status is `passed`; always-escalate/always-reject/always-accept are
-  reference policies, rule-only visible-tool is the completed deterministic
-  baseline, and majority-vote / separate E0 no-tool verifier are not completed
-  under the current aggregate-only boundary.
+  reference policies, uniform random three-way is an expected reference policy,
+  rule-only visible-tool is the completed deterministic baseline, and
+  majority-vote / separate E0 no-tool verifier are not completed under the
+  current aggregate-only boundary.
 - `../scripts/audit_ccfc_manuscript_v0_3.py`: reviewer-style paper audit for
   the current CCF-C Markdown manuscript. It checks citation-key insertion,
   reference support records, baseline policy boundary, Wilson CI summary,
+  random expected reference wording, tool-contestation opportunity-set CI,
   old-setting exclusion, and overclaim negation.
 - `../data/reviews/ccfc_manuscript_v0_3_reviewer_audit.json` and
   `paper/ccfc_manuscript_v0_3_reviewer_audit.md`: v0.3 manuscript reviewer

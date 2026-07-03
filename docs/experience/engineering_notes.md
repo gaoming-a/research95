@@ -4500,3 +4500,21 @@ This file starts fresh for the patch-verification project.
 - Wide Wilson intervals are a writing constraint, not a formatting footnote.
   They must sit near the E6 baseline/no-verdict table so readers see that
   point-estimate differences are bounded and should not be overclaimed.
+
+## 2026-07-04 Five-step CCF-C completion boundary
+
+- A random-policy baseline can be useful without becoming a new experiment. In
+  this project, `uniform_random_three_way_expected` is only an expected
+  reference over aggregate label totals; do not describe it as a stochastic run,
+  a completed verifier, or evidence that the model beats randomness.
+- Tool-contestation opportunity counts are small. Reporting Wilson intervals
+  for safe handling, strict correction, and repeated accept makes the
+  uncertainty visible and prevents escalation-heavy behavior from being
+  over-read as semantic correction.
+- Structure compression should happen in the generator, not just the rendered
+  Markdown. Otherwise Methods/Results/Discussion/Threats headings can drift on
+  the next regeneration.
+- The five-step paper pass is complete only under the current bounded route:
+  citation support, aggregate-feasible baselines, uncertainty presentation,
+  structure compression, and reviewer-aware audit. It still does not complete
+  majority-vote or a separate E0/no-tool deterministic verifier.

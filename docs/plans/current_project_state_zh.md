@@ -20,16 +20,21 @@
   `scripts/audit_ccfc_figure_placement.py` 审计。
   附件评审意见触发的 v0.2 修订已把 Qwen v0.3 label-conditioned metrics、
   E6 rule-only/no-verdict baseline 和 E0-E6 evidence ladder 放入主文；未完成的
-  always-escalate、random、majority、完整 E0/no-tool baseline 仍不得写成已完成结果。
+  majority 和完整 E0/no-tool baseline 仍不得写成已完成结果。
   2026-07-03 追加实验逻辑清理：当前论文包不再携带早期无效设置作为正文内容；
   新的 Fig. 2 保持为 Qwen v0.3 accept-aware + E6 ablation metric evidence。
   2026-07-04 追加 PaperSpine 下一步产物：citation support bank 和 baseline
   feasibility audit 已完成；rule-only visible-tool 是当前已完成 deterministic
-  baseline，always-escalate/always-reject/always-accept 只能作为 reference
-  policies，majority vote 和单独 E0/no-tool deterministic verifier 仍不得写成已完成。
+  baseline，always-escalate/always-reject/always-accept 以及
+  uniform random three-way expected policy 只能作为 reference policies，
+  majority vote 和单独 E0/no-tool deterministic verifier 仍不得写成已完成。
   2026-07-04 v0.3 正文已把 citation keys、reference support records、baseline
   policy boundary 和 Wilson 95% CI uncertainty summary 合入正文，并通过
   `scripts/audit_ccfc_manuscript_v0_3.py` reviewer-style audit。
+  2026-07-04 五步补齐 pass 已完成：random expected reference、tool-contestation
+  opportunity-set Wilson 95% CI、Methods/Results/Discussion/Threats 结构压缩和
+  reviewer-aware audit 均已进入可复现生成链路；这不改变 majority/E0-no-tool
+  未完成边界。
   在 `ready_for_verifier_api=false` 时仍不得运行 Qwen/DeepSeek verifier API。
 
 ## 2026-07-04 快速状态增量
@@ -46,14 +51,17 @@
 - 当前可写入论文的 baseline 边界：
   - deterministic reference policies：always-escalate、always-reject、
     always-accept；
+  - expected reference policy：uniform random three-way expected policy，
+    只按 aggregate label totals 计算期望值，不是随机模拟或完成 verifier；
   - completed deterministic baseline：rule-only visible-tool；
   - completed E6 model conditions：Qwen E6-full 和 DeepSeek E6-full；
   - 不可写成已完成：majority-vote across models、单独 E0/no-tool deterministic
     verifier。
 - 已完成 v0.3 正文集成：
   `docs/paper/ccfc_manuscript_rewrite_v0_1.md` 现在包含 citation-keyed related
-  work、baseline policy boundary、Phase A Wilson 95% CI summary 和 reference
-  support records。
+  work、baseline policy boundary、Phase A Wilson 95% CI summary、
+  tool-contestation opportunity-set Wilson 95% CI、Methods/Results/Discussion/
+  Threats 结构压缩和 reference support records。
 - 新增 reviewer-style manuscript audit：
   `docs/paper/ccfc_manuscript_v0_3_reviewer_audit.md` 和
   `data/reviews/ccfc_manuscript_v0_3_reviewer_audit.json`，状态为 `passed`。
@@ -159,11 +167,11 @@
 - 分支：`evp8-v03-qwen-main-exp`
 - 远端：`origin/evp8-v03-qwen-main-exp`
 - 最新本地语义锚点：以 `git log -1 --oneline` 为准，语义应为
-  `Integrate CCF-C manuscript support into v0.3`。
+  `Complete CCF-C manuscript audit pass`。
 - 当前远端同步状态：`git status --short --branch` 显示本地相对
-  `origin/evp8-v03-qwen-main-exp` 为 `[ahead 1]`；本轮 `git push` 多次因
-  GitHub HTTPS 443 连接失败或 reset 未完成。远端已包含上一提交 `595702c Add CCF-C
-  citation and baseline support`，但尚未包含本轮 v0.3 正文集成提交。
+  `origin/evp8-v03-qwen-main-exp` 为 `[ahead 2]`；本轮 `git push` 因
+  GitHub HTTPS 连接 reset 未完成。远端已包含上一提交 `595702c Add CCF-C
+  citation and baseline support`，但尚未包含 v0.3 正文集成提交和五步补齐提交。
 - 同步判断：以 `git status --short --branch`、`git log -1 --oneline` 和
   `origin/evp8-v03-qwen-main-exp` 为准；不得再用旧 `origin/main` 段落判断
   当前分支是否同步。
@@ -172,7 +180,9 @@
   `docs/paper/ccfc_revision_response_v0_2.md` 和
   `docs/paper/ccfc_manuscript_v0_3_reviewer_audit.md` 均已完成。当前实验逻辑以
   Qwen v0.3 accept-aware label-conditioned metrics 为主证据起点，且正文已包含
-  citation-keyed related work、baseline policy boundary 和 Wilson 95% CI summary。
+  citation-keyed related work、baseline policy boundary、Phase A Wilson 95% CI
+  summary、tool-contestation opportunity-set CI 和 Methods/Results/Discussion/
+  Threats 结构。
   Luigi
   source-acquisition/materialization protocol 已降级为可选未来工作，不再是稳妥
   CCF-C 路线的当前 blocker。

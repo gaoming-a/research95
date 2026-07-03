@@ -79,6 +79,7 @@ def metric_from_counts(
 def deterministic_reference_baselines(
     correct_total: int, incorrect_total: int
 ) -> dict[str, dict[str, Any]]:
+    random_probability = 1 / 3
     return {
         "always_escalate": metric_from_counts(
             true_accept=0,
@@ -107,6 +108,16 @@ def deterministic_reference_baselines(
             true_reject=0,
             escalated_correct=0,
             escalated_incorrect=0,
+            correct_total=correct_total,
+            incorrect_total=incorrect_total,
+        ),
+        "uniform_random_three_way_expected": metric_from_counts(
+            true_accept=correct_total * random_probability,
+            false_accept=incorrect_total * random_probability,
+            false_reject=correct_total * random_probability,
+            true_reject=incorrect_total * random_probability,
+            escalated_correct=correct_total * random_probability,
+            escalated_incorrect=incorrect_total * random_probability,
             correct_total=correct_total,
             incorrect_total=incorrect_total,
         ),
@@ -161,6 +172,11 @@ def build_audit() -> dict[str, Any]:
             "status": "calculable_from_label_totals",
             "reason": "Uses only aggregate correct/incorrect counts.",
             "paper_role": "unsafe throughput reference exposing base-rate risk.",
+        },
+        "uniform_random_three_way_expected": {
+            "status": "calculable_expected_reference_from_label_totals",
+            "reason": "Uses the expected value of a uniform random accept/reject/escalate policy over aggregate correct/incorrect counts; no stochastic simulation or candidate-level decisions are required.",
+            "paper_role": "sanity-check reference for the decision space, not a completed verifier or a reported stochastic experiment.",
         },
         "rule_only_visible_tool": {
             "status": "completed_existing_tracked_result",
@@ -269,12 +285,14 @@ def build_audit() -> dict[str, Any]:
         "claim_boundary": {
             "allowed": [
                 "Report always-escalate/always-reject/always-accept as deterministic reference policies calculated from label totals.",
+                "Report uniform-random three-way only as an expected reference policy, not as a completed stochastic baseline run.",
                 "Report rule-only visible-tool as the completed deterministic E6 baseline.",
                 "Use Phase A confidence intervals for rule-only and E6 model conditions.",
             ],
             "forbidden": [
                 "Do not claim a completed majority-vote baseline from aggregate-only files.",
                 "Do not call always-escalate a successful verifier.",
+                "Do not present the uniform-random expected reference as a real randomized experiment.",
                 "Do not claim LLM superiority over deterministic baselines as the paper's main result.",
             ],
         },
@@ -288,6 +306,7 @@ def render_md(audit: dict[str, Any]) -> str:
         "always_escalate",
         "always_reject",
         "always_accept",
+        "uniform_random_three_way_expected",
         "rule_only_visible_tool",
         "qwen_e6_full",
         "deepseek_e6_full",

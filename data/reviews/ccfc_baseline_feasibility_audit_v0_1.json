@@ -34,6 +34,11 @@
       "reason": "Uses only aggregate correct/incorrect counts.",
       "paper_role": "unsafe throughput reference exposing base-rate risk."
     },
+    "uniform_random_three_way_expected": {
+      "status": "calculable_expected_reference_from_label_totals",
+      "reason": "Uses the expected value of a uniform random accept/reject/escalate policy over aggregate correct/incorrect counts; no stochastic simulation or candidate-level decisions are required.",
+      "paper_role": "sanity-check reference for the decision space, not a completed verifier or a reported stochastic experiment."
+    },
     "rule_only_visible_tool": {
       "status": "completed_existing_tracked_result",
       "source": "data\\reviews\\evp8_e6_no_verdict_ablation_comparison.json",
@@ -123,6 +128,27 @@
       "false_accept_rate": 1.0,
       "false_reject_rate": 0.0,
       "escalation_rate": 0.0
+    },
+    "uniform_random_three_way_expected": {
+      "record_count": 98,
+      "decision_counts": {
+        "accept": 32.666666666666664,
+        "reject": 32.666666666666664,
+        "escalate": 32.666666666666664
+      },
+      "confusion_counts": {
+        "true_accept": 7.0,
+        "false_accept": 25.666666666666664,
+        "false_reject": 7.0,
+        "true_reject": 25.666666666666664,
+        "escalated_correct": 7.0,
+        "escalated_incorrect": 25.666666666666664
+      },
+      "accepted_precision": 0.2142857142857143,
+      "correct_recall": 0.3333333333333333,
+      "false_accept_rate": 0.3333333333333333,
+      "false_reject_rate": 0.3333333333333333,
+      "escalation_rate": 0.3333333333333333
     },
     "rule_only_visible_tool": {
       "accept_rate": 0.255102,
@@ -364,12 +390,14 @@
   "claim_boundary": {
     "allowed": [
       "Report always-escalate/always-reject/always-accept as deterministic reference policies calculated from label totals.",
+      "Report uniform-random three-way only as an expected reference policy, not as a completed stochastic baseline run.",
       "Report rule-only visible-tool as the completed deterministic E6 baseline.",
       "Use Phase A confidence intervals for rule-only and E6 model conditions."
     ],
     "forbidden": [
       "Do not claim a completed majority-vote baseline from aggregate-only files.",
       "Do not call always-escalate a successful verifier.",
+      "Do not present the uniform-random expected reference as a real randomized experiment.",
       "Do not claim LLM superiority over deterministic baselines as the paper's main result."
     ]
   },

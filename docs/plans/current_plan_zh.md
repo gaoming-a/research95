@@ -2,6 +2,95 @@
 
 最后更新：2026-07-04
 
+## 0.30 2026-07-04 Remaining five-step completion: random baseline, tool-contestation CI, structure compression
+
+本轮目标是补齐用户列出的五步中剩余缺口：random policy baseline、tool-contestation
+safe handling / strict correction CI、CCF-C 正文结构压缩，以及补齐后的
+reviewer-aware audit。该轮不新增实验、不调用 API、不读取 ignored raw outputs、
+rendered prompt text 或 patch diff。
+
+执行边界：
+
+- random policy 只作为基于 aggregate label totals 的 expected reference policy，
+  不进行随机模拟、不写成完成 verifier；
+- tool-contestation CI 只基于 tracked
+  `data/protocols/evp8_hard_tool_contestation_result_audit_v0_1.json` 的
+  opportunity counts 计算 Wilson 95% CI；
+- 正文结构压缩必须通过 `scripts/write_final_manuscript_claim_map.py` 完成，不能
+  只改生成后的 Markdown；
+- majority-vote 和单独 E0/no-tool deterministic verifier 仍不得写成完成结果；
+- GitHub 当前已知存在 HTTPS 443 网络阻塞，本轮仍会提交并尝试 push；若失败必须
+  记录 ahead 状态。
+
+验收条件：
+
+- baseline feasibility audit 包含 random policy reference；
+- 正文包含 tool-contestation safe handling / strict correction Wilson 95% CI；
+- 正文结构标题压缩为 Methods / Results / Discussion / Threats 的 CCF-C 风格；
+- reviewer audit 覆盖 random policy、tool-contestation CI 和结构压缩；
+- `py_compile`、baseline audit `--check`、manuscript generator `--check`、
+  figure placement audit `--check`、reviewer audit `--check` 全部通过；
+- 同步 README/INDEX/current project state/engineering notes；
+- 提交本轮相关文件并尝试 GitHub push。
+
+执行结果：
+
+- 更新 `scripts/audit_ccfc_baseline_feasibility.py`：
+  - 新增 `uniform_random_three_way_expected`，作为基于 aggregate label totals
+    的 accept/reject/escalate 三路均匀随机期望参考；
+  - 该项只用于 decision-space sanity check，不写成随机模拟或完成 verifier。
+- 更新 `scripts/write_final_manuscript_claim_map.py`：
+  - 将 random expected reference 接入 baseline boundary 表；
+  - 从 tracked tool-contestation audit 计算 opportunity-set Wilson 95% CI；
+  - 在正文 Results 中加入 safe handling、strict correction 和 repeated accept
+    的 95% CI；
+  - 将正文结构压缩为 Methods / Results / Discussion / Threats 主线。
+- 更新 `scripts/audit_ccfc_figure_placement.py` 和
+  `scripts/audit_ccfc_manuscript_v0_3.py`，使审计覆盖新的 Methods 标题、
+  random expected reference、tool-contestation CI 和结构压缩。
+- 重新生成：
+  - `data/reviews/ccfc_baseline_feasibility_audit_v0_1.json`；
+  - `docs/paper/ccfc_baseline_feasibility_audit_v0_1.md`；
+  - `data/reviews/final_manuscript_claim_map_v0_1.json`；
+  - `docs/paper/final_manuscript_claim_map_v0_1.md`；
+  - `docs/paper/ccfc_manuscript_rewrite_v0_1.md`；
+  - `data/reviews/ccfc_figure_placement_audit_v0_1.json`；
+  - `docs/paper/ccfc_figure_placement_audit_v0_1.md`；
+  - `data/reviews/ccfc_manuscript_v0_3_reviewer_audit.json`；
+  - `docs/paper/ccfc_manuscript_v0_3_reviewer_audit.md`。
+
+验收结果：
+
+- `python -m py_compile scripts\audit_ccfc_baseline_feasibility.py scripts\write_final_manuscript_claim_map.py scripts\audit_ccfc_figure_placement.py scripts\audit_ccfc_manuscript_v0_3.py`：通过；
+- `python scripts\audit_ccfc_baseline_feasibility.py --check`：通过；
+- `python scripts\write_final_manuscript_claim_map.py --check`：通过；
+- `python scripts\audit_ccfc_figure_placement.py --check`：通过；
+- `python scripts\audit_ccfc_manuscript_v0_3.py --check`：通过；
+- `python -m json.tool` 检查 baseline audit、final manuscript claim map 和
+  reviewer audit JSON：通过；
+- 关键正文定位检查确认 random expected reference、tool-contestation CI 和
+  Methods / Results / Discussion / Threats 标题均已进入论文文件。
+
+当前判断：
+
+- 用户列出的五步中，citation support bank、deterministic baseline feasibility
+  audit、uncertainty/CI 接入、正文结构压缩、reviewer-aware audit 已完成当前可完成
+  版本；
+- 仍不得声称已完成 majority-vote baseline 或单独 E0/no-tool deterministic
+  verifier；
+- 下一步应进入 final formatting：BibTeX/LaTeX 引用转换、目标 CCF-C 模板、
+  图表编号和表格宽度检查。
+
+GitHub 同步结果：
+
+- 本轮本地提交语义：`Complete CCF-C manuscript audit pass`
+  （精确 hash 以 `git log -1 --oneline` 为准）；
+- `git push origin evp8-v03-qwen-main-exp` 失败，错误为
+  `Recv failure: Connection was reset`；
+- 当前本地相对 `origin/evp8-v03-qwen-main-exp` 为 `[ahead 2]`，远端尚未包含
+  上一轮 v0.3 正文集成提交和本轮五步补齐提交；
+- 后续继续任务时应先重试 GitHub push，不要误判为远端已同步。
+
 ## 0.29 2026-07-04 Manuscript integration of citations, baselines, and uncertainty
 
 本轮目标是继续执行 0.28 的下一步：把 citation support bank、baseline
