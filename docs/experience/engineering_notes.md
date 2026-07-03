@@ -4449,3 +4449,16 @@ This file starts fresh for the patch-verification project.
   therefore had to be redrawn from Qwen v0.3 and E6 ablation metrics.
 - Future writing passes should fail review if they describe invalid earlier
   settings as paper-facing experimental evidence.
+
+## 2026-07-03 PaperSpine-style paper planning boundary
+
+- A PaperSpine-style pass is useful for contribution/result/reviewer alignment,
+  but it must not be treated as evidence generation. It should reorganize
+  tracked aggregate results, not invent claims or backfill missing baselines.
+- For the current CCF-C route, the strongest stable spine is a bounded
+  evidence-visibility and risk-behavior measurement paper. Pushing it toward
+  autonomous correctness verification would create unsupported claims.
+- The next high-leverage work is citation support, deterministic baseline
+  feasibility, and uncertainty presentation. Expanding API experiments should
+  be a later, explicit decision because it can reopen execution and validity
+  risks.

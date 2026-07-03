@@ -2,6 +2,43 @@
 
 最后更新：2026-07-03
 
+## 0.27 2026-07-03 PaperSpine-style current spine assessment
+
+本轮目标是按用户要求，用 PaperSpine 思路基于现有实验结果整理当前论文现状和后续
+方向。该轮不重跑实验、不调用 API、不读取 ignored raw outputs，只使用当前正文、
+claim map、figure package、final validity audit 和 revision response。
+
+执行边界：
+
+- 不新增实验；
+- 不调用 API；
+- 不读取 raw model outputs、rendered prompt text 或 patch diff；
+- 不把早期无效设置放回论文；
+- 不把 PaperSpine 当作结果生成器，只借用 contribution-first、results-as-validation
+  和 reviewer-aware audit 的结构思想。
+
+执行结果：
+
+- 新增 `docs/paper/paperspine_current_spine_assessment_zh.md`；
+- 该文档整理：
+  - confirmed contribution；
+  - confirmed motivation；
+  - result-to-claim matrix；
+  - current paper spine；
+  - CCF-C readiness audit；
+  - next direction priority；
+  - immediate action plan。
+
+当前判断：
+
+- 当前论文已经有 CCF-C 可冲底稿基础，但还不是 final submission ready；
+- 直接投稿仍偏 borderline；
+- 最短稳妥路线不是扩实验，而是先补 verified related-work citations、最小
+  deterministic baseline / baseline boundary、Phase A uncertainty summary 和
+  conference-style 结构压缩；
+- 若要明显增强，再考虑 Qwen 以外的 repaired label-conditioned analysis 或
+  realistic third-project gate，但这不适合作为当前“稳妥写完”的第一优先级。
+
 ## 0.26 2026-07-03 Manuscript cleanup after invalid-setting removal
 
 本轮目标是执行用户要求：把当前论文包中有关早期无效设置的内容删掉。上一轮

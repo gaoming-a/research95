@@ -127,6 +127,10 @@
   CCF-C manuscript. It identifies which external review criticisms were
   addressed in v0.2 and which remain deferred submission risks, especially
   verified citations and unimplemented baselines.
+- `paper/paperspine_current_spine_assessment_zh.md`: PaperSpine-style current
+  spine assessment for the CCF-C route. It fixes the confirmed contribution,
+  result-to-claim matrix, readiness risks, and next-direction priority without
+  running new experiments or reading raw outputs.
 - `../scripts/generate_ccfc_figures.py`: Python/matplotlib generator for the
   CCF-C manuscript figure set. It reads the tracked final manuscript claim map
   only and outputs PDF/SVG/PNG figures plus manifest, source-data, and QA notes.
