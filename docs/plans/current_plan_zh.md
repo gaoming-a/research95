@@ -2,6 +2,90 @@
 
 最后更新：2026-07-04
 
+## 0.29 2026-07-04 Manuscript integration of citations, baselines, and uncertainty
+
+本轮目标是继续执行 0.28 的下一步：把 citation support bank、baseline
+feasibility audit 和 Phase A uncertainty summary 合入当前 CCF-C 正文生成链路，
+并增加一轮 reviewer-style audit，检查正文是否仍有 citation gap、baseline gap
+或 overclaim。
+
+执行边界：
+
+- 不新增实验；
+- 不调用 API；
+- 不读取 ignored raw outputs、rendered prompt text 或 patch diff；
+- 不手工只改渲染后的 Markdown，必须改 `scripts/write_final_manuscript_claim_map.py`
+  以保持正文可复现；
+- reference policies 必须写成 baseline boundary/reference，不得写成 verifier
+  result；
+- majority-vote 和单独 E0/no-tool deterministic verifier 仍不得写成已完成。
+
+验收条件：
+
+- 正文 `docs/paper/ccfc_manuscript_rewrite_v0_1.md` 包含 citation-keyed
+  related work、baseline policy boundary、Phase A Wilson 95% CI summary；
+- claim map 同步记录 citation support 和 baseline feasibility 输入；
+- reviewer audit 输出 JSON/Markdown，且状态为 passed；
+- `python -m py_compile`、正文生成器 `--check`、baseline audit `--check`、
+  reviewer audit `--check` 均通过；
+- 同步更新 README/INDEX/current project state/engineering notes；
+- 只提交本轮相关文件并推送到 GitHub。
+
+执行结果：
+
+- 更新 `scripts/write_final_manuscript_claim_map.py`：
+  - 接入 `data/reviews/ccfc_baseline_feasibility_audit_v0_1.json`；
+  - 将 citation support rows、reference records、baseline policy boundaries
+    和 Phase A uncertainty summary 写入 claim map；
+  - 将正文升级为 `stable CCF-C manuscript rewrite v0.3, 2026-07-04`；
+  - 在 Introduction / Related Work / Discussion / Threats 中加入 citation-keyed
+    支撑；
+  - 在 Experimental Design 中加入 baseline policy boundary 表；
+  - 在 Results 中加入 Wilson 95% CI uncertainty summary；
+  - 在正文末尾加入 reference support records，供后续 BibTeX 转换。
+- 重新生成：
+  - `data/reviews/final_manuscript_claim_map_v0_1.json`；
+  - `docs/paper/final_manuscript_claim_map_v0_1.md`；
+  - `docs/paper/ccfc_manuscript_rewrite_v0_1.md`。
+- 新增 `scripts/audit_ccfc_manuscript_v0_3.py`；
+- 生成 `data/reviews/ccfc_manuscript_v0_3_reviewer_audit.json` 和
+  `docs/paper/ccfc_manuscript_v0_3_reviewer_audit.md`。
+
+当前审计结论：
+
+- v0.3 正文已包含 citation keys 和 reference support records；
+- baseline policy boundary 已明确：reference policies 不是 verifier result；
+- rule-only visible-tool 是完成的 deterministic baseline；
+- majority vote 和单独 E0/no-tool deterministic verifier 未被写成完成结果；
+- Wilson 95% CI summary 已进入 Results；
+- 未发现旧无效设置回流；
+- autonomous correctness verification 和 LLM superiority over deterministic
+  baselines 均保持否定/边界语境。
+
+验收结果：
+
+- `python -m py_compile scripts\write_final_manuscript_claim_map.py scripts\audit_ccfc_manuscript_v0_3.py`：通过；
+- `python scripts\write_final_manuscript_claim_map.py`：通过；
+- `python scripts\write_final_manuscript_claim_map.py --check`：通过；
+- `python scripts\audit_ccfc_manuscript_v0_3.py`：通过；
+- `python scripts\audit_ccfc_manuscript_v0_3.py --check`：通过；
+- `python -m json.tool data\reviews\final_manuscript_claim_map_v0_1.json`：通过。
+
+下一步：
+
+- 进行 final formatting：把 Markdown citation keys 转为目标会议模板需要的
+  BibTeX/LaTeX 引用；
+- 同步检查图表编号、表格宽度和最终模板格式；
+- 若用户确认目标具体 CCF-C 会议，再按该会议模板做最终排版。
+
+GitHub 同步结果：
+
+- 本轮本地提交语义：`Integrate CCF-C manuscript support into v0.3`
+  （精确 hash 以 `git log -1 --oneline` 为准）；
+- `git push` 多次失败，错误为无法连接 `github.com:443` 或连接 reset；
+- 当前本地相对 `origin/evp8-v03-qwen-main-exp` 为 `[ahead 1]`；
+- 远端尚未包含本轮 v0.3 正文集成提交，后续需要优先重试 push。
+
 ## 0.28 2026-07-04 CCF-C citation support bank and baseline feasibility audit
 
 本轮目标是完成 PaperSpine-style assessment 给出的下一步 P1：先补

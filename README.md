@@ -75,6 +75,14 @@ visible-tool; always-escalate, always-reject, and always-accept are reference
 policies only. Majority vote and a separate E0/no-tool deterministic verifier
 must not be described as completed results.
 
+The current CCF-C manuscript is now the v0.3 rewrite at
+`docs/paper/ccfc_manuscript_rewrite_v0_1.md`. It integrates citation keys,
+reference support records, baseline policy boundaries, and Wilson 95%
+confidence intervals. The reviewer-style audit is
+`docs/paper/ccfc_manuscript_v0_3_reviewer_audit.md`, with machine-readable
+output at `data/reviews/ccfc_manuscript_v0_3_reviewer_audit.json`; its status
+is `passed`.
+
 The final-paper route is:
 
 - `docs/plans/final_paper_roadmap_zh.md`

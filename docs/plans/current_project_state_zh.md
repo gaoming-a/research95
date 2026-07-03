@@ -13,7 +13,7 @@
   realistic hard-negative gate 路线。
 - 当前研究目标已收敛为“稳妥写完并面向 CCF-C”。final
   experiment-setting validity audit 已通过 bounded-claim gate；manuscript claim
-  map / threats-to-validity 收束、正文 v0.2 和 CCF-C 专用 Fig. 1--3 均已完成。
+  map / threats-to-validity 收束、正文 v0.3 和 CCF-C 专用 Fig. 1--3 均已完成。
   配图后端按用户询问后的推荐路径选择 Python/matplotlib，图集位于
   `docs/figures/ccfc/`。Fig. 1--3 已插入
   `docs/paper/ccfc_manuscript_rewrite_v0_1.md` 的对应正文位置，并通过
@@ -27,6 +27,9 @@
   feasibility audit 已完成；rule-only visible-tool 是当前已完成 deterministic
   baseline，always-escalate/always-reject/always-accept 只能作为 reference
   policies，majority vote 和单独 E0/no-tool deterministic verifier 仍不得写成已完成。
+  2026-07-04 v0.3 正文已把 citation keys、reference support records、baseline
+  policy boundary 和 Wilson 95% CI uncertainty summary 合入正文，并通过
+  `scripts/audit_ccfc_manuscript_v0_3.py` reviewer-style audit。
   在 `ready_for_verifier_api=false` 时仍不得运行 Qwen/DeepSeek verifier API。
 
 ## 2026-07-04 快速状态增量
@@ -47,8 +50,15 @@
   - completed E6 model conditions：Qwen E6-full 和 DeepSeek E6-full；
   - 不可写成已完成：majority-vote across models、单独 E0/no-tool deterministic
     verifier。
-- 下一步论文工作应把 citation bank / baseline audit / Phase A uncertainty
-  summary 合入正文相关小节，然后做 reviewer-style audit。
+- 已完成 v0.3 正文集成：
+  `docs/paper/ccfc_manuscript_rewrite_v0_1.md` 现在包含 citation-keyed related
+  work、baseline policy boundary、Phase A Wilson 95% CI summary 和 reference
+  support records。
+- 新增 reviewer-style manuscript audit：
+  `docs/paper/ccfc_manuscript_v0_3_reviewer_audit.md` 和
+  `data/reviews/ccfc_manuscript_v0_3_reviewer_audit.json`，状态为 `passed`。
+- 下一步论文工作应转向 final formatting：把 citation keys 转成目标会议模板的
+  BibTeX/LaTeX 引用，并检查图表编号、表格宽度和最终模板格式。
 
 ## 2026-07-03 快速状态增量
 
@@ -148,15 +158,21 @@
 
 - 分支：`evp8-v03-qwen-main-exp`
 - 远端：`origin/evp8-v03-qwen-main-exp`
-- 最新本地语义锚点：以 `git log -1 --oneline` 为准；当前语义上必须包含
-  paper uplift sync、plan de-stacking 和 third-project source-selection packet。
+- 最新本地语义锚点：以 `git log -1 --oneline` 为准，语义应为
+  `Integrate CCF-C manuscript support into v0.3`。
+- 当前远端同步状态：`git status --short --branch` 显示本地相对
+  `origin/evp8-v03-qwen-main-exp` 为 `[ahead 1]`；本轮 `git push` 多次因
+  GitHub HTTPS 443 连接失败或 reset 未完成。远端已包含上一提交 `595702c Add CCF-C
+  citation and baseline support`，但尚未包含本轮 v0.3 正文集成提交。
 - 同步判断：以 `git status --short --branch`、`git log -1 --oneline` 和
   `origin/evp8-v03-qwen-main-exp` 为准；不得再用旧 `origin/main` 段落判断
   当前分支是否同步。
 - 当前执行入口：CCF-C 稿件包后续审稿/格式整合。Manuscript claim map /
-  threats-to-validity 收束、正文 v0.2、Fig. 1--3、正文内配图放置和
-  `docs/paper/ccfc_revision_response_v0_2.md` 均已完成。当前实验逻辑以
-  Qwen v0.3 accept-aware label-conditioned metrics 为主证据起点。
+  threats-to-validity 收束、正文 v0.3、Fig. 1--3、正文内配图放置、
+  `docs/paper/ccfc_revision_response_v0_2.md` 和
+  `docs/paper/ccfc_manuscript_v0_3_reviewer_audit.md` 均已完成。当前实验逻辑以
+  Qwen v0.3 accept-aware label-conditioned metrics 为主证据起点，且正文已包含
+  citation-keyed related work、baseline policy boundary 和 Wilson 95% CI summary。
   Luigi
   source-acquisition/materialization protocol 已降级为可选未来工作，不再是稳妥
   CCF-C 路线的当前 blocker。

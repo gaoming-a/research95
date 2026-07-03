@@ -1,5 +1,63 @@
 {
   "artifact_id": "final_manuscript_claim_map_current",
+  "baseline_feasibility_boundary": {
+    "allowed": [
+      "Report always-escalate/always-reject/always-accept as deterministic reference policies calculated from label totals.",
+      "Report rule-only visible-tool as the completed deterministic E6 baseline.",
+      "Use Phase A confidence intervals for rule-only and E6 model conditions."
+    ],
+    "forbidden": [
+      "Do not claim a completed majority-vote baseline from aggregate-only files.",
+      "Do not call always-escalate a successful verifier.",
+      "Do not claim LLM superiority over deterministic baselines as the paper's main result."
+    ]
+  },
+  "baseline_policy_boundaries": [
+    {
+      "accept": 0,
+      "accepted_precision": null,
+      "correct_recall": 0.0,
+      "escalate": 98,
+      "false_accept_rate": 0.0,
+      "paper_role": "conservative abstention reference, not a useful verifier.",
+      "policy": "always_escalate",
+      "reject": 0,
+      "status": "calculable_from_label_totals"
+    },
+    {
+      "accept": 0,
+      "accepted_precision": null,
+      "correct_recall": 0.0,
+      "escalate": 0,
+      "false_accept_rate": 0.0,
+      "paper_role": "safety-heavy lower-bound reference exposing recall collapse.",
+      "policy": "always_reject",
+      "reject": 98,
+      "status": "calculable_from_label_totals"
+    },
+    {
+      "accept": 98,
+      "accepted_precision": 0.21428571428571427,
+      "correct_recall": 1.0,
+      "escalate": 0,
+      "false_accept_rate": 1.0,
+      "paper_role": "unsafe throughput reference exposing base-rate risk.",
+      "policy": "always_accept",
+      "reject": 0,
+      "status": "calculable_from_label_totals"
+    },
+    {
+      "accept": 25,
+      "accepted_precision": 0.8,
+      "correct_recall": 0.952381,
+      "escalate": 0,
+      "false_accept_rate": 0.064935,
+      "paper_role": "main deterministic baseline for E6 full/no-verdict comparison.",
+      "policy": "rule_only_visible_tool",
+      "reject": 73,
+      "status": "completed_existing_tracked_result"
+    }
+  ],
   "checks": [
     {
       "check": "validity_audit_passed_with_bounded_claims",
@@ -50,6 +108,74 @@
       "check": "phase_a_analysis_checks_passed",
       "detail": 7,
       "passed": true
+    },
+    {
+      "check": "baseline_feasibility_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "citation_support_bank_present",
+      "detail": "docs\\paper\\ccfc_citation_support_bank_v0_1.md",
+      "passed": true
+    }
+  ],
+  "citation_support": [
+    {
+      "boundary": "Motivates the task; does not prove EVP-8 effectiveness.",
+      "citation_keys": "qi_issta_2015_patch_plausibility; legoues_icse_2012_genprog; just_issta_2014_defects4j",
+      "claim": "Visible plausibility and test passing do not guarantee patch correctness.",
+      "paper_location": "Introduction / Related Work",
+      "segment": "S1"
+    },
+    {
+      "boundary": "Positions the setting; does not imply the same task distribution.",
+      "citation_keys": "just_issta_2014_defects4j; legoues_icse_2012_genprog; tufano_icse_2019_bugfix_nmt",
+      "claim": "APR and bug-fix studies commonly use controlled datasets and test-based evaluation.",
+      "paper_location": "Related Work",
+      "segment": "S2"
+    },
+    {
+      "boundary": "Background only; not autonomous verifier evidence.",
+      "citation_keys": "xia_zhang_icse_2023_llm_apr; tufano_icse_2019_bugfix_nmt",
+      "claim": "LLMs have been studied for repair and code editing, but verifier behavior is a separate decision problem.",
+      "paper_location": "Related Work",
+      "segment": "S3"
+    },
+    {
+      "boundary": "Supports merge-gate framing; not an industrial deployment claim.",
+      "citation_keys": "bacchelli_bird_icse_2013_code_review",
+      "claim": "Code review is a socio-technical merge-gate process rather than a pure test outcome.",
+      "paper_location": "Related Work / Method",
+      "segment": "S4"
+    },
+    {
+      "boundary": "Conceptual support; no calibrated probability claim.",
+      "citation_keys": "chow_tit_1970_reject_option; geifman_el_yaniv_2017_selective_classification",
+      "claim": "The accept/reject/escalate output space is related to reject-option and selective-classification work.",
+      "paper_location": "Method",
+      "segment": "S5"
+    },
+    {
+      "boundary": "Supports hidden-evaluator separation and validity limits.",
+      "citation_keys": "barr_tse_2015_oracle_problem",
+      "claim": "Evaluator-only labels should remain separate because software testing has an oracle problem.",
+      "paper_location": "Method / Threats",
+      "segment": "S6"
+    },
+    {
+      "boundary": "General evaluation caution; not direct patch-verifier transfer.",
+      "citation_keys": "zheng_neurips_2023_llm_judge",
+      "claim": "LLM-as-judge evaluations require bounded claims and controlled protocols.",
+      "paper_location": "Discussion",
+      "segment": "S7"
+    },
+    {
+      "boundary": "Supports reliance risk; not a patch-specific empirical result.",
+      "citation_keys": "parasuraman_riley_1997_automation",
+      "claim": "Automation outputs can induce misuse or over-reliance, motivating explicit evidence-boundary reporting.",
+      "paper_location": "Discussion",
+      "segment": "S8"
     }
   ],
   "claims": [
@@ -453,6 +579,8 @@
     }
   },
   "inputs": {
+    "baseline_feasibility": "data/reviews/ccfc_baseline_feasibility_audit_v0_1.json",
+    "citation_support_bank": "docs/paper/ccfc_citation_support_bank_v0_1.md",
     "evp8_protocol_v0_3": "data/protocols/evp8_protocol_v0_3_qwen_first.json",
     "five_model_synthesis": "data/protocols/evp8_five_model_synthesis_v0_1.json",
     "hard_tool_contestation": "data/protocols/evp8_hard_tool_contestation_result_audit_v0_1.json",
@@ -851,6 +979,163 @@
       }
     }
   },
+  "phase_a_uncertainty_summary": [
+    {
+      "accepted_precision": {
+        "ci_95_high": 0.911394,
+        "ci_95_low": 0.60869,
+        "estimate": 0.8,
+        "successes": 20,
+        "total": 25
+      },
+      "condition": "rule-only",
+      "correct_recall": {
+        "ci_95_high": 0.991544,
+        "ci_95_low": 0.773306,
+        "estimate": 0.952381,
+        "successes": 20,
+        "total": 21
+      },
+      "escalation_rate": {
+        "ci_95_high": 0.03772,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 98
+      },
+      "false_accept_rate": {
+        "ci_95_high": 0.143164,
+        "ci_95_low": 0.028053,
+        "estimate": 0.064935,
+        "successes": 5,
+        "total": 77
+      }
+    },
+    {
+      "accepted_precision": {
+        "ci_95_high": 0.933213,
+        "ci_95_low": 0.641469,
+        "estimate": 0.833333,
+        "successes": 20,
+        "total": 24
+      },
+      "condition": "qwen/qwen3.7-max E6-full",
+      "correct_recall": {
+        "ci_95_high": 0.991544,
+        "ci_95_low": 0.773306,
+        "estimate": 0.952381,
+        "successes": 20,
+        "total": 21
+      },
+      "escalation_rate": {
+        "ci_95_high": 0.03772,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 98
+      },
+      "false_accept_rate": {
+        "ci_95_high": 0.126093,
+        "ci_95_low": 0.020385,
+        "estimate": 0.051948,
+        "successes": 4,
+        "total": 77
+      }
+    },
+    {
+      "accepted_precision": {
+        "ci_95_high": 0.930213,
+        "ci_95_low": 0.628624,
+        "estimate": 0.826087,
+        "successes": 19,
+        "total": 23
+      },
+      "condition": "qwen/qwen3.7-max E6-no-verdict",
+      "correct_recall": {
+        "ci_95_high": 0.973481,
+        "ci_95_low": 0.710859,
+        "estimate": 0.904762,
+        "successes": 19,
+        "total": 21
+      },
+      "escalation_rate": {
+        "ci_95_high": 0.055555,
+        "ci_95_low": 0.001804,
+        "estimate": 0.010204,
+        "successes": 1,
+        "total": 98
+      },
+      "false_accept_rate": {
+        "ci_95_high": 0.126093,
+        "ci_95_low": 0.020385,
+        "estimate": 0.051948,
+        "successes": 4,
+        "total": 77
+      }
+    },
+    {
+      "accepted_precision": {
+        "ci_95_high": 0.930213,
+        "ci_95_low": 0.628624,
+        "estimate": 0.826087,
+        "successes": 19,
+        "total": 23
+      },
+      "condition": "deepseek/deepseek-v4-pro E6-full",
+      "correct_recall": {
+        "ci_95_high": 0.973481,
+        "ci_95_low": 0.710859,
+        "estimate": 0.904762,
+        "successes": 19,
+        "total": 21
+      },
+      "escalation_rate": {
+        "ci_95_high": 0.03772,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 98
+      },
+      "false_accept_rate": {
+        "ci_95_high": 0.126093,
+        "ci_95_low": 0.020385,
+        "estimate": 0.051948,
+        "successes": 4,
+        "total": 77
+      }
+    },
+    {
+      "accepted_precision": {
+        "ci_95_high": 1.0,
+        "ci_95_low": 0.741167,
+        "estimate": 1.0,
+        "successes": 11,
+        "total": 11
+      },
+      "condition": "deepseek/deepseek-v4-pro E6-no-verdict",
+      "correct_recall": {
+        "ci_95_high": 0.71656,
+        "ci_95_low": 0.323695,
+        "estimate": 0.52381,
+        "successes": 11,
+        "total": 21
+      },
+      "escalation_rate": {
+        "ci_95_high": 0.225612,
+        "ci_95_low": 0.087045,
+        "estimate": 0.142857,
+        "successes": 14,
+        "total": 98
+      },
+      "false_accept_rate": {
+        "ci_95_high": 0.047518,
+        "ci_95_low": 0.0,
+        "estimate": 0.0,
+        "successes": 0,
+        "total": 77
+      }
+    }
+  ],
   "qwen_label_conditioned_metrics": [
     {
       "accept": 0,
@@ -940,6 +1225,52 @@
       "cookiecutter"
     ]
   },
+  "reference_records": [
+    {
+      "key": "qi_issta_2015_patch_plausibility",
+      "reference": "Zichao Qi, Fan Long, Sara Achour, and Martin Rinard. \"An Analysis of Patch Plausibility and Correctness for Generate-and-Validate Patch Generation Systems.\" ISSTA 2015. DOI: 10.1145/2771783.2771791."
+    },
+    {
+      "key": "legoues_icse_2012_genprog",
+      "reference": "Claire Le Goues, ThanhVu Nguyen, Stephanie Forrest, and Westley Weimer. \"A Systematic Study of Automated Program Repair: Fixing 55 out of 105 Bugs for $8 Each.\" ICSE 2012. DOI: 10.1109/ICSE.2012.6227211."
+    },
+    {
+      "key": "just_issta_2014_defects4j",
+      "reference": "Rene Just, Darioush Jalali, and Michael D. Ernst. \"Defects4J: A Database of Existing Faults to Enable Controlled Testing Studies for Java Programs.\" ISSTA 2014. DOI: 10.1145/2610384.2628055."
+    },
+    {
+      "key": "barr_tse_2015_oracle_problem",
+      "reference": "Earl T. Barr, Mark Harman, Phil McMinn, Muzammil Shahbaz, and Shin Yoo. \"The Oracle Problem in Software Testing: A Survey.\" IEEE TSE 2015. DOI: 10.1109/TSE.2014.2372785."
+    },
+    {
+      "key": "xia_zhang_icse_2023_llm_apr",
+      "reference": "Chunqiu Steven Xia and Lingming Zhang. \"Automated Program Repair in the Era of Large Pre-trained Language Models.\" ICSE 2023. DOI: 10.1109/ICSE48619.2023.00129."
+    },
+    {
+      "key": "tufano_icse_2019_bugfix_nmt",
+      "reference": "Michele Tufano, Cody Watson, Gabriele Bavota, Massimiliano Di Penta, Martin White, and Denys Poshyvanyk. \"An Empirical Investigation into Learning Bug-Fixing Patches in the Wild via Neural Machine Translation.\" ICSE 2019. DOI: 10.1109/ICSE.2019.00064."
+    },
+    {
+      "key": "bacchelli_bird_icse_2013_code_review",
+      "reference": "Alberto Bacchelli and Christian Bird. \"Expectations, Outcomes, and Challenges of Modern Code Review.\" ICSE 2013. DOI: 10.1109/ICSE.2013.6606617."
+    },
+    {
+      "key": "chow_tit_1970_reject_option",
+      "reference": "C. K. Chow. \"On Optimum Recognition Error and Reject Tradeoff.\" IEEE Transactions on Information Theory 1970. DOI: 10.1109/TIT.1970.1054406."
+    },
+    {
+      "key": "geifman_el_yaniv_2017_selective_classification",
+      "reference": "Yonatan Geifman and Ran El-Yaniv. \"Selective Classification for Deep Neural Networks.\" arXiv:1705.08500, 2017."
+    },
+    {
+      "key": "zheng_neurips_2023_llm_judge",
+      "reference": "Lianmin Zheng et al. \"Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena.\" NeurIPS 2023. arXiv:2306.05685."
+    },
+    {
+      "key": "parasuraman_riley_1997_automation",
+      "reference": "Raja Parasuraman and Victor Riley. \"Humans and Automation: Use, Misuse, Disuse, Abuse.\" Human Factors 1997. DOI: 10.1518/001872097778543886."
+    }
+  ],
   "remaining_threats": [
     {
       "required_paper_response": "Scope the claim to candidate patch verification and report project/task counts explicitly.",
@@ -1001,6 +1332,16 @@
       "decision": "Use only when escalation is explicitly treated as human-review routing.",
       "definition": "rejecting or escalating a known tool false accept",
       "term": "safe handling"
+    },
+    {
+      "decision": "Use for always-escalate, always-reject, and always-accept.",
+      "definition": "a deterministic policy calculated for baseline orientation rather than implemented as a verifier result",
+      "term": "reference policy"
+    },
+    {
+      "decision": "Use as the current completed deterministic baseline.",
+      "definition": "the completed deterministic E6 baseline using visible tool evidence",
+      "term": "rule-only visible-tool baseline"
     }
   ]
 }

@@ -4482,3 +4482,21 @@ This file starts fresh for the patch-verification project.
 - Check fields must distinguish "the bad event did not happen" from "the check
   failed." In `ccfc_baseline_feasibility_audit_v0_1`, no API/raw/prompt reads
   are recorded as `passed=true` with `detail=false`.
+
+## 2026-07-04 Manuscript v0.3 integration audit
+
+- Paper-support artifacts are not enough until the manuscript generator consumes
+  them. For this project, citation support, baseline feasibility, and Phase A
+  uncertainty had to be wired into `scripts/write_final_manuscript_claim_map.py`
+  so regenerated Markdown preserves them.
+- A reference policy must be phrased as a policy boundary, not as an experiment
+  result. The manuscript now says always-escalate, always-reject, and
+  always-accept orient the decision space but are not successful verifier
+  results.
+- Reviewer-style audits should allow negated overclaim phrases. The manuscript
+  correctly says it does not support LLM superiority over deterministic
+  baselines; the audit therefore checks for the negated context rather than
+  banning the phrase mechanically.
+- Wide Wilson intervals are a writing constraint, not a formatting footnote.
+  They must sit near the E6 baseline/no-verdict table so readers see that
+  point-estimate differences are bounded and should not be overclaimed.

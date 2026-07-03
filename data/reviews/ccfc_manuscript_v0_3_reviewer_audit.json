@@ -1,0 +1,118 @@
+{
+  "audit_id": "ccfc_manuscript_v0_3_reviewer_audit",
+  "checks": [
+    {
+      "check": "manuscript_exists",
+      "detail": "docs\\paper\\ccfc_manuscript_rewrite_v0_1.md",
+      "passed": true
+    },
+    {
+      "check": "claim_map_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "baseline_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "draft_status_v0_3_present",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "all_expected_citation_keys_present",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "reference_support_records_present",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "baseline_policy_boundary_present",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "reference_policies_not_called_results",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "rule_only_completed_baseline_present",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "majority_vote_not_completed",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "wilson_uncertainty_summary_present",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "all_expected_uncertainty_conditions_present",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "old_invalid_setting_not_reintroduced",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "autonomous_correctness_claim_negated",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "llm_superiority_not_claimed",
+      "detail": "",
+      "passed": true
+    },
+    {
+      "check": "llm_outperform_baseline_phrase_only_negated",
+      "detail": "",
+      "passed": true
+    }
+  ],
+  "rejection_risks": [
+    {
+      "mitigation": "Manuscript now states the contribution as a protocol and evidence chain, not a new repair algorithm.",
+      "risk": "Contribution may still be read as measurement-only rather than algorithmic.",
+      "status": "bounded_accept_risk"
+    },
+    {
+      "mitigation": "Rule-only is reported as the completed deterministic baseline; majority and separate E0/no-tool verifier are explicitly not completed.",
+      "risk": "Baseline completeness can be challenged.",
+      "status": "bounded_accept_risk"
+    },
+    {
+      "mitigation": "Wilson 95% CIs are now shown in the Results section and used to avoid superiority claims.",
+      "risk": "Small cohort creates wide uncertainty intervals.",
+      "status": "bounded_accept_risk"
+    },
+    {
+      "mitigation": "Citation keys and reference support records are present; final conversion remains a formatting task.",
+      "risk": "References may need venue-specific BibTeX cleanup.",
+      "status": "formatting_remaining"
+    }
+  ],
+  "scope": {
+    "api_call_attempted": false,
+    "prompt_or_patch_text_read": false,
+    "purpose": "reviewer-style paper audit for citation, baseline, uncertainty, and overclaim risks.",
+    "raw_outputs_read": false
+  },
+  "status": "passed",
+  "verdict": {
+    "ccfc_readiness": "stronger_than_previous_draft_but_still_needs_final_formatting",
+    "reason": "The v0.3 draft now contains field-specific citations, explicit deterministic baseline boundaries, and uncertainty intervals, while avoiding unsupported autonomous-verifier and LLM-superiority claims."
+  }
+}

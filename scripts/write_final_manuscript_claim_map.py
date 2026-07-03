@@ -22,6 +22,8 @@ REALISTIC_GATE = REPO_ROOT / "data" / "protocols" / "evp8_realistic_hardneg_comb
 QWEN_LABEL_CONDITIONED = REPO_ROOT / "data" / "reviews" / "evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json"
 PHASE_A_ANALYSIS = REPO_ROOT / "data" / "reviews" / "evp8_phase_a_paper_ready_analysis.json"
 EVP8_PROTOCOL_V03 = REPO_ROOT / "data" / "protocols" / "evp8_protocol_v0_3_qwen_first.json"
+BASELINE_FEASIBILITY = REPO_ROOT / "data" / "reviews" / "ccfc_baseline_feasibility_audit_v0_1.json"
+CITATION_SUPPORT_BANK = REPO_ROOT / "docs" / "paper" / "ccfc_citation_support_bank_v0_1.md"
 
 DEFAULT_JSON_OUT = REPO_ROOT / "data" / "reviews" / "final_manuscript_claim_map_v0_1.json"
 DEFAULT_CLAIM_MD_OUT = REPO_ROOT / "docs" / "paper" / "final_manuscript_claim_map_v0_1.md"
@@ -90,6 +92,176 @@ def percent(value: Any) -> str:
     return f"{float(value) * 100:.2f}%"
 
 
+def ci_percent(interval: dict[str, Any] | None) -> str:
+    if not interval:
+        return "n/a"
+    return (
+        f"{percent(interval.get('estimate'))} "
+        f"[{percent(interval.get('ci_95_low'))}, {percent(interval.get('ci_95_high'))}]"
+    )
+
+
+def citation_support_rows() -> list[dict[str, str]]:
+    return [
+        {
+            "segment": "S1",
+            "paper_location": "Introduction / Related Work",
+            "claim": "Visible plausibility and test passing do not guarantee patch correctness.",
+            "citation_keys": "qi_issta_2015_patch_plausibility; legoues_icse_2012_genprog; just_issta_2014_defects4j",
+            "boundary": "Motivates the task; does not prove EVP-8 effectiveness.",
+        },
+        {
+            "segment": "S2",
+            "paper_location": "Related Work",
+            "claim": "APR and bug-fix studies commonly use controlled datasets and test-based evaluation.",
+            "citation_keys": "just_issta_2014_defects4j; legoues_icse_2012_genprog; tufano_icse_2019_bugfix_nmt",
+            "boundary": "Positions the setting; does not imply the same task distribution.",
+        },
+        {
+            "segment": "S3",
+            "paper_location": "Related Work",
+            "claim": "LLMs have been studied for repair and code editing, but verifier behavior is a separate decision problem.",
+            "citation_keys": "xia_zhang_icse_2023_llm_apr; tufano_icse_2019_bugfix_nmt",
+            "boundary": "Background only; not autonomous verifier evidence.",
+        },
+        {
+            "segment": "S4",
+            "paper_location": "Related Work / Method",
+            "claim": "Code review is a socio-technical merge-gate process rather than a pure test outcome.",
+            "citation_keys": "bacchelli_bird_icse_2013_code_review",
+            "boundary": "Supports merge-gate framing; not an industrial deployment claim.",
+        },
+        {
+            "segment": "S5",
+            "paper_location": "Method",
+            "claim": "The accept/reject/escalate output space is related to reject-option and selective-classification work.",
+            "citation_keys": "chow_tit_1970_reject_option; geifman_el_yaniv_2017_selective_classification",
+            "boundary": "Conceptual support; no calibrated probability claim.",
+        },
+        {
+            "segment": "S6",
+            "paper_location": "Method / Threats",
+            "claim": "Evaluator-only labels should remain separate because software testing has an oracle problem.",
+            "citation_keys": "barr_tse_2015_oracle_problem",
+            "boundary": "Supports hidden-evaluator separation and validity limits.",
+        },
+        {
+            "segment": "S7",
+            "paper_location": "Discussion",
+            "claim": "LLM-as-judge evaluations require bounded claims and controlled protocols.",
+            "citation_keys": "zheng_neurips_2023_llm_judge",
+            "boundary": "General evaluation caution; not direct patch-verifier transfer.",
+        },
+        {
+            "segment": "S8",
+            "paper_location": "Discussion",
+            "claim": "Automation outputs can induce misuse or over-reliance, motivating explicit evidence-boundary reporting.",
+            "citation_keys": "parasuraman_riley_1997_automation",
+            "boundary": "Supports reliance risk; not a patch-specific empirical result.",
+        },
+    ]
+
+
+def reference_records() -> list[dict[str, str]]:
+    return [
+        {
+            "key": "qi_issta_2015_patch_plausibility",
+            "reference": "Zichao Qi, Fan Long, Sara Achour, and Martin Rinard. \"An Analysis of Patch Plausibility and Correctness for Generate-and-Validate Patch Generation Systems.\" ISSTA 2015. DOI: 10.1145/2771783.2771791.",
+        },
+        {
+            "key": "legoues_icse_2012_genprog",
+            "reference": "Claire Le Goues, ThanhVu Nguyen, Stephanie Forrest, and Westley Weimer. \"A Systematic Study of Automated Program Repair: Fixing 55 out of 105 Bugs for $8 Each.\" ICSE 2012. DOI: 10.1109/ICSE.2012.6227211.",
+        },
+        {
+            "key": "just_issta_2014_defects4j",
+            "reference": "Rene Just, Darioush Jalali, and Michael D. Ernst. \"Defects4J: A Database of Existing Faults to Enable Controlled Testing Studies for Java Programs.\" ISSTA 2014. DOI: 10.1145/2610384.2628055.",
+        },
+        {
+            "key": "barr_tse_2015_oracle_problem",
+            "reference": "Earl T. Barr, Mark Harman, Phil McMinn, Muzammil Shahbaz, and Shin Yoo. \"The Oracle Problem in Software Testing: A Survey.\" IEEE TSE 2015. DOI: 10.1109/TSE.2014.2372785.",
+        },
+        {
+            "key": "xia_zhang_icse_2023_llm_apr",
+            "reference": "Chunqiu Steven Xia and Lingming Zhang. \"Automated Program Repair in the Era of Large Pre-trained Language Models.\" ICSE 2023. DOI: 10.1109/ICSE48619.2023.00129.",
+        },
+        {
+            "key": "tufano_icse_2019_bugfix_nmt",
+            "reference": "Michele Tufano, Cody Watson, Gabriele Bavota, Massimiliano Di Penta, Martin White, and Denys Poshyvanyk. \"An Empirical Investigation into Learning Bug-Fixing Patches in the Wild via Neural Machine Translation.\" ICSE 2019. DOI: 10.1109/ICSE.2019.00064.",
+        },
+        {
+            "key": "bacchelli_bird_icse_2013_code_review",
+            "reference": "Alberto Bacchelli and Christian Bird. \"Expectations, Outcomes, and Challenges of Modern Code Review.\" ICSE 2013. DOI: 10.1109/ICSE.2013.6606617.",
+        },
+        {
+            "key": "chow_tit_1970_reject_option",
+            "reference": "C. K. Chow. \"On Optimum Recognition Error and Reject Tradeoff.\" IEEE Transactions on Information Theory 1970. DOI: 10.1109/TIT.1970.1054406.",
+        },
+        {
+            "key": "geifman_el_yaniv_2017_selective_classification",
+            "reference": "Yonatan Geifman and Ran El-Yaniv. \"Selective Classification for Deep Neural Networks.\" arXiv:1705.08500, 2017.",
+        },
+        {
+            "key": "zheng_neurips_2023_llm_judge",
+            "reference": "Lianmin Zheng et al. \"Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena.\" NeurIPS 2023. arXiv:2306.05685.",
+        },
+        {
+            "key": "parasuraman_riley_1997_automation",
+            "reference": "Raja Parasuraman and Victor Riley. \"Humans and Automation: Use, Misuse, Disuse, Abuse.\" Human Factors 1997. DOI: 10.1518/001872097778543886.",
+        },
+    ]
+
+
+def baseline_policy_rows(baseline: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    metrics = baseline.get("completed_or_calculable_metrics") or {}
+    feasibility = baseline.get("feasibility") or {}
+    for key in [
+        "always_escalate",
+        "always_reject",
+        "always_accept",
+        "rule_only_visible_tool",
+    ]:
+        row_metrics = metrics.get(key) or {}
+        decisions = row_metrics.get("decision_counts") or {}
+        rows.append(
+            {
+                "policy": key,
+                "status": (feasibility.get(key) or {}).get("status", ""),
+                "paper_role": (feasibility.get(key) or {}).get("paper_role", ""),
+                "accept": decisions.get("accept", 0),
+                "reject": decisions.get("reject", 0),
+                "escalate": decisions.get("escalate", 0),
+                "accepted_precision": row_metrics.get("accepted_precision"),
+                "correct_recall": row_metrics.get("correct_recall"),
+                "false_accept_rate": row_metrics.get("false_accept_rate"),
+            }
+        )
+    return rows
+
+
+def uncertainty_rows(phase_a: dict[str, Any]) -> list[dict[str, Any]]:
+    confidence = phase_a.get("confidence_intervals") or {}
+    rows: list[dict[str, Any]] = []
+    for condition in [
+        "rule-only",
+        "qwen/qwen3.7-max E6-full",
+        "qwen/qwen3.7-max E6-no-verdict",
+        "deepseek/deepseek-v4-pro E6-full",
+        "deepseek/deepseek-v4-pro E6-no-verdict",
+    ]:
+        intervals = confidence.get(condition) or {}
+        rows.append(
+            {
+                "condition": condition,
+                "accepted_precision": intervals.get("accepted_precision"),
+                "correct_recall": intervals.get("correct_recall"),
+                "false_accept_rate": intervals.get("false_accept_rate"),
+                "escalation_rate": intervals.get("escalation_rate"),
+            }
+        )
+    return rows
+
+
 def evidence_ladder_rows(protocol: dict[str, Any]) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     for item in protocol.get("evidence_ladder") or []:
@@ -146,6 +318,7 @@ def build_claim_map() -> dict[str, Any]:
     qwen_label = read_json(QWEN_LABEL_CONDITIONED)
     phase_a = read_json(PHASE_A_ANALYSIS)
     protocol_v03 = read_json(EVP8_PROTOCOL_V03)
+    baseline_feasibility = read_json(BASELINE_FEASIBILITY)
 
     hard_gate = realistic.get("hard_negative_gate") or {}
     hard_models = hard.get("models") or {}
@@ -189,6 +362,16 @@ def build_claim_map() -> dict[str, Any]:
             "term": "safe handling",
             "definition": "rejecting or escalating a known tool false accept",
             "decision": "Use only when escalation is explicitly treated as human-review routing.",
+        },
+        {
+            "term": "reference policy",
+            "definition": "a deterministic policy calculated for baseline orientation rather than implemented as a verifier result",
+            "decision": "Use for always-escalate, always-reject, and always-accept.",
+        },
+        {
+            "term": "rule-only visible-tool baseline",
+            "definition": "the completed deterministic E6 baseline using visible tool evidence",
+            "decision": "Use as the current completed deterministic baseline.",
         },
     ]
 
@@ -279,6 +462,8 @@ def build_claim_map() -> dict[str, Any]:
         check("realistic_gate_not_verifier_ready", hard_gate.get("passed") is False, hard_gate),
         check("qwen_label_conditioned_checks_passed", all(item.get("passed") for item in qwen_label.get("checks", [])), len(qwen_label.get("checks", []))),
         check("phase_a_analysis_checks_passed", all(item.get("passed") for item in phase_a.get("checks", [])), len(phase_a.get("checks", []))),
+        check("baseline_feasibility_audit_passed", baseline_feasibility.get("status") == "passed", baseline_feasibility.get("status")),
+        check("citation_support_bank_present", CITATION_SUPPORT_BANK.exists(), str(CITATION_SUPPORT_BANK.relative_to(REPO_ROOT))),
     ]
 
     return {
@@ -302,6 +487,8 @@ def build_claim_map() -> dict[str, Any]:
             "qwen_label_conditioned": "data/reviews/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json",
             "phase_a_analysis": "data/reviews/evp8_phase_a_paper_ready_analysis.json",
             "evp8_protocol_v0_3": "data/protocols/evp8_protocol_v0_3_qwen_first.json",
+            "baseline_feasibility": "data/reviews/ccfc_baseline_feasibility_audit_v0_1.json",
+            "citation_support_bank": "docs/paper/ccfc_citation_support_bank_v0_1.md",
         },
         "manuscript_argument": manuscript_argument,
         "terminology_ledger": terminology,
@@ -313,6 +500,11 @@ def build_claim_map() -> dict[str, Any]:
         "evidence_ladder": evidence_ladder_rows(protocol_v03),
         "qwen_label_conditioned_metrics": qwen_label_metric_rows(qwen_label),
         "e6_ablation_metrics": e6_ablation_metric_rows(no_verdict),
+        "citation_support": citation_support_rows(),
+        "reference_records": reference_records(),
+        "baseline_policy_boundaries": baseline_policy_rows(baseline_feasibility),
+        "baseline_feasibility_boundary": baseline_feasibility.get("claim_boundary") or {},
+        "phase_a_uncertainty_summary": uncertainty_rows(phase_a),
         "phase_a_confidence_intervals": phase_a.get("confidence_intervals") or {},
         "phase_a_boundary": phase_a.get("claim_boundary") or {},
         "hard_tool_contestation_summary": {
@@ -336,7 +528,7 @@ def write_claim_markdown(path: Path, claim_map: dict[str, Any]) -> None:
     lines = [
         "# Current Final Manuscript Claim Map",
         "",
-        "Date: 2026-07-03",
+        "Date: 2026-07-04",
         "",
         f"- status: `{claim_map['status']}`",
         f"- target: `{claim_map['paper_target']}`",
@@ -364,6 +556,27 @@ def write_claim_markdown(path: Path, claim_map: dict[str, Any]) -> None:
             f"| `{row['id']}` | {row['claim']} | `{row['status']}` | "
             f"{', '.join(row['evidence'])} | {row['paper_location']} | {row['boundary']} |"
         )
+    lines += [
+        "",
+        "## Citation Support",
+        "",
+        "| segment | paper location | claim | citation keys | boundary |",
+        "| --- | --- | --- | --- | --- |",
+    ]
+    for row in claim_map["citation_support"]:
+        lines.append(
+            f"| `{row['segment']}` | {row['paper_location']} | {row['claim']} | "
+            f"`{row['citation_keys']}` | {row['boundary']} |"
+        )
+    lines += [
+        "",
+        "## Reference Support Records",
+        "",
+        "| key | reference |",
+        "| --- | --- |",
+    ]
+    for row in claim_map["reference_records"]:
+        lines.append(f"| `{row['key']}` | {row['reference']} |")
     lines += [
         "",
         "## Evidence Ladder",
@@ -400,6 +613,31 @@ def write_claim_markdown(path: Path, claim_map: dict[str, Any]) -> None:
             f"{decisions.get('escalate', 0)} | {percent(row.get('accepted_precision'))} | "
             f"{percent(row.get('correct_recall'))} | {percent(row.get('false_accept_rate'))} | "
             f"{percent(row.get('escalation_rate'))} |"
+        )
+    lines += [
+        "",
+        "## Baseline Policy Boundaries",
+        "",
+        "| policy | status | accept | reject | escalate | role |",
+        "| --- | --- | ---: | ---: | ---: | --- |",
+    ]
+    for row in claim_map["baseline_policy_boundaries"]:
+        lines.append(
+            f"| `{row['policy']}` | `{row['status']}` | {row['accept']} | "
+            f"{row['reject']} | {row['escalate']} | {row['paper_role']} |"
+        )
+    lines += [
+        "",
+        "## Phase A Uncertainty Summary",
+        "",
+        "| condition | accepted precision 95% CI | correct recall 95% CI | false accept rate 95% CI | escalation rate 95% CI |",
+        "| --- | ---: | ---: | ---: | ---: |",
+    ]
+    for row in claim_map["phase_a_uncertainty_summary"]:
+        lines.append(
+            f"| {row['condition']} | {ci_percent(row.get('accepted_precision'))} | "
+            f"{ci_percent(row.get('correct_recall'))} | {ci_percent(row.get('false_accept_rate'))} | "
+            f"{ci_percent(row.get('escalation_rate'))} |"
         )
     lines += ["", "## Forbidden Claims", ""]
     for claim in claim_map["forbidden_claims"]:
@@ -469,10 +707,29 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
             f"{percent(row.get('correct_recall'))} | {percent(row.get('false_accept_rate'))} | "
             f"{percent(row.get('escalation_rate'))} |"
         )
+    baseline_policy_table_lines = [
+        "| policy | status | accept | reject | escalate | paper role |",
+        "| --- | --- | ---: | ---: | ---: | --- |",
+    ]
+    for row in claim_map["baseline_policy_boundaries"]:
+        baseline_policy_table_lines.append(
+            f"| {row['policy']} | {row['status']} | {row['accept']} | {row['reject']} | "
+            f"{row['escalate']} | {row['paper_role']} |"
+        )
+    uncertainty_table_lines = [
+        "| condition | accepted precision 95% CI | correct recall 95% CI | false accept rate 95% CI | escalation rate 95% CI |",
+        "| --- | ---: | ---: | ---: | ---: |",
+    ]
+    for row in claim_map["phase_a_uncertainty_summary"]:
+        uncertainty_table_lines.append(
+            f"| {row['condition']} | {ci_percent(row.get('accepted_precision'))} | "
+            f"{ci_percent(row.get('correct_recall'))} | {ci_percent(row.get('false_accept_rate'))} | "
+            f"{ci_percent(row.get('escalation_rate'))} |"
+        )
     lines = [
         "# Evidence Visibility Shapes Risk Behavior in LLM-Based Candidate Patch Verification",
         "",
-        "Draft status: stable CCF-C manuscript rewrite v0.2, 2026-07-03.",
+        "Draft status: stable CCF-C manuscript rewrite v0.3, 2026-07-04.",
         "",
         "## Abstract",
         "",
@@ -480,23 +737,23 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "## 1. Introduction",
         "",
-        "Candidate patches generated or reviewed by automated systems can look plausible while remaining incomplete, irrelevant, or unsafe to merge. This creates a software-quality problem: teams need to decide not only whether a patch resembles a fix, but whether the evidence available at review time is sufficient to accept it. In practice, that evidence may include issue summaries, patch diffs, static checks, visible tests, generated tests, or tool summaries. A verifier that ignores this evidence boundary risks confusing apparent plausibility with correctness.",
+        "Candidate patches generated or reviewed by automated systems can look plausible while remaining incomplete, irrelevant, or unsafe to merge. Prior automated program repair studies have shown that plausible or test-passing patches can still be incorrect [qi_issta_2015_patch_plausibility; legoues_icse_2012_genprog]. This creates a software-quality problem: teams need to decide not only whether a patch resembles a fix, but whether the evidence available at review time is sufficient to accept it. In practice, that evidence may include issue summaries, patch diffs, static checks, visible tests, generated tests, or tool summaries. A verifier that ignores this evidence boundary risks confusing apparent plausibility with correctness.",
         "",
         "LLMs are attractive as patch reviewers because they can read code context and produce structured explanations. However, model behavior may depend strongly on what evidence is visible. If a study does not control the model-visible evidence, it becomes difficult to distinguish model capability from evidence presentation, tool-summary anchoring, or prompt-induced caution. This paper therefore treats evidence visibility as the main experimental variable in candidate patch verification.",
         "",
-        "We study a hidden-evaluator workflow in which model-visible evidence packets are separated from evaluator-only labels. The verifier emits one merge-gate decision: accept, reject, or escalate. Correctness labels, hidden oracle outcomes, and failure taxonomy labels are joined only after execution for analysis. This design lets us ask a bounded question: how does evidence visibility shape LLM risk behavior when reviewing candidate patches?",
+        "We study a hidden-evaluator workflow in which model-visible evidence packets are separated from evaluator-only labels. The verifier emits one merge-gate decision: accept, reject, or escalate, following the broader idea that a classifier can reject or abstain when the available evidence is insufficient [chow_tit_1970_reject_option; geifman_el_yaniv_2017_selective_classification]. Correctness labels, hidden oracle outcomes, and failure taxonomy labels are joined only after execution for analysis. This design lets us ask a bounded question: how does evidence visibility shape LLM risk behavior when reviewing candidate patches?",
         "",
         "Our central finding is that, once the evidence construction is repaired, visible executable and tool evidence can unlock correct-patch acceptance while exposing a measurable false-accept tradeoff. The result is not evidence that LLMs are reliable autonomous patch correctness verifiers. Instead, it supports a software-quality interpretation: LLM verifiers should be evaluated as evidence-conditioned risk controllers whose behavior can shift toward acceptance, rejection, escalation, or tool-summary dependence depending on the setting.",
         "",
         "## 2. Background and Related Work",
         "",
-        "Patch correctness has long been a central concern in automated program repair and software testing. Generate-and-validate repair systems can produce plausible patches that pass available tests while failing broader semantic expectations, a problem commonly discussed as plausible or overfitting patches. This paper studies the downstream verification side of that problem: after a candidate patch exists, what evidence is sufficient for a merge-gate decision?",
+        "Patch correctness has long been a central concern in automated program repair and software testing. Generate-and-validate repair systems can produce plausible patches that pass available tests while failing broader semantic expectations, a problem commonly discussed as plausible or overfitting patches [qi_issta_2015_patch_plausibility]. Controlled fault benchmarks and systematic APR studies provide the evaluation context for this problem [just_issta_2014_defects4j; legoues_icse_2012_genprog]. This paper studies the downstream verification side: after a candidate patch exists, what evidence is sufficient for a merge-gate decision?",
         "",
-        "Testing and semantic-equivalence work provide the technical basis for exposing the limits of visible evidence. Visible fail-to-pass tests, pass-to-pass regression checks, static diagnostics, and broader tool summaries can each support a reviewer, but none is identical to a hidden evaluator label. The EVP-8 design therefore separates model-visible evidence from evaluator-only outcomes rather than asking an LLM to see or infer the final label.",
+        "Testing and oracle research provide the technical basis for exposing the limits of visible evidence. The oracle problem in software testing means that deciding whether observed behavior is correct is itself a non-trivial validity boundary [barr_tse_2015_oracle_problem]. Visible fail-to-pass tests, pass-to-pass regression checks, static diagnostics, and broader tool summaries can each support a reviewer, but none is identical to a hidden evaluator label. The EVP-8 design therefore separates model-visible evidence from evaluator-only outcomes rather than asking an LLM to see or infer the final label.",
         "",
-        "LLM-as-reviewer and LLM-as-judge studies further motivate the evidence-boundary question. LLMs can summarize code context and produce structured rationales, but their decisions may be shaped by prompt framing, output schema, and authoritative-looking tool verdicts. We therefore evaluate LLM patch verification as a selective decision problem with an explicit escalation option, closer to human-in-the-loop triage and abstention than to proof of semantic correctness.",
+        "LLM-based repair and LLM-as-judge studies further motivate the evidence-boundary question. Large pretrained models have been studied as program repair systems and code-editing tools [xia_zhang_icse_2023_llm_apr; tufano_icse_2019_bugfix_nmt], while LLM-as-judge evaluations show that model judgments require controlled protocols and bounded claims [zheng_neurips_2023_llm_judge]. LLMs can summarize code context and produce structured rationales, but their decisions may be shaped by prompt framing, output schema, and authoritative-looking tool verdicts. We therefore evaluate LLM patch verification as a selective decision problem with an explicit escalation option, closer to human-in-the-loop triage and abstention than to proof of semantic correctness.",
         "",
-        "The distinction from prior benchmark-style repair evaluation is methodological. Existing benchmarks primarily ask whether a system resolves a task. EVP-8 asks how a verifier behaves under controlled evidence visibility after a candidate patch is already available. The contribution is not a new repair algorithm; it is a reproducible protocol and evidence chain for measuring evidence-conditioned risk behavior.",
+        "The distinction from prior benchmark-style repair evaluation is methodological. Existing benchmarks primarily ask whether a system resolves a task. Code review work, by contrast, emphasizes that a merge decision is embedded in a review process rather than reducible to a single test outcome [bacchelli_bird_icse_2013_code_review]. EVP-8 asks how a verifier behaves under controlled evidence visibility after a candidate patch is already available. The contribution is not a new repair algorithm; it is a reproducible protocol and evidence chain for measuring evidence-conditioned risk behavior.",
         "",
         "## 3. Evidence-Visibility Protocol",
         "",
@@ -520,6 +777,10 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "All paper-facing claims are constrained by a final setting-validity audit. That audit verifies run and parse coverage, raw-output-free summaries, post-execution label joins, prompt-boundary checks, and the non-overclaiming of the realistic hard-negative branch. It passed only with bounded claims: the results are usable as real evidence for evidence-conditioned risk behavior, not as proof of autonomous correctness verification. Baselines not yet implemented in tracked artifacts, such as always-escalate, random, and majority policies, are therefore not reported as completed results.",
         "",
+        "The baseline policy boundary is explicit. Always-escalate, always-reject, and always-accept are deterministic reference policies calculated from aggregate label totals; they orient the decision space but are not successful verifier results. The completed deterministic baseline is the rule-only visible-tool policy. Majority voting across models and a separate E0/no-tool deterministic verifier require candidate-level aligned audits and are not reported as completed baselines.",
+        "",
+        *baseline_policy_table_lines,
+        "",
         "## 5. Results",
         "",
         "### 5.1 RQ1: Accept-aware evidence changed Qwen label-conditioned behavior",
@@ -542,6 +803,10 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "The comparison is model-dependent. Qwen E6-no-verdict remains close to Qwen E6-full, preserving high correct recall but repeating four false accepts. DeepSeek E6-no-verdict removes false accepts on this cohort, but its correct recall drops to 52.38% and escalation rises to 14.29%. The result supports a risk-policy interpretation: removing verdict-like fields can reduce unsafe accepts for some models, but the gain may come from abstention rather than semantic discrimination.",
         "",
+        "The uncertainty summary reinforces the same boundary. Wilson 95% confidence intervals are wide because the cohort has 21 correct and 77 incorrect candidates, so point-estimate differences should not be overstated. The intervals support bounded comparison and risk reporting rather than a claim of stable LLM superiority over the deterministic baseline.",
+        "",
+        *uncertainty_table_lines,
+        "",
         "### 5.3 RQ3: Tool-contestation supported risk triage, not strict correction",
         "",
         f"On EVP-8-HARD, tool-contestation covered 47 candidates for both Qwen and DeepSeek. For the known tool false-accept opportunity set, DeepSeek shifted {deepseek_opp.get('candidate_count')} tool false accepts to {deepseek_opp.get('escalated')} escalations and {deepseek_opp.get('corrected_to_reject')} strict rejects. Qwen shifted {qwen_opp.get('candidate_count')} tool false accepts to {qwen_opp.get('escalated')} escalations, with {qwen_opp.get('corrected_to_reject')} strict rejects and {qwen_opp.get('repeated_accept')} repeated accept. The supported interpretation is therefore risk triage through escalation, not semantic correction of wrong patches.",
@@ -552,7 +817,7 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "## 6. Discussion",
         "",
-        "The results support a bounded but practically important interpretation. LLM-based patch verifiers are not only functions of model identity; they are functions of the evidence boundary. A model may become conservative, tool-dependent, or saturated depending on how patch evidence is presented. This matters for software quality because a deployment pipeline must decide whether escalation is acceptable, whether tool summaries should be trusted, and when a patch should remain under human review.",
+        "The results support a bounded but practically important interpretation. LLM-based patch verifiers are not only functions of model identity; they are functions of the evidence boundary. A model may become conservative, tool-dependent, or saturated depending on how patch evidence is presented. This matters for software quality because a deployment pipeline must decide whether escalation is acceptable, whether tool summaries should be trusted, and when a patch should remain under human review. Human-automation research has long warned that automation can be misused or over-trusted, so the evidence boundary should be reported rather than hidden [parasuraman_riley_1997_automation].",
         "",
         "The strongest contribution is methodological rather than algorithmic. EVP-8 makes evidence visibility explicit, separates model-visible information from evaluator-only labels, and forces each result to state whether it measures acceptance, false acceptance, strict rejection, or escalation.",
         "",
@@ -570,13 +835,22 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "Internal validity may be affected by prompt wording, output schema, and evidence formatting. We mitigate this by using frozen packet sets, tracked prompt-boundary audits, raw-output-free summaries, and post-run matrix checks, but the findings remain tied to the evaluated protocol versions.",
         "",
-        "Construct validity is limited by the accept/reject/escalate decision space. Escalation is useful as a human-review routing decision, but it is not strict correction. The manuscript therefore separates strict correction from safe handling.",
+        "Construct validity is limited by the accept/reject/escalate decision space and by the evaluator label boundary. The oracle problem means that hidden labels should be treated as post-decision evaluation evidence, not as model-visible truth [barr_tse_2015_oracle_problem]. Escalation is useful as a human-review routing decision, but it is not strict correction. The manuscript therefore separates strict correction from safe handling.",
         "",
         "External validity is bounded by the EVP-8 candidate set, the EVP-8-HARD controlled cohort, and the selected models. The realistic hard-negative branch provides useful source-acquisition evidence but did not pass the three-project verifier-readiness gate. We therefore report it as a negative boundary rather than as main verifier evidence.",
         "",
         "## 8. Conclusion",
         "",
         "This study introduces EVP-8 as a hidden-evaluator protocol for measuring evidence-conditioned LLM patch-verification behavior. The supported results come from repaired Qwen label-conditioned analysis, E6 rule-only/no-verdict ablations, and tool-contestation audits. The practical value is risk triage under explicit evidence boundaries, not reliable autonomous patch correctness verification. A stable CCF-C manuscript should therefore present the work as a bounded methods-and-measurement contribution with transparent metrics, baselines, excluded settings, and threat boundaries.",
+        "",
+        "## Reference Support Records",
+        "",
+        "The current Markdown draft uses citation keys pending final venue-specific BibTeX conversion. The cited support records are:",
+        "",
+    ]
+    for record in claim_map["reference_records"]:
+        lines.append(f"- `{record['key']}`: {record['reference']}")
+    lines += [
         "",
         "## Figure Asset Summary" if figures_generated else "## Planned Figures",
         "",

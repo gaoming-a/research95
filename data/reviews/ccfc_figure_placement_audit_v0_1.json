@@ -55,15 +55,15 @@
         }
       ],
       "caption_after_image": true,
-      "caption_line": 77,
+      "caption_line": 86,
       "id": "Fig. 2",
       "image_exists": true,
-      "image_line": 75,
+      "image_line": 84,
       "image_ref": "../figures/ccfc/ccfc_fig2_decision_patterns.png",
       "passed": true,
       "section": "### 5.1 RQ1: Accept-aware evidence changed Qwen label-conditioned behavior",
       "section_before_image": true,
-      "section_line": 61
+      "section_line": 70
     },
     {
       "assets": [
@@ -84,15 +84,15 @@
         }
       ],
       "caption_after_image": true,
-      "caption_line": 117,
+      "caption_line": 136,
       "id": "Fig. 3",
       "image_exists": true,
-      "image_line": 115,
+      "image_line": 134,
       "image_ref": "../figures/ccfc/ccfc_fig3_claim_boundary.png",
       "passed": true,
       "section": "## 6. Discussion",
       "section_before_image": true,
-      "section_line": 103
+      "section_line": 122
     }
   ],
   "manuscript": "docs/paper/ccfc_manuscript_rewrite_v0_1.md",

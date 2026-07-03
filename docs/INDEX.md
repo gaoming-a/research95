@@ -18,7 +18,10 @@
   tracked. The CCF-C citation support bank and baseline feasibility audit are
   also tracked; `rule-only visible-tool` is the completed deterministic
   baseline, while majority-vote and a separate E0/no-tool deterministic
-  verifier remain unimplemented. The no-API Luigi
+  verifier remain unimplemented. The v0.3 manuscript integration and
+  reviewer-style audit are tracked as well; citation keys, reference support
+  records, baseline policy boundaries, and Wilson 95% CIs are now in the
+  manuscript. The no-API Luigi
   source-acquisition/materialization protocol is optional future work, not the
   current blocker. Historical `origin/main` entries retained later in plan logs
   are audit records only. As of
@@ -78,7 +81,8 @@
   removes the earlier invalid setting from the manuscript-facing package and
   leaves Fig. 2 as accept-aware/no-verdict metric evidence for the current
   result chain. The 2026-07-04 0.28 entry records the citation support bank and
-  deterministic baseline feasibility audit.
+  deterministic baseline feasibility audit. The 2026-07-04 0.29 entry records
+  the v0.3 manuscript integration and reviewer-style audit.
 - `../scripts/write_evp8_realistic_hardneg_uplift_packet.py`: no-API boundary
   packet writer for the realistic hard-negative uplift route. It reads the
   tracked combined generation gate only and writes the current missing
@@ -114,19 +118,21 @@
   and forbidden claims.
 - `../scripts/write_final_manuscript_claim_map.py`: no-API manuscript-claim
   map and CCF-C body rewrite generator. It reads tracked aggregate audits only
-  and writes raw-output-free claim, threat, terminology, and figure-plan
-  artifacts.
+  and writes raw-output-free claim, threat, terminology, citation support,
+  baseline-boundary, uncertainty, and figure-plan artifacts.
 - `../data/reviews/final_manuscript_claim_map_v0_1.json` and
   `paper/final_manuscript_claim_map_v0_1.md`: final manuscript claim map.
   Status is `passed`; it maps supported claims, forbidden claims, terminology,
   and planned figures to the final setting-validity boundary.
 - `paper/ccfc_manuscript_rewrite_v0_1.md`: stable CCF-C body rewrite file.
-  The current content is the critique-driven v0.2 rewrite. It presents the
+  The current content is the critique-driven v0.3 rewrite. It presents the
   study as bounded evidence-conditioned risk behavior in candidate patch
   verification, not autonomous patch correctness verification; it also includes
-  E0-E6 evidence-level definitions, Qwen v0.3 label-conditioned metrics, and
-  E6 rule-only/no-verdict baseline metrics. CCF-C Fig. 1--3 are placed inline
-  in the protocol, results, and discussion/threat-boundary locations.
+  E0-E6 evidence-level definitions, Qwen v0.3 label-conditioned metrics, E6
+  rule-only/no-verdict baseline metrics, citation-keyed related work, baseline
+  policy boundaries, Wilson 95% confidence intervals, and reference support
+  records. CCF-C Fig. 1--3 are placed inline in the protocol, results, and
+  discussion/threat-boundary locations.
 - `paper/ccfc_revision_response_v0_2.md`: critique-to-action record for the
   CCF-C manuscript. It identifies which external review criticisms were
   addressed in v0.2 and which remain deferred submission risks, especially
@@ -149,6 +155,14 @@
   reference policies, rule-only visible-tool is the completed deterministic
   baseline, and majority-vote / separate E0 no-tool verifier are not completed
   under the current aggregate-only boundary.
+- `../scripts/audit_ccfc_manuscript_v0_3.py`: reviewer-style paper audit for
+  the current CCF-C Markdown manuscript. It checks citation-key insertion,
+  reference support records, baseline policy boundary, Wilson CI summary,
+  old-setting exclusion, and overclaim negation.
+- `../data/reviews/ccfc_manuscript_v0_3_reviewer_audit.json` and
+  `paper/ccfc_manuscript_v0_3_reviewer_audit.md`: v0.3 manuscript reviewer
+  audit. Status is `passed`; remaining risk is formatting and target-venue
+  conversion, not missing citation/baseline/uncertainty content.
 - `../scripts/generate_ccfc_figures.py`: Python/matplotlib generator for the
   CCF-C manuscript figure set. It reads the tracked final manuscript claim map
   only and outputs PDF/SVG/PNG figures plus manifest, source-data, and QA notes.
