@@ -1,6 +1,6 @@
 # 当前项目状态与文件地图
 
-日期：2026-07-04
+日期：2026-07-05
 
 本文件是短入口，用来整理当前计划文档和项目文件。它不替代
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
@@ -39,7 +39,30 @@
   只有 aggregate per-level counts，没有 candidate-level aligned decisions；
   因此 majority-vote 不能在当前 no-raw-response 边界下计算。Qwen E0 只能作为
   observed model condition，不能写成 deterministic no-tool verifier。
+  2026-07-05 追加 APSEC technical-track Markdown rewrite：
+  `docs/paper/apsec_technical_track_rewrite_v0_1.md` 已生成并通过
+  `scripts/audit_apsec_manuscript_rewrite.py` 审计。该稿保留当前 bounded claim，
+  适合作为匿名 IEEEtran / BibTeX / 10-page APSEC formatting 的下一步输入，但
+  还不是最终投稿 PDF。
   在 `ready_for_verifier_api=false` 时仍不得运行 Qwen/DeepSeek verifier API。
+
+## 2026-07-05 快速状态增量
+
+- 新增 APSEC technical-track Markdown rewrite：
+  `docs/paper/apsec_technical_track_rewrite_v0_1.md`。它把当前 CCF-C 稳定稿
+  重写为 APSEC-style technical research paper 结构，包含 Abstract、
+  Introduction、Background、Protocol、Experimental Design、Results、
+  Discussion、Threats 和 Conclusion。
+- 新增 APSEC rewrite generator：
+  `scripts/write_apsec_manuscript_rewrite.py`。它只读取 tracked claim map，
+  不调用 API、不读取 raw model responses、不把 majority-vote 或单独
+  E0/no-tool deterministic verifier 写成完成结果。
+- 新增 APSEC rewrite audit：
+  `docs/paper/apsec_manuscript_rewrite_audit_v0_1.md` 和
+  `data/reviews/apsec_manuscript_rewrite_audit_v0_1.json`，状态为 `passed`。
+- 当前下一步不是扩实验，而是 final formatting：把 citation keys 转 BibTeX，
+  转 anonymous IEEEtran conference LaTeX，检查 APSEC 10-page budget、图表宽度、
+  双盲措辞和 reference style。
 
 ## 2026-07-04 快速状态增量
 

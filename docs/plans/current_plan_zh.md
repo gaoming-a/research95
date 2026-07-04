@@ -1,6 +1,62 @@
 # 当前计划：AI 生成补丁的可验证审查
 
-最后更新：2026-07-04
+最后更新：2026-07-05
+
+## 0.32 2026-07-05 APSEC technical-track manuscript rewrite
+
+本轮目标是把当前稳定 CCF-C Markdown 稿重写为 APSEC-style technical-track
+会议论文稿，突出 novelty、technical soundness、proper research methods、clarity
+和 software-engineering relevance。该轮不新增实验、不调用 API、不读取 raw model
+responses，不把 majority-vote 或 E0/no-tool deterministic verifier 写成已完成。
+
+执行边界：
+
+- 重写必须基于 tracked claim map、baseline feasibility audit、figure assets 和
+  reviewer audit；
+- 新建 APSEC 专用稿件文件，保留原 `ccfc_manuscript_rewrite_v0_1.md`；
+- 必须保留 bounded claim：证据可见性影响 risk behavior，不证明 reliable
+  autonomous patch correctness verification；
+- 必须显式写出 double-blind / IEEEtran / 10-page formatting 后续任务，但本轮先
+  产出 Markdown rewrite，不直接生成最终 PDF；
+- 不新增模型实验，不解析 ignored raw responses。
+
+验收条件：
+
+- 新增可复现 APSEC rewrite generator；
+- 新增 APSEC rewrite audit，检查 APSEC 结构、贡献、baseline boundary、CI、
+  figure references、old invalid setting exclusion 和 overclaim negation；
+- 生成 `docs/paper/apsec_technical_track_rewrite_v0_1.md`；
+- 生成 JSON/Markdown audit；
+- 同步 README/INDEX/current project state/engineering notes；
+- 运行最小验证并提交、推送。
+
+执行结果：
+
+- 新增 `scripts/write_apsec_manuscript_rewrite.py`，从 tracked claim map
+  生成 APSEC technical-track Markdown rewrite，不读取 raw responses、不调用 API；
+- 新增 `docs/paper/apsec_technical_track_rewrite_v0_1.md`，保留 EVP-8
+  evidence-visibility contribution、Qwen v0.3 主结果、E6 ablation、
+  tool-contestation、realistic gate boundary 和 APSEC/IEEEtran 后续格式边界；
+- 新增 `scripts/audit_apsec_manuscript_rewrite.py`，审计 APSEC 结构、贡献、
+  baseline boundary、CI、figure references、citation keys、old invalid setting
+  exclusion 和 overclaim negation；
+- 新增 `data/reviews/apsec_manuscript_rewrite_audit_v0_1.json` 和
+  `docs/paper/apsec_manuscript_rewrite_audit_v0_1.md`，状态为 `passed`。
+
+验收结果：
+
+- `python -m py_compile scripts\write_apsec_manuscript_rewrite.py scripts\audit_apsec_manuscript_rewrite.py`：通过；
+- `python scripts\write_apsec_manuscript_rewrite.py --check`：通过；
+- `python scripts\audit_apsec_manuscript_rewrite.py --check`：通过；
+- `python -m json.tool data\reviews\apsec_manuscript_rewrite_audit_v0_1.json | Out-Null`：通过。
+
+当前判断：
+
+- APSEC 方向的 Markdown 重写已完成，适合作为下一步 LaTeX 化和页面压缩的输入；
+- 当前稿件仍不是最终投稿 PDF；下一步必须转匿名 IEEEtran、转 BibTeX、检查 10 页
+  上限、图表宽度、双盲措辞和 reference 格式；
+- 本轮没有补新实验，也没有改变 majority-vote 和单独 E0/no-tool deterministic
+  verifier 未完成的边界。
 
 ## 0.31 2026-07-04 No-API feasibility audit for majority and E0/no-tool baselines
 

@@ -4533,3 +4533,19 @@ This file starts fresh for the patch-verification project.
 - Always-escalate/always-reject/always-accept can serve as no-evidence
   reference policies from label totals. They remain policy references, not
   implemented deterministic verifiers.
+
+## 2026-07-05 APSEC manuscript rewrite boundary
+
+- A target-venue rewrite should be generated from the same claim map as the
+  stable manuscript. Hand-editing only the rendered Markdown risks drifting
+  from the audited evidence chain.
+- APSEC-style framing changes emphasis, not evidence scope. The rewrite can
+  foreground novelty, technical soundness, and software-engineering relevance,
+  but it must not turn evidence-conditioned risk behavior into autonomous
+  patch-correctness verification.
+- Audit rules should catch forbidden overclaims, but the manuscript should also
+  avoid phrases that create mechanical or reviewer ambiguity. Rephrase negated
+  superiority claims as positive boundary statements when possible.
+- A Markdown rewrite is not a submission artifact. The next gate is anonymous
+  IEEEtran/BibTeX/page-budget conversion, including figure/table layout and
+  double-blind wording checks.

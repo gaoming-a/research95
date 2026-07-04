@@ -1,0 +1,116 @@
+{
+  "audit_id": "apsec_manuscript_rewrite_audit_v0_1",
+  "status": "passed",
+  "boundary": "no API call, no raw output read, no prompt text or patch text read.",
+  "manuscript": "docs\\paper\\apsec_technical_track_rewrite_v0_1.md",
+  "checks": [
+    {
+      "check": "manuscript_exists",
+      "passed": true,
+      "detail": "docs\\paper\\apsec_technical_track_rewrite_v0_1.md"
+    },
+    {
+      "check": "baseline_audit_passed",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "check": "apsec_status_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "target_format_note_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "required_sections_present",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "contribution_bullets_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "evidence_visibility_protocol_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "qwen_main_result_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "rule_only_baseline_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "qwen_e0_not_deterministic",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "majority_boundary_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "ci_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "tool_contestation_boundary_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "realistic_gate_boundary_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "figures_referenced",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "all_expected_citations_present",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "forbidden_overclaims_absent",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "check": "api_call_attempted",
+      "passed": true,
+      "detail": false
+    },
+    {
+      "check": "raw_outputs_read_by_this_audit",
+      "passed": true,
+      "detail": false
+    },
+    {
+      "check": "prompt_or_patch_text_read_by_this_audit",
+      "passed": true,
+      "detail": false
+    }
+  ],
+  "verdict": {
+    "readiness": "markdown_rewrite_ready_for_latex_conversion",
+    "remaining_work": [
+      "Convert citation keys to BibTeX.",
+      "Convert Markdown to anonymous IEEEtran conference LaTeX.",
+      "Check page budget, table widths, figure placement, and double-blind wording."
+    ]
+  }
+}

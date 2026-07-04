@@ -12,7 +12,7 @@
   Start here before reading the long execution log. It records Git sync state,
   current paper/result boundaries, experiment-decision gates, active plan roles,
   key project files, script entry points, and forbidden misuses. As of
-  2026-07-04, its top section is the authority for the current active branch.
+  2026-07-05, its top section is the authority for the current active branch.
   The manuscript claim-map, threats-to-validity consolidation, CCF-C body
   rewrite file, CCF-C Fig. 1--3, and inline figure placement audit are now
   tracked. The CCF-C citation support bank and baseline feasibility audit are
@@ -23,10 +23,13 @@
   manuscript integration and reviewer-style audit are tracked as well;
   citation keys, reference support records, baseline policy boundaries, Phase A
   Wilson 95% CIs, tool-contestation opportunity-set Wilson 95% CIs, and the
-  Methods/Results/Discussion/Threats structure are now in the manuscript. The no-API Luigi
-  source-acquisition/materialization protocol is optional future work, not the
-  current blocker. Historical `origin/main` entries retained later in plan logs
-  are audit records only. As of
+  Methods/Results/Discussion/Threats structure are now in the manuscript. The
+  APSEC technical-track Markdown rewrite and audit are now tracked as the next
+  venue-specific writing artifact; it still requires anonymous IEEEtran,
+  BibTeX, page-budget, figure/table, and double-blind conversion before
+  submission. The no-API Luigi source-acquisition/materialization protocol is
+  optional future work, not the current blocker. Historical `origin/main`
+  entries retained later in plan logs are audit records only. As of
   2026-06-20, it also records the EVP-8 G0 expected-output absence guard and
   the exact manual phrase required before DeepSeek/Qwen smoke API execution.
 - `plans/final_paper_roadmap_zh.md`: canonical final-paper route and subsequent
@@ -91,7 +94,10 @@
   records the no-API feasibility audit for majority-vote and E0/no-tool
   baselines: tracked summaries do not contain candidate-level aligned decisions,
   Qwen E0 is only an observed model condition, and the separate deterministic
-  E0/no-tool verifier remains unimplemented.
+  E0/no-tool verifier remains unimplemented. The 2026-07-05 0.32 entry records
+  the APSEC technical-track Markdown rewrite and audit; it is ready for
+  anonymous IEEEtran/BibTeX/page-budget conversion, not yet a final submission
+  PDF.
 - `../scripts/write_evp8_realistic_hardneg_uplift_packet.py`: no-API boundary
   packet writer for the realistic hard-negative uplift route. It reads the
   tracked combined generation gate only and writes the current missing
@@ -177,6 +183,23 @@
   `paper/ccfc_manuscript_v0_3_reviewer_audit.md`: v0.3 manuscript reviewer
   audit. Status is `passed`; remaining risk is formatting and target-venue
   conversion, not missing citation/baseline/uncertainty content.
+- `../scripts/write_apsec_manuscript_rewrite.py`: APSEC technical-track
+  Markdown rewrite generator. It reads the tracked final manuscript claim map
+  only and preserves the bounded evidence-visibility / risk-behavior claim.
+- `paper/apsec_technical_track_rewrite_v0_1.md`: APSEC-style technical-track
+  rewrite of the current stable manuscript. It includes APSEC-facing
+  contribution framing, protocol, experimental design, results, discussion,
+  threats, figure references, and reference support records. It is a Markdown
+  rewrite, not the final anonymous IEEEtran PDF.
+- `../scripts/audit_apsec_manuscript_rewrite.py`: APSEC rewrite audit. It
+  checks APSEC structure, contribution bullets, baseline boundaries, Wilson
+  CIs, tool-contestation boundaries, realistic gate boundary, figure
+  references, citation keys, and forbidden overclaims.
+- `../data/reviews/apsec_manuscript_rewrite_audit_v0_1.json` and
+  `paper/apsec_manuscript_rewrite_audit_v0_1.md`: APSEC rewrite audit outputs.
+  Status is `passed`; remaining work is BibTeX conversion, anonymous IEEEtran
+  LaTeX conversion, APSEC page budget, figure/table layout, and double-blind
+  wording.
 - `../scripts/generate_ccfc_figures.py`: Python/matplotlib generator for the
   CCF-C manuscript figure set. It reads the tracked final manuscript claim map
   only and outputs PDF/SVG/PNG figures plus manifest, source-data, and QA notes.
