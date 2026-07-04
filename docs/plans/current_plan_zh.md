@@ -2,6 +2,85 @@
 
 最后更新：2026-07-05
 
+## 0.33 2026-07-05 APSEC reviewer-risk repair without new API
+
+本轮目标是针对 APSEC rewrite 的主要拒稿风险做无 API 修订：单模型 claim 过宽、
+数据集构造不清、E0-E6 表像内部字段、rule-only baseline 过强但解释不足、
+false accept 分析缺失、RQ4 把未完成 realistic gate 放成主问题，以及内部
+Reference Support Records 不应进入投稿稿。
+
+执行边界：
+
+- 不调用 API，不补 DeepSeek/Gemini/Kimi repaired E0-E6；
+- 不读取 raw model responses，不读取 rendered prompt text，不读取 patch diff；
+- 只使用 tracked raw-output-free summaries：
+  `evp8_candidate_set_v0_1_summary.json`、
+  `evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json`、
+  final claim map、baseline feasibility audit、tool-contestation audit；
+- 能写入正文的 false-accept 分析仅限 aggregate anatomy：3 个 partial fix、
+  1 个 regression patch；不得虚构具体 case/project/rationale；
+- 多模型 repaired main table 作为 APSEC 提升缺口记录，不能写成已完成结果。
+
+验收条件：
+
+- APSEC 稿标题收窄到 controlled LLM patch-verifier study；
+- Methods/Experimental Design 中新增 candidate dataset composition 表，写清
+  98 candidates、6 projects、21 tasks、21 correct / 77 non-correct、candidate
+  type 和 label source；
+- E0-E6 evidence table 改成自然语言；
+- RQ4 从主 RQ 移除，realistic branch 降级到 Discussion/Threats boundary；
+- Results 中新增 rule-only baseline interpretation 和 false-accept aggregate
+  anatomy；
+- 删除 APSEC Markdown 正文末尾的 Reference Support Records，保留 citation
+  keys 等待 BibTeX 转换；
+- 更新 APSEC rewrite audit 覆盖上述风险；
+- 同步 README/INDEX/current project state/engineering notes，运行最小验证并
+  提交、推送。
+
+执行结果：
+
+- 更新 `scripts/write_apsec_manuscript_rewrite.py`：
+  - 标题收窄为 controlled LLM patch-verifier study；
+  - 从 `evp8_candidate_set_v0_1_summary.json` 和 Qwen label-conditioned summary
+    写入 candidate composition 表；
+  - 将 E0-E6 evidence ladder 改成自然语言；
+  - 将主问题收束为 RQ1--RQ3，realistic hard-negative branch 降级为
+    Discussion/Threats boundary；
+  - 在 E6 ablation 后主动写明 rule-only baseline 已经很强，当前证据不支持
+    large LLM gain claim；
+  - 新增 E6 false-accept aggregate anatomy：3/41 partial fixes 和 1/1
+    regression patch 被 Qwen E6 accepted；
+  - 删除 APSEC Markdown 末尾 `Reference Support Records`，只保留 citation
+    keys 待 BibTeX 转换说明。
+- 更新 `scripts/audit_apsec_manuscript_rewrite.py`，新增 APSEC 风险检查：
+  title scope、dataset composition、humanized evidence ladder、RQ4 demotion、
+  rule-only strength acknowledgement、false-accept anatomy、Reference Support
+  Records removal、multi-model repaired gap explicit。
+- 重新生成 `docs/paper/apsec_technical_track_rewrite_v0_1.md`、
+  `docs/paper/apsec_manuscript_rewrite_audit_v0_1.md` 和
+  `data/reviews/apsec_manuscript_rewrite_audit_v0_1.json`，audit 状态为
+  `passed`。
+
+验收结果：
+
+- `python -m py_compile scripts\write_apsec_manuscript_rewrite.py scripts\audit_apsec_manuscript_rewrite.py`：通过；
+- `python scripts\write_apsec_manuscript_rewrite.py --check`：通过；
+- `python scripts\audit_apsec_manuscript_rewrite.py --check`：通过；
+- `python -m json.tool data\reviews\apsec_manuscript_rewrite_audit_v0_1.json | Out-Null`：通过。
+- Git commit 已完成：`Repair APSEC manuscript reviewer risks`；
+- GitHub push 连续三次失败，原因均为 HTTPS/GitHub 443 网络连接失败或 reset；
+  当前本地分支相对 `origin/evp8-v03-qwen-main-exp` 为 `[ahead 1]`。
+
+当前判断：
+
+- APSEC 文稿的文本硬伤已明显降低，但实验硬伤没有被消除；
+- 现在可以诚实投稿的 claim 是 controlled Qwen-centered evidence-visibility
+  measurement study；
+- 若目标是提高 APSEC 接收概率，下一步仍应补 repaired DeepSeek E0-E6，最好再补
+  Gemini/Kimi repaired E0-E6，形成 2--3 model repaired main result table；
+- 另一个仍未完成的质量提升项是四个 Qwen E6 false accepts 的 raw-output-free
+  case-level analysis。
+
 ## 0.32 2026-07-05 APSEC technical-track manuscript rewrite
 
 本轮目标是把当前稳定 CCF-C Markdown 稿重写为 APSEC-style technical-track

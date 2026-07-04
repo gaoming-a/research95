@@ -104,6 +104,16 @@ step is to convert citation keys to BibTeX, produce an anonymous IEEEtran
 conference LaTeX draft, and check APSEC page budget, figure/table layout,
 double-blind wording, and reference style.
 
+The APSEC rewrite has also been repaired against the main reviewer risks:
+the title is scoped to a controlled LLM patch-verifier study, the 98-candidate
+composition table is included, E0-E6 levels are written in natural language,
+the failed realistic branch is no longer a main RQ, the strong rule-only
+baseline is acknowledged, and E6 false accepts are summarized as three partial
+fixes plus one regression patch. The remaining APSEC competitiveness gap is
+experimental rather than textual: add repaired E0-E6 main results for
+DeepSeek and preferably Gemini/Kimi, plus a raw-output-free case-level analysis
+of the four Qwen E6 false accepts.
+
 The final-paper route is:
 
 - `docs/plans/final_paper_roadmap_zh.md`

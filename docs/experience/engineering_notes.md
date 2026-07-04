@@ -4549,3 +4549,22 @@ This file starts fresh for the patch-verification project.
 - A Markdown rewrite is not a submission artifact. The next gate is anonymous
   IEEEtran/BibTeX/page-budget conversion, including figure/table layout and
   double-blind wording checks.
+
+## 2026-07-05 APSEC reviewer-risk repair
+
+- When a reviewer identifies a single-model main-result risk, text can only
+  narrow the claim; it cannot create multi-model evidence. The paper should say
+  controlled LLM patch-verifier study until repaired E0-E6 results exist for
+  additional models.
+- Dataset composition belongs in Methods, not only in internal audits. For this
+  cohort, the defensible paper-facing numbers are 98 candidates, 6 projects,
+  21 tasks, 21 correct patches, and 77 non-correct patches with candidate-type
+  counts from the frozen candidate-set summary.
+- Strong deterministic baselines should be treated as results, not hidden
+  embarrassments. If rule-only visible-tool nearly matches Qwen E6, the paper's
+  claim must shift from LLM superiority to risk-policy behavior under evidence
+  removal and contestation.
+- False-accept analysis must match available evidence granularity. Aggregate
+  tracked summaries support saying Qwen E6 accepted three partial fixes and one
+  regression patch; per-case project/rationale claims require a separate
+  raw-output-free case-analysis artifact.

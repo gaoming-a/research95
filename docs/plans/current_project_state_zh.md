@@ -42,8 +42,10 @@
   2026-07-05 追加 APSEC technical-track Markdown rewrite：
   `docs/paper/apsec_technical_track_rewrite_v0_1.md` 已生成并通过
   `scripts/audit_apsec_manuscript_rewrite.py` 审计。该稿保留当前 bounded claim，
-  适合作为匿名 IEEEtran / BibTeX / 10-page APSEC formatting 的下一步输入，但
-  还不是最终投稿 PDF。
+  并已完成 APSEC reviewer-risk repair：标题收窄、candidate composition 表、
+  humanized E0-E6 表、RQ4 降级、rule-only 强基线解释、E6 false-accept aggregate
+  anatomy、Reference Support Records 删除。它适合作为匿名 IEEEtran / BibTeX /
+  10-page APSEC formatting 的下一步输入，但还不是最终投稿 PDF。
   在 `ready_for_verifier_api=false` 时仍不得运行 Qwen/DeepSeek verifier API。
 
 ## 2026-07-05 快速状态增量
@@ -63,6 +65,16 @@
 - 当前下一步不是扩实验，而是 final formatting：把 citation keys 转 BibTeX，
   转 anonymous IEEEtran conference LaTeX，检查 APSEC 10-page budget、图表宽度、
   双盲措辞和 reference style。
+- 2026-07-05 APSEC reviewer-risk repair 已完成：当前稿件明确承认
+  paper-facing main result remains single-model，rule-only baseline already
+  strong，并将 realistic hard-negative branch 作为 source-acquisition boundary。
+  若要提高 APSEC 接收概率，仍需另起计划补 repaired DeepSeek E0-E6，最好再补
+  Gemini/Kimi repaired E0-E6，以及四个 Qwen E6 false accepts 的 raw-output-free
+  case-level analysis。
+- 当前 Git 同步状态：本轮本地 commit
+  `Repair APSEC manuscript reviewer risks` 已完成，但 GitHub push 因
+  HTTPS/GitHub 443 连接 reset/timeout 连续失败；当前分支相对
+  `origin/evp8-v03-qwen-main-exp` 为 `[ahead 1]`。
 
 ## 2026-07-04 快速状态增量
 

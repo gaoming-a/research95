@@ -40,7 +40,6 @@ def build_audit() -> dict[str, Any]:
         "## 6. Discussion",
         "## 7. Threats to Validity",
         "## 8. Conclusion",
-        "## Reference Support Records",
     ]
     missing_sections = [section for section in required_sections if section not in manuscript]
     expected_citations = [
@@ -74,17 +73,58 @@ def build_audit() -> dict[str, Any]:
         check("apsec_status_present", "APSEC technical-track Markdown rewrite" in manuscript),
         check("target_format_note_present", "IEEEtran" in manuscript and "anonymous" in manuscript),
         check("required_sections_present", not missing_sections, missing_sections),
+        check(
+            "title_scope_narrowed",
+            "Evidence Visibility Shapes Risk Behavior in a Controlled LLM Patch-Verifier Study"
+            in manuscript,
+        ),
         check("contribution_bullets_present", "The paper makes three contributions:" in manuscript),
         check("evidence_visibility_protocol_present", "Evidence-Visibility Protocol (EVP-8)" in manuscript),
+        check(
+            "dataset_composition_present",
+            "98 candidate patches from 6 projects and 21 BugsInPy tasks" in manuscript
+            and "| correct_reference | 21 |" in manuscript
+            and "| partial_fix | 41 |" in manuscript
+            and "| regression_patch | 1 |" in manuscript,
+        ),
+        check(
+            "evidence_ladder_humanized",
+            "Issue summary and candidate patch diff" in manuscript
+            and "Structured changed-file/function map" in manuscript
+            and "Deterministic merge-gate summary" in manuscript
+            and "issue_patch_seed" not in manuscript,
+        ),
+        check(
+            "rq4_demoted_from_main_questions",
+            "The experiment asks three research questions." in manuscript
+            and "RQ4 asks" not in manuscript,
+        ),
         check("qwen_main_result_present", "95.24%" in manuscript and "83.33%" in manuscript and "5.19%" in manuscript),
         check("rule_only_baseline_present", "rule-only visible-tool" in manuscript),
+        check(
+            "rule_only_strength_acknowledged",
+            "The deterministic rule-only baseline was already strong" in manuscript
+            and "does not justify claiming a large LLM gain" in manuscript,
+        ),
         check("qwen_e0_not_deterministic", "Qwen E0 is an observed model condition, not a deterministic no-tool verifier" in manuscript),
         check("majority_boundary_present", "Majority-vote and a separate E0/no-tool deterministic verifier are not reported as completed" in manuscript),
         check("ci_present", "95% CI" in manuscript and "Wilson intervals are wide" in manuscript),
+        check(
+            "false_accept_anatomy_present",
+            "E6 false accepts were concentrated in partial and regression negatives" in manuscript
+            and "| partial_fix | 3/41 |" in manuscript
+            and "| regression_patch | 1/1 |" in manuscript,
+        ),
         check("tool_contestation_boundary_present", "strict correction remained zero for both models" in manuscript),
         check("realistic_gate_boundary_present", "source-acquisition boundary" in manuscript),
         check("figures_referenced", all(f"Figure {i}" in manuscript for i in [1, 2, 3])),
         check("all_expected_citations_present", not missing_citations, missing_citations),
+        check("reference_support_records_removed", "Reference Support Records" not in manuscript),
+        check(
+            "multi_model_repaired_gap_explicit",
+            "paper-facing main result remains single-model" in manuscript
+            and "would require repaired E0-E6 main tables for additional models" in manuscript,
+        ),
         check("forbidden_overclaims_absent", not forbidden_present, forbidden_present),
         check("api_call_attempted", True, False),
         check("raw_outputs_read_by_this_audit", True, False),
@@ -103,6 +143,8 @@ def build_audit() -> dict[str, Any]:
             if status == "passed"
             else "rewrite_requires_repair",
             "remaining_work": [
+                "If APSEC competitiveness is prioritized, add repaired E0-E6 main tables for at least one more model and preferably two more models.",
+                "Add a raw-output-free case-level false-accept analysis for the four Qwen E6 false accepts.",
                 "Convert citation keys to BibTeX.",
                 "Convert Markdown to anonymous IEEEtran conference LaTeX.",
                 "Check page budget, table widths, figure placement, and double-blind wording.",

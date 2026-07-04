@@ -30,6 +30,11 @@
       "detail": []
     },
     {
+      "check": "title_scope_narrowed",
+      "passed": true,
+      "detail": ""
+    },
+    {
       "check": "contribution_bullets_present",
       "passed": true,
       "detail": ""
@@ -40,12 +45,32 @@
       "detail": ""
     },
     {
+      "check": "dataset_composition_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "evidence_ladder_humanized",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "rq4_demoted_from_main_questions",
+      "passed": true,
+      "detail": ""
+    },
+    {
       "check": "qwen_main_result_present",
       "passed": true,
       "detail": ""
     },
     {
       "check": "rule_only_baseline_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "rule_only_strength_acknowledged",
       "passed": true,
       "detail": ""
     },
@@ -61,6 +86,11 @@
     },
     {
       "check": "ci_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "false_accept_anatomy_present",
       "passed": true,
       "detail": ""
     },
@@ -83,6 +113,16 @@
       "check": "all_expected_citations_present",
       "passed": true,
       "detail": []
+    },
+    {
+      "check": "reference_support_records_removed",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "multi_model_repaired_gap_explicit",
+      "passed": true,
+      "detail": ""
     },
     {
       "check": "forbidden_overclaims_absent",
@@ -108,6 +148,8 @@
   "verdict": {
     "readiness": "markdown_rewrite_ready_for_latex_conversion",
     "remaining_work": [
+      "If APSEC competitiveness is prioritized, add repaired E0-E6 main tables for at least one more model and preferably two more models.",
+      "Add a raw-output-free case-level false-accept analysis for the four Qwen E6 false accepts.",
       "Convert citation keys to BibTeX.",
       "Convert Markdown to anonymous IEEEtran conference LaTeX.",
       "Check page budget, table widths, figure placement, and double-blind wording."
