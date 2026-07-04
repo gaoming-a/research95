@@ -4,11 +4,14 @@
     "allowed": [
       "Report always-escalate/always-reject/always-accept as deterministic reference policies calculated from label totals.",
       "Report uniform-random three-way only as an expected reference policy, not as a completed stochastic baseline run.",
+      "Report Qwen E0 as an observed no-tool/no-executable-evidence model condition.",
       "Report rule-only visible-tool as the completed deterministic E6 baseline.",
       "Use Phase A confidence intervals for rule-only and E6 model conditions."
     ],
     "forbidden": [
       "Do not claim a completed majority-vote baseline from aggregate-only files.",
+      "Do not compute majority-vote by reading raw responses under this audit boundary.",
+      "Do not call Qwen E0 a deterministic no-tool verifier.",
       "Do not call always-escalate a successful verifier.",
       "Do not present the uniform-random expected reference as a real randomized experiment.",
       "Do not claim LLM superiority over deterministic baselines as the paper's main result."

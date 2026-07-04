@@ -35,6 +35,10 @@
   opportunity-set Wilson 95% CI、Methods/Results/Discussion/Threats 结构压缩和
   reviewer-aware audit 均已进入可复现生成链路；这不改变 majority/E0-no-tool
   未完成边界。
+  2026-07-04 追加 no-API baseline feasibility 复查：tracked model summaries
+  只有 aggregate per-level counts，没有 candidate-level aligned decisions；
+  因此 majority-vote 不能在当前 no-raw-response 边界下计算。Qwen E0 只能作为
+  observed model condition，不能写成 deterministic no-tool verifier。
   在 `ready_for_verifier_api=false` 时仍不得运行 Qwen/DeepSeek verifier API。
 
 ## 2026-07-04 快速状态增量
@@ -53,10 +57,12 @@
     always-accept；
   - expected reference policy：uniform random three-way expected policy，
     只按 aggregate label totals 计算期望值，不是随机模拟或完成 verifier；
+  - observed model condition：Qwen E0 no-tool/no-executable-evidence behavior；
   - completed deterministic baseline：rule-only visible-tool；
   - completed E6 model conditions：Qwen E6-full 和 DeepSeek E6-full；
   - 不可写成已完成：majority-vote across models、单独 E0/no-tool deterministic
-    verifier。
+    verifier。majority-vote 需要 candidate-level raw-output-free decision
+    export/audit；当前 tracked summaries 不足以计算。
 - 已完成 v0.3 正文集成：
   `docs/paper/ccfc_manuscript_rewrite_v0_1.md` 现在包含 citation-keyed related
   work、baseline policy boundary、Phase A Wilson 95% CI summary、

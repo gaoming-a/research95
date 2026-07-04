@@ -2,6 +2,67 @@
 
 最后更新：2026-07-04
 
+## 0.31 2026-07-04 No-API feasibility audit for majority and E0/no-tool baselines
+
+本轮目标是回答用户关于“补 majority-vote baseline 和 E0/no-tool deterministic
+baseline 是否需要调用大模型”的后续问题，并把判断做成可复现审计，而不是口头结论。
+
+执行边界：
+
+- 不调用 API；
+- 不读取 `outputs/**/raw_responses.jsonl`；
+- 不读取 rendered prompt text 或 patch diff；
+- 只检查 tracked JSON summaries / audits 是否包含 candidate-level aligned
+  decisions；
+- 如果 tracked summaries 没有逐 candidate 决策，不得为了算 majority 直接回读 raw
+  responses；
+- 可以把 Qwen E0 作为已完成 observed model condition 报告，但不得写成
+  deterministic no-tool verifier。
+
+验收条件：
+
+- `scripts/audit_ccfc_baseline_feasibility.py` 明确记录 majority-vote 是否能从
+  tracked raw-output-free summaries 离线计算；
+- 审计明确区分 Qwen E0 observed model condition、always-* no-evidence
+  reference policies、以及未实现的 separate E0/no-tool deterministic verifier；
+- 生成并检查 `data/reviews/ccfc_baseline_feasibility_audit_v0_1.json` 和
+  `docs/paper/ccfc_baseline_feasibility_audit_v0_1.md`；
+- 同步 README/INDEX/current project state/engineering notes；
+- 提交本轮相关文件并尝试 GitHub push；若 GitHub 仍失败，记录 ahead 状态。
+
+执行结果：
+
+- 更新 `scripts/audit_ccfc_baseline_feasibility.py`：
+  - 检查五个 tracked model full summaries 是否存在；
+  - 确认这些 summaries 只有 aggregate per-level decision counts，没有
+    candidate-level aligned decision records；
+  - 明确 majority-vote across models 在 no-API/no-raw-response 边界下仍不可计算；
+  - 将 `qwen_e0_observed_model_condition` 加入 baseline readiness 表，作为已完成
+    observed model condition，而不是 deterministic baseline；
+  - 将 `separate_no_tool_e0_deterministic_verifier` 标为
+    `not_implemented_as_separate_verifier`。
+- 重新生成：
+  - `data/reviews/ccfc_baseline_feasibility_audit_v0_1.json`；
+  - `docs/paper/ccfc_baseline_feasibility_audit_v0_1.md`。
+
+验收结果：
+
+- `python -m py_compile scripts\audit_ccfc_baseline_feasibility.py`：通过；
+- `python scripts\audit_ccfc_baseline_feasibility.py`：通过；
+- `python scripts\audit_ccfc_baseline_feasibility.py --check`：通过；
+- `python scripts\write_final_manuscript_claim_map.py --check`：通过；
+- `python scripts\audit_ccfc_manuscript_v0_3.py --check`：通过。
+
+当前判断：
+
+- 补 majority-vote 不需要重新调用大模型，但当前 tracked raw-output-free summaries
+  不含逐 candidate 对齐决策，因此不能在不回读 raw responses 的边界下诚实计算；
+- 补单独 E0/no-tool deterministic verifier 也不需要大模型，但当前没有实现该
+  deterministic policy，只能报告 Qwen E0 observed model condition 和 always-* no-evidence
+  references；
+- 如果后续一定要 majority-vote，应先生成 candidate-level raw-output-free decision
+  export/audit，而不是直接读取 raw responses 或重新调用模型。
+
 ## 0.30 2026-07-04 Remaining five-step completion: random baseline, tool-contestation CI, structure compression
 
 本轮目标是补齐用户列出的五步中剩余缺口：random policy baseline、tool-contestation

@@ -4518,3 +4518,18 @@ This file starts fresh for the patch-verification project.
   citation support, aggregate-feasible baselines, uncertainty presentation,
   structure compression, and reviewer-aware audit. It still does not complete
   majority-vote or a separate E0/no-tool deterministic verifier.
+
+## 2026-07-04 Majority and E0/no-tool feasibility boundary
+
+- Majority-vote is a data-shape problem before it is an experiment problem. It
+  does not require a new model call if candidate-level aligned decisions already
+  exist, but aggregate per-level summaries are insufficient.
+- Do not compute majority-vote by reading raw responses under a no-raw-output
+  audit boundary. First create a tracked raw-output-free candidate decision
+  export/audit, then compute majority from that artifact.
+- Qwen E0 is an observed model condition, not a deterministic no-tool baseline.
+  It can show what the model did with minimal evidence, but it must not be used
+  as a non-LLM verifier result.
+- Always-escalate/always-reject/always-accept can serve as no-evidence
+  reference policies from label totals. They remain policy references, not
+  implemented deterministic verifiers.

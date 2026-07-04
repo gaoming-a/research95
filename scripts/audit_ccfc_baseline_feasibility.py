@@ -19,6 +19,28 @@ NO_VERDICT_COMPARISON = (
 PHASE_A_ANALYSIS = (
     REPO_ROOT / "data" / "reviews" / "evp8_phase_a_paper_ready_analysis.json"
 )
+TRACKED_MODEL_SUMMARIES = {
+    "deepseek/deepseek-v4-pro": REPO_ROOT
+    / "data"
+    / "reviews"
+    / "evp8_deepseek_deepseek-v4-pro_full_summary.json",
+    "qwen/qwen3.7-max": REPO_ROOT
+    / "data"
+    / "reviews"
+    / "evp8_qwen_qwen3.7-max_full_summary.json",
+    "moonshotai/kimi-k2.6": REPO_ROOT
+    / "data"
+    / "reviews"
+    / "evp8_moonshotai_kimi-k2.6_full_summary.json",
+    "mistralai/devstral-2512": REPO_ROOT
+    / "data"
+    / "reviews"
+    / "evp8_mistralai_devstral-2512_full_summary.json",
+    "google/gemini-2.5-flash": REPO_ROOT
+    / "data"
+    / "reviews"
+    / "evp8_google_gemini-2.5-flash_full_summary.json",
+}
 DEFAULT_JSON_OUT = (
     REPO_ROOT / "data" / "reviews" / "ccfc_baseline_feasibility_audit_v0_1.json"
 )
@@ -128,10 +150,59 @@ def all_checks_pass(checks: list[dict[str, Any]]) -> bool:
     return all(bool(check.get("passed")) for check in checks)
 
 
+def has_candidate_decision_records(summary: dict[str, Any]) -> bool:
+    for key in ("records", "candidate_records", "per_candidate", "decisions"):
+        value = summary.get(key)
+        if isinstance(value, list) and value:
+            first = value[0]
+            if isinstance(first, dict) and any(
+                candidate_key in first
+                for candidate_key in (
+                    "candidate_id",
+                    "anonymous_candidate_id",
+                    "evp8_candidate_id",
+                )
+            ):
+                return "decision" in first or "review" in first
+        if isinstance(value, dict) and value:
+            return True
+    return False
+
+
+def tracked_summary_matrix_audit() -> dict[str, Any]:
+    summaries: dict[str, Any] = {}
+    for model_id, path in TRACKED_MODEL_SUMMARIES.items():
+        exists = path.exists()
+        summary = read_json(path) if exists else {}
+        summaries[model_id] = {
+            "path": str(path.relative_to(REPO_ROOT)),
+            "exists": exists,
+            "review_count": summary.get("review_count"),
+            "decision_counts_by_evidence_level_present": isinstance(
+                summary.get("decision_counts_by_evidence_level"), dict
+            ),
+            "candidate_level_decisions_present": has_candidate_decision_records(
+                summary
+            ),
+            "raw_response_text_stored_in_tracked_summary": summary.get(
+                "raw_response_text_stored_in_tracked_summary"
+            ),
+            "prompt_text_stored": summary.get("prompt_text_stored"),
+        }
+    return {
+        "purpose": "check whether majority-vote can be computed without API calls or raw response reads.",
+        "candidate_level_decision_summaries_available": any(
+            item["candidate_level_decisions_present"] for item in summaries.values()
+        ),
+        "summaries": summaries,
+    }
+
+
 def build_audit() -> dict[str, Any]:
     qwen = read_json(QWEN_LABEL_SUMMARY)
     no_verdict = read_json(NO_VERDICT_COMPARISON)
     phase_a = read_json(PHASE_A_ANALYSIS)
+    summary_matrix = tracked_summary_matrix_audit()
 
     label_distribution = qwen["label_distribution"]
     correct_total = int(label_distribution["correct_count"])
@@ -146,12 +217,14 @@ def build_audit() -> dict[str, Any]:
     qwen_e6 = no_verdict["per_model"]["qwen/qwen3.7-max"]["conditions"]["E6-full"][
         "metrics"
     ]
+    qwen_e0 = qwen["per_evidence_level"]["E0"]
     deepseek_e6 = no_verdict["per_model"]["deepseek/deepseek-v4-pro"]["conditions"][
         "E6-full"
     ]["metrics"]
 
     completed_or_calculable = {
         **reference_baselines,
+        "qwen_e0_observed_model_condition": qwen_e0,
         "rule_only_visible_tool": rule_only,
         "qwen_e6_full": qwen_e6,
         "deepseek_e6_full": deepseek_e6,
@@ -183,6 +256,12 @@ def build_audit() -> dict[str, Any]:
             "source": str(NO_VERDICT_COMPARISON.relative_to(REPO_ROOT)),
             "paper_role": "main deterministic baseline for E6 full/no-verdict comparison.",
         },
+        "qwen_e0_observed_model_condition": {
+            "status": "completed_existing_tracked_model_condition",
+            "source": str(QWEN_LABEL_SUMMARY.relative_to(REPO_ROOT)),
+            "reason": "Uses tracked Qwen v0.3 label-conditioned metrics at E0. This is an observed model condition, not a deterministic baseline.",
+            "paper_role": "no-tool/no-executable-evidence model condition for RQ1, not a deterministic verifier.",
+        },
         "qwen_e6_full": {
             "status": "completed_existing_tracked_result",
             "source": str(NO_VERDICT_COMPARISON.relative_to(REPO_ROOT)),
@@ -194,14 +273,14 @@ def build_audit() -> dict[str, Any]:
             "paper_role": "secondary model condition in the E6 ablation package.",
         },
         "majority_vote_across_models": {
-            "status": "not_feasible_from_current_aggregate_boundary",
-            "reason": "Requires candidate-level aligned decisions across models and hidden labels. The current paper-facing boundary for this audit uses aggregate summaries only.",
-            "paper_role": "do not report as completed unless a separate candidate-level, raw-output-free audit is built.",
+            "status": "not_feasible_from_tracked_raw_output_free_summaries",
+            "reason": "Requires candidate-level aligned decisions across models and hidden labels. The tracked model summaries contain per-level decision counts, but not candidate-level decision records. Raw response paths exist but are not read by this audit.",
+            "paper_role": "do not report as completed unless a separate candidate-level, raw-output-free decision export/audit is built.",
         },
         "separate_no_tool_e0_deterministic_verifier": {
-            "status": "partial_only",
-            "reason": "Qwen E0 behavior exists, and always-escalate is calculable as a no-evidence conservative reference. A separate non-LLM E0 verifier policy has not been implemented as a tracked result.",
-            "paper_role": "report Qwen E0 and always-escalate separately; do not call this a completed deterministic E0 verifier.",
+            "status": "not_implemented_as_separate_verifier",
+            "reason": "Qwen E0 behavior exists, and always-escalate/always-reject/always-accept are calculable no-evidence references. A separate non-LLM E0 verifier policy has not been implemented as a tracked result.",
+            "paper_role": "report Qwen E0 and deterministic references separately; do not call either a completed deterministic E0 verifier.",
         },
     }
 
@@ -229,6 +308,23 @@ def build_audit() -> dict[str, Any]:
         {
             "check": "phase_a_checks_pass",
             "passed": all_checks_pass(phase_a.get("checks", [])),
+        },
+        {
+            "check": "tracked_model_summaries_exist",
+            "passed": all(
+                item["exists"] for item in summary_matrix["summaries"].values()
+            ),
+            "detail": {
+                key: item["exists"]
+                for key, item in summary_matrix["summaries"].items()
+            },
+        },
+        {
+            "check": "majority_candidate_level_inputs_absent_from_tracked_summaries",
+            "passed": not summary_matrix[
+                "candidate_level_decision_summaries_available"
+            ],
+            "detail": "tracked summaries expose aggregate per-level counts, not candidate-level aligned decisions",
         },
         {
             "check": "rule_only_record_count_matches",
@@ -265,6 +361,10 @@ def build_audit() -> dict[str, Any]:
                 str(QWEN_LABEL_SUMMARY.relative_to(REPO_ROOT)),
                 str(NO_VERDICT_COMPARISON.relative_to(REPO_ROOT)),
                 str(PHASE_A_ANALYSIS.relative_to(REPO_ROOT)),
+                *[
+                    str(path.relative_to(REPO_ROOT))
+                    for path in TRACKED_MODEL_SUMMARIES.values()
+                ],
             ],
         },
         "cohort_totals": {
@@ -273,6 +373,7 @@ def build_audit() -> dict[str, Any]:
             "incorrect_total": incorrect_total,
         },
         "feasibility": feasibility,
+        "tracked_summary_matrix_audit": summary_matrix,
         "completed_or_calculable_metrics": completed_or_calculable,
         "uncertainty_available": {
             key: phase_a["confidence_intervals"].get(key)
@@ -286,11 +387,14 @@ def build_audit() -> dict[str, Any]:
             "allowed": [
                 "Report always-escalate/always-reject/always-accept as deterministic reference policies calculated from label totals.",
                 "Report uniform-random three-way only as an expected reference policy, not as a completed stochastic baseline run.",
+                "Report Qwen E0 as an observed no-tool/no-executable-evidence model condition.",
                 "Report rule-only visible-tool as the completed deterministic E6 baseline.",
                 "Use Phase A confidence intervals for rule-only and E6 model conditions.",
             ],
             "forbidden": [
                 "Do not claim a completed majority-vote baseline from aggregate-only files.",
+                "Do not compute majority-vote by reading raw responses under this audit boundary.",
+                "Do not call Qwen E0 a deterministic no-tool verifier.",
                 "Do not call always-escalate a successful verifier.",
                 "Do not present the uniform-random expected reference as a real randomized experiment.",
                 "Do not claim LLM superiority over deterministic baselines as the paper's main result.",
@@ -307,6 +411,7 @@ def render_md(audit: dict[str, Any]) -> str:
         "always_reject",
         "always_accept",
         "uniform_random_three_way_expected",
+        "qwen_e0_observed_model_condition",
         "rule_only_visible_tool",
         "qwen_e6_full",
         "deepseek_e6_full",
@@ -356,6 +461,27 @@ def render_md(audit: dict[str, Any]) -> str:
             "| baseline or analysis | feasibility | paper role | reason/source |",
             "|---|---|---|---|",
             *feasibility_rows,
+            "",
+            "## Candidate-Level Majority Input Audit",
+            "",
+            f"- candidate-level aligned decisions available in tracked summaries: `{audit['tracked_summary_matrix_audit']['candidate_level_decision_summaries_available']}`",
+            "- conclusion: majority-vote remains unavailable under the no-API, no-raw-response audit boundary.",
+            "",
+            "| model | tracked summary | aggregate counts present | candidate-level decisions present | raw text stored | prompt text stored |",
+            "|---|---|---:|---:|---:|---:|",
+            *[
+                "| {model} | `{path}` | {aggregate} | {candidate} | {raw_text} | {prompt_text} |".format(
+                    model=model,
+                    path=item["path"],
+                    aggregate=item["decision_counts_by_evidence_level_present"],
+                    candidate=item["candidate_level_decisions_present"],
+                    raw_text=item["raw_response_text_stored_in_tracked_summary"],
+                    prompt_text=item["prompt_text_stored"],
+                )
+                for model, item in audit["tracked_summary_matrix_audit"][
+                    "summaries"
+                ].items()
+            ],
             "",
             "## Manuscript Boundary",
             "",

@@ -75,7 +75,12 @@ visible-tool; always-escalate, always-reject, and always-accept are reference
 policies only. Uniform random three-way is now included only as an expected
 reference policy over aggregate label totals, not as a stochastic experiment or
 completed verifier. Majority vote and a separate E0/no-tool deterministic
-verifier must not be described as completed results.
+verifier must not be described as completed results. The latest feasibility
+audit confirms why: the tracked model summaries expose aggregate per-level
+decision counts but not candidate-level aligned decisions, so majority-vote
+cannot be computed under the current no-raw-response boundary. Qwen E0 can be
+reported only as an observed no-tool/no-executable-evidence model condition,
+not as a deterministic verifier.
 
 The current CCF-C manuscript is now the v0.3 rewrite at
 `docs/paper/ccfc_manuscript_rewrite_v0_1.md`. It integrates citation keys,

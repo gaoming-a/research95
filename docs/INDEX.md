@@ -87,7 +87,11 @@
   the v0.3 manuscript integration and reviewer-style audit. The 2026-07-04
   0.30 entry records the remaining five-step completion: random expected
   reference policy, tool-contestation opportunity-set CIs, structure
-  compression, and rerun reviewer-aware audit.
+  compression, and rerun reviewer-aware audit. The 2026-07-04 0.31 entry
+  records the no-API feasibility audit for majority-vote and E0/no-tool
+  baselines: tracked summaries do not contain candidate-level aligned decisions,
+  Qwen E0 is only an observed model condition, and the separate deterministic
+  E0/no-tool verifier remains unimplemented.
 - `../scripts/write_evp8_realistic_hardneg_uplift_packet.py`: no-API boundary
   packet writer for the realistic hard-negative uplift route. It reads the
   tracked combined generation gate only and writes the current missing
@@ -159,9 +163,11 @@
   `paper/ccfc_baseline_feasibility_audit_v0_1.md`: baseline feasibility audit.
   Status is `passed`; always-escalate/always-reject/always-accept are
   reference policies, uniform random three-way is an expected reference policy,
+  Qwen E0 is an observed no-tool/no-executable-evidence model condition,
   rule-only visible-tool is the completed deterministic baseline, and
-  majority-vote / separate E0 no-tool verifier are not completed under the
-  current aggregate-only boundary.
+  majority-vote / separate E0 no-tool verifier are not completed. The audit now
+  checks tracked model summaries directly and records that majority-vote lacks
+  candidate-level aligned decision inputs under the no-raw-response boundary.
 - `../scripts/audit_ccfc_manuscript_v0_3.py`: reviewer-style paper audit for
   the current CCF-C Markdown manuscript. It checks citation-key insertion,
   reference support records, baseline policy boundary, Wilson CI summary,
