@@ -9,12 +9,19 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+SRC_ROOT = REPO_ROOT / "src"
+if str(SRC_ROOT) not in sys.path:
+    sys.path.insert(0, str(SRC_ROOT))
+
+from cross_review.parsing import extract_json_object  # noqa: E402
+
 DEFAULT_CANDIDATE_SET = REPO_ROOT / "data" / "protocols" / "evp8_candidate_set_v0_1.json"
 DEFAULT_LABELS = REPO_ROOT / "data" / "patches" / "evp7_candidates.jsonl"
 DEFAULT_RAW_RESPONSES = (
@@ -129,7 +136,7 @@ def parse_decision(record: dict[str, Any]) -> str:
     raw_response_text = record.get("raw_response_text")
     if not isinstance(raw_response_text, str) or not raw_response_text.strip():
         raise ValueError("raw_response_text is missing or empty")
-    parsed = json.loads(raw_response_text)
+    parsed = extract_json_object(raw_response_text)
     if not isinstance(parsed, dict):
         raise ValueError("raw_response_text must parse to a JSON object")
     decision = parsed.get("decision")
@@ -353,7 +360,7 @@ def build_summary(
         "method": {
             "correct_label": CORRECT_LABEL,
             "incorrect_definition": "any selected candidate whose label_with_p2p_broad is not the correct label",
-            "decision_parse_source": "raw_response_text final JSON content only",
+            "decision_parse_source": "raw_response_text extracted JSON object",
             "reasoning_content_used": False,
             "api_call_attempted": False,
             "raw_response_content_stored": False,

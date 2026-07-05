@@ -21,6 +21,8 @@ NO_VERDICT_COMPARISON = REPO_ROOT / "data" / "reviews" / "evp8_e6_no_verdict_abl
 HARD_TOOL_CONTESTATION = REPO_ROOT / "data" / "protocols" / "evp8_hard_tool_contestation_result_audit_v0_1.json"
 REALISTIC_GATE = REPO_ROOT / "data" / "protocols" / "evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json"
 QWEN_LABEL_CONDITIONED = REPO_ROOT / "data" / "reviews" / "evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json"
+DEEPSEEK_LABEL_CONDITIONED = REPO_ROOT / "data" / "reviews" / "evp8_deepseek_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json"
+GEMINI_LABEL_CONDITIONED = REPO_ROOT / "data" / "reviews" / "evp8_gemini_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json"
 PHASE_A_ANALYSIS = REPO_ROOT / "data" / "reviews" / "evp8_phase_a_paper_ready_analysis.json"
 EVP8_PROTOCOL_V03 = REPO_ROOT / "data" / "protocols" / "evp8_protocol_v0_3_qwen_first.json"
 BASELINE_FEASIBILITY = REPO_ROOT / "data" / "reviews" / "ccfc_baseline_feasibility_audit_v0_1.json"
@@ -351,6 +353,28 @@ def qwen_label_metric_rows(label_conditioned: dict[str, Any]) -> list[dict[str, 
     return rows
 
 
+def repaired_model_e6_rows(*summaries: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for summary in summaries:
+        metrics = summary["per_evidence_level"]["E6"]
+        confusion = metrics["confusion_counts"]
+        rows.append(
+            {
+                "model": summary["model_id"],
+                "accept": (metrics.get("decision_counts") or {}).get("accept", 0),
+                "reject": (metrics.get("decision_counts") or {}).get("reject", 0),
+                "escalate": (metrics.get("decision_counts") or {}).get("escalate", 0),
+                "correct_accept": confusion.get("true_accept", 0),
+                "false_accept": confusion.get("false_accept", 0),
+                "accepted_precision": metrics.get("accepted_precision"),
+                "correct_recall": metrics.get("correct_recall"),
+                "false_accept_rate": metrics.get("false_accept_rate"),
+                "escalation_rate": metrics.get("escalation_rate"),
+            }
+        )
+    return rows
+
+
 def e6_ablation_metric_rows(no_verdict: dict[str, Any]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     rule_metrics = (no_verdict.get("rule_only") or {}).get("metrics") or {}
@@ -368,6 +392,8 @@ def build_claim_map() -> dict[str, Any]:
     hard = read_json(HARD_TOOL_CONTESTATION)
     realistic = read_json(REALISTIC_GATE)
     qwen_label = read_json(QWEN_LABEL_CONDITIONED)
+    deepseek_label = read_json(DEEPSEEK_LABEL_CONDITIONED)
+    gemini_label = read_json(GEMINI_LABEL_CONDITIONED)
     phase_a = read_json(PHASE_A_ANALYSIS)
     protocol_v03 = read_json(EVP8_PROTOCOL_V03)
     baseline_feasibility = read_json(BASELINE_FEASIBILITY)
@@ -380,7 +406,7 @@ def build_claim_map() -> dict[str, Any]:
     manuscript_argument = (
         "In candidate patch verification, we show that a hidden-evaluator evidence-visibility "
         "protocol can measure evidence-conditioned LLM merge-gate behavior, supported by the "
-        "accept-aware Qwen v0.3 label-conditioned analysis, E6 rule-only/no-verdict ablations, "
+        "accept-aware Qwen/DeepSeek/Gemini v0.3 label-conditioned analyses, E6 rule-only/no-verdict ablations, "
         "tool-contestation audits, and a realistic source-acquisition gate audit."
     )
 
@@ -439,12 +465,12 @@ def build_claim_map() -> dict[str, Any]:
         },
         {
             "id": "C2",
-            "claim": "In the Qwen v0.3 accept-aware run, visible executable and tool evidence changed correct-patch acceptance while introducing bounded false-accept risk.",
-            "status": "supported_qwen_only",
-            "evidence": ["v0_2_accept_aware_synthesis", "v0_3_qwen_label_conditioned_summary"],
+            "claim": "In three repaired v0.3 accept-aware runs, visible executable and tool evidence changed correct-patch acceptance while retaining bounded false-accept risk.",
+            "status": "supported_three_model",
+            "evidence": ["v0_3_qwen_label_conditioned_summary", "v0_3_deepseek_label_conditioned_summary", "v0_3_gemini_label_conditioned_summary"],
             "paper_location": "Results: Accept-aware label-conditioned behavior",
-            "allowed_wording": "For Qwen v0.3 on the frozen 98-candidate packet set, E3-E6 shifted many correct patches from non-accept to accept, with 3-4 false accepts depending on level.",
-            "boundary": "Qwen-only v0.3 descriptive result; not a five-model effectiveness claim or final evidence-level ranking.",
+            "allowed_wording": "For Qwen, DeepSeek, and Gemini v0.3 on the frozen 98-candidate packet set, visible executable/tool evidence shifted many correct patches from non-accept to accept while leaving 4-5 E6 false accepts.",
+            "boundary": "Three-model v0.3 descriptive result; not broad-model superiority or autonomous correctness verification.",
         },
         {
             "id": "C3",
@@ -513,6 +539,8 @@ def build_claim_map() -> dict[str, Any]:
         check("hard_tool_contestation_audit_passed", hard.get("audit_status") == "passed", hard.get("audit_status")),
         check("realistic_gate_not_verifier_ready", hard_gate.get("passed") is False, hard_gate),
         check("qwen_label_conditioned_checks_passed", all(item.get("passed") for item in qwen_label.get("checks", [])), len(qwen_label.get("checks", []))),
+        check("deepseek_label_conditioned_checks_passed", all(item.get("passed") for item in deepseek_label.get("checks", [])), len(deepseek_label.get("checks", []))),
+        check("gemini_label_conditioned_checks_passed", all(item.get("passed") for item in gemini_label.get("checks", [])), len(gemini_label.get("checks", []))),
         check("phase_a_analysis_checks_passed", all(item.get("passed") for item in phase_a.get("checks", [])), len(phase_a.get("checks", []))),
         check("baseline_feasibility_audit_passed", baseline_feasibility.get("status") == "passed", baseline_feasibility.get("status")),
         check("citation_support_bank_present", CITATION_SUPPORT_BANK.exists(), str(CITATION_SUPPORT_BANK.relative_to(REPO_ROOT))),
@@ -537,6 +565,8 @@ def build_claim_map() -> dict[str, Any]:
             "hard_tool_contestation": "data/protocols/evp8_hard_tool_contestation_result_audit_v0_1.json",
             "realistic_gate": "data/protocols/evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json",
             "qwen_label_conditioned": "data/reviews/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json",
+            "deepseek_label_conditioned": "data/reviews/evp8_deepseek_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json",
+            "gemini_label_conditioned": "data/reviews/evp8_gemini_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json",
             "phase_a_analysis": "data/reviews/evp8_phase_a_paper_ready_analysis.json",
             "evp8_protocol_v0_3": "data/protocols/evp8_protocol_v0_3_qwen_first.json",
             "baseline_feasibility": "data/reviews/ccfc_baseline_feasibility_audit_v0_1.json",
@@ -551,6 +581,7 @@ def build_claim_map() -> dict[str, Any]:
         "per_model_level_counts": compact_level_counts(five),
         "evidence_ladder": evidence_ladder_rows(protocol_v03),
         "qwen_label_conditioned_metrics": qwen_label_metric_rows(qwen_label),
+        "repaired_model_e6_metrics": repaired_model_e6_rows(qwen_label, deepseek_label, gemini_label),
         "e6_ablation_metrics": e6_ablation_metric_rows(no_verdict),
         "citation_support": citation_support_rows(),
         "reference_records": reference_records(),
@@ -760,6 +791,17 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
             f"{percent(row['accepted_precision'])} | {percent(row['correct_recall'])} | "
             f"{percent(row['false_accept_rate'])} | {percent(row['escalation_rate'])} |"
         )
+    repaired_e6_table_lines = [
+        "| model | accept | reject | escalate | correct accept | false accept | accepted precision | correct recall | false accept rate | escalation rate |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for row in claim_map["repaired_model_e6_metrics"]:
+        repaired_e6_table_lines.append(
+            f"| {row['model']} | {row['accept']} | {row['reject']} | {row['escalate']} | "
+            f"{row['correct_accept']} | {row['false_accept']} | {percent(row['accepted_precision'])} | "
+            f"{percent(row['correct_recall'])} | {percent(row['false_accept_rate'])} | "
+            f"{percent(row['escalation_rate'])} |"
+        )
     e6_table_lines = [
         "| condition | accept | reject | escalate | accepted precision | correct recall | false accept rate | escalation rate |",
         "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
@@ -807,7 +849,7 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "## Abstract",
         "",
-        "Large language models (LLMs) are increasingly used to inspect software patches, but a merge decision is only meaningful relative to the evidence available at review time. We formulate candidate patch verification as an evidence-conditioned merge-gate task: given a candidate patch and model-visible evidence, a verifier must accept, reject, or escalate while evaluator-only correctness labels remain hidden until post-decision analysis. We introduce the Evidence-Visibility Protocol (EVP-8), a frozen 98-candidate packet set with seven cumulative evidence levels and tracked hidden-evaluator joins. In the repaired Qwen v0.3 run, correct recall is 0.00% at E0-E2, 80.95% at E3, 85.71% at E4-E5, and 95.24% at E6, while E6 accepted precision is 83.33% with 4 false accepts among 77 non-correct candidates. E6 rule-only and no-verdict ablations further show that verdict-like tool summaries can anchor behavior, and tool-contestation shifts known false accepts mainly to escalation, not strict rejection. These results support a bounded methodological contribution: evidence visibility should be controlled and reported when evaluating LLM patch verifiers. They do not establish reliable autonomous patch correctness verification.",
+        "Large language models (LLMs) are increasingly used to inspect software patches, but a merge decision is only meaningful relative to the evidence available at review time. We formulate candidate patch verification as an evidence-conditioned merge-gate task: given a candidate patch and model-visible evidence, a verifier must accept, reject, or escalate while evaluator-only correctness labels remain hidden until post-decision analysis. We introduce the Evidence-Visibility Protocol (EVP-8), a frozen 98-candidate packet set with seven cumulative evidence levels and tracked hidden-evaluator joins. In three repaired v0.3 runs, Qwen and Gemini reached 95.24% E6 correct recall while DeepSeek reached 80.95%; accepted precision was 83.33% for Qwen, 80.95% for DeepSeek, and 80.00% for Gemini, with 4-5 false accepts among 77 non-correct candidates. E6 rule-only and no-verdict ablations further show that verdict-like tool summaries can anchor behavior, and tool-contestation shifts known false accepts mainly to escalation, not strict rejection. These results support a bounded methodological contribution: evidence visibility should be controlled and reported when evaluating LLM patch verifiers. They do not establish reliable autonomous patch correctness verification.",
         "",
         "## 1. Introduction",
         "",
@@ -845,9 +887,9 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "## 4. Methods: Data, Metrics, and Validity Gates",
         "",
-        "The study is organized around four research questions. RQ1 asks whether repaired accept-aware evidence changes label-conditioned Qwen decisions across E0-E6. RQ2 asks whether verdict-like deterministic tool summaries anchor E6 behavior. RQ3 asks whether explicit tool-contestation can make models challenge visible-test-only accept premises. RQ4 asks whether a fresh realistic hard-negative source-acquisition branch is ready to support a main verifier experiment.",
+        "The study is organized around four research questions. RQ1 asks whether repaired accept-aware evidence changes label-conditioned Qwen, DeepSeek, and Gemini decisions across E0-E6. RQ2 asks whether verdict-like deterministic tool summaries anchor E6 behavior. RQ3 asks whether explicit tool-contestation can make models challenge visible-test-only accept premises. RQ4 asks whether a fresh realistic hard-negative source-acquisition branch is ready to support a main verifier experiment.",
         "",
-        "The evaluated evidence sources match those questions. First, the accept-aware Qwen v0.3 analysis computes label-conditioned accepted precision, correct recall, false accept rate, false reject rate, and escalation rate after post-execution label join. Second, E6 full, rule-only, and E6 no-verdict comparisons test the effect of verdict-like tool fields. Third, EVP-8-HARD tool-contestation evaluates known false-accept opportunities. Fourth, the realistic hard-negative branch is treated as a source-acquisition gate rather than a main verifier result because it failed the predeclared three-project readiness threshold.",
+        "The evaluated evidence sources match those questions. First, the accept-aware Qwen, DeepSeek, and Gemini v0.3 analyses compute label-conditioned accepted precision, correct recall, false accept rate, false reject rate, and escalation rate after post-execution label join. Second, E6 full, rule-only, and E6 no-verdict comparisons test the effect of verdict-like tool fields. Third, EVP-8-HARD tool-contestation evaluates known false-accept opportunities. Fourth, the realistic hard-negative branch is treated as a source-acquisition gate rather than a main verifier result because it failed the predeclared three-project readiness threshold.",
         "",
         "All paper-facing claims are constrained by a final setting-validity audit. That audit verifies run and parse coverage, raw-output-free summaries, post-execution label joins, prompt-boundary checks, and the non-overclaiming of the realistic hard-negative branch. It passed only with bounded claims: the results are usable as real evidence for evidence-conditioned risk behavior, not as proof of autonomous correctness verification. Reference policies calculated from aggregate labels are therefore reported only as decision-space boundaries, while candidate-level baselines that require aligned decisions, such as majority voting, are not reported as completed results.",
         "",
@@ -857,9 +899,15 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "## 5. Results",
         "",
-        "### 5.1 RQ1: Accept-aware evidence changed Qwen label-conditioned behavior",
+        "### 5.1 RQ1: Accept-aware evidence changed three repaired model policies",
         "",
-        "The repaired Qwen v0.3 accept-aware run provides a direct label-conditioned result on the frozen 98-candidate packet set. Hidden labels were joined only after execution, and the matrix had complete candidate-level coverage with no missing or duplicate cells.",
+        "The repaired Qwen, DeepSeek, and Gemini v0.3 accept-aware runs provide direct label-conditioned results on the frozen 98-candidate packet set. Hidden labels were joined only after execution, and each matrix had complete candidate-level coverage with no missing or duplicate cells.",
+        "",
+        *repaired_e6_table_lines,
+        "",
+        "The three-model E6 table removes the earlier single-model weakness but does not remove the main risk boundary. Qwen and Gemini reached 95.24% correct recall, while DeepSeek was more conservative at 80.95%. All three retained false accepts: Qwen and DeepSeek accepted four non-correct candidates, and Gemini accepted five. The supported claim is therefore evidence-conditioned risk behavior, not reliable autonomous correctness verification or stable superiority over rule-only evidence.",
+        "",
+        "Qwen level-conditioned metrics remain shown below as the detailed evidence-visibility curve used by the current figure set:",
         "",
         *qwen_table_lines,
         "",
@@ -867,7 +915,7 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         f"**Figure 2. {fig2['title']}.** {fig2['conclusion']} Panel a reports Qwen v0.3 correct recall and false accept rate across E0--E6; panel b compares rule-only, E6-full, and E6-no-verdict conditions; panel c summarizes the current result-chain boundary. Source assets: `docs/figures/ccfc/ccfc_fig2_decision_patterns.pdf`, `.svg`, and `.png`.",
         "",
-        "This table changes the paper's main interpretation. At E0-E2, Qwen accepted no correct patches, so the setting mainly measured caution. At E3-E6, executable and tool evidence enabled many correct-patch accepts: correct recall rose to 80.95% at E3 and 95.24% at E6. The improvement was not free. E6 accepted 20 of 21 correct patches but also accepted 4 of 77 non-correct patches, giving 83.33% accepted precision and 5.19% false accept rate. The supported claim is therefore not that more evidence monotonically proves correctness; it is that visible evidence can unlock acceptance behavior while exposing a measurable false-accept tradeoff.",
+        "The detailed Qwen table illustrates the evidence-visibility curve: at E0-E2, Qwen accepted no correct patches, so the setting mainly measured caution. At E3-E6, executable and tool evidence enabled many correct-patch accepts. The three-model summary shows the same higher-level pattern with model-specific policy differences. The improvement was not free: E6 false accepts remained in all three repaired runs. The supported claim is therefore not that more evidence monotonically proves correctness; it is that visible evidence can unlock acceptance behavior while exposing a measurable false-accept tradeoff.",
         "",
         "### 5.2 RQ2: Verdict-like evidence changed policy behavior",
         "",
@@ -915,11 +963,11 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "Construct validity is limited by the accept/reject/escalate decision space and by the evaluator label boundary. The oracle problem means that hidden labels should be treated as post-decision evaluation evidence, not as model-visible truth [barr_tse_2015_oracle_problem]. Escalation is useful as a human-review routing decision, but it is not strict correction. The manuscript therefore separates strict correction from safe handling.",
         "",
-        "External validity is bounded by the EVP-8 candidate set, the EVP-8-HARD controlled cohort, and the selected models. The realistic hard-negative branch provides useful source-acquisition evidence but did not pass the three-project verifier-readiness gate. We therefore report it as a negative boundary rather than as main verifier evidence.",
+        "External validity is bounded by the EVP-8 candidate set, the EVP-8-HARD controlled cohort, and the selected models. The repaired main result now spans Qwen, DeepSeek, and Gemini, but it is still not a broad-model result. The realistic hard-negative branch provides useful source-acquisition evidence but did not pass the three-project verifier-readiness gate. We therefore report it as a negative boundary rather than as main verifier evidence.",
         "",
         "## 8. Conclusion",
         "",
-        "This study introduces EVP-8 as a hidden-evaluator protocol for measuring evidence-conditioned LLM patch-verification behavior. The supported results come from repaired Qwen label-conditioned analysis, E6 rule-only/no-verdict ablations, and tool-contestation audits. The practical value is risk triage under explicit evidence boundaries, not reliable autonomous patch correctness verification. A stable CCF-C manuscript should therefore present the work as a bounded methods-and-measurement contribution with transparent metrics, baselines, excluded settings, and threat boundaries.",
+        "This study introduces EVP-8 as a hidden-evaluator protocol for measuring evidence-conditioned LLM patch-verification behavior. The supported results come from repaired Qwen, DeepSeek, and Gemini label-conditioned analyses, E6 rule-only/no-verdict ablations, and tool-contestation audits. The practical value is risk triage under explicit evidence boundaries, not reliable autonomous patch correctness verification. A stable CCF-C manuscript should therefore present the work as a bounded methods-and-measurement contribution with transparent metrics, baselines, excluded settings, and threat boundaries.",
         "",
         "## Reference Support Records",
         "",

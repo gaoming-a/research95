@@ -31,9 +31,11 @@
   E6 false-accept aggregate anatomy, and Reference Support Records removal.
   It still requires anonymous IEEEtran, BibTeX, page-budget, figure/table, and
   double-blind conversion before submission. APSEC competitiveness has been
-  improved from single-model to Qwen + DeepSeek two-model repaired v0.3 E0-E6
-  main evidence, but a third repaired main model and raw-output-free
-  false-accept case export remain open. The no-API Luigi
+  improved from single-model to Qwen + DeepSeek + Gemini three-model repaired
+  v0.3 E0-E6 main evidence. The raw-output-free false-accept case export and
+  APSEC IEEEtran/BibTeX/page-budget draft package are now tracked. The
+  remaining formatting risks are final PDF compilation, visual page/layout
+  inspection, double-blind wording, and BibTeX field normalization. The no-API Luigi
   source-acquisition/materialization protocol is
   optional future work, not the current blocker. Historical `origin/main`
   entries retained later in plan logs are audit records only. As of
@@ -114,7 +116,9 @@
   The 2026-07-05 0.35 entry records the user-authorized DeepSeek repaired
   v0.3 E0-E6 main run: strict preflight, smoke/full check-only, smoke API,
   full API, label-conditioned analysis, APSEC two-model rewrite update, and
-  run packet all passed.
+  run packet all passed. The 2026-07-06 0.36 entry supersedes the main-result
+  scope with Gemini as the third repaired model, sanitized false-accept case
+  analysis, and the APSEC IEEEtran/BibTeX/page-budget draft package.
 - `../scripts/write_evp8_realistic_hardneg_uplift_packet.py`: no-API boundary
   packet writer for the realistic hard-negative uplift route. It reads the
   tracked combined generation gate only and writes the current missing
@@ -249,14 +253,66 @@
   escalation rate `4.08%`.
 - `../data/protocols/evp8_deepseek_repaired_v0_3_run_packet.json` and
   `experiments/evp8_deepseek_repaired_v0_3_run_packet.md`: current
-  DeepSeek repaired v0.3 run packet. Status is `passed`; remaining gaps are a
-  third repaired E0-E6 model and sanitized candidate-level false-accept export.
+  DeepSeek repaired v0.3 run packet. Status is `passed`; its historical
+  remaining gaps were a third repaired E0-E6 model and sanitized
+  candidate-level false-accept export, both superseded by the 2026-07-06 Gemini
+  run packet and false-accept case-analysis artifact.
 - `../data/reviews/apsec_false_accept_case_feasibility_v0_1.json` and
   `paper/apsec_false_accept_case_feasibility_v0_1.md`: false-accept
-  case-analysis feasibility audit. Status is
-  `blocked_missing_candidate_level_decision_export`; current tracked summaries
-  support only the aggregate anatomy of 4 E6 false accepts: 3 partial fixes and
-  1 regression patch.
+  case-analysis feasibility audit from before the sanitized export existed.
+  Its historical status is `blocked_missing_candidate_level_decision_export`;
+  it explains why aggregate summaries alone were insufficient. The later
+  `apsec_false_accept_case_analysis_v0_2` artifact supersedes the blockage for
+  raw-output-free case-category reporting.
+- `../configs/evp8_gemini_repaired_v0_3.example.json`: tracked Gemini repaired
+  v0.3 example config. The corresponding `.local.json` file is ignored and
+  must not be staged.
+- `../scripts/write_evp8_gemini_repaired_v0_3_run_packet.py`: raw-output-free
+  Gemini repaired v0.3 run-packet writer. It links readiness, dry-run,
+  smoke/full API summaries, label-conditioned metrics, sanitized false-accept
+  analysis, and the APSEC audit without reading ignored raw responses.
+- `../data/protocols/evp8_gemini_repaired_v0_3_preflight_summary.json`,
+  `../data/protocols/evp8_gemini_repaired_v0_3_smoke_check_only.json`, and
+  `../data/protocols/evp8_gemini_repaired_v0_3_full_check_only.json`:
+  Gemini repaired v0.3 readiness and no-API packet/schema checks. All passed.
+- `../data/reviews/evp8_gemini_repaired_v0_3_prompt_v0_2_google_gemini-2.5-flash_smoke_summary.json`
+  and
+  `../data/reviews/evp8_gemini_repaired_v0_3_prompt_v0_2_google_gemini-2.5-flash_full_summary.json`:
+  tracked raw-text-free Gemini API run summaries. Full run passed on 686/686
+  parse-valid records with estimated cost USD `0.638910370`.
+- `../data/reviews/evp8_gemini_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json`
+  and
+  `experiments/evp8_gemini_repaired_v0_3_prompt_v0_2_label_conditioned_summary.md`:
+  Gemini repaired v0.3 hidden-label-joined aggregate metrics. E6 has
+  25 accepts, 20 correct accepts, 5 false accepts, accepted precision
+  `80.00%`, correct recall `95.24%`, false accept rate `6.49%`, and
+  escalation rate `0.00%`.
+- `../data/protocols/evp8_gemini_repaired_v0_3_run_packet.json` and
+  `experiments/evp8_gemini_repaired_v0_3_run_packet.md`: current Gemini
+  repaired v0.3 run packet. Status is `passed`; it upgrades the APSEC/CCF-C
+  main result to a three-model repaired result while preserving the non-broad
+  claim boundary.
+- `../scripts/analyze_apsec_false_accept_cases.py`: sanitized false-accept
+  case-analysis exporter. It reads ignored raw decision sources only to produce
+  raw-output-free case categories, and it excludes raw response text, rendered
+  prompts, patch diffs, full rationales, and credentials from tracked outputs.
+- `../data/reviews/apsec_false_accept_case_analysis_v0_2.json` and
+  `paper/apsec_false_accept_case_analysis_v0_2.md`: sanitized Qwen/DeepSeek/
+  Gemini false-accept case analysis. Status is `passed`; Qwen and DeepSeek
+  each have 3 partial-fix plus 1 regression E6 false accepts, while Gemini has
+  4 partial-fix plus 1 regression E6 false accepts.
+- `../scripts/write_apsec_ieeetran_package.py`: APSEC IEEEtran/BibTeX/page
+  budget source-package generator. It converts the APSEC Markdown rewrite and
+  claim-map reference records into a draft IEEEtran source, BibTeX file, and
+  page-budget audit.
+- `paper/apsec_ieeetran_draft.tex`, `paper/apsec_references.bib`,
+  `paper/apsec_page_budget_audit_v0_1.md`, and
+  `../data/reviews/apsec_page_budget_audit_v0_1.json`: APSEC formatting draft
+  package. Status is `passed` for source generation and estimated 7.05-page
+  budget; IEEEtran/BibTeX compilation produced a 6-page PDF with no undefined
+  references in the latest log. Remaining formatting risks are table-width
+  overfull/underfull warnings, visual layout inspection, double-blind wording,
+  and BibTeX field normalization.
 - `../scripts/generate_ccfc_figures.py`: Python/matplotlib generator for the
   CCF-C manuscript figure set. It reads the tracked final manuscript claim map
   only and outputs PDF/SVG/PNG figures plus manifest, source-data, and QA notes.

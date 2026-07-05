@@ -71,7 +71,11 @@ def build_audit() -> dict[str, Any]:
         check("manuscript_exists", MANUSCRIPT.exists(), str(MANUSCRIPT.relative_to(REPO_ROOT))),
         check("baseline_audit_passed", baseline.get("status") == "passed", baseline.get("status")),
         check("apsec_status_present", "APSEC technical-track Markdown rewrite" in manuscript),
-        check("target_format_note_present", "IEEEtran" in manuscript and "anonymous" in manuscript),
+        check(
+            "target_format_note_present",
+            "IEEEtran/BibTeX/page-budget draft package" in manuscript
+            and "not the final PDF" in manuscript,
+        ),
         check("required_sections_present", not missing_sections, missing_sections),
         check(
             "title_scope_narrowed",
@@ -81,9 +85,11 @@ def build_audit() -> dict[str, Any]:
         check("contribution_bullets_present", "The paper makes three contributions:" in manuscript),
         check("evidence_visibility_protocol_present", "Evidence-Visibility Protocol (EVP-8)" in manuscript),
         check(
-            "two_model_repaired_main_result_present",
-            "two-model repaired v0.3 analysis for Qwen and DeepSeek" in manuscript
+            "three_model_repaired_main_result_present",
+            "three-model repaired v0.3 analysis for Qwen, DeepSeek, and Gemini" in manuscript
             and "| deepseek/deepseek-v4-pro | 21 | 17 | 4 | 80.95% | 80.95% | 5.19% | 4.08% |"
+            in manuscript
+            and "| google/gemini-2.5-flash | 25 | 20 | 5 | 80.00% | 95.24% | 6.49% | 0.00% |"
             in manuscript,
         ),
         check(
@@ -116,6 +122,12 @@ def build_audit() -> dict[str, Any]:
             in manuscript,
         ),
         check(
+            "gemini_main_result_present",
+            "Gemini level-conditioned metrics:" in manuscript
+            and "| E6 | 25 | 20 | 5 | 80.00% | 95.24% | 6.49% | 0.00% |"
+            in manuscript,
+        ),
+        check(
             "ablation_main_table_boundary_present",
             "The E6 ablation is a separate verdict-field ablation package rather than the repaired v0.3 E0-E6 main table"
             in manuscript
@@ -134,10 +146,18 @@ def build_audit() -> dict[str, Any]:
         check(
             "false_accept_anatomy_present",
             "E6 false accepts were concentrated in partial and regression negatives" in manuscript
-            and "both Qwen and DeepSeek E6 accepted three partial fixes and one regression patch"
+            and "Qwen and DeepSeek each accepted three partial fixes and one regression patch"
             in manuscript
-            and "| partial_fix | 3/41 |" in manuscript
-            and "| regression_patch | 1/1 |" in manuscript,
+            and "Gemini accepted four partial fixes and one regression patch"
+            in manuscript
+            and "| google/gemini-2.5-flash | 4/41 | 1/1 | 5 |"
+            in manuscript,
+        ),
+        check(
+            "sanitized_false_accept_case_analysis_present",
+            "A sanitized case-level analysis is now available" in manuscript
+            and "excludes raw response text, full rationale text, rendered prompts, patch diffs, and credentials"
+            in manuscript,
         ),
         check("tool_contestation_boundary_present", "strict correction remained zero for both models" in manuscript),
         check("realistic_gate_boundary_present", "source-acquisition boundary" in manuscript),
@@ -145,9 +165,9 @@ def build_audit() -> dict[str, Any]:
         check("all_expected_citations_present", not missing_citations, missing_citations),
         check("reference_support_records_removed", "Reference Support Records" not in manuscript),
         check(
-            "remaining_three_model_gap_explicit",
-            "still require a third repaired E0-E6 main table" in manuscript
-            and "two-model rather than three-model or broad-model" in manuscript,
+            "remaining_broad_model_gap_explicit",
+            "current paper-facing main result is three-model but still not broad-model" in manuscript
+            and "still not a broad-model result" in manuscript,
         ),
         check("forbidden_overclaims_absent", not forbidden_present, forbidden_present),
         check("api_call_attempted", True, False),
@@ -163,15 +183,15 @@ def build_audit() -> dict[str, Any]:
         "manuscript": str(MANUSCRIPT.relative_to(REPO_ROOT)),
         "checks": checks,
         "verdict": {
-            "readiness": "markdown_rewrite_ready_for_latex_conversion"
+            "readiness": "markdown_rewrite_ready_for_ieeetran_package"
             if status == "passed"
             else "rewrite_requires_repair",
             "remaining_work": [
-                "If APSEC competitiveness is prioritized, add repaired E0-E6 main tables for at least one more model and preferably two more models.",
-                "Add a raw-output-free case-level false-accept analysis for the Qwen and DeepSeek E6 false accepts.",
-                "Convert citation keys to BibTeX.",
-                "Convert Markdown to anonymous IEEEtran conference LaTeX.",
-                "Check page budget, table widths, figure placement, and double-blind wording.",
+                "Do not broaden the three-model repaired result into a universal LLM-verifier claim.",
+                "Use the sanitized false-accept case analysis only as category-level failure anatomy, not as full rationale auditing.",
+                "Compile and visually inspect the APSEC IEEEtran source package.",
+                "Normalize BibTeX fields and check APSEC reference style.",
+                "Check table widths, figure placement, page count, and double-blind wording in the compiled PDF.",
             ],
         },
     }

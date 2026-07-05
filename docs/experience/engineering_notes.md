@@ -4603,3 +4603,35 @@ This file starts fresh for the patch-verification project.
 - Raw-output-free tracked summaries are enough for aggregate label-conditioned
   metrics and run packets, but not enough for concrete false-accept case
   analysis unless candidate-level decision exports are explicitly produced.
+
+## 2026-07-06 Gemini repaired v0.3 and APSEC packaging boundary
+
+- OpenRouter models may return valid JSON inside fences or other wrapper text
+  even when the runner successfully parses the final decision. Downstream
+  analyzers should use the shared JSON-object extractor rather than
+  `json.loads(raw_response_text)` directly; otherwise a parse-valid API run can
+  fail during label-conditioned postprocessing.
+- Adding a third repaired model changes the APSEC claim from two-model to
+  three-model evidence, but still not to broad generality. The manuscript must
+  say Qwen/DeepSeek/Gemini support a controlled descriptive result and preserve
+  the deterministic rule-only baseline boundary.
+- A sanitized false-accept case analysis may read ignored raw decisions as an
+  input only when the tracked output excludes raw response text, rendered
+  prompts, patch diffs, full rationale text, and credentials. The output should
+  retain only candidate identifiers, hidden-label categories, decisions, and
+  compressed rationale categories.
+- IEEEtran/BibTeX conversion needs a separate audit from the manuscript audit.
+  Passing the APSEC manuscript audit means the research argument is internally
+  consistent; it does not mean the LaTeX source compiles, fits the venue page
+  limit after floats, or satisfies double-blind visual requirements.
+- Citation conversion must preserve BibTeX keys exactly inside `\cite{...}`.
+  Escaping underscores is correct in prose and tables, but wrong inside
+  citation keys.
+- BibTeX support records are not submission-grade entries by default. If a
+  reference string contains characters such as `$`, the generator must emit
+  structured BibTeX fields and escape special characters; otherwise the PDF may
+  compile with distorted reference text.
+- A successful IEEEtran compile can still leave submission-blocking layout
+  debt. The current APSEC draft compiles to 6 pages with resolved references,
+  but table-width overfull/underfull warnings remain and should be treated as
+  a formatting task before submission.

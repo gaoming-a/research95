@@ -1,0 +1,318 @@
+{
+  "analysis_id": "apsec_false_accept_case_analysis_v0_2",
+  "boundary": "reads local raw responses to extract decisions, writes only sanitized raw-output-free case fields",
+  "case_rows": [
+    {
+      "candidate_id": "evp8_smoke_candidate_0039",
+      "candidate_type": "regression_patch",
+      "confidence_bucket": "high",
+      "e6_decision": "accept",
+      "e6_no_verdict_decision": "accept",
+      "evidence_category": "merge_gate_summary_used",
+      "hidden_label": "incorrect_regression",
+      "human_review_needed": false,
+      "model": "qwen/qwen3.7-max",
+      "project": "thefuck",
+      "rationale_category": "accepted_without_specific_tool_reason_category",
+      "risk_flag_category": "accepted_without_reported_risk_flags",
+      "source_candidate_id": "evp7_candidate_0039",
+      "task_id": "bugsinpy_thefuck_1",
+      "tool_contestation_linkage": "not_matched_to_repaired_main_candidate_export"
+    },
+    {
+      "candidate_id": "evp8_smoke_candidate_0053",
+      "candidate_type": "partial_fix",
+      "confidence_bucket": "high",
+      "e6_decision": "accept",
+      "e6_no_verdict_decision": "accept",
+      "evidence_category": "merge_gate_summary_used",
+      "hidden_label": "incorrect_issue_not_fixed",
+      "human_review_needed": false,
+      "model": "qwen/qwen3.7-max",
+      "project": "youtube-dl",
+      "rationale_category": "accepted_without_specific_tool_reason_category",
+      "risk_flag_category": "accepted_without_reported_risk_flags",
+      "source_candidate_id": "evp7_candidate_0073",
+      "task_id": "bugsinpy_youtube-dl_16",
+      "tool_contestation_linkage": "not_matched_to_repaired_main_candidate_export"
+    },
+    {
+      "candidate_id": "evp8_smoke_candidate_0066",
+      "candidate_type": "partial_fix",
+      "confidence_bucket": "high",
+      "e6_decision": "accept",
+      "e6_no_verdict_decision": "accept",
+      "evidence_category": "merge_gate_summary_used",
+      "hidden_label": "incorrect_issue_not_fixed",
+      "human_review_needed": false,
+      "model": "qwen/qwen3.7-max",
+      "project": "youtube-dl",
+      "rationale_category": "accepted_due_to_visible_test_success",
+      "risk_flag_category": "accepted_without_reported_risk_flags",
+      "source_candidate_id": "evp7_candidate_0082",
+      "task_id": "bugsinpy_youtube-dl_20",
+      "tool_contestation_linkage": "not_matched_to_repaired_main_candidate_export"
+    },
+    {
+      "candidate_id": "evp8_smoke_candidate_0093",
+      "candidate_type": "partial_fix",
+      "confidence_bucket": "high",
+      "e6_decision": "accept",
+      "e6_no_verdict_decision": "accept",
+      "evidence_category": "merge_gate_summary_used",
+      "hidden_label": "incorrect_issue_not_fixed",
+      "human_review_needed": false,
+      "model": "qwen/qwen3.7-max",
+      "project": "youtube-dl",
+      "rationale_category": "accepted_without_specific_tool_reason_category",
+      "risk_flag_category": "accepted_without_reported_risk_flags",
+      "source_candidate_id": "evp7_candidate_0061",
+      "task_id": "bugsinpy_youtube-dl_6",
+      "tool_contestation_linkage": "not_matched_to_repaired_main_candidate_export"
+    },
+    {
+      "candidate_id": "evp8_smoke_candidate_0039",
+      "candidate_type": "regression_patch",
+      "confidence_bucket": "high",
+      "e6_decision": "accept",
+      "e6_no_verdict_decision": "escalate",
+      "evidence_category": "merge_gate_summary_used",
+      "hidden_label": "incorrect_regression",
+      "human_review_needed": false,
+      "model": "deepseek/deepseek-v4-pro",
+      "project": "thefuck",
+      "rationale_category": "accepted_due_to_visible_test_success",
+      "risk_flag_category": "accepted_without_reported_risk_flags",
+      "source_candidate_id": "evp7_candidate_0039",
+      "task_id": "bugsinpy_thefuck_1",
+      "tool_contestation_linkage": "not_matched_to_repaired_main_candidate_export"
+    },
+    {
+      "candidate_id": "evp8_smoke_candidate_0049",
+      "candidate_type": "partial_fix",
+      "confidence_bucket": "high",
+      "e6_decision": "accept",
+      "e6_no_verdict_decision": "escalate",
+      "evidence_category": "merge_gate_summary_used",
+      "hidden_label": "incorrect_issue_not_fixed",
+      "human_review_needed": false,
+      "model": "deepseek/deepseek-v4-pro",
+      "project": "youtube-dl",
+      "rationale_category": "accepted_due_to_visible_test_success",
+      "risk_flag_category": "accepted_without_reported_risk_flags",
+      "source_candidate_id": "evp7_candidate_0069",
+      "task_id": "bugsinpy_youtube-dl_11",
+      "tool_contestation_linkage": "not_matched_to_repaired_main_candidate_export"
+    },
+    {
+      "candidate_id": "evp8_smoke_candidate_0053",
+      "candidate_type": "partial_fix",
+      "confidence_bucket": "high",
+      "e6_decision": "accept",
+      "e6_no_verdict_decision": "escalate",
+      "evidence_category": "merge_gate_summary_used",
+      "hidden_label": "incorrect_issue_not_fixed",
+      "human_review_needed": false,
+      "model": "deepseek/deepseek-v4-pro",
+      "project": "youtube-dl",
+      "rationale_category": "accepted_due_to_visible_test_success",
+      "risk_flag_category": "accepted_without_reported_risk_flags",
+      "source_candidate_id": "evp7_candidate_0073",
+      "task_id": "bugsinpy_youtube-dl_16",
+      "tool_contestation_linkage": "not_matched_to_repaired_main_candidate_export"
+    },
+    {
+      "candidate_id": "evp8_smoke_candidate_0066",
+      "candidate_type": "partial_fix",
+      "confidence_bucket": "high",
+      "e6_decision": "accept",
+      "e6_no_verdict_decision": "escalate",
+      "evidence_category": "merge_gate_summary_used",
+      "hidden_label": "incorrect_issue_not_fixed",
+      "human_review_needed": false,
+      "model": "deepseek/deepseek-v4-pro",
+      "project": "youtube-dl",
+      "rationale_category": "accepted_due_to_visible_test_success",
+      "risk_flag_category": "accepted_without_reported_risk_flags",
+      "source_candidate_id": "evp7_candidate_0082",
+      "task_id": "bugsinpy_youtube-dl_20",
+      "tool_contestation_linkage": "not_matched_to_repaired_main_candidate_export"
+    },
+    {
+      "candidate_id": "evp8_smoke_candidate_0039",
+      "candidate_type": "regression_patch",
+      "confidence_bucket": "high",
+      "e6_decision": "accept",
+      "e6_no_verdict_decision": null,
+      "evidence_category": "merge_gate_summary_used",
+      "hidden_label": "incorrect_regression",
+      "human_review_needed": false,
+      "model": "google/gemini-2.5-flash",
+      "project": "thefuck",
+      "rationale_category": "accepted_due_to_visible_tests_and_merge_gate_summary",
+      "risk_flag_category": "accepted_without_reported_risk_flags",
+      "source_candidate_id": "evp7_candidate_0039",
+      "task_id": "bugsinpy_thefuck_1",
+      "tool_contestation_linkage": "not_matched_to_repaired_main_candidate_export"
+    },
+    {
+      "candidate_id": "evp8_smoke_candidate_0049",
+      "candidate_type": "partial_fix",
+      "confidence_bucket": "high",
+      "e6_decision": "accept",
+      "e6_no_verdict_decision": null,
+      "evidence_category": "merge_gate_summary_used",
+      "hidden_label": "incorrect_issue_not_fixed",
+      "human_review_needed": false,
+      "model": "google/gemini-2.5-flash",
+      "project": "youtube-dl",
+      "rationale_category": "accepted_due_to_visible_tests_and_merge_gate_summary",
+      "risk_flag_category": "accepted_without_reported_risk_flags",
+      "source_candidate_id": "evp7_candidate_0069",
+      "task_id": "bugsinpy_youtube-dl_11",
+      "tool_contestation_linkage": "not_matched_to_repaired_main_candidate_export"
+    },
+    {
+      "candidate_id": "evp8_smoke_candidate_0053",
+      "candidate_type": "partial_fix",
+      "confidence_bucket": "high",
+      "e6_decision": "accept",
+      "e6_no_verdict_decision": null,
+      "evidence_category": "merge_gate_summary_used",
+      "hidden_label": "incorrect_issue_not_fixed",
+      "human_review_needed": false,
+      "model": "google/gemini-2.5-flash",
+      "project": "youtube-dl",
+      "rationale_category": "accepted_due_to_visible_tests_and_merge_gate_summary",
+      "risk_flag_category": "accepted_without_reported_risk_flags",
+      "source_candidate_id": "evp7_candidate_0073",
+      "task_id": "bugsinpy_youtube-dl_16",
+      "tool_contestation_linkage": "not_matched_to_repaired_main_candidate_export"
+    },
+    {
+      "candidate_id": "evp8_smoke_candidate_0066",
+      "candidate_type": "partial_fix",
+      "confidence_bucket": "high",
+      "e6_decision": "accept",
+      "e6_no_verdict_decision": null,
+      "evidence_category": "merge_gate_summary_used",
+      "hidden_label": "incorrect_issue_not_fixed",
+      "human_review_needed": false,
+      "model": "google/gemini-2.5-flash",
+      "project": "youtube-dl",
+      "rationale_category": "accepted_due_to_visible_tests_and_merge_gate_summary",
+      "risk_flag_category": "accepted_without_reported_risk_flags",
+      "source_candidate_id": "evp7_candidate_0082",
+      "task_id": "bugsinpy_youtube-dl_20",
+      "tool_contestation_linkage": "not_matched_to_repaired_main_candidate_export"
+    },
+    {
+      "candidate_id": "evp8_smoke_candidate_0093",
+      "candidate_type": "partial_fix",
+      "confidence_bucket": "high",
+      "e6_decision": "accept",
+      "e6_no_verdict_decision": null,
+      "evidence_category": "merge_gate_summary_used",
+      "hidden_label": "incorrect_issue_not_fixed",
+      "human_review_needed": false,
+      "model": "google/gemini-2.5-flash",
+      "project": "youtube-dl",
+      "rationale_category": "accepted_due_to_visible_tests_and_merge_gate_summary",
+      "risk_flag_category": "accepted_without_reported_risk_flags",
+      "source_candidate_id": "evp7_candidate_0061",
+      "task_id": "bugsinpy_youtube-dl_6",
+      "tool_contestation_linkage": "not_matched_to_repaired_main_candidate_export"
+    }
+  ],
+  "checks": [
+    {
+      "check": "raw_sources_exist",
+      "detail": {
+        "deepseek/deepseek-v4-pro": "outputs/evp8_deepseek_repaired_v0_3_prompt_v0_2_json_mode_full/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+        "google/gemini-2.5-flash": "outputs/evp8_gemini_repaired_v0_3_prompt_v0_2_openrouter_full/google_gemini-2.5-flash/raw_responses.jsonl",
+        "qwen/qwen3.7-max": "outputs/evp8_main_v0_3_qwen_first_prompt_v0_2_json_mode_full/qwen_qwen3.7-max/raw_responses.jsonl"
+      },
+      "passed": true
+    },
+    {
+      "check": "false_accept_rows_present",
+      "detail": 13,
+      "passed": true
+    },
+    {
+      "check": "qwen_false_accept_count",
+      "detail": {
+        "false_accept": 4,
+        "partial_fix": 3,
+        "regression_patch": 1
+      },
+      "passed": true
+    },
+    {
+      "check": "deepseek_false_accept_count",
+      "detail": {
+        "false_accept": 4,
+        "partial_fix": 3,
+        "regression_patch": 1
+      },
+      "passed": true
+    },
+    {
+      "check": "gemini_false_accept_count",
+      "detail": {
+        "false_accept": 5,
+        "partial_fix": 4,
+        "regression_patch": 1
+      },
+      "passed": true
+    },
+    {
+      "check": "raw_response_text_not_stored",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "rendered_prompt_or_patch_diff_not_stored",
+      "detail": true,
+      "passed": true
+    }
+  ],
+  "forbidden_output_fields": [
+    "raw_response_text",
+    "full primary_reason",
+    "rendered_prompt",
+    "patch_diff",
+    "api_credentials"
+  ],
+  "inputs": {
+    "candidate_set": "data/protocols/evp8_candidate_set_v0_1.json",
+    "labels": "data/patches/evp7_candidates.jsonl",
+    "no_verdict_raw_sources_available": {
+      "deepseek/deepseek-v4-pro": "outputs/evp8_e6_no_verdict_ablation_full/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+      "qwen/qwen3.7-max": "outputs/evp8_e6_no_verdict_ablation_full/qwen_qwen3.7-max/raw_responses.jsonl"
+    },
+    "raw_sources": {
+      "deepseek/deepseek-v4-pro": "outputs/evp8_deepseek_repaired_v0_3_prompt_v0_2_json_mode_full/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+      "google/gemini-2.5-flash": "outputs/evp8_gemini_repaired_v0_3_prompt_v0_2_openrouter_full/google_gemini-2.5-flash/raw_responses.jsonl",
+      "qwen/qwen3.7-max": "outputs/evp8_main_v0_3_qwen_first_prompt_v0_2_json_mode_full/qwen_qwen3.7-max/raw_responses.jsonl"
+    }
+  },
+  "per_model_counts": {
+    "deepseek/deepseek-v4-pro": {
+      "false_accept": 4,
+      "partial_fix": 3,
+      "regression_patch": 1
+    },
+    "google/gemini-2.5-flash": {
+      "false_accept": 5,
+      "partial_fix": 4,
+      "regression_patch": 1
+    },
+    "qwen/qwen3.7-max": {
+      "false_accept": 4,
+      "partial_fix": 3,
+      "regression_patch": 1
+    }
+  },
+  "status": "passed"
+}

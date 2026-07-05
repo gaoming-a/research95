@@ -59,5 +59,5 @@
 
 ## Interpretation Boundary
 
-- Allowed: Report label-conditioned Qwen v0.3 descriptive metrics for the frozen 98-candidate E0-E6 packet set.
-- Forbidden: Do not claim five-model effectiveness, DeepSeek/Qwen comparison, LLM superiority, or final evidence-level ranking from this Qwen-only analysis.
+- Allowed: Report label-conditioned Qwen repaired v0.3 descriptive metrics for the frozen 98-candidate E0-E6 packet set.
+- Forbidden: Do not claim broad LLM superiority, autonomous correctness verification, or final evidence-level ranking from this repaired analysis.

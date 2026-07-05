@@ -1,6 +1,6 @@
 # 当前项目状态与文件地图
 
-日期：2026-07-05
+日期：2026-07-06
 
 本文件是短入口，用来整理当前计划文档和项目文件。它不替代
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
@@ -48,8 +48,40 @@
   10-page APSEC formatting 的下一步输入，但还不是最终投稿 PDF。
   对 realistic hard-negative branch，在 `ready_for_verifier_api=false` 时仍不得
   运行 Qwen/DeepSeek verifier API。该限制不追溯否定 2026-07-05 用户明确授权
-  并已完成的 DeepSeek repaired v0.3 E0-E6 main run；后续 Gemini/Kimi/Devstral
-  repaired run 仍需要新的明确授权和 preflight。
+  并已完成的 DeepSeek repaired v0.3 E0-E6 main run，也不追溯否定 2026-07-06
+  用户授权并已完成的 Gemini repaired v0.3 E0-E6 third-model run；后续
+  Kimi/Devstral repaired run 仍需要新的明确授权和 preflight。
+
+## 2026-07-06 快速状态增量
+
+- 新增 Gemini repaired EVP-8 v0.3 E0-E6 third-model run：
+  strict preflight、smoke/full check-only、smoke API、full API 和
+  label-conditioned analysis 均通过。full API 为 686/686 parse-valid，估算成本
+  USD `0.638910370`；Gemini E6 为 25 accepts、20 correct accepts、
+  5 false accepts、accepted precision `80.00%`、correct recall `95.24%`、
+  false accept rate `6.49%`、escalation rate `0.00%`。
+- APSEC/CCF-C 正文现在使用 Qwen + DeepSeek + Gemini three-model repaired
+  v0.3 主结果。当前结论是 bounded evidence-conditioned risk behavior，不是
+  broad-LLM superiority，也不是 autonomous correctness verifier。
+- 新增 Gemini run packet：
+  `docs/experiments/evp8_gemini_repaired_v0_3_run_packet.md` 和
+  `data/protocols/evp8_gemini_repaired_v0_3_run_packet.json`，状态为 `passed`。
+- 新增 sanitized false-accept case analysis：
+  `docs/paper/apsec_false_accept_case_analysis_v0_2.md` 和
+  `data/reviews/apsec_false_accept_case_analysis_v0_2.json`。它记录 Qwen、
+  DeepSeek、Gemini 的 E6 false accepts candidate-level category 信息，但不保存
+  raw response text、rendered prompts、patch diffs、full rationale text 或凭证。
+- 新增 APSEC IEEEtran/BibTeX/page-budget 草案包：
+  `docs/paper/apsec_ieeetran_draft.tex`、
+  `docs/paper/apsec_references.bib`、
+  `docs/paper/apsec_page_budget_audit_v0_1.md` 和
+  `data/reviews/apsec_page_budget_audit_v0_1.json`。页数估算 7.05 页，状态
+  `passed`；实际 IEEEtran/BibTeX 编译 PDF 为 6 页，latest log 无 undefined
+  references，但仍有 6 个 overfull hbox 和 24 个 underfull hbox，需要手工版面修复。
+- 当前剩余 APSEC 风险已经从“主结果单模型/两模型不足”转为：
+  cohort 小、三模型仍非 broad-model、rule-only baseline 很强、false accepts
+  仍集中在 partial/regression negatives、表格宽度 overfull/underfull warnings、
+  以及最终 double-blind 和 BibTeX 字段需要人工级格式检查。
 
 ## 2026-07-05 快速状态增量
 
@@ -65,15 +97,14 @@
 - 新增 APSEC rewrite audit：
   `docs/paper/apsec_manuscript_rewrite_audit_v0_1.md` 和
   `data/reviews/apsec_manuscript_rewrite_audit_v0_1.json`，状态为 `passed`。
-- 当前下一步不是扩实验，而是 final formatting：把 citation keys 转 BibTeX，
-  转 anonymous IEEEtran conference LaTeX，检查 APSEC 10-page budget、图表宽度、
-  双盲措辞和 reference style。
-- 2026-07-05 APSEC reviewer-risk repair 已完成：当前稿件明确承认
-  paper-facing main result remains single-model，rule-only baseline already
-  strong，并将 realistic hard-negative branch 作为 source-acquisition boundary。
-  若要继续提高 APSEC 接收概率，仍需另起计划补第三个 repaired E0-E6 主模型
-  （如 Gemini/Kimi），以及 Qwen 和 DeepSeek E6 false accepts 的
-  raw-output-free case-level analysis。
+- 当前下一步不是扩实验，而是 final formatting：APSEC IEEEtran/BibTeX/page
+  budget 草案包已经生成，仍需 PDF 编译、图表宽度、双盲措辞和 reference style
+  的人工级检查。
+- 2026-07-05 APSEC reviewer-risk repair 是历史阶段：当时稿件明确承认
+  paper-facing main result remains single-model/two-model，并将 realistic
+  hard-negative branch 作为 source-acquisition boundary。该阶段提出的第三个
+  repaired E0-E6 主模型和 raw-output-free case-level analysis 已在 2026-07-06
+  完成。
 - 当前 Git 同步状态：2026-07-05 继续执行后 GitHub push 已恢复成功，远端包含
   APSEC reviewer-risk repair。
 - 新增 APSEC false-accept case-analysis feasibility audit，状态为
@@ -85,16 +116,17 @@
   为 686/686 parse-valid，估算成本 USD `0.434221524`；DeepSeek E6 为
   21 accepts、17 correct accepts、4 false accepts、accepted precision `80.95%`、
   correct recall `80.95%`、false accept rate `5.19%`、escalation rate `4.08%`。
-- APSEC rewrite 现在使用 Qwen + DeepSeek two-model repaired main result，并在
-  正文中显式区分 repaired v0.3 E0-E6 主表和独立 E6 verdict-field ablation
-  package，避免 DeepSeek E6 数字来源混淆。
+- 2026-07-05 阶段 APSEC rewrite 使用 Qwen + DeepSeek two-model repaired main
+  result，并在正文中显式区分 repaired v0.3 E0-E6 主表和独立 E6 verdict-field
+  ablation package，避免 DeepSeek E6 数字来源混淆。当前 2026-07-06 版本已升级
+  为 Qwen + DeepSeek + Gemini three-model repaired main result。
 - 新增 DeepSeek run packet：
   `docs/experiments/evp8_deepseek_repaired_v0_3_run_packet.md` 和
   `data/protocols/evp8_deepseek_repaired_v0_3_run_packet.json`，状态为
   `passed`。
-- 当前剩余 APSEC 实验缺口：第三个 repaired E0-E6 主模型，以及 raw-output-free
-  candidate-level false-accept case export。两者都不能从 aggregate summaries
-  直接推断。
+- 当前剩余 APSEC 实验缺口中的第三个 repaired E0-E6 主模型和 raw-output-free
+  candidate-level false-accept case export 已在 2026-07-06 完成。后续如再扩模型，
+  仍必须另起计划和 preflight。
 - 当前 Git 同步状态：本地 commit `Add DeepSeek repaired EVP-8 results` 已完成；
   GitHub push 连续三次失败，原因是 HTTPS/GitHub 443 连接 reset/timeout；当前
   分支相对 `origin/evp8-v03-qwen-main-exp` 为 `[ahead 1]`。

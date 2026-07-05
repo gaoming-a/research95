@@ -26,7 +26,7 @@ if str(REPO_ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
 from cross_review.env import load_env_file  # noqa: E402
-from cross_review.openrouter import DeepSeekClient, QwenClient  # noqa: E402
+from cross_review.openrouter import DeepSeekClient, OpenRouterClient, QwenClient  # noqa: E402
 from cross_review.parsing import extract_json_object, response_text  # noqa: E402
 
 import build_evp8_prompt_manifest as prompt_module  # noqa: E402
@@ -808,10 +808,12 @@ def fetch_raw_record(
         prompt=prompt,
         temperature=float(config.get("temperature", 0.0)),
         max_tokens=int(config.get("max_output_tokens", 1024)),
+        provider=model_config.get("provider_preferences"),
         reasoning=model_config.get("reasoning"),
         include_reasoning=model_config.get("include_reasoning"),
         thinking=model_config.get("thinking"),
         response_format=model_config.get("response_format"),
+        metadata_enabled=config.get("openrouter_metadata_header") == "enabled",
     )
     return {
         "evidence_packet_id": packet["evidence_packet_id"],
@@ -821,6 +823,7 @@ def fetch_raw_record(
         "configured_model_id": model_config["model_id"],
         "actual_model_id": response.get("model"),
         "provider_route": model_config["provider_route"],
+        "provider_preferences": model_config.get("provider_preferences"),
         "request_reasoning": model_config.get("reasoning"),
         "request_include_reasoning": model_config.get("include_reasoning"),
         "request_thinking": model_config.get("thinking"),
@@ -921,11 +924,13 @@ def _model_config(config: dict[str, Any], model_id: str | None) -> dict[str, Any
     return None
 
 
-def _client(provider_route: str) -> DeepSeekClient | QwenClient:
+def _client(provider_route: str) -> DeepSeekClient | QwenClient | OpenRouterClient:
     if provider_route == "deepseek_official":
         return DeepSeekClient()
     if provider_route == "qwen_official":
         return QwenClient()
+    if provider_route == "openrouter_pinned_exact_model_id":
+        return OpenRouterClient()
     raise SystemExit(f"unsupported provider route for EVP-8 smoke: {provider_route}")
 
 

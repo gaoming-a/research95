@@ -121,6 +121,16 @@
       "passed": true
     },
     {
+      "check": "deepseek_label_conditioned_checks_passed",
+      "detail": 9,
+      "passed": true
+    },
+    {
+      "check": "gemini_label_conditioned_checks_passed",
+      "detail": 9,
+      "passed": true
+    },
+    {
       "check": "phase_a_analysis_checks_passed",
       "detail": 7,
       "passed": true
@@ -208,16 +218,17 @@
       "status": "supported"
     },
     {
-      "allowed_wording": "For Qwen v0.3 on the frozen 98-candidate packet set, E3-E6 shifted many correct patches from non-accept to accept, with 3-4 false accepts depending on level.",
-      "boundary": "Qwen-only v0.3 descriptive result; not a five-model effectiveness claim or final evidence-level ranking.",
-      "claim": "In the Qwen v0.3 accept-aware run, visible executable and tool evidence changed correct-patch acceptance while introducing bounded false-accept risk.",
+      "allowed_wording": "For Qwen, DeepSeek, and Gemini v0.3 on the frozen 98-candidate packet set, visible executable/tool evidence shifted many correct patches from non-accept to accept while leaving 4-5 E6 false accepts.",
+      "boundary": "Three-model v0.3 descriptive result; not broad-model superiority or autonomous correctness verification.",
+      "claim": "In three repaired v0.3 accept-aware runs, visible executable and tool evidence changed correct-patch acceptance while retaining bounded false-accept risk.",
       "evidence": [
-        "v0_2_accept_aware_synthesis",
-        "v0_3_qwen_label_conditioned_summary"
+        "v0_3_qwen_label_conditioned_summary",
+        "v0_3_deepseek_label_conditioned_summary",
+        "v0_3_gemini_label_conditioned_summary"
       ],
       "id": "C2",
       "paper_location": "Results: Accept-aware label-conditioned behavior",
-      "status": "supported_qwen_only"
+      "status": "supported_three_model"
     },
     {
       "allowed_wording": "Verdict removal and tool-contestation produced model-dependent risk-control tradeoffs.",
@@ -597,8 +608,10 @@
   "inputs": {
     "baseline_feasibility": "data/reviews/ccfc_baseline_feasibility_audit_v0_1.json",
     "citation_support_bank": "docs/paper/ccfc_citation_support_bank_v0_1.md",
+    "deepseek_label_conditioned": "data/reviews/evp8_deepseek_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json",
     "evp8_protocol_v0_3": "data/protocols/evp8_protocol_v0_3_qwen_first.json",
     "five_model_synthesis": "data/protocols/evp8_five_model_synthesis_v0_1.json",
+    "gemini_label_conditioned": "data/reviews/evp8_gemini_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json",
     "hard_tool_contestation": "data/protocols/evp8_hard_tool_contestation_result_audit_v0_1.json",
     "no_verdict_comparison": "data/reviews/evp8_e6_no_verdict_ablation_comparison.json",
     "phase_a_analysis": "data/reviews/evp8_phase_a_paper_ready_analysis.json",
@@ -606,7 +619,7 @@
     "realistic_gate": "data/protocols/evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json",
     "validity_audit": "data/reviews/final_experiment_setting_validity_audit_v0_1.json"
   },
-  "manuscript_argument": "In candidate patch verification, we show that a hidden-evaluator evidence-visibility protocol can measure evidence-conditioned LLM merge-gate behavior, supported by the accept-aware Qwen v0.3 label-conditioned analysis, E6 rule-only/no-verdict ablations, tool-contestation audits, and a realistic source-acquisition gate audit.",
+  "manuscript_argument": "In candidate patch verification, we show that a hidden-evaluator evidence-visibility protocol can measure evidence-conditioned LLM merge-gate behavior, supported by the accept-aware Qwen/DeepSeek/Gemini v0.3 label-conditioned analyses, E6 rule-only/no-verdict ablations, tool-contestation audits, and a realistic source-acquisition gate audit.",
   "paper_target": "stable CCF-C submission",
   "per_model_level_counts": [
     {
@@ -1307,6 +1320,44 @@
       "required_paper_response": "Keep historical versions in appendix/method provenance and avoid mixing them into main claims.",
       "severity": "low_if_claim_map_is_followed",
       "threat": "Some historical experiments are diagnostic rather than paper-facing."
+    }
+  ],
+  "repaired_model_e6_metrics": [
+    {
+      "accept": 24,
+      "accepted_precision": 0.833333,
+      "correct_accept": 20,
+      "correct_recall": 0.952381,
+      "escalate": 0,
+      "escalation_rate": 0.0,
+      "false_accept": 4,
+      "false_accept_rate": 0.051948,
+      "model": "qwen/qwen3.7-max",
+      "reject": 74
+    },
+    {
+      "accept": 21,
+      "accepted_precision": 0.809524,
+      "correct_accept": 17,
+      "correct_recall": 0.809524,
+      "escalate": 4,
+      "escalation_rate": 0.040816,
+      "false_accept": 4,
+      "false_accept_rate": 0.051948,
+      "model": "deepseek/deepseek-v4-pro",
+      "reject": 73
+    },
+    {
+      "accept": 25,
+      "accepted_precision": 0.8,
+      "correct_accept": 20,
+      "correct_recall": 0.952381,
+      "escalate": 0,
+      "escalation_rate": 0.0,
+      "false_accept": 5,
+      "false_accept_rate": 0.064935,
+      "model": "google/gemini-2.5-flash",
+      "reject": 73
     }
   ],
   "scope": {

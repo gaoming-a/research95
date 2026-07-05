@@ -45,7 +45,7 @@
       "detail": ""
     },
     {
-      "check": "two_model_repaired_main_result_present",
+      "check": "three_model_repaired_main_result_present",
       "passed": true,
       "detail": ""
     },
@@ -71,6 +71,11 @@
     },
     {
       "check": "deepseek_main_result_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "gemini_main_result_present",
       "passed": true,
       "detail": ""
     },
@@ -110,6 +115,11 @@
       "detail": ""
     },
     {
+      "check": "sanitized_false_accept_case_analysis_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
       "check": "tool_contestation_boundary_present",
       "passed": true,
       "detail": ""
@@ -135,7 +145,7 @@
       "detail": ""
     },
     {
-      "check": "remaining_three_model_gap_explicit",
+      "check": "remaining_broad_model_gap_explicit",
       "passed": true,
       "detail": ""
     },
@@ -161,13 +171,13 @@
     }
   ],
   "verdict": {
-    "readiness": "markdown_rewrite_ready_for_latex_conversion",
+    "readiness": "markdown_rewrite_ready_for_ieeetran_package",
     "remaining_work": [
-      "If APSEC competitiveness is prioritized, add repaired E0-E6 main tables for at least one more model and preferably two more models.",
-      "Add a raw-output-free case-level false-accept analysis for the Qwen and DeepSeek E6 false accepts.",
-      "Convert citation keys to BibTeX.",
-      "Convert Markdown to anonymous IEEEtran conference LaTeX.",
-      "Check page budget, table widths, figure placement, and double-blind wording."
+      "Do not broaden the three-model repaired result into a universal LLM-verifier claim.",
+      "Use the sanitized false-accept case analysis only as category-level failure anatomy, not as full rationale auditing.",
+      "Compile and visually inspect the APSEC IEEEtran source package.",
+      "Normalize BibTeX fields and check APSEC reference style.",
+      "Check table widths, figure placement, page count, and double-blind wording in the compiled PDF."
     ]
   }
 }

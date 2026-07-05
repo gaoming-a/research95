@@ -1,6 +1,97 @@
 # 当前计划：AI 生成补丁的可验证审查
 
-最后更新：2026-07-05
+最后更新：2026-07-06
+
+## 0.36 2026-07-06 Gemini repaired EVP-8 v0.3 E0-E6 third-model run
+
+本轮目标是按用户授权继续完成投稿前七步中的实验补强部分：补第三模型
+repaired v0.3 E0-E6 主结果，并把 APSEC/CCF-C 从 two-model 主表升级为
+three-model 主表。第三模型选择 `google/gemini-2.5-flash`，理由是它已在早期
+EVP-8 later-model batch 中通过 686/686 parse-valid，成本相对可控，且能提供
+Qwen/DeepSeek 之外的厂商多样性；Kimi 曾出现 reasoning-heavy invalid JSON 风险，
+Devstral 的论文说服力相对弱于 Gemini。
+
+执行边界：
+
+- API 授权范围：允许使用 `OPENROUTER_API_KEY` 调用
+  `google/gemini-2.5-flash` repaired v0.3 E0-E6；不得顺手调用 Kimi/Devstral
+  repaired v0.3，除非另起计划；
+- 使用同一 frozen 98-candidate EVP-8 candidate set、同一 E0-E6 ladder、
+  同一 `evp8_visible_evidence_merge_gate_v0_2` prompt、同一 hidden-label join
+  metrics；
+- raw responses 只能写入 ignored `outputs/**`；tracked summaries 不保存 raw
+  response text、rendered prompt text、patch diff 或 API key；
+- 先新增 Gemini repaired v0.3 config/example 和 local ignored config，再跑
+  strict preflight、smoke check-only、full check-only；
+- smoke API 必须先通过，再跑 full API；
+- full API 通过后生成 Gemini label-conditioned summary、three-model main
+  table、false-accept case analysis、APSEC/CCF-C 正文更新、reviewer-aware audit；
+- 如果 preflight、smoke、full、parse/cost gate 任一失败，必须先诊断是执行链路、
+  模型输出格式、API/成本还是实验设计问题，修复后重新通过对应最小 gate；
+- GitHub push 如果继续因 443 reset/timeout 失败，按用户授权直接记录并忽略，
+  不阻塞本地实验和论文产物。
+
+验收条件：
+
+- Gemini repaired v0.3 config/example、preflight summary、smoke/full check-only
+  summaries、smoke/full API summaries 均生成；
+- Gemini smoke API 通过；
+- Gemini full API 通过，686/686 parse-valid 且 cost gate passed；
+- 生成 Gemini label-conditioned summary JSON/Markdown；
+- APSEC/CCF-C 主结果升级为 three-model repaired EVP-8 evidence，并保留边界：
+  仍非 broad-LLM superiority 或 autonomous correctness verifier 结论；
+- false-accept analysis 至少给出 raw-output-free aggregate anatomy；若能生成
+  sanitized candidate-level decision export，则写 case-level table，否则明确记录
+  不足；
+- reviewer-aware audit 重新通过；
+- IEEEtran/BibTeX/page budget 至少形成可审计转换包或明确阻塞原因；
+- 更新 README/INDEX/current project state/engineering notes，运行最小验证并本地
+  commit；GitHub push 失败按本轮授权记录并忽略。
+
+执行结果：
+
+- 新增 `configs/evp8_gemini_repaired_v0_3.example.json`，本地执行使用 ignored
+  `configs/evp8_gemini_repaired_v0_3.local.json`，未进入 Git；
+- strict preflight 通过：
+  `data/protocols/evp8_gemini_repaired_v0_3_preflight_summary.json`；
+- smoke check-only 和 full check-only 通过：
+  `data/protocols/evp8_gemini_repaired_v0_3_smoke_check_only.json`、
+  `data/protocols/evp8_gemini_repaired_v0_3_full_check_only.json`；
+- Gemini smoke API 通过：35/35 parse-valid，cost gate passed，估算成本
+  USD `0.034846500`；
+- Gemini full API 通过：686/686 parse-valid，`first_batch_full_gate=passed`，
+  `run_gate=passed`，`usage_cost_gate=passed`，估算成本 USD `0.638910370`；
+- full run 决策计数为 `accept=101`、`escalate=291`、`reject=294`，E6 决策为
+  `accept=25`、`reject=73`；
+- Gemini label-conditioned summary 已生成：
+  `data/reviews/evp8_gemini_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json`
+  和
+  `docs/experiments/evp8_gemini_repaired_v0_3_prompt_v0_2_label_conditioned_summary.md`；
+- Gemini E6 label-conditioned 指标为：25 accepts、20 correct accepts、
+  5 false accepts、accepted precision `80.00%`、correct recall `95.24%`、
+  false accept rate `6.49%`、escalation rate `0.00%`；
+- 新增 Gemini repaired run packet：
+  `data/protocols/evp8_gemini_repaired_v0_3_run_packet.json` 和
+  `docs/experiments/evp8_gemini_repaired_v0_3_run_packet.md`，状态为
+  `passed`；
+- 新增 sanitized false-accept case analysis：
+  `data/reviews/apsec_false_accept_case_analysis_v0_2.json` 和
+  `docs/paper/apsec_false_accept_case_analysis_v0_2.md`。该产物只保留 candidate
+  id、project、task、negative type、E6/no-verdict decision 和压缩 rationale
+  category，不保存 raw response text、rendered prompt、patch diff 或凭证；
+- APSEC 和 CCF-C 正文已升级为 Qwen + DeepSeek + Gemini three-model repaired
+  v0.3 主结果；审计 `scripts/audit_apsec_manuscript_rewrite.py --check` 和
+  `scripts/audit_ccfc_manuscript_v0_3.py --check` 均通过；
+- 新增 APSEC IEEEtran/BibTeX/page-budget 草案包：
+  `docs/paper/apsec_ieeetran_draft.tex`、
+  `docs/paper/apsec_references.bib`、
+  `data/reviews/apsec_page_budget_audit_v0_1.json` 和
+  `docs/paper/apsec_page_budget_audit_v0_1.md`。页数估算为 7.05 页，实际
+  IEEEtran/BibTeX 编译 PDF 为 6 页且 latest log 无 undefined references；
+  仍有 6 个 overfull hbox 和 24 个 underfull hbox，需要后续手工修表格宽度和版面；
+- 当前论文边界：three-model repaired result 已解决 single-model/two-model
+  主结果硬伤，但仍不是 broad-model superiority、autonomous correctness
+  verifier，也没有证明 LLM 显著优于 deterministic rule-only baseline。
 
 ## 0.35 2026-07-05 DeepSeek repaired EVP-8 v0.3 E0-E6 main run
 
@@ -69,7 +160,7 @@ DeepSeek 结果写成三模型结论。
   同一实验前后矛盾；
 - `scripts/audit_apsec_manuscript_rewrite.py --check` 通过，审计状态保持
   `passed`。
-- Git commit 已完成：`4af1b60 Add DeepSeek repaired EVP-8 results`；
+- Git commit 已完成：`f6c48a9 Add DeepSeek repaired EVP-8 results`；
 - GitHub push 连续三次失败，原因是 HTTPS/GitHub 443 连接 reset/timeout；
   当前本地分支相对 `origin/evp8-v03-qwen-main-exp` 为 `[ahead 1]`。
 

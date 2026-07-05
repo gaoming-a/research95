@@ -159,6 +159,8 @@ def preflight(config_path: Path, allow_missing_credentials: bool = False) -> dic
     models = config.get("models") or []
     model_ids = [model.get("model_id") for model in models]
     api_key_envs = [model.get("api_key_env") for model in models]
+    config_supported_models = set(config.get("supported_model_ids") or [])
+    supported_models = SUPPORTED_MODELS | {str(model_id) for model_id in config_supported_models}
     configured_model_controls = _model_request_controls(models)
     expected_model_controls = (spec.get("routing_policy") or {}).get("direct_provider_model_controls") or {}
     planned_model_ids = _planned_model_ids(spec)
@@ -166,7 +168,7 @@ def preflight(config_path: Path, allow_missing_credentials: bool = False) -> dic
         [
             _check("protocol_audit_ready_for_preflight", audit.get("phase0_api_readiness") == "ready_for_api_preflight", audit.get("phase0_api_readiness")),
             _check("protocol_audit_no_api", audit.get("api_call_attempted") is False, audit.get("api_call_attempted")),
-            _check("configured_model_ids_supported", bool(model_ids) and set(model_ids).issubset(SUPPORTED_MODELS), model_ids),
+            _check("configured_model_ids_supported", bool(model_ids) and set(model_ids).issubset(supported_models), model_ids),
             _check("configured_model_ids_planned_by_protocol", bool(model_ids) and set(model_ids).issubset(planned_model_ids), model_ids),
             _check("configured_api_key_env_names_present", all(isinstance(value, str) and value for value in api_key_envs), api_key_envs),
             _check("direct_provider_model_controls", _configured_controls_match_expected(configured_model_controls, expected_model_controls), configured_model_controls),

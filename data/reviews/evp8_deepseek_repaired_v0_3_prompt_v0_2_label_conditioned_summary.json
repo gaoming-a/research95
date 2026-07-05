@@ -549,7 +549,7 @@
   ],
   "claim_boundary": {
     "allowed": "Report label-conditioned DeepSeek repaired v0.3 descriptive metrics for the frozen 98-candidate E0-E6 packet set.",
-    "forbidden": "Do not claim three-model effectiveness, LLM superiority, or final evidence-level ranking from this two-model repaired analysis."
+    "forbidden": "Do not claim broad LLM superiority, autonomous correctness verification, or final evidence-level ranking from this repaired analysis."
   },
   "cohort_id": "EVP-8",
   "inputs": {
@@ -614,7 +614,7 @@
   "method": {
     "api_call_attempted": false,
     "correct_label": "correct_under_f2p_and_p2p_broad",
-    "decision_parse_source": "raw_response_text final JSON content only",
+    "decision_parse_source": "raw_response_text extracted JSON object",
     "incorrect_definition": "any selected candidate whose label_with_p2p_broad is not the correct label",
     "prompt_text_stored": false,
     "raw_response_content_stored": false,

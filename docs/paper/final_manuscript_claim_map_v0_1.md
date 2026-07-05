@@ -7,7 +7,7 @@ Date: 2026-07-04
 
 ## One-Sentence Argument
 
-In candidate patch verification, we show that a hidden-evaluator evidence-visibility protocol can measure evidence-conditioned LLM merge-gate behavior, supported by the accept-aware Qwen v0.3 label-conditioned analysis, E6 rule-only/no-verdict ablations, tool-contestation audits, and a realistic source-acquisition gate audit.
+In candidate patch verification, we show that a hidden-evaluator evidence-visibility protocol can measure evidence-conditioned LLM merge-gate behavior, supported by the accept-aware Qwen/DeepSeek/Gemini v0.3 label-conditioned analyses, E6 rule-only/no-verdict ablations, tool-contestation audits, and a realistic source-acquisition gate audit.
 
 ## Terminology Ledger
 
@@ -27,7 +27,7 @@ In candidate patch verification, we show that a hidden-evaluator evidence-visibi
 | id | claim | status | evidence | paper location | boundary |
 | --- | --- | --- | --- | --- | --- |
 | `C1` | EVP-8 defines a valid hidden-evaluator evidence boundary for candidate patch verification. | `supported` | evp8_protocol_v0_3_qwen_first, final_experiment_setting_validity_audit | Methods: Evidence-visibility protocol | Protocol validity, not model effectiveness. |
-| `C2` | In the Qwen v0.3 accept-aware run, visible executable and tool evidence changed correct-patch acceptance while introducing bounded false-accept risk. | `supported_qwen_only` | v0_2_accept_aware_synthesis, v0_3_qwen_label_conditioned_summary | Results: Accept-aware label-conditioned behavior | Qwen-only v0.3 descriptive result; not a five-model effectiveness claim or final evidence-level ranking. |
+| `C2` | In three repaired v0.3 accept-aware runs, visible executable and tool evidence changed correct-patch acceptance while retaining bounded false-accept risk. | `supported_three_model` | v0_3_qwen_label_conditioned_summary, v0_3_deepseek_label_conditioned_summary, v0_3_gemini_label_conditioned_summary | Results: Accept-aware label-conditioned behavior | Three-model v0.3 descriptive result; not broad-model superiority or autonomous correctness verification. |
 | `C3` | Verdict-like tool summaries can anchor model decisions; removing or contesting them changes behavior. | `supported_qualified` | evp8_e6_no_verdict_ablation_comparison, evp8_hard_tool_contestation_result_audit | Results: Verdict dependence and contestation | Measured as policy behavior, not semantic proof. |
 | `C4` | Tool-contestation primarily improves safe handling through escalation rather than strict correction. | `supported` | EVP-8-HARD tool-contestation audit | Results: Tool-contestation as risk triage | Strict correction remains separate and limited. |
 | `C5` | The fresh realistic hard-negative branch is a source-acquisition negative result, not a verifier-ready main experiment. | `supported_negative_boundary` | realistic_hardneg_generation_gate | Threats/Discussion: Realistic hard-negative acquisition | Do not use it as three-project verifier evidence. |
@@ -148,6 +148,8 @@ In candidate patch verification, we show that a hidden-evaluator evidence-visibi
 | `hard_tool_contestation_audit_passed` | true | `passed` |
 | `realistic_gate_not_verifier_ready` | true | `{'minimum_count': 30, 'minimum_projects': 3, 'passed': False, 'required_property': 'patch_applied && declared_visible_tests_passed && hidden_oracle_failed', 'visible_pass_hidden_fail_count': 26, 'visible_pass_hidden_fail_projects': ['PySnooper', 'cookiecutter'], 'visible_pass_hidden_fail_tasks': ['bugsinpy_PySnooper_3', 'bugsinpy_cookiecutter_2', 'bugsinpy_cookiecutter_3']}` |
 | `qwen_label_conditioned_checks_passed` | true | `9` |
+| `deepseek_label_conditioned_checks_passed` | true | `9` |
+| `gemini_label_conditioned_checks_passed` | true | `9` |
 | `phase_a_analysis_checks_passed` | true | `7` |
 | `baseline_feasibility_audit_passed` | true | `passed` |
 | `citation_support_bank_present` | true | `docs\paper\ccfc_citation_support_bank_v0_1.md` |

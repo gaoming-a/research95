@@ -60,4 +60,4 @@
 ## Interpretation Boundary
 
 - Allowed: Report label-conditioned DeepSeek repaired v0.3 descriptive metrics for the frozen 98-candidate E0-E6 packet set.
-- Forbidden: Do not claim three-model effectiveness, LLM superiority, or final evidence-level ranking from this two-model repaired analysis.
+- Forbidden: Do not claim broad LLM superiority, autonomous correctness verification, or final evidence-level ranking from this repaired analysis.

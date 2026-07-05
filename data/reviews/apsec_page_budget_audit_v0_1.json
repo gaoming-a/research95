@@ -1,0 +1,61 @@
+{
+  "artifact_id": "apsec_page_budget_audit_v0_1",
+  "checks": [
+    {
+      "check": "ieeetran_source_generated",
+      "passed": true
+    },
+    {
+      "check": "bibtex_generated",
+      "passed": true
+    },
+    {
+      "check": "citation_keys_converted_to_cite_commands",
+      "passed": true
+    },
+    {
+      "check": "page_budget_estimate_within_apsec_technical_limit",
+      "passed": true
+    },
+    {
+      "check": "final_pdf_not_claimed",
+      "passed": true
+    }
+  ],
+  "compile_summary": {
+    "compiled_pdf_pages": 6,
+    "compiled_pdf_present": true,
+    "log_present": true,
+    "overfull_hbox_count_in_latest_log": 6,
+    "undefined_references_in_latest_log": false,
+    "underfull_hbox_count_in_latest_log": 24
+  },
+  "counts": {
+    "compiled_pdf_pages": 6,
+    "converted_figure_count": 3,
+    "converted_table_count": 11,
+    "estimated_pages": 7.05,
+    "reference_count": 11,
+    "word_count_excluding_tables": 2706
+  },
+  "date": "2026-07-06",
+  "outputs": {
+    "audit_json": "data/reviews/apsec_page_budget_audit_v0_1.json",
+    "audit_md": "docs/paper/apsec_page_budget_audit_v0_1.md",
+    "bib": "docs/paper/apsec_references.bib",
+    "tex": "docs/paper/apsec_ieeetran_draft.tex"
+  },
+  "remaining_formatting_risks": [
+    "Converted table captions are mechanical and should be manually shortened before submission.",
+    "Compiled PDF still has table-width overfull/underfull warnings that need manual layout repair.",
+    "Final double-blind compliance still requires visual inspection.",
+    "BibTeX entries compile but should be normalized to venue-quality fields.",
+    "The current package is a draft source conversion, not a submitted or camera-ready PDF."
+  ],
+  "status": "passed",
+  "target": {
+    "assumed_apsec_technical_page_limit": 10,
+    "format": "anonymous IEEEtran conference draft",
+    "note": "Estimate only; final status requires local LaTeX compilation and visual page inspection."
+  }
+}
