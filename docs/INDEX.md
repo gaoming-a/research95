@@ -30,8 +30,10 @@
   humanized evidence ladder, RQ4 demotion, rule-only baseline interpretation,
   E6 false-accept aggregate anatomy, and Reference Support Records removal.
   It still requires anonymous IEEEtran, BibTeX, page-budget, figure/table, and
-  double-blind conversion before submission, and stronger APSEC competitiveness
-  would require repaired multi-model E0-E6 main results. The no-API Luigi
+  double-blind conversion before submission. APSEC competitiveness has been
+  improved from single-model to Qwen + DeepSeek two-model repaired v0.3 E0-E6
+  main evidence, but a third repaired main model and raw-output-free
+  false-accept case export remain open. The no-API Luigi
   source-acquisition/materialization protocol is
   optional future work, not the current blocker. Historical `origin/main`
   entries retained later in plan logs are audit records only. As of
@@ -109,6 +111,10 @@
   0.34 entry records the APSEC false-accept case-analysis feasibility audit:
   current tracked summaries support aggregate anatomy only and need a sanitized
   candidate-level decision export before concrete case tables can be written.
+  The 2026-07-05 0.35 entry records the user-authorized DeepSeek repaired
+  v0.3 E0-E6 main run: strict preflight, smoke/full check-only, smoke API,
+  full API, label-conditioned analysis, APSEC two-model rewrite update, and
+  run packet all passed.
 - `../scripts/write_evp8_realistic_hardneg_uplift_packet.py`: no-API boundary
   packet writer for the realistic hard-negative uplift route. It reads the
   tracked combined generation gate only and writes the current missing
@@ -218,6 +224,33 @@
   feasibility audit for APSEC false-accept case analysis. It checks whether the
   tracked Qwen label-conditioned summaries expose candidate-level false-accept
   records.
+- `../configs/evp8_deepseek_repaired_v0_3.example.json`: tracked DeepSeek
+  repaired v0.3 example config. The corresponding `.local.json` file is
+  ignored and must not be staged.
+- `../scripts/write_evp8_deepseek_repaired_v0_3_run_packet.py`: raw-output-free
+  DeepSeek repaired v0.3 run-packet writer. It links readiness, dry-run,
+  smoke/full API summaries, label-conditioned metrics, and the APSEC audit
+  without reading ignored raw responses.
+- `../data/protocols/evp8_deepseek_repaired_v0_3_preflight_summary.json`,
+  `../data/protocols/evp8_deepseek_repaired_v0_3_smoke_check_only.json`, and
+  `../data/protocols/evp8_deepseek_repaired_v0_3_full_check_only.json`:
+  DeepSeek repaired v0.3 readiness and no-API packet/schema checks. All passed.
+- `../data/reviews/evp8_deepseek_repaired_v0_3_prompt_v0_2_deepseek_deepseek-v4-pro_smoke_summary.json`
+  and
+  `../data/reviews/evp8_deepseek_repaired_v0_3_prompt_v0_2_deepseek_deepseek-v4-pro_full_summary.json`:
+  tracked raw-text-free DeepSeek API run summaries. Full run passed on
+  686/686 parse-valid records with estimated cost USD `0.434221524`.
+- `../data/reviews/evp8_deepseek_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json`
+  and
+  `experiments/evp8_deepseek_repaired_v0_3_prompt_v0_2_label_conditioned_summary.md`:
+  DeepSeek repaired v0.3 hidden-label-joined aggregate metrics. E6 has
+  21 accepts, 17 correct accepts, 4 false accepts, accepted precision
+  `80.95%`, correct recall `80.95%`, false accept rate `5.19%`, and
+  escalation rate `4.08%`.
+- `../data/protocols/evp8_deepseek_repaired_v0_3_run_packet.json` and
+  `experiments/evp8_deepseek_repaired_v0_3_run_packet.md`: current
+  DeepSeek repaired v0.3 run packet. Status is `passed`; remaining gaps are a
+  third repaired E0-E6 model and sanitized candidate-level false-accept export.
 - `../data/reviews/apsec_false_accept_case_feasibility_v0_1.json` and
   `paper/apsec_false_accept_case_feasibility_v0_1.md`: false-accept
   case-analysis feasibility audit. Status is

@@ -309,6 +309,14 @@ def build_summary(
     candidate_set_path: Path,
     labels_path: Path,
     raw_responses_path: Path,
+    *,
+    analysis_id: str = "evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary",
+    model_id: str = "qwen/qwen3.7-max",
+    request_model_id: str = "qwen3.7-max",
+    provider_route: str = "qwen_official",
+    raw_input_key: str = "qwen_full_raw_responses",
+    allowed_claim: str | None = None,
+    forbidden_claim: str | None = None,
 ) -> dict[str, Any]:
     candidate_map = build_candidate_map(candidate_set_path)
     label_map = build_label_map(labels_path)
@@ -331,16 +339,16 @@ def build_summary(
             "false_accept_rate_delta_vs_e0": round(far - baseline_far, 6),
         }
     analysis = {
-        "analysis_id": "evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary",
+        "analysis_id": analysis_id,
         "cohort_id": "EVP-8",
         "protocol_id": "evp8_accept_aware_qwen_first_main_v0_3",
-        "model_id": "qwen/qwen3.7-max",
-        "request_model_id": "qwen3.7-max",
-        "provider_route": "qwen_official",
+        "model_id": model_id,
+        "request_model_id": request_model_id,
+        "provider_route": provider_route,
         "inputs": {
             "candidate_set": display_path(candidate_set_path),
             "evaluator_only_labels": display_path(labels_path),
-            "qwen_full_raw_responses": display_path(raw_responses_path),
+            raw_input_key: display_path(raw_responses_path),
         },
         "method": {
             "correct_label": CORRECT_LABEL,
@@ -383,11 +391,13 @@ def build_summary(
             check("api_call_not_attempted", True, False),
         ],
         "claim_boundary": {
-            "allowed": (
+            "allowed": allowed_claim
+            or (
                 "Report label-conditioned Qwen v0.3 descriptive metrics for the frozen "
                 "98-candidate E0-E6 packet set."
             ),
-            "forbidden": (
+            "forbidden": forbidden_claim
+            or (
                 "Do not claim five-model effectiveness, DeepSeek/Qwen comparison, LLM "
                 "superiority, or final evidence-level ranking from this Qwen-only analysis."
             ),
@@ -511,10 +521,28 @@ def main() -> int:
     parser.add_argument("--raw-responses", type=Path, default=DEFAULT_RAW_RESPONSES)
     parser.add_argument("--json-out", type=Path, default=DEFAULT_JSON_OUT)
     parser.add_argument("--md-out", type=Path, default=DEFAULT_MD_OUT)
+    parser.add_argument("--analysis-id", default="evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary")
+    parser.add_argument("--model-id", default="qwen/qwen3.7-max")
+    parser.add_argument("--request-model-id", default="qwen3.7-max")
+    parser.add_argument("--provider-route", default="qwen_official")
+    parser.add_argument("--raw-input-key", default="qwen_full_raw_responses")
+    parser.add_argument("--allowed-claim")
+    parser.add_argument("--forbidden-claim")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
 
-    analysis = build_summary(args.candidate_set, args.labels, args.raw_responses)
+    analysis = build_summary(
+        args.candidate_set,
+        args.labels,
+        args.raw_responses,
+        analysis_id=args.analysis_id,
+        model_id=args.model_id,
+        request_model_id=args.request_model_id,
+        provider_route=args.provider_route,
+        raw_input_key=args.raw_input_key,
+        allowed_claim=args.allowed_claim,
+        forbidden_claim=args.forbidden_claim,
+    )
     write_json(args.json_out, analysis)
     write_markdown(args.md_out, analysis)
     if args.check and not all(item["passed"] for item in analysis["checks"]):

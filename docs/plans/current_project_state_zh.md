@@ -46,7 +46,10 @@
   humanized E0-E6 表、RQ4 降级、rule-only 强基线解释、E6 false-accept aggregate
   anatomy、Reference Support Records 删除。它适合作为匿名 IEEEtran / BibTeX /
   10-page APSEC formatting 的下一步输入，但还不是最终投稿 PDF。
-  在 `ready_for_verifier_api=false` 时仍不得运行 Qwen/DeepSeek verifier API。
+  对 realistic hard-negative branch，在 `ready_for_verifier_api=false` 时仍不得
+  运行 Qwen/DeepSeek verifier API。该限制不追溯否定 2026-07-05 用户明确授权
+  并已完成的 DeepSeek repaired v0.3 E0-E6 main run；后续 Gemini/Kimi/Devstral
+  repaired run 仍需要新的明确授权和 preflight。
 
 ## 2026-07-05 快速状态增量
 
@@ -68,19 +71,33 @@
 - 2026-07-05 APSEC reviewer-risk repair 已完成：当前稿件明确承认
   paper-facing main result remains single-model，rule-only baseline already
   strong，并将 realistic hard-negative branch 作为 source-acquisition boundary。
-  若要提高 APSEC 接收概率，仍需另起计划补 repaired DeepSeek E0-E6，最好再补
-  Gemini/Kimi repaired E0-E6，以及四个 Qwen E6 false accepts 的 raw-output-free
-  case-level analysis。
+  若要继续提高 APSEC 接收概率，仍需另起计划补第三个 repaired E0-E6 主模型
+  （如 Gemini/Kimi），以及 Qwen 和 DeepSeek E6 false accepts 的
+  raw-output-free case-level analysis。
 - 当前 Git 同步状态：2026-07-05 继续执行后 GitHub push 已恢复成功，远端包含
   APSEC reviewer-risk repair。
 - 新增 APSEC false-accept case-analysis feasibility audit，状态为
   `blocked_missing_candidate_level_decision_export`：当前 no-raw summaries 只支持
   4 个 E6 false accepts 的 aggregate anatomy（3 partial fixes + 1 regression
   patch），不支持具体 candidate-level case table。
-- 当前 Git 同步状态：本地 commit
-  `Audit APSEC false accept case feasibility` 已完成，但 GitHub push 因
-  HTTPS/GitHub 443 连接 reset/timeout 连续失败；当前分支相对
-  `origin/evp8-v03-qwen-main-exp` 为 `[ahead 1]`。
+- 新增 DeepSeek repaired EVP-8 v0.3 run：strict preflight、smoke/full
+  check-only、smoke API、full API 和 label-conditioned analysis 均通过。full API
+  为 686/686 parse-valid，估算成本 USD `0.434221524`；DeepSeek E6 为
+  21 accepts、17 correct accepts、4 false accepts、accepted precision `80.95%`、
+  correct recall `80.95%`、false accept rate `5.19%`、escalation rate `4.08%`。
+- APSEC rewrite 现在使用 Qwen + DeepSeek two-model repaired main result，并在
+  正文中显式区分 repaired v0.3 E0-E6 主表和独立 E6 verdict-field ablation
+  package，避免 DeepSeek E6 数字来源混淆。
+- 新增 DeepSeek run packet：
+  `docs/experiments/evp8_deepseek_repaired_v0_3_run_packet.md` 和
+  `data/protocols/evp8_deepseek_repaired_v0_3_run_packet.json`，状态为
+  `passed`。
+- 当前剩余 APSEC 实验缺口：第三个 repaired E0-E6 主模型，以及 raw-output-free
+  candidate-level false-accept case export。两者都不能从 aggregate summaries
+  直接推断。
+- 当前 Git 同步状态：本地 commit `Add DeepSeek repaired EVP-8 results` 已完成；
+  GitHub push 连续三次失败，原因是 HTTPS/GitHub 443 连接 reset/timeout；当前
+  分支相对 `origin/evp8-v03-qwen-main-exp` 为 `[ahead 1]`。
 
 ## 2026-07-04 快速状态增量
 

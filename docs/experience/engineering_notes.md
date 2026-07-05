@@ -4580,3 +4580,26 @@ This file starts fresh for the patch-verification project.
 - The sanitized export must exclude raw response text, rendered prompts, patch
   diffs, full rationale text, and credentials. If producing it requires reading
   an ignored raw decision source, that needs an explicit plan and boundary.
+
+## 2026-07-05 DeepSeek repaired v0.3 run boundary
+
+- API authorization must still pass through local readiness gates. The
+  DeepSeek repaired v0.3 run only proceeded after strict preflight, smoke
+  check-only, and full check-only passed; this prevented the authorized API
+  call from bypassing the project execution loop.
+- A second repaired model changes the paper claim boundary, but not all the way
+  to broad generality. Qwen + DeepSeek supports a two-model controlled
+  evidence-visibility result; a third repaired model is still needed before
+  writing a stronger APSEC main table.
+- When multiple experiment packages share labels such as `E6-full`, the
+  manuscript must identify which package each row comes from. In this run,
+  repaired v0.3 DeepSeek E6 and the earlier E6 verdict-field ablation package
+  have different numbers; the fix was to state that the ablation table is
+  separate evidence, not the repaired v0.3 main E0-E6 table.
+- DeepSeek's E4-E5 conservatism is a result, not an error to smooth over.
+  More visible evidence changed policy behavior, but did not produce monotonic
+  correctness or a correctness oracle. The manuscript should preserve that
+  nonmonotonic pattern.
+- Raw-output-free tracked summaries are enough for aggregate label-conditioned
+  metrics and run packets, but not enough for concrete false-accept case
+  analysis unless candidate-level decision exports are explicitly produced.

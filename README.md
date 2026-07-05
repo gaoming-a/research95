@@ -66,7 +66,7 @@ Use the current short status entry first:
 
 - `docs/plans/current_project_state_zh.md`
 
-As of 2026-07-04, the stable CCF-C route has two additional paper-facing
+As of 2026-07-05, the stable CCF-C route has two additional paper-facing
 support artifacts: `docs/paper/ccfc_citation_support_bank_v0_1.md` for
 claim-to-citation mapping, and
 `docs/paper/ccfc_baseline_feasibility_audit_v0_1.md` for deterministic
@@ -109,10 +109,15 @@ the title is scoped to a controlled LLM patch-verifier study, the 98-candidate
 composition table is included, E0-E6 levels are written in natural language,
 the failed realistic branch is no longer a main RQ, the strong rule-only
 baseline is acknowledged, and E6 false accepts are summarized as three partial
-fixes plus one regression patch. The remaining APSEC competitiveness gap is
-experimental rather than textual: add repaired E0-E6 main results for
-DeepSeek and preferably Gemini/Kimi, plus a raw-output-free case-level analysis
-of the four Qwen E6 false accepts.
+fixes plus one regression patch. The APSEC main result now includes repaired
+Qwen and DeepSeek v0.3 E0-E6 label-conditioned evidence. DeepSeek v0.3 passed
+the strict preflight, smoke/full check-only gates, smoke API, and full API on
+686/686 parse-valid records; its E6 label-conditioned result is 17/21 correct
+accepts and 4/77 false accepts. The run packet is
+`docs/experiments/evp8_deepseek_repaired_v0_3_run_packet.md`. The remaining
+APSEC competitiveness gap is no longer the second model but a third repaired
+E0-E6 main table, plus raw-output-free case-level analysis for the Qwen and
+DeepSeek E6 false accepts.
 
 The false-accept case-analysis feasibility audit is now tracked at
 `docs/paper/apsec_false_accept_case_feasibility_v0_1.md`. It confirms that the

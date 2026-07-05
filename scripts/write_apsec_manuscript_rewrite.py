@@ -26,6 +26,12 @@ QWEN_LABEL_CONDITIONED_SUMMARY = (
     / "reviews"
     / "evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json"
 )
+DEEPSEEK_LABEL_CONDITIONED_SUMMARY = (
+    REPO_ROOT
+    / "data"
+    / "reviews"
+    / "evp8_deepseek_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json"
+)
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -61,6 +67,40 @@ def qwen_table(claim_map: dict[str, Any]) -> list[str]:
     for row in claim_map["qwen_label_conditioned_metrics"]:
         lines.append(
             f"| {row['level']} | {row['accept']} | {row['correct_accept']} | {row['false_accept']} | "
+            f"{percent(row.get('accepted_precision'))} | {percent(row.get('correct_recall'))} | "
+            f"{percent(row.get('false_accept_rate'))} | {percent(row.get('escalation_rate'))} |"
+        )
+    return lines
+
+
+def label_conditioned_table(summary: dict[str, Any]) -> list[str]:
+    lines = [
+        "| level | accept | correct accept | false accept | accepted precision | correct recall | false accept rate | escalation rate |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for level in ["E0", "E1", "E2", "E3", "E4", "E5", "E6"]:
+        row = summary["per_evidence_level"][level]
+        confusion = row["confusion_counts"]
+        lines.append(
+            f"| {level} | {row['decision_counts'].get('accept', 0)} | {confusion['true_accept']} | {confusion['false_accept']} | "
+            f"{percent(row.get('accepted_precision'))} | {percent(row.get('correct_recall'))} | "
+            f"{percent(row.get('false_accept_rate'))} | {percent(row.get('escalation_rate'))} |"
+        )
+    return lines
+
+
+def repaired_model_summary_table(
+    qwen_summary: dict[str, Any], deepseek_summary: dict[str, Any]
+) -> list[str]:
+    lines = [
+        "| model | E6 accept | E6 correct accept | E6 false accept | E6 accepted precision | E6 correct recall | E6 false accept rate | E6 escalation rate |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for summary in [qwen_summary, deepseek_summary]:
+        row = summary["per_evidence_level"]["E6"]
+        confusion = row["confusion_counts"]
+        lines.append(
+            f"| {summary['model_id']} | {row['decision_counts'].get('accept', 0)} | {confusion['true_accept']} | {confusion['false_accept']} | "
             f"{percent(row.get('accepted_precision'))} | {percent(row.get('correct_recall'))} | "
             f"{percent(row.get('false_accept_rate'))} | {percent(row.get('escalation_rate'))} |"
         )
@@ -243,6 +283,7 @@ def false_accept_anatomy_table(label_summary: dict[str, Any]) -> list[str]:
 def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
     candidate_summary = read_json(CANDIDATE_SET_SUMMARY)
     label_summary = read_json(QWEN_LABEL_CONDITIONED_SUMMARY)
+    deepseek_label_summary = read_json(DEEPSEEK_LABEL_CONDITIONED_SUMMARY)
     qwen_opp = claim_map["hard_tool_contestation_summary"]["qwen_opportunity"]
     deepseek_opp = claim_map["hard_tool_contestation_summary"][
         "deepseek_opportunity"
@@ -260,7 +301,7 @@ def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "## Abstract",
         "",
-        "Patch-verification decisions made by large language models (LLMs) are meaningful only relative to the evidence visible at review time. Existing evaluations often report whether an LLM accepts or rejects a patch without making this evidence boundary explicit, which makes it difficult to separate model capability from visible-test evidence, tool-summary anchoring, or prompt-induced caution. This paper introduces the Evidence-Visibility Protocol (EVP-8), a hidden-evaluator protocol for candidate patch verification. EVP-8 reviews 98 candidate patches across seven cumulative evidence levels while withholding evaluator-only correctness labels until post-decision analysis. In the repaired Qwen v0.3 run, correct recall was 0.00% at E0-E2, 80.95% at E3, 85.71% at E4-E5, and 95.24% at E6; E6 accepted precision was 83.33%, with four false accepts among 77 non-correct candidates. E6 rule-only and no-verdict ablations show that verdict-like tool summaries can anchor policy behavior, and tool-contestation moved known tool false accepts mainly to escalation rather than strict rejection. These results support a bounded software-engineering claim: in this controlled LLM patch-verifier study, evidence visibility should be treated as an experimental variable for risk control, not as proof of general autonomous correctness verification.",
+        "Patch-verification decisions made by large language models (LLMs) are meaningful only relative to the evidence visible at review time. Existing evaluations often report whether an LLM accepts or rejects a patch without making this evidence boundary explicit, which makes it difficult to separate model capability from visible-test evidence, tool-summary anchoring, or prompt-induced caution. This paper introduces the Evidence-Visibility Protocol (EVP-8), a hidden-evaluator protocol for candidate patch verification. EVP-8 reviews 98 candidate patches across seven cumulative evidence levels while withholding evaluator-only correctness labels until post-decision analysis. In two repaired v0.3 runs, Qwen reached 95.24% E6 correct recall with 83.33% accepted precision, while DeepSeek reached 80.95% E6 correct recall with 80.95% accepted precision; both accepted four of 77 non-correct candidates at E6. E6 rule-only and no-verdict ablations show that verdict-like tool summaries can anchor policy behavior, and tool-contestation moved known tool false accepts mainly to escalation rather than strict rejection. These results support a bounded software-engineering claim: in this controlled LLM patch-verifier study, evidence visibility should be treated as an experimental variable for risk control, not as proof of general autonomous correctness verification.",
         "",
         "## 1. Introduction",
         "",
@@ -268,12 +309,12 @@ def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "The difficulty is not only whether an LLM can read code. It is that a verifier's decision may change when issue context, patch structure, static status, visible tests, regression checks, diagnostics, or tool summaries become visible. If these evidence fields are not controlled, an evaluation may conflate model judgment with evidence presentation. In particular, authoritative-looking tool summaries can encourage acceptance even when the underlying semantic correctness remains unknown.",
         "",
-        "This paper studies candidate patch verification as an evidence-conditioned merge-gate task. A verifier receives a candidate patch and a predefined model-visible evidence packet, then emits one of three decisions: accept, reject, or escalate. Correctness labels and hidden evaluator outcomes are joined only after the decision. This design follows the intuition behind reject-option and selective-classification settings [chow_tit_1970_reject_option; geifman_el_yaniv_2017_selective_classification], but applies it to software patch verification. The current empirical scope is intentionally controlled: the paper-facing main result is a repaired Qwen v0.3 analysis, supported by E6 ablations and two-model tool-contestation evidence, rather than a broad claim about all LLM verifiers.",
+        "This paper studies candidate patch verification as an evidence-conditioned merge-gate task. A verifier receives a candidate patch and a predefined model-visible evidence packet, then emits one of three decisions: accept, reject, or escalate. Correctness labels and hidden evaluator outcomes are joined only after the decision. This design follows the intuition behind reject-option and selective-classification settings [chow_tit_1970_reject_option; geifman_el_yaniv_2017_selective_classification], but applies it to software patch verification. The current empirical scope is intentionally controlled: the paper-facing main result is a two-model repaired v0.3 analysis for Qwen and DeepSeek, supported by E6 ablations and tool-contestation evidence, rather than a broad claim about all LLM verifiers.",
         "",
         "The paper makes three contributions:",
         "",
         "- It defines EVP-8, a hidden-evaluator evidence-visibility protocol for measuring accept, reject, and escalation behavior in candidate patch verification.",
-        "- It reports repaired Qwen v0.3 label-conditioned results showing that visible executable and tool evidence can unlock correct-patch acceptance while introducing bounded false-accept risk.",
+        "- It reports repaired Qwen and DeepSeek v0.3 label-conditioned results showing that visible executable and tool evidence can unlock correct-patch acceptance while introducing bounded false-accept risk.",
         "- It analyzes E6 rule-only, no-verdict, and tool-contestation conditions to separate deterministic tool evidence, verdict-like anchoring, safe handling, and strict correction.",
         "",
         "The claim is deliberately bounded. The results do not establish reliable autonomous patch correctness verification, nor do they show that LLM decisions consistently outperform deterministic baselines. They show that evidence visibility is a measurable experimental variable that should be controlled and reported in LLM patch-verifier studies.",
@@ -306,11 +347,11 @@ def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         *candidate_composition_table(candidate_summary, label_summary),
         "",
-        "Five selected models produced complete parse-valid decisions on an earlier frozen E0-E6 packet set, but the paper-facing main result uses the repaired Qwen v0.3 label-conditioned analysis and the E6 ablation package. The five-model aggregate synthesis is used only descriptively and not as evidence of final model superiority. A stronger APSEC version would require repaired E0-E6 main tables for additional models under the same accept-aware protocol.",
+        "Five selected models produced complete parse-valid decisions on an earlier frozen E0-E6 packet set, but the paper-facing main result now uses repaired Qwen and DeepSeek v0.3 label-conditioned analyses plus the E6 ablation package. The earlier five-model aggregate synthesis is used only descriptively and not as evidence of final model superiority. A stronger APSEC version would still require a third repaired E0-E6 main table, such as Gemini or Kimi, under the same accept-aware protocol.",
         "",
         "## 4. Experimental Design",
         "",
-        "The experiment asks three research questions. RQ1 asks whether repaired accept-aware evidence changes Qwen's label-conditioned decisions across E0-E6. RQ2 asks whether verdict-like deterministic tool summaries anchor E6 decisions. RQ3 asks whether explicit tool-contestation can challenge visible-test-only accept premises. The fresh realistic hard-negative branch is not treated as a main research question because it did not pass its predeclared source-acquisition gate; it is reported later as a boundary condition.",
+        "The experiment asks three research questions. RQ1 asks whether repaired accept-aware evidence changes Qwen and DeepSeek label-conditioned decisions across E0-E6. RQ2 asks whether verdict-like deterministic tool summaries anchor E6 decisions. RQ3 asks whether explicit tool-contestation can challenge visible-test-only accept premises. The fresh realistic hard-negative branch is not treated as a main research question because it did not pass its predeclared source-acquisition gate; it is reported later as a boundary condition.",
         "",
         "All metrics are computed after post-decision hidden-label join. The main metrics are accepted precision, correct recall, false accept rate, false reject rate, and escalation rate. Accepted precision measures the correctness of accepted patches. Correct recall measures how many correct patches were accepted. False accept rate measures how often non-correct candidates were accepted. Escalation rate measures routing to human review.",
         "",
@@ -322,21 +363,29 @@ def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "## 5. Results",
         "",
-        "### 5.1 Visible executable evidence changed Qwen acceptance behavior",
+        "### 5.1 Visible executable evidence changed two repaired model policies",
         "",
-        "In the repaired Qwen v0.3 run, the E0-E2 conditions produced no accepted correct patches. Once visible executable evidence entered the packet at E3, Qwen began accepting correct patches, reaching 80.95% correct recall at E3 and 95.24% at E6. This gain came with false-accept risk: E6 accepted 4 of 77 non-correct candidates.",
+        "In the repaired Qwen and DeepSeek v0.3 runs, E0-E2 produced no accepted correct patches for either model. Once visible executable evidence entered the packet, both models began accepting correct patches, but their risk policies diverged. Qwen reached 80.95% correct recall at E3 and 95.24% at E6. DeepSeek reached 61.90% correct recall at E3, became more conservative at E4-E5, and reached 80.95% at E6. Both models accepted four of 77 non-correct candidates at E6, yielding the same 5.19% false accept rate in this cohort.",
         "",
-        *qwen_table(claim_map),
+        *repaired_model_summary_table(label_summary, deepseek_label_summary),
+        "",
+        "Qwen level-conditioned metrics:",
+        "",
+        *label_conditioned_table(label_summary),
+        "",
+        "DeepSeek level-conditioned metrics:",
+        "",
+        *label_conditioned_table(deepseek_label_summary),
         "",
         "![Figure 2. Accept-aware and no-verdict metric evidence.](../figures/ccfc/ccfc_fig2_decision_patterns.png)",
         "",
         f"**Figure 2. {figures['Fig. 2']['title']}.** {figures['Fig. 2']['conclusion']} The figure emphasizes the main tradeoff: more visible evidence enabled correct accepts, but acceptance remained bounded by false-accept risk.",
         "",
-        "The result supports an evidence-visibility claim, not a monotonic correctness claim. More evidence changed policy behavior and unlocked acceptance, but the E6 false accepts show that visible evidence did not become a correctness oracle.",
+        "The two-model result supports an evidence-visibility claim, not a monotonic correctness claim. More evidence changed policy behavior and unlocked acceptance, but DeepSeek's E4-E5 conservatism and the shared E6 false accepts show that visible evidence did not become a correctness oracle.",
         "",
         "### 5.2 Verdict-like evidence affected policy behavior",
         "",
-        "The E6 ablation compares the deterministic rule-only visible-tool baseline, full E6 model conditions, and E6-no-verdict conditions. This tests whether model decisions add value beyond following visible tool verdict fields.",
+        "The E6 ablation is a separate verdict-field ablation package rather than the repaired v0.3 E0-E6 main table. It compares the deterministic rule-only visible-tool baseline, full E6 model conditions, and E6-no-verdict conditions to test whether model decisions add value beyond following visible tool verdict fields. Therefore, the DeepSeek E6-full row below should be read as ablation evidence, while the repaired v0.3 DeepSeek E6 row in Section 5.1 is the main E0-E6 evidence-visibility result.",
         "",
         *metric_table(claim_map["e6_ablation_metrics"]),
         "",
@@ -358,7 +407,7 @@ def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "### 5.4 E6 false accepts were concentrated in partial and regression negatives",
         "",
-        "The most important failure mode is not the average E6 score but the four E6 false accepts among 77 non-correct candidates. Aggregate false-accept anatomy shows that Qwen E6 accepted three partial fixes and one regression patch. This breakdown supports the paper's risk framing: visible executable and tool evidence can unlock correct accepts, but summarized tool evidence can still miss semantic incompleteness and regression-safety failures.",
+        "The most important failure mode is not the average E6 score but the four E6 false accepts among 77 non-correct candidates for each repaired model. Aggregate false-accept anatomy shows that both Qwen and DeepSeek E6 accepted three partial fixes and one regression patch. This breakdown supports the paper's risk framing: visible executable and tool evidence can unlock correct accepts, but summarized tool evidence can still miss semantic incompleteness and regression-safety failures. It remains aggregate anatomy, not a case-level project or rationale table.",
         "",
         *false_accept_anatomy_table(label_summary),
         "",
@@ -376,7 +425,7 @@ def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "The strongest current contribution is methodological. EVP-8 provides a reproducible way to separate model-visible evidence from hidden evaluator labels, report accept/reject/escalate outcomes, and connect each claim to a validity gate. This is why the paper is framed as a controlled protocol and measurement study rather than as a new repair or verification algorithm.",
         "",
-        "Several reviewer concerns remain bounded rather than eliminated. The cohort is small, Wilson intervals are wide, Qwen v0.3 is the main repaired condition, majority-vote cannot be computed from the current tracked summaries, and the realistic hard-negative branch did not pass the three-project readiness gate. Most importantly, the current paper-facing main result remains single-model. These are not hidden weaknesses; they are the boundary conditions under which the current claims are valid.",
+        "Several reviewer concerns remain bounded rather than eliminated. The cohort is small, Wilson intervals are wide, repaired Qwen and DeepSeek are the main model conditions, majority-vote cannot be computed from the current tracked summaries, and the realistic hard-negative branch did not pass the three-project readiness gate. Most importantly, the current paper-facing main result is now two-model rather than three-model or broad-model. These are not hidden weaknesses; they are the boundary conditions under which the current claims are valid.",
         "",
         "![Figure 3. Claim boundary and setting-validity map.](../figures/ccfc/ccfc_fig3_claim_boundary.png)",
         "",
@@ -388,13 +437,13 @@ def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "**Construct validity.** The accept/reject/escalate decision space simplifies real review workflows. Escalation is a routing outcome, not proof of semantic rejection. Hidden evaluator labels are used only for post-decision analysis and should not be interpreted as model-visible truth.",
         "",
-        "**External validity.** The main evidence comes from a 98-candidate EVP-8 cohort, an EVP-8-HARD controlled cohort, and selected model conditions. The repaired E0-E6 main result is Qwen-only, and the realistic hard-negative branch did not pass its readiness gate. The results therefore support bounded evidence-conditioned risk behavior in a controlled patch-verifier study, not universal LLM patch-verifier reliability.",
+        "**External validity.** The main evidence comes from a 98-candidate EVP-8 cohort, an EVP-8-HARD controlled cohort, and selected model conditions. The repaired E0-E6 main result now covers Qwen and DeepSeek, but it is still not a three-model or broad-model result, and the realistic hard-negative branch did not pass its readiness gate. The results therefore support bounded evidence-conditioned risk behavior in a controlled patch-verifier study, not universal LLM patch-verifier reliability.",
         "",
         "**Baseline validity.** Rule-only visible-tool is the completed deterministic baseline. Always-* and uniform-random policies are reference policies. Majority-vote and a separate deterministic E0/no-tool verifier remain unavailable under the current tracked-summary boundary.",
         "",
         "## 8. Conclusion",
         "",
-        "This paper introduces EVP-8 as a hidden-evaluator evidence-visibility protocol for candidate patch verification. The repaired Qwen v0.3 result shows that visible executable and tool evidence can unlock correct-patch acceptance while retaining false-accept risk. E6 ablations and tool-contestation further show that verdict-like evidence can shape policy behavior and that safe handling often occurs through escalation rather than strict correction. The contribution is a reproducible software-engineering protocol for measuring evidence-conditioned risk behavior in a controlled LLM patch-verifier study, not a claim of autonomous patch correctness verification.",
+        "This paper introduces EVP-8 as a hidden-evaluator evidence-visibility protocol for candidate patch verification. The repaired Qwen and DeepSeek v0.3 results show that visible executable and tool evidence can unlock correct-patch acceptance while retaining false-accept risk and model-dependent caution. E6 ablations and tool-contestation further show that verdict-like evidence can shape policy behavior and that safe handling often occurs through escalation rather than strict correction. The contribution is a reproducible software-engineering protocol for measuring evidence-conditioned risk behavior in a controlled LLM patch-verifier study, not a claim of autonomous patch correctness verification.",
         "",
         "The citation keys in this Markdown draft must be converted to BibTeX entries before IEEEtran submission.",
         "",

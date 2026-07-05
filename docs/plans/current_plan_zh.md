@@ -2,6 +2,86 @@
 
 最后更新：2026-07-05
 
+## 0.35 2026-07-05 DeepSeek repaired EVP-8 v0.3 E0-E6 main run
+
+本轮目标是完成用户授权的五步：为 APSEC 解决单模型硬伤，补 DeepSeek repaired
+E0-E6 主结果。该轮允许在 readiness、preflight、check-only 全通过后调用
+DeepSeek API；不得调用 Qwen/Gemini/Kimi；不得覆盖 Qwen v0.3 输出；不得把
+DeepSeek 结果写成三模型结论。
+
+执行边界：
+
+- API 授权范围：只允许 `deepseek/deepseek-v4-pro` repaired v0.3 E0-E6；
+- 使用同一 frozen 98-candidate EVP-8 candidate set、同一 E0-E6 ladder、
+  同一 `evp8_visible_evidence_merge_gate_v0_2` prompt、同一 hidden-label join
+  metrics；
+- raw responses 只能写入 ignored `outputs/**`；tracked summaries 不保存 raw
+  response text、rendered prompt text、patch diff 或 API key；
+- 先生成 DeepSeek v0.3 config/readiness packet，再跑 strict preflight、smoke
+  check-only、full check-only；
+- smoke API 必须先通过，再跑 full API；
+- full API 通过后生成 DeepSeek label-conditioned summary，并更新 APSEC rewrite
+  为 Qwen + DeepSeek repaired main result；
+- 如果 preflight、smoke、full、parse/cost gate 任一失败，暂停后续 API 或论文
+  claim 升级，先诊断问题类型。
+
+验收条件：
+
+- 新增 DeepSeek repaired v0.3 config/example 和 readiness packet；
+- strict preflight、smoke check-only、full check-only 通过；
+- DeepSeek smoke API 通过；
+- DeepSeek full API 通过，686/686 parse-valid 且 cost gate passed；
+- 生成 DeepSeek label-conditioned summary JSON/Markdown；
+- APSEC rewrite 主结果升级为 two-model repaired EVP-8 evidence，并保留边界：
+  仍非三模型/通用 LLM 结论；
+- 更新 README/INDEX/current project state/engineering notes；
+- 运行最小验证，提交并推送。
+
+执行结果：
+
+- 新增 `configs/evp8_deepseek_repaired_v0_3.example.json`，本地执行使用 ignored
+  `configs/evp8_deepseek_repaired_v0_3.local.json`，未进入 Git；
+- strict preflight 通过：
+  `data/protocols/evp8_deepseek_repaired_v0_3_preflight_summary.json`；
+- smoke check-only 和 full check-only 通过：
+  `data/protocols/evp8_deepseek_repaired_v0_3_smoke_check_only.json`、
+  `data/protocols/evp8_deepseek_repaired_v0_3_full_check_only.json`；
+- DeepSeek smoke API 通过：35/35 parse-valid，cost gate passed，估算成本
+  USD `0.026675244`；
+- DeepSeek full API 通过：686/686 parse-valid，`first_batch_full_gate=passed`，
+  `run_gate=passed`，`usage_cost_gate=passed`，估算成本 USD `0.434221524`；
+- full run 决策计数为 `accept=45`、`escalate=343`、`reject=298`，E6 决策为
+  `accept=21`、`escalate=4`、`reject=73`；
+- DeepSeek label-conditioned summary 已生成：
+  `data/reviews/evp8_deepseek_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json`
+  和
+  `docs/experiments/evp8_deepseek_repaired_v0_3_prompt_v0_2_label_conditioned_summary.md`；
+- DeepSeek E6 label-conditioned 指标为：21 accepts、17 correct accepts、
+  4 false accepts、accepted precision `80.95%`、correct recall `80.95%`、
+  false accept rate `5.19%`、escalation rate `4.08%`；
+- 新增 DeepSeek repaired run packet：
+  `data/protocols/evp8_deepseek_repaired_v0_3_run_packet.json` 和
+  `docs/experiments/evp8_deepseek_repaired_v0_3_run_packet.md`，状态为
+  `passed`；
+- `docs/paper/apsec_technical_track_rewrite_v0_1.md` 已升级为 Qwen +
+  DeepSeek two-model repaired main result；同时显式区分 repaired v0.3 E0-E6
+  主表和单独的 E6 verdict-field ablation package，避免 DeepSeek E6 数字被误读为
+  同一实验前后矛盾；
+- `scripts/audit_apsec_manuscript_rewrite.py --check` 通过，审计状态保持
+  `passed`。
+- Git commit 已完成：`4af1b60 Add DeepSeek repaired EVP-8 results`；
+- GitHub push 连续三次失败，原因是 HTTPS/GitHub 443 连接 reset/timeout；
+  当前本地分支相对 `origin/evp8-v03-qwen-main-exp` 为 `[ahead 1]`。
+
+当前边界：
+
+- 本轮只完成 DeepSeek repaired v0.3，未授权也未执行 Gemini/Kimi/Devstral
+  repaired v0.3；
+- APSEC 主结果现在是 two-model repaired evidence，不是 three-model 或 broad-LLM
+  verifier 结论；
+- 具体 false-accept case table 仍需要 raw-output-free candidate-level decision
+  export，不能从 aggregate summaries 直接虚构。
+
 ## 0.34 2026-07-05 APSEC false-accept case-analysis feasibility audit
 
 本轮目标是继续推进 APSEC 剩余缺口中不需要 API 的部分：确认四个 Qwen E6

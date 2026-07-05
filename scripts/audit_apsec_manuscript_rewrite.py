@@ -81,6 +81,12 @@ def build_audit() -> dict[str, Any]:
         check("contribution_bullets_present", "The paper makes three contributions:" in manuscript),
         check("evidence_visibility_protocol_present", "Evidence-Visibility Protocol (EVP-8)" in manuscript),
         check(
+            "two_model_repaired_main_result_present",
+            "two-model repaired v0.3 analysis for Qwen and DeepSeek" in manuscript
+            and "| deepseek/deepseek-v4-pro | 21 | 17 | 4 | 80.95% | 80.95% | 5.19% | 4.08% |"
+            in manuscript,
+        ),
+        check(
             "dataset_composition_present",
             "98 candidate patches from 6 projects and 21 BugsInPy tasks" in manuscript
             and "| correct_reference | 21 |" in manuscript
@@ -99,7 +105,23 @@ def build_audit() -> dict[str, Any]:
             "The experiment asks three research questions." in manuscript
             and "RQ4 asks" not in manuscript,
         ),
-        check("qwen_main_result_present", "95.24%" in manuscript and "83.33%" in manuscript and "5.19%" in manuscript),
+        check(
+            "qwen_main_result_present",
+            "95.24%" in manuscript and "83.33%" in manuscript and "5.19%" in manuscript,
+        ),
+        check(
+            "deepseek_main_result_present",
+            "DeepSeek level-conditioned metrics:" in manuscript
+            and "| E6 | 21 | 17 | 4 | 80.95% | 80.95% | 5.19% | 4.08% |"
+            in manuscript,
+        ),
+        check(
+            "ablation_main_table_boundary_present",
+            "The E6 ablation is a separate verdict-field ablation package rather than the repaired v0.3 E0-E6 main table"
+            in manuscript
+            and "the DeepSeek E6-full row below should be read as ablation evidence"
+            in manuscript,
+        ),
         check("rule_only_baseline_present", "rule-only visible-tool" in manuscript),
         check(
             "rule_only_strength_acknowledged",
@@ -112,6 +134,8 @@ def build_audit() -> dict[str, Any]:
         check(
             "false_accept_anatomy_present",
             "E6 false accepts were concentrated in partial and regression negatives" in manuscript
+            and "both Qwen and DeepSeek E6 accepted three partial fixes and one regression patch"
+            in manuscript
             and "| partial_fix | 3/41 |" in manuscript
             and "| regression_patch | 1/1 |" in manuscript,
         ),
@@ -121,9 +145,9 @@ def build_audit() -> dict[str, Any]:
         check("all_expected_citations_present", not missing_citations, missing_citations),
         check("reference_support_records_removed", "Reference Support Records" not in manuscript),
         check(
-            "multi_model_repaired_gap_explicit",
-            "paper-facing main result remains single-model" in manuscript
-            and "would require repaired E0-E6 main tables for additional models" in manuscript,
+            "remaining_three_model_gap_explicit",
+            "still require a third repaired E0-E6 main table" in manuscript
+            and "two-model rather than three-model or broad-model" in manuscript,
         ),
         check("forbidden_overclaims_absent", not forbidden_present, forbidden_present),
         check("api_call_attempted", True, False),
@@ -144,7 +168,7 @@ def build_audit() -> dict[str, Any]:
             else "rewrite_requires_repair",
             "remaining_work": [
                 "If APSEC competitiveness is prioritized, add repaired E0-E6 main tables for at least one more model and preferably two more models.",
-                "Add a raw-output-free case-level false-accept analysis for the four Qwen E6 false accepts.",
+                "Add a raw-output-free case-level false-accept analysis for the Qwen and DeepSeek E6 false accepts.",
                 "Convert citation keys to BibTeX.",
                 "Convert Markdown to anonymous IEEEtran conference LaTeX.",
                 "Check page budget, table widths, figure placement, and double-blind wording.",

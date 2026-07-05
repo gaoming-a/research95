@@ -1,0 +1,283 @@
+{
+  "api_boundary": {
+    "authorized_model": "deepseek/deepseek-v4-pro",
+    "forbidden_without_new_authorization": [
+      "Qwen rerun",
+      "Gemini repaired run",
+      "Kimi repaired run",
+      "Devstral repaired run"
+    ],
+    "request_model_id": "deepseek-v4-pro"
+  },
+  "checks": [
+    {
+      "check": "preflight_strict_ready",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "smoke_check_only_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "full_check_only_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "smoke_api_passed",
+      "detail": {
+        "parse_valid_count": 35,
+        "review_count": 35,
+        "smoke_gate": "passed"
+      },
+      "passed": true
+    },
+    {
+      "check": "full_api_passed",
+      "detail": {
+        "first_batch_full_gate": "passed",
+        "parse_valid_count": 686,
+        "review_count": 686,
+        "run_gate": "passed"
+      },
+      "passed": true
+    },
+    {
+      "check": "cost_gate_passed",
+      "detail": {
+        "total_cost_usd": 0.434221524,
+        "usage_cost_gate": "passed"
+      },
+      "passed": true
+    },
+    {
+      "check": "tracked_summaries_exclude_raw_text",
+      "detail": {
+        "full": false,
+        "smoke": false
+      },
+      "passed": true
+    },
+    {
+      "check": "label_conditioned_deepseek_e6_present",
+      "detail": {
+        "accept": 21,
+        "accepted_precision": 0.809524,
+        "correct_accept": 17,
+        "correct_recall": 0.809524,
+        "escalate": 4,
+        "escalation_rate": 0.040816,
+        "false_accept": 4,
+        "false_accept_rate": 0.051948,
+        "level": "E6",
+        "reject": 73
+      },
+      "passed": true
+    },
+    {
+      "check": "apsec_two_model_audit_passed",
+      "detail": "passed",
+      "passed": true
+    }
+  ],
+  "date": "2026-07-05",
+  "execution_summary": {
+    "full": {
+      "cost_usd": 0.434221524,
+      "decision_counts": {
+        "accept": 45,
+        "escalate": 343,
+        "reject": 298
+      },
+      "decision_counts_by_evidence_level": {
+        "E0": {
+          "escalate": 95,
+          "reject": 3
+        },
+        "E1": {
+          "escalate": 97,
+          "reject": 1
+        },
+        "E2": {
+          "escalate": 97,
+          "reject": 1
+        },
+        "E3": {
+          "accept": 16,
+          "escalate": 8,
+          "reject": 74
+        },
+        "E4": {
+          "accept": 7,
+          "escalate": 18,
+          "reject": 73
+        },
+        "E5": {
+          "accept": 1,
+          "escalate": 24,
+          "reject": 73
+        },
+        "E6": {
+          "accept": 21,
+          "escalate": 4,
+          "reject": 73
+        }
+      },
+      "parse_valid_count": 686,
+      "raw_responses_out": "outputs/evp8_deepseek_repaired_v0_3_prompt_v0_2_json_mode_full/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+      "review_count": 686
+    },
+    "smoke": {
+      "cost_usd": 0.026675244,
+      "decision_counts": {
+        "accept": 9,
+        "escalate": 21,
+        "reject": 5
+      },
+      "parse_valid_count": 35,
+      "raw_responses_out": "outputs/evp8_deepseek_repaired_v0_3_prompt_v0_2_json_mode_smoke/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+      "review_count": 35
+    }
+  },
+  "experiment_boundary": {
+    "candidate_count": 98,
+    "candidate_set_id": "evp8_smoke_from_evp7_structural_98_v0_1",
+    "claim_boundary": "two-model repaired Qwen + DeepSeek result, not three-model or broad-LLM superiority evidence",
+    "evidence_levels": [
+      "E0",
+      "E1",
+      "E2",
+      "E3",
+      "E4",
+      "E5",
+      "E6"
+    ],
+    "hidden_labels_joined_after_execution": true,
+    "packet_count": 686,
+    "prompt_id": "evp8_visible_evidence_merge_gate_v0_2"
+  },
+  "forbidden_claims": [
+    "DeepSeek result proves broad LLM verifier generality",
+    "two-model result completes three-model APSEC repaired main table",
+    "LLM verifier clearly outperforms deterministic rule-only baseline",
+    "E6 false accepts have case-level causes without sanitized candidate-level export"
+  ],
+  "label_conditioned_by_level": [
+    {
+      "accept": 0,
+      "accepted_precision": null,
+      "correct_accept": 0,
+      "correct_recall": 0.0,
+      "escalate": 95,
+      "escalation_rate": 0.969388,
+      "false_accept": 0,
+      "false_accept_rate": 0.0,
+      "level": "E0",
+      "reject": 3
+    },
+    {
+      "accept": 0,
+      "accepted_precision": null,
+      "correct_accept": 0,
+      "correct_recall": 0.0,
+      "escalate": 97,
+      "escalation_rate": 0.989796,
+      "false_accept": 0,
+      "false_accept_rate": 0.0,
+      "level": "E1",
+      "reject": 1
+    },
+    {
+      "accept": 0,
+      "accepted_precision": null,
+      "correct_accept": 0,
+      "correct_recall": 0.0,
+      "escalate": 97,
+      "escalation_rate": 0.989796,
+      "false_accept": 0,
+      "false_accept_rate": 0.0,
+      "level": "E2",
+      "reject": 1
+    },
+    {
+      "accept": 16,
+      "accepted_precision": 0.8125,
+      "correct_accept": 13,
+      "correct_recall": 0.619048,
+      "escalate": 8,
+      "escalation_rate": 0.081633,
+      "false_accept": 3,
+      "false_accept_rate": 0.038961,
+      "level": "E3",
+      "reject": 74
+    },
+    {
+      "accept": 7,
+      "accepted_precision": 1.0,
+      "correct_accept": 7,
+      "correct_recall": 0.333333,
+      "escalate": 18,
+      "escalation_rate": 0.183673,
+      "false_accept": 0,
+      "false_accept_rate": 0.0,
+      "level": "E4",
+      "reject": 73
+    },
+    {
+      "accept": 1,
+      "accepted_precision": 1.0,
+      "correct_accept": 1,
+      "correct_recall": 0.047619,
+      "escalate": 24,
+      "escalation_rate": 0.244898,
+      "false_accept": 0,
+      "false_accept_rate": 0.0,
+      "level": "E5",
+      "reject": 73
+    },
+    {
+      "accept": 21,
+      "accepted_precision": 0.809524,
+      "correct_accept": 17,
+      "correct_recall": 0.809524,
+      "escalate": 4,
+      "escalation_rate": 0.040816,
+      "false_accept": 4,
+      "false_accept_rate": 0.051948,
+      "level": "E6",
+      "reject": 73
+    }
+  ],
+  "label_conditioned_e6": {
+    "accept": 21,
+    "accepted_precision": 0.809524,
+    "correct_accept": 17,
+    "correct_recall": 0.809524,
+    "escalate": 4,
+    "escalation_rate": 0.040816,
+    "false_accept": 4,
+    "false_accept_rate": 0.051948,
+    "level": "E6",
+    "reject": 73
+  },
+  "next_research_gap": [
+    "Add a third repaired E0-E6 model only with a new explicit authorization and preflight.",
+    "Create a raw-output-free candidate-level decision export before writing concrete false-accept case tables."
+  ],
+  "packet_id": "evp8_deepseek_repaired_v0_3_run_packet",
+  "status": "passed",
+  "tracked_artifacts": {
+    "apsec_audit": "data/reviews/apsec_manuscript_rewrite_audit_v0_1.json",
+    "apsec_manuscript": "docs/paper/apsec_technical_track_rewrite_v0_1.md",
+    "config_example": "configs/evp8_deepseek_repaired_v0_3.example.json",
+    "full_check_only": "data/protocols/evp8_deepseek_repaired_v0_3_full_check_only.json",
+    "full_summary": "data/reviews/evp8_deepseek_repaired_v0_3_prompt_v0_2_deepseek_deepseek-v4-pro_full_summary.json",
+    "label_conditioned_md": "docs/experiments/evp8_deepseek_repaired_v0_3_prompt_v0_2_label_conditioned_summary.md",
+    "label_conditioned_summary": "data/reviews/evp8_deepseek_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json",
+    "preflight": "data/protocols/evp8_deepseek_repaired_v0_3_preflight_summary.json",
+    "smoke_check_only": "data/protocols/evp8_deepseek_repaired_v0_3_smoke_check_only.json",
+    "smoke_summary": "data/reviews/evp8_deepseek_repaired_v0_3_prompt_v0_2_deepseek_deepseek-v4-pro_smoke_summary.json"
+  }
+}
