@@ -114,6 +114,13 @@ experimental rather than textual: add repaired E0-E6 main results for
 DeepSeek and preferably Gemini/Kimi, plus a raw-output-free case-level analysis
 of the four Qwen E6 false accepts.
 
+The false-accept case-analysis feasibility audit is now tracked at
+`docs/paper/apsec_false_accept_case_feasibility_v0_1.md`. It confirms that the
+current no-raw summaries support only aggregate anatomy for the four Qwen E6
+false accepts. A concrete case table still requires a sanitized candidate-level
+decision export; it must not store raw responses, rendered prompts, patch diffs,
+or full model rationale text.
+
 The final-paper route is:
 
 - `docs/plans/final_paper_roadmap_zh.md`

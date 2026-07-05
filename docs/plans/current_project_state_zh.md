@@ -71,8 +71,14 @@
   若要提高 APSEC 接收概率，仍需另起计划补 repaired DeepSeek E0-E6，最好再补
   Gemini/Kimi repaired E0-E6，以及四个 Qwen E6 false accepts 的 raw-output-free
   case-level analysis。
-- 当前 Git 同步状态：本轮本地 commit
-  `Repair APSEC manuscript reviewer risks` 已完成，但 GitHub push 因
+- 当前 Git 同步状态：2026-07-05 继续执行后 GitHub push 已恢复成功，远端包含
+  APSEC reviewer-risk repair。
+- 新增 APSEC false-accept case-analysis feasibility audit，状态为
+  `blocked_missing_candidate_level_decision_export`：当前 no-raw summaries 只支持
+  4 个 E6 false accepts 的 aggregate anatomy（3 partial fixes + 1 regression
+  patch），不支持具体 candidate-level case table。
+- 当前 Git 同步状态：本地 commit
+  `Audit APSEC false accept case feasibility` 已完成，但 GitHub push 因
   HTTPS/GitHub 443 连接 reset/timeout 连续失败；当前分支相对
   `origin/evp8-v03-qwen-main-exp` 为 `[ahead 1]`。
 

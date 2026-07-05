@@ -2,6 +2,69 @@
 
 最后更新：2026-07-05
 
+## 0.34 2026-07-05 APSEC false-accept case-analysis feasibility audit
+
+本轮目标是继续推进 APSEC 剩余缺口中不需要 API 的部分：确认四个 Qwen E6
+false accepts 能否在不读取 raw responses、不读取 patch diff 的边界下做
+case-level analysis。如果当前 tracked summaries 不含 candidate-level decision
+IDs，则必须输出 feasibility audit，并把下一步收束为生成 raw-output-free
+candidate-decision export，而不是伪造 case 表。
+
+执行边界：
+
+- 不调用 API；
+- 不读取 `outputs/**/raw_responses.jsonl`；
+- 不读取 patch diff、rendered prompt text 或模型 rationale 原文；
+- 只读取 APSEC rewrite audit、Qwen label-conditioned aggregate summary、
+  candidate-set summary 和 candidate-set metadata；
+- 可以报告 aggregate anatomy：E6 false accepts = 3 partial fixes + 1 regression
+  patch；
+- 不得报告具体 false-accept candidate id、project、visible evidence 或 rationale
+  cause，除非 tracked raw-output-free artifact 已经提供这些字段。
+
+验收条件：
+
+- 新增 false-accept case-analysis feasibility audit 脚本；
+- 生成 JSON/Markdown audit，明确当前是否可做 case-level table；
+- 若不可做，写清需要的最小下一步 artifact：
+  candidate_id、project、task_id、candidate_type、hidden label、E6 decision、
+  E6 no-verdict decision、tool-contestation linkage、rationale category，且不得
+  保存 raw response；
+- 同步 README/INDEX/current project state/engineering notes；
+- 运行最小验证并提交、推送。
+
+执行结果：
+
+- 新增 `scripts/audit_apsec_false_accept_case_feasibility.py`；
+- 生成 `docs/paper/apsec_false_accept_case_feasibility_v0_1.md` 和
+  `data/reviews/apsec_false_accept_case_feasibility_v0_1.json`；
+- 审计状态为 `blocked_missing_candidate_level_decision_export`；
+- 当前 tracked paper-facing summaries 支持的结论仍是 aggregate anatomy：
+  Qwen E6 false accepts = 4，其中 3 个 partial fixes、1 个 regression patch；
+- 当前 tracked summaries 不包含这四个 false accepts 的 candidate IDs，因此不能在
+  no-raw-response/no-patch-diff 边界下写具体 case-level table；
+- 最小下一步 artifact 应是 raw-output-free candidate-decision export，字段包括
+  candidate_id、project、task_id、candidate_type、hidden label、E6 decision、
+  E6 no-verdict decision、tool-contestation linkage 和 rationale category，禁止保存
+  raw response、完整 rationale、rendered prompt、patch diff 或 API credentials。
+
+验收结果：
+
+- `python -m py_compile scripts\audit_apsec_false_accept_case_feasibility.py`：通过；
+- `python scripts\audit_apsec_false_accept_case_feasibility.py`：通过；
+- `python scripts\audit_apsec_false_accept_case_feasibility.py --check`：通过。
+- Git commit 已完成：`Audit APSEC false accept case feasibility`；
+- GitHub push 连续三次失败，原因是 HTTPS/GitHub 443 连接 reset/timeout；
+  当前本地分支相对 `origin/evp8-v03-qwen-main-exp` 为 `[ahead 1]`。
+
+当前判断：
+
+- APSEC 稿中已有的 aggregate false-accept anatomy 是当前 no-raw 边界下的最强
+  可写结果；
+- 若要完成真正 case-level false-accept analysis，必须另起明确授权的 sanitized
+  decision-export 步骤；否则不能报告具体 case/project/rationale cause；
+- 当前更大的 APSEC 实验缺口仍是 repaired multi-model E0-E6 main table。
+
 ## 0.33 2026-07-05 APSEC reviewer-risk repair without new API
 
 本轮目标是针对 APSEC rewrite 的主要拒稿风险做无 API 修订：单模型 claim 过宽、

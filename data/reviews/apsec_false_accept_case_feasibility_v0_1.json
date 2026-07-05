@@ -1,0 +1,124 @@
+{
+  "audit_id": "apsec_false_accept_case_feasibility_v0_1",
+  "status": "blocked_missing_candidate_level_decision_export",
+  "boundary": "no API call, no raw response read, no patch diff read, no rendered prompt read.",
+  "inputs": {
+    "qwen_label_summary": "data\\reviews\\evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json",
+    "candidate_set_summary": "data\\protocols\\evp8_candidate_set_v0_1_summary.json",
+    "candidate_set_metadata": "data\\protocols\\evp8_candidate_set_v0_1.json",
+    "apsec_audit": "data\\reviews\\apsec_manuscript_rewrite_audit_v0_1.json"
+  },
+  "aggregate_supported_anatomy": {
+    "e6_false_accept_total": 4,
+    "partial_fix_false_accepts": 3,
+    "regression_patch_false_accepts": 1
+  },
+  "checks": [
+    {
+      "check": "qwen_label_summary_exists",
+      "passed": true,
+      "detail": "data\\reviews\\evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json"
+    },
+    {
+      "check": "candidate_set_summary_exists",
+      "passed": true,
+      "detail": "data\\protocols\\evp8_candidate_set_v0_1_summary.json"
+    },
+    {
+      "check": "candidate_set_metadata_exists",
+      "passed": true,
+      "detail": "data\\protocols\\evp8_candidate_set_v0_1.json"
+    },
+    {
+      "check": "apsec_audit_passed",
+      "passed": true,
+      "detail": "passed"
+    },
+    {
+      "check": "e6_false_accept_total_is_four",
+      "passed": true,
+      "detail": 4
+    },
+    {
+      "check": "aggregate_partial_false_accepts_available",
+      "passed": true,
+      "detail": 3
+    },
+    {
+      "check": "aggregate_regression_false_accepts_available",
+      "passed": true,
+      "detail": 1
+    },
+    {
+      "check": "candidate_set_has_metadata_but_not_labels_or_decisions",
+      "passed": true,
+      "detail": [
+        "candidate_set_id",
+        "evp8_candidate_id",
+        "has_issue_summary",
+        "has_patch_text_source",
+        "label_fields_in_record",
+        "model_visible_record",
+        "patch_file_count",
+        "patch_sha256",
+        "project",
+        "selection_role",
+        "source_candidate_id",
+        "source_cohort_id",
+        "source_manifest",
+        "task_id",
+        "touched_file_count",
+        "touched_files"
+      ]
+    },
+    {
+      "check": "qwen_summary_has_candidate_level_false_accept_records",
+      "passed": false,
+      "detail": "No candidate-level false-accept records are present in the tracked aggregate summary."
+    },
+    {
+      "check": "api_call_attempted_by_this_audit",
+      "passed": true,
+      "detail": false
+    },
+    {
+      "check": "raw_response_read_by_this_audit",
+      "passed": true,
+      "detail": false
+    },
+    {
+      "check": "patch_diff_read_by_this_audit",
+      "passed": true,
+      "detail": false
+    },
+    {
+      "check": "rendered_prompt_read_by_this_audit",
+      "passed": true,
+      "detail": false
+    }
+  ],
+  "case_level_table_allowed_now": false,
+  "blocked_reason": "Tracked paper-facing summaries expose aggregate false-accept counts but not the candidate IDs behind the four Qwen E6 false accepts.",
+  "minimum_next_artifact": {
+    "name": "raw_output_free_qwen_e6_false_accept_decision_export",
+    "required_fields": [
+      "candidate_id",
+      "project",
+      "task_id",
+      "candidate_type",
+      "hidden_label",
+      "E6 decision",
+      "E6 no-verdict decision",
+      "tool-contestation linkage",
+      "rationale category without raw response text"
+    ],
+    "forbidden_fields": [
+      "raw_response_text",
+      "full model rationale text",
+      "rendered prompt text",
+      "patch diff",
+      "API credentials"
+    ],
+    "construction_note": "Generate from existing local execution artifacts only if explicitly authorized to read the needed raw decision source; store only sanitized decision/category fields."
+  }
+}

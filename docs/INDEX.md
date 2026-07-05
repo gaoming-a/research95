@@ -105,7 +105,10 @@
   PDF. The 2026-07-05 0.33 entry records reviewer-risk repair for APSEC:
   title narrowing, candidate composition, humanized evidence levels, RQ4
   demotion, strong rule-only interpretation, aggregate false-accept anatomy,
-  and remaining repaired multi-model / case-level-analysis gaps.
+  and remaining repaired multi-model / case-level-analysis gaps. The 2026-07-05
+  0.34 entry records the APSEC false-accept case-analysis feasibility audit:
+  current tracked summaries support aggregate anatomy only and need a sanitized
+  candidate-level decision export before concrete case tables can be written.
 - `../scripts/write_evp8_realistic_hardneg_uplift_packet.py`: no-API boundary
   packet writer for the realistic hard-negative uplift route. It reads the
   tracked combined generation gate only and writes the current missing
@@ -211,6 +214,16 @@
   results if APSEC competitiveness is prioritized, raw-output-free case-level
   false-accept analysis, BibTeX conversion, anonymous IEEEtran LaTeX
   conversion, APSEC page budget, figure/table layout, and double-blind wording.
+- `../scripts/audit_apsec_false_accept_case_feasibility.py`: no-API/no-raw
+  feasibility audit for APSEC false-accept case analysis. It checks whether the
+  tracked Qwen label-conditioned summaries expose candidate-level false-accept
+  records.
+- `../data/reviews/apsec_false_accept_case_feasibility_v0_1.json` and
+  `paper/apsec_false_accept_case_feasibility_v0_1.md`: false-accept
+  case-analysis feasibility audit. Status is
+  `blocked_missing_candidate_level_decision_export`; current tracked summaries
+  support only the aggregate anatomy of 4 E6 false accepts: 3 partial fixes and
+  1 regression patch.
 - `../scripts/generate_ccfc_figures.py`: Python/matplotlib generator for the
   CCF-C manuscript figure set. It reads the tracked final manuscript claim map
   only and outputs PDF/SVG/PNG figures plus manifest, source-data, and QA notes.

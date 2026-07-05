@@ -4568,3 +4568,15 @@ This file starts fresh for the patch-verification project.
   tracked summaries support saying Qwen E6 accepted three partial fixes and one
   regression patch; per-case project/rationale claims require a separate
   raw-output-free case-analysis artifact.
+
+## 2026-07-05 False-accept case-analysis feasibility boundary
+
+- Aggregate false-accept anatomy is not a case table. If tracked summaries do
+  not carry candidate IDs for the false accepts, do not infer the cases from
+  candidate-type counts.
+- A raw-output-free case table needs a sanitized decision export with candidate
+  ID, project, task, candidate type, hidden label, E6 decision, no-verdict
+  decision, tool-contestation linkage, and a categorical rationale summary.
+- The sanitized export must exclude raw response text, rendered prompts, patch
+  diffs, full rationale text, and credentials. If producing it requires reading
+  an ignored raw decision source, that needs an explicit plan and boundary.
