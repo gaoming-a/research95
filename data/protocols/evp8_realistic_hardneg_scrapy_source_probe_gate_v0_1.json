@@ -1,0 +1,111 @@
+{
+  "analysis_id": "evp8_realistic_hardneg_generation_gate_v0_1",
+  "analysis_status": "passed",
+  "candidate_count": 10,
+  "checks": [
+    {
+      "check": "api_call_not_attempted_by_analysis",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_model_outputs_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "patch_text_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "generation_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "visible_tests_completed",
+      "detail": {
+        "completed": 10
+      },
+      "passed": true
+    },
+    {
+      "check": "validation_count_matches_visible_count",
+      "detail": {
+        "validation": 10,
+        "visible": 10
+      },
+      "passed": true
+    },
+    {
+      "check": "visible_coverage_complete",
+      "detail": {
+        "extra": [],
+        "missing": []
+      },
+      "passed": true
+    },
+    {
+      "check": "hard_negative_min_count_gate",
+      "detail": 5,
+      "passed": true
+    },
+    {
+      "check": "hard_negative_min_project_gate",
+      "detail": [
+        "scrapy"
+      ],
+      "passed": true
+    }
+  ],
+  "classification_by_project": {
+    "scrapy": {
+      "visible_fail_hidden_fail": 4,
+      "visible_pass_hidden_fail": 5,
+      "visible_pass_hidden_pass": 1
+    }
+  },
+  "classification_by_task": {
+    "bugsinpy_scrapy_1": {
+      "visible_fail_hidden_fail": 4,
+      "visible_pass_hidden_fail": 5,
+      "visible_pass_hidden_pass": 1
+    }
+  },
+  "classification_counts": {
+    "visible_fail_hidden_fail": 4,
+    "visible_pass_hidden_fail": 5,
+    "visible_pass_hidden_pass": 1
+  },
+  "date": "2026-07-06",
+  "hard_negative_gate": {
+    "minimum_count": 1,
+    "minimum_projects": 1,
+    "passed": true,
+    "required_property": "patch_applied && declared_visible_tests_passed && hidden_oracle_failed",
+    "visible_pass_hidden_fail_count": 5,
+    "visible_pass_hidden_fail_projects": [
+      "scrapy"
+    ],
+    "visible_pass_hidden_fail_tasks": [
+      "bugsinpy_scrapy_1"
+    ]
+  },
+  "inputs": {
+    "generation_audit": "data/protocols/evp8_realistic_hardneg_scrapy_source_probe_result_audit_v0_1.json",
+    "validation": "outputs/scrapy1_hardneg_source_probe_002/validation.jsonl",
+    "visible_test_outcomes": "data/evidence/evp8_realistic_hardneg_scrapy_source_probe_visible_test_outcomes_v0_1.jsonl",
+    "visible_test_summary": "data/protocols/evp8_realistic_hardneg_scrapy_source_probe_visible_test_outcomes_v0_1.json"
+  },
+  "readiness": {
+    "next_step": "Construct separated evaluator/model-visible hard-negative cohort and visible-tool headroom gate.",
+    "ready_for_verifier_api": true
+  },
+  "scope": {
+    "api_call_attempted": false,
+    "patch_text_stored": false,
+    "prompt_text_stored": false,
+    "raw_model_outputs_read": false
+  }
+}

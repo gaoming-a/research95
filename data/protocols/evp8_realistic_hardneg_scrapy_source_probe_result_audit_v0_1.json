@@ -1,0 +1,102 @@
+{
+  "audit_id": "evp8_realistic_hardneg_source_probe_audit_v0_1",
+  "checks": [
+    {
+      "check": "api_call_not_attempted_by_source_probe",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_model_outputs_not_read",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "patch_text_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "prompt_text_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "candidate_count_matches_summary",
+      "detail": 10,
+      "passed": true
+    },
+    {
+      "check": "evidence_count_matches_candidates",
+      "detail": 10,
+      "passed": true
+    },
+    {
+      "check": "evidence_ids_match_candidate_ids",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "validation_all_validated",
+      "detail": {
+        "validated": 10
+      },
+      "passed": true
+    },
+    {
+      "check": "visible_tests_completed",
+      "detail": {
+        "completed": 10
+      },
+      "passed": true
+    }
+  ],
+  "counts": {
+    "candidate_count": 10,
+    "candidate_type_counts": {
+      "buggy_noop": 1,
+      "correct_reference": 1,
+      "irrelevant_patch": 1,
+      "partial_fix": 7
+    },
+    "expected_outcome_counts": {
+      "correct": 1,
+      "incorrect": 1,
+      "irrelevant_or_noop": 1,
+      "partial": 7
+    },
+    "oracle_passed_count": 1,
+    "patch_materialization_counts": {
+      "buggy_fixed_unified_diff": 1,
+      "empty_diff_against_buggy_checkout": 1,
+      "local_comment_only_unified_diff": 1,
+      "reference_diff_with_one_change_omitted": 3,
+      "task_specific_scrapy_visible_only_partial_diff": 4
+    },
+    "project_counts": {
+      "scrapy": 10
+    },
+    "visible_test_outcome_counts": {
+      "failed": 4,
+      "passed": 6
+    }
+  },
+  "date_utc": "2026-07-06T09:35:34.306120+00:00",
+  "inputs": {
+    "candidates": "outputs/scrapy1_hardneg_source_probe_002/candidates.jsonl",
+    "dataset_summary": "outputs/scrapy1_hardneg_source_probe_002/dataset_summary.json",
+    "evidence_packets": "outputs/scrapy1_hardneg_source_probe_002/evidence_packets.jsonl",
+    "probe_dir": "outputs/scrapy1_hardneg_source_probe_002",
+    "validation_summary": "outputs/scrapy1_hardneg_source_probe_002/validation_summary.json",
+    "visible_summary": "data/protocols/evp8_realistic_hardneg_scrapy_source_probe_visible_test_outcomes_v0_1.json"
+  },
+  "next_required_step": "join validation with visible-test outcomes and refresh the combined hard-negative gate",
+  "scope": {
+    "api_call_attempted": false,
+    "patch_text_stored": false,
+    "prompt_text_stored": false,
+    "raw_model_outputs_read": false,
+    "source_kind": "curated_no_api_hard_negative_source_probe"
+  },
+  "status": "passed"
+}

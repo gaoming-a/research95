@@ -2,6 +2,72 @@
 
 最后更新：2026-07-06
 
+## 0.39 2026-07-06 主线 B：realistic hard-negative gate repair
+
+本轮目标是按用户要求完成主线 B：把 realistic hard-negative stress test 从
+`26/30` visible-pass/hidden-fail cases、`2/3` projects 的 blocked 状态推进到
+可用于论文的 hard-negative verifier-readiness gate。初始第三项目 Luigi 已经
+被 no-API probe 否决：`bugsinpy_luigi_3` 的 visible test 与 hidden oracle 检查
+同一 tuple round-trip，`bugsinpy_luigi_4` 的 visible test 比 hidden oracle 更强，
+继续对 Luigi 盲目扩量不符合 visible-pass/hidden-fail 目标。当前第三项目改为
+Scrapy，任务为 `bugsinpy_scrapy_1`。
+
+执行边界：
+
+- hard-negative verifier API 仍受 gate 控制：只有 combined gate 达到至少
+  30 个 visible-pass/hidden-fail cases、至少 3 个 projects 后才允许调用；
+- 不能把旧的 Luigi task-file smoke/stability artifacts 直接计入正式 gate；
+- 先建立或刷新 Scrapy full-file source-acquisition/materialization no-API protocol，
+  明确任务、单文件边界、可见测试、hidden oracle、dry-run、validation 和 raw-free
+  tracked output 规则；
+- 如 protocol 和 dry-run 均通过，允许仅为 Scrapy hard-negative candidate
+  construction 调用生成 API；该授权不包含 verifier API；
+- raw responses、rendered prompts、patch diffs 只能留在 ignored `outputs/**`；
+  tracked JSON/Markdown 只能保存聚合计数、路径、hash、状态和 raw-free 审计；
+- 如果 Scrapy 生成候选无法通过 validation 或不能产生 visible-pass/hidden-fail，
+  不得强行补数，主线 B 必须记录为第三项目 source-acquisition blocker；
+- 如果 combined gate 通过，下一步才进入 hard-negative verifier preflight/matrix：
+  rule-only visible-tool baseline、current merge-gate prompt、no-verdict prompt、
+  coverage-contestation prompt，并至少覆盖 Qwen / DeepSeek / Gemini。
+
+本轮验收条件：
+
+- 生成 Scrapy full-file source-acquisition/materialization protocol；
+- 通过 Scrapy no-API dry-run/prompt-boundary/materialization check；
+- 生成或接入 Scrapy candidates 后完成 validation、visible-test outcome、hidden oracle
+  classification 和 raw-free result audit；
+- 刷新 combined hard-negative gate，明确是否达到 `>=30 cases` 和 `>=3 projects`；
+- gate 未过则停止 verifier API 并更新 blocker；gate 通过则继续 hard-negative
+  verifier preflight/matrix；
+- 更新 README/INDEX/current project state/engineering notes，运行最小验证，提交并
+  同步 GitHub。
+
+执行结果：
+
+- Luigi source probe 被否决为主线 B source：`bugsinpy_luigi_3` 的 visible test
+  与 hidden oracle 语义重合，`bugsinpy_luigi_4` 的 visible test 强于 hidden
+  oracle；继续对 Luigi 调用生成 API 不符合 visible-pass/hidden-fail 目标；
+- 新增 Scrapy_1 source definition 和 hidden oracle：
+  `bugsinpy_scrapy_1` / `scripts/oracles/scrapy_1_offsite_allowed_domains.py`；
+- 修复 visible-test 执行链路：`luigi` 走 legacy pytest wrapper，`scrapy` 使用
+  `outputs/envs/scrapy1_p2p_py311`，并新增
+  `scripts/run_unittest_legacy_py311.py` 处理旧 unittest 在 Python 3.11 下的
+  `inspect.ArgSpec` 兼容问题；
+- Scrapy_1 Qwen full-file generation probe 已运行，但 8 个 clean candidates 均为
+  visible-pass/hidden-pass，不能补 hard-negative 缺口；
+- 新增 Scrapy_1 curated no-API stress-source partial variants，明确只作为
+  hard-negative stress source，不冒充 LLM-generated realistic cohort；
+- Scrapy source probe gate 通过：10 candidates，其中 5 个
+  visible-pass/hidden-fail，1 个 visible-pass/hidden-pass，4 个
+  visible-fail/hidden-fail；
+- combined hard-negative gate 已刷新为：
+  `31/30` visible-pass/hidden-fail cases、`3/3` projects
+  (`PySnooper`, `cookiecutter`, `scrapy`)，
+  `ready_for_verifier_api=true`；
+- 本轮没有运行 hard-negative verifier API。由于第三项目新增 hard-negatives 来自
+  curated no-API stress source，后续 verifier matrix 必须写成 stress-test 条件，
+  不能写成纯 agent-generated realistic cohort 结果。
+
 ## 0.38 2026-07-06 Coverage-contestation prompt robustness and hard-negative stress-test route
 
 本轮目标是沿用户确认的新方向推进，但不替换当前主 prompt：

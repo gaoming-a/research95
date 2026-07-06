@@ -79,6 +79,18 @@ SOURCE_BUGS = [
         "oracle_command": "python scripts/oracles/luigi_4_redshift_none_columns.py",
     },
     {
+        "task_id": "bugsinpy_scrapy_1",
+        "project": "scrapy",
+        "touched_files": ["scrapy/spidermiddlewares/offsite.py"],
+        "issue_summary": (
+            "OffsiteMiddleware allowed_domains should ignore None entries and "
+            "URL-shaped entries when compiling the host regex"
+        ),
+        "visible_tests": ["tests.test_spidermiddleware_offsite.TestOffsiteMiddleware4.test_process_spider_output"],
+        "hidden_oracles": ["scripts/oracles/scrapy_1_offsite_allowed_domains.py"],
+        "oracle_command": "python scripts/oracles/scrapy_1_offsite_allowed_domains.py",
+    },
+    {
         "task_id": "bugsinpy_thefuck_1",
         "project": "thefuck",
         "touched_files": ["thefuck/rules/pip_unknown_command.py"],
@@ -462,6 +474,97 @@ def build_task_specific_negative_diffs(
                     "touches the relevant open call but leaves the undefined output_path variable in place."
                 ),
             }
+        ]
+    if source_bug["task_id"] == "bugsinpy_scrapy_1":
+        buggy_lines, _ = read_buggy_fixed_lines(source_root, source_bug, file_path)
+        line_url_pattern = '        url_pattern = re.compile("^https?://.*$")\n'
+        line_for_domain = "        for domain in allowed_domains:\n"
+        line_if_url = "            if url_pattern.match(domain):\n"
+        line_domains = "        domains = [re.escape(d) for d in allowed_domains if d is not None]\n"
+        required = {line_url_pattern, line_for_domain, line_if_url, line_domains}
+        missing = [line.strip() for line in required if line not in buggy_lines]
+        if missing:
+            raise ValueError(f"expected Scrapy offsite lines not found in {file_path}: {missing}")
+
+        def patch_with_replacements(replacements: dict[str, list[str]], suffix: str, notes: str) -> dict[str, str]:
+            candidate_lines: list[str] = []
+            for line in buggy_lines:
+                candidate_lines.extend(replacements.get(line, [line]))
+            return {
+                "suffix": suffix,
+                "patch_text": unified_diff_from_lines(
+                    file_path,
+                    buggy_lines,
+                    candidate_lines,
+                    source_bug["task_id"],
+                ),
+                "materialization": "task_specific_scrapy_visible_only_partial_diff",
+                "notes": notes,
+            }
+
+        return [
+            patch_with_replacements(
+                {
+                    line_if_url: [
+                        "            if domain is None:\n",
+                        "                continue\n",
+                        "            if url_pattern.match(domain):\n",
+                    ]
+                },
+                "scrapy_skip_none_in_warning_loop_only",
+                (
+                    "Curated hard negative for Scrapy_1: prevents the visible-test None crash "
+                    "but still includes URL-shaped allowed_domains entries in the compiled regex."
+                ),
+            ),
+            patch_with_replacements(
+                {
+                    line_for_domain: [
+                        "        domains = []\n",
+                        "        for domain in allowed_domains:\n",
+                    ],
+                    line_if_url: [
+                        "            if domain is None:\n",
+                        "                continue\n",
+                        "            if url_pattern.match(domain):\n",
+                    ],
+                    line_domains: ["            domains.append(re.escape(domain))\n"],
+                },
+                "scrapy_append_url_after_warning",
+                (
+                    "Curated hard negative for Scrapy_1: builds the regex incrementally and "
+                    "skips None, but appends URL-shaped domains even after warning."
+                ),
+            ),
+            patch_with_replacements(
+                {
+                    line_url_pattern: [
+                        "        allowed_domains = [domain for domain in allowed_domains if domain is not None]\n",
+                        '        url_pattern = re.compile("^https?://.*$")\n',
+                    ]
+                },
+                "scrapy_prefilter_none_only",
+                (
+                    "Curated hard negative for Scrapy_1: prefilters None before the warning loop "
+                    "but leaves URL-shaped domains in the final regex domain list."
+                ),
+            ),
+            patch_with_replacements(
+                {
+                    line_if_url: [
+                        "            try:\n",
+                        "                is_url = url_pattern.match(domain)\n",
+                        "            except TypeError:\n",
+                        "                continue\n",
+                        "            if is_url:\n",
+                    ]
+                },
+                "scrapy_typeerror_guard_only",
+                (
+                    "Curated hard negative for Scrapy_1: guards the visible-test None TypeError "
+                    "but preserves the original URL-shaped domain inclusion behavior."
+                ),
+            ),
         ]
     return []
 

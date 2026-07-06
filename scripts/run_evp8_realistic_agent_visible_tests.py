@@ -34,12 +34,14 @@ DEFAULT_OUTCOMES_OUT = REPO_ROOT / "data" / "evidence" / "evp8_realistic_agent_v
 DEFAULT_SUMMARY_OUT = REPO_ROOT / "data" / "protocols" / "evp8_realistic_agent_visible_test_outcomes_v0_1.json"
 DEFAULT_MD_OUT = REPO_ROOT / "docs" / "experiments" / "evp8_realistic_agent_visible_test_outcomes_v0_1.md"
 LEGACY_PY311_PYTEST = REPO_ROOT / "scripts" / "run_pytest_legacy_py311.py"
+LEGACY_PY311_UNITTEST = REPO_ROOT / "scripts" / "run_unittest_legacy_py311.py"
 
 PROJECT_PYTHONS = {
     "bugsinpy_PySnooper_1": REPO_ROOT / "outputs" / "envs" / "pysnooper_p2p_py311" / "Scripts" / "python.exe",
     "bugsinpy_PySnooper_3": REPO_ROOT / "outputs" / "envs" / "pysnooper3_p2p_py311" / "Scripts" / "python.exe",
     "cookiecutter": REPO_ROOT / "outputs" / "envs" / "cookiecutter_p2p_py311" / "Scripts" / "python.exe",
     "httpie": REPO_ROOT / "outputs" / "envs" / "httpie_hard_visible_py311" / "Scripts" / "python.exe",
+    "scrapy": REPO_ROOT / "outputs" / "envs" / "scrapy1_p2p_py311" / "Scripts" / "python.exe",
     "thefuck": REPO_ROOT / "outputs" / "envs" / "thefuck1_f2p_py311" / "Scripts" / "python.exe",
 }
 
@@ -106,9 +108,11 @@ def python_for(packet: dict[str, Any]) -> tuple[str, str]:
 
 
 def pytest_command_for(packet: dict[str, Any], python_executable: str, tests: list[str]) -> list[str]:
+    if packet.get("project") == "scrapy":
+        return [python_executable, str(LEGACY_PY311_UNITTEST), "-q", *tests]
     if packet.get("project") == "youtube-dl":
         return [python_executable, "-m", "unittest", "-q", *tests]
-    if packet.get("project") in {"PySnooper", "httpie"}:
+    if packet.get("project") in {"PySnooper", "httpie", "luigi"}:
         return [python_executable, str(LEGACY_PY311_PYTEST), "-q", *tests]
     if packet.get("project") == "cookiecutter":
         return [python_executable, "-m", "pytest", "-q", "-o", "addopts=", *tests]

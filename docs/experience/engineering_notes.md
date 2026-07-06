@@ -4698,3 +4698,26 @@ This file starts fresh for the patch-verification project.
 - The completed current-98 coverage-contestation result is conservative triage:
   zero repeated false accepts, but severe correct-recall loss. Future writing
   must not present it as improved autonomous semantic verification.
+
+## 2026-07-06 Mainline B hard-negative source repair
+
+- A third project is only useful for visible-pass/hidden-fail acquisition if the
+  visible test is weaker than the hidden oracle. Luigi was rejected because
+  `luigi_3` uses the same tuple round-trip behavior in visible and hidden
+  checks, and `luigi_4` has a visible test that is stronger than the hidden
+  oracle.
+- Environment failures must be separated from candidate behavior. Luigi needed
+  the existing legacy pytest wrapper for Python 3.11 compatibility; Scrapy
+  needed a legacy unittest wrapper for `inspect.ArgSpec` plus missing ignored
+  env dependencies before visible tests became meaningful.
+- Do not reuse the same full-file generation directory for dry-run and execute.
+  `generate_agent_full_file_candidates.py` appends to `prompt_manifest.jsonl`;
+  using the same directory causes prompt counts to include both dry-run and
+  execute manifests. Use a separate dry-run directory or a clean execute
+  directory before result audit.
+- If model-generated candidates all pass the hidden oracle, that is a result,
+  not a failure to hide. Qwen generated correct Scrapy_1 full-file fixes, so
+  those candidates were not counted as hard negatives.
+- Curated no-API partial variants can repair a stress-test opportunity set, but
+  they must be labeled as curated stress-source evidence. They cannot be
+  described as a pure agent-generated realistic cohort.

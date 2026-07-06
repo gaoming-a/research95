@@ -149,9 +149,15 @@ severe correct-recall loss: DeepSeek and Gemini accepted no correct patches,
 and Qwen accepted 2/21. The APSEC rewrite now includes this as Section 5.4,
 not as a replacement for the repaired v0.3 main result. The hard-negative
 stress-test packet is
-`docs/experiments/evp8_hardneg_stress_test_packet_v0_1.md`; it remains blocked
-at 26/30 visible-pass/hidden-fail cases and 2/3 projects, so verifier APIs must
-not be run for that stress matrix until the Luigi/third-project gate is repaired.
+`docs/experiments/evp8_hardneg_stress_test_packet_v0_1.md`; its original
+26/30 two-project state is now historical. Mainline B repaired the gate with a
+Scrapy_1 curated no-API stress source:
+`docs/experiments/evp8_realistic_hardneg_combined_generation_gate_with_scrapy_source_probe_v0_1.md`
+reports 31 visible-pass/hidden-fail cases across PySnooper, cookiecutter, and
+scrapy, with `ready_for_verifier_api=true`. Because the Scrapy additions are
+curated stress-source partial variants rather than LLM-generated agent patches,
+future verifier results must be framed as a hard-negative stress test, not as a
+pure agent-generated realistic cohort.
 
 The false-accept case-analysis feasibility audit is now tracked at
 `docs/paper/apsec_false_accept_case_feasibility_v0_1.md`. It confirms that the
@@ -302,16 +308,19 @@ visible-pass/hidden-fail cases across at least 3 projects before any new
 Qwen/DeepSeek verifier API is planned for that branch. If the gate remains
 blocked, the fresh realistic branch stays a source-acquisition / gate-readiness
 negative result.
-The current no-API uplift packet is
-`docs/experiments/evp8_realistic_hardneg_uplift_packet_v0_1.md`: it records the
-branch as `blocked_needs_more_cases_and_third_project`, with 26/30
-visible-pass/hidden-fail cases, 2/3 projects, and
-`ready_for_verifier_api=false`.
-The follow-up no-API third-project source-selection packet is
+The no-API uplift packet
+`docs/experiments/evp8_realistic_hardneg_uplift_packet_v0_1.md` records a
+historical pre-Scrapy blocked state. The current mainline B gate is
+`docs/experiments/evp8_realistic_hardneg_combined_generation_gate_with_scrapy_source_probe_v0_1.md`:
+31/30 visible-pass/hidden-fail cases, 3/3 projects, and
+`ready_for_verifier_api=true`.
+The historical no-API third-project source-selection packet is
 `docs/experiments/evp8_realistic_hardneg_third_project_source_selection_packet_v0_1.md`.
 It selects `luigi` (`bugsinpy_luigi_3`, `bugsinpy_luigi_4`) for a separately
 frozen source-acquisition/materialization protocol and does not authorize
-generation or verifier APIs.
+generation or verifier APIs. Luigi was later rejected as the current mainline B
+source because its visible tests are as strong as or stronger than the hidden
+oracles.
 As of 2026-07-03, the stable CCF-C route is no longer blocked on Luigi. The
 final experiment-setting validity audit is
 `docs/experiments/final_experiment_setting_validity_audit_v0_1.md`; it passes

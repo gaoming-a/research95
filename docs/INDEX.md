@@ -44,9 +44,14 @@
   Gemini each completed 98 current-98 E6/no-verdict reviews, repeated false
   accepts dropped to zero, and correct-patch recall collapsed under the
   stronger coverage challenge. The APSEC rewrite reports this as conservative
-  triage evidence, not as autonomous verification improvement. The no-API Luigi
-  source-acquisition/materialization protocol is
-  optional future work, not the current blocker. Historical `origin/main`
+  triage evidence, not as autonomous verification improvement. Mainline B
+  hard-negative readiness is now repaired by a Scrapy_1 curated no-API
+  stress-source probe: the current combined gate is 31/30 visible-pass/
+  hidden-fail cases across 3/3 projects, with `ready_for_verifier_api=true`.
+  This does not make the branch a pure agent-generated realistic cohort; future
+  verifier matrix results must be labeled as hard-negative stress-test evidence.
+  The old no-API Luigi source-acquisition/materialization path is a historical
+  dead end, not the current blocker. Historical `origin/main`
   entries retained later in plan logs are audit records only. As of
   2026-06-20, it also records the EVP-8 G0 expected-output absence guard and
   the exact manual phrase required before DeepSeek/Qwen smoke API execution.
@@ -159,10 +164,18 @@
   tracked combined generation gate only and writes the current missing
   case/project counts plus allowed and forbidden next actions.
 - `../data/protocols/evp8_realistic_hardneg_uplift_packet_v0_1.json` and
-  `../docs/experiments/evp8_realistic_hardneg_uplift_packet_v0_1.md`: current
-  uplift packet. Status is `blocked_needs_more_cases_and_third_project`:
-  26/30 visible-pass/hidden-fail cases, 2/3 projects, and
-  `ready_for_verifier_api=false`.
+  `../docs/experiments/evp8_realistic_hardneg_uplift_packet_v0_1.md`:
+  historical pre-Scrapy uplift packet. Its `blocked_needs_more_cases_and_third_project`
+  state is no longer the current mainline B gate.
+- `../data/protocols/evp8_realistic_hardneg_combined_generation_gate_with_scrapy_source_probe_v0_1.json`
+  and
+  `experiments/evp8_realistic_hardneg_combined_generation_gate_with_scrapy_source_probe_v0_1.md`:
+  current mainline B gate result. Status is `passed`: 31 visible-pass/
+  hidden-fail cases, 3 projects, and `ready_for_verifier_api=true`.
+- `../scripts/audit_evp8_realistic_hardneg_source_probe.py`: raw-free audit
+  for curated no-API hard-negative source probes. It records aggregate counts
+  and validation/visible-test consistency without storing patch text, prompt
+  text, or raw model outputs.
 - `../scripts/write_evp8_realistic_hardneg_third_project_source_selection_packet.py`:
   no-API source-selection packet writer for the third-project gate repair.
   It reads tracked aggregate gates and source definitions only, then selects
