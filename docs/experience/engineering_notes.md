@@ -4729,3 +4729,23 @@ This file starts fresh for the patch-verification project.
   The separated 31-case cohort does this: visible-tool accepts every case, and
   every case is hidden-failing, so verifier prompts have direct false-accept
   reduction headroom.
+
+## 2026-07-06 Hard-negative stress verifier preflight
+
+- Do not assume an `E6-no-verdict` condition exists just because it was useful
+  on the current-98 EVP-8 packets. The separated hard-negative stress packets
+  do not contain `rule_based_visible_merge_gate_decision`,
+  `rule_based_visible_merge_gate_reasons`, or `source_decision`; removing those
+  fields changes nothing. Treating that as an independent ablation would be an
+  experimental-design error.
+- The stress verifier matrix should run only the conditions that actually
+  change the prompt/packet contract. Current ready conditions are
+  `current_merge_gate` and `coverage_contestation`; across 31 cases and three
+  models, this is 186 calls, not the originally sketched 279 calls.
+- Patch-bearing verifier packets can still be model-visible, but preflight and
+  tracked summaries must store only packet/prompt hashes, counts, condition
+  gates, and metadata. The call manifest belongs under ignored `outputs/**`.
+- Remove nonessential hidden/provenance metadata such as `has_hidden_oracle`,
+  `label_leakage_guard`, and `stress_source_boundary` before rendering verifier
+  prompts. These fields are not hidden outcomes, but they are unnecessary for a
+  clean visible-evidence decision contract.

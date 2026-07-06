@@ -158,6 +158,16 @@ scrapy, with `ready_for_verifier_api=true`. Because the Scrapy additions are
 curated stress-source partial variants rather than LLM-generated agent patches,
 future verifier results must be framed as a hard-negative stress test, not as a
 pure agent-generated realistic cohort.
+
+The separated 31-case hard-negative stress cohort is now verifier-preflighted.
+`docs/experiments/evp8_realistic_hardneg_stress_matrix_preflight_v0_1.md`
+records a no-API `passed_with_no_verdict_blocked` gate. The effective next API
+matrix is 186 calls: 31 cases, two ready prompt conditions
+(`current_merge_gate`, `coverage_contestation`), and three models
+(Qwen/DeepSeek/Gemini). The originally planned `e6_no_verdict` condition is not
+valid on this stress packet format because there are no verdict-like fields to
+remove; it must not be reported as a ready or executed ablation unless a
+separate verdict-field packet variant is built and preflighted.
 The separated stress cohort/headroom packet is
 `docs/experiments/evp8_realistic_hardneg_stress_cohort_v0_1.md`: it contains 31
 visible-pass/hidden-fail cases, and the rule-only visible-tool baseline accepts

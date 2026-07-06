@@ -182,6 +182,17 @@
   verifier-preflight input summary. Status is `passed`; rule-only visible-tool
   baseline accepts 31/31 hidden-fail stress cases, so false accept rate is
   `1.0` and verifier headroom exists.
+- `../scripts/check_evp8_realistic_hardneg_stress_matrix_preflight.py`: no-API
+  preflight for the 31-case hard-negative stress verifier matrix. It renders
+  prompts only in memory, stores only hashes/counts, and writes an ignored
+  raw-free call manifest.
+- `../data/protocols/evp8_realistic_hardneg_stress_matrix_preflight_v0_1.json`
+  and `experiments/evp8_realistic_hardneg_stress_matrix_preflight_v0_1.md`:
+  current stress-matrix preflight. Status is
+  `passed_with_no_verdict_blocked`; only `current_merge_gate` and
+  `coverage_contestation` are ready for Qwen/DeepSeek/Gemini, giving 186
+  planned calls. `e6_no_verdict` is blocked because this stress packet format
+  has no verdict-like fields to remove.
 - `../scripts/audit_evp8_realistic_hardneg_source_probe.py`: raw-free audit
   for curated no-API hard-negative source probes. It records aggregate counts
   and validation/visible-test consistency without storing patch text, prompt

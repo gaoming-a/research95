@@ -1,0 +1,214 @@
+{
+  "analysis_id": "evp8_realistic_hardneg_stress_matrix_preflight_v0_1",
+  "api_call_attempted": false,
+  "call_manifest_out": "outputs/evp8_realistic_hardneg_stress_matrix_preflight_v0_1/call_manifest.jsonl",
+  "calls_per_ready_condition": 93,
+  "candidate_count": 31,
+  "checks": [
+    {
+      "check": "api_call_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_outputs_not_generated",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "rendered_prompt_text_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "stress_cohort_summary_exists",
+      "detail": "data/protocols/evp8_realistic_hardneg_stress_cohort_v0_1.json",
+      "passed": true
+    },
+    {
+      "check": "model_visible_packets_exists",
+      "detail": "outputs/evp8_realistic_hardneg_stress_cohort_v0_1/model_visible_packets.jsonl",
+      "passed": true
+    },
+    {
+      "check": "candidate_count_is_31",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "candidate_ids_unique",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "tracked_summary_candidate_count_matches_packets",
+      "detail": {
+        "packets": 31,
+        "summary": 31
+      },
+      "passed": true
+    },
+    {
+      "check": "visible_pass_all_packets",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "forbidden_label_keys_absent_from_packets",
+      "detail": {},
+      "passed": true
+    },
+    {
+      "check": "sanitizer_removed_hidden_metadata",
+      "detail": {
+        "max": 3,
+        "min": 3
+      },
+      "passed": true
+    },
+    {
+      "check": "ready_conditions_are_nonempty",
+      "detail": [
+        "current_merge_gate",
+        "coverage_contestation"
+      ],
+      "passed": true
+    },
+    {
+      "check": "no_verdict_degenerate_condition_blocked",
+      "detail": [
+        {
+          "boundary_findings": [],
+          "condition_id": "e6_no_verdict",
+          "metadata_fields_removed_total": 93,
+          "packet_count": 31,
+          "packet_transform": "sanitized_stress_packet_minus_verdict_fields",
+          "prompt_template": "prompts/evp8_visible_evidence_merge_gate_v0_2.md",
+          "prompt_template_sha256": "3e64dbedf9b0155f3013f30a4044631dc18d4f8d22920620941e16bd0e7d09f0",
+          "readiness_reason": "blocked_no_verdict_transform_is_degenerate_for_stress_packets",
+          "ready_for_api": false,
+          "rendered_prompt_chars_max": 5884,
+          "rendered_prompt_chars_min": 4965,
+          "rendered_prompt_hashes_unique_count": 31,
+          "rendered_prompt_text_stored": false,
+          "verdict_fields_removed_total": 0
+        }
+      ],
+      "passed": true
+    },
+    {
+      "check": "effective_call_count_matches_ready_conditions",
+      "detail": 186,
+      "passed": true
+    }
+  ],
+  "claim_boundary": "This preflight prepares a hard-negative stress-test verifier matrix. It is not model-result evidence, and the blocked no-verdict condition must not be reported as an executed independent ablation.",
+  "cohort_id": "EVP-8-REALISTIC-HARDNEG-STRESS",
+  "condition_summaries": [
+    {
+      "boundary_findings": [],
+      "condition_id": "current_merge_gate",
+      "metadata_fields_removed_total": 93,
+      "packet_count": 31,
+      "packet_transform": "sanitized_stress_packet",
+      "prompt_template": "prompts/evp8_visible_evidence_merge_gate_v0_2.md",
+      "prompt_template_sha256": "3e64dbedf9b0155f3013f30a4044631dc18d4f8d22920620941e16bd0e7d09f0",
+      "readiness_reason": "ready",
+      "ready_for_api": true,
+      "rendered_prompt_chars_max": 5884,
+      "rendered_prompt_chars_min": 4965,
+      "rendered_prompt_hashes_unique_count": 31,
+      "rendered_prompt_text_stored": false,
+      "verdict_fields_removed_total": 0
+    },
+    {
+      "boundary_findings": [],
+      "condition_id": "e6_no_verdict",
+      "metadata_fields_removed_total": 93,
+      "packet_count": 31,
+      "packet_transform": "sanitized_stress_packet_minus_verdict_fields",
+      "prompt_template": "prompts/evp8_visible_evidence_merge_gate_v0_2.md",
+      "prompt_template_sha256": "3e64dbedf9b0155f3013f30a4044631dc18d4f8d22920620941e16bd0e7d09f0",
+      "readiness_reason": "blocked_no_verdict_transform_is_degenerate_for_stress_packets",
+      "ready_for_api": false,
+      "rendered_prompt_chars_max": 5884,
+      "rendered_prompt_chars_min": 4965,
+      "rendered_prompt_hashes_unique_count": 31,
+      "rendered_prompt_text_stored": false,
+      "verdict_fields_removed_total": 0
+    },
+    {
+      "boundary_findings": [],
+      "condition_id": "coverage_contestation",
+      "metadata_fields_removed_total": 93,
+      "packet_count": 31,
+      "packet_transform": "sanitized_stress_packet",
+      "prompt_template": "prompts/evp8_coverage_contestation_merge_gate_v0_1.md",
+      "prompt_template_sha256": "722608bd0b88ec8af3c31ce06fc756e39aa4c070f57292c9eea256a66e4c422a",
+      "readiness_reason": "ready",
+      "ready_for_api": true,
+      "rendered_prompt_chars_max": 7490,
+      "rendered_prompt_chars_min": 6571,
+      "rendered_prompt_hashes_unique_count": 31,
+      "rendered_prompt_text_stored": false,
+      "verdict_fields_removed_total": 0
+    }
+  ],
+  "effective_ready_matrix_call_count": 186,
+  "input_model_visible_packets": "outputs/evp8_realistic_hardneg_stress_cohort_v0_1/model_visible_packets.jsonl",
+  "input_summary": "data/protocols/evp8_realistic_hardneg_stress_cohort_v0_1.json",
+  "mode": "no_api_preflight",
+  "models": [
+    {
+      "model_id": "qwen/qwen3.7-max",
+      "provider_route": "qwen_official",
+      "request_model_id": "qwen3.7-max"
+    },
+    {
+      "model_id": "deepseek/deepseek-v4-pro",
+      "provider_route": "deepseek_official",
+      "request_model_id": "deepseek-v4-pro"
+    },
+    {
+      "model_id": "google/gemini-2.5-flash",
+      "provider_route": "openrouter_pinned_exact_model_id",
+      "request_model_id": "google/gemini-2.5-flash"
+    }
+  ],
+  "next_step": "Run only the ready current_merge_gate and coverage_contestation conditions for Qwen, DeepSeek, and Gemini unless a separate verdict-field packet variant is built and preflighted for no-verdict.",
+  "patch_text_stored_in_tracked_outputs": false,
+  "project_counts": {
+    "PySnooper": 9,
+    "cookiecutter": 17,
+    "scrapy": 5
+  },
+  "prompt_conditions_blocked": [
+    {
+      "condition_id": "e6_no_verdict",
+      "reason": "blocked_no_verdict_transform_is_degenerate_for_stress_packets"
+    }
+  ],
+  "prompt_conditions_ready": [
+    "current_merge_gate",
+    "coverage_contestation"
+  ],
+  "prompt_conditions_requested": [
+    "current_merge_gate",
+    "e6_no_verdict",
+    "coverage_contestation"
+  ],
+  "raw_outputs_generated": false,
+  "rendered_prompt_text_stored": false,
+  "requested_matrix_call_count_if_all_conditions_ready": 279,
+  "source_kind_counts": {
+    "curated_no_api_stress_source": 5,
+    "model_generated_source": 26
+  },
+  "status": "passed_with_no_verdict_blocked",
+  "task_counts": {
+    "bugsinpy_PySnooper_3": 9,
+    "bugsinpy_cookiecutter_2": 9,
+    "bugsinpy_cookiecutter_3": 8,
+    "bugsinpy_scrapy_1": 5
+  }
+}

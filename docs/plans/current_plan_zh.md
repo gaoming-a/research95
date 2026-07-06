@@ -2,6 +2,62 @@
 
 最后更新：2026-07-06
 
+## 0.41 2026-07-06 主线 B 后续：31-case verifier matrix no-API preflight
+
+本轮目标是在 31-case hard-negative stress cohort 和 rule-only headroom 已完成后，
+冻结 verifier API 之前的矩阵执行边界。当前轮只做 no-API preflight，不调用
+Qwen、DeepSeek 或 Gemini，不生成 raw model responses。
+
+执行边界：
+
+- 本轮不调用 verifier API；
+- 输入只能来自 ignored
+  `outputs/evp8_realistic_hardneg_stress_cohort_v0_1/model_visible_packets.jsonl`
+  和 tracked stress cohort summary；
+- model-visible packets 含 `patch_text`，因此它们继续只保存在 ignored
+  `outputs/**`；tracked preflight JSON/Markdown 不得复制 patch diff、rendered
+  prompt、raw response 或 API key；
+- prompt 条件先检查三类：current merge-gate prompt、E6 no-verdict variant、
+  coverage-contestation prompt；
+- 如果 no-verdict variant 在 31-case stress packets 上没有任何 verdict-like 字段可
+  移除，必须标记为退化/不宜执行，不能把它写成独立有效实验条件；
+- planned model set 固定为 Qwen / DeepSeek / Gemini；preflight 只记录 call
+  manifest 的候选、模型、条件、hash 和字段审计；
+- 如果 prompt boundary、hidden-label leakage、tracked patch leakage 或 no-verdict
+  退化检查失败，暂停 API 执行并先修复计划/runner。
+
+本轮验收条件：
+
+- 生成 raw-free 31-case verifier matrix preflight 脚本和输出；
+- 明确哪些 prompt conditions ready，哪些 blocked，以及原因；
+- 明确后续 API 矩阵的有效 call count；
+- 更新 README/INDEX/current project state/engineering notes；
+- 运行最小验证，提交并尝试同步 GitHub。
+
+执行结果：
+
+- 新增 no-API preflight 脚本：
+  `scripts/check_evp8_realistic_hardneg_stress_matrix_preflight.py`；
+- 生成 tracked raw-free preflight 输出：
+  `data/protocols/evp8_realistic_hardneg_stress_matrix_preflight_v0_1.json`
+  和
+  `docs/experiments/evp8_realistic_hardneg_stress_matrix_preflight_v0_1.md`；
+- 生成 ignored call manifest：
+  `outputs/evp8_realistic_hardneg_stress_matrix_preflight_v0_1/call_manifest.jsonl`；
+- preflight 状态为 `passed_with_no_verdict_blocked`；
+- 31 个 packets 均为 visible pass，且 sanitizer 从每个 packet 中移除了
+  `has_hidden_oracle`、`label_leakage_guard`、`stress_source_boundary` 这类
+  不应进入 verifier prompt 的 hidden/provenance 元字段；
+- `current_merge_gate` 和 `coverage_contestation` 两个条件 ready；
+- `e6_no_verdict` 被阻断：stress packets 本身没有
+  `rule_based_visible_merge_gate_decision`、
+  `rule_based_visible_merge_gate_reasons` 或 `source_decision`，因此 no-verdict
+  transform 在该 cohort 上是退化条件，不能写成独立 ablation；
+- 原始三条件矩阵若全跑会是 279 calls，但有效 ready 矩阵为
+  `31 cases * 2 ready conditions * 3 models = 186 calls`；
+- 本轮没有调用 verifier API，没有生成 raw responses，没有把 patch diff 或 rendered
+  prompt 写入 tracked 文件。
+
 ## 0.39 2026-07-06 主线 B：realistic hard-negative gate repair
 
 本轮目标是按用户要求完成主线 B：把 realistic hard-negative stress test 从

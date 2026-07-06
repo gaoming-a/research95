@@ -98,6 +98,15 @@
   `1.0`。这说明 stress-test verifier matrix 有明确 headroom；下一步可在
   ignored `outputs/evp8_realistic_hardneg_stress_cohort_v0_1/model_visible_packets.jsonl`
   上做 verifier preflight/API，但论文口径仍是 stress-test evidence。
+- 主线 B 31-case verifier matrix no-API preflight 已完成：
+  `docs/experiments/evp8_realistic_hardneg_stress_matrix_preflight_v0_1.md` 和
+  `data/protocols/evp8_realistic_hardneg_stress_matrix_preflight_v0_1.json`。
+  状态为 `passed_with_no_verdict_blocked`。有效 ready API 矩阵只包含
+  `current_merge_gate` 与 `coverage_contestation` 两个 prompt 条件，覆盖
+  Qwen / DeepSeek / Gemini，共 `186` calls。`e6_no_verdict` 在该 stress cohort
+  上被阻断，因为 packets 中没有 verdict-like 字段可移除；不得写成已 ready 或
+  已执行的独立 ablation。preflight 同时确认 tracked 输出不保存 patch diff、
+  rendered prompt 或 raw responses。
 - 新增 Gemini repaired EVP-8 v0.3 E0-E6 third-model run：
   strict preflight、smoke/full check-only、smoke API、full API 和
   label-conditioned analysis 均通过。full API 为 686/686 parse-valid，估算成本
