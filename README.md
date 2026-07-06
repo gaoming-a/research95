@@ -126,12 +126,17 @@ An APSEC IEEEtran/BibTeX/page-budget draft package is now generated at
 `docs/paper/apsec_ieeetran_draft.tex`,
 `docs/paper/apsec_references.bib`, and
 `docs/paper/apsec_page_budget_audit_v0_1.md`; the estimated page count is
-7.05 pages and the compiled IEEEtran/BibTeX PDF is 6 pages with resolved
-references. This is a source conversion package, not a final submitted PDF.
-The remaining APSEC risks are table-width overfull/underfull warnings, visual
-inspection, manual BibTeX normalization, double-blind wording, the small
-98-candidate cohort, and the fact that three repaired models still do not
-establish broad LLM-verifier generality.
+8.14 pages and the compiled IEEEtran/BibTeX PDF is 8 pages with resolved
+references. `scripts/write_apsec_ieeetran_package.py --compile` now regenerates
+the source package and records compile commands in the page-budget audit. The
+compiled PDF render/layout audit is
+`docs/paper/apsec_pdf_layout_audit_v0_1.md`; it renders all 8 pages, checks that
+rendered pages are nonblank, verifies the anonymous author block, and confirms
+old APSEC gate-failed wording is absent. This is still a draft source/PDF
+package, not a final submitted PDF. Remaining APSEC risks are minor
+overfull/underfull warnings, manual BibTeX normalization, final human visual
+polish, the small 98-candidate cohort, and the fact that three repaired models
+still do not establish broad LLM-verifier generality.
 
 As of 2026-07-06, mainline A is complete. The main prompt remains fixed, and
 the separate coverage-contestation condition is reported only as a
@@ -178,8 +183,9 @@ claim, not autonomous correction or correctness verification.
 The APSEC technical-track Markdown rewrite now incorporates this result in
 `docs/paper/apsec_technical_track_rewrite_v0_1.md` and passes
 `scripts/audit_apsec_manuscript_rewrite.py`. The IEEEtran/BibTeX/page-budget
-draft package still needs regeneration so the submission-format files match
-the updated Markdown manuscript.
+draft package has been regenerated from the updated Markdown manuscript and
+compiled locally; use `docs/paper/apsec_page_budget_audit_v0_1.md` and
+`docs/paper/apsec_pdf_layout_audit_v0_1.md` as the current formatting gates.
 The CCF-C manuscript generation chain has also been synchronized:
 `scripts/write_final_manuscript_claim_map.py` now reads the stress-matrix
 analysis, regenerates `docs/paper/ccfc_manuscript_rewrite_v0_1.md`, and updates

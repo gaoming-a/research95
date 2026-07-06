@@ -57,6 +57,13 @@
   cohort. CCF-C Fig. 2--3 and `final_manuscript_claim_map_v0_1` have been
   regenerated so current paper-facing artifacts no longer describe the old
   realistic branch as a failed three-project gate.
+  The APSEC IEEEtran/BibTeX/page-budget package has also been regenerated from
+  the latest Markdown and compiled locally. The current compiled draft is 8
+  pages, with 4 overfull and 11 underfull hbox warnings recorded in
+  `paper/apsec_page_budget_audit_v0_1.md`; `paper/apsec_pdf_layout_audit_v0_1.md`
+  verifies that all 8 rendered pages are nonblank, the source author block is
+  anonymous, and stale APSEC gate wording is absent. This remains a draft
+  package, not a final submission PDF.
   The old no-API Luigi source-acquisition/materialization path is a historical
   dead end, not the current blocker. Historical `origin/main`
   entries retained later in plan logs are audit records only. As of
@@ -435,15 +442,21 @@
 - `../scripts/write_apsec_ieeetran_package.py`: APSEC IEEEtran/BibTeX/page
   budget source-package generator. It converts the APSEC Markdown rewrite and
   claim-map reference records into a draft IEEEtran source, BibTeX file, and
-  page-budget audit.
+  page-budget audit. Use `--compile` to run
+  pdflatex/bibtex/pdflatex/pdflatex and record compile command status in the
+  audit.
 - `paper/apsec_ieeetran_draft.tex`, `paper/apsec_references.bib`,
   `paper/apsec_page_budget_audit_v0_1.md`, and
   `../data/reviews/apsec_page_budget_audit_v0_1.json`: APSEC formatting draft
-  package. Status is `passed` for source generation and estimated 7.05-page
-  budget; IEEEtran/BibTeX compilation produced a 6-page PDF with no undefined
-  references in the latest log. Remaining formatting risks are table-width
-  overfull/underfull warnings, visual layout inspection, double-blind wording,
-  and BibTeX field normalization.
+  package. Status is `passed`; the current IEEEtran/BibTeX compilation
+  produces an 8-page PDF with no undefined references and records 4 overfull /
+  11 underfull hbox warnings.
+- `../scripts/audit_apsec_pdf_layout.py`,
+  `paper/apsec_pdf_layout_audit_v0_1.md`, and
+  `../data/reviews/apsec_pdf_layout_audit_v0_1.json`: APSEC compiled-PDF
+  render/layout gate. It renders the compiled IEEEtran PDF to temporary PNG
+  pages, checks page count and nonblank pages, and verifies anonymous/stale
+  wording boundaries without reading raw model outputs.
 - `../scripts/generate_ccfc_figures.py`: Python/matplotlib generator for the
   CCF-C manuscript figure set. It reads the tracked final manuscript claim map
   only and outputs PDF/SVG/PNG figures plus manifest, source-data, and QA notes.

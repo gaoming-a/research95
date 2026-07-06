@@ -2,6 +2,70 @@
 
 最后更新：2026-07-06
 
+## 0.45 2026-07-06 APSEC IEEEtran/BibTeX/PDF package synchronization
+
+本轮目标是把 APSEC IEEEtran/BibTeX/page-budget/PDF 草案包同步到最新
+Markdown 主稿，尤其是 0.43/0.44 已合入的 31-case hard-negative stress
+matrix 结果。该轮不运行 API、不改实验、不读取 raw outputs、不改 prompt，只处理
+投稿格式转换、编译、PDF 版面审计和文档同步。
+
+执行边界：
+
+- 输入以 `docs/paper/apsec_technical_track_rewrite_v0_1.md` 和 tracked claim
+  map 为准；
+- 修改 `scripts/write_apsec_ieeetran_package.py`，避免手改 LaTeX 后被生成器覆盖；
+- 重新生成 `docs/paper/apsec_ieeetran_draft.tex`、
+  `docs/paper/apsec_references.bib`、
+  `data/reviews/apsec_page_budget_audit_v0_1.json` 和
+  `docs/paper/apsec_page_budget_audit_v0_1.md`；
+- 如果本机可编译，则编译 PDF，并用 PDF 渲染/文本/日志进行最小版面审计；
+- 必须检查：
+  - LaTeX 是否包含最新 stress matrix 结果；
+  - BibTeX/citation 是否无 undefined references；
+  - page budget 是否仍在 APSEC technical track 10 页内；
+  - overfull/underfull warnings 是否被记录，能低风险修复则修复；
+  - double-blind 文案是否没有作者、单位、邮箱等非匿名信息；
+- 不把本轮输出写成 final submission/camera-ready，只能写成 draft package
+  synchronized and locally audited。
+
+本轮验收条件：
+
+- IEEEtran package generator 通过 `--check`；
+- APSEC manuscript audit 通过；
+- PDF 编译和 page-budget audit 更新；
+- PDF pages 可渲染，且审计记录页面数、日志 warnings、双盲边界；
+- README/INDEX/current state/engineering notes 同步；
+- 提交并同步 GitHub。
+
+执行结果：
+
+- 更新 `scripts/write_apsec_ieeetran_package.py`：
+  - 新增 `--compile`，可运行 pdflatex/bibtex/pdflatex/pdflatex；
+  - 长 token 表格单元使用可断行形式，转换表局部缩小 `tabcolsep`；
+  - page-budget audit 增加 compiled PDF、undefined references、stress matrix
+    同步、匿名 author block 等检查；
+  - compile audit 只记录命令和 exit code，不记录本机 stdout/path，避免泄露本地
+    用户路径；
+- 重新生成并编译：
+  - `docs/paper/apsec_ieeetran_draft.tex`；
+  - `docs/paper/apsec_references.bib`；
+  - `docs/paper/apsec_ieeetran_draft.pdf`；
+  - `data/reviews/apsec_page_budget_audit_v0_1.json`；
+  - `docs/paper/apsec_page_budget_audit_v0_1.md`；
+- 当前 APSEC IEEEtran/BibTeX 编译通过，PDF 为 8 页，仍在 10 页 technical
+  track 边界内；
+- latest LaTeX log 无 undefined references；overfull hbox 从旧记录的 6 个降到
+  4 个，underfull hbox 从旧记录的 24/26 个降到 11 个；
+- 新增 `scripts/audit_apsec_pdf_layout.py`、
+  `data/reviews/apsec_pdf_layout_audit_v0_1.json` 和
+  `docs/paper/apsec_pdf_layout_audit_v0_1.md`；
+- PDF layout audit 已渲染 8 页 PNG 到 ignored `tmp/`，确认 rendered page
+  count 与 PDF page count 一致、各页非空、source author block 匿名、旧
+  APSEC gate-failed 文案未残留；
+- 视觉 contact sheet 检查未发现空页、图表明显跑出页面或非匿名 title block；
+- 当前包仍标记为 draft package，不写成 final submission/camera-ready；
+- 本轮没有调用 API，没有读取 raw outputs，没有改实验结论或 prompt。
+
 ## 0.44 2026-07-06 CCF-C manuscript consistency update for hard-negative stress matrix
 
 本轮目标是把 0.42 hard-negative stress matrix 结果同步到 CCF-C stable

@@ -124,8 +124,17 @@
   31-case stress matrix 写成 bounded stress-test supplement，并明确 scrapy cases
   来自 curated no-API stress-source partial variants。APSEC audit 已通过：
   `docs/paper/apsec_manuscript_rewrite_audit_v0_1.md` /
-  `data/reviews/apsec_manuscript_rewrite_audit_v0_1.json`。下一步仍需重生成
-  IEEEtran/BibTeX/page-budget/PDF 包，否则 LaTeX 包会落后于 Markdown 主稿。
+  `data/reviews/apsec_manuscript_rewrite_audit_v0_1.json`。
+- APSEC IEEEtran/BibTeX/page-budget/PDF 包已同步到最新 Markdown 主稿：
+  `scripts/write_apsec_ieeetran_package.py --compile` 会重新生成
+  `docs/paper/apsec_ieeetran_draft.tex`、`docs/paper/apsec_references.bib`、
+  page-budget audit，并执行 pdflatex/bibtex/pdflatex/pdflatex。本地编译 PDF 为
+  8 页，仍低于 APSEC technical track 10 页边界；latest log 无 undefined
+  references，记录 4 个 overfull hbox 和 11 个 underfull hbox。新增
+  `scripts/audit_apsec_pdf_layout.py`、`docs/paper/apsec_pdf_layout_audit_v0_1.md`
+  和 `data/reviews/apsec_pdf_layout_audit_v0_1.json`，确认 8 页 PDF 均可渲染、
+  页面非空、author block 匿名、旧 APSEC gate-failed 文案未残留。当前包仍是
+  draft package，不是 final submission PDF。
 - CCF-C manuscript generation chain 已同步 stress matrix 结果：
   `scripts/write_final_manuscript_claim_map.py` 现在读取
   `data/reviews/evp8_realistic_hardneg_stress_matrix_analysis_v0_1.json`，
@@ -158,13 +167,13 @@
   `data/reviews/apsec_false_accept_case_analysis_v0_2.json`。它记录 Qwen、
   DeepSeek、Gemini 的 E6 false accepts candidate-level category 信息，但不保存
   raw response text、rendered prompts、patch diffs、full rationale text 或凭证。
-- 新增 APSEC IEEEtran/BibTeX/page-budget 草案包：
+- APSEC IEEEtran/BibTeX/page-budget 草案包：
   `docs/paper/apsec_ieeetran_draft.tex`、
   `docs/paper/apsec_references.bib`、
   `docs/paper/apsec_page_budget_audit_v0_1.md` 和
-  `data/reviews/apsec_page_budget_audit_v0_1.json`。页数估算 7.05 页，状态
-  `passed`；实际 IEEEtran/BibTeX 编译 PDF 为 6 页，latest log 无 undefined
-  references，但仍有 6 个 overfull hbox 和 24 个 underfull hbox，需要手工版面修复。
+  `data/reviews/apsec_page_budget_audit_v0_1.json`。页数估算 8.14 页，状态
+  `passed`；实际 IEEEtran/BibTeX 编译 PDF 为 8 页，latest log 无 undefined
+  references，但仍有 4 个 overfull hbox 和 11 个 underfull hbox，需要最终人工版面精修。
 - 当前剩余 APSEC 风险已经从“主结果单模型/两模型不足”转为：
   cohort 小、三模型仍非 broad-model、rule-only baseline 很强、false accepts
   仍集中在 partial/regression negatives、表格宽度 overfull/underfull warnings、

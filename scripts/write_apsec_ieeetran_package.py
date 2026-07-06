@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -88,16 +89,17 @@ def table_to_latex(lines: list[str], table_index: int) -> str:
         return "\n".join(latex_escape(line) for line in lines)
     header = rows[0]
     data_rows = rows[2:] if is_separator_row(rows[1]) else rows[1:]
-    col_spec = "l" + "X" * max(len(header) - 1, 0)
+    col_spec = "Y" * len(header)
 
     def row(cells: list[str]) -> str:
         padded = cells + [""] * (len(header) - len(cells))
-        return " & ".join(latex_escape(cell) for cell in padded[: len(header)]) + r" \\"
+        return " & ".join(table_cell_to_latex(cell) for cell in padded[: len(header)]) + r" \\"
 
     latex_lines = [
         r"\begin{table*}[t]",
         r"\centering",
         r"\scriptsize",
+        r"\setlength{\tabcolsep}{2pt}",
         rf"\caption{{Converted APSEC draft table {table_index}.}}",
         rf"\label{{tab:apsec-converted-{table_index}}}",
         rf"\begin{{tabularx}}{{\textwidth}}{{{col_spec}}}",
@@ -108,6 +110,28 @@ def table_to_latex(lines: list[str], table_index: int) -> str:
     latex_lines.extend(row(data_row) for data_row in data_rows)
     latex_lines.extend([r"\bottomrule", r"\end{tabularx}", r"\end{table*}"])
     return "\n".join(latex_lines)
+
+
+def table_cell_to_latex(text: str) -> str:
+    placeholders: list[str] = []
+
+    def protect(value: str) -> str:
+        token = f"@@TABLE_PLACEHOLDER_{len(placeholders)}@@"
+        placeholders.append(value)
+        return token
+
+    def maybe_break_token(match: re.Match[str]) -> str:
+        token = match.group(0)
+        if len(token) >= 14 and any(char in token for char in "_/-"):
+            safe = token.replace("{", "").replace("}", "")
+            return protect(r"\path{" + safe + "}")
+        return token
+
+    protected = re.sub(r"[A-Za-z0-9][A-Za-z0-9_./-]{8,}", maybe_break_token, text)
+    escaped = latex_escape(protected)
+    for index, value in enumerate(placeholders):
+        escaped = escaped.replace(f"@@TABLE\_PLACEHOLDER\_{index}@@", value)
+    return escaped
 
 
 def convert_inline_markdown(text: str) -> str:
@@ -286,6 +310,9 @@ def build_tex(body: str) -> str:
             r"\usepackage{tabularx}",
             r"\usepackage{url}",
             r"\usepackage[hidelinks]{hyperref}",
+            r"\newcolumntype{Y}{>{\raggedright\arraybackslash}X}",
+            r"\Urlmuskip=0mu plus 1mu",
+            r"\emergencystretch=2em",
             "",
             r"\title{Evidence Visibility Shapes Risk Behavior in a Controlled LLM Patch-Verifier Study}",
             r"\author{\IEEEauthorblockN{Anonymous Authors}\IEEEauthorblockA{Anonymous Institution}}",
@@ -315,6 +342,7 @@ def build_audit(
     bib_text: str,
     stats: dict[str, int],
     reference_count: int,
+    compile_runs: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     words = word_count(markdown)
     estimated_text_pages = words / 850.0
@@ -340,6 +368,26 @@ def build_audit(
             "passed": estimated_pages <= 10.0,
         },
         {
+            "check": "compiled_pdf_within_apsec_technical_limit",
+            "passed": bool(compile_summary["compiled_pdf_present"])
+            and (compile_summary["compiled_pdf_pages"] or 999) <= 10,
+        },
+        {
+            "check": "compiled_pdf_has_no_undefined_references",
+            "passed": compile_summary["undefined_references_in_latest_log"] is False,
+        },
+        {
+            "check": "stress_matrix_result_present_in_tex",
+            "passed": "62 repeated false accepts" in tex_text
+            and "12/93" in tex_text
+            and "strict rejects remained 0" in tex_text,
+        },
+        {
+            "check": "anonymous_author_block_present",
+            "passed": "Anonymous Authors" in tex_text
+            and "Anonymous Institution" in tex_text,
+        },
+        {
             "check": "final_pdf_not_claimed",
             "passed": True,
         },
@@ -362,6 +410,7 @@ def build_audit(
             "compiled_pdf_pages": compile_summary["compiled_pdf_pages"],
         },
         "compile_summary": compile_summary,
+        "compile_runs": compile_runs or [],
         "checks": checks,
         "outputs": {
             "tex": rel(DEFAULT_TEX_OUT),
@@ -372,7 +421,7 @@ def build_audit(
         "remaining_formatting_risks": [
             "Converted table captions are mechanical and should be manually shortened before submission.",
             "Compiled PDF still has table-width overfull/underfull warnings that need manual layout repair.",
-            "Final double-blind compliance still requires visual inspection.",
+            "Final double-blind compliance still requires visual inspection even though the source author block is anonymous.",
             "BibTeX entries compile but should be normalized to venue-quality fields.",
             "The current package is a draft source conversion, not a submitted or camera-ready PDF.",
         ],
@@ -400,6 +449,37 @@ def read_compile_summary() -> dict[str, Any]:
     summary["overfull_hbox_count_in_latest_log"] = log_text.count("Overfull \\hbox")
     summary["underfull_hbox_count_in_latest_log"] = log_text.count("Underfull \\hbox")
     return summary
+
+
+def run_latex_compile(tex_path: Path) -> list[dict[str, Any]]:
+    workdir = tex_path.parent
+    stem = tex_path.stem
+    commands = [
+        ["pdflatex", "-interaction=nonstopmode", tex_path.name],
+        ["bibtex", stem],
+        ["pdflatex", "-interaction=nonstopmode", tex_path.name],
+        ["pdflatex", "-interaction=nonstopmode", tex_path.name],
+    ]
+    runs: list[dict[str, Any]] = []
+    for command in commands:
+        result = subprocess.run(
+            command,
+            cwd=workdir,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            timeout=120,
+            check=False,
+        )
+        runs.append(
+            {
+                "command": " ".join(command),
+                "exit_code": result.returncode,
+            }
+        )
+        if result.returncode != 0:
+            break
+    return runs
 
 
 def write_audit_md(audit: dict[str, Any], path: Path) -> None:
@@ -433,6 +513,10 @@ def write_audit_md(audit: dict[str, Any], path: Path) -> None:
         "| --- | --- |",
     ]
     lines.extend(f"| {check['check']} | {str(check['passed']).lower()} |" for check in audit["checks"])
+    if audit.get("compile_runs"):
+        lines.extend(["", "## Compile Runs", "", "| command | exit code |", "| --- | ---: |"])
+        for run in audit["compile_runs"]:
+            lines.append(f"| `{run['command']}` | {run['exit_code']} |")
     lines.extend(["", "## Remaining Formatting Risks", ""])
     lines.extend(f"- {risk}" for risk in audit["remaining_formatting_risks"])
     lines.append("")
@@ -447,6 +531,7 @@ def main() -> None:
     parser.add_argument("--bib-out", type=Path, default=DEFAULT_BIB_OUT)
     parser.add_argument("--json-out", type=Path, default=DEFAULT_JSON_OUT)
     parser.add_argument("--md-out", type=Path, default=DEFAULT_MD_OUT)
+    parser.add_argument("--compile", action="store_true")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
 
@@ -457,15 +542,19 @@ def main() -> None:
     body, stats = markdown_to_latex(markdown, citation_keys)
     tex_text = build_tex(body)
     bib_text = "\n\n".join(bibtex_entry(record).rstrip() for record in references) + "\n"
-    audit = build_audit(markdown, tex_text, bib_text, stats, len(references))
-    json_text = json.dumps(audit, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
-
     existing = {
         "tex": args.tex_out.read_text(encoding="utf-8") if args.tex_out.exists() else None,
         "bib": args.bib_out.read_text(encoding="utf-8") if args.bib_out.exists() else None,
         "json": args.json_out.read_text(encoding="utf-8") if args.json_out.exists() else None,
         "md": args.md_out.read_text(encoding="utf-8") if args.md_out.exists() else None,
     }
+    existing_compile_runs: list[dict[str, Any]] = []
+    if existing["json"]:
+        try:
+            parsed_existing = json.loads(existing["json"])
+            existing_compile_runs = parsed_existing.get("compile_runs") or []
+        except json.JSONDecodeError:
+            existing_compile_runs = []
 
     args.tex_out.parent.mkdir(parents=True, exist_ok=True)
     args.bib_out.parent.mkdir(parents=True, exist_ok=True)
@@ -473,6 +562,10 @@ def main() -> None:
     args.md_out.parent.mkdir(parents=True, exist_ok=True)
     args.tex_out.write_text(tex_text, encoding="utf-8")
     args.bib_out.write_text(bib_text, encoding="utf-8")
+
+    compile_runs = run_latex_compile(args.tex_out) if args.compile else existing_compile_runs
+    audit = build_audit(markdown, tex_text, bib_text, stats, len(references), compile_runs)
+    json_text = json.dumps(audit, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
     args.json_out.write_text(json_text, encoding="utf-8")
     write_audit_md(audit, args.md_out)
 

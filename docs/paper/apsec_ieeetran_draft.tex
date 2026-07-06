@@ -5,6 +5,9 @@
 \usepackage{tabularx}
 \usepackage{url}
 \usepackage[hidelinks]{hyperref}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\Urlmuskip=0mu plus 1mu
+\emergencystretch=2em
 
 \title{Evidence Visibility Shapes Risk Behavior in a Controlled LLM Patch-Verifier Study}
 \author{\IEEEauthorblockN{Anonymous Authors}\IEEEauthorblockA{Anonymous Institution}}
@@ -17,7 +20,7 @@
 
 \begin{abstract}
 
-Patch-verification decisions made by large language models (LLMs) are meaningful only relative to the evidence visible at review time. Existing evaluations often report whether an LLM accepts or rejects a patch without making this evidence boundary explicit, which makes it difficult to separate model capability from visible-test evidence, tool-summary anchoring, or prompt-induced caution. This paper introduces the Evidence-Visibility Protocol (EVP-8), a hidden-evaluator protocol for candidate patch verification. EVP-8 reviews 98 candidate patches across seven cumulative evidence levels while withholding evaluator-only correctness labels until post-decision analysis. In three repaired v0.3 runs, Qwen reached 95.24\% E6 correct recall with 83.33\% accepted precision, DeepSeek reached 80.95\% E6 correct recall with 80.95\% accepted precision, and Gemini reached 95.24\% E6 correct recall with 80.00\% accepted precision. The three models still accepted 4-5 of 77 non-correct candidates at E6. E6 rule-only and no-verdict ablations show that verdict-like tool summaries can anchor policy behavior, and tool-contestation moved known tool false accepts mainly to escalation rather than strict rejection. These results support a bounded software-engineering claim: in this controlled LLM patch-verifier study, evidence visibility should be treated as an experimental variable for risk control, not as proof of general autonomous correctness verification.
+Patch-verification decisions made by large language models (LLMs) are meaningful only relative to the evidence visible at review time. Existing evaluations often report whether an LLM accepts or rejects a patch without making this evidence boundary explicit, which makes it difficult to separate model capability from visible-test evidence, tool-summary anchoring, or prompt-induced caution. This paper introduces the Evidence-Visibility Protocol (EVP-8), a hidden-evaluator protocol for candidate patch verification. EVP-8 reviews 98 candidate patches across seven cumulative evidence levels while withholding evaluator-only correctness labels until post-decision analysis. In three repaired v0.3 runs, Qwen reached 95.24\% E6 correct recall with 83.33\% accepted precision, DeepSeek reached 80.95\% E6 correct recall with 80.95\% accepted precision, and Gemini reached 95.24\% E6 correct recall with 80.00\% accepted precision. The three models still accepted 4-5 of 77 non-correct candidates at E6. E6 ablations, current-98 coverage-contestation, and a 31-case hard-negative stress matrix show that prompt framing can strongly shift risk policy: in the stress matrix, coverage-contestation reduced repeated false accepts from 62/93 to 12/93, entirely through escalation rather than strict rejection. These results support a bounded software-engineering claim: in this controlled LLM patch-verifier study, evidence visibility should be treated as an experimental variable for risk control, not as proof of general autonomous correctness verification.
 
 \end{abstract}
 \section{Introduction}
@@ -33,7 +36,7 @@ The paper makes three contributions:
 \begin{itemize}
 \item It defines EVP-8, a hidden-evaluator evidence-visibility protocol for measuring accept, reject, and escalation behavior in candidate patch verification.
 \item It reports repaired Qwen, DeepSeek, and Gemini v0.3 label-conditioned results showing that visible executable and tool evidence can unlock correct-patch acceptance while introducing bounded false-accept risk.
-\item It analyzes E6 rule-only, no-verdict, and tool-contestation conditions to separate deterministic tool evidence, verdict-like anchoring, safe handling, and strict correction.
+\item It analyzes E6 rule-only, no-verdict, tool-contestation, coverage-contestation, and hard-negative stress-test conditions to separate deterministic tool evidence, verdict-like anchoring, safe handling, strict correction, and prompt-induced conservatism.
 \end{itemize}
 
 The claim is deliberately bounded. The results do not establish reliable autonomous patch correctness verification, nor do they show that LLM decisions consistently outperform deterministic baselines. They show that evidence visibility is a measurable experimental variable that should be controlled and reported in LLM patch-verifier studies.
@@ -66,17 +69,18 @@ EVP-8 uses seven cumulative evidence levels:
 \begin{table*}[t]
 \centering
 \scriptsize
+\setlength{\tabcolsep}{2pt}
 \caption{Converted APSEC draft table 1.}
 \label{tab:apsec-converted-1}
-\begin{tabularx}{\textwidth}{lXX}
+\begin{tabularx}{\textwidth}{YYY}
 \toprule
 level & visible evidence & meaning \\
 \midrule
 E0 & Issue summary and candidate patch diff & minimal review context \\
-E1 & Structured changed-file/function map & patch surface information \\
+E1 & Structured \path{changed-file/function} map & patch surface information \\
 E2 & Patch application and static-check status & basic feasibility evidence \\
-E3 & Visible fail-to-pass test results & issue-relevant executable evidence \\
-E4 & Visible pass-to-pass regression results & regression-safety evidence \\
+E3 & Visible fail-to-pass test results & \path{issue-relevant} executable evidence \\
+E4 & Visible pass-to-pass regression results & \path{regression-safety} evidence \\
 E5 & Additional diagnostics & broader tool evidence \\
 E6 & Deterministic merge-gate summary & summarized tool verdict \\
 \bottomrule
@@ -88,17 +92,18 @@ The current packet set contains 98 candidate patches from 6 projects and 21 Bugs
 \begin{table*}[t]
 \centering
 \scriptsize
+\setlength{\tabcolsep}{2pt}
 \caption{Converted APSEC draft table 2.}
 \label{tab:apsec-converted-2}
-\begin{tabularx}{\textwidth}{lXXXXX}
+\begin{tabularx}{\textwidth}{YYYYYY}
 \toprule
 candidate type & count & evaluator label & label count & label source & purpose \\
 \midrule
-correct\_reference & 21 & correct\_under\_f2p\_and\_p2p\_broad & 21 & hidden F2P and P2P-broad evaluator labels & measure correct-patch recall \\
-buggy\_noop & 21 & incorrect\_issue\_not\_fixed & part of 76 issue-not-fixed negatives & hidden evaluator labels & issue-not-fixed false-accept risk \\
-irrelevant\_patch & 14 & incorrect\_issue\_not\_fixed & part of 76 issue-not-fixed negatives & hidden evaluator labels & plausibility-trap negative patches \\
-partial\_fix & 41 & incorrect\_issue\_not\_fixed & part of 76 issue-not-fixed negatives & hidden F2P and P2P-broad evaluator labels & semantic incompleteness and partial repair risk \\
-regression\_patch & 1 & incorrect\_regression & 1 & P2P-broad regression label & regression-safety risk \\
+\path{correct_reference} & 21 & \path{correct_under_f2p_and_p2p_broad} & 21 & hidden F2P and P2P-broad evaluator labels & measure correct-patch recall \\
+buggy\_noop & 21 & \path{incorrect_issue_not_fixed} & part of 76 \path{issue-not-fixed} negatives & hidden evaluator labels & \path{issue-not-fixed} false-accept risk \\
+\path{irrelevant_patch} & 14 & \path{incorrect_issue_not_fixed} & part of 76 \path{issue-not-fixed} negatives & hidden evaluator labels & \path{plausibility-trap} negative patches \\
+partial\_fix & 41 & \path{incorrect_issue_not_fixed} & part of 76 \path{issue-not-fixed} negatives & hidden F2P and P2P-broad evaluator labels & semantic incompleteness and partial repair risk \\
+\path{regression_patch} & 1 & \path{incorrect_regression} & 1 & P2P-broad regression label & \path{regression-safety} risk \\
 \bottomrule
 \end{tabularx}
 \end{table*}
@@ -107,7 +112,7 @@ Five selected models produced complete parse-valid decisions on an earlier froze
 
 \section{Experimental Design}
 
-The experiment asks three research questions. RQ1 asks whether repaired accept-aware evidence changes Qwen, DeepSeek, and Gemini label-conditioned decisions across E0-E6. RQ2 asks whether verdict-like deterministic tool summaries anchor E6 decisions. RQ3 asks whether explicit tool-contestation can challenge visible-test-only accept premises. The fresh realistic hard-negative branch is not treated as a main research question because it did not pass its predeclared source-acquisition gate; it is reported later as a boundary condition.
+The experiment asks three research questions. RQ1 asks whether repaired accept-aware evidence changes Qwen, DeepSeek, and Gemini label-conditioned decisions across E0-E6. RQ2 asks whether verdict-like deterministic tool summaries anchor E6 decisions. RQ3 asks whether explicit tool- or coverage-contestation can challenge visible-test-only accept premises, and whether that challenge occurs through strict rejection, safe escalation, or over-conservative recall loss. A later hard-negative stress matrix is reported as a supplemental stress test rather than a main research question because its third project comes from curated no-API stress-source variants, not a pure agent-generated realistic cohort.
 
 All metrics are computed after post-decision hidden-label join. The main metrics are accepted precision, correct recall, false accept rate, false reject rate, and escalation rate. Accepted precision measures the correctness of accepted patches. Correct recall measures how many correct patches were accepted. False accept rate measures how often non-correct candidates were accepted. Escalation rate measures routing to human review.
 
@@ -116,17 +121,18 @@ The baseline boundary is explicit. Always-escalate, always-reject, and always-ac
 \begin{table*}[t]
 \centering
 \scriptsize
+\setlength{\tabcolsep}{2pt}
 \caption{Converted APSEC draft table 3.}
 \label{tab:apsec-converted-3}
-\begin{tabularx}{\textwidth}{lXXXXX}
+\begin{tabularx}{\textwidth}{YYYYYY}
 \toprule
 policy or condition & status & accept & reject & escalate & role \\
 \midrule
-always\_escalate & calculable\_from\_label\_totals & 0 & 0 & 98 & conservative abstention reference, not a useful verifier. \\
-always\_reject & calculable\_from\_label\_totals & 0 & 98 & 0 & safety-heavy lower-bound reference exposing recall collapse. \\
-always\_accept & calculable\_from\_label\_totals & 98 & 0 & 0 & unsafe throughput reference exposing base-rate risk. \\
-uniform\_random\_three\_way\_expected & calculable\_expected\_reference\_from\_label\_totals & 32.666666666666664 & 32.666666666666664 & 32.666666666666664 & sanity-check reference for the decision space, not a completed verifier or a reported stochastic experiment. \\
-rule\_only\_visible\_tool & completed\_existing\_tracked\_result & 25 & 73 & 0 & main deterministic baseline for E6 full/no-verdict comparison. \\
+\path{always_escalate} & \path{calculable_from_label_totals} & 0 & 0 & 98 & conservative abstention reference, not a useful verifier. \\
+always\_reject & \path{calculable_from_label_totals} & 0 & 98 & 0 & safety-heavy lower-bound reference exposing recall collapse. \\
+always\_accept & \path{calculable_from_label_totals} & 98 & 0 & 0 & unsafe throughput reference exposing base-rate risk. \\
+\path{uniform_random_three_way_expected} & \path{calculable_expected_reference_from_label_totals} & 32.666666666666664 & 32.666666666666664 & 32.666666666666664 & sanity-check reference for the decision space, not a completed verifier or a reported stochastic experiment. \\
+\path{rule_only_visible_tool} & \path{completed_existing_tracked_result} & 25 & 73 & 0 & main deterministic baseline for E6 \path{full/no-verdict} comparison. \\
 \bottomrule
 \end{tabularx}
 \end{table*}
@@ -142,15 +148,16 @@ In the repaired Qwen, DeepSeek, and Gemini v0.3 runs, E0-E2 produced no accepted
 \begin{table*}[t]
 \centering
 \scriptsize
+\setlength{\tabcolsep}{2pt}
 \caption{Converted APSEC draft table 4.}
 \label{tab:apsec-converted-4}
-\begin{tabularx}{\textwidth}{lXXXXXXX}
+\begin{tabularx}{\textwidth}{YYYYYYYY}
 \toprule
 model & E6 accept & E6 correct accept & E6 false accept & E6 accepted precision & E6 correct recall & E6 false accept rate & E6 escalation rate \\
 \midrule
-qwen/qwen3.7-max & 24 & 20 & 4 & 83.33\% & 95.24\% & 5.19\% & 0.00\% \\
-deepseek/deepseek-v4-pro & 21 & 17 & 4 & 80.95\% & 80.95\% & 5.19\% & 4.08\% \\
-google/gemini-2.5-flash & 25 & 20 & 5 & 80.00\% & 95.24\% & 6.49\% & 0.00\% \\
+\path{qwen/qwen3.7-max} & 24 & 20 & 4 & 83.33\% & 95.24\% & 5.19\% & 0.00\% \\
+\path{deepseek/deepseek-v4-pro} & 21 & 17 & 4 & 80.95\% & 80.95\% & 5.19\% & 4.08\% \\
+\path{google/gemini-2.5-flash} & 25 & 20 & 5 & 80.00\% & 95.24\% & 6.49\% & 0.00\% \\
 \bottomrule
 \end{tabularx}
 \end{table*}
@@ -160,9 +167,10 @@ Qwen level-conditioned metrics:
 \begin{table*}[t]
 \centering
 \scriptsize
+\setlength{\tabcolsep}{2pt}
 \caption{Converted APSEC draft table 5.}
 \label{tab:apsec-converted-5}
-\begin{tabularx}{\textwidth}{lXXXXXXX}
+\begin{tabularx}{\textwidth}{YYYYYYYY}
 \toprule
 level & accept & correct accept & false accept & accepted precision & correct recall & false accept rate & escalation rate \\
 \midrule
@@ -182,9 +190,10 @@ DeepSeek level-conditioned metrics:
 \begin{table*}[t]
 \centering
 \scriptsize
+\setlength{\tabcolsep}{2pt}
 \caption{Converted APSEC draft table 6.}
 \label{tab:apsec-converted-6}
-\begin{tabularx}{\textwidth}{lXXXXXXX}
+\begin{tabularx}{\textwidth}{YYYYYYYY}
 \toprule
 level & accept & correct accept & false accept & accepted precision & correct recall & false accept rate & escalation rate \\
 \midrule
@@ -204,9 +213,10 @@ Gemini level-conditioned metrics:
 \begin{table*}[t]
 \centering
 \scriptsize
+\setlength{\tabcolsep}{2pt}
 \caption{Converted APSEC draft table 7.}
 \label{tab:apsec-converted-7}
-\begin{tabularx}{\textwidth}{lXXXXXXX}
+\begin{tabularx}{\textwidth}{YYYYYYYY}
 \toprule
 level & accept & correct accept & false accept & accepted precision & correct recall & false accept rate & escalation rate \\
 \midrule
@@ -237,17 +247,18 @@ The E6 ablation is a separate verdict-field ablation package rather than the rep
 \begin{table*}[t]
 \centering
 \scriptsize
+\setlength{\tabcolsep}{2pt}
 \caption{Converted APSEC draft table 8.}
 \label{tab:apsec-converted-8}
-\begin{tabularx}{\textwidth}{lXXXXXXX}
+\begin{tabularx}{\textwidth}{YYYYYYYY}
 \toprule
 condition & accept & reject & escalate & accepted precision & correct recall & false accept rate & escalation rate \\
 \midrule
 rule-only & 25 & 73 & 0 & 80.00\% & 95.24\% & 6.49\% & 0.00\% \\
-deepseek/deepseek-v4-pro E6-full & 23 & 75 & 0 & 82.61\% & 90.48\% & 5.19\% & 0.00\% \\
-deepseek/deepseek-v4-pro E6-no-verdict & 11 & 73 & 14 & 100.00\% & 52.38\% & 0.00\% & 14.29\% \\
-qwen/qwen3.7-max E6-full & 24 & 74 & 0 & 83.33\% & 95.24\% & 5.19\% & 0.00\% \\
-qwen/qwen3.7-max E6-no-verdict & 23 & 74 & 1 & 82.61\% & 90.48\% & 5.19\% & 1.02\% \\
+\path{deepseek/deepseek-v4-pro} E6-full & 23 & 75 & 0 & 82.61\% & 90.48\% & 5.19\% & 0.00\% \\
+\path{deepseek/deepseek-v4-pro} E6-no-verdict & 11 & 73 & 14 & 100.00\% & 52.38\% & 0.00\% & 14.29\% \\
+\path{qwen/qwen3.7-max} E6-full & 24 & 74 & 0 & 83.33\% & 95.24\% & 5.19\% & 0.00\% \\
+\path{qwen/qwen3.7-max} E6-no-verdict & 23 & 74 & 1 & 82.61\% & 90.48\% & 5.19\% & 1.02\% \\
 \bottomrule
 \end{tabularx}
 \end{table*}
@@ -261,17 +272,18 @@ The Wilson intervals are wide, so the ablation should be read as bounded risk-po
 \begin{table*}[t]
 \centering
 \scriptsize
+\setlength{\tabcolsep}{2pt}
 \caption{Converted APSEC draft table 9.}
 \label{tab:apsec-converted-9}
-\begin{tabularx}{\textwidth}{lXXXX}
+\begin{tabularx}{\textwidth}{YYYYY}
 \toprule
 condition & accepted precision 95\% CI & correct recall 95\% CI & false accept rate 95\% CI & escalation rate 95\% CI \\
 \midrule
 rule-only & 80.00\% [60.87\%, 91.14\%] & 95.24\% [77.33\%, 99.15\%] & 6.49\% [2.81\%, 14.32\%] & 0.00\% [0.00\%, 3.77\%] \\
-qwen/qwen3.7-max E6-full & 83.33\% [64.15\%, 93.32\%] & 95.24\% [77.33\%, 99.15\%] & 5.19\% [2.04\%, 12.61\%] & 0.00\% [0.00\%, 3.77\%] \\
-qwen/qwen3.7-max E6-no-verdict & 82.61\% [62.86\%, 93.02\%] & 90.48\% [71.09\%, 97.35\%] & 5.19\% [2.04\%, 12.61\%] & 1.02\% [0.18\%, 5.56\%] \\
-deepseek/deepseek-v4-pro E6-full & 82.61\% [62.86\%, 93.02\%] & 90.48\% [71.09\%, 97.35\%] & 5.19\% [2.04\%, 12.61\%] & 0.00\% [0.00\%, 3.77\%] \\
-deepseek/deepseek-v4-pro E6-no-verdict & 100.00\% [74.12\%, 100.00\%] & 52.38\% [32.37\%, 71.66\%] & 0.00\% [0.00\%, 4.75\%] & 14.29\% [8.70\%, 22.56\%] \\
+\path{qwen/qwen3.7-max} E6-full & 83.33\% [64.15\%, 93.32\%] & 95.24\% [77.33\%, 99.15\%] & 5.19\% [2.04\%, 12.61\%] & 0.00\% [0.00\%, 3.77\%] \\
+\path{qwen/qwen3.7-max} E6-no-verdict & 82.61\% [62.86\%, 93.02\%] & 90.48\% [71.09\%, 97.35\%] & 5.19\% [2.04\%, 12.61\%] & 1.02\% [0.18\%, 5.56\%] \\
+\path{deepseek/deepseek-v4-pro} E6-full & 82.61\% [62.86\%, 93.02\%] & 90.48\% [71.09\%, 97.35\%] & 5.19\% [2.04\%, 12.61\%] & 0.00\% [0.00\%, 3.77\%] \\
+\path{deepseek/deepseek-v4-pro} E6-no-verdict & 100.00\% [74.12\%, 100.00\%] & 52.38\% [32.37\%, 71.66\%] & 0.00\% [0.00\%, 4.75\%] & 14.29\% [8.70\%, 22.56\%] \\
 \bottomrule
 \end{tabularx}
 \end{table*}
@@ -285,17 +297,85 @@ This result supports safe handling through escalation. It does not support a cla
 \begin{table*}[t]
 \centering
 \scriptsize
+\setlength{\tabcolsep}{2pt}
 \caption{Converted APSEC draft table 10.}
 \label{tab:apsec-converted-10}
-\begin{tabularx}{\textwidth}{lXXXX}
+\begin{tabularx}{\textwidth}{YYYYY}
 \toprule
 model & opportunity cases & safe handling 95\% CI & strict correction 95\% CI & repeated accept 95\% CI \\
 \midrule
-deepseek/deepseek-v4-pro & 9 & 100.00\% [70.09\%, 100.00\%] & 0.00\% [0.00\%, 29.91\%] & 0.00\% [0.00\%, 29.91\%] \\
-qwen/qwen3.7-max & 9 & 88.89\% [56.50\%, 98.01\%] & 0.00\% [0.00\%, 29.91\%] & 11.11\% [1.99\%, 43.50\%] \\
+\path{deepseek/deepseek-v4-pro} & 9 & 100.00\% [70.09\%, 100.00\%] & 0.00\% [0.00\%, 29.91\%] & 0.00\% [0.00\%, 29.91\%] \\
+\path{qwen/qwen3.7-max} & 9 & 88.89\% [56.50\%, 98.01\%] & 0.00\% [0.00\%, 29.91\%] & 11.11\% [1.99\%, 43.50\%] \\
 \bottomrule
 \end{tabularx}
 \end{table*}
+
+\subsection{Coverage-contestation removed repeated false accepts by becoming highly conservative}
+
+The current-98 coverage-contestation condition tested whether a stronger prompt could challenge visible-test-only acceptance without changing the frozen E6/no-verdict packet set. It removed repeated false accepts for Qwen, DeepSeek, and Gemini, reducing the false accept rate on 77 non-correct candidates to 0.00\% for all three models. This is prompt-sensitivity evidence, not a new main result, because the same condition also collapsed correct-patch acceptance. DeepSeek and Gemini accepted no correct patches, and Qwen accepted only 2 of 21 correct patches.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\caption{Converted APSEC draft table 11.}
+\label{tab:apsec-converted-11}
+\begin{tabularx}{\textwidth}{YYYYYYYYY}
+\toprule
+model & accept & reject & escalate & repeated false accept & strict reject on wrong & safe escalation on wrong & correct recall & correct recall loss \\
+\midrule
+\path{deepseek/deepseek-v4-pro} & 0 & 73 & 25 & 0.00\% & 93.51\% & 6.49\% & 0.00\% & 100.00\% \\
+\path{google/gemini-2.5-flash} & 0 & 73 & 25 & 0.00\% & 93.51\% & 6.49\% & 0.00\% & 100.00\% \\
+\path{qwen/qwen3.7-max} & 2 & 74 & 22 & 0.00\% & 94.81\% & 5.19\% & 9.52\% & 90.48\% \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+The result answers a narrow prompt-setting question. A model can be instructed to challenge coverage sufficiency and avoid visible-test-only acceptance on this frozen cohort, but the observed mechanism is mostly conservative triage rather than semantic discrimination. Therefore the paper should not claim that coverage-contestation improves autonomous verification. The supported claim is that prompt framing can move false-accept risk into reject/escalate outcomes while imposing a large correct-recall cost.
+
+\subsection{A hard-negative stress matrix reduced false accepts through escalation}
+
+After the current-98 prompt-sensitivity result, we constructed a separated hard-negative stress cohort to test visible-pass/hidden-fail cases more directly. The cohort contains 31 hidden-failing candidates across PySnooper, cookiecutter, and scrapy. The visible-tool baseline accepted all 31 cases. Because the scrapy cases are curated no-API stress-source partial variants, this is a hard-negative stress-test supplement rather than a pure agent-generated realistic cohort.
+
+Across Qwen, DeepSeek, and Gemini, the current merge-gate prompt produced 62 repeated false accepts in 93 model-condition records. The coverage-contestation prompt reduced repeated false accepts to 12/93. The reduction came entirely through escalation: strict rejects remained 0 in both conditions.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\caption{Converted APSEC draft table 12.}
+\label{tab:apsec-converted-12}
+\begin{tabularx}{\textwidth}{YYYYYY}
+\toprule
+condition & records & repeated false accepts & strict rejects & safe escalations & safe handling \\
+\midrule
+\path{current_merge_gate} & 93 & 62 (66.67\%) & 0 (0.00\%) & 31 (33.33\%) & 31 (33.33\%) \\
+\path{coverage_contestation} & 93 & 12 (12.90\%) & 0 (0.00\%) & 81 (87.10\%) & 81 (87.10\%) \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\caption{Converted APSEC draft table 13.}
+\label{tab:apsec-converted-13}
+\begin{tabularx}{\textwidth}{YYYYYY}
+\toprule
+condition & model & accept & reject & escalate & safe handling \\
+\midrule
+\path{current_merge_gate} & \path{deepseek/deepseek-v4-pro} & 0 & 0 & 31 & 31 (100.00\%) \\
+\path{current_merge_gate} & \path{google/gemini-2.5-flash} & 31 & 0 & 0 & 0 (0.00\%) \\
+\path{current_merge_gate} & \path{qwen/qwen3.7-max} & 31 & 0 & 0 & 0 (0.00\%) \\
+\path{coverage_contestation} & \path{deepseek/deepseek-v4-pro} & 0 & 0 & 31 & 31 (100.00\%) \\
+\path{coverage_contestation} & \path{google/gemini-2.5-flash} & 0 & 0 & 31 & 31 (100.00\%) \\
+\path{coverage_contestation} & \path{qwen/qwen3.7-max} & 12 & 0 & 19 & 19 (61.29\%) \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+This stress result strengthens the risk-triage interpretation. It shows that the stronger prompt can route many visible-pass/hidden-fail candidates away from autonomous acceptance, including all Gemini stress cases and all DeepSeek stress cases. It does not show semantic correction, because no condition strictly rejected the hard negatives. Correct recall is also undefined in this all-negative cohort.
 
 \subsection{E6 false accepts were concentrated in partial and regression negatives}
 
@@ -304,34 +384,31 @@ The most important failure mode is not the average E6 score but the remaining E6
 \begin{table*}[t]
 \centering
 \scriptsize
-\caption{Converted APSEC draft table 11.}
-\label{tab:apsec-converted-11}
-\begin{tabularx}{\textwidth}{lXXXX}
+\setlength{\tabcolsep}{2pt}
+\caption{Converted APSEC draft table 14.}
+\label{tab:apsec-converted-14}
+\begin{tabularx}{\textwidth}{YYYYY}
 \toprule
-model & partial\_fix accepts & regression\_patch accepts & total E6 false accepts & what the failure shows \\
+model & partial\_fix accepts & \path{regression_patch} accepts & total E6 false accepts & what the failure shows \\
 \midrule
-qwen/qwen3.7-max & 3/41 & 1/1 & 4 & semantic incompleteness and regression-safety failures remain visible-evidence risks \\
-deepseek/deepseek-v4-pro & 3/41 & 1/1 & 4 & semantic incompleteness and regression-safety failures remain visible-evidence risks \\
-google/gemini-2.5-flash & 4/41 & 1/1 & 5 & semantic incompleteness and regression-safety failures remain visible-evidence risks \\
+\path{qwen/qwen3.7-max} & 3/41 & 1/1 & 4 & semantic incompleteness and \path{regression-safety} failures remain \path{visible-evidence} risks \\
+\path{deepseek/deepseek-v4-pro} & 3/41 & 1/1 & 4 & semantic incompleteness and \path{regression-safety} failures remain \path{visible-evidence} risks \\
+\path{google/gemini-2.5-flash} & 4/41 & 1/1 & 5 & semantic incompleteness and \path{regression-safety} failures remain \path{visible-evidence} risks \\
 \bottomrule
 \end{tabularx}
 \end{table*}
 
 A sanitized case-level analysis is now available for these model-specific false accepts. It records candidate id, project, task, negative type, E6 decision, no-verdict decision where available, and compressed rationale categories, but excludes raw response text, full rationale text, rendered prompts, patch diffs, and credentials. The case rows show repeated risk concentration in the same regression case and several youtube-dl partial fixes; they support failure anatomy, not a claim that the complete model rationale has been audited semantically.
 
-\subsection{Realistic hard-negative acquisition remained a boundary}
-
-The fresh realistic branch produced 26 visible-pass/hidden-fail cases across 2 projects. This missed the predeclared verifier-readiness gate of 30 cases across 3 projects. The branch is therefore reported as a source-acquisition boundary rather than a main verifier experiment.
-
 \section{Discussion}
 
 The main implication is that LLM patch verification should be evaluated with explicit evidence boundaries. The same candidate patch may be treated differently when visible tests, regression checks, diagnostics, or deterministic tool summaries are introduced. Reporting only an aggregate accept/reject rate would hide this dependence.
 
-The results also clarify the role of escalation. Escalation can be useful for software-quality workflows because it routes risky cases away from autonomous acceptance. However, escalation is not strict correction. This distinction matters for deployment: a verifier that escalates risky candidates may reduce unsafe automation, but it has not proven semantic incorrectness.
+The results also clarify the role of escalation. Escalation can be useful for software-quality workflows because it routes risky cases away from autonomous acceptance. However, escalation is not strict correction, and aggressive contestation can destroy correct-patch recall. This distinction matters for deployment: a verifier that escalates risky candidates may reduce unsafe automation, but it has not proven semantic incorrectness or preserved useful acceptance.
 
 The strongest current contribution is methodological. EVP-8 provides a reproducible way to separate model-visible evidence from hidden evaluator labels, report accept/reject/escalate outcomes, and connect each claim to a validity gate. This is why the paper is framed as a controlled protocol and measurement study rather than as a new repair or verification algorithm.
 
-Several reviewer concerns remain bounded rather than eliminated. The cohort is small, Wilson intervals are wide, repaired Qwen, DeepSeek, and Gemini are the main model conditions, majority-vote cannot be computed from the current tracked summaries, and the realistic hard-negative branch did not pass the three-project readiness gate. Most importantly, the current paper-facing main result is three-model but still not broad-model. These are not hidden weaknesses; they are the boundary conditions under which the current claims are valid.
+Several reviewer concerns remain bounded rather than eliminated. The cohort is small, Wilson intervals are wide, repaired Qwen, DeepSeek, and Gemini are the main model conditions, majority-vote cannot be computed from the current tracked summaries, and the hard-negative stress matrix is a stress-test supplement rather than a pure realistic agent-patch cohort. Most importantly, the current paper-facing main result is three-model but still not broad-model. These are not hidden weaknesses; they are the boundary conditions under which the current claims are valid.
 
 \begin{figure}[t]
 \centering
@@ -346,13 +423,13 @@ Several reviewer concerns remain bounded rather than eliminated. The cohort is s
 
 \textbf{Construct validity.} The accept/reject/escalate decision space simplifies real review workflows. Escalation is a routing outcome, not proof of semantic rejection. Hidden evaluator labels are used only for post-decision analysis and should not be interpreted as model-visible truth.
 
-\textbf{External validity.} The main evidence comes from a 98-candidate EVP-8 cohort, an EVP-8-HARD controlled cohort, and selected model conditions. The repaired E0-E6 main result now covers Qwen, DeepSeek, and Gemini, but it is still not a broad-model result, and the realistic hard-negative branch did not pass its readiness gate. The results therefore support bounded evidence-conditioned risk behavior in a controlled patch-verifier study, not universal LLM patch-verifier reliability.
+\textbf{External validity.} The main evidence comes from a 98-candidate EVP-8 cohort, an EVP-8-HARD controlled cohort, a 31-case hard-negative stress matrix, and selected model conditions. The repaired E0-E6 main result now covers Qwen, DeepSeek, and Gemini, but it is still not a broad-model result. The hard-negative stress matrix reaches three projects, but the scrapy cases are curated no-API stress-source variants, so it should not be generalized as a pure agent-generated realistic cohort. The results therefore support bounded evidence-conditioned risk behavior in a controlled patch-verifier study, not universal LLM patch-verifier reliability.
 
 \textbf{Baseline validity.} Rule-only visible-tool is the completed deterministic baseline. Always-* and uniform-random policies are reference policies. Majority-vote and a separate deterministic E0/no-tool verifier remain unavailable under the current tracked-summary boundary.
 
 \section{Conclusion}
 
-This paper introduces EVP-8 as a hidden-evaluator evidence-visibility protocol for candidate patch verification. The repaired Qwen, DeepSeek, and Gemini v0.3 results show that visible executable and tool evidence can unlock correct-patch acceptance while retaining false-accept risk and model-dependent caution. E6 ablations and tool-contestation further show that verdict-like evidence can shape policy behavior and that safe handling often occurs through escalation rather than strict correction. The contribution is a reproducible software-engineering protocol for measuring evidence-conditioned risk behavior in a controlled LLM patch-verifier study, not a claim of autonomous patch correctness verification.
+This paper introduces EVP-8 as a hidden-evaluator evidence-visibility protocol for candidate patch verification. The repaired Qwen, DeepSeek, and Gemini v0.3 results show that visible executable and tool evidence can unlock correct-patch acceptance while retaining false-accept risk and model-dependent caution. E6 ablations, tool-contestation, coverage-contestation, and the hard-negative stress matrix further show that verdict-like evidence and prompt framing can shape policy behavior, and that safer handling often occurs through escalation rather than strict semantic correction. The contribution is a reproducible software-engineering protocol for measuring evidence-conditioned risk behavior in a controlled LLM patch-verifier study, not a claim of autonomous patch correctness verification.
 
 The companion IEEEtran/BibTeX/page-budget draft package converts these citation keys into a draft reference file; final submission still requires BibTeX field normalization, PDF compilation, visual page-budget inspection, and double-blind checks.
 

@@ -1,5 +1,21 @@
 # Engineering Notes
 
+## 2026-07-06 APSEC IEEEtran compile and layout audit
+
+- Do not store LaTeX compile stdout in tracked JSON audits. MiKTeX logs include
+  local absolute paths, which can leak the local user name and violate the
+  double-blind boundary. Store command names and exit codes only.
+- Markdown-to-LaTeX table conversion needs special handling for long
+  identifier-like tokens. Wrapping underscore/slash tokens with breakable table
+  formatting and reducing local `tabcolsep` lowered APSEC overfull warnings
+  without changing paper claims.
+- Page count alone is insufficient. The APSEC draft is within the 10-page
+  boundary, but a render audit is still needed to catch blank pages, obvious
+  layout failures, and stale non-anonymous/stale-claim wording.
+- Compile-derived audits should be regenerated through the source generator,
+  not by hand-editing `.tex`, because the Markdown-to-LaTeX package is
+  generator-owned.
+
 ## 2026-07-06 hard-negative stress matrix manuscript synchronization
 
 - When a late experiment changes the paper-facing boundary, update the
