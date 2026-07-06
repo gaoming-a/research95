@@ -37,6 +37,7 @@
       "request_model_id": "google/gemini-2.5-flash"
     }
   ],
+  "max_output_tokens": 4096,
   "packet_variant": "current98_e6_coverage_contestation_no_verdict",
   "prompt_template": "prompts/evp8_coverage_contestation_merge_gate_v0_1.md",
   "protocol_spec": "data/protocols/evp8_protocol_v0_3_qwen_first.json",

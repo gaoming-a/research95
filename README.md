@@ -133,15 +133,22 @@ inspection, manual BibTeX normalization, double-blind wording, the small
 98-candidate cohort, and the fact that three repaired models still do not
 establish broad LLM-verifier generality.
 
-As of 2026-07-06, the next robustness route keeps the main prompt fixed and
-adds a separate coverage-contestation condition. The frozen prompt is
+As of 2026-07-06, mainline A is complete. The main prompt remains fixed, and
+the separate coverage-contestation condition is reported only as a
+prompt-sensitivity ablation. The frozen prompt is
 `prompts/evp8_coverage_contestation_merge_gate_v0_1.md`; the prompt change
 record is
 `docs/experiments/evp8_coverage_contestation_prompt_change_record_v0_1.md`.
-The current-98 no-API check-only packet passed at
+The current-98 check-only packet passed at
 `docs/experiments/evp8_coverage_contestation_current98_check_only_v0_1.md`,
-with 98 E6 no-verdict packets per model and 294 planned Qwen/DeepSeek/Gemini
-calls if execution is later authorized. The hard-negative stress-test packet is
+and Qwen, DeepSeek, and Gemini each completed 98 E6 no-verdict
+coverage-contestation reviews. The analysis is
+`docs/experiments/evp8_coverage_contestation_current98_analysis_v0_1.md`.
+It shows zero repeated false accepts for all three models, but only by inducing
+severe correct-recall loss: DeepSeek and Gemini accepted no correct patches,
+and Qwen accepted 2/21. The APSEC rewrite now includes this as Section 5.4,
+not as a replacement for the repaired v0.3 main result. The hard-negative
+stress-test packet is
 `docs/experiments/evp8_hardneg_stress_test_packet_v0_1.md`; it remains blocked
 at 26/30 visible-pass/hidden-fail cases and 2/3 projects, so verifier APIs must
 not be run for that stress matrix until the Luigi/third-project gate is repaired.

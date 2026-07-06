@@ -1,0 +1,74 @@
+{
+  "actual_model_id_counts": {
+    "deepseek-v4-pro": 98
+  },
+  "analysis_id": "evp8_coverage_contestation_current98_v0_1",
+  "api_call_attempted": true,
+  "api_key_values_printed": false,
+  "challenge_visible_test_only_accept_counts": {
+    "False": 68,
+    "True": 30
+  },
+  "cohort_id": "EVP-8",
+  "condition": "coverage-contestation-current98-e6-no-verdict",
+  "config": "configs/evp8_coverage_contestation_current98.local.json",
+  "configured_model_id": "deepseek/deepseek-v4-pro",
+  "cost_summary": {
+    "cost_currency_counts": {
+      "USD": 98
+    },
+    "cost_observability_counts": {
+      "estimated_from_provider_token_usage": 98
+    },
+    "cost_source_counts": {
+      "estimated_from_tokens": 98
+    },
+    "total_cost_cny": 0.0,
+    "total_cost_usd": 0.153830529,
+    "unknown_cost_record_count": 0
+  },
+  "coverage_concern_counts": {
+    "high": 31,
+    "low": 13,
+    "medium": 3,
+    "none": 51
+  },
+  "decision_counts": {
+    "escalate": 25,
+    "reject": 73
+  },
+  "invalid_parse_count": 0,
+  "mode": "executed",
+  "new_api_call_count": 98,
+  "packet_variant": "current98_e6_coverage_contestation_no_verdict",
+  "parse_valid_count": 98,
+  "provider_preferences": null,
+  "provider_route": "deepseek_official",
+  "provider_route_counts": {
+    "deepseek_official": 98
+  },
+  "raw_outputs_generated": true,
+  "raw_response_text_stored_in_tracked_reviews": false,
+  "raw_response_text_stored_in_tracked_summary": false,
+  "raw_responses_out": "outputs/evp8_coverage_contestation_current98_v0_1/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+  "rendered_prompt_text_stored": false,
+  "request_model_id": "deepseek-v4-pro",
+  "request_response_format": null,
+  "request_thinking": null,
+  "resume_enabled": false,
+  "resumed_raw_record_count": 0,
+  "review_count": 98,
+  "run_gate": "passed",
+  "run_scope": "full",
+  "tool_evidence_reliability_counts": {
+    "contradicts_accept": 72,
+    "insufficient_for_accept": 23,
+    "no_visible_tool_evidence": 3
+  },
+  "tracked_reviews_out": "data/reviews/evp8_coverage_contestation_current98_deepseek_deepseek-v4-pro_full_reviews.jsonl",
+  "usage_cost_gate": "passed",
+  "visible_tests_sufficient_counts": {
+    "False": 63,
+    "True": 35
+  }
+}

@@ -1,0 +1,423 @@
+{
+  "analysis_id": "evp8_coverage_contestation_current98_analysis_v0_1",
+  "candidate_count": 98,
+  "checks": [
+    {
+      "check": "candidate_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "model_count",
+      "detail": [
+        "deepseek/deepseek-v4-pro",
+        "google/gemini-2.5-flash",
+        "qwen/qwen3.7-max"
+      ],
+      "passed": true
+    },
+    {
+      "check": "review_count_per_model",
+      "detail": {
+        "deepseek/deepseek-v4-pro": 98,
+        "google/gemini-2.5-flash": 98,
+        "qwen/qwen3.7-max": 98
+      },
+      "passed": true
+    },
+    {
+      "check": "rule_only_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "raw_response_text_not_read",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "rendered_prompt_text_not_read",
+      "detail": true,
+      "passed": true
+    }
+  ],
+  "claim_boundary": "This analysis measures prompt sensitivity on the frozen current-98 E6/no-verdict cohort. It does not replace the repaired v0.3 main result and cannot establish general hard-negative robustness without the separate gated hard-negative cohort.",
+  "cohort_id": "EVP-8",
+  "condition": "coverage-contestation-current98-e6-no-verdict",
+  "cross_model_summary": {
+    "all_false_accept_cases": [],
+    "model_metrics": {
+      "deepseek/deepseek-v4-pro": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 20,
+          "escalated_incorrect": 5,
+          "false_accept": 0,
+          "false_reject": 1,
+          "true_accept": 0,
+          "true_reject": 72
+        },
+        "correct_decision_counts": {
+          "escalate": 20,
+          "reject": 1
+        },
+        "correct_recall": 0.0,
+        "correct_recall_loss": 1.0,
+        "correct_total": 21,
+        "decision_counts": {
+          "escalate": 25,
+          "reject": 73
+        },
+        "escalation_rate": 0.255102,
+        "false_accept_rate": 0.0,
+        "incorrect_decision_counts": {
+          "escalate": 5,
+          "reject": 72
+        },
+        "incorrect_total": 77,
+        "record_count": 98,
+        "reject_rate": 0.744898,
+        "repeated_false_accept_rate_on_incorrect": 0.0,
+        "safe_escalation_rate_on_incorrect": 0.064935,
+        "safe_handling_rate_on_incorrect": 1.0,
+        "strict_reject_rate_on_incorrect": 0.935065
+      },
+      "google/gemini-2.5-flash": {
+        "accepted_precision": null,
+        "confusion_counts": {
+          "escalated_correct": 20,
+          "escalated_incorrect": 5,
+          "false_accept": 0,
+          "false_reject": 1,
+          "true_accept": 0,
+          "true_reject": 72
+        },
+        "correct_decision_counts": {
+          "escalate": 20,
+          "reject": 1
+        },
+        "correct_recall": 0.0,
+        "correct_recall_loss": 1.0,
+        "correct_total": 21,
+        "decision_counts": {
+          "escalate": 25,
+          "reject": 73
+        },
+        "escalation_rate": 0.255102,
+        "false_accept_rate": 0.0,
+        "incorrect_decision_counts": {
+          "escalate": 5,
+          "reject": 72
+        },
+        "incorrect_total": 77,
+        "record_count": 98,
+        "reject_rate": 0.744898,
+        "repeated_false_accept_rate_on_incorrect": 0.0,
+        "safe_escalation_rate_on_incorrect": 0.064935,
+        "safe_handling_rate_on_incorrect": 1.0,
+        "strict_reject_rate_on_incorrect": 0.935065
+      },
+      "qwen/qwen3.7-max": {
+        "accepted_precision": 1.0,
+        "confusion_counts": {
+          "escalated_correct": 18,
+          "escalated_incorrect": 4,
+          "false_accept": 0,
+          "false_reject": 1,
+          "true_accept": 2,
+          "true_reject": 73
+        },
+        "correct_decision_counts": {
+          "accept": 2,
+          "escalate": 18,
+          "reject": 1
+        },
+        "correct_recall": 0.095238,
+        "correct_recall_loss": 0.904762,
+        "correct_total": 21,
+        "decision_counts": {
+          "accept": 2,
+          "escalate": 22,
+          "reject": 74
+        },
+        "escalation_rate": 0.22449,
+        "false_accept_rate": 0.0,
+        "incorrect_decision_counts": {
+          "escalate": 4,
+          "reject": 73
+        },
+        "incorrect_total": 77,
+        "record_count": 98,
+        "reject_rate": 0.755102,
+        "repeated_false_accept_rate_on_incorrect": 0.0,
+        "safe_escalation_rate_on_incorrect": 0.051948,
+        "safe_handling_rate_on_incorrect": 1.0,
+        "strict_reject_rate_on_incorrect": 0.948052
+      }
+    }
+  },
+  "model_count": 3,
+  "model_summaries": {
+    "deepseek/deepseek-v4-pro": {
+      "accepted_precision": null,
+      "challenge_visible_test_only_accept_counts": {
+        "False": 68,
+        "True": 30
+      },
+      "confusion_counts": {
+        "escalated_correct": 20,
+        "escalated_incorrect": 5,
+        "false_accept": 0,
+        "false_reject": 1,
+        "true_accept": 0,
+        "true_reject": 72
+      },
+      "correct_decision_counts": {
+        "escalate": 20,
+        "reject": 1
+      },
+      "correct_recall": 0.0,
+      "correct_recall_loss": 1.0,
+      "correct_total": 21,
+      "coverage_concern_counts": {
+        "high": 31,
+        "low": 13,
+        "medium": 3,
+        "none": 51
+      },
+      "decision_counts": {
+        "escalate": 25,
+        "reject": 73
+      },
+      "escalation_rate": 0.255102,
+      "false_accept_by_candidate_type": {},
+      "false_accept_by_project": {},
+      "false_accept_cases": [],
+      "false_accept_rate": 0.0,
+      "incorrect_challenge_visible_test_only_accept_counts": {
+        "False": 67,
+        "True": 10
+      },
+      "incorrect_coverage_concern_counts": {
+        "high": 12,
+        "low": 12,
+        "medium": 2,
+        "none": 51
+      },
+      "incorrect_decision_counts": {
+        "escalate": 5,
+        "reject": 72
+      },
+      "incorrect_tool_evidence_reliability_counts": {
+        "contradicts_accept": 71,
+        "insufficient_for_accept": 6
+      },
+      "incorrect_total": 77,
+      "incorrect_visible_tests_sufficient_counts": {
+        "False": 43,
+        "True": 34
+      },
+      "record_count": 98,
+      "reject_rate": 0.744898,
+      "repeated_false_accept_rate_on_incorrect": 0.0,
+      "safe_escalation_rate_on_incorrect": 0.064935,
+      "safe_handling_rate_on_incorrect": 1.0,
+      "strict_reject_rate_on_incorrect": 0.935065,
+      "tool_evidence_reliability_counts": {
+        "contradicts_accept": 72,
+        "insufficient_for_accept": 23,
+        "no_visible_tool_evidence": 3
+      },
+      "visible_tests_sufficient_counts": {
+        "False": 63,
+        "True": 35
+      }
+    },
+    "google/gemini-2.5-flash": {
+      "accepted_precision": null,
+      "challenge_visible_test_only_accept_counts": {
+        "False": 73,
+        "True": 25
+      },
+      "confusion_counts": {
+        "escalated_correct": 20,
+        "escalated_incorrect": 5,
+        "false_accept": 0,
+        "false_reject": 1,
+        "true_accept": 0,
+        "true_reject": 72
+      },
+      "correct_decision_counts": {
+        "escalate": 20,
+        "reject": 1
+      },
+      "correct_recall": 0.0,
+      "correct_recall_loss": 1.0,
+      "correct_total": 21,
+      "coverage_concern_counts": {
+        "high": 6,
+        "low": 1,
+        "medium": 19,
+        "none": 72
+      },
+      "decision_counts": {
+        "escalate": 25,
+        "reject": 73
+      },
+      "escalation_rate": 0.255102,
+      "false_accept_by_candidate_type": {},
+      "false_accept_by_project": {},
+      "false_accept_cases": [],
+      "false_accept_rate": 0.0,
+      "incorrect_challenge_visible_test_only_accept_counts": {
+        "False": 72,
+        "True": 5
+      },
+      "incorrect_coverage_concern_counts": {
+        "high": 2,
+        "low": 1,
+        "medium": 3,
+        "none": 71
+      },
+      "incorrect_decision_counts": {
+        "escalate": 5,
+        "reject": 72
+      },
+      "incorrect_tool_evidence_reliability_counts": {
+        "insufficient_for_accept": 5,
+        "sufficient_for_accept": 72
+      },
+      "incorrect_total": 77,
+      "incorrect_visible_tests_sufficient_counts": {
+        "False": 29,
+        "True": 48
+      },
+      "record_count": 98,
+      "reject_rate": 0.744898,
+      "repeated_false_accept_rate_on_incorrect": 0.0,
+      "safe_escalation_rate_on_incorrect": 0.064935,
+      "safe_handling_rate_on_incorrect": 1.0,
+      "strict_reject_rate_on_incorrect": 0.935065,
+      "tool_evidence_reliability_counts": {
+        "insufficient_for_accept": 25,
+        "sufficient_for_accept": 73
+      },
+      "visible_tests_sufficient_counts": {
+        "False": 49,
+        "True": 49
+      }
+    },
+    "qwen/qwen3.7-max": {
+      "accepted_precision": 1.0,
+      "challenge_visible_test_only_accept_counts": {
+        "False": 75,
+        "True": 23
+      },
+      "confusion_counts": {
+        "escalated_correct": 18,
+        "escalated_incorrect": 4,
+        "false_accept": 0,
+        "false_reject": 1,
+        "true_accept": 2,
+        "true_reject": 73
+      },
+      "correct_decision_counts": {
+        "accept": 2,
+        "escalate": 18,
+        "reject": 1
+      },
+      "correct_recall": 0.095238,
+      "correct_recall_loss": 0.904762,
+      "correct_total": 21,
+      "coverage_concern_counts": {
+        "high": 16,
+        "low": 1,
+        "medium": 7,
+        "none": 74
+      },
+      "decision_counts": {
+        "accept": 2,
+        "escalate": 22,
+        "reject": 74
+      },
+      "escalation_rate": 0.22449,
+      "false_accept_by_candidate_type": {},
+      "false_accept_by_project": {},
+      "false_accept_cases": [],
+      "false_accept_rate": 0.0,
+      "incorrect_challenge_visible_test_only_accept_counts": {
+        "False": 72,
+        "True": 5
+      },
+      "incorrect_coverage_concern_counts": {
+        "high": 5,
+        "none": 72
+      },
+      "incorrect_decision_counts": {
+        "escalate": 4,
+        "reject": 73
+      },
+      "incorrect_tool_evidence_reliability_counts": {
+        "contradicts_accept": 72,
+        "insufficient_for_accept": 5
+      },
+      "incorrect_total": 77,
+      "incorrect_visible_tests_sufficient_counts": {
+        "False": 5,
+        "True": 72
+      },
+      "record_count": 98,
+      "reject_rate": 0.755102,
+      "repeated_false_accept_rate_on_incorrect": 0.0,
+      "safe_escalation_rate_on_incorrect": 0.051948,
+      "safe_handling_rate_on_incorrect": 1.0,
+      "strict_reject_rate_on_incorrect": 0.948052,
+      "tool_evidence_reliability_counts": {
+        "contradicts_accept": 73,
+        "insufficient_for_accept": 23,
+        "sufficient_for_accept": 2
+      },
+      "visible_tests_sufficient_counts": {
+        "False": 23,
+        "True": 75
+      }
+    }
+  },
+  "review_count": 294,
+  "rule_only_e6_metrics": {
+    "accepted_precision": 0.8,
+    "confusion_counts": {
+      "escalated_correct": 0,
+      "escalated_incorrect": 0,
+      "false_accept": 5,
+      "false_reject": 1,
+      "true_accept": 20,
+      "true_reject": 72
+    },
+    "correct_decision_counts": {
+      "accept": 20,
+      "reject": 1
+    },
+    "correct_recall": 0.952381,
+    "correct_recall_loss": 0.047619,
+    "correct_total": 21,
+    "decision_counts": {
+      "accept": 25,
+      "reject": 73
+    },
+    "escalation_rate": 0.0,
+    "false_accept_rate": 0.064935,
+    "incorrect_decision_counts": {
+      "accept": 5,
+      "reject": 72
+    },
+    "incorrect_total": 77,
+    "record_count": 98,
+    "reject_rate": 0.744898,
+    "repeated_false_accept_rate_on_incorrect": 0.064935,
+    "safe_escalation_rate_on_incorrect": 0.0,
+    "safe_handling_rate_on_incorrect": 0.935065,
+    "strict_reject_rate_on_incorrect": 0.935065
+  },
+  "status": "passed"
+}

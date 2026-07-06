@@ -160,6 +160,14 @@ def build_audit() -> dict[str, Any]:
             in manuscript,
         ),
         check("tool_contestation_boundary_present", "strict correction remained zero for both models" in manuscript),
+        check(
+            "coverage_contestation_boundary_present",
+            "Coverage-contestation removed repeated false accepts by becoming highly conservative" in manuscript
+            and "reducing the false accept rate on 77 non-correct candidates to 0.00% for all three models" in manuscript
+            and "DeepSeek and Gemini accepted no correct patches, and Qwen accepted only 2 of 21 correct patches" in manuscript
+            and "prompt-sensitivity evidence, not a new main result" in manuscript
+            and "should not claim that coverage-contestation improves autonomous verification" in manuscript,
+        ),
         check("realistic_gate_boundary_present", "source-acquisition boundary" in manuscript),
         check("figures_referenced", all(f"Figure {i}" in manuscript for i in [1, 2, 3])),
         check("all_expected_citations_present", not missing_citations, missing_citations),
@@ -188,6 +196,7 @@ def build_audit() -> dict[str, Any]:
             else "rewrite_requires_repair",
             "remaining_work": [
                 "Do not broaden the three-model repaired result into a universal LLM-verifier claim.",
+                "Report coverage-contestation as conservative prompt-sensitivity evidence, not as an improved verifier.",
                 "Use the sanitized false-accept case analysis only as category-level failure anatomy, not as full rationale auditing.",
                 "Compile and visually inspect the APSEC IEEEtran source package.",
                 "Normalize BibTeX fields and check APSEC reference style.",

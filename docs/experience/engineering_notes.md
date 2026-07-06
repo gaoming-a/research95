@@ -4673,3 +4673,28 @@ This file starts fresh for the patch-verification project.
   realistic branch remains below gate at 26/30 cases and 2/3 projects, so
   verifier APIs must stay blocked until source-acquisition and validation add
   at least one project and four visible-pass/hidden-fail cases.
+
+## 2026-07-06 Coverage-contestation execution repairs
+
+- If a new runner reuses `run_evp8_deepseek_qwen_smoke.fetch_raw_record`
+  without setting `max_output_tokens`, the default is 1024. DeepSeek V4 Pro can
+  spend that entire budget on reasoning tokens or truncate the JSON body,
+  producing many `invalid_json:No JSON object found` records even though the
+  API calls succeeded. For EVP-8 verifier runs, set `max_output_tokens=4096`
+  in the config before execution and treat parse invalids as an execution-chain
+  blocker, not as a model result.
+- When a provider run fails after writing a valid raw JSONL prefix, do not
+  restart from scratch. Check the raw line count, confirm no process is still
+  writing the file, then resume only if the existing packet IDs are a prefix of
+  the planned packet order.
+- OpenRouter-compatible calls can fail with `http.client.RemoteDisconnected`.
+  This is a retryable transport failure like a transient URL error, not an
+  experimental result. The shared client now retries it; if it appears again,
+  inspect whether the raw prefix is complete before resuming.
+- Tracked coverage-contestation reviews should remain normalized and raw-free.
+  Keep raw responses in ignored `outputs/**`; do not copy full model rationale,
+  rendered prompts, patch diffs, or credentials into `data/reviews/**` or
+  paper-facing Markdown.
+- The completed current-98 coverage-contestation result is conservative triage:
+  zero repeated false accepts, but severe correct-recall loss. Future writing
+  must not present it as improved autonomous semantic verification.

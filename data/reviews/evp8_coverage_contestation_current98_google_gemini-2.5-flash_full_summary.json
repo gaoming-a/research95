@@ -1,0 +1,76 @@
+{
+  "actual_model_id_counts": {
+    "google/gemini-2.5-flash": 98
+  },
+  "analysis_id": "evp8_coverage_contestation_current98_v0_1",
+  "api_call_attempted": true,
+  "api_key_values_printed": false,
+  "challenge_visible_test_only_accept_counts": {
+    "False": 73,
+    "True": 25
+  },
+  "cohort_id": "EVP-8",
+  "condition": "coverage-contestation-current98-e6-no-verdict",
+  "config": "configs/evp8_coverage_contestation_current98.local.json",
+  "configured_model_id": "google/gemini-2.5-flash",
+  "cost_summary": {
+    "cost_currency_counts": {
+      "USD": 98
+    },
+    "cost_observability_counts": {
+      "provider_reported_cost": 98
+    },
+    "cost_source_counts": {
+      "provider_reported_usage_cost": 98
+    },
+    "total_cost_cny": 0.0,
+    "total_cost_usd": 0.1415857,
+    "unknown_cost_record_count": 0
+  },
+  "coverage_concern_counts": {
+    "high": 6,
+    "low": 1,
+    "medium": 19,
+    "none": 72
+  },
+  "decision_counts": {
+    "escalate": 25,
+    "reject": 73
+  },
+  "invalid_parse_count": 0,
+  "mode": "executed",
+  "new_api_call_count": 68,
+  "packet_variant": "current98_e6_coverage_contestation_no_verdict",
+  "parse_valid_count": 98,
+  "provider_preferences": {
+    "allow_fallbacks": false,
+    "require_parameters": true
+  },
+  "provider_route": "openrouter_pinned_exact_model_id",
+  "provider_route_counts": {
+    "openrouter_pinned_exact_model_id": 98
+  },
+  "raw_outputs_generated": true,
+  "raw_response_text_stored_in_tracked_reviews": false,
+  "raw_response_text_stored_in_tracked_summary": false,
+  "raw_responses_out": "outputs/evp8_coverage_contestation_current98_v0_1/google_gemini-2.5-flash/raw_responses.jsonl",
+  "rendered_prompt_text_stored": false,
+  "request_model_id": "google/gemini-2.5-flash",
+  "request_response_format": null,
+  "request_thinking": null,
+  "resume_enabled": true,
+  "resumed_raw_record_count": 30,
+  "review_count": 98,
+  "run_gate": "passed",
+  "run_scope": "full",
+  "tool_evidence_reliability_counts": {
+    "insufficient_for_accept": 25,
+    "sufficient_for_accept": 73
+  },
+  "tracked_reviews_out": "data/reviews/evp8_coverage_contestation_current98_google_gemini-2.5-flash_full_reviews.jsonl",
+  "usage_cost_gate": "passed",
+  "visible_tests_sufficient_counts": {
+    "False": 49,
+    "True": 49
+  }
+}

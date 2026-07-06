@@ -4,6 +4,7 @@ import json
 import os
 import re
 import time
+import http.client
 import urllib.error
 import urllib.request
 from typing import Any
@@ -221,6 +222,13 @@ class OpenAICompatibleChatClient:
                     time.sleep(self.retry_backoff_seconds * attempt)
                     continue
                 raise RuntimeError(f"{self.provider_name} request timed out after {attempt} attempt(s)") from exc
+            except http.client.RemoteDisconnected as exc:
+                if attempt < attempts_allowed:
+                    time.sleep(self.retry_backoff_seconds * attempt)
+                    continue
+                raise RuntimeError(
+                    f"{self.provider_name} remote disconnected after {attempt} attempt(s)"
+                ) from exc
             except json.JSONDecodeError as exc:
                 if attempt < attempts_allowed:
                     time.sleep(self.retry_backoff_seconds * attempt)

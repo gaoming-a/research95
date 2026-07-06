@@ -54,7 +54,7 @@
 
 ## 2026-07-06 快速状态增量
 
-- 新增 coverage-contestation prompt robustness 路线：主 prompt
+- 主线 A 已完成。coverage-contestation prompt robustness 路线保持主 prompt
   `evp8_visible_evidence_merge_gate_v0_2` 保持不动；新增独立 frozen prompt
   `prompts/evp8_coverage_contestation_merge_gate_v0_1.md`，用于测试模型是否能
   主动挑战 visible-test-only accept 和 coverage 不足。
@@ -65,8 +65,17 @@
 - 当前 98 cohort coverage-contestation no-API check-only 已通过：
   `docs/experiments/evp8_coverage_contestation_current98_check_only_v0_1.md` 和
   `data/protocols/evp8_coverage_contestation_current98_check_only_v0_1.json`。
-  它构造 98 个 E6 no-verdict packets；planned Qwen/DeepSeek/Gemini total 为
-  294 calls，但本轮未调用 API。
+  它构造 98 个 E6 no-verdict packets；Qwen、DeepSeek、Gemini 已按该边界
+  各完成 98 条 API review，合计 294 calls，三模型均为 98/98 parse-valid。
+- 当前 98 cohort coverage-contestation 分析已通过：
+  `docs/experiments/evp8_coverage_contestation_current98_analysis_v0_1.md` 和
+  `data/reviews/evp8_coverage_contestation_current98_analysis_v0_1.json`。
+  结果为三模型 repeated false accept 均为 0，但 correct recall 代价极大：
+  DeepSeek/Gemini 为 0/21，Qwen 为 2/21。该结果只能写成
+  prompt-sensitivity / conservative triage evidence，不能写成 autonomous
+  semantic verification improvement。
+- APSEC rewrite 已新增 Section 5.4 coverage-contestation 小节，明确它不替代
+  repaired v0.3 三模型主结果，也不支持“LLM 显著优于 rule-only”的 claim。
 - 新增 hard-negative stress-test packet：
   `docs/experiments/evp8_hardneg_stress_test_packet_v0_1.md` 和
   `data/protocols/evp8_hardneg_stress_test_packet_v0_1.json`。当前仍 blocked：

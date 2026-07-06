@@ -125,6 +125,11 @@
       "detail": ""
     },
     {
+      "check": "coverage_contestation_boundary_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
       "check": "realistic_gate_boundary_present",
       "passed": true,
       "detail": ""
@@ -174,6 +179,7 @@
     "readiness": "markdown_rewrite_ready_for_ieeetran_package",
     "remaining_work": [
       "Do not broaden the three-model repaired result into a universal LLM-verifier claim.",
+      "Report coverage-contestation as conservative prompt-sensitivity evidence, not as an improved verifier.",
       "Use the sanitized false-accept case analysis only as category-level failure anatomy, not as full rationale auditing.",
       "Compile and visually inspect the APSEC IEEEtran source package.",
       "Normalize BibTeX fields and check APSEC reference style.",

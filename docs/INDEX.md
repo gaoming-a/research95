@@ -39,7 +39,12 @@
   prompt-setting audit for weak EVP-8 results is now tracked and concludes
   that the issue is not a prompt implementation bug; the visible-only
   merge-gate prompt and E6 deterministic visible summary bound the claim to
-  evidence-conditioned policy behavior. The no-API Luigi
+  evidence-conditioned policy behavior. Mainline A coverage-contestation is
+  now complete as a separate prompt-sensitivity condition: Qwen, DeepSeek, and
+  Gemini each completed 98 current-98 E6/no-verdict reviews, repeated false
+  accepts dropped to zero, and correct-patch recall collapsed under the
+  stronger coverage challenge. The APSEC rewrite reports this as conservative
+  triage evidence, not as autonomous verification improvement. The no-API Luigi
   source-acquisition/materialization protocol is
   optional future work, not the current blocker. Historical `origin/main`
   entries retained later in plan logs are audit records only. As of
@@ -133,6 +138,22 @@
   `passed_with_prompt_setting_boundary`; it concludes the result is not a
   prompt implementation bug, but the visible-only merge-gate prompt/evidence
   setting limits claims to evidence-conditioned policy behavior.
+- `experiments/evp8_coverage_contestation_current98_check_only_v0_1.md` and
+  `../data/protocols/evp8_coverage_contestation_current98_check_only_v0_1.json`:
+  no-API packet-boundary gate for the current-98 E6/no-verdict
+  coverage-contestation condition. Status is `passed`.
+- `../data/reviews/evp8_coverage_contestation_current98_analysis_v0_1.json`
+  and `experiments/evp8_coverage_contestation_current98_analysis_v0_1.md`:
+  mainline A post-decision analysis. Status is `passed`; Qwen/DeepSeek/Gemini
+  each have 98 parse-valid reviews, zero repeated false accepts, and large
+  correct-recall loss under the stronger prompt.
+- `../scripts/run_evp8_coverage_contestation_current98.py`: API runner for the
+  independent current-98 coverage-contestation condition. Raw responses go to
+  ignored `outputs/**`; tracked reviews omit raw response text, rendered
+  prompts, patch diffs, and credentials.
+- `../scripts/analyze_evp8_coverage_contestation_current98.py`: raw-free
+  label-join analyzer for strict reject, safe escalation, repeated false
+  accept, correct recall loss, and coverage-specific output fields.
 - `../scripts/write_evp8_realistic_hardneg_uplift_packet.py`: no-API boundary
   packet writer for the realistic hard-negative uplift route. It reads the
   tracked combined generation gate only and writes the current missing

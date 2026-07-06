@@ -23651,3 +23651,108 @@ layout/references 审计，检查页面是否可渲染、图是否进入 PDF、c
 - 当前仍不能 final freeze 或提交：学校/部门认定、人类作者/基金/利益冲突/贡献
   信息、final artifact rebuild 和最终提交授权仍未解决；
 - GitHub fetch 仍因 `github.com:443` 不可达而未同步远端。
+
+## 2026-07-06 主线 A：current-98 coverage-contestation API execution
+
+本轮小目标是把主线 A 做完：在不改变主基线 prompt
+`evp8_visible_evidence_merge_gate_v0_2` 的前提下，执行独立的
+`evp8_coverage_contestation_merge_gate_v0_1` prompt 条件，检验模型是否会
+主动挑战 visible-test-only accept、识别 coverage 不足，并把高风险可见通过
+补丁转为 strict reject 或 safe escalation。
+
+执行边界：
+
+- API 执行授权来自用户本轮“把主线A做完”；
+- 只执行 current-98 / E6 / no-verdict / coverage-contestation 条件；
+- 模型范围固定为 Qwen、DeepSeek、Gemini，计划调用数为 `98 * 3 = 294`；
+- 不修改 `prompts/evp8_visible_evidence_merge_gate_v0_2.md`；
+- 不把该条件并入 repaired v0.3 主结果，只作为 prompt-sensitivity /
+  coverage-contestation ablation；
+- 不运行 hard-negative verifier API；EVP-8-HARD gate 仍需至少 30 个
+  visible-pass/hidden-fail cases 和至少 3 个项目；
+- raw responses 只能写入 ignored `outputs/**`；
+- tracked summaries/reviews 不能包含 raw response text、rendered prompt、patch
+  diff、API key 或 local config；
+- 如果 credential、schema、parse、cost observability、verdict-field leakage 或
+  raw-free 检查失败，必须暂停后续 API，先修复执行链路或降低论文 claim。
+
+验收条件：
+
+1. 新增可重复运行的 coverage-contestation execute/analyze pipeline；
+2. check-only gate 继续通过，并确认 E6 verdict-like fields 已移除；
+3. 三个模型各完成 98 条 current-98 coverage-contestation review；
+4. 三个模型 parse-valid count 均等于 98，cost observability 不阻塞；
+5. 分析报告给出：
+   - strict reject；
+   - safe escalation；
+   - repeated false accept；
+   - correct recall loss；
+   - coverage concern / visible tests sufficiency / tool evidence reliability；
+6. 更新论文侧文字，明确这不是主基线替代，而是 prompt-sensitivity 证据；
+7. README、docs/INDEX、工程经验文档和当前项目状态同步；
+8. 只暂存本轮相关文件，检查 diff 和敏感信息后提交并同步 GitHub。
+
+执行结果：
+
+- 新增 `scripts/run_evp8_coverage_contestation_current98.py`：
+  - 使用独立 prompt
+    `prompts/evp8_coverage_contestation_merge_gate_v0_1.md`；
+  - 构造 current-98 / E6 / no-verdict packets；
+  - raw responses 写入 ignored `outputs/**`；
+  - tracked reviews 只保留 normalized structured fields，不保存 raw response
+    text、rendered prompt、patch diff 或 API key。
+- 新增 `scripts/analyze_evp8_coverage_contestation_current98.py`：
+  - 只读取 tracked normalized reviews、candidate map、hidden labels 和
+    rule-only E6 baseline；
+  - 输出 strict reject、safe escalation、repeated false accept、correct recall
+    loss、coverage concern、visible-test sufficiency 和 tool evidence
+    reliability。
+- 更新 `configs/evp8_coverage_contestation_current98.example.json`：
+  - 增加 `max_output_tokens=4096`，防止 JSON response 被默认 1024 tokens
+    截断；
+  - 不修改主 prompt，不修改 prompt schema。
+- 修复 `src/cross_review/openrouter.py`：
+  - 将 `http.client.RemoteDisconnected` 纳入 OpenRouter-compatible client
+    retry；
+  - 该修复只处理传输层断连，不改变 prompt、packet 或 decision schema。
+- API 执行完成：
+  - Qwen：98/98 parse-valid，cost gate passed；
+  - DeepSeek：第一次因 1024 token 截断出现 94 invalid JSON，删除本轮失败
+    ignored/tracked outputs 后用 4096 上限重跑，98/98 parse-valid；
+  - Gemini：第一次 OpenRouter 断连于 30/98，修复 retry 后 `--resume`
+    完成 98/98 parse-valid；
+  - 三模型合计 294 条 coverage-contestation review。
+- 分析结果：
+  - rule-only E6：accepted precision 80.00%，correct recall 95.24%，false
+    accept rate 6.49%；
+  - Qwen coverage-contestation：accept 2、reject 74、escalate 22，repeated
+    false accept 0.00%，correct recall 9.52%，correct recall loss 90.48%；
+  - DeepSeek coverage-contestation：accept 0、reject 73、escalate 25，
+    repeated false accept 0.00%，correct recall 0.00%，correct recall loss
+    100.00%；
+  - Gemini coverage-contestation：accept 0、reject 73、escalate 25，repeated
+    false accept 0.00%，correct recall 0.00%，correct recall loss 100.00%。
+- 论文更新：
+  - `scripts/write_apsec_manuscript_rewrite.py` 读取
+    `evp8_coverage_contestation_current98_analysis_v0_1.json`；
+  - `docs/paper/apsec_technical_track_rewrite_v0_1.md` 新增 Section 5.4；
+  - 正文明确该结果是 prompt-sensitivity / conservative triage evidence，
+    不是主结果替代，也不是 autonomous semantic verification improvement。
+
+验证结果：
+
+- `python -m py_compile scripts\run_evp8_coverage_contestation_current98.py scripts\analyze_evp8_coverage_contestation_current98.py scripts\check_evp8_coverage_contestation_current98.py`：通过；
+- `python scripts\check_evp8_coverage_contestation_current98.py --check`：通过；
+- `python -m py_compile src\cross_review\openrouter.py scripts\run_evp8_coverage_contestation_current98.py`：通过；
+- `python scripts\analyze_evp8_coverage_contestation_current98.py`：通过；
+- `python scripts\write_apsec_manuscript_rewrite.py --check`：通过；
+- `python -m py_compile scripts\write_apsec_manuscript_rewrite.py scripts\analyze_evp8_coverage_contestation_current98.py scripts\run_evp8_coverage_contestation_current98.py src\cross_review\openrouter.py`：通过。
+
+当前判断：
+
+- 主线 A 已完成；
+- coverage-contestation 是有效的 prompt-sensitivity stress condition；
+- 它不能提升论文主 claim，只能作为“强覆盖质疑会把误收风险转成拒绝/升级，
+  但几乎牺牲正确补丁接受”的证据；
+- realistic hard-negative stress matrix 仍未过 30 cases / 3 projects gate，
+  不得运行 verifier API。

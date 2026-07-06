@@ -1,0 +1,75 @@
+{
+  "actual_model_id_counts": {
+    "qwen3.7-max": 98
+  },
+  "analysis_id": "evp8_coverage_contestation_current98_v0_1",
+  "api_call_attempted": true,
+  "api_key_values_printed": false,
+  "challenge_visible_test_only_accept_counts": {
+    "False": 75,
+    "True": 23
+  },
+  "cohort_id": "EVP-8",
+  "condition": "coverage-contestation-current98-e6-no-verdict",
+  "config": "configs/evp8_coverage_contestation_current98.local.json",
+  "configured_model_id": "qwen/qwen3.7-max",
+  "cost_summary": {
+    "cost_currency_counts": {
+      "CNY": 98
+    },
+    "cost_observability_counts": {
+      "estimated_from_provider_token_usage_and_official_cny_pricing": 98
+    },
+    "cost_source_counts": {
+      "estimated_from_tokens_official_qwen_cny_pricing": 98
+    },
+    "total_cost_cny": 7.676316,
+    "total_cost_usd": 0.0,
+    "unknown_cost_record_count": 0
+  },
+  "coverage_concern_counts": {
+    "high": 16,
+    "low": 1,
+    "medium": 7,
+    "none": 74
+  },
+  "decision_counts": {
+    "accept": 2,
+    "escalate": 22,
+    "reject": 74
+  },
+  "invalid_parse_count": 0,
+  "mode": "executed",
+  "new_api_call_count": 98,
+  "packet_variant": "current98_e6_coverage_contestation_no_verdict",
+  "parse_valid_count": 98,
+  "provider_preferences": null,
+  "provider_route": "qwen_official",
+  "provider_route_counts": {
+    "qwen_official": 98
+  },
+  "raw_outputs_generated": true,
+  "raw_response_text_stored_in_tracked_reviews": false,
+  "raw_response_text_stored_in_tracked_summary": false,
+  "raw_responses_out": "outputs/evp8_coverage_contestation_current98_v0_1/qwen_qwen3.7-max/raw_responses.jsonl",
+  "rendered_prompt_text_stored": false,
+  "request_model_id": "qwen3.7-max",
+  "request_response_format": null,
+  "request_thinking": null,
+  "resume_enabled": false,
+  "resumed_raw_record_count": 0,
+  "review_count": 98,
+  "run_gate": "passed",
+  "run_scope": "full",
+  "tool_evidence_reliability_counts": {
+    "contradicts_accept": 73,
+    "insufficient_for_accept": 23,
+    "sufficient_for_accept": 2
+  },
+  "tracked_reviews_out": "data/reviews/evp8_coverage_contestation_current98_qwen_qwen3.7-max_full_reviews.jsonl",
+  "usage_cost_gate": "passed",
+  "visible_tests_sufficient_counts": {
+    "False": 23,
+    "True": 75
+  }
+}
