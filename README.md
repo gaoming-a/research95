@@ -114,6 +114,14 @@ and full API on 686/686 parse-valid records. The run packets are
 `docs/experiments/evp8_deepseek_repaired_v0_3_run_packet.md` and
 `docs/experiments/evp8_gemini_repaired_v0_3_run_packet.md`.
 
+The prompt-setting audit for the weak/limited EVP-8 results is tracked at
+`docs/experiments/evp8_prompt_setting_audit_v0_1.md` with machine-readable
+output at `data/reviews/evp8_prompt_setting_audit_v0_1.json`. Its conclusion is
+that the result should not be blamed on a prompt implementation bug, schema
+failure, or hidden-label leakage. The real boundary is experimental: the
+visible-only merge-gate prompt and E6 deterministic visible summary measure
+evidence-conditioned policy behavior, not autonomous semantic verification.
+
 An APSEC IEEEtran/BibTeX/page-budget draft package is now generated at
 `docs/paper/apsec_ieeetran_draft.tex`,
 `docs/paper/apsec_references.bib`, and

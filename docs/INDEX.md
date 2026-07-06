@@ -35,7 +35,11 @@
   v0.3 E0-E6 main evidence. The raw-output-free false-accept case export and
   APSEC IEEEtran/BibTeX/page-budget draft package are now tracked. The
   remaining formatting risks are final PDF compilation, visual page/layout
-  inspection, double-blind wording, and BibTeX field normalization. The no-API Luigi
+  inspection, double-blind wording, and BibTeX field normalization. The
+  prompt-setting audit for weak EVP-8 results is now tracked and concludes
+  that the issue is not a prompt implementation bug; the visible-only
+  merge-gate prompt and E6 deterministic visible summary bound the claim to
+  evidence-conditioned policy behavior. The no-API Luigi
   source-acquisition/materialization protocol is
   optional future work, not the current blocker. Historical `origin/main`
   entries retained later in plan logs are audit records only. As of
@@ -118,7 +122,17 @@
   full API, label-conditioned analysis, APSEC two-model rewrite update, and
   run packet all passed. The 2026-07-06 0.36 entry supersedes the main-result
   scope with Gemini as the third repaired model, sanitized false-accept case
-  analysis, and the APSEC IEEEtran/BibTeX/page-budget draft package.
+  analysis, and the APSEC IEEEtran/BibTeX/page-budget draft package. The
+  2026-07-06 0.37 entry records the prompt-setting audit for weak results:
+  prompt boundary/schema/leakage checks pass, verdict anchoring is measured but
+  not the sole cause, and any stronger coverage-contestation prompt must be
+  treated as a separate condition rather than a silent main-prompt repair.
+- `../data/reviews/evp8_prompt_setting_audit_v0_1.json` and
+  `experiments/evp8_prompt_setting_audit_v0_1.md`: no-API, raw-output-free
+  audit of whether weak EVP-8 results are caused by prompt settings. Status is
+  `passed_with_prompt_setting_boundary`; it concludes the result is not a
+  prompt implementation bug, but the visible-only merge-gate prompt/evidence
+  setting limits claims to evidence-conditioned policy behavior.
 - `../scripts/write_evp8_realistic_hardneg_uplift_packet.py`: no-API boundary
   packet writer for the realistic hard-negative uplift route. It reads the
   tracked combined generation gate only and writes the current missing

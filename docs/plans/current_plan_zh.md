@@ -2,6 +2,51 @@
 
 最后更新：2026-07-06
 
+## 0.37 2026-07-06 EVP-8 prompt-setting audit for weak results
+
+本轮目标是按用户要求审核“当前实验结果不太好”是否由实验设置中的 prompt
+导致。该轮为 no-API、raw-output-free 审计：不修改 prompt，不运行真实 API，不读取
+raw response text、rendered prompt text 或 patch diff，只串联 tracked prompt、
+boundary audit、三模型 repaired label-conditioned summaries、E6 no-verdict
+ablation、tool-contestation 和 realistic no-verdict 对照。
+
+执行边界：
+
+- 不调用任何模型 API；
+- 不修改 `prompts/evp8_visible_evidence_merge_gate_v0_2.md` 或 runner；
+- 不把 `tool-contestation` prompt 当作主 prompt 的兼容补丁；
+- 不把 escalation 解释为 strict semantic correction；
+- 只报告当前结果是否可归因为 prompt bug、prompt/evidence setting、数据/工具
+  headroom 或 claim 预期不匹配。
+
+执行结果：
+
+- 新增 raw-output-free 审计产物：
+  `data/reviews/evp8_prompt_setting_audit_v0_1.json` 和
+  `docs/experiments/evp8_prompt_setting_audit_v0_1.md`；
+- 审计结论为 `passed_with_prompt_setting_boundary`；
+- prompt boundary audit 已通过，未发现 hidden-label/oracle/reference leakage、
+  schema 缺项或 rendered prompt 保存问题；
+- 三模型 repaired E6 指标显示结果是稳定的 visible-evidence merge-policy 形态：
+  Qwen `20/24` correct accepts、4 false accepts；DeepSeek `17/21` correct
+  accepts、4 false accepts、4 escalations；Gemini `20/25` correct accepts、5
+  false accepts；
+- E6 no-verdict ablation 表明 verdict anchoring 是模型相关因素但不是唯一原因：
+  DeepSeek 去 verdict 后把 5 个 tool false accepts 转为 escalation，false accept
+  rate 降到 0，但 correct recall 降到 `52.38%`；Qwen 去 verdict 后几乎不变；
+- tool-contestation prompt 能让 hard false accepts 多数转入 escalation，但这是单独
+  的 risk-triage 条件，不能静默替换主 E0-E6 prompt；
+- 最终判断：不能把结果不佳归因为 prompt 实现 bug；如果预期是“工具外语义
+  verifier”，则当前 visible-only merge-gate prompt/evidence setting 本身会限制
+  结果，应作为研究边界而不是补丁式改 prompt。
+
+验收结果：
+
+- 文档、索引和经验记录已同步；
+- 最小验证将在本轮文档更新后执行：JSON parse、相关 no-API audit check 和 git
+  diff/sensitive boundary 检查；
+- 本轮不产生新的 API 结果，不改变既有论文主 claim。
+
 ## 0.36 2026-07-06 Gemini repaired EVP-8 v0.3 E0-E6 third-model run
 
 本轮目标是按用户授权继续完成投稿前七步中的实验补强部分：补第三模型

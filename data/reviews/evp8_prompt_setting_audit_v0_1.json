@@ -1,0 +1,156 @@
+{
+  "audit_id": "evp8_prompt_setting_audit_v0_1",
+  "date": "2026-07-06",
+  "scope": {
+    "api_call_attempted": false,
+    "prompt_modified": false,
+    "raw_model_outputs_read": false,
+    "rendered_prompt_text_stored": false,
+    "patch_diff_read_or_stored": false,
+    "input_artifacts": [
+      "prompts/evp8_visible_evidence_merge_gate_v0_2.md",
+      "prompts/evp8_tool_contestation_merge_gate_v0_1.md",
+      "data/protocols/evp8_prompt_boundary_audit_v0_3_qwen_first_prompt_v0_2.json",
+      "data/protocols/evp8_tool_headroom_audit_v0_1.json",
+      "data/reviews/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json",
+      "data/reviews/evp8_deepseek_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json",
+      "data/reviews/evp8_gemini_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json",
+      "data/reviews/evp8_e6_no_verdict_ablation_comparison.json",
+      "docs/experiments/evp8_hard_tool_contestation_opportunity_analysis_v0_1.md",
+      "docs/experiments/evp8_realistic_agent_qwen_merge_label_variant_comparison_v0_3.md"
+    ]
+  },
+  "overall_status": "passed_with_prompt_setting_boundary",
+  "bottom_line": "The poor or limited result is not explained by a prompt implementation bug, schema failure, parser loss, or hidden-label leakage. It is partly explained by the intended prompt/evidence setting: the main prompt is a visible-only merge-gate policy, and E6 explicitly exposes deterministic visible merge-gate summary evidence. Under that setting, models should be expected to follow visible test/tool evidence rather than discover hidden semantic failures.",
+  "prompt_boundary_checks": {
+    "prompt_boundary_audit_status": "passed",
+    "template_boundary_findings": 0,
+    "sample_render_boundary_findings": 0,
+    "rendered_prompt_text_stored": false,
+    "hidden_evaluator_labels_exposed": false,
+    "schema_contract_complete": true
+  },
+  "three_model_e6_repaired_metrics": [
+    {
+      "model": "qwen/qwen3.7-max",
+      "accept": 24,
+      "reject": 74,
+      "escalate": 0,
+      "correct_accept": 20,
+      "false_accept": 4,
+      "accepted_precision": 0.833333,
+      "correct_recall": 0.952381,
+      "false_accept_rate": 0.051948,
+      "escalation_rate": 0.0
+    },
+    {
+      "model": "deepseek/deepseek-v4-pro",
+      "accept": 21,
+      "reject": 73,
+      "escalate": 4,
+      "correct_accept": 17,
+      "false_accept": 4,
+      "accepted_precision": 0.809524,
+      "correct_recall": 0.809524,
+      "false_accept_rate": 0.051948,
+      "escalation_rate": 0.040816
+    },
+    {
+      "model": "google/gemini-2.5-flash",
+      "accept": 25,
+      "reject": 73,
+      "escalate": 0,
+      "correct_accept": 20,
+      "false_accept": 5,
+      "accepted_precision": 0.8,
+      "correct_recall": 0.952381,
+      "false_accept_rate": 0.064935,
+      "escalation_rate": 0.0
+    }
+  ],
+  "diagnosis": [
+    {
+      "factor": "prompt_implementation_bug",
+      "status": "not_supported",
+      "evidence": "Prompt boundary audit passed; required schema and enum values are present; three repaired model runs are parse-valid and matrix-complete."
+    },
+    {
+      "factor": "hidden_label_or_oracle_leakage",
+      "status": "not_supported",
+      "evidence": "The prompt instructs visible-only use, and the boundary audit reports no hidden label/reference/oracle leakage in rendered samples."
+    },
+    {
+      "factor": "main_prompt_policy_shape",
+      "status": "supported_as_design_cause",
+      "evidence": "The main prompt asks for a merge-gate accept/reject/escalate decision using only visible evidence; E6 adds deterministic visible merge-gate summary evidence. This makes tool-following behavior an expected result, not a surprise failure."
+    },
+    {
+      "factor": "verdict_anchoring",
+      "status": "measured_not_sole_cause",
+      "evidence": "E6-no-verdict changed DeepSeek substantially but changed Qwen only once; therefore the explicit verdict field affects some models, but visible test/tool evidence remains enough to anchor others."
+    },
+    {
+      "factor": "limited_tool_headroom",
+      "status": "supported",
+      "evidence": "Rule-only visible-tool baseline has 25 accepts, 20 correct accepts, 5 false accepts, accepted precision 80.00%, and correct recall 95.24%; the opportunity set is only 6/98."
+    },
+    {
+      "factor": "coverage_prompt_needed_for_false_accept_reduction",
+      "status": "supported_as_separate_condition",
+      "evidence": "The tool-contestation prompt moves known hard false accepts mostly to escalation, but that is a different risk-triage condition and should not replace the main repaired E0-E6 setting without changing the research question."
+    }
+  ],
+  "no_verdict_findings": {
+    "rule_only": {
+      "accept": 25,
+      "reject": 73,
+      "escalate": 0,
+      "accepted_precision": 0.8,
+      "correct_recall": 0.952381,
+      "false_accept_rate": 0.064935
+    },
+    "deepseek_e6_full": {
+      "accept": 23,
+      "reject": 75,
+      "escalate": 0,
+      "accepted_precision": 0.826087,
+      "correct_recall": 0.904762,
+      "false_accept_rate": 0.051948
+    },
+    "deepseek_e6_no_verdict": {
+      "accept": 11,
+      "reject": 73,
+      "escalate": 14,
+      "accepted_precision": 1.0,
+      "correct_recall": 0.52381,
+      "false_accept_rate": 0.0
+    },
+    "qwen_e6_full": {
+      "accept": 24,
+      "reject": 74,
+      "escalate": 0,
+      "accepted_precision": 0.833333,
+      "correct_recall": 0.952381,
+      "false_accept_rate": 0.051948
+    },
+    "qwen_e6_no_verdict": {
+      "accept": 23,
+      "reject": 74,
+      "escalate": 1,
+      "accepted_precision": 0.826087,
+      "correct_recall": 0.904762,
+      "false_accept_rate": 0.051948
+    }
+  },
+  "conclusion_for_current_results": {
+    "can_blame_prompt_bug": false,
+    "can_blame_prompt_setting_if_expectation_was_semantic_verifier": true,
+    "paper_safe_wording": "The result should be framed as evidence-conditioned merge-gate policy behavior under visible evidence, not as a failure of JSON prompt wording or as evidence that the models had hidden semantic verification ability.",
+    "do_not_do_without_new_plan": [
+      "Do not silently replace the main prompt with the tool-contestation prompt.",
+      "Do not claim that stronger prompt wording alone fixes the experiment.",
+      "Do not report escalation as strict semantic correction.",
+      "Do not rerun APIs before deciding whether the target is main E0-E6 evidence visibility or a separate coverage-contestation condition."
+    ]
+  }
+}

@@ -63,6 +63,12 @@
 - APSEC/CCF-C 正文现在使用 Qwen + DeepSeek + Gemini three-model repaired
   v0.3 主结果。当前结论是 bounded evidence-conditioned risk behavior，不是
   broad-LLM superiority，也不是 autonomous correctness verifier。
+- 新增 EVP-8 prompt-setting audit：
+  `docs/experiments/evp8_prompt_setting_audit_v0_1.md` 和
+  `data/reviews/evp8_prompt_setting_audit_v0_1.json`。结论是：当前结果不佳不能
+  归因为 prompt 实现 bug、schema 错误或 hidden-label leakage；如果目标是工具外
+  语义 verifier，则 visible-only merge-gate prompt 和 E6 deterministic visible
+  summary 本身会把结果限制为 evidence-conditioned policy behavior。
 - 新增 Gemini run packet：
   `docs/experiments/evp8_gemini_repaired_v0_3_run_packet.md` 和
   `data/protocols/evp8_gemini_repaired_v0_3_run_packet.json`，状态为 `passed`。

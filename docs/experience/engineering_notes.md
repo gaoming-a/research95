@@ -1,5 +1,25 @@
 # Engineering Notes
 
+## 2026-07-06 EVP-8 prompt-setting audit
+
+- A weak verifier result can be caused by the prompt/evidence setting without
+  being a prompt bug. For EVP-8 repaired v0.3, the visible-only prompt and E6
+  deterministic visible merge-gate summary are internally valid, but they make
+  tool-following behavior expected.
+- Do not silently repair the main evidence-visibility prompt by importing the
+  tool-contestation prompt. The contestation prompt asks a different question:
+  whether visible-test-only accepts should be challenged for coverage risk.
+- E6 no-verdict is the right diagnostic for verdict anchoring, but its result
+  must be read model by model. DeepSeek becomes much more conservative without
+  verdict fields; Qwen remains close to the full E6 condition, so visible
+  tests/tool evidence alone can still anchor decisions.
+- A strong rule-only visible-tool baseline creates a headroom problem. On the
+  frozen 98-candidate EVP-8 cohort, only 6/98 cases are tool opportunity cases,
+  so large LLM gains should not be expected without a new hard-negative cohort
+  or a different risk-triage condition.
+- The safe paper phrasing is evidence-conditioned merge-gate policy behavior,
+  not autonomous semantic correctness verification.
+
 ## 2026-07-03 final experiment-setting validity audit
 
 - For a stable CCF-C paper route, the immediate risk is no longer whether a
