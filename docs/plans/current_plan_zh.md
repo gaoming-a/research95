@@ -2,6 +2,73 @@
 
 最后更新：2026-07-06
 
+## 0.38 2026-07-06 Coverage-contestation prompt robustness and hard-negative stress-test route
+
+本轮目标是沿用户确认的新方向推进，但不替换当前主 prompt：
+`evp8_visible_evidence_merge_gate_v0_2` 继续作为主实验基线，支撑当前
+bounded evidence-conditioned merge-gate behavior claim。本轮新增一个独立
+coverage-contestation prompt 条件，用来测试模型是否能主动挑战
+visible-test-only accept、识别 coverage 不足，并把高风险可见通过补丁转为
+strict reject 或 safe escalation。
+
+执行边界：
+
+- 不修改、不重命名、不覆盖 `prompts/evp8_visible_evidence_merge_gate_v0_2.md`；
+- 新 prompt 冻结为 `prompts/evp8_coverage_contestation_merge_gate_v0_1.md`；
+- 新 prompt 必须先做 prompt 修改记录和矛盾/重复审计，确认与现有主 prompt、
+  tool-contestation prompt 的关系是独立 ablation，而不是替换或冲突；
+- 当前 98-candidate frozen cohort 上只先建立 no-API check-only / preflight 链路，
+  用于回答“当前结果是否受 prompt setting 限制”；
+- hard-negative stress test 的 verifier API 仍受 gate 控制：必须先达到至少
+  30 个 visible-pass/hidden-fail cases、至少 3 个 projects；当前 26 cases /
+  2 projects 时不得跑 hard-negative verifier API；
+- 新 hard-negative cohort 的矩阵目标是 rule-only visible-tool、current
+  merge-gate prompt、no-verdict prompt、coverage-contestation prompt，以及
+  Qwen / DeepSeek / Gemini；但必须先完成 source-acquisition/generation/validation
+  gate，不得直接调用 verifier API；
+- 输出指标必须区分 strict reject、safe escalation、repeated false accept、
+  correct recall loss、coverage challenge rate、verdict dependence。
+
+本轮验收条件：
+
+- 新 coverage-contestation prompt 文件生成；
+- 生成 prompt 修改记录，说明新增内容与已有 prompt 不矛盾、不重复替换；
+- 生成当前 98 cohort 的 no-API coverage-contestation check-only summary；
+- 生成 hard-negative stress-test 下一步 packet，明确当前缺口、allowed next work
+  和 forbidden next work；
+- 更新 README/INDEX/current project state/engineering notes；
+- 运行最小验证，提交并同步 GitHub。
+
+执行结果：
+
+- 新增 frozen prompt：
+  `prompts/evp8_coverage_contestation_merge_gate_v0_1.md`；
+- 新增 prompt 修改记录：
+  `docs/experiments/evp8_coverage_contestation_prompt_change_record_v0_1.md`，
+  记录主 prompt 未修改、新 prompt 与 tool-contestation prompt 的关系、允许用途和
+  forbidden use；
+- 新增 current-98 coverage-contestation example config：
+  `configs/evp8_coverage_contestation_current98.example.json`；
+- 新增 no-API check-only 脚本：
+  `scripts/check_evp8_coverage_contestation_current98.py`；
+- current 98 cohort E6 no-verdict coverage-contestation check-only 已通过：
+  `data/protocols/evp8_coverage_contestation_current98_check_only_v0_1.json` 和
+  `docs/experiments/evp8_coverage_contestation_current98_check_only_v0_1.md`；
+- check-only 结果：98 candidates、每模型 98 E6 packets、Qwen/DeepSeek/Gemini
+  planned total 294 calls；`rule_based_visible_merge_gate_decision`、
+  `rule_based_visible_merge_gate_reasons` 和 `source_decision` 均已移除；未调用 API、
+  未生成 raw outputs、未存储 rendered prompts；
+- 新增 hard-negative stress-test packet：
+  `data/protocols/evp8_hardneg_stress_test_packet_v0_1.json` 和
+  `docs/experiments/evp8_hardneg_stress_test_packet_v0_1.md`；
+- hard-negative stress-test 当前状态仍为
+  `blocked_needs_more_cases_and_third_project`：26/30 visible-pass/hidden-fail
+  cases、2/3 projects，缺 4 个 case 和 1 个 project；selected next source 仍为
+  Luigi (`bugsinpy_luigi_3`, `bugsinpy_luigi_4`)；
+- 本轮没有运行任何真实 verifier API；下一步若继续，应先写或刷新 Luigi no-API
+  source-acquisition/materialization protocol，并重新通过 hard-negative gate 后再做
+  verifier API preflight。
+
 ## 0.37 2026-07-06 EVP-8 prompt-setting audit for weak results
 
 本轮目标是按用户要求审核“当前实验结果不太好”是否由实验设置中的 prompt

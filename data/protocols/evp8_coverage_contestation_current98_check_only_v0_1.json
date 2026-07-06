@@ -1,0 +1,111 @@
+{
+  "analysis_id": "evp8_coverage_contestation_current98_check_only_v0_1",
+  "api_call_attempted": false,
+  "candidate_count": 98,
+  "checks": [
+    {
+      "check": "api_call_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "raw_outputs_not_generated",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "prompt_text_not_stored",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "prompt_template_exists",
+      "detail": "prompts/evp8_coverage_contestation_merge_gate_v0_1.md",
+      "passed": true
+    },
+    {
+      "check": "candidate_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "packet_count",
+      "detail": 98,
+      "passed": true
+    },
+    {
+      "check": "only_e6_packets",
+      "detail": [
+        "E6"
+      ],
+      "passed": true
+    },
+    {
+      "check": "rule_based_visible_merge_gate_decision_removed",
+      "detail": 0,
+      "passed": true
+    },
+    {
+      "check": "rule_based_visible_merge_gate_reasons_removed",
+      "detail": 0,
+      "passed": true
+    },
+    {
+      "check": "source_decision_removed",
+      "detail": 0,
+      "passed": true
+    },
+    {
+      "check": "prompt_boundary_error_count",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "schema_sample_valid",
+      "detail": null,
+      "passed": true
+    },
+    {
+      "check": "main_prompt_unchanged_by_this_check",
+      "detail": "evp8_visible_evidence_merge_gate_v0_2 is not modified or used as this condition",
+      "passed": true
+    }
+  ],
+  "claim_boundary": "This check-only artifact freezes a coverage-contestation prompt condition; it is not model-result evidence.",
+  "cohort_id": "EVP-8",
+  "config": "configs/evp8_coverage_contestation_current98.example.json",
+  "credential_presence_observed": {
+    "env_file_exists": true,
+    "key_states": {
+      "DEEPSEEK_API_KEY": "set",
+      "OPENROUTER_API_KEY": "set",
+      "QWEN_API_KEY": "set"
+    },
+    "values_printed": false
+  },
+  "mode": "check_only",
+  "next_step": "If the user authorizes execution after this check-only gate, run the three planned models as a separate prompt-sensitivity condition and keep outputs separate from the main E0-E6 table.",
+  "packet_count_per_model": 98,
+  "packet_variant": "current98_e6_coverage_contestation_no_verdict",
+  "planned_model_ids": [
+    "qwen/qwen3.7-max",
+    "deepseek/deepseek-v4-pro",
+    "google/gemini-2.5-flash"
+  ],
+  "planned_total_model_calls": 294,
+  "prompt_chars_max": 11273,
+  "prompt_chars_min": 8798,
+  "prompt_count_per_model": 98,
+  "prompt_hashes_unique_count": 98,
+  "prompt_sha256": "722608bd0b88ec8af3c31ce06fc756e39aa4c070f57292c9eea256a66e4c422a",
+  "prompt_template": "prompts/evp8_coverage_contestation_merge_gate_v0_1.md",
+  "prompt_text_stored": false,
+  "raw_outputs_generated": false,
+  "removed_verdict_fields": [
+    "rule_based_visible_merge_gate_decision",
+    "rule_based_visible_merge_gate_reasons",
+    "source_decision"
+  ],
+  "run_scope": "full",
+  "status": "passed"
+}

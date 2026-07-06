@@ -4655,3 +4655,21 @@ This file starts fresh for the patch-verification project.
   debt. The current APSEC draft compiles to 6 pages with resolved references,
   but table-width overfull/underfull warnings remain and should be treated as
   a formatting task before submission.
+
+## 2026-07-06 Coverage-contestation prompt boundary
+
+- A prompt-sensitivity condition should not replace the main prompt after main
+  results are known. Keep `evp8_visible_evidence_merge_gate_v0_2` as the main
+  protocol prompt and report coverage-contestation as a separate ablation.
+- Coverage-contestation prompts intentionally measure a different behavior:
+  whether the model challenges visible-test-only accept premises and routes
+  high-risk visible-pass cases to strict reject or safe escalation. Their
+  results cannot be merged into the main E0-E6 table without a condition label.
+- Removing `rule_based_visible_merge_gate_decision` and
+  `rule_based_visible_merge_gate_reasons` is necessary for this ablation;
+  otherwise the prompt still tests verdict following rather than coverage
+  challenge.
+- Hard-negative stress tests need a real opportunity set. The current
+  realistic branch remains below gate at 26/30 cases and 2/3 projects, so
+  verifier APIs must stay blocked until source-acquisition and validation add
+  at least one project and four visible-pass/hidden-fail cases.

@@ -218,6 +218,37 @@
   `paper/ccfc_manuscript_v0_3_reviewer_audit.md`: v0.3 manuscript reviewer
   audit. Status is `passed`; remaining risk is formatting and target-venue
   conversion, not missing citation/baseline/uncertainty content.
+- `../prompts/evp8_coverage_contestation_merge_gate_v0_1.md`: frozen
+  coverage-contestation prompt for prompt-sensitivity / robustness analysis.
+  It is independent from the main prompt and asks models to challenge
+  visible-test-only accept premises when coverage is insufficient.
+- `experiments/evp8_coverage_contestation_prompt_change_record_v0_1.md`:
+  prompt modification record. It documents that
+  `evp8_visible_evidence_merge_gate_v0_2` was not modified, and that the new
+  prompt is a separate ablation rather than a replacement.
+- `../configs/evp8_coverage_contestation_current98.example.json`: no-API
+  current-98 coverage-contestation config. It plans only E6 no-verdict packets
+  for Qwen, DeepSeek, and Gemini; execution still requires a later explicit
+  run step after check-only/preflight.
+- `../scripts/check_evp8_coverage_contestation_current98.py`: no-API
+  check-only gate for current-98 coverage-contestation packets. It builds E6
+  packets, removes final deterministic verdict fields, renders prompt hashes,
+  and checks schema/leakage without storing rendered prompts or calling APIs.
+- `../data/protocols/evp8_coverage_contestation_current98_check_only_v0_1.json`
+  and
+  `experiments/evp8_coverage_contestation_current98_check_only_v0_1.md`:
+  current-98 coverage-contestation check-only outputs. Status is `passed`;
+  it covers 98 E6 packets per model and 294 planned calls across Qwen,
+  DeepSeek, and Gemini if execution is later authorized.
+- `../scripts/write_evp8_hardneg_stress_test_packet.py`: no-API hard-negative
+  stress-test packet writer. It reads existing uplift/source-selection gates
+  and writes the required stress-test matrix and current blockers without
+  calling APIs or reading raw model outputs.
+- `../data/protocols/evp8_hardneg_stress_test_packet_v0_1.json` and
+  `experiments/evp8_hardneg_stress_test_packet_v0_1.md`: hard-negative
+  stress-test packet. Status is `blocked_needs_more_cases_and_third_project`;
+  current gate is 26/30 visible-pass/hidden-fail cases and 2/3 projects, with
+  Luigi selected as the next source-acquisition/materialization target.
 - `../scripts/write_apsec_manuscript_rewrite.py`: APSEC technical-track
   Markdown rewrite generator. It reads the tracked final manuscript claim map
   only and preserves the bounded evidence-visibility / risk-behavior claim.

@@ -54,6 +54,24 @@
 
 ## 2026-07-06 快速状态增量
 
+- 新增 coverage-contestation prompt robustness 路线：主 prompt
+  `evp8_visible_evidence_merge_gate_v0_2` 保持不动；新增独立 frozen prompt
+  `prompts/evp8_coverage_contestation_merge_gate_v0_1.md`，用于测试模型是否能
+  主动挑战 visible-test-only accept 和 coverage 不足。
+- 新增 prompt 修改记录：
+  `docs/experiments/evp8_coverage_contestation_prompt_change_record_v0_1.md`，
+  明确新 prompt 是独立 ablation，不替换主 prompt，也不能把 escalation 当作
+  strict correction。
+- 当前 98 cohort coverage-contestation no-API check-only 已通过：
+  `docs/experiments/evp8_coverage_contestation_current98_check_only_v0_1.md` 和
+  `data/protocols/evp8_coverage_contestation_current98_check_only_v0_1.json`。
+  它构造 98 个 E6 no-verdict packets；planned Qwen/DeepSeek/Gemini total 为
+  294 calls，但本轮未调用 API。
+- 新增 hard-negative stress-test packet：
+  `docs/experiments/evp8_hardneg_stress_test_packet_v0_1.md` 和
+  `data/protocols/evp8_hardneg_stress_test_packet_v0_1.json`。当前仍 blocked：
+  26/30 visible-pass/hidden-fail cases、2/3 projects。下一步应修 Luigi
+  source-acquisition/materialization gate，而不是直接运行 verifier API。
 - 新增 Gemini repaired EVP-8 v0.3 E0-E6 third-model run：
   strict preflight、smoke/full check-only、smoke API、full API 和
   label-conditioned analysis 均通过。full API 为 686/686 parse-valid，估算成本

@@ -1,0 +1,58 @@
+{
+  "api_execution_authorized": false,
+  "candidate_set": "data/protocols/evp8_candidate_set_v0_1.json",
+  "config_id": "evp8_coverage_contestation_current98_v0_1",
+  "env": ".env",
+  "evidence_source_mode": "evp7_visible_artifacts",
+  "execution_requires_new_authorization_after_check_only": true,
+  "full": {
+    "candidate_count": 98,
+    "levels": [
+      "E6"
+    ],
+    "packet_suffix": "evp8_coverage_contestation_current98_e6_v0_1",
+    "planned_calls_per_model": 98
+  },
+  "models": [
+    {
+      "api_key_env": "QWEN_API_KEY",
+      "model_id": "qwen/qwen3.7-max",
+      "provider_route": "qwen_official",
+      "request_model_id": "qwen3.7-max"
+    },
+    {
+      "api_key_env": "DEEPSEEK_API_KEY",
+      "model_id": "deepseek/deepseek-v4-pro",
+      "provider_route": "deepseek_official",
+      "request_model_id": "deepseek-v4-pro"
+    },
+    {
+      "api_key_env": "OPENROUTER_API_KEY",
+      "model_id": "google/gemini-2.5-flash",
+      "provider_preferences": {
+        "allow_fallbacks": false,
+        "require_parameters": true
+      },
+      "provider_route": "openrouter_pinned_exact_model_id",
+      "request_model_id": "google/gemini-2.5-flash"
+    }
+  ],
+  "packet_variant": "current98_e6_coverage_contestation_no_verdict",
+  "prompt_template": "prompts/evp8_coverage_contestation_merge_gate_v0_1.md",
+  "protocol_spec": "data/protocols/evp8_protocol_v0_3_qwen_first.json",
+  "raw_output_policy": "ignored_outputs_only",
+  "smoke": {
+    "candidate_count": 5,
+    "levels": [
+      "E6"
+    ],
+    "packet_suffix": "evp8_coverage_contestation_current98_smoke_e6_v0_1",
+    "planned_calls_per_model": 5
+  },
+  "temperature": 0.0,
+  "visible_artifact_sources": {
+    "tool_only_decisions": "data/baselines/evp7_tool_only_decisions.jsonl",
+    "visible_test_outcomes": "data/evidence/evp7_visible_test_outcomes.jsonl",
+    "visible_tool_summaries": "data/evidence/evp7_visible_tool_summaries.jsonl"
+  }
+}
