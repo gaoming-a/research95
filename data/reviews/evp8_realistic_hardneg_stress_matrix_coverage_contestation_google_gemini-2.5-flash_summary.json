@@ -1,0 +1,59 @@
+{
+  "actual_model_id_counts": {
+    "google/gemini-2.5-flash": 31
+  },
+  "analysis_id": "evp8_realistic_hardneg_stress_matrix_v0_1",
+  "api_call_attempted": true,
+  "challenge_visible_test_only_accept_counts": {
+    "True": 31
+  },
+  "cohort_id": "EVP-8-REALISTIC-HARDNEG-STRESS",
+  "condition_id": "coverage_contestation",
+  "configured_model_id": "google/gemini-2.5-flash",
+  "cost_summary": {
+    "cost_currency_counts": {
+      "USD": 31
+    },
+    "cost_observability_counts": {
+      "provider_reported_cost": 31
+    },
+    "cost_source_counts": {
+      "provider_reported_usage_cost": 31
+    },
+    "total_cost_cny": 0.0,
+    "total_cost_usd": 0.04014247,
+    "unknown_cost_record_count": 0
+  },
+  "coverage_concern_counts": {
+    "high": 2,
+    "medium": 29
+  },
+  "decision_counts": {
+    "escalate": 31
+  },
+  "invalid_parse_count": 0,
+  "invalid_raw_retry_count": 0,
+  "max_output_tokens": 4096,
+  "mode": "executed",
+  "new_api_call_count": 31,
+  "parse_valid_count": 31,
+  "patch_text_stored_in_tracked_reviews": false,
+  "provider_preferences": {
+    "allow_fallbacks": false,
+    "require_parameters": true
+  },
+  "provider_route": "openrouter_pinned_exact_model_id",
+  "raw_outputs_generated": true,
+  "raw_response_text_stored_in_tracked_reviews": false,
+  "raw_responses_out": "outputs/evp8_realistic_hardneg_stress_matrix_v0_1/coverage_contestation/google_gemini-2.5-flash/raw_responses.jsonl",
+  "rendered_prompt_text_stored": false,
+  "request_model_id": "google/gemini-2.5-flash",
+  "request_response_format": null,
+  "request_thinking": null,
+  "resume_enabled": false,
+  "resumed_raw_record_count": 0,
+  "review_count": 31,
+  "run_gate": "passed",
+  "tracked_reviews_out": "data/reviews/evp8_realistic_hardneg_stress_matrix_coverage_contestation_google_gemini-2.5-flash_reviews.jsonl",
+  "usage_cost_gate": "passed"
+}

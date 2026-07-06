@@ -193,6 +193,19 @@
   `coverage_contestation` are ready for Qwen/DeepSeek/Gemini, giving 186
   planned calls. `e6_no_verdict` is blocked because this stress packet format
   has no verdict-like fields to remove.
+- `../scripts/run_evp8_realistic_hardneg_stress_matrix.py`: API runner for the
+  ready 31-case hard-negative stress matrix. Raw provider responses go only to
+  ignored `outputs/**`; tracked reviews contain normalized decisions and cost
+  metadata only.
+- `../scripts/analyze_evp8_realistic_hardneg_stress_matrix.py`: raw-free
+  analyzer for repeated false accept, strict reject, safe escalation, safe
+  handling, and cost across the stress matrix.
+- `../data/reviews/evp8_realistic_hardneg_stress_matrix_analysis_v0_1.json`
+  and `experiments/evp8_realistic_hardneg_stress_matrix_analysis_v0_1.md`:
+  completed stress-matrix analysis. Status is `passed`; 186 reviews are
+  parse-valid. `coverage_contestation` reduces repeated false accepts from
+  62/93 to 12/93, but all improvements are safe escalations, not strict
+  rejects. Correct recall is undefined because the cohort is all hard-negative.
 - `../scripts/audit_evp8_realistic_hardneg_source_probe.py`: raw-free audit
   for curated no-API hard-negative source probes. It records aggregate counts
   and validation/visible-test consistency without storing patch text, prompt

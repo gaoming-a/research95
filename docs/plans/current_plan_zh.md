@@ -58,6 +58,73 @@ Qwen、DeepSeek 或 Gemini，不生成 raw model responses。
 - 本轮没有调用 verifier API，没有生成 raw responses，没有把 patch diff 或 rendered
   prompt 写入 tracked 文件。
 
+## 0.42 2026-07-06 主线 B 后续：31-case ready verifier matrix execution
+
+本轮目标是在 0.41 preflight 已通过后，执行且只执行 ready 的 hard-negative
+stress verifier matrix：`current_merge_gate` 与 `coverage_contestation` 两个
+prompt 条件，Qwen / DeepSeek / Gemini 三个模型，共 186 calls。用户已要求“继续”，
+且前置 gate 已通过；本轮不执行被阻断的 `e6_no_verdict` 条件。
+
+执行边界：
+
+- 只运行 0.41 标记为 ready 的两个条件；
+- 不运行、不补跑 `e6_no_verdict`，除非之后另建 verdict-field packet variant 并
+  重新 preflight；
+- raw responses 只能写入 ignored `outputs/**`；
+- tracked reviews / analysis 只能保存 normalized decision、parse status、cost、
+  candidate id、condition、model、aggregate metrics，不保存 raw response text、
+  rendered prompt、patch diff 或 API key；
+- 如任一模型/条件 parse invalid、成本不可观测或 resume prefix 不一致，停止并诊断
+  execution-chain bug，不把部分结果写成论文结果；
+- stress cohort 全部是 hidden-fail hard negatives，因此本轮指标只评估
+  repeated false accept、strict reject、safe escalation、parse validity 和成本；
+  不计算 correct recall，也不写成 autonomous correctness verification。
+
+本轮验收条件：
+
+- 新增 stress matrix API runner 和 raw-free analyzer；
+- 完成 6 个 model-condition runs，每个 31 records，合计 186 parse-valid reviews；
+- 输出 hard-negative stress matrix analysis，比较 current prompt 与
+  coverage-contestation 在 repeated false accept / strict reject / safe escalation
+  上的差异；
+- 同步 README/INDEX/current project state/engineering notes；
+- 运行最小验证，提交并同步 GitHub。
+
+执行结果：
+
+- 新增 API runner：
+  `scripts/run_evp8_realistic_hardneg_stress_matrix.py`；
+- 新增 raw-free analyzer：
+  `scripts/analyze_evp8_realistic_hardneg_stress_matrix.py`；
+- 6 个 model-condition runs 均通过 run gate：2 个 prompt 条件 × 3 个模型 ×
+  31 cases = 186 parse-valid reviews；
+- Gemini `current_merge_gate` 首轮出现 3 条 provider 空响应，诊断为
+  `invalid_json:No JSON object found` 且 token usage 为 0；runner 增加
+  `--retry-invalid` 后仅重试这 3 条 invalid raw records，并保留 ignored raw backup；
+- tracked reviews / summaries 位于 `data/reviews/evp8_realistic_hardneg_stress_matrix_*`；
+  raw responses 位于 ignored
+  `outputs/evp8_realistic_hardneg_stress_matrix_v0_1/`；
+- 新增聚合分析：
+  `data/reviews/evp8_realistic_hardneg_stress_matrix_analysis_v0_1.json` 和
+  `docs/experiments/evp8_realistic_hardneg_stress_matrix_analysis_v0_1.md`；
+- aggregate result：
+  - `current_merge_gate`：93 records 中 62 repeated false accepts
+    (`66.67%`)，31 safe escalations (`33.33%`)，0 strict rejects；
+  - `coverage_contestation`：93 records 中 12 repeated false accepts
+    (`12.90%`)，81 safe escalations (`87.10%`)，0 strict rejects；
+- per-model result：
+  - Qwen current：31 accept / 0 escalate；Qwen coverage：12 accept / 19 escalate；
+  - DeepSeek current：0 accept / 31 escalate；DeepSeek coverage：0 accept /
+    31 escalate；
+  - Gemini current：31 accept / 0 escalate；Gemini coverage：0 accept /
+    31 escalate；
+- cost：planned review calls 186，invalid raw retries 3，effective API calls
+  189；tracked cost totals为 USD `0.106014608` + CNY `3.95826`，unknown-cost
+  records 为 0；
+- 论文边界：该结果支持 hard-negative stress cohort 上的 conservative triage /
+  false-accept reduction claim；不支持 strict correction，因为 strict reject 为 0；
+  也不支持 correct recall，因为该 cohort 全部是 hidden-fail negatives。
+
 ## 0.39 2026-07-06 主线 B：realistic hard-negative gate repair
 
 本轮目标是按用户要求完成主线 B：把 realistic hard-negative stress test 从

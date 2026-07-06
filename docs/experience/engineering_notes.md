@@ -4749,3 +4749,22 @@ This file starts fresh for the patch-verification project.
   `label_leakage_guard`, and `stress_source_boundary` before rendering verifier
   prompts. These fields are not hidden outcomes, but they are unnecessary for a
   clean visible-evidence decision contract.
+
+## 2026-07-06 Hard-negative stress matrix execution
+
+- OpenRouter/Gemini can return an empty response with zero token usage for a
+  single record even when the surrounding run is healthy. Treat this as a
+  provider/execution-chain issue, not a model decision. The runner now supports
+  `--resume --retry-invalid`, backs up the ignored raw JSONL, and retries only
+  records that fail parsing.
+- On an all-negative hard-negative cohort, do not report correct recall. The
+  valid metrics are repeated false accept, strict reject, safe escalation, and
+  safe handling.
+- The stress result is strong for prompt-sensitivity and triage: coverage
+  contestation reduced repeated false accepts from 62/93 to 12/93. It is not
+  strict semantic correction evidence because strict reject stayed at 0 for
+  both conditions.
+- Model behavior remains heterogeneous. Qwen and Gemini accepted all stress
+  cases under the current prompt; DeepSeek escalated all. Under coverage
+  contestation, DeepSeek and Gemini escalated all cases, while Qwen still
+  accepted 12/31.

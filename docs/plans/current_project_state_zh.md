@@ -107,6 +107,16 @@
   上被阻断，因为 packets 中没有 verdict-like 字段可移除；不得写成已 ready 或
   已执行的独立 ablation。preflight 同时确认 tracked 输出不保存 patch diff、
   rendered prompt 或 raw responses。
+- 主线 B 31-case verifier matrix API run 与分析已完成：
+  `docs/experiments/evp8_realistic_hardneg_stress_matrix_analysis_v0_1.md` 和
+  `data/reviews/evp8_realistic_hardneg_stress_matrix_analysis_v0_1.json`。
+  6 个 model-condition runs 均通过，合计 186 parse-valid reviews；Gemini
+  `current_merge_gate` 有 3 条 provider 空响应被 `--retry-invalid` 重试修复。
+  `current_merge_gate` aggregate repeated false accept 为 62/93 (`66.67%`)，
+  safe escalation 为 31/93 (`33.33%`)；`coverage_contestation` repeated false
+  accept 降为 12/93 (`12.90%`)，safe escalation 升为 81/93 (`87.10%`)。
+  两个条件 strict reject 均为 0，因此该结果支持 conservative triage /
+  false-accept reduction，不支持 strict correction，也不定义 correct recall。
 - 新增 Gemini repaired EVP-8 v0.3 E0-E6 third-model run：
   strict preflight、smoke/full check-only、smoke API、full API 和
   label-conditioned analysis 均通过。full API 为 686/686 parse-valid，估算成本

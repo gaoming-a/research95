@@ -1,0 +1,592 @@
+{
+  "aggregate_by_condition": {
+    "coverage_contestation": {
+      "challenge_visible_test_only_accept_counts": {
+        "False": 12,
+        "True": 81
+      },
+      "coverage_concern_counts": {
+        "high": 50,
+        "low": 12,
+        "medium": 31
+      },
+      "decision_counts": {
+        "accept": 12,
+        "escalate": 81
+      },
+      "decision_counts_by_project": {
+        "PySnooper": {
+          "accept": 9,
+          "escalate": 18
+        },
+        "cookiecutter": {
+          "accept": 3,
+          "escalate": 48
+        },
+        "scrapy": {
+          "escalate": 15
+        }
+      },
+      "decision_counts_by_source_kind": {
+        "curated_no_api_stress_source": {
+          "escalate": 15
+        },
+        "model_generated_source": {
+          "accept": 12,
+          "escalate": 66
+        }
+      },
+      "invalid_parse_count": 0,
+      "parse_valid_count": 93,
+      "record_count": 93,
+      "repeated_false_accept_count": 12,
+      "repeated_false_accept_rate": 0.12903225806451613,
+      "safe_escalation_count": 81,
+      "safe_escalation_rate": 0.8709677419354839,
+      "safe_handling_count": 81,
+      "safe_handling_rate": 0.8709677419354839,
+      "strict_reject_count": 0,
+      "strict_reject_rate": 0.0
+    },
+    "current_merge_gate": {
+      "challenge_visible_test_only_accept_counts": {
+        "None": 93
+      },
+      "coverage_concern_counts": {
+        "None": 93
+      },
+      "decision_counts": {
+        "accept": 62,
+        "escalate": 31
+      },
+      "decision_counts_by_project": {
+        "PySnooper": {
+          "accept": 18,
+          "escalate": 9
+        },
+        "cookiecutter": {
+          "accept": 34,
+          "escalate": 17
+        },
+        "scrapy": {
+          "accept": 10,
+          "escalate": 5
+        }
+      },
+      "decision_counts_by_source_kind": {
+        "curated_no_api_stress_source": {
+          "accept": 10,
+          "escalate": 5
+        },
+        "model_generated_source": {
+          "accept": 52,
+          "escalate": 26
+        }
+      },
+      "invalid_parse_count": 0,
+      "parse_valid_count": 93,
+      "record_count": 93,
+      "repeated_false_accept_count": 62,
+      "repeated_false_accept_rate": 0.6666666666666666,
+      "safe_escalation_count": 31,
+      "safe_escalation_rate": 0.3333333333333333,
+      "safe_handling_count": 31,
+      "safe_handling_rate": 0.3333333333333333,
+      "strict_reject_count": 0,
+      "strict_reject_rate": 0.0
+    }
+  },
+  "analysis_id": "evp8_realistic_hardneg_stress_matrix_analysis_v0_1",
+  "candidate_count": 31,
+  "checks": [
+    {
+      "check": "current_merge_gate_qwen_qwen3.7-max_run_gate_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "current_merge_gate_qwen_qwen3.7-max_record_count_31",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "current_merge_gate_qwen_qwen3.7-max_parse_valid_31",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "current_merge_gate_deepseek_deepseek-v4-pro_run_gate_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "current_merge_gate_deepseek_deepseek-v4-pro_record_count_31",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "current_merge_gate_deepseek_deepseek-v4-pro_parse_valid_31",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "current_merge_gate_google_gemini-2.5-flash_run_gate_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "current_merge_gate_google_gemini-2.5-flash_record_count_31",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "current_merge_gate_google_gemini-2.5-flash_parse_valid_31",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "coverage_contestation_qwen_qwen3.7-max_run_gate_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "coverage_contestation_qwen_qwen3.7-max_record_count_31",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "coverage_contestation_qwen_qwen3.7-max_parse_valid_31",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "coverage_contestation_deepseek_deepseek-v4-pro_run_gate_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "coverage_contestation_deepseek_deepseek-v4-pro_record_count_31",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "coverage_contestation_deepseek_deepseek-v4-pro_parse_valid_31",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "coverage_contestation_google_gemini-2.5-flash_run_gate_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "coverage_contestation_google_gemini-2.5-flash_record_count_31",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "coverage_contestation_google_gemini-2.5-flash_parse_valid_31",
+      "detail": 31,
+      "passed": true
+    }
+  ],
+  "claim_boundary": "This analysis measures false-accept handling on a hard-negative stress cohort. It does not measure correct recall and does not establish autonomous correctness verification.",
+  "cohort_id": "EVP-8-REALISTIC-HARDNEG-STRESS",
+  "condition_ids": [
+    "current_merge_gate",
+    "coverage_contestation"
+  ],
+  "cost_summary": {
+    "effective_api_call_count_including_invalid_retries": 189,
+    "invalid_raw_retry_count": 3,
+    "planned_review_call_count": 186,
+    "total_cost_cny": 3.95826,
+    "total_cost_usd": 0.106014608,
+    "unknown_cost_record_count": 0
+  },
+  "hidden_label_boundary": "All 31 stress-cohort candidates are visible-pass/hidden-fail hard negatives.",
+  "input_cohort_summary": "data/protocols/evp8_realistic_hardneg_stress_cohort_v0_1.json",
+  "input_preflight": "data/protocols/evp8_realistic_hardneg_stress_matrix_preflight_v0_1.json",
+  "model_ids": [
+    "qwen/qwen3.7-max",
+    "deepseek/deepseek-v4-pro",
+    "google/gemini-2.5-flash"
+  ],
+  "patch_text_stored": false,
+  "per_condition_model": {
+    "coverage_contestation": {
+      "deepseek/deepseek-v4-pro": {
+        "cost_summary": {
+          "cost_currency_counts": {
+            "USD": 31
+          },
+          "cost_observability_counts": {
+            "estimated_from_provider_token_usage": 31
+          },
+          "cost_source_counts": {
+            "estimated_from_tokens": 31
+          },
+          "total_cost_cny": 0.0,
+          "total_cost_usd": 0.021878122,
+          "unknown_cost_record_count": 0
+        },
+        "metrics": {
+          "challenge_visible_test_only_accept_counts": {
+            "True": 31
+          },
+          "coverage_concern_counts": {
+            "high": 31
+          },
+          "decision_counts": {
+            "escalate": 31
+          },
+          "decision_counts_by_project": {
+            "PySnooper": {
+              "escalate": 9
+            },
+            "cookiecutter": {
+              "escalate": 17
+            },
+            "scrapy": {
+              "escalate": 5
+            }
+          },
+          "decision_counts_by_source_kind": {
+            "curated_no_api_stress_source": {
+              "escalate": 5
+            },
+            "model_generated_source": {
+              "escalate": 26
+            }
+          },
+          "invalid_parse_count": 0,
+          "parse_valid_count": 31,
+          "record_count": 31,
+          "repeated_false_accept_count": 0,
+          "repeated_false_accept_rate": 0.0,
+          "safe_escalation_count": 31,
+          "safe_escalation_rate": 1.0,
+          "safe_handling_count": 31,
+          "safe_handling_rate": 1.0,
+          "strict_reject_count": 0,
+          "strict_reject_rate": 0.0
+        },
+        "reviews": "data/reviews/evp8_realistic_hardneg_stress_matrix_coverage_contestation_deepseek_deepseek-v4-pro_reviews.jsonl",
+        "run_gate": "passed",
+        "summary": "data/reviews/evp8_realistic_hardneg_stress_matrix_coverage_contestation_deepseek_deepseek-v4-pro_summary.json"
+      },
+      "google/gemini-2.5-flash": {
+        "cost_summary": {
+          "cost_currency_counts": {
+            "USD": 31
+          },
+          "cost_observability_counts": {
+            "provider_reported_cost": 31
+          },
+          "cost_source_counts": {
+            "provider_reported_usage_cost": 31
+          },
+          "total_cost_cny": 0.0,
+          "total_cost_usd": 0.04014247,
+          "unknown_cost_record_count": 0
+        },
+        "metrics": {
+          "challenge_visible_test_only_accept_counts": {
+            "True": 31
+          },
+          "coverage_concern_counts": {
+            "high": 2,
+            "medium": 29
+          },
+          "decision_counts": {
+            "escalate": 31
+          },
+          "decision_counts_by_project": {
+            "PySnooper": {
+              "escalate": 9
+            },
+            "cookiecutter": {
+              "escalate": 17
+            },
+            "scrapy": {
+              "escalate": 5
+            }
+          },
+          "decision_counts_by_source_kind": {
+            "curated_no_api_stress_source": {
+              "escalate": 5
+            },
+            "model_generated_source": {
+              "escalate": 26
+            }
+          },
+          "invalid_parse_count": 0,
+          "parse_valid_count": 31,
+          "record_count": 31,
+          "repeated_false_accept_count": 0,
+          "repeated_false_accept_rate": 0.0,
+          "safe_escalation_count": 31,
+          "safe_escalation_rate": 1.0,
+          "safe_handling_count": 31,
+          "safe_handling_rate": 1.0,
+          "strict_reject_count": 0,
+          "strict_reject_rate": 0.0
+        },
+        "reviews": "data/reviews/evp8_realistic_hardneg_stress_matrix_coverage_contestation_google_gemini-2.5-flash_reviews.jsonl",
+        "run_gate": "passed",
+        "summary": "data/reviews/evp8_realistic_hardneg_stress_matrix_coverage_contestation_google_gemini-2.5-flash_summary.json"
+      },
+      "qwen/qwen3.7-max": {
+        "cost_summary": {
+          "cost_currency_counts": {
+            "CNY": 31
+          },
+          "cost_observability_counts": {
+            "estimated_from_provider_token_usage_and_official_cny_pricing": 31
+          },
+          "cost_source_counts": {
+            "estimated_from_tokens_official_qwen_cny_pricing": 31
+          },
+          "total_cost_cny": 2.274048,
+          "total_cost_usd": 0.0,
+          "unknown_cost_record_count": 0
+        },
+        "metrics": {
+          "challenge_visible_test_only_accept_counts": {
+            "False": 12,
+            "True": 19
+          },
+          "coverage_concern_counts": {
+            "high": 17,
+            "low": 12,
+            "medium": 2
+          },
+          "decision_counts": {
+            "accept": 12,
+            "escalate": 19
+          },
+          "decision_counts_by_project": {
+            "PySnooper": {
+              "accept": 9
+            },
+            "cookiecutter": {
+              "accept": 3,
+              "escalate": 14
+            },
+            "scrapy": {
+              "escalate": 5
+            }
+          },
+          "decision_counts_by_source_kind": {
+            "curated_no_api_stress_source": {
+              "escalate": 5
+            },
+            "model_generated_source": {
+              "accept": 12,
+              "escalate": 14
+            }
+          },
+          "invalid_parse_count": 0,
+          "parse_valid_count": 31,
+          "record_count": 31,
+          "repeated_false_accept_count": 12,
+          "repeated_false_accept_rate": 0.3870967741935484,
+          "safe_escalation_count": 19,
+          "safe_escalation_rate": 0.6129032258064516,
+          "safe_handling_count": 19,
+          "safe_handling_rate": 0.6129032258064516,
+          "strict_reject_count": 0,
+          "strict_reject_rate": 0.0
+        },
+        "reviews": "data/reviews/evp8_realistic_hardneg_stress_matrix_coverage_contestation_qwen_qwen3.7-max_reviews.jsonl",
+        "run_gate": "passed",
+        "summary": "data/reviews/evp8_realistic_hardneg_stress_matrix_coverage_contestation_qwen_qwen3.7-max_summary.json"
+      }
+    },
+    "current_merge_gate": {
+      "deepseek/deepseek-v4-pro": {
+        "cost_summary": {
+          "cost_currency_counts": {
+            "USD": 31
+          },
+          "cost_observability_counts": {
+            "estimated_from_provider_token_usage": 31
+          },
+          "cost_source_counts": {
+            "estimated_from_tokens": 31
+          },
+          "total_cost_cny": 0.0,
+          "total_cost_usd": 0.018270116,
+          "unknown_cost_record_count": 0
+        },
+        "metrics": {
+          "challenge_visible_test_only_accept_counts": {
+            "None": 31
+          },
+          "coverage_concern_counts": {
+            "None": 31
+          },
+          "decision_counts": {
+            "escalate": 31
+          },
+          "decision_counts_by_project": {
+            "PySnooper": {
+              "escalate": 9
+            },
+            "cookiecutter": {
+              "escalate": 17
+            },
+            "scrapy": {
+              "escalate": 5
+            }
+          },
+          "decision_counts_by_source_kind": {
+            "curated_no_api_stress_source": {
+              "escalate": 5
+            },
+            "model_generated_source": {
+              "escalate": 26
+            }
+          },
+          "invalid_parse_count": 0,
+          "parse_valid_count": 31,
+          "record_count": 31,
+          "repeated_false_accept_count": 0,
+          "repeated_false_accept_rate": 0.0,
+          "safe_escalation_count": 31,
+          "safe_escalation_rate": 1.0,
+          "safe_handling_count": 31,
+          "safe_handling_rate": 1.0,
+          "strict_reject_count": 0,
+          "strict_reject_rate": 0.0
+        },
+        "reviews": "data/reviews/evp8_realistic_hardneg_stress_matrix_current_merge_gate_deepseek_deepseek-v4-pro_reviews.jsonl",
+        "run_gate": "passed",
+        "summary": "data/reviews/evp8_realistic_hardneg_stress_matrix_current_merge_gate_deepseek_deepseek-v4-pro_summary.json"
+      },
+      "google/gemini-2.5-flash": {
+        "cost_summary": {
+          "cost_currency_counts": {
+            "USD": 31
+          },
+          "cost_observability_counts": {
+            "provider_reported_cost": 31
+          },
+          "cost_source_counts": {
+            "provider_reported_usage_cost": 31
+          },
+          "total_cost_cny": 0.0,
+          "total_cost_usd": 0.0257239,
+          "unknown_cost_record_count": 0
+        },
+        "metrics": {
+          "challenge_visible_test_only_accept_counts": {
+            "None": 31
+          },
+          "coverage_concern_counts": {
+            "None": 31
+          },
+          "decision_counts": {
+            "accept": 31
+          },
+          "decision_counts_by_project": {
+            "PySnooper": {
+              "accept": 9
+            },
+            "cookiecutter": {
+              "accept": 17
+            },
+            "scrapy": {
+              "accept": 5
+            }
+          },
+          "decision_counts_by_source_kind": {
+            "curated_no_api_stress_source": {
+              "accept": 5
+            },
+            "model_generated_source": {
+              "accept": 26
+            }
+          },
+          "invalid_parse_count": 0,
+          "parse_valid_count": 31,
+          "record_count": 31,
+          "repeated_false_accept_count": 31,
+          "repeated_false_accept_rate": 1.0,
+          "safe_escalation_count": 0,
+          "safe_escalation_rate": 0.0,
+          "safe_handling_count": 0,
+          "safe_handling_rate": 0.0,
+          "strict_reject_count": 0,
+          "strict_reject_rate": 0.0
+        },
+        "reviews": "data/reviews/evp8_realistic_hardneg_stress_matrix_current_merge_gate_google_gemini-2.5-flash_reviews.jsonl",
+        "run_gate": "passed",
+        "summary": "data/reviews/evp8_realistic_hardneg_stress_matrix_current_merge_gate_google_gemini-2.5-flash_summary.json"
+      },
+      "qwen/qwen3.7-max": {
+        "cost_summary": {
+          "cost_currency_counts": {
+            "CNY": 31
+          },
+          "cost_observability_counts": {
+            "estimated_from_provider_token_usage_and_official_cny_pricing": 31
+          },
+          "cost_source_counts": {
+            "estimated_from_tokens_official_qwen_cny_pricing": 31
+          },
+          "total_cost_cny": 1.684212,
+          "total_cost_usd": 0.0,
+          "unknown_cost_record_count": 0
+        },
+        "metrics": {
+          "challenge_visible_test_only_accept_counts": {
+            "None": 31
+          },
+          "coverage_concern_counts": {
+            "None": 31
+          },
+          "decision_counts": {
+            "accept": 31
+          },
+          "decision_counts_by_project": {
+            "PySnooper": {
+              "accept": 9
+            },
+            "cookiecutter": {
+              "accept": 17
+            },
+            "scrapy": {
+              "accept": 5
+            }
+          },
+          "decision_counts_by_source_kind": {
+            "curated_no_api_stress_source": {
+              "accept": 5
+            },
+            "model_generated_source": {
+              "accept": 26
+            }
+          },
+          "invalid_parse_count": 0,
+          "parse_valid_count": 31,
+          "record_count": 31,
+          "repeated_false_accept_count": 31,
+          "repeated_false_accept_rate": 1.0,
+          "safe_escalation_count": 0,
+          "safe_escalation_rate": 0.0,
+          "safe_handling_count": 0,
+          "safe_handling_rate": 0.0,
+          "strict_reject_count": 0,
+          "strict_reject_rate": 0.0
+        },
+        "reviews": "data/reviews/evp8_realistic_hardneg_stress_matrix_current_merge_gate_qwen_qwen3.7-max_reviews.jsonl",
+        "run_gate": "passed",
+        "summary": "data/reviews/evp8_realistic_hardneg_stress_matrix_current_merge_gate_qwen_qwen3.7-max_summary.json"
+      }
+    }
+  },
+  "raw_response_text_stored": false,
+  "rendered_prompt_text_stored": false,
+  "status": "passed"
+}

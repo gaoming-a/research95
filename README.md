@@ -168,6 +168,13 @@ matrix is 186 calls: 31 cases, two ready prompt conditions
 valid on this stress packet format because there are no verdict-like fields to
 remove; it must not be reported as a ready or executed ablation unless a
 separate verdict-field packet variant is built and preflighted.
+The ready stress matrix has now been executed and analyzed at
+`docs/experiments/evp8_realistic_hardneg_stress_matrix_analysis_v0_1.md`.
+All 186 planned reviews are parse-valid. On this all-negative stress cohort,
+`coverage_contestation` reduces repeated false accepts from 62/93 to 12/93, but
+the reduction comes entirely from safe escalation: strict reject remains 0 for
+both conditions. This supports a conservative triage / false-accept reduction
+claim, not autonomous correction or correctness verification.
 The separated stress cohort/headroom packet is
 `docs/experiments/evp8_realistic_hardneg_stress_cohort_v0_1.md`: it contains 31
 visible-pass/hidden-fail cases, and the rule-only visible-tool baseline accepts

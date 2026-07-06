@@ -1,0 +1,58 @@
+{
+  "actual_model_id_counts": {
+    "deepseek-v4-pro": 31
+  },
+  "analysis_id": "evp8_realistic_hardneg_stress_matrix_v0_1",
+  "api_call_attempted": true,
+  "challenge_visible_test_only_accept_counts": {
+    "None": 31
+  },
+  "cohort_id": "EVP-8-REALISTIC-HARDNEG-STRESS",
+  "condition_id": "current_merge_gate",
+  "configured_model_id": "deepseek/deepseek-v4-pro",
+  "cost_summary": {
+    "cost_currency_counts": {
+      "USD": 31
+    },
+    "cost_observability_counts": {
+      "estimated_from_provider_token_usage": 31
+    },
+    "cost_source_counts": {
+      "estimated_from_tokens": 31
+    },
+    "total_cost_cny": 0.0,
+    "total_cost_usd": 0.018270116,
+    "unknown_cost_record_count": 0
+  },
+  "coverage_concern_counts": {
+    "None": 31
+  },
+  "decision_counts": {
+    "escalate": 31
+  },
+  "invalid_parse_count": 0,
+  "max_output_tokens": 4096,
+  "mode": "executed",
+  "new_api_call_count": 31,
+  "parse_valid_count": 31,
+  "patch_text_stored_in_tracked_reviews": false,
+  "provider_preferences": null,
+  "provider_route": "deepseek_official",
+  "raw_outputs_generated": true,
+  "raw_response_text_stored_in_tracked_reviews": false,
+  "raw_responses_out": "outputs/evp8_realistic_hardneg_stress_matrix_v0_1/current_merge_gate/deepseek_deepseek-v4-pro/raw_responses.jsonl",
+  "rendered_prompt_text_stored": false,
+  "request_model_id": "deepseek-v4-pro",
+  "request_response_format": {
+    "type": "json_object"
+  },
+  "request_thinking": {
+    "type": "disabled"
+  },
+  "resume_enabled": false,
+  "resumed_raw_record_count": 0,
+  "review_count": 31,
+  "run_gate": "passed",
+  "tracked_reviews_out": "data/reviews/evp8_realistic_hardneg_stress_matrix_current_merge_gate_deepseek_deepseek-v4-pro_reviews.jsonl",
+  "usage_cost_gate": "passed"
+}
