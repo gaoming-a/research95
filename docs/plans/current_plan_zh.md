@@ -68,6 +68,56 @@ Scrapy，任务为 `bugsinpy_scrapy_1`。
   curated no-API stress source，后续 verifier matrix 必须写成 stress-test 条件，
   不能写成纯 agent-generated realistic cohort 结果。
 
+## 0.40 2026-07-06 主线 B 后续：separated hard-negative stress cohort and headroom
+
+本轮目标是在主线 B gate 已通过后，继续完成 verifier API 之前的 no-API
+准备工作：从 combined gate 中分离出 31 个 visible-pass/hidden-fail cases，构造
+hard-negative stress cohort，并计算 rule-only visible-tool headroom baseline。
+
+执行边界：
+
+- 本轮不调用 verifier API；
+- 本轮不把 Scrapy curated partial variants 写成纯 agent-generated realistic cohort；
+- model-visible packets 需要包含 patch diff，因此只能写入 ignored `outputs/**`，
+  不提交到 tracked `data/**`；
+- tracked JSON/Markdown 只保存 candidate id、project/task、source path、
+  patch hash、label、visible outcome、baseline decision 和聚合指标，不保存
+  patch text、rendered prompt、raw response 或 API key；
+- 如果 31-case cohort 无法从 validation/visible/source candidates 精确 join，
+  必须停止并诊断 join key，而不是手工补数；
+- 如果 rule-only baseline 不是 31/31 false accepts，仍然如实记录 headroom，
+  不为了制造结果改 visible evidence 或 labels。
+
+本轮验收条件：
+
+- 生成 31-case hard-negative stress cohort 的 evaluator-only manifest 和
+  ignored model-visible packets；
+- 生成 rule-only visible-tool baseline/headroom summary；
+- 确认 baseline headroom 是否足以支持后续 verifier matrix；
+- 更新 README/INDEX/current project state/engineering notes；
+- 运行最小验证，提交并尝试同步 GitHub。
+
+执行结果：
+
+- 新增 no-API builder：
+  `scripts/build_evp8_realistic_hardneg_stress_cohort.py`；
+- 从 6 个 gate 输入中自动 join validation、visible-test outcomes、candidate
+  sources 和 evidence packets，筛出 31 个 `visible_pass_hidden_fail` cases；
+- ignored patch-bearing outputs 写入
+  `outputs/evp8_realistic_hardneg_stress_cohort_v0_1/`：
+  evaluator manifest、model-visible packets 和 visible-tool baseline；
+- tracked raw-free summary 写入：
+  `data/protocols/evp8_realistic_hardneg_stress_cohort_v0_1.json` 和
+  `docs/experiments/evp8_realistic_hardneg_stress_cohort_v0_1.md`；
+- 31-case stress cohort 覆盖 3 projects / 4 tasks：
+  `PySnooper` 9、`cookiecutter` 17、`scrapy` 5；
+- source kind 组成：26 model-generated source cases + 5 curated no-API
+  stress-source cases；
+- rule-only visible-tool baseline 结果为 31/31 `accept`，且 31/31 都是
+  hidden-fail false accepts，false accept rate = `1.0`；
+- 结论：后续 verifier matrix 有明确 headroom，但必须写成 hard-negative
+  stress-test evidence，不能写成纯 agent-generated realistic cohort。
+
 ## 0.38 2026-07-06 Coverage-contestation prompt robustness and hard-negative stress-test route
 
 本轮目标是沿用户确认的新方向推进，但不替换当前主 prompt：

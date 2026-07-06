@@ -1,0 +1,689 @@
+{
+  "analysis_id": "evp8_realistic_hardneg_stress_cohort_v0_1",
+  "candidate_count": 31,
+  "case_records": [
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0001",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "ff241462dac77feacce42f4c1a555c6da08f3ac6c9ace1c54900e9814bcc4536",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "PySnooper",
+      "source_candidate_id": "agent_candidate_3010",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_PySnooper_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0002",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "ff241462dac77feacce42f4c1a555c6da08f3ac6c9ace1c54900e9814bcc4536",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "PySnooper",
+      "source_candidate_id": "agent_candidate_3011",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_PySnooper_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0003",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "ff241462dac77feacce42f4c1a555c6da08f3ac6c9ace1c54900e9814bcc4536",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "PySnooper",
+      "source_candidate_id": "agent_candidate_3012",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_PySnooper_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0004",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "ff241462dac77feacce42f4c1a555c6da08f3ac6c9ace1c54900e9814bcc4536",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "PySnooper",
+      "source_candidate_id": "agent_candidate_3013",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_PySnooper_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0005",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "ff241462dac77feacce42f4c1a555c6da08f3ac6c9ace1c54900e9814bcc4536",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "PySnooper",
+      "source_candidate_id": "agent_candidate_3014",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_PySnooper_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0006",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "ff241462dac77feacce42f4c1a555c6da08f3ac6c9ace1c54900e9814bcc4536",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "PySnooper",
+      "source_candidate_id": "agent_candidate_3015",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_PySnooper_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0007",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "ff241462dac77feacce42f4c1a555c6da08f3ac6c9ace1c54900e9814bcc4536",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "PySnooper",
+      "source_candidate_id": "agent_candidate_3016",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_PySnooper_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0008",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "ff241462dac77feacce42f4c1a555c6da08f3ac6c9ace1c54900e9814bcc4536",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "PySnooper",
+      "source_candidate_id": "agent_candidate_3017",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_PySnooper_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0009",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "ff241462dac77feacce42f4c1a555c6da08f3ac6c9ace1c54900e9814bcc4536",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "PySnooper",
+      "source_candidate_id": "agent_candidate_3018",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_PySnooper_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0010",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "d85a5b1071cf0a9c5d7e4952b0cd11b0b67f68d5f1be136ce053e9c28f1563bc",
+      "patch_size": {
+        "added_lines": 7,
+        "deleted_lines": 5,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3028",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_2"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0011",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "c702f2293ed6a5eb28085964bac28c6119f900feaf038815c64d0094df63208c",
+      "patch_size": {
+        "added_lines": 8,
+        "deleted_lines": 6,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3029",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_2"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0012",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "d7f463482e38127ed8cd9ff33a3739acc1ccc32da1b98bed6907999ffb6b5b90",
+      "patch_size": {
+        "added_lines": 8,
+        "deleted_lines": 6,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3030",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_2"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0013",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "ccf6738f4eb7aa8b47608a1f30a9abcee7873afdfeb12e5f356981b55119dd87",
+      "patch_size": {
+        "added_lines": 7,
+        "deleted_lines": 5,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3031",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_2"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0014",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "ccf6738f4eb7aa8b47608a1f30a9abcee7873afdfeb12e5f356981b55119dd87",
+      "patch_size": {
+        "added_lines": 7,
+        "deleted_lines": 5,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3032",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_2"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0015",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "8119761f5ea516d627782c8bbbd64a444458ce39ba9b5a504981358aa674fa5d",
+      "patch_size": {
+        "added_lines": 5,
+        "deleted_lines": 3,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3033",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_2"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0016",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "ccf6738f4eb7aa8b47608a1f30a9abcee7873afdfeb12e5f356981b55119dd87",
+      "patch_size": {
+        "added_lines": 7,
+        "deleted_lines": 5,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3034",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_2"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0017",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "c702f2293ed6a5eb28085964bac28c6119f900feaf038815c64d0094df63208c",
+      "patch_size": {
+        "added_lines": 8,
+        "deleted_lines": 6,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3035",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_2"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0018",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "d85a5b1071cf0a9c5d7e4952b0cd11b0b67f68d5f1be136ce053e9c28f1563bc",
+      "patch_size": {
+        "added_lines": 7,
+        "deleted_lines": 5,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3036",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_2"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0019",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "8d4299aa06a54af9f1c77fe2a801b6cb4e56eea84bf822c90c3aeab3424ee5e8",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3037",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0020",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "8d4299aa06a54af9f1c77fe2a801b6cb4e56eea84bf822c90c3aeab3424ee5e8",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3039",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0021",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "8d4299aa06a54af9f1c77fe2a801b6cb4e56eea84bf822c90c3aeab3424ee5e8",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3040",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0022",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "8d4299aa06a54af9f1c77fe2a801b6cb4e56eea84bf822c90c3aeab3424ee5e8",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3041",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0023",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "8d4299aa06a54af9f1c77fe2a801b6cb4e56eea84bf822c90c3aeab3424ee5e8",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3042",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0024",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "8d4299aa06a54af9f1c77fe2a801b6cb4e56eea84bf822c90c3aeab3424ee5e8",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3043",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0025",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "8d4299aa06a54af9f1c77fe2a801b6cb4e56eea84bf822c90c3aeab3424ee5e8",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3044",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0026",
+      "candidate_type": "model_generated_patch",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "agent_edit_plan_git_diff",
+      "patch_sha256": "8d4299aa06a54af9f1c77fe2a801b6cb4e56eea84bf822c90c3aeab3424ee5e8",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "cookiecutter",
+      "source_candidate_id": "agent_candidate_3045",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_generation_gate_v0_1.json",
+      "source_kind": "model_generated_source",
+      "task_id": "bugsinpy_cookiecutter_3"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0027",
+      "candidate_type": "partial_fix",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "reference_diff_with_one_change_omitted",
+      "patch_sha256": "e9614a3e1cec54ecfa60c967b8879c6f9efc3d948d3bb3247e7c4b9906f68bd2",
+      "patch_size": {
+        "added_lines": 4,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "scrapy",
+      "source_candidate_id": "candidate_0006",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_scrapy_source_probe_gate_v0_1.json",
+      "source_kind": "curated_no_api_stress_source",
+      "task_id": "bugsinpy_scrapy_1"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0028",
+      "candidate_type": "partial_fix",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "task_specific_scrapy_visible_only_partial_diff",
+      "patch_sha256": "cfb46d4324d99c0e0a2b7dc64fe8184aa9a46d62cf5a26539e1d3de49baa5cec",
+      "patch_size": {
+        "added_lines": 2,
+        "deleted_lines": 0,
+        "files_changed": 1
+      },
+      "project": "scrapy",
+      "source_candidate_id": "candidate_0007",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_scrapy_source_probe_gate_v0_1.json",
+      "source_kind": "curated_no_api_stress_source",
+      "task_id": "bugsinpy_scrapy_1"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0029",
+      "candidate_type": "partial_fix",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "task_specific_scrapy_visible_only_partial_diff",
+      "patch_sha256": "a5d53ae615d9ef66dff398600a96831bbb3cd073a7b3e86459e717304456cd35",
+      "patch_size": {
+        "added_lines": 4,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "scrapy",
+      "source_candidate_id": "candidate_0008",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_scrapy_source_probe_gate_v0_1.json",
+      "source_kind": "curated_no_api_stress_source",
+      "task_id": "bugsinpy_scrapy_1"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0030",
+      "candidate_type": "partial_fix",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "task_specific_scrapy_visible_only_partial_diff",
+      "patch_sha256": "72f39972de4d25c7f276def74422ae071cdf5fdc4acdeb433a55eae0c8f4e1ba",
+      "patch_size": {
+        "added_lines": 1,
+        "deleted_lines": 0,
+        "files_changed": 1
+      },
+      "project": "scrapy",
+      "source_candidate_id": "candidate_0009",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_scrapy_source_probe_gate_v0_1.json",
+      "source_kind": "curated_no_api_stress_source",
+      "task_id": "bugsinpy_scrapy_1"
+    },
+    {
+      "baseline_decision": "accept",
+      "candidate_id": "evp8_hardneg_stress_candidate_0031",
+      "candidate_type": "partial_fix",
+      "hard_negative_class": "visible_pass_hidden_fail",
+      "normalized_label": "test_passing_wrong",
+      "patch_materialization": "task_specific_scrapy_visible_only_partial_diff",
+      "patch_sha256": "23768d14c5c57435bbf3c0449e04ec0eeb0b225169a1e2bc5de58c5f0684d419",
+      "patch_size": {
+        "added_lines": 5,
+        "deleted_lines": 1,
+        "files_changed": 1
+      },
+      "project": "scrapy",
+      "source_candidate_id": "candidate_0010",
+      "source_gate": "data/protocols/evp8_realistic_hardneg_scrapy_source_probe_gate_v0_1.json",
+      "source_kind": "curated_no_api_stress_source",
+      "task_id": "bugsinpy_scrapy_1"
+    }
+  ],
+  "checks": [
+    {
+      "check": "api_call_not_attempted",
+      "detail": false,
+      "passed": true
+    },
+    {
+      "check": "case_count_minimum_met",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "project_minimum_met",
+      "detail": [
+        "PySnooper",
+        "cookiecutter",
+        "scrapy"
+      ],
+      "passed": true
+    },
+    {
+      "check": "all_cases_are_visible_pass_hidden_fail",
+      "detail": true,
+      "passed": true
+    },
+    {
+      "check": "model_visible_count_matches_evaluator",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "baseline_count_matches_evaluator",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "visible_tool_baseline_all_accepts",
+      "detail": {
+        "accept": 31
+      },
+      "passed": true
+    },
+    {
+      "check": "visible_tool_false_accepts_all_cases",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "model_visible_forbidden_fields_absent",
+      "detail": [],
+      "passed": true
+    }
+  ],
+  "cohort_id": "EVP-8-REALISTIC-HARDNEG-STRESS",
+  "date_utc": "2026-07-06T11:24:05.130558+00:00",
+  "next_required_step": "Run verifier preflight/matrix only as hard-negative stress-test evidence.",
+  "outputs": {
+    "ignored_evaluator_manifest": "outputs/evp8_realistic_hardneg_stress_cohort_v0_1/evaluator_manifest.jsonl",
+    "ignored_model_visible_packets": "outputs/evp8_realistic_hardneg_stress_cohort_v0_1/model_visible_packets.jsonl",
+    "ignored_visible_tool_baseline": "outputs/evp8_realistic_hardneg_stress_cohort_v0_1/visible_tool_baseline.jsonl"
+  },
+  "project_counts": {
+    "PySnooper": 9,
+    "cookiecutter": 17,
+    "scrapy": 5
+  },
+  "scope": {
+    "api_call_attempted": false,
+    "cohort_boundary": "hard-negative stress test; not a pure agent-generated realistic cohort",
+    "model_visible_packets_path_is_ignored_outputs": true,
+    "raw_model_outputs_read": false,
+    "tracked_patch_text_stored": false,
+    "tracked_prompt_text_stored": false
+  },
+  "source_kind_counts": {
+    "curated_no_api_stress_source": 5,
+    "model_generated_source": 26
+  },
+  "status": "passed",
+  "task_counts": {
+    "bugsinpy_PySnooper_3": 9,
+    "bugsinpy_cookiecutter_2": 9,
+    "bugsinpy_cookiecutter_3": 8,
+    "bugsinpy_scrapy_1": 5
+  },
+  "visible_tool_baseline": {
+    "decision_counts": {
+      "accept": 31
+    },
+    "false_accept_rate": 1.0,
+    "false_accepts": 31,
+    "headroom_exists": true,
+    "interpretation": "A visible-tool-only merge rule accepts every stress case; this creates direct headroom for verifier prompts to reduce false accepts."
+  }
+}

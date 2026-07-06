@@ -172,6 +172,16 @@
   `experiments/evp8_realistic_hardneg_combined_generation_gate_with_scrapy_source_probe_v0_1.md`:
   current mainline B gate result. Status is `passed`: 31 visible-pass/
   hidden-fail cases, 3 projects, and `ready_for_verifier_api=true`.
+- `../scripts/build_evp8_realistic_hardneg_stress_cohort.py`: no-API builder
+  for the separated 31-case hard-negative stress cohort. Patch-bearing
+  model-visible packets are written only under ignored `outputs/**`; tracked
+  summaries contain hashes, labels, visible outcomes, baseline decisions, and
+  aggregate counts only.
+- `../data/protocols/evp8_realistic_hardneg_stress_cohort_v0_1.json` and
+  `experiments/evp8_realistic_hardneg_stress_cohort_v0_1.md`: current
+  verifier-preflight input summary. Status is `passed`; rule-only visible-tool
+  baseline accepts 31/31 hidden-fail stress cases, so false accept rate is
+  `1.0` and verifier headroom exists.
 - `../scripts/audit_evp8_realistic_hardneg_source_probe.py`: raw-free audit
   for curated no-API hard-negative source probes. It records aggregate counts
   and validation/visible-test consistency without storing patch text, prompt

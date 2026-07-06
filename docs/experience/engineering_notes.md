@@ -4721,3 +4721,11 @@ This file starts fresh for the patch-verification project.
 - Curated no-API partial variants can repair a stress-test opportunity set, but
   they must be labeled as curated stress-source evidence. They cannot be
   described as a pure agent-generated realistic cohort.
+- Keep patch-bearing stress-cohort packets in ignored `outputs/**`. Tracked
+  files should carry only hashes, source IDs, labels, visible outcomes, and
+  aggregate baseline decisions. This preserves the raw-free/prompt-free
+  boundary while still giving future verifier runners a concrete local input.
+- A useful stress cohort should make the visible-tool baseline fail clearly.
+  The separated 31-case cohort does this: visible-tool accepts every case, and
+  every case is hidden-failing, so verifier prompts have direct false-accept
+  reduction headroom.

@@ -158,6 +158,11 @@ scrapy, with `ready_for_verifier_api=true`. Because the Scrapy additions are
 curated stress-source partial variants rather than LLM-generated agent patches,
 future verifier results must be framed as a hard-negative stress test, not as a
 pure agent-generated realistic cohort.
+The separated stress cohort/headroom packet is
+`docs/experiments/evp8_realistic_hardneg_stress_cohort_v0_1.md`: it contains 31
+visible-pass/hidden-fail cases, and the rule-only visible-tool baseline accepts
+all 31, producing a false-accept rate of 1.0. This is the clean no-API input for
+the next verifier matrix.
 
 The false-accept case-analysis feasibility audit is now tracked at
 `docs/paper/apsec_false_accept_case_feasibility_v0_1.md`. It confirms that the

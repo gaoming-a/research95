@@ -90,6 +90,14 @@
   其中 Scrapy 第三项目来自 curated no-API stress-source partial variants，不得
   写成纯 agent-generated realistic cohort。后续 verifier matrix 如继续运行，必须
   标注为 hard-negative stress-test 条件。
+- 主线 B verifier 前置 cohort/headroom 已完成：
+  `docs/experiments/evp8_realistic_hardneg_stress_cohort_v0_1.md` 和
+  `data/protocols/evp8_realistic_hardneg_stress_cohort_v0_1.json` 记录 31 个
+  separated hard-negative stress cases。rule-only visible-tool baseline 为
+  31/31 accept，且 31/31 都是 hidden-fail false accepts，false accept rate
+  `1.0`。这说明 stress-test verifier matrix 有明确 headroom；下一步可在
+  ignored `outputs/evp8_realistic_hardneg_stress_cohort_v0_1/model_visible_packets.jsonl`
+  上做 verifier preflight/API，但论文口径仍是 stress-test evidence。
 - 新增 Gemini repaired EVP-8 v0.3 E0-E6 third-model run：
   strict preflight、smoke/full check-only、smoke API、full API 和
   label-conditioned analysis 均通过。full API 为 686/686 parse-valid，估算成本
