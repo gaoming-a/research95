@@ -34,7 +34,8 @@
 | `sanitized_false_accept_case_analysis_present` | True | `` |
 | `tool_contestation_boundary_present` | True | `` |
 | `coverage_contestation_boundary_present` | True | `` |
-| `realistic_gate_boundary_present` | True | `` |
+| `hard_negative_stress_matrix_present` | True | `` |
+| `hard_negative_stress_boundary_present` | True | `` |
 | `figures_referenced` | True | `` |
 | `all_expected_citations_present` | True | `[]` |
 | `reference_support_records_removed` | True | `` |
@@ -52,6 +53,7 @@ Remaining work:
 
 - Do not broaden the three-model repaired result into a universal LLM-verifier claim.
 - Report coverage-contestation as conservative prompt-sensitivity evidence, not as an improved verifier.
+- Report the hard-negative stress matrix as bounded triage evidence, not as strict correction or a pure realistic agent-patch result.
 - Use the sanitized false-accept case analysis only as category-level failure anatomy, not as full rationale auditing.
 - Compile and visually inspect the APSEC IEEEtran source package.
 - Normalize BibTeX fields and check APSEC reference style.

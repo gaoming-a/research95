@@ -117,6 +117,24 @@
   accept 降为 12/93 (`12.90%`)，safe escalation 升为 81/93 (`87.10%`)。
   两个条件 strict reject 均为 0，因此该结果支持 conservative triage /
   false-accept reduction，不支持 strict correction，也不定义 correct recall。
+- APSEC technical-track Markdown rewrite 已纳入 stress matrix 结果：
+  `docs/paper/apsec_technical_track_rewrite_v0_1.md` 的 abstract、contribution、
+  experiment design、Results 5.5、Discussion、Threats 和 Conclusion 均已更新。
+  旧的 “realistic hard-negative branch 未过 readiness gate” 叙述已移除；新稿把
+  31-case stress matrix 写成 bounded stress-test supplement，并明确 scrapy cases
+  来自 curated no-API stress-source partial variants。APSEC audit 已通过：
+  `docs/paper/apsec_manuscript_rewrite_audit_v0_1.md` /
+  `data/reviews/apsec_manuscript_rewrite_audit_v0_1.json`。下一步仍需重生成
+  IEEEtran/BibTeX/page-budget/PDF 包，否则 LaTeX 包会落后于 Markdown 主稿。
+- CCF-C manuscript generation chain 已同步 stress matrix 结果：
+  `scripts/write_final_manuscript_claim_map.py` 现在读取
+  `data/reviews/evp8_realistic_hardneg_stress_matrix_analysis_v0_1.json`，
+  并重新生成 `docs/paper/ccfc_manuscript_rewrite_v0_1.md`、
+  `docs/paper/final_manuscript_claim_map_v0_1.md` 和
+  `data/reviews/final_manuscript_claim_map_v0_1.json`。CCF-C Fig. 2--3 已重画，
+  不再出现旧的 “realistic gate is source acquisition / three-project realistic
+  verifier readiness” 文案。`scripts/audit_ccfc_manuscript_v0_3.py` 已把旧
+  gate-failed 当前结论列为 forbidden wording，并通过 reviewer-style audit。
 - 新增 Gemini repaired EVP-8 v0.3 E0-E6 third-model run：
   strict preflight、smoke/full check-only、smoke API、full API 和
   label-conditioned analysis 均通过。full API 为 686/686 parse-valid，估算成本

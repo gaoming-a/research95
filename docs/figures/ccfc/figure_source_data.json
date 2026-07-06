@@ -22,23 +22,18 @@
       "passed": true
     },
     {
-      "check": "realistic_gate_not_verifier_ready",
-      "detail": {
-        "minimum_count": 30,
-        "minimum_projects": 3,
-        "passed": false,
-        "required_property": "patch_applied && declared_visible_tests_passed && hidden_oracle_failed",
-        "visible_pass_hidden_fail_count": 26,
-        "visible_pass_hidden_fail_projects": [
-          "PySnooper",
-          "cookiecutter"
-        ],
-        "visible_pass_hidden_fail_tasks": [
-          "bugsinpy_PySnooper_3",
-          "bugsinpy_cookiecutter_2",
-          "bugsinpy_cookiecutter_3"
-        ]
-      },
+      "check": "hard_negative_stress_matrix_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "hard_negative_stress_matrix_31_cases",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "hard_negative_stress_matrix_all_negative_boundary",
+      "detail": "All 31 stress-cohort candidates are visible-pass/hidden-fail hard negatives.",
       "passed": true
     },
     {
@@ -47,8 +42,28 @@
       "passed": true
     },
     {
+      "check": "deepseek_label_conditioned_checks_passed",
+      "detail": 9,
+      "passed": true
+    },
+    {
+      "check": "gemini_label_conditioned_checks_passed",
+      "detail": 9,
+      "passed": true
+    },
+    {
       "check": "phase_a_analysis_checks_passed",
       "detail": 7,
+      "passed": true
+    },
+    {
+      "check": "baseline_feasibility_audit_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "citation_support_bank_present",
+      "detail": "docs\\paper\\ccfc_citation_support_bank_v0_1.md",
       "passed": true
     }
   ],
@@ -66,16 +81,17 @@
       "status": "supported"
     },
     {
-      "allowed_wording": "For Qwen v0.3 on the frozen 98-candidate packet set, E3-E6 shifted many correct patches from non-accept to accept, with 3-4 false accepts depending on level.",
-      "boundary": "Qwen-only v0.3 descriptive result; not a five-model effectiveness claim or final evidence-level ranking.",
-      "claim": "In the Qwen v0.3 accept-aware run, visible executable and tool evidence changed correct-patch acceptance while introducing bounded false-accept risk.",
+      "allowed_wording": "For Qwen, DeepSeek, and Gemini v0.3 on the frozen 98-candidate packet set, visible executable/tool evidence shifted many correct patches from non-accept to accept while leaving 4-5 E6 false accepts.",
+      "boundary": "Three-model v0.3 descriptive result; not broad-model superiority or autonomous correctness verification.",
+      "claim": "In three repaired v0.3 accept-aware runs, visible executable and tool evidence changed correct-patch acceptance while retaining bounded false-accept risk.",
       "evidence": [
-        "v0_2_accept_aware_synthesis",
-        "v0_3_qwen_label_conditioned_summary"
+        "v0_3_qwen_label_conditioned_summary",
+        "v0_3_deepseek_label_conditioned_summary",
+        "v0_3_gemini_label_conditioned_summary"
       ],
       "id": "C2",
       "paper_location": "Results: Accept-aware label-conditioned behavior",
-      "status": "supported_qwen_only"
+      "status": "supported_three_model"
     },
     {
       "allowed_wording": "Verdict removal and tool-contestation produced model-dependent risk-control tradeoffs.",
@@ -101,15 +117,15 @@
       "status": "supported"
     },
     {
-      "allowed_wording": "The branch yielded a two-project hard-negative opportunity set but failed the three-project readiness gate.",
-      "boundary": "Do not use it as three-project verifier evidence.",
-      "claim": "The fresh realistic hard-negative branch is a source-acquisition negative result, not a verifier-ready main experiment.",
+      "allowed_wording": "Coverage-contestation reduced repeated false accepts from 62/93 to 12/93 on an all-negative stress cohort, entirely through escalation because strict rejects remained zero.",
+      "boundary": "Stress-test supplement only; correct recall is undefined and the scrapy cases are curated no-API stress-source variants, not a pure agent-generated realistic cohort.",
+      "claim": "On a 31-case hard-negative stress matrix, coverage-contestation reduced repeated false accepts mainly by escalating rather than strictly rejecting hidden-failing patches.",
       "evidence": [
-        "realistic_hardneg_generation_gate"
+        "evp8_realistic_hardneg_stress_matrix_analysis_v0_1"
       ],
       "id": "C5",
-      "paper_location": "Threats/Discussion: Realistic hard-negative acquisition",
-      "status": "supported_negative_boundary"
+      "paper_location": "Results/Discussion: Hard-negative stress matrix",
+      "status": "supported_qualified"
     }
   ],
   "decision_totals_by_level": {

@@ -1,5 +1,21 @@
 # Engineering Notes
 
+## 2026-07-06 hard-negative stress matrix manuscript synchronization
+
+- When a late experiment changes the paper-facing boundary, update the
+  manuscript generator, claim map, reviewer audit, and figures together. Editing
+  only the Markdown can leave stale claims in generated artifacts.
+- The 31-case hard-negative stress matrix improves the paper only as bounded
+  triage evidence. It reduces repeated false accepts from 62/93 to 12/93 under
+  coverage-contestation, but strict reject remains 0, so the result must not be
+  described as semantic correction.
+- Stress-cohort correct recall is undefined because all 31 cases are
+  hidden-failing hard negatives. Any table or abstract that implies recall
+  improvement on this cohort is logically invalid.
+- Stale wording such as a failed three-project realistic gate can survive in
+  figures and claim maps even after the main manuscript is fixed. Add forbidden
+  wording checks to the reviewer audit whenever a claim boundary changes.
+
 ## 2026-07-06 EVP-8 prompt-setting audit
 
 - A weak verifier result can be caused by the prompt/evidence setting without
@@ -4768,3 +4784,20 @@ This file starts fresh for the patch-verification project.
   cases under the current prompt; DeepSeek escalated all. Under coverage
   contestation, DeepSeek and Gemini escalated all cases, while Qwen still
   accepted 12/31.
+
+## 2026-07-06 APSEC stress-matrix manuscript integration
+
+- When a previously blocked branch later receives a bounded stress-test repair,
+  update the manuscript generator, not only the Markdown output. Otherwise the
+  next regeneration will restore stale gate-failed prose.
+- The correct APSEC framing is now: the hard-negative branch supplies a
+  31-case stress-test supplement across three projects, but it is not a pure
+  agent-generated realistic cohort because the scrapy cases are curated no-API
+  stress-source partial variants.
+- The stress-matrix result should sit after current-98 coverage-contestation:
+  current-98 shows prompt sensitivity with severe recall cost, while the
+  all-negative stress matrix shows false-accept reduction without defining
+  correct recall.
+- Keep the key boundary sentence near the result table: repeated false accepts
+  fell from 62/93 to 12/93, but strict rejects stayed at 0, so this is
+  conservative triage evidence, not strict correction.

@@ -175,6 +175,19 @@ All 186 planned reviews are parse-valid. On this all-negative stress cohort,
 the reduction comes entirely from safe escalation: strict reject remains 0 for
 both conditions. This supports a conservative triage / false-accept reduction
 claim, not autonomous correction or correctness verification.
+The APSEC technical-track Markdown rewrite now incorporates this result in
+`docs/paper/apsec_technical_track_rewrite_v0_1.md` and passes
+`scripts/audit_apsec_manuscript_rewrite.py`. The IEEEtran/BibTeX/page-budget
+draft package still needs regeneration so the submission-format files match
+the updated Markdown manuscript.
+The CCF-C manuscript generation chain has also been synchronized:
+`scripts/write_final_manuscript_claim_map.py` now reads the stress-matrix
+analysis, regenerates `docs/paper/ccfc_manuscript_rewrite_v0_1.md`, and updates
+`docs/paper/final_manuscript_claim_map_v0_1.md`. CCF-C Fig. 2--3 have been
+redrawn so they no longer describe the old realistic branch as a failed
+three-project gate. `scripts/audit_ccfc_manuscript_v0_3.py` now treats that old
+gate-failed wording as forbidden current wording and passes on the regenerated
+manuscript.
 The separated stress cohort/headroom packet is
 `docs/experiments/evp8_realistic_hardneg_stress_cohort_v0_1.md`: it contains 31
 visible-pass/hidden-fail cases, and the rule-only visible-tool baseline accepts

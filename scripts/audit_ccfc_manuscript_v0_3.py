@@ -36,6 +36,26 @@ EXPECTED_UNCERTAINTY_CONDITIONS = [
     "deepseek/deepseek-v4-pro E6-no-verdict",
 ]
 
+FORBIDDEN_CURRENT_WORDING = [
+    "source-acquisition negative result",
+    "failed the predeclared three-project readiness threshold",
+    "predeclared three-project gate failed",
+    "did not pass the three-project verifier-readiness gate",
+    "realistic gate is source acquisition",
+    "three-project realistic verifier readiness",
+]
+
+EXPECTED_STRESS_MATRIX_PHRASES = [
+    "31-case hard-negative stress matrix",
+    "visible-tool baseline accepted all 31 stress cases",
+    "62 repeated false accepts in 93 model-condition records",
+    "reduced repeated false accepts to 12/93",
+    "Strict rejects remained 0 in both conditions",
+    "Correct recall is also undefined in this all-negative cohort",
+    "curated no-API stress-source partial variants",
+    "bounded triage evidence",
+]
+
 
 def read_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
@@ -54,6 +74,8 @@ def build_audit() -> dict[str, Any]:
     missing_uncertainty_conditions = [
         condition for condition in EXPECTED_UNCERTAINTY_CONDITIONS if condition not in manuscript
     ]
+    forbidden_current_wording = [token for token in FORBIDDEN_CURRENT_WORDING if token in manuscript]
+    missing_stress_matrix_phrases = [phrase for phrase in EXPECTED_STRESS_MATRIX_PHRASES if phrase not in manuscript]
 
     checks = [
         check("manuscript_exists", MANUSCRIPT.exists(), str(MANUSCRIPT.relative_to(REPO_ROOT))),
@@ -70,6 +92,13 @@ def build_audit() -> dict[str, Any]:
         check("wilson_uncertainty_summary_present", "Wilson 95% confidence intervals" in manuscript, ""),
         check("all_expected_uncertainty_conditions_present", not missing_uncertainty_conditions, missing_uncertainty_conditions),
         check("tool_contestation_ci_present", "safe handling 95% CI" in manuscript and "strict correction 95% CI" in manuscript, ""),
+        check("hard_negative_stress_matrix_present", not missing_stress_matrix_phrases, missing_stress_matrix_phrases),
+        check("old_realistic_gate_wording_absent", not forbidden_current_wording, forbidden_current_wording),
+        check(
+            "claim_map_stress_matrix_summary_present",
+            bool(claim_map.get("hard_negative_stress_matrix_summary")),
+            claim_map.get("hard_negative_stress_matrix_summary"),
+        ),
         check("methods_protocol_section_present", "## 3. Methods: Evidence-Visibility Protocol" in manuscript, ""),
         check("methods_data_metrics_section_present", "## 4. Methods: Data, Metrics, and Validity Gates" in manuscript, ""),
         check("results_section_present", "## 5. Results" in manuscript, ""),

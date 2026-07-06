@@ -130,7 +130,12 @@
       "detail": ""
     },
     {
-      "check": "realistic_gate_boundary_present",
+      "check": "hard_negative_stress_matrix_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "hard_negative_stress_boundary_present",
       "passed": true,
       "detail": ""
     },
@@ -180,6 +185,7 @@
     "remaining_work": [
       "Do not broaden the three-model repaired result into a universal LLM-verifier claim.",
       "Report coverage-contestation as conservative prompt-sensitivity evidence, not as an improved verifier.",
+      "Report the hard-negative stress matrix as bounded triage evidence, not as strict correction or a pure realistic agent-patch result.",
       "Use the sanitized false-accept case analysis only as category-level failure anatomy, not as full rationale auditing.",
       "Compile and visually inspect the APSEC IEEEtran source package.",
       "Normalize BibTeX fields and check APSEC reference style.",

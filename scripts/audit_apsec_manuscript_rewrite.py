@@ -64,6 +64,8 @@ def build_audit() -> dict[str, Any]:
         "majority-vote baseline is completed",
         "V0.1",
         "invalid-setting",
+        "did not pass its readiness gate",
+        "missed the predeclared verifier-readiness gate",
     ]
     forbidden_present = [token for token in forbidden_tokens if token in manuscript]
 
@@ -168,7 +170,22 @@ def build_audit() -> dict[str, Any]:
             and "prompt-sensitivity evidence, not a new main result" in manuscript
             and "should not claim that coverage-contestation improves autonomous verification" in manuscript,
         ),
-        check("realistic_gate_boundary_present", "source-acquisition boundary" in manuscript),
+        check(
+            "hard_negative_stress_matrix_present",
+            "A hard-negative stress matrix reduced false accepts through escalation" in manuscript
+            and "31 hidden-failing candidates across PySnooper, cookiecutter, and scrapy" in manuscript
+            and "The visible-tool baseline accepted all 31 cases" in manuscript
+            and "62 repeated false accepts in 93 model-condition records" in manuscript
+            and "reduced repeated false accepts to 12/93" in manuscript
+            and "strict rejects remained 0 in both conditions" in manuscript,
+        ),
+        check(
+            "hard_negative_stress_boundary_present",
+            "curated no-API stress-source partial variants" in manuscript
+            and "hard-negative stress-test supplement rather than a pure agent-generated realistic cohort" in manuscript
+            and "Correct recall is also undefined in this all-negative cohort" in manuscript
+            and "bounded triage evidence" in manuscript,
+        ),
         check("figures_referenced", all(f"Figure {i}" in manuscript for i in [1, 2, 3])),
         check("all_expected_citations_present", not missing_citations, missing_citations),
         check("reference_support_records_removed", "Reference Support Records" not in manuscript),
@@ -197,6 +214,7 @@ def build_audit() -> dict[str, Any]:
             "remaining_work": [
                 "Do not broaden the three-model repaired result into a universal LLM-verifier claim.",
                 "Report coverage-contestation as conservative prompt-sensitivity evidence, not as an improved verifier.",
+                "Report the hard-negative stress matrix as bounded triage evidence, not as strict correction or a pure realistic agent-patch result.",
                 "Use the sanitized false-accept case analysis only as category-level failure anatomy, not as full rationale auditing.",
                 "Compile and visually inspect the APSEC IEEEtran source package.",
                 "Normalize BibTeX fields and check APSEC reference style.",

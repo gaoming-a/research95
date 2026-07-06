@@ -6,7 +6,7 @@ Target format note: this draft is shaped for an APSEC-style technical research p
 
 ## Abstract
 
-Patch-verification decisions made by large language models (LLMs) are meaningful only relative to the evidence visible at review time. Existing evaluations often report whether an LLM accepts or rejects a patch without making this evidence boundary explicit, which makes it difficult to separate model capability from visible-test evidence, tool-summary anchoring, or prompt-induced caution. This paper introduces the Evidence-Visibility Protocol (EVP-8), a hidden-evaluator protocol for candidate patch verification. EVP-8 reviews 98 candidate patches across seven cumulative evidence levels while withholding evaluator-only correctness labels until post-decision analysis. In three repaired v0.3 runs, Qwen reached 95.24% E6 correct recall with 83.33% accepted precision, DeepSeek reached 80.95% E6 correct recall with 80.95% accepted precision, and Gemini reached 95.24% E6 correct recall with 80.00% accepted precision. The three models still accepted 4-5 of 77 non-correct candidates at E6. E6 rule-only, no-verdict, and coverage-contestation ablations show that verdict-like tool summaries and prompt framing can strongly shift risk policy: the coverage-contestation condition removed repeated false accepts on current-98, but mainly by rejecting or escalating most correct patches. These results support a bounded software-engineering claim: in this controlled LLM patch-verifier study, evidence visibility should be treated as an experimental variable for risk control, not as proof of general autonomous correctness verification.
+Patch-verification decisions made by large language models (LLMs) are meaningful only relative to the evidence visible at review time. Existing evaluations often report whether an LLM accepts or rejects a patch without making this evidence boundary explicit, which makes it difficult to separate model capability from visible-test evidence, tool-summary anchoring, or prompt-induced caution. This paper introduces the Evidence-Visibility Protocol (EVP-8), a hidden-evaluator protocol for candidate patch verification. EVP-8 reviews 98 candidate patches across seven cumulative evidence levels while withholding evaluator-only correctness labels until post-decision analysis. In three repaired v0.3 runs, Qwen reached 95.24% E6 correct recall with 83.33% accepted precision, DeepSeek reached 80.95% E6 correct recall with 80.95% accepted precision, and Gemini reached 95.24% E6 correct recall with 80.00% accepted precision. The three models still accepted 4-5 of 77 non-correct candidates at E6. E6 ablations, current-98 coverage-contestation, and a 31-case hard-negative stress matrix show that prompt framing can strongly shift risk policy: in the stress matrix, coverage-contestation reduced repeated false accepts from 62/93 to 12/93, entirely through escalation rather than strict rejection. These results support a bounded software-engineering claim: in this controlled LLM patch-verifier study, evidence visibility should be treated as an experimental variable for risk control, not as proof of general autonomous correctness verification.
 
 ## 1. Introduction
 
@@ -20,7 +20,7 @@ The paper makes three contributions:
 
 - It defines EVP-8, a hidden-evaluator evidence-visibility protocol for measuring accept, reject, and escalation behavior in candidate patch verification.
 - It reports repaired Qwen, DeepSeek, and Gemini v0.3 label-conditioned results showing that visible executable and tool evidence can unlock correct-patch acceptance while introducing bounded false-accept risk.
-- It analyzes E6 rule-only, no-verdict, tool-contestation, and coverage-contestation conditions to separate deterministic tool evidence, verdict-like anchoring, safe handling, strict correction, and prompt-induced conservatism.
+- It analyzes E6 rule-only, no-verdict, tool-contestation, coverage-contestation, and hard-negative stress-test conditions to separate deterministic tool evidence, verdict-like anchoring, safe handling, strict correction, and prompt-induced conservatism.
 
 The claim is deliberately bounded. The results do not establish reliable autonomous patch correctness verification, nor do they show that LLM decisions consistently outperform deterministic baselines. They show that evidence visibility is a measurable experimental variable that should be controlled and reported in LLM patch-verifier studies.
 
@@ -70,7 +70,7 @@ Five selected models produced complete parse-valid decisions on an earlier froze
 
 ## 4. Experimental Design
 
-The experiment asks three research questions. RQ1 asks whether repaired accept-aware evidence changes Qwen, DeepSeek, and Gemini label-conditioned decisions across E0-E6. RQ2 asks whether verdict-like deterministic tool summaries anchor E6 decisions. RQ3 asks whether explicit tool- or coverage-contestation can challenge visible-test-only accept premises, and whether that challenge occurs through strict rejection, safe escalation, or over-conservative recall loss. The fresh realistic hard-negative branch is not treated as a main research question because it did not pass its predeclared source-acquisition gate; it is reported later as a boundary condition.
+The experiment asks three research questions. RQ1 asks whether repaired accept-aware evidence changes Qwen, DeepSeek, and Gemini label-conditioned decisions across E0-E6. RQ2 asks whether verdict-like deterministic tool summaries anchor E6 decisions. RQ3 asks whether explicit tool- or coverage-contestation can challenge visible-test-only accept premises, and whether that challenge occurs through strict rejection, safe escalation, or over-conservative recall loss. A later hard-negative stress matrix is reported as a supplemental stress test rather than a main research question because its third project comes from curated no-API stress-source variants, not a pure agent-generated realistic cohort.
 
 All metrics are computed after post-decision hidden-label join. The main metrics are accepted precision, correct recall, false accept rate, false reject rate, and escalation rate. Accepted precision measures the correctness of accepted patches. Correct recall measures how many correct patches were accepted. False accept rate measures how often non-correct candidates were accepted. Escalation rate measures routing to human review.
 
@@ -189,7 +189,29 @@ The current-98 coverage-contestation condition tested whether a stronger prompt 
 
 The result answers a narrow prompt-setting question. A model can be instructed to challenge coverage sufficiency and avoid visible-test-only acceptance on this frozen cohort, but the observed mechanism is mostly conservative triage rather than semantic discrimination. Therefore the paper should not claim that coverage-contestation improves autonomous verification. The supported claim is that prompt framing can move false-accept risk into reject/escalate outcomes while imposing a large correct-recall cost.
 
-### 5.5 E6 false accepts were concentrated in partial and regression negatives
+### 5.5 A hard-negative stress matrix reduced false accepts through escalation
+
+After the current-98 prompt-sensitivity result, we constructed a separated hard-negative stress cohort to test visible-pass/hidden-fail cases more directly. The cohort contains 31 hidden-failing candidates across PySnooper, cookiecutter, and scrapy. The visible-tool baseline accepted all 31 cases. Because the scrapy cases are curated no-API stress-source partial variants, this is a hard-negative stress-test supplement rather than a pure agent-generated realistic cohort.
+
+Across Qwen, DeepSeek, and Gemini, the current merge-gate prompt produced 62 repeated false accepts in 93 model-condition records. The coverage-contestation prompt reduced repeated false accepts to 12/93. The reduction came entirely through escalation: strict rejects remained 0 in both conditions.
+
+| condition | records | repeated false accepts | strict rejects | safe escalations | safe handling |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| current_merge_gate | 93 | 62 (66.67%) | 0 (0.00%) | 31 (33.33%) | 31 (33.33%) |
+| coverage_contestation | 93 | 12 (12.90%) | 0 (0.00%) | 81 (87.10%) | 81 (87.10%) |
+
+| condition | model | accept | reject | escalate | safe handling |
+| --- | --- | ---: | ---: | ---: | ---: |
+| current_merge_gate | deepseek/deepseek-v4-pro | 0 | 0 | 31 | 31 (100.00%) |
+| current_merge_gate | google/gemini-2.5-flash | 31 | 0 | 0 | 0 (0.00%) |
+| current_merge_gate | qwen/qwen3.7-max | 31 | 0 | 0 | 0 (0.00%) |
+| coverage_contestation | deepseek/deepseek-v4-pro | 0 | 0 | 31 | 31 (100.00%) |
+| coverage_contestation | google/gemini-2.5-flash | 0 | 0 | 31 | 31 (100.00%) |
+| coverage_contestation | qwen/qwen3.7-max | 12 | 0 | 19 | 19 (61.29%) |
+
+This stress result strengthens the risk-triage interpretation. It shows that the stronger prompt can route many visible-pass/hidden-fail candidates away from autonomous acceptance, including all Gemini stress cases and all DeepSeek stress cases. It does not show semantic correction, because no condition strictly rejected the hard negatives. Correct recall is also undefined in this all-negative cohort.
+
+### 5.6 E6 false accepts were concentrated in partial and regression negatives
 
 The most important failure mode is not the average E6 score but the remaining E6 false accepts among 77 non-correct candidates. Aggregate false-accept anatomy shows that Qwen and DeepSeek each accepted three partial fixes and one regression patch, while Gemini accepted four partial fixes and one regression patch. This breakdown supports the paper's risk framing: visible executable and tool evidence can unlock correct accepts, but summarized tool evidence can still miss semantic incompleteness and regression-safety failures. It remains aggregate anatomy, not a case-level project or rationale table.
 
@@ -201,10 +223,6 @@ The most important failure mode is not the average E6 score but the remaining E6
 
 A sanitized case-level analysis is now available for these model-specific false accepts. It records candidate id, project, task, negative type, E6 decision, no-verdict decision where available, and compressed rationale categories, but excludes raw response text, full rationale text, rendered prompts, patch diffs, and credentials. The case rows show repeated risk concentration in the same regression case and several youtube-dl partial fixes; they support failure anatomy, not a claim that the complete model rationale has been audited semantically.
 
-### 5.6 Realistic hard-negative acquisition remained a boundary
-
-The fresh realistic branch produced 26 visible-pass/hidden-fail cases across 2 projects. This missed the predeclared verifier-readiness gate of 30 cases across 3 projects. The branch is therefore reported as a source-acquisition boundary rather than a main verifier experiment.
-
 ## 6. Discussion
 
 The main implication is that LLM patch verification should be evaluated with explicit evidence boundaries. The same candidate patch may be treated differently when visible tests, regression checks, diagnostics, or deterministic tool summaries are introduced. Reporting only an aggregate accept/reject rate would hide this dependence.
@@ -213,11 +231,11 @@ The results also clarify the role of escalation. Escalation can be useful for so
 
 The strongest current contribution is methodological. EVP-8 provides a reproducible way to separate model-visible evidence from hidden evaluator labels, report accept/reject/escalate outcomes, and connect each claim to a validity gate. This is why the paper is framed as a controlled protocol and measurement study rather than as a new repair or verification algorithm.
 
-Several reviewer concerns remain bounded rather than eliminated. The cohort is small, Wilson intervals are wide, repaired Qwen, DeepSeek, and Gemini are the main model conditions, majority-vote cannot be computed from the current tracked summaries, and the realistic hard-negative branch did not pass the three-project readiness gate. Most importantly, the current paper-facing main result is three-model but still not broad-model. These are not hidden weaknesses; they are the boundary conditions under which the current claims are valid.
+Several reviewer concerns remain bounded rather than eliminated. The cohort is small, Wilson intervals are wide, repaired Qwen, DeepSeek, and Gemini are the main model conditions, majority-vote cannot be computed from the current tracked summaries, and the hard-negative stress matrix is a stress-test supplement rather than a pure realistic agent-patch cohort. Most importantly, the current paper-facing main result is three-model but still not broad-model. These are not hidden weaknesses; they are the boundary conditions under which the current claims are valid.
 
 ![Figure 3. Claim boundary and setting-validity map.](../figures/ccfc/ccfc_fig3_claim_boundary.png)
 
-**Figure 3. Claim boundary and setting-validity map.** Supported findings are bounded by leakage controls, protocol repairs, and remaining external-validity threats. The map separates supported claims from forbidden overclaims and shows why the realistic branch remains a boundary result.
+**Figure 3. Claim boundary and setting-validity map.** Supported findings are bounded by leakage controls, protocol repairs, and the stress matrix's triage-only interpretation. The map separates supported claims from forbidden overclaims and shows why the hard-negative stress matrix must be interpreted as bounded triage evidence.
 
 ## 7. Threats to Validity
 
@@ -225,13 +243,13 @@ Several reviewer concerns remain bounded rather than eliminated. The cohort is s
 
 **Construct validity.** The accept/reject/escalate decision space simplifies real review workflows. Escalation is a routing outcome, not proof of semantic rejection. Hidden evaluator labels are used only for post-decision analysis and should not be interpreted as model-visible truth.
 
-**External validity.** The main evidence comes from a 98-candidate EVP-8 cohort, an EVP-8-HARD controlled cohort, and selected model conditions. The repaired E0-E6 main result now covers Qwen, DeepSeek, and Gemini, but it is still not a broad-model result, and the realistic hard-negative branch did not pass its readiness gate. The results therefore support bounded evidence-conditioned risk behavior in a controlled patch-verifier study, not universal LLM patch-verifier reliability.
+**External validity.** The main evidence comes from a 98-candidate EVP-8 cohort, an EVP-8-HARD controlled cohort, a 31-case hard-negative stress matrix, and selected model conditions. The repaired E0-E6 main result now covers Qwen, DeepSeek, and Gemini, but it is still not a broad-model result. The hard-negative stress matrix reaches three projects, but the scrapy cases are curated no-API stress-source variants, so it should not be generalized as a pure agent-generated realistic cohort. The results therefore support bounded evidence-conditioned risk behavior in a controlled patch-verifier study, not universal LLM patch-verifier reliability.
 
 **Baseline validity.** Rule-only visible-tool is the completed deterministic baseline. Always-* and uniform-random policies are reference policies. Majority-vote and a separate deterministic E0/no-tool verifier remain unavailable under the current tracked-summary boundary.
 
 ## 8. Conclusion
 
-This paper introduces EVP-8 as a hidden-evaluator evidence-visibility protocol for candidate patch verification. The repaired Qwen, DeepSeek, and Gemini v0.3 results show that visible executable and tool evidence can unlock correct-patch acceptance while retaining false-accept risk and model-dependent caution. E6 ablations, tool-contestation, and coverage-contestation further show that verdict-like evidence and prompt framing can shape policy behavior, and that safer handling often occurs through escalation or conservative rejection rather than strict semantic correction. The contribution is a reproducible software-engineering protocol for measuring evidence-conditioned risk behavior in a controlled LLM patch-verifier study, not a claim of autonomous patch correctness verification.
+This paper introduces EVP-8 as a hidden-evaluator evidence-visibility protocol for candidate patch verification. The repaired Qwen, DeepSeek, and Gemini v0.3 results show that visible executable and tool evidence can unlock correct-patch acceptance while retaining false-accept risk and model-dependent caution. E6 ablations, tool-contestation, coverage-contestation, and the hard-negative stress matrix further show that verdict-like evidence and prompt framing can shape policy behavior, and that safer handling often occurs through escalation rather than strict semantic correction. The contribution is a reproducible software-engineering protocol for measuring evidence-conditioned risk behavior in a controlled LLM patch-verifier study, not a claim of autonomous patch correctness verification.
 
 The companion IEEEtran/BibTeX/page-budget draft package converts these citation keys into a draft reference file; final submission still requires BibTeX field normalization, PDF compilation, visual page-budget inspection, and double-blind checks.
 

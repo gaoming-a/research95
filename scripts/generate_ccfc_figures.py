@@ -320,7 +320,7 @@ def fig2_decision_patterns(claim_map: dict[str, Any]) -> None:
     notes = [
         ("Main evidence", "Qwen v0.3 label-conditioned metrics"),
         ("Ablation", "rule-only / E6-full / no-verdict"),
-        ("Boundary", "realistic gate is source acquisition"),
+        ("Stress test", "hard-negative matrix is triage only"),
     ]
     for idx, (head, body) in enumerate(notes):
         y = 0.82 - idx * 0.31
@@ -338,7 +338,7 @@ def claim_source_matrix(claims: list[dict[str, Any]]) -> tuple[list[str], np.nda
         "EVP-8\nprotocol",
         "accept-aware\nrepair",
         "no-verdict /\ncontestation",
-        "realistic\ngate",
+        "hard-negative\nstress",
         "validity\naudit",
     ]
     matrix = np.zeros((len(claims), len(sources)), dtype=float)
@@ -351,7 +351,7 @@ def claim_source_matrix(claims: list[dict[str, Any]]) -> tuple[list[str], np.nda
             matrix[idx, 1] = 1
         if "no_verdict" in evidence or "tool_contestation" in evidence or "EVP-8-HARD" in evidence:
             matrix[idx, 2] = 1
-        if "realistic" in evidence or claim_id == "C6":
+        if "stress_matrix" in evidence or "hard_negative" in evidence or claim_id == "C5":
             matrix[idx, 3] = 1
         matrix[idx, 4] = 1
     return sources, matrix
@@ -366,6 +366,7 @@ def fig3_claim_boundary(claim_map: dict[str, Any]) -> None:
     status_labels = {
         "supported": "supported",
         "supported_qwen_only": "Qwen only",
+        "supported_three_model": "three-model",
         "supported_qualified": "qualified",
         "supported_negative_boundary": "negative boundary",
     }
@@ -404,7 +405,7 @@ def fig3_claim_boundary(claim_map: dict[str, Any]) -> None:
         ("validity audit", "passed with bounded claims"),
         ("claim scope", "evidence-conditioned risk behavior"),
         ("tool-contestation", "risk triage, not strict correction"),
-        ("realistic gate", "26/30 cases; 2/3 projects"),
+        ("stress matrix", "62/93 to 12/93 by escalation"),
     ]
     for idx, (head, body) in enumerate(compact_checks):
         y = 0.86 - idx * 0.22
@@ -421,7 +422,7 @@ def fig3_claim_boundary(claim_map: dict[str, Any]) -> None:
         "reliable autonomous correctness verifier",
         "monotonic evidence-level correctness gain",
         "escalation equals strict correction",
-        "three-project realistic verifier readiness",
+        "stress matrix proves verifier readiness",
     ]
     for idx, item in enumerate(short_forbidden):
         y = 0.82 - idx * 0.21

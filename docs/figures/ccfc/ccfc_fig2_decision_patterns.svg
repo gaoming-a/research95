@@ -735,10 +735,10 @@ z
     <text style="font-size: 6px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: start; fill: #252a31" x="341.200129" y="263.187307" transform="rotate(-0 341.200129 263.187307)">rule-only / E6-full / no-verdict</text>
    </g>
    <g id="text_43">
-    <text style="font-weight: 700; font-size: 7px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: start" x="341.200129" y="284.869885" transform="rotate(-0 341.200129 284.869885)">Boundary</text>
+    <text style="font-weight: 700; font-size: 7px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: start" x="341.200129" y="284.915822" transform="rotate(-0 341.200129 284.915822)">Stress test</text>
    </g>
    <g id="text_44">
-    <text style="font-size: 6px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: start; fill: #252a31" x="341.200129" y="293.22361" transform="rotate(-0 341.200129 293.22361)">realistic gate is source acquisition</text>
+    <text style="font-size: 6px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: start; fill: #252a31" x="341.200129" y="293.22361" transform="rotate(-0 341.200129 293.22361)">hard-negative matrix is triage only</text>
    </g>
    <g id="text_45">
     <text style="font-weight: 700; font-size: 8.2px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: start" x="332.591797" y="200.370814" transform="rotate(-0 332.591797 200.370814)">Experiment logic boundary</text>

@@ -2,6 +2,141 @@
 
 最后更新：2026-07-06
 
+## 0.44 2026-07-06 CCF-C manuscript consistency update for hard-negative stress matrix
+
+本轮目标是把 0.42 hard-negative stress matrix 结果同步到 CCF-C stable
+manuscript 生成链，消除 APSEC 稿件与 CCF-C 稿件之间关于 realistic /
+hard-negative 分支的前后矛盾。该轮不运行 API，不读取 raw outputs，不修改
+prompt，只使用 tracked analysis：
+`data/reviews/evp8_realistic_hardneg_stress_matrix_analysis_v0_1.json`。
+
+执行边界：
+
+- 修改 `scripts/write_final_manuscript_claim_map.py`，避免手改
+  `docs/paper/ccfc_manuscript_rewrite_v0_1.md` 后被生成器覆盖；
+- 同步更新 `data/reviews/final_manuscript_claim_map_v0_1.json`、
+  `docs/paper/final_manuscript_claim_map_v0_1.md` 和 CCF-C manuscript；
+- 修改 `scripts/audit_ccfc_manuscript_v0_3.py`，把旧 gate-failed 叙述列为
+  forbidden wording，并新增 stress matrix boundary 检查；
+- 论文中必须写清楚：31-case stress matrix 覆盖 PySnooper /
+  cookiecutter / scrapy，但 scrapy cases 来自 curated no-API
+  stress-source partial variants，因此它是 hard-negative stress-test
+  supplement，不是纯 agent-generated realistic cohort；
+- 论文中必须写清楚：coverage-contestation 将 repeated false accepts 从
+  62/93 降到 12/93，机制是 escalation；strict reject 为 0，correct recall
+  在全负例 stress cohort 上 undefined；
+- 本轮不得把 stress matrix 写成 autonomous correctness verification 或
+  strict semantic correction。
+
+本轮验收条件：
+
+- CCF-C manuscript、claim map 和 reviewer audit 均由脚本重新生成；
+- CCF-C manuscript 不再出现旧的 “failed three-project readiness gate /
+  source-acquisition negative result” 作为当前结论；
+- APSEC 与 CCF-C 两套稿件的 stress matrix 口径一致；
+- 最小验证、敏感信息扫描、stale wording 扫描通过；
+- README/INDEX/current state/engineering notes 同步更新；
+- 提交并同步 GitHub。
+
+执行结果：
+
+- 更新 CCF-C claim-map / manuscript 生成器：
+  `scripts/write_final_manuscript_claim_map.py`；
+- 生成器现在读取
+  `data/reviews/evp8_realistic_hardneg_stress_matrix_analysis_v0_1.json`，
+  并把 C5 改为 hard-negative stress matrix bounded-triage claim；
+- 重新生成：
+  - `data/reviews/final_manuscript_claim_map_v0_1.json`；
+  - `docs/paper/final_manuscript_claim_map_v0_1.md`；
+  - `docs/paper/ccfc_manuscript_rewrite_v0_1.md`；
+- CCF-C 正文已从四个 RQ 收束为 RQ1--RQ3，31-case stress matrix 作为
+  supplemental stress test 写入 Results 5.4；
+- CCF-C 正文明确：
+  - visible-tool baseline 接受 31/31 stress cases；
+  - current merge-gate 为 62/93 repeated false accepts；
+  - coverage-contestation 降为 12/93 repeated false accepts；
+  - strict reject 为 0，因此只支持 conservative triage / false-accept
+    reduction；
+  - correct recall 在全负例 stress cohort 上 undefined；
+  - scrapy cases 是 curated no-API stress-source partial variants，不是
+    pure agent-generated realistic cohort；
+- 更新 CCF-C 图生成器：`scripts/generate_ccfc_figures.py`；
+- 重画 CCF-C Fig. 2--3 和 source data，移除旧的
+  `realistic gate is source acquisition` /
+  `three-project realistic verifier readiness` 文案；
+- 更新 CCF-C reviewer audit：
+  `scripts/audit_ccfc_manuscript_v0_3.py`，把旧 gate-failed 当前结论列为
+  forbidden wording，并新增 stress matrix boundary 检查；
+- 重新生成并通过：
+  `data/reviews/ccfc_manuscript_v0_3_reviewer_audit.json` 和
+  `docs/paper/ccfc_manuscript_v0_3_reviewer_audit.md`；
+- APSEC stress matrix 表格顺序已调整为 current merge-gate 在前、
+  coverage-contestation 在后；
+- APSEC 与 CCF-C active manuscript / claim map / CCF-C figures 的旧 gate
+  wording scan 已通过；
+- README、INDEX、current project state 和 engineering notes 已同步；
+- 本轮没有调用 API，没有读取 raw outputs，没有读取 prompt text 或 patch text。
+
+## 0.43 2026-07-06 APSEC manuscript integration for hard-negative stress matrix
+
+本轮目标是把 0.42 已完成的 hard-negative stress matrix 结果写回 APSEC
+technical-track manuscript 主线，并修复旧稿中“realistic hard-negative branch
+仍未过 gate”的前后矛盾。该轮不运行新 API、不读取 raw outputs，只使用 tracked
+analysis：`data/reviews/evp8_realistic_hardneg_stress_matrix_analysis_v0_1.json`。
+
+执行边界：
+
+- 不新增实验，不改 prompt，不重跑模型；
+- 修改生成脚本 `scripts/write_apsec_manuscript_rewrite.py`，避免手改 Markdown 后被
+  生成链路覆盖；
+- 同步修改 `scripts/audit_apsec_manuscript_rewrite.py`，把审计规则从旧的
+  `source-acquisition boundary` 更新为 stress-test supplement boundary；
+- 论文中必须写清楚：31-case stress matrix 是 hard-negative stress-test
+  supplement，不是纯 agent-generated realistic cohort；
+- 论文中必须写清楚：coverage-contestation 把 false accept 转成 escalation，
+  strict reject 仍为 0，因此支持 conservative triage / false-accept reduction，
+  不支持 strict correction 或 autonomous correctness verification；
+- 如果审计发现旧 gate-failed 文案残留，必须先修稿，不得提交。
+
+本轮验收条件：
+
+- APSEC Markdown 由脚本重新生成；
+- 新增/更新 stress matrix 结果段、讨论、威胁和结论；
+- APSEC manuscript audit 通过；
+- README/INDEX/current state/engineering notes 如有入口变化则同步；
+- 运行最小验证，提交并同步 GitHub。
+
+执行结果：
+
+- 更新 APSEC Markdown 生成脚本：
+  `scripts/write_apsec_manuscript_rewrite.py`；
+- 脚本现在读取
+  `data/reviews/evp8_realistic_hardneg_stress_matrix_analysis_v0_1.json`，
+  并在 APSEC 稿件中加入 31-case hard-negative stress matrix；
+- 重新生成 `docs/paper/apsec_technical_track_rewrite_v0_1.md`；
+- APSEC Abstract、贡献、实验设计、Results、Discussion、Threats 和 Conclusion
+  均已同步 stress matrix 结果；
+- 旧的 “realistic hard-negative branch did not pass readiness gate /
+  source-acquisition boundary” 叙述已从 APSEC 稿件中移除；
+- 新增 Results 5.5：
+  `A hard-negative stress matrix reduced false accepts through escalation`；
+- 新稿明确：
+  - 31 cases 覆盖 PySnooper / cookiecutter / scrapy；
+  - visible-tool baseline 接受 31/31 hidden-fail cases；
+  - current merge-gate 为 62/93 repeated false accepts；
+  - coverage-contestation 降为 12/93 repeated false accepts；
+  - strict reject 仍为 0，因此只支持 conservative triage / false-accept
+    reduction，不支持 strict correction；
+  - scrapy cases 来自 curated no-API stress-source partial variants，不能写成
+    pure agent-generated realistic cohort；
+- 更新 APSEC audit：
+  `scripts/audit_apsec_manuscript_rewrite.py`、
+  `data/reviews/apsec_manuscript_rewrite_audit_v0_1.json` 和
+  `docs/paper/apsec_manuscript_rewrite_audit_v0_1.md`；
+- APSEC manuscript rewrite audit 已通过；
+- 本轮没有调用 API，没有读取 raw outputs，没有读取 prompt text 或 patch text；
+- 尚未重生成 APSEC IEEEtran/BibTeX/page-budget/PDF 包；这是下一步排版同步任务。
+
 ## 0.41 2026-07-06 主线 B 后续：31-case verifier matrix no-API preflight
 
 本轮目标是在 31-case hard-negative stress cohort 和 rule-only headroom 已完成后，

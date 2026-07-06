@@ -50,6 +50,13 @@
   hidden-fail cases across 3/3 projects, with `ready_for_verifier_api=true`.
   This does not make the branch a pure agent-generated realistic cohort; future
   verifier matrix results must be labeled as hard-negative stress-test evidence.
+  The 31-case hard-negative stress matrix is now executed and integrated into
+  both APSEC and CCF-C manuscript chains as bounded triage evidence:
+  coverage-contestation reduces repeated false accepts from 62/93 to 12/93,
+  strict rejects remain 0, and correct recall is undefined on the all-negative
+  cohort. CCF-C Fig. 2--3 and `final_manuscript_claim_map_v0_1` have been
+  regenerated so current paper-facing artifacts no longer describe the old
+  realistic branch as a failed three-project gate.
   The old no-API Luigi source-acquisition/materialization path is a historical
   dead end, not the current blocker. Historical `origin/main`
   entries retained later in plan logs are audit records only. As of
@@ -206,6 +213,17 @@
   parse-valid. `coverage_contestation` reduces repeated false accepts from
   62/93 to 12/93, but all improvements are safe escalations, not strict
   rejects. Correct recall is undefined because the cohort is all hard-negative.
+- `paper/apsec_technical_track_rewrite_v0_1.md`: APSEC technical-track
+  Markdown rewrite. It now incorporates the 31-case hard-negative stress matrix
+  as bounded stress-test evidence and no longer describes the realistic
+  hard-negative branch as failing the verifier-readiness gate.
+- `../scripts/write_apsec_manuscript_rewrite.py`: APSEC Markdown generator.
+  It reads the tracked stress matrix analysis and writes the updated abstract,
+  results, discussion, threats, and conclusion sections.
+- `../scripts/audit_apsec_manuscript_rewrite.py`: APSEC Markdown audit. It now
+  checks the stress matrix result and boundary: 62/93 to 12/93 repeated false
+  accepts, zero strict rejects, curated no-API stress-source boundary, and no
+  autonomous-verification overclaim.
 - `../scripts/audit_evp8_realistic_hardneg_source_probe.py`: raw-free audit
   for curated no-API hard-negative source probes. It records aggregate counts
   and validation/visible-test consistency without storing patch text, prompt

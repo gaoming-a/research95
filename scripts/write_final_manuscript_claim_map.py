@@ -20,6 +20,7 @@ FIVE_MODEL_SYNTHESIS = REPO_ROOT / "data" / "protocols" / "evp8_five_model_synth
 NO_VERDICT_COMPARISON = REPO_ROOT / "data" / "reviews" / "evp8_e6_no_verdict_ablation_comparison.json"
 HARD_TOOL_CONTESTATION = REPO_ROOT / "data" / "protocols" / "evp8_hard_tool_contestation_result_audit_v0_1.json"
 REALISTIC_GATE = REPO_ROOT / "data" / "protocols" / "evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json"
+STRESS_MATRIX_ANALYSIS = REPO_ROOT / "data" / "reviews" / "evp8_realistic_hardneg_stress_matrix_analysis_v0_1.json"
 QWEN_LABEL_CONDITIONED = REPO_ROOT / "data" / "reviews" / "evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json"
 DEEPSEEK_LABEL_CONDITIONED = REPO_ROOT / "data" / "reviews" / "evp8_deepseek_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json"
 GEMINI_LABEL_CONDITIONED = REPO_ROOT / "data" / "reviews" / "evp8_gemini_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json"
@@ -385,12 +386,32 @@ def e6_ablation_metric_rows(no_verdict: dict[str, Any]) -> list[dict[str, Any]]:
     return rows
 
 
+def stress_matrix_aggregate_rows(stress: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    by_condition = stress.get("aggregate_by_condition") or {}
+    for condition in ("current_merge_gate", "coverage_contestation"):
+        metrics = by_condition.get(condition) or {}
+        rows.append({"condition": condition, **metrics})
+    return rows
+
+
+def stress_matrix_model_rows(stress: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    by_condition = stress.get("per_condition_model") or {}
+    for condition in ("current_merge_gate", "coverage_contestation"):
+        by_model = by_condition.get(condition) or {}
+        for model, model_data in sorted(by_model.items()):
+            rows.append({"condition": condition, "model": model, **(model_data.get("metrics") or {})})
+    return rows
+
+
 def build_claim_map() -> dict[str, Any]:
     validity = read_json(VALIDITY_AUDIT)
     five = read_json(FIVE_MODEL_SYNTHESIS)
     no_verdict = read_json(NO_VERDICT_COMPARISON)
     hard = read_json(HARD_TOOL_CONTESTATION)
     realistic = read_json(REALISTIC_GATE)
+    stress = read_json(STRESS_MATRIX_ANALYSIS)
     qwen_label = read_json(QWEN_LABEL_CONDITIONED)
     deepseek_label = read_json(DEEPSEEK_LABEL_CONDITIONED)
     gemini_label = read_json(GEMINI_LABEL_CONDITIONED)
@@ -407,7 +428,7 @@ def build_claim_map() -> dict[str, Any]:
         "In candidate patch verification, we show that a hidden-evaluator evidence-visibility "
         "protocol can measure evidence-conditioned LLM merge-gate behavior, supported by the "
         "accept-aware Qwen/DeepSeek/Gemini v0.3 label-conditioned analyses, E6 rule-only/no-verdict ablations, "
-        "tool-contestation audits, and a realistic source-acquisition gate audit."
+        "tool-contestation audits, and a 31-case hard-negative stress matrix."
     )
 
     terminology = [
@@ -492,12 +513,12 @@ def build_claim_map() -> dict[str, Any]:
         },
         {
             "id": "C5",
-            "claim": "The fresh realistic hard-negative branch is a source-acquisition negative result, not a verifier-ready main experiment.",
-            "status": "supported_negative_boundary",
-            "evidence": ["realistic_hardneg_generation_gate"],
-            "paper_location": "Threats/Discussion: Realistic hard-negative acquisition",
-            "allowed_wording": "The branch yielded a two-project hard-negative opportunity set but failed the three-project readiness gate.",
-            "boundary": "Do not use it as three-project verifier evidence.",
+            "claim": "On a 31-case hard-negative stress matrix, coverage-contestation reduced repeated false accepts mainly by escalating rather than strictly rejecting hidden-failing patches.",
+            "status": "supported_qualified",
+            "evidence": ["evp8_realistic_hardneg_stress_matrix_analysis_v0_1"],
+            "paper_location": "Results/Discussion: Hard-negative stress matrix",
+            "allowed_wording": "Coverage-contestation reduced repeated false accepts from 62/93 to 12/93 on an all-negative stress cohort, entirely through escalation because strict rejects remained zero.",
+            "boundary": "Stress-test supplement only; correct recall is undefined and the scrapy cases are curated no-API stress-source variants, not a pure agent-generated realistic cohort.",
         },
     ]
 
@@ -519,7 +540,7 @@ def build_claim_map() -> dict[str, Any]:
         {
             "id": "Fig. 3",
             "title": "Claim boundary and setting-validity map",
-            "conclusion": "Supported findings are bounded by leakage controls, protocol repairs, and remaining external-validity threats.",
+            "conclusion": "Supported findings are bounded by leakage controls, protocol repairs, and the stress matrix's triage-only interpretation.",
             "panels": ["supported claims vs evidence sources", "controlled artifacts vs remaining threats"],
             "status": "planned_requires_backend",
         },
@@ -537,7 +558,13 @@ def build_claim_map() -> dict[str, Any]:
         check("five_model_synthesis_passed", five.get("later_model_audit_status") == "passed", five.get("later_model_audit_status")),
         check("no_verdict_comparison_checks_present", len(no_verdict.get("checks", [])) >= 1, len(no_verdict.get("checks", []))),
         check("hard_tool_contestation_audit_passed", hard.get("audit_status") == "passed", hard.get("audit_status")),
-        check("realistic_gate_not_verifier_ready", hard_gate.get("passed") is False, hard_gate),
+        check("hard_negative_stress_matrix_passed", stress.get("status") == "passed", stress.get("status")),
+        check("hard_negative_stress_matrix_31_cases", stress.get("candidate_count") == 31, stress.get("candidate_count")),
+        check(
+            "hard_negative_stress_matrix_all_negative_boundary",
+            "all 31" in str(stress.get("hidden_label_boundary")).lower(),
+            stress.get("hidden_label_boundary"),
+        ),
         check("qwen_label_conditioned_checks_passed", all(item.get("passed") for item in qwen_label.get("checks", [])), len(qwen_label.get("checks", []))),
         check("deepseek_label_conditioned_checks_passed", all(item.get("passed") for item in deepseek_label.get("checks", [])), len(deepseek_label.get("checks", []))),
         check("gemini_label_conditioned_checks_passed", all(item.get("passed") for item in gemini_label.get("checks", [])), len(gemini_label.get("checks", []))),
@@ -564,6 +591,7 @@ def build_claim_map() -> dict[str, Any]:
             "no_verdict_comparison": "data/reviews/evp8_e6_no_verdict_ablation_comparison.json",
             "hard_tool_contestation": "data/protocols/evp8_hard_tool_contestation_result_audit_v0_1.json",
             "realistic_gate": "data/protocols/evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json",
+            "hard_negative_stress_matrix": "data/reviews/evp8_realistic_hardneg_stress_matrix_analysis_v0_1.json",
             "qwen_label_conditioned": "data/reviews/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json",
             "deepseek_label_conditioned": "data/reviews/evp8_deepseek_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json",
             "gemini_label_conditioned": "data/reviews/evp8_gemini_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json",
@@ -589,6 +617,17 @@ def build_claim_map() -> dict[str, Any]:
         "baseline_feasibility_boundary": baseline_feasibility.get("claim_boundary") or {},
         "phase_a_uncertainty_summary": uncertainty_rows(phase_a),
         "tool_contestation_uncertainty_summary": tool_contestation_ci_rows(hard),
+        "hard_negative_stress_matrix_summary": {
+            "cohort_id": stress.get("cohort_id"),
+            "candidate_count": stress.get("candidate_count"),
+            "model_ids": stress.get("model_ids") or [],
+            "condition_ids": stress.get("condition_ids") or [],
+            "claim_boundary": stress.get("claim_boundary"),
+            "hidden_label_boundary": stress.get("hidden_label_boundary"),
+            "aggregate_by_condition": stress.get("aggregate_by_condition") or {},
+        },
+        "hard_negative_stress_matrix_aggregate_rows": stress_matrix_aggregate_rows(stress),
+        "hard_negative_stress_matrix_model_rows": stress_matrix_model_rows(stress),
         "phase_a_confidence_intervals": phase_a.get("confidence_intervals") or {},
         "phase_a_boundary": phase_a.get("claim_boundary") or {},
         "hard_tool_contestation_summary": {
@@ -735,6 +774,25 @@ def write_claim_markdown(path: Path, claim_map: dict[str, Any]) -> None:
             f"| {row['model']} | {row['candidate_count']} | {ci_percent(row['safe_handling_ci'])} | "
             f"{ci_percent(row['strict_correction_ci'])} | {ci_percent(row['repeated_accept_ci'])} |"
         )
+    lines += [
+        "",
+        "## Hard-Negative Stress Matrix",
+        "",
+        f"- cohort: `{claim_map['hard_negative_stress_matrix_summary']['cohort_id']}`",
+        f"- candidates: `{claim_map['hard_negative_stress_matrix_summary']['candidate_count']}`",
+        f"- boundary: {claim_map['hard_negative_stress_matrix_summary']['claim_boundary']}",
+        "",
+        "| condition | records | repeated false accepts | strict rejects | safe escalations | safe handling |",
+        "| --- | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for row in claim_map["hard_negative_stress_matrix_aggregate_rows"]:
+        lines.append(
+            f"| {row['condition']} | {row.get('record_count', 0)} | "
+            f"{row.get('repeated_false_accept_count', 0)} ({percent(row.get('repeated_false_accept_rate'))}) | "
+            f"{row.get('strict_reject_count', 0)} ({percent(row.get('strict_reject_rate'))}) | "
+            f"{row.get('safe_escalation_count', 0)} ({percent(row.get('safe_escalation_rate'))}) | "
+            f"{row.get('safe_handling_count', 0)} ({percent(row.get('safe_handling_rate'))}) |"
+        )
     lines += ["", "## Forbidden Claims", ""]
     for claim in claim_map["forbidden_claims"]:
         lines.append(f"- {claim}")
@@ -767,7 +825,6 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         f"{level}: " + ", ".join(f"{decision}={count}" for decision, count in counts.items())
         for level, counts in totals.items()
     )
-    realistic = claim_map["realistic_gate_summary"]
     deepseek_opp = claim_map["hard_tool_contestation_summary"]["deepseek_opportunity"] or {}
     qwen_opp = claim_map["hard_tool_contestation_summary"]["qwen_opportunity"] or {}
     figures_generated = all(figure["status"] == "generated_python" for figure in claim_map["figure_plan"])
@@ -842,6 +899,28 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
             f"| {row['model']} | {row['candidate_count']} | {ci_percent(row['safe_handling_ci'])} | "
             f"{ci_percent(row['strict_correction_ci'])} | {ci_percent(row['repeated_accept_ci'])} |"
         )
+    stress_matrix_table_lines = [
+        "| condition | records | repeated false accepts | strict rejects | safe escalations | safe handling |",
+        "| --- | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for row in claim_map["hard_negative_stress_matrix_aggregate_rows"]:
+        stress_matrix_table_lines.append(
+            f"| {row['condition']} | {row.get('record_count', 0)} | "
+            f"{row.get('repeated_false_accept_count', 0)} ({percent(row.get('repeated_false_accept_rate'))}) | "
+            f"{row.get('strict_reject_count', 0)} ({percent(row.get('strict_reject_rate'))}) | "
+            f"{row.get('safe_escalation_count', 0)} ({percent(row.get('safe_escalation_rate'))}) | "
+            f"{row.get('safe_handling_count', 0)} ({percent(row.get('safe_handling_rate'))}) |"
+        )
+    stress_matrix_model_table_lines = [
+        "| condition | model | repeated false accepts | strict rejects | safe escalations | safe handling |",
+        "| --- | --- | ---: | ---: | ---: | ---: |",
+    ]
+    for row in claim_map["hard_negative_stress_matrix_model_rows"]:
+        stress_matrix_model_table_lines.append(
+            f"| {row['condition']} | {row['model']} | {row.get('repeated_false_accept_count', 0)} | "
+            f"{row.get('strict_reject_count', 0)} | {row.get('safe_escalation_count', 0)} | "
+            f"{row.get('safe_handling_count', 0)} ({percent(row.get('safe_handling_rate'))}) |"
+        )
     lines = [
         "# Evidence Visibility Shapes Risk Behavior in LLM-Based Candidate Patch Verification",
         "",
@@ -849,7 +928,7 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "## Abstract",
         "",
-        "Large language models (LLMs) are increasingly used to inspect software patches, but a merge decision is only meaningful relative to the evidence available at review time. We formulate candidate patch verification as an evidence-conditioned merge-gate task: given a candidate patch and model-visible evidence, a verifier must accept, reject, or escalate while evaluator-only correctness labels remain hidden until post-decision analysis. We introduce the Evidence-Visibility Protocol (EVP-8), a frozen 98-candidate packet set with seven cumulative evidence levels and tracked hidden-evaluator joins. In three repaired v0.3 runs, Qwen and Gemini reached 95.24% E6 correct recall while DeepSeek reached 80.95%; accepted precision was 83.33% for Qwen, 80.95% for DeepSeek, and 80.00% for Gemini, with 4-5 false accepts among 77 non-correct candidates. E6 rule-only and no-verdict ablations further show that verdict-like tool summaries can anchor behavior, and tool-contestation shifts known false accepts mainly to escalation, not strict rejection. These results support a bounded methodological contribution: evidence visibility should be controlled and reported when evaluating LLM patch verifiers. They do not establish reliable autonomous patch correctness verification.",
+        "Large language models (LLMs) are increasingly used to inspect software patches, but a merge decision is only meaningful relative to the evidence available at review time. We formulate candidate patch verification as an evidence-conditioned merge-gate task: given a candidate patch and model-visible evidence, a verifier must accept, reject, or escalate while evaluator-only correctness labels remain hidden until post-decision analysis. We introduce the Evidence-Visibility Protocol (EVP-8), a frozen 98-candidate packet set with seven cumulative evidence levels and tracked hidden-evaluator joins. In three repaired v0.3 runs, Qwen and Gemini reached 95.24% E6 correct recall while DeepSeek reached 80.95%; accepted precision was 83.33% for Qwen, 80.95% for DeepSeek, and 80.00% for Gemini, with 4-5 false accepts among 77 non-correct candidates. E6 rule-only and no-verdict ablations show that verdict-like tool summaries can anchor behavior. Tool-contestation and a 31-case hard-negative stress matrix further show that safer handling often comes from escalation rather than strict rejection: in the stress matrix, coverage-contestation reduced repeated false accepts from 62/93 to 12/93 while strict rejects remained zero. These results support a bounded methodological contribution: evidence visibility should be controlled and reported when evaluating LLM patch verifiers. They do not establish reliable autonomous patch correctness verification.",
         "",
         "## 1. Introduction",
         "",
@@ -887,11 +966,11 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "## 4. Methods: Data, Metrics, and Validity Gates",
         "",
-        "The study is organized around four research questions. RQ1 asks whether repaired accept-aware evidence changes label-conditioned Qwen, DeepSeek, and Gemini decisions across E0-E6. RQ2 asks whether verdict-like deterministic tool summaries anchor E6 behavior. RQ3 asks whether explicit tool-contestation can make models challenge visible-test-only accept premises. RQ4 asks whether a fresh realistic hard-negative source-acquisition branch is ready to support a main verifier experiment.",
+        "The study is organized around three research questions. RQ1 asks whether repaired accept-aware evidence changes label-conditioned Qwen, DeepSeek, and Gemini decisions across E0-E6. RQ2 asks whether verdict-like deterministic tool summaries anchor E6 behavior. RQ3 asks whether explicit tool- or coverage-contestation can make models challenge visible-test-only accept premises, and whether that challenge appears as strict rejection, safe escalation, or over-conservative recall loss. A later 31-case hard-negative stress matrix is reported as a supplemental stress test rather than a fourth main research question.",
         "",
-        "The evaluated evidence sources match those questions. First, the accept-aware Qwen, DeepSeek, and Gemini v0.3 analyses compute label-conditioned accepted precision, correct recall, false accept rate, false reject rate, and escalation rate after post-execution label join. Second, E6 full, rule-only, and E6 no-verdict comparisons test the effect of verdict-like tool fields. Third, EVP-8-HARD tool-contestation evaluates known false-accept opportunities. Fourth, the realistic hard-negative branch is treated as a source-acquisition gate rather than a main verifier result because it failed the predeclared three-project readiness threshold.",
+        "The evaluated evidence sources match those questions. First, the accept-aware Qwen, DeepSeek, and Gemini v0.3 analyses compute label-conditioned accepted precision, correct recall, false accept rate, false reject rate, and escalation rate after post-execution label join. Second, E6 full, rule-only, and E6 no-verdict comparisons test the effect of verdict-like tool fields. Third, EVP-8-HARD tool-contestation and the hard-negative stress matrix evaluate whether risky visible-test-only accept premises can be routed away from autonomous acceptance. The stress matrix covers 31 hidden-failing candidates across PySnooper, cookiecutter, and scrapy; however, the scrapy cases are curated no-API stress-source partial variants, so the stress matrix is a bounded stress-test supplement rather than a pure agent-generated realistic cohort.",
         "",
-        "All paper-facing claims are constrained by a final setting-validity audit. That audit verifies run and parse coverage, raw-output-free summaries, post-execution label joins, prompt-boundary checks, and the non-overclaiming of the realistic hard-negative branch. It passed only with bounded claims: the results are usable as real evidence for evidence-conditioned risk behavior, not as proof of autonomous correctness verification. Reference policies calculated from aggregate labels are therefore reported only as decision-space boundaries, while candidate-level baselines that require aligned decisions, such as majority voting, are not reported as completed results.",
+        "All paper-facing claims are constrained by a final setting-validity audit and by the stress-matrix claim boundary. The audits verify run and parse coverage, raw-output-free summaries, post-execution label joins, prompt-boundary checks, and the non-overclaiming of escalation as correction. They passed only with bounded claims: the results are usable as real evidence for evidence-conditioned risk behavior, not as proof of autonomous correctness verification. Reference policies calculated from aggregate labels are therefore reported only as decision-space boundaries, while candidate-level baselines that require aligned decisions, such as majority voting, are not reported as completed results.",
         "",
         "The baseline policy boundary is explicit. Always-escalate, always-reject, and always-accept are deterministic reference policies calculated from aggregate label totals; they orient the decision space but are not successful verifier results. Uniform random three-way is reported only as an expected reference policy over accept, reject, and escalate, not as a stochastic experiment. The completed deterministic baseline is the rule-only visible-tool policy. Majority voting across models and a separate E0/no-tool deterministic verifier require candidate-level aligned audits and are not reported as completed baselines.",
         "",
@@ -937,9 +1016,15 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         *tool_contestation_ci_table_lines,
         "",
-        "### 5.4 RQ4: Realistic hard-negative acquisition remained a boundary",
+        "### 5.4 Hard-negative stress matrix reduced false accepts through escalation",
         "",
-        f"The fresh realistic branch produced {realistic.get('visible_pass_hidden_fail_count')} visible-pass/hidden-fail cases, below the predeclared target of {realistic.get('minimum_count')}, and covered {len(realistic.get('visible_pass_hidden_fail_projects') or [])} projects rather than the required {realistic.get('minimum_projects')}. It is therefore a source-acquisition and gate-readiness negative result, not a verifier-ready main experiment.",
+        "The hard-negative stress matrix tests an all-negative opportunity set in which visible evidence can look mergeable while hidden oracles fail. The visible-tool baseline accepted all 31 stress cases. Across Qwen, DeepSeek, and Gemini under the current merge-gate prompt, this produced 62 repeated false accepts in 93 model-condition records. The coverage-contestation prompt reduced repeated false accepts to 12/93.",
+        "",
+        *stress_matrix_table_lines,
+        "",
+        *stress_matrix_model_table_lines,
+        "",
+        "The mechanism is important. Strict rejects remained 0 in both conditions, so the improvement is not semantic correction of wrong patches. It is conservative triage: the stronger prompt routed more hidden-failing candidates to escalation. Correct recall is also undefined in this all-negative cohort. The stress matrix therefore strengthens the false-accept-risk story, but only as bounded triage evidence.",
         "",
         "## 6. Discussion",
         "",
@@ -947,15 +1032,15 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "The strongest contribution is methodological rather than algorithmic. EVP-8 makes evidence visibility explicit, separates model-visible information from evaluator-only labels, and forces each result to state whether it measures acceptance, false acceptance, strict rejection, or escalation.",
         "",
-        "The most important rival explanation is that the observed behavior is a setup artifact. The final setting-validity audit reduces this risk but does not erase all limitations. It shows that run coverage, parse validity, post-execution label joins, prompt-boundary checks, and claim boundaries are in place. It also identifies remaining threats: cohort diversity is limited, prompt formatting can influence behavior, and the realistic three-project hard-negative gate remains blocked.",
+        "The most important rival explanation is that the observed behavior is a setup artifact. The final setting-validity audit reduces this risk but does not erase all limitations. It shows that run coverage, parse validity, post-execution label joins, prompt-boundary checks, and claim boundaries are in place. The stress matrix adds a harder false-accept setting, but it also confirms a conservative-routing interpretation: coverage-contestation reduced repeated false accepts by increasing escalation, not by producing strict semantic rejection.",
         "",
-        "The realistic hard-negative branch should be read as a boundary result. It demonstrates that constructing fresh visible-pass/hidden-fail cases is feasible but not yet ready as a main verifier experiment because the predeclared three-project gate failed. This negative result is valuable for reproducibility and source-acquisition planning, but it should not be used to strengthen the verifier claim.",
+        "The hard-negative stress matrix should be read as a stress-test supplement rather than a pure realistic agent-patch cohort. It reaches three projects, but the scrapy cases are curated no-API stress-source partial variants. This makes the result useful for testing false-accept handling under visible-test-only pressure, but not sufficient for broad claims about realistic patch generation or autonomous verifier readiness.",
         "",
         "The paper should therefore avoid a stronger interpretation. It does not show that LLMs reliably verify patch correctness. It shows that evidence visibility shapes risk behavior in candidate patch verification and that some apparent improvements are better understood as conservative routing rather than correctness proof.",
         "",
         "![Figure 3. Claim boundary and setting-validity map.](../figures/ccfc/ccfc_fig3_claim_boundary.png)",
         "",
-        f"**Figure 3. {fig3['title']}.** {fig3['conclusion']} The map connects each supported claim to tracked aggregate evidence, separates passed validity gates from the blocked realistic gate, and lists overclaims that the manuscript must not make. Source assets: `docs/figures/ccfc/ccfc_fig3_claim_boundary.pdf`, `.svg`, and `.png`.",
+        f"**Figure 3. {fig3['title']}.** {fig3['conclusion']} The map connects each supported claim to tracked aggregate evidence, separates passed validity gates from stress-matrix boundaries, and lists overclaims that the manuscript must not make. Source assets: `docs/figures/ccfc/ccfc_fig3_claim_boundary.pdf`, `.svg`, and `.png`.",
         "",
         "## 7. Threats to Validity",
         "",
@@ -963,11 +1048,11 @@ def write_manuscript_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "Construct validity is limited by the accept/reject/escalate decision space and by the evaluator label boundary. The oracle problem means that hidden labels should be treated as post-decision evaluation evidence, not as model-visible truth [barr_tse_2015_oracle_problem]. Escalation is useful as a human-review routing decision, but it is not strict correction. The manuscript therefore separates strict correction from safe handling.",
         "",
-        "External validity is bounded by the EVP-8 candidate set, the EVP-8-HARD controlled cohort, and the selected models. The repaired main result now spans Qwen, DeepSeek, and Gemini, but it is still not a broad-model result. The realistic hard-negative branch provides useful source-acquisition evidence but did not pass the three-project verifier-readiness gate. We therefore report it as a negative boundary rather than as main verifier evidence.",
+        "External validity is bounded by the EVP-8 candidate set, the EVP-8-HARD controlled cohort, the 31-case hard-negative stress matrix, and the selected models. The repaired main result now spans Qwen, DeepSeek, and Gemini, but it is still not a broad-model result. The hard-negative stress matrix reaches three projects, but the scrapy cases are curated no-API stress-source variants, so it should not be generalized as a pure agent-generated realistic cohort. We therefore report it as bounded triage evidence rather than as main proof of verifier readiness.",
         "",
         "## 8. Conclusion",
         "",
-        "This study introduces EVP-8 as a hidden-evaluator protocol for measuring evidence-conditioned LLM patch-verification behavior. The supported results come from repaired Qwen, DeepSeek, and Gemini label-conditioned analyses, E6 rule-only/no-verdict ablations, and tool-contestation audits. The practical value is risk triage under explicit evidence boundaries, not reliable autonomous patch correctness verification. A stable CCF-C manuscript should therefore present the work as a bounded methods-and-measurement contribution with transparent metrics, baselines, excluded settings, and threat boundaries.",
+        "This study introduces EVP-8 as a hidden-evaluator protocol for measuring evidence-conditioned LLM patch-verification behavior. The supported results come from repaired Qwen, DeepSeek, and Gemini label-conditioned analyses, E6 rule-only/no-verdict ablations, tool-contestation audits, and a 31-case hard-negative stress matrix. The practical value is risk triage under explicit evidence boundaries, not reliable autonomous patch correctness verification. A stable CCF-C manuscript should therefore present the work as a bounded methods-and-measurement contribution with transparent metrics, baselines, stress-test boundaries, and threat boundaries.",
         "",
         "## Reference Support Records",
         "",

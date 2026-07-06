@@ -7,7 +7,7 @@ Date: 2026-07-04
 
 ## One-Sentence Argument
 
-In candidate patch verification, we show that a hidden-evaluator evidence-visibility protocol can measure evidence-conditioned LLM merge-gate behavior, supported by the accept-aware Qwen/DeepSeek/Gemini v0.3 label-conditioned analyses, E6 rule-only/no-verdict ablations, tool-contestation audits, and a realistic source-acquisition gate audit.
+In candidate patch verification, we show that a hidden-evaluator evidence-visibility protocol can measure evidence-conditioned LLM merge-gate behavior, supported by the accept-aware Qwen/DeepSeek/Gemini v0.3 label-conditioned analyses, E6 rule-only/no-verdict ablations, tool-contestation audits, and a 31-case hard-negative stress matrix.
 
 ## Terminology Ledger
 
@@ -30,7 +30,7 @@ In candidate patch verification, we show that a hidden-evaluator evidence-visibi
 | `C2` | In three repaired v0.3 accept-aware runs, visible executable and tool evidence changed correct-patch acceptance while retaining bounded false-accept risk. | `supported_three_model` | v0_3_qwen_label_conditioned_summary, v0_3_deepseek_label_conditioned_summary, v0_3_gemini_label_conditioned_summary | Results: Accept-aware label-conditioned behavior | Three-model v0.3 descriptive result; not broad-model superiority or autonomous correctness verification. |
 | `C3` | Verdict-like tool summaries can anchor model decisions; removing or contesting them changes behavior. | `supported_qualified` | evp8_e6_no_verdict_ablation_comparison, evp8_hard_tool_contestation_result_audit | Results: Verdict dependence and contestation | Measured as policy behavior, not semantic proof. |
 | `C4` | Tool-contestation primarily improves safe handling through escalation rather than strict correction. | `supported` | EVP-8-HARD tool-contestation audit | Results: Tool-contestation as risk triage | Strict correction remains separate and limited. |
-| `C5` | The fresh realistic hard-negative branch is a source-acquisition negative result, not a verifier-ready main experiment. | `supported_negative_boundary` | realistic_hardneg_generation_gate | Threats/Discussion: Realistic hard-negative acquisition | Do not use it as three-project verifier evidence. |
+| `C5` | On a 31-case hard-negative stress matrix, coverage-contestation reduced repeated false accepts mainly by escalating rather than strictly rejecting hidden-failing patches. | `supported_qualified` | evp8_realistic_hardneg_stress_matrix_analysis_v0_1 | Results/Discussion: Hard-negative stress matrix | Stress-test supplement only; correct recall is undefined and the scrapy cases are curated no-API stress-source variants, not a pure agent-generated realistic cohort. |
 
 ## Citation Support
 
@@ -122,6 +122,17 @@ In candidate patch verification, we show that a hidden-evaluator evidence-visibi
 | deepseek/deepseek-v4-pro | 9 | 100.00% [70.09%, 100.00%] | 0.00% [0.00%, 29.91%] | 0.00% [0.00%, 29.91%] |
 | qwen/qwen3.7-max | 9 | 88.89% [56.50%, 98.01%] | 0.00% [0.00%, 29.91%] | 11.11% [1.99%, 43.50%] |
 
+## Hard-Negative Stress Matrix
+
+- cohort: `EVP-8-REALISTIC-HARDNEG-STRESS`
+- candidates: `31`
+- boundary: This analysis measures false-accept handling on a hard-negative stress cohort. It does not measure correct recall and does not establish autonomous correctness verification.
+
+| condition | records | repeated false accepts | strict rejects | safe escalations | safe handling |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| current_merge_gate | 93 | 62 (66.67%) | 0 (0.00%) | 31 (33.33%) | 31 (33.33%) |
+| coverage_contestation | 93 | 12 (12.90%) | 0 (0.00%) | 81 (87.10%) | 81 (87.10%) |
+
 ## Forbidden Claims
 
 - LLMs are reliable autonomous patch correctness verifiers.
@@ -136,7 +147,7 @@ In candidate patch verification, we show that a hidden-evaluator evidence-visibi
 | --- | --- | --- | --- |
 | Fig. 1 | Hidden-evaluator evidence-visibility protocol | Model-visible evidence and evaluator-only labels are separated until post-decision analysis. | `generated_python` |
 | Fig. 2 | Accept-aware and no-verdict metric evidence | Repaired evidence unlocks Qwen correct-patch acceptance while E6 ablations expose verdict-dependent risk tradeoffs. | `generated_python` |
-| Fig. 3 | Claim boundary and setting-validity map | Supported findings are bounded by leakage controls, protocol repairs, and remaining external-validity threats. | `generated_python` |
+| Fig. 3 | Claim boundary and setting-validity map | Supported findings are bounded by leakage controls, protocol repairs, and the stress matrix's triage-only interpretation. | `generated_python` |
 
 ## Checks
 
@@ -146,7 +157,9 @@ In candidate patch verification, we show that a hidden-evaluator evidence-visibi
 | `five_model_synthesis_passed` | true | `passed` |
 | `no_verdict_comparison_checks_present` | true | `13` |
 | `hard_tool_contestation_audit_passed` | true | `passed` |
-| `realistic_gate_not_verifier_ready` | true | `{'minimum_count': 30, 'minimum_projects': 3, 'passed': False, 'required_property': 'patch_applied && declared_visible_tests_passed && hidden_oracle_failed', 'visible_pass_hidden_fail_count': 26, 'visible_pass_hidden_fail_projects': ['PySnooper', 'cookiecutter'], 'visible_pass_hidden_fail_tasks': ['bugsinpy_PySnooper_3', 'bugsinpy_cookiecutter_2', 'bugsinpy_cookiecutter_3']}` |
+| `hard_negative_stress_matrix_passed` | true | `passed` |
+| `hard_negative_stress_matrix_31_cases` | true | `31` |
+| `hard_negative_stress_matrix_all_negative_boundary` | true | `All 31 stress-cohort candidates are visible-pass/hidden-fail hard negatives.` |
 | `qwen_label_conditioned_checks_passed` | true | `9` |
 | `deepseek_label_conditioned_checks_passed` | true | `9` |
 | `gemini_label_conditioned_checks_passed` | true | `9` |

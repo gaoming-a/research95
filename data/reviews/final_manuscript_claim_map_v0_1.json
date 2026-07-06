@@ -96,23 +96,18 @@
       "passed": true
     },
     {
-      "check": "realistic_gate_not_verifier_ready",
-      "detail": {
-        "minimum_count": 30,
-        "minimum_projects": 3,
-        "passed": false,
-        "required_property": "patch_applied && declared_visible_tests_passed && hidden_oracle_failed",
-        "visible_pass_hidden_fail_count": 26,
-        "visible_pass_hidden_fail_projects": [
-          "PySnooper",
-          "cookiecutter"
-        ],
-        "visible_pass_hidden_fail_tasks": [
-          "bugsinpy_PySnooper_3",
-          "bugsinpy_cookiecutter_2",
-          "bugsinpy_cookiecutter_3"
-        ]
-      },
+      "check": "hard_negative_stress_matrix_passed",
+      "detail": "passed",
+      "passed": true
+    },
+    {
+      "check": "hard_negative_stress_matrix_31_cases",
+      "detail": 31,
+      "passed": true
+    },
+    {
+      "check": "hard_negative_stress_matrix_all_negative_boundary",
+      "detail": "All 31 stress-cohort candidates are visible-pass/hidden-fail hard negatives.",
       "passed": true
     },
     {
@@ -254,15 +249,15 @@
       "status": "supported"
     },
     {
-      "allowed_wording": "The branch yielded a two-project hard-negative opportunity set but failed the three-project readiness gate.",
-      "boundary": "Do not use it as three-project verifier evidence.",
-      "claim": "The fresh realistic hard-negative branch is a source-acquisition negative result, not a verifier-ready main experiment.",
+      "allowed_wording": "Coverage-contestation reduced repeated false accepts from 62/93 to 12/93 on an all-negative stress cohort, entirely through escalation because strict rejects remained zero.",
+      "boundary": "Stress-test supplement only; correct recall is undefined and the scrapy cases are curated no-API stress-source variants, not a pure agent-generated realistic cohort.",
+      "claim": "On a 31-case hard-negative stress matrix, coverage-contestation reduced repeated false accepts mainly by escalating rather than strictly rejecting hidden-failing patches.",
       "evidence": [
-        "realistic_hardneg_generation_gate"
+        "evp8_realistic_hardneg_stress_matrix_analysis_v0_1"
       ],
       "id": "C5",
-      "paper_location": "Threats/Discussion: Realistic hard-negative acquisition",
-      "status": "supported_negative_boundary"
+      "paper_location": "Results/Discussion: Hard-negative stress matrix",
+      "status": "supported_qualified"
     }
   ],
   "date": "2026-07-03",
@@ -557,7 +552,7 @@
     },
     {
       "backend": "python",
-      "conclusion": "Supported findings are bounded by leakage controls, protocol repairs, and remaining external-validity threats.",
+      "conclusion": "Supported findings are bounded by leakage controls, protocol repairs, and the stress matrix's triage-only interpretation.",
       "id": "Fig. 3",
       "output_stem": "ccfc_fig3_claim_boundary",
       "outputs": [
@@ -580,6 +575,484 @@
     "The fresh realistic hard-negative branch is verifier-ready across three projects.",
     "The controlled EVP-8 or EVP-8-HARD cohorts prove broad external validity for real agent patch distributions."
   ],
+  "hard_negative_stress_matrix_aggregate_rows": [
+    {
+      "challenge_visible_test_only_accept_counts": {
+        "None": 93
+      },
+      "condition": "current_merge_gate",
+      "coverage_concern_counts": {
+        "None": 93
+      },
+      "decision_counts": {
+        "accept": 62,
+        "escalate": 31
+      },
+      "decision_counts_by_project": {
+        "PySnooper": {
+          "accept": 18,
+          "escalate": 9
+        },
+        "cookiecutter": {
+          "accept": 34,
+          "escalate": 17
+        },
+        "scrapy": {
+          "accept": 10,
+          "escalate": 5
+        }
+      },
+      "decision_counts_by_source_kind": {
+        "curated_no_api_stress_source": {
+          "accept": 10,
+          "escalate": 5
+        },
+        "model_generated_source": {
+          "accept": 52,
+          "escalate": 26
+        }
+      },
+      "invalid_parse_count": 0,
+      "parse_valid_count": 93,
+      "record_count": 93,
+      "repeated_false_accept_count": 62,
+      "repeated_false_accept_rate": 0.6666666666666666,
+      "safe_escalation_count": 31,
+      "safe_escalation_rate": 0.3333333333333333,
+      "safe_handling_count": 31,
+      "safe_handling_rate": 0.3333333333333333,
+      "strict_reject_count": 0,
+      "strict_reject_rate": 0.0
+    },
+    {
+      "challenge_visible_test_only_accept_counts": {
+        "False": 12,
+        "True": 81
+      },
+      "condition": "coverage_contestation",
+      "coverage_concern_counts": {
+        "high": 50,
+        "low": 12,
+        "medium": 31
+      },
+      "decision_counts": {
+        "accept": 12,
+        "escalate": 81
+      },
+      "decision_counts_by_project": {
+        "PySnooper": {
+          "accept": 9,
+          "escalate": 18
+        },
+        "cookiecutter": {
+          "accept": 3,
+          "escalate": 48
+        },
+        "scrapy": {
+          "escalate": 15
+        }
+      },
+      "decision_counts_by_source_kind": {
+        "curated_no_api_stress_source": {
+          "escalate": 15
+        },
+        "model_generated_source": {
+          "accept": 12,
+          "escalate": 66
+        }
+      },
+      "invalid_parse_count": 0,
+      "parse_valid_count": 93,
+      "record_count": 93,
+      "repeated_false_accept_count": 12,
+      "repeated_false_accept_rate": 0.12903225806451613,
+      "safe_escalation_count": 81,
+      "safe_escalation_rate": 0.8709677419354839,
+      "safe_handling_count": 81,
+      "safe_handling_rate": 0.8709677419354839,
+      "strict_reject_count": 0,
+      "strict_reject_rate": 0.0
+    }
+  ],
+  "hard_negative_stress_matrix_model_rows": [
+    {
+      "challenge_visible_test_only_accept_counts": {
+        "None": 31
+      },
+      "condition": "current_merge_gate",
+      "coverage_concern_counts": {
+        "None": 31
+      },
+      "decision_counts": {
+        "escalate": 31
+      },
+      "decision_counts_by_project": {
+        "PySnooper": {
+          "escalate": 9
+        },
+        "cookiecutter": {
+          "escalate": 17
+        },
+        "scrapy": {
+          "escalate": 5
+        }
+      },
+      "decision_counts_by_source_kind": {
+        "curated_no_api_stress_source": {
+          "escalate": 5
+        },
+        "model_generated_source": {
+          "escalate": 26
+        }
+      },
+      "invalid_parse_count": 0,
+      "model": "deepseek/deepseek-v4-pro",
+      "parse_valid_count": 31,
+      "record_count": 31,
+      "repeated_false_accept_count": 0,
+      "repeated_false_accept_rate": 0.0,
+      "safe_escalation_count": 31,
+      "safe_escalation_rate": 1.0,
+      "safe_handling_count": 31,
+      "safe_handling_rate": 1.0,
+      "strict_reject_count": 0,
+      "strict_reject_rate": 0.0
+    },
+    {
+      "challenge_visible_test_only_accept_counts": {
+        "None": 31
+      },
+      "condition": "current_merge_gate",
+      "coverage_concern_counts": {
+        "None": 31
+      },
+      "decision_counts": {
+        "accept": 31
+      },
+      "decision_counts_by_project": {
+        "PySnooper": {
+          "accept": 9
+        },
+        "cookiecutter": {
+          "accept": 17
+        },
+        "scrapy": {
+          "accept": 5
+        }
+      },
+      "decision_counts_by_source_kind": {
+        "curated_no_api_stress_source": {
+          "accept": 5
+        },
+        "model_generated_source": {
+          "accept": 26
+        }
+      },
+      "invalid_parse_count": 0,
+      "model": "google/gemini-2.5-flash",
+      "parse_valid_count": 31,
+      "record_count": 31,
+      "repeated_false_accept_count": 31,
+      "repeated_false_accept_rate": 1.0,
+      "safe_escalation_count": 0,
+      "safe_escalation_rate": 0.0,
+      "safe_handling_count": 0,
+      "safe_handling_rate": 0.0,
+      "strict_reject_count": 0,
+      "strict_reject_rate": 0.0
+    },
+    {
+      "challenge_visible_test_only_accept_counts": {
+        "None": 31
+      },
+      "condition": "current_merge_gate",
+      "coverage_concern_counts": {
+        "None": 31
+      },
+      "decision_counts": {
+        "accept": 31
+      },
+      "decision_counts_by_project": {
+        "PySnooper": {
+          "accept": 9
+        },
+        "cookiecutter": {
+          "accept": 17
+        },
+        "scrapy": {
+          "accept": 5
+        }
+      },
+      "decision_counts_by_source_kind": {
+        "curated_no_api_stress_source": {
+          "accept": 5
+        },
+        "model_generated_source": {
+          "accept": 26
+        }
+      },
+      "invalid_parse_count": 0,
+      "model": "qwen/qwen3.7-max",
+      "parse_valid_count": 31,
+      "record_count": 31,
+      "repeated_false_accept_count": 31,
+      "repeated_false_accept_rate": 1.0,
+      "safe_escalation_count": 0,
+      "safe_escalation_rate": 0.0,
+      "safe_handling_count": 0,
+      "safe_handling_rate": 0.0,
+      "strict_reject_count": 0,
+      "strict_reject_rate": 0.0
+    },
+    {
+      "challenge_visible_test_only_accept_counts": {
+        "True": 31
+      },
+      "condition": "coverage_contestation",
+      "coverage_concern_counts": {
+        "high": 31
+      },
+      "decision_counts": {
+        "escalate": 31
+      },
+      "decision_counts_by_project": {
+        "PySnooper": {
+          "escalate": 9
+        },
+        "cookiecutter": {
+          "escalate": 17
+        },
+        "scrapy": {
+          "escalate": 5
+        }
+      },
+      "decision_counts_by_source_kind": {
+        "curated_no_api_stress_source": {
+          "escalate": 5
+        },
+        "model_generated_source": {
+          "escalate": 26
+        }
+      },
+      "invalid_parse_count": 0,
+      "model": "deepseek/deepseek-v4-pro",
+      "parse_valid_count": 31,
+      "record_count": 31,
+      "repeated_false_accept_count": 0,
+      "repeated_false_accept_rate": 0.0,
+      "safe_escalation_count": 31,
+      "safe_escalation_rate": 1.0,
+      "safe_handling_count": 31,
+      "safe_handling_rate": 1.0,
+      "strict_reject_count": 0,
+      "strict_reject_rate": 0.0
+    },
+    {
+      "challenge_visible_test_only_accept_counts": {
+        "True": 31
+      },
+      "condition": "coverage_contestation",
+      "coverage_concern_counts": {
+        "high": 2,
+        "medium": 29
+      },
+      "decision_counts": {
+        "escalate": 31
+      },
+      "decision_counts_by_project": {
+        "PySnooper": {
+          "escalate": 9
+        },
+        "cookiecutter": {
+          "escalate": 17
+        },
+        "scrapy": {
+          "escalate": 5
+        }
+      },
+      "decision_counts_by_source_kind": {
+        "curated_no_api_stress_source": {
+          "escalate": 5
+        },
+        "model_generated_source": {
+          "escalate": 26
+        }
+      },
+      "invalid_parse_count": 0,
+      "model": "google/gemini-2.5-flash",
+      "parse_valid_count": 31,
+      "record_count": 31,
+      "repeated_false_accept_count": 0,
+      "repeated_false_accept_rate": 0.0,
+      "safe_escalation_count": 31,
+      "safe_escalation_rate": 1.0,
+      "safe_handling_count": 31,
+      "safe_handling_rate": 1.0,
+      "strict_reject_count": 0,
+      "strict_reject_rate": 0.0
+    },
+    {
+      "challenge_visible_test_only_accept_counts": {
+        "False": 12,
+        "True": 19
+      },
+      "condition": "coverage_contestation",
+      "coverage_concern_counts": {
+        "high": 17,
+        "low": 12,
+        "medium": 2
+      },
+      "decision_counts": {
+        "accept": 12,
+        "escalate": 19
+      },
+      "decision_counts_by_project": {
+        "PySnooper": {
+          "accept": 9
+        },
+        "cookiecutter": {
+          "accept": 3,
+          "escalate": 14
+        },
+        "scrapy": {
+          "escalate": 5
+        }
+      },
+      "decision_counts_by_source_kind": {
+        "curated_no_api_stress_source": {
+          "escalate": 5
+        },
+        "model_generated_source": {
+          "accept": 12,
+          "escalate": 14
+        }
+      },
+      "invalid_parse_count": 0,
+      "model": "qwen/qwen3.7-max",
+      "parse_valid_count": 31,
+      "record_count": 31,
+      "repeated_false_accept_count": 12,
+      "repeated_false_accept_rate": 0.3870967741935484,
+      "safe_escalation_count": 19,
+      "safe_escalation_rate": 0.6129032258064516,
+      "safe_handling_count": 19,
+      "safe_handling_rate": 0.6129032258064516,
+      "strict_reject_count": 0,
+      "strict_reject_rate": 0.0
+    }
+  ],
+  "hard_negative_stress_matrix_summary": {
+    "aggregate_by_condition": {
+      "coverage_contestation": {
+        "challenge_visible_test_only_accept_counts": {
+          "False": 12,
+          "True": 81
+        },
+        "coverage_concern_counts": {
+          "high": 50,
+          "low": 12,
+          "medium": 31
+        },
+        "decision_counts": {
+          "accept": 12,
+          "escalate": 81
+        },
+        "decision_counts_by_project": {
+          "PySnooper": {
+            "accept": 9,
+            "escalate": 18
+          },
+          "cookiecutter": {
+            "accept": 3,
+            "escalate": 48
+          },
+          "scrapy": {
+            "escalate": 15
+          }
+        },
+        "decision_counts_by_source_kind": {
+          "curated_no_api_stress_source": {
+            "escalate": 15
+          },
+          "model_generated_source": {
+            "accept": 12,
+            "escalate": 66
+          }
+        },
+        "invalid_parse_count": 0,
+        "parse_valid_count": 93,
+        "record_count": 93,
+        "repeated_false_accept_count": 12,
+        "repeated_false_accept_rate": 0.12903225806451613,
+        "safe_escalation_count": 81,
+        "safe_escalation_rate": 0.8709677419354839,
+        "safe_handling_count": 81,
+        "safe_handling_rate": 0.8709677419354839,
+        "strict_reject_count": 0,
+        "strict_reject_rate": 0.0
+      },
+      "current_merge_gate": {
+        "challenge_visible_test_only_accept_counts": {
+          "None": 93
+        },
+        "coverage_concern_counts": {
+          "None": 93
+        },
+        "decision_counts": {
+          "accept": 62,
+          "escalate": 31
+        },
+        "decision_counts_by_project": {
+          "PySnooper": {
+            "accept": 18,
+            "escalate": 9
+          },
+          "cookiecutter": {
+            "accept": 34,
+            "escalate": 17
+          },
+          "scrapy": {
+            "accept": 10,
+            "escalate": 5
+          }
+        },
+        "decision_counts_by_source_kind": {
+          "curated_no_api_stress_source": {
+            "accept": 10,
+            "escalate": 5
+          },
+          "model_generated_source": {
+            "accept": 52,
+            "escalate": 26
+          }
+        },
+        "invalid_parse_count": 0,
+        "parse_valid_count": 93,
+        "record_count": 93,
+        "repeated_false_accept_count": 62,
+        "repeated_false_accept_rate": 0.6666666666666666,
+        "safe_escalation_count": 31,
+        "safe_escalation_rate": 0.3333333333333333,
+        "safe_handling_count": 31,
+        "safe_handling_rate": 0.3333333333333333,
+        "strict_reject_count": 0,
+        "strict_reject_rate": 0.0
+      }
+    },
+    "candidate_count": 31,
+    "claim_boundary": "This analysis measures false-accept handling on a hard-negative stress cohort. It does not measure correct recall and does not establish autonomous correctness verification.",
+    "cohort_id": "EVP-8-REALISTIC-HARDNEG-STRESS",
+    "condition_ids": [
+      "current_merge_gate",
+      "coverage_contestation"
+    ],
+    "hidden_label_boundary": "All 31 stress-cohort candidates are visible-pass/hidden-fail hard negatives.",
+    "model_ids": [
+      "qwen/qwen3.7-max",
+      "deepseek/deepseek-v4-pro",
+      "google/gemini-2.5-flash"
+    ]
+  },
   "hard_tool_contestation_summary": {
     "deepseek_opportunity": {
       "candidate_count": 9,
@@ -612,6 +1085,7 @@
     "evp8_protocol_v0_3": "data/protocols/evp8_protocol_v0_3_qwen_first.json",
     "five_model_synthesis": "data/protocols/evp8_five_model_synthesis_v0_1.json",
     "gemini_label_conditioned": "data/reviews/evp8_gemini_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json",
+    "hard_negative_stress_matrix": "data/reviews/evp8_realistic_hardneg_stress_matrix_analysis_v0_1.json",
     "hard_tool_contestation": "data/protocols/evp8_hard_tool_contestation_result_audit_v0_1.json",
     "no_verdict_comparison": "data/reviews/evp8_e6_no_verdict_ablation_comparison.json",
     "phase_a_analysis": "data/reviews/evp8_phase_a_paper_ready_analysis.json",
@@ -619,7 +1093,7 @@
     "realistic_gate": "data/protocols/evp8_realistic_hardneg_combined_generation_gate_with_full_file_v0_1.json",
     "validity_audit": "data/reviews/final_experiment_setting_validity_audit_v0_1.json"
   },
-  "manuscript_argument": "In candidate patch verification, we show that a hidden-evaluator evidence-visibility protocol can measure evidence-conditioned LLM merge-gate behavior, supported by the accept-aware Qwen/DeepSeek/Gemini v0.3 label-conditioned analyses, E6 rule-only/no-verdict ablations, tool-contestation audits, and a realistic source-acquisition gate audit.",
+  "manuscript_argument": "In candidate patch verification, we show that a hidden-evaluator evidence-visibility protocol can measure evidence-conditioned LLM merge-gate behavior, supported by the accept-aware Qwen/DeepSeek/Gemini v0.3 label-conditioned analyses, E6 rule-only/no-verdict ablations, tool-contestation audits, and a 31-case hard-negative stress matrix.",
   "paper_target": "stable CCF-C submission",
   "per_model_level_counts": [
     {
