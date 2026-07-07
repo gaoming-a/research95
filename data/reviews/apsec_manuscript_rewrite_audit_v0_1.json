@@ -55,12 +55,27 @@
       "detail": ""
     },
     {
+      "check": "candidate_table_simplified",
+      "passed": true,
+      "detail": ""
+    },
+    {
       "check": "evidence_ladder_humanized",
       "passed": true,
       "detail": ""
     },
     {
       "check": "rq4_demoted_from_main_questions",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "rq3_unified_visible_evidence_challenge",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "implementation_artifact_detail_present",
       "passed": true,
       "detail": ""
     },
@@ -126,6 +141,11 @@
     },
     {
       "check": "coverage_contestation_boundary_present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "prompt_sensitivity_discussion_present",
       "passed": true,
       "detail": ""
     },

@@ -130,18 +130,21 @@ camera-facing cleanup removes mechanical conversion artifacts from the PDF:
 semantic table captions replace `Converted APSEC draft table` captions, figure
 captions no longer duplicate `Figure N`, the internal package note is removed,
 long raw floats are formatted, and the main paper is curated to 6 tables rather
-than 14. The compiled IEEEtran/BibTeX PDF is now 6 pages with resolved
-references, 0 overfull hbox warnings, and 11 underfull hbox warnings from
-narrow-column paragraph breaks. `scripts/write_apsec_ieeetran_package.py
+than 14. The references have been expanded from 11 temporary entries to 24
+structured APSEC-facing BibTeX entries, Table II is simplified, Figure 3 is
+removed from the APSEC main paper, and Figure 2 is rendered as a larger
+double-column figure. The compiled IEEEtran/BibTeX PDF is now 7 pages with
+resolved references, 0 overfull hbox warnings, and 11 underfull hbox warnings
+from narrow-column paragraph breaks. `scripts/write_apsec_ieeetran_package.py
 --compile` regenerates the source package and records compile commands in the
 page-budget audit. The compiled PDF render/layout audit is
-`docs/paper/apsec_pdf_layout_audit_v0_1.md`; it renders all 6 pages, checks that
+`docs/paper/apsec_pdf_layout_audit_v0_1.md`; it renders all 7 pages, checks that
 rendered pages are nonblank, verifies the anonymous author block, and confirms
 old APSEC gate-failed wording is absent. This is still a draft source/PDF
-package, not a final submitted PDF. Remaining APSEC risks are sparse references
-that need verified expansion and BibTeX normalization, final human visual
-polish, the small 98-candidate cohort, and the fact that three repaired models
-still do not establish broad LLM-verifier generality.
+package, not a final submitted PDF. Remaining APSEC risks are final human
+bibliographic review, final visual polish, the small 98-candidate cohort, and
+the fact that three repaired models still do not establish broad LLM-verifier
+generality.
 
 As of 2026-07-06, mainline A is complete. The main prompt remains fixed, and
 the separate coverage-contestation condition is reported only as a

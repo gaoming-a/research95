@@ -44,15 +44,24 @@ def build_audit() -> dict[str, Any]:
     missing_sections = [section for section in required_sections if section not in manuscript]
     expected_citations = [
         "qi_issta_2015_patch_plausibility",
+        "long_popl_2016_prophet",
+        "smith_fse_2015_overfitting",
         "legoues_icse_2012_genprog",
         "just_issta_2014_defects4j",
         "barr_tse_2015_oracle_problem",
         "xia_zhang_icse_2023_llm_apr",
         "tufano_icse_2019_bugfix_nmt",
+        "chen_arxiv_2021_codex",
+        "joshi_arxiv_2022_repair_is_nearly_generation",
         "bacchelli_bird_icse_2013_code_review",
+        "li_fse_2022_codereviewer",
         "chow_tit_1970_reject_option",
         "geifman_el_yaniv_2017_selective_classification",
+        "cortes_jmlr_2016_reject_option",
         "zheng_neurips_2023_llm_judge",
+        "wang_acl_2024_not_fair_evaluators",
+        "jimenez_iclr_2024_swebench",
+        "yang_neurips_2024_sweagent",
         "parasuraman_riley_1997_automation",
     ]
     missing_citations = [key for key in expected_citations if key not in manuscript]
@@ -102,6 +111,14 @@ def build_audit() -> dict[str, Any]:
             and "| Regression patch | 1 |" in manuscript,
         ),
         check(
+            "candidate_table_simplified",
+            "| candidate type | count | hidden label | purpose |" in manuscript
+            and "The 76 issue-not-fixed negatives plus one regression negative form the 77 non-correct candidates."
+            in manuscript
+            and "Project counts are PySnooper 10, cookiecutter 19, httpie 6, thefuck 4, tqdm 7, and youtube-dl 52."
+            in manuscript,
+        ),
+        check(
             "evidence_ladder_humanized",
             "Issue summary and candidate patch diff" in manuscript
             and "Structured changed-file/function map" in manuscript
@@ -112,6 +129,22 @@ def build_audit() -> dict[str, Any]:
             "rq4_demoted_from_main_questions",
             "The experiment asks three research questions." in manuscript
             and "RQ4 asks" not in manuscript,
+        ),
+        check(
+            "rq3_unified_visible_evidence_challenge",
+            "RQ3 asks: when visible evidence is challenged, do models correct wrong accepts or route them to escalation?"
+            in manuscript
+            and "three evidence sources for RQ3 rather than separate main questions"
+            in manuscript,
+        ),
+        check(
+            "implementation_artifact_detail_present",
+            "### 4.1 Implementation and artifact boundary" in manuscript
+            and "temperature 0.0" in manuscript
+            and "4096-token output cap" in manuscript
+            and "686 parse-valid records" in manuscript
+            and "raw provider responses, rendered prompts, patch diffs, local configs, and credentials remain excluded"
+            in manuscript,
         ),
         check(
             "qwen_main_result_present",
@@ -173,6 +206,13 @@ def build_audit() -> dict[str, Any]:
             and "should not claim that coverage-contestation improves autonomous verification" in manuscript,
         ),
         check(
+            "prompt_sensitivity_discussion_present",
+            "Prompt sensitivity is part of the measurement target rather than only a nuisance variable"
+            in manuscript
+            and "through semantic discrimination or through abstention-driven routing"
+            in manuscript,
+        ),
+        check(
             "hard_negative_stress_matrix_present",
             "A hard-negative stress matrix reduced false accepts through escalation" in manuscript
             and "31 hidden-failing candidates across PySnooper, cookiecutter, and scrapy" in manuscript
@@ -188,7 +228,11 @@ def build_audit() -> dict[str, Any]:
             and "Correct recall is also undefined in this all-negative cohort" in manuscript
             and "bounded triage evidence" in manuscript,
         ),
-        check("figures_referenced", all(f"Figure {i}" in manuscript for i in [1, 2, 3])),
+        check(
+            "figures_referenced",
+            all(f"Figure {i}" in manuscript for i in [1, 2])
+            and "Figure 3. Claim boundary" not in manuscript,
+        ),
         check("all_expected_citations_present", not missing_citations, missing_citations),
         check("reference_support_records_removed", "Reference Support Records" not in manuscript),
         check(

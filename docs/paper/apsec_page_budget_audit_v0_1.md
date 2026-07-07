@@ -6,12 +6,12 @@ Status: `passed`
 
 | item | value |
 | --- | ---: |
-| word count excluding tables | 3071 |
+| word count excluding tables | 3264 |
 | converted tables | 6 |
-| converted figures | 3 |
-| references | 11 |
-| estimated pages | 6.38 |
-| compiled PDF pages | 6 |
+| converted figures | 2 |
+| references | 24 |
+| estimated pages | 7.05 |
+| compiled PDF pages | 7 |
 
 ## Compile Summary
 
@@ -26,6 +26,8 @@ Status: `passed`
 | --- | --- |
 | ieeetran_source_generated | true |
 | bibtex_generated | true |
+| apsec_reference_count_not_sparse | true |
+| apsec_bibtex_not_temporary_misc_only | true |
 | citation_keys_converted_to_cite_commands | true |
 | camera_facing_caption_cleanup | true |
 | camera_facing_internal_note_removed | true |
@@ -52,5 +54,5 @@ Status: `passed`
 - Compiled PDF may still have underfull hbox warnings from narrow-column paragraph breaks that need visual layout review.
 - Final double-blind compliance still requires visual inspection even though the source author block is anonymous.
 - BibTeX entries compile but should be normalized to venue-quality fields.
-- References remain sparse for APSEC and need a separate verified expansion pass.
+- References now meet the APSEC draft density gate but still need final human bibliographic review.
 - The current package is a draft source conversion, not a submitted or camera-ready PDF.

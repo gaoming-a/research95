@@ -59,15 +59,19 @@
   realistic branch as a failed three-project gate.
   The APSEC IEEEtran/BibTeX/page-budget package has also been regenerated from
   the latest Markdown and compiled locally. The 2026-07-07 camera-facing cleanup
-  curates the main PDF to 6 tables and 6 pages, removes mechanical conversion
-  captions and the internal package note, formats raw floats, and adds a
-  compressed false-accept case-group table. The current compiled draft has 0
-  overfull and 11 underfull hbox warnings recorded in
+  curates the main PDF to 6 tables, removes mechanical conversion captions and
+  the internal package note, formats raw floats, and adds a compressed
+  false-accept case-group table. The follow-up APSEC reference/method-detail
+  pass expands the references to 24 structured BibTeX entries, simplifies Table
+  II, adds an Implementation and Artifact subsection, unifies RQ3, removes
+  Figure 3 from the APSEC main paper, and renders Figure 2 as a larger
+  double-column figure. The current compiled draft is 7 pages with 0 overfull
+  and 11 underfull hbox warnings recorded in
   `paper/apsec_page_budget_audit_v0_1.md`; `paper/apsec_pdf_layout_audit_v0_1.md`
-  verifies that all 6 rendered pages are nonblank, the source author block is
+  verifies that all 7 rendered pages are nonblank, the source author block is
   anonymous, and stale APSEC gate wording is absent. This remains a draft
-  package, not a final submission PDF; verified reference expansion and BibTeX
-  normalization remain the next APSEC writing task.
+  package, not a final submission PDF; final human bibliographic review and
+  venue-format polish remain open.
   The old no-API Luigi source-acquisition/materialization path is a historical
   dead end, not the current blocker. Historical `origin/main`
   entries retained later in plan logs are audit records only. As of
@@ -453,10 +457,11 @@
   `paper/apsec_page_budget_audit_v0_1.md`, and
   `../data/reviews/apsec_page_budget_audit_v0_1.json`: APSEC formatting draft
   package. Status is `passed`; the current IEEEtran/BibTeX compilation
-  produces a 6-page PDF with no undefined references, 0 overfull hbox warnings,
-  and 11 underfull hbox warnings. The camera-facing cleanup keeps 6 main tables
-  and removes mechanical conversion captions, duplicate figure captions,
-  internal package notes, and raw long floats.
+  produces a 7-page PDF with 24 cited references, no undefined references, 0
+  overfull hbox warnings, and 11 underfull hbox warnings. The camera-facing
+  cleanup keeps 6 main tables and removes mechanical conversion captions,
+  duplicate figure captions, internal package notes, raw long floats, and
+  Figure 3 from the APSEC main paper.
 - `../scripts/audit_apsec_pdf_layout.py`,
   `paper/apsec_pdf_layout_audit_v0_1.md`, and
   `../data/reviews/apsec_pdf_layout_audit_v0_1.json`: APSEC compiled-PDF

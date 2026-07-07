@@ -19,8 +19,11 @@
 | `evidence_visibility_protocol_present` | True | `` |
 | `three_model_repaired_main_result_present` | True | `` |
 | `dataset_composition_present` | True | `` |
+| `candidate_table_simplified` | True | `` |
 | `evidence_ladder_humanized` | True | `` |
 | `rq4_demoted_from_main_questions` | True | `` |
+| `rq3_unified_visible_evidence_challenge` | True | `` |
+| `implementation_artifact_detail_present` | True | `` |
 | `qwen_main_result_present` | True | `` |
 | `deepseek_main_result_present` | True | `` |
 | `gemini_main_result_present` | True | `` |
@@ -34,6 +37,7 @@
 | `sanitized_false_accept_case_analysis_present` | True | `` |
 | `tool_contestation_boundary_present` | True | `` |
 | `coverage_contestation_boundary_present` | True | `` |
+| `prompt_sensitivity_discussion_present` | True | `` |
 | `hard_negative_stress_matrix_present` | True | `` |
 | `hard_negative_stress_boundary_present` | True | `` |
 | `figures_referenced` | True | `` |

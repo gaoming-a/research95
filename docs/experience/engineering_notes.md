@@ -4843,3 +4843,29 @@ This file starts fresh for the patch-verification project.
 - After changing table labels, recompile and inspect the log. The
   `Coverage-contestation` condition label caused the only overfull hbox; shorter
   paper labels removed it without changing the underlying experimental result.
+
+## 2026-07-07 APSEC references and method-detail pass
+
+- Reference expansion should be connected to claims, not appended as uncited
+  bibliography. The APSEC rewrite now cites APR/test-overfitting, LLM code
+  review, LLM code generation/repair, software-agent benchmarks,
+  LLM-as-judge reliability, and reject-option/selective-classification work in
+  the paragraphs that need those supports.
+- Do not use DOI fields unless they are verified. A SANER DOI initially pointed
+  to a different paper; the safer repair was to remove that DOI and keep the
+  entry as an arXiv-backed conference reference.
+- Temporary support-record strings should not become submission references.
+  APSEC now uses structured BibTeX entries and the page-budget audit blocks
+  sparse references and all-`@misc` temporary bibliographies.
+- A method-detail paragraph can be added without reading raw outputs if it is
+  built from tracked configs, run packets, and summaries. The paper can report
+  frozen prompt/template identity, temperature, output-token cap, parse-valid
+  counts, cost telemetry boundaries, and raw-free artifact policy from tracked
+  files only.
+- Cost telemetry needs careful wording. Qwen's tracked provider cost field is
+  0.0, so it must not be described as a billing statement; DeepSeek/Gemini
+  tracked summaries can be reported as runner/provider-token cost summaries.
+- If a figure is readable only as an internal claim map, remove it from the
+  APSEC main paper rather than forcing reviewers to decode it. Figure 3 remains
+  available as a CCF-C/claim-boundary artifact, while APSEC keeps Figure 1 and a
+  larger double-column Figure 2.

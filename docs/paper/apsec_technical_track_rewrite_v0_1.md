@@ -14,7 +14,7 @@ Automated patch generation and LLM-assisted review are increasingly positioned n
 
 The difficulty is not only whether an LLM can read code. It is that a verifier's decision may change when issue context, patch structure, static status, visible tests, regression checks, diagnostics, or tool summaries become visible. If these evidence fields are not controlled, an evaluation may conflate model judgment with evidence presentation. In particular, authoritative-looking tool summaries can encourage acceptance even when the underlying semantic correctness remains unknown.
 
-This paper studies candidate patch verification as an evidence-conditioned merge-gate task. A verifier receives a candidate patch and a predefined model-visible evidence packet, then emits one of three decisions: accept, reject, or escalate. Correctness labels and hidden evaluator outcomes are joined only after the decision. This design follows the intuition behind reject-option and selective-classification settings [chow_tit_1970_reject_option; geifman_el_yaniv_2017_selective_classification], but applies it to software patch verification. The current empirical scope is intentionally controlled: the paper-facing main result is a three-model repaired v0.3 analysis for Qwen, DeepSeek, and Gemini, supported by E6 ablations and tool-contestation evidence, rather than a broad claim about all LLM verifiers.
+This paper studies candidate patch verification as an evidence-conditioned merge-gate task. A verifier receives a candidate patch and a predefined model-visible evidence packet, then emits one of three decisions: accept, reject, or escalate. Correctness labels and hidden evaluator outcomes are joined only after the decision. This design follows the intuition behind reject-option and selective-classification settings [chow_tit_1970_reject_option; cortes_jmlr_2016_reject_option; geifman_el_yaniv_2017_selective_classification], but applies it to software patch verification. The current empirical scope is intentionally controlled: the paper-facing main result is a three-model repaired v0.3 analysis for Qwen, DeepSeek, and Gemini, supported by E6 ablations and tool-contestation evidence, rather than a broad claim about all LLM verifiers.
 
 The paper makes three contributions:
 
@@ -26,13 +26,13 @@ The claim is deliberately bounded. The results do not establish reliable autonom
 
 ## 2. Background and Motivation
 
-Automated program repair research has long distinguished plausible patches from correct patches. Generate-and-validate systems and controlled benchmarks have shown that passing available tests may be insufficient for semantic correctness [qi_issta_2015_patch_plausibility; just_issta_2014_defects4j]. EVP-8 studies the downstream verifier setting: after a candidate patch exists, the question is not how it was generated, but whether a merge-gate decision is justified by the evidence visible to the verifier.
+Automated program repair research has long distinguished plausible patches from correct patches. Generate-and-validate and semantic-repair systems make this distinction visible, while controlled benchmarks expose why available tests are not complete correctness oracles [qi_issta_2015_patch_plausibility; long_popl_2016_prophet; long_fse_2015_spr; nguyen_icse_2013_semfix; smith_fse_2015_overfitting; just_issta_2014_defects4j; durieux_saner_2019_bears; lin_splash_2017_quixbugs]. EVP-8 studies the downstream verifier setting: after a candidate patch exists, the question is not how it was generated, but whether a merge-gate decision is justified by the evidence visible to the verifier.
 
 Software testing research also motivates the hidden-evaluator design. The oracle problem means that deciding correctness is itself a validity boundary [barr_tse_2015_oracle_problem]. EVP-8 therefore keeps evaluator-only labels separate from model-visible evidence and joins them only after decisions have been produced.
 
-LLM-based repair and code-editing studies show that LLMs can produce or inspect patches [xia_zhang_icse_2023_llm_apr; tufano_icse_2019_bugfix_nmt]. However, verifier behavior is not identical to generation performance. A patch reviewer must decide whether visible evidence is enough to accept, reject, or escalate. This makes the task closer to code review and risk triage than to benchmark success alone [bacchelli_bird_icse_2013_code_review].
+LLM-based repair, code generation, and code-editing studies show that LLMs can produce or inspect patches [xia_zhang_icse_2023_llm_apr; tufano_icse_2019_bugfix_nmt; chen_arxiv_2021_codex; joshi_arxiv_2022_repair_is_nearly_generation]. However, verifier behavior is not identical to generation performance. A patch reviewer must decide whether visible evidence is enough to accept, reject, or escalate. This makes the task closer to code review and risk triage than to benchmark success alone [bacchelli_bird_icse_2013_code_review; li_fse_2022_codereviewer].
 
-Finally, LLM-as-judge and automation-reliance work warn that model judgments and automation outputs require controlled protocols and explicit boundaries [zheng_neurips_2023_llm_judge; parasuraman_riley_1997_automation]. The protocol in this paper responds to that concern by making evidence visibility an explicit variable rather than an implicit property of the prompt.
+Recent software-agent benchmarks further show why task framing and evaluation protocol matter for code-oriented LLM systems [jimenez_iclr_2024_swebench; yang_neurips_2024_sweagent]. Finally, LLM-as-judge and automation-reliance work warn that model judgments and automation outputs require controlled protocols and explicit boundaries [zheng_neurips_2023_llm_judge; wang_acl_2024_not_fair_evaluators; parasuraman_riley_1997_automation]. The protocol in this paper responds to that concern by making evidence visibility an explicit variable rather than an implicit property of the prompt.
 
 ## 3. Evidence-Visibility Protocol
 
@@ -58,23 +58,29 @@ EVP-8 uses seven cumulative evidence levels:
 
 The current packet set contains 98 candidate patches from 6 projects and 21 BugsInPy tasks. It contains 21 correct patches and 77 non-correct patches under hidden F2P/P2P-broad evaluator labels. The candidate mix is intentionally skewed toward negative and partial cases because the merge-gate risk is false acceptance rather than classification accuracy on a balanced benchmark.
 
-| candidate type | count | evaluator label | label count | label source | purpose |
-| --- | ---: | --- | ---: | --- | --- |
-| Correct reference | 21 | Correct under F2P and P2P-broad | 21 | hidden F2P and P2P-broad evaluator labels | measure correct-patch recall |
-| Buggy no-op | 21 | Issue not fixed | part of 76 issue-not-fixed negatives | hidden evaluator labels | issue-not-fixed false-accept risk |
-| Irrelevant patch | 14 | Issue not fixed | part of 76 issue-not-fixed negatives | hidden evaluator labels | plausibility-trap negative patches |
-| Partial fix | 41 | Issue not fixed | part of 76 issue-not-fixed negatives | hidden F2P and P2P-broad evaluator labels | semantic incompleteness and partial repair risk |
-| Regression patch | 1 | Incorrect regression | 1 | P2P-broad regression label | regression-safety risk |
+| candidate type | count | hidden label | purpose |
+| --- | ---: | --- | --- |
+| Correct reference | 21 | correct | correct-patch recall |
+| Buggy no-op | 21 | Issue not fixed | obvious negative |
+| Irrelevant patch | 14 | Issue not fixed | plausibility trap |
+| Partial fix | 41 | Issue not fixed | semantic incompleteness |
+| Regression patch | 1 | regression | regression risk |
+
+The 76 issue-not-fixed negatives plus one regression negative form the 77 non-correct candidates. Project counts are PySnooper 10, cookiecutter 19, httpie 6, thefuck 4, tqdm 7, and youtube-dl 52.
 
 Five selected models produced complete parse-valid decisions on an earlier frozen E0-E6 packet set, but the paper-facing main result now uses repaired Qwen, DeepSeek, and Gemini v0.3 label-conditioned analyses plus the E6 ablation package. The earlier five-model aggregate synthesis is used only descriptively and not as evidence of final model superiority. The repaired three-model main table removes the previous single-/two-model visibility weakness, but it still does not prove broad LLM superiority over deterministic tool summaries.
 
 ## 4. Experimental Design
 
-The experiment asks three research questions. RQ1 asks whether repaired accept-aware evidence changes Qwen, DeepSeek, and Gemini label-conditioned decisions across E0-E6. RQ2 asks whether verdict-like deterministic tool summaries anchor E6 decisions. RQ3 asks whether explicit tool- or coverage-contestation can challenge visible-test-only accept premises, and whether that challenge occurs through strict rejection, safe escalation, or over-conservative recall loss. A later hard-negative stress matrix is reported as a supplemental stress test rather than a main research question because its third project comes from curated no-API stress-source variants, not a pure agent-generated realistic cohort.
+The experiment asks three research questions. RQ1 asks whether repaired accept-aware evidence changes Qwen, DeepSeek, and Gemini label-conditioned decisions across E0-E6. RQ2 asks whether verdict-like deterministic tool summaries anchor E6 decisions. RQ3 asks: when visible evidence is challenged, do models correct wrong accepts or route them to escalation? Tool-contestation, current-98 coverage-contestation, and the hard-negative stress matrix are three evidence sources for RQ3 rather than separate main questions. The hard-negative stress matrix remains a supplemental stress test because its third project comes from curated no-API stress-source variants, not a pure agent-generated realistic cohort.
 
 All metrics are computed after post-decision hidden-label join. The main metrics are accepted precision, correct recall, false accept rate, false reject rate, and escalation rate. Accepted precision measures the correctness of accepted patches. Correct recall measures how many correct patches were accepted. False accept rate measures how often non-correct candidates were accepted. Escalation rate measures routing to human review.
 
 The baseline boundary is explicit. Always-escalate, always-reject, and always-accept are deterministic reference policies calculated from label totals. Uniform random three-way is an expected reference policy, not a stochastic experiment. The completed deterministic baseline is rule-only visible-tool. Qwen E0 is an observed model condition, not a deterministic no-tool verifier. Majority-vote and a separate E0/no-tool deterministic verifier are not reported as completed because current tracked summaries do not contain candidate-level aligned decision records.
+
+### 4.1 Implementation and artifact boundary
+
+All repaired main runs used the same frozen prompt template, `evp8_visible_evidence_merge_gate_v0_2`, the same E0-E6 packet construction, temperature 0.0, and a 4096-token output cap. The three repaired full runs each produced 686 parse-valid records, covering 98 candidates across seven levels. Parse validity required a schema-conforming accept, reject, or escalate decision with required structured fields; invalid JSON or missing decisions were execution-chain failures, not model decisions. DeepSeek and Gemini tracked cost summaries report USD 0.4342 and USD 0.6389, respectively. Qwen provider telemetry recorded USD 0.0 in the tracked summary and is not treated as an external billing claim. The paper-facing artifacts are raw-output-free summaries, scripts, generated packets, audits, and anonymized aggregate tables; raw provider responses, rendered prompts, patch diffs, local configs, and credentials remain excluded from tracked outputs.
 
 All paper-facing claims are constrained by a setting-validity audit. The audit checks run coverage, parse validity, raw-output-free summaries, post-execution label joins, prompt-boundary conditions, baseline feasibility, and exclusion of the earlier invalid setting. The audit passed only for bounded claims.
 
@@ -145,7 +151,7 @@ Across Qwen, DeepSeek, and Gemini, the current merge-gate prompt produced 62 rep
 | Current prompt | 93 | 62 (66.67%) | 0 (0.00%) | 31 (33.33%) | 31 (33.33%) |
 | Coverage prompt | 93 | 12 (12.90%) | 0 (0.00%) | 81 (87.10%) | 81 (87.10%) |
 
-This stress result strengthens the risk-triage interpretation. It shows that the stronger prompt can route many visible-pass/hidden-fail candidates away from autonomous acceptance, including all Gemini stress cases and all DeepSeek stress cases. It does not show semantic correction, because no condition strictly rejected the hard negatives. Correct recall is also undefined in this all-negative cohort.
+This stress result strengthens the risk-triage interpretation. It is bounded triage evidence: the stronger prompt can route many visible-pass/hidden-fail candidates away from autonomous acceptance, including all Gemini stress cases and all DeepSeek stress cases. It does not show semantic correction, because no condition strictly rejected the hard negatives. Correct recall is also undefined in this all-negative cohort.
 
 ### 5.6 E6 false accepts were concentrated in partial and regression negatives
 
@@ -165,15 +171,13 @@ The sanitized case-level export records candidate id, project, task, negative ty
 
 The main implication is that LLM patch verification should be evaluated with explicit evidence boundaries. The same candidate patch may be treated differently when visible tests, regression checks, diagnostics, or deterministic tool summaries are introduced. Reporting only an aggregate accept/reject rate would hide this dependence.
 
+Prompt sensitivity is part of the measurement target rather than only a nuisance variable. EVP-8 exposes whether a prompt reduces false-accept risk through semantic discrimination or through abstention-driven routing. In the current evidence, the safer coverage-contestation behavior was mostly abstention and escalation, not strict correction.
+
 The results also clarify the role of escalation. Escalation can be useful for software-quality workflows because it routes risky cases away from autonomous acceptance. However, escalation is not strict correction, and aggressive contestation can destroy correct-patch recall. This distinction matters for deployment: a verifier that escalates risky candidates may reduce unsafe automation, but it has not proven semantic incorrectness or preserved useful acceptance.
 
 The strongest current contribution is methodological. EVP-8 provides a reproducible way to separate model-visible evidence from hidden evaluator labels, report accept/reject/escalate outcomes, and connect each claim to a validity gate. This is why the paper is framed as a controlled protocol and measurement study rather than as a new repair or verification algorithm.
 
 Several reviewer concerns remain bounded rather than eliminated. The cohort is small, Wilson intervals are wide, repaired Qwen, DeepSeek, and Gemini are the main model conditions, majority-vote cannot be computed from the current tracked summaries, and the hard-negative stress matrix is a stress-test supplement rather than a pure realistic agent-patch cohort. Most importantly, the current paper-facing main result is three-model but still not broad-model. These are not hidden weaknesses; they are the boundary conditions under which the current claims are valid.
-
-![Figure 3. Claim boundary and setting-validity map.](../figures/ccfc/ccfc_fig3_claim_boundary.png)
-
-**Figure 3. Claim boundary and setting-validity map.** Supported findings are bounded by leakage controls, protocol repairs, and the stress matrix's triage-only interpretation. The map separates supported claims from forbidden overclaims and shows why the hard-negative stress matrix must be interpreted as bounded triage evidence.
 
 ## 7. Threats to Validity
 

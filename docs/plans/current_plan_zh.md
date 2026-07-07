@@ -24297,3 +24297,107 @@ paper-facing 生成链路和排版呈现修复，不扩实验、不调用 API。
 - 这仍不是最终投稿件；
 - 下一步应单独做 verified reference expansion：把 APSEC references 从 11 条扩到
   约 22--30 条，并规范 BibTeX/IEEE 格式。该步骤需要联网核验文献和 DOI。
+
+## 2026-07-07 APSEC references/method-detail revision
+
+本轮小目标是处理 APSEC 审稿专业性风险：reference density/format 不足、方法
+细节不够可复查、Table II 表述仍绕、RQ3 过宽、coverage-contestation 可能被质疑为
+prompt trick、Figure 3 可读性低。目标是生成器级修复，不手改最终 PDF。
+
+执行边界：
+
+- 不改实验结果、不调用模型 API、不读取 raw responses、rendered prompts 或 patch
+  diffs；
+- 参考文献必须联网核验，优先使用论文主页、ACM/IEEE/ACL/OpenReview/arXiv/DBLP
+  等主来源，不凭空生成引用；
+- APSEC BibTeX 至少扩到 20 条，目标 20--25 条；同时清理 `@misc` 临时转换风格；
+- 方法细节只使用 tracked summary/config/protocol 中已有字段，不补造不可核验细节；
+- Figure 3 若保留会继续占空间且可读性低，本轮优先从 APSEC 主文移除，将 claim
+  boundary 保留为文字；
+- Table II 改成四列简表：candidate type、count、hidden label、purpose，并用正文
+  单句解释 76 issue-not-fixed + 1 regression = 77 non-correct；
+- RQ3 改成单一问题：visible evidence 被挑战时，模型是 corrected wrong accepts
+  还是 route to escalation；
+- Discussion 加入 prompt sensitivity 贡献句：EVP-8 暴露风险降低来自 discrimination
+  还是 abstention。
+
+验收条件：
+
+1. `scripts/write_apsec_manuscript_rewrite.py` 完成 Table II、RQ3、Implementation
+   and Artifact、Discussion 和 Figure 3 APSEC 主文调整；
+2. `scripts/write_apsec_ieeetran_package.py` 输出正式结构化 BibTeX，reference count
+   至少 20，并在 audit 中阻断 sparse references；
+3. APSEC Markdown/TeX/PDF/page-budget/layout audit 全部重新生成并通过；
+4. 禁止字符串和敏感信息扫描通过；
+5. README、docs/INDEX、current_project_state_zh、engineering_notes 和本计划同步；
+6. 本轮提交并尝试同步 GitHub。若 GitHub 443 仍不可达，记录本地 ahead 状态和
+   push 失败原因。
+
+执行结果：
+
+- `scripts/write_apsec_manuscript_rewrite.py` 已完成 APSEC 主文结构修补：
+  - Table II 改为四列简表：candidate type、count、hidden label、purpose；
+  - 正文新增说明：76 个 issue-not-fixed negatives + 1 个 regression negative =
+    77 个 non-correct candidates；
+  - 新增项目分布：PySnooper 10、cookiecutter 19、httpie 6、thefuck 4、tqdm 7、
+    youtube-dl 52；
+  - RQ3 改为单一问题：visible evidence 被 challenge 时，模型是 correct wrong
+    accepts 还是 route to escalation；
+  - 新增 `4.1 Implementation and artifact boundary`，说明 frozen prompt、E0-E6
+    packets、temperature 0.0、4096-token output cap、三模型各 686 parse-valid
+    records、parse-validity 定义、DeepSeek/Gemini 成本、Qwen 成本 telemetry 边界、
+    raw-free artifact policy；
+  - Discussion 新增 prompt sensitivity 贡献句：EVP-8 暴露 risk reduction 是来自
+    semantic discrimination 还是 abstention-driven routing；
+  - APSEC 主文删除 Figure 3，保留为 CCF-C/claim-boundary artifact，不再放入
+    APSEC main PDF。
+- `scripts/write_apsec_ieeetran_package.py` 已完成 APSEC reference/BibTeX 修复：
+  - 新增 APSEC 专用结构化 BibTeX 表；
+  - references 从 11 条扩到 24 条；
+  - 新增类别覆盖 APR/test overfitting、LLM code review、LLM code generation/
+    repair、SWE-bench/software-agent evaluation、LLM-as-judge reliability、
+    selective prediction/reject option；
+  - `@misc` 临时转换不再主导 bibliography；
+  - page-budget audit 新增 sparse-reference 和 temporary-misc-only gate；
+  - Figure 2 改为双栏图，提升可读性；
+  - 核验时发现 Bears DOI 指向另一篇 SANER paper，已移除错误 DOI，改为
+    arXiv-backed conference reference。
+- `scripts/audit_apsec_manuscript_rewrite.py` 已同步新要求：
+  - 检查 Table II 简化；
+  - 检查 RQ3 统一；
+  - 检查 Implementation and Artifact；
+  - 检查 prompt sensitivity discussion；
+  - 检查 Figure 3 不再出现在 APSEC main draft；
+  - 检查新增 citation keys。
+- 当前 APSEC PDF 状态：
+  - compiled PDF pages = 7；
+  - converted tables = 6；
+  - converted figures = 2；
+  - cited references / bibitems = 24；
+  - undefined references = false；
+  - overfull hbox = 0；
+  - underfull hbox = 11；
+  - layout audit 渲染 7/7 页，页面非空，author block 匿名。
+
+验证结果：
+
+- `python -m py_compile scripts\write_apsec_manuscript_rewrite.py scripts\write_apsec_ieeetran_package.py scripts\audit_apsec_manuscript_rewrite.py scripts\audit_apsec_pdf_layout.py`：通过；
+- `python scripts\write_apsec_manuscript_rewrite.py --check`：通过；
+- `python scripts\audit_apsec_manuscript_rewrite.py --check`：通过；
+- `python scripts\write_apsec_ieeetran_package.py --compile`：通过；
+- `python scripts\write_apsec_ieeetran_package.py --check`：通过；
+- `python scripts\audit_apsec_pdf_layout.py --check`：通过；
+- `.bbl` 中 `\bibitem` 数量 = 24；
+- 禁止字符串扫描无 APSEC 机械转换残留：无 `Converted APSEC`、重复 Figure caption、
+  `Figure 3`、`32.666666666666664`、`companion IEEEtran`、
+  `Reference Support Records`；
+- 已生成并人工查看 contact sheet：
+  `tmp/pdfs/apsec_ieeetran_layout_audit/contact_sheet.png`，未见明显空白页、
+  表格溢出、标题堆叠；Figure 2 可读性较上一版提升。
+
+当前判断：
+
+- APSEC references 和方法可复查性已经明显改善；
+- 当前 PDF 仍不是 final submission PDF；
+- 下一步不是继续补实验，而是 final human review：逐条人工核对 BibTeX、最终
+  double-blind、venue formatting 和全文可读性。
