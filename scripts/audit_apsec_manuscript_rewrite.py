@@ -75,7 +75,7 @@ def build_audit() -> dict[str, Any]:
         check("apsec_status_present", "APSEC technical-track Markdown rewrite" in manuscript),
         check(
             "target_format_note_present",
-            "IEEEtran/BibTeX/page-budget draft package" in manuscript
+            "IEEEtran source package is generated separately" in manuscript
             and "not the final PDF" in manuscript,
         ),
         check("required_sections_present", not missing_sections, missing_sections),
@@ -89,17 +89,17 @@ def build_audit() -> dict[str, Any]:
         check(
             "three_model_repaired_main_result_present",
             "three-model repaired v0.3 analysis for Qwen, DeepSeek, and Gemini" in manuscript
-            and "| deepseek/deepseek-v4-pro | 21 | 17 | 4 | 80.95% | 80.95% | 5.19% | 4.08% |"
+            and "| DeepSeek | E6 | 21 | 17 | 4 | 80.95% | 80.95% | 5.19% | 4.08% |"
             in manuscript
-            and "| google/gemini-2.5-flash | 25 | 20 | 5 | 80.00% | 95.24% | 6.49% | 0.00% |"
+            and "| Gemini | E6 | 25 | 20 | 5 | 80.00% | 95.24% | 6.49% | 0.00% |"
             in manuscript,
         ),
         check(
             "dataset_composition_present",
             "98 candidate patches from 6 projects and 21 BugsInPy tasks" in manuscript
-            and "| correct_reference | 21 |" in manuscript
-            and "| partial_fix | 41 |" in manuscript
-            and "| regression_patch | 1 |" in manuscript,
+            and "| Correct reference | 21 |" in manuscript
+            and "| Partial fix | 41 |" in manuscript
+            and "| Regression patch | 1 |" in manuscript,
         ),
         check(
             "evidence_ladder_humanized",
@@ -119,14 +119,16 @@ def build_audit() -> dict[str, Any]:
         ),
         check(
             "deepseek_main_result_present",
-            "DeepSeek level-conditioned metrics:" in manuscript
-            and "| E6 | 21 | 17 | 4 | 80.95% | 80.95% | 5.19% | 4.08% |"
+            "| DeepSeek | E3 | 16 | 13 | 3 | 81.25% | 61.90% | 3.90% | 8.16% |"
+            in manuscript
+            and "| DeepSeek | E6 | 21 | 17 | 4 | 80.95% | 80.95% | 5.19% | 4.08% |"
             in manuscript,
         ),
         check(
             "gemini_main_result_present",
-            "Gemini level-conditioned metrics:" in manuscript
-            and "| E6 | 25 | 20 | 5 | 80.00% | 95.24% | 6.49% | 0.00% |"
+            "| Gemini | E3 | 25 | 20 | 5 | 80.00% | 95.24% | 6.49% | 3.06% |"
+            in manuscript
+            and "| Gemini | E6 | 25 | 20 | 5 | 80.00% | 95.24% | 6.49% | 0.00% |"
             in manuscript,
         ),
         check(
@@ -144,7 +146,7 @@ def build_audit() -> dict[str, Any]:
         ),
         check("qwen_e0_not_deterministic", "Qwen E0 is an observed model condition, not a deterministic no-tool verifier" in manuscript),
         check("majority_boundary_present", "Majority-vote and a separate E0/no-tool deterministic verifier are not reported as completed" in manuscript),
-        check("ci_present", "95% CI" in manuscript and "Wilson intervals are wide" in manuscript),
+        check("ci_present", "CI table remains part of the analysis package" in manuscript and "Wilson intervals are wide" in manuscript),
         check(
             "false_accept_anatomy_present",
             "E6 false accepts were concentrated in partial and regression negatives" in manuscript
@@ -152,12 +154,12 @@ def build_audit() -> dict[str, Any]:
             in manuscript
             and "Gemini accepted four partial fixes and one regression patch"
             in manuscript
-            and "| google/gemini-2.5-flash | 4/41 | 1/1 | 5 |"
+            and "| thefuck / thefuck_1 | Regression patch | DeepSeek, Gemini, Qwen |"
             in manuscript,
         ),
         check(
             "sanitized_false_accept_case_analysis_present",
-            "A sanitized case-level analysis is now available" in manuscript
+            "The sanitized case-level export records candidate id" in manuscript
             and "excludes raw response text, full rationale text, rendered prompts, patch diffs, and credentials"
             in manuscript,
         ),

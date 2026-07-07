@@ -4817,3 +4817,29 @@ This file starts fresh for the patch-verification project.
 - Keep the key boundary sentence near the result table: repeated false accepts
   fell from 62/93 to 12/93, but strict rejects stayed at 0, so this is
   conservative triage evidence, not strict correction.
+
+## 2026-07-07 APSEC camera-facing PDF cleanup
+
+- A compiled PDF is not automatically submission-facing just because LaTeX
+  compiles. Mechanical captions such as `Converted APSEC draft table X`,
+  duplicated `Figure N` captions, internal package notes, raw floating-point
+  values, and too many converted tables should be audit blockers.
+- Main-body table count must be curated at the generator level. If the Markdown
+  generator emits every analysis table, the IEEEtran converter will create an
+  appendix-like PDF even when each individual table compiles.
+- Keep detailed per-level, CI, and per-model stress breakdowns in analysis
+  artifacts unless they carry the main paper's evidence chain. For the APSEC
+  draft, the camera-facing main PDF uses six tables: evidence levels, dataset
+  composition, selected three-model main results, E6 ablation, hard-negative
+  stress aggregate, and false-accept case groups.
+- Treat strong deterministic baselines as a result boundary, not as a threat to
+  hide. The APSEC text should say that EVP-8 exposes tool-following,
+  abstention, and prompt-induced conservatism rather than claiming large LLM
+  gains over rule-only visible-tool summaries.
+- Single-case regression failures can be severe signals, but not statistical
+  conclusions. The manuscript should explicitly say that the one regression
+  negative accepted by all three models is a severe failure signal, not a broad
+  regression-safety failure rate.
+- After changing table labels, recompile and inspect the log. The
+  `Coverage-contestation` condition label caused the only overfull hbox; shorter
+  paper labels removed it without changing the underlying experimental result.

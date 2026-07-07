@@ -2,7 +2,7 @@
 
 Draft status: APSEC technical-track Markdown rewrite v0.1, 2026-07-05.
 
-Target format note: this draft is shaped for an APSEC-style technical research paper. The companion IEEEtran/BibTeX/page-budget draft package is generated separately; this Markdown file is not the final PDF.
+Target format note: this draft is shaped for an APSEC-style technical research paper. The IEEEtran source package is generated separately; this Markdown file is not the final PDF.
 
 ## Abstract
 
@@ -60,11 +60,11 @@ The current packet set contains 98 candidate patches from 6 projects and 21 Bugs
 
 | candidate type | count | evaluator label | label count | label source | purpose |
 | --- | ---: | --- | ---: | --- | --- |
-| correct_reference | 21 | correct_under_f2p_and_p2p_broad | 21 | hidden F2P and P2P-broad evaluator labels | measure correct-patch recall |
-| buggy_noop | 21 | incorrect_issue_not_fixed | part of 76 issue-not-fixed negatives | hidden evaluator labels | issue-not-fixed false-accept risk |
-| irrelevant_patch | 14 | incorrect_issue_not_fixed | part of 76 issue-not-fixed negatives | hidden evaluator labels | plausibility-trap negative patches |
-| partial_fix | 41 | incorrect_issue_not_fixed | part of 76 issue-not-fixed negatives | hidden F2P and P2P-broad evaluator labels | semantic incompleteness and partial repair risk |
-| regression_patch | 1 | incorrect_regression | 1 | P2P-broad regression label | regression-safety risk |
+| Correct reference | 21 | Correct under F2P and P2P-broad | 21 | hidden F2P and P2P-broad evaluator labels | measure correct-patch recall |
+| Buggy no-op | 21 | Issue not fixed | part of 76 issue-not-fixed negatives | hidden evaluator labels | issue-not-fixed false-accept risk |
+| Irrelevant patch | 14 | Issue not fixed | part of 76 issue-not-fixed negatives | hidden evaluator labels | plausibility-trap negative patches |
+| Partial fix | 41 | Issue not fixed | part of 76 issue-not-fixed negatives | hidden F2P and P2P-broad evaluator labels | semantic incompleteness and partial repair risk |
+| Regression patch | 1 | Incorrect regression | 1 | P2P-broad regression label | regression-safety risk |
 
 Five selected models produced complete parse-valid decisions on an earlier frozen E0-E6 packet set, but the paper-facing main result now uses repaired Qwen, DeepSeek, and Gemini v0.3 label-conditioned analyses plus the E6 ablation package. The earlier five-model aggregate synthesis is used only descriptively and not as evidence of final model superiority. The repaired three-model main table removes the previous single-/two-model visibility weakness, but it still does not prove broad LLM superiority over deterministic tool summaries.
 
@@ -76,14 +76,6 @@ All metrics are computed after post-decision hidden-label join. The main metrics
 
 The baseline boundary is explicit. Always-escalate, always-reject, and always-accept are deterministic reference policies calculated from label totals. Uniform random three-way is an expected reference policy, not a stochastic experiment. The completed deterministic baseline is rule-only visible-tool. Qwen E0 is an observed model condition, not a deterministic no-tool verifier. Majority-vote and a separate E0/no-tool deterministic verifier are not reported as completed because current tracked summaries do not contain candidate-level aligned decision records.
 
-| policy or condition | status | accept | reject | escalate | role |
-| --- | --- | ---: | ---: | ---: | --- |
-| always_escalate | calculable_from_label_totals | 0 | 0 | 98 | conservative abstention reference, not a useful verifier. |
-| always_reject | calculable_from_label_totals | 0 | 98 | 0 | safety-heavy lower-bound reference exposing recall collapse. |
-| always_accept | calculable_from_label_totals | 98 | 0 | 0 | unsafe throughput reference exposing base-rate risk. |
-| uniform_random_three_way_expected | calculable_expected_reference_from_label_totals | 32.666666666666664 | 32.666666666666664 | 32.666666666666664 | sanity-check reference for the decision space, not a completed verifier or a reported stochastic experiment. |
-| rule_only_visible_tool | completed_existing_tracked_result | 25 | 73 | 0 | main deterministic baseline for E6 full/no-verdict comparison. |
-
 All paper-facing claims are constrained by a setting-validity audit. The audit checks run coverage, parse validity, raw-output-free summaries, post-execution label joins, prompt-boundary conditions, baseline feasibility, and exclusion of the earlier invalid setting. The audit passed only for bounded claims.
 
 ## 5. Results
@@ -92,47 +84,17 @@ All paper-facing claims are constrained by a setting-validity audit. The audit c
 
 In the repaired Qwen, DeepSeek, and Gemini v0.3 runs, E0-E2 produced no accepted correct patches for Qwen and DeepSeek and only a single incorrect Gemini accept at E1. Once visible executable evidence entered the packet, all three models began accepting correct patches, but their risk policies diverged. Qwen reached 80.95% correct recall at E3 and 95.24% at E6. DeepSeek reached 61.90% correct recall at E3, became more conservative at E4-E5, and reached 80.95% at E6. Gemini reached 95.24% correct recall from E3 through E6, but accepted five of 77 non-correct candidates at E6. The repaired three-model table therefore strengthens the evidence-visibility finding while preserving the false-accept risk boundary.
 
-| model | E6 accept | E6 correct accept | E6 false accept | E6 accepted precision | E6 correct recall | E6 false accept rate | E6 escalation rate |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| qwen/qwen3.7-max | 24 | 20 | 4 | 83.33% | 95.24% | 5.19% | 0.00% |
-| deepseek/deepseek-v4-pro | 21 | 17 | 4 | 80.95% | 80.95% | 5.19% | 4.08% |
-| google/gemini-2.5-flash | 25 | 20 | 5 | 80.00% | 95.24% | 6.49% | 0.00% |
-
-Qwen level-conditioned metrics:
-
-| level | accept | correct accept | false accept | accepted precision | correct recall | false accept rate | escalation rate |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| E0 | 0 | 0 | 0 | n/a | 0.00% | 0.00% | 75.51% |
-| E1 | 0 | 0 | 0 | n/a | 0.00% | 0.00% | 75.51% |
-| E2 | 0 | 0 | 0 | n/a | 0.00% | 0.00% | 74.49% |
-| E3 | 20 | 17 | 3 | 85.00% | 80.95% | 3.90% | 4.08% |
-| E4 | 21 | 18 | 3 | 85.71% | 85.71% | 3.90% | 2.04% |
-| E5 | 21 | 18 | 3 | 85.71% | 85.71% | 3.90% | 3.06% |
-| E6 | 24 | 20 | 4 | 83.33% | 95.24% | 5.19% | 0.00% |
-
-DeepSeek level-conditioned metrics:
-
-| level | accept | correct accept | false accept | accepted precision | correct recall | false accept rate | escalation rate |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| E0 | 0 | 0 | 0 | n/a | 0.00% | 0.00% | 96.94% |
-| E1 | 0 | 0 | 0 | n/a | 0.00% | 0.00% | 98.98% |
-| E2 | 0 | 0 | 0 | n/a | 0.00% | 0.00% | 98.98% |
-| E3 | 16 | 13 | 3 | 81.25% | 61.90% | 3.90% | 8.16% |
-| E4 | 7 | 7 | 0 | 100.00% | 33.33% | 0.00% | 18.37% |
-| E5 | 1 | 1 | 0 | 100.00% | 4.76% | 0.00% | 24.49% |
-| E6 | 21 | 17 | 4 | 80.95% | 80.95% | 5.19% | 4.08% |
-
-Gemini level-conditioned metrics:
-
-| level | accept | correct accept | false accept | accepted precision | correct recall | false accept rate | escalation rate |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| E0 | 0 | 0 | 0 | n/a | 0.00% | 0.00% | 98.98% |
-| E1 | 1 | 0 | 1 | 0.00% | 0.00% | 1.30% | 95.92% |
-| E2 | 0 | 0 | 0 | n/a | 0.00% | 0.00% | 98.98% |
-| E3 | 25 | 20 | 5 | 80.00% | 95.24% | 6.49% | 3.06% |
-| E4 | 25 | 20 | 5 | 80.00% | 95.24% | 6.49% | 0.00% |
-| E5 | 25 | 20 | 5 | 80.00% | 95.24% | 6.49% | 0.00% |
-| E6 | 25 | 20 | 5 | 80.00% | 95.24% | 6.49% | 0.00% |
+| model | level | accept | correct accept | false accept | accepted precision | correct recall | false accept rate | escalation rate |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Qwen | E0 | 0 | 0 | 0 | n/a | 0.00% | 0.00% | 75.51% |
+| Qwen | E3 | 20 | 17 | 3 | 85.00% | 80.95% | 3.90% | 4.08% |
+| Qwen | E6 | 24 | 20 | 4 | 83.33% | 95.24% | 5.19% | 0.00% |
+| DeepSeek | E0 | 0 | 0 | 0 | n/a | 0.00% | 0.00% | 96.94% |
+| DeepSeek | E3 | 16 | 13 | 3 | 81.25% | 61.90% | 3.90% | 8.16% |
+| DeepSeek | E6 | 21 | 17 | 4 | 80.95% | 80.95% | 5.19% | 4.08% |
+| Gemini | E0 | 0 | 0 | 0 | n/a | 0.00% | 0.00% | 98.98% |
+| Gemini | E3 | 25 | 20 | 5 | 80.00% | 95.24% | 6.49% | 3.06% |
+| Gemini | E6 | 25 | 20 | 5 | 80.00% | 95.24% | 6.49% | 0.00% |
 
 ![Figure 2. Accept-aware and no-verdict metric evidence.](../figures/ccfc/ccfc_fig2_decision_patterns.png)
 
@@ -146,25 +108,17 @@ The E6 ablation is a separate verdict-field ablation package rather than the rep
 
 | condition | accept | reject | escalate | accepted precision | correct recall | false accept rate | escalation rate |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| rule-only | 25 | 73 | 0 | 80.00% | 95.24% | 6.49% | 0.00% |
-| deepseek/deepseek-v4-pro E6-full | 23 | 75 | 0 | 82.61% | 90.48% | 5.19% | 0.00% |
-| deepseek/deepseek-v4-pro E6-no-verdict | 11 | 73 | 14 | 100.00% | 52.38% | 0.00% | 14.29% |
-| qwen/qwen3.7-max E6-full | 24 | 74 | 0 | 83.33% | 95.24% | 5.19% | 0.00% |
-| qwen/qwen3.7-max E6-no-verdict | 23 | 74 | 1 | 82.61% | 90.48% | 5.19% | 1.02% |
+| Rule-only visible-tool | 25 | 73 | 0 | 80.00% | 95.24% | 6.49% | 0.00% |
+| DeepSeek E6-full | 23 | 75 | 0 | 82.61% | 90.48% | 5.19% | 0.00% |
+| DeepSeek E6-no-verdict | 11 | 73 | 14 | 100.00% | 52.38% | 0.00% | 14.29% |
+| Qwen E6-full | 24 | 74 | 0 | 83.33% | 95.24% | 5.19% | 0.00% |
+| Qwen E6-no-verdict | 23 | 74 | 1 | 82.61% | 90.48% | 5.19% | 1.02% |
 
 Qwen E6-full and rule-only produced similar correct recall, accepted precision, and false accept rates. Qwen E6-no-verdict remained close to Qwen E6-full. DeepSeek E6-no-verdict removed false accepts in this cohort, but correct recall dropped to 52.38% and escalation increased to 14.29%. The safer behavior therefore appears to be partly abstention-driven rather than strict semantic discrimination.
 
-This is an important negative result for the LLM-verifier claim. The deterministic rule-only baseline was already strong: it reached 95.24% correct recall and 80.00% accepted precision, compared with 95.24% and 83.33% for Qwen E6-full. The current evidence therefore does not justify claiming a large LLM gain over the tool summary. The value of the LLM conditions in this draft is narrower: they expose how model policy changes when verdict-like fields are removed or challenged, and they show whether risky accepts are routed to escalation rather than autonomous acceptance.
+This is an important negative result for the LLM-verifier claim. The deterministic rule-only baseline was already strong: it reached 95.24% correct recall and 80.00% accepted precision, compared with 95.24% and 83.33% for Qwen E6-full. The goal of EVP-8 is not to show that LLMs dominate rule-only tool summaries, but to expose when LLM decisions collapse into tool-following, abstention, or prompt-induced conservatism. The current evidence therefore does not justify claiming a large LLM gain over the tool summary. The value of the LLM conditions in this draft is narrower: they expose how model policy changes when verdict-like fields are removed or challenged, and they show whether risky accepts are routed to escalation rather than autonomous acceptance.
 
-The Wilson intervals are wide, so the ablation should be read as bounded risk-policy evidence rather than as a ranking of model quality.
-
-| condition | accepted precision 95% CI | correct recall 95% CI | false accept rate 95% CI | escalation rate 95% CI |
-| --- | ---: | ---: | ---: | ---: |
-| rule-only | 80.00% [60.87%, 91.14%] | 95.24% [77.33%, 99.15%] | 6.49% [2.81%, 14.32%] | 0.00% [0.00%, 3.77%] |
-| qwen/qwen3.7-max E6-full | 83.33% [64.15%, 93.32%] | 95.24% [77.33%, 99.15%] | 5.19% [2.04%, 12.61%] | 0.00% [0.00%, 3.77%] |
-| qwen/qwen3.7-max E6-no-verdict | 82.61% [62.86%, 93.02%] | 90.48% [71.09%, 97.35%] | 5.19% [2.04%, 12.61%] | 1.02% [0.18%, 5.56%] |
-| deepseek/deepseek-v4-pro E6-full | 82.61% [62.86%, 93.02%] | 90.48% [71.09%, 97.35%] | 5.19% [2.04%, 12.61%] | 0.00% [0.00%, 3.77%] |
-| deepseek/deepseek-v4-pro E6-no-verdict | 100.00% [74.12%, 100.00%] | 52.38% [32.37%, 71.66%] | 0.00% [0.00%, 4.75%] | 14.29% [8.70%, 22.56%] |
+The Wilson intervals are wide, so the ablation should be read as bounded risk-policy evidence rather than as a ranking of model quality. The full CI table remains part of the analysis package rather than a main-body table.
 
 ### 5.3 Tool-contestation shifted risky accepts to escalation, not strict correction
 
@@ -172,20 +126,11 @@ On the EVP-8-HARD cohort, tool-contestation evaluated 47 candidates for both Qwe
 
 This result supports safe handling through escalation. It does not support a claim that tool-contestation reliably identifies semantic incorrectness, because strict correction remained zero for both models.
 
-| model | opportunity cases | safe handling 95% CI | strict correction 95% CI | repeated accept 95% CI |
-| --- | ---: | ---: | ---: | ---: |
-| deepseek/deepseek-v4-pro | 9 | 100.00% [70.09%, 100.00%] | 0.00% [0.00%, 29.91%] | 0.00% [0.00%, 29.91%] |
-| qwen/qwen3.7-max | 9 | 88.89% [56.50%, 98.01%] | 0.00% [0.00%, 29.91%] | 11.11% [1.99%, 43.50%] |
+The opportunity-set Wilson intervals are wide and are retained in the analysis package rather than expanded into a separate main-body table.
 
 ### 5.4 Coverage-contestation removed repeated false accepts by becoming highly conservative
 
 The current-98 coverage-contestation condition tested whether a stronger prompt could challenge visible-test-only acceptance without changing the frozen E6/no-verdict packet set. It removed repeated false accepts for Qwen, DeepSeek, and Gemini, reducing the false accept rate on 77 non-correct candidates to 0.00% for all three models. This is prompt-sensitivity evidence, not a new main result, because the same condition also collapsed correct-patch acceptance. DeepSeek and Gemini accepted no correct patches, and Qwen accepted only 2 of 21 correct patches.
-
-| model | accept | reject | escalate | repeated false accept | strict reject on wrong | safe escalation on wrong | correct recall | correct recall loss |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| deepseek/deepseek-v4-pro | 0 | 73 | 25 | 0.00% | 93.51% | 6.49% | 0.00% | 100.00% |
-| google/gemini-2.5-flash | 0 | 73 | 25 | 0.00% | 93.51% | 6.49% | 0.00% | 100.00% |
-| qwen/qwen3.7-max | 2 | 74 | 22 | 0.00% | 94.81% | 5.19% | 9.52% | 90.48% |
 
 The result answers a narrow prompt-setting question. A model can be instructed to challenge coverage sufficiency and avoid visible-test-only acceptance on this frozen cohort, but the observed mechanism is mostly conservative triage rather than semantic discrimination. Therefore the paper should not claim that coverage-contestation improves autonomous verification. The supported claim is that prompt framing can move false-accept risk into reject/escalate outcomes while imposing a large correct-recall cost.
 
@@ -197,31 +142,24 @@ Across Qwen, DeepSeek, and Gemini, the current merge-gate prompt produced 62 rep
 
 | condition | records | repeated false accepts | strict rejects | safe escalations | safe handling |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| current_merge_gate | 93 | 62 (66.67%) | 0 (0.00%) | 31 (33.33%) | 31 (33.33%) |
-| coverage_contestation | 93 | 12 (12.90%) | 0 (0.00%) | 81 (87.10%) | 81 (87.10%) |
-
-| condition | model | accept | reject | escalate | safe handling |
-| --- | --- | ---: | ---: | ---: | ---: |
-| current_merge_gate | deepseek/deepseek-v4-pro | 0 | 0 | 31 | 31 (100.00%) |
-| current_merge_gate | google/gemini-2.5-flash | 31 | 0 | 0 | 0 (0.00%) |
-| current_merge_gate | qwen/qwen3.7-max | 31 | 0 | 0 | 0 (0.00%) |
-| coverage_contestation | deepseek/deepseek-v4-pro | 0 | 0 | 31 | 31 (100.00%) |
-| coverage_contestation | google/gemini-2.5-flash | 0 | 0 | 31 | 31 (100.00%) |
-| coverage_contestation | qwen/qwen3.7-max | 12 | 0 | 19 | 19 (61.29%) |
+| Current prompt | 93 | 62 (66.67%) | 0 (0.00%) | 31 (33.33%) | 31 (33.33%) |
+| Coverage prompt | 93 | 12 (12.90%) | 0 (0.00%) | 81 (87.10%) | 81 (87.10%) |
 
 This stress result strengthens the risk-triage interpretation. It shows that the stronger prompt can route many visible-pass/hidden-fail candidates away from autonomous acceptance, including all Gemini stress cases and all DeepSeek stress cases. It does not show semantic correction, because no condition strictly rejected the hard negatives. Correct recall is also undefined in this all-negative cohort.
 
 ### 5.6 E6 false accepts were concentrated in partial and regression negatives
 
-The most important failure mode is not the average E6 score but the remaining E6 false accepts among 77 non-correct candidates. Aggregate false-accept anatomy shows that Qwen and DeepSeek each accepted three partial fixes and one regression patch, while Gemini accepted four partial fixes and one regression patch. This breakdown supports the paper's risk framing: visible executable and tool evidence can unlock correct accepts, but summarized tool evidence can still miss semantic incompleteness and regression-safety failures. It remains aggregate anatomy, not a case-level project or rationale table.
+The most important failure mode is not the average E6 score but the remaining E6 false accepts among 77 non-correct candidates. Aggregate false-accept anatomy shows that Qwen and DeepSeek each accepted three partial fixes and one regression patch, while Gemini accepted four partial fixes and one regression patch. In the single regression negative included in EVP-8, all three repaired models accepted it at E6; this is a severe failure signal, not a statistical claim about regression-safety failures. The partial-fix rows show a broader semantic-incompleteness pattern concentrated in youtube-dl tasks.
 
-| model | partial_fix accepts | regression_patch accepts | total E6 false accepts | what the failure shows |
-| --- | ---: | ---: | ---: | --- |
-| qwen/qwen3.7-max | 3/41 | 1/1 | 4 | semantic incompleteness and regression-safety failures remain visible-evidence risks |
-| deepseek/deepseek-v4-pro | 3/41 | 1/1 | 4 | semantic incompleteness and regression-safety failures remain visible-evidence risks |
-| google/gemini-2.5-flash | 4/41 | 1/1 | 5 | semantic incompleteness and regression-safety failures remain visible-evidence risks |
+| project/task | negative type | models accepting | likely cause |
+| --- | --- | --- | --- |
+| thefuck / thefuck_1 | Regression patch | DeepSeek, Gemini, Qwen | visible E6 evidence missed a hidden P2P-broad regression |
+| youtube-dl / youtube-dl_11 | Partial fix | DeepSeek, Gemini | visible tests encouraged acceptance despite partial semantic repair |
+| youtube-dl / youtube-dl_16 | Partial fix | DeepSeek, Gemini, Qwen | visible tests encouraged acceptance despite partial semantic repair |
+| youtube-dl / youtube-dl_20 | Partial fix | DeepSeek, Gemini, Qwen | visible tests encouraged acceptance despite partial semantic repair |
+| youtube-dl / youtube-dl_6 | Partial fix | Gemini, Qwen | merge-gate summary did not expose the remaining semantic gap |
 
-A sanitized case-level analysis is now available for these model-specific false accepts. It records candidate id, project, task, negative type, E6 decision, no-verdict decision where available, and compressed rationale categories, but excludes raw response text, full rationale text, rendered prompts, patch diffs, and credentials. The case rows show repeated risk concentration in the same regression case and several youtube-dl partial fixes; they support failure anatomy, not a claim that the complete model rationale has been audited semantically.
+The sanitized case-level export records candidate id, project, task, negative type, E6 decision, no-verdict decision where available, and compressed rationale categories, but excludes raw response text, full rationale text, rendered prompts, patch diffs, and credentials. The table supports failure anatomy, not a claim that the complete model rationale has been audited semantically.
 
 ## 6. Discussion
 
@@ -250,6 +188,4 @@ Several reviewer concerns remain bounded rather than eliminated. The cohort is s
 ## 8. Conclusion
 
 This paper introduces EVP-8 as a hidden-evaluator evidence-visibility protocol for candidate patch verification. The repaired Qwen, DeepSeek, and Gemini v0.3 results show that visible executable and tool evidence can unlock correct-patch acceptance while retaining false-accept risk and model-dependent caution. E6 ablations, tool-contestation, coverage-contestation, and the hard-negative stress matrix further show that verdict-like evidence and prompt framing can shape policy behavior, and that safer handling often occurs through escalation rather than strict semantic correction. The contribution is a reproducible software-engineering protocol for measuring evidence-conditioned risk behavior in a controlled LLM patch-verifier study, not a claim of autonomous patch correctness verification.
-
-The companion IEEEtran/BibTeX/page-budget draft package converts these citation keys into a draft reference file; final submission still requires BibTeX field normalization, PDF compilation, visual page-budget inspection, and double-blind checks.
 

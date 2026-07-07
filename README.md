@@ -125,16 +125,21 @@ evidence-conditioned policy behavior, not autonomous semantic verification.
 An APSEC IEEEtran/BibTeX/page-budget draft package is now generated at
 `docs/paper/apsec_ieeetran_draft.tex`,
 `docs/paper/apsec_references.bib`, and
-`docs/paper/apsec_page_budget_audit_v0_1.md`; the estimated page count is
-8.14 pages and the compiled IEEEtran/BibTeX PDF is 8 pages with resolved
-references. `scripts/write_apsec_ieeetran_package.py --compile` now regenerates
-the source package and records compile commands in the page-budget audit. The
-compiled PDF render/layout audit is
-`docs/paper/apsec_pdf_layout_audit_v0_1.md`; it renders all 8 pages, checks that
+`docs/paper/apsec_page_budget_audit_v0_1.md`. The 2026-07-07
+camera-facing cleanup removes mechanical conversion artifacts from the PDF:
+semantic table captions replace `Converted APSEC draft table` captions, figure
+captions no longer duplicate `Figure N`, the internal package note is removed,
+long raw floats are formatted, and the main paper is curated to 6 tables rather
+than 14. The compiled IEEEtran/BibTeX PDF is now 6 pages with resolved
+references, 0 overfull hbox warnings, and 11 underfull hbox warnings from
+narrow-column paragraph breaks. `scripts/write_apsec_ieeetran_package.py
+--compile` regenerates the source package and records compile commands in the
+page-budget audit. The compiled PDF render/layout audit is
+`docs/paper/apsec_pdf_layout_audit_v0_1.md`; it renders all 6 pages, checks that
 rendered pages are nonblank, verifies the anonymous author block, and confirms
 old APSEC gate-failed wording is absent. This is still a draft source/PDF
-package, not a final submitted PDF. Remaining APSEC risks are minor
-overfull/underfull warnings, manual BibTeX normalization, final human visual
+package, not a final submitted PDF. Remaining APSEC risks are sparse references
+that need verified expansion and BibTeX normalization, final human visual
 polish, the small 98-candidate cohort, and the fact that three repaired models
 still do not establish broad LLM-verifier generality.
 

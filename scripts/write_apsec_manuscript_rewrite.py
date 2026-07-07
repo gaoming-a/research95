@@ -50,6 +50,16 @@ STRESS_MATRIX_ANALYSIS = (
     / "reviews"
     / "evp8_realistic_hardneg_stress_matrix_analysis_v0_1.json"
 )
+FALSE_ACCEPT_CASE_ANALYSIS = (
+    REPO_ROOT / "data" / "reviews" / "apsec_false_accept_case_analysis_v0_2.json"
+)
+
+
+MODEL_NAMES = {
+    "qwen/qwen3.7-max": "Qwen",
+    "deepseek/deepseek-v4-pro": "DeepSeek",
+    "google/gemini-2.5-flash": "Gemini",
+}
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -57,6 +67,21 @@ def read_json(path: Path) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ValueError(f"{path} must contain a JSON object")
     return value
+
+
+def model_name(model_id: str) -> str:
+    return MODEL_NAMES.get(model_id, model_id)
+
+
+def condition_name(condition: str) -> str:
+    replacements = {
+        "rule-only": "Rule-only visible-tool",
+        "deepseek/deepseek-v4-pro E6-full": "DeepSeek E6-full",
+        "deepseek/deepseek-v4-pro E6-no-verdict": "DeepSeek E6-no-verdict",
+        "qwen/qwen3.7-max E6-full": "Qwen E6-full",
+        "qwen/qwen3.7-max E6-no-verdict": "Qwen E6-no-verdict",
+    }
+    return replacements.get(condition, condition)
 
 
 def metric_table(rows: list[dict[str, Any]]) -> list[str]:
@@ -70,7 +95,7 @@ def metric_table(rows: list[dict[str, Any]]) -> list[str]:
         reject = row.get("reject", decisions.get("reject", 0))
         escalate = row.get("escalate", decisions.get("escalate", 0))
         lines.append(
-            f"| {row['condition']} | {accept} | {reject} | {escalate} | "
+            f"| {condition_name(row['condition'])} | {accept} | {reject} | {escalate} | "
             f"{percent(row.get('accepted_precision'))} | {percent(row.get('correct_recall'))} | "
             f"{percent(row.get('false_accept_rate'))} | {percent(row.get('escalation_rate'))} |"
         )
@@ -125,6 +150,27 @@ def repaired_model_summary_table(
     return lines
 
 
+def repaired_selected_levels_table(*summaries: dict[str, Any]) -> list[str]:
+    lines = [
+        "| model | level | accept | correct accept | false accept | accepted precision | correct recall | false accept rate | escalation rate |",
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for summary in summaries:
+        for level in ["E0", "E3", "E6"]:
+            row = summary["per_evidence_level"][level]
+            confusion = row["confusion_counts"]
+            lines.append(
+                f"| {model_name(summary['model_id'])} | {level} | "
+                f"{row['decision_counts'].get('accept', 0)} | "
+                f"{confusion['true_accept']} | {confusion['false_accept']} | "
+                f"{percent(row.get('accepted_precision'))} | "
+                f"{percent(row.get('correct_recall'))} | "
+                f"{percent(row.get('false_accept_rate'))} | "
+                f"{percent(row.get('escalation_rate'))} |"
+            )
+    return lines
+
+
 def uncertainty_table(claim_map: dict[str, Any]) -> list[str]:
     lines = [
         "| condition | accepted precision 95% CI | correct recall 95% CI | false accept rate 95% CI | escalation rate 95% CI |",
@@ -160,7 +206,7 @@ def coverage_contestation_table(analysis: dict[str, Any]) -> list[str]:
     for model_id, row in analysis["model_summaries"].items():
         decisions = row.get("decision_counts", {})
         lines.append(
-            f"| {model_id} | {decisions.get('accept', 0)} | {decisions.get('reject', 0)} | {decisions.get('escalate', 0)} | "
+            f"| {model_name(model_id)} | {decisions.get('accept', 0)} | {decisions.get('reject', 0)} | {decisions.get('escalate', 0)} | "
             f"{percent(row.get('repeated_false_accept_rate_on_incorrect'))} | "
             f"{percent(row.get('strict_reject_rate_on_incorrect'))} | "
             f"{percent(row.get('safe_escalation_rate_on_incorrect'))} | "
@@ -174,10 +220,14 @@ def stress_matrix_aggregate_table(analysis: dict[str, Any]) -> list[str]:
         "| condition | records | repeated false accepts | strict rejects | safe escalations | safe handling |",
         "| --- | ---: | ---: | ---: | ---: | ---: |",
     ]
+    labels = {
+        "current_merge_gate": "Current prompt",
+        "coverage_contestation": "Coverage prompt",
+    }
     for condition in ("current_merge_gate", "coverage_contestation"):
         row = analysis["aggregate_by_condition"][condition]
         lines.append(
-            f"| {condition} | {row['record_count']} | "
+            f"| {labels[condition]} | {row['record_count']} | "
             f"{row['repeated_false_accept_count']} ({percent(row['repeated_false_accept_rate'])}) | "
             f"{row['strict_reject_count']} ({percent(row['strict_reject_rate'])}) | "
             f"{row['safe_escalation_count']} ({percent(row['safe_escalation_rate'])}) | "
@@ -261,41 +311,41 @@ def candidate_composition_table(
     label_counts = candidate_summary["aggregate_p2p_label_counts"]
     rows = [
         (
-            "correct_reference",
+            "Correct reference",
             candidate_counts["correct_reference"],
-            "correct_under_f2p_and_p2p_broad",
+            "Correct under F2P and P2P-broad",
             label_counts["correct_under_f2p_and_p2p_broad"],
             "hidden F2P and P2P-broad evaluator labels",
             "measure correct-patch recall",
         ),
         (
-            "buggy_noop",
+            "Buggy no-op",
             candidate_counts["buggy_noop"],
-            "incorrect_issue_not_fixed",
+            "Issue not fixed",
             "",
             "hidden evaluator labels",
             "issue-not-fixed false-accept risk",
         ),
         (
-            "irrelevant_patch",
+            "Irrelevant patch",
             candidate_counts["irrelevant_patch"],
-            "incorrect_issue_not_fixed",
+            "Issue not fixed",
             "",
             "hidden evaluator labels",
             "plausibility-trap negative patches",
         ),
         (
-            "partial_fix",
+            "Partial fix",
             candidate_counts["partial_fix"],
-            "incorrect_issue_not_fixed",
+            "Issue not fixed",
             "",
             "hidden F2P and P2P-broad evaluator labels",
             "semantic incompleteness and partial repair risk",
         ),
         (
-            "regression_patch",
+            "Regression patch",
             candidate_counts["regression_patch"],
-            "incorrect_regression",
+            "Incorrect regression",
             label_counts["incorrect_regression"],
             "P2P-broad regression label",
             "regression-safety risk",
@@ -349,7 +399,45 @@ def false_accept_anatomy_table(*summaries: dict[str, Any]) -> list[str]:
             summary["per_evidence_level"]["E6"]["confusion_counts"]["false_accept"]
         )
         lines.append(
-            f"| {summary['model_id']} | {partial_accept}/41 | {regression_accept}/1 | {total_false_accept} | semantic incompleteness and regression-safety failures remain visible-evidence risks |"
+            f"| {model_name(summary['model_id'])} | {partial_accept}/41 | {regression_accept}/1 | {total_false_accept} | semantic incompleteness and regression-safety failures remain visible-evidence risks |"
+        )
+    return lines
+
+
+def false_accept_case_group_table(case_analysis: dict[str, Any]) -> list[str]:
+    grouped: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for row in case_analysis["case_rows"]:
+        key = (
+            row["project"],
+            row["task_id"].replace("bugsinpy_", ""),
+            row["candidate_type"],
+        )
+        bucket = grouped.setdefault(
+            key,
+            {"models": set(), "rationales": set()},
+        )
+        bucket["models"].add(model_name(row["model"]))
+        bucket["rationales"].add(row["rationale_category"])
+
+    lines = [
+        "| project/task | negative type | models accepting | likely cause |",
+        "| --- | --- | --- | --- |",
+    ]
+    type_labels = {
+        "regression_patch": "Regression patch",
+        "partial_fix": "Partial fix",
+    }
+    for (project, task, candidate_type), payload in sorted(grouped.items()):
+        rationales = payload["rationales"]
+        if candidate_type == "regression_patch":
+            cause = "visible E6 evidence missed a hidden P2P-broad regression"
+        elif "accepted_due_to_visible_test_success" in rationales:
+            cause = "visible tests encouraged acceptance despite partial semantic repair"
+        else:
+            cause = "merge-gate summary did not expose the remaining semantic gap"
+        lines.append(
+            f"| {project} / {task} | {type_labels.get(candidate_type, candidate_type)} | "
+            f"{', '.join(sorted(payload['models']))} | {cause} |"
         )
     return lines
 
@@ -361,6 +449,7 @@ def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
     gemini_label_summary = read_json(GEMINI_LABEL_CONDITIONED_SUMMARY)
     coverage_contestation = read_json(COVERAGE_CONTESTATION_ANALYSIS)
     stress_matrix = read_json(STRESS_MATRIX_ANALYSIS)
+    false_accept_cases = read_json(FALSE_ACCEPT_CASE_ANALYSIS)
     qwen_opp = claim_map["hard_tool_contestation_summary"]["qwen_opportunity"]
     deepseek_opp = claim_map["hard_tool_contestation_summary"][
         "deepseek_opportunity"
@@ -374,7 +463,7 @@ def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "Draft status: APSEC technical-track Markdown rewrite v0.1, 2026-07-05.",
         "",
-        "Target format note: this draft is shaped for an APSEC-style technical research paper. The companion IEEEtran/BibTeX/page-budget draft package is generated separately; this Markdown file is not the final PDF.",
+        "Target format note: this draft is shaped for an APSEC-style technical research paper. The IEEEtran source package is generated separately; this Markdown file is not the final PDF.",
         "",
         "## Abstract",
         "",
@@ -434,8 +523,6 @@ def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "The baseline boundary is explicit. Always-escalate, always-reject, and always-accept are deterministic reference policies calculated from label totals. Uniform random three-way is an expected reference policy, not a stochastic experiment. The completed deterministic baseline is rule-only visible-tool. Qwen E0 is an observed model condition, not a deterministic no-tool verifier. Majority-vote and a separate E0/no-tool deterministic verifier are not reported as completed because current tracked summaries do not contain candidate-level aligned decision records.",
         "",
-        *baseline_table(claim_map),
-        "",
         "All paper-facing claims are constrained by a setting-validity audit. The audit checks run coverage, parse validity, raw-output-free summaries, post-execution label joins, prompt-boundary conditions, baseline feasibility, and exclusion of the earlier invalid setting. The audit passed only for bounded claims.",
         "",
         "## 5. Results",
@@ -444,19 +531,7 @@ def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "In the repaired Qwen, DeepSeek, and Gemini v0.3 runs, E0-E2 produced no accepted correct patches for Qwen and DeepSeek and only a single incorrect Gemini accept at E1. Once visible executable evidence entered the packet, all three models began accepting correct patches, but their risk policies diverged. Qwen reached 80.95% correct recall at E3 and 95.24% at E6. DeepSeek reached 61.90% correct recall at E3, became more conservative at E4-E5, and reached 80.95% at E6. Gemini reached 95.24% correct recall from E3 through E6, but accepted five of 77 non-correct candidates at E6. The repaired three-model table therefore strengthens the evidence-visibility finding while preserving the false-accept risk boundary.",
         "",
-        *repaired_model_summary_table(label_summary, deepseek_label_summary, gemini_label_summary),
-        "",
-        "Qwen level-conditioned metrics:",
-        "",
-        *label_conditioned_table(label_summary),
-        "",
-        "DeepSeek level-conditioned metrics:",
-        "",
-        *label_conditioned_table(deepseek_label_summary),
-        "",
-        "Gemini level-conditioned metrics:",
-        "",
-        *label_conditioned_table(gemini_label_summary),
+        *repaired_selected_levels_table(label_summary, deepseek_label_summary, gemini_label_summary),
         "",
         "![Figure 2. Accept-aware and no-verdict metric evidence.](../figures/ccfc/ccfc_fig2_decision_patterns.png)",
         "",
@@ -472,11 +547,9 @@ def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "Qwen E6-full and rule-only produced similar correct recall, accepted precision, and false accept rates. Qwen E6-no-verdict remained close to Qwen E6-full. DeepSeek E6-no-verdict removed false accepts in this cohort, but correct recall dropped to 52.38% and escalation increased to 14.29%. The safer behavior therefore appears to be partly abstention-driven rather than strict semantic discrimination.",
         "",
-        "This is an important negative result for the LLM-verifier claim. The deterministic rule-only baseline was already strong: it reached 95.24% correct recall and 80.00% accepted precision, compared with 95.24% and 83.33% for Qwen E6-full. The current evidence therefore does not justify claiming a large LLM gain over the tool summary. The value of the LLM conditions in this draft is narrower: they expose how model policy changes when verdict-like fields are removed or challenged, and they show whether risky accepts are routed to escalation rather than autonomous acceptance.",
+        "This is an important negative result for the LLM-verifier claim. The deterministic rule-only baseline was already strong: it reached 95.24% correct recall and 80.00% accepted precision, compared with 95.24% and 83.33% for Qwen E6-full. The goal of EVP-8 is not to show that LLMs dominate rule-only tool summaries, but to expose when LLM decisions collapse into tool-following, abstention, or prompt-induced conservatism. The current evidence therefore does not justify claiming a large LLM gain over the tool summary. The value of the LLM conditions in this draft is narrower: they expose how model policy changes when verdict-like fields are removed or challenged, and they show whether risky accepts are routed to escalation rather than autonomous acceptance.",
         "",
-        "The Wilson intervals are wide, so the ablation should be read as bounded risk-policy evidence rather than as a ranking of model quality.",
-        "",
-        *uncertainty_table(claim_map),
+        "The Wilson intervals are wide, so the ablation should be read as bounded risk-policy evidence rather than as a ranking of model quality. The full CI table remains part of the analysis package rather than a main-body table.",
         "",
         "### 5.3 Tool-contestation shifted risky accepts to escalation, not strict correction",
         "",
@@ -484,13 +557,11 @@ def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         "This result supports safe handling through escalation. It does not support a claim that tool-contestation reliably identifies semantic incorrectness, because strict correction remained zero for both models.",
         "",
-        *tool_contestation_table(claim_map),
+        "The opportunity-set Wilson intervals are wide and are retained in the analysis package rather than expanded into a separate main-body table.",
         "",
         "### 5.4 Coverage-contestation removed repeated false accepts by becoming highly conservative",
         "",
         "The current-98 coverage-contestation condition tested whether a stronger prompt could challenge visible-test-only acceptance without changing the frozen E6/no-verdict packet set. It removed repeated false accepts for Qwen, DeepSeek, and Gemini, reducing the false accept rate on 77 non-correct candidates to 0.00% for all three models. This is prompt-sensitivity evidence, not a new main result, because the same condition also collapsed correct-patch acceptance. DeepSeek and Gemini accepted no correct patches, and Qwen accepted only 2 of 21 correct patches.",
-        "",
-        *coverage_contestation_table(coverage_contestation),
         "",
         "The result answers a narrow prompt-setting question. A model can be instructed to challenge coverage sufficiency and avoid visible-test-only acceptance on this frozen cohort, but the observed mechanism is mostly conservative triage rather than semantic discrimination. Therefore the paper should not claim that coverage-contestation improves autonomous verification. The supported claim is that prompt framing can move false-accept risk into reject/escalate outcomes while imposing a large correct-recall cost.",
         "",
@@ -502,17 +573,15 @@ def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "",
         *stress_matrix_aggregate_table(stress_matrix),
         "",
-        *stress_matrix_model_table(stress_matrix),
-        "",
         "This stress result strengthens the risk-triage interpretation. It shows that the stronger prompt can route many visible-pass/hidden-fail candidates away from autonomous acceptance, including all Gemini stress cases and all DeepSeek stress cases. It does not show semantic correction, because no condition strictly rejected the hard negatives. Correct recall is also undefined in this all-negative cohort.",
         "",
         "### 5.6 E6 false accepts were concentrated in partial and regression negatives",
         "",
-        "The most important failure mode is not the average E6 score but the remaining E6 false accepts among 77 non-correct candidates. Aggregate false-accept anatomy shows that Qwen and DeepSeek each accepted three partial fixes and one regression patch, while Gemini accepted four partial fixes and one regression patch. This breakdown supports the paper's risk framing: visible executable and tool evidence can unlock correct accepts, but summarized tool evidence can still miss semantic incompleteness and regression-safety failures. It remains aggregate anatomy, not a case-level project or rationale table.",
+        "The most important failure mode is not the average E6 score but the remaining E6 false accepts among 77 non-correct candidates. Aggregate false-accept anatomy shows that Qwen and DeepSeek each accepted three partial fixes and one regression patch, while Gemini accepted four partial fixes and one regression patch. In the single regression negative included in EVP-8, all three repaired models accepted it at E6; this is a severe failure signal, not a statistical claim about regression-safety failures. The partial-fix rows show a broader semantic-incompleteness pattern concentrated in youtube-dl tasks.",
         "",
-        *false_accept_anatomy_table(label_summary, deepseek_label_summary, gemini_label_summary),
+        *false_accept_case_group_table(false_accept_cases),
         "",
-        "A sanitized case-level analysis is now available for these model-specific false accepts. It records candidate id, project, task, negative type, E6 decision, no-verdict decision where available, and compressed rationale categories, but excludes raw response text, full rationale text, rendered prompts, patch diffs, and credentials. The case rows show repeated risk concentration in the same regression case and several youtube-dl partial fixes; they support failure anatomy, not a claim that the complete model rationale has been audited semantically.",
+        "The sanitized case-level export records candidate id, project, task, negative type, E6 decision, no-verdict decision where available, and compressed rationale categories, but excludes raw response text, full rationale text, rendered prompts, patch diffs, and credentials. The table supports failure anatomy, not a claim that the complete model rationale has been audited semantically.",
         "",
         "## 6. Discussion",
         "",
@@ -541,8 +610,6 @@ def write_apsec_markdown(path: Path, claim_map: dict[str, Any]) -> None:
         "## 8. Conclusion",
         "",
         "This paper introduces EVP-8 as a hidden-evaluator evidence-visibility protocol for candidate patch verification. The repaired Qwen, DeepSeek, and Gemini v0.3 results show that visible executable and tool evidence can unlock correct-patch acceptance while retaining false-accept risk and model-dependent caution. E6 ablations, tool-contestation, coverage-contestation, and the hard-negative stress matrix further show that verdict-like evidence and prompt framing can shape policy behavior, and that safer handling often occurs through escalation rather than strict semantic correction. The contribution is a reproducible software-engineering protocol for measuring evidence-conditioned risk behavior in a controlled LLM patch-verifier study, not a claim of autonomous patch correctness verification.",
-        "",
-        "The companion IEEEtran/BibTeX/page-budget draft package converts these citation keys into a draft reference file; final submission still requires BibTeX field normalization, PDF compilation, visual page-budget inspection, and double-blind checks.",
         "",
     ]
     lines.append("")

@@ -83,6 +83,16 @@ def is_separator_row(cells: list[str]) -> bool:
     return all(re.fullmatch(r":?-{3,}:?", cell.strip()) for cell in cells)
 
 
+TABLE_CAPTIONS = {
+    1: "Cumulative EVP-8 evidence levels.",
+    2: "EVP-8 candidate composition.",
+    3: "Three-model main results at selected evidence levels.",
+    4: "E6 deterministic and no-verdict ablation.",
+    5: "Hard-negative stress matrix aggregate results.",
+    6: "False-accept anatomy and representative case groups.",
+}
+
+
 def table_to_latex(lines: list[str], table_index: int) -> str:
     rows = [split_table_row(line) for line in lines if line.strip().startswith("|")]
     if len(rows) < 2:
@@ -100,8 +110,8 @@ def table_to_latex(lines: list[str], table_index: int) -> str:
         r"\centering",
         r"\scriptsize",
         r"\setlength{\tabcolsep}{2pt}",
-        rf"\caption{{Converted APSEC draft table {table_index}.}}",
-        rf"\label{{tab:apsec-converted-{table_index}}}",
+        rf"\caption{{{TABLE_CAPTIONS.get(table_index, f'APSEC manuscript table {table_index}.')}}}",
+        rf"\label{{tab:apsec-{table_index}}}",
         rf"\begin{{tabularx}}{{\textwidth}}{{{col_spec}}}",
         r"\toprule",
         row(header),
@@ -127,6 +137,8 @@ def table_cell_to_latex(text: str) -> str:
             return protect(r"\path{" + safe + "}")
         return token
 
+    if re.fullmatch(r"-?\d+\.\d{4,}", text.strip()):
+        text = f"{float(text):.2f}"
     protected = re.sub(r"[A-Za-z0-9][A-Za-z0-9_./-]{8,}", maybe_break_token, text)
     escaped = latex_escape(protected)
     for index, value in enumerate(placeholders):
@@ -162,7 +174,9 @@ def figure_to_latex(line: str, figure_index: int) -> str | None:
     match = re.match(r"!\[(.*?)\]\((.*?)\)", line.strip())
     if not match:
         return None
-    caption = latex_escape(match.group(1).strip() or f"APSEC figure {figure_index}")
+    caption_text = match.group(1).strip() or f"APSEC figure {figure_index}"
+    caption_text = re.sub(r"^Figure\s+\d+\.\s*", "", caption_text)
+    caption = latex_escape(caption_text)
     path = match.group(2).strip()
     return "\n".join(
         [
@@ -364,6 +378,27 @@ def build_audit(
             "passed": r"\cite{" in tex_text and "Reference Support Records" not in tex_text,
         },
         {
+            "check": "camera_facing_caption_cleanup",
+            "passed": "Converted APSEC draft table" not in tex_text
+            and "CONVERTED APSEC DRAFT TABLE" not in tex_text
+            and "Figure 1. Figure 1." not in tex_text
+            and "Figure 2. Figure 2." not in tex_text
+            and "Figure 3. Figure 3." not in tex_text,
+        },
+        {
+            "check": "camera_facing_internal_note_removed",
+            "passed": "companion IEEEtran/BibTeX/page-budget draft package"
+            not in tex_text,
+        },
+        {
+            "check": "camera_facing_table_count_curated",
+            "passed": stats["converted_table_count"] <= 6,
+        },
+        {
+            "check": "camera_facing_long_float_removed",
+            "passed": "32.666666666666664" not in tex_text,
+        },
+        {
             "check": "page_budget_estimate_within_apsec_technical_limit",
             "passed": estimated_pages <= 10.0,
         },
@@ -419,10 +454,10 @@ def build_audit(
             "audit_md": rel(DEFAULT_MD_OUT),
         },
         "remaining_formatting_risks": [
-            "Converted table captions are mechanical and should be manually shortened before submission.",
-            "Compiled PDF still has table-width overfull/underfull warnings that need manual layout repair.",
+            "Compiled PDF may still have underfull hbox warnings from narrow-column paragraph breaks that need visual layout review.",
             "Final double-blind compliance still requires visual inspection even though the source author block is anonymous.",
             "BibTeX entries compile but should be normalized to venue-quality fields.",
+            "References remain sparse for APSEC and need a separate verified expansion pass.",
             "The current package is a draft source conversion, not a submitted or camera-ready PDF.",
         ],
     }

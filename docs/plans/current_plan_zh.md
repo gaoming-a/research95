@@ -24194,3 +24194,106 @@ layout/references 审计，检查页面是否可渲染、图是否进入 PDF、c
   但几乎牺牲正确补丁接受”的证据；
 - realistic hard-negative stress matrix 仍未过 30 cases / 3 projects gate，
   不得运行 verifier API。
+
+## 2026-07-07 APSEC camera-facing PDF cleanup
+
+本轮小目标是处理用户指出的 APSEC PDF 成稿质量问题：当前 PDF 仍像自动转换草稿，
+表题、图题、内部说明、表格数量和实验层级呈现都不足以直接投稿。本轮只做
+paper-facing 生成链路和排版呈现修复，不扩实验、不调用 API。
+
+执行边界：
+
+- 不改 `evp8_visible_evidence_merge_gate_v0_2`，不改任何已执行实验结果；
+- 不新增模型 API 调用，不读取或提交 raw responses、rendered prompts、patch
+  diffs 或凭证；
+- APSEC 主文表格压缩到论文主线所需的少数表格，per-level/CI/model-detail 表
+  转为正文概述或保留在 artifact/analysis 文件，不继续全部塞入主 PDF；
+- 清理 PDF/TeX 中的机械转换痕迹，包括 `Converted APSEC draft table X`、
+  `Figure 1. Figure 1.` 类重复图题、原始长浮点数和 conclusion 内部说明；
+- 实验层级必须明确：three-model repaired E0-E6 是 main experiment，E6
+  full/no-verdict/rule-only 是 ablation，tool/coverage contestation 是 prompt
+  sensitivity，31-case hard-negative matrix 是 bounded stress supplement；
+- rule-only baseline 很强必须写成核心结论边界，不能藏在 threats；
+- regression false accept 只能写成单样本 severe failure signal，不能扩大成统计结论；
+- false-accept case analysis 至少在正文放入压缩 case-group 表；
+- 参考文献扩展到 22--30 条需要单独检索和 BibTeX 规范化，本轮只记录为下一步，
+  不把未经核验的文献硬塞进 submission draft。
+
+验收条件：
+
+1. `scripts/write_apsec_manuscript_rewrite.py` 生成的 Markdown 主线压缩、
+   去掉内部 package note，并新增正文级 false-accept case-group 表；
+2. `scripts/write_apsec_ieeetran_package.py` 生成语义化表题、清理 figure caption、
+   格式化长浮点数，并在 audit 中阻断机械转换表题和内部说明；
+3. 重新生成 APSEC Markdown、IEEEtran TeX、BibTeX、page-budget audit 和 PDF；
+4. PDF layout audit 重新通过，且禁止字符串扫描无残留；
+5. README、docs/INDEX、当前项目状态和工程经验文档同步；
+6. 只暂存本轮相关文件，检查 diff 和敏感信息后提交并同步 GitHub。
+
+执行结果：
+
+- `scripts/write_apsec_manuscript_rewrite.py` 已压缩 APSEC 主文结构：
+  - 主体保留 6 张主表：evidence levels、candidate composition、three-model
+    E0/E3/E6 selected main results、E6 ablation、hard-negative stress aggregate、
+    false-accept case-group anatomy；
+  - 删除主文中的 per-model full E0-E6 tables、CI table、tool-contestation CI
+    table、coverage-contestation table 和 stress per-model table；
+  - 删除 conclusion 末尾内部 package note；
+  - rule-only 强基线改成正文结论边界：EVP-8 不是证明 LLM 超越 rule-only，
+    而是暴露 tool-following、abstention 和 prompt-induced conservatism；
+  - regression false accept 改为单样本 severe failure signal，不再扩大为统计结论；
+  - false-accept analysis 从“available”改为正文 case-group 表。
+- `scripts/write_apsec_ieeetran_package.py` 已修复 camera-facing 转换：
+  - 语义化 table captions，去除 `Converted APSEC draft table X`；
+  - figure captions 去掉 Markdown alt text 中的 `Figure N.` 前缀，避免
+    `Figure 1. Figure 1.`；
+  - 长浮点数统一两位格式化；
+  - page-budget audit 新增机械 caption、内部 note、表数和长浮点数 gate；
+  - stress matrix 条件名缩短为 `Current prompt` / `Coverage prompt`，消除唯一
+    overfull hbox。
+- `scripts/audit_apsec_manuscript_rewrite.py` 已同步新主文结构，不再要求被移出
+  主 PDF 的堆叠表格作为通过条件。
+- 重新生成并编译：
+  - `docs/paper/apsec_technical_track_rewrite_v0_1.md`；
+  - `docs/paper/apsec_ieeetran_draft.tex`；
+  - `docs/paper/apsec_ieeetran_draft.pdf`；
+  - `docs/paper/apsec_page_budget_audit_v0_1.md`；
+  - `docs/paper/apsec_pdf_layout_audit_v0_1.md`。
+- PDF 当前状态：
+  - compiled PDF pages = 6；
+  - converted tables = 6；
+  - converted figures = 3；
+  - undefined references = false；
+  - overfull hbox = 0；
+  - underfull hbox = 11；
+  - layout audit 渲染 6/6 页，页面非空，author block 匿名。
+- 文档同步：
+  - README、docs/INDEX、current_project_state_zh 和 engineering_notes 已同步；
+  - APSEC remaining risk 改为 references sparse / BibTeX normalization /
+    final human visual polish / cohort and broad-model boundary。
+
+验证结果：
+
+- `python -m py_compile scripts\write_apsec_manuscript_rewrite.py scripts\write_apsec_ieeetran_package.py scripts\audit_apsec_pdf_layout.py scripts\audit_apsec_manuscript_rewrite.py`：通过；
+- `python scripts\write_apsec_manuscript_rewrite.py --check`：通过；
+- `python scripts\audit_apsec_manuscript_rewrite.py --check`：通过；
+- `python scripts\write_apsec_ieeetran_package.py --compile`：通过；
+- `python scripts\write_apsec_ieeetran_package.py --check`：通过；
+- `python scripts\audit_apsec_pdf_layout.py --check`：通过；
+- 禁止字符串扫描无命中：
+  `Converted APSEC`、`CONVERTED APSEC`、`companion IEEEtran`、
+  `Figure 1. Figure 1.`、`Figure 2. Figure 2.`、`Figure 3. Figure 3.`、
+  `32.666666666666664`、`Reference Support Records`、旧 realistic gate wording；
+- 敏感信息扫描无命中：
+  API key/Bearer token、`raw_response_text`、`rendered_prompt`、`patch_text`、
+  local user name；
+- 已生成并人工查看 contact sheet：
+  `tmp/pdfs/apsec_ieeetran_layout_audit/contact_sheet.png`，未见明显空白页、
+  表格溢出、标题堆叠或机械 caption。
+
+当前判断：
+
+- APSEC PDF 已从自动转换草稿提升为可继续人工审阅的 camera-facing draft；
+- 这仍不是最终投稿件；
+- 下一步应单独做 verified reference expansion：把 APSEC references 从 11 条扩到
+  约 22--30 条，并规范 BibTeX/IEEE 格式。该步骤需要联网核验文献和 DOI。

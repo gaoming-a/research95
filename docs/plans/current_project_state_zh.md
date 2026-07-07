@@ -129,10 +129,10 @@
   `scripts/write_apsec_ieeetran_package.py --compile` 会重新生成
   `docs/paper/apsec_ieeetran_draft.tex`、`docs/paper/apsec_references.bib`、
   page-budget audit，并执行 pdflatex/bibtex/pdflatex/pdflatex。本地编译 PDF 为
-  8 页，仍低于 APSEC technical track 10 页边界；latest log 无 undefined
-  references，记录 4 个 overfull hbox 和 11 个 underfull hbox。新增
+  6 页，仍低于 APSEC technical track 10 页边界；latest log 无 undefined
+  references，记录 0 个 overfull hbox 和 11 个 underfull hbox。新增
   `scripts/audit_apsec_pdf_layout.py`、`docs/paper/apsec_pdf_layout_audit_v0_1.md`
-  和 `data/reviews/apsec_pdf_layout_audit_v0_1.json`，确认 8 页 PDF 均可渲染、
+  和 `data/reviews/apsec_pdf_layout_audit_v0_1.json`，确认 6 页 PDF 均可渲染、
   页面非空、author block 匿名、旧 APSEC gate-failed 文案未残留。当前包仍是
   draft package，不是 final submission PDF。
 - CCF-C manuscript generation chain 已同步 stress matrix 结果：
@@ -171,12 +171,16 @@
   `docs/paper/apsec_ieeetran_draft.tex`、
   `docs/paper/apsec_references.bib`、
   `docs/paper/apsec_page_budget_audit_v0_1.md` 和
-  `data/reviews/apsec_page_budget_audit_v0_1.json`。页数估算 8.14 页，状态
-  `passed`；实际 IEEEtran/BibTeX 编译 PDF 为 8 页，latest log 无 undefined
-  references，但仍有 4 个 overfull hbox 和 11 个 underfull hbox，需要最终人工版面精修。
+  `data/reviews/apsec_page_budget_audit_v0_1.json`。2026-07-07
+  camera-facing cleanup 已把主文表格从 14 张压缩到 6 张，删除机械表题、重复图题、
+  conclusion 内部 package note 和原始长浮点数，并把 false-accept analysis 改为
+  正文 case-group 表。页数估算 6.38 页，状态 `passed`；实际 IEEEtran/BibTeX
+  编译 PDF 为 6 页，latest log 无 undefined references、0 个 overfull hbox、
+  11 个 underfull hbox。当前仍不是最终投稿 PDF；下一步需要 verified reference
+  expansion 和 BibTeX 字段规范化。
 - 当前剩余 APSEC 风险已经从“主结果单模型/两模型不足”转为：
   cohort 小、三模型仍非 broad-model、rule-only baseline 很强、false accepts
-  仍集中在 partial/regression negatives、表格宽度 overfull/underfull warnings、
+  仍集中在 partial/regression negatives、APSEC references 仍偏少并需核验扩展、
   以及最终 double-blind 和 BibTeX 字段需要人工级格式检查。
 
 ## 2026-07-05 快速状态增量

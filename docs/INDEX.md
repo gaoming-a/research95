@@ -58,12 +58,16 @@
   regenerated so current paper-facing artifacts no longer describe the old
   realistic branch as a failed three-project gate.
   The APSEC IEEEtran/BibTeX/page-budget package has also been regenerated from
-  the latest Markdown and compiled locally. The current compiled draft is 8
-  pages, with 4 overfull and 11 underfull hbox warnings recorded in
+  the latest Markdown and compiled locally. The 2026-07-07 camera-facing cleanup
+  curates the main PDF to 6 tables and 6 pages, removes mechanical conversion
+  captions and the internal package note, formats raw floats, and adds a
+  compressed false-accept case-group table. The current compiled draft has 0
+  overfull and 11 underfull hbox warnings recorded in
   `paper/apsec_page_budget_audit_v0_1.md`; `paper/apsec_pdf_layout_audit_v0_1.md`
-  verifies that all 8 rendered pages are nonblank, the source author block is
+  verifies that all 6 rendered pages are nonblank, the source author block is
   anonymous, and stale APSEC gate wording is absent. This remains a draft
-  package, not a final submission PDF.
+  package, not a final submission PDF; verified reference expansion and BibTeX
+  normalization remain the next APSEC writing task.
   The old no-API Luigi source-acquisition/materialization path is a historical
   dead end, not the current blocker. Historical `origin/main`
   entries retained later in plan logs are audit records only. As of
@@ -449,8 +453,10 @@
   `paper/apsec_page_budget_audit_v0_1.md`, and
   `../data/reviews/apsec_page_budget_audit_v0_1.json`: APSEC formatting draft
   package. Status is `passed`; the current IEEEtran/BibTeX compilation
-  produces an 8-page PDF with no undefined references and records 4 overfull /
-  11 underfull hbox warnings.
+  produces a 6-page PDF with no undefined references, 0 overfull hbox warnings,
+  and 11 underfull hbox warnings. The camera-facing cleanup keeps 6 main tables
+  and removes mechanical conversion captions, duplicate figure captions,
+  internal package notes, and raw long floats.
 - `../scripts/audit_apsec_pdf_layout.py`,
   `paper/apsec_pdf_layout_audit_v0_1.md`, and
   `../data/reviews/apsec_pdf_layout_audit_v0_1.json`: APSEC compiled-PDF

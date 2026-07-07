@@ -8,14 +8,14 @@
     },
     {
       "check": "pdfinfo_pages_within_apsec_limit",
-      "detail": 8,
+      "detail": 6,
       "passed": true
     },
     {
       "check": "rendered_page_count_matches_pdfinfo",
       "detail": {
-        "pdfinfo_pages": 8,
-        "rendered_pages": 8
+        "pdfinfo_pages": 6,
+        "rendered_pages": 6
       },
       "passed": true
     },
@@ -23,13 +23,11 @@
       "check": "rendered_pages_nonblank",
       "detail": {
         "tmp/pdfs/apsec_ieeetran_layout_audit/page-1.png": 0.16671,
-        "tmp/pdfs/apsec_ieeetran_layout_audit/page-2.png": 0.163116,
-        "tmp/pdfs/apsec_ieeetran_layout_audit/page-3.png": 0.087517,
-        "tmp/pdfs/apsec_ieeetran_layout_audit/page-4.png": 0.078743,
-        "tmp/pdfs/apsec_ieeetran_layout_audit/page-5.png": 0.097845,
-        "tmp/pdfs/apsec_ieeetran_layout_audit/page-6.png": 0.15789,
-        "tmp/pdfs/apsec_ieeetran_layout_audit/page-7.png": 0.097989,
-        "tmp/pdfs/apsec_ieeetran_layout_audit/page-8.png": 0.031437
+        "tmp/pdfs/apsec_ieeetran_layout_audit/page-2.png": 0.16199,
+        "tmp/pdfs/apsec_ieeetran_layout_audit/page-3.png": 0.102634,
+        "tmp/pdfs/apsec_ieeetran_layout_audit/page-4.png": 0.131812,
+        "tmp/pdfs/apsec_ieeetran_layout_audit/page-5.png": 0.167538,
+        "tmp/pdfs/apsec_ieeetran_layout_audit/page-6.png": 0.062536
       },
       "passed": true
     },
@@ -44,7 +42,7 @@
       "passed": true
     }
   ],
-  "pdfinfo_pages": 8,
+  "pdfinfo_pages": 6,
   "remaining_risks": [
     "This audit verifies renderability and obvious blank-page/layout failures; final camera-ready visual polish still needs human inspection.",
     "The compiled PDF remains a draft package, not a final submission artifact."
@@ -53,16 +51,14 @@
     "render_attempted": true,
     "render_exit_code": 0,
     "render_tool": "pdftoppm.exe",
-    "rendered_page_count": 8,
+    "rendered_page_count": 6,
     "rendered_pages": [
       "tmp/pdfs/apsec_ieeetran_layout_audit/page-1.png",
       "tmp/pdfs/apsec_ieeetran_layout_audit/page-2.png",
       "tmp/pdfs/apsec_ieeetran_layout_audit/page-3.png",
       "tmp/pdfs/apsec_ieeetran_layout_audit/page-4.png",
       "tmp/pdfs/apsec_ieeetran_layout_audit/page-5.png",
-      "tmp/pdfs/apsec_ieeetran_layout_audit/page-6.png",
-      "tmp/pdfs/apsec_ieeetran_layout_audit/page-7.png",
-      "tmp/pdfs/apsec_ieeetran_layout_audit/page-8.png"
+      "tmp/pdfs/apsec_ieeetran_layout_audit/page-6.png"
     ]
   },
   "scope": {

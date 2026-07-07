@@ -14,6 +14,22 @@
       "passed": true
     },
     {
+      "check": "camera_facing_caption_cleanup",
+      "passed": true
+    },
+    {
+      "check": "camera_facing_internal_note_removed",
+      "passed": true
+    },
+    {
+      "check": "camera_facing_table_count_curated",
+      "passed": true
+    },
+    {
+      "check": "camera_facing_long_float_removed",
+      "passed": true
+    },
+    {
       "check": "page_budget_estimate_within_apsec_technical_limit",
       "passed": true
     },
@@ -57,18 +73,18 @@
     }
   ],
   "compile_summary": {
-    "compiled_pdf_pages": 8,
+    "compiled_pdf_pages": 6,
     "compiled_pdf_present": true,
     "log_present": true,
-    "overfull_hbox_count_in_latest_log": 4,
+    "overfull_hbox_count_in_latest_log": 0,
     "undefined_references_in_latest_log": false,
     "underfull_hbox_count_in_latest_log": 11
   },
   "counts": {
-    "compiled_pdf_pages": 8,
+    "compiled_pdf_pages": 6,
     "converted_figure_count": 3,
-    "converted_table_count": 14,
-    "estimated_pages": 8.14,
+    "converted_table_count": 6,
+    "estimated_pages": 6.38,
     "reference_count": 11,
     "word_count_excluding_tables": 3071
   },
@@ -80,10 +96,10 @@
     "tex": "docs/paper/apsec_ieeetran_draft.tex"
   },
   "remaining_formatting_risks": [
-    "Converted table captions are mechanical and should be manually shortened before submission.",
-    "Compiled PDF still has table-width overfull/underfull warnings that need manual layout repair.",
+    "Compiled PDF may still have underfull hbox warnings from narrow-column paragraph breaks that need visual layout review.",
     "Final double-blind compliance still requires visual inspection even though the source author block is anonymous.",
     "BibTeX entries compile but should be normalized to venue-quality fields.",
+    "References remain sparse for APSEC and need a separate verified expansion pass.",
     "The current package is a draft source conversion, not a submitted or camera-ready PDF."
   ],
   "status": "passed",
