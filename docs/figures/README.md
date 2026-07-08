@@ -55,7 +55,8 @@ python scripts\generate_ccfc_figures.py
 The CCF-C figures are emitted under `docs/figures/ccfc/` in PDF, SVG, and PNG:
 
 - `ccfc_fig1_protocol`: hidden-evaluator evidence-visibility protocol.
-- `ccfc_fig2_decision_patterns`: five-model evidence-level decision patterns.
+- `ccfc_fig2_decision_patterns`: repaired Qwen, DeepSeek, and Gemini E0/E3/E6
+  correct-recall, false-accept, and escalation metrics.
 - `ccfc_fig3_claim_boundary`: claim-boundary and setting-validity map.
 
 The same directory also contains `figure_manifest.json`,

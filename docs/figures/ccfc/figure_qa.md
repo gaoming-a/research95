@@ -5,7 +5,7 @@ Backend: Python / matplotlib only.
 Generated figures:
 
 - `ccfc_fig1_protocol`: schematic-led composite for the hidden-evaluator protocol.
-- `ccfc_fig2_decision_patterns`: quantitative grid for repaired Qwen label-conditioned metrics and E6 ablations.
+- `ccfc_fig2_decision_patterns`: quantitative grid for repaired Qwen, DeepSeek, and Gemini E0/E3/E6 metrics.
 - `ccfc_fig3_claim_boundary`: asymmetric mixed-modality map for claim and validity boundaries.
 
 Export contract:

@@ -130,10 +130,12 @@ camera-facing cleanup removes mechanical conversion artifacts from the PDF:
 semantic table captions replace `Converted APSEC draft table` captions, figure
 captions no longer duplicate `Figure N`, the internal package note is removed,
 long raw floats are formatted, and the main paper is curated to 6 tables rather
-than 14. The references have been expanded from 11 temporary entries to 24
-structured APSEC-facing BibTeX entries, Table II is simplified, Figure 3 is
-removed from the APSEC main paper, and Figure 2 is rendered as a larger
-double-column figure. The compiled IEEEtran/BibTeX PDF is now 7 pages with
+than 14. The references have been expanded from 11 temporary entries to 25
+structured APSEC-facing BibTeX entries, including a formal BugsInPy citation.
+Table II is simplified, Figure 3 is removed from the APSEC main paper, Figure
+1 no longer implies a five-model main result, and Figure 2 now shows the
+three-model repaired E0/E3/E6 recall, false-accept, and escalation metrics.
+The compiled IEEEtran/BibTeX PDF is now 7 pages with
 resolved references, 0 overfull hbox warnings, and 11 underfull hbox warnings
 from narrow-column paragraph breaks. `scripts/write_apsec_ieeetran_package.py
 --compile` regenerates the source package and records compile commands in the
@@ -388,14 +390,14 @@ baselines as submission risks rather than completed results. The revision respon
 `docs/paper/ccfc_revision_response_v0_2.md`.
 After the final experiment-logic cleanup on 2026-07-03, the manuscript-facing
 package no longer carries the earlier invalid setting as paper content. The
-main evidence starts from the repaired Qwen v0.3 accept-aware label-conditioned
-analysis, followed by E6 rule-only/no-verdict ablations and tool-contestation.
+main evidence starts from repaired accept-aware label-conditioned analysis and
+is now strengthened by Qwen, DeepSeek, and Gemini three-model main evidence,
+followed by E6 rule-only/no-verdict ablations and tool-contestation.
 The CCF-C figure set is generated with Python/matplotlib by
 `scripts/generate_ccfc_figures.py` under `docs/figures/ccfc/` in PDF, SVG, and
-PNG form. It includes the hidden-evaluator protocol, accept-aware/no-verdict
-metric evidence, and claim-boundary/setting-validity map. Fig. 2 has been
-redrawn as accept-aware/no-verdict metric evidence for the current result
-chain. The figures are now placed inline in
+PNG form. It includes the hidden-evaluator protocol, three-model repaired
+E0/E3/E6 metric evidence, and claim-boundary/setting-validity map. Fig. 2 has
+been redrawn as the Qwen/DeepSeek/Gemini main-result metric view. The figures are now placed inline in
 `docs/paper/ccfc_manuscript_rewrite_v0_1.md`, with placement audited by
 `scripts/audit_ccfc_figure_placement.py`.
 The first tracked EVP-8 machine spec is

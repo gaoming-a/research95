@@ -30,6 +30,7 @@ APSEC_EXTRA_REFERENCES = [
     "long_fse_2015_spr",
     "nguyen_icse_2013_semfix",
     "smith_fse_2015_overfitting",
+    "widyasari_fse_2020_bugsinpy",
     "durieux_saner_2019_bears",
     "lin_splash_2017_quixbugs",
     "li_fse_2022_codereviewer",
@@ -66,6 +67,14 @@ APSEC_BIBTEX_BY_KEY = {
   pages = {437--440},
   year = {2014},
   doi = {10.1145/2610384.2628055}
+}""",
+    "widyasari_fse_2020_bugsinpy": r"""@inproceedings{widyasari_fse_2020_bugsinpy,
+  author = {Widyasari, Ratnadira and Sim, Sheng Qin and Lok, Camellia and Qi, Haodi and Phan, Jack and Tay, Qijin and Tan, Constance and Wee, Fiona and Tan, Jodie Ethelda and Yieh, Yuheng and Goh, Brian and Thung, Ferdian and Kang, Hong Jin and Hoang, Thong and Lo, David and Ouh, Eng Lieh},
+  title = {BugsInPy: A Database of Existing Bugs in Python Programs to Enable Controlled Testing and Debugging Studies},
+  booktitle = {Proceedings of the 28th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering},
+  pages = {1556--1560},
+  year = {2020},
+  doi = {10.1145/3368089.3417943}
 }""",
     "barr_tse_2015_oracle_problem": r"""@article{barr_tse_2015_oracle_problem,
   author = {Barr, Earl T. and Harman, Mark and McMinn, Phil and Shahbaz, Muzammil and Yoo, Shin},
@@ -600,11 +609,12 @@ def build_audit(
         },
         {
             "check": "bibtex_generated",
-            "passed": reference_count >= 20 and "@" in bib_text,
+            "passed": reference_count >= 25 and "@" in bib_text,
         },
         {
             "check": "apsec_reference_count_not_sparse",
-            "passed": reference_count >= 20,
+            "passed": reference_count >= 25,
+            "detail": f"{reference_count} references; APSEC draft gate is >=25",
         },
         {
             "check": "apsec_bibtex_not_temporary_misc_only",
@@ -667,7 +677,7 @@ def build_audit(
     ]
     return {
         "artifact_id": "apsec_page_budget_audit_v0_1",
-        "date": "2026-07-06",
+        "date": "2026-07-08",
         "status": "passed" if all(check["passed"] for check in checks) else "needs_revision",
         "target": {
             "format": "anonymous IEEEtran conference draft",

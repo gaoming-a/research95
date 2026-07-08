@@ -17,8 +17,24 @@ from matplotlib.patches import FancyArrowPatch, FancyBboxPatch, Rectangle
 ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = ROOT / "docs" / "figures" / "ccfc"
 CLAIM_MAP_PATH = ROOT / "data" / "reviews" / "final_manuscript_claim_map_v0_1.json"
+REPAIRED_LABEL_SUMMARY_PATHS = {
+    "Qwen": ROOT
+    / "data"
+    / "reviews"
+    / "evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json",
+    "DeepSeek": ROOT
+    / "data"
+    / "reviews"
+    / "evp8_deepseek_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json",
+    "Gemini": ROOT
+    / "data"
+    / "reviews"
+    / "evp8_gemini_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json",
+}
 FORMATS = ("pdf", "svg", "png")
 LEVELS = ("E0", "E1", "E2", "E3", "E4", "E5", "E6")
+MAIN_LEVELS = ("E0", "E3", "E6")
+REPAIRED_MODEL_LABELS = tuple(REPAIRED_LABEL_SUMMARY_PATHS)
 MODEL_ORDER = (
     "deepseek/deepseek-v4-pro",
     "qwen/qwen3.7-max",
@@ -197,6 +213,28 @@ def qwen_metric_series(claim_map: dict[str, Any]) -> tuple[np.ndarray, np.ndarra
     return np.array(recall), np.array(false_accept), np.array(escalation)
 
 
+def repaired_three_model_metrics() -> dict[str, dict[str, np.ndarray]]:
+    metrics: dict[str, dict[str, np.ndarray]] = {
+        "correct_recall": {},
+        "false_accept_rate": {},
+        "escalation_rate": {},
+    }
+    for model_label, path in REPAIRED_LABEL_SUMMARY_PATHS.items():
+        summary = read_json(path)
+        per_level = summary.get("per_evidence_level")
+        if not isinstance(per_level, dict):
+            raise ValueError(f"{path} missing per_evidence_level")
+        for metric in metrics:
+            values: list[float] = []
+            for level in MAIN_LEVELS:
+                row = per_level.get(level)
+                if not isinstance(row, dict):
+                    raise ValueError(f"{path} missing {level}")
+                values.append(float(row.get(metric) or 0.0) * 100.0)
+            metrics[metric][model_label] = np.array(values)
+    return metrics
+
+
 def e6_ablation_rows(claim_map: dict[str, Any]) -> list[dict[str, Any]]:
     rows = claim_map.get("e6_ablation_metrics")
     if not isinstance(rows, list):
@@ -241,7 +279,7 @@ def fig1_protocol(claim_map: dict[str, Any]) -> None:
     add_box(ax, (0.04, 0.53), 0.15, 0.18, "98 candidate\npatches", COLORS["blue_soft"], COLORS["blue"], weight="bold")
     add_box(ax, (0.26, 0.66), 0.19, 0.14, "Visible evidence\nlevels E0-E6", COLORS["teal_soft"], COLORS["teal"], weight="bold")
     add_box(ax, (0.26, 0.37), 0.19, 0.14, "Evaluator-only\nlabels withheld", COLORS["gray"], COLORS["gray_3"])
-    add_box(ax, (0.53, 0.53), 0.16, 0.18, "5 model\nverifiers", COLORS["orange_soft"], COLORS["orange"], weight="bold")
+    add_box(ax, (0.53, 0.53), 0.16, 0.18, "LLM\nverifier(s)", COLORS["orange_soft"], COLORS["orange"], weight="bold")
     add_box(ax, (0.78, 0.69), 0.15, 0.10, "escalate", COLORS["gray"], COLORS["gray_3"], weight="bold")
     add_box(ax, (0.78, 0.53), 0.15, 0.10, "reject", COLORS["red_soft"], COLORS["red"], weight="bold")
     add_box(ax, (0.78, 0.37), 0.15, 0.10, "accept\n0 observed", COLORS["green_soft"], COLORS["green"])
@@ -258,7 +296,7 @@ def fig1_protocol(claim_map: dict[str, Any]) -> None:
     add_panel_label(ax2, "b")
     ax2.text(0.02, 0.92, "Figure contract", fontsize=8.5, weight="bold", va="top")
     cards = [
-        ("Scale", "98 candidates x 7 levels x 5 models = 3430 parse-valid decisions", COLORS["blue_soft"], COLORS["blue"]),
+        ("Scale", "98 candidates x 7 levels; APSEC main result uses 3 repaired models", COLORS["blue_soft"], COLORS["blue"]),
         ("Boundary", "No raw response text; hidden labels joined only after model decisions", COLORS["purple_soft"], COLORS["purple"]),
         ("Claim", "Evidence visibility shapes risk behavior, not autonomous correctness verification", COLORS["green_soft"], COLORS["green"]),
     ]
@@ -273,62 +311,41 @@ def fig1_protocol(claim_map: dict[str, Any]) -> None:
 
 
 def fig2_decision_patterns(claim_map: dict[str, Any]) -> None:
-    qwen_recall, qwen_false_accept, qwen_escalation = qwen_metric_series(claim_map)
-    ablation_rows = e6_ablation_rows(claim_map)
-    condition_labels = ["rule-only", "DS full", "DS no\nverdict", "Qwen full", "Qwen no\nverdict"]
-    ablation_recall = np.array([float(row.get("correct_recall") or 0.0) * 100.0 for row in ablation_rows])
-    ablation_false_accept = np.array([float(row.get("false_accept_rate") or 0.0) * 100.0 for row in ablation_rows])
-    ablation_escalation = np.array([float(row.get("escalation_rate") or 0.0) * 100.0 for row in ablation_rows])
+    repaired_metrics = repaired_three_model_metrics()
 
-    fig = plt.figure(figsize=(7.4, 4.65))
-    grid = fig.add_gridspec(2, 2, height_ratios=[1.10, 0.95], width_ratios=[1.18, 0.82], hspace=0.46, wspace=0.36)
-    ax_line = fig.add_subplot(grid[0, :])
-    ax_ablation = fig.add_subplot(grid[1, 0])
-    ax_note = fig.add_subplot(grid[1, 1])
-    fig.suptitle("Accept-aware and no-verdict metric evidence", x=0.02, y=0.995, ha="left", fontsize=10.5, weight="bold")
+    fig, axes = plt.subplots(1, 3, figsize=(7.4, 2.85), sharey=True)
+    fig.suptitle("Three-model repaired evidence metrics", x=0.02, y=1.02, ha="left", fontsize=10.5, weight="bold")
 
-    add_panel_label(ax_line, "a", y=1.08)
-    x = np.arange(len(LEVELS))
-    ax_line.plot(x, qwen_recall, marker="o", color=COLORS["green"], linewidth=1.8, label="correct recall")
-    ax_line.plot(x, qwen_false_accept, marker="s", color=COLORS["red"], linewidth=1.5, label="false accept rate")
-    ax_line.plot(x, qwen_escalation, marker="^", color=COLORS["gray_3"], linewidth=1.5, label="escalation rate")
-    ax_line.axvspan(-0.35, 2.35, color=COLORS["gray"], alpha=0.62, zorder=-1)
-    ax_line.text(1.0, 92, "no accept at E0-E2", ha="center", fontsize=6.6, color=COLORS["muted"])
-    ax_line.set_xticks(x, LEVELS)
-    ax_line.set_ylim(-2, 102)
-    ax_line.set_ylabel("rate (%)")
-    ax_line.grid(axis="y", color=COLORS["grid"], linewidth=0.65)
-    ax_line.set_title("Repaired Qwen v0.3 evidence ladder: acceptance emerges after visible tests", loc="left", fontsize=8.2, weight="bold")
-    ax_line.legend(ncol=3, loc="upper center", bbox_to_anchor=(0.55, -0.16))
-
-    add_panel_label(ax_ablation, "b", x=-0.055, y=1.10)
-    xi = np.arange(len(condition_labels))
-    width = 0.25
-    ax_ablation.bar(xi - width, ablation_recall, width=width, color=COLORS["green"], label="correct recall")
-    ax_ablation.bar(xi, ablation_false_accept, width=width, color=COLORS["red"], label="false accept rate")
-    ax_ablation.bar(xi + width, ablation_escalation, width=width, color=COLORS["gray_3"], label="escalation rate")
-    ax_ablation.set_xticks(xi, condition_labels)
-    ax_ablation.set_ylim(0, 105)
-    ax_ablation.set_ylabel("rate (%)")
-    ax_ablation.grid(axis="y", color=COLORS["grid"], linewidth=0.65)
-    ax_ablation.set_title("E6 ablation: no-verdict changes risk policy, not proof", loc="left", fontsize=8.2, weight="bold")
-    ax_ablation.legend(ncol=1, loc="upper left", bbox_to_anchor=(0.00, -0.30))
-
-    add_panel_label(ax_note, "c", x=-0.055, y=1.10)
-    ax_note.axis("off")
-    ax_note.set_title("Experiment logic boundary", loc="left", fontsize=8.2, weight="bold")
-    notes = [
-        ("Main evidence", "Qwen v0.3 label-conditioned metrics"),
-        ("Ablation", "rule-only / E6-full / no-verdict"),
-        ("Stress test", "hard-negative matrix is triage only"),
+    metric_specs = [
+        ("a", "correct_recall", "Correct recall", COLORS["green"]),
+        ("b", "false_accept_rate", "False accept rate", COLORS["red"]),
+        ("c", "escalation_rate", "Escalation rate", COLORS["gray_3"]),
     ]
-    for idx, (head, body) in enumerate(notes):
-        y = 0.82 - idx * 0.31
-        color = [COLORS["green_soft"], COLORS["orange_soft"], COLORS["red_soft"]][idx]
-        edge = [COLORS["green"], COLORS["orange"], COLORS["red"]][idx]
-        ax_note.add_patch(Rectangle((0.02, y - 0.17), 0.94, 0.24, linewidth=0.85, edgecolor=edge, facecolor=color))
-        ax_note.text(0.06, y + 0.010, head, fontsize=7.0, weight="bold", va="center")
-        text_block(ax_note, 0.06, y - 0.050, body, width=36, fontsize=6.0, va="top", color=COLORS["ink"])
+    x = np.arange(len(REPAIRED_MODEL_LABELS))
+    width = 0.22
+    level_colors = [COLORS["gray_2"], COLORS["teal"], COLORS["purple"]]
+    for ax, (panel, metric, title, edge_color) in zip(axes, metric_specs):
+        add_panel_label(ax, panel, x=-0.12, y=1.05)
+        for level_idx, level in enumerate(MAIN_LEVELS):
+            values = np.array(
+                [repaired_metrics[metric][model_label][level_idx] for model_label in REPAIRED_MODEL_LABELS]
+            )
+            ax.bar(
+                x + (level_idx - 1) * width,
+                values,
+                width=width,
+                color=level_colors[level_idx],
+                edgecolor=edge_color,
+                linewidth=0.55,
+                label=level,
+            )
+        ax.set_title(title, loc="left", fontsize=8.2, weight="bold")
+        ax.set_xticks(x, REPAIRED_MODEL_LABELS)
+        ax.set_ylim(0, 105)
+        ax.grid(axis="y", color=COLORS["grid"], linewidth=0.65)
+        ax.tick_params(axis="x", rotation=0)
+    axes[0].set_ylabel("rate (%)")
+    axes[1].legend(ncol=3, loc="upper center", bbox_to_anchor=(0.5, -0.17))
 
     save_figure(fig, "ccfc_fig2_decision_patterns")
 
@@ -436,10 +453,19 @@ def fig3_claim_boundary(claim_map: dict[str, Any]) -> None:
 def export_source_data(claim_map: dict[str, Any]) -> None:
     qwen_recall, qwen_false_accept, qwen_escalation = qwen_metric_series(claim_map)
     ablation_rows = e6_ablation_rows(claim_map)
+    repaired_metrics = repaired_three_model_metrics()
     source_data = {
         "source": str(CLAIM_MAP_PATH.relative_to(ROOT)).replace("\\", "/"),
+        "repaired_label_summary_sources": [
+            str(path.relative_to(ROOT)).replace("\\", "/") for path in REPAIRED_LABEL_SUMMARY_PATHS.values()
+        ],
         "backend": "python/matplotlib",
         "levels": list(LEVELS),
+        "main_levels": list(MAIN_LEVELS),
+        "repaired_three_model_metrics": {
+            metric: {model: values.tolist() for model, values in by_model.items()}
+            for metric, by_model in repaired_metrics.items()
+        },
         "qwen_v0_3_correct_recall": qwen_recall.tolist(),
         "qwen_v0_3_false_accept_rate": qwen_false_accept.tolist(),
         "qwen_v0_3_escalation_rate": qwen_escalation.tolist(),
@@ -453,7 +479,7 @@ def export_source_data(claim_map: dict[str, Any]) -> None:
             "backend": "Python",
             "archetypes": {
                 "ccfc_fig1_protocol": "schematic-led composite",
-                "ccfc_fig2_decision_patterns": "quantitative grid for repaired main evidence",
+                "ccfc_fig2_decision_patterns": "three-model quantitative grid for repaired main evidence",
                 "ccfc_fig3_claim_boundary": "asymmetric mixed-modality figure",
             },
             "export_formats": list(FORMATS),
@@ -479,8 +505,8 @@ def write_manifest() -> None:
             },
             {
                 "id": "ccfc_fig2_decision_patterns",
-                "title": "Accept-aware and no-verdict metric evidence",
-                "purpose": "show repaired Qwen label-conditioned metrics and E6 verdict-field ablation",
+                "title": "Three-model repaired evidence metrics",
+                "purpose": "show Qwen, DeepSeek, and Gemini E0/E3/E6 recall, false-accept, and escalation metrics",
             },
             {
                 "id": "ccfc_fig3_claim_boundary",
@@ -500,7 +526,7 @@ Backend: Python / matplotlib only.
 Generated figures:
 
 - `ccfc_fig1_protocol`: schematic-led composite for the hidden-evaluator protocol.
-- `ccfc_fig2_decision_patterns`: quantitative grid for repaired Qwen label-conditioned metrics and E6 ablations.
+- `ccfc_fig2_decision_patterns`: quantitative grid for repaired Qwen, DeepSeek, and Gemini E0/E3/E6 metrics.
 - `ccfc_fig3_claim_boundary`: asymmetric mixed-modality map for claim and validity boundaries.
 
 Export contract:

@@ -24401,3 +24401,86 @@ prompt trick、Figure 3 可读性低。目标是生成器级修复，不手改�
 - 当前 PDF 仍不是 final submission PDF；
 - 下一步不是继续补实验，而是 final human review：逐条人工核对 BibTeX、最终
   double-blind、venue formatting 和全文可读性。
+
+## 2026-07-08 APSEC figure/mainline consistency revision
+
+本轮小目标是修正 APSEC draft 中仍可能让审稿人困惑的主线一致性问题：
+Fig. 1 仍显示五模型、Fig. 2 仍偏 Qwen、BugsInPy 未正式引用、成本句喧宾夺主、
+E4-E5 叙述超过主表支撑、rule-only 防守需要在 abstract/conclusion 更明确、
+hard-negative stress matrix 在摘要中权重过高。
+
+执行边界：
+
+- 不改实验设置、不新增实验、不调用模型 API；
+- 不把旧五模型 synthesis 重新提升为主结果；
+- 不手改最终 PDF，优先修生成脚本、图生成脚本、BibTeX 和审计 gate；
+- cost 不作为 paper-facing claim，仅保留 artifact telemetry 边界；
+- E4/E5 只能作为 artifact 中的 intermediate-level non-monotonic behavior，
+  不能在主文中写成主结果；
+- hard-negative stress matrix 保持 supplemental stress-test/triage evidence，
+  不在摘要中压过三模型 EVP-8 主结果。
+
+验收条件：
+
+1. Fig. 1 不再出现 `5 model verifiers`，改为泛化的 verifier wording；
+2. Fig. 2 改为服务三模型主线，至少展示 Qwen/DeepSeek/Gemini 的 E0/E3/E6
+   correct recall、false accept rate、escalation rate；
+3. 正文引用 BugsInPy，BibTeX 新增正式 BugsInPy 条目，references >= 25；
+4. Implementation 中删除具体 cost 数值，只写 cost telemetry tracked when available；
+5. 主文删除或弱化 E4-E5 具体 claim；
+6. abstract/conclusion 明确 EVP-8 的价值是揭示 tool-following、abstention、
+   risk-routing，而不是证明 LLM 超越 rule-only；
+7. APSEC Markdown/TeX/PDF/page-budget/layout audit 全部重新生成并通过；
+8. README、INDEX、current_project_state、engineering_notes 和本计划同步；
+9. 本轮提交并尝试同步 GitHub，若 GitHub 连接失败则记录 ahead 状态。
+
+执行结果：
+
+- `scripts/generate_ccfc_figures.py` 已修正：
+  - Fig. 1 中 `5 model verifiers` 改为 `LLM verifier(s)`；
+  - figure contract 中的 scale 改为“98 candidates x 7 levels；APSEC main
+    result uses 3 repaired models”；
+  - Fig. 2 改为三模型主线图，展示 Qwen、DeepSeek、Gemini 在 E0/E3/E6 的
+    correct recall、false accept rate、escalation rate；
+  - `figure_manifest.json`、`figure_source_data.json`、`figure_qa.md` 已同步。
+- `scripts/write_apsec_manuscript_rewrite.py` 已修正：
+  - abstract 降低 hard-negative stress matrix 权重，只写 supplemental stress
+    matrix 和 escalation mechanism；
+  - abstract/conclusion 明确 EVP-8 的工程价值是揭示 tool-following、
+    abstention、risk-routing；
+  - Background 和 dataset paragraph 已正式引用 BugsInPy；
+  - Implementation 删除具体 dollar cost 数值，改为 cost telemetry tracked
+    when available but not used as paper-facing claim；
+  - E4-E5 具体 claim 改为 artifact-level intermediate non-monotonic behavior；
+  - Fig. 2 caption 改为 three-model repaired evidence metrics。
+- `scripts/write_apsec_ieeetran_package.py` 已新增
+  `widyasari_fse_2020_bugsinpy` BibTeX，reference gate 从 >=20 提升为 >=25。
+- `scripts/audit_apsec_manuscript_rewrite.py` 已新增 gate：
+  BugsInPy citation、cost not paper-facing claim、Fig. 2 three-model mainline、
+  intermediate-level claim bounded、abstract stress matrix downweighted。
+- README、docs/INDEX、current_project_state_zh、docs/figures/README 和
+  engineering_notes 已同步当前状态。
+
+验证结果：
+
+- `python -m py_compile scripts\generate_ccfc_figures.py scripts\write_apsec_manuscript_rewrite.py scripts\write_apsec_ieeetran_package.py scripts\audit_apsec_manuscript_rewrite.py scripts\audit_apsec_pdf_layout.py`：通过；
+- `python scripts\write_apsec_manuscript_rewrite.py --check`：通过；
+- `python scripts\audit_apsec_manuscript_rewrite.py --check`：通过；
+- `python scripts\write_apsec_ieeetran_package.py --check`：通过；
+- `python scripts\audit_apsec_pdf_layout.py --check`：通过；
+- `.bbl` 中 `\bibitem` 数量 = 25；
+- page-budget audit：compiled PDF = 7 pages，converted figures = 2，
+  converted tables = 6，0 overfull hbox，11 underfull hbox，undefined
+  references = false；
+- layout audit：7/7 pages rendered，页面非空，author block 匿名，旧 APSEC
+  gate wording absent；
+- 手动查看 `tmp/pdfs/apsec_ieeetran_layout_audit/page-4.png`，确认 Fig. 2
+  已是三模型图，且无图内文字遮挡。
+
+当前判断：
+
+- 本轮解决的是论文表达和图表逻辑一致性问题，不改变实验结果；
+- APSEC draft 当前仍不是最终投稿件，但已消除 Fig.1/Fig.2 与三模型主线不一致、
+  BugsInPy 未引用、cost 数值干扰、E4/E5 claim 过界、stress matrix 摘要权重过高
+  这几类明显审稿风险；
+- 下一步应做最终人工 bibliography/style review，而不是继续追加实验。

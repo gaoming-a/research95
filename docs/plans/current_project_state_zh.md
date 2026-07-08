@@ -1,6 +1,6 @@
 # 当前项目状态与文件地图
 
-日期：2026-07-06
+日期：2026-07-08
 
 本文件是短入口，用来整理当前计划文档和项目文件。它不替代
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
@@ -21,8 +21,10 @@
   附件评审意见触发的 v0.2 修订已把 Qwen v0.3 label-conditioned metrics、
   E6 rule-only/no-verdict baseline 和 E0-E6 evidence ladder 放入主文；未完成的
   majority 和完整 E0/no-tool baseline 仍不得写成已完成结果。
-  2026-07-03 追加实验逻辑清理：当前论文包不再携带早期无效设置作为正文内容；
-  新的 Fig. 2 保持为 Qwen v0.3 accept-aware + E6 ablation metric evidence。
+  2026-07-03 追加实验逻辑清理：当前论文包不再携带早期无效设置作为正文内容。
+  2026-07-08 追加 APSEC figure/mainline consistency pass：APSEC Fig. 1 不再
+  写成五模型 verifier，Fig. 2 已改为 Qwen/DeepSeek/Gemini 三模型 E0/E3/E6
+  correct recall、false accept rate、escalation rate，对齐当前三模型主结果。
   2026-07-04 追加 PaperSpine 下一步产物：citation support bank 和 baseline
   feasibility audit 已完成；rule-only visible-tool 是当前已完成 deterministic
   baseline，always-escalate/always-reject/always-accept 以及
@@ -176,7 +178,9 @@
   conclusion 内部 package note 和原始长浮点数，并把 false-accept analysis 改为
   正文 case-group 表。后续 APSEC reference/method-detail pass 已把 references
   从 11 条扩到 24 条结构化 BibTeX，简化 Table II，新增 Implementation and
-  Artifact 小节，统一 RQ3，删除 APSEC 主文 Figure 3，并把 Figure 2 放大为双栏图。
+  Artifact 小节，统一 RQ3，删除 APSEC 主文 Figure 3。2026-07-08 后续一致性
+  pass 又补充 BugsInPy 正式引用，将 references 提升到 25 条，删除 main text
+  中具体 cost 数值，弱化 E4/E5 主文 claim，并把 Figure 2 改为三模型主线图。
   页数估算 7.05 页，状态 `passed`；实际 IEEEtran/BibTeX 编译 PDF 为 7 页，
   latest log 无 undefined references、0 个 overfull hbox、11 个 underfull hbox。
   当前仍不是最终投稿 PDF；下一步需要 final human bibliographic review 和最终
@@ -300,8 +304,9 @@
   早期无效设置不应作为论文内容、accept-aware 结果应成为主证据、baseline 缺口、
   related-work 缺口和 realistic branch 边界等问题的处理状态。
 - 已完成实验逻辑二次清理：当前论文包不再把早期无效设置作为 RQ、主结果或
-  解释性段落；当前主证据链从 Qwen v0.3 accept-aware label-conditioned metrics
-  开始，并通过 E6 rule-only/no-verdict ablation 与 tool-contestation 继续收束。
+  解释性段落；当前主证据链从 repaired accept-aware label-conditioned metrics
+  开始，并已升级为 Qwen/DeepSeek/Gemini 三模型主结果，再通过 E6
+  rule-only/no-verdict ablation 与 tool-contestation 继续收束。
 - 当前本轮写作/配图/正文插图目标已完成；若继续投稿准备，下一步应优先补 verified
   related-work citations 和缺失 baseline，或在目标模板确定后整合到 LaTeX/Word
   投稿格式，而不是继续无边界实验或 API。

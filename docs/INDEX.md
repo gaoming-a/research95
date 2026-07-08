@@ -62,10 +62,12 @@
   curates the main PDF to 6 tables, removes mechanical conversion captions and
   the internal package note, formats raw floats, and adds a compressed
   false-accept case-group table. The follow-up APSEC reference/method-detail
-  pass expands the references to 24 structured BibTeX entries, simplifies Table
+  pass expands the references to 25 structured BibTeX entries, adds the formal
+  BugsInPy citation, simplifies Table
   II, adds an Implementation and Artifact subsection, unifies RQ3, removes
-  Figure 3 from the APSEC main paper, and renders Figure 2 as a larger
-  double-column figure. The current compiled draft is 7 pages with 0 overfull
+  Figure 3 from the APSEC main paper, generalizes Fig. 1 to avoid a five-model
+  main-result mismatch, and changes Fig. 2 to the three-model repaired E0/E3/E6
+  metric view. The current compiled draft is 7 pages with 0 overfull
   and 11 underfull hbox warnings recorded in
   `paper/apsec_page_budget_audit_v0_1.md`; `paper/apsec_pdf_layout_audit_v0_1.md`
   verifies that all 7 rendered pages are nonblank, the source author block is
@@ -128,9 +130,10 @@
   0.24 entry records the critique-driven v0.2 rewrite: RQ structure,
   Qwen v0.3 label-conditioned metrics, E6 rule-only/no-verdict metrics, and
   explicit remaining baseline/citation risks. The 2026-07-03 0.26 entry
-  removes the earlier invalid setting from the manuscript-facing package and
-  leaves Fig. 2 as accept-aware/no-verdict metric evidence for the current
-  result chain. The 2026-07-04 0.28 entry records the citation support bank and
+  removes the earlier invalid setting from the manuscript-facing package. The
+  later 2026-07-08 APSEC consistency pass redraws Fig. 2 as three-model
+  repaired E0/E3/E6 metric evidence for Qwen, DeepSeek, and Gemini. The
+  2026-07-04 0.28 entry records the citation support bank and
   deterministic baseline feasibility audit. The 2026-07-04 0.29 entry records
   the v0.3 manuscript integration and reviewer-style audit. The 2026-07-04
   0.30 entry records the remaining five-step completion: random expected
@@ -457,7 +460,7 @@
   `paper/apsec_page_budget_audit_v0_1.md`, and
   `../data/reviews/apsec_page_budget_audit_v0_1.json`: APSEC formatting draft
   package. Status is `passed`; the current IEEEtran/BibTeX compilation
-  produces a 7-page PDF with 24 cited references, no undefined references, 0
+  produces a 7-page PDF with 25 cited references, no undefined references, 0
   overfull hbox warnings, and 11 underfull hbox warnings. The camera-facing
   cleanup keeps 6 main tables and removes mechanical conversion captions,
   duplicate figure captions, internal package notes, raw long floats, and
@@ -475,8 +478,8 @@
   `ccfc_fig1_protocol`, `ccfc_fig2_decision_patterns`, and
   `ccfc_fig3_claim_boundary` in PDF/SVG/PNG formats, plus
   `figure_manifest.json`, `figure_source_data.json`, and `figure_qa.md`.
-  Current Fig. 2 content is accept-aware/no-verdict metric evidence for the
-  current result chain.
+  Current Fig. 2 content is the repaired Qwen/DeepSeek/Gemini E0/E3/E6 metric
+  view for the current three-model main result.
 - `../scripts/audit_ccfc_figure_placement.py`: validates that CCF-C Fig. 1--3
   are placed in the expected manuscript sections, appear in order, have
   captions after the image references, and point to existing non-empty assets.

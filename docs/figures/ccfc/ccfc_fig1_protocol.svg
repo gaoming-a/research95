@@ -224,8 +224,8 @@ z
     <text style="font-size: 7px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; fill: #252a31" transform="translate(136.995234 92.708175)">labels withheld</text>
    </g>
    <g id="text_7">
-    <text style="font-weight: 700; font-size: 7px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; fill: #252a31" transform="translate(250.599122 63.065078)">5 model</text>
-    <text style="font-weight: 700; font-size: 7px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; fill: #252a31" transform="translate(250.204278 70.058209)">verifiers</text>
+    <text style="font-weight: 700; font-size: 7px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; fill: #252a31" transform="translate(256.633341 62.971365)">LLM</text>
+    <text style="font-weight: 700; font-size: 7px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; fill: #252a31" transform="translate(247.873497 70.060047)">verifier(s)</text>
    </g>
    <g id="text_8">
     <text style="font-weight: 700; font-size: 7px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: middle; fill: #252a31" x="363.6225" y="51.48901" transform="rotate(-0 363.6225 51.48901)">escalate</text>
@@ -276,9 +276,9 @@ z
     <text style="font-weight: 700; font-size: 7.4px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: start; fill: #252a31" x="35.7138" y="194.924425" transform="rotate(-0 35.7138 194.924425)">Scale</text>
    </g>
    <g id="text_15">
-    <text style="font-size: 6.6px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; fill: #252a31" transform="translate(35.7138 206.883446)">98 candidates x 7 levels x 5</text>
-    <text style="font-size: 6.6px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; fill: #252a31" transform="translate(35.7138 213.650508)">models = 3430 parse-valid</text>
-    <text style="font-size: 6.6px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; fill: #252a31" transform="translate(35.7138 220.395038)">decisions</text>
+    <text style="font-size: 6.6px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; fill: #252a31" transform="translate(35.7138 206.883446)">98 candidates x 7 levels; APSEC</text>
+    <text style="font-size: 6.6px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; fill: #252a31" transform="translate(35.7138 213.650508)">main result uses 3 repaired</text>
+    <text style="font-size: 6.6px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; fill: #252a31" transform="translate(35.7138 220.395038)">models</text>
    </g>
    <g id="text_16">
     <text style="font-weight: 700; font-size: 7.4px; font-family: 'Arial', 'DejaVu Sans', 'Liberation Sans', sans-serif; text-anchor: start; fill: #252a31" x="164.0259" y="194.924425" transform="rotate(-0 164.0259 194.924425)">Boundary</text>

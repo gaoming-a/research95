@@ -80,6 +80,11 @@
       "detail": ""
     },
     {
+      "check": "cost_not_paper_facing_claim",
+      "passed": true,
+      "detail": ""
+    },
+    {
       "check": "qwen_main_result_present",
       "passed": true,
       "detail": ""
@@ -161,6 +166,21 @@
     },
     {
       "check": "figures_referenced",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "figure_two_three_model_mainline",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "intermediate_level_claim_bounded",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "abstract_stress_matrix_downweighted",
       "passed": true,
       "detail": ""
     },

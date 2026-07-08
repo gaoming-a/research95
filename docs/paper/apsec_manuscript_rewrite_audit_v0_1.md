@@ -24,6 +24,7 @@
 | `rq4_demoted_from_main_questions` | True | `` |
 | `rq3_unified_visible_evidence_challenge` | True | `` |
 | `implementation_artifact_detail_present` | True | `` |
+| `cost_not_paper_facing_claim` | True | `` |
 | `qwen_main_result_present` | True | `` |
 | `deepseek_main_result_present` | True | `` |
 | `gemini_main_result_present` | True | `` |
@@ -41,6 +42,9 @@
 | `hard_negative_stress_matrix_present` | True | `` |
 | `hard_negative_stress_boundary_present` | True | `` |
 | `figures_referenced` | True | `` |
+| `figure_two_three_model_mainline` | True | `` |
+| `intermediate_level_claim_bounded` | True | `` |
+| `abstract_stress_matrix_downweighted` | True | `` |
 | `all_expected_citations_present` | True | `[]` |
 | `reference_support_records_removed` | True | `` |
 | `remaining_broad_model_gap_explicit` | True | `` |

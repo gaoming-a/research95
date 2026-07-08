@@ -6,11 +6,11 @@ Status: `passed`
 
 | item | value |
 | --- | ---: |
-| word count excluding tables | 3264 |
+| word count excluding tables | 3251 |
 | converted tables | 6 |
 | converted figures | 2 |
-| references | 24 |
-| estimated pages | 7.05 |
+| references | 25 |
+| estimated pages | 7.09 |
 | compiled PDF pages | 7 |
 
 ## Compile Summary

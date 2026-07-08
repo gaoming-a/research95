@@ -48,6 +48,7 @@ def build_audit() -> dict[str, Any]:
         "smith_fse_2015_overfitting",
         "legoues_icse_2012_genprog",
         "just_issta_2014_defects4j",
+        "widyasari_fse_2020_bugsinpy",
         "barr_tse_2015_oracle_problem",
         "xia_zhang_icse_2023_llm_apr",
         "tufano_icse_2019_bugfix_nmt",
@@ -143,8 +144,17 @@ def build_audit() -> dict[str, Any]:
             and "temperature 0.0" in manuscript
             and "4096-token output cap" in manuscript
             and "686 parse-valid records" in manuscript
+            and "Cost telemetry was tracked when available, but cost comparison is not used as a paper-facing claim"
+            in manuscript
             and "raw provider responses, rendered prompts, patch diffs, local configs, and credentials remain excluded"
             in manuscript,
+        ),
+        check(
+            "cost_not_paper_facing_claim",
+            "USD 0.0" not in manuscript
+            and "USD 0.4342" not in manuscript
+            and "USD 0.6389" not in manuscript
+            and "cost comparison is not used as a paper-facing claim" in manuscript,
         ),
         check(
             "qwen_main_result_present",
@@ -232,6 +242,22 @@ def build_audit() -> dict[str, Any]:
             "figures_referenced",
             all(f"Figure {i}" in manuscript for i in [1, 2])
             and "Figure 3. Claim boundary" not in manuscript,
+        ),
+        check(
+            "figure_two_three_model_mainline",
+            "Figure 2. Three-model repaired evidence metrics" in manuscript
+            and "compares Qwen, DeepSeek, and Gemini at E0, E3, and E6" in manuscript
+            and "Repaired Qwen v0.3 evidence ladder" not in manuscript,
+        ),
+        check(
+            "intermediate_level_claim_bounded",
+            "E4-E5 conservatism" not in manuscript
+            and "intermediate-level non-monotonic behavior in the full artifact" in manuscript,
+        ),
+        check(
+            "abstract_stress_matrix_downweighted",
+            "supplemental 31-case hard-negative stress matrix" in manuscript
+            and "62/93" not in manuscript.split("## 1. Introduction", 1)[0],
         ),
         check("all_expected_citations_present", not missing_citations, missing_citations),
         check("reference_support_records_removed", "Reference Support Records" not in manuscript),

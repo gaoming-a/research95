@@ -4869,3 +4869,20 @@ This file starts fresh for the patch-verification project.
   APSEC main paper rather than forcing reviewers to decode it. Figure 3 remains
   available as a CCF-C/claim-boundary artifact, while APSEC keeps Figure 1 and a
   larger double-column Figure 2.
+
+## 2026-07-08 APSEC figure and citation consistency pass
+
+- Figure text must match the paper-facing result scope. A protocol schematic
+  that says `5 model verifiers` conflicts with a three-model APSEC main result;
+  use generic verifier wording unless the figure is specifically about the
+  earlier descriptive five-model synthesis.
+- Result figures should carry the main evidence chain. APSEC Fig. 2 now uses
+  Qwen, DeepSeek, and Gemini E0/E3/E6 metrics instead of the older Qwen-only
+  ladder plus ablation panel.
+- Benchmark citations are not optional. If the dataset paragraph names
+  BugsInPy tasks, the manuscript and BibTeX must cite BugsInPy directly.
+- Cost telemetry is an artifact boundary, not a paper-facing result here. Do
+  not report provider-specific dollar values in the main paper unless cost is a
+  designed comparison.
+- If the main table only shows E0/E3/E6, keep E4/E5 behavior as an artifact
+  boundary rather than a prominent main-text claim.

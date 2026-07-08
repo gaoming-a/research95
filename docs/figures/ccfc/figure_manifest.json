@@ -10,8 +10,8 @@
     },
     {
       "id": "ccfc_fig2_decision_patterns",
-      "purpose": "show repaired Qwen label-conditioned metrics and E6 verdict-field ablation",
-      "title": "Accept-aware and no-verdict metric evidence"
+      "purpose": "show Qwen, DeepSeek, and Gemini E0/E3/E6 recall, false-accept, and escalation metrics",
+      "title": "Three-model repaired evidence metrics"
     },
     {
       "id": "ccfc_fig3_claim_boundary",

@@ -340,7 +340,7 @@
   "figure_contract": {
     "archetypes": {
       "ccfc_fig1_protocol": "schematic-led composite",
-      "ccfc_fig2_decision_patterns": "quantitative grid for repaired main evidence",
+      "ccfc_fig2_decision_patterns": "three-model quantitative grid for repaired main evidence",
       "ccfc_fig3_claim_boundary": "asymmetric mixed-modality figure"
     },
     "backend": "Python",
@@ -367,6 +367,11 @@
     "E3",
     "E4",
     "E5",
+    "E6"
+  ],
+  "main_levels": [
+    "E0",
+    "E3",
     "E6"
   ],
   "qwen_v0_3_correct_recall": [
@@ -396,5 +401,63 @@
     3.8961,
     5.1948
   ],
+  "repaired_label_summary_sources": [
+    "data/reviews/evp8_qwen_first_main_v0_3_prompt_v0_2_label_conditioned_summary.json",
+    "data/reviews/evp8_deepseek_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json",
+    "data/reviews/evp8_gemini_repaired_v0_3_prompt_v0_2_label_conditioned_summary.json"
+  ],
+  "repaired_three_model_metrics": {
+    "correct_recall": {
+      "DeepSeek": [
+        0.0,
+        61.9048,
+        80.9524
+      ],
+      "Gemini": [
+        0.0,
+        95.2381,
+        95.2381
+      ],
+      "Qwen": [
+        0.0,
+        80.9524,
+        95.2381
+      ]
+    },
+    "escalation_rate": {
+      "DeepSeek": [
+        96.9388,
+        8.1633,
+        4.0816
+      ],
+      "Gemini": [
+        98.9796,
+        3.0612,
+        0.0
+      ],
+      "Qwen": [
+        75.51020000000001,
+        4.0816,
+        0.0
+      ]
+    },
+    "false_accept_rate": {
+      "DeepSeek": [
+        0.0,
+        3.8961,
+        5.1948
+      ],
+      "Gemini": [
+        0.0,
+        6.493500000000001,
+        6.493500000000001
+      ],
+      "Qwen": [
+        0.0,
+        3.8961,
+        5.1948
+      ]
+    }
+  },
   "source": "data/reviews/final_manuscript_claim_map_v0_1.json"
 }
