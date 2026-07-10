@@ -8,11 +8,23 @@
 
 ## Active Plan
 
+- [apsec_ccfc_evidence_repair_plan_zh.md](plans/apsec_ccfc_evidence_repair_plan_zh.md):
+  sole active master plan as of
+  2026-07-10. It supersedes the submission-readiness implications of the older
+  plan/audit entries. The current APSEC package is only a historical baseline;
+  current-98, EVP-8-HARD, coverage-contestation, stress-31, and all v0.1--v0.3
+  paper-facing results are development/exploratory evidence. The plan requires
+  G0 venue/AI-provenance clearance, a new 30-task/8-project EVP-v0.4
+  confirmation, task-cluster statistics, author-led scientific prose, and an
+  A4/10-page/double-blind final gate. Status:
+  STOP_PENDING_G0_AND_COHORT_FEASIBILITY. The current identity-linked public
+  remote must not receive new APSEC-facing pushes during the anonymity period;
+  no API is authorized.
 - `plans/current_project_state_zh.md`: short current-state entry and file map.
   Start here before reading the long execution log. It records Git sync state,
   current paper/result boundaries, experiment-decision gates, active plan roles,
   key project files, script entry points, and forbidden misuses. As of
-  2026-07-05, its top section is the authority for the current active branch.
+  2026-07-10, its top override is the authority for the current active branch.
   The manuscript claim-map, threats-to-validity consolidation, CCF-C body
   rewrite file, CCF-C Fig. 1--3, and inline figure placement audit are now
   tracked. The CCF-C citation support bank and baseline feasibility audit are

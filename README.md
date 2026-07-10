@@ -5,6 +5,26 @@ It keeps only the assets that are useful for a stronger research direction:
 studying how evidence visibility affects whether candidate patches should be
 accepted, rejected, or escalated in real software projects.
 
+## Current Validity And Submission Status
+
+As of 2026-07-10, the current APSEC manuscript/PDF is a historical draft
+baseline, not a submission-ready paper. A new objective audit found that the
+old E6-no-verdict path retained a nested verdict-like decision, the evidence
+ladder contained non-materialized E4/E5 fields, the same development cohort was
+reused after prompt repair, and candidate-level intervals ignored task/project
+clustering. The current PDF is also US Letter rather than the required A4.
+
+The sole active repair route is
+[docs/plans/apsec_ccfc_evidence_repair_plan_zh.md](docs/plans/apsec_ccfc_evidence_repair_plan_zh.md).
+It quarantines all old current-98/HARD/stress results as exploratory evidence
+and requires a new task-disjoint EVP-v0.4 confirmation with a preregistered
+project-held-out subset before any CCF-C-facing claim is restored. Execution is
+currently stopped at G0 and cohort feasibility: the existing readiness audit
+has zero fresh-project promising candidates, and the identity-linked public
+GitHub remote conflicts with APSEC's active anonymity period. No API call or
+new public push is authorized by the plan itself; a private/anonymized GitHub
+remote and author/Program-Chair policy decision are required first.
+
 ## Current Thesis
 
 LLM-only code review is not a reliable merge gate. The previous paired real-bug

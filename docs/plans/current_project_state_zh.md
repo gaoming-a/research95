@@ -1,6 +1,27 @@
 # 当前项目状态与文件地图
 
-日期：2026-07-08
+日期：2026-07-10
+
+## 2026-07-10 证据有效性状态覆盖
+
+- 唯一 active master plan 已切换为
+  docs/plans/apsec_ccfc_evidence_repair_plan_zh.md，状态为
+  PLANNED / STOP_PENDING_G0_AND_COHORT_FEASIBILITY。
+- 当前 APSEC Markdown、LaTeX、BibTeX 和 7 页 PDF 只作为历史 draft baseline，
+  不是 submission-ready package。
+- 旧 final experiment-setting validity audit 和旧 manuscript audit 只证明其
+  当时实现的内部一致性，已被 2026-07-10 根因审计超越；它们不能证明当前
+  no-verdict、evidence ladder、统计单位或 confirmatory design 有效。
+- current-98、EVP-8-HARD、coverage-contestation、stress-31 和所有旧
+  v0.1--v0.3 paper-facing 数值全部降级为 development/exploratory evidence。
+- 新主线是全新的 EVP-v0.4：30 held-out tasks、至少 8 projects、60 个配对候选、
+  四级真实 evidence、正交 synthetic cue 干预、三模型三重复和 task-cluster
+  统计。
+- 既有 readiness 记录 fresh-project promising candidates=0，P1A 必须先证明
+  40 个 source tasks/8 projects 可物化，否则 APSEC 2026 实验路线停止。
+- 当前 origin 是身份关联的公开仓库，APSEC 匿名期内不得继续 public push。
+  下一轮只能先做 G0 五项决策、P1 历史隔离和 P1A feasibility；在
+  G0、P1、P1A、P2--P6 全部通过且用户另行授权前，不得调用 API。
 
 本文件是短入口，用来整理当前计划文档和项目文件。它不替代
 `docs/plans/current_plan_zh.md` 的逐轮执行日志，也不替代
@@ -8,12 +29,11 @@
 
 当前权威性规则：
 
-- 本文件顶部的快速状态和“当前同步状态”优先于后文历史记录。
+- 本文件顶部的 2026-07-10 状态覆盖优先于后文全部历史记录。
 - 后文保留的旧分支、旧 hash、旧“下一步”只作为审计追溯，不得覆盖当前
-  realistic hard-negative gate 路线。
-- 当前研究目标已收敛为“稳妥写完并面向 CCF-C”。final
-  experiment-setting validity audit 已通过 bounded-claim gate；manuscript claim
-  map / threats-to-validity 收束、正文 v0.3 和 CCF-C 专用 Fig. 1--3 均已完成。
+  EVP-v0.4 evidence-validity repair 路线。
+- 旧 manuscript claim map、正文 v0.3 和 CCF-C Fig. 1--3 均为历史资产；只有在
+  新确认性证据和 claim gate 通过后才能决定是否复用其机械结构。
   配图后端按用户询问后的推荐路径选择 Python/matplotlib，图集位于
   `docs/figures/ccfc/`。Fig. 1--3 已插入
   `docs/paper/ccfc_manuscript_rewrite_v0_1.md` 的对应正文位置，并通过

@@ -1,6 +1,78 @@
 # 当前计划：AI 生成补丁的可验证审查
 
-最后更新：2026-07-06
+最后更新：2026-07-10
+
+## 0.46 2026-07-10 APSEC/CCF-C 证据有效性修复总计划
+
+本轮目标是对 2026-07-10 客观审计发现的实验有效性、统计、引用定位、
+APSEC 投稿规则和 PDF 封装问题，形成一个后续必须逐阶段执行的单一总计划。
+本轮只制定和同步计划，不改论文、不改 prompt、不运行实验、不调用 API。
+
+Inspect 结论：
+
+- 工作区在本轮开始时干净，当前分支为
+  evp8-v03-qwen-main-exp，并跟踪同名 origin 分支；
+- 旧 current-98 cohort 明确来自 21 tasks，candidate 数量按 task/project
+  严重不均；旧 candidate summary 自己将其标为 phase-0 smoke protocol
+  validation，而不是 final full-run cohort；
+- 旧 E6-no-verdict 只移除了顶层 E6 summary 字段，但 E4
+  visible_pass_to_pass_regression_evidence 中仍保留
+  visible_tests_rule_decision；因此现有 no-verdict/anchoring 结果不能作为
+  确认性证据；
+- E4/E5 存在空 test name/outcome、not_run 或 not_recorded，证据阶梯的实际
+  construct 与论文描述不一致；
+- 同一 cohort 被用于发现旧设置失败、修 prompt/evidence construction 和主实验，
+  没有独立 held-out confirmation；
+- 旧 Wilson CI 以 correlated candidates 为独立样本，不能支持 task/project-level
+  推断；
+- 31-case stress matrix 全为 negatives、只覆盖 4 tasks，always-escalate
+  baseline 可达到 100% safe handling，不能证明 verifier utility；
+- 最近邻 patch-correctness assessment 文献、2025--2026 文献和逐句
+  claim-to-citation map 不完整；
+- 既有 expansion readiness 记录 fresh-project promising candidates=0，
+  F2P-established P2P candidate 列表为空；新 30-task cohort 当前不可假定 ready；
+- 当前 PDF 为 7 页 US Letter，六张表使用 scriptsize，末页失衡，且 TeX 比 PDF
+  新 23 秒；旧计划中 8 页记录已过时；
+- APSEC 2026 Technical Track 官方当前要求 A4、10 pt、最多 10 页含参考文献、
+  双盲；可选摘要截止 2026-07-13、全文截止 2026-07-20；
+- 官方 AI/originality policy 只允许轻微语言辅助，禁止用生成式 AI 实质产生
+  研究内容、claim、实验结果、分析或论文文本，因此执行前必须先做作者 provenance
+  和政策合规门；
+- 当前 origin 是身份关联公开仓库，且匿名期已开始；继续 public push 与 APSEC
+  preprint/anonymity policy 冲突。
+
+Plan 决策：
+
+- 新增唯一权威总计划：
+  docs/plans/apsec_ccfc_evidence_repair_plan_zh.md；
+- 当前状态为 PLANNED / STOP_PENDING_G0_AND_COHORT_FEASIBILITY；默认目标暂按 APSEC 2026
+  Technical Track，但必须由用户确认目标、AI provenance、政策澄清和时间/成本；
+- 所有 current-98、EVP-8-HARD、coverage-contestation、stress-31 和旧
+  v0.1--v0.3 结果降级为 development/exploratory evidence；
+- 不修补旧 runner。新建 EVP-v0.4 单一执行链，四级真实可执行 evidence
+  conditions C0--C3，以及在相同 C3 底层证据上的
+  synthetic_advisory_cue=NONE/ACCEPT/REJECT 正交条件；
+- 在 P3/P4 前新增 P1A no-API feasibility gate，必须先证明至少 40 个
+  source tasks/8 projects 和预冻结 visible/hidden oracle 可物化；
+- 新确认性 cohort 锁定为 30 held-out tasks、至少 8 projects、每 task
+  恰好一个 oracle-positive 和一个同源 visible-pass/hidden-fail hard negative；
+- 三模型、三独立重复、六条件，共 3240 planned unique verifier requests；
+  full hard maximum 为 3402 attempts；smoke 为 36 unique/38 maximum；
+- task 是唯一主抽样单位，project→task hierarchical bootstrap 和 task-paired
+  permutation 为主分析；candidate、repeat 和 model 均不得扩充独立样本数；
+- API 前必须依次通过 G0、历史隔离、最近邻 novelty、预注册、held-out cohort、
+  新执行链和完整 no-API preflight；smoke/full 必须分别获得用户明确授权；
+- 科学内容冻结后才进行作者主导的正文重建、A4/10-page 双盲封装和最终人工审计。
+
+本轮验收条件：
+
+- 总计划包含阶段输入、动作、产物、最小验证、通过门、停止门、时间门、API
+  授权和 Git 同步规则；
+- README、INDEX、current project state 和 engineering notes 明确旧稿只是
+  历史基线，不能继续写成 submission-ready；
+- 本轮不改变任何论文、prompt、实验数据或 API 状态；
+- 文档 diff、内部链接、敏感信息和 Git 状态检查通过后，只创建本轮相关本地
+  提交；G0.5 未解决前不向当前 public origin 推送。
 
 ## 0.45 2026-07-06 APSEC IEEEtran/BibTeX/PDF package synchronization
 

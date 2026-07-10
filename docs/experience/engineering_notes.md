@@ -1,5 +1,48 @@
 # Engineering Notes
 
+## 2026-07-10 APSEC/CCF-C evidence-validity reset
+
+- Removing only top-level verdict keys does not create a no-verdict condition.
+  The old E6 ablation removed the E6 summary decision but retained the nested
+  E4 visible_tests_rule_decision; a recursive packet and rendered-prompt
+  denylist is required.
+- A field named regression evidence is not evidence when test names/outcomes
+  are empty, and not_run or not_recorded is not an evidence level. Paper
+  terminology must follow materialized commands and outcomes.
+- Prompt repair on a cohort converts that cohort into development data. The
+  same task/candidate set cannot later be presented as independent
+  confirmation, even when prompt and packet hashes are frozen.
+- Candidate-level Wilson intervals are invalid for a cohort with multiple
+  related variants per task and heavily unbalanced projects. Task is the main
+  unit; project-to-task hierarchical resampling preserves the design.
+- An all-negative stress set can measure false-accept handling but cannot
+  estimate correct recall or demonstrate useful automation. Always-escalate
+  must be shown as a strong risk baseline.
+- Do not repair the old EVP-8 runner with another compatibility branch. Build a
+  new fail-closed EVP-v0.4 chain in which real evidence bundles and the
+  synthetic advisory cue are orthogonal.
+- Freeze and hash each task's visible/hidden oracle split before constructing
+  any mutant candidate. Changing an oracle after candidate materialization is
+  label-design leakage and invalidates that task.
+- Planned requests are not the authorization ceiling when retry exists. A
+  global retry cap must turn 3240 unique full requests into an explicit 3402
+  maximum attempts, with cost calculated at the hard maximum.
+- Current fresh-project readiness is zero, so the 30-task cohort is not an
+  available input. A no-API source-feasibility gate must pass before protocol
+  freeze; a deadline is not evidence that tasks can be materialized.
+- Venue policy is an experimental gate, not final formatting trivia. APSEC 2026
+  permits only minor AI language assistance and forbids substantive AI-generated
+  research content, claims, analysis, results, or manuscript text; provenance
+  clearance must precede further venue-specific work.
+- Git hygiene and double-blind policy can conflict. The current identity-linked
+  public GitHub repository must not receive APSEC-facing updates during the
+  anonymity period; project sync can resume only on a user-approved
+  private/anonymized GitHub remote or after the APSEC route is stopped.
+- The master route is recorded in
+  docs/plans/apsec_ccfc_evidence_repair_plan_zh.md. Old current-98,
+  EVP-8-HARD, coverage, and stress-31 results remain auditable history but are
+  no longer confirmatory paper evidence.
+
 ## 2026-07-06 APSEC IEEEtran compile and layout audit
 
 - Do not store LaTeX compile stdout in tracked JSON audits. MiKTeX logs include
