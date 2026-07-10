@@ -102,3 +102,47 @@ Verification:
   `python scripts\audit_evp8_hard_tool_contestation_results.py --out data\protocols\evp8_hard_tool_contestation_result_audit_v0_1.json --check`.
 - Run
   `python scripts\analyze_evp8_hard_tool_contestation_opportunity.py --out-json data\reviews\evp8_hard_tool_contestation_opportunity_analysis_v0_1.json --out-md docs\experiments\evp8_hard_tool_contestation_opportunity_analysis_v0_1.md --check`.
+
+## 2026-07-10 Legacy EVP-8 Prompt Retirement
+
+- Change type: physical deletion from the active worktree.
+- Author decision: retire every legacy EVP-8 experiment prompt and continue
+  under research objective A, which studies how visible evidence changes the
+  accept/reject/escalate policy rather than claiming verifier correctness.
+- Replacement: none. No EVP-v0.4 prompt was created in this change.
+- API boundary: no smoke, full run, or model API call is authorized.
+
+Deleted templates and their pre-deletion SHA-256 values:
+
+| Deleted path | SHA-256 |
+|---|---|
+| `prompts/evp8_visible_evidence_merge_gate_v0_1.md` | `a31d23d74f5130c9ce06262c4a9f016a303da8e77683c007e7cfb142fb74066c` |
+| `prompts/evp8_visible_evidence_merge_gate_v0_2.md` | `3e64dbedf9b0155f3013f30a4044631dc18d4f8d22920620941e16bd0e7d09f0` |
+| `prompts/evp8_tool_contestation_merge_gate_v0_1.md` | `dbb09a88a3c4370d82cc257f9d44561924fcf7ba9f8cd21934adeabf2eb51bbc` |
+| `prompts/evp8_coverage_contestation_merge_gate_v0_1.md` | `722608bd0b88ec8af3c31ce06fc756e39aa4c070f57292c9eea256a66e4c422a` |
+
+Conflict and duplication check:
+
+- The previous master plan said not to modify legacy prompts. The user's later
+  explicit deletion decision superseded that retention rule, and the master
+  plan was amended before deletion.
+- The deleted templates encode policy and condition framing that the
+  2026-07-10 root-cause audit found unsuitable for confirmatory reuse.
+- The four original byte sequences remain recoverable from existing Git
+  history; no second active or archived worktree copy was created.
+- Historical protocols, manifests, run packets, results, and audits retain
+  their original prompt paths, ids, and hashes as provenance. Their old
+  `passed`, `ready`, `current`, or `main` labels describe the historical run
+  state only and do not make the retired chain executable.
+- Legacy example/local configs and runners must not be redirected to a future
+  prompt. They are historical code and are not valid execution entry points.
+- A future EVP-v0.4 prompt requires a new id, path, author decision, conflict
+  check, preregistration gate, and separate change record.
+
+Verification:
+
+- The active `prompts/` directory must contain this log and no legacy EVP-8
+  template.
+- The four deleted paths must be absent.
+- Historical data/protocol/result artifacts must have no content diff from
+  this retirement change.

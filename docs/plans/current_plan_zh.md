@@ -2,6 +2,76 @@
 
 最后更新：2026-07-10
 
+## 0.47 2026-07-10 旧 EVP-8 prompt 物理删除与执行链退休
+
+本轮小目标是执行用户在研究目标 A 下的明确决定：删除活动工作树中的全部旧
+EVP-8 实验 prompt，防止下一轮继续复用已经被根因审计判定为不可确认性使用的
+policy-inducing 设置。
+
+Inspect：
+
+- `prompts/` 中共有四个旧 EVP-8 模板和一个 `prompt_change_log.md`；后者是审计
+  账本，不是 prompt；
+- 四个旧模板分别是 visible-evidence v0.1、visible-evidence v0.2、
+  tool-contestation v0.1 和 coverage-contestation v0.1；
+- tracked config、protocol、manifest、run packet、result 和 audit 中仍保留旧路径；
+  其中 protocol/result 类引用属于必须保留的历史 provenance；
+- 现有总计划原先写有“不修改旧 prompt”，与用户最新的物理删除决定冲突。
+
+Plan：
+
+1. 先修订总计划，记录用户决定覆盖旧的保留安排；
+2. 删除四个模板，但保留 `prompt_change_log.md` 并写入删除前 SHA-256；
+3. 不改写任何历史 protocol、manifest、run packet、result 或 audit；
+4. README、INDEX、current project state 和 engineering notes 统一把旧
+   config/runner 标为 historical/not executable；
+5. 不创建 v0.4 prompt，不调用模型 API，不触碰 ignored local config；
+6. 验证活动 prompt 路径为空、日志哈希完整、历史 artifact 未被改写、文档状态
+   一致，再创建仅包含本轮文件的本地提交；G0.5 未通过前不推送当前公开 origin。
+
+验收条件：
+
+- 四个旧模板从活动工作树删除，`prompt_change_log.md` 保留；
+- 没有新增或替代 prompt；
+- 旧路径命中只属于明确标记的历史 provenance、退休记录或历史代码/config；
+- 当前入口明确禁止旧 runner/config 触发 smoke、full run 或 API；
+- `git diff --check`、敏感信息扫描和相关文件集检查通过。
+
+Execute：
+
+- 已物理删除四个旧 EVP-8 prompt 模板；活动 `prompts/` 目录只保留
+  `prompt_change_log.md`；
+- 已在 prompt change log 记录四个删除前 SHA-256、用户决定、冲突检查、历史
+  provenance 边界以及 replacement=none；
+- 已同步 master plan、README、INDEX、current project state、final roadmap 和
+  engineering notes；
+- 未创建 EVP-v0.4 prompt，未调用 API，未修改历史 data/protocol/result、脚本、
+  tracked example config、ignored local config 或论文文件。
+
+Verify：
+
+- `prompt-retirement-integrity`：通过；四个路径均不存在，活动目录文件集合正确，
+  四个哈希和 replacement boundary 完整；
+- `historical-artifacts-and-untracked-clean`：通过；受保护历史/执行目录无 diff，
+  无意外 untracked 文件；
+- `diff-allowlist`：通过；diff 仅含 4 个模板删除、prompt log 和 7 个闭环文档；
+- `git diff --check` 与敏感信息扫描：通过；
+- 旧 prompt 名称剩余引用共 43 个文件：4 个当前退休说明、6 个历史文档、3 个
+  历史脚本、13 个历史 config、17 个 provenance data artifact；没有活动模板。
+
+Diagnose / Repair：
+
+- 初始总计划的“不修改旧 prompt”与用户新决定冲突；已在删除前修订计划，明确
+  用户决定覆盖旧安排，并用 Git 历史加删除前哈希保持可审计性；
+- 没有把旧 config/runner 静默改到新路径，也没有用缺失模板伪装成 v0.4。
+
+Gate：
+
+- `P1_LEGACY_PROMPT_RETIREMENT_COMPLETE`：通过；
+- P1 的完整 evidence quarantine、递归 leakage registry 和 P1A feasibility 尚未
+  完成；G0/G0.5 也未通过，因此仍不得创建新科学 prompt、调用 API 或推送当前
+  identity-linked public origin。
+
 ## 0.46 2026-07-10 APSEC/CCF-C 证据有效性修复总计划
 
 本轮目标是对 2026-07-10 客观审计发现的实验有效性、统计、引用定位、

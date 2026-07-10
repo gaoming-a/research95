@@ -1,5 +1,10 @@
 # 最终论文路线：Evidence Visibility for Candidate Patch Verification
 
+> 2026-07-10 权威性覆盖：本文件现为历史长期路线，不再是当前执行入口。当前唯一
+> 主计划是 `docs/plans/apsec_ccfc_evidence_repair_plan_zh.md`。四个旧 EVP-8
+> prompt 已从活动工作树删除，本文后文出现的 frozen/current/ready prompt 或 API
+> 下一步均为历史状态，不得执行，也不得覆盖研究目标 A 和 P1/P1A/G0 门禁。
+
 本文档保存长期最终论文路线，并从 2026-06-08 起被指定为本项目后续目标的
 规范入口。它不是当前必须立即执行的完整实验清单，也不替代
 `docs/plans/current_plan_zh.md` 的轮次执行记录。当前 pilot、IEEE 草稿和中期

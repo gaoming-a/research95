@@ -2,10 +2,20 @@
 
 计划编号：APSEC-CCFC-VALIDITY-20260710
 制定日期：2026-07-10
-当前状态：PLANNED；STOP_PENDING_G0_AND_COHORT_FEASIBILITY
+当前状态：P1_LEGACY_PROMPT_RETIREMENT_COMPLETE；STOP_PENDING_G0_AND_COHORT_FEASIBILITY
 默认目标：APSEC 2026 Technical Track，按用户指定的 CCF-C 目标评估
 论文类型：受控实证方法研究
-本轮边界：只制定计划，不改论文、不改 prompt、不运行实验、不调用 API
+研究目标选择：A——研究可见证据如何改变 accept/reject/escalate policy，
+不把实验定义为 verifier correctness 证明
+本轮边界：按用户明确授权物理删除四个旧 EVP-8 prompt；不改论文、不生成
+新 prompt、不运行实验、不调用 API
+
+2026-07-10 执行修订：用户明确要求删除全部旧 EVP-8 prompt。该决定覆盖本计划
+原先“保留且不修改旧 prompt”的安排。四个旧模板从活动工作树物理删除；其原始
+字节仍由既有 Git 提交保存，删除前 SHA-256 和退休原因写入 prompt change log。
+旧 protocol、manifest、run packet、result 和 audit 中的 prompt path/id/hash 作为
+历史 provenance 保持原样，不得改写。任何旧 config/runner 都只允许用于历史
+代码审计，不再是执行入口；不得把它们静默改指向未来 v0.4 prompt。
 
 ## 1. 本计划的权威性
 
@@ -400,6 +410,8 @@ cohort-conditional accepted precision 只能是次要描述指标。
 
 - 建立 paper-evidence registry；
 - 将所有旧结果标为 development/exploratory/not-confirmatory；
+- 删除活动工作树中的四个旧 EVP-8 prompt 模板，并在 prompt change log 中记录
+  文件名、删除前 SHA-256、退休原因和历史引用边界；
 - 递归重建和扫描旧 no-verdict packets，记录嵌套
   visible_tests_rule_decision 残留；
 - 记录 E4/E5 空证据、同 cohort 调 prompt、candidate-level Wilson CI、
@@ -410,11 +422,14 @@ cohort-conditional accepted precision 只能是次要描述指标。
 
 - evidence quarantine report；
 - superseding validity audit note；
+- legacy prompt retirement record；
 - 新旧 artifact 边界清单。
 
 最小验证：
 
 - 每个旧 artifact 恰好一个分类；
+- 四个旧 prompt 的活动路径均不存在，删除前哈希可从退休记录复核，且没有生成
+  任何替代 prompt；
 - 旧数值不能进入新的 confirmatory analysis 输入；
 - 递归扫描可以抓到任意深度 verdict-like key。
 
@@ -500,8 +515,10 @@ Chairs 明确允许时，Codex 才能对作者已核验的 primary sources 做�
   再冻结 transform registry；顺序不得倒置；
 - 冻结一句话研究问题、RQ、C0–C5、模型数、重复数、主要指标、统计代码接口、
   cohort 标准、排除规则和随机化种子；
-- 从旧 prompt 逐条检查矛盾和重复，写全新的单一 v0.4 prompt；
-- 单独记录 prompt change record；不修改旧 prompt；
+- 使用旧 prompt 的 Git 历史、删除前哈希和审计记录逐条检查矛盾和重复；不得
+  恢复已退休模板；
+- 由作者在 G0/政策边界允许后另行形成全新的单一 v0.4 prompt，并单独记录
+  prompt change record；Codex 本轮不生成该 prompt；
 - 冻结 semantic parse-valid=100% 的处理规则；invalid 不作为第四决策、不从
   denominator 删除，任一 semantic invalid 使受影响 run 无效；
 - 冻结两个 primary statistical families、project-cluster inference、

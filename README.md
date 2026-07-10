@@ -25,6 +25,14 @@ GitHub remote conflicts with APSEC's active anonymity period. No API call or
 new public push is authorized by the plan itself; a private/anonymized GitHub
 remote and author/Program-Chair policy decision are required first.
 
+The four legacy EVP-8 prompt templates were physically removed from the active
+worktree on 2026-07-10. Their pre-deletion hashes and retirement rationale are
+recorded in `prompts/prompt_change_log.md`, while historical protocol/result
+artifacts retain the original paths and hashes as provenance. Every legacy
+EVP-8 config and runner is historical and not an execution entry point; no
+replacement EVP-v0.4 prompt exists yet, and none may be inferred from the old
+templates.
+
 ## Current Thesis
 
 LLM-only code review is not a reliable merge gate. The previous paired real-bug
@@ -168,11 +176,11 @@ bibliographic review, final visual polish, the small 98-candidate cohort, and
 the fact that three repaired models still do not establish broad LLM-verifier
 generality.
 
-As of 2026-07-06, mainline A is complete. The main prompt remains fixed, and
-the separate coverage-contestation condition is reported only as a
-prompt-sensitivity ablation. The frozen prompt is
-`prompts/evp8_coverage_contestation_merge_gate_v0_1.md`; the prompt change
-record is
+The following paragraph records the historical 2026-07-06 mainline-A state;
+it is superseded by the 2026-07-10 retirement above. At that time the separate
+coverage-contestation condition was reported as a prompt-sensitivity ablation
+using `prompts/evp8_coverage_contestation_merge_gate_v0_1.md`, which has now
+been deleted from the active worktree. Its historical prompt change record is
 `docs/experiments/evp8_coverage_contestation_prompt_change_record_v0_1.md`.
 The current-98 check-only packet passed at
 `docs/experiments/evp8_coverage_contestation_current98_check_only_v0_1.md`,
@@ -440,12 +448,13 @@ does not authorize model calls by itself. The post-smoke audit scaffold is
 `data/protocols/evp8_deepseek_qwen_smoke_result_audit_v0_1.json`, with
 Markdown at `docs/experiments/evp8_deepseek_qwen_smoke_result_audit_v0_1.md`;
 before execution it is expected to report `waiting_for_execution`.
-The Phase 0 smoke/protocol-validation candidate set is frozen at
+The historical Phase 0 smoke/protocol-validation candidate set is frozen at
 `data/protocols/evp8_candidate_set_v0_1.json`: 21 tasks, 6 projects, and 98
 candidates from the tracked EVP-7 structural cohort. This is not the final
-journal-scale full-run cohort. The EVP-8 prompt template is frozen at
-`prompts/evp8_visible_evidence_merge_gate_v0_1.md`, with no-API prompt
-manifest and boundary audit outputs under `data/protocols/`.
+journal-scale full-run cohort. Its former prompt path was
+`prompts/evp8_visible_evidence_merge_gate_v0_1.md`; that template is now
+deleted and not executable. The no-API prompt manifest and boundary audit
+outputs remain under `data/protocols/` as historical provenance.
 
 Every concrete continuation round must first update:
 

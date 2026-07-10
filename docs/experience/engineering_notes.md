@@ -1,5 +1,23 @@
 # Engineering Notes
 
+## 2026-07-10 Legacy EVP-8 prompt retirement
+
+- When a prompt family is invalid for confirmatory reuse, retaining it under
+  the active prompt path makes accidental reruns and silent inheritance more
+  likely. The user therefore authorized physical deletion of all four legacy
+  EVP-8 templates after their SHA-256 values were recorded.
+- Do not delete or rewrite historical protocol, manifest, packet, result, or
+  audit references. Git history plus the retirement hashes preserve what was
+  actually run; changing those paths would falsify provenance.
+- A prompt change log is an audit record, not a prompt. Keep it in the active
+  tree and record deletion, conflict checks, rationale, and the absence of a
+  replacement.
+- Historical configs and runners must never be silently repointed to a new
+  prompt. A future EVP-v0.4 chain needs a new namespace and independent gates.
+- Earlier notes that call v0.1/v0.2 the `main` or `frozen` EVP-8 prompt describe
+  their historical experiment sequence only. They are superseded by this
+  retirement and do not authorize execution.
+
 ## 2026-07-10 APSEC/CCF-C evidence-validity reset
 
 - Removing only top-level verdict keys does not create a no-verdict condition.

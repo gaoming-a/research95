@@ -2,11 +2,19 @@
 
 日期：2026-07-10
 
-## 2026-07-10 证据有效性状态覆盖
+## 2026-07-10 证据有效性与旧 prompt 退休状态覆盖
 
 - 唯一 active master plan 已切换为
   docs/plans/apsec_ccfc_evidence_repair_plan_zh.md，状态为
-  PLANNED / STOP_PENDING_G0_AND_COHORT_FEASIBILITY。
+  P1_LEGACY_PROMPT_RETIREMENT_COMPLETE /
+  STOP_PENDING_G0_AND_COHORT_FEASIBILITY。
+- 用户已选择研究目标 A：研究可见证据如何改变 accept/reject/escalate policy，
+  不把实验定义为 verifier correctness 证明。
+- 四个旧 EVP-8 prompt 模板已从活动工作树物理删除；删除前 SHA-256 和冲突/
+  重复检查保存在 `prompts/prompt_change_log.md`。当前没有 EVP-v0.4 prompt。
+- 下文或历史 artifact 中的 `current`、`main`、`ready`、`passed` 只表示当时状态；
+  所有旧 EVP-8 config/runner 均为 historical/not executable，不得触发新的
+  smoke、full run 或模型 API，也不得被静默改指向未来 v0.4 prompt。
 - 当前 APSEC Markdown、LaTeX、BibTeX 和 7 页 PDF 只作为历史 draft baseline，
   不是 submission-ready package。
 - 旧 final experiment-setting validity audit 和旧 manuscript audit 只证明其

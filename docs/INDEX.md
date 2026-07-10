@@ -20,6 +20,13 @@
   STOP_PENDING_G0_AND_COHORT_FEASIBILITY. The current identity-linked public
   remote must not receive new APSEC-facing pushes during the anonymity period;
   no API is authorized.
+- Legacy prompt retirement override (2026-07-10): the four EVP-8 prompt files
+  were physically deleted from the active worktree. Their hashes and reasons
+  are recorded in `../prompts/prompt_change_log.md`. Every later index entry
+  that calls an old EVP-8 config, runner, packet, or prompt `current`, `main`,
+  `ready`, or `passed` is a historical snapshot only; it is superseded and not
+  executable. Historical protocol/result paths and hashes remain unchanged for
+  provenance. No EVP-v0.4 prompt exists yet.
 - `plans/current_project_state_zh.md`: short current-state entry and file map.
   Start here before reading the long execution log. It records Git sync state,
   current paper/result boundaries, experiment-decision gates, active plan roles,
@@ -334,10 +341,10 @@
   `paper/ccfc_manuscript_v0_3_reviewer_audit.md`: v0.3 manuscript reviewer
   audit. Status is `passed`; remaining risk is formatting and target-venue
   conversion, not missing citation/baseline/uncertainty content.
-- `../prompts/evp8_coverage_contestation_merge_gate_v0_1.md`: frozen
-  coverage-contestation prompt for prompt-sensitivity / robustness analysis.
-  It is independent from the main prompt and asks models to challenge
-  visible-test-only accept premises when coverage is insufficient.
+- `../prompts/evp8_coverage_contestation_merge_gate_v0_1.md`: deleted legacy
+  coverage-contestation prompt. The path is retained here only to identify the
+  historical prompt-sensitivity experiment; it is not an active file or an
+  execution entry point.
 - `experiments/evp8_coverage_contestation_prompt_change_record_v0_1.md`:
   prompt modification record. It documents that
   `evp8_visible_evidence_merge_gate_v0_2` was not modified, and that the new
@@ -559,9 +566,9 @@
   candidate-set audit summary. It records 21 tasks, 6 projects, 98 candidates,
   aggregate evaluator-side label counts for balance audit, and
   `api_call_attempted=false`.
-- `../prompts/evp8_visible_evidence_merge_gate_v0_1.md`: frozen EVP-8
-  visible-evidence merge-gate prompt template. It stores the template text, not
-  rendered per-packet prompts.
+- `../prompts/evp8_visible_evidence_merge_gate_v0_1.md`: deleted legacy EVP-8
+  visible-evidence prompt. The historical manifest below preserves its hash;
+  the active worktree contains no template at this path.
 - `../data/protocols/evp8_prompt_manifest_v0_1.json`: no-API prompt-template
   manifest. It records prompt id, template hash/length, output-schema keys,
   and `api_call_attempted=false`.
@@ -653,9 +660,9 @@
   98-candidate E0-E6 ladder but changes visible evidence construction to use
   existing sanitized EVP-7 visible test/tool artifacts, records direct-provider
   JSON-mode controls, and does not overwrite v0.1.
-- `../prompts/evp8_visible_evidence_merge_gate_v0_2.md`: prompt v0.2 for the
-  accept-aware retest. It keeps the visible-only decision policy and tightens
-  JSON/risk-flag enum discipline after the blocked v0.2 diagnostic attempt.
+- `../prompts/evp8_visible_evidence_merge_gate_v0_2.md`: deleted legacy prompt
+  v0.2. Historical accept-aware artifacts retain this path and hash, but the
+  prompt cannot be selected for new execution.
 - `../configs/evp8_deepseek_qwen_accept_v0_2.example.json`: tracked no-secret
   accept-aware retest config. The ignored local copy is
   `configs/evp8_deepseek_qwen_accept_v0_2.local.json`; it uses JSON mode for
@@ -2612,10 +2619,9 @@
   summary builder for EVP-8. It reads raw-output-free passed summaries and
   ignored blocked-attempt summaries, writes tracked JSON/Markdown cost ledgers,
   and sets the API-freeze boundary after the Kimi blocked-attempt overrun.
-- `../prompts/evp8_tool_contestation_merge_gate_v0_1.md`: EVP-8-HARD
-  tool-contestation prompt. It keeps the visible-only boundary, removes final
-  tool verdict fields, and asks for explicit coverage/reliability/challenge
-  fields.
+- `../prompts/evp8_tool_contestation_merge_gate_v0_1.md`: deleted legacy
+  EVP-8-HARD tool-contestation prompt. Existing result analysis remains
+  auditable, but the path is not an active experiment input.
 - `../configs/evp8_hard_tool_contestation.example.json`: tracked no-secret
   config template for the tool-contestation ablation.
 - `../scripts/run_evp8_hard_tool_contestation.py`: guarded tool-contestation
@@ -2653,8 +2659,8 @@
 - `../prompts/prompt_change_log.md`: prompt log for patch-verification prompts
   only. It records the EVP-8 prompt addition and the no-conflict check against
   the historical EVP-7 prompt.
-- `../prompts/evp8_visible_evidence_merge_gate_v0_1.md`: frozen EVP-8 prompt
-  template for the full-ladder no-API protocol.
+- `../prompts/evp8_visible_evidence_merge_gate_v0_1.md`: deleted legacy prompt
+  path, retained in this historical index section for provenance only.
 
 ## Safety Rules
 
