@@ -2,9 +2,33 @@
 
 日期：2026-07-10
 
-## 2026-07-10 证据有效性与旧 prompt 退休状态覆盖
+## 2026-07-10 DSA 2026 路线状态覆盖
 
-- 唯一 active master plan 已切换为
+- 当前唯一 active master plan 是
+  `docs/plans/dsa_2026_submission_execution_plan_zh.md`。
+- 唯一主目标为 DSA 2026 Regular；Short 只是在任何模型调用前、经 P2 feasibility
+  和 precision gate 后由用户明确锁定的独立 protocol，不是结果不好时的降格。
+  ACAI 当前 inactive，禁止并行投稿。
+- 当前状态为 `DSA_2026_ROUTE_PLANNING_ONLY / REGULAR_NO_GO /
+  SHORT_NO_GO / WAITING_FOR_D0_P1_P2_P3`。默认 Regular 不等于授权执行。
+- 新研究只回答真实、累积 C0--C3 可执行证据如何改变固定 LLM 的
+  accept/reject/escalate policy；旧 C4/C5 synthetic-advisory 支线已删除。
+- current-98、EVP-8-HARD、coverage-contestation、stress-31 及旧论文全部是
+  quarantined development/exploratory provenance，不进入 DSA 主统计、CI、摘要、
+  结论或主图表。
+- 当前没有新 prompt；没有 smoke/full/API 授权。下一轮严格只执行 P0/D0；P0 passed
+  后另开一轮 P1，P1 passed 后才可另开 P2。
+- DSA AI 参与许可、近三届 EI 检索、2026 CPS/出版信息、现场参会预算、作者签核、
+  官方页面/template ZIP 快照与最小 skeleton 编译仍待完成；在这些门通过前不能把
+  DSA 视为已满足最低 EI。
+- 推荐独立 private GitHub repository，remote 名为 `private`。URL 尚未提供，当前
+  只允许本地提交，禁止向身份关联的 public origin 推送本轮论文计划。
+- 现有 APSEC Markdown/TeX/BibTeX/7 页 PDF 只是历史 baseline；DSA 新稿必须使用
+  官方 `IEEEconf.cls` 的独立 namespace，按最终 PDF 12/10 页门重新构建。
+
+## 2026-07-10 历史：证据有效性与旧 prompt 退休状态覆盖
+
+- 当时的唯一 active master plan 已切换为
   docs/plans/apsec_ccfc_evidence_repair_plan_zh.md，状态为
   P1_LEGACY_PROMPT_RETIREMENT_COMPLETE /
   STOP_PENDING_G0_AND_COHORT_FEASIBILITY。

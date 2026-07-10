@@ -7,23 +7,29 @@ accepted, rejected, or escalated in real software projects.
 
 ## Current Validity And Submission Status
 
-As of 2026-07-10, the current APSEC manuscript/PDF is a historical draft
-baseline, not a submission-ready paper. A new objective audit found that the
-old E6-no-verdict path retained a nested verdict-like decision, the evidence
-ladder contained non-materialized E4/E5 fields, the same development cohort was
-reused after prompt repair, and candidate-level intervals ignored task/project
-clustering. The current PDF is also US Letter rather than the required A4.
+As of 2026-07-10, the sole active route is
+[the DSA 2026 execution plan](docs/plans/dsa_2026_submission_execution_plan_zh.md).
+The single target is a DSA 2026 Regular paper. A Short paper may be selected
+only as a separately frozen protocol before any model call; ACAI is inactive.
+Both DSA routes are currently NO-GO pending venue/AI/EI checks, old-evidence
+quarantine, cohort feasibility, precision simulation, nearest-neighbor review,
+and author-signed preregistration. No smoke, full run, or model API is
+authorized.
 
-The sole active repair route is
-[docs/plans/apsec_ccfc_evidence_repair_plan_zh.md](docs/plans/apsec_ccfc_evidence_repair_plan_zh.md).
-It quarantines all old current-98/HARD/stress results as exploratory evidence
-and requires a new task-disjoint EVP-v0.4 confirmation with a preregistered
-project-held-out subset before any CCF-C-facing claim is restored. Execution is
-currently stopped at G0 and cohort feasibility: the existing readiness audit
-has zero fresh-project promising candidates, and the identity-linked public
-GitHub remote conflicts with APSEC's active anonymity period. No API call or
-new public push is authorized by the plan itself; a private/anonymized GitHub
-remote and author/Program-Chair policy decision are required first.
+The current APSEC manuscript/PDF remains a historical baseline, not a
+submission-ready paper. Its old E6-no-verdict path retained a nested
+verdict-like decision, evidence fields were not fully materialized, prompt
+development reused the evaluation cohort, and candidate-level intervals ignored
+task/project dependence. All current-98/HARD/coverage/stress figures and numbers
+are quarantined from the DSA title, abstract, results, conclusion, confidence
+intervals, and main figures. The DSA paper will be rebuilt in a new namespace
+with the official `IEEEconf.cls`; the existing seven-page `IEEEtran` PDF cannot
+be renamed into a submission.
+
+The recommended Git route is a separate private repository using remote name
+`private`. Until its URL is supplied and venue policy is recorded, this branch
+may be committed locally but must not be pushed to the identity-linked public
+origin.
 
 The four legacy EVP-8 prompt templates were physically removed from the active
 worktree on 2026-07-10. Their pre-deletion hashes and retirement rationale are

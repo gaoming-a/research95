@@ -1,5 +1,11 @@
 # APSEC/CCF-C 证据有效性修复与投稿总计划
 
+> 2026-07-10 权威性覆盖：本文件已退出 active 状态，仅保留 APSEC 路线、旧实验
+> 根因审计和 prompt 退休 provenance。项目当前唯一执行总计划是
+> `docs/plans/dsa_2026_submission_execution_plan_zh.md`。DSA Regular/Short 当前均为
+> NO-GO；在 D0/P1/P2/P3 通过前不得构造 confirmatory cohort、创建新 prompt 或调用
+> 模型。本文后文的“唯一主计划”“默认 APSEC”和阶段授权全部是历史状态。
+
 计划编号：APSEC-CCFC-VALIDITY-20260710
 制定日期：2026-07-10
 当前状态：P1_LEGACY_PROMPT_RETIREMENT_COMPLETE；STOP_PENDING_G0_AND_COHORT_FEASIBILITY
@@ -17,11 +23,10 @@
 历史 provenance 保持原样，不得改写。任何旧 config/runner 都只允许用于历史
 代码审计，不再是执行入口；不得把它们静默改指向未来 v0.4 prompt。
 
-## 1. 本计划的权威性
+## 1. 历史权威性（已由 DSA 计划覆盖）
 
-本文件是后续论文修复和投稿工作的唯一主计划。docs/plans/current_plan_zh.md
-只记录每一轮的执行日志；旧 roadmap、旧实验 packet、旧 claim map 和旧审计报告
-只提供历史证据，不能覆盖本计划的门禁。
+本文件在 APSEC 修复阶段曾是后续论文修复和投稿工作的唯一主计划；现由顶部所列
+DSA 计划覆盖。以下层级关系仅用于解释当时决策与 provenance，不再授权后续动作。
 
 后续每轮必须按以下闭环执行：
 

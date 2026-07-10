@@ -1,5 +1,44 @@
 # Engineering Notes
 
+## 2026-07-10 DSA route lock and no-rerun design
+
+- A venue pivot does not rehabilitate invalid evidence. The APSEC draft, old
+  prompts, current-98/HARD/coverage/stress outputs, and candidate-level
+  intervals remain exploratory after selecting DSA; they must be quarantined
+  from the new title, abstract, results, confidence intervals, conclusion, and
+  main figures.
+- Lock the paper type before any model call. DSA Regular is the sole target;
+  Short is an independently sized pre-API protocol, never a wrapper for weak
+  Regular results. A null or unfavorable frozen result is reportable evidence,
+  not a reason to change tasks, models, prompt, oracle, or repeats.
+- One question is safer than two confounded interventions. Removing the old
+  C4/C5 synthetic-advisory branch reduces request volume and leaves one
+  auditable contrast: real cumulative executable evidence C0--C3 on paired
+  positive and hidden-failing candidates.
+- A balanced challenge cohort is not a prevalence sample. Task is the analysis
+  unit; model/repeat/request counts do not increase its external n. Conditional
+  intervals may estimate only stateless response variability for the frozen
+  tasks/models/run window; project reweighting and leave-one-out show stability,
+  not population confidence.
+- Never test a candidate transform on would-be primary tasks before freezing it.
+  Design and mechanically validate the transform registry only on permanently
+  excluded development tasks; select sources without candidate outcomes, sign
+  the registry, then apply it once to primary/reserve in fixed order.
+- Run a nearest-neighbor literature gate before paying for model calls. A
+  technically valid experiment can still be a poor submission if direct LLM
+  patch-verifier/critic/ranker work removes the claimed gap. Novelty phrases
+  require a search log, full-text verification, and claim-to-citation map.
+- Treat AI policy as a scientific gate, not late boilerplate. Separately record
+  LLMs as experimental subjects, AI help in design/code/statistics, and AI help
+  in writing; author review does not erase substantive AI participation.
+- A seven-page `IEEEtran` PDF is not a DSA submission template. Rebuild in a new
+  namespace with official `IEEEconf.cls`, readable figure/table text, clean
+  hashes, and distinct initial-submission, camera-ready, and presentation gates.
+- The identity-linked public origin is not the private development remote.
+  Prefer an independent private repository named `private`; until its URL and
+  venue disposition are recorded, commit locally and do not push this route to
+  the public origin.
+
 ## 2026-07-10 Legacy EVP-8 prompt retirement
 
 - When a prompt family is invalid for confirmatory reuse, retaining it under

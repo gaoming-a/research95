@@ -8,18 +8,18 @@
 
 ## Active Plan
 
+- [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
+  sole active master plan as of 2026-07-10. The only target is DSA 2026 Regular;
+  Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is
+  inactive. Status: `DSA_2026_ROUTE_PLANNING_ONLY / REGULAR_NO_GO /
+  SHORT_NO_GO / WAITING_FOR_D0_P1_P2_P3`. It defines venue/AI/EI gates, old-data
+  quarantine, a task-disjoint C0--C3 experiment, no-rerun rules, finite-cohort
+  statistics, evidence-first paper reconstruction, official `IEEEconf.cls` PDF
+  QA, private artifact/Git boundaries, and the submission-to-presentation
+  timeline. No prompt or model API is authorized.
 - [apsec_ccfc_evidence_repair_plan_zh.md](plans/apsec_ccfc_evidence_repair_plan_zh.md):
-  sole active master plan as of
-  2026-07-10. It supersedes the submission-readiness implications of the older
-  plan/audit entries. The current APSEC package is only a historical baseline;
-  current-98, EVP-8-HARD, coverage-contestation, stress-31, and all v0.1--v0.3
-  paper-facing results are development/exploratory evidence. The plan requires
-  G0 venue/AI-provenance clearance, a new 30-task/8-project EVP-v0.4
-  confirmation, task-cluster statistics, author-led scientific prose, and an
-  A4/10-page/double-blind final gate. Status:
-  STOP_PENDING_G0_AND_COHORT_FEASIBILITY. The current identity-linked public
-  remote must not receive new APSEC-facing pushes during the anonymity period;
-  no API is authorized.
+  historical APSEC route and validity-reset provenance. It no longer authorizes
+  an experiment, prompt, API call, manuscript claim, or public push.
 - Legacy prompt retirement override (2026-07-10): the four EVP-8 prompt files
   were physically deleted from the active worktree. Their hashes and reasons
   are recorded in `../prompts/prompt_change_log.md`. Every later index entry

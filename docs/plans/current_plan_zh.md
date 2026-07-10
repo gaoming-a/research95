@@ -2,6 +2,78 @@
 
 最后更新：2026-07-10
 
+## 0.48 2026-07-10 DSA 2026 论文、实验与投稿总计划
+
+本轮小目标是根据用户“最低 EI、尽可能稳健且尽可能快”的优先级，把 DSA 2026
+Regular 确立为唯一主目标，并形成从当前无效旧证据到投稿、录用后 CPS 和现场报告的
+完整闭环计划。本轮只规划和同步文档；不创建 prompt、不构造 cohort、不运行实验、
+不调用 API、不修改论文结果。
+
+Inspect：
+
+- 当前 APSEC Markdown/LaTeX/BibTeX/7 页 PDF 仅为历史 draft；旧 E6 verdict leakage、
+  非物化证据、开发 cohort 重用和 candidate-level 统计问题仍然成立；
+- 四个旧 prompt 已物理删除，没有替代 prompt；旧 runner/config 仅作 provenance；
+- DSA 官方公开信息给出 2026-09-01 截止、Regular 12 页、Short 10 页、IEEE CPS/
+  EI submission 和现场报告要求，但 venue-specific AI policy、EI 最终检索、artifact
+  规则和页数是否含 references 仍需书面/图书馆核验；
+- 当前 origin 是身份关联的公开仓库；private remote URL 尚未提供；
+- 实验、文献和 PDF 三路独立审计共同确认：旧论文不能直接改投，必须用 task-disjoint
+  cohort、DSA namespace 和新的 claim/evidence chain 重建。
+
+Plan：
+
+1. DSA Regular 为唯一主目标；Short 只能在任何模型调用前根据 P2 feasibility 和
+   precision simulation 单独冻结，ACAI inactive；
+2. 当前 Regular/Short 都标为 NO-GO；先完成 D0 venue/AI/EI/publication/logistics/
+   authorship/template snapshot、P1 quarantine、P2 source/文献 feasibility、P3 作者预注册；
+3. 删除旧 C4/C5 synthetic-advisory 支线，只研究真实累积 C0--C3 evidence bundle；
+4. Regular 预案为 30 tasks、至少 8 projects、60 candidates、3 models、3 repeats；
+   Short 预案为 20 tasks、至少 6 projects、40 candidates、2 models、3 repeats；
+5. task 是唯一科学分析单位；主结论是 finite-cohort paired effect，repeats 只估计
+   固定 task/model/run-window 下的调用随机性；project reweight/leave-one-out 只作
+   稳定性边界；
+6. smoke/full 分开授权，冻结模型、prompt/schema、packet、analysis hash；禁止因结果
+   弱、CI 宽、模型分歧或 reviewer 意见重跑；
+7. 按 Results-first、Abstract-last 的 evidence-first 顺序新建 DSA 论文，不从旧 APSEC
+   generator 复制科学内容；引用和内部 claim 分别建立证据账本；
+8. 使用官方 `IEEEconf.cls`、实名作者、最多 5 名作者和最多 6 个 keywords，从 clean
+   build 完成页数、字体、图表、引用、逐页渲染和 hash QA；
+9. 推荐独立 private GitHub repository，remote 名为 `private`；URL 未提供前仅本地
+   commit，不向当前 public origin 推送。
+
+Execute：
+
+- 新建 `docs/plans/dsa_2026_submission_execution_plan_zh.md`，覆盖 D0、P1--P14、
+  Regular/Short gate、实验、统计、论文、引用、artifact、AI provenance、Git、时间表；
+- 将 APSEC plan 和旧 final roadmap 标为 historical/provenance；
+- 同步 README、INDEX、current project state 和 engineering notes；
+- 未创建或修改任何 prompt、实验脚本、配置、数据、结果、Markdown/TeX/BibTeX/PDF。
+
+独立计划审计后的修订：
+
+- transform registry 只能在 excluded development tasks 上设计；P2 选 source 时禁止
+  应用 transform，P3 作者签核后 P4 才首次应用于冻结 primary/reserve；
+- finite-cohort conditional interval 的随机性来源锁定为 stateless repeat blocks，
+  不再混用总体 ICC、cluster CI 或概率抽样解释；
+- smoke 后只允许不改变 request/语义的纯 transport/telemetry repair，任何 prompt、
+  schema、parser semantics、packet 或 model-config 变化都停止当前 DSA 路线；
+- D0 即 clean-build 官方 template skeleton；Regular 内部页预算降为 11.0 页；
+- visible-test policy 因 cohort 选择规则与 always-accept 恒等，只报告一次等价性；
+- 下一轮严格只激活 P0/D0，P1 和 P2 必须各自等前一 Gate 通过后另开轮次。
+
+Verify/Gate：
+
+- 请求量通过独立算术校验：Regular 2160 unique / 108 retries / 2268 hard max，
+  Short 960 / 48 / 1008；packet 240/160，smoke 24/16，Regular 页预算 11.0；
+- working-tree allowlist 精确为本轮 8 个文档；`git diff --check`、新增计划 trailing
+  whitespace、敏感信息和必需 Gate 扫描均通过；
+- PDF 独立复核确认 10.7、P11--P14 和投稿/录用后/现场时间门无 blocker/major；
+- 实验独立复核最初发现 2 blocker/4 major，全部修订后复核 PASS，无新增
+  blocker/major；
+- Gate：`PASS_FOR_LOCAL_COMMIT / NO_PROMPT / NO_API / NO_PUBLIC_PUSH`。只提交本轮
+  8 个文档；private remote 未提供，不向当前 public origin 推送。
+
 ## 0.47 2026-07-10 旧 EVP-8 prompt 物理删除与执行链退休
 
 本轮小目标是执行用户在研究目标 A 下的明确决定：删除活动工作树中的全部旧
