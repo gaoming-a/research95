@@ -1,8 +1,25 @@
 # 当前项目状态与文件地图
 
-日期：2026-07-10
+日期：2026-07-11
 
-## 2026-07-10 DSA 2026 路线状态覆盖
+## 2026-07-11 DSA P0/D0 状态覆盖
+
+- P0/D0 已实际启动，但尚未通过：`D0.1--D0.5=PENDING/PARTIAL`；D0.6 的官方
+  template 技术构建已通过，但最终作者元数据仍待确认；
+- 官方页面现已确认 Regular 12 页、Short 10 页均包含 content and references；初稿
+  实名、最多 5 位作者、最多 6 个关键词；
+- DSA venue-specific AI policy 未找到；询问信已生成但未发送。三届 IEEE Xplore
+  proceedings 已定位，但学校 Engineering Village/Compendex 核验未完成；
+- 官方 `IEEEconf.cls` skeleton 已生成，US Letter/双栏/字体嵌入/零编译警告/250 dpi
+  渲染均通过；该 PDF 不是论文稿；
+- GitHub 核验确认当前 `origin` 为 public，两个已有 private repos 属于旧研究阶段；
+  已新建 `gaoming-a/research95-dsa-private` 并配置 remote `private`，尚未推送；
+- 用户已授权后续 API 预算无需再次确认，并允许 private GitHub 连续同步失败时记录后
+  继续本地工作；该 standing authorization 只在 D0/P1--P5 passed 后激活；
+- 下一轮仍只能继续 P0，禁止激活 P1、P2、prompt 或模型 API。完整状态见
+  `docs/submission/dsa_2026/p0_d0_record_zh.md`。
+
+### 2026-07-10 DSA 路线计划基线（已由上方 P0 状态覆盖）
 
 - 当前唯一 active master plan 是
   `docs/plans/dsa_2026_submission_execution_plan_zh.md`。

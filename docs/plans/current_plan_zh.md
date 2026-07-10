@@ -1,6 +1,75 @@
 # 当前计划：AI 生成补丁的可验证审查
 
-最后更新：2026-07-10
+最后更新：2026-07-11
+
+## 0.49 2026-07-11 DSA P0/D0 官方政策、模板与执行授权
+
+本轮小目标严格限定为总计划 P0/D0：核验 DSA/IEEE 官方信息、建立 AI/EI/
+publication/logistics/authorship/remote 决策记录、clean-build 官方 LaTeX skeleton。
+不进入 P1/P2，不创建 prompt，不构造 cohort，不调用模型 API。
+
+Inspect：
+
+- 工作树起始 clean，分支相对 public origin ahead 3；当前只有 public `origin`；
+- DSA 总计划要求 P0 先于 P1，D0.1--D0.6 全 pass 前不得进入实验；
+- DSA 官网没有 venue-specific GenAI author policy；IEEE 通用政策不能自动替代
+  Secretariat 书面回复；
+- GitHub connector 显示 `gaoming-a/research95` 为 public，已有
+  `cross-model-code-review` 和 `review` 两个旧 private research repos，但没有独立
+  DSA private repo；
+- 本机有 MiKTeX/Poppler，`latexmk` 因缺 Perl 不可用，`pdflatex` 可用。
+
+Plan：
+
+1. 冻结 2026-07-11 官方页面、CFP、template ZIP、IEEE AI policy 的 URL/hash；
+2. 记录 Regular/Short 页限、作者/关键词、日期、CPS/EI、费用和现场报告边界；
+3. 生成可直接发送的英文 Secretariat 询问信；
+4. 建立 AI-use inventory、三届 Engineering Village 核验单、logistics/authorship
+   sign-off 和 private remote decision；
+5. 用官方 ZIP 的未修改 `IEEEconf.cls` clean-build 最小 skeleton，完成 PDF 工具和
+   250 dpi 视觉审计；
+6. P0 未全过时只提交本轮证据，不推进 P1。
+
+用户 2026-07-11 新授权：
+
+- D0、P1--P5 全 pass 后，可使用现有 API key 自动执行 smoke/full，不再确认预算；
+- standing authorization 不绕过 Gate、hard cap、no-rerun 和 secret boundary；
+- GitHub private sync 频繁失败时记录并继续本地闭环，绝不改推 public origin。
+
+Execute：
+
+- 核验官方 scope、2026-09-01 截止、12/10 页且包含 references、实名初稿、最多
+  5 authors/6 keywords、IEEE CPS submitted-for-possible-inclusion wording、注册费和
+  co-author 现场报告要求；
+- 冻结 2023--2025 proceedings 的 IEEE Xplore ID、catalog 和 ISBN，但未把它们误写
+  为 Compendex 已核验；
+- 解码官网 Secretariat 联系方式 `zxc190007@utdallas.edu`，生成 ready-to-send 邮件；
+- 生成 P0/D0 consolidated record、official-source snapshot、AI inventory、remote
+  recommendation 和 template skeleton/build audit；
+- 官方 ZIP/template 与页面均已哈希；已创建 private
+  `gaoming-a/research95-dsa-private` 并配置 remote `private`；未发送邮件、未推送
+  public origin、未调用模型 API。
+
+Diagnose/Repair：
+
+- 首次 `latexmk` 在 TeX 前失败，原因是 MiKTeX 缺 Perl script engine；
+- 不安装额外运行时，改用两遍 `pdflatex`；移除 skeleton 中非必要的 `titlesec` 和
+  单页 `balance` 调用，第二遍实现 warning/undefined/overfull/underfull/error=0；
+- 该修复不修改官方 `IEEEconf.cls`。
+
+Verify/Gate：
+
+- skeleton PDF：1 页 US Letter、字体全部嵌入、无图片、无页码、250 dpi 视觉检查
+  无裁切/重叠/缺字；
+- `pypdf`/`pdfplumber` 的页框、必需文字和字符边界检查通过；second-pass log
+  warnings/errors=0；source/PDF/official-source hashes 与记录一致；
+- 12-file allowlist、Markdown local links、trailing whitespace、tracked high-confidence
+  secret、`git diff --check` 和状态关键词检查通过；
+- D0.6 template technical build pass，但最终作者元数据未提供；
+- D0.1 邮件/回复、D0.2 Compendex、D0.3 2026 IEEE ID/ISBN、D0.4 现场报告人和
+  D0.5 authorship sign-off 仍未完成；P0 总 Gate=STOP；
+- 本轮不得激活 P1，后续 API standing authorization 尚未生效；本地文档/PDF Gate
+  为 `PASS_FOR_COMMIT_AND_PRIVATE_SYNC`。
 
 ## 0.48 2026-07-10 DSA 2026 论文、实验与投稿总计划
 

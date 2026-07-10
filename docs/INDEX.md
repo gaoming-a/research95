@@ -9,14 +9,29 @@
 ## Active Plan
 
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
-  sole active master plan as of 2026-07-10. The only target is DSA 2026 Regular;
+  sole active master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is
-  inactive. Status: `DSA_2026_ROUTE_PLANNING_ONLY / REGULAR_NO_GO /
-  SHORT_NO_GO / WAITING_FOR_D0_P1_P2_P3`. It defines venue/AI/EI gates, old-data
+  inactive. Status: `P0_IN_PROGRESS / REGULAR_NO_GO / SHORT_NO_GO`. It defines
+  venue/AI/EI gates, old-data
   quarantine, a task-disjoint C0--C3 experiment, no-rerun rules, finite-cohort
   statistics, evidence-first paper reconstruction, official `IEEEconf.cls` PDF
   QA, private artifact/Git boundaries, and the submission-to-presentation
-  timeline. No prompt or model API is authorized.
+  timeline. A 2026-07-11 standing API authorization exists but activates only
+  after D0 and P1--P5 pass; no prompt/model call is allowed during P0.
+- [p0_d0_record_zh.md](submission/dsa_2026/p0_d0_record_zh.md): consolidated
+  P0 gate table, venue decision, AI-use inventory, Engineering Village query
+  sheet, logistics/authorship sign-off, private remote recommendation, and API
+  standing-authorization boundary. P0 remains STOP because external policy,
+  EI, attendance, and authorship evidence is incomplete.
+- [official_source_snapshot_20260711.md](submission/dsa_2026/official_source_snapshot_20260711.md):
+  hashed DSA/IEEE source snapshot, exact page/author/date/publication boundaries,
+  past IEEE proceedings IDs, contact address, and official template hashes.
+- [dsa_secretariat_inquiry_en.md](submission/dsa_2026/dsa_secretariat_inquiry_en.md):
+  ready-to-send but unsent DSA policy/indexing/artifact inquiry.
+- [dsa_template_skeleton_build_audit.md](submission/dsa_2026/dsa_template_skeleton_build_audit.md):
+  official `IEEEconf.cls` clean-build diagnosis and PDF QA. The compiled
+  non-submission skeleton is
+  [dsa_2026_template_skeleton.pdf](../output/pdf/dsa_2026_template_skeleton.pdf).
 - [apsec_ccfc_evidence_repair_plan_zh.md](plans/apsec_ccfc_evidence_repair_plan_zh.md):
   historical APSEC route and validity-reset provenance. It no longer authorizes
   an experiment, prompt, API call, manuscript claim, or public push.

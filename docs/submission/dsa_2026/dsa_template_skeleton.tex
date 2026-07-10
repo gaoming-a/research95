@@ -1,0 +1,68 @@
+% DSA 2026 template verification skeleton.
+% Not a manuscript and not for submission.
+% Official template URL:
+% https://dsa26.techconf.org/download/DSA-Paper-Template.zip
+% Retrieved 2026-07-11; ZIP SHA-256:
+% 4AA03B1133DEDA277A507D9AD7897FE032027DAAD452CE86D7840EC37EA1D74F
+\documentclass[conference]{IEEEconf}
+
+\usepackage{balance}
+
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsectiondis{\thesection.\arabic{subsection}}
+\renewcommand\thesubsubsectiondis{\thesubsectiondis.\arabic{subsubsection}}
+
+\begin{document}
+
+\title{\textbf{\Large DSA 2026 Template Verification Skeleton\\}}
+
+\author{Author Metadata Pending$^{1,*}$\\
+  \normalsize $^{1}$Affiliation Pending, City, Country\\
+  \normalsize author-email-pending@example.com\\
+  \normalsize *corresponding author
+}
+
+\maketitle
+
+\begin{abstract}
+This non-submission document verifies that the official DSA 2026 LaTeX class
+can be compiled in a clean local build. It contains no scientific result and
+must be replaced by author-approved manuscript content.
+\end{abstract}
+
+\IEEEoverridecommandlockouts
+\vspace{1.5ex}
+\begin{keywords}
+\itshape template verification; reproducible build; PDF audit; DSA 2026
+\end{keywords}
+
+\section{Introduction}
+
+This skeleton checks the required title, author, affiliation, abstract,
+keyword, numbered-section, citation, and reference structures. The official
+submission instructions limit a Regular Paper to twelve pages and a Short
+Paper to ten pages, including content and references.
+
+\section{Template Checks}
+
+The build uses the unmodified official \texttt{IEEEconf.cls} retrieved from
+the DSA 2026 template archive. Page size, margins, columns, and pagination are
+left to the class. The final manuscript will replace all pending author
+metadata and will be independently checked against the current instructions
+before submission. IEEE publication policy is consulted separately~\cite{ieee-policy}.
+
+\section{Conclusion}
+
+Successful compilation of this skeleton proves only template compatibility.
+It does not authorize a manuscript claim, experiment, model call, or
+submission.
+
+\begin{thebibliography}{1}
+
+\bibitem{ieee-policy}
+IEEE, ``Submission and peer review policies,'' IEEE Author Center, accessed
+July 11, 2026.
+
+\end{thebibliography}
+
+\end{document}

@@ -2,8 +2,8 @@
 
 计划编号：DSA-2026-EVIDENCE-POLICY-20260710
 制定日期：2026-07-10
-当前状态：DSA_2026_ROUTE_PLANNING_ONLY / REGULAR_NO_GO / SHORT_NO_GO /
-WAITING_FOR_D0_P1_P2_P3
+当前状态：P0_IN_PROGRESS / REGULAR_NO_GO / SHORT_NO_GO /
+D0.1--D0.5_PENDING / D0.6_TEMPLATE_BUILD_PASS_AUTHOR_METADATA_PENDING
 唯一主目标：DSA 2026 Regular Paper
 同会场降级：DSA 2026 Short Paper，仅可在任何模型调用前锁定
 非活动备选：ACAI 2026；不得并行投稿，也不得在看到 DSA 实验结果后切换
@@ -25,7 +25,13 @@ WAITING_FOR_D0_P1_P2_P3
 只记录每轮 Inspect--Plan--Execute--Verify--Diagnose--Repair--Gate 日志。
 
 后续每轮只激活一个阶段。阶段 Gate 未通过时，不得顺手进入下一阶段；no-API
-轮次不得调用模型，smoke 授权不得扩张为 full-run 授权。
+轮次不得调用模型，standing authorization 也不得绕过 smoke/full 各自的 Gate。
+
+2026-07-11 用户持续授权覆盖：在 D0、P1--P5 全部 passed、模型/packet/analysis 和
+exact hard maximum 已冻结后，smoke 与随后满足 Gate 的 full run 可使用现有 API key
+自动执行，不再单独确认预算。该授权不覆盖提前调用、不允许突破 request/retry/token/
+cost hard cap，也不覆盖因结果方向而重跑。GitHub 同步仍先尽力执行；private remote
+连续失败时记录错误并继续本地闭环，但任何情况下都不得误推当前 public origin。
 
 ## 2. 第一性原理结论
 
@@ -71,13 +77,13 @@ conclusion 和主图表删除；ID/hash 只保留在 quarantine/provenance 账�
 - Proceedings：https://dsa26.techconf.org/track/proceeding
 - Registration：https://dsa26.techconf.org/registration
 
-截至 2026-07-10 的官方信息：
+截至 2026-07-11 的官方信息：
 
 - Regular/Short 截止：2026-09-01；页面未写明时区；
 - 通知：2026-10-18；camera ready 与 author registration：2026-10-25；
 - 会议：2026-11-14 至 2026-11-15，厦门；
-- Regular 最多 12 页，Short 最多 10 页；公开页未明确参考文献是否另计，因此在
-  Secretariat 书面澄清前保守按最终 PDF 全部页面计入；
+- Regular 最多 12 页，Short 最多 10 页；Regular/Short track 页面明确 content and
+  references 均计入页限；
 - Proceedings 由 IEEE CPS 出版，并提交 IEEE Xplore、Ei Compendex、Scopus；
 - 每篇论文至少一名作者付 full registration 并现场报告，否则不进入 IEEE
   digital library 和 EI indexing；
@@ -90,7 +96,7 @@ conclusion 和主图表删除；ID/hash 只保留在 quarantine/provenance 账�
 | D0.1 AI policy | DSA Secretariat 对现有 AI 参与、IEEE disclosure 位置和允许范围的书面回复 | 停止 DSA 科学内容与 API |
 | D0.2 EI | 学校图书馆核验近三届 DSA proceedings 的 Compendex 记录；保存检索式、日期和截图/导出 | 不把 DSA 视为满足最低 EI |
 | D0.3 publication | 核对 2026 IEEE conference ID、ISBN、CPS 和现场报告要求 | 信息不一致则暂停 |
-| D0.4 logistics | 作者确认厦门现场参会、USD 700/750 注册和差旅预算 | 无法现场报告则停止 |
+| D0.4 logistics | 用户已授权注册/差旅预算无需再次确认；作者仍须确认厦门现场报告人和可行性 | 无共同作者能现场报告则停止 |
 | D0.5 authorship | 作者逐项盘点 AI 参与并确认能独立审查、复现和承担最终科学内容 | 无法如实披露则停止 |
 | D0.6 venue/template snapshot | 保存 CFP、submission、track、proceedings、registration 和官方 template ZIP 的快照/哈希；用 `IEEEconf.cls` clean-build 最小实名 skeleton，核验 Letter、作者/keyword、页限和引用计页规则 | 网页或模板不一致则暂停 |
 
@@ -100,6 +106,12 @@ DSA 页面尚未给出 venue-specific GenAI 细则。IEEE 通用政策要求披�
 
 本计划本身由 AI 协助形成。作者必须在 D0.5 中逐条接受、修改或否决设计决定，
 形成作者签核版本；本计划不能代替作者的方法学责任。
+
+2026-07-11 P0 执行记录：官方页面、IEEE 通用 AI policy、三届 IEEE proceedings、
+Secretariat 联系邮箱和模板 ZIP 已核验；`IEEEconf.cls` skeleton 已 clean-build 并通过
+字体/渲染审计。询问信已完成但未发送，Engineering Village 核验、2026 CPS ID/ISBN、
+现场报告人、作者责任和最终作者元数据仍待外部确认。权威状态见
+`docs/submission/dsa_2026/p0_d0_record_zh.md`；P0 Gate 仍为 STOP，不得进入 P1。
 
 ### D0 时间门
 
@@ -417,8 +429,9 @@ request、schema、parser semantics、packet、model ID/decoding config、调度
 
 ### 8.2 Full-run Gate
 
-full 必须由用户在看到 passed smoke audit、exact request maximum 和最大成本后单独
-授权。授权只覆盖冻结版本和 hard maximum。
+2026-07-11 standing authorization 只在 passed smoke audit、exact request maximum、
+最大成本和全部冻结 hash 存在时激活。full 只能覆盖该冻结版本和 hard maximum；不再
+追加预算确认。
 
 Full 期间只允许查看完整性、成本、传输和 provider identity；不得查看 paper-facing
 metrics 或连接 hidden labels。
@@ -513,14 +526,15 @@ Gate：7.4 全 pass。
 
 ### G1/P6：Smoke 授权与执行
 
-动作：用户单独批准 24/16 unique smoke；执行后立即审计 identity、parse、cost 和
-输出边界。
+动作：P5 passed 后按 standing authorization 执行 24/16 unique smoke；执行后立即
+审计 identity、parse、cost 和输出边界。
 Gate：全部 smoke records valid、无 fallback、无泄漏、成本在 cap 内。
 停止：只允许一次上述纯 transport/telemetry repair；再次失败或任何语义改动停止 DSA。
 
 ### G2/P7：Full 授权与一次冻结执行
 
-动作：用户看到 hard maximum 与最大成本后单独批准；按 frozen manifest 完成。
+动作：smoke Gate passed 后按 standing authorization 和 frozen manifest 完成；不得
+突破 hard maximum。
 输出：private raw responses、tracked sanitized decisions、run audit。
 Gate：全部 unique requests 完成、hash 一致、invalid=0、成本/attempts 合规。
 
@@ -665,9 +679,10 @@ build 重建。
 
 ### 11.1 私有开发仓库
 
-推荐新建独立 private GitHub repository，remote 名为 `private`；现有 public
-origin 改名为 `public-archive` 并禁止默认 push。不能把 public repo fork 当成
-private/anonymized artifact。
+2026-07-11 已新建独立 private GitHub repository
+`gaoming-a/research95-dsa-private`，remote 名为 `private`；现有 public `origin`
+保留但禁止 DSA development push。该 private repo 不是 public fork，也不等于
+anonymized artifact。
 
 private repo 保存：
 
@@ -680,8 +695,9 @@ private repo 保存：
 不提交：`.env`、local configs、credentials、raw responses、rendered prompts、
 benchmark checkout、带身份/本机路径的日志、artifact ZIP。
 
-private remote URL 未提供前只允许本地 commit，不向当前 public origin 推送。若 DSA
-书面确认允许身份关联公开仓库且用户明确批准，public release 时点再单独决定。
+每轮只向 `private` 尽力同步，不向当前 public origin 推送。private sync 连续失败时按
+用户指令记录并继续本地闭环；若 DSA 书面确认允许身份关联公开仓库且用户明确批准，
+public release 时点再单独决定。
 
 ### 11.2 审稿/发布 artifact
 
@@ -712,7 +728,7 @@ Secretariat 书面确认；未确认时只冻结私有 staging，录用后再按
 | 2026-08-03 | P4 cohort 双环境 materialization 完成 |
 | 2026-08-06 | P5 no-API preflight 全通过；exact cost packet 完成 |
 | 2026-08-08 | G1 smoke 执行与 audit 通过 |
-| 2026-08-09 | G2 full 单独授权 |
+| 2026-08-09 | smoke Gate passed 后 standing authorization 激活 full |
 | 2026-08-12 | 一次 frozen full run 完成 |
 | 2026-08-15 | P8 双实现分析、claim freeze 完成 |
 | 2026-08-22 | 作者完成 DSA full draft |
@@ -772,12 +788,13 @@ full；若 2026-08-15 没有完整有效结果，不用旧结果替代。
 
 1. 生成待作者发送的 DSA AI/EI/publication 询问信；
 2. 建立 private AI-use inventory 与 venue decision record；
-3. 确定 private GitHub remote；
+3. 核验已创建的 private GitHub remote 和 public no-push boundary；
 4. 下载并哈希官方页面/template ZIP，clean-build 最小 `IEEEconf.cls` skeleton；
 5. 核验 EI、现场报告、费用、作者和 artifact/页数规则；
-6. 更新闭环文档并创建本地提交；private remote 未提供前不推送。
+6. 更新闭环文档并提交；只向 `private` 尽力推送，失败时记录并继续。
 
 本轮禁止提前建立 P1 quarantine registry 或盘点 P2 source feasibility。只有 P0 passed
 记录存在时，下一独立轮才可激活 P1；P1 passed 后再单独激活 P2。
 
-在 D0、P1、P2、P3、P4、P5 全部通过且用户另行批准 smoke 前，不调用任何模型。
+在 D0、P1、P2、P3、P4、P5 全部通过前，不调用任何模型；全部通过后按 2026-07-11
+standing authorization 执行，不再单独确认预算。

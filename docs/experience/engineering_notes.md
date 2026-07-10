@@ -1,5 +1,40 @@
 # Engineering Notes
 
+## 2026-07-11 DSA P0 official-template and policy gate
+
+- Venue wording matters. The DSA track page explicitly says the 12/10-page
+  limits include content and references, while the generic submission page only
+  says maximum pages. Freeze the track-specific statement and do not preserve
+  the earlier "unclear references" assumption.
+- "Submitted for possible inclusion" is not an Ei guarantee. IEEE Xplore IDs,
+  catalogs, and ISBNs for prior DSA proceedings are useful search keys, but D0
+  requires actual Engineering Village/Compendex accession evidence.
+- A general IEEE AI policy does not answer a missing venue-specific rule. This
+  project has substantive AI help beyond grammar editing, so it needs a factual
+  inventory and Secretariat disposition rather than relying on the grammar-only
+  exception.
+- Cloudflare-obfuscated conference email links can be decoded from the
+  `email-protection#` hex token by XORing each subsequent byte with the first
+  byte. The official DSA contact resolved to `zxc190007@utdallas.edu`; preserve
+  the retrieval source and date.
+- MiKTeX `latexmk` can exist while remaining unusable because it requires a Perl
+  script engine. Diagnose this before changing TeX. For a simple deterministic
+  skeleton, two direct `pdflatex` passes are the shortest valid repair and avoid
+  installing an unrelated runtime.
+- The official sample's optional `titlesec` and single-page `balance` call
+  caused warnings/overfull output in the minimal skeleton. Removing only those
+  nonessential skeleton uses, while leaving `IEEEconf.cls` byte-for-byte
+  unchanged, produced a zero-warning second pass.
+- A template PDF with placeholder author metadata is a technical build proof,
+  not a passed authorship gate or submission-ready paper. Keep D0.6 partial
+  until real author metadata and live rules are rechecked.
+- Standing API authorization removes repeated budget questions but does not
+  bypass scientific gates or hard caps. Record the authorization now and keep
+  P0 strictly no-API until D0 and P1--P5 have passed.
+- If private GitHub synchronization repeatedly fails, log the failure and keep
+  the local scientific loop moving as the user instructed. Never reinterpret
+  that instruction as permission to push the identity-linked public origin.
+
 ## 2026-07-10 DSA route lock and no-rerun design
 
 - A venue pivot does not rehabilitate invalid evidence. The APSEC draft, old
