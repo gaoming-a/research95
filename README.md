@@ -40,14 +40,17 @@ counter remains zero. Real V2-P2 materialization is not authorized, so that
 task has not been checked out or started; no environment, container, project
 test, prompt change, credential read, or model API call may begin.
 
-The author has authorized the first real V2-P2 task, but its pre-outcome audit
+The author has authorized automatic V2-P2 execution, and its pre-outcome audit
 found that the signed V2-P1 text references a project test root that the nine
 machine recipes do not actually contain. A no-outcome proposal now derives all
 nine roots and collection adapters from the 299 frozen declared test paths.
 Its amendment SHA-256 is
 `b5778a7c95042d5475d333842c5b8a486a2798a7586d74a20a84e30487ddef94`.
-Real task activity remains paused at zero until the author signs that exact
-amendment; the original V2-P1 aggregate remains unchanged.
+The author has now signed that exact SHA-bound amendment. The complete order-1
+source/image/oracle/T1--T4/candidate/terminal execution chain is frozen and its
+real preflight passes, while actual checkout, environment, container, test, and
+API activity remain zero until the pre-outcome implementation commit. The
+original V2-P1 aggregate remains unchanged; V2-P3 and model API remain forbidden.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,

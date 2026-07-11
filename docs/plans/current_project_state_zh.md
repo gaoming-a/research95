@@ -2,7 +2,21 @@
 
 日期：2026-07-12
 
-## 2026-07-12 V2-P2 首任务 pre-outcome amendment Gate
+## 2026-07-12 V2-P2 order-1 real preflight PASS
+
+- 作者高明已签核 SHA-bound V2-P1 清单并授权自动执行 V2-P1 至 V2-P2；test-scope
+  amendment 状态为 `author_signed_immutable`；
+- 当前状态：`V2_P2_ORDER_1_REAL_PREFLIGHT_PASS / PANDAS_161_NOT_STARTED /
+  NO_API / V0_SUBMISSION_GATE_PENDING`；
+- source freezer、py383 no-setup task image、dual-fresh oracle、project-root pool、T1--T4
+  materializer、candidate runner 与 terminal ledger 均已 outcome 前实现；synthetic T1--T4
+  10/10 patch/tree 可重放；
+- real preflight 全项 PASS；checkout/environment/container/project-test/prompt/key/API
+  当前仍为0；下一步只启动 order=1 `bugsinpy_pandas_161`；
+- 作者的 V2-P2 自动授权不授权 V2-P3、prompt/schema、论文结果或模型 API；到 V2-P3
+  final freeze 或冻结 hard stop 必须暂停。
+
+## 2026-07-12 V2-P2 首任务 pre-outcome amendment Gate（已被上方覆盖）
 
 - 用户已授权真实处理 order=1 `bugsinpy_pandas_161`，但尚未发生 checkout、环境构建、
   container、项目测试或模型请求；

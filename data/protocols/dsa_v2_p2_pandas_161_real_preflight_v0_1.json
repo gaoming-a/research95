@@ -1,0 +1,47 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 0,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 0
+  },
+  "boundary": "Real source acquisition and execution remain disabled until the exact author-signed amendment exists.",
+  "checks": {
+    "author_gate_passed": true,
+    "build_enforces_pip_check": true,
+    "build_installs_official_requirements": true,
+    "build_installs_project_editable": true,
+    "candidate_materializer_contains_t1_t4": true,
+    "candidate_materializer_requires_signed_amendment": true,
+    "candidate_runner_requires_signed_amendment": true,
+    "candidate_runner_stops_at_first_qualifying": true,
+    "docker_binds_py383_lock": true,
+    "docker_labels_order_one_and_no_api": true,
+    "docker_uses_v2_p2_entrypoint": true,
+    "image_builder_requires_signed_amendment": true,
+    "no_prompt_or_model_surface": true,
+    "official_setup_never_executed": true,
+    "oracle_runner_binds_dual_fresh_and_split": true,
+    "oracle_runner_requires_signed_amendment": true,
+    "proposal_hash_matches": true,
+    "source_freezer_requires_signed_amendment": true
+  },
+  "component_sha256": {
+    "build_script": "ac90dc252dac987f608f6a1a965091b2c269dd6cb0c187f019d0876bbaf28966",
+    "candidate_materializer": "39d1a2f262b1fabeb6f34652568b17217f7f73a115f4c7323d8c317295cadaac",
+    "candidate_runner": "60a26c9ea55a14119002df076eee1ea3efd4ed1bc8da3200ac3d49a98290c8b7",
+    "dockerfile": "30a205dc9201c86a6c8490258e7b503850bd36b24d6f49533dd05603e3dbcbcc",
+    "image_builder": "77e204e1a3a60ef7b07e528422b8d150eb3e2e4539b71acaff077994fd2c421d",
+    "oracle_runner": "af4affcdcfe43c05ec560257a4ccd67ae2f8cdd10639798df3a42fc659fb745a",
+    "source_freezer": "a6441b81a2c4b5be3dfb00567cf2413cf85369c331df01c130b0db129c83d513",
+    "worker": "59907573a42496a494709c7f0ff24d17056e11b70969079f65ee39871304c9e5"
+  },
+  "created_date": "2026-07-12",
+  "order": 1,
+  "preflight_id": "dsa_v2_p2_pandas_161_real_preflight_v0_1",
+  "status": "ready_for_real_activity",
+  "task_id": "bugsinpy_pandas_161"
+}

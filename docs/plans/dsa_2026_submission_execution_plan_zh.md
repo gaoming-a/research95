@@ -3,14 +3,14 @@
 计划编号：DSA-2026-EVIDENCE-POLICY-20260710
 制定日期：2026-07-10
 当前状态：V0_1_TERMINATED_BEFORE_MODEL_OUTPUT / V2_P1_PASS_AUTHOR_SIGNED /
-V2_P2_EXECUTOR_CHECK_ONLY_PASS / TEST_SCOPE_AMENDMENT_SIGNOFF_REQUIRED / NO_API /
+V2_P2_ORDER_1_REAL_PREFLIGHT_PASS / PANDAS_161_NOT_STARTED / NO_API /
 V0_SUBMISSION_GATE_PENDING
 唯一主目标：DSA 2026 Regular Paper
 同会场降级：DSA 2026 Short Paper，仅可在任何模型调用前锁定
 非活动备选：ACAI 2026；不得并行投稿，也不得在看到 DSA 实验结果后切换
 用户优先级：科学与收录稳健性优先，其次才是时间
-本轮边界：用户已授权首 task，但 pre-outcome audit 发现九个签核 recipe 遗漏 test root；
-amendment 签核前不运行真实 task/test/container，不调用 API，不改 prompt 或论文结果
+本轮边界：test-scope amendment 已由作者签核，完整 order-1 runner 已 outcome 前冻结；
+只执行 V2-P2，V2-P3 final freeze、prompt、API 与论文结果仍禁止
 
 ## 2026-07-11 v0.2 实验路线覆盖
 

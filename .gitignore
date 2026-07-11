@@ -32,6 +32,9 @@ data/*
 !data/hidden/dsa_p4_candidate_registry_v0_1.json
 !data/hidden/dsa_p4_candidate_results_v0_1.json
 !data/hidden/dsa_p4_task_gate_v0_1.json
+!data/hidden/dsa_v2_p2_pandas_161_oracle_v0_1.json
+!data/hidden/dsa_v2_p2_pandas_161_candidate_registry_v0_1.json
+!data/hidden/dsa_v2_p2_pandas_161_candidate_results_v0_1.json
 outputs/
 runs/
 artifacts/

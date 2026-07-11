@@ -19,9 +19,33 @@ Inspect/Diagnose：
   各项目所有 test-file parent 的最长公共前缀，同时冻结 pytest/unittest collection
   adapter；不读取任何 task outcome。
 
-当前 Gate：生成独立 amendment proposal 与未签核报告，不修改 V2-P1 manifest 内任一
-文件。作者签核前 checkout/environment/container/project-test/prompt/key/API 均保持0；
-签核只允许恢复本 Goal，不自动授权第二个 task 或后续阶段。
+Author Gate 已解除：
+
+- 作者高明声明签核 V2-P1 清单及 SHA-256 绑定的全部8项，并授权自动执行 V2-P1 至
+  V2-P2，只在 V2-P3 最终冻结或硬停止条件暂停；原文保存于
+  `data/protocols/dsa_v2_p1_test_scope_amendment_author_declaration_v0_1.txt`；
+- 九项目 amendment SHA-256 仍为
+  `b5778a7c95042d5475d333842c5b8a486a2798a7586d74a20a84e30487ddef94`，冻结记录状态为
+  `author_signed_immutable`；原 V2-P1 aggregate/source-order 未修改；
+- real preflight 已变为 `ready_for_real_activity`，所有真实活动仍为0。
+
+Pre-outcome implementation freeze：
+
+- source freezer 只允许 order=1，要求 signed amendment，并从 official GitHub commit
+  archives 冻结 buggy tree、fixed tests、metadata 与 reference-apply context；
+- task image 从 py383 explicit lock 创建 fresh Python 3.8.3 环境，只执行 official
+  requirements、`pip install -e .` 与 `pip check`，明确不执行 `setup.sh`；
+- oracle runner 先双 fresh F2P，再从 `pandas/tests` 全范围 collect，按冻结 relatedness/
+  tie hash 取最多40 nodes，双 fresh 稳定后切3 visible/最多20 hidden，再双 fresh 完整
+  验证 oracle-positive；
+- candidate materializer 在任何 candidate outcome 前枚举并 hash-order T1--T4，合成
+  self-test 的10个 candidates 全部 patch/tree 可重放；candidate runner 每项执行全部
+  basic/F2P/visible/hidden，两 fresh 完全一致且首次满足 hard-negative 时停止；
+- 任一 environment/oracle/candidate failure 都写唯一 order=1 terminal，不修环境、不修
+  candidate、不启动 order=2；prompt/key/model API 始终为0。
+
+下一动作：提交上述完整 pre-outcome implementation 后，下载 pandas_161 两个官方 commit
+archives 并冻结 source/context；随后按 Gate 顺序执行，不能根据结果修改已提交规则。
 
 ## 0.56 2026-07-12 DSA v0.2 V2-P2 executor synthetic check-only
 

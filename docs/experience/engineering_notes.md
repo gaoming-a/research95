@@ -1,5 +1,23 @@
 # Engineering Notes
 
+## 2026-07-12 Freeze the whole real runner before the first outcome
+
+- A construction protocol is not protected from outcome-driven repair if only
+  its prose is frozen. Before the first checkout, also freeze the source
+  acquisition, image recipe, oracle collection/split, candidate materializer,
+  dual-fresh executor, terminal writer, and every runtime authorization gate.
+- Reusing a historical worker as a library is acceptable only when the active
+  V2 entry point, image labels, source registries, and result namespaces are
+  new and the generic worker semantics match the signed checks. Historical P4
+  registries and cursors must never be active inputs.
+- The V2 environment recipe deliberately differs from historical P4: official
+  `setup.sh` is provenance only. Install the selected explicit Python lock,
+  official requirements, the project via editable package metadata, and enforce
+  `pip check`; any failure is terminal and cannot trigger a dependency edit.
+- Candidate transform code needs behavioral-independent tests. A synthetic
+  two-file/two-hunk patch can cover T1--T4 enumeration and prove every produced
+  patch recreates its candidate tree before any real candidate outcome exists.
+
 ## 2026-07-12 Signed prose must match executable recipe fields
 
 - A signed rule that refers to a value "declared by the project recipe" is not

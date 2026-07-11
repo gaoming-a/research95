@@ -1,0 +1,177 @@
+{
+  "amendment_id": "dsa_v2_p1_test_scope_amendment_v0_1",
+  "amendment_record_sha256": "c9012f7d17630cd352a1e28913113f73ba1dc3f2ad6332ec2845bc2c0577a33b",
+  "amendments": [
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "test/units"
+      ],
+      "derived_from_declared_file_count": 15,
+      "framework": "pytest",
+      "project": "ansible",
+      "project_test_root": "test/units",
+      "unittest_pattern": null,
+      "unittest_top_level_dir": null
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "unittest-discover",
+        "--start-dir",
+        "tests",
+        "--pattern",
+        "test*.py",
+        "--top-level-dir",
+        "."
+      ],
+      "derived_from_declared_file_count": 13,
+      "framework": "unittest",
+      "project": "black",
+      "project_test_root": "tests",
+      "unittest_pattern": "test*.py",
+      "unittest_top_level_dir": "."
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "tests"
+      ],
+      "derived_from_declared_file_count": 14,
+      "framework": "pytest",
+      "project": "fastapi",
+      "project_test_root": "tests",
+      "unittest_pattern": null,
+      "unittest_top_level_dir": null
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "tests"
+      ],
+      "derived_from_declared_file_count": 23,
+      "framework": "pytest",
+      "project": "keras",
+      "project_test_root": "tests",
+      "unittest_pattern": null,
+      "unittest_top_level_dir": null
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "lib/matplotlib/tests"
+      ],
+      "derived_from_declared_file_count": 8,
+      "framework": "pytest",
+      "project": "matplotlib",
+      "project_test_root": "lib/matplotlib/tests",
+      "unittest_pattern": null,
+      "unittest_top_level_dir": null
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "pandas/tests"
+      ],
+      "derived_from_declared_file_count": 119,
+      "framework": "pytest",
+      "project": "pandas",
+      "project_test_root": "pandas/tests",
+      "unittest_pattern": null,
+      "unittest_top_level_dir": null
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "tests"
+      ],
+      "derived_from_declared_file_count": 2,
+      "framework": "pytest",
+      "project": "sanic",
+      "project_test_root": "tests",
+      "unittest_pattern": null,
+      "unittest_top_level_dir": null
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "spacy/tests"
+      ],
+      "derived_from_declared_file_count": 9,
+      "framework": "pytest",
+      "project": "spacy",
+      "project_test_root": "spacy/tests",
+      "unittest_pattern": null,
+      "unittest_top_level_dir": null
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "unittest-discover",
+        "--start-dir",
+        "tornado/test",
+        "--pattern",
+        "*_test.py",
+        "--top-level-dir",
+        "."
+      ],
+      "derived_from_declared_file_count": 9,
+      "framework": "unittest",
+      "project": "tornado",
+      "project_test_root": "tornado/test",
+      "unittest_pattern": "*_test.py",
+      "unittest_top_level_dir": "."
+    }
+  ],
+  "amendments_sha256": "b5778a7c95042d5475d333842c5b8a486a2798a7586d74a20a84e30487ddef94",
+  "author": "高明",
+  "author_declaration_path": "data/protocols/dsa_v2_p1_test_scope_amendment_author_declaration_v0_1.txt",
+  "author_declaration_sha256": "874bd942b3771f3732afbf0d163f051c075b5e4455ef0f0a75f8f8d42168c627",
+  "authorization": {
+    "model_api": false,
+    "pause_at_hard_stop": true,
+    "pause_at_v2_p3_final_freeze": true,
+    "prompt": false,
+    "real_v2_p2_all_orders": true,
+    "real_v2_p2_order_1": true,
+    "v2_p3": false
+  },
+  "boundary": "This additive author-signed amendment completes the missing project test scopes without changing any original V2-P1 file or authorizing V2-P3, prompt changes, credential access, or model API calls.",
+  "created_date": "2026-07-12",
+  "derivation_rule": "Split every frozen declared_test_file on semicolons, normalize POSIX paths, take parent directories, and select the longest common parent per project before observing any task outcome.",
+  "original_v2_p1_manifest_aggregate_sha256": "ed7c927129c47027b57374625a2d76667503bbb1d8d37e04d4460e42b2ae8b40",
+  "original_v2_p1_source_order_sha256": "21be1d9fed719de44126be585fa7e9123fd8579588d9ce86eb396d4ab5c2dd11",
+  "proposal_path": "data/protocols/dsa_v2_p1_test_scope_amendment_proposal_v0_1.json",
+  "proposal_sha256": "8f4adfc98fffa9e718f98049c3249e6b400eacdac2f19f65b7bcd2338b95af5c",
+  "status": "author_signed_immutable"
+}

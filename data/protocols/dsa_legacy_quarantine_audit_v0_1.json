@@ -21,6 +21,7 @@
       "scripts/dsa2026_build_p2_source_frame.py",
       "scripts/dsa2026_build_p2_transform_registry.py",
       "scripts/dsa2026_freeze_v2_p1_construction.py",
+      "scripts/dsa2026_freeze_v2_p1_test_scope_amendment.py",
       "scripts/dsa2026_p4_container_worker.py",
       "scripts/dsa2026_p4_materialize_candidate.py",
       "scripts/dsa2026_p4_oracle_freeze.py",
@@ -33,8 +34,15 @@
       "scripts/dsa2026_p4_run_reference_pool.py",
       "scripts/dsa2026_propose_v2_p1_test_scope_amendment.py",
       "scripts/dsa2026_simulate_p2_precision.py",
+      "scripts/dsa2026_v2_p2_build_task_image.py",
       "scripts/dsa2026_v2_p2_check_only.py",
-      "scripts/dsa2026_v2_p2_executor.py"
+      "scripts/dsa2026_v2_p2_container_worker.py",
+      "scripts/dsa2026_v2_p2_executor.py",
+      "scripts/dsa2026_v2_p2_freeze_task_context.py",
+      "scripts/dsa2026_v2_p2_materialize_candidates.py",
+      "scripts/dsa2026_v2_p2_real_preflight.py",
+      "scripts/dsa2026_v2_p2_run_candidates.py",
+      "scripts/dsa2026_v2_p2_run_oracle.py"
     ],
     "violations": []
   },

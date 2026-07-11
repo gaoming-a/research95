@@ -47,7 +47,20 @@
   deterministic replay are
   `../data/protocols/dsa_v2_p1_test_scope_amendment_proposal_v0_1.json` and
   `../scripts/dsa2026_propose_v2_p1_test_scope_amendment.py`. Real V2-P2
-  activity remains zero until author sign-off.
+  activity remained zero until author sign-off. The signed declaration and
+  immutable amendment are
+  `../data/protocols/dsa_v2_p1_test_scope_amendment_author_declaration_v0_1.txt`
+  and `../data/protocols/dsa_v2_p1_test_scope_amendment_v0_1.json`; deterministic
+  freeze is `../scripts/dsa2026_freeze_v2_p1_test_scope_amendment.py`.
+- `../data/protocols/dsa_v2_p2_pandas_161_real_preflight_v0_1.json`: passing
+  pre-outcome real-execution gate for order-1 pandas_161. The active chain is
+  `../scripts/dsa2026_v2_p2_freeze_task_context.py`,
+  `../containers/dsa2026_v2_p2/Dockerfile.task`,
+  `../scripts/dsa2026_v2_p2_build_task_image.py`,
+  `../scripts/dsa2026_v2_p2_run_oracle.py`,
+  `../scripts/dsa2026_v2_p2_materialize_candidates.py`, and
+  `../scripts/dsa2026_v2_p2_run_candidates.py`. It does not authorize V2-P3,
+  prompt changes, credential reads, or model API calls.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
   venue/submission master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is
