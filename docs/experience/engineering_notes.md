@@ -35,6 +35,17 @@
   tree, emit a task Gate and separation audit, decrement the nonstructural
   discard allowance, and defer reserve consumption to the next explicitly
   bounded P4 Goal.
+- Primary and reserve order need an explicit execution cursor, not only two
+  frozen arrays. The pre-outcome trajectory already skipped structurally
+  inapplicable primary #1 and entered primary #2 before reserve #1, so preserve
+  a primary-first scan: allocate realized discard slots to the reserve prefix,
+  but execute that prefix only after the primary scan. Recomputing the cursor
+  then skips structural primary #3 and uniquely selects primary #4
+  `bugsinpy_tornado_10`; it does not use the direction of the FastAPI outcome.
+- Capacity accounting must include future structural discards even before the
+  cursor reaches them. Four structural primary discards plus one terminal
+  candidate discard leave at most 35 complete pairs from 40 frozen sources,
+  hence exactly five further discard allowances for a 30-pair target.
 - A stopped reproduction container can contain fresh official Git objects even
   when its environment build failed. Export a Git bundle from committed refs
   only; never carry its dirty worktree, copied benchmark index, logs, or prior

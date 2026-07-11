@@ -37,6 +37,11 @@ the negative consistently failed syntax, F2P, all 3 visible P2P, and all 20
 held-out checks. Because a negative must pass every visible check, the frozen
 task Gate is `DISCARD_TASK`, not admission. No candidate from this task enters
 the model-visible cohort; leakage is 0 and P4's final Gate is still pending.
+The replacement cursor audit now resolves the next step without running another
+experiment: primary orders 1--3 are realized as structural/terminal/structural
+discards and are allocated reserve orders 1--3. The unique next executable
+primary is order 4, `bugsinpy_tornado_10`; the remaining nonstructural discard
+budget is five.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,

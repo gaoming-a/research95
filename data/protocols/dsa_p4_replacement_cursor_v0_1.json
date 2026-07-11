@@ -1,0 +1,160 @@
+{
+  "audit_id": "dsa_p4_replacement_cursor_v0_1",
+  "boundary": "Read-only cursor audit: no task image, container, candidate, test, prompt, P5 artifact, paper result, or model API call was created or executed.",
+  "capacity": {
+    "known_discard_count": 5,
+    "maximum_possible_pairs_after_known_discards": 35,
+    "primary_count": 30,
+    "realized_replacement_slots": 3,
+    "remaining_nonstructural_discard_budget": 5,
+    "reserve_count": 10,
+    "target_pairs": 30,
+    "terminal_nonstructural_discards": 1,
+    "total_structural_primary_discards": 4,
+    "unallocated_reserve_count": 7
+  },
+  "checks": {
+    "all_reserves_structurally_eligible": true,
+    "maximum_capacity_at_least_30_pairs": true,
+    "next_task_has_no_prior_p4_activity": true,
+    "next_task_is_unique_pending_primary": true,
+    "no_model_api_call": true,
+    "no_new_task_or_candidate_run": true,
+    "p2_raw_hashes_unchanged": true,
+    "p3_manifest_unchanged": true,
+    "p4_preflight_passed": true,
+    "p5_not_entered": true,
+    "primary_orders_contiguous": true,
+    "realized_primary_scan_contiguous": true,
+    "remaining_nonstructural_discard_budget_is_five": true,
+    "replacement_ledger_uses_reserve_prefix_only": true,
+    "reserve_orders_contiguous": true,
+    "selection_and_preflight_task_sets_equal": true,
+    "selection_is_30_primary_10_reserve": true,
+    "terminal_task_gates_integrity_passed": true
+  },
+  "created_date": "2026-07-11",
+  "cursor": {
+    "execution_policy": "scan frozen primary order first; allocate each realized primary discard to the next frozen reserve; execute allocated reserves in frozen order after the primary scan",
+    "future_structural_discards": [
+      {
+        "order": 18,
+        "project": "spacy",
+        "role": "primary",
+        "selected_transform_id": null,
+        "structural_disposition": "discard_no_applicable_transform",
+        "task_id": "bugsinpy_spacy_10"
+      },
+      {
+        "order": 19,
+        "project": "fastapi",
+        "role": "primary",
+        "selected_transform_id": null,
+        "structural_disposition": "discard_no_applicable_transform",
+        "task_id": "bugsinpy_fastapi_10"
+      }
+    ],
+    "next_task": {
+      "order": 4,
+      "project": "tornado",
+      "role": "primary",
+      "selected_transform_id": "T1_omit_secondary_source_file",
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_tornado_10"
+    },
+    "next_task_id": "bugsinpy_tornado_10",
+    "policy_evidence": "Before the fastapi_12 outcome, P4 skipped structurally inapplicable primary #1 and entered primary #2 without executing reserve #1. The cursor preserves that pre-outcome trajectory.",
+    "realized_primary_scan": [
+      {
+        "cursor_disposition": "discard_structural_no_applicable_transform",
+        "order": 1,
+        "outcome_observed": false,
+        "project": "sanic",
+        "role": "primary",
+        "selected_transform_id": null,
+        "structural_disposition": "discard_no_applicable_transform",
+        "task_id": "bugsinpy_sanic_5"
+      },
+      {
+        "candidate_results_sha256": "cdfbd008a2585c93d0d7150682f9897f9e38314db2eb515f58b410859d6eacc2",
+        "cursor_disposition": "discard_terminal_task_gate",
+        "order": 2,
+        "outcome_observed": true,
+        "project": "fastapi",
+        "role": "primary",
+        "selected_transform_id": "T4_partial_multiline_reversion",
+        "structural_disposition": "eligible_for_candidate_materialization",
+        "task_gate": "DISCARD_TASK",
+        "task_id": "bugsinpy_fastapi_12"
+      },
+      {
+        "cursor_disposition": "discard_structural_no_applicable_transform",
+        "order": 3,
+        "outcome_observed": false,
+        "project": "pandas",
+        "role": "primary",
+        "selected_transform_id": null,
+        "structural_disposition": "discard_no_applicable_transform",
+        "task_id": "bugsinpy_pandas_54"
+      }
+    ],
+    "replacement_ledger": [
+      {
+        "discard_reason": "discard_structural_no_applicable_transform",
+        "discarded_primary_order": 1,
+        "discarded_task_id": "bugsinpy_sanic_5",
+        "replacement_slot": 1,
+        "replacement_status": "allocated_pending_primary_scan_completion",
+        "reserve_order": 1,
+        "reserve_project": "sanic",
+        "reserve_task_id": "bugsinpy_sanic_4"
+      },
+      {
+        "discard_reason": "discard_terminal_task_gate",
+        "discarded_primary_order": 2,
+        "discarded_task_id": "bugsinpy_fastapi_12",
+        "replacement_slot": 2,
+        "replacement_status": "allocated_pending_primary_scan_completion",
+        "reserve_order": 2,
+        "reserve_project": "fastapi",
+        "reserve_task_id": "bugsinpy_fastapi_6"
+      },
+      {
+        "discard_reason": "discard_structural_no_applicable_transform",
+        "discarded_primary_order": 3,
+        "discarded_task_id": "bugsinpy_pandas_54",
+        "replacement_slot": 3,
+        "replacement_status": "allocated_pending_primary_scan_completion",
+        "reserve_order": 3,
+        "reserve_project": "pandas",
+        "reserve_task_id": "bugsinpy_pandas_90"
+      }
+    ]
+  },
+  "cursor_sha256": "24f37f3f2eefe99c9346b4b141965cb137e8f7dfb87e6e11eaa0ac909b0fbf2e",
+  "source_hashes": {
+    "p2_raw_sha256": {
+      "data/protocols/dsa_p2_development_exclusion_registry_v0_1.json": {
+        "actual": "7e8be772ac1b7fd70fcdaae1a038940916920cbf182d55fadf36717a2dcbba38",
+        "expected": "7e8be772ac1b7fd70fcdaae1a038940916920cbf182d55fadf36717a2dcbba38"
+      },
+      "data/protocols/dsa_p2_protocol_decision_v0_1.json": {
+        "actual": "b3443c506250196885787debb00adc612cca986f2485f63462f404f64b6c1ff2",
+        "expected": "b3443c506250196885787debb00adc612cca986f2485f63462f404f64b6c1ff2"
+      },
+      "data/protocols/dsa_p2_source_selection_v0_1.json": {
+        "actual": "9fe40e8a38053ffdc8c965070740704924d13b9901cf0c3ed25aa4c1be14bd4b",
+        "expected": "9fe40e8a38053ffdc8c965070740704924d13b9901cf0c3ed25aa4c1be14bd4b"
+      },
+      "data/protocols/dsa_p2_transform_registry_v0_1.json": {
+        "actual": "7c2eb308378b732ca2dbe9d1f7b8dc86ba836173f0346374f576093796276430",
+        "expected": "7c2eb308378b732ca2dbe9d1f7b8dc86ba836173f0346374f576093796276430"
+      }
+    },
+    "p3_manifest_aggregate": "f81ba7063297dc9264041256b99a7daa002bd730cbe1dbd9bfb105cd7aa71297",
+    "preflight_sha256": "878ca05ae37d6c3f3a6e76cc614ed04ac8ba360bafb26210a13337ee2bfd1928",
+    "selection_sha256": "9fe40e8a38053ffdc8c965070740704924d13b9901cf0c3ed25aa4c1be14bd4b",
+    "task_gates_sha256": "deb6f8929fde7046d06b3fc7ea33f824690637478b0607844f3629c190b167c8"
+  },
+  "status": "passed_unique_next_task"
+}

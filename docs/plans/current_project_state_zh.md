@@ -51,6 +51,11 @@
   negative 的 syntax、F2P、3 P2P、20 held-out 均稳定 fail。negative 未通过 visible，
   因而 task Gate=`DISCARD_TASK`、model-visible records=0、leakage=0；非结构性 discard
   理论余量降为 5。P4 final Gate 未形成，下一 task 本轮未启动。
+- replacement-cursor audit 已把 primary #1--#3 的 structural/terminal/structural
+  discards 分配给 reserve #1--#3，但 reserve 只在 primary scan 完成后执行。唯一 next
+  task 已冻结为 primary #4 `bugsinpy_tornado_10`，cursor SHA-256=
+  `24f37f3f2eefe99c9346b4b141965cb137e8f7dfb87e6e11eaa0ac909b0fbf2e`；
+  该审计未创建/运行新 task、candidate、container 或 API request。
 
 ### 2026-07-10 DSA 路线计划基线（已由上方 P2 状态覆盖）
 

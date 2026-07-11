@@ -9,7 +9,39 @@
 model-visible/hidden manifests。本轮不调用模型 API、不进入 P5、不生成 rendered prompt、
 不修改论文结果或任何 P2/P3 冻结语义。
 
-当前 task-level Goal（2026-07-11）：
+当前 replacement-cursor Goal（2026-07-11）：
+
+- 只从 private-synced commit `bd38523` 复算 P4 primary/reserve cursor，不构建或运行
+  新 task/candidate/container，不重跑 `bugsinpy_fastapi_12`；
+- 重新验证 P2/P3 immutable hashes、P4 preflight、全部 source-only structural
+  dispositions 和 terminal task Gate；
+- 执行顺序沿用 outcome 前已经实现的 primary-first cursor：按 frozen primary order
+  扫描，结构不适用项机械 discard，已执行项读取 terminal Gate；reserve 只按 frozen
+  reserve order 分配给已实现的 discard slots，并在 primary scan 完成后依序执行；
+- 该解释不是结果后选择：P4 在 primary #1 `bugsinpy_sanic_5` 的结构 discard 后，已经
+  在任何 `fastapi_12` candidate outcome 前进入 primary #2，而没有先执行 reserve #1；
+- 当前 cursor 必须依次识别 primary #1 structural discard、primary #2 terminal discard、
+  primary #3 structural discard，并唯一落到 primary #4 `bugsinpy_tornado_10`；
+- 输出 realized replacement ledger、future structural discards、capacity calculation、
+  唯一 `next_task_id` 和 hash；同步文档、提交并只推 private 后停止，不进入下一实验、
+  P5、rendered prompt、论文结果或 model API。
+
+Replacement cursor audit 执行结果：
+
+- P2 raw hashes、P3 16-file aggregate、P4 preflight、30 primary + 10 reserve order、
+  `fastapi_12` terminal Gate 和 no-API/P5 boundary 全部复核通过；
+- realized scan 为 primary #1 `sanic_5` structural discard、#2 `fastapi_12`
+  terminal discard、#3 `pandas_54` structural discard；分别只分配 frozen reserve
+  #1 `sanic_4`、#2 `fastapi_6`、#3 `pandas_90`，状态均为 primary scan 完成后待执行；
+- future known structural discards 仍为 primary #18 `spacy_10` 与 #19 `fastapi_10`；
+- unique next task=`bugsinpy_tornado_10`，primary order=4，transform=
+  `T1_omit_secondary_source_file`，此前 P4 activity=0；
+- target=30、known discards=5、maximum possible pairs=35、remaining nonstructural
+  discard budget=5、当前 unallocated reserves=7；
+- cursor SHA-256=`24f37f3f2eefe99c9346b4b141965cb137e8f7dfb87e6e11eaa0ac909b0fbf2e`；
+  本 Goal 新 task/container/candidate/test/model API 均为 0，P5 未进入。
+
+已完成的 `bugsinpy_fastapi_12` task-level Goal（2026-07-11）：
 
 - 只从 commit `07c3066` 继续 `bugsinpy_fastapi_12`，不重做已通过的 reference
   oracle freeze，也不处理下一个 primary/reserve task；
