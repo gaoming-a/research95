@@ -19,7 +19,9 @@ schema, synthetic render audit, and hash manifest pass their mechanical checks.
 Author 高明 signed all 11 frozen items at `2026-07-11T15:00:02+08:00`; identity,
 item completeness, scientific responsibility, and the exact declaration hash
 all pass. P3 is now immutable and complete.
-P4--P5 are not started, so no smoke, full run, or model API is authorized.
+P4 held-out cohort materialization is now in progress under the immutable P2/P3
+order and transform rules. P5 is not started, so no smoke, full run, rendered
+prompt, or model API is authorized.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,

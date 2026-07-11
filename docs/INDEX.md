@@ -12,14 +12,15 @@
   sole active master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is
   inactive. Status: `P2_SOURCE_FEASIBILITY_PASS / REGULAR_FROZEN /
-  P3_PASS_AUTHOR_SIGNED / P4_NOT_STARTED / P5_NOT_STARTED / SHORT_INACTIVE /
+  P3_PASS_AUTHOR_SIGNED / P4_IN_PROGRESS / P5_NOT_STARTED / SHORT_INACTIVE /
   V0_SUBMISSION_GATE_PENDING`. It defines
   venue/AI/EI gates, old-data
   quarantine, a task-disjoint C0--C3 experiment, no-rerun rules, finite-cohort
   statistics, evidence-first paper reconstruction, official `IEEEconf.cls` PDF
   QA, private artifact/Git boundaries, and the submission-to-presentation
   timeline. A 2026-07-11 standing API authorization exists but activates only
-  after P1--P5 pass; P4--P5 are still pending, so no model call is allowed.
+  after P1--P5 pass; P4 is in progress and P5 is pending, so no model call is
+  allowed.
 - [dsa_p3_preregistration_v0_1.md](experiments/dsa_p3_preregistration_v0_1.md):
   human-readable P3 research questions, primary estimands, cumulative evidence
   contract, task-level conditional statistics, exact model routes, exclusions,

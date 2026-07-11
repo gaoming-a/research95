@@ -2,6 +2,49 @@
 
 最后更新：2026-07-11
 
+## 0.53 2026-07-11 DSA P4 held-out cohort materialization（执行中）
+
+本轮只执行 P4：按 P2/P3 冻结顺序与 transform priority 构造 30 个 task pairs，
+在两个 fresh clean containers 中独立运行冻结 visible/hidden checks，并形成严格分离的
+model-visible/hidden manifests。本轮不调用模型 API、不进入 P5、不生成 rendered prompt、
+不修改论文结果或任何 P2/P3 冻结语义。
+
+Inspect：
+
+- P3 Gate=`PASS`，16-file manifest=`immutable_author_signed`；P2 四个 raw SHA-256
+  与 P3 completion audit 一致，起始工作树 clean；
+- Regular 为 30 primary + 10 reserve/9 projects/60 planned candidates；reserve 只能
+  按冻结顺序消耗，Short inactive；
+- 本地存在 frozen official/reproduction BugsInPy checkouts，Docker Desktop Linux engine
+  可用；host 无 Conda，因此 clean environments 统一由 pinned Docker/Conda image 构造；
+- source frame 只冻结 official F2P 与“project regression scope”来源，没有后验选择
+  candidate outcome 的许可。
+
+P4 test/oracle freeze rule（在任何 transformed candidate 结果前固定）：
+
+1. official declared F2P node/command 作为 visible F2P；
+2. 在 reference-fixed source 上从 declared project test root 收集非 F2P nodes；
+3. 按 changed-source path token relatedness 形成最多 40-node pre-transform pool，分数
+   相同按 `SHA-256(dsa2026-p4-regression-split-v0_1|task_id|nodeid)` 排序；
+4. pool 必须在两个 fresh containers 的 reference candidate 上稳定通过；从稳定集合按
+   同一 hash 排序冻结前 3 个为 visible P2P、随后最多 20 个为 hidden regression；不足
+   3 visible P2P + 1 hidden 时 task discard，不看 transformed outcome；
+5. hidden nodes、candidate role、source/oracle/admission 只进入 hidden tree；visible tree
+   只保留中性代码、diff/context 与真实物化的 executable/F2P/P2P evidence。
+
+候选与 Gate：
+
+- positive 只用 official reference fix；negative 只用冻结 priority 下第一个结构适用
+  transform，不能根据测试结果换 transform；
+- 每个候选在两个从同一 locked image 新建、无共享 writable volume 的 containers 中
+  独立运行；记录 image/container/environment/dependency/command/result hashes；
+- positive 必须两环境 visible+hidden 全通过；negative 必须 visible 全通过且至少一个
+  frozen hidden oracle 在两环境稳定失败；否则整 task discard 并取下一 frozen reserve；
+- PASS 需要 30 pairs/60 candidates、≥8 projects、每项目≤4、evidence 全物化、环境一致、
+  leakage=0、P2/P3 hashes 不变；reserve 耗尽或结构不可保持则 `STOP_DSA`；
+- 输出 cohort/environment/oracle/candidate/replacement/reproducibility/separation/Gate/hash
+  artifacts，完成文档和 private Git 尝试后立即停止，不进入 P5/API。
+
 ## 0.52 2026-07-11 DSA P3 作者预注册与 prompt/schema 冻结（完成）
 
 本轮小目标严格限定为 P3：在不调用模型 API、不构造或运行 P4 candidates、不修改

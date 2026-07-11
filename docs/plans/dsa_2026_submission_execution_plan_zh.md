@@ -3,13 +3,13 @@
 计划编号：DSA-2026-EVIDENCE-POLICY-20260710
 制定日期：2026-07-10
 当前状态：P2_SOURCE_FEASIBILITY_PASS / REGULAR_FROZEN /
-P3_PASS_AUTHOR_SIGNED / P4_NOT_STARTED / P5_NOT_STARTED /
+P3_PASS_AUTHOR_SIGNED / P4_IN_PROGRESS / P5_NOT_STARTED /
 SHORT_INACTIVE / V0_SUBMISSION_GATE_PENDING
 唯一主目标：DSA 2026 Regular Paper
 同会场降级：DSA 2026 Short Paper，仅可在任何模型调用前锁定
 非活动备选：ACAI 2026；不得并行投稿，也不得在看到 DSA 实验结果后切换
 用户优先级：科学与收录稳健性优先，其次才是时间
-本轮边界：P3 已完成并由作者签核；在 P3 停止，不进入 P4/P5，不调用 API，不改论文结果
+本轮边界：P4 已显式建立为新 goal；只材料化 cohort，不进入 P5，不调用 API，不改论文结果
 
 ## 1. 权威性与目标覆盖
 
