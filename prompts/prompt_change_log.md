@@ -146,3 +146,27 @@ Verification:
 - The four deleted paths must be absent.
 - Historical data/protocol/result artifacts must have no content diff from
   this retirement change.
+
+## 2026-07-11 DSA P3 New Prompt Candidate Freeze
+
+- Prompt file: `prompts/dsa2026_evidence_conditioned_patch_gate_v0_1.md`.
+- Schema file: `data/protocols/dsa_p3_output_schema_v0_1.json`.
+- Change type: new DSA prompt and schema, created from empty files.
+- Status: candidate freeze pending explicit author sign-off.
+- API boundary: no inference API call is authorized by this change.
+
+Conflict, duplication, and provenance boundary:
+
+- No deleted prompt was opened from Git history, restored, copied, or
+  paraphrased. Model selection and wording were not based on legacy outcomes.
+- The new prompt has one neutral role across C0--C3. It contains no condition
+  name, evidence-level explanation, candidate role, hidden label/oracle,
+  expected answer, decision example, tool verdict, or condition-specific cue.
+- It does not prescribe escalation for sparse evidence or rejection for a
+  failed check. It only forbids inventing unreported facts.
+- Its only output fields are `decision`, `confidence`, `concise_rationale`,
+  `evidence_used`, and `uncertainty`; invalid output cannot be rewritten as
+  escalation.
+- The full mechanical review is recorded in
+  `docs/experiments/dsa_p3_prompt_change_record_v0_1.md` and the generated P3
+  prompt-boundary audit. Author sign-off remains a separate Gate.

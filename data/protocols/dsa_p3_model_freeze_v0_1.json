@@ -1,0 +1,157 @@
+{
+  "freeze_id": "dsa_p3_model_freeze_v0_1",
+  "status": "candidate_freeze_pending_author_signoff",
+  "verified_at": "2026-07-11",
+  "verification_method": "Official provider documentation only; no inference, count-token, or credentialed API request was sent.",
+  "selection_rule": "Three distinct official providers with currently documented structured output and a pinnable model ID; selection did not use legacy experiment outcomes.",
+  "run_window": {
+    "not_before": "P1 through P5 passed and P3 author sign-off recorded",
+    "calendar_start": "2026-07-12T00:00:00+08:00",
+    "calendar_end": "2026-08-15T23:59:59+08:00",
+    "outside_window": "stop_without_model_substitution"
+  },
+  "common_request_contract": {
+    "stateless_repeats": 3,
+    "conversation_state": "none",
+    "stream": false,
+    "tools": "disabled",
+    "grounding": "disabled",
+    "external_retrieval": "disabled",
+    "provider_cache": "not_requested",
+    "input_token_hard_max_per_request": 32768,
+    "output_token_hard_max_per_request": 1024,
+    "preflight_rule": "P5 must prove the complete model-visible request, including any transmitted schema, is at most 32768 provider tokens using a provider-matched local tokenizer or a conservative UTF-8-byte upper bound; otherwise P5 fails.",
+    "identity_rule": "The response model identity must equal the frozen model_id. Missing identity, alias resolution to another version, fallback, or provider-side substitution stops the route.",
+    "schema_rule": "Provider JSON mode is transport assistance only. The local parser must validate the frozen schema exactly and must not repair, coerce, or map invalid output to escalate.",
+    "price_rule": "Recheck the cited official price immediately before smoke and full. Any price or billing-unit change stops execution and requires a new study version; it cannot mutate this freeze.",
+    "no_fallback": true
+  },
+  "model_routes": [
+    {
+      "route_order": 1,
+      "provider": "Alibaba Cloud Model Studio",
+      "model_id": "qwen3.7-plus-2026-05-26",
+      "id_type": "dated_snapshot",
+      "endpoint": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+      "api_style": "OpenAI-compatible Chat Completions",
+      "parameters": {
+        "enable_thinking": false,
+        "temperature": 0.2,
+        "max_completion_tokens": 1024,
+        "max_tokens": "omitted",
+        "response_format": {"type": "json_object"},
+        "stream": false
+      },
+      "structured_output_note": "Official documentation supports JSON object output for the Qwen3.7 Plus series in non-thinking mode. max_completion_tokens, not max_tokens, freezes the output cap.",
+      "price_snapshot": {
+        "currency": "CNY",
+        "service_region": "China (Beijing)",
+        "tier": "0 < input tokens <= 256K, pay-as-you-go list price",
+        "input_per_million": 2.0,
+        "output_per_million": 8.0,
+        "per_route_study_cost_hard_cap": 60.0,
+        "cap_basis": "At most 766 attempts, 32768 input tokens and 1024 output tokens per attempt; the exact arithmetic ceiling is CNY 56.475648."
+      },
+      "official_sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model",
+        "https://help.aliyun.com/en/model-studio/qwen-structured-output",
+        "https://help.aliyun.com/zh/model-studio/model-pricing",
+        "https://help.aliyun.com/en/model-studio/deep-thinking"
+      ]
+    },
+    {
+      "route_order": 2,
+      "provider": "DeepSeek API",
+      "model_id": "deepseek-v4-flash",
+      "id_type": "official_exact_model_id",
+      "endpoint": "https://api.deepseek.com/chat/completions",
+      "api_style": "OpenAI-compatible Chat Completions",
+      "parameters": {
+        "thinking": {"type": "disabled"},
+        "temperature": 0.2,
+        "max_tokens": 1024,
+        "response_format": {"type": "json_object"},
+        "stream": false
+      },
+      "structured_output_note": "Official V4 Flash documentation lists JSON Output and an explicit non-thinking toggle.",
+      "price_snapshot": {
+        "currency": "USD",
+        "input_cache_assumption": "cache miss",
+        "input_per_million": 0.14,
+        "output_per_million": 0.28,
+        "per_route_study_cost_hard_cap": 4.0,
+        "cap_basis": "At most 766 attempts, 32768 cache-miss input tokens and 1024 output tokens per attempt; the exact arithmetic ceiling is USD 3.73366784."
+      },
+      "official_sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing",
+        "https://api-docs.deepseek.com/api/create-chat-completion",
+        "https://api-docs.deepseek.com/guides/thinking_mode",
+        "https://api-docs.deepseek.com/updates/"
+      ]
+    },
+    {
+      "route_order": 3,
+      "provider": "Google Gemini Developer API",
+      "model_id": "gemini-3.5-flash",
+      "id_type": "official_stable_model_id",
+      "endpoint": "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent",
+      "api_style": "Gemini GenerateContent",
+      "parameters": {
+        "thinkingConfig": {"thinkingLevel": "minimal"},
+        "temperature": "omitted_per_official_Gemini_3x_guidance",
+        "maxOutputTokens": 1024,
+        "responseMimeType": "application/json",
+        "responseJsonSchema": "data/protocols/dsa_p3_output_schema_v0_1.json",
+        "candidateCount": 1,
+        "stream": false
+      },
+      "structured_output_note": "The official stable model page lists structured outputs. Gemini 3.5 Flash does not offer thinking-off; minimal is the lowest documented level and is frozen rather than treated as equivalent to non-thinking.",
+      "price_snapshot": {
+        "currency": "USD",
+        "service_tier": "standard paid",
+        "input_per_million": 0.75,
+        "output_including_thinking_per_million": 4.5,
+        "per_route_study_cost_hard_cap": 23.0,
+        "cap_basis": "At most 766 attempts, 32768 input tokens and 1024 total billed output tokens per attempt; the exact arithmetic ceiling is USD 22.354944."
+      },
+      "official_sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash",
+        "https://ai.google.dev/gemini-api/docs/models",
+        "https://ai.google.dev/gemini-api/docs/thinking",
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ]
+    }
+  ],
+  "request_order": {
+    "full_seed": "dsa2026-p3-full-request-order-v0_1",
+    "smoke_seed": "dsa2026-p3-smoke-request-order-v0_1",
+    "block_key": ["source_order", "candidate_code", "route_order", "repeat_index"],
+    "block_order_algorithm": "Sort blocks by lowercase SHA-256 hex of seed joined with the block key using ASCII vertical bars.",
+    "condition_order_algorithm": "Within each block, sort C0 through C3 by lowercase SHA-256 hex of seed, block key, and condition code joined with ASCII vertical bars.",
+    "repeat_indices": [1, 2, 3],
+    "context_sharing_between_requests": false
+  },
+  "attempt_budgets": {
+    "full_unique": 2160,
+    "full_retry_budget": 108,
+    "full_hard_maximum": 2268,
+    "smoke_unique": 24,
+    "smoke_retry_budget": 2,
+    "smoke_hard_maximum": 26,
+    "per_request_retry_maximum": 1,
+    "retry_eligible": ["transport_failure", "http_429", "empty_response"],
+    "retry_ineligible": ["schema_invalid", "semantic_invalid", "identity_mismatch", "other_http_4xx", "decision_disagreement"],
+    "valid_response_replacement": "forbidden"
+  },
+  "stop_conditions": [
+    "any model or provider identity drift",
+    "any fallback or endpoint substitution",
+    "any price or billing-unit change",
+    "first schema or semantic invalid response",
+    "prompt, schema, packet, config, ordering, or analysis hash drift",
+    "retry, attempt, input-token, output-token, route-cost, or calendar-window cap reached",
+    "early hidden-label join or inspection",
+    "attempt to overwrite a valid response"
+  ],
+  "api_call_authorized": false
+}

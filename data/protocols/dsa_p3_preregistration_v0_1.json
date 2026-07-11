@@ -1,0 +1,176 @@
+{
+  "preregistration_id": "dsa_p3_preregistration_v0_1",
+  "study_title": "A Controlled Study of Evidence-Conditioned LLM Patch-Gating Decisions",
+  "target": "DSA 2026 Regular",
+  "status": "candidate_freeze_pending_author_signoff",
+  "freeze_effective_when": "The named author explicitly signs every item in docs/experiments/dsa_p3_author_signoff_v0_1.md and the resulting hashes are recorded before P4 or any model output.",
+  "one_sentence_argument": "In a task-disjoint controlled patch cohort, the study will estimate how cumulative, genuinely executed visible evidence changes LLM accept policy for paired hidden-failing and oracle-positive candidates, while conditioning all uncertainty statements on the frozen tasks, models, and run window.",
+  "claim_boundary": [
+    "The study estimates finite-cohort decision-policy effects, not autonomous patch correctness, software safety, real-world defect prevalence, or effects for all projects and LLMs.",
+    "C0 to C3 are cumulative evidence bundles; adjacent differences are descriptive and cannot be attributed to one field.",
+    "A balanced positive/negative cohort does not estimate deployment prevalence or accepted-patch precision.",
+    "Null, negative, heterogeneous, or wide-interval results remain reportable and do not authorize redesign or rerun."
+  ],
+  "research_questions": [
+    {
+      "rq": "RQ1",
+      "role": "primary",
+      "question": "For frozen hard-negative candidates, how does cumulative visible evidence at C3 rather than C0 change the probability that a fixed model response recommends automatic merge?"
+    },
+    {
+      "rq": "RQ2",
+      "role": "primary",
+      "question": "For frozen oracle-positive candidates, how does cumulative visible evidence at C3 rather than C0 change the probability that a fixed model response recommends automatic merge?"
+    },
+    {
+      "rq": "RQ3",
+      "role": "secondary_descriptive",
+      "question": "Through which accept, reject, and escalate transitions do C0-to-C3 changes occur, and how do those patterns vary across the three frozen model routes?"
+    }
+  ],
+  "design": {
+    "protocol": "Regular",
+    "primary_tasks": 30,
+    "reserve_tasks": 10,
+    "projects": 9,
+    "candidates_per_admitted_task": 2,
+    "candidate_roles": ["oracle_positive", "hard_negative"],
+    "conditions": ["C0", "C1", "C2", "C3"],
+    "models": 3,
+    "stateless_repeats": 3,
+    "scientific_analysis_unit": "task",
+    "finite_cohort_n": 30,
+    "nested_nonindependent_units": ["candidate", "condition", "model", "repeat", "request"],
+    "source_order": "data/protocols/dsa_p2_source_selection_v0_1.json",
+    "transform_priority": "data/protocols/dsa_p2_transform_registry_v0_1.json",
+    "evidence_contract": "data/protocols/dsa_p3_evidence_contract_v0_1.json",
+    "model_freeze": "data/protocols/dsa_p3_model_freeze_v0_1.json",
+    "prompt": "prompts/dsa2026_evidence_conditioned_patch_gate_v0_1.md",
+    "output_schema": "data/protocols/dsa_p3_output_schema_v0_1.json"
+  },
+  "estimands": {
+    "target_expectation": "Expected paired finite-cohort decision effect over independent stateless response draws within the frozen task, model, provider configuration, and calendar window.",
+    "primary": [
+      {
+        "name": "Delta_minus",
+        "candidate_role": "hard_negative",
+        "formula": "P(accept | C3, hard-negative) - P(accept | C0, hard-negative)",
+        "direction_interpretation": "Negative values mean fewer automatic-merge recommendations at C3; no direction is declared desirable without jointly reporting the positive-candidate effect."
+      },
+      {
+        "name": "Delta_plus",
+        "candidate_role": "oracle_positive",
+        "formula": "P(accept | C3, oracle-positive) - P(accept | C0, oracle-positive)",
+        "direction_interpretation": "Positive values mean more automatic-merge recommendations at C3; no direction is declared desirable without jointly reporting the hard-negative effect and escalation/reject pathways."
+      }
+    ],
+    "task_level_construction": [
+      "For each task, candidate role, model, and repeat index, compute I(decision=accept at C3) minus I(decision=accept at C0).",
+      "Average the three paired repeat contrasts within each fixed task-model block.",
+      "Average the three frozen model values with equal model weight within task.",
+      "Average the 30 task values with equal task weight for the pooled primary estimand."
+    ]
+  },
+  "outcomes": {
+    "primary": ["Delta_minus", "Delta_plus"],
+    "secondary": [
+      "model-specific C3-minus-C0 accept effects",
+      "C3-minus-C0 reject effects",
+      "C3-minus-C0 escalate effects",
+      "C3-minus-C0 non-escalation effects",
+      "paired C0-to-C3 three-by-three decision transition matrices",
+      "within-block response disagreement across repeats",
+      "between-model decision disagreement",
+      "project-balanced reweighted primary effects",
+      "leave-one-project-out primary-effect ranges"
+    ],
+    "descriptive_only": [
+      "C0-to-C1, C1-to-C2, and C2-to-C3 adjacent contrasts",
+      "cohort-conditional accepted-patch precision",
+      "always-accept, always-reject, always-escalate, and per-model C0 baselines"
+    ],
+    "baseline_equivalence": "Because both candidate roles must pass all visible checks by admission, a deterministic visible-test-pass policy equals always-accept on this cohort and is reported once, not as an independent baseline."
+  },
+  "conditional_interval": {
+    "name": "paired repeat-block percentile interval",
+    "scope": "Conditional on the 30 frozen tasks, 3 model routes, provider configurations, and run window; it does not quantify task/project/model population sampling uncertainty.",
+    "bootstrap_draws": 20000,
+    "seed": 2026071103,
+    "random_generator": "NumPy PCG64",
+    "resampling_unit": "paired repeat index within each fixed task, candidate role, and model block",
+    "algorithm": [
+      "Within every fixed task-candidate-model block, sample three repeat indices with replacement from {1,2,3}.",
+      "For every sampled index retain the paired C3 and C0 decisions and compute the accept-indicator contrast.",
+      "Average sampled contrasts within block, then equally across models within task, then equally across tasks.",
+      "Repeat independently for Delta_minus and Delta_plus using one deterministic generator stream in that order.",
+      "Use percentile endpoints 0.0125 and 0.9875 for each primary estimand."
+    ],
+    "familywise_level": 0.95,
+    "multiplicity": "Bonferroni over the two primary estimands; each interval has 97.5% marginal coverage under the conditional bootstrap procedure.",
+    "inference_exclusions": ["no pooled p-value", "no population-general confidence claim", "no candidate/request-level n inflation"]
+  },
+  "stability_analyses": {
+    "project_balanced": "Average tasks equally within each project, then average the nine project means equally; label as reweighting, not a confidence interval.",
+    "leave_one_project_out": "Recompute each pooled task-macro primary effect after deleting one project at a time; report the minimum and maximum over nine deletions, not as a confidence interval."
+  },
+  "exclusion_and_replacement": {
+    "pre_materialization": [
+      "All tasks/projects in the P1 and P2 development exclusion registries remain permanently excluded.",
+      "P2 Regular primary/reserve order and transform priority are immutable."
+    ],
+    "p4_candidate_admission": [
+      "Admit an oracle-positive only when the official reference fix passes all frozen visible and hidden checks in two fresh clean environments.",
+      "Admit a hard negative only when the first applicable frozen transform passes all frozen visible checks and fails at least one independent hidden oracle in both fresh environments.",
+      "Discard without reclassification when the transform is inapplicable, a visible check fails, all hidden checks pass, or environments disagree.",
+      "Before any model call, replace a discarded primary only by the next task in frozen reserve order. If reserves are exhausted before 30 complete pairs, stop the DSA study."
+    ],
+    "model_execution": [
+      "Do not exclude a valid response because of its decision, confidence, rationale, model disagreement, or effect direction.",
+      "Do not impute a missing or invalid response and do not convert it to escalate.",
+      "A retry-exhausted eligible transport failure, first schema/semantic invalid, identity drift, or frozen-hash drift stops the applicable execution stage."
+    ],
+    "analysis": "Analyze every frozen valid response exactly once. No post-output task, candidate, model, condition, repeat, or response exclusion is allowed except a documented integrity failure that already requires stopping rather than continuing the confirmatory study."
+  },
+  "stop_rules": [
+    "P3 remains pending until explicit author scientific-responsibility sign-off and all mechanical audits pass.",
+    "P4 stops if frozen reserves cannot yield 30 complete candidate pairs without changing transform or source order.",
+    "No smoke starts until P1 through P5 and all relevant hashes pass.",
+    "Smoke stops on any invalid response, identity/fallback/hash breach, or 26-attempt hard maximum.",
+    "Full stops on any invalid response, identity/fallback/hash breach, early hidden-label access, cost/token/window breach, or 2268-attempt hard maximum.",
+    "If the frozen model is unavailable or an official ID/price changes, stop; do not substitute a model.",
+    "If complete valid full output is not frozen by 2026-08-15T23:59:59+08:00, stop without using legacy results."
+  ],
+  "no_rerun_policy": {
+    "valid_response": "immutable and never overwritten",
+    "allowed_retry": "At most once for transport failure, HTTP 429, or empty response, subject to stage-wide retry and attempt caps.",
+    "forbidden_reasons": [
+      "unexpected or undesirable decision",
+      "high false accepts or low correct accepts",
+      "model disagreement",
+      "wide interval, null effect, negative effect, or non-significance",
+      "reviewer preference",
+      "desire to change paper type, prompt, model, candidate, transform, oracle, condition, or repeat count"
+    ],
+    "after_hidden_join": "No task addition, reserve use, oracle/transform change, model rerun, or cross-version pooling.",
+    "semantic_change": "Any scientific, model-visible, schema, parser, scheduling, or analysis-semantic change terminates this study version. A later version is a separate study and is not automatically authorized."
+  },
+  "reporting_commitments": [
+    "Report both primary effects together with their conditional intervals.",
+    "Report zero, negative, heterogeneous, wide-interval, and disagreement results without directional filtering.",
+    "Keep model-specific results secondary and avoid ranking claims unsupported by this design.",
+    "Describe adjacent condition changes as bundled evidence differences, never single-field causal effects.",
+    "Disclose substantive AI assistance according to the final written venue policy and retain author responsibility for every claim."
+  ],
+  "author_signoff": {
+    "status": "pending",
+    "author_name": null,
+    "signed_at": null,
+    "scientific_responsibility_confirmed": false,
+    "items_confirmed": []
+  },
+  "execution_authorization": {
+    "p4_candidate_materialization": false,
+    "p5_runner_implementation": false,
+    "model_api": false
+  }
+}

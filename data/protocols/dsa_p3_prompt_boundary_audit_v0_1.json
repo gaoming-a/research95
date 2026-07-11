@@ -1,0 +1,99 @@
+{
+  "active_templates": [
+    "prompts/dsa2026_evidence_conditioned_patch_gate_v0_1.md"
+  ],
+  "audit_date": "2026-07-11",
+  "audit_id": "dsa_p3_prompt_boundary_audit_v0_1",
+  "checks": {
+    "active_prompt_set_exact": true,
+    "api_call_attempted": false,
+    "deleted_prompt_content_read": false,
+    "new_prompt_hash_distinct_from_retired_hashes": true,
+    "p4_candidate_constructed_or_run": false,
+    "placeholder_exactly_once": true,
+    "prompt_conflict_patterns_absent": true,
+    "retired_prompt_paths_absent": true,
+    "schema_decision_enum_exact": true,
+    "schema_exact_fields": true,
+    "synthetic_cumulative_contract_passed": true,
+    "synthetic_rendered_prompt_passed": true
+  },
+  "mechanical_pass": true,
+  "prompt_conflict_matches": {
+    "condition_explanation": false,
+    "coverage_instruction": false,
+    "decision_example": false,
+    "failed_implies_reject": false,
+    "sparse_implies_escalate": false,
+    "tool_or_rule_verdict": false
+  },
+  "prompt_sha256": "08a485635924a6813a2d646518c02dacf9fa108b6a5271efb88fe35d79d4809e",
+  "scope": "Synthetic no-API prompt/schema/evidence-contract audit; no P4 candidate materialization.",
+  "status": "passed",
+  "synthetic_packets": {
+    "C0": {
+      "canonical_sha256": "74216a47dedc988bf199324673b06bc020bbc7ef98ffb55d8259a6d6b3eda4fb",
+      "errors": [],
+      "passed": true,
+      "top_level_groups": [
+        "change_request"
+      ]
+    },
+    "C1": {
+      "canonical_sha256": "b0bf2b37c61a19e5ac07c314fcc6a9c38210e71e0b78aab95dc0818ce94c0948",
+      "errors": [],
+      "passed": true,
+      "top_level_groups": [
+        "change_request",
+        "executable_basic"
+      ]
+    },
+    "C2": {
+      "canonical_sha256": "2c91cc5b5f20fa49380ac75a56de3be93c86e54b74843cbc0c0dae2227393f49",
+      "errors": [],
+      "passed": true,
+      "top_level_groups": [
+        "change_request",
+        "executable_basic",
+        "visible_f2p"
+      ]
+    },
+    "C3": {
+      "canonical_sha256": "521a081b5016b29c27d9e5d08e4ed75c4dc2e8494d5c768f7daa8b34360cb22e",
+      "errors": [],
+      "passed": true,
+      "top_level_groups": [
+        "change_request",
+        "executable_basic",
+        "visible_f2p",
+        "visible_p2p"
+      ]
+    }
+  },
+  "synthetic_rendered_prompts": {
+    "C0": {
+      "errors": [],
+      "passed": true,
+      "rendered_sha256": "dfec29a761ccca25dbca825f4fec7b1baf77fb95431dfca1c7393f0a4fdd1100",
+      "rendered_text_stored": false
+    },
+    "C1": {
+      "errors": [],
+      "passed": true,
+      "rendered_sha256": "2b09e715e656412b5827bab0933be720087c434265847f2f3476fdf8f119b0ed",
+      "rendered_text_stored": false
+    },
+    "C2": {
+      "errors": [],
+      "passed": true,
+      "rendered_sha256": "34786787dee76fed6d442e373676ac8f4c7c4ccd5bec9fb07587fd5b740897dc",
+      "rendered_text_stored": false
+    },
+    "C3": {
+      "errors": [],
+      "passed": true,
+      "rendered_sha256": "e4e0ce1583b1050d4d2dc16f7c254ca5fe5da42822bb287c2f51098446cf2d1f",
+      "rendered_text_stored": false
+    }
+  }
+}

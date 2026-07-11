@@ -12,13 +12,32 @@
   sole active master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is
   inactive. Status: `P2_SOURCE_FEASIBILITY_PASS / REGULAR_FROZEN /
-  P3_NOT_STARTED / SHORT_INACTIVE / V0_SUBMISSION_GATE_PENDING`. It defines
+  P3_MECHANICAL_PASS_PENDING_AUTHOR_SIGNOFF / SHORT_INACTIVE /
+  V0_SUBMISSION_GATE_PENDING`. It defines
   venue/AI/EI gates, old-data
   quarantine, a task-disjoint C0--C3 experiment, no-rerun rules, finite-cohort
   statistics, evidence-first paper reconstruction, official `IEEEconf.cls` PDF
   QA, private artifact/Git boundaries, and the submission-to-presentation
   timeline. A 2026-07-11 standing API authorization exists but activates only
-  after P1--P5 pass; P3--P5 are still pending, so no prompt/model call is allowed.
+  after P1--P5 pass; P3 author sign-off and P4--P5 are still pending, so no
+  model call is allowed.
+- [dsa_p3_preregistration_v0_1.md](experiments/dsa_p3_preregistration_v0_1.md):
+  human-readable P3 research questions, primary estimands, cumulative evidence
+  contract, task-level conditional statistics, exact model routes, exclusions,
+  stop rules, and no-rerun commitment. Mechanical Gate passes; author sign-off
+  is pending.
+- [dsa_p3_author_signoff_v0_1.md](experiments/dsa_p3_author_signoff_v0_1.md):
+  the 11-item author scientific-responsibility sheet and exact signing text.
+- [dsa_p3_model_provider_verification_v0_1.md](experiments/dsa_p3_model_provider_verification_v0_1.md):
+  official-document verification of the three exact model IDs, provider-native
+  controls, structured-output support, price snapshots, and access/identity
+  residual Gate; no credentialed request was sent.
+- [dsa_p3_prompt_change_record_v0_1.md](experiments/dsa_p3_prompt_change_record_v0_1.md):
+  new-from-empty DSA prompt/schema change record and conflict/duplication
+  boundary. The machine preregistration, evidence/model/schema freezes,
+  prompt-boundary audit, Gate audit, and hash manifest are under
+  `../data/protocols/dsa_p3_*_v0_1.json`; the deterministic auditor is
+  `../scripts/dsa2026_audit_p3_freeze.py`.
 - [dsa_p2_source_feasibility_and_protocol_decision_v0_1.md](experiments/dsa_p2_source_feasibility_and_protocol_decision_v0_1.md):
   consolidated 18-check P2 audit and Regular freeze. It records the 59-task
   development exclusion, 304-task/9-project source frame, 30+10 selection,
@@ -75,7 +94,8 @@
   that calls an old EVP-8 config, runner, packet, or prompt `current`, `main`,
   `ready`, or `passed` is a historical snapshot only; it is superseded and not
   executable. Historical protocol/result paths and hashes remain unchanged for
-  provenance. No EVP-v0.4 prompt exists yet.
+  provenance. No EVP-v0.4 prompt exists. The separate new DSA prompt is indexed
+  above and remains a candidate freeze until author sign-off.
 - `plans/current_project_state_zh.md`: short current-state entry and file map.
   Start here before reading the long execution log. It records Git sync state,
   current paper/result boundaries, experiment-decision gates, active plan roles,

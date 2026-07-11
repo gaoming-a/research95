@@ -2,6 +2,62 @@
 
 最后更新：2026-07-11
 
+## 0.52 2026-07-11 DSA P3 作者预注册与 prompt/schema 冻结（执行中）
+
+本轮小目标严格限定为 P3：在不调用模型 API、不构造或运行 P4 candidates、不修改
+P2 已冻结的 Regular 稿型、source order 和 transform priority 的前提下，冻结研究问题、
+estimands、C0--C3 evidence contract、指标、统计、exclusion、停止规则、no-rerun policy、
+三条 exact model route、一个全新 prompt 和一个 output schema。作者未明确承担科学
+责任前，P3 保持 pending；本轮不得顺手进入 P4/P5。
+
+Inspect：
+
+- P2 Gate 已通过，Regular 固定为 30 primary + 10 reserve、9 projects、60 planned
+  candidates、3 models、3 stateless repeats；Short inactive；
+- 四个旧实验 prompt 已删除且只保留删除前 hash/provenance；P3 不读取 Git 历史来
+  恢复、复制或改写旧文本；
+- P3 机械 Gate 必须覆盖 prompt 冲突/重复、递归 label/verdict leakage、synthetic
+  rendered-prompt、canonical cumulative diff 和完整 hash manifest；
+- 最终作者签核不能由 Codex 代签；签核前不得将候选冻结稿标记为 immutable/pass。
+
+Plan 与验收：
+
+1. 只从当前官方 provider 文档核验三条 exact model route、endpoint、结构化输出、
+   reasoning control 和价格；冻结调用参数、顺序、window、retry/attempt/token/cost cap；
+2. 写入作者可逐项审查的预注册，明确 task 是唯一科学分析单位，两个 primary
+   C3-C0 estimand、Bonferroni conditional repeat-block interval、secondary outcomes、
+   exclusions、停止和 no-rerun；
+3. 从空白文件建立一个中性 prompt/schema，不恢复或读取已删除 prompt；
+4. 用 synthetic 非 P4 packet 验证 C0--C3 只累积新增 evidence group，并对 packet、
+   serialization 和 rendered prompt 做递归 leakage/placeholder/forbidden-field 审计；
+5. 生成 prompt change record、mechanical gate audit、author sign-off packet 和 hash
+   manifest；机械项全通过但作者未签时，Gate 必须为 `PENDING_AUTHOR_SIGNOFF`；
+6. 只提交 P3 相关文件并同步 private remote。作者签核后另行更新 immutable hash 和
+   Gate；本轮不调用模型 API。
+
+Execute/Verify：
+
+- 官方文档核验并候选冻结三条路线：`qwen3.7-plus-2026-05-26`、
+  `deepseek-v4-flash`、`gemini-3.5-flash`；均使用 documented structured output，
+  无 fallback，provider identity/price 漂移即停止；
+- 预注册冻结稿明确 3 个 RQ、2 个 primary estimand、task-level `n=30`、20,000 次
+  paired repeat-block percentile bootstrap、Bonferroni 0.0125/0.9875 endpoints、
+  secondary/stability 分层、P4 admission、exclusion、stop 和 no-rerun；
+- 新 DSA prompt/schema 从空文件建立；没有从 Git 恢复、读取、复制或改写四个已删除
+  prompt；
+- synthetic C0--C3 packet 只依次新增 `executable_basic`、`visible_f2p`、
+  `visible_p2p`，四个 cumulative/canonical checks 与四个 rendered-prompt checks
+  均通过；递归 leakage、placeholder、冲突/重复和 retired-hash inequality 为 0；
+- `dsa2026_audit_p3_freeze.py --write/--check` 一致，P1 namespace audit 在新增脚本后
+  重新生成并通过；全程 API call=0、P4 candidate=0、P5 entered=false。
+
+Gate：
+
+- 机械 Gate=`PASS`；总 P3 Gate=`PENDING_AUTHOR_SIGNOFF`；
+- 待作者逐项确认 11 项冻结内容、能独立核验并承担完整科学/作者责任后，才可把
+  candidate manifest 重新生成成 immutable 并关闭 P3；
+- 当前不得进入 P4/P5 或调用模型 API。
+
 ## 0.51 2026-07-11 DSA P2 source feasibility、precision 与稿型冻结
 
 本轮小目标严格限定为 P2：在不调用模型 API、不创建 prompt、不读取旧 paper-facing

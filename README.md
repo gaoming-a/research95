@@ -14,8 +14,10 @@ only as a separately frozen protocol before any model call; ACAI is inactive.
 P1 quarantine and P2 source feasibility have passed. The protocol is now
 irreversibly frozen as a Regular paper with 30 primary tasks, 10 reserves,
 9 projects, and 60 planned candidates. Short is inactive and cannot be used as
-a post-result fallback. Author-signed P3 preregistration and P4--P5 gates are
-still pending; no smoke, full run, or model API is authorized.
+a post-result fallback. P3 preregistration, model routes, the new DSA prompt,
+schema, synthetic render audit, and hash manifest now pass their mechanical
+checks; explicit author scientific-responsibility sign-off remains pending.
+P4--P5 are not started, so no smoke, full run, or model API is authorized.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,
@@ -53,8 +55,10 @@ improved-reproduction source snapshots, and found 304 untouched tasks across
 conditional precision simulation passed (maximum rate/effect widths
 0.1185/0.1704), and a 12-paper nearest-neighbor review preserved a bounded
 evidence-conditioned gating position without first/unique/SOTA claims. The
-next and only active phase is P3 author preregistration and prompt/schema
-freezing; P4 still requires two fresh clean-environment candidate reruns.
+next and only active action is the P3 author sign-off recorded in
+`docs/experiments/dsa_p3_author_signoff_v0_1.md`; P4 still requires two fresh
+clean-environment candidate reruns and is not authorized by the candidate
+freeze.
 
 The private development repository is
 `gaoming-a/research95-dsa-private`, configured locally as remote `private`.
@@ -65,8 +69,10 @@ The four legacy EVP-8 prompt templates were physically removed from the active
 worktree on 2026-07-10. Their pre-deletion hashes and retirement rationale are
 recorded in `prompts/prompt_change_log.md`, while historical protocol/result
 artifacts retain the original paths and hashes as provenance. Every legacy
-EVP-8 config and runner is historical and not an execution entry point; no
-replacement EVP-v0.4 prompt exists yet, and none may be inferred from the old
+EVP-8 config and runner is historical and not an execution entry point. No
+replacement EVP-v0.4 prompt exists. The separate
+`dsa2026_evidence_conditioned_patch_gate_v0_1` prompt was written from an empty
+file and remains pending author freeze; it was not inferred from the deleted
 templates.
 
 ## Current Thesis

@@ -1,0 +1,22 @@
+{
+  "audit_date": "2026-07-11",
+  "audit_id": "dsa_p3_gate_audit_v0_1",
+  "author_gate_pass": false,
+  "checks": {
+    "author_scientific_responsibility_signed": false,
+    "evidence_contract_complete": true,
+    "freeze_status_consistent": true,
+    "hash_manifest_complete": true,
+    "model_api_called": false,
+    "p2_regular_unchanged": true,
+    "p4_candidate_constructed_or_run": false,
+    "p5_entered": false,
+    "preregistration_complete": true,
+    "prompt_boundary_mechanical_pass": true,
+    "three_exact_model_routes": true,
+    "three_stateless_repeats": true
+  },
+  "gate_status": "PENDING_AUTHOR_SIGNOFF",
+  "mechanical_gate_pass": true,
+  "next_action": "Record explicit author sign-off, regenerate hashes, and rerun this gate. Do not enter P4/P5 or call a model API."
+}

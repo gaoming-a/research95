@@ -2,9 +2,10 @@
 
 日期：2026-07-11
 
-## 2026-07-11 DSA P2 状态覆盖
+## 2026-07-11 DSA P3 状态覆盖
 
-- 当前状态：`P2_SOURCE_FEASIBILITY_PASS / REGULAR_FROZEN / P3_NOT_STARTED /
+- 当前状态：`P2_SOURCE_FEASIBILITY_PASS / REGULAR_FROZEN /
+  P3_MECHANICAL_PASS_PENDING_AUTHOR_SIGNOFF /
   SHORT_INACTIVE / V0_SUBMISSION_GATE_PENDING / NO_API`；
 - P0 的官方 source/template/private remote 本地证据包已完成。AI policy、学校
   Compendex 核验、2026 publication metadata、现场报告人和 authorship metadata
@@ -24,10 +25,13 @@
   最近邻定位 Gate 通过，但禁止 first/unique/SOTA 或 autonomous correctness claim；
 - 新 DSA 脚本必须采用 `scripts/dsa2026_*.py`，并在每次新增或修改后通过
   `python scripts/audit_dsa_legacy_quarantine.py --check`；
-- 用户 standing API authorization 只在 P1--P5 全 pass 后激活；目前 P3--P5 未过，
-  因而仍禁止 prompt、smoke、full 和模型 API；
+- P3 已形成预注册、evidence contract、三条 exact model route、一个全新 DSA
+  prompt/schema、synthetic render/leakage audit 和 hash manifest；机械 Gate 通过，
+  但作者科学责任签核仍 pending；
+- 用户 standing API authorization 只在 P1--P5 全 pass 后激活；目前 P3 作者门和
+  P4--P5 未过，因而仍禁止 smoke、full 和模型 API；
 - private remote 已配置并为当前分支 push target；public `origin` 禁止作为 fallback。
-  下一轮唯一入口为 P3 作者预注册与 prompt/schema 冻结；本轮不得提前创建 prompt。
+  下一步唯一动作是完成 P3 作者签核；不得顺手进入 P4/P5。
 
 ### 2026-07-10 DSA 路线计划基线（已由上方 P2 状态覆盖）
 

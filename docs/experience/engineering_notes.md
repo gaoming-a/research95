@@ -1,5 +1,32 @@
 # Engineering Notes
 
+## 2026-07-11 DSA P3 candidate freeze and author gate
+
+- Exact model ID is necessary but not sufficient. Freeze endpoint, reasoning
+  control, JSON transport, output cap, response identity, price snapshot, run
+  window, ordering, retries, and no-fallback behavior; any provider drift must
+  stop rather than select a replacement.
+- Provider-native controls are not symmetric. Qwen and DeepSeek can be frozen
+  in non-thinking mode, whereas the current stable Gemini route exposes
+  `minimal` as its lowest documented thinking level and recommends omitting
+  sampling parameters. Record that asymmetry instead of pretending the same
+  parameter has the same semantics across providers.
+- A prompt leakage audit must separate prompt semantics from packet leakage.
+  The prompt necessarily defines the output decision field, so recursive
+  forbidden-key checks apply to the extracted serialized packet while prompt
+  checks target condition cues, expected answers, and policy prescriptions.
+- Synthetic rendered prompts can validate serialization and cumulative
+  C0--C3 behavior without creating held-out candidates. Store only canonical
+  packet/render hashes and errors, not rendered prompt text.
+- A mechanical preregistration Gate cannot establish authorship responsibility.
+  Keep the manifest mutable and P3 pending until the named author explicitly
+  accepts the scientific design, AI-policy duty, and responsibility for every
+  result and claim.
+- Conditional repeat-block intervals describe response stochasticity for
+  frozen tasks/models. Pair C3 and C0 within repeat, keep task as the only
+  scientific unit, and label project reweighting/deletion ranges as stability
+  analyses rather than confidence intervals.
+
 ## 2026-07-11 DSA P2 source feasibility and protocol freeze
 
 - A paper-result exclusion registry can still miss engineering probes. P2 must

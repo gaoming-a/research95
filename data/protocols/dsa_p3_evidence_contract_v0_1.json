@@ -1,0 +1,122 @@
+{
+  "contract_id": "dsa_p3_evidence_contract_v0_1",
+  "status": "candidate_freeze_pending_author_signoff",
+  "purpose": "Define the only cumulative model-visible evidence ladder for the DSA study.",
+  "common_context": {
+    "required_top_level_key": "change_request",
+    "required_fields": [
+      "neutral_description",
+      "candidate_diff",
+      "code_context"
+    ],
+    "rules": [
+      "Use a neutral description that does not disclose the source project, task, issue, commit, reference patch, or candidate class.",
+      "Normalize file paths and symbols only through a deterministic P4 map that is identical across C0 through C3.",
+      "Keep candidate_diff and code_context byte-identical across C0 through C3 for one candidate.",
+      "Do not include a condition name, evidence-level name, protocol identifier, expected decision, label, verdict, oracle outcome, or provenance marker."
+    ]
+  },
+  "conditions": [
+    {
+      "condition_code": "C0",
+      "semantic_name": "context",
+      "model_visible_groups": ["change_request"],
+      "addition_from_previous": null
+    },
+    {
+      "condition_code": "C1",
+      "semantic_name": "executable_basic",
+      "model_visible_groups": ["change_request", "executable_basic"],
+      "addition_from_previous": "executable_basic"
+    },
+    {
+      "condition_code": "C2",
+      "semantic_name": "bug_focused",
+      "model_visible_groups": ["change_request", "executable_basic", "visible_f2p"],
+      "addition_from_previous": "visible_f2p"
+    },
+    {
+      "condition_code": "C3",
+      "semantic_name": "regression_aware",
+      "model_visible_groups": ["change_request", "executable_basic", "visible_f2p", "visible_p2p"],
+      "addition_from_previous": "visible_p2p"
+    }
+  ],
+  "evidence_group_contract": {
+    "executable_basic": {
+      "required_check_kinds": ["patch_apply", "syntax_or_import_or_static"],
+      "required_fields_per_check": [
+        "check_code",
+        "check_kind",
+        "command",
+        "exit_code",
+        "outcome",
+        "output_excerpt"
+      ]
+    },
+    "visible_f2p": {
+      "meaning": "Preregistered visible fail-to-pass behavior checks.",
+      "required_fields_per_check": [
+        "check_code",
+        "test_name",
+        "command",
+        "exit_code",
+        "outcome",
+        "output_excerpt"
+      ]
+    },
+    "visible_p2p": {
+      "meaning": "Preregistered visible pass-to-pass or regression checks.",
+      "required_fields_per_check": [
+        "check_code",
+        "test_name",
+        "command",
+        "exit_code",
+        "outcome",
+        "output_excerpt"
+      ]
+    }
+  },
+  "materialization_rules": [
+    "Every visible evidence group must contain a non-empty checks array.",
+    "Every check must pair the exact executed command with an exit code, normalized outcome, and non-empty output excerpt.",
+    "Every visible evidence group must include the same complete environment object with runtime, dependency lock SHA-256, and environment image SHA-256.",
+    "No placeholder, not-run, not-recorded, unknown, or empty evidence value is allowed.",
+    "C0 to C3 may only add the registered next group; earlier serialized values and key order must remain byte-identical under canonical JSON serialization."
+  ],
+  "separation_rules": {
+    "hidden_tree": "A separate P4 private object may contain oracle, candidate class, source identifiers, reference provenance, and admission outcome; none of it may be joined before P8.",
+    "model_visible_tree": "Contains only the cumulative groups in this contract.",
+    "join_time": "After all valid model outputs, execution audit, and output hashes are frozen in P7."
+  },
+  "forbidden_visible_key_fragments": [
+    "condition",
+    "evidence_level",
+    "packet_variant",
+    "protocol",
+    "decision",
+    "verdict",
+    "label",
+    "oracle",
+    "candidate_type",
+    "candidate_class",
+    "source_decision",
+    "rule_decision",
+    "expected_behavior",
+    "project_id",
+    "task_id",
+    "issue_url",
+    "commit",
+    "reference_patch",
+    "source_id"
+  ],
+  "canonical_json": {
+    "encoding": "UTF-8",
+    "sort_keys": false,
+    "separators": [",", ":"],
+    "ensure_ascii": false,
+    "terminal_newline": false
+  },
+  "api_call_authorized": false,
+  "p4_candidate_materialization_authorized": false
+}
