@@ -32,7 +32,10 @@ For the first structurally eligible task, `bugsinpy_fastapi_12`, two fresh
 reference F2P runs agree. Its pre-outcome 40-node pool then passed 40/40 nodes in
 two distinct network-disabled, mount-free containers; 3 visible P2P and 20
 hidden regression nodes are now frozen. No transformed candidate has yet been
-materialized, so it is still not an admitted pair.
+run. The official positive and frozen T4 partial-reversion candidate are now
+materialized and hash-bound in a hidden registry before any candidate outcome;
+the task is still not an admitted pair until both candidates complete two fresh
+container runs.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,

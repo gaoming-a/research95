@@ -2,6 +2,16 @@
 
 ## 2026-07-11 DSA P4 bootstrap and pre-transform audit
 
+- A hash-ordered transform is not reproducible until its edit identity and
+  serialization are explicit. Before any candidate outcome, encode each T4
+  source-diff line as canonical JSON over path, hunk index, line index, kind,
+  and value; order by SHA-256 and freeze the chosen identity together with both
+  candidate patch/tree hashes in a separate commit. Do not run syntax or tests
+  until that commit exists.
+- Read official patches as raw bytes for provenance hashes, but normalize CRLF
+  to LF before passing text to `unidiff`. Feeding preserved CRLF lines directly
+  caused duplicate paths with trailing `\r`; the structural assertion stopped
+  materialization before any candidate registry or outcome was written.
 - A stopped reproduction container can contain fresh official Git objects even
   when its environment build failed. Export a Git bundle from committed refs
   only; never carry its dirty worktree, copied benchmark index, logs, or prior

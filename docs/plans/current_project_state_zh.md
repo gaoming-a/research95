@@ -43,7 +43,10 @@
 - `bugsinpy_fastapi_12` 的 task environment 与 official F2P 已在两个 fresh containers
   一致通过；40-node regression pool 已在任何 pool outcome/transform 前冻结并哈希。
   随后的双环境逐节点验证为 40/40 stable pass，现已冻结 visible P2P=3、hidden=20；
-  该任务仍未形成 candidate pair，下一门是唯一 T4 hard negative 的物化与双环境验证。
+  official positive 与唯一 T4 partial-reversion candidate 已在任何 candidate outcome
+  前物化并哈希，materialization SHA-256 为
+  `41bbfc2319f9f5aa336cb772e5db5f098211cf7d3253120df6b577648d0445bb`；
+  下一门是两候选各两个 fresh containers 的冻结 checks，当前仍未 admission。
 
 ### 2026-07-10 DSA 路线计划基线（已由上方 P2 状态覆盖）
 

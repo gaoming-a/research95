@@ -9,6 +9,24 @@
 model-visible/hidden manifests。本轮不调用模型 API、不进入 P5、不生成 rendered prompt、
 不修改论文结果或任何 P2/P3 冻结语义。
 
+当前 task-level Goal（2026-07-11）：
+
+- 只从 commit `07c3066` 继续 `bugsinpy_fastapi_12`，不重做已通过的 reference
+  oracle freeze，也不处理下一个 primary/reserve task；
+- 开始前重新验证 clean Git、P2/P3 immutable hashes、P4 preflight、task image ID、
+  frozen F2P/P2P/held-out node identities 与 registry 状态；任一漂移立即停止；
+- 严格物化冻结 priority 下的唯一 T4 candidate，不更换 transform、不修改 tests/oracle、
+  不根据结果修 candidate；positive 只用 official reference fix；
+- T4 的通用实现先于 outcome 冻结：把每个 non-header source-diff added/removed line
+  的 `{path,hunk_index,line_index,kind,value}` 以 canonical JSON 编码，按其 SHA-256
+  升序选择第一项，在 reference-fixed tree 上反向该行，同时保留其余 reference edits；
+  选择和 candidate hashes 必须在任何 candidate check 前单独提交；
+- positive/negative 各在两个 fresh locked containers 中独立执行全部冻结 checks，形成
+  candidate hashes、完整 hidden outcome、model-visible/hidden separation audit 和唯一
+  task-level admission/discard 判定；
+- 验收条件为证据无 placeholder/not_run、两环境一致、leakage=0、P2/P3 hashes 不变；
+  完成文档、相关文件提交与 private remote 同步尝试后停止，不进入 P5/API。
+
 Inspect：
 
 - P3 Gate=`PASS`，16-file manifest=`immutable_author_signed`；P2 四个 raw SHA-256

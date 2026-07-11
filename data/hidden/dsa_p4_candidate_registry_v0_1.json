@@ -1,0 +1,122 @@
+{
+  "boundary": "Candidate identities and transforms are frozen before any candidate check outcome.",
+  "created_date": "2026-07-11",
+  "records": [
+    {
+      "candidate_outcome_observed": false,
+      "candidates": [
+        {
+          "candidate_tree_sha256": "efa2cfbb025c5d8cac1e49d47f8552020fc34e17a1e82b781ff819730b78b117",
+          "neutral_payload": {
+            "change_request": {
+              "candidate_diff": "diff --git a/module_001.py b/module_001.py\nindex f41d8d9..362390b 100644\n--- a/module_001.py\n+++ b/module_001.py\n@@ -112,10 +112,13 @@ class HTTPBearer(HTTPBase):\n             else:\n                 return None\n         if scheme.lower() != \"bearer\":\n-            raise HTTPException(\n-                status_code=HTTP_403_FORBIDDEN,\n-                detail=\"Invalid authentication credentials\",\n-            )\n+            if self.auto_error:\n+                raise HTTPException(\n+                    status_code=HTTP_403_FORBIDDEN,\n+                    detail=\"Invalid authentication credentials\",\n+                )\n+            else:\n+                return None\n         return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\n \n \n",
+              "code_context": "File: module_001.py\nBefore lines 100-137:\n        self.auto_error = auto_error\n\n    async def __call__(\n        self, request: Request\n    ) -> Optional[HTTPAuthorizationCredentials]:\n        authorization: str = request.headers.get(\"Authorization\")\n        scheme, credentials = get_authorization_scheme_param(authorization)\n        if not (authorization and scheme and credentials):\n            if self.auto_error:\n                raise HTTPException(\n                    status_code=HTTP_403_FORBIDDEN, detail=\"Not authenticated\"\n                )\n            else:\n                return None\n        if scheme.lower() != \"bearer\":\n            raise HTTPException(\n                status_code=HTTP_403_FORBIDDEN,\n                detail=\"Invalid authentication credentials\",\n            )\n        return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\n\n\nclass HTTPDigest(HTTPBase):\n    def __init__(self, *, scheme_name: str = None, auto_error: bool = True):\n        self.model = HTTPBaseModel(scheme=\"digest\")\n        self.scheme_name = scheme_name or self.__class__.__name__\n        self.auto_error = auto_error\n\n    async def __call__(\n        self, request: Request\n    ) -> Optional[HTTPAuthorizationCredentials]:\n        authorization: str = request.headers.get(\"Authorization\")\n        scheme, credentials = get_authorization_scheme_param(authorization)\n        if not (authorization and scheme and credentials):\n            if self.auto_error:\n                raise HTTPException(\n                    status_code=HTTP_403_FORBIDDEN, detail=\"Not authenticated\"\n                )\nCandidate lines 100-137:\n        self.auto_error = auto_error\n\n    async def __call__(\n        self, request: Request\n    ) -> Optional[HTTPAuthorizationCredentials]:\n        authorization: str = request.headers.get(\"Authorization\")\n        scheme, credentials = get_authorization_scheme_param(authorization)\n        if not (authorization and scheme and credentials):\n            if self.auto_error:\n                raise HTTPException(\n                    status_code=HTTP_403_FORBIDDEN, detail=\"Not authenticated\"\n                )\n            else:\n                return None\n        if scheme.lower() != \"bearer\":\n            if self.auto_error:\n                raise HTTPException(\n                    status_code=HTTP_403_FORBIDDEN,\n                    detail=\"Invalid authentication credentials\",\n                )\n            else:\n                return None\n        return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\n\n\nclass HTTPDigest(HTTPBase):\n    def __init__(self, *, scheme_name: str = None, auto_error: bool = True):\n        self.model = HTTPBaseModel(scheme=\"digest\")\n        self.scheme_name = scheme_name or self.__class__.__name__\n        self.auto_error = auto_error\n\n    async def __call__(\n        self, request: Request\n    ) -> Optional[HTTPAuthorizationCredentials]:\n        authorization: str = request.headers.get(\"Authorization\")\n        scheme, credentials = get_authorization_scheme_param(authorization)\n        if not (authorization and scheme and credentials):\n            if self.auto_error:\n",
+              "neutral_description": "Update optional credential handling when the supplied authorization scheme does not match the expected scheme."
+            }
+          },
+          "opaque_id": "cand_b4162818ab0effd8",
+          "patch_sha256": "b4162818ab0effd813ea6c95afc415906a960fff3a0df21ea8f95404c2043374",
+          "patch_text": "diff --git a/fastapi/security/http.py b/fastapi/security/http.py\nindex f41d8d9..362390b 100644\n--- a/fastapi/security/http.py\n+++ b/fastapi/security/http.py\n@@ -112,10 +112,13 @@ class HTTPBearer(HTTPBase):\n             else:\n                 return None\n         if scheme.lower() != \"bearer\":\n-            raise HTTPException(\n-                status_code=HTTP_403_FORBIDDEN,\n-                detail=\"Invalid authentication credentials\",\n-            )\n+            if self.auto_error:\n+                raise HTTPException(\n+                    status_code=HTTP_403_FORBIDDEN,\n+                    detail=\"Invalid authentication credentials\",\n+                )\n+            else:\n+                return None\n         return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\n \n \n",
+          "patch_utf8_bytes": 801,
+          "role": "oracle_positive"
+        },
+        {
+          "candidate_tree_sha256": "33ddff888801aa3812fa1b4fc819f86204a776ab5482c4e7f1baf7aab70870b5",
+          "neutral_payload": {
+            "change_request": {
+              "candidate_diff": "--- a/module_001.py\n+++ b/module_001.py\n@@ -112,10 +112,14 @@\n             else:\n                 return None\n         if scheme.lower() != \"bearer\":\n-            raise HTTPException(\n-                status_code=HTTP_403_FORBIDDEN,\n-                detail=\"Invalid authentication credentials\",\n-            )\n+                status_code=HTTP_403_FORBIDDEN,\n+            if self.auto_error:\n+                raise HTTPException(\n+                    status_code=HTTP_403_FORBIDDEN,\n+                    detail=\"Invalid authentication credentials\",\n+                )\n+            else:\n+                return None\n         return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\n \n \n",
+              "code_context": "File: module_001.py\nBefore lines 100-137:\n        self.auto_error = auto_error\n\n    async def __call__(\n        self, request: Request\n    ) -> Optional[HTTPAuthorizationCredentials]:\n        authorization: str = request.headers.get(\"Authorization\")\n        scheme, credentials = get_authorization_scheme_param(authorization)\n        if not (authorization and scheme and credentials):\n            if self.auto_error:\n                raise HTTPException(\n                    status_code=HTTP_403_FORBIDDEN, detail=\"Not authenticated\"\n                )\n            else:\n                return None\n        if scheme.lower() != \"bearer\":\n            raise HTTPException(\n                status_code=HTTP_403_FORBIDDEN,\n                detail=\"Invalid authentication credentials\",\n            )\n        return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\n\n\nclass HTTPDigest(HTTPBase):\n    def __init__(self, *, scheme_name: str = None, auto_error: bool = True):\n        self.model = HTTPBaseModel(scheme=\"digest\")\n        self.scheme_name = scheme_name or self.__class__.__name__\n        self.auto_error = auto_error\n\n    async def __call__(\n        self, request: Request\n    ) -> Optional[HTTPAuthorizationCredentials]:\n        authorization: str = request.headers.get(\"Authorization\")\n        scheme, credentials = get_authorization_scheme_param(authorization)\n        if not (authorization and scheme and credentials):\n            if self.auto_error:\n                raise HTTPException(\n                    status_code=HTTP_403_FORBIDDEN, detail=\"Not authenticated\"\n                )\nCandidate lines 100-137:\n        self.auto_error = auto_error\n\n    async def __call__(\n        self, request: Request\n    ) -> Optional[HTTPAuthorizationCredentials]:\n        authorization: str = request.headers.get(\"Authorization\")\n        scheme, credentials = get_authorization_scheme_param(authorization)\n        if not (authorization and scheme and credentials):\n            if self.auto_error:\n                raise HTTPException(\n                    status_code=HTTP_403_FORBIDDEN, detail=\"Not authenticated\"\n                )\n            else:\n                return None\n        if scheme.lower() != \"bearer\":\n                status_code=HTTP_403_FORBIDDEN,\n            if self.auto_error:\n                raise HTTPException(\n                    status_code=HTTP_403_FORBIDDEN,\n                    detail=\"Invalid authentication credentials\",\n                )\n            else:\n                return None\n        return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\n\n\nclass HTTPDigest(HTTPBase):\n    def __init__(self, *, scheme_name: str = None, auto_error: bool = True):\n        self.model = HTTPBaseModel(scheme=\"digest\")\n        self.scheme_name = scheme_name or self.__class__.__name__\n        self.auto_error = auto_error\n\n    async def __call__(\n        self, request: Request\n    ) -> Optional[HTTPAuthorizationCredentials]:\n        authorization: str = request.headers.get(\"Authorization\")\n        scheme, credentials = get_authorization_scheme_param(authorization)\n        if not (authorization and scheme and credentials):\n",
+              "neutral_description": "Update optional credential handling when the supplied authorization scheme does not match the expected scheme."
+            }
+          },
+          "opaque_id": "cand_bde8cefbe5760e60",
+          "patch_sha256": "bde8cefbe5760e6032e71ba17af3256a232da33ae5fd62a5d0bdc536fb6117b5",
+          "patch_text": "--- a/fastapi/security/http.py\n+++ b/fastapi/security/http.py\n@@ -112,10 +112,14 @@\n             else:\r\n                 return None\r\n         if scheme.lower() != \"bearer\":\r\n-            raise HTTPException(\r\n-                status_code=HTTP_403_FORBIDDEN,\r\n-                detail=\"Invalid authentication credentials\",\r\n-            )\r\n+                status_code=HTTP_403_FORBIDDEN,\n+            if self.auto_error:\r\n+                raise HTTPException(\r\n+                    status_code=HTTP_403_FORBIDDEN,\r\n+                    detail=\"Invalid authentication credentials\",\r\n+                )\r\n+            else:\r\n+                return None\r\n         return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\r\n \r\n \r\n",
+          "patch_utf8_bytes": 744,
+          "role": "hard_negative"
+        }
+      ],
+      "frozen_checks": {
+        "hidden_regression_nodeids": [
+          "tests/test_security_http_digest_optional.py::test_security_http_digest_incorrect_scheme_credentials",
+          "tests/test_security_oauth2.py::test_strict_login[None-422-expected_response0]",
+          "tests/test_security_oauth2.py::test_security_oauth2_password_other_header",
+          "tests/test_security_oauth2_optional.py::test_strict_login[data3-200-expected_response3]",
+          "tests/test_security_openid_connect_optional.py::test_openapi_schema",
+          "tests/test_security_http_digest.py::test_security_http_digest",
+          "tests/test_security_api_key_cookie.py::test_security_api_key_no_key",
+          "tests/test_security_api_key_query_optional.py::test_security_api_key_no_key",
+          "tests/test_security_http_basic_realm.py::test_security_http_basic",
+          "tests/test_security_http_base_optional.py::test_security_http_base_no_credentials",
+          "tests/test_security_http_digest_optional.py::test_security_http_digest_no_credentials",
+          "tests/test_security_http_base.py::test_openapi_schema",
+          "tests/test_security_http_digest.py::test_security_http_digest_incorrect_scheme_credentials",
+          "tests/test_security_http_base_optional.py::test_openapi_schema",
+          "tests/test_security_http_basic_optional.py::test_openapi_schema",
+          "tests/test_security_http_bearer.py::test_security_http_bearer",
+          "tests/test_security_http_basic_realm.py::test_openapi_schema",
+          "tests/test_security_http_base.py::test_security_http_base_no_credentials",
+          "tests/test_security_http_basic_optional.py::test_security_http_basic_non_basic_credentials",
+          "tests/test_security_http_basic_realm.py::test_security_http_basic_non_basic_credentials"
+        ],
+        "hidden_regression_sha256": "d721689dcccc0c3cdc3cdfb1dbda4e517caaab30bf83ee1073afb58e326c9750",
+        "official_f2p_nodeids": [
+          "tests/test_security_http_bearer_optional.py::test_security_http_bearer_incorrect_scheme_credentials"
+        ],
+        "visible_p2p_nodeids": [
+          "tests/test_security_openid_connect_optional.py::test_security_oauth2_password_other_header",
+          "tests/test_security_api_key_header.py::test_security_api_key",
+          "tests/test_security_oauth2.py::test_openapi_schema"
+        ],
+        "visible_p2p_sha256": "0a3bdea4f54502f22dea00f854981effb4175e72bc8284b5adab07bf2d635e8c"
+      },
+      "materialization_sha256": "41bbfc2319f9f5aa336cb772e5db5f098211cf7d3253120df6b577648d0445bb",
+      "normalized_path_map": {
+        "fastapi/security/http.py": "module_001.py"
+      },
+      "project": "fastapi",
+      "reference_patch_sha256": "586ed616d3a17fdec4139892a3e47e4fa158e874d6b6fa672ddd5f7dbbf85a52",
+      "role_by_opaque_id": {
+        "cand_b4162818ab0effd8": "oracle_positive",
+        "cand_bde8cefbe5760e60": "hard_negative"
+      },
+      "source_paths": [
+        "fastapi/security/http.py"
+      ],
+      "status": "materialized_outcomes_not_observed",
+      "stream_order": 2,
+      "stream_role": "primary",
+      "task_gate": "pending_candidate_runs",
+      "task_id": "bugsinpy_fastapi_12",
+      "task_image": "dsa2026-p4-task:bugsinpy_fastapi_12",
+      "task_image_id": "sha256:11fb7ffa940afd56884299fdb26a5775bf1b09ed87a5fb8c1c9213c04ad22da3",
+      "transform_id": "T4_partial_multiline_reversion",
+      "transform_implementation": {
+        "eligible_edit_count": 11,
+        "identity_fields": [
+          "path",
+          "hunk_index",
+          "line_index",
+          "kind",
+          "value"
+        ],
+        "identity_serialization": "canonical JSON UTF-8, sort_keys=true, separators=(',', ':')",
+        "operation": "invert the first ordered line on the reference-fixed tree",
+        "order": "SHA-256(identity) ascending, then canonical identity bytes ascending",
+        "outcome_observed_before_selection": false,
+        "selected_identity": {
+          "hunk_index": 0,
+          "identity_sha256": "0a13deab2ab6aa6b37e4b54dff36d547532f7762ec12135e452548d0c22da2bf",
+          "kind": "removed",
+          "line_index": 4,
+          "path": "fastapi/security/http.py",
+          "value": "                status_code=HTTP_403_FORBIDDEN,\n"
+        },
+        "unit": "one added or removed non-header source-diff line"
+      }
+    }
+  ],
+  "registry_id": "dsa_p4_candidate_registry_v0_1",
+  "status": "materialization_in_progress",
+  "visibility": "hidden_never_model_visible"
+}

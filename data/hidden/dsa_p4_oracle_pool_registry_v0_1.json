@@ -3,6 +3,7 @@
   "created_date": "2026-07-11",
   "records": [
     {
+      "candidate_materialization_sha256": "41bbfc2319f9f5aa336cb772e5db5f098211cf7d3253120df6b577648d0445bb",
       "collection": {
         "candidate_tree_sha256": "efa2cfbb025c5d8cac1e49d47f8552020fc34e17a1e82b781ff819730b78b117",
         "collected_node_count": 252,
@@ -426,14 +427,14 @@
         "security"
       ],
       "stable_reference_node_count": 40,
-      "status": "oracle_frozen_transform_not_materialized",
+      "status": "candidates_materialized_outcomes_not_observed",
       "stream_order": 2,
       "stream_role": "primary",
       "task_id": "bugsinpy_fastapi_12",
       "task_image": "dsa2026-p4-task:bugsinpy_fastapi_12",
       "task_image_id": "sha256:11fb7ffa940afd56884299fdb26a5775bf1b09ed87a5fb8c1c9213c04ad22da3",
       "test_root": "tests",
-      "transformed_candidate_materialized": false,
+      "transformed_candidate_materialized": true,
       "transformed_candidate_outcome_observed": false,
       "visible_p2p_nodeids": [
         "tests/test_security_openid_connect_optional.py::test_security_oauth2_password_other_header",
