@@ -1,5 +1,38 @@
 # Engineering Notes
 
+## 2026-07-11 DSA P2 source feasibility and protocol freeze
+
+- A paper-result exclusion registry can still miss engineering probes. P2 must
+  combine the P1 result quarantine with registered checkout/P2P development
+  task IDs. The final source exclusion is 59 tasks, while the eight old paper
+  projects remain excluded wholesale.
+- Git object IDs in benchmark metadata may be abbreviated. Requiring exactly
+  40 hex characters incorrectly rejected 168 pandas records; accept an
+  unambiguous 7--40 character hex ID and verify reachability later.
+- Environment failure is not automatically task failure. The BugsInPy
+  reproduction study shows original virtualenv decay and improved Conda/Docker
+  reproduction. Use buggy=fail/fixed=pass in the improved environment for P2
+  source feasibility, record original decay as risk, and still require two
+  fresh clean-environment candidate runs in P4.
+- Protect one reserve per project before allocating primary tasks. Otherwise a
+  small project can consume all eligible tasks as primary and make the project-
+  count gate impossible to preserve when one task fails later.
+- Transform validation should expose non-applicability. Sixteen atomic one-edit
+  development patches do not support a principled partial-reference transform;
+  marking them non-applicable is safer than inventing a task-specific mutation.
+- Conditional repeat precision is not population precision. The P2 simulation
+  conditions on fixed tasks/models and estimates only stateless repeat-window
+  decision stochasticity; task/model/request counts must never be presented as
+  independent external samples.
+- Citation tooling can fail on valid arXiv-issued DOIs through Crossref. Recover
+  bibliographic records from official arXiv pages, record the retrieval error,
+  and keep one final RIS instead of treating missing Crossref metadata as a
+  missing nearest neighbor.
+- The nearest-neighbor boundary is substantive: LLM4PatchCorrect, PatchZero,
+  SWE-PRBench, CodeJudgeBench, and requirement-conformance review overlap with
+  parts of the design. The safe position is finite-cohort evidence-conditioned
+  patch gating, not first/unique/SOTA or autonomous correctness verification.
+
 ## 2026-07-11 DSA P1 legacy-evidence quarantine
 
 - Removing only named top-level verdict fields is not a no-verdict guarantee.

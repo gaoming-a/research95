@@ -2,13 +2,13 @@
 
 计划编号：DSA-2026-EVIDENCE-POLICY-20260710
 制定日期：2026-07-10
-当前状态：P1_LEGACY_QUARANTINE_PASS / P2_NOT_STARTED / REGULAR_NO_GO /
-SHORT_NO_GO / V0_SUBMISSION_GATE_PENDING
+当前状态：P2_SOURCE_FEASIBILITY_PASS / REGULAR_FROZEN / P3_NOT_STARTED /
+SHORT_INACTIVE / V0_SUBMISSION_GATE_PENDING
 唯一主目标：DSA 2026 Regular Paper
 同会场降级：DSA 2026 Short Paper，仅可在任何模型调用前锁定
 非活动备选：ACAI 2026；不得并行投稿，也不得在看到 DSA 实验结果后切换
 用户优先级：科学与收录稳健性优先，其次才是时间
-本轮边界：P1 已完成；不创建 prompt，不进入 P2，不调用 API，不改论文结果
+本轮边界：P2 已完成并冻结 Regular；不创建 prompt，不进入 P3，不调用 API，不改论文结果
 
 ## 1. 权威性与目标覆盖
 
@@ -153,9 +153,11 @@ Secretariat 联系邮箱和模板 ZIP 已核验；`IEEEconf.cls` skeleton 已 cl
 5. 结果弱、CI 宽、p 值不显著或 reviewer 意见都不能触发 Regular→Short；
 6. Short 不能使用旧 task 补规模。
 
-当前 Regular 和 Short 都是 NO-GO。只有 P1、P2、P3 以及 D0.5 科学责任部分各自形成
-可审计的 passed 记录后，所选稿型才可进入 cohort materialization；V0 其余外部项在
-P12 前并行完成；“默认 Regular”不是实验授权。
+2026-07-11 P2 决策：Regular 已通过 source capacity、conditional precision 和最近邻
+定位 Gate，冻结为唯一稿型；Short 仅保留为 pre-API simulation record 并设为 inactive，
+不得在看到任何模型或 cohort 结果后重新激活。只有 P3 以及 D0.5 科学责任部分形成可审计
+passed 记录后，Regular 才可进入 cohort materialization；V0 其余外部项在 P12 前并行
+完成。稿型冻结不等于模型 API 授权。
 
 API 前 precision simulation 只针对一个已锁定目标：冻结 tasks/models/providers/run
 window 后，独立 stateless repeats 所诱导的 decision stochasticity。task/project 不是
@@ -518,6 +520,21 @@ Gate：开发任务与 source list 完全 disjoint；对应数量、项目分布
 width 门全部通过；研究问题仍有清楚且诚实的定位。
 停止：Short 也不达标。
 
+2026-07-11 执行结果：PASS / REGULAR_FROZEN。P2 在 P1 的 28-task/8-project 基础上，
+将实际登记或 probe 过的开发 task 扩展排除到 59 个；官方 BugsInPy snapshot 与 SCAM
+2023 improved Conda/Docker reproduction snapshot 均冻结 commit/hash。改进环境中仍有
+304 个 buggy=fail/fixed=pass 的未接触 source，覆盖 9 个新 project；hash-seeded
+Regular source list 为 30 primary + 10 reserve，每 project primary 不超过 4，且每个
+primary project 都有 reserve。四类 transform 只在 excluded development tasks 上做
+结构适用性验证并冻结优先级，未在 source 上应用。
+
+20,000-run-window conditional simulation 覆盖 marginal rate 0.1--0.9 和 C0/C3
+correlation 0/0.3/0.6；Regular 最大 primary-rate width=0.1185、paired-effect
+width=0.1704，均通过 0.35/0.30 门。2018--2026 最近邻预检核对 12 篇 official/
+publisher/arXiv source，未发现 exact design match，但冻结定位不得使用 first/unique/
+SOTA。总审计 18 项 PASS。SCAM reproduction 只证明 source-level feasibility；P4 对
+最终 candidates 的两次全新 clean-environment 复跑仍是强制 Gate。
+
 ### P3：作者预注册与 prompt/schema 冻结
 
 动作：作者签核 RQ、estimands、C0--C3、P2 transform registry、模型顺序、统计、
@@ -800,16 +817,15 @@ full；若 2026-08-15 没有完整有效结果，不用旧结果替代。
 
 ## 14. 下一轮唯一入口
 
-下一轮只执行 P2 source feasibility 与稿型冻结；V0 外部材料继续并行等待：
+下一轮只执行 P3 作者预注册与 prompt/schema 冻结；V0 外部材料继续并行等待：
 
-1. 先读取 P1 exclusion registry，确保 development/source 完全 task/project-disjoint；
-2. 只在 excluded development tasks 上设计并验证 transform registry；
-3. 对 primary/reserve source 只做 source-level feasibility，不应用 transform、不查看
-   candidate hidden 结果；
-4. 冻结 seed、source frame、primary/reserve list，并运行 conditional precision
-   simulation 与 nearest-neighbor 文献预检；
-5. 在任何模型调用前唯一冻结 Regular 或 Short；
-6. P2 passed 后停止，本轮不得顺手进入 P3。
+1. 作者逐项签核 RQ、estimands、C0--C3、finite-cohort/conditional interval 边界；
+2. 作者接受、修改或否决 P2 transform registry，但不得根据 source outcome 另加
+   task-specific transform；
+3. 冻结 exact model IDs/provider、运行顺序、统计、exclusion、prompt 和 output schema；
+4. 建立 prompt change record、hash manifest 与 recursive leakage/canonical diff 规则；
+5. D0.5 科学责任部分必须完成，作者能独立审查并承担全部设计；
+6. P3 passed 后停止，本轮不得顺手进入 P4 或调用模型 API。
 
 在 P1、P2、P3、P4、P5 全部通过前，不调用任何模型；全部通过后按 2026-07-11
 standing authorization 执行，不再单独确认预算。

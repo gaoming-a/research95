@@ -1,0 +1,212 @@
+TY  - JOUR
+TI  - On Reliability of Patch Correctness Assessment
+AU  - Le, Xuan-Bach D.
+AU  - Bao, Lingfeng
+AU  - Lo, David
+AU  - Xia, Xin
+AU  - Li, Shanping
+AU  - Pasareanu, Corina
+T2  - 2019 IEEE/ACM 41st International Conference on Software Engineering (ICSE)
+JO  - 2019 IEEE/ACM 41st International Conference on Software Engineering (ICSE)
+PY  - 2019
+Y1  - 2019/05/01
+SP  - 524
+EP  - 535
+DO  - 10.1109/icse.2019.00064
+UR  - https://doi.org/10.1109/icse.2019.00064
+N1  - Metadata-only candidate. Inspect abstract or publisher page before citing as support.
+ER  -
+
+TY  - JOUR
+TI  - BugsInPy: a database of existing bugs in Python programs to enable controlled testing and debugging studies
+AU  - Widyasari, Ratnadira
+AU  - Sim, Sheng Qin
+AU  - Lok, Camellia
+AU  - Qi, Haodi
+AU  - Phan, Jack
+AU  - Tay, Qijin
+AU  - Tan, Constance
+AU  - Wee, Fiona
+AU  - Tan, Jodie Ethelda
+AU  - Yieh, Yuheng
+AU  - Goh, Brian
+AU  - Thung, Ferdian
+AU  - Kang, Hong Jin
+AU  - Hoang, Thong
+AU  - Lo, David
+AU  - Ouh, Eng Lieh
+T2  - Proceedings of the 28th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering
+JO  - Proceedings of the 28th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering
+PY  - 2020
+Y1  - 2020/11/08
+SP  - 1556
+EP  - 1560
+DO  - 10.1145/3368089.3417943
+UR  - https://doi.org/10.1145/3368089.3417943
+N1  - Metadata-only candidate. Inspect abstract or publisher page before citing as support.
+ER  -
+
+TY  - JOUR
+TI  - Automated patch assessment for program repair at scale
+AU  - Ye, He
+AU  - Martinez, Matias
+AU  - Monperrus, Martin
+T2  - Empirical Software Engineering
+JO  - Empirical Software Engineering
+PY  - 2021
+Y1  - 2021/03/01
+VL  - 26
+IS  - 2
+SP  - 20
+DO  - 10.1007/s10664-020-09920-w
+UR  - https://doi.org/10.1007/s10664-020-09920-w
+SN  - 1382-3256
+N1  - Metadata-only candidate. Inspect abstract or publisher page before citing as support.
+ER  -
+
+TY  - JOUR
+TI  - Patch correctness assessment in automated program repair based on the impact of patches on production and test code
+AU  - Ghanbari, Ali
+AU  - Marcus, Andrian
+T2  - Proceedings of the 31st ACM SIGSOFT International Symposium on Software Testing and Analysis
+JO  - Proceedings of the 31st ACM SIGSOFT International Symposium on Software Testing and Analysis
+PY  - 2022
+Y1  - 2022/07/18
+SP  - 654
+EP  - 665
+DO  - 10.1145/3533767.3534368
+UR  - https://doi.org/10.1145/3533767.3534368
+N1  - Metadata-only candidate. Inspect abstract or publisher page before citing as support.
+ER  -
+
+TY  - JOUR
+TI  - PatchZero: Zero-Shot Automatic Patch Correctness Assessment
+AU  - Zhou, Xin
+AU  - Xu, Bowen
+AU  - Kim, Kisub
+AU  - Han, DongGyun
+AU  - Le-Cong, Thanh
+AU  - He, Junda
+AU  - Le, Bach
+AU  - Lo, David
+T2  - arXiv
+PY  - 2023
+DO  - 10.48550/arXiv.2303.00202
+UR  - https://arxiv.org/abs/2303.00202
+N1  - Abstract checked on the official arXiv page for the P2 nearest-neighbor audit.
+ER  -
+
+TY  - JOUR
+TI  - Reproducing and Improving the BugsInPy Dataset
+AU  - Aguilar, Faustino
+AU  - Grayson, Samuel
+AU  - Marinov, Darko
+T2  - 2023 IEEE 23rd International Working Conference on Source Code Analysis and Manipulation (SCAM)
+JO  - 2023 IEEE 23rd International Working Conference on Source Code Analysis and Manipulation (SCAM)
+PY  - 2023
+Y1  - 2023/10/02
+SP  - 260
+EP  - 264
+DO  - 10.1109/scam59687.2023.00036
+UR  - https://doi.org/10.1109/scam59687.2023.00036
+N1  - Metadata-only candidate. Inspect abstract or publisher page before citing as support.
+ER  -
+
+TY  - JOUR
+TI  - Improving Patch Correctness Analysis via Random Testing and Large Language Models
+AU  - Molina, Facundo
+AU  - Copia, Juan Manuel
+AU  - Gorla, Alessandra
+T2  - 2024 IEEE Conference on Software Testing, Verification and Validation (ICST)
+JO  - 2024 IEEE Conference on Software Testing, Verification and Validation (ICST)
+PY  - 2024
+Y1  - 2024/05/27
+SP  - 317
+EP  - 328
+DO  - 10.1109/icst60714.2024.00036
+UR  - https://doi.org/10.1109/icst60714.2024.00036
+N1  - Metadata-only candidate. Inspect abstract or publisher page before citing as support.
+ER  -
+
+TY  - JOUR
+TI  - Leveraging Large Language Model for Automatic Patch Correctness Assessment
+AU  - Zhou, Xin
+AU  - Xu, Bowen
+AU  - Kim, Kisub
+AU  - Han, DongGyun
+AU  - Nguyen, Hung Huu
+AU  - Le-Cong, Thanh
+AU  - He, Junda
+AU  - Le, Bach
+AU  - Lo, David
+T2  - IEEE Transactions on Software Engineering
+JO  - IEEE Transactions on Software Engineering
+PY  - 2024
+Y1  - 2024/11/01
+VL  - 50
+IS  - 11
+SP  - 2865
+EP  - 2883
+DO  - 10.1109/tse.2024.3452252
+UR  - https://doi.org/10.1109/tse.2024.3452252
+SN  - 0098-5589
+N1  - Metadata-only candidate. Inspect abstract or publisher page before citing as support.
+ER  -
+
+TY  - JOUR
+TI  - Evaluating Large Language Models for Code Review
+AU  - Cihan, Umut
+AU  - İçöz, Arda
+AU  - Haratian, Vahid
+AU  - Tüzün, Eray
+T2  - arXiv
+PY  - 2025
+DO  - 10.48550/arXiv.2505.20206
+UR  - https://arxiv.org/abs/2505.20206
+N1  - Abstract checked on the official arXiv page for the P2 nearest-neighbor audit.
+ER  -
+
+TY  - JOUR
+TI  - Are LLMs reliable code reviewers? systematic overcorrection in requirement conformance judgement
+AU  - Jin, Haolin
+AU  - Chen, Huaming
+T2  - Automated Software Engineering
+JO  - Automated Software Engineering
+PY  - 2026
+Y1  - 2026/11/01
+VL  - 33
+IS  - 3
+SP  - 90
+DO  - 10.1007/s10515-026-00638-5
+UR  - https://doi.org/10.1007/s10515-026-00638-5
+SN  - 0928-8910
+N1  - Metadata-only candidate. Inspect abstract or publisher page before citing as support.
+ER  -
+
+TY  - JOUR
+TI  - CodeJudgeBench: Benchmarking LLM-as-a-Judge for Coding Tasks
+AU  - Jiang, Hongchao
+AU  - Chen, Yiming
+AU  - Cao, Yushi
+AU  - Lee, Hung-yi
+AU  - Tan, Robby T.
+T2  - Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)
+JO  - Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)
+PY  - 2026
+Y1  - 2026/01/01
+SP  - 19416
+EP  - 19448
+DO  - 10.18653/v1/2026.acl-long.888
+UR  - https://doi.org/10.18653/v1/2026.acl-long.888
+N1  - Metadata-only candidate. Inspect abstract or publisher page before citing as support.
+ER  -
+
+TY  - JOUR
+TI  - SWE-PRBench: Benchmarking AI Code Review Quality Against Pull Request Feedback
+AU  - Kumar, Deepak
+T2  - arXiv
+PY  - 2026
+DO  - 10.48550/arXiv.2603.26130
+UR  - https://arxiv.org/abs/2603.26130
+N1  - Abstract checked on the official arXiv page for the P2 nearest-neighbor audit.
+ER  -

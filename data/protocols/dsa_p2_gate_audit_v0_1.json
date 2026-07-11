@@ -1,0 +1,65 @@
+{
+  "audit_date": "2026-07-11",
+  "audit_id": "dsa_p2_gate_audit_v0_1",
+  "checks": {
+    "all_regular_tasks_are_new_project_tasks": true,
+    "all_selected_sources_have_improved_environment_reproduction": true,
+    "all_selected_sources_have_visible_and_hidden_oracle_source_plan": true,
+    "base_excluded_project_overlap_zero": true,
+    "development_source_task_overlap_zero": true,
+    "nearest_neighbor_exact_design_match_absent": true,
+    "nearest_neighbor_positioning_passed": true,
+    "new_project_requirement_at_least_15_tasks_and_4_projects": true,
+    "no_api_prompt_or_old_result_use": true,
+    "no_candidate_hidden_result_observed_in_p2": true,
+    "no_source_transform_applied_in_p2": true,
+    "official_source_frame_has_at_least_30_primary_and_10_reserve": true,
+    "p1_quarantine_passed": true,
+    "regular_has_at_least_eight_projects": true,
+    "regular_precision_passed": true,
+    "regular_primary_project_cap_at_most_four": true,
+    "reserve_covers_every_primary_project": true,
+    "transform_registry_frozen_for_author_review": true,
+    "transform_validation_passed": true
+  },
+  "decision": "data/protocols/dsa_p2_protocol_decision_v0_1.json",
+  "evidence": {
+    "development_exclusions": "data/protocols/dsa_p2_development_exclusion_registry_v0_1.json",
+    "literature": "data/protocols/dsa_p2_literature_search_log_v0_1.json",
+    "p1_audit": "data/protocols/dsa_legacy_quarantine_audit_v0_1.json",
+    "precision": "data/protocols/dsa_p2_precision_simulation_v0_1.json",
+    "source_frame": "data/protocols/dsa_p2_source_frame_v0_1.json",
+    "source_selection": "data/protocols/dsa_p2_source_selection_v0_1.json",
+    "transform_registry": "data/protocols/dsa_p2_transform_registry_v0_1.json",
+    "transform_validation": "data/protocols/dsa_p2_transform_validation_v0_1.json"
+  },
+  "literature_summary": {
+    "allowed_positioning": "A controlled finite-cohort study of how cumulative real executable evidence changes fixed-LLM patch-gating policy; not a first/unique/SOTA claim and not APCA correctness proof.",
+    "exact_design_match_found": false,
+    "reference_count": 12
+  },
+  "precision_summary": {
+    "regular_maximum_effect_width": 0.17037037037037034,
+    "regular_maximum_rate_width": 0.11851851851851847,
+    "short_maximum_effect_width": 0.25
+  },
+  "source_summary": {
+    "base_excluded_projects": 8,
+    "development_excluded_tasks": 59,
+    "eligible_source_projects": 9,
+    "eligible_source_tasks": 304,
+    "regular_primary_project_counts": {
+      "ansible": 3,
+      "black": 3,
+      "fastapi": 4,
+      "keras": 3,
+      "matplotlib": 4,
+      "pandas": 4,
+      "sanic": 2,
+      "spacy": 3,
+      "tornado": 4
+    },
+    "regular_reserve_project_count": 9
+  },
+  "status": "passed"
+}

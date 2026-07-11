@@ -11,10 +11,11 @@ As of 2026-07-11, the sole active route is
 [the DSA 2026 execution plan](docs/plans/dsa_2026_submission_execution_plan_zh.md).
 The single target is a DSA 2026 Regular paper. A Short paper may be selected
 only as a separately frozen protocol before any model call; ACAI is inactive.
-Both DSA routes are currently NO-GO pending venue/AI/EI checks, cohort
-feasibility, precision simulation, nearest-neighbor review, and author-signed
-preregistration. P1 old-evidence quarantine has passed. No smoke, full run, or
-model API is authorized.
+P1 quarantine and P2 source feasibility have passed. The protocol is now
+irreversibly frozen as a Regular paper with 30 primary tasks, 10 reserves,
+9 projects, and 60 planned candidates. Short is inactive and cannot be used as
+a post-result fallback. Author-signed P3 preregistration and P4--P5 gates are
+still pending; no smoke, full run, or model API is authorized.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,
@@ -44,8 +45,16 @@ The P1 audit mechanically reproduced the nested verdict leak in 98/98
 E6-no-verdict packets and incomplete evidence construction in both 686-packet
 legacy full configurations. It froze 28 legacy tasks across 8 projects as an
 exclusion-only registry. The machine denylist and reproducible audit are
-[indexed below](docs/INDEX.md); the next and only active phase is no-API P2
-source feasibility and paper-format freezing.
+[indexed below](docs/INDEX.md).
+
+P2 extended the development exclusion set to 59 tasks, froze official and
+improved-reproduction source snapshots, and found 304 untouched tasks across
+9 new projects with source-level buggy-fail/fixed-pass evidence. The Regular
+conditional precision simulation passed (maximum rate/effect widths
+0.1185/0.1704), and a 12-paper nearest-neighbor review preserved a bounded
+evidence-conditioned gating position without first/unique/SOTA claims. The
+next and only active phase is P3 author preregistration and prompt/schema
+freezing; P4 still requires two fresh clean-environment candidate reruns.
 
 The private development repository is
 `gaoming-a/research95-dsa-private`, configured locally as remote `private`.

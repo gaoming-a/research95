@@ -2,27 +2,34 @@
 
 日期：2026-07-11
 
-## 2026-07-11 DSA P1 状态覆盖
+## 2026-07-11 DSA P2 状态覆盖
 
-- 当前状态：`P1_LEGACY_QUARANTINE_PASS / P2_NOT_STARTED /
-  V0_SUBMISSION_GATE_PENDING / NO_API`；
+- 当前状态：`P2_SOURCE_FEASIBILITY_PASS / REGULAR_FROZEN / P3_NOT_STARTED /
+  SHORT_INACTIVE / V0_SUBMISSION_GATE_PENDING / NO_API`；
 - P0 的官方 source/template/private remote 本地证据包已完成。AI policy、学校
   Compendex 核验、2026 publication metadata、现场报告人和 authorship metadata
-  作为并行 V0 外部门继续等待，V0 未通过时不得提交 DSA，但不阻塞 P2 no-API 工作；
+  作为并行 V0 外部门继续等待，V0 未通过时不得提交 DSA，但不否定已完成的 P2；
 - P1 已建立机器 denylist、人工隔离注册表和 superseding validity audit。旧 APSEC/
   EVP-8/current-98/HARD/coverage/stress 结果只允许 provenance、失败复盘和任务排除，
   禁止进入 DSA 效果量、表图、claim map 或正文数字；
 - 机械复现确认 E6-no-verdict 的嵌套 `visible_tests_rule_decision` 残留为 98/98；两个
   旧 full config 各有 686 个结构等价 packet，并复现未物化字段和空 P2P evidence；
-- 旧任务排除表冻结 28 tasks/8 projects，只供 P2 disjointness 使用，不是候选池；
+- P2 将 development task exclusion 扩展到 59 tasks，P1 的整项目排除保持 8 projects；
+  official/improved-reproduction snapshot 形成 304-task/9-project source frame；
+- Regular 已冻结为 30 primary + 10 reserve/9 projects/60 planned candidates；每项目
+  primary≤4 且都有 reserve。Short precision 虽通过但已 inactive，不是结果 fallback；
+- transform registry 仅在 excluded development tasks 上验证；P2 没有对 source 应用
+  transform、读取 candidate hidden result 或创建候选；
+- Regular precision 最大 rate/effect width 为 0.1185/0.1704，低于 0.35/0.30；12 篇
+  最近邻定位 Gate 通过，但禁止 first/unique/SOTA 或 autonomous correctness claim；
 - 新 DSA 脚本必须采用 `scripts/dsa2026_*.py`，并在每次新增或修改后通过
   `python scripts/audit_dsa_legacy_quarantine.py --check`；
-- 用户 standing API authorization 只在 P1--P5 全 pass 后激活；目前 P2--P5 未过，
+- 用户 standing API authorization 只在 P1--P5 全 pass 后激活；目前 P3--P5 未过，
   因而仍禁止 prompt、smoke、full 和模型 API；
 - private remote 已配置并为当前分支 push target；public `origin` 禁止作为 fallback。
-  下一轮唯一入口为 P2 source feasibility 与稿型冻结。
+  下一轮唯一入口为 P3 作者预注册与 prompt/schema 冻结；本轮不得提前创建 prompt。
 
-### 2026-07-10 DSA 路线计划基线（已由上方 P1 状态覆盖）
+### 2026-07-10 DSA 路线计划基线（已由上方 P2 状态覆盖）
 
 - 当前唯一 active master plan 是
   `docs/plans/dsa_2026_submission_execution_plan_zh.md`。

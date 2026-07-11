@@ -1,0 +1,58 @@
+{
+  "candidate_acceptance_rule": {
+    "discard_without_reclassification": [
+      "transformed patch fails a visible check",
+      "transformed patch passes all hidden checks",
+      "environment disagreement",
+      "transform is not applicable"
+    ],
+    "hard_negative": "transformed patch passes all frozen visible checks and fails at least one frozen independent hidden oracle in both environments",
+    "oracle_positive": "official reference fix after dual-environment visible and hidden checks"
+  },
+  "frozen_date": "2026-07-11",
+  "priority_rule": "apply the first applicable transform by ascending priority; never choose by candidate outcome",
+  "prohibited_adaptation": [
+    "do not change transform priority after observing a source-task outcome",
+    "do not add a task-specific transform",
+    "do not retain a candidate because it produces a larger model effect",
+    "do not inspect model output before candidate labels are frozen"
+  ],
+  "registry_id": "dsa_p2_transform_registry_v0_1",
+  "source_task_boundary": {
+    "candidate_with_no_applicable_transform": "replace only by frozen reserve order in P4",
+    "design_and_validation_tasks": "development exclusion registry only",
+    "first_primary_or_reserve_application_phase": "P4 after P3 author sign-off",
+    "primary_or_reserve_transform_application_in_p2": false
+  },
+  "status": "frozen_for_p3_author_review",
+  "transforms": [
+    {
+      "applicability": "reference diff changes at least two files",
+      "operation": "retain the first hash-ordered changed source file and omit one later changed source file",
+      "priority": 1,
+      "scientific_intent": "partial fix that leaves one independently changed source surface unresolved",
+      "transform_id": "T1_omit_secondary_source_file"
+    },
+    {
+      "applicability": "reference diff contains at least two hunks",
+      "operation": "retain all but one hash-ordered non-test hunk",
+      "priority": 2,
+      "scientific_intent": "partial fix that omits one localized semantic component",
+      "transform_id": "T2_omit_secondary_hunk"
+    },
+    {
+      "applicability": "reference diff contains at least two separated edit blocks",
+      "operation": "retain all but one hash-ordered edit block and recompute the unified-diff hunk header",
+      "priority": 3,
+      "scientific_intent": "within-hunk partial fix without adding new code",
+      "transform_id": "T3_omit_secondary_edit_block"
+    },
+    {
+      "applicability": "reference diff changes at least three non-header lines",
+      "operation": "restore one hash-ordered reference edit while retaining at least one other reference edit",
+      "priority": 4,
+      "scientific_intent": "minimal partial reversion for a multi-line reference fix",
+      "transform_id": "T4_partial_multiline_reversion"
+    }
+  ]
+}

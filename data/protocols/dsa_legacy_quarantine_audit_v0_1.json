@@ -13,7 +13,13 @@
     "namespace_glob": "scripts/dsa2026_*.py",
     "note": "zero scripts is valid at P1; this guard must be rerun after every new DSA script",
     "passed": true,
-    "scanned_scripts": [],
+    "scanned_scripts": [
+      "scripts/dsa2026_audit_p2_gate.py",
+      "scripts/dsa2026_build_p2_literature_audit.py",
+      "scripts/dsa2026_build_p2_source_frame.py",
+      "scripts/dsa2026_build_p2_transform_registry.py",
+      "scripts/dsa2026_simulate_p2_precision.py"
+    ],
     "violations": []
   },
   "evidence_materialization_reproduction": {

@@ -1,0 +1,853 @@
+{
+  "applicable_development_task_count": 43,
+  "atomic_patch_not_applicable_count": 16,
+  "boundary": "Validation checks structural applicability only on excluded development reference diffs; no transformed candidate or outcome is generated.",
+  "catalog_commit": "11c5f1eea954a42132cfd06bf257766a7963e0fd",
+  "checks": {
+    "all_validation_records_are_development_tasks": true,
+    "development_source_overlap_zero": true,
+    "each_transform_has_at_least_three_development_examples": true,
+    "no_hidden_result_observed": true,
+    "no_transform_materialized_in_p2": true,
+    "reference_diff_available_for_all_development_tasks": true
+  },
+  "development_task_count": 59,
+  "records": [
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "1952f411ce23b0f633e2a30c40901963e83ac96066782eb342a4f68f756e0da9",
+      "selected_transform_id": "T1_omit_secondary_source_file",
+      "shape": {
+        "changed_line_count": 12,
+        "edit_block_count": 6,
+        "file_count": 3,
+        "hunk_count": 6
+      },
+      "task_id": "bugsinpy_PySnooper_1",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "b88a33e185cca74865b09d3e05199b9db2933749b08fc419ecf97902f2403dc3",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "shape": {
+        "changed_line_count": 38,
+        "edit_block_count": 17,
+        "file_count": 1,
+        "hunk_count": 11
+      },
+      "task_id": "bugsinpy_PySnooper_2",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "5c176e4bbfb86b235df3865f2990f0c471c95eeb7572a7ef765fb211061fe43b",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_PySnooper_3",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "82df868e5f50f5064c79031deeed6ede1b73c54c294b165dd24f87caaa8721b4",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 5,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_ansible_1",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "fc3798966de2144c1801f093e45bb33487ab6c13cecf5003abdef8bc4a881471",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "shape": {
+        "changed_line_count": 16,
+        "edit_block_count": 6,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "task_id": "bugsinpy_ansible_2",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "95bf24182a768ef792c2a0af142f8193a1197206cd0f6752127c200466f3823d",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "shape": {
+        "changed_line_count": 14,
+        "edit_block_count": 3,
+        "file_count": 1,
+        "hunk_count": 3
+      },
+      "task_id": "bugsinpy_black_1",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "dd0737a162e8d1f48754ca35a23a474e7bbfe31e64c4b866ab749613651c81b8",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "shape": {
+        "changed_line_count": 49,
+        "edit_block_count": 3,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_black_2",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "2abe4abbe8dcdb8272b97b64e374f7243ef77878a348cff10876d811b5a87920",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_black_3",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "8aa49e1d1a81356cece4244bf12b4e0c1924ce1ebe7d50897646f8b19200c3bf",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_cookiecutter_1",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "1501e8e2e6455adc64799fbd45b0405afaf49771ebd9b5bbe5dc090673c04312",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "shape": {
+        "changed_line_count": 14,
+        "edit_block_count": 5,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "task_id": "bugsinpy_cookiecutter_2",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "3a5c2da4895949c99708f994ca684339aca70fe6caf611ff6fa6d5c5634f651f",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_cookiecutter_3",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "3f53f215bc72769cbca0f364574bede10cc766ef5012913f3ed5e31427e141b2",
+      "selected_transform_id": "T1_omit_secondary_source_file",
+      "shape": {
+        "changed_line_count": 26,
+        "edit_block_count": 8,
+        "file_count": 3,
+        "hunk_count": 7
+      },
+      "task_id": "bugsinpy_cookiecutter_4",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "dc7f2e707b2e57ee0ccb4760c07233e21af3b64dfa0fe14fc7072111dd47b074",
+      "selected_transform_id": "T1_omit_secondary_source_file",
+      "shape": {
+        "changed_line_count": 223,
+        "edit_block_count": 68,
+        "file_count": 5,
+        "hunk_count": 60
+      },
+      "task_id": "bugsinpy_fastapi_1",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "f3e910a20ab8cd3c3d38863af8d07ea62559a3a44dcf75c648229b276fa0d692",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 7,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_fastapi_2",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "fd589f0876f793846e18733bfbce966af2228736cbf5299c6eafcedbe835a5ec",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 4,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_fastapi_4",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "280ec5b51ff60acae2776bbcd2ca02e21af3eed777a953cddea40949128528b4",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "shape": {
+        "changed_line_count": 36,
+        "edit_block_count": 3,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "task_id": "bugsinpy_httpie_1",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "adca0400c658270d94524d7f0f4cc461c65088a670127de9f746db9da5e68117",
+      "selected_transform_id": "T1_omit_secondary_source_file",
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 2,
+        "file_count": 2,
+        "hunk_count": 2
+      },
+      "task_id": "bugsinpy_httpie_2",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "6c760254cb705312a5e6e9f79602b890bf09924e924ee58f718af81646393891",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 4,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_httpie_3",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "d68d83b4daa4a281fbbfb939e747e5f791eefb05da74adf74974c95efc7dfa6a",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 3,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_httpie_4",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "13cda1f86e741d0251a28fe4c66d18d8d2c99344a3259a6b654469f0dd9c1bc5",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "shape": {
+        "changed_line_count": 18,
+        "edit_block_count": 3,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_httpie_5",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "b8811a12edcfa4272c02e9d1234dfe2f1eebd0141adb11538063ffede675115c",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "shape": {
+        "changed_line_count": 5,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_luigi_1",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "c2d3258f6d28e021a1cd1ae16992425c8780591e93faa1f65fd770368af384b1",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 4,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_luigi_3",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "f95062892e139f70c894056e081203ff404d83b09d78ffc74441d92ff500f6c6",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_luigi_4",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "5fc9ab8bd448899451fabfad7df50a23d8fd42d0e4d9a4a0cd41552bec466d3d",
+      "selected_transform_id": "T1_omit_secondary_source_file",
+      "shape": {
+        "changed_line_count": 49,
+        "edit_block_count": 8,
+        "file_count": 3,
+        "hunk_count": 7
+      },
+      "task_id": "bugsinpy_matplotlib_1",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "7a6905bf42a769e9c4df92b6083d459c98797aa93e41f005c403a624e407f853",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_sanic_1",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "a5a5d8c2d7ca34259a17dbe7eb415bbceb1e0dc7b0408b5cd89b42d9df34b9b7",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 20,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_sanic_2",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "4faea796aa3acd44dac6666afb23359623d761f8096ae9bfc04fb560dd47795c",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "shape": {
+        "changed_line_count": 8,
+        "edit_block_count": 3,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_scrapy_1",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "8c1673631551f074d4fefb80504ce5c6762d21c2d2fd08dae012b2a667fc73d3",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 5,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_scrapy_2",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "1b56afa084ce53a9e18382407a5058d6c99fb3ead6432cd6a133a9a072e78b07",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "shape": {
+        "changed_line_count": 4,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_thefuck_1",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "df63e442f5f948ed5c36b35013eb5e1df86e7a2f105e41abc1e0302c9eab68a6",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_thefuck_5",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "36a773272f044f9d4c89b832ca049500d5766780b9807c63809fead69bafe993",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "shape": {
+        "changed_line_count": 11,
+        "edit_block_count": 3,
+        "file_count": 1,
+        "hunk_count": 3
+      },
+      "task_id": "bugsinpy_tornado_1",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "854c0df67d11c4ffda2c66be81f61491675858a494f8511e6181befdb1072f3e",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 5,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_tornado_2",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "5df55865adb80a445c185eed279132a7f033158bfe4e90117b46690279e38c20",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_tornado_9",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "51a281e051e5e388bb1d96261b4230ed7abfe8aace5cd5de1871c581afe0d60f",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_tqdm_1",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "660ead01c8b9d6731e0a74a05979af7b843d9b5ef38f57b27e82b365b2c854c7",
+      "selected_transform_id": "T1_omit_secondary_source_file",
+      "shape": {
+        "changed_line_count": 12,
+        "edit_block_count": 4,
+        "file_count": 2,
+        "hunk_count": 3
+      },
+      "task_id": "bugsinpy_tqdm_2",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "83953985aef34f668789163a892adf844a791df2c973ec86a481501293464523",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 11,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_tqdm_3",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "d56b36da1d8dfb4e4f6f96b0de09ab04022e3ef8736cc887342471171d67402b",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 3,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_tqdm_4",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "9bc73368eea036ead81fdfa3b650d19371775abdb0344b39060218c0572d8c34",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "shape": {
+        "changed_line_count": 13,
+        "edit_block_count": 3,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "task_id": "bugsinpy_tqdm_5",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "1f391f21ba09c98469a70dd1fdb23bfb38b11ceaed11c11210dc5cbb45fde817",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_tqdm_6",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "64c547e653d9f8ac38ade602efc392a43b65318ee8a933b98c4e01c0223dbe1e",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_tqdm_7",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "81219e6fb7cea7e034921c54f7b1b57f070ea85f84a31492704e0acb6af5762c",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_tqdm_8",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "374d66fdc5bc1d1f23b0fd65708e71a1f678d5714d9d37ea90091b38631ce95e",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "shape": {
+        "changed_line_count": 16,
+        "edit_block_count": 6,
+        "file_count": 1,
+        "hunk_count": 6
+      },
+      "task_id": "bugsinpy_tqdm_9",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "6a13d50ef3534c861634944c27bb11deb65b283d4d23fedbd6ddade58e2f0054",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 4,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_youtube-dl_1",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "d06a801b087d7a4a3ebdd244c82e93e64d0c96169677cd924b8ef43f7b991b3b",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 4,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_youtube-dl_10",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "c531e34e4428e7b21bd04fb0db308146a693c2f0cca0365d94ed29a2a53ad387",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 4,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_youtube-dl_11",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "a85a58beb76557be86198aed2b6b6057a3ef78a709ccc5a090ae436b69297434",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_youtube-dl_13",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "f3bbd30867cf8a2df2a6fbb48821e5fdab73e01291a48e192ad8454cc42f3e8f",
+      "selected_transform_id": "T1_omit_secondary_source_file",
+      "shape": {
+        "changed_line_count": 20,
+        "edit_block_count": 5,
+        "file_count": 2,
+        "hunk_count": 3
+      },
+      "task_id": "bugsinpy_youtube-dl_16",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "c980c40c694e9890c39a2fcb5a77239d0f7a5f44d564a3ccf8b76cdb80e4bff9",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_youtube-dl_17",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "525d0d68504ab2d9405db91576626181d701e263c550e2cf8534dd40a5da62ba",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 18,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_youtube-dl_2",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "4e4909d72cd116f907e2d0c2f0cd2819ddd7dfeeb94c222e538f02a3a4ea5caa",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "shape": {
+        "changed_line_count": 4,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_youtube-dl_20",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "3b59e8ddbb8770c7b6034ff315c3f67557786596a69a8006ff567482381ce954",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "shape": {
+        "changed_line_count": 7,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_youtube-dl_21",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "859d282ca67d6dd37d7186bfb4b7cb96e0ed1aea60a9a7e19f1678726abcdf9f",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "shape": {
+        "changed_line_count": 4,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "task_id": "bugsinpy_youtube-dl_23",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "150aa16c7ed0c262552614feecd3ab340a187e904b3704b303dc772eae84fba8",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_youtube-dl_3",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "78d08e25faa943d3e0003cff528ac3ca1559a035b32ad90f886f839db226abf5",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "shape": {
+        "changed_line_count": 5,
+        "edit_block_count": 3,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "task_id": "bugsinpy_youtube-dl_37",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "928372923d5a0d6194c5ebffdd3b3befd348583cdf79c43bbfac60a3e1c3044a",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "shape": {
+        "changed_line_count": 4,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_youtube-dl_4",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "5294a349002ece9d1cc0b0e3a2d54f3a06092498e7f68a41b79f70d8c7963056",
+      "selected_transform_id": null,
+      "shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_youtube-dl_43",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "f0f06af5ffb4c7870c296a18b685129e9001682c642b0cb87e5cc677491d3cec",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "shape": {
+        "changed_line_count": 6,
+        "edit_block_count": 3,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "task_id": "bugsinpy_youtube-dl_5",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "580ad16ff520aa586a5b10b0edd7e831ef191216ca65b9c0f307ba749f763d17",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "shape": {
+        "changed_line_count": 11,
+        "edit_block_count": 4,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "task_id": "bugsinpy_youtube-dl_6",
+      "transform_materialized": false
+    },
+    {
+      "hidden_result_observed": false,
+      "reference_diff_available": true,
+      "reference_diff_sha256": "9c894b16ef6f0bfb791db3d4dcf90d191a9e5da674893fd8980caa3d13ba83bc",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "shape": {
+        "changed_line_count": 4,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "task_id": "bugsinpy_youtube-dl_7",
+      "transform_materialized": false
+    }
+  ],
+  "selected_source_task_count": 41,
+  "selected_transform_counts": {
+    "T1_omit_secondary_source_file": 7,
+    "T2_omit_secondary_hunk": 12,
+    "T3_omit_secondary_edit_block": 8,
+    "T4_partial_multiline_reversion": 16
+  },
+  "status": "passed",
+  "validation_date": "2026-07-11",
+  "validation_id": "dsa_p2_transform_validation_v0_1"
+}

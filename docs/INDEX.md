@@ -11,14 +11,33 @@
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
   sole active master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is
-  inactive. Status: `P1_LEGACY_QUARANTINE_PASS / P2_NOT_STARTED /
-  V0_SUBMISSION_GATE_PENDING`. It defines
+  inactive. Status: `P2_SOURCE_FEASIBILITY_PASS / REGULAR_FROZEN /
+  P3_NOT_STARTED / SHORT_INACTIVE / V0_SUBMISSION_GATE_PENDING`. It defines
   venue/AI/EI gates, old-data
   quarantine, a task-disjoint C0--C3 experiment, no-rerun rules, finite-cohort
   statistics, evidence-first paper reconstruction, official `IEEEconf.cls` PDF
   QA, private artifact/Git boundaries, and the submission-to-presentation
   timeline. A 2026-07-11 standing API authorization exists but activates only
-  after P1--P5 pass; P2--P5 are still pending, so no prompt/model call is allowed.
+  after P1--P5 pass; P3--P5 are still pending, so no prompt/model call is allowed.
+- [dsa_p2_source_feasibility_and_protocol_decision_v0_1.md](experiments/dsa_p2_source_feasibility_and_protocol_decision_v0_1.md):
+  consolidated 18-check P2 audit and Regular freeze. It records the 59-task
+  development exclusion, 304-task/9-project source frame, 30+10 selection,
+  transform boundary, precision result, literature positioning, and P4 rerun rule.
+- [dsa_p2_precision_simulation_v0_1.md](experiments/dsa_p2_precision_simulation_v0_1.md):
+  20,000-window-per-scenario conditional precision simulation for Regular and Short.
+- [dsa_p2_nearest_neighbor_matrix_v0_1.md](literature/dsa_p2_nearest_neighbor_matrix_v0_1.md):
+  12-paper 2018--2026 APCA/code-review/judge/source-reproducibility matrix. The
+  [HTML browser](literature/dsa_p2_nearest_neighbor_matrix_v0_1.html) and
+  [RIS export](literature/dsa_p2_nearest_neighbor_references_v0_1.ris) are the
+  human-review and reference-manager artifacts.
+- `../data/protocols/dsa_p2_protocol_decision_v0_1.json`: machine-readable
+  Regular freeze; Short is inactive and not a post-result fallback.
+- `../data/protocols/dsa_p2_source_frame_v0_1.json` and
+  `../data/protocols/dsa_p2_source_selection_v0_1.json`: frozen official source
+  frame, improved-environment evidence, seed, 30 primary and 10 reserve order.
+- `../data/protocols/dsa_p2_transform_registry_v0_1.json` and
+  `../data/protocols/dsa_p2_transform_validation_v0_1.json`: P3-reviewable
+  transform families, priority, applicability, and development-only validation.
 - [dsa_legacy_evidence_quarantine_registry_v0_1.md](experiments/dsa_legacy_evidence_quarantine_registry_v0_1.md):
   human-readable P1 classification of legacy artifact families and exact
   permitted/forbidden DSA uses.

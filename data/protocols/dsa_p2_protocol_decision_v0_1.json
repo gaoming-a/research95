@@ -1,0 +1,24 @@
+{
+  "api_authorized_now": false,
+  "decision_date": "2026-07-11",
+  "decision_id": "dsa_p2_protocol_decision_v0_1",
+  "fresh_p4_requirement": "Every selected candidate must still pass two fresh clean-environment runs in P4. The external reproduction result is P2 source feasibility, not final cohort admission.",
+  "irreversibility": "After P3 author sign-off or any model call, Regular/Short, task/project counts, model count, repeat count, source order, and transform priority cannot change because of results, interval width, model disagreement, or review feedback.",
+  "next_phase": "P3 author preregistration and prompt/schema freeze",
+  "p3_not_started": true,
+  "regular": {
+    "candidates_planned_for_p4": 60,
+    "fixed_models_to_freeze_in_p3": 3,
+    "primary_tasks": 30,
+    "projects": 9,
+    "reserve_tasks": 10,
+    "source_selection": "data/protocols/dsa_p2_source_selection_v0_1.json",
+    "stateless_repeats": 3
+  },
+  "selected_protocol": "Regular",
+  "short": {
+    "precision_simulation_preserved": true,
+    "status": "inactive_not_a_post_result_fallback"
+  },
+  "status": "regular_frozen"
+}

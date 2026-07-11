@@ -1,0 +1,922 @@
+{
+  "boundary": "This freezes source order only. It does not admit a task, apply a transform, inspect candidate hidden results, create a prompt, or authorize an API call.",
+  "created_date": "2026-07-11",
+  "gate": {
+    "project_overlap_with_base_excluded_projects": 0,
+    "regular_capacity_passed": true,
+    "short_capacity_passed": true,
+    "source_environment_gate_passed": true,
+    "task_overlap_with_development": 0
+  },
+  "regular": {
+    "four_task_primary_project_cap_passed": true,
+    "minimum_projects": 8,
+    "primary": [
+      {
+        "bug_id": 5,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 1,
+        "project": "sanic",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_sanic_5",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 12,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 2,
+        "project": "fastapi",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_fastapi_12",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 54,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [
+          "native_extension_build"
+        ],
+        "order": 3,
+        "project": "pandas",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_pandas_54",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 10,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 4,
+        "project": "tornado",
+        "python_version": "3.7.0",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_tornado_10",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 21,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 5,
+        "project": "matplotlib",
+        "python_version": "3.8.1",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_matplotlib_21",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 29,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [
+          "heavy_tensorflow_stack"
+        ],
+        "order": 6,
+        "project": "keras",
+        "python_version": "3.7.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_keras_29",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 8,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 7,
+        "project": "ansible",
+        "python_version": "3.6.9",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_ansible_8",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 16,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 8,
+        "project": "black",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_black_16",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 3,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [
+          "native_extension_build"
+        ],
+        "order": 9,
+        "project": "spacy",
+        "python_version": "3.7.7",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_spacy_3",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 3,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 10,
+        "project": "sanic",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_sanic_3",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 3,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 11,
+        "project": "fastapi",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_fastapi_3",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 51,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [
+          "native_extension_build"
+        ],
+        "order": 12,
+        "project": "pandas",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_pandas_51",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 8,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 13,
+        "project": "tornado",
+        "python_version": "3.7.0",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_tornado_8",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 6,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 14,
+        "project": "matplotlib",
+        "python_version": "3.8.1",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_matplotlib_6",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 32,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [
+          "heavy_tensorflow_stack"
+        ],
+        "order": 15,
+        "project": "keras",
+        "python_version": "3.7.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_keras_32",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 3,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 16,
+        "project": "ansible",
+        "python_version": "3.6.9",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_ansible_3",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 13,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 17,
+        "project": "black",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_black_13",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 10,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [
+          "native_extension_build"
+        ],
+        "order": 18,
+        "project": "spacy",
+        "python_version": "3.7.7",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_spacy_10",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 10,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 19,
+        "project": "fastapi",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_fastapi_10",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 166,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [
+          "native_extension_build"
+        ],
+        "order": 20,
+        "project": "pandas",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_pandas_166",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 12,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 21,
+        "project": "tornado",
+        "python_version": "3.7.0",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_tornado_12",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 22,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 22,
+        "project": "matplotlib",
+        "python_version": "3.8.1",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_matplotlib_22",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 41,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [
+          "heavy_tensorflow_stack"
+        ],
+        "order": 23,
+        "project": "keras",
+        "python_version": "3.7.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_keras_41",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 14,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 24,
+        "project": "ansible",
+        "python_version": "3.6.9",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_ansible_14",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 11,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 25,
+        "project": "black",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_black_11",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 7,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [
+          "native_extension_build"
+        ],
+        "order": 26,
+        "project": "spacy",
+        "python_version": "3.7.7",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_spacy_7",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 15,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 27,
+        "project": "fastapi",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_fastapi_15",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 45,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [
+          "native_extension_build"
+        ],
+        "order": 28,
+        "project": "pandas",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_pandas_45",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 5,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 29,
+        "project": "tornado",
+        "python_version": "3.7.0",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_tornado_5",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 25,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 30,
+        "project": "matplotlib",
+        "python_version": "3.8.1",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_matplotlib_25",
+        "transform_applied": false
+      }
+    ],
+    "primary_count": 30,
+    "primary_project_count": 9,
+    "primary_project_counts": {
+      "ansible": 3,
+      "black": 3,
+      "fastapi": 4,
+      "keras": 3,
+      "matplotlib": 4,
+      "pandas": 4,
+      "sanic": 2,
+      "spacy": 3,
+      "tornado": 4
+    },
+    "project_pool": [
+      "ansible",
+      "black",
+      "fastapi",
+      "keras",
+      "matplotlib",
+      "pandas",
+      "sanic",
+      "spacy",
+      "tornado"
+    ],
+    "protocol": "Regular",
+    "reserve": [
+      {
+        "bug_id": 4,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 1,
+        "project": "sanic",
+        "python_version": "3.8.3",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_sanic_4",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 6,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 2,
+        "project": "fastapi",
+        "python_version": "3.8.3",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_fastapi_6",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 90,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [
+          "native_extension_build"
+        ],
+        "order": 3,
+        "project": "pandas",
+        "python_version": "3.8.3",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_pandas_90",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 7,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 4,
+        "project": "tornado",
+        "python_version": "3.7.0",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_tornado_7",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 29,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 5,
+        "project": "matplotlib",
+        "python_version": "3.8.1",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_matplotlib_29",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 8,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [
+          "heavy_tensorflow_stack"
+        ],
+        "order": 6,
+        "project": "keras",
+        "python_version": "3.7.3",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_keras_8",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 10,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 7,
+        "project": "ansible",
+        "python_version": "3.6.9",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_ansible_10",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 9,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 8,
+        "project": "black",
+        "python_version": "3.8.3",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_black_9",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 9,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [
+          "native_extension_build"
+        ],
+        "order": 9,
+        "project": "spacy",
+        "python_version": "3.7.7",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_spacy_9",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 11,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 10,
+        "project": "fastapi",
+        "python_version": "3.8.3",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_fastapi_11",
+        "transform_applied": false
+      }
+    ],
+    "reserve_count": 10,
+    "selection_status": "source_order_frozen_p2_source_level_gate_passed"
+  },
+  "selection_id": "dsa_p2_source_selection_v0_1",
+  "selection_rule": "hash-seeded project/task order; reserve one task per project before round-robin primary selection; max four primary tasks and two reserves per project",
+  "selection_seed_sha256": "877bf7a0d2acb3768686a9167d2a8bf6ecb954821ea66a8039aff1b22e9d0328",
+  "short": {
+    "four_task_primary_project_cap_passed": true,
+    "minimum_projects": 6,
+    "primary": [
+      {
+        "bug_id": 5,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 1,
+        "project": "sanic",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_sanic_5",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 12,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 2,
+        "project": "fastapi",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_fastapi_12",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 10,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 3,
+        "project": "tornado",
+        "python_version": "3.7.0",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_tornado_10",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 21,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 4,
+        "project": "matplotlib",
+        "python_version": "3.8.1",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_matplotlib_21",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 8,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 5,
+        "project": "ansible",
+        "python_version": "3.6.9",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_ansible_8",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 16,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 6,
+        "project": "black",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_black_16",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 3,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 7,
+        "project": "sanic",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_sanic_3",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 3,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 8,
+        "project": "fastapi",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_fastapi_3",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 8,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 9,
+        "project": "tornado",
+        "python_version": "3.7.0",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_tornado_8",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 6,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 10,
+        "project": "matplotlib",
+        "python_version": "3.8.1",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_matplotlib_6",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 3,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 11,
+        "project": "ansible",
+        "python_version": "3.6.9",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_ansible_3",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 13,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 12,
+        "project": "black",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_black_13",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 10,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 13,
+        "project": "fastapi",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_fastapi_10",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 12,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 14,
+        "project": "tornado",
+        "python_version": "3.7.0",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_tornado_12",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 22,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 15,
+        "project": "matplotlib",
+        "python_version": "3.8.1",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_matplotlib_22",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 14,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 16,
+        "project": "ansible",
+        "python_version": "3.6.9",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_ansible_14",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 11,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 17,
+        "project": "black",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_black_11",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 15,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 18,
+        "project": "fastapi",
+        "python_version": "3.8.3",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_fastapi_15",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 5,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 19,
+        "project": "tornado",
+        "python_version": "3.7.0",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_tornado_5",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 25,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 20,
+        "project": "matplotlib",
+        "python_version": "3.8.1",
+        "role": "primary",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_matplotlib_25",
+        "transform_applied": false
+      }
+    ],
+    "primary_count": 20,
+    "primary_project_count": 6,
+    "primary_project_counts": {
+      "ansible": 3,
+      "black": 3,
+      "fastapi": 4,
+      "matplotlib": 4,
+      "sanic": 2,
+      "tornado": 4
+    },
+    "project_pool": [
+      "ansible",
+      "black",
+      "fastapi",
+      "matplotlib",
+      "sanic",
+      "tornado"
+    ],
+    "protocol": "Short",
+    "reserve": [
+      {
+        "bug_id": 4,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 1,
+        "project": "sanic",
+        "python_version": "3.8.3",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_sanic_4",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 6,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 2,
+        "project": "fastapi",
+        "python_version": "3.8.3",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_fastapi_6",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 7,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 3,
+        "project": "tornado",
+        "python_version": "3.7.0",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_tornado_7",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 29,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 4,
+        "project": "matplotlib",
+        "python_version": "3.8.1",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_matplotlib_29",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 10,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 5,
+        "project": "ansible",
+        "python_version": "3.6.9",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_ansible_10",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 9,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 6,
+        "project": "black",
+        "python_version": "3.8.3",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_black_9",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 11,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 7,
+        "project": "fastapi",
+        "python_version": "3.8.3",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_fastapi_11",
+        "transform_applied": false
+      },
+      {
+        "bug_id": 13,
+        "candidate_hidden_result_observed": false,
+        "environment_risk_tags": [],
+        "order": 8,
+        "project": "tornado",
+        "python_version": "3.7.0",
+        "role": "reserve",
+        "source_level_environment_gate": "external improved-environment buggy-fail/fixed-pass evidence passed; fresh dual-clean rerun required in P4",
+        "task_id": "bugsinpy_tornado_13",
+        "transform_applied": false
+      }
+    ],
+    "reserve_count": 8,
+    "selection_status": "source_order_frozen_p2_source_level_gate_passed"
+  },
+  "source_frame": "data/protocols/dsa_p2_source_frame_v0_1.json",
+  "status": "source_selection_frozen_protocol_decision_recorded_separately"
+}

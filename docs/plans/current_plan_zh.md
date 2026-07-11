@@ -2,6 +2,64 @@
 
 最后更新：2026-07-11
 
+## 0.51 2026-07-11 DSA P2 source feasibility、precision 与稿型冻结
+
+本轮小目标严格限定为 P2：在不调用模型 API、不创建 prompt、不读取旧 paper-facing
+metric/raw output 的前提下，建立 task/project-disjoint source frame，只在 excluded
+development tasks 上验证 transform registry，完成 conditional precision simulation、
+最近邻文献预检并冻结 Regular/Short 唯一稿型。不进入 P3。
+
+Inspect：
+
+- P1 的 28-task/8-project 表覆盖旧论文实验，但 tracked engineering registry 和 P2P
+  scope 还记录了未进入论文结果的开发 probes；它们同样不能进入新 source；
+- 官方 BugsInPy 当前 snapshot 含 501 tasks/17 projects；排除 8 个旧 project 后最多
+  剩 9 个新 project，Regular 的 ≥8-project 门理论可行但尚未证明环境可复现；
+- SCAM 2023 复现研究和 improved repository 表明原始 virtualenv 会因环境衰减报错，
+  improved Conda/Docker 结果才适合作为 P2 source-level feasibility evidence；
+- 最近邻必须覆盖 APCA、LLM code review/judge 和 BugsInPy reproducibility，而不能只查
+  prompt/code-review 标题相近论文。
+
+Plan：
+
+1. 从 P1、engineering registry、P2P scope filename 和早期 probe task ID 形成只含
+   标识的扩展 development exclusion；
+2. 冻结 official 与 reproduction repositories 的 commit/CSV hash，以 improved
+   environment 中 buggy=fail/fixed=pass 为 source-level gate；
+3. 用预冻结 SHA-256 seed、round-robin、每项目 primary≤4、每项目 reserve≥1 建立
+   Regular/Short primary/reserve；
+4. 只在 excluded development reference diff 上冻结 transform family/priority；
+5. 模拟固定 task/model 下 stateless repeats 的 conditional interval 和 LOO range；
+6. 按 2018--2026 直接最近邻核对，完成 RIS/matrix/search log 后作唯一稿型决策。
+
+Execute/Diagnose/Repair：
+
+- 扩展 development exclusion 为 59 tasks，整项目排除仍为 P1 的 8 projects；
+- 首次 source builder 错把 7 位 abbreviated Git SHA 判为无效，导致 pandas 168 个假
+  阴性；修复为 7--40 位 hex object ID 后，metadata eligible 恢复；
+- 再根据 SCAM improved-environment CSV 冻结 304 tasks/9 projects 的 source frame；
+  原始 virtualenv error 只记为 environment decay，不误写成 task failure；
+- Regular 冻结 30 primary + 10 reserve/9 projects；Short 20+8/6 projects 的预先模拟
+  通过但因 Regular 达标而 inactive；source order 由 seed 决定；
+- 四类 transform 在 7/12/8/16 个 development tasks 上适用，16 个 atomic patch
+  明确 non-applicable；P2 未物化 transformed candidate；
+- precision simulation 每场景 20,000 run windows；Regular width 0.1185/0.1704，
+  Short paired width 0.2500；
+- 检索 12 篇最近邻。Crossref 对 3 个 arXiv DOI 返回 404 后，使用 arXiv official
+  metadata 恢复到同一个 RIS；未把检索错误当成不存在论文。
+
+Verify/Gate：
+
+- P2 总审计 18 项全部 PASS：development/source overlap=0、excluded-project overlap=0、
+  30+10/≥8 projects/cap/reserve/new-project/source reproduction/oracle plan/transform/
+  precision/literature/no-API/no-prompt 全通过；
+- P1 namespace audit 在新增 5 个 `dsa2026_*.py` 后重新生成并通过；所有生成器
+  `--write` 后独立 `--check` 一致；
+- P2 Gate=`PASS`，唯一稿型=`Regular`。Short 不得作为 post-result fallback；
+- SCAM aggregate evidence 不替代 P4 两次 fresh clean-environment candidate rerun；
+- API standing authorization 仍未激活，因为 P3--P5 未通过。下一轮唯一入口是 P3，
+  本轮不创建 prompt、不进入 P3、不调用模型。
+
 ## 0.50 2026-07-11 DSA P1 旧证据隔离与失效复现
 
 本轮小目标严格限定为 P1：把全部旧实验降为 provenance/development evidence，冻结
