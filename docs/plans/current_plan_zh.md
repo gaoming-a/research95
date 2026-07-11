@@ -57,6 +57,11 @@ P4 task list。该执行链修复必须先提交，才允许重试同一 archive
 V2-P1 的 `setup_provenance_only` key 不同；仍未构建环境或运行测试。修复只在纯 copy/hash
 helper 边界建立一对一 alias，不改变 V2 record，不执行 setup，提交后再重试。
 
+Source/context Gate 随后 write/check PASS：buggy/fixed official archive SHA-256 分别为
+`d7ce371c…ea746`/`0e38184d…a4969`，context tree=`fc25ef13…7108`，reference tree=
+`15278f3b…2204b`，record=`8e2e4786…05380`。真实 checkout count=1，但 environment/
+container/test/API 仍为0；该 registry 必须先提交才允许 image build。
+
 ## 0.56 2026-07-12 DSA v0.2 V2-P2 executor synthetic check-only
 
 本轮 Goal：只实现并审计消费 synthetic metadata 的 V2-P2 纯状态机，证明它严格读取

@@ -12,7 +12,9 @@
   materializer、candidate runner 与 terminal ledger 均已 outcome 前实现；synthetic T1--T4
   10/10 patch/tree 可重放；
 - real preflight 全项 PASS；checkout/environment/container/project-test/prompt/key/API
-  当前仍为0；下一步只启动 order=1 `bugsinpy_pandas_161`；
+  在 pre-outcome 时均为0；现已冻结 order=1 official source/context，context tree=
+  `fc25ef1325ecba7a346f576012d13349050e76709cc1f07fad7b05d81aee7108`，checkout=1，
+  environment/container/test/API 仍为0；下一步构建唯一 py383 task image；
 - 作者的 V2-P2 自动授权不授权 V2-P3、prompt/schema、论文结果或模型 API；到 V2-P3
   final freeze 或冻结 hard stop 必须暂停。
 
