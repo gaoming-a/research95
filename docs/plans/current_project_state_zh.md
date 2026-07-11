@@ -46,7 +46,8 @@
   official positive 与唯一 T4 partial-reversion candidate 已在任何 candidate outcome
   前物化并哈希，materialization SHA-256 为
   `41bbfc2319f9f5aa336cb772e5db5f098211cf7d3253120df6b577648d0445bb`；
-  下一门是两候选各两个 fresh containers 的冻结 checks，当前仍未 admission。
+  candidate worker/runner 已独立实现并通过静态与 namespace audit；下一门是两候选各
+  两个 fresh containers 的冻结 checks，当前仍未观察 candidate outcome 或 admission。
 
 ### 2026-07-10 DSA 路线计划基线（已由上方 P2 状态覆盖）
 

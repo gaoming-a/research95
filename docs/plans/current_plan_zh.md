@@ -24,6 +24,10 @@ model-visible/hidden manifests。本轮不调用模型 API、不进入 P5、不�
 - positive/negative 各在两个 fresh locked containers 中独立执行全部冻结 checks，形成
   candidate hashes、完整 hidden outcome、model-visible/hidden separation audit 和唯一
   task-level admission/discard 判定；
+- 四个 candidate runs 从同一 frozen task image 新建，均为 mounts=0、network=none；
+  每个容器独立复制已提交的 worker 与同 hash patch，完整运行 patch-apply、py_compile、
+  frozen F2P、3 个 visible P2P 和 20 个 held-out checks，不因早期 visible failure
+  跳过后续证据；raw container JSON 只写 ignored runtime，聚合 evidence 才进入 tracked tree；
 - 验收条件为证据无 placeholder/not_run、两环境一致、leakage=0、P2/P3 hashes 不变；
   完成文档、相关文件提交与 private remote 同步尝试后停止，不进入 P5/API。
 

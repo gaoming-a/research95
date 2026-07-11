@@ -30,6 +30,8 @@ data/*
 !data/hidden/dsa_p4_oracle_pool_registry_v0_1.json
 !data/hidden/dsa_p4_reference_pool_results_v0_1.json
 !data/hidden/dsa_p4_candidate_registry_v0_1.json
+!data/hidden/dsa_p4_candidate_results_v0_1.json
+!data/hidden/dsa_p4_task_gate_v0_1.json
 outputs/
 runs/
 artifacts/

@@ -35,7 +35,8 @@ hidden regression nodes are now frozen. No transformed candidate has yet been
 run. The official positive and frozen T4 partial-reversion candidate are now
 materialized and hash-bound in a hidden registry before any candidate outcome;
 the task is still not an admitted pair until both candidates complete two fresh
-container runs.
+container runs. The candidate worker/runner is now separately frozen and
+audited, but has not yet executed those four containers.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,

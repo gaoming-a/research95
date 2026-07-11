@@ -23,6 +23,7 @@
       "scripts/dsa2026_p4_materialize_candidate.py",
       "scripts/dsa2026_p4_oracle_freeze.py",
       "scripts/dsa2026_p4_preflight.py",
+      "scripts/dsa2026_p4_run_candidate_pair.py",
       "scripts/dsa2026_p4_run_reference_pool.py",
       "scripts/dsa2026_simulate_p2_precision.py"
     ],

@@ -89,6 +89,64 @@ def prepare_reference() -> dict[str, Any]:
     }
 
 
+def prepare_candidate(
+    candidate_patch: Path,
+    expected_patch_sha256: str,
+    expected_tree_sha256: str,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    if WORKSPACE.exists():
+        if WORKSPACE != Path("/workspace/project"):
+            raise RuntimeError(f"refusing to replace unexpected workspace: {WORKSPACE}")
+        shutil.rmtree(WORKSPACE)
+    WORKSPACE.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(TASK_ROOT / "buggy_source", WORKSPACE)
+    copied_tests = copy_fixed_tests()
+    actual_patch_sha256 = sha256_bytes(candidate_patch.read_bytes())
+    if actual_patch_sha256 != expected_patch_sha256:
+        raise RuntimeError("candidate patch hash drift")
+    command = ["git", "apply", "--check", str(candidate_patch)]
+    checked = subprocess.run(
+        command,
+        cwd=WORKSPACE,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    normalized = (checked.stdout + checked.stderr).replace(str(candidate_patch), "<CANDIDATE_PATCH>")
+    patch_check = {
+        "check_code": "basic_patch_apply",
+        "check_kind": "patch_apply",
+        "command": ["git", "apply", "--check", "<CANDIDATE_PATCH>"],
+        "exit_code": checked.returncode,
+        "timed_out": False,
+        "outcome": "passed" if checked.returncode == 0 else "failed",
+        "output_sha256": sha256_bytes(normalized.encode("utf-8")),
+        "output_excerpt": normalized[-4000:] or "candidate patch applies cleanly",
+    }
+    if checked.returncode != 0:
+        raise RuntimeError(f"candidate patch check failed: {normalized[-2000:]}")
+    applied = subprocess.run(
+        ["git", "apply", str(candidate_patch)],
+        cwd=WORKSPACE,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+    )
+    if applied.returncode != 0:
+        raise RuntimeError(f"candidate patch apply failed: {applied.stderr[-2000:]}")
+    actual_tree_sha256 = tree_sha256(WORKSPACE)
+    if actual_tree_sha256 != expected_tree_sha256:
+        raise RuntimeError("candidate tree hash drift")
+    preparation = {
+        "fixed_test_paths": copied_tests,
+        "candidate_patch_sha256": actual_patch_sha256,
+        "candidate_tree_sha256": actual_tree_sha256,
+    }
+    return preparation, patch_check
+
+
 def env_bin(name: str) -> Path:
     path = Path("/opt/conda/envs") / PYTHON_ENV / "bin" / name
     if not path.is_file():
@@ -178,6 +236,81 @@ def run_nodes(nodeids: list[str], timeout: int) -> dict[str, Any]:
     return {"preparation": preparation, "checks": checks}
 
 
+def evidence_result(result: dict[str, Any], **fields: Any) -> dict[str, Any]:
+    value = {key: item for key, item in result.items() if key != "_normalized_output"}
+    if not str(value.get("output_excerpt", "")).strip():
+        value["output_excerpt"] = "command completed with no output"
+    value.update(fields)
+    return value
+
+
+def candidate_run(args: argparse.Namespace) -> dict[str, Any]:
+    candidate_patch = Path(args.candidate_patch)
+    preparation, patch_check = prepare_candidate(
+        candidate_patch,
+        args.expected_patch_sha256,
+        args.expected_tree_sha256,
+    )
+    environment = environment_audit()
+    basic_checks = [patch_check]
+    for index, source_path in enumerate(args.source_path, start=1):
+        result = run_command(
+            [str(env_bin("python")), "-m", "py_compile", source_path],
+            args.timeout,
+        )
+        basic_checks.append(
+            evidence_result(
+                result,
+                check_code=f"basic_static_{index:03d}",
+                check_kind="syntax_or_import_or_static",
+            )
+        )
+    f2p_checks = []
+    for index, command in enumerate(args.f2p_command, start=1):
+        result = run_command(["/bin/bash", "-c", command], args.timeout)
+        f2p_checks.append(
+            evidence_result(
+                result,
+                check_code=f"f2p_{index:03d}",
+                test_name=f"visible_behavior_{index:03d}",
+            )
+        )
+    visible_checks = []
+    for index, nodeid in enumerate(args.visible_node, start=1):
+        result = run_command(
+            [str(env_bin("python")), "-m", "pytest", "-q", nodeid],
+            args.timeout,
+        )
+        visible_checks.append(
+            evidence_result(
+                result,
+                check_code=f"p2p_{index:03d}",
+                test_name=nodeid,
+            )
+        )
+    hidden_checks = []
+    for index, nodeid in enumerate(args.hidden_node, start=1):
+        result = run_command(
+            [str(env_bin("python")), "-m", "pytest", "-q", nodeid],
+            args.timeout,
+        )
+        hidden_checks.append(
+            evidence_result(
+                result,
+                check_code=f"hidden_{index:03d}",
+                test_name=nodeid,
+            )
+        )
+    return {
+        "preparation": preparation,
+        "environment": environment,
+        "executable_basic": basic_checks,
+        "visible_f2p": f2p_checks,
+        "visible_p2p": visible_checks,
+        "hidden_regression": hidden_checks,
+    }
+
+
 def environment_audit() -> dict[str, Any]:
     records = {}
     build = TASK_ROOT / "environment_build"
@@ -204,6 +337,15 @@ def main() -> None:
     nodes = subparsers.add_parser("run-nodes")
     nodes.add_argument("--node", action="append", required=True)
     nodes.add_argument("--timeout", type=int, default=300)
+    candidate = subparsers.add_parser("candidate-run")
+    candidate.add_argument("--candidate-patch", required=True)
+    candidate.add_argument("--expected-patch-sha256", required=True)
+    candidate.add_argument("--expected-tree-sha256", required=True)
+    candidate.add_argument("--source-path", action="append", required=True)
+    candidate.add_argument("--f2p-command", action="append", required=True)
+    candidate.add_argument("--visible-node", action="append", required=True)
+    candidate.add_argument("--hidden-node", action="append", required=True)
+    candidate.add_argument("--timeout", type=int, default=300)
     args = parser.parse_args()
     if args.command == "environment-audit":
         value = environment_audit()
@@ -211,8 +353,10 @@ def main() -> None:
         value = official_f2p(args.timeout)
     elif args.command == "collect":
         value = collect_nodes(args.test_root, args.timeout)
-    else:
+    elif args.command == "run-nodes":
         value = run_nodes(args.node, args.timeout)
+    else:
+        value = candidate_run(args)
     print(json.dumps(value, ensure_ascii=False, sort_keys=True))
 
 

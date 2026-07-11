@@ -45,6 +45,12 @@
   candidate patch/tree hashes, neutral payload source, frozen checks, and
   `candidate_outcome_observed=false`. The deterministic materializer and replay
   check are `../scripts/dsa2026_p4_materialize_candidate.py`.
+- `../scripts/dsa2026_p4_run_candidate_pair.py`: pending task-level P4 executor.
+  It creates four mount-free, network-disabled containers from the frozen task
+  image, copies the committed worker and hash-bound patch into each container,
+  runs every basic/F2P/P2P/held-out check without early outcome selection, and
+  deterministically writes the hidden results/Gate, admitted-only model-visible
+  manifest, separation audit, and hash manifest. It does not call a model API.
 - [dsa_p3_preregistration_v0_1.md](experiments/dsa_p3_preregistration_v0_1.md):
   human-readable P3 research questions, primary estimands, cumulative evidence
   contract, task-level conditional statistics, exact model routes, exclusions,

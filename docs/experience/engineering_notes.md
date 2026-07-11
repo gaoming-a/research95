@@ -12,6 +12,11 @@
   to LF before passing text to `unidiff`. Feeding preserved CRLF lines directly
   caused duplicate paths with trailing `\r`; the structural assertion stopped
   materialization before any candidate registry or outcome was written.
+- Candidate containers can retain the exact frozen task-image ID without a
+  writable mount: create each stopped container with `network=none`, copy the
+  committed worker and hash-bound patch into its private filesystem, inspect
+  mounts/image/network, and only then start it. Use a distinct patch path per
+  concurrent run so two fresh runs cannot race while writing one host file.
 - A stopped reproduction container can contain fresh official Git objects even
   when its environment build failed. Export a Git bundle from committed refs
   only; never carry its dirty worktree, copied benchmark index, logs, or prior
