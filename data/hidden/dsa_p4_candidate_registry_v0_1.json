@@ -3,10 +3,14 @@
   "created_date": "2026-07-11",
   "records": [
     {
-      "candidate_outcome_observed": false,
+      "candidate_outcome_observed": true,
+      "candidate_results_sha256": "cdfbd008a2585c93d0d7150682f9897f9e38314db2eb515f58b410859d6eacc2",
       "candidates": [
         {
+          "candidate_gate_pass": true,
+          "candidate_result_sha256": "77876be19f9e56e691b356e6db9902badd1f37b0d8007d7b2c8a42e67edc1962",
           "candidate_tree_sha256": "efa2cfbb025c5d8cac1e49d47f8552020fc34e17a1e82b781ff819730b78b117",
+          "disposition": "positive_valid",
           "neutral_payload": {
             "change_request": {
               "candidate_diff": "diff --git a/module_001.py b/module_001.py\nindex f41d8d9..362390b 100644\n--- a/module_001.py\n+++ b/module_001.py\n@@ -112,10 +112,13 @@ class HTTPBearer(HTTPBase):\n             else:\n                 return None\n         if scheme.lower() != \"bearer\":\n-            raise HTTPException(\n-                status_code=HTTP_403_FORBIDDEN,\n-                detail=\"Invalid authentication credentials\",\n-            )\n+            if self.auto_error:\n+                raise HTTPException(\n+                    status_code=HTTP_403_FORBIDDEN,\n+                    detail=\"Invalid authentication credentials\",\n+                )\n+            else:\n+                return None\n         return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\n \n \n",
@@ -21,7 +25,10 @@
           "role": "oracle_positive"
         },
         {
+          "candidate_gate_pass": false,
+          "candidate_result_sha256": "28376a8ce789024a2bc6ef241080154c86e8caa819b8c2c8dae66377dbb5aeab",
           "candidate_tree_sha256": "7a5089ef69b63ded2a36410a7251263aa9b44f1c2742131a84013602f60b5447",
+          "disposition": "discard_visible_check_failure",
           "neutral_payload": {
             "change_request": {
               "candidate_diff": "--- a/module_001.py\n+++ b/module_001.py\n@@ -112,10 +112,14 @@\n             else:\n                 return None\n         if scheme.lower() != \"bearer\":\n-            raise HTTPException(\n                 status_code=HTTP_403_FORBIDDEN,\n-                detail=\"Invalid authentication credentials\",\n-            )\n+            if self.auto_error:\n+                raise HTTPException(\n+                    status_code=HTTP_403_FORBIDDEN,\n+                    detail=\"Invalid authentication credentials\",\n+                )\n+            else:\n+                return None\n         return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\n \n \n",
@@ -83,10 +90,10 @@
       "source_paths": [
         "fastapi/security/http.py"
       ],
-      "status": "materialized_outcomes_not_observed",
+      "status": "task_discarded",
       "stream_order": 2,
       "stream_role": "primary",
-      "task_gate": "pending_candidate_runs",
+      "task_gate": "DISCARD_TASK",
       "task_id": "bugsinpy_fastapi_12",
       "task_image": "dsa2026-p4-task:bugsinpy_fastapi_12",
       "task_image_id": "sha256:11fb7ffa940afd56884299fdb26a5775bf1b09ed87a5fb8c1c9213c04ad22da3",

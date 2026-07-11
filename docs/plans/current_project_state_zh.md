@@ -46,10 +46,11 @@
   official positive 与唯一 T4 partial-reversion candidate 已在任何 candidate outcome
   前物化并哈希，materialization SHA-256 为
   `41bbfc2319f9f5aa336cb772e5db5f098211cf7d3253120df6b577648d0445bb`；
-  candidate worker/runner 已独立实现并通过静态与 namespace audit；下一门是两候选各
-  两个 fresh containers 的冻结 checks。首次启动在任何测试前被 CRLF patch-apply
-  integrity gate 阻断；当前仍未观察 candidate test outcome 或 admission，同一 T4 edit
-  正在只修复 patch bytes 后重新冻结。
+  candidate worker/runner 已独立实现并通过静态与 namespace audit。保留同一 T4 edit
+  修复 CRLF patch bytes 后，四个正式 fresh containers 已完成：positive 26/26 pass；
+  negative 的 syntax、F2P、3 P2P、20 held-out 均稳定 fail。negative 未通过 visible，
+  因而 task Gate=`DISCARD_TASK`、model-visible records=0、leakage=0；非结构性 discard
+  理论余量降为 5。P4 final Gate 未形成，下一 task 本轮未启动。
 
 ### 2026-07-10 DSA 路线计划基线（已由上方 P2 状态覆盖）
 

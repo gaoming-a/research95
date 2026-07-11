@@ -24,6 +24,17 @@
   the transformed patch with the official newline style, and restore a removed
   T4 line using the target file's newline style. Keep the same selected edit
   hash; this is an execution repair, not outcome-dependent candidate selection.
+- Hidden failure is necessary but not sufficient for a hard negative. The first
+  T4 candidate failed `py_compile`, the F2P, all three visible P2P checks, and
+  all 20 held-out nodes consistently in both containers. Even though the hidden
+  failure signal was maximal, the frozen visible-pass prerequisite requires a
+  task discard. Never reinterpret a syntax-invalid partial patch as a stronger
+  negative or switch to a different hash-ordered edit.
+- A discarded task must contribute zero records to the admitted model-visible
+  manifest. Keep its full 2-candidate x 2-container evidence only in the hidden
+  tree, emit a task Gate and separation audit, decrement the nonstructural
+  discard allowance, and defer reserve consumption to the next explicitly
+  bounded P4 Goal.
 - A stopped reproduction container can contain fresh official Git objects even
   when its environment build failed. Export a Git bundle from committed refs
   only; never carry its dirty worktree, copied benchmark index, logs, or prior

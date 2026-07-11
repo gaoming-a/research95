@@ -39,18 +39,34 @@
   stable-node decisions, and frozen visible/hidden split hashes. The executor
   and deterministic replay check are
   `../scripts/dsa2026_p4_run_reference_pool.py`.
-- `../data/hidden/dsa_p4_candidate_registry_v0_1.json`: pre-outcome private
-  mapping for the first P4 candidate pair. It binds the opaque candidate IDs,
+- `../data/hidden/dsa_p4_candidate_registry_v0_1.json`: private materialization
+  and terminal task mapping for the first P4 candidate pair. It binds the opaque
+  candidate IDs,
   official-positive and T4 roles, canonical edit-order rule, selected edit,
-  raw newline-preserving candidate patch/tree hashes, neutral payload source, frozen checks, and
-  `candidate_outcome_observed=false`. The deterministic materializer and replay
-  check are `../scripts/dsa2026_p4_materialize_candidate.py`.
-- `../scripts/dsa2026_p4_run_candidate_pair.py`: pending task-level P4 executor.
+  raw newline-preserving candidate patch/tree hashes, neutral payload source,
+  frozen checks, pre-outcome boundary, and terminal dispositions. The
+  deterministic materializer and replay check are
+  `../scripts/dsa2026_p4_materialize_candidate.py`.
+- [dsa_p4_fastapi_12_task_gate_v0_1.md](experiments/dsa_p4_fastapi_12_task_gate_v0_1.md):
+  human-readable first task Gate. The official positive is valid, the frozen T4
+  negative fails syntax and every visible/held-out behavior check in both fresh
+  containers, and the task is discarded because visible checks fail.
+- `../scripts/dsa2026_p4_run_candidate_pair.py`: task-level P4 executor and
+  deterministic replay/completeness auditor.
   It creates four mount-free, network-disabled containers from the frozen task
   image, copies the committed worker and hash-bound patch into each container,
   runs every basic/F2P/P2P/held-out check without early outcome selection, and
   deterministically writes the hidden results/Gate, admitted-only model-visible
   manifest, separation audit, and hash manifest. It does not call a model API.
+- `../data/hidden/dsa_p4_candidate_results_v0_1.json` and
+  `../data/hidden/dsa_p4_task_gate_v0_1.json`: complete four-container private
+  evidence and `DISCARD_TASK` decision for `bugsinpy_fastapi_12`.
+- `../data/cohorts/dsa_p4_model_visible_candidates_v0_1.json`: admitted-only
+  model-visible manifest; it correctly contains zero records after this task
+  discard.
+- `../data/protocols/dsa_p4_separation_audit_v0_1.json` and
+  `../data/protocols/dsa_p4_candidate_hash_manifest_v0_1.json`: zero-leakage
+  audit and immutable input/output hashes for the task Gate.
 - [dsa_p3_preregistration_v0_1.md](experiments/dsa_p3_preregistration_v0_1.md):
   human-readable P3 research questions, primary estimands, cumulative evidence
   contract, task-level conditional statistics, exact model routes, exclusions,

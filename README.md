@@ -31,14 +31,12 @@ the final P4 Gate remain pending.
 For the first structurally eligible task, `bugsinpy_fastapi_12`, two fresh
 reference F2P runs agree. Its pre-outcome 40-node pool then passed 40/40 nodes in
 two distinct network-disabled, mount-free containers; 3 visible P2P and 20
-hidden regression nodes are now frozen. No transformed candidate has yet been
-run. The official positive and frozen T4 partial-reversion candidate are now
-materialized and hash-bound in a hidden registry before any candidate outcome;
-the task is still not an admitted pair until both candidates complete two fresh
-container runs. The candidate worker/runner is now separately frozen and
-audited. Its first start was stopped by a pre-test CRLF patch-apply integrity
-failure; no candidate test outcome or task Gate was produced, and the same T4
-edit is being re-frozen with byte-correct patch serialization before execution.
+hidden regression nodes are now frozen. The official positive and frozen T4
+partial-reversion candidate completed two fresh container runs each. The positive passed all 26 checks;
+the negative consistently failed syntax, F2P, all 3 visible P2P, and all 20
+held-out checks. Because a negative must pass every visible check, the frozen
+task Gate is `DISCARD_TASK`, not admission. No candidate from this task enters
+the model-visible cohort; leakage is 0 and P4's final Gate is still pending.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,
@@ -80,6 +78,10 @@ P3 author sign-off is recorded in
 `docs/experiments/dsa_p3_author_signoff_v0_1.md`. P4 is now separately
 authorized and in progress; it still requires two fresh clean-environment runs
 for every admitted candidate, and no final cohort decision has been made.
+The first task-level candidate Gate is recorded in
+`docs/experiments/dsa_p4_fastapi_12_task_gate_v0_1.md`; it consumes one of the
+six nonstructural discard allowances, leaving five while preserving the frozen
+reserve order.
 
 The private development repository is
 `gaoming-a/research95-dsa-private`, configured locally as remote `private`.

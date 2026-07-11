@@ -1,0 +1,43 @@
+{
+  "created_date": "2026-07-11",
+  "records": [
+    {
+      "artifact_sha256": {
+        "data/cohorts/dsa_p4_model_visible_candidates_v0_1.json": "6c1db664439054b14cf5baade95beb5c1b194266ecf60003a2aab24c85fd8359",
+        "data/hidden/dsa_p4_candidate_registry_v0_1.json": "3244e2ac0bf43a0718aa1417aa1607220b0a3b82f8a2382f3f191e5a428f935e",
+        "data/hidden/dsa_p4_candidate_results_v0_1.json": "82f28bce81a20caf7fca948307c9a3b1f794bf99963310e6a38bed2cd3ae2273",
+        "data/hidden/dsa_p4_oracle_pool_registry_v0_1.json": "be575d65e509f1c4f70e66e8a9299efa03659b6c5b135477aefd1f89965518ee",
+        "data/hidden/dsa_p4_task_gate_v0_1.json": "deb6f8929fde7046d06b3fc7ea33f824690637478b0607844f3629c190b167c8",
+        "data/protocols/dsa_p4_separation_audit_v0_1.json": "48c9f18ba89866b318a322db0a038bd7bc978cd27612bcf8cc99c77f3788cb0f"
+      },
+      "candidate_results_sha256": "cdfbd008a2585c93d0d7150682f9897f9e38314db2eb515f58b410859d6eacc2",
+      "materialization_sha256": "2cd71a77407a96169fb8988fb914666dab372ab6e4663452d148ae670b67bbb3",
+      "model_api_calls": 0,
+      "p2_raw_sha256": {
+        "data/protocols/dsa_p2_development_exclusion_registry_v0_1.json": {
+          "actual": "7e8be772ac1b7fd70fcdaae1a038940916920cbf182d55fadf36717a2dcbba38",
+          "expected": "7e8be772ac1b7fd70fcdaae1a038940916920cbf182d55fadf36717a2dcbba38"
+        },
+        "data/protocols/dsa_p2_protocol_decision_v0_1.json": {
+          "actual": "b3443c506250196885787debb00adc612cca986f2485f63462f404f64b6c1ff2",
+          "expected": "b3443c506250196885787debb00adc612cca986f2485f63462f404f64b6c1ff2"
+        },
+        "data/protocols/dsa_p2_source_selection_v0_1.json": {
+          "actual": "9fe40e8a38053ffdc8c965070740704924d13b9901cf0c3ed25aa4c1be14bd4b",
+          "expected": "9fe40e8a38053ffdc8c965070740704924d13b9901cf0c3ed25aa4c1be14bd4b"
+        },
+        "data/protocols/dsa_p2_transform_registry_v0_1.json": {
+          "actual": "7c2eb308378b732ca2dbe9d1f7b8dc86ba836173f0346374f576093796276430",
+          "expected": "7c2eb308378b732ca2dbe9d1f7b8dc86ba836173f0346374f576093796276430"
+        }
+      },
+      "p3_manifest_aggregate": "f81ba7063297dc9264041256b99a7daa002bd730cbe1dbd9bfb105cd7aa71297",
+      "p5_entered": false,
+      "task_gate": "DISCARD_TASK",
+      "task_id": "bugsinpy_fastapi_12",
+      "worker_sha256": "1c9581a8e4858074a13b5b8ff64e464ee7712f57d1b74cea39370e940176a21e"
+    }
+  ],
+  "registry_id": "dsa_p4_candidate_hash_manifest_v0_1",
+  "visibility": "audit_not_model_input"
+}

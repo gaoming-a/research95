@@ -1,0 +1,27 @@
+{
+  "created_date": "2026-07-11",
+  "records": [
+    {
+      "expected_model_visible_candidate_count": 0,
+      "hidden_candidate_count": 2,
+      "hidden_model_visible_leakage_count": 0,
+      "key_leakage_findings": [],
+      "model_visible_candidate_count": 0,
+      "model_visible_map": {
+        "path_replacements": {
+          "fastapi/security/http.py": "module_001.py"
+        },
+        "symbol_replacements": {
+          "fastapi": "package_001"
+        }
+      },
+      "passed": true,
+      "placeholder_findings": [],
+      "task_gate": "DISCARD_TASK",
+      "task_id": "bugsinpy_fastapi_12",
+      "value_leakage_findings": []
+    }
+  ],
+  "registry_id": "dsa_p4_separation_audit_v0_1",
+  "visibility": "audit_not_model_input"
+}

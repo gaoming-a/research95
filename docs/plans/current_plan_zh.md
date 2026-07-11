@@ -100,6 +100,26 @@ P4 pre-transform checkpoint（2026-07-11）：
 - oracle capacity=`PASS`，registry 状态=`oracle_frozen_transform_not_materialized`。
   下一动作才允许按冻结 T4 物化唯一 hard negative；不得根据 hidden outcome换 transform。
 
+`bugsinpy_fastapi_12` candidate Gate（本 task-level Goal 完成）：
+
+- initial materialization commit=`90146a3`，runner freeze commit=`92c09c7`；首次正式启动
+  在任何 candidate test outcome 前被 CRLF/LF patch-apply integrity mismatch 阻断；
+- repair 保持同一 T4 selected edit SHA-256=`0a13deab2ab6aa6b37e4b54dff36d547532f7762ec12135e452548d0c22da2bf`，
+  新 materialization SHA-256=`2cd71a77407a96169fb8988fb914666dab372ab6e4663452d148ae670b67bbb3`；
+  repair commit=`9dab47b`，private push 当时 connection reset，未切 public origin；
+- 四个正式 containers distinct、image ID 一致、network=none、mounts=0、exit=0；
+  每候选 2 basic + 1 F2P + 3 visible P2P + 20 held-out checks 全部实际执行，
+  两环境 normalized outcome/exit code 全一致，无 placeholder/not_run；
+- official positive 在两环境中 26/26 checks 全 pass，status=`positive_valid`；
+- T4 negative 的 patch apply pass，但 py_compile 均为 IndentationError；F2P、3 个
+  visible P2P、20 个 held-out checks 均稳定失败。由于 visible 不全 pass，status=
+  `discard_visible_check_failure`，不得因 hidden 20/20 fail 而保留；
+- task Gate=`DISCARD_TASK`；admitted model-visible records=0、leakage=0；candidate
+  results SHA-256=`cdfbd008a2585c93d0d7150682f9897f9e38314db2eb515f58b410859d6eacc2`；
+- 该任务消耗 1 个非结构性 discard allowance，理论余量 6→5；P4 final Gate 未形成，
+  后续完整 P4 只能按 next frozen reserve 规则继续。本 Goal 在此任务停止，不进入
+  下一 task、P5、rendered prompt、paper result 或 model API。
+
 P4 test/oracle freeze rule（在任何 transformed candidate 结果前固定）：
 
 1. official declared F2P node/command 作为 visible F2P；

@@ -4,6 +4,7 @@
   "records": [
     {
       "candidate_materialization_sha256": "2cd71a77407a96169fb8988fb914666dab372ab6e4663452d148ae670b67bbb3",
+      "candidate_results_sha256": "cdfbd008a2585c93d0d7150682f9897f9e38314db2eb515f58b410859d6eacc2",
       "collection": {
         "candidate_tree_sha256": "efa2cfbb025c5d8cac1e49d47f8552020fc34e17a1e82b781ff819730b78b117",
         "collected_node_count": 252,
@@ -427,15 +428,16 @@
         "security"
       ],
       "stable_reference_node_count": 40,
-      "status": "candidates_materialized_outcomes_not_observed",
+      "status": "task_discarded",
       "stream_order": 2,
       "stream_role": "primary",
+      "task_gate": "DISCARD_TASK",
       "task_id": "bugsinpy_fastapi_12",
       "task_image": "dsa2026-p4-task:bugsinpy_fastapi_12",
       "task_image_id": "sha256:11fb7ffa940afd56884299fdb26a5775bf1b09ed87a5fb8c1c9213c04ad22da3",
       "test_root": "tests",
       "transformed_candidate_materialized": true,
-      "transformed_candidate_outcome_observed": false,
+      "transformed_candidate_outcome_observed": true,
       "visible_p2p_nodeids": [
         "tests/test_security_openid_connect_optional.py::test_security_oauth2_password_other_header",
         "tests/test_security_api_key_header.py::test_security_api_key",

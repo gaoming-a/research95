@@ -231,6 +231,53 @@ def load_or_run(
     return result
 
 
+def audit_runtime(
+    task: dict[str, Any],
+    oracle: dict[str, Any],
+    materialization: dict[str, Any],
+    runtime: dict[str, dict[str, dict[str, Any]]],
+) -> None:
+    expected_counts = {
+        "executable_basic": 1 + len(task["reference_source_paths"]),
+        "visible_f2p": len(task["declared_f2p_commands"]),
+        "visible_p2p": len(oracle["visible_p2p_nodeids"]),
+        "hidden_regression": len(oracle["hidden_regression_nodeids"]),
+    }
+    current_worker_sha256 = sha256_bytes(WORKER.read_bytes())
+    for candidate in materialization["candidates"]:
+        for run_id in ("A", "B"):
+            run = runtime[candidate["opaque_id"]][run_id]
+            if run["task_id"] != task["task_id"] or run["opaque_id"] != candidate["opaque_id"]:
+                raise ValueError("runtime task/candidate identity drift")
+            if run["image_id"] != oracle["task_image_id"] or run["network_mode"] != "none" or run["mounts"]:
+                raise ValueError("runtime isolation drift")
+            if run["container_exit_code"] != 0 or run["worker_sha256"] != current_worker_sha256:
+                raise ValueError("runtime worker integrity failure")
+            if run["candidate_patch_sha256"] != candidate["patch_sha256"]:
+                raise ValueError("runtime candidate patch identity drift")
+            preparation = run["worker"]["preparation"]
+            if preparation["candidate_patch_sha256"] != candidate["patch_sha256"]:
+                raise ValueError("worker patch hash drift")
+            if preparation["candidate_tree_sha256"] != candidate["candidate_tree_sha256"]:
+                raise ValueError("worker candidate tree hash drift")
+            for group, expected_count in expected_counts.items():
+                checks = run["worker"][group]
+                if len(checks) != expected_count:
+                    raise ValueError(f"{candidate['opaque_id']} {run_id} {group} count drift")
+                for check in checks:
+                    required = ("check_code", "command", "exit_code", "outcome", "output_excerpt")
+                    if any(key not in check for key in required):
+                        raise ValueError(f"incomplete check evidence in {group}")
+                    if not check["command"] or not str(check["output_excerpt"]).strip():
+                        raise ValueError(f"empty check evidence in {group}")
+                    if check["outcome"] not in {"passed", "failed"} or not isinstance(check["exit_code"], int):
+                        raise ValueError(f"invalid check outcome in {group}")
+                    if str(check["output_excerpt"]).strip().lower() in {
+                        "not_run", "not_recorded", "placeholder", "unknown"
+                    }:
+                        raise ValueError(f"placeholder check evidence in {group}")
+
+
 def check_map(run: dict[str, Any], group: str) -> dict[str, dict[str, Any]]:
     values = run["worker"][group]
     result = {item["check_code"]: item for item in values}
@@ -562,6 +609,7 @@ def main() -> None:
         if materialization["candidate_outcome_observed"]:
             raise ValueError("candidate outcome already observed")
     runtime = load_or_run(args, task, oracle, materialization)
+    audit_runtime(task, oracle, materialization, runtime)
     candidate_results = [
         build_candidate_result(candidate, runtime[candidate["opaque_id"]]["A"], runtime[candidate["opaque_id"]]["B"])
         for candidate in materialization["candidates"]

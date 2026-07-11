@@ -1,0 +1,20 @@
+{
+  "created_date": "2026-07-11",
+  "records": [
+    {
+      "candidate_results_sha256": "cdfbd008a2585c93d0d7150682f9897f9e38314db2eb515f58b410859d6eacc2",
+      "model_api_calls": 0,
+      "negative_disposition": "discard_visible_check_failure",
+      "p4_final_gate_formed": false,
+      "p5_entered": false,
+      "positive_disposition": "positive_valid",
+      "replacement_action": "use_next_frozen_reserve_when_full_P4_continues",
+      "stream_order": 2,
+      "stream_role": "primary",
+      "task_gate": "DISCARD_TASK",
+      "task_id": "bugsinpy_fastapi_12"
+    }
+  ],
+  "registry_id": "dsa_p4_task_gate_v0_1",
+  "visibility": "hidden_never_model_visible"
+}
