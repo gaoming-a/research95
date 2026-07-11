@@ -9,6 +9,35 @@
 model-visible/hidden manifests。本轮不调用模型 API、不进入 P5、不生成 rendered prompt、
 不修改论文结果或任何 P2/P3 冻结语义。
 
+当前 `bugsinpy_matplotlib_21` pre-outcome Goal（2026-07-11）：
+
+- 用户明确授权暂缓 private GitHub sync；只从本地 commit `10bf977` 和 cursor
+  SHA-256=`a212352973531adfc58b0e85978fcad1cf65adea100fb2584b66f03ebeb437fb`
+  处理唯一 next task primary #5 `bugsinpy_matplotlib_21`；public origin 仍禁止；
+- 重新验证 P2/P3 immutable hashes、P4 preflight、cursor、official metadata/commands、
+  buggy/fixed commits、Python 3.8.1 lock、pytest framework 和 prior activity=0；
+- 从 frozen official source 构造 task context并构建 task-specific image；不得根据
+  clean-environment 缺失依赖修补空 requirements 或新增 setup 命令；
+- official reference F2P 必须在两个 fresh、network=none、mounts=0 containers 中一致
+  通过；随后才可在任何 transformed candidate activity 前按冻结 source-token/tie-hash
+  规则冻结最多40个 regression identifiers，并在另两个 fresh containers 中逐项验证；
+- 只从稳定通过集合按 tie hash 冻结前3个 visible P2P和随后最多20个 held-out；环境、
+  F2P、capacity或双环境一致性任一失败即 pre-candidate discard；
+- 本 Goal 严禁物化或运行 T2 candidate；完成机器/人工证据、文档、本地提交后停止，
+  不进入下一 task、P5、rendered prompt、paper result 或 model API。
+
+Matplotlib pre-outcome source freeze：
+
+- official codeload buggy/fixed archives 经完整 gzip/tar 与 exact root 校验，SHA-256
+  分别为 `837661d62b25a5fd1ad06e3e279f4d31d8cd5b492d7886d644659fed112bd159`
+  与 `7800e3164b360ae7f75c9138f6d0704aa0f07c62d6139f3178a4242c4cf9553d`；
+- task context write/check 一致：context tree SHA-256=
+  `b26d8bfe8fb6f689b92be08e792acb2518ada992586dac2c7fc34013d4203ab9`，
+  reference tree SHA-256=`68ebadac604d296519588ce7c20ded570008aa749bb46189f8fd620f7a6d2c8e`，
+  record SHA-256=`b1e09a00c57d8adfcfb65a71f5c3028c873f988b56d4f9f573c52a797cfd6660`；
+- 归档获取阶段 candidate/image/test/model API activity 均为 0；下一动作只能在该
+  pre-outcome commit 后构建冻结 `py381` task image。
+
 当前 post-Tornado replacement-cursor Goal（2026-07-11）：
 
 - 只从 private-synced commit `6647c3c` 读取 P2/P3/P4 frozen inputs、FastAPI

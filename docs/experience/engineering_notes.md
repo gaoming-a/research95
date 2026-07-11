@@ -34,6 +34,12 @@
   require the live cursor to remain on that task forever. Use the task-source
   record's frozen cursor SHA as the historical anchor; otherwise a legitimate
   cursor advance makes prior environment evidence falsely unreplayable.
+- Improved BugsInPy's Conda environment name hashes only Python version plus
+  `requirements.txt`; tasks with the same version and empty requirements can
+  therefore reuse packages installed by earlier tasks' setup commands. Treat
+  source-frame buggy/fixed logs as provenance, not proof that a fresh P4 image
+  has those undeclared dependencies. A P4 task must use its isolated explicit
+  lock and frozen metadata without importing the shared environment state.
 - A hash-ordered transform is not reproducible until its edit identity and
   serialization are explicit. Before any candidate outcome, encode each T4
   source-diff line as canonical JSON over path, hunk index, line index, kind,

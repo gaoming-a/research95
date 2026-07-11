@@ -29,7 +29,8 @@
   `../scripts/dsa2026_p4_preflight.py`. This is not the final P4 Gate and does
   not authorize P5 or a model call.
 - `../data/protocols/dsa_p4_task_source_registry_v0_1.json`: pre-candidate
-  provenance for the unique replacement-cursor task `bugsinpy_tornado_10`,
+  provenance for processed replacement-cursor tasks, currently
+  `bugsinpy_tornado_10` and `bugsinpy_matplotlib_21`,
   including exact codeload archive, extracted-tree, fixed-test, frozen metadata,
   normalized reference-validation, and context hashes. The deterministic
   write/check entry point is

@@ -229,7 +229,8 @@ def build_context(
         raise ValueError("task does not equal the frozen replacement cursor")
     if task["candidate_materialized"] or task["candidate_hidden_result_observed"]:
         raise ValueError("preflight records prior candidate activity")
-    if source["project_repository"] != "https://github.com/tornadoweb/tornado":
+    repository = source["project_repository"].rstrip("/")
+    if not repository.startswith("https://github.com/") or repository.rsplit("/", 1)[-1] != task["project"]:
         raise ValueError("unexpected official project repository")
 
     context = temporary_root / task_id

@@ -68,6 +68,10 @@
   SHA-256=`a212352973531adfc58b0e85978fcad1cf65adea100fb2584b66f03ebeb437fb`；
   maximum possible pairs=34、remaining nonstructural discard budget=4。该 cursor Goal
   未构建/运行 Matplotlib task、container、candidate、test 或模型请求。
+- Matplotlib #21 的 official buggy/fixed codeload archives 与 task context 已完成
+  write/check freeze；context record SHA-256=
+  `b1e09a00c57d8adfcfb65a71f5c3028c873f988b56d4f9f573c52a797cfd6660`。
+  该 checkpoint 尚未构建 task image、运行 reference F2P/pool、物化 T2 或调用模型。
 
 ### 2026-07-10 DSA 路线计划基线（已由上方 P2 状态覆盖）
 

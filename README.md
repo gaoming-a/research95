@@ -54,6 +54,10 @@ distribution. The task is therefore discarded at the pre-candidate environment
 Gate: no image, F2P, regression pool, T1 candidate, or model call was produced.
 The completed replacement-cursor audit did not repair the environment or start
 another task; a separate later Goal is required to begin Matplotlib.
+That Matplotlib Goal has now frozen and replay-checked the exact official buggy
+and fixed archives, metadata, fixed test, reference patch, and task-context
+hashes. No task image, test, regression pool, transformed candidate, or model
+call had occurred at this pre-outcome source checkpoint.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,
