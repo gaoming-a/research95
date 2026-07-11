@@ -1,5 +1,31 @@
 # Engineering Notes
 
+## 2026-07-11 DSA P1 legacy-evidence quarantine
+
+- Removing only named top-level verdict fields is not a no-verdict guarantee.
+  The old E6 ablation left `visible_tests_rule_decision` nested under P2P
+  evidence in 98/98 packets. Leakage checks must recurse over the complete
+  model-visible object and reason about verdict-like semantics, not only a
+  short forbidden-key list.
+- A field name is not executable evidence. The old constructors emitted
+  `not_run`, `not_recorded`, `not_separately_materialized`, and empty P2P
+  collections while presenting a multi-level evidence ladder. Gate evidence
+  on actual materialization before any API call.
+- Failure reproduction does not require reopening sensitive payloads. Synthetic
+  empty patch/test inputs can exercise the retired constructor and isolate its
+  schema/control-flow defect without reading patch text, prompt text, raw model
+  outputs, credentials, or making API calls.
+- Preserve invalidated results as provenance instead of deleting them, but
+  enforce their permitted uses mechanically. A denylist plus a namespace scan
+  is stronger than prose saying that old numbers should not be reused.
+- An exclusion registry is not a candidate source. The frozen union of 28 old
+  tasks and 8 old projects can only prevent task/project reuse in P2; selecting
+  from it would invert the independence rule.
+- Venue policy/EI evidence and scientific validity are different gates. Missing
+  external DSA confirmation blocks submission, while no-API venue-neutral
+  scientific preparation can proceed. Model execution remains gated by P1--P5,
+  and DSA submission remains gated by V0.
+
 ## 2026-07-11 DSA P0 official-template and policy gate
 
 - Venue wording matters. The DSA track page explicitly says the 12/10-page

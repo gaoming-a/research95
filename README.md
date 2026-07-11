@@ -11,20 +11,21 @@ As of 2026-07-11, the sole active route is
 [the DSA 2026 execution plan](docs/plans/dsa_2026_submission_execution_plan_zh.md).
 The single target is a DSA 2026 Regular paper. A Short paper may be selected
 only as a separately frozen protocol before any model call; ACAI is inactive.
-Both DSA routes are currently NO-GO pending venue/AI/EI checks, old-evidence
-quarantine, cohort feasibility, precision simulation, nearest-neighbor review,
-and author-signed preregistration. No smoke, full run, or model API is
-authorized.
+Both DSA routes are currently NO-GO pending venue/AI/EI checks, cohort
+feasibility, precision simulation, nearest-neighbor review, and author-signed
+preregistration. P1 old-evidence quarantine has passed. No smoke, full run, or
+model API is authorized.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,
 and 250 dpi visual checks. The DSA-specific AI policy, institutional Compendex
 verification, 2026 IEEE conference identifiers, in-person presenting author,
-and authorship sign-off remain pending, so P0 is still STOP. See the
-[P0/D0 record](docs/submission/dsa_2026/p0_d0_record_zh.md).
+and authorship sign-off remain pending, so the parallel V0 submission gate is
+still STOP. It blocks DSA submission, not venue-neutral P2--P5 preparation. See
+the [P0/V0 record](docs/submission/dsa_2026/p0_d0_record_zh.md).
 
 The user has granted standing authorization for later model API use without a
-separate budget confirmation. It activates only after D0 and P1--P5 pass and
+separate budget confirmation. It activates only after P1--P5 pass and
 does not override request/cost hard caps or the no-rerun policy. Repeated private
 GitHub sync failures may be logged without stopping local work; the public
 origin must still never be used as a fallback push target.
@@ -38,6 +39,13 @@ are quarantined from the DSA title, abstract, results, conclusion, confidence
 intervals, and main figures. The DSA paper will be rebuilt in a new namespace
 with the official `IEEEconf.cls`; the existing seven-page `IEEEtran` PDF cannot
 be renamed into a submission.
+
+The P1 audit mechanically reproduced the nested verdict leak in 98/98
+E6-no-verdict packets and incomplete evidence construction in both 686-packet
+legacy full configurations. It froze 28 legacy tasks across 8 projects as an
+exclusion-only registry. The machine denylist and reproducible audit are
+[indexed below](docs/INDEX.md); the next and only active phase is no-API P2
+source feasibility and paper-format freezing.
 
 The private development repository is
 `gaoming-a/research95-dsa-private`, configured locally as remote `private`.

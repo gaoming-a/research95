@@ -1,0 +1,83 @@
+{
+  "denylist_id": "dsa_legacy_analysis_denylist_v0_1",
+  "effective_date": "2026-07-11",
+  "status": "active",
+  "scope": {
+    "analysis_namespace_glob": "scripts/dsa2026_*.py",
+    "p1_auditor": "scripts/audit_dsa_legacy_quarantine.py"
+  },
+  "policy": {
+    "permitted_legacy_uses": [
+      "provenance_inventory",
+      "task_and_project_exclusion",
+      "failure_reproduction",
+      "contamination_audit"
+    ],
+    "forbidden_legacy_uses": [
+      "dsa_candidate_inclusion",
+      "dsa_prompt_or_model_selection",
+      "dsa_effect_estimation",
+      "dsa_paper_table_or_figure",
+      "dsa_claim_map",
+      "dsa_manuscript_numeric_claim"
+    ]
+  },
+  "retired_prompts": [
+    {
+      "path": "prompts/evp8_visible_evidence_merge_gate_v0_1.md",
+      "sha256_before_deletion": "a31d23d74f5130c9ce06262c4a9f016a303da8e77683c007e7cfb142fb74066c"
+    },
+    {
+      "path": "prompts/evp8_visible_evidence_merge_gate_v0_2.md",
+      "sha256_before_deletion": "3e64dbedf9b0155f3013f30a4044631dc18d4f8d22920620941e16bd0e7d09f0"
+    },
+    {
+      "path": "prompts/evp8_tool_contestation_merge_gate_v0_1.md",
+      "sha256_before_deletion": "dbb09a88a3c4370d82cc257f9d44561924fcf7ba9f8cd21934adeabf2eb51bbc"
+    },
+    {
+      "path": "prompts/evp8_coverage_contestation_merge_gate_v0_1.md",
+      "sha256_before_deletion": "722608bd0b88ec8af3c31ce06fc756e39aa4c070f57292c9eea256a66e4c422a"
+    }
+  ],
+  "forbidden_input_globs": [
+    "data/reviews/evp8_*",
+    "data/protocols/evp8_*",
+    "data/patches/evp7_candidates.jsonl",
+    "data/patches/evp8_hard_*",
+    "data/evidence/evp7_*",
+    "data/baselines/evp7_*",
+    "docs/experiments/*evp8*",
+    "docs/paper/apsec_*"
+  ],
+  "forbidden_generator_scripts": [
+    "scripts/write_apsec_manuscript_rewrite.py",
+    "scripts/write_final_manuscript_claim_map.py",
+    "scripts/write_apsec_ieeetran_package.py",
+    "scripts/write_ieee_latex_draft.py",
+    "scripts/write_paper_tables.py"
+  ],
+  "forbidden_identifiers_in_dsa_analysis": [
+    "EVP-7",
+    "EVP-8",
+    "EVP-8-HARD",
+    "current-98",
+    "E6-no-verdict",
+    "coverage-contestation",
+    "tool-contestation",
+    "stress-31",
+    "evp8_",
+    "evp7_",
+    "apsec_"
+  ],
+  "safe_metadata_sources_for_exclusion_only": [
+    "data/protocols/evp8_candidate_set_v0_1.json",
+    "data/patches/evp8_hard_evaluator_manifest_v0_1.jsonl",
+    "data/protocols/evp8_realistic_hardneg_stress_cohort_v0_1.json",
+    "data/protocols/evp8_realistic_agent_cohort_manifest_v0_1.json"
+  ],
+  "supersedes": [
+    "data/reviews/final_experiment_setting_validity_audit_v0_1.json",
+    "docs/experiments/final_experiment_setting_validity_audit_v0_1.md"
+  ]
+}

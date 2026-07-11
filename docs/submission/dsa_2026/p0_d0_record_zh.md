@@ -5,8 +5,8 @@
 当前状态：P0_IN_PROGRESS / D0.6_TEMPLATE_BUILD_PASS_AUTHOR_METADATA_PENDING /
 D0.1--D0.3_AND_D0.5_PENDING / D0.4_BUDGET_AUTHORIZED_ATTENDANCE_PENDING
 
-本文件只记录 P0/D0。它不授权 P1、source feasibility、candidate transform、prompt、
-smoke、full run 或任何模型 API。
+本文件只记录并行 V0 投稿资格门。2026-07-11 用户确认继续后，V0 与科学执行门解耦：
+它不授权 submission，但不再阻塞 P1--P5。模型 API 仍须等 P1--P5 全部 passed。
 
 ## 1. Gate 总表
 
@@ -19,7 +19,8 @@ smoke、full run 或任何模型 API。
 | D0.5 authorship | PENDING | AI-use inventory 已建立；作者责任清单已列出 | 全体作者姓名/单位/邮箱和逐项人工签核 |
 | D0.6 venue/template | PARTIAL (technical pass) | 官方页面/ZIP 哈希、页限、`IEEEconf.cls` clean build、字体/渲染/PDF hash 均通过 | 用最终作者元数据替换 skeleton placeholder，投稿前再次核验活页面 |
 
-P0 总 Gate 仍为 STOP。D0.1--D0.5 全部 PASS 前不得激活 P1。
+V0 投稿 Gate 仍为 STOP。D0.1--D0.6 全部 PASS 前不得提交 DSA，但 P1--P5 可按各自
+科学 Gate 继续；D0.5 的科学责任部分必须在 P3 前完成。
 
 ## 2. Venue Decision Record
 
@@ -145,13 +146,13 @@ staging 生成，无 `.git`、作者本机路径、credentials、raw responses�
 1. 用户从自己的邮箱发送 `dsa_secretariat_inquiry_en.md`，保存 sent copy 和回复；
 2. 学校图书馆完成三届 Compendex 核验；
 3. 用户/全体作者完成 D0.4 与 D0.5 签核并提供作者元数据；
-在三项完成前，本轮只能提交 P0 文档和 template skeleton，不能进入 P1。
+三项必须在 P12 初始投稿前完成；它们继续并行跟踪，不再阻塞 P1/P2 no-API 工作。
 
 ## 9. API Standing Authorization
 
 2026-07-11 用户明确授权后续实验使用现有 API key，且无需再次确认预算。执行边界：
 
-- 本授权只在 D0、P1--P5 全部 passed 后激活；P0 当前不得调用模型；
+- 本授权只在 P1--P5 全部 passed 后激活；V0 不阻塞实验，但阻塞 DSA 投稿；
 - P5 必须先冻结 exact model IDs、requests、retries、token/cost hard cap、no-fallback、
   hashes 和中断恢复语义；
 - G1 smoke passed 后可自动进入满足 Gate 的 G2 full，不再请求预算确认；

@@ -2,6 +2,54 @@
 
 最后更新：2026-07-11
 
+## 0.50 2026-07-11 DSA P1 旧证据隔离与失效复现
+
+本轮小目标严格限定为 P1：把全部旧实验降为 provenance/development evidence，冻结
+DSA analysis denylist 和旧 task/project 排除表，并机械复现导致旧结果不可继续用于
+DSA 正向结论的根因。不进入 P2，不创建 prompt，不调用模型 API。
+
+Inspect：
+
+- P0 已完成官方 source/template/private remote 的本地证据包，但 AI policy、
+  Compendex、2026 publication metadata、现场报告人和作者签核仍是并行 V0 投稿门；
+- 旧 E6-no-verdict 只移除了 deterministic summary 顶层三个 verdict 字段；
+  `visible_pass_to_pass_regression_evidence` 内仍有 `visible_tests_rule_decision`；
+- 两个旧 full config 都依赖含 `not_run`、`not_separately_materialized`、
+  `not_recorded` 和空 P2P 列表的 packet 构造链；
+- 2026-07-03 validity audit 只支持 bounded claims，未覆盖递归泄漏、证据未物化、
+  cohort reuse 和分析单位问题；四个旧 prompt 已删除且删除前 hash 可核验。
+
+Plan：
+
+1. 将 V0 改为 P12 投稿前必须通过的外部门，与 P1--P5 科学 Gate 并行；
+2. 建立机器可读 denylist 和人工 evidence-family 注册表；
+3. 用空 patch/test 合成输入调用旧 packet 构造函数，复现嵌套泄漏与未物化字段；
+4. 从四个只含 metadata 的旧 manifest 冻结 task/project 排除并集；
+5. 扫描 `scripts/dsa2026_*.py` 命名空间，阻止旧输入、标识和 manuscript generator；
+6. 通过后只关闭 P1，不进入 P2。
+
+Execute：
+
+- 新建 `dsa_legacy_analysis_denylist_v0_1.json`，明确旧证据允许/禁止用途、退休
+  prompt hash、禁止输入 glob 和旧 generator；
+- 新建隔离注册表和 `audit_dsa_legacy_quarantine.py`；审计器只读列明的 config、
+  protocol 和 metadata，不读取 prompt/patch 正文、raw model output 或 API key；
+- 98/98 个 E6-no-verdict packet 复现嵌套 rule decision；两个旧 full config 各重建
+  686 个结构等价 packet，并复现 placeholder 与空 P2P evidence；
+- 冻结 28 个旧 task、8 个旧 project，明确该集合只供 P2 排除，不是候选池；
+- P1 audit 明确取代 2026-07-03 validity audit 的 DSA 有效性地位，但不删除旧文件。
+
+Verify/Diagnose/Repair/Gate：
+
+- 初次 `--write` 与随后独立 `--check` 全部五项 PASS；顶层 verdict 残留为 0，嵌套
+  `visible_tests_rule_decision` 为 98/98；两个 config 的 packet 数均为 686；
+- 新 DSA namespace 当前为空，guard 无违规；任何新增 `dsa2026_*.py` 后必须重跑；
+- 审计过程 `api_call_attempted=false`、`api_key_read=false`、
+  `raw_model_output_read=false`、`prompt_text_read=false`、
+  `legacy_patch_text_read=false`；
+- P1 Gate=`PASS`。V0 仍为投稿 STOP，不阻塞后续科学准备；API standing
+  authorization 仍未激活，因为 P2--P5 尚未通过；下一轮唯一入口为 P2。
+
 ## 0.49 2026-07-11 DSA P0/D0 官方政策、模板与执行授权
 
 本轮小目标严格限定为总计划 P0/D0：核验 DSA/IEEE 官方信息、建立 AI/EI/

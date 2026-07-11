@@ -11,18 +11,33 @@
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
   sole active master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is
-  inactive. Status: `P0_IN_PROGRESS / REGULAR_NO_GO / SHORT_NO_GO`. It defines
+  inactive. Status: `P1_LEGACY_QUARANTINE_PASS / P2_NOT_STARTED /
+  V0_SUBMISSION_GATE_PENDING`. It defines
   venue/AI/EI gates, old-data
   quarantine, a task-disjoint C0--C3 experiment, no-rerun rules, finite-cohort
   statistics, evidence-first paper reconstruction, official `IEEEconf.cls` PDF
   QA, private artifact/Git boundaries, and the submission-to-presentation
   timeline. A 2026-07-11 standing API authorization exists but activates only
-  after D0 and P1--P5 pass; no prompt/model call is allowed during P0.
+  after P1--P5 pass; P2--P5 are still pending, so no prompt/model call is allowed.
+- [dsa_legacy_evidence_quarantine_registry_v0_1.md](experiments/dsa_legacy_evidence_quarantine_registry_v0_1.md):
+  human-readable P1 classification of legacy artifact families and exact
+  permitted/forbidden DSA uses.
+- [dsa_legacy_quarantine_audit_v0_1.md](experiments/dsa_legacy_quarantine_audit_v0_1.md):
+  superseding P1 validity audit. It reproduces the 98/98 nested-decision leak,
+  incomplete 686-packet constructors, retired-prompt state, exclusion registry,
+  and DSA namespace guard without API, prompt text, patch text, or raw outputs.
+- `../data/protocols/dsa_legacy_analysis_denylist_v0_1.json`: machine-readable
+  legacy input/generator/identifier denylist.
+- `../data/protocols/dsa_legacy_task_exclusion_registry_v0_1.json`: 28-task,
+  8-project exclusion-only registry for P2.
+- `../scripts/audit_dsa_legacy_quarantine.py`: deterministic `--write`/`--check`
+  P1 auditor; rerun after every new or modified `scripts/dsa2026_*.py`.
 - [p0_d0_record_zh.md](submission/dsa_2026/p0_d0_record_zh.md): consolidated
   P0 gate table, venue decision, AI-use inventory, Engineering Village query
   sheet, logistics/authorship sign-off, private remote recommendation, and API
-  standing-authorization boundary. P0 remains STOP because external policy,
-  EI, attendance, and authorship evidence is incomplete.
+  standing-authorization boundary. Parallel V0 remains STOP because external
+  policy, EI, attendance, and authorship evidence is incomplete; it blocks DSA
+  submission but not P2--P5 venue-neutral preparation.
 - [official_source_snapshot_20260711.md](submission/dsa_2026/official_source_snapshot_20260711.md):
   hashed DSA/IEEE source snapshot, exact page/author/date/publication boundaries,
   past IEEE proceedings IDs, contact address, and official template hashes.

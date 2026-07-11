@@ -2,13 +2,13 @@
 
 计划编号：DSA-2026-EVIDENCE-POLICY-20260710
 制定日期：2026-07-10
-当前状态：P0_IN_PROGRESS / REGULAR_NO_GO / SHORT_NO_GO /
-D0.1--D0.5_PENDING / D0.6_TEMPLATE_BUILD_PASS_AUTHOR_METADATA_PENDING
+当前状态：P1_LEGACY_QUARANTINE_PASS / P2_NOT_STARTED / REGULAR_NO_GO /
+SHORT_NO_GO / V0_SUBMISSION_GATE_PENDING
 唯一主目标：DSA 2026 Regular Paper
 同会场降级：DSA 2026 Short Paper，仅可在任何模型调用前锁定
 非活动备选：ACAI 2026；不得并行投稿，也不得在看到 DSA 实验结果后切换
 用户优先级：科学与收录稳健性优先，其次才是时间
-本轮边界：只制定计划；不创建 prompt，不运行实验，不调用 API，不改论文结果
+本轮边界：P1 已完成；不创建 prompt，不进入 P2，不调用 API，不改论文结果
 
 ## 1. 权威性与目标覆盖
 
@@ -27,7 +27,7 @@ D0.1--D0.5_PENDING / D0.6_TEMPLATE_BUILD_PASS_AUTHOR_METADATA_PENDING
 后续每轮只激活一个阶段。阶段 Gate 未通过时，不得顺手进入下一阶段；no-API
 轮次不得调用模型，standing authorization 也不得绕过 smoke/full 各自的 Gate。
 
-2026-07-11 用户持续授权覆盖：在 D0、P1--P5 全部 passed、模型/packet/analysis 和
+2026-07-11 用户持续授权覆盖：在 P1--P5 全部 passed、模型/packet/analysis 和
 exact hard maximum 已冻结后，smoke 与随后满足 Gate 的 full run 可使用现有 API key
 自动执行，不再单独确认预算。该授权不覆盖提前调用、不允许突破 request/retry/token/
 cost hard cap，也不覆盖因结果方向而重跑。GitHub 同步仍先尽力执行；private remote
@@ -89,15 +89,15 @@ conclusion 和主图表删除；ID/hash 只保留在 quarantine/provenance 账�
   digital library 和 EI indexing；
 - early author registration 为 IEEE/REAJ/ORSC member USD 700，其他 USD 750。
 
-“提交 EI”不是最终检索保证。进入实验前必须通过六项 D0：
+“提交 EI”不是最终检索保证。以下六项是 DSA 投稿资格门 V0，不是内部实验有效性门：
 
 | 门 | 必须得到的证据 | 未通过时 |
 |---|---|---|
-| D0.1 AI policy | DSA Secretariat 对现有 AI 参与、IEEE disclosure 位置和允许范围的书面回复 | 停止 DSA 科学内容与 API |
+| D0.1 AI policy | DSA Secretariat 对现有 AI 参与、IEEE disclosure 位置和允许范围的书面回复 | 未回复前不得提交 DSA；venue-neutral 科学准备可继续 |
 | D0.2 EI | 学校图书馆核验近三届 DSA proceedings 的 Compendex 记录；保存检索式、日期和截图/导出 | 不把 DSA 视为满足最低 EI |
-| D0.3 publication | 核对 2026 IEEE conference ID、ISBN、CPS 和现场报告要求 | 信息不一致则暂停 |
+| D0.3 publication | 核对 2026 IEEE conference ID、ISBN、CPS 和现场报告要求 | 信息不一致则停止 DSA 投稿 |
 | D0.4 logistics | 用户已授权注册/差旅预算无需再次确认；作者仍须确认厦门现场报告人和可行性 | 无共同作者能现场报告则停止 |
-| D0.5 authorship | 作者逐项盘点 AI 参与并确认能独立审查、复现和承担最终科学内容 | 无法如实披露则停止 |
+| D0.5 authorship | P3 前确认科学责任；P12 前冻结姓名、单位、邮箱和顺序 | 无法承担或如实披露则不得 API/投稿 |
 | D0.6 venue/template snapshot | 保存 CFP、submission、track、proceedings、registration 和官方 template ZIP 的快照/哈希；用 `IEEEconf.cls` clean-build 最小实名 skeleton，核验 Letter、作者/keyword、页限和引用计页规则 | 网页或模板不一致则暂停 |
 
 DSA 页面尚未给出 venue-specific GenAI 细则。IEEE 通用政策要求披露 AI 生成的
@@ -107,11 +107,18 @@ DSA 页面尚未给出 venue-specific GenAI 细则。IEEE 通用政策要求披�
 本计划本身由 AI 协助形成。作者必须在 D0.5 中逐条接受、修改或否决设计决定，
 形成作者签核版本；本计划不能代替作者的方法学责任。
 
+2026-07-11 Gate 解耦修订：V0 外部门与 P1--P5 科学门并行推进。V0 必须在 P12 初始
+投稿前全部 pass，但不再阻塞 P1 quarantine、P2 source feasibility 或其他 no-API
+科学准备。首次模型调用只由 P1--P5、冻结 hard cap 和 standing authorization 控制；
+D0.5 的科学责任部分仍须在 P3 前完成。若 V0 最终失败，保留冻结实验作为
+venue-neutral evidence，另选已核验 EI venue；不得为换会场重跑或挑选结果。
+
 2026-07-11 P0 执行记录：官方页面、IEEE 通用 AI policy、三届 IEEE proceedings、
 Secretariat 联系邮箱和模板 ZIP 已核验；`IEEEconf.cls` skeleton 已 clean-build 并通过
 字体/渲染审计。询问信已完成但未发送，Engineering Village 核验、2026 CPS ID/ISBN、
 现场报告人、作者责任和最终作者元数据仍待外部确认。权威状态见
-`docs/submission/dsa_2026/p0_d0_record_zh.md`；P0 Gate 仍为 STOP，不得进入 P1。
+`docs/submission/dsa_2026/p0_d0_record_zh.md`；V0 投稿 Gate 仍为 STOP，但按上述解耦
+规则不再阻塞 P1。
 
 ### D0 时间门
 
@@ -146,8 +153,9 @@ Secretariat 联系邮箱和模板 ZIP 已核验；`IEEEconf.cls` skeleton 已 cl
 5. 结果弱、CI 宽、p 值不显著或 reviewer 意见都不能触发 Regular→Short；
 6. Short 不能使用旧 task 补规模。
 
-当前 Regular 和 Short 都是 NO-GO。只有 D0、P1、P2、P3 各自形成可审计的 passed
-记录后，所选稿型才可进入 cohort materialization；“默认 Regular”不是实验授权。
+当前 Regular 和 Short 都是 NO-GO。只有 P1、P2、P3 以及 D0.5 科学责任部分各自形成
+可审计的 passed 记录后，所选稿型才可进入 cohort materialization；V0 其余外部项在
+P12 前并行完成；“默认 Regular”不是实验授权。
 
 API 前 precision simulation 只针对一个已锁定目标：冻结 tasks/models/providers/run
 window 后，独立 stateless repeats 所诱导的 decision stochasticity。task/project 不是
@@ -479,8 +487,8 @@ policy 完成尚未成功写入的 request。若科学设计或执行语义必�
 输出：venue decision record、AI-use inventory、EI verification record、attendance/
 budget sign-off、private remote decision、DSA 官方页面/template ZIP 快照及哈希、
 可 clean-build 的最小 `IEEEconf.cls` skeleton PDF 与编译日志。
-Gate：D0.1--D0.6 全 pass。
-停止：任一未确认。
+Gate：本地 source/template/remote 证据包完成；D0.1--D0.6 作为并行 V0 投稿门跟踪。
+停止：V0 未全 pass 时不得进入 P12 初始投稿；不阻塞 P1--P5 科学准备。
 
 ### P1：旧证据 quarantine
 
@@ -488,6 +496,14 @@ Gate：D0.1--D0.6 全 pass。
 禁止新 generator 读取旧 paper-facing metric。
 输出：quarantine registry、superseding validity audit。
 Gate：旧结果不能进入新 analysis/claim map。
+
+2026-07-11 执行结果：PASS。机器 denylist、人工隔离注册表、superseding audit 和
+task/project exclusion registry 已冻结；98/98 个结构等价 E6-no-verdict packet 复现
+嵌套 `visible_tests_rule_decision`，两个旧 full config 各复现 686 个 packet 的
+placeholder/空 P2P evidence；28 个旧 task 和 8 个旧 project 只供 P2 排除。
+`scripts/audit_dsa_legacy_quarantine.py --check` 全部通过，且未读取 prompt/patch 正文、
+raw response、API key，也未调用 API。此结果取代 2026-07-03 的旧 validity audit；
+旧文件继续保留为 provenance。
 
 ### P2：source feasibility 与稿型冻结
 
@@ -784,17 +800,16 @@ full；若 2026-08-15 没有完整有效结果，不用旧结果替代。
 
 ## 14. 下一轮唯一入口
 
-下一轮只执行 P0/D0；P0 Gate 通过后另开一轮只执行 P1：
+下一轮只执行 P2 source feasibility 与稿型冻结；V0 外部材料继续并行等待：
 
-1. 生成待作者发送的 DSA AI/EI/publication 询问信；
-2. 建立 private AI-use inventory 与 venue decision record；
-3. 核验已创建的 private GitHub remote 和 public no-push boundary；
-4. 下载并哈希官方页面/template ZIP，clean-build 最小 `IEEEconf.cls` skeleton；
-5. 核验 EI、现场报告、费用、作者和 artifact/页数规则；
-6. 更新闭环文档并提交；只向 `private` 尽力推送，失败时记录并继续。
+1. 先读取 P1 exclusion registry，确保 development/source 完全 task/project-disjoint；
+2. 只在 excluded development tasks 上设计并验证 transform registry；
+3. 对 primary/reserve source 只做 source-level feasibility，不应用 transform、不查看
+   candidate hidden 结果；
+4. 冻结 seed、source frame、primary/reserve list，并运行 conditional precision
+   simulation 与 nearest-neighbor 文献预检；
+5. 在任何模型调用前唯一冻结 Regular 或 Short；
+6. P2 passed 后停止，本轮不得顺手进入 P3。
 
-本轮禁止提前建立 P1 quarantine registry 或盘点 P2 source feasibility。只有 P0 passed
-记录存在时，下一独立轮才可激活 P1；P1 passed 后再单独激活 P2。
-
-在 D0、P1、P2、P3、P4、P5 全部通过前，不调用任何模型；全部通过后按 2026-07-11
+在 P1、P2、P3、P4、P5 全部通过前，不调用任何模型；全部通过后按 2026-07-11
 standing authorization 执行，不再单独确认预算。
