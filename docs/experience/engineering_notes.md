@@ -1,5 +1,38 @@
 # Engineering Notes
 
+## 2026-07-11 DSA P4 bootstrap and pre-transform audit
+
+- A stopped reproduction container can contain fresh official Git objects even
+  when its environment build failed. Export a Git bundle from committed refs
+  only; never carry its dirty worktree, copied benchmark index, logs, or prior
+  outcomes into a clean source snapshot.
+- BugsInPy's improved runner copies its own historical `bugsinpy-index.csv` and
+  CRLF shell scripts when the repository is mounted from Windows. A true run
+  must remove the copied index/temp state and normalize executable scripts
+  before invoking the framework; otherwise it can silently skip work or fail
+  with `/bin/bash^M`.
+- Container TLS EOF affected the official Anaconda, PyPI, and GitHub endpoints
+  while HTTPS mirrors passed certificate verification. Keep `ssl_verify=true`,
+  freeze a single mirror and explicit package URLs, and put network resolution
+  in the image-build phase rather than disabling TLS or retrying during the
+  experiment.
+- Old Python alone is not a sufficient environment lock. Conda selected
+  setuptools 75.1.0, then the 2020 requirements installed packaging 20.4;
+  setuptools called an API absent from that packaging version and project
+  installation failed before the F2P ran. Pin pip 20.1.1, setuptools 47.1.1,
+  wheel 0.34.2, pytest 5.4.3, and packaging 20.4 together, then verify the
+  actual target node. The repaired fresh sanic run produced buggy=fail and
+  fixed=pass.
+- BuildKit treats an unqualified local `image@digest` in `FROM` as a registry
+  reference and may contact Docker Hub. Use the local frozen tag only after a
+  mandatory RepoDigest assertion; record both the expected base digest and the
+  resulting toolchain image ID.
+- P2 froze transform priority, not a per-task candidate. P4 must compute shape
+  over the official source-only `bug_patch.txt`, exclude test paths from all
+  candidate edits, and record atomic patches as no-transform discards before
+  any outcome. With 36 structurally eligible tasks for a 30-pair target, only
+  six further exclusions can occur without `STOP_DSA`.
+
 ## 2026-07-11 DSA P3 candidate freeze and author gate
 
 - Final closure should bind the exact author declaration, not just a copied

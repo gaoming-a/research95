@@ -21,6 +21,13 @@
   timeline. A 2026-07-11 standing API authorization exists but activates only
   after P1--P5 pass; P4 is in progress and P5 is pending, so no model call is
   allowed.
+- [dsa_p4_preflight_v0_1.md](experiments/dsa_p4_preflight_v0_1.md):
+  passing pre-transform P4 audit for immutable P2/P3 inputs, source-only
+  transform applicability, six explicit Conda locks, the candidate-independent
+  toolchain image, and the sanic environment-chain repair. Machine evidence is
+  `../data/protocols/dsa_p4_preflight_v0_1.json`; the deterministic auditor is
+  `../scripts/dsa2026_p4_preflight.py`. This is not the final P4 Gate and does
+  not authorize P5 or a model call.
 - [dsa_p3_preregistration_v0_1.md](experiments/dsa_p3_preregistration_v0_1.md):
   human-readable P3 research questions, primary estimands, cumulative evidence
   contract, task-level conditional statistics, exact model routes, exclusions,

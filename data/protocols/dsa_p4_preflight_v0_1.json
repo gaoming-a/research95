@@ -1,0 +1,1876 @@
+{
+  "boundary": "P4 preflight only: no candidate, hidden outcome, model-visible packet, rendered prompt, P5 artifact, paper metric, or model API call was produced.",
+  "checks": {
+    "all_f2p_commands_match_catalog": true,
+    "all_task_metadata_hashed": true,
+    "base_image_digest_match": true,
+    "bootstrap_locks_complete": true,
+    "bootstrap_locks_explicit_https_only": true,
+    "bootstrap_locks_hash_match": true,
+    "no_legacy_candidate_or_result_read": true,
+    "no_model_api_call": true,
+    "no_rendered_prompt_generated": true,
+    "official_catalog_commit_unchanged": true,
+    "p2_raw_hashes_unchanged": true,
+    "p3_gate_pass": true,
+    "p3_manifest_16_files": true,
+    "p3_manifest_aggregate_unchanged": true,
+    "p3_manifest_files_unchanged": true,
+    "p3_manifest_immutable_author_signed": true,
+    "p5_not_entered": true,
+    "regular_order_30_primary_10_reserve": true,
+    "structural_capacity_at_least_30": true,
+    "toolchain_image_id_match": true,
+    "transform_structure_frozen_before_candidates": true
+  },
+  "created_date": "2026-07-11",
+  "environment_bootstrap": {
+    "base_image": "dsa2026-p4-base:conda23.3.1-r1",
+    "base_repo_digest": "dsa2026-p4-base@sha256:e4e42fb5e98a45ba82afd5f9d4cd2ad297bbfe912ca3954eb03f2d7b57c7fa98",
+    "bootstrap_packages": {
+      "packaging": "20.4",
+      "pip": "20.1.1",
+      "pytest": "5.4.3",
+      "setuptools": "47.1.1",
+      "wheel": "0.34.2"
+    },
+    "candidate_source_or_outcome_in_image": false,
+    "conda_channel": "https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main",
+    "locks": [
+      {
+        "actual_sha256": "127d75b0d841583a2250c48b0a833de078b5ae45e0e606888f6928eb621c7a4e",
+        "environment_name": "py369",
+        "expected_sha256": "127d75b0d841583a2250c48b0a833de078b5ae45e0e606888f6928eb621c7a4e",
+        "explicit": true,
+        "only_frozen_https_mirror": true,
+        "path": "data/environment_locks/dsa2026_p4_bootstrap/py369-linux-64.txt",
+        "python_version": "3.6.9"
+      },
+      {
+        "actual_sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82",
+        "environment_name": "py370",
+        "expected_sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82",
+        "explicit": true,
+        "only_frozen_https_mirror": true,
+        "path": "data/environment_locks/dsa2026_p4_bootstrap/py370-linux-64.txt",
+        "python_version": "3.7.0"
+      },
+      {
+        "actual_sha256": "f5f36238a1b97f435d93a9ff7b23c5fa12b075fc616ee05e66bd2c6e72552fd5",
+        "environment_name": "py373",
+        "expected_sha256": "f5f36238a1b97f435d93a9ff7b23c5fa12b075fc616ee05e66bd2c6e72552fd5",
+        "explicit": true,
+        "only_frozen_https_mirror": true,
+        "path": "data/environment_locks/dsa2026_p4_bootstrap/py373-linux-64.txt",
+        "python_version": "3.7.3"
+      },
+      {
+        "actual_sha256": "8fd9517e7b4a6a22002488faa14b752e4de41bad6e37211a81ec8f67fe11adb7",
+        "environment_name": "py377",
+        "expected_sha256": "8fd9517e7b4a6a22002488faa14b752e4de41bad6e37211a81ec8f67fe11adb7",
+        "explicit": true,
+        "only_frozen_https_mirror": true,
+        "path": "data/environment_locks/dsa2026_p4_bootstrap/py377-linux-64.txt",
+        "python_version": "3.7.7"
+      },
+      {
+        "actual_sha256": "df1e425eedcb0d3806b5bf10c55e369648621d93f46f5754cdc85f8435cf21f8",
+        "environment_name": "py381",
+        "expected_sha256": "df1e425eedcb0d3806b5bf10c55e369648621d93f46f5754cdc85f8435cf21f8",
+        "explicit": true,
+        "only_frozen_https_mirror": true,
+        "path": "data/environment_locks/dsa2026_p4_bootstrap/py381-linux-64.txt",
+        "python_version": "3.8.1"
+      },
+      {
+        "actual_sha256": "6a25cb9316d222d0bf8b53b516268668cb23b3bebc1cf3ede3d6d33dbc872144",
+        "environment_name": "py383",
+        "expected_sha256": "6a25cb9316d222d0bf8b53b516268668cb23b3bebc1cf3ede3d6d33dbc872144",
+        "explicit": true,
+        "only_frozen_https_mirror": true,
+        "path": "data/environment_locks/dsa2026_p4_bootstrap/py383-linux-64.txt",
+        "python_version": "3.8.3"
+      }
+    ],
+    "pip_index": "https://pypi.tuna.tsinghua.edu.cn/simple",
+    "ssl_verification": true,
+    "toolchain_image": "dsa2026-p4-toolchains:bootstrap-v0_1",
+    "toolchain_image_id": "sha256:97e089cee02d0908e374f7b784ee0ffbb2fe5a2d64f619335aa962dc3ab3d768"
+  },
+  "p2_raw_sha256": {
+    "data/protocols/dsa_p2_development_exclusion_registry_v0_1.json": {
+      "actual": "7e8be772ac1b7fd70fcdaae1a038940916920cbf182d55fadf36717a2dcbba38",
+      "expected": "7e8be772ac1b7fd70fcdaae1a038940916920cbf182d55fadf36717a2dcbba38"
+    },
+    "data/protocols/dsa_p2_protocol_decision_v0_1.json": {
+      "actual": "b3443c506250196885787debb00adc612cca986f2485f63462f404f64b6c1ff2",
+      "expected": "b3443c506250196885787debb00adc612cca986f2485f63462f404f64b6c1ff2"
+    },
+    "data/protocols/dsa_p2_source_selection_v0_1.json": {
+      "actual": "9fe40e8a38053ffdc8c965070740704924d13b9901cf0c3ed25aa4c1be14bd4b",
+      "expected": "9fe40e8a38053ffdc8c965070740704924d13b9901cf0c3ed25aa4c1be14bd4b"
+    },
+    "data/protocols/dsa_p2_transform_registry_v0_1.json": {
+      "actual": "7c2eb308378b732ca2dbe9d1f7b8dc86ba836173f0346374f576093796276430",
+      "expected": "7c2eb308378b732ca2dbe9d1f7b8dc86ba836173f0346374f576093796276430"
+    }
+  },
+  "p3_manifest_audit": {
+    "aggregate_actual": "f81ba7063297dc9264041256b99a7daa002bd730cbe1dbd9bfb105cd7aa71297",
+    "aggregate_expected": "f81ba7063297dc9264041256b99a7daa002bd730cbe1dbd9bfb105cd7aa71297",
+    "file_count": 16,
+    "files_all_passed": true,
+    "immutable": true,
+    "manifest_status": "immutable_author_signed",
+    "records": [
+      {
+        "actual_canonical_utf8_bytes": 1114,
+        "actual_sha256": "c89958e6f2035768c837ff7c3d1c820338a9b5d929910d37db522e4580909573",
+        "expected_canonical_utf8_bytes": 1114,
+        "expected_sha256": "c89958e6f2035768c837ff7c3d1c820338a9b5d929910d37db522e4580909573",
+        "passed": true,
+        "path": "data/protocols/dsa_p2_protocol_decision_v0_1.json"
+      },
+      {
+        "actual_canonical_utf8_bytes": 34483,
+        "actual_sha256": "df8ef95685d27fb58a75dcf7de535f60e93fe85205aabeff34d3c26704881b96",
+        "expected_canonical_utf8_bytes": 34483,
+        "expected_sha256": "df8ef95685d27fb58a75dcf7de535f60e93fe85205aabeff34d3c26704881b96",
+        "passed": true,
+        "path": "data/protocols/dsa_p2_source_selection_v0_1.json"
+      },
+      {
+        "actual_canonical_utf8_bytes": 2817,
+        "actual_sha256": "7fa1395a77af44e4e81a205ac305ae2081e4971677e94f5cb32116f54a7f5bcd",
+        "expected_canonical_utf8_bytes": 2817,
+        "expected_sha256": "7fa1395a77af44e4e81a205ac305ae2081e4971677e94f5cb32116f54a7f5bcd",
+        "passed": true,
+        "path": "data/protocols/dsa_p2_transform_registry_v0_1.json"
+      },
+      {
+        "actual_canonical_utf8_bytes": 3481,
+        "actual_sha256": "fc270d1ae46eef5971ba3d91ca93fe9377c5f62b66cc716686c93813f8808779",
+        "expected_canonical_utf8_bytes": 3481,
+        "expected_sha256": "fc270d1ae46eef5971ba3d91ca93fe9377c5f62b66cc716686c93813f8808779",
+        "passed": true,
+        "path": "data/protocols/dsa_p2_development_exclusion_registry_v0_1.json"
+      },
+      {
+        "actual_canonical_utf8_bytes": 12747,
+        "actual_sha256": "417b148eacc2b0ea038331a68627c1c97fb9be0d3c44d32924fe5ee4ea6e9560",
+        "expected_canonical_utf8_bytes": 12747,
+        "expected_sha256": "417b148eacc2b0ea038331a68627c1c97fb9be0d3c44d32924fe5ee4ea6e9560",
+        "passed": true,
+        "path": "data/protocols/dsa_p3_preregistration_v0_1.json"
+      },
+      {
+        "actual_canonical_utf8_bytes": 461,
+        "actual_sha256": "e510298422c014932fb9ba54ff5286ec5b7b93996f2b05fd2972445ab6911c91",
+        "expected_canonical_utf8_bytes": 461,
+        "expected_sha256": "e510298422c014932fb9ba54ff5286ec5b7b93996f2b05fd2972445ab6911c91",
+        "passed": true,
+        "path": "data/protocols/dsa_p3_author_declaration_v0_1.txt"
+      },
+      {
+        "actual_canonical_utf8_bytes": 4291,
+        "actual_sha256": "315a94e8e2e5c229cd346f25a60a0dec7f6de7aac3ef7facdcf224ea7086cd56",
+        "expected_canonical_utf8_bytes": 4291,
+        "expected_sha256": "315a94e8e2e5c229cd346f25a60a0dec7f6de7aac3ef7facdcf224ea7086cd56",
+        "passed": true,
+        "path": "data/protocols/dsa_p3_evidence_contract_v0_1.json"
+      },
+      {
+        "actual_canonical_utf8_bytes": 7858,
+        "actual_sha256": "fffecebdbede79e4fa0f38371fabf0a21bedb39987274d51de1dc25579efe077",
+        "expected_canonical_utf8_bytes": 7858,
+        "expected_sha256": "fffecebdbede79e4fa0f38371fabf0a21bedb39987274d51de1dc25579efe077",
+        "passed": true,
+        "path": "data/protocols/dsa_p3_model_freeze_v0_1.json"
+      },
+      {
+        "actual_canonical_utf8_bytes": 940,
+        "actual_sha256": "622212864170cbe6bb0677f230b5008947b9bf1a95f665f82cded1f44b91dbf9",
+        "expected_canonical_utf8_bytes": 940,
+        "expected_sha256": "622212864170cbe6bb0677f230b5008947b9bf1a95f665f82cded1f44b91dbf9",
+        "passed": true,
+        "path": "data/protocols/dsa_p3_output_schema_v0_1.json"
+      },
+      {
+        "actual_canonical_utf8_bytes": 1343,
+        "actual_sha256": "08a485635924a6813a2d646518c02dacf9fa108b6a5271efb88fe35d79d4809e",
+        "expected_canonical_utf8_bytes": 1343,
+        "expected_sha256": "08a485635924a6813a2d646518c02dacf9fa108b6a5271efb88fe35d79d4809e",
+        "passed": true,
+        "path": "prompts/dsa2026_evidence_conditioned_patch_gate_v0_1.md"
+      },
+      {
+        "actual_canonical_utf8_bytes": 9103,
+        "actual_sha256": "06a406b88806221117b1ad5d9928fe823769c77289b4d05383a6ceee4fb7a665",
+        "expected_canonical_utf8_bytes": 9103,
+        "expected_sha256": "06a406b88806221117b1ad5d9928fe823769c77289b4d05383a6ceee4fb7a665",
+        "passed": true,
+        "path": "prompts/prompt_change_log.md"
+      },
+      {
+        "actual_canonical_utf8_bytes": 6555,
+        "actual_sha256": "8758ef9f83fcd995ca548dd21c7a19d65caeaae939b82c457d1917f6830d1446",
+        "expected_canonical_utf8_bytes": 6555,
+        "expected_sha256": "8758ef9f83fcd995ca548dd21c7a19d65caeaae939b82c457d1917f6830d1446",
+        "passed": true,
+        "path": "docs/experiments/dsa_p3_preregistration_v0_1.md"
+      },
+      {
+        "actual_canonical_utf8_bytes": 3386,
+        "actual_sha256": "1b5da1960eb6751e1a449554e153666f73033609f771bddee55247794a06137c",
+        "expected_canonical_utf8_bytes": 3386,
+        "expected_sha256": "1b5da1960eb6751e1a449554e153666f73033609f771bddee55247794a06137c",
+        "passed": true,
+        "path": "docs/experiments/dsa_p3_model_provider_verification_v0_1.md"
+      },
+      {
+        "actual_canonical_utf8_bytes": 2789,
+        "actual_sha256": "9ff04c21e495af5be22a96027fab9be3e277d3c873f1afe6bf06ef535a6fc08f",
+        "expected_canonical_utf8_bytes": 2789,
+        "expected_sha256": "9ff04c21e495af5be22a96027fab9be3e277d3c873f1afe6bf06ef535a6fc08f",
+        "passed": true,
+        "path": "docs/experiments/dsa_p3_prompt_change_record_v0_1.md"
+      },
+      {
+        "actual_canonical_utf8_bytes": 2865,
+        "actual_sha256": "4cbdb3aaf013d641ec70f80fa628d61a015d322736faa6f1ad59d618c8140ab2",
+        "expected_canonical_utf8_bytes": 2865,
+        "expected_sha256": "4cbdb3aaf013d641ec70f80fa628d61a015d322736faa6f1ad59d618c8140ab2",
+        "passed": true,
+        "path": "docs/experiments/dsa_p3_author_signoff_v0_1.md"
+      },
+      {
+        "actual_canonical_utf8_bytes": 30803,
+        "actual_sha256": "8175c07edcc329732604dd022c80a22953babf8b5531e04da37e1fecd5f4a3c0",
+        "expected_canonical_utf8_bytes": 30803,
+        "expected_sha256": "8175c07edcc329732604dd022c80a22953babf8b5531e04da37e1fecd5f4a3c0",
+        "passed": true,
+        "path": "scripts/dsa2026_audit_p3_freeze.py"
+      }
+    ]
+  },
+  "preflight_id": "dsa_p4_preflight_v0_1",
+  "reference_boundary": {
+    "authoritative_f2p": "official run_test.sh, byte-bound to P2 source-frame declared command(s)",
+    "authoritative_patch": "official BugsInPy bug_patch.txt applied to the declared buggy commit",
+    "test_file_edits_are_never_candidate_edits": true,
+    "test_path_predicate": "exclude path components test/tests/testing and Python basenames test_*, tests_*, *_test.py, *_tests.py from transform application",
+    "transform_selection": "first structurally applicable P2 transform over source-only reference diff shape; no outcome-dependent fallback"
+  },
+  "status": "passed",
+  "structural_summary": {
+    "primary_count": 30,
+    "remaining_nonstructural_discard_budget": 6,
+    "reserve_count": 10,
+    "structural_discard_count": 4,
+    "structurally_eligible_count": 36,
+    "transform_counts": {
+      "NONE": 4,
+      "T1_omit_secondary_source_file": 3,
+      "T2_omit_secondary_hunk": 17,
+      "T3_omit_secondary_edit_block": 8,
+      "T4_partial_multiline_reversion": 8
+    }
+  },
+  "tasks": [
+    {
+      "bug_id": 5,
+      "buggy_commit_id": "e3a27c2cc485d57aa1ff87d9f69098e4ab12727e",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest tests/test_logging.py::test_logging_modified_root_logger_config"
+      ],
+      "declared_f2p_commands": [
+        "pytest tests/test_logging.py::test_logging_modified_root_logger_config"
+      ],
+      "declared_test_file": "tests/test_logging.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "b63c06c75a54752d7f3115d3c635580db44b8399",
+      "metadata_sha256": {
+        "bug_info": "38f8b21ea7dc3b5058f34c66f9c5acfbc7f9b4c5e5e07c8d251575979fcca410",
+        "reference_patch": "558af6ef2586132cf4689716fcff2d0a384facc3d0634f827b50f57b3e02f528",
+        "requirements": "97aa631405ec704f885d6813be6bed7a15dcf87570bb7dcb93e10d64325eb044",
+        "run_test": "2ba0afb65377f8f57619233a83932dcaa718703c3fd039523ad49a05ea8c2e70",
+        "setup": "28c76c4d388d78fd7e3bda08d447f92ab8aa1cd85652afabcdd99afafa1c7a6c"
+      },
+      "project": "sanic",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "sanic/log.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": null,
+      "source_diff_shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 1,
+      "structural_disposition": "discard_no_applicable_transform",
+      "task_id": "bugsinpy_sanic_5"
+    },
+    {
+      "bug_id": 12,
+      "buggy_commit_id": "d61f5e4b555b123bf222503fc0e076cbae6a7ebc",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest tests/test_security_http_bearer_optional.py::test_security_http_bearer_incorrect_scheme_credentials"
+      ],
+      "declared_f2p_commands": [
+        "pytest tests/test_security_http_bearer_optional.py::test_security_http_bearer_incorrect_scheme_credentials"
+      ],
+      "declared_test_file": "tests/test_security_http_bearer_optional.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "d262f6e9296993e528e2327f0a73f7bf5514e7c6",
+      "metadata_sha256": {
+        "bug_info": "32091156bab760cc2d479f4cdbf71fb9ac315eddfcb22951345909d71fef1949",
+        "reference_patch": "586ed616d3a17fdec4139892a3e47e4fa158e874d6b6fa672ddd5f7dbbf85a52",
+        "requirements": "5d485919c9dc15c3da11945b5ef1ab8ab0b8dbd8b20b4f75ef2e0d2943a37c42",
+        "run_test": "9feda67e4c5191d7a89d1ed97483805b76ee204fe1753c89cf84f0f5083c2885"
+      },
+      "project": "fastapi",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "fastapi/security/http.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "source_diff_shape": {
+        "changed_line_count": 11,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 2,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_fastapi_12"
+    },
+    {
+      "bug_id": 54,
+      "buggy_commit_id": "25443f0",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest pandas/tests/dtypes/test_dtypes.py::TestCategoricalDtype::test_from_values_or_dtype_invalid_dtype"
+      ],
+      "declared_f2p_commands": [
+        "pytest pandas/tests/dtypes/test_dtypes.py::TestCategoricalDtype::test_from_values_or_dtype_invalid_dtype"
+      ],
+      "declared_test_file": "pandas/tests/dtypes/test_dtypes.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "00e8e4ab0c5e4c7bfb3e356e660d9f088d4a82a4",
+      "metadata_sha256": {
+        "bug_info": "d912f8fffcf98299a50e2760bdb24b5e232a3afe8892133ac75d73b0ce95a3c3",
+        "reference_patch": "3783594f869a621d20745ba8a141a67b1ff751f56c96d4bd93ede517e33c99b4",
+        "requirements": "49c4d6bbc7411b505a60397ff80d4dd63785d38c415fb4a3f13c49f607058642",
+        "run_test": "77ca762d0ab1d21f5e5a41cac183bf8279bf30cb904b59cc799e08ba818a999e",
+        "setup": "fff3ab9f74619b05cbe5eea2a563d8185d513b5305565b880e002d238bfdbe93"
+      },
+      "project": "pandas",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "pandas/core/dtypes/dtypes.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [
+        "pandas/tests/indexes/common.py"
+      ],
+      "role": "primary",
+      "selected_transform_id": null,
+      "source_diff_shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 3,
+      "structural_disposition": "discard_no_applicable_transform",
+      "task_id": "bugsinpy_pandas_54"
+    },
+    {
+      "bug_id": 10,
+      "buggy_commit_id": "ecd8968c5135b810cd607b5902dda2cd32122b39",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "python -m unittest -q tornado.test.websocket_test.WebSocketTest.test_render_message"
+      ],
+      "declared_f2p_commands": [
+        "python -m unittest -q tornado.test.websocket_test.WebSocketTest.test_render_message"
+      ],
+      "declared_test_file": "tornado/test/websocket_test.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "5931d913b4ea250891a0b582f1f8b2901b868c79",
+      "metadata_sha256": {
+        "bug_info": "68c67711865f69d27f503cfa741365960ce7c655d1a9db233dc08152a49af458",
+        "reference_patch": "055498d31fac223b49fca440e3821c044700f19d19dc569e5cdf34002fe978a5",
+        "requirements": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "run_test": "941a6a755098ad9b137878bfe4a44888cb7fa33fef6f50acd5e57aca2079240e",
+        "setup": "d3a4076796d738e69fdc78f14825c1f2e48cd317367ac3812b2e9df6ff8b580b"
+      },
+      "project": "tornado",
+      "python_version": "3.7.0",
+      "reference_source_paths": [
+        "tornado/web.py",
+        "tornado/websocket.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T1_omit_secondary_source_file",
+      "source_diff_shape": {
+        "changed_line_count": 13,
+        "edit_block_count": 2,
+        "file_count": 2,
+        "hunk_count": 2
+      },
+      "stream_order": 4,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_tornado_10"
+    },
+    {
+      "bug_id": 21,
+      "buggy_commit_id": "e240493a899ac05cb992cdb88f5487386586090e",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest lib/matplotlib/tests/test_axes.py::test_boxplot_marker_behavior"
+      ],
+      "declared_f2p_commands": [
+        "pytest lib/matplotlib/tests/test_axes.py::test_boxplot_marker_behavior"
+      ],
+      "declared_test_file": "lib/matplotlib/tests/test_axes.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "6fceb054369445d0b20d2864957e8bcfd8d2cb87",
+      "metadata_sha256": {
+        "bug_info": "679da7c3e8486bc4567ffb941c7841384fcb8072ab3863701b03b63ce9039a8b",
+        "reference_patch": "2874ffe8cac4b57f37eb9cc5b63d761736f5ebbf50568975bb4cce9e9ae9ece6",
+        "requirements": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "run_test": "2c2825968e0b68341f1ed8f81e897000619c40373ceb8310d9e3e92594ab3146"
+      },
+      "project": "matplotlib",
+      "python_version": "3.8.1",
+      "reference_source_paths": [
+        "lib/matplotlib/axes/_axes.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 14,
+        "edit_block_count": 6,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "stream_order": 5,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_matplotlib_21"
+    },
+    {
+      "bug_id": 29,
+      "buggy_commit_id": "a341c014412cbfc86a9dd9816ae228e398dff3a2",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest tests/keras/metrics_test.py::test_stateful_metrics[dict]"
+      ],
+      "declared_f2p_commands": [
+        "pytest tests/keras/metrics_test.py::test_stateful_metrics[dict]"
+      ],
+      "declared_test_file": "tests/keras/metrics_test.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "adc321b4d7a4e22f6bdb00b404dfe5e23d4887aa",
+      "metadata_sha256": {
+        "bug_info": "dae42987b96d3567ae940fbd642a7cdff3f1977b7621e7ca8967ca2c39373ac4",
+        "reference_patch": "3270e8d669a2f1a5319b88eaa28ab3e4be683e8d140f6c8a35e605d3b6b76fdd",
+        "requirements": "1caa9e58a5f4146a48b41c7b0fb5f853f4f4a9795ab2e1d10c30e2bb1dab86ab",
+        "run_test": "a9f5b5472fda57aac802d83f77264f27122eaa512a0b5c76f194f472d9ebbd81"
+      },
+      "project": "keras",
+      "python_version": "3.7.3",
+      "reference_source_paths": [
+        "keras/engine/training.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 22,
+        "edit_block_count": 6,
+        "file_count": 1,
+        "hunk_count": 6
+      },
+      "stream_order": 6,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_keras_29"
+    },
+    {
+      "bug_id": 8,
+      "buggy_commit_id": "81378b3e744cd0d13b33d18a4f8a38aeb8a6e97a",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest test/units/plugins/shell/test_powershell.py::test_join_path_unc"
+      ],
+      "declared_f2p_commands": [
+        "pytest test/units/plugins/shell/test_powershell.py::test_join_path_unc"
+      ],
+      "declared_test_file": "test/units/plugins/shell/test_powershell.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "fc7980af9a42676913b4054163570ee438b82e9c",
+      "metadata_sha256": {
+        "bug_info": "e1697846ee92783b1541c236ae3f042b080c95422bf458dac45169a9f6d12ced",
+        "reference_patch": "a00135f5aec6cb14cc3f0faa95f0bafe3c1e3f8b60fd61f0953d800f8ba9205f",
+        "requirements": "0c260efd21646c472796270e1df9c0348c007edffd6b5ac67c2f00d7c0310659",
+        "run_test": "e2476a310a74d643d388b898338ddd57e65eefb03f582ac689469421cad4790a",
+        "setup": "baba8276fe95fc71a9298ce3b31cdf8f0011576312ebbb7a26cea5cccde514f7"
+      },
+      "project": "ansible",
+      "python_version": "3.6.9",
+      "reference_source_paths": [
+        "lib/ansible/plugins/shell/powershell.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 16,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "stream_order": 7,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_ansible_8"
+    },
+    {
+      "bug_id": 16,
+      "buggy_commit_id": "fb34c9e19589d05f92084a28940837151251ebd6",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "python -m unittest -q tests.test_black.BlackTestCase.test_symlink_out_of_root_directory"
+      ],
+      "declared_f2p_commands": [
+        "python -m unittest -q tests.test_black.BlackTestCase.test_symlink_out_of_root_directory"
+      ],
+      "declared_test_file": "tests/test_black.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "42a3fe53319a8c02858c2a96989ed1339f84515a",
+      "metadata_sha256": {
+        "bug_info": "521c2037e0d133c98ccf0cbea77fb96786719d2319399f7ce40be6bedbb3ebe9",
+        "reference_patch": "8f6dbfc4f22ce13e78a090d636f24fa0d382703bccb0be7eb6e36a2f7f57d6ac",
+        "requirements": "4287ff3834a5519b60fd0482856b8108371867840f9218f7057545394c8a7a73",
+        "run_test": "8ad338f3627f6383ebee0de7037da12fa7866557fa89b7a2e9ddde2d1869536a",
+        "setup": "5ebfe240917e30d1dcb9c5d19ad85af36a29ae5c33d6d4a768863069b0a3329b"
+      },
+      "project": "black",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "black.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "source_diff_shape": {
+        "changed_line_count": 15,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 8,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_black_16"
+    },
+    {
+      "bug_id": 3,
+      "buggy_commit_id": "dac70f29eb3b1f21ae9e2c6346666bf6a46307b6",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "py.test spacy/tests/regression/test_issue5314.py::test_issue5314"
+      ],
+      "declared_f2p_commands": [
+        "py.test spacy/tests/regression/test_issue5314.py::test_issue5314"
+      ],
+      "declared_test_file": "spacy/tests/regression/test_issue5314.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "663333c3b2bad90915d1a48a626ca1275b7ef077",
+      "metadata_sha256": {
+        "bug_info": "6743d3fac9d16e2df8e404ebf0ec540436308af19c0f3b7ed1daf31c3af23fc3",
+        "reference_patch": "eee7a3f1455ab3ae172e3a97535970765fb242fe3fb0c5bc55381aff1d68faee",
+        "requirements": "6903de773ac8df57fafa2df197bb003d9810b32f76906a7c1e67c7b9672f84b8",
+        "run_test": "1d8837e1c41035d021ca55c15a3c2ac7b701b39b3a1ee2a0664400a85ec49095",
+        "setup": "00293ccdff169f1ec9384222eea57c351deb8cf694d68f0e0e937867c214a6c2"
+      },
+      "project": "spacy",
+      "python_version": "3.7.7",
+      "reference_source_paths": [
+        "bin/wiki_entity_linking/wikipedia_processor.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 6,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "stream_order": 9,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_spacy_3"
+    },
+    {
+      "bug_id": 3,
+      "buggy_commit_id": "91f6abaa81248189fbcbdf685e8bdcbb7846609f",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest tests/test_url_for.py::test_routes_with_host"
+      ],
+      "declared_f2p_commands": [
+        "pytest tests/test_url_for.py::test_routes_with_host"
+      ],
+      "declared_test_file": "tests/test_url_for.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "861e87347a2d373d6ffa387965a6887c83af632c",
+      "metadata_sha256": {
+        "bug_info": "85171fe4eae544e3cd530c52fb66d1d255a6e8aad758aa7e4b16ce212839ed4e",
+        "reference_patch": "55d080c99c727b204eccf2f16a7628c6e49e9714c14ca7fc37c94c0385143591",
+        "requirements": "bc75613889e071411573f715fbd4121dff29c074d2af38d246a48ae501c7de38",
+        "run_test": "4ae67771f8558183efe6a0f50243098c621752d8006c4242f42af82f893704f4",
+        "setup": "28c76c4d388d78fd7e3bda08d447f92ab8aa1cd85652afabcdd99afafa1c7a6c"
+      },
+      "project": "sanic",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "sanic/app.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 10,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "stream_order": 10,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_sanic_3"
+    },
+    {
+      "bug_id": 3,
+      "buggy_commit_id": "869c7389e22dc9ad659940fa271da76c4f3ba3b1",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest tests/test_serialize_response_model.py::test_valid",
+        "pytest tests/test_serialize_response_model.py::test_coerce",
+        "pytest tests/test_serialize_response_model.py::test_validlist",
+        "pytest tests/test_serialize_response_model.py::test_validdict",
+        "pytest tests/test_serialize_response_model.py::test_valid_exclude_unset",
+        "pytest tests/test_serialize_response_model.py::test_coerce_exclude_unset",
+        "pytest tests/test_serialize_response_model.py::test_validlist_exclude_unset",
+        "pytest tests/test_serialize_response_model.py::test_validdict_exclude_unset"
+      ],
+      "declared_f2p_commands": [
+        "pytest tests/test_serialize_response_model.py::test_valid",
+        "pytest tests/test_serialize_response_model.py::test_coerce",
+        "pytest tests/test_serialize_response_model.py::test_validlist",
+        "pytest tests/test_serialize_response_model.py::test_validdict",
+        "pytest tests/test_serialize_response_model.py::test_valid_exclude_unset",
+        "pytest tests/test_serialize_response_model.py::test_coerce_exclude_unset",
+        "pytest tests/test_serialize_response_model.py::test_validlist_exclude_unset",
+        "pytest tests/test_serialize_response_model.py::test_validdict_exclude_unset"
+      ],
+      "declared_test_file": "tests/test_serialize_response_model.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "aea04ee32ee1942e6e1a904527bb8da6ba76abd9",
+      "metadata_sha256": {
+        "bug_info": "7120abca92a0cf759a1b0897be002b0ece6744eb2c95610e1c1a4ab682520099",
+        "reference_patch": "00a943a25c1bf85b0c54aaa52f9a371fc8da1efcdcfb30de7104165cc606734a",
+        "requirements": "1d6aee524e8baa45f5659fcb3be89e556b037d21e6fa8109595cef0c09eee596",
+        "run_test": "17b7a0dd7f2f491d3e499e06c38ee11db9e3b997f77633d281ca74bc1ea24fa4"
+      },
+      "project": "fastapi",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "fastapi/routing.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 32,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "stream_order": 11,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_fastapi_3"
+    },
+    {
+      "bug_id": 51,
+      "buggy_commit_id": "4800ab4",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest pandas/tests/reshape/merge/test_merge.py::test_categorical_non_unique_monotonic"
+      ],
+      "declared_f2p_commands": [
+        "pytest pandas/tests/reshape/merge/test_merge.py::test_categorical_non_unique_monotonic"
+      ],
+      "declared_test_file": "pandas/tests/reshape/merge/test_merge.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "ea1d8fadb95fbc7cafe036274006228400817fd4",
+      "metadata_sha256": {
+        "bug_info": "59ec27a926bb61faa375a55fd01c0fba642040aaa4e5e3f2744c803350dd5cd2",
+        "reference_patch": "d69becf55ce6bf1d606e254ebd7d9dfe8d719b8d8df63a96c74a64b449d96757",
+        "requirements": "2b9eb8d0a0b89eddfb55dade87c45034802102ff21e8796ed1dc4d4c540d2a2b",
+        "run_test": "eddeece85a588ffe9b19d2ab05fcc562207fd3560180d9be9897b4d369584331",
+        "setup": "fff3ab9f74619b05cbe5eea2a563d8185d513b5305565b880e002d238bfdbe93"
+      },
+      "project": "pandas",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "pandas/core/indexes/category.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 7,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "stream_order": 12,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_pandas_51"
+    },
+    {
+      "bug_id": 8,
+      "buggy_commit_id": "34c43f4775971ab9b2b8ed43356f218add6387b2",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "python -m unittest -q tornado.test.websocket_test.WebSocketTest.test_missing_websocket_key"
+      ],
+      "declared_f2p_commands": [
+        "python -m unittest -q tornado.test.websocket_test.WebSocketTest.test_missing_websocket_key"
+      ],
+      "declared_test_file": "tornado/test/websocket_test.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "5d4a9ab26372efd255bbb29fde55c41395ed17b1",
+      "metadata_sha256": {
+        "bug_info": "475e9718d325e87c45d1e1ebdb3808779a3e7da44058000434929a6a5eb40b49",
+        "reference_patch": "56bf2416608021a7fa2ce727513f7884ad77f3ba6fcf141e5ebf0238bc9280a2",
+        "requirements": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "run_test": "2ba2d838cb3b16e44f604489798f2aabdbe2b73d43b8b3d5a2a0f70103fb5787",
+        "setup": "d3a4076796d738e69fdc78f14825c1f2e48cd317367ac3812b2e9df6ff8b580b"
+      },
+      "project": "tornado",
+      "python_version": "3.7.0",
+      "reference_source_paths": [
+        "tornado/websocket.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "source_diff_shape": {
+        "changed_line_count": 8,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 13,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_tornado_8"
+    },
+    {
+      "bug_id": 6,
+      "buggy_commit_id": "fb9e72309aeefb51d1a56ecbdb1e7399d105ff06",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest lib/matplotlib/tests/test_axes.py::TestScatter::test_scatter_single_color_c"
+      ],
+      "declared_f2p_commands": [
+        "pytest lib/matplotlib/tests/test_axes.py::TestScatter::test_scatter_single_color_c"
+      ],
+      "declared_test_file": "lib/matplotlib/tests/test_axes.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "d84f4a7ac8d43d1288cb8ce11ab60ae557306b7e",
+      "metadata_sha256": {
+        "bug_info": "5d667bbe39e45fd000863ecc47c3eaa3a50bde4e3f8ba26e0bcb4b90f822cae1",
+        "reference_patch": "9b817e9a7f14af02c16b9aed602fba5255bea531fdd0e86d35509fec63d34e4a",
+        "requirements": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "run_test": "aed8b61bce54e420d4e3328a9305b37ded6524a9e718313cd29717edfe74e070"
+      },
+      "project": "matplotlib",
+      "python_version": "3.8.1",
+      "reference_source_paths": [
+        "lib/matplotlib/axes/_axes.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "source_diff_shape": {
+        "changed_line_count": 8,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 14,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_matplotlib_6"
+    },
+    {
+      "bug_id": 32,
+      "buggy_commit_id": "a3d160b9467c99cbb27f9aa0382c759f45c8ee66",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest tests/keras/test_callbacks.py::test_ReduceLROnPlateau_patience",
+        "pytest tests/keras/test_callbacks.py::test_ReduceLROnPlateau_backwards_compatibility"
+      ],
+      "declared_f2p_commands": [
+        "pytest tests/keras/test_callbacks.py::test_ReduceLROnPlateau_patience",
+        "pytest tests/keras/test_callbacks.py::test_ReduceLROnPlateau_backwards_compatibility"
+      ],
+      "declared_test_file": "tests/keras/test_callbacks.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "709f791af201caaab4aa180bda259989087cfe47",
+      "metadata_sha256": {
+        "bug_info": "26e2a1b53a94de07a3a0b1e0f94b7a655336852d91829d562ef322d9f5364934",
+        "reference_patch": "dc27928c8168c8c95c273653cfb6cbf38bb5dfaadf3cef1365e3fee92ebd6440",
+        "requirements": "1dc7467403495f18fbd37d326a6fd717eb60d020daba4914251d2507fca2d6eb",
+        "run_test": "9c6262662593c52ee4e3a36a1178982b800441dd37e6857fce58a1f1b59d6956"
+      },
+      "project": "keras",
+      "python_version": "3.7.3",
+      "reference_source_paths": [
+        "keras/callbacks.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 17,
+        "edit_block_count": 8,
+        "file_count": 1,
+        "hunk_count": 5
+      },
+      "stream_order": 15,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_keras_32"
+    },
+    {
+      "bug_id": 3,
+      "buggy_commit_id": "70219df9056ffb1e2766f572fbe71f7a1800c9f5",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest test/units/module_utils/test_distribution_version.py::test_distribution_version"
+      ],
+      "declared_f2p_commands": [
+        "pytest test/units/module_utils/test_distribution_version.py::test_distribution_version"
+      ],
+      "declared_test_file": "test/units/module_utils/test_distribution_version.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "9d48884e36fb4fd9551f000b87d264383de74e75",
+      "metadata_sha256": {
+        "bug_info": "bb34d0516b3e8f4716c9e3b171c75653b1f2d16e8ec5b5b4e01725f3246b2cb2",
+        "reference_patch": "3e1862e338443b852236cdce71d7d697395f075996229cb47a8af69d30130546",
+        "requirements": "bdc06beb8201739ac06e3652df613f7a2510473bc5bb44d87a5038708e397d27",
+        "run_test": "492a2446419b8fbb81694c383d92ddff17e0c8b70e20bfe6c3c3c69f33f8cf1c",
+        "setup": "5ebb0107e567d11b5201cae1174a68a0fec3c216f70781f910a077a0ba139dc2"
+      },
+      "project": "ansible",
+      "python_version": "3.6.9",
+      "reference_source_paths": [
+        "lib/ansible/module_utils/facts/system/distribution.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "source_diff_shape": {
+        "changed_line_count": 3,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 16,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_ansible_3"
+    },
+    {
+      "bug_id": 13,
+      "buggy_commit_id": "b719d85ccc330170e40b2617307a7e3b2a0bab14",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "python -m unittest -q tests.test_black.BlackTestCase.test_python37"
+      ],
+      "declared_f2p_commands": [
+        "python -m unittest -q tests.test_black.BlackTestCase.test_python37"
+      ],
+      "declared_test_file": "tests/data/python37.py;tests/test_black.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "883689366ce0f0e0ddd66d81360c61abfd19b01a",
+      "metadata_sha256": {
+        "bug_info": "fe2832e35bf7e77b9569138927f788f8933d60927afb036304bd6c621e47b474",
+        "reference_patch": "146e0f9d33449e8594458ea267fdf1ca0692fb9156d7c8d46b53b5e1316898ef",
+        "requirements": "b6a48e2fa80fd0533c47d55f15d34bbcb5f4517dd773878f2e27d4c060da73e7",
+        "run_test": "1aefe8c47b2254ec1dedbf18dea62fef53b7007e115a5d9f5e305991bcd81043",
+        "setup": "5ebfe240917e30d1dcb9c5d19ad85af36a29ae5c33d6d4a768863069b0a3329b"
+      },
+      "project": "black",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "blib2to3/pgen2/tokenize.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "source_diff_shape": {
+        "changed_line_count": 7,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 17,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_black_13"
+    },
+    {
+      "bug_id": 10,
+      "buggy_commit_id": "38de08c7a99d5d8c490223126071afe7dd4f4b67",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "py.test spacy/tests/matcher/test_matcher_api.py::test_matcher_valid_callback"
+      ],
+      "declared_f2p_commands": [
+        "py.test spacy/tests/matcher/test_matcher_api.py::test_matcher_valid_callback"
+      ],
+      "declared_test_file": "spacy/tests/matcher/test_matcher_api.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "52904b72700a3f301a26563d3f94493bad96a446",
+      "metadata_sha256": {
+        "bug_info": "7b1c0d43cf8066cd5ea2aa69284a2a5277322c9a4028be921d074eda73b450a4",
+        "reference_patch": "b92b12d7175b7aec8fa31910b0cf79d73320ab07bc9f43ec77bf289987dfb9d3",
+        "requirements": "8952958ea146849ac029184aa1618795bc0e5752f921e2a83c959430c95b1124",
+        "run_test": "cd653176e621510258d493da5adfeaf8603f2a3cbf0ef40809228fb8024e38c5",
+        "setup": "4684d8e8af3cf0720b49a9d379e6479d53caf607652c29e7b03470fdb8426fcf"
+      },
+      "project": "spacy",
+      "python_version": "3.7.7",
+      "reference_source_paths": [
+        "spacy/errors.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": null,
+      "source_diff_shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 18,
+      "structural_disposition": "discard_no_applicable_transform",
+      "task_id": "bugsinpy_spacy_10"
+    },
+    {
+      "bug_id": 10,
+      "buggy_commit_id": "b77a43bcac3ec8e7edbe82543e777c60ae85c178",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest tests/test_skip_defaults.py::test_return_defaults"
+      ],
+      "declared_f2p_commands": [
+        "pytest tests/test_skip_defaults.py::test_return_defaults"
+      ],
+      "declared_test_file": "tests/test_skip_defaults.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "38495fffa560fa57a8f0e6437d8e43c36c8e5612",
+      "metadata_sha256": {
+        "bug_info": "7a333555e5c5139c68a48b1e1424a3235ccb25c7c97fb147891b36ea417d1340",
+        "reference_patch": "5e9401db420e981ddec2c6c436a10f0ace75b47d6f587fcfa9d818f3ae6b81e7",
+        "requirements": "56d999acf8b530869e31a89fe73b17c1dc5a1f1292e61f4f3faa5913b0f10fb3",
+        "run_test": "3bf5a3304fc50d8c1848e78dd97b11a05c1243cc720bacef75da80216479381b"
+      },
+      "project": "fastapi",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "fastapi/routing.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": null,
+      "source_diff_shape": {
+        "changed_line_count": 2,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 19,
+      "structural_disposition": "discard_no_applicable_transform",
+      "task_id": "bugsinpy_fastapi_10"
+    },
+    {
+      "bug_id": 166,
+      "buggy_commit_id": "4056ded",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest pandas/tests/frame/test_join.py::test_suppress_future_warning_with_sort_kw"
+      ],
+      "declared_f2p_commands": [
+        "pytest pandas/tests/frame/test_join.py::test_suppress_future_warning_with_sort_kw"
+      ],
+      "declared_test_file": "pandas/tests/frame/test_join.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "d44fb07063e9a8bd8a209ddce35b40d8a56c8d02",
+      "metadata_sha256": {
+        "bug_info": "2f797fff2510420e8b1c8c869c255e47d8198752ff9c47ce521fe70eb0fc4c6d",
+        "reference_patch": "909c59fa308416b3283621bb7b2bfb532ae05bd63c3e82b425cca2ba81a9c799",
+        "requirements": "ba70c1128d8aa7900bb1ec0bdeae4e3eea90bb6bcb5fbcce4a72a5d106e2f7e5",
+        "run_test": "e021048d36ff872a1ae098472d038b10c491ffd35b2b74852b9e3c1b37bd07f3",
+        "setup": "fff3ab9f74619b05cbe5eea2a563d8185d513b5305565b880e002d238bfdbe93"
+      },
+      "project": "pandas",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "pandas/core/frame.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "source_diff_shape": {
+        "changed_line_count": 8,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 20,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_pandas_166"
+    },
+    {
+      "bug_id": 12,
+      "buggy_commit_id": "4ee9ba94de11aaa4f932560fa2b3d8ceb8c61d2a",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "python -m unittest -q tornado.test.auth_test.AuthTest.test_facebook_login"
+      ],
+      "declared_f2p_commands": [
+        "python -m unittest -q tornado.test.auth_test.AuthTest.test_facebook_login"
+      ],
+      "declared_test_file": "tornado/test/auth_test.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "301f52b532c071a0d2fec1eb7c23f2714bb38567",
+      "metadata_sha256": {
+        "bug_info": "e966543e43cd03b0bdc87bd22745c7d749d90a3944fa0a7de0762b7f2e57eed4",
+        "reference_patch": "1f7c9d4f7fd70eeb6551cf6517f65b30a570e0a6e5e203f83061a669b7c0d437",
+        "requirements": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "run_test": "24c2328e9afcd8481cfad8ba729abe838e329e837834b9045ac6ee73c0772d7a",
+        "setup": "d3a4076796d738e69fdc78f14825c1f2e48cd317367ac3812b2e9df6ff8b580b"
+      },
+      "project": "tornado",
+      "python_version": "3.7.0",
+      "reference_source_paths": [
+        "tornado/auth.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 13,
+        "edit_block_count": 3,
+        "file_count": 1,
+        "hunk_count": 3
+      },
+      "stream_order": 21,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_tornado_12"
+    },
+    {
+      "bug_id": 22,
+      "buggy_commit_id": "a87cd8a4c43688137155accdc57ed64fb95e2d40",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest lib/matplotlib/tests/test_axes.py::test_hist_datetime_datasets_bins"
+      ],
+      "declared_f2p_commands": [
+        "pytest lib/matplotlib/tests/test_axes.py::test_hist_datetime_datasets_bins"
+      ],
+      "declared_test_file": "lib/matplotlib/tests/test_axes.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "2349d826a170a10510d1ee8be02eaff51f7ee89f",
+      "metadata_sha256": {
+        "bug_info": "77b711e008b5eacaf5679425cc39f352a5ddf6a5a12167003dfccf8bb6c3a869",
+        "reference_patch": "664e03448c91ede437bc5d3b5e0ab16e7d60a05d624a53d20fcc282431381b7c",
+        "requirements": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "run_test": "032c4273b673c435addf82298f35aeb3b19dd4ea8208185052e04d31203253a6"
+      },
+      "project": "matplotlib",
+      "python_version": "3.8.1",
+      "reference_source_paths": [
+        "lib/matplotlib/axes/_axes.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "source_diff_shape": {
+        "changed_line_count": 3,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 22,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_matplotlib_22"
+    },
+    {
+      "bug_id": 41,
+      "buggy_commit_id": "a27b4a51f4880ad3a7669531b667c1ef44b173ef",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest tests/keras/utils/data_utils_test.py::test_generator_enqueuer_fail_threads"
+      ],
+      "declared_f2p_commands": [
+        "pytest tests/keras/utils/data_utils_test.py::test_generator_enqueuer_fail_threads"
+      ],
+      "declared_test_file": "tests/keras/utils/data_utils_test.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "4a58b178073f0ba3b166220f7ebd7d56149bfb20",
+      "metadata_sha256": {
+        "bug_info": "c04b6d4b1f0dadf9eabe961c52e1c605de54b8e31b8e7c75f50568534767b3cf",
+        "reference_patch": "d86cbee79c336c4193f9a6b45c5d379ca66d87ed5d6c4398274abb2236b62c92",
+        "requirements": "1a1fa8223f5b3b2f8a698719df9aead9af0594b7c9a6b4cf098d1cb0a11d66e5",
+        "run_test": "243eb0a70451a6b6f5998dea93ce0a5e9817b96f72255b9f55d9e601f9cc1c26"
+      },
+      "project": "keras",
+      "python_version": "3.7.3",
+      "reference_source_paths": [
+        "keras/utils/data_utils.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [
+        "tests/test_multiprocessing.py"
+      ],
+      "role": "primary",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 42,
+        "edit_block_count": 10,
+        "file_count": 1,
+        "hunk_count": 6
+      },
+      "stream_order": 23,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_keras_41"
+    },
+    {
+      "bug_id": 14,
+      "buggy_commit_id": "a1ab093ddbd32f1002cbf6d6f184c7d0041d890d",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest test/units/galaxy/test_api.py::test_get_role_versions_pagination"
+      ],
+      "declared_f2p_commands": [
+        "pytest test/units/galaxy/test_api.py::test_get_role_versions_pagination"
+      ],
+      "declared_test_file": "test/units/galaxy/test_api.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "7acae62fa849481b2a5e2e2d56961c5e1dcea96c",
+      "metadata_sha256": {
+        "bug_info": "0f64c5075f4b0c23d717e3ece8f6096e35f85657a4d27ce159477893b80c10c6",
+        "reference_patch": "8a63136d2ddd28b61d4ce0e5916f24356b3b198e734b5e8487f030f16bb2c150",
+        "requirements": "66c7389ad30c5c441a026536c3af3fd75cb44627b8de50465841622abad04c00",
+        "run_test": "60e7a864f74c30028be3d2018e245efddff8f44f329c08756f0cf52359b35cc5",
+        "setup": "baba8276fe95fc71a9298ce3b31cdf8f0011576312ebbb7a26cea5cccde514f7"
+      },
+      "project": "ansible",
+      "python_version": "3.6.9",
+      "reference_source_paths": [
+        "lib/ansible/galaxy/api.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 18,
+        "edit_block_count": 4,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "stream_order": 24,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_ansible_14"
+    },
+    {
+      "bug_id": 11,
+      "buggy_commit_id": "283a5d53a8d57e8e186a08c9fbf249e1fbe7bc94",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "python -m unittest -q tests.test_black.BlackTestCase.test_comments6"
+      ],
+      "declared_f2p_commands": [
+        "python -m unittest -q tests.test_black.BlackTestCase.test_comments6"
+      ],
+      "declared_test_file": "tests/data/comments6.py;tests/test_black.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "024c9cab55da7bd3236fd88759c9735d6149b464",
+      "metadata_sha256": {
+        "bug_info": "ad0b0b6f9b5029e059a9bba213fc2e3f13fb30359411f9bf445c58110efcccf8",
+        "reference_patch": "c9c61804d1dac3b2568b82173504c57a5471095af7094cfad57f3d3a12ea5ce2",
+        "requirements": "db6de7261cb613e44d8b726403872a2a20e8cb0e0ebc6f1d72fee857dc72a838",
+        "run_test": "b0be451c3955d478f22899d73c33ed0a66b47acec21be8b6b84bba74ece68b68",
+        "setup": "5ebfe240917e30d1dcb9c5d19ad85af36a29ae5c33d6d4a768863069b0a3329b"
+      },
+      "project": "black",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "black.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 26,
+        "edit_block_count": 3,
+        "file_count": 1,
+        "hunk_count": 3
+      },
+      "stream_order": 25,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_black_11"
+    },
+    {
+      "bug_id": 7,
+      "buggy_commit_id": "da6e0de34f4947fdebc839df3969c641014cfa97",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "py.test spacy/tests/doc/test_span.py::test_filter_spans"
+      ],
+      "declared_f2p_commands": [
+        "py.test spacy/tests/doc/test_span.py::test_filter_spans"
+      ],
+      "declared_test_file": "spacy/tests/doc/test_span.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "6f54e59fe7ccb3bacce896ed33d36b39f11cbfaf",
+      "metadata_sha256": {
+        "bug_info": "1d88615656da37c43341ba87af0878f553b0a2134163dea2d606ccb71d235b58",
+        "reference_patch": "0b67137d75ec05776b6ed6e993e01571344d8cfb16a44a7c3ec0b20782e48c21",
+        "requirements": "be0788a8393788b0374b0f6373f187da0ff2af308f0d9127e9bbb7bcedc6c10c",
+        "run_test": "0b159d6ad6f85929e2bac95cd009efd40640bf1da8b1d8fb312a6c87017aafd6",
+        "setup": "00293ccdff169f1ec9384222eea57c351deb8cf694d68f0e0e937867c214a6c2"
+      },
+      "project": "spacy",
+      "python_version": "3.7.7",
+      "reference_source_paths": [
+        "examples/information_extraction/entity_relations.py",
+        "spacy/util.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T1_omit_secondary_source_file",
+      "source_diff_shape": {
+        "changed_line_count": 11,
+        "edit_block_count": 5,
+        "file_count": 2,
+        "hunk_count": 3
+      },
+      "stream_order": 26,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_spacy_7"
+    },
+    {
+      "bug_id": 15,
+      "buggy_commit_id": "b16ca54c30644667ab9f65a712704850666a039c",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest tests/test_ws_router.py::test_router",
+        "pytest tests/test_ws_router.py::test_prefix_router"
+      ],
+      "declared_f2p_commands": [
+        "pytest tests/test_ws_router.py::test_router",
+        "pytest tests/test_ws_router.py::test_prefix_router"
+      ],
+      "declared_test_file": "tests/test_ws_router.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "6d77e2ac5f2cadc63424f2d85d8d8cded2975922",
+      "metadata_sha256": {
+        "bug_info": "c8980116ddde973869462b6e93b446df3c60966de3931a80859ff4217f4f2995",
+        "reference_patch": "01e94593e028011ed24ac0701f13f8484936a214adea94b137cbda033f459154",
+        "requirements": "5d485919c9dc15c3da11945b5ef1ab8ab0b8dbd8b20b4f75ef2e0d2943a37c42",
+        "run_test": "17b5d2d5176fcdb784f10e7266c08e0f336c744e4cea15b6681316fad2f7b07a"
+      },
+      "project": "fastapi",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "fastapi/routing.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "source_diff_shape": {
+        "changed_line_count": 4,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 27,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_fastapi_15"
+    },
+    {
+      "bug_id": 45,
+      "buggy_commit_id": "74c5306",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest pandas/tests/frame/test_constructors.py::TestDataFrameConstructorWithDatetimeTZ::test_construction_from_set_raises"
+      ],
+      "declared_f2p_commands": [
+        "pytest pandas/tests/frame/test_constructors.py::TestDataFrameConstructorWithDatetimeTZ::test_construction_from_set_raises"
+      ],
+      "declared_test_file": "pandas/tests/frame/test_constructors.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "74f6579941fbe71cf7c033f53977047ac872e469",
+      "metadata_sha256": {
+        "bug_info": "efb3e4db0720c0bd34b68bba39b2521d764a9f38b41ccc44a045d8beb74f33b4",
+        "reference_patch": "d525cabdbe943002872ef77d36e1629f12ead66bc7f48ef08e9a013f8030f23b",
+        "requirements": "b9fc8a3d1590bfbd267188e4763ad05378c38edbaba786a286235ccdfc93b517",
+        "run_test": "432655011253cde6deff87a0005e9402ff7948d608d457eb83cebc677a9a9fbd",
+        "setup": "fff3ab9f74619b05cbe5eea2a563d8185d513b5305565b880e002d238bfdbe93"
+      },
+      "project": "pandas",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "pandas/core/construction.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 3,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "stream_order": 28,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_pandas_45"
+    },
+    {
+      "bug_id": 5,
+      "buggy_commit_id": "2d4053daa56c609d642b214399e046671d4a593e",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "python -m unittest -q tornado.test.ioloop_test.TestPeriodicCallbackMath.test_clock_backwards"
+      ],
+      "declared_f2p_commands": [
+        "python -m unittest -q tornado.test.ioloop_test.TestPeriodicCallbackMath.test_clock_backwards"
+      ],
+      "declared_test_file": "tornado/test/ioloop_test.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "886643965b5cb782503d8d7b374b7a794ec2077b",
+      "metadata_sha256": {
+        "bug_info": "1ef390bf3c81e65f092f56b54ec93ab616f34bf7828b4c34584c0e18d529f5be",
+        "reference_patch": "ac2cc6ca4ffa92eea23f9a3e5a4858cb0b532075481e733884faf0790e5eb195",
+        "requirements": "c46e1ce1dfd77158130ada9feaa05cb86dd953cc762a954d097028dd19921dc9",
+        "run_test": "1f4d28e6d3cc2ce3ba1306b2c617bb78b47fd1cf751aeddca1e48a884114dd6e",
+        "setup": "c31bec1ffb52f343ff1893ebf6983f4371a99b69898acc1d577989b52057f7e8"
+      },
+      "project": "tornado",
+      "python_version": "3.7.0",
+      "reference_source_paths": [
+        "tornado/ioloop.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "source_diff_shape": {
+        "changed_line_count": 22,
+        "edit_block_count": 3,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 29,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_tornado_5"
+    },
+    {
+      "bug_id": 25,
+      "buggy_commit_id": "9a5473dbac05f3d6773b42c8e16d58a7dc3159b8",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest lib/matplotlib/tests/test_collections.py::test_EventCollection_nosort"
+      ],
+      "declared_f2p_commands": [
+        "pytest lib/matplotlib/tests/test_collections.py::test_EventCollection_nosort"
+      ],
+      "declared_test_file": "lib/matplotlib/tests/test_collections.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "184225bc5639fbd2f29c1253602806a8b6462d9f",
+      "metadata_sha256": {
+        "bug_info": "401b22f12bdb4fd0fa9379d263349fd83682ce99f31831665a79681d5393a6cf",
+        "reference_patch": "039bf3668c57c9bd6795bdaaed7185a7cccb20bd44413fba0c77b9178c0f818f",
+        "requirements": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "run_test": "889f6508517c325670b90f991c24de99193d343f44889f61d7916f68e05927bb"
+      },
+      "project": "matplotlib",
+      "python_version": "3.8.1",
+      "reference_source_paths": [
+        "lib/matplotlib/collections.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "primary",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "source_diff_shape": {
+        "changed_line_count": 9,
+        "edit_block_count": 3,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 30,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_matplotlib_25"
+    },
+    {
+      "bug_id": 4,
+      "buggy_commit_id": "e506c89304948bba593e8603ecace1c495b06fd5",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest tests/test_requests.py::test_url_for_without_server_name"
+      ],
+      "declared_f2p_commands": [
+        "pytest tests/test_requests.py::test_url_for_without_server_name"
+      ],
+      "declared_test_file": "tests/test_requests.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "e81a8ce07329e95d3d0899b1d774f21759c28e0e",
+      "metadata_sha256": {
+        "bug_info": "83c8a5e87e02bd1515a16e8b5c20b95fe52a1e1dc575a2f18462ee4f460219e5",
+        "reference_patch": "3fb4bd0b812ccb9497a9396807589e9e3f1b25ae29efb900f77fdbb2fb96326c",
+        "requirements": "2b9cdc736f4b71f18d39e352b451b8abb708c59eb7d2982490455032466d975c",
+        "run_test": "c22fc917206caac8a19620121019b8914fd9f26d458387ebd2e9c74174b094b5",
+        "setup": "28c76c4d388d78fd7e3bda08d447f92ab8aa1cd85652afabcdd99afafa1c7a6c"
+      },
+      "project": "sanic",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "sanic/request.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "reserve",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "source_diff_shape": {
+        "changed_line_count": 7,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 1,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_sanic_4"
+    },
+    {
+      "bug_id": 6,
+      "buggy_commit_id": "5db99a27cf640864b4793807811848698c5ff4a2",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest tests/test_forms_from_non_typing_sequences.py::test_python_list_param_as_form",
+        "pytest tests/test_forms_from_non_typing_sequences.py::test_python_set_param_as_form",
+        "pytest tests/test_forms_from_non_typing_sequences.py::test_python_tuple_param_as_form"
+      ],
+      "declared_f2p_commands": [
+        "pytest tests/test_forms_from_non_typing_sequences.py::test_python_list_param_as_form",
+        "pytest tests/test_forms_from_non_typing_sequences.py::test_python_set_param_as_form",
+        "pytest tests/test_forms_from_non_typing_sequences.py::test_python_tuple_param_as_form"
+      ],
+      "declared_test_file": "tests/test_forms_from_non_typing_sequences.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "874d24181e779ebc6e1c52afb7d6598f863fd6a8",
+      "metadata_sha256": {
+        "bug_info": "28ade77ba29704758c98f72c689bbfdab48fb4bc75bc1a6839eb622e6970ec3f",
+        "reference_patch": "0c850d9002a9e3e60521491ed2927085dd9affdae226e5ce0e7e49196c82969c",
+        "requirements": "b8b1f9c1c7ad13441d7972b6b866d0e1ea367c9cfc3b38aa6e65aeb7eb613e80",
+        "run_test": "f74bb080c41a6bb226496eef301c4a3f62389b46c7b1fc4beb46b12990e0f2d2"
+      },
+      "project": "fastapi",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "fastapi/dependencies/utils.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "reserve",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "source_diff_shape": {
+        "changed_line_count": 6,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 2,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_fastapi_6"
+    },
+    {
+      "bug_id": 90,
+      "buggy_commit_id": "a474a01",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest pandas/tests/io/test_pickle.py::test_pickle_buffer_roundtrip",
+        "pytest pandas/tests/io/test_pickle.py::test_pickle_generalurl_read"
+      ],
+      "declared_f2p_commands": [
+        "pytest pandas/tests/io/test_pickle.py::test_pickle_buffer_roundtrip",
+        "pytest pandas/tests/io/test_pickle.py::test_pickle_generalurl_read"
+      ],
+      "declared_test_file": "pandas/tests/io/test_pickle.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "1c3d64bae7c07b5ae1be337e0ebd751385b7ce27",
+      "metadata_sha256": {
+        "bug_info": "3402e17311b8bdb78852112b45538523d1eafb232424d4120594de020b6a788f",
+        "reference_patch": "7dbcfe80aa2d61837c54a22aaa625a672d59638cfbf82ad22fca267083a6b7f8",
+        "requirements": "2f26c5c86aadd198c6e22f06a9d4151f8bc66928ea41fe87d3838b0b68d648f3",
+        "run_test": "eb678b627b4d9acc172e5c2b0cb870b724f92132a30bc703e3acf4046753d65b",
+        "setup": "fff3ab9f74619b05cbe5eea2a563d8185d513b5305565b880e002d238bfdbe93"
+      },
+      "project": "pandas",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "pandas/_testing.py",
+        "pandas/io/pickle.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "reserve",
+      "selected_transform_id": "T1_omit_secondary_source_file",
+      "source_diff_shape": {
+        "changed_line_count": 94,
+        "edit_block_count": 19,
+        "file_count": 2,
+        "hunk_count": 11
+      },
+      "stream_order": 3,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_pandas_90"
+    },
+    {
+      "bug_id": 7,
+      "buggy_commit_id": "fa3409179588536f2f743d16e537f6f9827fa92f",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "python -m unittest -q tornado.test.ioloop_test.TestIOLoopFutures.test_run_in_executor_native"
+      ],
+      "declared_f2p_commands": [
+        "python -m unittest -q tornado.test.ioloop_test.TestIOLoopFutures.test_run_in_executor_native"
+      ],
+      "declared_test_file": "tornado/test/ioloop_test.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "a3b44cd701e0e82693363701bc0346b0125d2362",
+      "metadata_sha256": {
+        "bug_info": "7d204db1feccf459e5f5464acf8154b683d4759bbbfb684dda1f0c6a82463986",
+        "reference_patch": "3f405ed08a47d8a2f25a2e67bab3af33f8b144b60f65534ed2c422f2f35e380b",
+        "requirements": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "run_test": "9a44c1bdc5b9d8b027ffff074159a82b8d549340c6059a1b5205ed8e1291cc78",
+        "setup": "d3a4076796d738e69fdc78f14825c1f2e48cd317367ac3812b2e9df6ff8b580b"
+      },
+      "project": "tornado",
+      "python_version": "3.7.0",
+      "reference_source_paths": [
+        "tornado/ioloop.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "reserve",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 10,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "stream_order": 4,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_tornado_7"
+    },
+    {
+      "bug_id": 29,
+      "buggy_commit_id": "cdf9e30e4f3fb7747b178ee9c3849dfdebee7bd0",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest lib/matplotlib/tests/test_axes.py::test_inverted_cla"
+      ],
+      "declared_f2p_commands": [
+        "pytest lib/matplotlib/tests/test_axes.py::test_inverted_cla"
+      ],
+      "declared_test_file": "lib/matplotlib/tests/test_axes.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "fc51b411ba5d0984544ecff97e0a28ea4b6a6d03",
+      "metadata_sha256": {
+        "bug_info": "5d9cbd222dc69fce0b728dafeb343d7ad5c30730e4566e47536bc347ffecef61",
+        "reference_patch": "8d1a8067aa349b3a7b8bff805917404097a0f33e782c7ac8d91cd0be9df9f944",
+        "requirements": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "run_test": "1fb92c973d08ecea30fe9ba8badd829188ed5ffc74f7c2413c0ce3e53e5431b3"
+      },
+      "project": "matplotlib",
+      "python_version": "3.8.1",
+      "reference_source_paths": [
+        "lib/matplotlib/axis.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "reserve",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 19,
+        "edit_block_count": 3,
+        "file_count": 1,
+        "hunk_count": 3
+      },
+      "stream_order": 5,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_matplotlib_29"
+    },
+    {
+      "bug_id": 8,
+      "buggy_commit_id": "87540a2a2f42e00c4a2ca7ca35d19f96e62e6cb0",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest tests/keras/engine/test_topology.py::test_layer_sharing_at_heterogeneous_depth_order"
+      ],
+      "declared_f2p_commands": [
+        "pytest tests/keras/engine/test_topology.py::test_layer_sharing_at_heterogeneous_depth_order"
+      ],
+      "declared_test_file": "tests/keras/engine/test_topology.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "d78c982b326adeed6ac25200dc6892ff8f518ca6",
+      "metadata_sha256": {
+        "bug_info": "86bab8cfda0aa88ed7231ce1b92d1f677f424fe3043809a3cafd69975dd9d58d",
+        "reference_patch": "cb9006173688a25a094ac47ca1c0979b12f881925d9d8474d6ff24b82647865f",
+        "requirements": "a740c7f6f4ec429286993fe6cfa984d43d8f432f0fddc72aa1efd82f7f4f5203",
+        "run_test": "3275d08ea3f90b5d1b5f00b6fba65efbfdc1fd5c562309f202a396256aa4b578"
+      },
+      "project": "keras",
+      "python_version": "3.7.3",
+      "reference_source_paths": [
+        "keras/engine/network.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "reserve",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 50,
+        "edit_block_count": 9,
+        "file_count": 1,
+        "hunk_count": 4
+      },
+      "stream_order": 6,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_keras_8"
+    },
+    {
+      "bug_id": 10,
+      "buggy_commit_id": "e368f788f71c338cd3f049d5d6bdc643a51c0514",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest test/units/modules/system/test_pamd.py::PamdServiceTestCase::test_remove_first_rule",
+        "pytest test/units/modules/system/test_pamd.py::PamdServiceTestCase::test_remove_last_rule"
+      ],
+      "declared_f2p_commands": [
+        "pytest test/units/modules/system/test_pamd.py::PamdServiceTestCase::test_remove_first_rule",
+        "pytest test/units/modules/system/test_pamd.py::PamdServiceTestCase::test_remove_last_rule"
+      ],
+      "declared_test_file": "test/units/modules/system/test_pamd.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "a4b59d021368285490f7cda50c11ac4f7a8030b5",
+      "metadata_sha256": {
+        "bug_info": "7717df526553be28ded34098b06fad0630557bede41a8d44b18fc5897ef3e7d7",
+        "reference_patch": "f9283acba3f446e1df2125209f024cba801ec50b184b2b634ae2e952d03adb66",
+        "requirements": "bdc06beb8201739ac06e3652df613f7a2510473bc5bb44d87a5038708e397d27",
+        "run_test": "481b98dd92fab3d2b119762399403584cacefb772c0046e846e9740893e85aac",
+        "setup": "baba8276fe95fc71a9298ce3b31cdf8f0011576312ebbb7a26cea5cccde514f7"
+      },
+      "project": "ansible",
+      "python_version": "3.6.9",
+      "reference_source_paths": [
+        "lib/ansible/modules/system/pamd.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "reserve",
+      "selected_transform_id": "T2_omit_secondary_hunk",
+      "source_diff_shape": {
+        "changed_line_count": 5,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 2
+      },
+      "stream_order": 7,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_ansible_10"
+    },
+    {
+      "bug_id": 9,
+      "buggy_commit_id": "026c81b83454f176a9f9253cbfb70be2c159d822",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "python -m unittest -q tests.test_black.BlackTestCase.test_python2_print_function"
+      ],
+      "declared_f2p_commands": [
+        "python -m unittest -q tests.test_black.BlackTestCase.test_python2_print_function"
+      ],
+      "declared_test_file": "tests/data/python2_print_function.py;tests/test_black.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "d6db1c12a8e14833fe22da377cddc2bd1f43dc14",
+      "metadata_sha256": {
+        "bug_info": "49887118e5b805570154ec94fff9bf9701c34b2974fdc31a37143e6b46e516ba",
+        "reference_patch": "0084a4808b68e7c663b6c605f7dbefbbf60a5aada953c5856808299d1c245a81",
+        "requirements": "0722a4d859665e73a51bf30b280e75aa40800b29c726fec9d15efbaecfdd5019",
+        "run_test": "08660ce2aef433c6c5a28f576062514b4afaac105b93b29743f35b1c6988ea4a",
+        "setup": "5ebfe240917e30d1dcb9c5d19ad85af36a29ae5c33d6d4a768863069b0a3329b"
+      },
+      "project": "black",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "black.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "reserve",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "source_diff_shape": {
+        "changed_line_count": 4,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 8,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_black_9"
+    },
+    {
+      "bug_id": 9,
+      "buggy_commit_id": "bc7e7db208d351fae2982afbcdff7633f9636779",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "py.test spacy/tests/pipeline/test_tagger.py::test_tagger_warns_no_lemma_lookups"
+      ],
+      "declared_f2p_commands": [
+        "py.test spacy/tests/pipeline/test_tagger.py::test_tagger_warns_no_lemma_lookups"
+      ],
+      "declared_test_file": "spacy/tests/pipeline/test_tagger.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "3297a19545027c8d8550b1ae793ce290567eff32",
+      "metadata_sha256": {
+        "bug_info": "a04569cdc23bd311379fad42cfc5de39ddd0707a526d406c483f33121345bc19",
+        "reference_patch": "11405a7ea8a791607e3557caf1e865e768cd7326b00e149ee56c38b5097f28e4",
+        "requirements": "8952958ea146849ac029184aa1618795bc0e5752f921e2a83c959430c95b1124",
+        "run_test": "f250c3fec393da7d356fb55cb8f9d27a363eebd46ea5b0f4adfcf0dc12f3ff6e",
+        "setup": "4684d8e8af3cf0720b49a9d379e6479d53caf607652c29e7b03470fdb8426fcf"
+      },
+      "project": "spacy",
+      "python_version": "3.7.7",
+      "reference_source_paths": [
+        "spacy/errors.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "reserve",
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "source_diff_shape": {
+        "changed_line_count": 7,
+        "edit_block_count": 1,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 9,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_spacy_9"
+    },
+    {
+      "bug_id": 11,
+      "buggy_commit_id": "bf229ad5d830eb5320f966d51a55e590e8d57008",
+      "candidate_hidden_result_observed": false,
+      "candidate_materialized": false,
+      "catalog_f2p_commands": [
+        "pytest tests/test_union_body.py::test_item_openapi_schema",
+        "pytest tests/test_union_body.py::test_post_other_item",
+        "pytest tests/test_union_body.py::test_post_item",
+        "pytest tests/test_union_inherited_body.py::test_inherited_item_openapi_schema",
+        "pytest tests/test_union_inherited_body.py::test_post_extended_item",
+        "pytest tests/test_union_inherited_body.py::test_post_item"
+      ],
+      "declared_f2p_commands": [
+        "pytest tests/test_union_body.py::test_item_openapi_schema",
+        "pytest tests/test_union_body.py::test_post_other_item",
+        "pytest tests/test_union_body.py::test_post_item",
+        "pytest tests/test_union_inherited_body.py::test_inherited_item_openapi_schema",
+        "pytest tests/test_union_inherited_body.py::test_post_extended_item",
+        "pytest tests/test_union_inherited_body.py::test_post_item"
+      ],
+      "declared_test_file": "tests/test_union_body.py;tests/test_union_inherited_body.py",
+      "f2p_command_match": true,
+      "fixed_commit_id": "06eb4219345a77d23484528c9d164eb8d2097fec",
+      "metadata_sha256": {
+        "bug_info": "069475feaa907d498b14b4b2934a6fece9038d034b20af4706fc2c6be6f89107",
+        "reference_patch": "ea5517142fe8a9562f42c752dfba963e39abc2216be44356861ccc1be23bd7e7",
+        "requirements": "56d999acf8b530869e31a89fe73b17c1dc5a1f1292e61f4f3faa5913b0f10fb3",
+        "run_test": "acb147996987aa877e2aec55a6f529925e7fce22411279122d3726e29480c203"
+      },
+      "project": "fastapi",
+      "python_version": "3.8.3",
+      "reference_source_paths": [
+        "fastapi/dependencies/utils.py"
+      ],
+      "reference_test_paths_excluded_from_transform": [],
+      "role": "reserve",
+      "selected_transform_id": "T3_omit_secondary_edit_block",
+      "source_diff_shape": {
+        "changed_line_count": 9,
+        "edit_block_count": 2,
+        "file_count": 1,
+        "hunk_count": 1
+      },
+      "stream_order": 10,
+      "structural_disposition": "eligible_for_candidate_materialization",
+      "task_id": "bugsinpy_fastapi_11"
+    }
+  ],
+  "timeouts_and_pass_rules": {
+    "command_pass": "exit code 0 with framework summary showing the selected node(s) passed and no failure/error",
+    "dependency_image_build_seconds": 3600,
+    "dual_environment_consistency": "same normalized outcome and exit code in two fresh containers from one locked task-image digest",
+    "individual_f2p_or_regression_node_seconds": 300,
+    "test_collection_seconds": 1800
+  }
+}

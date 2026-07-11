@@ -1,0 +1,26 @@
+FROM dsa2026-p4-base:conda23.3.1-r1
+
+COPY data/environment_locks/dsa2026_p4_bootstrap/ /opt/dsa2026/locks/
+
+RUN conda config --system --set ssl_verify true \
+    && conda create -n py369 --file /opt/dsa2026/locks/py369-linux-64.txt \
+    && conda create -n py370 --file /opt/dsa2026/locks/py370-linux-64.txt \
+    && conda create -n py373 --file /opt/dsa2026/locks/py373-linux-64.txt \
+    && conda create -n py377 --file /opt/dsa2026/locks/py377-linux-64.txt \
+    && conda create -n py381 --file /opt/dsa2026/locks/py381-linux-64.txt \
+    && conda create -n py383 --file /opt/dsa2026/locks/py383-linux-64.txt \
+    && conda clean --all --yes
+
+RUN conda run -n py369 python -c "import sys; assert sys.version.split()[0] == '3.6.9'" \
+    && conda run -n py370 python -c "import sys; assert sys.version.split()[0] == '3.7.0'" \
+    && conda run -n py373 python -c "import sys; assert sys.version.split()[0] == '3.7.3'" \
+    && conda run -n py377 python -c "import sys; assert sys.version.split()[0] == '3.7.7'" \
+    && conda run -n py381 python -c "import sys; assert sys.version.split()[0] == '3.8.1'" \
+    && conda run -n py383 python -c "import sys; assert sys.version.split()[0] == '3.8.3'"
+
+ENV PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+
+LABEL org.opencontainers.image.title="DSA 2026 P4 frozen Python toolchains"
+LABEL org.opencontainers.image.description="Candidate-independent bootstrap environments for P4 only"
+LABEL org.opencontainers.image.base.digest="sha256:e4e42fb5e98a45ba82afd5f9d4cd2ad297bbfe912ca3954eb03f2d7b57c7fa98"

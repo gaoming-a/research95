@@ -23,6 +23,9 @@ data/*
 !data/p2p_scopes/*.json
 !data/protocols/
 !data/protocols/*.json
+!data/environment_locks/
+!data/environment_locks/dsa2026_p4_bootstrap/
+!data/environment_locks/dsa2026_p4_bootstrap/*.txt
 outputs/
 runs/
 artifacts/

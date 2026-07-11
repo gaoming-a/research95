@@ -22,6 +22,12 @@ all pass. P3 is now immutable and complete.
 P4 held-out cohort materialization is now in progress under the immutable P2/P3
 order and transform rules. P5 is not started, so no smoke, full run, rendered
 prompt, or model API is authorized.
+The P4 pre-transform audit now passes: all P2/P3 hashes and 40 source records
+remain frozen, 36 tasks have a structurally applicable first-priority transform,
+and four atomic tasks are pre-outcome discards. Six explicit Conda locks are
+bound into a candidate-independent toolchain image and reproduce identically in
+two network-disabled fresh containers. Task-specific oracle/candidate runs and
+the final P4 Gate remain pending.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,
@@ -60,9 +66,9 @@ conditional precision simulation passed (maximum rate/effect widths
 0.1185/0.1704), and a 12-paper nearest-neighbor review preserved a bounded
 evidence-conditioned gating position without first/unique/SOTA claims. The
 P3 author sign-off is recorded in
-`docs/experiments/dsa_p3_author_signoff_v0_1.md`. This phase stops at P3; P4
-still requires two fresh clean-environment candidate reruns and has not been
-started or authorized by the P3 closeout.
+`docs/experiments/dsa_p3_author_signoff_v0_1.md`. P4 is now separately
+authorized and in progress; it still requires two fresh clean-environment runs
+for every admitted candidate, and no final cohort decision has been made.
 
 The private development repository is
 `gaoming-a/research95-dsa-private`, configured locally as remote `private`.

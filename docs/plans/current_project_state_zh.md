@@ -2,7 +2,7 @@
 
 日期：2026-07-11
 
-## 2026-07-11 DSA P3 状态覆盖
+## 2026-07-11 DSA P4 preflight 状态覆盖
 
 - 当前状态：`P2_SOURCE_FEASIBILITY_PASS / REGULAR_FROZEN /
   P3_PASS_AUTHOR_SIGNED / P4_IN_PROGRESS / P5_NOT_STARTED /
@@ -33,6 +33,13 @@
   未过，因而仍禁止 smoke、full 和模型 API；
 - private remote 已配置并为当前分支 push target；public `origin` 禁止作为 fallback。
   当前唯一 active goal 是 P4 dual-clean cohort materialization；P5 未创建、未进入。
+- P4 preflight 已通过：P2/P3 immutable hashes、40-task/F2P metadata 和 catalog commit
+  均无漂移；source-only transform scan 为 T1=3/T2=17/T3=8/T4=8/NONE=4。
+  结构上最多 36 pairs，达到 30 pairs 仅余 6 个非结构性 exclusion 空间；
+- 6 个冻结 Python 版本已导出 Conda explicit locks。candidate-independent toolchain
+  image ID 为 `sha256:97e089cee02d0908e374f7b784ee0ffbb2fe5a2d64f619335aa962dc3ab3d768`，
+  两个无网络 fresh containers 的版本/lock 输出一致；正式 task-specific environment、
+  oracle registry、candidate pair 和最终 P4 Gate 尚未完成。
 
 ### 2026-07-10 DSA 路线计划基线（已由上方 P2 状态覆盖）
 

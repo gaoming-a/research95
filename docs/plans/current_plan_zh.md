@@ -20,6 +20,27 @@ Inspect：
 - source frame 只冻结 official F2P 与“project regression scope”来源，没有后验选择
   candidate outcome 的许可。
 
+P4 pre-transform checkpoint（2026-07-11）：
+
+- `scripts/dsa2026_p4_preflight.py --write/--check` 均通过；P2 raw hashes、P3
+  16-file canonical manifest/aggregate、official catalog commit、40-task order/F2P
+  commands 和全部 metadata hashes 无漂移；
+- reference candidate 的代码补丁唯一取 official `bug_patch.txt` 并应用到 declared
+  buggy commit；reference-fixed test file 只用于冻结/执行 oracle，任何 test-path edit
+  都不进入 candidate transform；
+- source-only structural scan 在任何 transformed outcome 前冻结为 T1=3、T2=17、
+  T3=8、T4=8、NONE=4。四个 atomic primary 结构 discard，36 个任务仍可达 30 pairs，
+  非结构性 discard 余量仅 6；
+- 6 个 Python 版本均已形成 Conda `@EXPLICIT` locks；candidate-independent toolchain
+  image ID=`sha256:97e089cee02d0908e374f7b784ee0ffbb2fe5a2d64f619335aa962dc3ab3d768`。
+  两个 `--network none` fresh containers 的 lock/version 输出完全一致；
+- official Conda/PyPI/GitHub 在 Docker 内出现 TLS EOF，HTTPS 清华镜像证书校验正常；
+  未关闭 SSL。sanic pilot 还发现 setuptools 75.1.0 与 packaging 20.4 不兼容；将
+  bootstrap 固定为 pip 20.1.1/setuptools 47.1.1/wheel 0.34.2 后，新容器真实得到
+  buggy fail/fixed F2P pass。该 pilot 不构成候选或 cohort evidence；
+- 下一步仅构建 task-specific dependency images，并在 transform 前冻结 reference-stable
+  P2P/hidden nodes。P4 Gate 未形成，P5/API 仍禁止。
+
 P4 test/oracle freeze rule（在任何 transformed candidate 结果前固定）：
 
 1. official declared F2P node/command 作为 visible F2P；

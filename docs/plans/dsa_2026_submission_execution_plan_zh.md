@@ -9,7 +9,8 @@ SHORT_INACTIVE / V0_SUBMISSION_GATE_PENDING
 同会场降级：DSA 2026 Short Paper，仅可在任何模型调用前锁定
 非活动备选：ACAI 2026；不得并行投稿，也不得在看到 DSA 实验结果后切换
 用户优先级：科学与收录稳健性优先，其次才是时间
-本轮边界：P4 已显式建立为新 goal；只材料化 cohort，不进入 P5，不调用 API，不改论文结果
+本轮边界：P4 已显式建立为新 goal；pre-transform/bootstrap Gate 已 PASS，继续材料化
+cohort；不进入 P5，不调用 API，不改论文结果
 
 ## 1. 权威性与目标覆盖
 
