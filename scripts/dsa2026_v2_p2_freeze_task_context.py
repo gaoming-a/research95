@@ -11,7 +11,13 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from dsa2026_p4_prepare_task_context import build_context, tree_sha256
+from dsa2026_p4_prepare_task_context import (
+    apply_reference,
+    copy_fixed_tests,
+    copy_metadata,
+    extract_commit_archive,
+    tree_sha256,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,6 +26,7 @@ AMENDMENT = ROOT / "data/protocols/dsa_v2_p1_test_scope_amendment_v0_1.json"
 OUT = ROOT / "data/protocols/dsa_v2_p2_task_source_registry_v0_1.json"
 CONTEXT_ROOT = (ROOT / "tmp/dsa2026_v2_p2_runtime/task_contexts").resolve()
 TASK_ID = "bugsinpy_pandas_161"
+SOURCE_REPOSITORY = "https://github.com/pandas-dev/pandas"
 EXPECTED_AMENDMENTS_SHA256 = "b5778a7c95042d5475d333842c5b8a486a2798a7586d74a20a84e30487ddef94"
 
 
@@ -86,6 +93,51 @@ def build_registry(record: dict[str, Any], amendment: dict[str, Any]) -> dict[st
         "records": [value],
         "model_api_calls": 0,
     }
+
+
+def build_context(
+    task: dict[str, Any],
+    buggy_archive: Path,
+    fixed_archive: Path,
+    catalog_root: Path,
+    temporary_root: Path,
+) -> tuple[Path, dict[str, Any]]:
+    context = temporary_root / TASK_ID
+    buggy_source = context / "buggy_source"
+    fixed_source = temporary_root / "fixed_source"
+    buggy_archive_record = extract_commit_archive(
+        buggy_archive, buggy_source, f"{task['project']}-{task['buggy_commit_id']}"
+    )
+    fixed_archive_record = extract_commit_archive(
+        fixed_archive, fixed_source, f"{task['project']}-{task['fixed_commit_id']}"
+    )
+    fixed_test_hashes = copy_fixed_tests(
+        fixed_source, task["declared_test_file"], context / "fixed_tests"
+    )
+    metadata_hashes = copy_metadata(catalog_root, task, context / "metadata")
+    reference = apply_reference(context)
+    value = {
+        "task_id": TASK_ID,
+        "project": task["project"],
+        "order": task["order"],
+        "status": "v2_p2_source_context_frozen_no_candidate",
+        "source_repository": SOURCE_REPOSITORY,
+        "source_acquisition": "official GitHub codeload commit tarballs",
+        "buggy_commit_id": task["buggy_commit_id"],
+        "fixed_commit_id": task["fixed_commit_id"],
+        "buggy_archive": buggy_archive_record,
+        "fixed_archive": fixed_archive_record,
+        "buggy_source_tree_sha256": tree_sha256(buggy_source),
+        "fixed_test_sha256": fixed_test_hashes,
+        "metadata_sha256": metadata_hashes,
+        "reference_validation": reference,
+        "context_tree_sha256": tree_sha256(context),
+        "candidate_materialized": False,
+        "candidate_outcome_observed": False,
+        "model_api_calls": 0,
+    }
+    value["record_sha256"] = hashlib.sha256(canonical_bytes(value)).hexdigest()
+    return context, value
 
 
 def main() -> None:

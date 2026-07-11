@@ -17,6 +17,11 @@
 - Candidate transform code needs behavioral-independent tests. A synthetic
   two-file/two-hunk patch can cover T1--T4 enumeration and prove every produced
   patch recreates its candidate tree before any real candidate outcome exists.
+- A helper with a generic-looking name may still hide an old protocol cursor.
+  The first V2 source-freeze attempt called P4 `build_context`, which internally
+  required membership in the terminated P4 task list. Reuse only its pure
+  archive/copy/apply primitives; construct V2 records directly from the signed
+  V2 source order and never make a historical cursor an active dependency.
 
 ## 2026-07-12 Signed prose must match executable recipe fields
 

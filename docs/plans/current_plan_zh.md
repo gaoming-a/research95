@@ -47,6 +47,12 @@ Pre-outcome implementation freeze：
 下一动作：提交上述完整 pre-outcome implementation 后，下载 pandas_161 两个官方 commit
 archives 并冻结 source/context；随后按 Gate 顺序执行，不能根据结果修改已提交规则。
 
+Source-freezer repair（真实 outcome 前）：首次 archive freeze 被旧 P4 `build_context`
+内部的 v0.1 replacement-cursor lookup 拒绝，未构建环境、未启动 container/test。修复为
+只复用纯 archive extraction、metadata/fixed-test copy、reference-apply helpers，由 V2-P1
+order=1 record 与 signed amendment 直接构造新 V2 registry；不再读取任何 P4 cursor 或
+P4 task list。该执行链修复必须先提交，才允许重试同一 archive freeze。
+
 ## 0.56 2026-07-12 DSA v0.2 V2-P2 executor synthetic check-only
 
 本轮 Goal：只实现并审计消费 synthetic metadata 的 V2-P2 纯状态机，证明它严格读取
