@@ -1,0 +1,95 @@
+{
+  "aggregate_algorithm": "SHA-256 over ordered UTF-8 path, NUL, lowercase file hash, LF records",
+  "aggregate_sha256": "ed7c927129c47027b57374625a2d76667503bbb1d8d37e04d4460e42b2ae8b40",
+  "created_date": "2026-07-12",
+  "excluded_derived_paths": [
+    "data/protocols/dsa_v2_p1_hash_manifest_v0_1.json",
+    "data/protocols/dsa_v2_p1_gate_audit_v0_1.json"
+  ],
+  "files": [
+    {
+      "canonical_utf8_bytes": 467,
+      "path": "data/protocols/dsa_v2_p1_author_declaration_v0_1.txt",
+      "sha256": "65328de6aa913bd8ee04dfdbfd172960745bc431ab7d2f7742c8aa7038dbe2ca"
+    },
+    {
+      "canonical_utf8_bytes": 9412,
+      "path": "data/protocols/dsa_v0_1_termination_and_v0_2_redesign_v0_1.json",
+      "sha256": "3a18d196653d260b5125b45bb504d81fa2e45a30abfa9cf581c8ab77c74414ef"
+    },
+    {
+      "canonical_utf8_bytes": 8579,
+      "path": "docs/plans/dsa_agent_evidence_experiment_v0_2_zh.md",
+      "sha256": "ed9927f2aa0e98634e4a4d3142bf0d4603a9f5f23d68c0e782f002e85497b81a"
+    },
+    {
+      "canonical_utf8_bytes": 2806,
+      "path": "docs/experiments/dsa_v0_2_construction_protocol_signoff_v0_1.md",
+      "sha256": "a554fa544f56b2a0a0b1d49802e7903c0b5aa867869fd6a7764fd8d9e4897793"
+    },
+    {
+      "canonical_utf8_bytes": 855860,
+      "path": "data/protocols/dsa_p2_source_frame_v0_1.json",
+      "sha256": "3b47d074996b479643a6ac7ebb31bbe178c15a8a769ba23eba1dfbd7afacc2de"
+    },
+    {
+      "canonical_utf8_bytes": 3481,
+      "path": "data/protocols/dsa_p2_development_exclusion_registry_v0_1.json",
+      "sha256": "fc270d1ae46eef5971ba3d91ca93fe9377c5f62b66cc716686c93813f8808779"
+    },
+    {
+      "canonical_utf8_bytes": 37354,
+      "path": "scripts/dsa2026_freeze_v2_p1_construction.py",
+      "sha256": "bcf9f0f78cca4c68dd87c9bf4efc09ddd95003c760cbef4a1d00f4d08607bda4"
+    },
+    {
+      "canonical_utf8_bytes": 531677,
+      "path": "data/protocols/dsa_v2_p1_source_order_v0_1.json",
+      "sha256": "d7c58c17469caa977c493fc91809442fd8a2041289fc6202353e1fa34daf3815"
+    },
+    {
+      "canonical_utf8_bytes": 22014,
+      "path": "data/protocols/dsa_v2_p1_construction_protocol_v0_1.json",
+      "sha256": "cfc7780250b6268be021b70c1096936390816c3ed1456c1f160953c7b9703d58"
+    },
+    {
+      "canonical_utf8_bytes": 4061,
+      "path": "docs/experiments/dsa_v2_p1_construction_freeze_v0_1.md",
+      "sha256": "7cb8902c411009b35599b7c10f5bb536b7da5f63ef7805270fc6bba55cdf4262"
+    },
+    {
+      "canonical_utf8_bytes": 4145,
+      "path": "data/environment_locks/dsa2026_p4_bootstrap/py369-linux-64.txt",
+      "sha256": "127d75b0d841583a2250c48b0a833de078b5ae45e0e606888f6928eb621c7a4e"
+    },
+    {
+      "canonical_utf8_bytes": 4262,
+      "path": "data/environment_locks/dsa2026_p4_bootstrap/py370-linux-64.txt",
+      "sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82"
+    },
+    {
+      "canonical_utf8_bytes": 4262,
+      "path": "data/environment_locks/dsa2026_p4_bootstrap/py373-linux-64.txt",
+      "sha256": "f5f36238a1b97f435d93a9ff7b23c5fa12b075fc616ee05e66bd2c6e72552fd5"
+    },
+    {
+      "canonical_utf8_bytes": 4258,
+      "path": "data/environment_locks/dsa2026_p4_bootstrap/py377-linux-64.txt",
+      "sha256": "8fd9517e7b4a6a22002488faa14b752e4de41bad6e37211a81ec8f67fe11adb7"
+    },
+    {
+      "canonical_utf8_bytes": 3846,
+      "path": "data/environment_locks/dsa2026_p4_bootstrap/py381-linux-64.txt",
+      "sha256": "df1e425eedcb0d3806b5bf10c55e369648621d93f46f5754cdc85f8435cf21f8"
+    },
+    {
+      "canonical_utf8_bytes": 3738,
+      "path": "data/environment_locks/dsa2026_p4_bootstrap/py383-linux-64.txt",
+      "sha256": "6a25cb9316d222d0bf8b53b516268668cb23b3bebc1cf3ede3d6d33dbc872144"
+    }
+  ],
+  "hash_algorithm": "SHA-256 over UTF-8 text after CRLF/CR normalization to LF; author declaration also strips terminal LF",
+  "immutability_boundary": "V2-P1 construction rules and source order only; no task outcome, final cohort, prompt/model/statistical freeze, or API authorization.",
+  "manifest_id": "dsa_v2_p1_hash_manifest_v0_1",
+  "status": "immutable_author_signed_rules_only"
+}

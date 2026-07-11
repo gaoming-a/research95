@@ -1,0 +1,1 @@
+我作为作者【高明】签核 DSA v0.2 V2-P1 材料构造协议的全部 8 项；我已审查核心问题、reviewer-agent 边界、pre-confirmatory materialization、source/exclusion、project-level environment policy、candidate qualification、30-pair/stop rule 和后续独立冻结责任。我理解该签核只授权后续 Goal 冻结 V2-P1 规则，不授权运行 task/test/container，不授权进入 V2-P2，不授权修改 prompt 或调用模型 API。

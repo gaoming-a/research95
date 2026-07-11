@@ -2,14 +2,14 @@
 
 计划编号：DSA-2026-EVIDENCE-POLICY-20260710
 制定日期：2026-07-10
-当前状态：V0_1_TERMINATED_BEFORE_MODEL_OUTPUT / V0_2_DESIGN_DRAFT /
-V2_P1_AUTHOR_SIGNOFF_PENDING / NO_API / V0_SUBMISSION_GATE_PENDING
+当前状态：V0_1_TERMINATED_BEFORE_MODEL_OUTPUT / V2_P1_PASS_AUTHOR_SIGNED /
+RULES_FROZEN / V2_P2_NOT_AUTHORIZED / NO_API / V0_SUBMISSION_GATE_PENDING
 唯一主目标：DSA 2026 Regular Paper
 同会场降级：DSA 2026 Short Paper，仅可在任何模型调用前锁定
 非活动备选：ACAI 2026；不得并行投稿，也不得在看到 DSA 实验结果后切换
 用户优先级：科学与收录稳健性优先，其次才是时间
-本轮边界：P3/P4 v0.1 已在模型调用前终止；只建立 v0.2 精简实验设计和 V2-P1
-作者签核入口，不运行 task/test/container，不调用 API，不改 prompt 或论文结果
+本轮边界：V2-P1 source/order/construction rules 已冻结并通过作者/机械 Gate；不运行
+task/test/container，不进入 V2-P2，不调用 API，不改 prompt 或论文结果
 
 ## 2026-07-11 v0.2 实验路线覆盖
 
@@ -23,8 +23,9 @@ capacity stop，而是 clean environment 与 candidate behavioral qualification 
 C0--C3、两项 task-level estimands、三模型和三重复，但先冻结材料构造规则，再机械
 生成并质检候选池；只有首批 30 个合格 task pairs 才进入最终 P3 v0.2 冻结。
 
-当前下一 Gate 是作者签核 V2-P1 的 8 项材料构造规则。该签核仍不授权 V2-P2
-materialization 或模型 API。
+作者已签核 V2-P1 的8项材料构造规则，机器 Gate 已冻结299-task source order 与构造
+规则。下一 Gate 最多实现 executor/synthetic check-only；真实 V2-P2 materialization
+仍需新的明确授权，模型 API 继续禁止。
 
 ## 1. 权威性与目标覆盖
 

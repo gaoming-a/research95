@@ -1,8 +1,26 @@
 # 当前项目状态与文件地图
 
-日期：2026-07-11
+日期：2026-07-12
 
-## 2026-07-11 v0.2 路线覆盖
+## 2026-07-12 V2-P1 状态覆盖
+
+- 当前状态：`V2_P1_PASS_AUTHOR_SIGNED / RULES_FROZEN /
+  V2_P2_NOT_AUTHORIZED / NO_API / V0_SUBMISSION_GATE_PENDING`；
+- 作者高明签核的8项原文已保存，SHA-256=
+  `65328de6aa913bd8ee04dfdbfd172960745bc431ab7d2f7742c8aa7038dbe2ca`；
+- V2-P1 冻结299 tasks/9 projects 的完整 project-round-robin source order；P2 development
+  与 v0.1 五个 P4-active tasks 均排除；source-order SHA-256=
+  `21be1d9fed719de44126be585fa7e9123fd8579588d9ce86eb396d4ab5c2dd11`；
+- 六个 Python base locks、固定 bootstrap versions、project recipe template、T1--T4
+  全候选枚举、pre-candidate regression split、dual-fresh qualification 和30-pair/source
+  exhaustion stop rule 均已冻结；
+- V2-P1 check-only Gate 全部 PASS；没有 task checkout、environment build、container、
+  project test、candidate/model outcome、prompt render 或 API；
+- V2-P2 尚未授权。下一 Goal 只可实现 executor 与 synthetic metadata dry-run；真实
+  materialization 需要新的明确用户授权；
+- V0 submission gates 继续 pending，不因 V2-P1 通过而自动满足。
+
+## 2026-07-11 v0.2 路线覆盖（已被上方覆盖）
 
 - 当前状态：`V0_1_TERMINATED_BEFORE_MODEL_OUTPUT / V0_2_DESIGN_DRAFT /
   V2_P1_AUTHOR_SIGNOFF_PENDING / NO_API / V0_SUBMISSION_GATE_PENDING`；

@@ -1,7 +1,7 @@
 # DSA reviewer-agent 证据条件实验计划 v0.2
 
-日期：2026-07-11
-状态：`DESIGN_DRAFT / AUTHOR_SIGNOFF_REQUIRED / NO_API`
+日期：2026-07-12
+状态：`V2-P1_PASS_AUTHOR_SIGNED / RULES_FROZEN / V2-P2_NOT_AUTHORIZED / NO_API`
 
 ## 1. 一句话论点
 
@@ -53,7 +53,7 @@ v0.2 只改变材料构造与最终冻结的先后顺序：先冻结通用构造
 - 五个 v0.1 P4-active tasks 进入 v0.2 development exclusion；
 - 不调用模型、不改 prompt、不改论文结果。
 
-### V2-P1：冻结材料构造协议
+### V2-P1：冻结材料构造协议（已完成）
 
 在查看任何新 task qualification outcome 前，冻结并由作者签核：
 
@@ -64,7 +64,13 @@ v0.2 只改变材料构造与最终冻结的先后顺序：先冻结通用构造
 5. source-frame exhaustion stop rule；
 6. 全部失败记录与 no-task-specific-repair 规则。
 
-本阶段只冻结规则，不运行新 task，不调用模型。
+作者高明已签核全部8项。V2-P1 现已冻结299个 eligible tasks/9 projects 的完整
+project-round-robin source order、六个 Python explicit locks、project recipe template、
+T1--T4 全候选枚举顺序、3-visible/最多20-hidden oracle split、双 fresh qualification、
+30-pair/source-exhaustion stop rule。source-order SHA-256 为
+`21be1d9fed719de44126be585fa7e9123fd8579588d9ce86eb396d4ab5c2dd11`。
+
+本阶段只冻结规则，没有运行 task/test/container，也没有调用模型。
 
 ### V2-P2：预模型材料池构造
 
@@ -144,9 +150,11 @@ placeholder、not-run、tool verdict 或 hidden oracle。
 
 ## 9. 当前边界与下一 Gate
 
-本文件是设计草案，不是新的预注册签核，也不授权 task materialization、prompt 修改、
-API 或论文结果修改。下一 Goal 只能在作者签核 V2-P1 的构造规则后，建立 source order、
-project recipe policy、candidate generator 和 check-only preflight；不得顺手进入 V2-P2。
+V2-P1 已完成，但不是 V2-P2 授权，也不是最终 V2-P3 预注册。下一 Goal 最多实现
+V2-P2 executor 和 synthetic metadata check-only dry-run；真实 task checkout、environment
+build、container/test、prompt 修改、API 和论文结果修改仍禁止。任何真实 materialization
+必须由用户另行明确授权。
 
 机器设计：`data/protocols/dsa_v0_1_termination_and_v0_2_redesign_v0_1.json`。
-机械审计：`scripts/dsa2026_audit_v0_2_redesign.py`。
+V2-P1 协议：`data/protocols/dsa_v2_p1_construction_protocol_v0_1.json`。
+V2-P1 审计：`data/protocols/dsa_v2_p1_gate_audit_v0_1.json`。

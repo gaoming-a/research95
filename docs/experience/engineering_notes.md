@@ -1,5 +1,24 @@
 # Engineering Notes
 
+## 2026-07-12 V2-P1 metadata and base-lock freeze
+
+- Source-frame eligibility does not imply that every official task directory
+  contains a `requirements.txt`. Treat missing and empty files as an explicit
+  absence of extra task requirements, record file presence, and continue to
+  use project package metadata as the generic runtime-dependency authority.
+  Do not synthesize a requirements file or infer task-specific packages.
+- A textual phrase such as "frozen bootstrap" is not an executable freeze.
+  Bind exact pip/setuptools/wheel/pytest/packaging versions and every Python
+  explicit-lock path/hash before V2-P2 so environment resolution cannot drift.
+- Transcribed hashes require a second authority. The first V2-P1 script draft
+  copied the wrong Python 3.7.7 lock hash; cross-checking the existing P4
+  preflight constant and the lock file itself identified the mismatch before
+  any environment build or task outcome.
+- A complete source order is safer than a small preselected reserve when
+  pre-model materialization loss is unknown. Domain-separate the seed, order
+  projects and tasks by hashes, then process project queues round-robin until
+  30 pairs qualify or all eligible sources are exhausted.
+
 ## 2026-07-11 Confirmatory cohort must follow stimulus qualification
 
 - An external improved-reproduction pass is provenance, not a clean task

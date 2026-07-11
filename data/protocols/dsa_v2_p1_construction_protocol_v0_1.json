@@ -1,0 +1,404 @@
+{
+  "agent_boundary": "A reviewer agent is one frozen model endpoint executing one neutral prompt and one JSON output schema without autonomous tools; it receives only the supplied cumulative evidence packet.",
+  "author_signoff": {
+    "author_name": "高明",
+    "canonicalization": "UTF-8 exact user message with terminal CR/LF removed",
+    "confirmed_item_ids": [
+      "central_question",
+      "agent_boundary",
+      "preconfirmatory_materialization",
+      "source_and_exclusion",
+      "environment_policy",
+      "candidate_qualification",
+      "cohort_and_stop",
+      "freeze_and_responsibility"
+    ],
+    "declaration_path": "data/protocols/dsa_v2_p1_author_declaration_v0_1.txt",
+    "declaration_sha256": "65328de6aa913bd8ee04dfdbfd172960745bc431ab7d2f7742c8aa7038dbe2ca",
+    "recorded_at": "2026-07-12T01:04:41+08:00",
+    "status": "signed"
+  },
+  "candidate_generation": {
+    "candidate_classes_in_priority_order": [
+      {
+        "enumeration": "one candidate per source file when at least two source files contain reference edits; omit all reference edits for that file",
+        "id": "T1_omit_one_source_file"
+      },
+      {
+        "enumeration": "one candidate per source hunk when at least two source hunks exist; omit that hunk",
+        "id": "T2_omit_one_hunk"
+      },
+      {
+        "enumeration": "one candidate per contiguous added/removed edit block when at least two edit blocks exist; omit that block",
+        "id": "T3_omit_one_edit_block"
+      },
+      {
+        "enumeration": "one candidate per source changed line when at least two changed lines exist; reverse that one reference edit using the source newline style",
+        "id": "T4_revert_one_changed_line"
+      }
+    ],
+    "deduplication": "discard candidates whose patch/tree hash equals buggy, oracle-positive, or an earlier generated candidate",
+    "descriptor": "canonical JSON over class ID, path, hunk index, edit-block index, line index, edit kind, and raw line value; unused fields are null",
+    "input": "source-only official reference patch; every test-path edit is excluded",
+    "manual_candidate_repair_or_reordering": "forbidden",
+    "selection": "execute in frozen class/descriptor order and select the first candidate satisfying every hard-negative qualification rule",
+    "tie_preimage": "DSA-V2-P1-CANDIDATE-ORDER-20260712-V1|<task_id>|<canonical_descriptor>",
+    "within_class_order": "ascending SHA-256(candidate-order seed|task_id|canonical descriptor), then canonical descriptor bytes"
+  },
+  "created_date": "2026-07-12",
+  "current_authorization": {
+    "container_run": false,
+    "environment_build": false,
+    "model_api": false,
+    "paper_result_change": false,
+    "project_test": false,
+    "prompt_change": false,
+    "prompt_render": false,
+    "task_checkout": false,
+    "v2_p1_rules_frozen": true,
+    "v2_p2_materialization": false
+  },
+  "execution_cursor": {
+    "advance": "advance exactly once to the next frozen source-order record after a terminal pair-qualified/materialization-failed disposition",
+    "rerun_after_terminal_disposition": "forbidden",
+    "state_transition": "pending -> environment-qualified -> oracle-qualified -> candidate-search -> pair-qualified or materialization-failed"
+  },
+  "next_gate": "A separate user-authorized Goal may implement V2-P2 executors and run a check-only dry-run against synthetic metadata; real task/container/test materialization still requires explicit V2-P2 authorization.",
+  "project_environment_recipe_policy": {
+    "allowed_dependency_authorities": [
+      "task official requirements.txt",
+      "project package metadata resolved by `python -m pip install -e .`",
+      "frozen bootstrap/test-framework packages"
+    ],
+    "candidate_independent_base": {
+      "bootstrap_packages": {
+        "packaging": "20.4",
+        "pip": "20.1.1",
+        "pytest": "5.4.3",
+        "setuptools": "47.1.1",
+        "wheel": "0.34.2"
+      },
+      "lock_rule": "the task-declared Python version selects exactly one hash-matched base lock",
+      "python_explicit_locks": [
+        {
+          "actual_sha256": "127d75b0d841583a2250c48b0a833de078b5ae45e0e606888f6928eb621c7a4e",
+          "environment_name": "py369",
+          "expected_sha256": "127d75b0d841583a2250c48b0a833de078b5ae45e0e606888f6928eb621c7a4e",
+          "path": "data/environment_locks/dsa2026_p4_bootstrap/py369-linux-64.txt",
+          "python_version": "3.6.9"
+        },
+        {
+          "actual_sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82",
+          "environment_name": "py370",
+          "expected_sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82",
+          "path": "data/environment_locks/dsa2026_p4_bootstrap/py370-linux-64.txt",
+          "python_version": "3.7.0"
+        },
+        {
+          "actual_sha256": "f5f36238a1b97f435d93a9ff7b23c5fa12b075fc616ee05e66bd2c6e72552fd5",
+          "environment_name": "py373",
+          "expected_sha256": "f5f36238a1b97f435d93a9ff7b23c5fa12b075fc616ee05e66bd2c6e72552fd5",
+          "path": "data/environment_locks/dsa2026_p4_bootstrap/py373-linux-64.txt",
+          "python_version": "3.7.3"
+        },
+        {
+          "actual_sha256": "8fd9517e7b4a6a22002488faa14b752e4de41bad6e37211a81ec8f67fe11adb7",
+          "environment_name": "py377",
+          "expected_sha256": "8fd9517e7b4a6a22002488faa14b752e4de41bad6e37211a81ec8f67fe11adb7",
+          "path": "data/environment_locks/dsa2026_p4_bootstrap/py377-linux-64.txt",
+          "python_version": "3.7.7"
+        },
+        {
+          "actual_sha256": "df1e425eedcb0d3806b5bf10c55e369648621d93f46f5754cdc85f8435cf21f8",
+          "environment_name": "py381",
+          "expected_sha256": "df1e425eedcb0d3806b5bf10c55e369648621d93f46f5754cdc85f8435cf21f8",
+          "path": "data/environment_locks/dsa2026_p4_bootstrap/py381-linux-64.txt",
+          "python_version": "3.8.1"
+        },
+        {
+          "actual_sha256": "6a25cb9316d222d0bf8b53b516268668cb23b3bebc1cf3ede3d6d33dbc872144",
+          "environment_name": "py383",
+          "expected_sha256": "6a25cb9316d222d0bf8b53b516268668cb23b3bebc1cf3ede3d6d33dbc872144",
+          "path": "data/environment_locks/dsa2026_p4_bootstrap/py383-linux-64.txt",
+          "python_version": "3.8.3"
+        }
+      ]
+    },
+    "failure_disposition": "record pre-confirmatory environment failure and continue to the next frozen task; do not repair and rerun the task",
+    "forbidden_authorities": [
+      "decayed official setup.sh commands",
+      "packages inherited from a shared historical environment",
+      "task-specific dependency additions after observing a failure",
+      "source/test/fixture compatibility edits"
+    ],
+    "recipes": [
+      {
+        "candidate_role_environment_equality": "oracle-positive and every partial-fix candidate use the same frozen task-image ID",
+        "command_template": [
+          "create a fresh Linux environment at the task-declared Python version",
+          "install frozen bootstrap pip/setuptools/wheel and the declared test framework",
+          "install the task's official requirements.txt when non-empty",
+          "install the buggy checkout with `python -m pip install -e .` so project-declared runtime dependencies are resolved",
+          "run `python -m pip check`, export the complete dependency lock, and bind the image ID"
+        ],
+        "eligible_task_count": 164,
+        "freeze_timing": "instantiate and hash before the first V2-P2 task outcome for this project",
+        "network_boundary": "network is allowed only while building the frozen image; every qualification run uses network=none and no shared writable mount",
+        "official_setup_sh_role": "provenance hash only; never executed as dependency authority",
+        "post_outcome_task_specific_repair": "forbidden",
+        "project": "pandas",
+        "python_versions": [
+          "3.8.3"
+        ],
+        "same_template_for_all_project_tasks": true,
+        "test_frameworks": [
+          "pytest"
+        ]
+      },
+      {
+        "candidate_role_environment_equality": "oracle-positive and every partial-fix candidate use the same frozen task-image ID",
+        "command_template": [
+          "create a fresh Linux environment at the task-declared Python version",
+          "install frozen bootstrap pip/setuptools/wheel and the declared test framework",
+          "install the task's official requirements.txt when non-empty",
+          "install the buggy checkout with `python -m pip install -e .` so project-declared runtime dependencies are resolved",
+          "run `python -m pip check`, export the complete dependency lock, and bind the image ID"
+        ],
+        "eligible_task_count": 12,
+        "freeze_timing": "instantiate and hash before the first V2-P2 task outcome for this project",
+        "network_boundary": "network is allowed only while building the frozen image; every qualification run uses network=none and no shared writable mount",
+        "official_setup_sh_role": "provenance hash only; never executed as dependency authority",
+        "post_outcome_task_specific_repair": "forbidden",
+        "project": "fastapi",
+        "python_versions": [
+          "3.8.3"
+        ],
+        "same_template_for_all_project_tasks": true,
+        "test_frameworks": [
+          "pytest"
+        ]
+      },
+      {
+        "candidate_role_environment_equality": "oracle-positive and every partial-fix candidate use the same frozen task-image ID",
+        "command_template": [
+          "create a fresh Linux environment at the task-declared Python version",
+          "install frozen bootstrap pip/setuptools/wheel and the declared test framework",
+          "install the task's official requirements.txt when non-empty",
+          "install the buggy checkout with `python -m pip install -e .` so project-declared runtime dependencies are resolved",
+          "run `python -m pip check`, export the complete dependency lock, and bind the image ID"
+        ],
+        "eligible_task_count": 19,
+        "freeze_timing": "instantiate and hash before the first V2-P2 task outcome for this project",
+        "network_boundary": "network is allowed only while building the frozen image; every qualification run uses network=none and no shared writable mount",
+        "official_setup_sh_role": "provenance hash only; never executed as dependency authority",
+        "post_outcome_task_specific_repair": "forbidden",
+        "project": "black",
+        "python_versions": [
+          "3.8.3"
+        ],
+        "same_template_for_all_project_tasks": true,
+        "test_frameworks": [
+          "unittest"
+        ]
+      },
+      {
+        "candidate_role_environment_equality": "oracle-positive and every partial-fix candidate use the same frozen task-image ID",
+        "command_template": [
+          "create a fresh Linux environment at the task-declared Python version",
+          "install frozen bootstrap pip/setuptools/wheel and the declared test framework",
+          "install the task's official requirements.txt when non-empty",
+          "install the buggy checkout with `python -m pip install -e .` so project-declared runtime dependencies are resolved",
+          "run `python -m pip check`, export the complete dependency lock, and bind the image ID"
+        ],
+        "eligible_task_count": 41,
+        "freeze_timing": "instantiate and hash before the first V2-P2 task outcome for this project",
+        "network_boundary": "network is allowed only while building the frozen image; every qualification run uses network=none and no shared writable mount",
+        "official_setup_sh_role": "provenance hash only; never executed as dependency authority",
+        "post_outcome_task_specific_repair": "forbidden",
+        "project": "keras",
+        "python_versions": [
+          "3.7.3"
+        ],
+        "same_template_for_all_project_tasks": true,
+        "test_frameworks": [
+          "pytest"
+        ]
+      },
+      {
+        "candidate_role_environment_equality": "oracle-positive and every partial-fix candidate use the same frozen task-image ID",
+        "command_template": [
+          "create a fresh Linux environment at the task-declared Python version",
+          "install frozen bootstrap pip/setuptools/wheel and the declared test framework",
+          "install the task's official requirements.txt when non-empty",
+          "install the buggy checkout with `python -m pip install -e .` so project-declared runtime dependencies are resolved",
+          "run `python -m pip check`, export the complete dependency lock, and bind the image ID"
+        ],
+        "eligible_task_count": 16,
+        "freeze_timing": "instantiate and hash before the first V2-P2 task outcome for this project",
+        "network_boundary": "network is allowed only while building the frozen image; every qualification run uses network=none and no shared writable mount",
+        "official_setup_sh_role": "provenance hash only; never executed as dependency authority",
+        "post_outcome_task_specific_repair": "forbidden",
+        "project": "ansible",
+        "python_versions": [
+          "3.6.9"
+        ],
+        "same_template_for_all_project_tasks": true,
+        "test_frameworks": [
+          "pytest"
+        ]
+      },
+      {
+        "candidate_role_environment_equality": "oracle-positive and every partial-fix candidate use the same frozen task-image ID",
+        "command_template": [
+          "create a fresh Linux environment at the task-declared Python version",
+          "install frozen bootstrap pip/setuptools/wheel and the declared test framework",
+          "install the task's official requirements.txt when non-empty",
+          "install the buggy checkout with `python -m pip install -e .` so project-declared runtime dependencies are resolved",
+          "run `python -m pip check`, export the complete dependency lock, and bind the image ID"
+        ],
+        "eligible_task_count": 12,
+        "freeze_timing": "instantiate and hash before the first V2-P2 task outcome for this project",
+        "network_boundary": "network is allowed only while building the frozen image; every qualification run uses network=none and no shared writable mount",
+        "official_setup_sh_role": "provenance hash only; never executed as dependency authority",
+        "post_outcome_task_specific_repair": "forbidden",
+        "project": "tornado",
+        "python_versions": [
+          "3.7.0"
+        ],
+        "same_template_for_all_project_tasks": true,
+        "test_frameworks": [
+          "unittest"
+        ]
+      },
+      {
+        "candidate_role_environment_equality": "oracle-positive and every partial-fix candidate use the same frozen task-image ID",
+        "command_template": [
+          "create a fresh Linux environment at the task-declared Python version",
+          "install frozen bootstrap pip/setuptools/wheel and the declared test framework",
+          "install the task's official requirements.txt when non-empty",
+          "install the buggy checkout with `python -m pip install -e .` so project-declared runtime dependencies are resolved",
+          "run `python -m pip check`, export the complete dependency lock, and bind the image ID"
+        ],
+        "eligible_task_count": 24,
+        "freeze_timing": "instantiate and hash before the first V2-P2 task outcome for this project",
+        "network_boundary": "network is allowed only while building the frozen image; every qualification run uses network=none and no shared writable mount",
+        "official_setup_sh_role": "provenance hash only; never executed as dependency authority",
+        "post_outcome_task_specific_repair": "forbidden",
+        "project": "matplotlib",
+        "python_versions": [
+          "3.8.1"
+        ],
+        "same_template_for_all_project_tasks": true,
+        "test_frameworks": [
+          "pytest"
+        ]
+      },
+      {
+        "candidate_role_environment_equality": "oracle-positive and every partial-fix candidate use the same frozen task-image ID",
+        "command_template": [
+          "create a fresh Linux environment at the task-declared Python version",
+          "install frozen bootstrap pip/setuptools/wheel and the declared test framework",
+          "install the task's official requirements.txt when non-empty",
+          "install the buggy checkout with `python -m pip install -e .` so project-declared runtime dependencies are resolved",
+          "run `python -m pip check`, export the complete dependency lock, and bind the image ID"
+        ],
+        "eligible_task_count": 9,
+        "freeze_timing": "instantiate and hash before the first V2-P2 task outcome for this project",
+        "network_boundary": "network is allowed only while building the frozen image; every qualification run uses network=none and no shared writable mount",
+        "official_setup_sh_role": "provenance hash only; never executed as dependency authority",
+        "post_outcome_task_specific_repair": "forbidden",
+        "project": "spacy",
+        "python_versions": [
+          "3.7.7"
+        ],
+        "same_template_for_all_project_tasks": true,
+        "test_frameworks": [
+          "pytest"
+        ]
+      },
+      {
+        "candidate_role_environment_equality": "oracle-positive and every partial-fix candidate use the same frozen task-image ID",
+        "command_template": [
+          "create a fresh Linux environment at the task-declared Python version",
+          "install frozen bootstrap pip/setuptools/wheel and the declared test framework",
+          "install the task's official requirements.txt when non-empty",
+          "install the buggy checkout with `python -m pip install -e .` so project-declared runtime dependencies are resolved",
+          "run `python -m pip check`, export the complete dependency lock, and bind the image ID"
+        ],
+        "eligible_task_count": 2,
+        "freeze_timing": "instantiate and hash before the first V2-P2 task outcome for this project",
+        "network_boundary": "network is allowed only while building the frozen image; every qualification run uses network=none and no shared writable mount",
+        "official_setup_sh_role": "provenance hash only; never executed as dependency authority",
+        "post_outcome_task_specific_repair": "forbidden",
+        "project": "sanic",
+        "python_versions": [
+          "3.8.3"
+        ],
+        "same_template_for_all_project_tasks": true,
+        "test_frameworks": [
+          "pytest"
+        ]
+      }
+    ]
+  },
+  "protocol_id": "dsa_v2_p1_construction_protocol_v0_1",
+  "qualification": {
+    "fresh_run_count": 2,
+    "hard_negative": [
+      "patch applies exactly and differs from both buggy and oracle-positive trees",
+      "syntax/import/static basic checks pass",
+      "all official visible F2P commands pass",
+      "all three visible P2P nodes pass",
+      "at least one independent hidden node fails",
+      "both fresh runs agree on every required pass and the qualifying hidden failure"
+    ],
+    "isolation": "same frozen task-image ID, network=none, no shared writable mount, distinct fresh containers",
+    "model_outcome_used": false,
+    "oracle_positive": [
+      "patch applies exactly to the frozen buggy tree",
+      "syntax/import/static basic checks pass",
+      "all official visible F2P commands pass",
+      "all three visible P2P nodes pass",
+      "all frozen hidden nodes pass",
+      "both fresh runs agree on normalized outcomes"
+    ],
+    "task_admission": "admit exactly one oracle-positive plus the first qualifying hard negative; otherwise record materialization failure"
+  },
+  "regression_oracle_construction": {
+    "discarded_generic_tokens": [
+      "init",
+      "lib",
+      "main",
+      "py",
+      "source",
+      "src",
+      "test",
+      "testing",
+      "tests"
+    ],
+    "dual_positive_stability": "run the pool in two fresh isolated oracle-positive containers and retain only nodes that pass with identical normalized outcomes",
+    "hidden_count": 20,
+    "maximum_pool_nodes": 40,
+    "official_f2p": "all exact catalog run_test.sh commands; always visible and excluded from the regression pool",
+    "order": "relatedness descending, then SHA-256 tie ascending, then node ID ascending",
+    "relatedness": "count distinct exact source-path tokens shared with each non-F2P node ID",
+    "split_rule": "first three stable nodes are visible P2P; the next up to 20 are hidden; require at least three visible and one hidden node",
+    "test_scope": "project test root declared by the frozen project recipe; no task-specific scope shrink after collection begins",
+    "tie_preimage": "DSA-V2-P1-REGRESSION-POOL-20260712-V1|<task_id>|<nodeid>",
+    "timing": "collect and freeze node identities on the oracle-positive fixed tree before any partial-fix candidate is materialized",
+    "tokenization": "lowercase [a-z0-9]+ tokens of length >=2 from changed source paths and collected node IDs",
+    "visible_p2p_count": 3
+  },
+  "scientific_objective": "On a task-disjoint cohort qualified before confirmatory freeze, estimate how cumulative genuinely executed evidence from C0 through C3 changes a fixed reviewer agent's accept, reject, and escalate policy for paired oracle-positive and hard-negative patches, with claims limited to the frozen cohort, model routes, and run window.",
+  "source": {
+    "cohort_rule": "freeze the first 30 fully qualified task pairs in that order",
+    "eligible_project_count": 9,
+    "eligible_task_count": 299,
+    "order_registry": "data/protocols/dsa_v2_p1_source_order_v0_1.json",
+    "processing_rule": "attempt tasks strictly in frozen source order and retain complete disposition records",
+    "stop_rule": "if the frozen eligible source order is exhausted before 30 pairs qualify, stop before V2-P3 and every model request",
+    "v0_1_active_task_exclusion_count": 5
+  },
+  "status": "immutable_author_signed_rules_only",
+  "target": "DSA 2026 Regular"
+}

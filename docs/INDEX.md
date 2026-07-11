@@ -12,8 +12,8 @@
   sole active experimental execution plan. P3/P4 v0.1 terminated before model
   output; v0.2 freezes construction rules before qualification, materializes a
   pre-model pool, then freezes the first 30 qualified task pairs before any
-  reviewer-agent request. Status: `DESIGN_DRAFT / AUTHOR_SIGNOFF_REQUIRED /
-  NO_API`. Machine design and audit are
+  reviewer-agent request. Status: `V2-P1_PASS_AUTHOR_SIGNED / RULES_FROZEN /
+  V2-P2_NOT_AUTHORIZED / NO_API`. Machine design and transition audit are
   `../data/protocols/dsa_v0_1_termination_and_v0_2_redesign_v0_1.json` and
   `../scripts/dsa2026_audit_v0_2_redesign.py`.
 - [dsa_p4_v0_1_termination_v0_1.md](experiments/dsa_p4_v0_1_termination_v0_1.md):
@@ -21,14 +21,22 @@
   states that the capacity stop rule did not fire, records API/output counts as
   zero, and limits old P4 evidence to feasibility/provenance.
 - [dsa_v0_2_construction_protocol_signoff_v0_1.md](experiments/dsa_v0_2_construction_protocol_signoff_v0_1.md):
-  unsigned eight-item author checklist for the next V2-P1 rule-freeze Goal; it
-  does not authorize materialization, prompt changes, or model API use.
+  signed eight-item author record. The exact declaration is
+  `../data/protocols/dsa_v2_p1_author_declaration_v0_1.txt`; it authorizes only
+  the completed V2-P1 rule freeze, not materialization, prompt changes, or API.
+- [dsa_v2_p1_construction_freeze_v0_1.md](experiments/dsa_v2_p1_construction_freeze_v0_1.md):
+  passing V2-P1 human report. Machine artifacts are
+  `../data/protocols/dsa_v2_p1_construction_protocol_v0_1.json`,
+  `../data/protocols/dsa_v2_p1_source_order_v0_1.json`,
+  `../data/protocols/dsa_v2_p1_gate_audit_v0_1.json`, and
+  `../data/protocols/dsa_v2_p1_hash_manifest_v0_1.json`; deterministic
+  write/check is `../scripts/dsa2026_freeze_v2_p1_construction.py`.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
   venue/submission master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is
   inactive. Its experimental status is overridden by v0.2:
-  `V0_1_TERMINATED_BEFORE_MODEL_OUTPUT / V0_2_DESIGN_DRAFT /
-  V2_P1_AUTHOR_SIGNOFF_PENDING / NO_API`. It defines
+  `V0_1_TERMINATED_BEFORE_MODEL_OUTPUT / V2_P1_PASS_AUTHOR_SIGNED /
+  RULES_FROZEN / V2_P2_NOT_AUTHORIZED / NO_API`. It defines
   venue/AI/EI gates, old-data
   quarantine, a task-disjoint C0--C3 experiment, no-rerun rules, finite-cohort
   statistics, evidence-first paper reconstruction, official `IEEEconf.cls` PDF

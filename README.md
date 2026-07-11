@@ -20,15 +20,21 @@ before clean environment and behavioral candidate qualification shifted the
 work toward historical benchmark reproduction rather than the intended
 evidence-conditioned reviewer-agent experiment.
 
-The active experimental plan is now
+The active experimental plan is
 [DSA reviewer-agent evidence experiment v0.2](docs/plans/dsa_agent_evidence_experiment_v0_2_zh.md).
 It preserves RQ1--RQ3, C0--C3, paired oracle-positive/hard-negative roles,
 task-level `Delta_minus`/`Delta_plus`, three models, and three stateless repeats.
 It first freezes generic stimulus-construction rules, then mechanically builds
 and dual-validates a pre-model candidate pool; only the first 30 qualified task
-pairs enter the final confirmatory freeze. The planned full experiment remains
-2,160 valid reviewer-agent responses. The V2-P1 author checklist is unsigned,
-so no new task, container, test, prompt change, or model API call is authorized.
+pairs enter the final confirmatory freeze. Author 高明 has now signed all eight
+V2-P1 construction items. The machine freeze covers 299 eligible tasks across
+9 projects, six hash-bound Python locks, a complete project-round-robin source
+order, deterministic T1--T4 candidate enumeration, dual-fresh qualification,
+and the 30-pair/source-exhaustion stop rule. The source-order SHA-256 is
+`21be1d9fed719de44126be585fa7e9123fd8579588d9ce86eb396d4ab5c2dd11`.
+The planned full experiment remains 2,160 valid reviewer-agent responses.
+V2-P2 is not authorized, so no task, environment, container, project test,
+prompt change, or model API call may begin.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,

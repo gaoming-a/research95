@@ -21,6 +21,7 @@ PRE_CANDIDATE = ROOT / "data/hidden/dsa_p4_pre_candidate_discard_v0_1.json"
 PLAN = ROOT / "docs/plans/dsa_agent_evidence_experiment_v0_2_zh.md"
 TERMINATION = ROOT / "docs/experiments/dsa_p4_v0_1_termination_v0_1.md"
 SIGNOFF = ROOT / "docs/experiments/dsa_v0_2_construction_protocol_signoff_v0_1.md"
+V2P1_PROTOCOL = ROOT / "data/protocols/dsa_v2_p1_construction_protocol_v0_1.json"
 CURRENT_PLAN = ROOT / "docs/plans/current_plan_zh.md"
 CURRENT_STATE = ROOT / "docs/plans/current_project_state_zh.md"
 MASTER_PLAN = ROOT / "docs/plans/dsa_2026_submission_execution_plan_zh.md"
@@ -53,6 +54,7 @@ def build_checks() -> dict[str, bool]:
     manifest = read_json(P3_MANIFEST)
     gates = read_json(TASK_GATES)
     discards = read_json(PRE_CANDIDATE)
+    v2p1 = read_json(V2P1_PROTOCOL)
     old = design["v0_1_termination"]
     new = design["v0_2_design"]
     gate_by_task = {record["task_id"]: record for record in gates["records"]}
@@ -129,12 +131,12 @@ def build_checks() -> dict[str, bool]:
         "plan_has_required_boundaries": all(
             marker in plan_text
             for marker in (
-                "DESIGN_DRAFT / AUTHOR_SIGNOFF_REQUIRED / NO_API",
+                "V2-P1_PASS_AUTHOR_SIGNED / RULES_FROZEN / V2-P2_NOT_AUTHORIZED / NO_API",
                 "reviewer agent",
                 "Delta_minus",
                 "Delta_plus",
                 "2160",
-                "不得顺手进入 V2-P2",
+                "真实 materialization",
             )
         ),
         "termination_doc_has_required_boundaries": all(
@@ -146,21 +148,27 @@ def build_checks() -> dict[str, bool]:
                 "不得进入 v0.2",
             )
         ),
-        "signoff_remains_unsigned_and_bounded": all(
-            marker in signoff_text
-            for marker in (
-                "UNSIGNED / V2-P1_NOT_AUTHORIZED / NO_API",
-                "全部 8 项",
-                "不授权进入 V2-P2",
-                "不授权修改 prompt 或调用模型 API",
+        "signoff_is_signed_and_v2_p2_remains_bounded": (
+            all(
+                marker in signoff_text
+                for marker in (
+                    "AUTHOR_SIGNED / V2-P1_RULE_FREEZE_AUTHORIZED",
+                    "65328de6aa913bd8ee04dfdbfd172960745bc431ab7d2f7742c8aa7038dbe2ca",
+                    "不授权进入 V2-P2",
+                    "不授权修改 prompt 或调用模型 API",
+                )
             )
+            and v2p1["author_signoff"]["status"] == "signed"
+            and v2p1["current_authorization"]["v2_p2_materialization"] is False
+            and v2p1["current_authorization"]["model_api"] is False
         ),
         "current_surfaces_point_to_v0_2_no_api": all(
             marker in current_surfaces
             for marker in (
                 "dsa_agent_evidence_experiment_v0_2_zh.md",
                 "V0_1_TERMINATED_BEFORE_MODEL_OUTPUT",
-                "V2_P1_AUTHOR_SIGNOFF_PENDING",
+                "V2_P1_PASS_AUTHOR_SIGNED",
+                "V2_P2_NOT_AUTHORIZED",
                 "NO_API",
             )
         ),

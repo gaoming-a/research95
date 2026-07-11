@@ -1,0 +1,40 @@
+{
+  "audit_id": "dsa_v2_p1_gate_audit_v0_1",
+  "author_declaration_sha256": "65328de6aa913bd8ee04dfdbfd172960745bc431ab7d2f7742c8aa7038dbe2ca",
+  "boundary": "Check-only V2-P1 freeze: no checkout, environment build, container, project test, candidate outcome, prompt change/render, paper result, or model request.",
+  "checks": {
+    "all_f2p_commands_match_catalog": true,
+    "all_gate_checks_pass": true,
+    "author_declaration_exact": true,
+    "author_declaration_sha256": true,
+    "author_signed_all_eight_items": true,
+    "base_python_locks_complete_and_hash_matched": true,
+    "candidate_order_has_four_frozen_classes": true,
+    "eligible_count_is_299": true,
+    "eligible_projects_are_nine": true,
+    "no_v2_p2_or_api_authorization": true,
+    "official_catalog_commit_match": true,
+    "official_setup_is_not_executable_authority": true,
+    "p2_development_tasks_absent": true,
+    "p2_excluded_projects_absent": true,
+    "p3_v0_1_manifest_intact": true,
+    "project_recipes_cover_all_projects": true,
+    "qualification_requires_dual_visible_pass_hidden_fail": true,
+    "signoff_document_bound": true,
+    "source_order_contiguous_unique": true,
+    "source_order_is_pre_outcome": true,
+    "target_and_source_exhaustion_stop_frozen": true,
+    "v0_1_active_tasks_absent": true
+  },
+  "counts": {
+    "eligible_projects": 9,
+    "eligible_tasks": 299,
+    "model_api_calls": 0,
+    "target_pairs": 30,
+    "v0_1_active_task_exclusions": 5
+  },
+  "created_date": "2026-07-12",
+  "manifest_aggregate_sha256": "ed7c927129c47027b57374625a2d76667503bbb1d8d37e04d4460e42b2ae8b40",
+  "source_order_sha256": "21be1d9fed719de44126be585fa7e9123fd8579588d9ce86eb396d4ab5c2dd11",
+  "status": "passed"
+}

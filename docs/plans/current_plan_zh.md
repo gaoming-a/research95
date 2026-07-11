@@ -1,6 +1,59 @@
 # 当前计划：AI 生成补丁的可验证审查
 
-最后更新：2026-07-11
+最后更新：2026-07-12
+
+## 0.55 2026-07-12 DSA v0.2 V2-P1 construction protocol freeze
+
+本轮 Goal：根据作者高明明确签核的8项声明，只冻结 V2-P1 source/order、环境 recipe、
+candidate enumeration、qualification/exclusion/stop rules 和 check-only evidence；不运行
+task/test/container，不进入 V2-P2，不改 prompt，不调用 API，不改论文结果。
+
+Author Gate：
+
+- 原始声明保存于 `data/protocols/dsa_v2_p1_author_declaration_v0_1.txt`；canonical
+  SHA-256=`65328de6aa913bd8ee04dfdbfd172960745bc431ab7d2f7742c8aa7038dbe2ca`；
+- 作者高明确认 `central_question`、`agent_boundary`、
+  `preconfirmatory_materialization`、`source_and_exclusion`、`environment_policy`、
+  `candidate_qualification`、`cohort_and_stop`、`freeze_and_responsibility` 全部8项；
+- 授权只覆盖 V2-P1 rule freeze；V2-P2/task/test/container/prompt/API 仍未授权。
+
+Execute：
+
+- 从 P2 source frame 的304个 eligible tasks 中机械排除5个 v0.1 P4-active tasks，得到
+  299 tasks/9 projects；P2 development tasks 与8个 excluded projects 均为零交集；
+- 使用 domain-separated SHA-256 project/task keys 生成完整 project round-robin order；
+  source-order SHA-256=
+  `21be1d9fed719de44126be585fa7e9123fd8579588d9ce86eb396d4ab5c2dd11`；
+- 第一轮9项依次为 pandas_161、fastapi_11、black_4、keras_40、ansible_8、tornado_3、
+  matplotlib_4、spacy_8、sanic_4；全部299项 official bug/patch/run-test/requirements/setup
+  provenance hashes 已冻结，官方 F2P commands 全部匹配；
+- environment policy 绑定6个 Python explicit locks，以及 pip20.1.1、setuptools47.1.1、
+  wheel0.34.2、pytest5.4.3、packaging20.4；不执行腐化 official setup.sh，统一用 task
+  requirements + project package metadata，task outcome 后禁止定向修补；
+- candidate generator 按 T1 source-file、T2 hunk、T3 edit-block、T4 changed-line 固定
+  类优先级并枚举全部单一 omission/reversion，类内按 canonical descriptor hash；选择首个
+  basic/全部 visible 双环境通过且 independent hidden 双环境失败者；
+- regression pool 在 candidate 前于 fixed tree 冻结最多40 nodes；双 positive 稳定通过后
+  前3 visible、随后最多20 hidden，至少需3+1；
+- 首批30个完整 pairs 才进入 V2-P3；299项耗尽仍不足30则 API 前停止。
+
+Diagnose/Repair：
+
+- 首次冻结错误地假设每个 task 必有 `requirements.txt`，在 tornado_16 停止；修为
+  missing/empty 均表示无额外 task requirements，并显式记录 presence，不改变依赖规则；
+- 首次补入 base locks 时手工误录 py377 hash；与 P4 preflight 和 lock 文件交叉核验后
+  修正为 `8fd9517e…11adb7`，六个 locks 随后全部 hash-match。
+
+Gate：
+
+- `python scripts/dsa2026_freeze_v2_p1_construction.py --catalog-root
+  tmp/dsa2026_bugsinpy_catalog --check` PASS；20项 Gate 全部通过；
+- manifest aggregate SHA-256=
+  `ed7c927129c47027b57374625a2d76667503bbb1d8d37e04d4460e42b2ae8b40`；
+- 当前状态：`V2_P1_PASS_AUTHOR_SIGNED / RULES_FROZEN /
+  V2_P2_NOT_AUTHORIZED / NO_API`；
+- 下一 Goal 最多实现 executor 与 synthetic metadata dry-run；未经新的明确授权，不得
+  checkout真实 task、构建环境、运行 container/test 或进入 V2-P2 materialization。
 
 ## 0.54 2026-07-11 v0.1 终止与 reviewer-agent 实验 v0.2 重构
 

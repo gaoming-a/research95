@@ -1,7 +1,7 @@
 # DSA v0.2 材料构造协议作者签核清单
 
-日期：2026-07-11
-状态：`UNSIGNED / V2-P1_NOT_AUTHORIZED / NO_API`
+日期：2026-07-12
+状态：`AUTHOR_SIGNED / V2-P1_RULE_FREEZE_AUTHORIZED / V2-P2_NOT_AUTHORIZED / NO_API`
 
 该签核只授权后续 Goal 冻结 V2-P1 的材料构造协议，不授权运行 task/test/container，
 不授权进入 V2-P2，不授权修改 prompt，不授权模型 API。
@@ -32,3 +32,15 @@
 > environment policy、candidate qualification、30-pair/stop rule 和后续独立冻结责任。
 > 我理解该签核只授权后续 Goal 冻结 V2-P1 规则，不授权运行 task/test/container，
 > 不授权进入 V2-P2，不授权修改 prompt 或调用模型 API。
+
+## 签核记录
+
+- 作者：高明；
+- 记录时间：`2026-07-12T01:04:41+08:00`；
+- 声明来源：当前 Codex 用户消息；
+- 原文：`data/protocols/dsa_v2_p1_author_declaration_v0_1.txt`；
+- canonicalization：UTF-8 exact message，移除末尾 CR/LF；
+- SHA-256：`65328de6aa913bd8ee04dfdbfd172960745bc431ab7d2f7742c8aa7038dbe2ca`；
+- 8项状态：全部明确确认；
+- 授权边界：只允许冻结 V2-P1 规则。V2-P2、task/test/container、prompt 修改和模型
+  API 仍未授权。
