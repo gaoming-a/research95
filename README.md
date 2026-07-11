@@ -48,7 +48,12 @@ preserved while an explicitly hashed LF copy is used only for strict patch
 validation. A standard-library unittest collector/runner adapter is frozen
 before any Tornado reference outcome. The task image, dual reference checks,
 and regression-pool outcomes remain pending; no transformed candidate or model
-call has occurred for this task.
+call has occurred for this task. The subsequent task-image build stopped at the
+frozen official command `pip install unittest`, which has no installable
+distribution. The task is therefore discarded at the pre-candidate environment
+Gate: no image, F2P, regression pool, T1 candidate, or model call was produced.
+The next action is a separately bounded replacement-cursor audit, not an
+environment repair or automatic move to another task.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,

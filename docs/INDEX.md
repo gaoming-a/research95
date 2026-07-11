@@ -35,6 +35,12 @@
   write/check entry point is
   `../scripts/dsa2026_p4_prepare_task_context.py`; it does not materialize a
   transformed candidate or run a test/model.
+- [dsa_p4_tornado_10_environment_gate_v0_1.md](experiments/dsa_p4_tornado_10_environment_gate_v0_1.md):
+  task-level pre-candidate discard. The frozen official `pip install unittest`
+  command failed, so no task image, F2P, regression pool, transformed candidate,
+  or model call was permitted. Machine/log-hash evidence is
+  `../data/hidden/dsa_p4_pre_candidate_discard_v0_1.json`; deterministic replay
+  is `../scripts/dsa2026_p4_record_pre_candidate_discard.py`.
 - `../data/hidden/dsa_p4_oracle_pool_registry_v0_1.json`: private hidden-tree
   pre-transform node-pool registry. It freezes each pool, image/tree/patch
   hashes, exact relatedness formula, and tie hashes before observing pool or

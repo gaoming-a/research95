@@ -26,6 +26,22 @@ model-visible/hidden manifests。本轮不调用模型 API、不进入 P5、不�
 - 本 Goal 严禁物化或运行 T1 candidate；完成 oracle/environment 证据、文档、private Git
   闭环后停止，不进入下一 task、P5、rendered prompt、paper result 或 model API。
 
+`bugsinpy_tornado_10` Environment Gate 结果：
+
+- pre-outcome 源上下文和 unittest 执行适配已先提交到 private commit `36e3fc0`；
+  source record SHA-256=`cf5b5bf5b44885161d538a2063090afdc347396593bd90eeef0687337d686038`；
+- task image 构建在冻结 official `setup.sh` 第1条 `pip install unittest` 失败，
+  exit=1，日志明确为无可安装的 `unittest` distribution；requirements、其余两条
+  setup 和 `pip check` 不能覆盖 aggregate setup status=1；
+- 按冻结 exclusion/no-redesign 规则，未删除或忽略该命令、未改依赖、oracle、transform
+  或 task；Gate=`DISCARD_PRE_CANDIDATE_ENVIRONMENT_BUILD_FAILURE`；
+- task image 未生成，official reference F2P 未执行，regression pool 未发现/冻结，
+  T1 candidate 未物化或运行，model API calls=0；
+- machine record SHA-256=
+  `6fd7c9b54962796c61e382353b5beae2ff7d58f681de792f63d98a0d7ce817f9`；
+  本 Goal 到此停止，下一轮只能重新审计 primary-first replacement cursor，不得顺手
+  开始下一 task。
+
 当前 replacement-cursor Goal（2026-07-11）：
 
 - 只从 private-synced commit `bd38523` 复算 P4 primary/reserve cursor，不构建或运行

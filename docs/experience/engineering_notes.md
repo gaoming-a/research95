@@ -14,6 +14,17 @@
   Before any reference outcome, add a standard-library discovery adapter that
   emits dotted test IDs and execute each ID with `python -m unittest -q`; keep
   the source-token/tie-hash selection and dual-fresh-container rules unchanged.
+- Do not silently treat standard-library modules named in benchmark setup
+  metadata as no-op dependencies. Tornado bug 10's frozen `pip install
+  unittest` has no installable distribution and made aggregate setup status 1.
+  Even though later setup commands and `pip check` passed in the disposable
+  diagnostic container, the task-specific image correctly failed to build and
+  the task had to be discarded before F2P, pool discovery, or candidate work.
+- The P3 phase generator is not the post-P3 immutable replay entry point: its
+  derived Gate records every path changed since the P2 commit, so authorized P4
+  files necessarily make that derived JSON differ. During P4, verify the frozen
+  P2/P3 file hashes through `dsa2026_p4_preflight.py --check`; do not regenerate
+  or edit any P3 artifact to silence the phase-scoped mismatch.
 - A hash-ordered transform is not reproducible until its edit identity and
   serialization are explicit. Before any candidate outcome, encode each T4
   source-diff line as canonical JSON over path, hunk index, line index, kind,

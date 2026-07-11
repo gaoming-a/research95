@@ -1,0 +1,137 @@
+{
+  "boundary": "Environment-gate evidence only; no F2P, regression-pool, transformed-candidate, prompt, P5, or model outcome.",
+  "created_date": "2026-07-11",
+  "records": [
+    {
+      "activity_audit": {
+        "candidate_registry_record_absent": true,
+        "candidate_result_record_absent": true,
+        "oracle_pool_record_absent": true,
+        "source_registry_candidate_materialized": false,
+        "source_registry_candidate_outcome_observed": false,
+        "source_registry_model_api_calls": 0
+      },
+      "attempted_from_commit": "36e3fc0fa06dcd5cc20a44307e587bda8a8c3592",
+      "command_exit_codes": {
+        "pip_check": 0,
+        "requirements_after": 0,
+        "requirements_before": 0,
+        "setup_1": 1,
+        "setup_2": 0,
+        "setup_3": 0,
+        "setup_overall": 1
+      },
+      "cursor_sha256": "24f37f3f2eefe99c9346b4b141965cb137e8f7dfb87e6e11eaa0ac909b0fbf2e",
+      "dependency_or_oracle_repair_performed": false,
+      "disposition_rule": "Discard the task before candidate activity when the frozen official environment build fails; do not alter dependencies, oracle, transform, or task.",
+      "environment_lock_sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82",
+      "environment_name": "py370",
+      "failed_command": "pip install unittest",
+      "failed_command_index": 1,
+      "failure_markers": [
+        "Could not find a version that satisfies the requirement unittest",
+        "No matching distribution found for unittest"
+      ],
+      "frozen_setup_commands": [
+        "pip install unittest",
+        "pip install python-gettext",
+        "pip install tornado"
+      ],
+      "frozen_setup_sha256": "d3a4076796d738e69fdc78f14825c1f2e48cd317367ac3812b2e9df6ff8b580b",
+      "model_api_calls": 0,
+      "official_reference_f2p_executed": false,
+      "project": "tornado",
+      "python_version": "3.7.0",
+      "reason_code": "official_setup_command_uninstallable_stdlib_distribution",
+      "record_sha256": "6fd7c9b54962796c61e382353b5beae2ff7d58f681de792f63d98a0d7ce817f9",
+      "regression_pool_discovered_or_frozen": false,
+      "runtime_log_manifest": {
+        "conda-explicit.txt": {
+          "bytes": 4262,
+          "sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82"
+        },
+        "environment_name.txt": {
+          "bytes": 6,
+          "sha256": "499933e6f5e6fd762bb88f49880033c9659d4b6445b6e459fbe9753a1be12b54"
+        },
+        "pip-freeze.txt": {
+          "bytes": 913,
+          "sha256": "b72427b9083d6af97a227f269b068bec70954ca8a595ca66228392ebf3c95a59"
+        },
+        "pip_check.exit_code": {
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "pip_check.log": {
+          "bytes": 31,
+          "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+        },
+        "requirements_after.exit_code": {
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "requirements_after.log": {
+          "bytes": 62,
+          "sha256": "6293448b504e0414565bcd5d177328ff03fa1f0809521d26d94d994ddce5662f"
+        },
+        "requirements_after_status.txt": {
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "requirements_before.exit_code": {
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "requirements_before.log": {
+          "bytes": 62,
+          "sha256": "6293448b504e0414565bcd5d177328ff03fa1f0809521d26d94d994ddce5662f"
+        },
+        "requirements_before_status.txt": {
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "setup_1.exit_code": {
+          "bytes": 2,
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+        },
+        "setup_1.log": {
+          "bytes": 361,
+          "sha256": "4fef434c434141fe9fdb9e29aad9f8c6c876ed58310de6b8cfd499e4a2e299d5"
+        },
+        "setup_2.exit_code": {
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "setup_2.log": {
+          "bytes": 344,
+          "sha256": "e456693f2ca0a58045bba801f797dfba24268ad2539f84b441890209ee484711"
+        },
+        "setup_3.exit_code": {
+          "bytes": 2,
+          "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+        },
+        "setup_3.log": {
+          "bytes": 396,
+          "sha256": "a4545cf1368a44191f123313bf8e4e168ef89a89c184ca00be8775d8b65392a0"
+        },
+        "setup_status.txt": {
+          "bytes": 2,
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+        }
+      },
+      "source_record_sha256": "cf5b5bf5b44885161d538a2063090afdc347396593bd90eeef0687337d686038",
+      "status": "discard_pre_candidate_environment_build_failure",
+      "stream_order": 4,
+      "stream_role": "primary",
+      "task_id": "bugsinpy_tornado_10",
+      "task_image": "dsa2026-p4-task:bugsinpy_tornado_10",
+      "task_image_created": false,
+      "toolchain_image": "dsa2026-p4-toolchains:bootstrap-v0_1",
+      "toolchain_image_id": "sha256:97e089cee02d0908e374f7b784ee0ffbb2fe5a2d64f619335aa962dc3ab3d768",
+      "transformed_candidate_materialized": false,
+      "transformed_candidate_outcome_observed": false
+    }
+  ],
+  "registry_id": "dsa_p4_pre_candidate_discard_v0_1",
+  "visibility": "private_hidden_environment_gate"
+}

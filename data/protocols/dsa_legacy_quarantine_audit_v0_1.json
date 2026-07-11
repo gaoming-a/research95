@@ -24,6 +24,7 @@
       "scripts/dsa2026_p4_oracle_freeze.py",
       "scripts/dsa2026_p4_preflight.py",
       "scripts/dsa2026_p4_prepare_task_context.py",
+      "scripts/dsa2026_p4_record_pre_candidate_discard.py",
       "scripts/dsa2026_p4_replacement_cursor_audit.py",
       "scripts/dsa2026_p4_run_candidate_pair.py",
       "scripts/dsa2026_p4_run_reference_pool.py",

@@ -56,6 +56,12 @@
   task 已冻结为 primary #4 `bugsinpy_tornado_10`，cursor SHA-256=
   `24f37f3f2eefe99c9346b4b141965cb137e8f7dfb87e6e11eaa0ac909b0fbf2e`；
   该审计未创建/运行新 task、candidate、container 或 API request。
+- primary #4 `bugsinpy_tornado_10` 的 official source/context 先完成 hash freeze，
+  但 task-specific image 构建在 official `setup.sh` 第1条 `pip install unittest`
+  以 exit=1 失败。按 P3 no-redesign 规则，任务状态为
+  `DISCARD_PRE_CANDIDATE_ENVIRONMENT_BUILD_FAILURE`；没有修改依赖，也没有执行 F2P、
+  发现 regression pool、物化 T1 或调用模型。P4 仍在进行中，当前 bounded Goal 已结束；
+  下一步须另设 Goal 重新计算 replacement cursor，不能直接启动下一 task。
 
 ### 2026-07-10 DSA 路线计划基线（已由上方 P2 状态覆盖）
 
