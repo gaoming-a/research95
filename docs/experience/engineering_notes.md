@@ -25,6 +25,15 @@
   files necessarily make that derived JSON differ. During P4, verify the frozen
   P2/P3 file hashes through `dsa2026_p4_preflight.py --check`; do not regenerate
   or edit any P3 artifact to silence the phase-scoped mismatch.
+- A replacement cursor must join every terminal disposition registry, not only
+  candidate task Gates. After Tornado failed its environment Gate before F2P,
+  a task-Gate-only cursor still selected Tornado. Bind the pre-candidate discard
+  registry by hash, require the terminal sets to be disjoint, and count both
+  categories in reserve allocation and capacity before selecting the next task.
+- Historical discard replay must bind the cursor that selected the task, not
+  require the live cursor to remain on that task forever. Use the task-source
+  record's frozen cursor SHA as the historical anchor; otherwise a legitimate
+  cursor advance makes prior environment evidence falsely unreplayable.
 - A hash-ordered transform is not reproducible until its edit identity and
   serialization are explicit. Before any candidate outcome, encode each T4
   source-diff line as canonical JSON over path, hunk index, line index, kind,

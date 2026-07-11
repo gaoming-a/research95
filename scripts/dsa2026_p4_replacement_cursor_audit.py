@@ -15,6 +15,7 @@ SELECTION = ROOT / "data/protocols/dsa_p2_source_selection_v0_1.json"
 PREFLIGHT = ROOT / "data/protocols/dsa_p4_preflight_v0_1.json"
 P3_MANIFEST = ROOT / "data/protocols/dsa_p3_hash_manifest_v0_1.json"
 TASK_GATES = ROOT / "data/hidden/dsa_p4_task_gate_v0_1.json"
+PRE_CANDIDATE_DISCARDS = ROOT / "data/hidden/dsa_p4_pre_candidate_discard_v0_1.json"
 ORACLE_REGISTRY = ROOT / "data/hidden/dsa_p4_oracle_pool_registry_v0_1.json"
 CANDIDATE_REGISTRY = ROOT / "data/hidden/dsa_p4_candidate_registry_v0_1.json"
 OUT_JSON = ROOT / "data/protocols/dsa_p4_replacement_cursor_v0_1.json"
@@ -108,6 +109,7 @@ def build() -> dict[str, Any]:
     selection_root = read_json(SELECTION)
     preflight = read_json(PREFLIGHT)
     gates_root = read_json(TASK_GATES)
+    pre_candidate_discards_root = read_json(PRE_CANDIDATE_DISCARDS)
     oracle_root = read_json(ORACLE_REGISTRY)
     candidate_root = read_json(CANDIDATE_REGISTRY)
     regular = selection_root["regular"]
@@ -115,6 +117,9 @@ def build() -> dict[str, Any]:
     reserve = sorted(regular["reserve"], key=lambda item: item["order"])
     preflight_by_task = {item["task_id"]: item for item in preflight["tasks"]}
     gate_by_task = {item["task_id"]: item for item in gates_root.get("records", [])}
+    pre_candidate_discard_by_task = {
+        item["task_id"]: item for item in pre_candidate_discards_root.get("records", [])
+    }
     oracle_by_task = {item["task_id"]: item for item in oracle_root.get("records", [])}
     candidate_by_task = {item["task_id"]: item for item in candidate_root.get("records", [])}
 
@@ -152,6 +157,20 @@ def build() -> dict[str, Any]:
                     "outcome_observed": True,
                     "task_gate": gate["task_gate"],
                     "candidate_results_sha256": gate["candidate_results_sha256"],
+                }
+            )
+            continue
+        pre_candidate_discard = pre_candidate_discard_by_task.get(record["task_id"])
+        if pre_candidate_discard:
+            realized_scan.append(
+                {
+                    **record,
+                    "cursor_disposition": "discard_pre_candidate_environment_gate",
+                    "outcome_observed": True,
+                    "candidate_outcome_observed": False,
+                    "environment_gate_status": pre_candidate_discard["status"],
+                    "environment_gate_reason_code": pre_candidate_discard["reason_code"],
+                    "pre_candidate_discard_record_sha256": pre_candidate_discard["record_sha256"],
                 }
             )
             continue
@@ -196,11 +215,20 @@ def build() -> dict[str, Any]:
         if gate["task_gate"] == "DISCARD_TASK"
         and preflight_by_task[task_id]["structural_disposition"] != "discard_no_applicable_transform"
     ]
+    pre_candidate_nonstructural_discards = [
+        discard
+        for task_id, discard in pre_candidate_discard_by_task.items()
+        if preflight_by_task[task_id]["structural_disposition"] != "discard_no_applicable_transform"
+    ]
     reserve_structurally_eligible = all(
         item["structural_disposition"] == "eligible_for_candidate_materialization"
         for item in reserve_records
     )
-    known_discard_count = len(all_structural_discards) + len(terminal_nonstructural_discards)
+    known_discard_count = (
+        len(all_structural_discards)
+        + len(terminal_nonstructural_discards)
+        + len(pre_candidate_nonstructural_discards)
+    )
     maximum_possible_pairs = len(primary_records) + len(reserve_records) - known_discard_count
     target_pairs = 30
     remaining_discard_budget = maximum_possible_pairs - target_pairs
@@ -217,10 +245,21 @@ def build() -> dict[str, Any]:
         and gate.get("model_api_calls") == 0
         for gate in gate_by_task.values()
     )
+    pre_candidate_discard_integrity = all(
+        discard.get("status") == "discard_pre_candidate_environment_build_failure"
+        and discard.get("task_image_created") is False
+        and discard.get("official_reference_f2p_executed") is False
+        and discard.get("regression_pool_discovered_or_frozen") is False
+        and discard.get("transformed_candidate_materialized") is False
+        and discard.get("transformed_candidate_outcome_observed") is False
+        and discard.get("model_api_calls") == 0
+        for discard in pre_candidate_discard_by_task.values()
+    )
     next_has_no_activity = (
         next_task["task_id"] not in oracle_by_task
         and next_task["task_id"] not in candidate_by_task
         and next_task["task_id"] not in gate_by_task
+        and next_task["task_id"] not in pre_candidate_discard_by_task
     )
     checks = {
         "p2_raw_hashes_unchanged": all(item["actual"] == item["expected"] for item in p2_hashes.values()),
@@ -232,14 +271,18 @@ def build() -> dict[str, Any]:
         "reserve_orders_contiguous": [item["order"] for item in reserve_records] == list(range(1, 11)),
         "realized_primary_scan_contiguous": scanned_orders == expected_scanned_orders,
         "terminal_task_gates_integrity_passed": terminal_gate_integrity,
+        "pre_candidate_discard_integrity_passed": pre_candidate_discard_integrity,
+        "terminal_and_pre_candidate_discard_sets_disjoint": not (
+            set(gate_by_task) & set(pre_candidate_discard_by_task)
+        ),
         "replacement_ledger_uses_reserve_prefix_only": [
             item["reserve_order"] for item in replacement_ledger
         ] == list(range(1, len(replacement_ledger) + 1)),
         "all_reserves_structurally_eligible": reserve_structurally_eligible,
-        "next_task_is_unique_pending_primary": next_task["task_id"] == "bugsinpy_tornado_10",
+        "next_task_is_unique_pending_primary": next_task["task_id"] == "bugsinpy_matplotlib_21",
         "next_task_has_no_prior_p4_activity": next_has_no_activity,
         "maximum_capacity_at_least_30_pairs": maximum_possible_pairs >= target_pairs,
-        "remaining_nonstructural_discard_budget_is_five": remaining_discard_budget == 5,
+        "remaining_nonstructural_discard_budget_is_four": remaining_discard_budget == 4,
         "no_model_api_call": True,
         "p5_not_entered": True,
         "no_new_task_or_candidate_run": True,
@@ -269,6 +312,7 @@ def build() -> dict[str, Any]:
             "selection_sha256": sha256_file(SELECTION),
             "preflight_sha256": sha256_file(PREFLIGHT),
             "task_gates_sha256": sha256_file(TASK_GATES),
+            "pre_candidate_discards_sha256": sha256_file(PRE_CANDIDATE_DISCARDS),
             "p2_raw_sha256": p2_hashes,
             "p3_manifest_aggregate": p3["aggregate_actual"],
         },
@@ -280,6 +324,10 @@ def build() -> dict[str, Any]:
             "reserve_count": len(reserve_records),
             "total_structural_primary_discards": len(all_structural_discards),
             "terminal_nonstructural_discards": len(terminal_nonstructural_discards),
+            "pre_candidate_environment_discards": len(pre_candidate_nonstructural_discards),
+            "known_nonstructural_discards": (
+                len(terminal_nonstructural_discards) + len(pre_candidate_nonstructural_discards)
+            ),
             "known_discard_count": known_discard_count,
             "maximum_possible_pairs_after_known_discards": maximum_possible_pairs,
             "remaining_nonstructural_discard_budget": remaining_discard_budget,
@@ -341,6 +389,7 @@ def render_markdown(value: dict[str, Any]) -> str:
             f"- target pairs：{capacity['target_pairs']}；",
             f"- known structural primary discards：{capacity['total_structural_primary_discards']}；",
             f"- terminal nonstructural discards：{capacity['terminal_nonstructural_discards']}；",
+            f"- pre-candidate environment discards：{capacity['pre_candidate_environment_discards']}；",
             f"- maximum possible pairs after known discards：{capacity['maximum_possible_pairs_after_known_discards']}；",
             f"- remaining nonstructural discard budget：{capacity['remaining_nonstructural_discard_budget']}；",
             f"- realized replacement slots：{capacity['realized_replacement_slots']}；",

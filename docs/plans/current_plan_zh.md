@@ -9,6 +9,32 @@
 model-visible/hidden manifests。本轮不调用模型 API、不进入 P5、不生成 rendered prompt、
 不修改论文结果或任何 P2/P3 冻结语义。
 
+当前 post-Tornado replacement-cursor Goal（2026-07-11）：
+
+- 只从 private-synced commit `6647c3c` 读取 P2/P3/P4 frozen inputs、FastAPI
+  terminal discard 与 Tornado pre-candidate environment discard；
+- 最小扩展既有 primary-first cursor auditor，使其读取 environment-discard registry，
+  不改变 primary/reserve 顺序、transform priority 或 replacement policy；
+- 复算 realized primary scan、reserve prefix allocation、capacity 和唯一 next task，
+  并以 write/check 固化机器/人工证据；
+- 本 Goal 严禁构建/运行下一 task、container、candidate、F2P 或 pool；不得进入 P5、
+  生成 prompt、修改论文结果/claim 或调用模型 API；
+- 完成文档、replay、private Git 同步后停止；新 next task 只能由后续独立 Goal 启动。
+
+Post-Tornado replacement cursor 执行结果：
+
+- P2 raw hashes、P3 16-file aggregate、P4 preflight、30 primary + 10 reserve order、
+  FastAPI terminal Gate、Tornado environment Gate 和 no-API/P5 boundary 全部通过；
+- realized primary scan 现为 #1 Sanic structural、#2 FastAPI terminal、#3 Pandas
+  structural、#4 Tornado pre-candidate environment discard；对应只分配 frozen reserve
+  #1--#4，仍全部为 primary scan 完成后待执行；
+- unique next task=`bugsinpy_matplotlib_21`，primary order=5，transform=
+  `T2_omit_secondary_hunk`，此前 P4 activity=0；
+- known discards=6、maximum possible pairs=34、remaining nonstructural discard
+  budget=4、realized replacement slots=4、unallocated reserves=6；
+- cursor SHA-256=`a212352973531adfc58b0e85978fcad1cf65adea100fb2584b66f03ebeb437fb`；
+  本 Goal 新 task/image/container/candidate/test/model API 均为 0，P5 未进入。
+
 当前 `bugsinpy_tornado_10` pre-outcome Goal（2026-07-11）：
 
 - 只从 private-synced commit `1c8f276` 和 cursor SHA-256

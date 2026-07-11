@@ -82,10 +82,10 @@
   `../data/protocols/dsa_p4_candidate_hash_manifest_v0_1.json`: zero-leakage
   audit and immutable input/output hashes for the task Gate.
 - [dsa_p4_replacement_cursor_v0_1.md](experiments/dsa_p4_replacement_cursor_v0_1.md):
-  read-only P4 primary/reserve cursor audit. It records the first three realized
-  discard slots, allocates only reserve orders 1--3, preserves primary-first
-  execution already established before the first candidate outcome, and freezes
-  `bugsinpy_tornado_10` as the unique next task. Machine evidence is
+  read-only P4 primary/reserve cursor audit. It records four realized discard
+  slots, including the Tornado pre-candidate environment Gate, allocates only
+  reserve orders 1--4, preserves primary-first execution, and freezes
+  `bugsinpy_matplotlib_21` as the unique next task. Machine evidence is
   `../data/protocols/dsa_p4_replacement_cursor_v0_1.json`; deterministic
   generation/replay is `../scripts/dsa2026_p4_replacement_cursor_audit.py`.
 - [dsa_p3_preregistration_v0_1.md](experiments/dsa_p3_preregistration_v0_1.md):

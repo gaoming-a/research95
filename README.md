@@ -38,10 +38,10 @@ held-out checks. Because a negative must pass every visible check, the frozen
 task Gate is `DISCARD_TASK`, not admission. No candidate from this task enters
 the model-visible cohort; leakage is 0 and P4's final Gate is still pending.
 The replacement cursor audit now resolves the next step without running another
-experiment: primary orders 1--3 are realized as structural/terminal/structural
-discards and are allocated reserve orders 1--3. The unique next executable
-primary is order 4, `bugsinpy_tornado_10`; the remaining nonstructural discard
-budget is five.
+experiment. After the Tornado environment Gate, primary orders 1--4 are realized
+as structural/terminal/structural/pre-candidate-environment discards and are
+allocated reserve orders 1--4. The unique next executable primary is order 5,
+`bugsinpy_matplotlib_21`; the remaining nonstructural discard budget is four.
 Its official buggy/fixed codeload archives and BugsInPy metadata have now been
 hash-verified into a pre-candidate task context. The raw CRLF reference patch is
 preserved while an explicitly hashed LF copy is used only for strict patch
@@ -52,8 +52,8 @@ call has occurred for this task. The subsequent task-image build stopped at the
 frozen official command `pip install unittest`, which has no installable
 distribution. The task is therefore discarded at the pre-candidate environment
 Gate: no image, F2P, regression pool, T1 candidate, or model call was produced.
-The next action is a separately bounded replacement-cursor audit, not an
-environment repair or automatic move to another task.
+The completed replacement-cursor audit did not repair the environment or start
+another task; a separate later Goal is required to begin Matplotlib.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,

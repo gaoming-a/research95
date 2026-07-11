@@ -62,6 +62,12 @@
   `DISCARD_PRE_CANDIDATE_ENVIRONMENT_BUILD_FAILURE`；没有修改依赖，也没有执行 F2P、
   发现 regression pool、物化 T1 或调用模型。P4 仍在进行中，当前 bounded Goal 已结束；
   下一步须另设 Goal 重新计算 replacement cursor，不能直接启动下一 task。
+- post-Tornado cursor replay 已把该 environment discard 作为第4个 realized slot，
+  只分配 frozen reserve #4 `bugsinpy_tornado_7`，不执行 reserve。唯一 next task 已更新为
+  primary #5 `bugsinpy_matplotlib_21`，transform=`T2_omit_secondary_hunk`，cursor
+  SHA-256=`a212352973531adfc58b0e85978fcad1cf65adea100fb2584b66f03ebeb437fb`；
+  maximum possible pairs=34、remaining nonstructural discard budget=4。该 cursor Goal
+  未构建/运行 Matplotlib task、container、candidate、test 或模型请求。
 
 ### 2026-07-10 DSA 路线计划基线（已由上方 P2 状态覆盖）
 

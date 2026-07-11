@@ -2,16 +2,18 @@
   "audit_id": "dsa_p4_replacement_cursor_v0_1",
   "boundary": "Read-only cursor audit: no task image, container, candidate, test, prompt, P5 artifact, paper result, or model API call was created or executed.",
   "capacity": {
-    "known_discard_count": 5,
-    "maximum_possible_pairs_after_known_discards": 35,
+    "known_discard_count": 6,
+    "known_nonstructural_discards": 2,
+    "maximum_possible_pairs_after_known_discards": 34,
+    "pre_candidate_environment_discards": 1,
     "primary_count": 30,
-    "realized_replacement_slots": 3,
-    "remaining_nonstructural_discard_budget": 5,
+    "realized_replacement_slots": 4,
+    "remaining_nonstructural_discard_budget": 4,
     "reserve_count": 10,
     "target_pairs": 30,
     "terminal_nonstructural_discards": 1,
     "total_structural_primary_discards": 4,
-    "unallocated_reserve_count": 7
+    "unallocated_reserve_count": 6
   },
   "checks": {
     "all_reserves_structurally_eligible": true,
@@ -24,13 +26,15 @@
     "p3_manifest_unchanged": true,
     "p4_preflight_passed": true,
     "p5_not_entered": true,
+    "pre_candidate_discard_integrity_passed": true,
     "primary_orders_contiguous": true,
     "realized_primary_scan_contiguous": true,
-    "remaining_nonstructural_discard_budget_is_five": true,
+    "remaining_nonstructural_discard_budget_is_four": true,
     "replacement_ledger_uses_reserve_prefix_only": true,
     "reserve_orders_contiguous": true,
     "selection_and_preflight_task_sets_equal": true,
     "selection_is_30_primary_10_reserve": true,
+    "terminal_and_pre_candidate_discard_sets_disjoint": true,
     "terminal_task_gates_integrity_passed": true
   },
   "created_date": "2026-07-11",
@@ -55,14 +59,14 @@
       }
     ],
     "next_task": {
-      "order": 4,
-      "project": "tornado",
+      "order": 5,
+      "project": "matplotlib",
       "role": "primary",
-      "selected_transform_id": "T1_omit_secondary_source_file",
+      "selected_transform_id": "T2_omit_secondary_hunk",
       "structural_disposition": "eligible_for_candidate_materialization",
-      "task_id": "bugsinpy_tornado_10"
+      "task_id": "bugsinpy_matplotlib_21"
     },
-    "next_task_id": "bugsinpy_tornado_10",
+    "next_task_id": "bugsinpy_matplotlib_21",
     "policy_evidence": "Before the fastapi_12 outcome, P4 skipped structurally inapplicable primary #1 and entered primary #2 without executing reserve #1. The cursor preserves that pre-outcome trajectory.",
     "realized_primary_scan": [
       {
@@ -96,6 +100,20 @@
         "selected_transform_id": null,
         "structural_disposition": "discard_no_applicable_transform",
         "task_id": "bugsinpy_pandas_54"
+      },
+      {
+        "candidate_outcome_observed": false,
+        "cursor_disposition": "discard_pre_candidate_environment_gate",
+        "environment_gate_reason_code": "official_setup_command_uninstallable_stdlib_distribution",
+        "environment_gate_status": "discard_pre_candidate_environment_build_failure",
+        "order": 4,
+        "outcome_observed": true,
+        "pre_candidate_discard_record_sha256": "6fd7c9b54962796c61e382353b5beae2ff7d58f681de792f63d98a0d7ce817f9",
+        "project": "tornado",
+        "role": "primary",
+        "selected_transform_id": "T1_omit_secondary_source_file",
+        "structural_disposition": "eligible_for_candidate_materialization",
+        "task_id": "bugsinpy_tornado_10"
       }
     ],
     "replacement_ledger": [
@@ -128,10 +146,20 @@
         "reserve_order": 3,
         "reserve_project": "pandas",
         "reserve_task_id": "bugsinpy_pandas_90"
+      },
+      {
+        "discard_reason": "discard_pre_candidate_environment_gate",
+        "discarded_primary_order": 4,
+        "discarded_task_id": "bugsinpy_tornado_10",
+        "replacement_slot": 4,
+        "replacement_status": "allocated_pending_primary_scan_completion",
+        "reserve_order": 4,
+        "reserve_project": "tornado",
+        "reserve_task_id": "bugsinpy_tornado_7"
       }
     ]
   },
-  "cursor_sha256": "24f37f3f2eefe99c9346b4b141965cb137e8f7dfb87e6e11eaa0ac909b0fbf2e",
+  "cursor_sha256": "a212352973531adfc58b0e85978fcad1cf65adea100fb2584b66f03ebeb437fb",
   "source_hashes": {
     "p2_raw_sha256": {
       "data/protocols/dsa_p2_development_exclusion_registry_v0_1.json": {
@@ -152,6 +180,7 @@
       }
     },
     "p3_manifest_aggregate": "f81ba7063297dc9264041256b99a7daa002bd730cbe1dbd9bfb105cd7aa71297",
+    "pre_candidate_discards_sha256": "0c38c242bbb4f8d2945faec3565b803505e65470bd1dfdc5a079360aec21e5af",
     "preflight_sha256": "878ca05ae37d6c3f3a6e76cc614ed04ac8ba360bafb26210a13337ee2bfd1928",
     "selection_sha256": "9fe40e8a38053ffdc8c965070740704924d13b9901cf0c3ed25aa4c1be14bd4b",
     "task_gates_sha256": "deb6f8929fde7046d06b3fc7ea33f824690637478b0607844f3629c190b167c8"

@@ -13,7 +13,6 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFLIGHT = ROOT / "data/protocols/dsa_p4_preflight_v0_1.json"
-CURSOR = ROOT / "data/protocols/dsa_p4_replacement_cursor_v0_1.json"
 SOURCE_REGISTRY = ROOT / "data/protocols/dsa_p4_task_source_registry_v0_1.json"
 POOL_REGISTRY = ROOT / "data/hidden/dsa_p4_oracle_pool_registry_v0_1.json"
 CANDIDATE_REGISTRY = ROOT / "data/hidden/dsa_p4_candidate_registry_v0_1.json"
@@ -53,14 +52,13 @@ def task_absent(path: Path, task_id: str) -> bool:
 
 def build_record(task_id: str, runtime: Path, attempted_commit: str) -> dict[str, Any]:
     preflight = read_json(PREFLIGHT)
-    cursor = read_json(CURSOR)
     source_registry = read_json(SOURCE_REGISTRY)
     task = next(item for item in preflight["tasks"] if item["task_id"] == task_id)
     source = next(item for item in source_registry["records"] if item["task_id"] == task_id)
-    if cursor["cursor"]["next_task_id"] != task_id:
-        raise ValueError("task does not equal the frozen cursor")
     if source["candidate_materialized"] or source["candidate_outcome_observed"]:
         raise ValueError("source registry records forbidden candidate activity")
+    if not isinstance(source.get("cursor_sha256"), str) or len(source["cursor_sha256"]) != 64:
+        raise ValueError("source registry lacks the historical cursor binding")
     if subprocess.run(
         ["git", "merge-base", "--is-ancestor", attempted_commit, "HEAD"],
         cwd=ROOT,
@@ -137,7 +135,7 @@ def build_record(task_id: str, runtime: Path, attempted_commit: str) -> dict[str
         "status": "discard_pre_candidate_environment_build_failure",
         "reason_code": "official_setup_command_uninstallable_stdlib_distribution",
         "attempted_from_commit": attempted_commit,
-        "cursor_sha256": cursor["cursor_sha256"],
+        "cursor_sha256": source["cursor_sha256"],
         "source_record_sha256": source["record_sha256"],
         "python_version": task["python_version"],
         "environment_name": lock["environment_name"],
