@@ -28,6 +28,12 @@
   `../data/protocols/dsa_p4_preflight_v0_1.json`; the deterministic auditor is
   `../scripts/dsa2026_p4_preflight.py`. This is not the final P4 Gate and does
   not authorize P5 or a model call.
+- `../data/hidden/dsa_p4_oracle_pool_registry_v0_1.json`: private hidden-tree
+  pre-transform node-pool registry. It freezes each pool, image/tree/patch
+  hashes, exact relatedness formula, and tie hashes before observing pool or
+  transformed outcomes. `../scripts/dsa2026_p4_oracle_freeze.py` performs
+  discovery/freeze checks; `../scripts/dsa2026_p4_container_worker.py` runs
+  isolated reference collection and checks inside task images.
 - [dsa_p3_preregistration_v0_1.md](experiments/dsa_p3_preregistration_v0_1.md):
   human-readable P3 research questions, primary estimands, cumulative evidence
   contract, task-level conditional statistics, exact model routes, exclusions,

@@ -26,6 +26,8 @@ data/*
 !data/environment_locks/
 !data/environment_locks/dsa2026_p4_bootstrap/
 !data/environment_locks/dsa2026_p4_bootstrap/*.txt
+!data/hidden/
+!data/hidden/dsa_p4_oracle_pool_registry_v0_1.json
 outputs/
 runs/
 artifacts/

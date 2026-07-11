@@ -41,6 +41,23 @@ P4 pre-transform checkpoint（2026-07-11）：
 - 下一步仅构建 task-specific dependency images，并在 transform 前冻结 reference-stable
   P2P/hidden nodes。P4 Gate 未形成，P5/API 仍禁止。
 
+首个结构适用任务 pre-outcome freeze（`bugsinpy_fastapi_12`）：
+
+- 从 official GitHub 仅浅取 FastAPI 六个冻结任务的 12 个 declared commits，逐个
+  `cat-file` 验证；fastapi_12 buggy tree/fixed declared test file/official metadata
+  分别从声明对象和 catalog 生成，official patch 在 buggy tree 上 apply-check 通过；
+- task image ID=`sha256:11fb7ffa940afd56884299fdb26a5775bf1b09ed87a5fb8c1c9213c04ad22da3`；
+  两个无网络 fresh containers 的 dependency/environment hashes 全部一致；
+- official reference F2P 两次均 exit=0，candidate tree hash 均为
+  `efa2cfbb025c5d8cac1e49d47f8552020fc34e17a1e82b781ff819730b78b117`，normalized
+  output hash 均为 `8518bbadc25aab239b3bb96a199a85137b892cbf3dde89ae70dae4d1bdb1899d`；
+- reference discovery 识别 252 个 nodeids；全树 collection 的 67 个 optional/tutorial
+  import errors 只影响未入 pool 的 collection surfaces，不能据此判定已识别节点通过；
+- 在运行任何 pool outcome 前，按 exact-token relatedness + frozen tie SHA-256 规则冻结
+  40-node pool，pool hash=`63c586ba58a4eb6b44cf556e9e797ae87bc0a6df0d2e42fdf7ff316eb49d3dbb`。
+  `data/hidden/dsa_p4_oracle_pool_registry_v0_1.json` 此时明确记录 transform/candidate
+  outcome 未观察；下一动作才是两 fresh reference containers 的逐节点验证。
+
 P4 test/oracle freeze rule（在任何 transformed candidate 结果前固定）：
 
 1. official declared F2P node/command 作为 visible F2P；

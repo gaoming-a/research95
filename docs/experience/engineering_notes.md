@@ -32,6 +32,22 @@
   candidate edits, and record atomic patches as no-transform discards before
   any outcome. With 36 structurally eligible tasks for a 30-pair target, only
   six further exclusions can occur without `STOP_DSA`.
+- Do not normalize an entire frozen metadata directory. Some BugsInPy source
+  files and patch contexts both use CRLF; converting only `bug_patch.txt` to LF
+  preserves neither the raw metadata hash nor patch applicability. Keep every
+  metadata file byte-identical and strip `\r` only from a command string in
+  memory when it is executed.
+- `pip check` can report benchmark-snapshot conflicts even when the checked-out
+  local source has the declared historical dependencies and the official F2P
+  executes correctly. Preserve the conflict log and exact `pip freeze`; do not
+  silently upgrade dependencies to make metadata green. Environment admission
+  is based on the frozen image plus real dual-reference checks, not a rewritten
+  dependency graph.
+- Full-tree pytest collection can fail on optional tutorial modules while still
+  yielding hundreds of valid nodeids. Collection is only discovery: freeze the
+  pool before outcomes, then require each selected node to pass independently
+  in two fresh reference containers. Never treat collection visibility as a
+  passing oracle.
 
 ## 2026-07-11 DSA P3 candidate freeze and author gate
 

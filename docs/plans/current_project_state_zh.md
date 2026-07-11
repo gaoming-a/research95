@@ -40,6 +40,9 @@
   image ID 为 `sha256:97e089cee02d0908e374f7b784ee0ffbb2fe5a2d64f619335aa962dc3ab3d768`，
   两个无网络 fresh containers 的版本/lock 输出一致；正式 task-specific environment、
   oracle registry、candidate pair 和最终 P4 Gate 尚未完成。
+- `bugsinpy_fastapi_12` 的 task environment 与 official F2P 已在两个 fresh containers
+  一致通过；40-node regression pool 已在任何 pool outcome/transform 前冻结并哈希。
+  该任务仍未形成 candidate pair，下一门是 pool 的双环境逐节点稳定性验证。
 
 ### 2026-07-10 DSA 路线计划基线（已由上方 P2 状态覆盖）
 

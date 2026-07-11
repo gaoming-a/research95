@@ -1,1 +1,2 @@
 data/environment_locks/dsa2026_p4_bootstrap/*.txt text eol=lf
+containers/dsa2026_p4/*.sh text eol=lf

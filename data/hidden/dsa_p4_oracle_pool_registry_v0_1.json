@@ -1,0 +1,417 @@
+{
+  "boundary": "Pool identities are frozen before their reference outcomes and before any transformed candidate is materialized.",
+  "created_date": "2026-07-11",
+  "records": [
+    {
+      "collection": {
+        "candidate_tree_sha256": "efa2cfbb025c5d8cac1e49d47f8552020fc34e17a1e82b781ff819730b78b117",
+        "collected_node_count": 252,
+        "exit_code": 2,
+        "outcome": "failed",
+        "output_sha256": "73e35f5d409f99c73f48664f5851b763b51b66cbb82e785d2eac2a5d615b09ec",
+        "reference_patch_sha256": "586ed616d3a17fdec4139892a3e47e4fa158e874d6b6fa672ddd5f7dbbf85a52"
+      },
+      "official_f2p_nodeids": [
+        "tests/test_security_http_bearer_optional.py::test_security_http_bearer_incorrect_scheme_credentials"
+      ],
+      "pool": [
+        {
+          "nodeid": "tests/test_security_http_digest_optional.py::test_security_http_digest_incorrect_scheme_credentials",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "118b0612c4be15dd994d7ae9e6e0e3a4fd0ff7f01c27552b1a9ba4f01b3421e7"
+        },
+        {
+          "nodeid": "tests/test_security_http_digest.py::test_security_http_digest",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "28f2fe015f4e081ba7456118e8625bce7ab1c9ead915c75e1182a0047ed61283"
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "408bc30e7266aa560af4986e33e8eed5b1abbdf5c7d8c327a5aae3f230cce612"
+        },
+        {
+          "nodeid": "tests/test_security_http_base_optional.py::test_security_http_base_no_credentials",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "449b5d27ef25fdce6e372a80abaa4cfefc883b482ea8bad1ca6e13a79a3c9480"
+        },
+        {
+          "nodeid": "tests/test_security_http_digest_optional.py::test_security_http_digest_no_credentials",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "467f1c028f7cdc53b5a12f784b77b6de3a971e488d0ffa6279d9800ab795970c"
+        },
+        {
+          "nodeid": "tests/test_security_http_base.py::test_openapi_schema",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "4bb557b4f8ec012cac4bfef8f12c675ad37854095e7a4df77acabdaf4128b7e5"
+        },
+        {
+          "nodeid": "tests/test_security_http_digest.py::test_security_http_digest_incorrect_scheme_credentials",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "50a5ae3e9b290d2f44817c0c232c29e3a2b8f8e7942bb2e87517ddb92f9313be"
+        },
+        {
+          "nodeid": "tests/test_security_http_base_optional.py::test_openapi_schema",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "5c7481933e2fde495d0a42a9cb4890e6664524f5cfe2922948622778f5a43738"
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_optional.py::test_openapi_schema",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "630d550f654357acd8278e1dfa4cffe7ecef9b5233bc9cd361018f11019b07e3"
+        },
+        {
+          "nodeid": "tests/test_security_http_bearer.py::test_security_http_bearer",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "6f3b5e3139f336287182b5bec6210b406a2793797c641b9598c0095dd1335993"
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_realm.py::test_openapi_schema",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "70cf30343fd173a7c5992b573e807aed79f18fd590eb71cd0ce855031ed61cd6"
+        },
+        {
+          "nodeid": "tests/test_security_http_base.py::test_security_http_base_no_credentials",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "71a6fccdfd996ffb07e6972ac3f500786fd27e3385b0b92273c457feeac189e5"
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic_non_basic_credentials",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "81eeaf1d6c44bea5bf9b3c9554277b4b78d29d8ba8908b87b574c2c039a26ee5"
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic_non_basic_credentials",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "8274cff0e0f4d4c7b276059bf5db818c248d066d169eb3ab8f0db2f27e561f8b"
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic_invalid_credentials",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "853172323eb6a1ef34119219198da97fbe18055f105c99a2739b41d87532dfc8"
+        },
+        {
+          "nodeid": "tests/test_security_http_bearer.py::test_openapi_schema",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "85ea2c9e2aa2cfc44dc32952bfba0204a45c98872b556474ccd967a01d920fb7"
+        },
+        {
+          "nodeid": "tests/test_security_http_bearer_optional.py::test_openapi_schema",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "860092102d26b218bea6b8309a4b91fb4f7add62b48052996e4ae60795bc870d"
+        },
+        {
+          "nodeid": "tests/test_security_http_bearer_optional.py::test_security_http_bearer",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "8aa152750e7a65a18a68f3f2d93914f8eed7d61c3925489c19a02ac0bbe6b2b2"
+        },
+        {
+          "nodeid": "tests/test_security_http_digest_optional.py::test_security_http_digest",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "91d3d2fe44adbb0e0bab048ae3e103d9d80bddc482ecacf0346211c67e8c8695"
+        },
+        {
+          "nodeid": "tests/test_security_http_bearer.py::test_security_http_bearer_no_credentials",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "947b780705a044b8261b6bd3d9295fa3976963bdd2effeecaee8329fb0ffeceb"
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic_no_credentials",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "a4cd946cc0b84586564d1c934a452d53ee485053841a61b072f94d65f9e6043a"
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "b45a5df109078176ca6d25c7fd79f28b39b5a5f661ea61aafd7b8d10f5d4ae14"
+        },
+        {
+          "nodeid": "tests/test_security_http_bearer_optional.py::test_security_http_bearer_no_credentials",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "b8d242ce3794e94a740ead914bfc47323557dd0841f24b6c4cdf829a322dda86"
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic_no_credentials",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "bad93a1cfd8908a94f55d4ec8ce4ce0ea7e1fc4244757e4d9c6de49dd46b76c7"
+        },
+        {
+          "nodeid": "tests/test_security_http_digest.py::test_openapi_schema",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "c1aacd0c765f569357861a7217cbe94a62fdf44a362bdbd0daae91d853ddd2ba"
+        },
+        {
+          "nodeid": "tests/test_security_http_bearer.py::test_security_http_bearer_incorrect_scheme_credentials",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "d118072044039c6c955b26db8d8cb644451b10366be64c2bc3b9a4c9a46f200c"
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic_invalid_credentials",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "d2e9bd86541283c2e83993870a16833d7aa9186e38df92969f8433ae3dd79677"
+        },
+        {
+          "nodeid": "tests/test_security_http_base_optional.py::test_security_http_base",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "dccca79c4ca40cfa38cd20aefa355f0f80ea2434de97f251feeadf45545e1860"
+        },
+        {
+          "nodeid": "tests/test_security_http_digest_optional.py::test_openapi_schema",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "e9dbbdc88de7c8d45fddce0b03296a5366eadf759f35a436423a3de0c6a4a4d7"
+        },
+        {
+          "nodeid": "tests/test_security_http_base.py::test_security_http_base",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "f403c9aad5aee1de3579a761eec23454cf2d135e3596cdf4e71fb1dc2de604f8"
+        },
+        {
+          "nodeid": "tests/test_security_http_digest.py::test_security_http_digest_no_credentials",
+          "overlap_tokens": [
+            "http",
+            "security"
+          ],
+          "relatedness_score": 2,
+          "tie_sha256": "f5c55d6bc960a9ab69c221f33111d68450d4d0b18aab4dc66f02563859689508"
+        },
+        {
+          "nodeid": "tests/test_security_openid_connect_optional.py::test_security_oauth2_password_other_header",
+          "overlap_tokens": [
+            "security"
+          ],
+          "relatedness_score": 1,
+          "tie_sha256": "039a3f40c2283ab47cbe3f919f5f7fa2c6e23eaa2462531e453269deb669f84d"
+        },
+        {
+          "nodeid": "tests/test_security_api_key_header.py::test_security_api_key",
+          "overlap_tokens": [
+            "security"
+          ],
+          "relatedness_score": 1,
+          "tie_sha256": "05258faeb5637e9ed25f63082d7a5ebcbce08ab7a76f56e841d5b6c6df00ef50"
+        },
+        {
+          "nodeid": "tests/test_security_oauth2.py::test_openapi_schema",
+          "overlap_tokens": [
+            "security"
+          ],
+          "relatedness_score": 1,
+          "tie_sha256": "0b3c61cc472fc6c8cddc83f892e4b7ffae336e52ab70d915eaef0131ed684fe2"
+        },
+        {
+          "nodeid": "tests/test_security_oauth2.py::test_strict_login[None-422-expected_response0]",
+          "overlap_tokens": [
+            "security"
+          ],
+          "relatedness_score": 1,
+          "tie_sha256": "125b69d3b5a28d59da1a82f5b3e43ba7a72eb7e384cfe290cb742f394b4fb803"
+        },
+        {
+          "nodeid": "tests/test_security_oauth2.py::test_security_oauth2_password_other_header",
+          "overlap_tokens": [
+            "security"
+          ],
+          "relatedness_score": 1,
+          "tie_sha256": "130f93a68ccad2d0db44aadf8cdc952194afa9b4ec981bb25f0f62984de91148"
+        },
+        {
+          "nodeid": "tests/test_security_oauth2_optional.py::test_strict_login[data3-200-expected_response3]",
+          "overlap_tokens": [
+            "security"
+          ],
+          "relatedness_score": 1,
+          "tie_sha256": "1e3ce6128db89c3ec9464b8703351bebf7deab5d6c9854823357c3d81f022a29"
+        },
+        {
+          "nodeid": "tests/test_security_openid_connect_optional.py::test_openapi_schema",
+          "overlap_tokens": [
+            "security"
+          ],
+          "relatedness_score": 1,
+          "tie_sha256": "24b2c5a0f3b7511915275be2369ee6a1affb0fecfe6bf9e11925d744b702c005"
+        },
+        {
+          "nodeid": "tests/test_security_api_key_cookie.py::test_security_api_key_no_key",
+          "overlap_tokens": [
+            "security"
+          ],
+          "relatedness_score": 1,
+          "tie_sha256": "2f1d26384b52a6fb0a0c70472d0f340c4578af2cf95be21bc587de36367a96cd"
+        },
+        {
+          "nodeid": "tests/test_security_api_key_query_optional.py::test_security_api_key_no_key",
+          "overlap_tokens": [
+            "security"
+          ],
+          "relatedness_score": 1,
+          "tie_sha256": "34ac15c00e5d7ab9e9f4b7f140783818eba32aa822bd5d4cc144f86ebac3b432"
+        }
+      ],
+      "pool_node_count": 40,
+      "pool_sha256": "63c586ba58a4eb6b44cf556e9e797ae87bc0a6df0d2e42fdf7ff316eb49d3dbb",
+      "project": "fastapi",
+      "python_version": "3.8.3",
+      "reference_pool_outcome_observed": false,
+      "reference_source_paths": [
+        "fastapi/security/http.py"
+      ],
+      "selected_transform_id": "T4_partial_multiline_reversion",
+      "selection_rule": {
+        "discarded_generic_tokens": [
+          "init",
+          "lib",
+          "main",
+          "py",
+          "source",
+          "src",
+          "test",
+          "testing",
+          "tests"
+        ],
+        "maximum_pool_nodes": 40,
+        "official_f2p_excluded": true,
+        "order": "score descending, then tie SHA-256 ascending, then nodeid ascending",
+        "score": "count of distinct exact tokens shared by source paths and nodeid",
+        "tie_preimage": "dsa2026-p4-regression-split-v0_1|<task_id>|<nodeid>",
+        "tokenization": "lowercase [a-z0-9]+ tokens of length >=2"
+      },
+      "source_tokens": [
+        "fastapi",
+        "http",
+        "security"
+      ],
+      "status": "pretransform_pool_frozen",
+      "stream_order": 2,
+      "stream_role": "primary",
+      "task_id": "bugsinpy_fastapi_12",
+      "task_image": "dsa2026-p4-task:bugsinpy_fastapi_12",
+      "task_image_id": "sha256:11fb7ffa940afd56884299fdb26a5775bf1b09ed87a5fb8c1c9213c04ad22da3",
+      "test_root": "tests",
+      "transformed_candidate_materialized": false,
+      "transformed_candidate_outcome_observed": false
+    }
+  ],
+  "registry_id": "dsa_p4_oracle_pool_registry_v0_1",
+  "status": "pretransform_freeze_in_progress",
+  "visibility": "hidden_never_model_visible"
+}

@@ -28,6 +28,10 @@ and four atomic tasks are pre-outcome discards. Six explicit Conda locks are
 bound into a candidate-independent toolchain image and reproduce identically in
 two network-disabled fresh containers. Task-specific oracle/candidate runs and
 the final P4 Gate remain pending.
+For the first structurally eligible task, `bugsinpy_fastapi_12`, two fresh
+reference F2P runs agree and a 40-node regression pool is now hash-frozen before
+any pool outcome or transformed candidate is observed. Its dual-reference pool
+run is the next gate; it is not yet an admitted pair.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,
