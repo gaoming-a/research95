@@ -1,5 +1,20 @@
 # Engineering Notes
 
+## 2026-07-12 Signed prose must match executable recipe fields
+
+- A signed rule that refers to a value "declared by the project recipe" is not
+  executable if the signed recipe records omit that field. A human-readable
+  requirement does not substitute for the exact test root and collection
+  adapter consumed by the runner.
+- Detect this class of omission before checkout or test outcomes. Here the
+  project-level roots can be derived without outcome data by splitting every
+  frozen declared test path, normalizing it, and taking the longest common
+  parent per project. The derived object still requires author sign-off because
+  it completes an immutable signed protocol.
+- Keep the amendment separate from the original manifest. Bind the proposed
+  values by hash, preserve the original aggregate unchanged, and prohibit real
+  activity until the author signs the exact amendment object.
+
 ## 2026-07-12 V2-P2 pure executor check-only
 
 - A pre-materialization executor can be audited without giving it execution

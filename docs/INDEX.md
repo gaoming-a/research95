@@ -40,6 +40,14 @@
   `../scripts/dsa2026_v2_p2_check_only.py`. The cursor identifies pandas_161
   but does not start it; all checkout/container/test/prompt/key/API counters are
   zero, and this record does not authorize real materialization.
+- [dsa_v2_p1_test_scope_amendment_signoff_v0_1.md](experiments/dsa_v2_p1_test_scope_amendment_signoff_v0_1.md):
+  unsigned pre-outcome repair proposal for the project-test-root fields omitted
+  from the signed V2-P1 recipes. It derives nine project scopes and collection
+  adapters only from the 299 frozen declared test paths. Machine proposal and
+  deterministic replay are
+  `../data/protocols/dsa_v2_p1_test_scope_amendment_proposal_v0_1.json` and
+  `../scripts/dsa2026_propose_v2_p1_test_scope_amendment.py`. Real V2-P2
+  activity remains zero until author sign-off.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
   venue/submission master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is

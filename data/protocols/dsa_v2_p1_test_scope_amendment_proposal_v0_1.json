@@ -1,0 +1,178 @@
+{
+  "amendments": [
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "test/units"
+      ],
+      "derived_from_declared_file_count": 15,
+      "framework": "pytest",
+      "project": "ansible",
+      "project_test_root": "test/units",
+      "unittest_pattern": null,
+      "unittest_top_level_dir": null
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "unittest-discover",
+        "--start-dir",
+        "tests",
+        "--pattern",
+        "test*.py",
+        "--top-level-dir",
+        "."
+      ],
+      "derived_from_declared_file_count": 13,
+      "framework": "unittest",
+      "project": "black",
+      "project_test_root": "tests",
+      "unittest_pattern": "test*.py",
+      "unittest_top_level_dir": "."
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "tests"
+      ],
+      "derived_from_declared_file_count": 14,
+      "framework": "pytest",
+      "project": "fastapi",
+      "project_test_root": "tests",
+      "unittest_pattern": null,
+      "unittest_top_level_dir": null
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "tests"
+      ],
+      "derived_from_declared_file_count": 23,
+      "framework": "pytest",
+      "project": "keras",
+      "project_test_root": "tests",
+      "unittest_pattern": null,
+      "unittest_top_level_dir": null
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "lib/matplotlib/tests"
+      ],
+      "derived_from_declared_file_count": 8,
+      "framework": "pytest",
+      "project": "matplotlib",
+      "project_test_root": "lib/matplotlib/tests",
+      "unittest_pattern": null,
+      "unittest_top_level_dir": null
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "pandas/tests"
+      ],
+      "derived_from_declared_file_count": 119,
+      "framework": "pytest",
+      "project": "pandas",
+      "project_test_root": "pandas/tests",
+      "unittest_pattern": null,
+      "unittest_top_level_dir": null
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "tests"
+      ],
+      "derived_from_declared_file_count": 2,
+      "framework": "pytest",
+      "project": "sanic",
+      "project_test_root": "tests",
+      "unittest_pattern": null,
+      "unittest_top_level_dir": null
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "spacy/tests"
+      ],
+      "derived_from_declared_file_count": 9,
+      "framework": "pytest",
+      "project": "spacy",
+      "project_test_root": "spacy/tests",
+      "unittest_pattern": null,
+      "unittest_top_level_dir": null
+    },
+    {
+      "collection_command": [
+        "python",
+        "-m",
+        "unittest-discover",
+        "--start-dir",
+        "tornado/test",
+        "--pattern",
+        "*_test.py",
+        "--top-level-dir",
+        "."
+      ],
+      "derived_from_declared_file_count": 9,
+      "framework": "unittest",
+      "project": "tornado",
+      "project_test_root": "tornado/test",
+      "unittest_pattern": "*_test.py",
+      "unittest_top_level_dir": "."
+    }
+  ],
+  "amendments_sha256": "b5778a7c95042d5475d333842c5b8a486a2798a7586d74a20a84e30487ddef94",
+  "authorization": {
+    "author_signed": false,
+    "model_api": false,
+    "real_v2_p2_materialization": false
+  },
+  "boundary": "This proposal changes no V2-P1 file and permits no checkout, environment build, container, project test, prompt render, credential read, or model request.",
+  "checks": {
+    "all_299_records_used": true,
+    "all_nine_projects_covered": true,
+    "all_scopes_are_common_test_directories": true,
+    "no_task_outcome_or_runtime_input_used": true,
+    "one_framework_per_project": true,
+    "proposal_does_not_authorize_materialization": true,
+    "source_order_hash_unchanged": true,
+    "v2_p1_manifest_intact": true
+  },
+  "created_date": "2026-07-12",
+  "derivation_rule": "Split every frozen declared_test_file on semicolons, normalize POSIX paths, take parent directories, and select the longest common parent per project before observing any task outcome.",
+  "proposal_id": "dsa_v2_p1_test_scope_amendment_proposal_v0_1",
+  "reason": "V2-P1 refers to a project test root declared by each project recipe, but the signed recipe records omit that field.",
+  "source_order_sha256": "21be1d9fed719de44126be585fa7e9123fd8579588d9ce86eb396d4ab5c2dd11",
+  "status": "author_signoff_required",
+  "v2_p1_manifest_aggregate_sha256": "ed7c927129c47027b57374625a2d76667503bbb1d8d37e04d4460e42b2ae8b40"
+}

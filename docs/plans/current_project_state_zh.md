@@ -2,7 +2,18 @@
 
 日期：2026-07-12
 
-## 2026-07-12 V2-P2 executor check-only 状态覆盖
+## 2026-07-12 V2-P2 首任务 pre-outcome amendment Gate
+
+- 用户已授权真实处理 order=1 `bugsinpy_pandas_161`，但尚未发生 checkout、环境构建、
+  container、项目测试或模型请求；
+- Inspect 发现 V2-P1 文本引用 project recipe 中的 project test root，而签核 artifact
+  的九个 recipe 均遗漏该字段；真实活动在 outcome 前暂停；
+- 当前只生成基于299条冻结 `declared_test_file` 的九项目 test-scope/collection-adapter
+  amendment proposal；不修改 V2-P1 hashes；
+- 作者签核 amendment 后，本 Goal 才恢复首任务真实材料化；第二个 task、V2-P3、prompt、
+  论文结果与模型 API 仍不授权。
+
+## 2026-07-12 V2-P2 executor check-only 状态覆盖（已被上方覆盖）
 
 - 当前状态：`V2_P2_EXECUTOR_CHECK_ONLY_PASS / REAL_MATERIALIZATION_NOT_AUTHORIZED /
   FIRST_TASK_NOT_STARTED / NO_API / V0_SUBMISSION_GATE_PENDING`；

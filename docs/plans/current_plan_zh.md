@@ -2,6 +2,27 @@
 
 最后更新：2026-07-12
 
+## 0.57 2026-07-12 V2-P2 首任务授权与 test-scope amendment Gate
+
+用户已明确授权下一 Goal 真实处理唯一 order=1 `bugsinpy_pandas_161`，边界为完成该
+task 的 source/context、冻结环境、双 fresh oracle-positive、T1--T4 candidate search
+与唯一 terminal record；不处理第二个 task，不进入 V2-P3，不改 prompt/schema/论文，
+不读取 API key，不调用模型 API，不 push GitHub。
+
+Inspect/Diagnose：
+
+- V2-P1 regression rule 要求使用“project recipe 声明的 project test root”，但作者
+  签核并 hash-frozen 的九个 recipe 实际都没有 `test_root` 或 collection adapter 字段；
+- 直接为 pandas_161 选择 `pandas/tests` 会成为签核后、task-specific 的未授权协议补充；
+  因此在下载源码、构建镜像或运行测试前暂停真实活动；
+- 修复最短路径是只使用已冻结299条 `declared_test_file`：分号拆分、POSIX规范化、取
+  各项目所有 test-file parent 的最长公共前缀，同时冻结 pytest/unittest collection
+  adapter；不读取任何 task outcome。
+
+当前 Gate：生成独立 amendment proposal 与未签核报告，不修改 V2-P1 manifest 内任一
+文件。作者签核前 checkout/environment/container/project-test/prompt/key/API 均保持0；
+签核只允许恢复本 Goal，不自动授权第二个 task 或后续阶段。
+
 ## 0.56 2026-07-12 DSA v0.2 V2-P2 executor synthetic check-only
 
 本轮 Goal：只实现并审计消费 synthetic metadata 的 V2-P2 纯状态机，证明它严格读取
