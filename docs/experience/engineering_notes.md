@@ -1,5 +1,21 @@
 # Engineering Notes
 
+## 2026-07-12 V2-P2 pure executor check-only
+
+- A pre-materialization executor can be audited without giving it execution
+  capability. Keep the state machine pure and inject synthetic observations;
+  filesystem, process, network, container, test, prompt, and credential access
+  belong only in a later explicitly authorized adapter.
+- Do not trust a supplied candidate-order hash. Parse the exact canonical
+  descriptor, reject field drift, and recompute the domain-separated SHA-256
+  from the frozen seed and task id before accepting ordering or uniqueness.
+- Positive path tests are insufficient for a frozen protocol. Also prove that
+  out-of-order tasks, tampered hashes, noncontiguous ledgers, and execution after
+  target/source terminal states are rejected.
+- Selecting the first source-order identity is not starting a task. Record a
+  pending cursor separately and keep checkout, environment, container, test,
+  prompt, credential, and API activity counters explicitly at zero.
+
 ## 2026-07-12 V2-P1 metadata and base-lock freeze
 
 - Source-frame eligibility does not imply that every official task directory

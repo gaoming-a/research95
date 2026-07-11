@@ -2,7 +2,20 @@
 
 日期：2026-07-12
 
-## 2026-07-12 V2-P1 状态覆盖
+## 2026-07-12 V2-P2 executor check-only 状态覆盖
+
+- 当前状态：`V2_P2_EXECUTOR_CHECK_ONLY_PASS / REAL_MATERIALIZATION_NOT_AUTHORIZED /
+  FIRST_TASK_NOT_STARTED / NO_API / V0_SUBMISSION_GATE_PENDING`；
+- 纯状态机 executor 与 deterministic write/check auditor 已完成；它们只消费 synthetic
+  metadata，没有 filesystem/process/network/container/test/prompt/API 执行能力；
+- V2-P1 aggregate 与299-task source order 均未变化；首个 cursor task 仍为
+  `bugsinpy_pandas_161`，只完成 identity selection，没有 checkout 或启动；
+- 六条成功/失败/停止路径与五条协议漂移拒绝路径全部 PASS，真实 checkout、环境构建、
+  container、项目测试、prompt render、API key read 和模型请求计数均为0；
+- 下一 Goal 只有在用户明确授权后才可开始真实 V2-P2 materialization；该授权不自动
+  扩展到 V2-P3、prompt、论文结果或模型 API。
+
+## 2026-07-12 V2-P1 状态覆盖（已被上方覆盖）
 
 - 当前状态：`V2_P1_PASS_AUTHOR_SIGNED / RULES_FROZEN /
   V2_P2_NOT_AUTHORIZED / NO_API / V0_SUBMISSION_GATE_PENDING`；

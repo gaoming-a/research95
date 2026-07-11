@@ -12,8 +12,9 @@
   sole active experimental execution plan. P3/P4 v0.1 terminated before model
   output; v0.2 freezes construction rules before qualification, materializes a
   pre-model pool, then freezes the first 30 qualified task pairs before any
-  reviewer-agent request. Status: `V2-P1_PASS_AUTHOR_SIGNED / RULES_FROZEN /
-  V2-P2_NOT_AUTHORIZED / NO_API`. Machine design and transition audit are
+  reviewer-agent request. Status: `V2-P2_EXECUTOR_CHECK_ONLY_PASS /
+  REAL_MATERIALIZATION_NOT_AUTHORIZED / FIRST_TASK_NOT_STARTED / NO_API`.
+  Machine design and transition audit are
   `../data/protocols/dsa_v0_1_termination_and_v0_2_redesign_v0_1.json` and
   `../scripts/dsa2026_audit_v0_2_redesign.py`.
 - [dsa_p4_v0_1_termination_v0_1.md](experiments/dsa_p4_v0_1_termination_v0_1.md):
@@ -31,12 +32,21 @@
   `../data/protocols/dsa_v2_p1_gate_audit_v0_1.json`, and
   `../data/protocols/dsa_v2_p1_hash_manifest_v0_1.json`; deterministic
   write/check is `../scripts/dsa2026_freeze_v2_p1_construction.py`.
+- [dsa_v2_p2_executor_check_only_v0_1.md](experiments/dsa_v2_p2_executor_check_only_v0_1.md):
+  passing pure-state-machine and synthetic-only V2-P2 executor audit. Machine
+  evidence is `../data/protocols/dsa_v2_p2_executor_preflight_v0_1.json` and
+  `../data/protocols/dsa_v2_p2_synthetic_audit_v0_1.json`; implementation and
+  deterministic replay are `../scripts/dsa2026_v2_p2_executor.py` and
+  `../scripts/dsa2026_v2_p2_check_only.py`. The cursor identifies pandas_161
+  but does not start it; all checkout/container/test/prompt/key/API counters are
+  zero, and this record does not authorize real materialization.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
   venue/submission master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is
   inactive. Its experimental status is overridden by v0.2:
   `V0_1_TERMINATED_BEFORE_MODEL_OUTPUT / V2_P1_PASS_AUTHOR_SIGNED /
-  RULES_FROZEN / V2_P2_NOT_AUTHORIZED / NO_API`. It defines
+  V2_P2_EXECUTOR_CHECK_ONLY_PASS / REAL_MATERIALIZATION_NOT_AUTHORIZED / NO_API`.
+  It defines
   venue/AI/EI gates, old-data
   quarantine, a task-disjoint C0--C3 experiment, no-rerun rules, finite-cohort
   statistics, evidence-first paper reconstruction, official `IEEEconf.cls` PDF

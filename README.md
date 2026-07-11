@@ -7,7 +7,7 @@ accepted, rejected, or escalated in real software projects.
 
 ## Current Validity And Submission Status
 
-As of 2026-07-11, the sole active route is
+As of 2026-07-12, the sole active route is
 [the DSA 2026 execution plan](docs/plans/dsa_2026_submission_execution_plan_zh.md).
 The single target is a DSA 2026 Regular paper. A Short paper may be selected
 only as a separately frozen protocol before any model call; ACAI is inactive.
@@ -33,8 +33,12 @@ order, deterministic T1--T4 candidate enumeration, dual-fresh qualification,
 and the 30-pair/source-exhaustion stop rule. The source-order SHA-256 is
 `21be1d9fed719de44126be585fa7e9123fd8579588d9ce86eb396d4ab5c2dd11`.
 The planned full experiment remains 2,160 valid reviewer-agent responses.
-V2-P2 is not authorized, so no task, environment, container, project test,
-prompt change, or model API call may begin.
+The V2-P2 pure executor and synthetic check-only audit now pass: all six
+success/failure/stop paths and five protocol-drift rejection paths are covered,
+the first cursor identity is `bugsinpy_pandas_161`, and every real-activity
+counter remains zero. Real V2-P2 materialization is not authorized, so that
+task has not been checked out or started; no environment, container, project
+test, prompt change, credential read, or model API call may begin.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,

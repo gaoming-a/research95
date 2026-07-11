@@ -2,6 +2,39 @@
 
 最后更新：2026-07-12
 
+## 0.56 2026-07-12 DSA v0.2 V2-P2 executor synthetic check-only
+
+本轮 Goal：只实现并审计消费 synthetic metadata 的 V2-P2 纯状态机，证明它严格读取
+V2-P1 冻结规则、只把首个 task 放到 pending cursor，并能机械处理成功、环境失败、
+oracle-positive 失败、无合格 hard-negative、30-pair 停止和 source exhaustion；不
+checkout task，不构建环境，不启动 container/test，不渲染 prompt，不读取凭证，不调用 API。
+
+Execute/Verify：
+
+- 新增 `scripts/dsa2026_v2_p2_executor.py`；其静态依赖仅限 dataclass、hash/JSON/regex/
+  typing，不能访问 filesystem、process、network、container、test、prompt 或模型；
+- executor 从 V2-P1 读取299-task order、T1--T4、candidate tie preimage、dual-fresh、
+  3-visible/最多20-hidden、30-pair/source-exhaustion，并从 canonical descriptor 重新计算
+  候选 order SHA-256，不信任调用方提供的排序；
+- 新增 `scripts/dsa2026_v2_p2_check_only.py`，六条 synthetic terminal paths 与五条
+  protocol-drift rejection 均 PASS；乱序 task、篡改候选 hash、非连续 ledger、停止后
+  继续执行均被拒绝；
+- preflight 的16项检查与 synthetic audit 的9项检查全部 PASS；唯一 next task 是
+  `bugsinpy_pandas_161`，但 `selected_task_started=false`；checkout/environment/container/
+  project-test/prompt/key/model API 计数全部为0；
+- V2-P1 aggregate 仍为
+  `ed7c927129c47027b57374625a2d76667503bbb1d8d37e04d4460e42b2ae8b40`，source-order
+  SHA-256 仍为 `21be1d9fed719de44126be585fa7e9123fd8579588d9ce86eb396d4ab5c2dd11`。
+
+Gate：
+
+- 当前状态：`V2_P2_EXECUTOR_CHECK_ONLY_PASS / REAL_MATERIALIZATION_NOT_AUTHORIZED /
+  FIRST_TASK_NOT_STARTED / NO_API`；
+- 本轮没有修改 V2-P1 immutable manifest 内文件，包括 active v0.2 实验计划；
+- 下一 Goal 若继续，必须由用户明确授权真实 V2-P2 materialization，才可 checkout
+  `bugsinpy_pandas_161`、构建环境和运行项目测试；仍不得进入 V2-P3、改 prompt、改论文
+  结果或调用模型 API。
+
 ## 0.55 2026-07-12 DSA v0.2 V2-P1 construction protocol freeze
 
 本轮 Goal：根据作者高明明确签核的8项声明，只冻结 V2-P1 source/order、环境 recipe、

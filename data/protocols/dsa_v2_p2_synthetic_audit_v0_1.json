@@ -1,0 +1,242 @@
+{
+  "audit_id": "dsa_v2_p2_synthetic_audit_v0_1",
+  "case_names_sha256": "5e7dc3c9ded6c92b832e88666fa70aafb25033f1dd547c79a626f2f3e93796fe",
+  "cases": [
+    {
+      "activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 0
+      },
+      "case": "pair_success",
+      "output_cursor": {
+        "attempted_tasks": 1,
+        "next_order": 2,
+        "next_task_id": "bugsinpy_fastapi_11",
+        "qualified_pairs": 1,
+        "status": "pending",
+        "stop_reason": null
+      },
+      "selected_task_started": false,
+      "terminal": {
+        "disposition": "pair-qualified",
+        "order": 1,
+        "reason": "first-frozen-order-hard-negative-qualified",
+        "selected_candidate_sha256": "a6d481db9e63f3c12c96473c9115f3e173d2223545c08874e02b3b11046ce032",
+        "task_id": "bugsinpy_pandas_161"
+      },
+      "trace": [
+        "pending",
+        "environment-qualified",
+        "oracle-qualified",
+        "candidate-search",
+        "pair-qualified"
+      ]
+    },
+    {
+      "activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 0
+      },
+      "case": "environment_failure",
+      "output_cursor": {
+        "attempted_tasks": 1,
+        "next_order": 2,
+        "next_task_id": "bugsinpy_fastapi_11",
+        "qualified_pairs": 0,
+        "status": "pending",
+        "stop_reason": null
+      },
+      "selected_task_started": false,
+      "terminal": {
+        "disposition": "materialization-failed",
+        "order": 1,
+        "reason": "environment-failure-or-dual-disagreement",
+        "selected_candidate_sha256": null,
+        "task_id": "bugsinpy_pandas_161"
+      },
+      "trace": [
+        "pending",
+        "materialization-failed"
+      ]
+    },
+    {
+      "activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 0
+      },
+      "case": "oracle_positive_failure",
+      "output_cursor": {
+        "attempted_tasks": 1,
+        "next_order": 2,
+        "next_task_id": "bugsinpy_fastapi_11",
+        "qualified_pairs": 0,
+        "status": "pending",
+        "stop_reason": null
+      },
+      "selected_task_started": false,
+      "terminal": {
+        "disposition": "materialization-failed",
+        "order": 1,
+        "reason": "oracle-positive-failure-or-dual-disagreement",
+        "selected_candidate_sha256": null,
+        "task_id": "bugsinpy_pandas_161"
+      },
+      "trace": [
+        "pending",
+        "environment-qualified",
+        "materialization-failed"
+      ]
+    },
+    {
+      "activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 0
+      },
+      "case": "no_qualifying_hard_negative",
+      "output_cursor": {
+        "attempted_tasks": 1,
+        "next_order": 2,
+        "next_task_id": "bugsinpy_fastapi_11",
+        "qualified_pairs": 0,
+        "status": "pending",
+        "stop_reason": null
+      },
+      "selected_task_started": false,
+      "terminal": {
+        "disposition": "materialization-failed",
+        "order": 1,
+        "reason": "no-qualifying-hard-negative",
+        "selected_candidate_sha256": null,
+        "task_id": "bugsinpy_pandas_161"
+      },
+      "trace": [
+        "pending",
+        "environment-qualified",
+        "oracle-qualified",
+        "candidate-search",
+        "materialization-failed"
+      ]
+    },
+    {
+      "activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 0
+      },
+      "attempted_tasks": 299,
+      "case": "source_exhaustion",
+      "first_task": "bugsinpy_pandas_161",
+      "last_task": "bugsinpy_pandas_18",
+      "output_cursor": {
+        "attempted_tasks": 299,
+        "next_order": null,
+        "next_task_id": null,
+        "qualified_pairs": 0,
+        "status": "source-exhausted",
+        "stop_reason": "eligible-source-order-exhausted-before-30-pairs"
+      },
+      "selected_task_started": false
+    },
+    {
+      "activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 0
+      },
+      "attempted_tasks": 30,
+      "case": "target_30_reached",
+      "first_task": "bugsinpy_pandas_161",
+      "last_task": "bugsinpy_keras_12",
+      "output_cursor": {
+        "attempted_tasks": 30,
+        "next_order": null,
+        "next_task_id": null,
+        "qualified_pairs": 30,
+        "status": "cohort-qualified",
+        "stop_reason": "target-pairs-reached"
+      },
+      "selected_task_started": false
+    }
+  ],
+  "checks": {
+    "all_cases_keep_real_activity_zero": true,
+    "all_cases_refuse_to_start_selected_task": true,
+    "all_protocol_drift_attempts_rejected": true,
+    "environment_failure_is_terminal": true,
+    "no_qualifying_negative_is_terminal": true,
+    "oracle_positive_failure_is_terminal": true,
+    "source_exhaustion_stops_before_30": true,
+    "success_selects_first_qualifying_candidate": true,
+    "target_30_stops_without_source_exhaustion": true
+  },
+  "created_date": "2026-07-12",
+  "mode": "synthetic_check_only",
+  "model_api_calls": 0,
+  "protocol_rejections": [
+    {
+      "case": "out_of_order_task_rejected",
+      "reason": "observation does not match unique frozen next task",
+      "rejected": true
+    },
+    {
+      "case": "tampered_candidate_order_hash_rejected",
+      "reason": "candidate order SHA-256 drift",
+      "rejected": true
+    },
+    {
+      "case": "noncontiguous_ledger_rejected",
+      "reason": "ledger does not follow contiguous frozen source order",
+      "rejected": true
+    },
+    {
+      "case": "execution_after_target_rejected",
+      "reason": "cannot execute from terminal cursor: cohort-qualified",
+      "rejected": true
+    },
+    {
+      "case": "execution_after_source_exhaustion_rejected",
+      "reason": "cannot execute from terminal cursor: source-exhausted",
+      "rejected": true
+    }
+  ],
+  "real_activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 0,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 0
+  },
+  "selected_real_task": "bugsinpy_pandas_161",
+  "selected_real_task_started": false,
+  "status": "passed"
+}
