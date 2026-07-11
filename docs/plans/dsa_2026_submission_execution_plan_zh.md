@@ -2,15 +2,29 @@
 
 计划编号：DSA-2026-EVIDENCE-POLICY-20260710
 制定日期：2026-07-10
-当前状态：P2_SOURCE_FEASIBILITY_PASS / REGULAR_FROZEN /
-P3_PASS_AUTHOR_SIGNED / P4_IN_PROGRESS / P5_NOT_STARTED /
-SHORT_INACTIVE / V0_SUBMISSION_GATE_PENDING
+当前状态：V0_1_TERMINATED_BEFORE_MODEL_OUTPUT / V0_2_DESIGN_DRAFT /
+V2_P1_AUTHOR_SIGNOFF_PENDING / NO_API / V0_SUBMISSION_GATE_PENDING
 唯一主目标：DSA 2026 Regular Paper
 同会场降级：DSA 2026 Short Paper，仅可在任何模型调用前锁定
 非活动备选：ACAI 2026；不得并行投稿，也不得在看到 DSA 实验结果后切换
 用户优先级：科学与收录稳健性优先，其次才是时间
-本轮边界：P4 已显式建立为新 goal；pre-transform/bootstrap Gate 已 PASS，继续材料化
-cohort；不进入 P5，不调用 API，不改论文结果
+本轮边界：P3/P4 v0.1 已在模型调用前终止；只建立 v0.2 精简实验设计和 V2-P1
+作者签核入口，不运行 task/test/container，不调用 API，不改 prompt 或论文结果
+
+## 2026-07-11 v0.2 实验路线覆盖
+
+本计划的投稿目标、V0 外部门、AI/EI/现场报告和论文交付要求继续有效；实验执行主线
+改由 `docs/plans/dsa_agent_evidence_experiment_v0_2_zh.md` 管理。下文关于
+“Regular 已冻结、P4 继续 materialization”的内容只保留为 v0.1 历史，不再授权执行。
+
+v0.1 在 API=0、confirmatory outputs=0 时终止，原因不是不利模型结果或已触发
+capacity stop，而是 clean environment 与 candidate behavioral qualification 被放在
+确认性 cohort 冻结之后，实际执行偏向旧 benchmark 复现。v0.2 保留 RQ1--RQ3、
+C0--C3、两项 task-level estimands、三模型和三重复，但先冻结材料构造规则，再机械
+生成并质检候选池；只有首批 30 个合格 task pairs 才进入最终 P3 v0.2 冻结。
+
+当前下一 Gate 是作者签核 V2-P1 的 8 项材料构造规则。该签核仍不授权 V2-P2
+materialization 或模型 API。
 
 ## 1. 权威性与目标覆盖
 

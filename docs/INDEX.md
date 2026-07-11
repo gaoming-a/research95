@@ -8,19 +8,40 @@
 
 ## Active Plan
 
+- [dsa_agent_evidence_experiment_v0_2_zh.md](plans/dsa_agent_evidence_experiment_v0_2_zh.md):
+  sole active experimental execution plan. P3/P4 v0.1 terminated before model
+  output; v0.2 freezes construction rules before qualification, materializes a
+  pre-model pool, then freezes the first 30 qualified task pairs before any
+  reviewer-agent request. Status: `DESIGN_DRAFT / AUTHOR_SIGNOFF_REQUIRED /
+  NO_API`. Machine design and audit are
+  `../data/protocols/dsa_v0_1_termination_and_v0_2_redesign_v0_1.json` and
+  `../scripts/dsa2026_audit_v0_2_redesign.py`.
+- [dsa_p4_v0_1_termination_v0_1.md](experiments/dsa_p4_v0_1_termination_v0_1.md):
+  explicit pre-model termination record. It preserves P3 v0.1 immutability,
+  states that the capacity stop rule did not fire, records API/output counts as
+  zero, and limits old P4 evidence to feasibility/provenance.
+- [dsa_v0_2_construction_protocol_signoff_v0_1.md](experiments/dsa_v0_2_construction_protocol_signoff_v0_1.md):
+  unsigned eight-item author checklist for the next V2-P1 rule-freeze Goal; it
+  does not authorize materialization, prompt changes, or model API use.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
-  sole active master plan as of 2026-07-11. The only target is DSA 2026 Regular;
+  venue/submission master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is
-  inactive. Status: `P2_SOURCE_FEASIBILITY_PASS / REGULAR_FROZEN /
-  P3_PASS_AUTHOR_SIGNED / P4_IN_PROGRESS / P5_NOT_STARTED / SHORT_INACTIVE /
-  V0_SUBMISSION_GATE_PENDING`. It defines
+  inactive. Its experimental status is overridden by v0.2:
+  `V0_1_TERMINATED_BEFORE_MODEL_OUTPUT / V0_2_DESIGN_DRAFT /
+  V2_P1_AUTHOR_SIGNOFF_PENDING / NO_API`. It defines
   venue/AI/EI gates, old-data
   quarantine, a task-disjoint C0--C3 experiment, no-rerun rules, finite-cohort
   statistics, evidence-first paper reconstruction, official `IEEEconf.cls` PDF
   QA, private artifact/Git boundaries, and the submission-to-presentation
   timeline. A 2026-07-11 standing API authorization exists but activates only
-  after P1--P5 pass; P4 is in progress and P5 is pending, so no model call is
-  allowed.
+  after the corresponding v0.2 construction, freeze, render, and preflight
+  Gates pass; currently no model call is allowed.
+
+## Historical v0.1 DSA experiment artifacts
+
+The following P2/P3/P4 v0.1 files remain immutable or provenance-only. They do
+not authorize continuation of the terminated v0.1 execution stream.
+
 - [dsa_p4_preflight_v0_1.md](experiments/dsa_p4_preflight_v0_1.md):
   passing pre-transform P4 audit for immutable P2/P3 inputs, source-only
   transform applicability, six explicit Conda locks, the candidate-independent

@@ -2,6 +2,55 @@
 
 最后更新：2026-07-11
 
+## 0.54 2026-07-11 v0.1 终止与 reviewer-agent 实验 v0.2 重构
+
+本轮 Goal：保留 P2/P3/P4 v0.1 的全部冻结证据，在模型调用前正式终止旧
+cohort-materialization 路线，并建立以 C0--C3 下 reviewer agent
+`accept/reject/escalate` 回复变化为核心的 v0.2 精简计划。本轮不运行新
+task/test/container，不进入材料物化，不修改 prompt，不调用 API，不修改论文结果，
+也不替作者完成 V2-P1 签核。
+
+Inspect 与诊断：
+
+- P3 v0.1 的研究问题、`Delta_minus`/`Delta_plus`、C0--C3 evidence contract、三模型
+  三重复和 hidden separation 本身仍对齐研究目标；
+- P4 前五个 primary 中只有 FastAPI #12 进入 candidate Gate，且 negative 因
+  `IndentationError`/visible failure discard；Tornado #10 与 Matplotlib #21 分别在
+  official setup 和 clean F2P 阶段失败，Sanic #5/Pandas #54 结构不适用；API=0；
+- 根因是 confirmatory cohort 在 clean environment 与 behavioral candidate
+  qualification 前冻结；同项目 reserve 对项目级环境失败高度相关；继续旧 stream
+  主要增加 benchmark archaeology，而不是 agent-response evidence；
+- 因此 v0.1 状态是 author-directed pre-model protocol termination，不宣称已触发
+  reserve/capacity stop，也没有 confirmatory effect estimate。
+
+Execute：
+
+- 新增机器记录
+  `data/protocols/dsa_v0_1_termination_and_v0_2_redesign_v0_1.json`；P3 v0.1 的
+  16-file aggregate 保持
+  `f81ba7063297dc9264041256b99a7daa002bd730cbe1dbd9bfb105cd7aa71297`；
+- 新增终止说明 `docs/experiments/dsa_p4_v0_1_termination_v0_1.md`，冻结 v0.1
+  只能作 feasibility/provenance、不能进入 v0.2 模型结果或效果量的边界；
+- 新增 `docs/plans/dsa_agent_evidence_experiment_v0_2_zh.md`：V2-P1 先签核
+  source/order、project-level environment policy、ordered candidate generator、
+  qualification/exclusion/stop rules；V2-P2 再预模型物化；首批30个合格 pairs 才进入
+  V2-P3 确认性冻结；V2-P4 render/check-only 后，V2-P5 才允许模型实验；
+- v0.2 的 reviewer agent 明确定义为 frozen endpoint + neutral prompt + JSON schema，
+  无自主工具，只读取给定 packet；若研究 tool-using agent，必须另设研究；
+- 计划有效响应仍为 `30×2×4×3×3=2160`，task 是唯一科学分析单位；
+- 新增未签核清单
+  `docs/experiments/dsa_v0_2_construction_protocol_signoff_v0_1.md`，8项均需作者独立核验。
+
+Gate：
+
+- `python scripts/dsa2026_audit_v0_2_redesign.py --check` 已通过：P3 v0.1 immutable
+  files 未变、三类 P4 Gate 绑定、C0--C3 严格累积、2160 计算、phase order、
+  unsigned/no-API/no-materialization boundary 全部 PASS；
+- 当前状态：`V0_1_TERMINATED_BEFORE_MODEL_OUTPUT / V0_2_DESIGN_DRAFT /
+  V2_P1_AUTHOR_SIGNOFF_PENDING / NO_API`；
+- 下一 Goal 只能在作者签核 8 项后冻结 V2-P1 construction protocol，不得顺手运行
+  task/container/test、进入 V2-P2、修改 prompt 或调用 API。
+
 ## 0.53 2026-07-11 DSA P4 held-out cohort materialization（执行中）
 
 本轮只执行 P4：按 P2/P3 冻结顺序与 transform priority 构造 30 个 task pairs，

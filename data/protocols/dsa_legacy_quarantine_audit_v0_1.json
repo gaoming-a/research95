@@ -16,6 +16,7 @@
     "scanned_scripts": [
       "scripts/dsa2026_audit_p2_gate.py",
       "scripts/dsa2026_audit_p3_freeze.py",
+      "scripts/dsa2026_audit_v0_2_redesign.py",
       "scripts/dsa2026_build_p2_literature_audit.py",
       "scripts/dsa2026_build_p2_source_frame.py",
       "scripts/dsa2026_build_p2_transform_registry.py",

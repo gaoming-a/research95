@@ -2,7 +2,29 @@
 
 日期：2026-07-11
 
-## 2026-07-11 DSA P4 preflight 状态覆盖
+## 2026-07-11 v0.2 路线覆盖
+
+- 当前状态：`V0_1_TERMINATED_BEFORE_MODEL_OUTPUT / V0_2_DESIGN_DRAFT /
+  V2_P1_AUTHOR_SIGNOFF_PENDING / NO_API / V0_SUBMISSION_GATE_PENDING`；
+- P3/P4 v0.1 在模型 API=0、confirmatory outputs=0、P4 final Gate 未形成时终止；
+  不是不利模型结果驱动，也不声称预注册 capacity stop 已触发；
+- P2/P3 v0.1 immutable artifacts 保留不变，16-file aggregate 仍为
+  `f81ba7063297dc9264041256b99a7daa002bd730cbe1dbd9bfb105cd7aa71297`；v0.1
+  P4 记录只作 feasibility/provenance，不得进入 v0.2 效果量或模型结果；
+- 唯一 active 实验计划为
+  `docs/plans/dsa_agent_evidence_experiment_v0_2_zh.md`；核心仍是同一候选在
+  C0--C3 累积真实证据下 reviewer agent 的 `accept/reject/escalate` 变化；
+- v0.2 把通用材料构造规则冻结在 outcome 前，把 clean environment、positive/negative
+  行为资格验证放到最终 cohort/P3 冻结前；只有机械顺序中前30个合格 task pairs 才
+  进入确认性冻结；
+- reviewer agent 是 frozen endpoint + neutral prompt + JSON schema，无自主工具；
+  计划有效响应为 2160，task 仍是唯一科学分析单位；
+- 当前 V2-P1 签核清单未签署，不授权 materialization、task/test/container、prompt
+  修改或 API；下一步必须先由作者签核8项 construction rules；
+- DSA 的 AI policy、学校 Compendex、2026 publication metadata、现场报告人与 authorship
+  仍是独立 V0 submission gates，未因实验路线重构而通过。
+
+## 2026-07-11 DSA P4 preflight 状态（v0.1 历史，已被上方覆盖）
 
 - 当前状态：`P2_SOURCE_FEASIBILITY_PASS / REGULAR_FROZEN /
   P3_PASS_AUTHOR_SIGNED / P4_IN_PROGRESS / P5_NOT_STARTED /

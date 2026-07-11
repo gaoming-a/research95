@@ -1,5 +1,30 @@
 # Engineering Notes
 
+## 2026-07-11 Confirmatory cohort must follow stimulus qualification
+
+- An external improved-reproduction pass is provenance, not a clean task
+  qualification when the external runner reuses environments by Python version
+  and requirements hash. Freeze a construction rule first, but do not freeze
+  the confirmatory cohort until every retained stimulus has been built and
+  behavior-qualified under that rule.
+- Structural transform applicability is insufficient for a reviewer-agent
+  experiment. A negative stimulus must pass syntax/basic and every visible
+  check before its hidden failure is scientifically interpretable; otherwise
+  the model is being asked to detect a trivial broken artifact rather than
+  respond to increasing evidence.
+- Reserves drawn from the same project do not hedge project-level setup or
+  dependency decay. Capacity planning must treat environment signatures as
+  correlated and construct a qualified pool before freezing the final sample.
+- Terminating a preregistered version before model output is not the same as
+  claiming its capacity stop rule fired. Preserve the signed artifacts, record
+  the deviation/termination explicitly, publish no confirmatory estimate from
+  that version, and make the redesign a separate author-signed study version.
+- For an evidence-conditioned response study, exact historical benchmark
+  setup reproduction is one possible stimulus-construction method, not the
+  research outcome. The necessary boundary is stable paired candidate behavior
+  plus command/result/environment provenance; avoid turning environment
+  archaeology into the main experiment.
+
 ## 2026-07-11 DSA P4 bootstrap and pre-transform audit
 
 - Official GitHub codeload archives can contain symlinks that Windows cannot

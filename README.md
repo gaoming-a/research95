@@ -11,57 +11,24 @@ As of 2026-07-11, the sole active route is
 [the DSA 2026 execution plan](docs/plans/dsa_2026_submission_execution_plan_zh.md).
 The single target is a DSA 2026 Regular paper. A Short paper may be selected
 only as a separately frozen protocol before any model call; ACAI is inactive.
-P1 quarantine and P2 source feasibility have passed. The protocol is now
-irreversibly frozen as a Regular paper with 30 primary tasks, 10 reserves,
-9 projects, and 60 planned candidates. Short is inactive and cannot be used as
-a post-result fallback. P3 preregistration, model routes, the new DSA prompt,
-schema, synthetic render audit, and hash manifest pass their mechanical checks.
-Author 高明 signed all 11 frozen items at `2026-07-11T15:00:02+08:00`; identity,
-item completeness, scientific responsibility, and the exact declaration hash
-all pass. P3 is now immutable and complete.
-P4 held-out cohort materialization is now in progress under the immutable P2/P3
-order and transform rules. P5 is not started, so no smoke, full run, rendered
-prompt, or model API is authorized.
-The P4 pre-transform audit now passes: all P2/P3 hashes and 40 source records
-remain frozen, 36 tasks have a structurally applicable first-priority transform,
-and four atomic tasks are pre-outcome discards. Six explicit Conda locks are
-bound into a candidate-independent toolchain image and reproduce identically in
-two network-disabled fresh containers. Task-specific oracle/candidate runs and
-the final P4 Gate remain pending.
-For the first structurally eligible task, `bugsinpy_fastapi_12`, two fresh
-reference F2P runs agree. Its pre-outcome 40-node pool then passed 40/40 nodes in
-two distinct network-disabled, mount-free containers; 3 visible P2P and 20
-hidden regression nodes are now frozen. The official positive and frozen T4
-partial-reversion candidate completed two fresh container runs each. The positive passed all 26 checks;
-the negative consistently failed syntax, F2P, all 3 visible P2P, and all 20
-held-out checks. Because a negative must pass every visible check, the frozen
-task Gate is `DISCARD_TASK`, not admission. No candidate from this task enters
-the model-visible cohort; leakage is 0 and P4's final Gate is still pending.
-The replacement cursor audit now resolves the next step without running another
-experiment. After the Tornado environment Gate, primary orders 1--4 are realized
-as structural/terminal/structural/pre-candidate-environment discards and are
-allocated reserve orders 1--4. The unique next executable primary is order 5,
-`bugsinpy_matplotlib_21`; the remaining nonstructural discard budget is four.
-Its official buggy/fixed codeload archives and BugsInPy metadata have now been
-hash-verified into a pre-candidate task context. The raw CRLF reference patch is
-preserved while an explicitly hashed LF copy is used only for strict patch
-validation. A standard-library unittest collector/runner adapter is frozen
-before any Tornado reference outcome. The task image, dual reference checks,
-and regression-pool outcomes remain pending; no transformed candidate or model
-call has occurred for this task. The subsequent task-image build stopped at the
-frozen official command `pip install unittest`, which has no installable
-distribution. The task is therefore discarded at the pre-candidate environment
-Gate: no image, F2P, regression pool, T1 candidate, or model call was produced.
-The completed replacement-cursor audit did not repair the environment or start
-another task; a separate later Goal is required to begin Matplotlib.
-That Matplotlib Goal has now frozen and replay-checked the exact official buggy
-and fixed archives, metadata, fixed test, reference patch, and task-context
-hashes. No task image, test, regression pool, transformed candidate, or model
-call had occurred at that pre-outcome source checkpoint. Its clean `py381` task
-image then built, but both fresh isolated official-reference F2P runs failed
-identically because NumPy was absent from the frozen empty requirements/setup
-metadata. Matplotlib #21 is therefore discarded before regression-pool or T2
-activity; no dependency repair or model call was made.
+P3/P4 v0.1 has now been terminated before any model request or confirmatory
+output. Its signed P3 files remain immutable, and its P4 records remain useful
+only as feasibility and engineering provenance. The termination is not an
+unfavorable-model-result exclusion and does not claim that the preregistered
+capacity stop rule fired. It records that freezing the 30+10 source cohort
+before clean environment and behavioral candidate qualification shifted the
+work toward historical benchmark reproduction rather than the intended
+evidence-conditioned reviewer-agent experiment.
+
+The active experimental plan is now
+[DSA reviewer-agent evidence experiment v0.2](docs/plans/dsa_agent_evidence_experiment_v0_2_zh.md).
+It preserves RQ1--RQ3, C0--C3, paired oracle-positive/hard-negative roles,
+task-level `Delta_minus`/`Delta_plus`, three models, and three stateless repeats.
+It first freezes generic stimulus-construction rules, then mechanically builds
+and dual-validates a pre-model candidate pool; only the first 30 qualified task
+pairs enter the final confirmatory freeze. The planned full experiment remains
+2,160 valid reviewer-agent responses. The V2-P1 author checklist is unsigned,
+so no new task, container, test, prompt change, or model API call is authorized.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,
@@ -100,13 +67,10 @@ conditional precision simulation passed (maximum rate/effect widths
 0.1185/0.1704), and a 12-paper nearest-neighbor review preserved a bounded
 evidence-conditioned gating position without first/unique/SOTA claims. The
 P3 author sign-off is recorded in
-`docs/experiments/dsa_p3_author_signoff_v0_1.md`. P4 is now separately
-authorized and in progress; it still requires two fresh clean-environment runs
-for every admitted candidate, and no final cohort decision has been made.
-The first task-level candidate Gate is recorded in
-`docs/experiments/dsa_p4_fastapi_12_task_gate_v0_1.md`; it consumes one of the
-six nonstructural discard allowances, leaving five while preserving the frozen
-reserve order.
+`docs/experiments/dsa_p3_author_signoff_v0_1.md`. That v0.1 sign-off and its
+P4 task Gates are retained unchanged as historical protocol records; they no
+longer authorize P4 continuation. The v0.2 construction rules require a new
+author sign-off before any materialization.
 
 The private development repository is
 `gaoming-a/research95-dsa-private`, configured locally as remote `private`.

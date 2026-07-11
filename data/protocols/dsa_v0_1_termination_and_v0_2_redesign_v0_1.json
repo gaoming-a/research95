@@ -1,0 +1,209 @@
+{
+  "record_id": "dsa_v0_1_termination_and_v0_2_redesign_v0_1",
+  "created_date": "2026-07-11",
+  "status": "v0_1_terminated_before_model_output_v0_2_design_draft",
+  "v0_1_termination": {
+    "study_version": "DSA P3/P4 v0.1",
+    "disposition": "author_directed_termination_before_model_output_for_protocol_redesign",
+    "capacity_stop_rule_triggered": false,
+    "reason": "The confirmatory cohort was frozen before clean environment and behavioral candidate qualification. Continuing the frozen stream would primarily measure benchmark materialization failures rather than the planned C0-C3 reviewer-agent response effect.",
+    "immutable_p3_manifest_aggregate_sha256": "f81ba7063297dc9264041256b99a7daa002bd730cbe1dbd9bfb105cd7aa71297",
+    "immutable_p3_files_modified": false,
+    "p4_final_gate_formed": false,
+    "p5_started": false,
+    "model_api_calls": 0,
+    "confirmatory_model_outputs": 0,
+    "confirmatory_effect_estimates_available": false,
+    "paper_use_boundary": "P3/P4 v0.1 records are protocol-feasibility and engineering provenance only. They cannot enter v0.2 confirmatory estimates, model-result tables, or effectiveness claims.",
+    "observed_pre_model_gates": [
+      {
+        "task_id": "bugsinpy_sanic_5",
+        "gate": "discard_structural_no_applicable_transform"
+      },
+      {
+        "task_id": "bugsinpy_fastapi_12",
+        "gate": "DISCARD_TASK",
+        "record_sha256": "cdfbd008a2585c93d0d7150682f9897f9e38314db2eb515f58b410859d6eacc2"
+      },
+      {
+        "task_id": "bugsinpy_pandas_54",
+        "gate": "discard_structural_no_applicable_transform"
+      },
+      {
+        "task_id": "bugsinpy_tornado_10",
+        "gate": "DISCARD_PRE_CANDIDATE_ENVIRONMENT_BUILD_FAILURE",
+        "record_sha256": "6fd7c9b54962796c61e382353b5beae2ff7d58f681de792f63d98a0d7ce817f9"
+      },
+      {
+        "task_id": "bugsinpy_matplotlib_21",
+        "gate": "DISCARD_PRE_CANDIDATE_REFERENCE_F2P_FAILURE",
+        "record_sha256": "9b36980b50a50d64c2a9692980cad6b328684b1f497dc3c5c180f255dd5fe7d9"
+      }
+    ],
+    "v0_2_development_exclusion_task_ids": [
+      "bugsinpy_fastapi_12",
+      "bugsinpy_matplotlib_21",
+      "bugsinpy_pandas_54",
+      "bugsinpy_sanic_5",
+      "bugsinpy_tornado_10"
+    ]
+  },
+  "v0_2_design": {
+    "status": "draft_requires_author_signoff_before_materialization",
+    "target": "DSA 2026 Regular",
+    "one_sentence_argument": "On a task-disjoint cohort qualified before confirmatory freeze, estimate how cumulative genuinely executed evidence from C0 through C3 changes a fixed reviewer agent's accept, reject, and escalate policy for paired oracle-positive and hard-negative patches, with claims limited to the frozen cohort, model routes, and run window.",
+    "agent_boundary": "A reviewer agent is one frozen model endpoint executing one neutral prompt and one JSON output schema without autonomous tools; it receives only the supplied cumulative evidence packet.",
+    "scientific_unit": "task",
+    "target_task_pairs": 30,
+    "candidates_per_task": 2,
+    "candidate_roles": [
+      "oracle_positive",
+      "hard_negative"
+    ],
+    "conditions": [
+      "C0",
+      "C1",
+      "C2",
+      "C3"
+    ],
+    "models": 3,
+    "stateless_repeats": 3,
+    "planned_valid_responses": 2160,
+    "primary_estimands": [
+      {
+        "name": "Delta_minus",
+        "formula": "P(accept | C3, hard-negative) - P(accept | C0, hard-negative)"
+      },
+      {
+        "name": "Delta_plus",
+        "formula": "P(accept | C3, oracle-positive) - P(accept | C0, oracle-positive)"
+      }
+    ],
+    "cumulative_evidence": [
+      {
+        "condition": "C0",
+        "groups": [
+          "change_request"
+        ]
+      },
+      {
+        "condition": "C1",
+        "groups": [
+          "change_request",
+          "executable_basic"
+        ]
+      },
+      {
+        "condition": "C2",
+        "groups": [
+          "change_request",
+          "executable_basic",
+          "visible_f2p"
+        ]
+      },
+      {
+        "condition": "C3",
+        "groups": [
+          "change_request",
+          "executable_basic",
+          "visible_f2p",
+          "visible_p2p"
+        ]
+      }
+    ],
+    "construction_protocol": {
+      "freeze_before_outcomes": [
+        "source eligibility and task-disjoint exclusions",
+        "hash-seeded task order",
+        "project-level environment-recipe policy",
+        "ordered candidate-generation policy",
+        "visible and hidden qualification rules",
+        "pool exhaustion stop rule"
+      ],
+      "source_reuse_boundary": "Tasks with no v0.1 candidate/model outcome may be reconsidered under v0.2. The five v0.1 P4-active tasks are development-only and excluded from the v0.2 confirmatory cohort.",
+      "environment_policy": [
+        "Use a project-level recipe frozen before task checks; do not require byte-for-byte execution of decayed benchmark setup metadata.",
+        "A recipe may install declared runtime/test dependencies and the project itself, but must apply identically to all attempted tasks in that project.",
+        "Do not add a task-specific dependency or compatibility repair after observing that task's qualification outcome.",
+        "Run both candidate roles in the same frozen task image and bind every visible command/result to its image and dependency-lock hashes."
+      ],
+      "candidate_policy": [
+        "The oracle-positive candidate must pass all basic, visible, and hidden checks in two fresh isolated runs.",
+        "Generate partial-fix candidates in a frozen deterministic order before observing model output.",
+        "Select the first generated candidate that passes syntax/basic and every visible check but fails at least one independent hidden check in two fresh isolated runs.",
+        "If no generated candidate qualifies, record the task as pre-confirmatory materialization failure and continue in frozen task order; do not reinterpret or manually repair the candidate."
+      ],
+      "cohort_freeze_rule": "Freeze the first 30 fully qualified task pairs in the preregistered task order. If the eligible source frame is exhausted first, stop before P3 v0.2 and before every model call.",
+      "model_outcome_used_for_construction": false
+    },
+    "phases": [
+      {
+        "phase": "V2-D0",
+        "purpose": "Terminate v0.1 without changing its frozen artifacts and approve the v0.2 design direction.",
+        "api_allowed": false
+      },
+      {
+        "phase": "V2-P1",
+        "purpose": "Freeze and author-sign the source, environment, candidate-generation, qualification, exclusion, and stop rules before materialization.",
+        "api_allowed": false
+      },
+      {
+        "phase": "V2-P2",
+        "purpose": "Materialize and dual-run pre-model candidate pairs mechanically until 30 tasks qualify or the source frame is exhausted.",
+        "api_allowed": false
+      },
+      {
+        "phase": "V2-P3",
+        "purpose": "Freeze the exact cohort, evidence packets, prompt/schema, model routes, estimands, statistics, order, retry limits, cost, and run window; obtain author signoff.",
+        "api_allowed": false
+      },
+      {
+        "phase": "V2-P4",
+        "purpose": "Render all C0-C3 packets and pass schema, cumulative-evidence, identity-hiding, leakage, scheduling, and cost preflight audits.",
+        "api_allowed": false
+      },
+      {
+        "phase": "V2-P5",
+        "purpose": "Run bounded smoke and then the frozen reviewer-agent model experiment.",
+        "api_allowed": true,
+        "activation_condition": "V2-P1 through V2-P4 passed, V2-P3 author signoff recorded, exact model routes reverified, and a separate execution Goal is active."
+      },
+      {
+        "phase": "V2-P6",
+        "purpose": "Join hidden labels after output freeze, compute preregistered effects, and revise the paper with bounded claims.",
+        "api_allowed": false
+      }
+    ],
+    "preserved_scientific_elements": [
+      "RQ1-RQ3 decision-policy framing",
+      "C0-C3 cumulative evidence semantics",
+      "accept/reject/escalate response space",
+      "paired oracle-positive and hard-negative roles",
+      "task-level Delta_minus and Delta_plus",
+      "three models and three stateless repeats",
+      "hidden-label separation and unfavorable-result reporting"
+    ],
+    "must_be_refrozen_after_materialization": [
+      "exact 30-task cohort and candidate hashes",
+      "environment and evidence-command hashes",
+      "prompt and output-schema hashes",
+      "exact model identifiers, parameters, prices, and access",
+      "request ordering, retry/attempt/cost/token caps, and run window",
+      "statistical seed and executable analysis plan"
+    ],
+    "claim_boundary": [
+      "Estimate evidence-conditioned reviewer-agent decision-policy changes; do not claim autonomous verification or repair correctness.",
+      "Report both primary effects together and retain null, adverse, heterogeneous, or wide-interval results.",
+      "Do not estimate deployment prevalence or generalize beyond the frozen tasks, routes, and run window.",
+      "P3/P4 v0.1 feasibility records cannot be pooled with v0.2 model outcomes."
+    ],
+    "current_authorization": {
+      "v0_1_termination_record": true,
+      "v0_2_design_draft": true,
+      "v0_2_materialization": false,
+      "v0_2_prompt_change": false,
+      "model_api": false,
+      "paper_result_change": false
+    }
+  }
+}
