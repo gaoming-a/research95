@@ -64,7 +64,8 @@ Gate：
 - 全程 model API=0、P4 candidate=0、P5 entered=false。本轮在 P3 停止。
 - P3 candidate-freeze 证据包已提交为 `d7178b3`。向 private remote 的首次 push 在
   64 秒内无响应并超时；按用户既有指示记录后继续，不改推 public `origin`。作者
-  签核后的最终 P3 commit 将再次尝试 private sync。
+  签核后的最终 P3 freeze 已提交为 `807c0b6`；其 private push 在 15 秒低速阈值后
+  再次失败。按用户授权停止重试并保持本地闭环，public `origin` 未使用。
 - continuation completion audit 发现原 Gate 只检查 `status+responsibility`，理论上可
   跳过 11 项逐项确认；已修为必须同时具备非占位作者名、带时区时间、11 个冻结 item
   ID 精确有序全集、科学责任、`codex_user_message` 来源和 declaration SHA-256。
