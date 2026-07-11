@@ -2,7 +2,7 @@
 
 最后更新：2026-07-11
 
-## 0.52 2026-07-11 DSA P3 作者预注册与 prompt/schema 冻结（执行中）
+## 0.52 2026-07-11 DSA P3 作者预注册与 prompt/schema 冻结（完成）
 
 本轮小目标严格限定为 P3：在不调用模型 API、不构造或运行 P4 candidates、不修改
 P2 已冻结的 Regular 稿型、source order 和 transform priority 的前提下，冻结研究问题、
@@ -53,10 +53,15 @@ Execute/Verify：
 
 Gate：
 
-- 机械 Gate=`PASS`；总 P3 Gate=`PENDING_AUTHOR_SIGNOFF`；
-- 待作者逐项确认 11 项冻结内容、能独立核验并承担完整科学/作者责任后，才可把
-  candidate manifest 重新生成成 immutable 并关闭 P3；
-- 当前不得进入 P4/P5 或调用模型 API；
+- 作者高明于 `2026-07-11T15:00:02+08:00` 签核全部 11 项冻结内容，并确认独立核验、
+  AI 政策义务及完整科学/作者责任；声明规范化 SHA-256 为
+  `48b19341bdd25e26f8fb2d1412ae8b30d462d8b40e7400f2002e25fb2e522e52`；
+- 机械 Gate=`PASS`，作者 Gate=`PASS`，manifest=`immutable_author_signed`，总 P3
+  Gate=`PASS`；16 个 authoritative freeze inputs 的 aggregate SHA-256 为
+  `f81ba7063297dc9264041256b99a7daa002bd730cbe1dbd9bfb105cd7aa71297`；
+- P2 protocol/source order/transform/development exclusion 四个冻结 SHA-256 与 P2
+  commit 一致，P2 后 change scope 仅含 P3 allowlist；
+- 全程 model API=0、P4 candidate=0、P5 entered=false。本轮在 P3 停止。
 - P3 candidate-freeze 证据包已提交为 `d7178b3`。向 private remote 的首次 push 在
   64 秒内无响应并超时；按用户既有指示记录后继续，不改推 public `origin`。作者
   签核后的最终 P3 commit 将再次尝试 private sync。

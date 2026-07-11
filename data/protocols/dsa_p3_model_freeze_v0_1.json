@@ -1,6 +1,6 @@
 {
   "freeze_id": "dsa_p3_model_freeze_v0_1",
-  "status": "candidate_freeze_pending_author_signoff",
+  "status": "frozen_after_author_signoff",
   "verified_at": "2026-07-11",
   "verification_method": "Official provider documentation only; no inference, count-token, or credentialed API request was sent.",
   "selection_rule": "Three distinct official providers with currently documented structured output and a pinnable model ID; selection did not use legacy experiment outcomes.",

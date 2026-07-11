@@ -2,6 +2,19 @@
 
 ## 2026-07-11 DSA P3 candidate freeze and author gate
 
+- Final closure should bind the exact author declaration, not just a copied
+  checkbox state. Store the exact UTF-8 user message, define terminal-newline
+  canonicalization, recompute its SHA-256, and include both declaration and
+  sign-off record in the immutable manifest.
+- An immutable P3 audit must prove the previous phase stayed frozen. Compare
+  the P2 protocol, source order, transform registry, and development exclusion
+  against their P2 SHA-256 values, and restrict every post-P2 tracked/untracked
+  change to a P3 allowlist. A current hash alone cannot prove non-mutation.
+- Cross-platform text manifests must define line-ending canonicalization.
+  Windows `core.autocrlf=true` can convert newly generated LF files to CRLF on
+  checkout; hash P3 UTF-8 text after CRLF/CR-to-LF normalization while keeping
+  the already-frozen P2 raw-byte hashes as a separate invariant.
+
 - Exact model ID is necessary but not sufficient. Freeze endpoint, reasoning
   control, JSON transport, output cap, response identity, price snapshot, run
   window, ordering, retries, and no-fallback behavior; any provider drift must

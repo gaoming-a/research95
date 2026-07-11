@@ -15,12 +15,10 @@ P1 quarantine and P2 source feasibility have passed. The protocol is now
 irreversibly frozen as a Regular paper with 30 primary tasks, 10 reserves,
 9 projects, and 60 planned candidates. Short is inactive and cannot be used as
 a post-result fallback. P3 preregistration, model routes, the new DSA prompt,
-schema, synthetic render audit, and hash manifest now pass their mechanical
-checks; explicit author scientific-responsibility sign-off remains pending.
-The Gate requires a non-placeholder author name, timezone-qualified timestamp,
-all 11 frozen item IDs in order, scientific-responsibility confirmation, and a
-hash of the actual Codex user declaration; changing only a status flag cannot
-make P3 pass.
+schema, synthetic render audit, and hash manifest pass their mechanical checks.
+Author 高明 signed all 11 frozen items at `2026-07-11T15:00:02+08:00`; identity,
+item completeness, scientific responsibility, and the exact declaration hash
+all pass. P3 is now immutable and complete.
 P4--P5 are not started, so no smoke, full run, or model API is authorized.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
@@ -59,10 +57,10 @@ improved-reproduction source snapshots, and found 304 untouched tasks across
 conditional precision simulation passed (maximum rate/effect widths
 0.1185/0.1704), and a 12-paper nearest-neighbor review preserved a bounded
 evidence-conditioned gating position without first/unique/SOTA claims. The
-next and only active action is the P3 author sign-off recorded in
-`docs/experiments/dsa_p3_author_signoff_v0_1.md`; P4 still requires two fresh
-clean-environment candidate reruns and is not authorized by the candidate
-freeze.
+P3 author sign-off is recorded in
+`docs/experiments/dsa_p3_author_signoff_v0_1.md`. This phase stops at P3; P4
+still requires two fresh clean-environment candidate reruns and has not been
+started or authorized by the P3 closeout.
 
 The private development repository is
 `gaoming-a/research95-dsa-private`, configured locally as remote `private`.
@@ -76,8 +74,8 @@ artifacts retain the original paths and hashes as provenance. Every legacy
 EVP-8 config and runner is historical and not an execution entry point. No
 replacement EVP-v0.4 prompt exists. The separate
 `dsa2026_evidence_conditioned_patch_gate_v0_1` prompt was written from an empty
-file and remains pending author freeze; it was not inferred from the deleted
-templates.
+file and is now frozen by the P3 author sign-off; it was not inferred from the
+deleted templates.
 
 ## Current Thesis
 

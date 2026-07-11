@@ -1,6 +1,6 @@
 # DSA P3 Preregistration v0.1
 
-Status: candidate freeze pending author sign-off
+Status: frozen after author sign-off
 Target: DSA 2026 Regular
 Prepared: 2026-07-11
 Model API calls: 0
@@ -113,11 +113,12 @@ stops execution rather than substituting a route.
 | C3 changes oracle-positive accept policy | `Delta_plus` on new frozen outputs | needs P7/P8 evidence |
 | Effects vary by model or decision pathway | secondary analyses on new outputs | needs P7/P8 evidence |
 
-## Assumptions or missing inputs
+## Author freeze
 
-The author has not yet signed the 11 frozen items or accepted scientific
-responsibility. Therefore this document is not yet immutable, P3 is not passed,
-and P4, P5, and model API execution remain unauthorized.
+Author 高明 signed all 11 items at `2026-07-11T15:00:02+08:00`; the exact
+declaration and its SHA-256 are recorded in the P3 sign-off artifacts. This
+makes the P3 design immutable. It does not authorize P4, P5, or model API
+execution.
 
 The machine-readable preregistration is authoritative for exact formulas and
 rules: `data/protocols/dsa_p3_preregistration_v0_1.json`.

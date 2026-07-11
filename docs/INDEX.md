@@ -12,22 +12,23 @@
   sole active master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is
   inactive. Status: `P2_SOURCE_FEASIBILITY_PASS / REGULAR_FROZEN /
-  P3_MECHANICAL_PASS_PENDING_AUTHOR_SIGNOFF / SHORT_INACTIVE /
+  P3_PASS_AUTHOR_SIGNED / P4_NOT_STARTED / P5_NOT_STARTED / SHORT_INACTIVE /
   V0_SUBMISSION_GATE_PENDING`. It defines
   venue/AI/EI gates, old-data
   quarantine, a task-disjoint C0--C3 experiment, no-rerun rules, finite-cohort
   statistics, evidence-first paper reconstruction, official `IEEEconf.cls` PDF
   QA, private artifact/Git boundaries, and the submission-to-presentation
   timeline. A 2026-07-11 standing API authorization exists but activates only
-  after P1--P5 pass; P3 author sign-off and P4--P5 are still pending, so no
-  model call is allowed.
+  after P1--P5 pass; P4--P5 are still pending, so no model call is allowed.
 - [dsa_p3_preregistration_v0_1.md](experiments/dsa_p3_preregistration_v0_1.md):
   human-readable P3 research questions, primary estimands, cumulative evidence
   contract, task-level conditional statistics, exact model routes, exclusions,
-  stop rules, and no-rerun commitment. Mechanical Gate passes; author sign-off
-  is pending.
+  stop rules, and no-rerun commitment. Mechanical and author Gates pass; the
+  P3 design is immutable.
 - [dsa_p3_author_signoff_v0_1.md](experiments/dsa_p3_author_signoff_v0_1.md):
-  the 11-item author scientific-responsibility sheet and exact signing text.
+  signed 11-item scientific-responsibility record for author 高明. The exact
+  source declaration is `../data/protocols/dsa_p3_author_declaration_v0_1.txt`
+  and is bound to the preregistration by SHA-256.
 - [dsa_p3_model_provider_verification_v0_1.md](experiments/dsa_p3_model_provider_verification_v0_1.md):
   official-document verification of the three exact model IDs, provider-native
   controls, structured-output support, price snapshots, and access/identity
@@ -97,7 +98,7 @@
   `ready`, or `passed` is a historical snapshot only; it is superseded and not
   executable. Historical protocol/result paths and hashes remain unchanged for
   provenance. No EVP-v0.4 prompt exists. The separate new DSA prompt is indexed
-  above and remains a candidate freeze until author sign-off.
+  above and is immutable under the completed P3 author freeze.
 - `plans/current_project_state_zh.md`: short current-state entry and file map.
   Start here before reading the long execution log. It records Git sync state,
   current paper/result boundaries, experiment-decision gates, active plan roles,

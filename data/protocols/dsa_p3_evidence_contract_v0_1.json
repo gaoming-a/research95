@@ -1,6 +1,6 @@
 {
   "contract_id": "dsa_p3_evidence_contract_v0_1",
-  "status": "candidate_freeze_pending_author_signoff",
+  "status": "frozen_after_author_signoff",
   "purpose": "Define the only cumulative model-visible evidence ladder for the DSA study.",
   "common_context": {
     "required_top_level_key": "change_request",

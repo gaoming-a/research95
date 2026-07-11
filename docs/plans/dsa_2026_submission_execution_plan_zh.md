@@ -3,13 +3,13 @@
 计划编号：DSA-2026-EVIDENCE-POLICY-20260710
 制定日期：2026-07-10
 当前状态：P2_SOURCE_FEASIBILITY_PASS / REGULAR_FROZEN /
-P3_MECHANICAL_PASS_PENDING_AUTHOR_SIGNOFF / SHORT_INACTIVE /
-V0_SUBMISSION_GATE_PENDING
+P3_PASS_AUTHOR_SIGNED / P4_NOT_STARTED / P5_NOT_STARTED /
+SHORT_INACTIVE / V0_SUBMISSION_GATE_PENDING
 唯一主目标：DSA 2026 Regular Paper
 同会场降级：DSA 2026 Short Paper，仅可在任何模型调用前锁定
 非活动备选：ACAI 2026；不得并行投稿，也不得在看到 DSA 实验结果后切换
 用户优先级：科学与收录稳健性优先，其次才是时间
-本轮边界：P3 机械冻结候选已完成；等待作者签核，不进入 P4/P5，不调用 API，不改论文结果
+本轮边界：P3 已完成并由作者签核；在 P3 停止，不进入 P4/P5，不调用 API，不改论文结果
 
 ## 1. 权威性与目标覆盖
 
@@ -543,14 +543,16 @@ exclusion、prompt 和 schema；Codex 只在允许范围做机械冲突/泄漏�
 输出：preregistration、prompt change record、hash manifest。
 Gate：所有设计项在模型输出前不可变。
 
-2026-07-11 执行状态：MECHANICAL_PASS / PENDING_AUTHOR_SIGNOFF。已形成 RQ1--RQ3、
+2026-07-11 执行状态：PASS / AUTHOR_SIGNED / IMMUTABLE。已形成 RQ1--RQ3、
 两个 task-level primary estimand、C0--C3 contract、20,000-draw paired repeat-block
 Bonferroni conditional interval、secondary/stability outcomes、exclusion/stop/no-rerun，
 并冻结 `qwen3.7-plus-2026-05-26`、`deepseek-v4-flash`、`gemini-3.5-flash` 三条
 provider route、参数、顺序、window 和 hard caps。全新 DSA prompt/schema 从空文件
 建立；未恢复或读取已删除 prompt。synthetic cumulative/rendered-prompt、递归 leakage、
-冲突/重复、retired-hash inequality 和 manifest 机械审计均通过。作者科学责任尚未
-签核，因此 P3 不是 PASS，P4/P5/API 仍未授权。
+冲突/重复、retired-hash inequality 和 manifest 机械审计均通过。作者高明于
+`2026-07-11T15:00:02+08:00` 签核全部 11 项并承担完整科学/作者责任；声明原文与
+SHA-256 已入 manifest，P2 frozen hashes 与 P3-only change scope 复核通过。P3 Gate
+=`PASS`。本轮停止；P4/P5/API 仍未授权。
 
 ### P4：held-out cohort materialization
 
@@ -825,17 +827,12 @@ full；若 2026-08-15 没有完整有效结果，不用旧结果替代。
 - 至少一轮独立 reviewer-style audit 无 critical/major issue；
 - 作者最终签核。
 
-## 14. 下一轮唯一入口
+## 14. P3 closeout 与未来入口
 
-P3 机械冻结候选已经通过，下一步只执行作者签核与 immutable manifest 重生成；V0
-外部材料继续并行等待：
-
-1. 作者逐项签核候选冻结稿中的 RQ、estimands、C0--C3、P2 transform registry、
-   finite-cohort/conditional interval、models、统计、exclusion、prompt/schema 和
-   no-rerun；
-2. 作者确认能独立审查并承担全部科学/作者责任；
-3. 记录作者名/时间，重生成 immutable hash manifest，重新运行 P3 Gate；
-4. P3 passed 后立即停止，不得顺手进入 P4/P5 或调用模型 API。
+P3 已由作者签核并通过 immutable manifest/Gate。本轮严格停止在 P3，没有创建或运行
+P4 candidate、没有实现 P5、没有调用模型 API。未来若用户另设 goal，计划中的下一
+科学阶段是 P4 held-out cohort materialization；该未来入口不由本次 P3 签核自动授权。
+V0 外部材料继续并行等待，且仍阻塞最终 DSA 投稿。
 
 在 P1、P2、P3、P4、P5 全部通过前，不调用任何模型；全部通过后按 2026-07-11
 standing authorization 执行，不再单独确认预算。

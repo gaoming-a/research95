@@ -147,12 +147,13 @@ Verification:
 - Historical data/protocol/result artifacts must have no content diff from
   this retirement change.
 
-## 2026-07-11 DSA P3 New Prompt Candidate Freeze
+## 2026-07-11 DSA P3 New Prompt Freeze
 
 - Prompt file: `prompts/dsa2026_evidence_conditioned_patch_gate_v0_1.md`.
 - Schema file: `data/protocols/dsa_p3_output_schema_v0_1.json`.
 - Change type: new DSA prompt and schema, created from empty files.
-- Status: candidate freeze pending explicit author sign-off.
+- Status: frozen after explicit author sign-off by 高明 at
+  `2026-07-11T15:00:02+08:00`.
 - API boundary: no inference API call is authorized by this change.
 
 Conflict, duplication, and provenance boundary:

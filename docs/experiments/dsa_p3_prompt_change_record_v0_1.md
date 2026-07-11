@@ -1,7 +1,7 @@
 # DSA P3 Prompt Change Record v0.1
 
 Date: 2026-07-11
-Status: candidate freeze pending author sign-off
+Status: frozen after author sign-off by 高明 at 2026-07-11T15:00:02+08:00
 API calls: none
 
 ## Change
@@ -38,6 +38,12 @@ fields.
   one DSA template plus the audit ledger.
 - Byte-hash comparison against the four recorded pre-deletion hashes must be
   unequal. This is a provenance check, not recovery of deleted content.
+- Author 高明 signed the new prompt/schema as one of the 11 P3 frozen items;
+  any later model-visible or schema-semantic change terminates this study
+  version rather than amending this prompt in place.
+- Frozen P3 text hashes use UTF-8 with CRLF/CR normalized to LF, so a Windows
+  checkout cannot change prompt or manifest identity solely through line-ending
+  conversion. P2 raw freeze hashes remain separately checked byte-for-byte.
 
 ## Mechanical checks required before sign-off
 

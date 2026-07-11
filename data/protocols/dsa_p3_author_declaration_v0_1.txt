@@ -1,0 +1,1 @@
+我作为作者【高明】签核 DSA P3 v0.1 的全部 11 项冻结内容；我已审查研究问题、estimands、C0–C3、P2 transform priority、指标、统计、exclusion、停止与 no-rerun、三条 exact model route、prompt/schema，并愿意独立核验全部结果和论文主张、遵守最终 AI 政策并承担完整科学与作者责任。我理解该签核只授权完成 P3，不授权调用模型 API，也不授权顺手进入 P4 或 P5。

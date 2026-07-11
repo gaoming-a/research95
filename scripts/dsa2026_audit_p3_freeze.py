@@ -8,6 +8,7 @@ import copy
 import hashlib
 import json
 import re
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -18,6 +19,7 @@ SCHEMA = ROOT / "data/protocols/dsa_p3_output_schema_v0_1.json"
 CONTRACT = ROOT / "data/protocols/dsa_p3_evidence_contract_v0_1.json"
 MODEL_FREEZE = ROOT / "data/protocols/dsa_p3_model_freeze_v0_1.json"
 PREREG = ROOT / "data/protocols/dsa_p3_preregistration_v0_1.json"
+AUTHOR_DECLARATION = ROOT / "data/protocols/dsa_p3_author_declaration_v0_1.txt"
 DENYLIST = ROOT / "data/protocols/dsa_legacy_analysis_denylist_v0_1.json"
 BOUNDARY_OUT = ROOT / "data/protocols/dsa_p3_prompt_boundary_audit_v0_1.json"
 MANIFEST_OUT = ROOT / "data/protocols/dsa_p3_hash_manifest_v0_1.json"
@@ -36,6 +38,37 @@ AUTHOR_ITEM_IDS = [
     "unfavorable_result_reporting",
     "scientific_ai_and_authorship_responsibility",
 ]
+P2_FREEZE_COMMIT = "cb588a0502a58434db9758fa2bfe8265697c5274"
+P2_FROZEN_SHA256 = {
+    "data/protocols/dsa_p2_protocol_decision_v0_1.json": "b3443c506250196885787debb00adc612cca986f2485f63462f404f64b6c1ff2",
+    "data/protocols/dsa_p2_source_selection_v0_1.json": "9fe40e8a38053ffdc8c965070740704924d13b9901cf0c3ed25aa4c1be14bd4b",
+    "data/protocols/dsa_p2_transform_registry_v0_1.json": "7c2eb308378b732ca2dbe9d1f7b8dc86ba836173f0346374f576093796276430",
+    "data/protocols/dsa_p2_development_exclusion_registry_v0_1.json": "7e8be772ac1b7fd70fcdaae1a038940916920cbf182d55fadf36717a2dcbba38",
+}
+P3_ALLOWED_CHANGED_PATHS = {
+    "README.md",
+    "data/protocols/dsa_legacy_quarantine_audit_v0_1.json",
+    "data/protocols/dsa_p3_author_declaration_v0_1.txt",
+    "data/protocols/dsa_p3_evidence_contract_v0_1.json",
+    "data/protocols/dsa_p3_gate_audit_v0_1.json",
+    "data/protocols/dsa_p3_hash_manifest_v0_1.json",
+    "data/protocols/dsa_p3_model_freeze_v0_1.json",
+    "data/protocols/dsa_p3_output_schema_v0_1.json",
+    "data/protocols/dsa_p3_preregistration_v0_1.json",
+    "data/protocols/dsa_p3_prompt_boundary_audit_v0_1.json",
+    "docs/INDEX.md",
+    "docs/experience/engineering_notes.md",
+    "docs/experiments/dsa_p3_author_signoff_v0_1.md",
+    "docs/experiments/dsa_p3_model_provider_verification_v0_1.md",
+    "docs/experiments/dsa_p3_preregistration_v0_1.md",
+    "docs/experiments/dsa_p3_prompt_change_record_v0_1.md",
+    "docs/plans/current_plan_zh.md",
+    "docs/plans/current_project_state_zh.md",
+    "docs/plans/dsa_2026_submission_execution_plan_zh.md",
+    "prompts/dsa2026_evidence_conditioned_patch_gate_v0_1.md",
+    "prompts/prompt_change_log.md",
+    "scripts/dsa2026_audit_p3_freeze.py",
+}
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -52,6 +85,23 @@ def sha256_bytes(value: bytes) -> str:
 
 def sha256_file(path: Path) -> str:
     return sha256_bytes(path.read_bytes())
+
+
+def canonical_text_bytes(path: Path) -> bytes:
+    text = path.read_text(encoding="utf-8").replace("\r\n", "\n").replace("\r", "\n")
+    return text.encode("utf-8")
+
+
+def git_paths(command: list[str]) -> set[str]:
+    result = subprocess.run(
+        command,
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+    )
+    return {line.strip().replace("\\", "/") for line in result.stdout.splitlines() if line.strip()}
 
 
 def synthetic_packets() -> dict[str, dict[str, Any]]:
@@ -336,7 +386,7 @@ def build_boundary_audit() -> dict[str, Any]:
     )
     retired = denylist["retired_prompts"]
     retired_absent = all(not (ROOT / item["path"]).exists() for item in retired)
-    prompt_hash = sha256_file(PROMPT)
+    prompt_hash = sha256_bytes(canonical_text_bytes(PROMPT))
     hash_distinct = all(prompt_hash != item["sha256_before_deletion"] for item in retired)
 
     checks = {
@@ -395,8 +445,12 @@ def author_signoff_complete(prereg: dict[str, Any]) -> bool:
         and signoff.get("required_item_ids") == AUTHOR_ITEM_IDS
         and signoff.get("items_confirmed") == AUTHOR_ITEM_IDS
         and signoff.get("declaration_source") == "codex_user_message"
+        and signoff.get("declaration_path") == "data/protocols/dsa_p3_author_declaration_v0_1.txt"
         and isinstance(declaration_sha256, str)
         and re.fullmatch(r"[0-9a-f]{64}", declaration_sha256) is not None
+        and AUTHOR_DECLARATION.exists()
+        and sha256_bytes(AUTHOR_DECLARATION.read_text(encoding="utf-8").rstrip("\r\n").encode("utf-8"))
+        == declaration_sha256
     )
 
 
@@ -409,6 +463,7 @@ def build_manifest() -> dict[str, Any]:
         "data/protocols/dsa_p2_transform_registry_v0_1.json",
         "data/protocols/dsa_p2_development_exclusion_registry_v0_1.json",
         "data/protocols/dsa_p3_preregistration_v0_1.json",
+        "data/protocols/dsa_p3_author_declaration_v0_1.txt",
         "data/protocols/dsa_p3_evidence_contract_v0_1.json",
         "data/protocols/dsa_p3_model_freeze_v0_1.json",
         "data/protocols/dsa_p3_output_schema_v0_1.json",
@@ -423,12 +478,17 @@ def build_manifest() -> dict[str, Any]:
     files = []
     for relative in frozen_paths:
         path = ROOT / relative
-        files.append({"path": relative, "sha256": sha256_file(path), "bytes": path.stat().st_size})
+        canonical_bytes = canonical_text_bytes(path)
+        files.append({
+            "path": relative,
+            "sha256": sha256_bytes(canonical_bytes),
+            "canonical_utf8_bytes": len(canonical_bytes),
+        })
     aggregate_source = "".join(f"{item['path']}\0{item['sha256']}\n" for item in files)
     return {
         "manifest_id": "dsa_p3_hash_manifest_v0_1",
         "status": "immutable_author_signed" if author_signed else "candidate_freeze_pending_author_signoff",
-        "hash_algorithm": "SHA-256",
+        "hash_algorithm": "SHA-256 over UTF-8 text after CRLF and CR normalization to LF",
         "aggregate_algorithm": "SHA-256 over ordered UTF-8 path, NUL, lowercase file hash, LF records",
         "scope": "All authoritative P2 freeze anchors and P3 design, model, prompt, schema, change, sign-off, and auditor-source inputs.",
         "excluded_derived_paths": [
@@ -461,13 +521,29 @@ def build_gate(boundary: dict[str, Any], manifest: dict[str, Any]) -> dict[str, 
     )
     author_declaration_recorded = (
         signoff.get("declaration_source") == "codex_user_message"
+        and signoff.get("declaration_path") == "data/protocols/dsa_p3_author_declaration_v0_1.txt"
         and isinstance(signoff.get("declaration_sha256"), str)
         and re.fullmatch(r"[0-9a-f]{64}", signoff["declaration_sha256"]) is not None
+        and AUTHOR_DECLARATION.exists()
+        and sha256_bytes(AUTHOR_DECLARATION.read_text(encoding="utf-8").rstrip("\r\n").encode("utf-8"))
+        == signoff["declaration_sha256"]
     )
     author_signed = author_signoff_complete(prereg)
+    p2_actual_hashes = {relative: sha256_file(ROOT / relative) for relative in P2_FROZEN_SHA256}
+    changed_paths = git_paths(["git", "diff", "--name-only", P2_FREEZE_COMMIT]) | git_paths(
+        ["git", "ls-files", "--others", "--exclude-standard"]
+    )
+    unexpected_changed_paths = sorted(changed_paths - P3_ALLOWED_CHANGED_PATHS)
+    conditions = contract.get("conditions", [])
+    model_routes = model_freeze.get("model_routes", [])
+    interval = prereg.get("conditional_interval", {})
+    outcomes = prereg.get("outcomes", {})
+    design = prereg.get("design", {})
     expected_freeze_status = "frozen_after_author_signoff" if author_signed else "candidate_freeze_pending_author_signoff"
     checks = {
         "p2_regular_unchanged": load_json(ROOT / "data/protocols/dsa_p2_protocol_decision_v0_1.json").get("selected_protocol") == "Regular",
+        "p2_frozen_hashes_unchanged": p2_actual_hashes == P2_FROZEN_SHA256,
+        "p3_change_scope_only": not unexpected_changed_paths,
         "preregistration_complete": all(
             key in prereg
             for key in (
@@ -480,12 +556,40 @@ def build_gate(boundary: dict[str, Any], manifest: dict[str, Any]) -> dict[str, 
                 "no_rerun_policy",
             )
         ),
-        "evidence_contract_complete": len(contract.get("conditions", [])) == 4,
-        "three_exact_model_routes": len(model_freeze.get("model_routes", [])) == 3
-        and all(route.get("model_id") for route in model_freeze.get("model_routes", [])),
+        "three_research_questions_frozen": [item.get("rq") for item in prereg.get("research_questions", [])]
+        == ["RQ1", "RQ2", "RQ3"],
+        "primary_estimands_exact": [item.get("name") for item in prereg.get("estimands", {}).get("primary", [])]
+        == ["Delta_minus", "Delta_plus"],
+        "scientific_unit_task_n30": design.get("scientific_analysis_unit") == "task"
+        and design.get("finite_cohort_n") == 30,
+        "outcome_classes_frozen": outcomes.get("primary") == ["Delta_minus", "Delta_plus"]
+        and bool(outcomes.get("secondary"))
+        and bool(outcomes.get("descriptive_only")),
+        "conditional_interval_exact": interval.get("bootstrap_draws") == 20000
+        and interval.get("seed") == 2026071103
+        and interval.get("random_generator") == "NumPy PCG64"
+        and interval.get("familywise_level") == 0.95
+        and "0.0125 and 0.9875" in " ".join(interval.get("algorithm", [])),
+        "exclusion_stop_no_rerun_frozen": bool(prereg.get("exclusion_and_replacement"))
+        and bool(prereg.get("stop_rules"))
+        and bool(prereg.get("no_rerun_policy")),
+        "evidence_contract_complete": [item.get("condition_code") for item in conditions]
+        == ["C0", "C1", "C2", "C3"]
+        and [item.get("addition_from_previous") for item in conditions]
+        == [None, "executable_basic", "visible_f2p", "visible_p2p"],
+        "three_exact_model_routes": [route.get("model_id") for route in model_routes]
+        == ["qwen3.7-plus-2026-05-26", "deepseek-v4-flash", "gemini-3.5-flash"]
+        and [route.get("route_order") for route in model_routes] == [1, 2, 3],
+        "model_parameters_order_and_caps_frozen": all(
+            route.get("provider") and route.get("endpoint") and route.get("parameters")
+            for route in model_routes
+        )
+        and model_freeze.get("request_order", {}).get("repeat_indices") == [1, 2, 3]
+        and model_freeze.get("attempt_budgets", {}).get("full_hard_maximum") == 2268
+        and model_freeze.get("attempt_budgets", {}).get("smoke_hard_maximum") == 26,
         "three_stateless_repeats": model_freeze.get("common_request_contract", {}).get("stateless_repeats") == 3,
         "prompt_boundary_mechanical_pass": boundary["mechanical_pass"],
-        "hash_manifest_complete": len(manifest["files"]) == 15,
+        "hash_manifest_complete": len(manifest["files"]) == 16,
         "freeze_status_consistent": prereg.get("status") == expected_freeze_status
         and contract.get("status") == expected_freeze_status
         and model_freeze.get("status") == expected_freeze_status
@@ -500,9 +604,18 @@ def build_gate(boundary: dict[str, Any], manifest: dict[str, Any]) -> dict[str, 
     }
     mechanical_names = [
         "p2_regular_unchanged",
+        "p2_frozen_hashes_unchanged",
+        "p3_change_scope_only",
         "preregistration_complete",
+        "three_research_questions_frozen",
+        "primary_estimands_exact",
+        "scientific_unit_task_n30",
+        "outcome_classes_frozen",
+        "conditional_interval_exact",
+        "exclusion_stop_no_rerun_frozen",
         "evidence_contract_complete",
         "three_exact_model_routes",
+        "model_parameters_order_and_caps_frozen",
         "three_stateless_repeats",
         "prompt_boundary_mechanical_pass",
         "hash_manifest_complete",
@@ -525,6 +638,9 @@ def build_gate(boundary: dict[str, Any], manifest: dict[str, Any]) -> dict[str, 
         "mechanical_gate_pass": mechanical_pass,
         "author_gate_pass": author_signed,
         "checks": checks,
+        "p2_frozen_sha256": p2_actual_hashes,
+        "changed_paths_since_p2": sorted(changed_paths),
+        "unexpected_changed_paths": unexpected_changed_paths,
         "next_action": (
             "Record explicit author sign-off, regenerate hashes, and rerun this gate. Do not enter P4/P5 or call a model API."
             if gate_status == "PENDING_AUTHOR_SIGNOFF"
