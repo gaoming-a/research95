@@ -1,5 +1,5 @@
 {
-  "boundary": "Environment-gate evidence only; no F2P, regression-pool, transformed-candidate, prompt, P5, or model outcome.",
+  "boundary": "Pre-candidate environment/reference evidence only; no regression pool, transformed candidate, prompt, P5, or model outcome.",
   "created_date": "2026-07-11",
   "records": [
     {
@@ -128,6 +128,27 @@
       "task_image_created": false,
       "toolchain_image": "dsa2026-p4-toolchains:bootstrap-v0_1",
       "toolchain_image_id": "sha256:97e089cee02d0908e374f7b784ee0ffbb2fe5a2d64f619335aa962dc3ab3d768",
+      "transformed_candidate_materialized": false,
+      "transformed_candidate_outcome_observed": false
+    },
+    {
+      "cursor_sha256": "a212352973531adfc58b0e85978fcad1cf65adea100fb2584b66f03ebeb437fb",
+      "dependency_or_oracle_repair_performed": false,
+      "model_api_calls": 0,
+      "official_reference_f2p_executed": true,
+      "project": "matplotlib",
+      "reason_code": "official_reference_f2p_failed_or_disagreed_in_dual_fresh_environments",
+      "record_sha256": "9b36980b50a50d64c2a9692980cad6b328684b1f497dc3c5c180f255dd5fe7d9",
+      "reference_f2p_passed": false,
+      "reference_f2p_result_sha256": "2b20ec02f840ed8738d7a0fe29e3e9ce70adf4be892be3075b8fc050087a8c5c",
+      "regression_pool_discovered_or_frozen": false,
+      "source_record_sha256": "b1e09a00c57d8adfcfb65a71f5c3028c873f988b56d4f9f573c52a797cfd6660",
+      "status": "discard_pre_candidate_reference_f2p_failure",
+      "stream_order": 5,
+      "stream_role": "primary",
+      "task_id": "bugsinpy_matplotlib_21",
+      "task_image_created": true,
+      "task_image_id": "sha256:3632b1e6573f98531116b876d8bd25d00accac9ff3aca80b3e51095b3bb6c5a7",
       "transformed_candidate_materialized": false,
       "transformed_candidate_outcome_observed": false
     }

@@ -307,6 +307,12 @@ def main() -> None:
         capture_output=True,
     ).returncode != 0:
         raise SystemExit("executor commit is not an ancestor of HEAD")
+    args.executor_commit = subprocess.check_output(
+        ["git", "rev-parse", args.executor_commit],
+        cwd=ROOT,
+        text=True,
+        encoding="utf-8",
+    ).strip()
     run_a, run_b = load_or_run(args, Path(args.runtime_dir).resolve())
     result = build_result(args, run_a, run_b)
     results_registry = registry_with(

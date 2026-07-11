@@ -58,6 +58,12 @@
   reference F2P runner. It freezes image/label/environment/reference/isolation
   evidence before any regression pool or transformed candidate, and writes a
   pre-candidate discard when either fresh run fails or disagrees.
+- [dsa_p4_matplotlib_21_reference_f2p_gate_v0_1.md](experiments/dsa_p4_matplotlib_21_reference_f2p_gate_v0_1.md):
+  task-level pre-candidate discard after two isolated official-reference F2P
+  runs identically failed on undeclared NumPy. Machine evidence is
+  `../data/hidden/dsa_p4_reference_f2p_results_v0_1.json` and the shared
+  `../data/hidden/dsa_p4_pre_candidate_discard_v0_1.json`; no pool or T2
+  candidate was created.
 - `../data/hidden/dsa_p4_candidate_registry_v0_1.json`: private materialization
   and terminal task mapping for the first P4 candidate pair. It binds the opaque
   candidate IDs,

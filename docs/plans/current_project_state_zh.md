@@ -72,6 +72,11 @@
   write/check freeze；context record SHA-256=
   `b1e09a00c57d8adfcfb65a71f5c3028c873f988b56d4f9f573c52a797cfd6660`。
   该 checkpoint 尚未构建 task image、运行 reference F2P/pool、物化 T2 或调用模型。
+- 随后的 clean `py381` image ID 为 `sha256:3632b1e6…bb6c5a7`；两个 fresh、
+  network-none、mount-free reference F2P runs 均因 frozen environment 缺少 NumPy
+  exit=4，且 output hash 完全一致。Gate=
+  `DISCARD_PRE_CANDIDATE_REFERENCE_F2P_FAILURE`；未补依赖、未发现 pool、未物化 T2、
+  API=0。当前 bounded Goal 结束，下一步须另设 replacement-cursor Goal。
 
 ### 2026-07-10 DSA 路线计划基线（已由上方 P2 状态覆盖）
 

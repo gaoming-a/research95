@@ -1,0 +1,224 @@
+{
+  "created_date": "2026-07-11",
+  "records": [
+    {
+      "cursor_sha256": "a212352973531adfc58b0e85978fcad1cf65adea100fb2584b66f03ebeb437fb",
+      "environment_equal": true,
+      "executor_commit": "b6d0cc69a86a0f542efd543d5c40156b241c3481",
+      "f2p_outcomes_equal": true,
+      "image_labels_match": true,
+      "isolation_passed": true,
+      "model_api_calls": 0,
+      "project": "matplotlib",
+      "record_sha256": "2b20ec02f840ed8738d7a0fe29e3e9ce70adf4be892be3075b8fc050087a8c5c",
+      "reference_f2p_passed": false,
+      "reference_preparation_equal": true,
+      "regression_pool_discovered_or_frozen": false,
+      "run_a": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "pytest lib/matplotlib/tests/test_axes.py::test_boxplot_marker_behavior"
+            ],
+            "duration_seconds": 0.367,
+            "exit_code": 4,
+            "outcome": "failed",
+            "output_excerpt": "ImportError while loading conftest '<PROJECT>/lib/matplotlib/tests/conftest.py'.\nlib/matplotlib/__init__.py:124: in <module>\n    from . import cbook, rcsetup\nlib/matplotlib/cbook/__init__.py:29: in <module>\n    import numpy as np\nE   ModuleNotFoundError: No module named 'numpy'\n",
+            "output_sha256": "966307f535435b2f4d646c7871debb59fcb1b4c72497199ca5c7d67c75b14ff5",
+            "timed_out": false
+          }
+        ],
+        "container_exit_code": 0,
+        "container_id": "5a6f036a024dcd092adbd69ae80fa56a7a415ce8465fc1705c5707ae2082f64f",
+        "created": "2026-07-11T14:06:35.897676901Z",
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 3846,
+              "sha256": "df1e425eedcb0d3806b5bf10c55e369648621d93f46f5754cdc85f8435cf21f8"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "3b1dc2bbc3cff0751e6bbf8d3cda2b91cdc3c8ccb60b7220d643eee87bac30f1"
+            },
+            "pip-freeze.txt": {
+              "bytes": 565,
+              "sha256": "4cdad0f267aaddfb7aa86557b26196c14efb4095318da87e13950fdda04589f4"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "requirements_after.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements_after.log": {
+              "bytes": 62,
+              "sha256": "6293448b504e0414565bcd5d177328ff03fa1f0809521d26d94d994ddce5662f"
+            },
+            "requirements_after_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements_before.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements_before.log": {
+              "bytes": 62,
+              "sha256": "6293448b504e0414565bcd5d177328ff03fa1f0809521d26d94d994ddce5662f"
+            },
+            "requirements_before_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "setup_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py381/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.003,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.8.1\n",
+            "output_sha256": "91a3a5d83d5640b02e465696e524316a49de4b6da26732db04fc640ef12412d4",
+            "timed_out": false
+          }
+        },
+        "image_id": "sha256:3632b1e6573f98531116b876d8bd25d00accac9ff3aca80b3e51095b3bb6c5a7",
+        "mounts": [],
+        "network_mode": "none",
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "371b33a1f7695bf6bf011663f4ff03c370d181a252300d289789dc8886786a66",
+          "fixed_test_paths": [
+            "lib/matplotlib/tests/test_axes.py"
+          ],
+          "reference_patch_sha256": "2874ffe8cac4b57f37eb9cc5b63d761736f5ebbf50568975bb4cce9e9ae9ece6"
+        },
+        "run_id": "A"
+      },
+      "run_a_passed": false,
+      "run_b": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "pytest lib/matplotlib/tests/test_axes.py::test_boxplot_marker_behavior"
+            ],
+            "duration_seconds": 0.306,
+            "exit_code": 4,
+            "outcome": "failed",
+            "output_excerpt": "ImportError while loading conftest '<PROJECT>/lib/matplotlib/tests/conftest.py'.\nlib/matplotlib/__init__.py:124: in <module>\n    from . import cbook, rcsetup\nlib/matplotlib/cbook/__init__.py:29: in <module>\n    import numpy as np\nE   ModuleNotFoundError: No module named 'numpy'\n",
+            "output_sha256": "966307f535435b2f4d646c7871debb59fcb1b4c72497199ca5c7d67c75b14ff5",
+            "timed_out": false
+          }
+        ],
+        "container_exit_code": 0,
+        "container_id": "8c634dc6e2049b5e38f5e36922734f085db7c5c5cc5a3e64dfdba5e1903ba87c",
+        "created": "2026-07-11T14:06:36.052581739Z",
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 3846,
+              "sha256": "df1e425eedcb0d3806b5bf10c55e369648621d93f46f5754cdc85f8435cf21f8"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "3b1dc2bbc3cff0751e6bbf8d3cda2b91cdc3c8ccb60b7220d643eee87bac30f1"
+            },
+            "pip-freeze.txt": {
+              "bytes": 565,
+              "sha256": "4cdad0f267aaddfb7aa86557b26196c14efb4095318da87e13950fdda04589f4"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "requirements_after.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements_after.log": {
+              "bytes": 62,
+              "sha256": "6293448b504e0414565bcd5d177328ff03fa1f0809521d26d94d994ddce5662f"
+            },
+            "requirements_after_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements_before.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements_before.log": {
+              "bytes": 62,
+              "sha256": "6293448b504e0414565bcd5d177328ff03fa1f0809521d26d94d994ddce5662f"
+            },
+            "requirements_before_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "setup_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py381/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.003,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.8.1\n",
+            "output_sha256": "91a3a5d83d5640b02e465696e524316a49de4b6da26732db04fc640ef12412d4",
+            "timed_out": false
+          }
+        },
+        "image_id": "sha256:3632b1e6573f98531116b876d8bd25d00accac9ff3aca80b3e51095b3bb6c5a7",
+        "mounts": [],
+        "network_mode": "none",
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "371b33a1f7695bf6bf011663f4ff03c370d181a252300d289789dc8886786a66",
+          "fixed_test_paths": [
+            "lib/matplotlib/tests/test_axes.py"
+          ],
+          "reference_patch_sha256": "2874ffe8cac4b57f37eb9cc5b63d761736f5ebbf50568975bb4cce9e9ae9ece6"
+        },
+        "run_id": "B"
+      },
+      "run_b_passed": false,
+      "source_record_sha256": "b1e09a00c57d8adfcfb65a71f5c3028c873f988b56d4f9f573c52a797cfd6660",
+      "status": "discard_pre_candidate_reference_f2p_failure",
+      "stream_order": 5,
+      "stream_role": "primary",
+      "task_id": "bugsinpy_matplotlib_21",
+      "task_image": "dsa2026-p4-task:bugsinpy_matplotlib_21",
+      "task_image_id": "sha256:3632b1e6573f98531116b876d8bd25d00accac9ff3aca80b3e51095b3bb6c5a7",
+      "transformed_candidate_materialized": false,
+      "transformed_candidate_outcome_observed": false
+    }
+  ],
+  "registry_id": "dsa_p4_reference_f2p_results_v0_1",
+  "visibility": "private_hidden_pre_candidate_reference_evidence"
+}

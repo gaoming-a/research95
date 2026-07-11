@@ -43,6 +43,23 @@ Matplotlib pre-outcome source freeze：
   只比较命令/outcome/output hashes和 build-artifact hashes；失败则机械写入
   pre-candidate discard，成功才允许进入 pool freeze。
 
+Matplotlib reference F2P Gate 结果：
+
+- final task image ID=`sha256:3632b1e6573f98531116b876d8bd25d00accac9ff3aca80b3e51095b3bb6c5a7`；
+  labels、`py381` explicit lock与 environment build hashes 均匹配；
+- 两个 fresh containers 分别为 `5a6f036a…82f64f` 与 `8c634dc6…3ba87c`，均
+  `network=none`、`mounts=[]`，reference tree/patch/environment 完全一致；
+- exact F2P 在两环境均 exit=4，normalized output SHA-256 同为
+  `966307f535435b2f4d646c7871debb59fcb1b4c72497199ca5c7d67c75b14ff5`，
+  原因为导入 `matplotlib` 时 `ModuleNotFoundError: No module named 'numpy'`；
+- 未把 improved shared environment 中的 NumPy补入冻结空 requirements；Gate=
+  `DISCARD_PRE_CANDIDATE_REFERENCE_F2P_FAILURE`；
+- F2P result/discard record SHA-256 分别为
+  `2b20ec02f840ed8738d7a0fe29e3e9ce70adf4be892be3075b8fc050087a8c5c` 与
+  `9b36980b50a50d64c2a9692980cad6b328684b1f497dc3c5c180f255dd5fe7d9`；
+- regression pool 未发现/冻结，T2 未物化或运行，model API calls=0；本 Goal 停止，
+  下一 task 必须由后续独立 cursor Goal 选择。
+
 当前 post-Tornado replacement-cursor Goal（2026-07-11）：
 
 - 只从 private-synced commit `6647c3c` 读取 P2/P3/P4 frozen inputs、FastAPI

@@ -57,7 +57,11 @@ another task; a separate later Goal is required to begin Matplotlib.
 That Matplotlib Goal has now frozen and replay-checked the exact official buggy
 and fixed archives, metadata, fixed test, reference patch, and task-context
 hashes. No task image, test, regression pool, transformed candidate, or model
-call had occurred at this pre-outcome source checkpoint.
+call had occurred at that pre-outcome source checkpoint. Its clean `py381` task
+image then built, but both fresh isolated official-reference F2P runs failed
+identically because NumPy was absent from the frozen empty requirements/setup
+metadata. Matplotlib #21 is therefore discarded before regression-pool or T2
+activity; no dependency repair or model call was made.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,

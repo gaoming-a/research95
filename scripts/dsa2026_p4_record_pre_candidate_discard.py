@@ -175,7 +175,7 @@ def registry_with(record: dict[str, Any]) -> dict[str, Any]:
         "created_date": "2026-07-11",
         "visibility": "private_hidden_environment_gate",
         "records": records,
-        "boundary": "Environment-gate evidence only; no F2P, regression-pool, transformed-candidate, prompt, P5, or model outcome.",
+        "boundary": "Pre-candidate environment/reference evidence only; no regression pool, transformed candidate, prompt, P5, or model outcome.",
     }
 
 

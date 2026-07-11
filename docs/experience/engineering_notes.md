@@ -45,6 +45,11 @@
   build-artifact hash in the fingerprint; retain durations as provenance but do
   not make two otherwise identical fresh runs disagree because they took
   different milliseconds.
+- A successful task-image build with empty requirements is not an executable
+  reference Gate. Matplotlib #21 built cleanly but both isolated F2P runs failed
+  identically while importing NumPy. Do not reinterpret a shared historical
+  Conda environment's installed packages as frozen metadata or add them after
+  observing the failure; discard before pool/candidate activity.
 - A hash-ordered transform is not reproducible until its edit identity and
   serialization are explicit. Before any candidate outcome, encode each T4
   source-diff line as canonical JSON over path, hunk index, line index, kind,
