@@ -56,7 +56,10 @@ Gate：
 - 机械 Gate=`PASS`；总 P3 Gate=`PENDING_AUTHOR_SIGNOFF`；
 - 待作者逐项确认 11 项冻结内容、能独立核验并承担完整科学/作者责任后，才可把
   candidate manifest 重新生成成 immutable 并关闭 P3；
-- 当前不得进入 P4/P5 或调用模型 API。
+- 当前不得进入 P4/P5 或调用模型 API；
+- P3 candidate-freeze 证据包已提交为 `d7178b3`。向 private remote 的首次 push 在
+  64 秒内无响应并超时；按用户既有指示记录后继续，不改推 public `origin`。作者
+  签核后的最终 P3 commit 将再次尝试 private sync。
 
 ## 0.51 2026-07-11 DSA P2 source feasibility、precision 与稿型冻结
 
