@@ -19,6 +19,27 @@ SEED = "dsa2026-p4-regression-split-v0_1"
 GENERIC_TOKENS = {
     "py", "test", "tests", "testing", "src", "source", "lib", "main", "init"
 }
+FROZEN_RECORD_FIELDS = {
+    "stream_role",
+    "stream_order",
+    "task_id",
+    "project",
+    "task_image",
+    "task_image_id",
+    "python_version",
+    "selected_transform_id",
+    "reference_source_paths",
+    "source_tokens",
+    "official_f2p_nodeids",
+    "test_root",
+    "collection",
+    "selection_rule",
+    "pool",
+    "pool_node_count",
+    "pool_sha256",
+    "transformed_candidate_materialized",
+    "transformed_candidate_outcome_observed",
+}
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -206,6 +227,30 @@ def main() -> None:
         args.test_root,
         discovery,
     )
+    existing_record = None
+    if OUT.exists():
+        existing_registry = read_json(OUT)
+        existing_record = next(
+            (item for item in existing_registry.get("records", []) if item["task_id"] == args.task_id),
+            None,
+        )
+    if existing_record and existing_record.get("reference_pool_outcome_observed"):
+        if args.write:
+            raise SystemExit("refusing to overwrite a pool after reference outcomes exist")
+        mismatched = [
+            field for field in sorted(FROZEN_RECORD_FIELDS)
+            if existing_record.get(field) != record.get(field)
+        ]
+        if mismatched:
+            raise SystemExit(f"pre-outcome frozen fields drifted: {mismatched}")
+        print(json.dumps({
+            "task_id": record["task_id"],
+            "pool_node_count": record["pool_node_count"],
+            "pool_sha256": record["pool_sha256"],
+            "task_image_id": record["task_image_id"],
+            "post_outcome_frozen_fields_check": "passed",
+        }, sort_keys=True))
+        return
     registry = registry_with(record)
     content = json.dumps(registry, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
     if args.write:

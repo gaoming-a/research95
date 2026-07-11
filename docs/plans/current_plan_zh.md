@@ -58,6 +58,21 @@ P4 pre-transform checkpoint（2026-07-11）：
   `data/hidden/dsa_p4_oracle_pool_registry_v0_1.json` 此时明确记录 transform/candidate
   outcome 未观察；下一动作才是两 fresh reference containers 的逐节点验证。
 
+`bugsinpy_fastapi_12` reference oracle Gate：
+
+- pre-outcome freeze commit=`50558d4`；向 private remote 的同步因 GitHub 443 在约
+  21 秒后失败，已按用户授权停止重试，public origin 未使用；
+- 两个 fresh container IDs 分别为
+  `801a27a23cccc542735eb2d6fc198f4e3228cc9711ba71913d44f64caa4c6c41` 与
+  `8a64dcbcd18bc31232c2192376dbb05fbede38b2b13960e42f4f09ea52b83632`；两者
+  network=`none`、mounts=0、image/tree hashes 一致；
+- frozen pool 40/40 节点均在两环境 exit=0/outcome=passed，结果一致；按冻结 tie hash
+  排序后的 visible P2P=3、hidden regression=20，hash 分别为
+  `0a3bdea4f54502f22dea00f854981effb4175e72bc8284b5adab07bf2d635e8c` 与
+  `d721689dcccc0c3cdc3cdfb1dbda4e517caaab30bf83ee1073afb58e326c9750`；
+- oracle capacity=`PASS`，registry 状态=`oracle_frozen_transform_not_materialized`。
+  下一动作才允许按冻结 T4 物化唯一 hard negative；不得根据 hidden outcome换 transform。
+
 P4 test/oracle freeze rule（在任何 transformed candidate 结果前固定）：
 
 1. official declared F2P node/command 作为 visible F2P；

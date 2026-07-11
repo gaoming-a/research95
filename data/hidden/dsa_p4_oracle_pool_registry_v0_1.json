@@ -11,9 +11,33 @@
         "output_sha256": "73e35f5d409f99c73f48664f5851b763b51b66cbb82e785d2eac2a5d615b09ec",
         "reference_patch_sha256": "586ed616d3a17fdec4139892a3e47e4fa158e874d6b6fa672ddd5f7dbbf85a52"
       },
+      "hidden_regression_nodeids": [
+        "tests/test_security_http_digest_optional.py::test_security_http_digest_incorrect_scheme_credentials",
+        "tests/test_security_oauth2.py::test_strict_login[None-422-expected_response0]",
+        "tests/test_security_oauth2.py::test_security_oauth2_password_other_header",
+        "tests/test_security_oauth2_optional.py::test_strict_login[data3-200-expected_response3]",
+        "tests/test_security_openid_connect_optional.py::test_openapi_schema",
+        "tests/test_security_http_digest.py::test_security_http_digest",
+        "tests/test_security_api_key_cookie.py::test_security_api_key_no_key",
+        "tests/test_security_api_key_query_optional.py::test_security_api_key_no_key",
+        "tests/test_security_http_basic_realm.py::test_security_http_basic",
+        "tests/test_security_http_base_optional.py::test_security_http_base_no_credentials",
+        "tests/test_security_http_digest_optional.py::test_security_http_digest_no_credentials",
+        "tests/test_security_http_base.py::test_openapi_schema",
+        "tests/test_security_http_digest.py::test_security_http_digest_incorrect_scheme_credentials",
+        "tests/test_security_http_base_optional.py::test_openapi_schema",
+        "tests/test_security_http_basic_optional.py::test_openapi_schema",
+        "tests/test_security_http_bearer.py::test_security_http_bearer",
+        "tests/test_security_http_basic_realm.py::test_openapi_schema",
+        "tests/test_security_http_base.py::test_security_http_base_no_credentials",
+        "tests/test_security_http_basic_optional.py::test_security_http_basic_non_basic_credentials",
+        "tests/test_security_http_basic_realm.py::test_security_http_basic_non_basic_credentials"
+      ],
+      "hidden_regression_sha256": "d721689dcccc0c3cdc3cdfb1dbda4e517caaab30bf83ee1073afb58e326c9750",
       "official_f2p_nodeids": [
         "tests/test_security_http_bearer_optional.py::test_security_http_bearer_incorrect_scheme_credentials"
       ],
+      "oracle_capacity_passed": true,
       "pool": [
         {
           "nodeid": "tests/test_security_http_digest_optional.py::test_security_http_digest_incorrect_scheme_credentials",
@@ -371,7 +395,8 @@
       "pool_sha256": "63c586ba58a4eb6b44cf556e9e797ae87bc0a6df0d2e42fdf7ff316eb49d3dbb",
       "project": "fastapi",
       "python_version": "3.8.3",
-      "reference_pool_outcome_observed": false,
+      "reference_pool_outcome_observed": true,
+      "reference_pool_result_sha256": "ed7dc4c96ee086c1a9723d865c74d1b53f961e931b7271384db57730cad6c69f",
       "reference_source_paths": [
         "fastapi/security/http.py"
       ],
@@ -400,7 +425,8 @@
         "http",
         "security"
       ],
-      "status": "pretransform_pool_frozen",
+      "stable_reference_node_count": 40,
+      "status": "oracle_frozen_transform_not_materialized",
       "stream_order": 2,
       "stream_role": "primary",
       "task_id": "bugsinpy_fastapi_12",
@@ -408,7 +434,13 @@
       "task_image_id": "sha256:11fb7ffa940afd56884299fdb26a5775bf1b09ed87a5fb8c1c9213c04ad22da3",
       "test_root": "tests",
       "transformed_candidate_materialized": false,
-      "transformed_candidate_outcome_observed": false
+      "transformed_candidate_outcome_observed": false,
+      "visible_p2p_nodeids": [
+        "tests/test_security_openid_connect_optional.py::test_security_oauth2_password_other_header",
+        "tests/test_security_api_key_header.py::test_security_api_key",
+        "tests/test_security_oauth2.py::test_openapi_schema"
+      ],
+      "visible_p2p_sha256": "0a3bdea4f54502f22dea00f854981effb4175e72bc8284b5adab07bf2d635e8c"
     }
   ],
   "registry_id": "dsa_p4_oracle_pool_registry_v0_1",

@@ -48,6 +48,12 @@
   pool before outcomes, then require each selected node to pass independently
   in two fresh reference containers. Never treat collection visibility as a
   passing oracle.
+- Container output hashes need not match when pytest embeds elapsed time. Treat
+  normalized scientific consistency as identical node identity, exit code,
+  timeout state, and pass/fail outcome; retain both output hashes and excerpts
+  for diagnosis instead of silently deleting timing-bearing evidence. For the
+  first FastAPI pool, all 40 outcomes agreed although only 13 timing-bearing
+  output hashes were byte-identical.
 
 ## 2026-07-11 DSA P3 candidate freeze and author gate
 

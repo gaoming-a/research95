@@ -1,0 +1,1507 @@
+{
+  "created_date": "2026-07-11",
+  "records": [
+    {
+      "checks": [
+        {
+          "nodeid": "tests/test_security_http_digest_optional.py::test_security_http_digest_incorrect_scheme_credentials",
+          "outcome_consistent": true,
+          "output_hash_equal": true,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest_optional.py::test_security_http_digest_incorrect_scheme_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest_optional.py::test_security_http_digest_incorrect_scheme_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.20s\n",
+            "output_sha256": "8e1c4ffd0f8c323eee5cddf264a6d4eb3ebb79a3f0bf759bcd460e87508b4f97",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest_optional.py::test_security_http_digest_incorrect_scheme_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest_optional.py::test_security_http_digest_incorrect_scheme_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.20s\n",
+            "output_sha256": "8e1c4ffd0f8c323eee5cddf264a6d4eb3ebb79a3f0bf759bcd460e87508b4f97",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_digest.py::test_security_http_digest",
+          "outcome_consistent": true,
+          "output_hash_equal": true,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest.py::test_security_http_digest"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest.py::test_security_http_digest",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.18s\n",
+            "output_sha256": "c187c26d5ca5b33e26135a100ffc3118dcadea5ccfe1881bf90fbb74c225a8ae",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest.py::test_security_http_digest"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest.py::test_security_http_digest",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.18s\n",
+            "output_sha256": "c187c26d5ca5b33e26135a100ffc3118dcadea5ccfe1881bf90fbb74c225a8ae",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_realm.py::test_security_http_basic"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_realm.py::test_security_http_basic"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_base_optional.py::test_security_http_base_no_credentials",
+          "outcome_consistent": true,
+          "output_hash_equal": true,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_base_optional.py::test_security_http_base_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_base_optional.py::test_security_http_base_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_base_optional.py::test_security_http_base_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_base_optional.py::test_security_http_base_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_digest_optional.py::test_security_http_digest_no_credentials",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest_optional.py::test_security_http_digest_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest_optional.py::test_security_http_digest_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.13s\n",
+            "output_sha256": "8191d57a5a6e0b2a03771053a25855e901c674ec2945e8a112667457fdf6b6e3",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest_optional.py::test_security_http_digest_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest_optional.py::test_security_http_digest_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.12s\n",
+            "output_sha256": "ed732441578303c111587e2262e59d6c804943a0262c23d93de37ba561de8c2b",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_base.py::test_openapi_schema",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_base.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_base.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_base.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_base.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.17s\n",
+            "output_sha256": "c19f4d1187eeffa2501c99433e001768940a0fa29a34c2c31e89cd3015513185",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_digest.py::test_security_http_digest_incorrect_scheme_credentials",
+          "outcome_consistent": true,
+          "output_hash_equal": true,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest.py::test_security_http_digest_incorrect_scheme_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest.py::test_security_http_digest_incorrect_scheme_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest.py::test_security_http_digest_incorrect_scheme_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest.py::test_security_http_digest_incorrect_scheme_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_base_optional.py::test_openapi_schema",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_base_optional.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_base_optional.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.17s\n",
+            "output_sha256": "c19f4d1187eeffa2501c99433e001768940a0fa29a34c2c31e89cd3015513185",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_base_optional.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_base_optional.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.18s\n",
+            "output_sha256": "c187c26d5ca5b33e26135a100ffc3118dcadea5ccfe1881bf90fbb74c225a8ae",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_optional.py::test_openapi_schema",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_optional.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_optional.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_optional.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_optional.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.16s\n",
+            "output_sha256": "205d58c39ad043ed358d072964e6248772468ab7fa152369d75174489085c301",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_bearer.py::test_security_http_bearer",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_bearer.py::test_security_http_bearer"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_bearer.py::test_security_http_bearer",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_bearer.py::test_security_http_bearer"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_bearer.py::test_security_http_bearer",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_realm.py::test_openapi_schema",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_realm.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_realm.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.16s\n",
+            "output_sha256": "205d58c39ad043ed358d072964e6248772468ab7fa152369d75174489085c301",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_realm.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_realm.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_base.py::test_security_http_base_no_credentials",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_base.py::test_security_http_base_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_base.py::test_security_http_base_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.13s\n",
+            "output_sha256": "8191d57a5a6e0b2a03771053a25855e901c674ec2945e8a112667457fdf6b6e3",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_base.py::test_security_http_base_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_base.py::test_security_http_base_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic_non_basic_credentials",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_optional.py::test_security_http_basic_non_basic_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic_non_basic_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.16s\n",
+            "output_sha256": "205d58c39ad043ed358d072964e6248772468ab7fa152369d75174489085c301",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_optional.py::test_security_http_basic_non_basic_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic_non_basic_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic_non_basic_credentials",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_realm.py::test_security_http_basic_non_basic_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic_non_basic_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.16s\n",
+            "output_sha256": "205d58c39ad043ed358d072964e6248772468ab7fa152369d75174489085c301",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_realm.py::test_security_http_basic_non_basic_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic_non_basic_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.19s\n",
+            "output_sha256": "a5721b58acea678eda3d7bc1d56f2a145c287b2d30832793415b58b8dad65d31",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic_invalid_credentials",
+          "outcome_consistent": true,
+          "output_hash_equal": true,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_optional.py::test_security_http_basic_invalid_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic_invalid_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_optional.py::test_security_http_basic_invalid_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic_invalid_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_bearer.py::test_openapi_schema",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_bearer.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_bearer.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.17s\n",
+            "output_sha256": "c19f4d1187eeffa2501c99433e001768940a0fa29a34c2c31e89cd3015513185",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_bearer.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_bearer.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.18s\n",
+            "output_sha256": "c187c26d5ca5b33e26135a100ffc3118dcadea5ccfe1881bf90fbb74c225a8ae",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_bearer_optional.py::test_openapi_schema",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_bearer_optional.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_bearer_optional.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_bearer_optional.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_bearer_optional.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.19s\n",
+            "output_sha256": "a5721b58acea678eda3d7bc1d56f2a145c287b2d30832793415b58b8dad65d31",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_bearer_optional.py::test_security_http_bearer",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_bearer_optional.py::test_security_http_bearer"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_bearer_optional.py::test_security_http_bearer",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.17s\n",
+            "output_sha256": "c19f4d1187eeffa2501c99433e001768940a0fa29a34c2c31e89cd3015513185",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_bearer_optional.py::test_security_http_bearer"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_bearer_optional.py::test_security_http_bearer",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.16s\n",
+            "output_sha256": "205d58c39ad043ed358d072964e6248772468ab7fa152369d75174489085c301",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_digest_optional.py::test_security_http_digest",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest_optional.py::test_security_http_digest"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest_optional.py::test_security_http_digest",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.18s\n",
+            "output_sha256": "c187c26d5ca5b33e26135a100ffc3118dcadea5ccfe1881bf90fbb74c225a8ae",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest_optional.py::test_security_http_digest"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest_optional.py::test_security_http_digest",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.19s\n",
+            "output_sha256": "a5721b58acea678eda3d7bc1d56f2a145c287b2d30832793415b58b8dad65d31",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_bearer.py::test_security_http_bearer_no_credentials",
+          "outcome_consistent": true,
+          "output_hash_equal": true,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_bearer.py::test_security_http_bearer_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_bearer.py::test_security_http_bearer_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_bearer.py::test_security_http_bearer_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_bearer.py::test_security_http_bearer_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic_no_credentials",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_optional.py::test_security_http_basic_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.16s\n",
+            "output_sha256": "205d58c39ad043ed358d072964e6248772468ab7fa152369d75174489085c301",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_optional.py::test_security_http_basic_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.13s\n",
+            "output_sha256": "8191d57a5a6e0b2a03771053a25855e901c674ec2945e8a112667457fdf6b6e3",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_optional.py::test_security_http_basic"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.13s\n",
+            "output_sha256": "8191d57a5a6e0b2a03771053a25855e901c674ec2945e8a112667457fdf6b6e3",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_optional.py::test_security_http_basic"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_optional.py::test_security_http_basic",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_bearer_optional.py::test_security_http_bearer_no_credentials",
+          "outcome_consistent": true,
+          "output_hash_equal": true,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_bearer_optional.py::test_security_http_bearer_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_bearer_optional.py::test_security_http_bearer_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_bearer_optional.py::test_security_http_bearer_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_bearer_optional.py::test_security_http_bearer_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic_no_credentials",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_realm.py::test_security_http_basic_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.13s\n",
+            "output_sha256": "8191d57a5a6e0b2a03771053a25855e901c674ec2945e8a112667457fdf6b6e3",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_realm.py::test_security_http_basic_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_digest.py::test_openapi_schema",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.18s\n",
+            "output_sha256": "c187c26d5ca5b33e26135a100ffc3118dcadea5ccfe1881bf90fbb74c225a8ae",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.16s\n",
+            "output_sha256": "205d58c39ad043ed358d072964e6248772468ab7fa152369d75174489085c301",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_bearer.py::test_security_http_bearer_incorrect_scheme_credentials",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_bearer.py::test_security_http_bearer_incorrect_scheme_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_bearer.py::test_security_http_bearer_incorrect_scheme_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_bearer.py::test_security_http_bearer_incorrect_scheme_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_bearer.py::test_security_http_bearer_incorrect_scheme_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.13s\n",
+            "output_sha256": "8191d57a5a6e0b2a03771053a25855e901c674ec2945e8a112667457fdf6b6e3",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic_invalid_credentials",
+          "outcome_consistent": true,
+          "output_hash_equal": true,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_realm.py::test_security_http_basic_invalid_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic_invalid_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.13s\n",
+            "output_sha256": "8191d57a5a6e0b2a03771053a25855e901c674ec2945e8a112667457fdf6b6e3",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_basic_realm.py::test_security_http_basic_invalid_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_basic_realm.py::test_security_http_basic_invalid_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.13s\n",
+            "output_sha256": "8191d57a5a6e0b2a03771053a25855e901c674ec2945e8a112667457fdf6b6e3",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_base_optional.py::test_security_http_base",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_base_optional.py::test_security_http_base"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_base_optional.py::test_security_http_base",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_base_optional.py::test_security_http_base"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_base_optional.py::test_security_http_base",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.13s\n",
+            "output_sha256": "8191d57a5a6e0b2a03771053a25855e901c674ec2945e8a112667457fdf6b6e3",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_digest_optional.py::test_openapi_schema",
+          "outcome_consistent": true,
+          "output_hash_equal": true,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest_optional.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest_optional.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest_optional.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest_optional.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_base.py::test_security_http_base",
+          "outcome_consistent": true,
+          "output_hash_equal": true,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_base.py::test_security_http_base"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_base.py::test_security_http_base",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_base.py::test_security_http_base"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_base.py::test_security_http_base",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_http_digest.py::test_security_http_digest_no_credentials",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest.py::test_security_http_digest_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest.py::test_security_http_digest_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.13s\n",
+            "output_sha256": "8191d57a5a6e0b2a03771053a25855e901c674ec2945e8a112667457fdf6b6e3",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_http_digest.py::test_security_http_digest_no_credentials"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_http_digest.py::test_security_http_digest_no_credentials",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_openid_connect_optional.py::test_security_oauth2_password_other_header",
+          "outcome_consistent": true,
+          "output_hash_equal": true,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_openid_connect_optional.py::test_security_oauth2_password_other_header"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_openid_connect_optional.py::test_security_oauth2_password_other_header",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.16s\n",
+            "output_sha256": "205d58c39ad043ed358d072964e6248772468ab7fa152369d75174489085c301",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_openid_connect_optional.py::test_security_oauth2_password_other_header"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_openid_connect_optional.py::test_security_oauth2_password_other_header",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.16s\n",
+            "output_sha256": "205d58c39ad043ed358d072964e6248772468ab7fa152369d75174489085c301",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_api_key_header.py::test_security_api_key",
+          "outcome_consistent": true,
+          "output_hash_equal": true,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_api_key_header.py::test_security_api_key"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_api_key_header.py::test_security_api_key",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_api_key_header.py::test_security_api_key"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_api_key_header.py::test_security_api_key",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_oauth2.py::test_openapi_schema",
+          "outcome_consistent": true,
+          "output_hash_equal": true,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_oauth2.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_oauth2.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.18s\n",
+            "output_sha256": "c187c26d5ca5b33e26135a100ffc3118dcadea5ccfe1881bf90fbb74c225a8ae",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_oauth2.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_oauth2.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.18s\n",
+            "output_sha256": "c187c26d5ca5b33e26135a100ffc3118dcadea5ccfe1881bf90fbb74c225a8ae",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_oauth2.py::test_strict_login[None-422-expected_response0]",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_oauth2.py::test_strict_login[None-422-expected_response0]"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_oauth2.py::test_strict_login[None-422-expected_response0]",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.14s\n",
+            "output_sha256": "73e28e7855ac434216f6a887531346e106624ce5343281357aff12b7fbd4787a",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_oauth2.py::test_strict_login[None-422-expected_response0]"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_oauth2.py::test_strict_login[None-422-expected_response0]",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_oauth2.py::test_security_oauth2_password_other_header",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_oauth2.py::test_security_oauth2_password_other_header"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_oauth2.py::test_security_oauth2_password_other_header",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.16s\n",
+            "output_sha256": "205d58c39ad043ed358d072964e6248772468ab7fa152369d75174489085c301",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_oauth2.py::test_security_oauth2_password_other_header"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_oauth2.py::test_security_oauth2_password_other_header",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.19s\n",
+            "output_sha256": "a5721b58acea678eda3d7bc1d56f2a145c287b2d30832793415b58b8dad65d31",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_oauth2_optional.py::test_strict_login[data3-200-expected_response3]",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_oauth2_optional.py::test_strict_login[data3-200-expected_response3]"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_oauth2_optional.py::test_strict_login[data3-200-expected_response3]",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.20s\n",
+            "output_sha256": "8e1c4ffd0f8c323eee5cddf264a6d4eb3ebb79a3f0bf759bcd460e87508b4f97",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_oauth2_optional.py::test_strict_login[data3-200-expected_response3]"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_oauth2_optional.py::test_strict_login[data3-200-expected_response3]",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.17s\n",
+            "output_sha256": "c19f4d1187eeffa2501c99433e001768940a0fa29a34c2c31e89cd3015513185",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_openid_connect_optional.py::test_openapi_schema",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_openid_connect_optional.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_openid_connect_optional.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_openid_connect_optional.py::test_openapi_schema"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_openid_connect_optional.py::test_openapi_schema",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.17s\n",
+            "output_sha256": "c19f4d1187eeffa2501c99433e001768940a0fa29a34c2c31e89cd3015513185",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_api_key_cookie.py::test_security_api_key_no_key",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_api_key_cookie.py::test_security_api_key_no_key"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_api_key_cookie.py::test_security_api_key_no_key",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.16s\n",
+            "output_sha256": "205d58c39ad043ed358d072964e6248772468ab7fa152369d75174489085c301",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_api_key_cookie.py::test_security_api_key_no_key"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_api_key_cookie.py::test_security_api_key_no_key",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.17s\n",
+            "output_sha256": "c19f4d1187eeffa2501c99433e001768940a0fa29a34c2c31e89cd3015513185",
+            "timed_out": false
+          },
+          "stable_pass": true
+        },
+        {
+          "nodeid": "tests/test_security_api_key_query_optional.py::test_security_api_key_no_key",
+          "outcome_consistent": true,
+          "output_hash_equal": false,
+          "run_a": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_api_key_query_optional.py::test_security_api_key_no_key"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_api_key_query_optional.py::test_security_api_key_no_key",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.15s\n",
+            "output_sha256": "836c77589cb7112d32244b570e357ecfc49c616e7eb42a09cd79d4e07f596799",
+            "timed_out": false
+          },
+          "run_b": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_security_api_key_query_optional.py::test_security_api_key_no_key"
+            ],
+            "exit_code": 0,
+            "nodeid": "tests/test_security_api_key_query_optional.py::test_security_api_key_no_key",
+            "outcome": "passed",
+            "output_excerpt": ".                                                                        [100%]\n=============================== warnings summary ===============================\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n/opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10\n  /opt/conda/envs/py383/lib/python3.8/site-packages/aiofiles/os.py:10: DeprecationWarning: \"@coroutine\" decorator is deprecated since Python 3.8, use \"async def\" instead\n    def run(*args, loop=None, executor=None, **kwargs):\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n1 passed, 6 warnings in 0.16s\n",
+            "output_sha256": "205d58c39ad043ed358d072964e6248772468ab7fa152369d75174489085c301",
+            "timed_out": false
+          },
+          "stable_pass": true
+        }
+      ],
+      "hidden_regression_nodeids": [
+        "tests/test_security_http_digest_optional.py::test_security_http_digest_incorrect_scheme_credentials",
+        "tests/test_security_oauth2.py::test_strict_login[None-422-expected_response0]",
+        "tests/test_security_oauth2.py::test_security_oauth2_password_other_header",
+        "tests/test_security_oauth2_optional.py::test_strict_login[data3-200-expected_response3]",
+        "tests/test_security_openid_connect_optional.py::test_openapi_schema",
+        "tests/test_security_http_digest.py::test_security_http_digest",
+        "tests/test_security_api_key_cookie.py::test_security_api_key_no_key",
+        "tests/test_security_api_key_query_optional.py::test_security_api_key_no_key",
+        "tests/test_security_http_basic_realm.py::test_security_http_basic",
+        "tests/test_security_http_base_optional.py::test_security_http_base_no_credentials",
+        "tests/test_security_http_digest_optional.py::test_security_http_digest_no_credentials",
+        "tests/test_security_http_base.py::test_openapi_schema",
+        "tests/test_security_http_digest.py::test_security_http_digest_incorrect_scheme_credentials",
+        "tests/test_security_http_base_optional.py::test_openapi_schema",
+        "tests/test_security_http_basic_optional.py::test_openapi_schema",
+        "tests/test_security_http_bearer.py::test_security_http_bearer",
+        "tests/test_security_http_basic_realm.py::test_openapi_schema",
+        "tests/test_security_http_base.py::test_security_http_base_no_credentials",
+        "tests/test_security_http_basic_optional.py::test_security_http_basic_non_basic_credentials",
+        "tests/test_security_http_basic_realm.py::test_security_http_basic_non_basic_credentials"
+      ],
+      "hidden_regression_sha256": "d721689dcccc0c3cdc3cdfb1dbda4e517caaab30bf83ee1073afb58e326c9750",
+      "oracle_capacity_passed": true,
+      "pool_node_count": 40,
+      "pool_sha256": "63c586ba58a4eb6b44cf556e9e797ae87bc0a6df0d2e42fdf7ff316eb49d3dbb",
+      "reference_tree_hash_equal": true,
+      "reference_tree_sha256": "efa2cfbb025c5d8cac1e49d47f8552020fc34e17a1e82b781ff819730b78b117",
+      "run_a": {
+        "container_exit_code": 0,
+        "container_id": "801a27a23cccc542735eb2d6fc198f4e3228cc9711ba71913d44f64caa4c6c41",
+        "created": "2026-07-11T09:33:06.565834009Z",
+        "image_id": "sha256:11fb7ffa940afd56884299fdb26a5775bf1b09ed87a5fb8c1c9213c04ad22da3",
+        "mounts": [],
+        "network_mode": "none",
+        "run_id": "A"
+      },
+      "run_b": {
+        "container_exit_code": 0,
+        "container_id": "8a64dcbcd18bc31232c2192376dbb05fbede38b2b13960e42f4f09ea52b83632",
+        "created": "2026-07-11T09:33:07.510109573Z",
+        "image_id": "sha256:11fb7ffa940afd56884299fdb26a5775bf1b09ed87a5fb8c1c9213c04ad22da3",
+        "mounts": [],
+        "network_mode": "none",
+        "run_id": "B"
+      },
+      "stable_pass_count": 40,
+      "task_id": "bugsinpy_fastapi_12",
+      "task_image_id": "sha256:11fb7ffa940afd56884299fdb26a5775bf1b09ed87a5fb8c1c9213c04ad22da3",
+      "unstable_or_failed_count": 0,
+      "visible_p2p_nodeids": [
+        "tests/test_security_openid_connect_optional.py::test_security_oauth2_password_other_header",
+        "tests/test_security_api_key_header.py::test_security_api_key",
+        "tests/test_security_oauth2.py::test_openapi_schema"
+      ],
+      "visible_p2p_sha256": "0a3bdea4f54502f22dea00f854981effb4175e72bc8284b5adab07bf2d635e8c"
+    }
+  ],
+  "registry_id": "dsa_p4_reference_pool_results_v0_1",
+  "visibility": "hidden_never_model_visible"
+}

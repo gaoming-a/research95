@@ -29,9 +29,10 @@ bound into a candidate-independent toolchain image and reproduce identically in
 two network-disabled fresh containers. Task-specific oracle/candidate runs and
 the final P4 Gate remain pending.
 For the first structurally eligible task, `bugsinpy_fastapi_12`, two fresh
-reference F2P runs agree and a 40-node regression pool is now hash-frozen before
-any pool outcome or transformed candidate is observed. Its dual-reference pool
-run is the next gate; it is not yet an admitted pair.
+reference F2P runs agree. Its pre-outcome 40-node pool then passed 40/40 nodes in
+two distinct network-disabled, mount-free containers; 3 visible P2P and 20
+hidden regression nodes are now frozen. No transformed candidate has yet been
+materialized, so it is still not an admitted pair.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,

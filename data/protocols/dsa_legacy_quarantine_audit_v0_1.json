@@ -22,6 +22,7 @@
       "scripts/dsa2026_p4_container_worker.py",
       "scripts/dsa2026_p4_oracle_freeze.py",
       "scripts/dsa2026_p4_preflight.py",
+      "scripts/dsa2026_p4_run_reference_pool.py",
       "scripts/dsa2026_simulate_p2_precision.py"
     ],
     "violations": []

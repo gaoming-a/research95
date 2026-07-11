@@ -42,7 +42,8 @@
   oracle registry、candidate pair 和最终 P4 Gate 尚未完成。
 - `bugsinpy_fastapi_12` 的 task environment 与 official F2P 已在两个 fresh containers
   一致通过；40-node regression pool 已在任何 pool outcome/transform 前冻结并哈希。
-  该任务仍未形成 candidate pair，下一门是 pool 的双环境逐节点稳定性验证。
+  随后的双环境逐节点验证为 40/40 stable pass，现已冻结 visible P2P=3、hidden=20；
+  该任务仍未形成 candidate pair，下一门是唯一 T4 hard negative 的物化与双环境验证。
 
 ### 2026-07-10 DSA 路线计划基线（已由上方 P2 状态覆盖）
 

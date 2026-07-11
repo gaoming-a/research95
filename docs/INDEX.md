@@ -34,6 +34,11 @@
   transformed outcomes. `../scripts/dsa2026_p4_oracle_freeze.py` performs
   discovery/freeze checks; `../scripts/dsa2026_p4_container_worker.py` runs
   isolated reference collection and checks inside task images.
+- `../data/hidden/dsa_p4_reference_pool_results_v0_1.json`: private dual-fresh
+  per-node reference results, distinct container IDs, network/mount checks,
+  stable-node decisions, and frozen visible/hidden split hashes. The executor
+  and deterministic replay check are
+  `../scripts/dsa2026_p4_run_reference_pool.py`.
 - [dsa_p3_preregistration_v0_1.md](experiments/dsa_p3_preregistration_v0_1.md):
   human-readable P3 research questions, primary estimands, cumulative evidence
   contract, task-level conditional statistics, exact model routes, exclusions,
