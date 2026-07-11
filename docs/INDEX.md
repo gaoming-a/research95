@@ -28,12 +28,20 @@
   `../data/protocols/dsa_p4_preflight_v0_1.json`; the deterministic auditor is
   `../scripts/dsa2026_p4_preflight.py`. This is not the final P4 Gate and does
   not authorize P5 or a model call.
+- `../data/protocols/dsa_p4_task_source_registry_v0_1.json`: pre-candidate
+  provenance for the unique replacement-cursor task `bugsinpy_tornado_10`,
+  including exact codeload archive, extracted-tree, fixed-test, frozen metadata,
+  normalized reference-validation, and context hashes. The deterministic
+  write/check entry point is
+  `../scripts/dsa2026_p4_prepare_task_context.py`; it does not materialize a
+  transformed candidate or run a test/model.
 - `../data/hidden/dsa_p4_oracle_pool_registry_v0_1.json`: private hidden-tree
   pre-transform node-pool registry. It freezes each pool, image/tree/patch
   hashes, exact relatedness formula, and tie hashes before observing pool or
   transformed outcomes. `../scripts/dsa2026_p4_oracle_freeze.py` performs
   discovery/freeze checks; `../scripts/dsa2026_p4_container_worker.py` runs
-  isolated reference collection and checks inside task images.
+  isolated reference collection and checks inside task images, including the
+  pre-outcome standard-library unittest adapter required by Tornado.
 - `../data/hidden/dsa_p4_reference_pool_results_v0_1.json`: private dual-fresh
   per-node reference results, distinct container IDs, network/mount checks,
   stable-node decisions, and frozen visible/hidden split hashes. The executor

@@ -42,6 +42,13 @@ experiment: primary orders 1--3 are realized as structural/terminal/structural
 discards and are allocated reserve orders 1--3. The unique next executable
 primary is order 4, `bugsinpy_tornado_10`; the remaining nonstructural discard
 budget is five.
+Its official buggy/fixed codeload archives and BugsInPy metadata have now been
+hash-verified into a pre-candidate task context. The raw CRLF reference patch is
+preserved while an explicitly hashed LF copy is used only for strict patch
+validation. A standard-library unittest collector/runner adapter is frozen
+before any Tornado reference outcome. The task image, dual reference checks,
+and regression-pool outcomes remain pending; no transformed candidate or model
+call has occurred for this task.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,

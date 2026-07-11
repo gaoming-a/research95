@@ -31,6 +31,9 @@ FROZEN_RECORD_FIELDS = {
     "reference_source_paths",
     "source_tokens",
     "official_f2p_nodeids",
+    "test_framework",
+    "unittest_pattern",
+    "unittest_top_level_dir",
     "test_root",
     "collection",
     "selection_rule",
@@ -82,11 +85,22 @@ def inspect_image(image: str) -> dict[str, Any]:
     return values[0]
 
 
-def discover(image: str, test_root: str, timeout: int) -> dict[str, Any]:
+def discover(
+    image: str,
+    test_framework: str,
+    test_root: str,
+    unittest_pattern: str,
+    unittest_top_level_dir: str,
+    timeout: int,
+) -> dict[str, Any]:
     result = subprocess.run(
         [
             "docker", "run", "--rm", "--network", "none", image,
-            "collect", "--test-root", test_root, "--timeout", str(timeout),
+            "collect", "--test-framework", test_framework,
+            "--test-root", test_root,
+            "--unittest-pattern", unittest_pattern,
+            "--unittest-top-level-dir", unittest_top_level_dir,
+            "--timeout", str(timeout),
         ],
         cwd=ROOT,
         capture_output=True,
@@ -110,6 +124,9 @@ def build_record(
     source_paths: list[str],
     official_f2p_nodeids: list[str],
     test_root: str,
+    test_framework: str,
+    unittest_pattern: str,
+    unittest_top_level_dir: str,
     discovery: dict[str, Any],
 ) -> dict[str, Any]:
     image_data = inspect_image(image)
@@ -133,7 +150,7 @@ def build_record(
     rows.sort(key=lambda row: (-row["relatedness_score"], row["tie_sha256"], row["nodeid"]))
     pool = rows[:40]
     pool_nodeids = [row["nodeid"] for row in pool]
-    return {
+    record = {
         "stream_role": task["role"],
         "stream_order": task["stream_order"],
         "task_id": task["task_id"],
@@ -171,6 +188,15 @@ def build_record(
         "transformed_candidate_materialized": False,
         "transformed_candidate_outcome_observed": False,
     }
+    if test_framework != "pytest":
+        record.update(
+            {
+                "test_framework": test_framework,
+                "unittest_pattern": unittest_pattern,
+                "unittest_top_level_dir": unittest_top_level_dir,
+            }
+        )
+    return record
 
 
 def registry_with(record: dict[str, Any]) -> dict[str, Any]:
@@ -199,6 +225,9 @@ def main() -> None:
     parser.add_argument("--source-path", action="append", required=True)
     parser.add_argument("--official-f2p-nodeid", action="append", required=True)
     parser.add_argument("--test-root", required=True)
+    parser.add_argument("--test-framework", choices=("pytest", "unittest"), default="pytest")
+    parser.add_argument("--unittest-pattern", default="*_test.py")
+    parser.add_argument("--unittest-top-level-dir", default=".")
     parser.add_argument("--runtime-output", required=True)
     parser.add_argument("--collection-timeout", type=int, default=1800)
     mode = parser.add_mutually_exclusive_group(required=True)
@@ -210,7 +239,14 @@ def main() -> None:
     task = next(item for item in preflight["tasks"] if item["task_id"] == args.task_id)
     runtime = Path(args.runtime_output).resolve()
     if args.write:
-        discovery = discover(args.image, args.test_root, args.collection_timeout)
+        discovery = discover(
+            args.image,
+            args.test_framework,
+            args.test_root,
+            args.unittest_pattern,
+            args.unittest_top_level_dir,
+            args.collection_timeout,
+        )
         runtime.parent.mkdir(parents=True, exist_ok=True)
         runtime.write_text(
             json.dumps(discovery, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
@@ -225,6 +261,9 @@ def main() -> None:
         args.source_path,
         args.official_f2p_nodeid,
         args.test_root,
+        args.test_framework,
+        args.unittest_pattern,
+        args.unittest_top_level_dir,
         discovery,
     )
     existing_record = None

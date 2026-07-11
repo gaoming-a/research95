@@ -2,6 +2,18 @@
 
 ## 2026-07-11 DSA P4 bootstrap and pre-transform audit
 
+- Official GitHub codeload archives can contain symlinks that Windows cannot
+  recreate in a Docker build context. Validate every link stays inside the
+  archive root, then materialize its target content and record the count; keep
+  the original archive SHA-256 as the source-provenance identity.
+- BugsInPy `bug_patch.txt` may use CRLF while its codeload source uses LF. Keep
+  and hash the raw metadata unchanged, but apply an explicitly hashed LF
+  validation copy. Do not use whitespace-ignore patch matching because that
+  weakens the reference-integrity gate.
+- A frozen `unittest` task cannot be sent through a pytest-only oracle worker.
+  Before any reference outcome, add a standard-library discovery adapter that
+  emits dotted test IDs and execute each ID with `python -m unittest -q`; keep
+  the source-token/tie-hash selection and dual-fresh-container rules unchanged.
 - A hash-ordered transform is not reproducible until its edit identity and
   serialization are explicit. Before any candidate outcome, encode each T4
   source-diff line as canonical JSON over path, hunk index, line index, kind,

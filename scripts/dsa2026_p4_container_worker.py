@@ -11,6 +11,7 @@ import shutil
 import subprocess
 import sys
 import time
+import textwrap
 from pathlib import Path
 from typing import Any
 
@@ -19,6 +20,60 @@ TASK_ROOT = Path(os.environ.get("DSA_P4_TASK_ROOT", "/opt/dsa2026/task"))
 PYTHON_ENV = os.environ.get("DSA_P4_PYTHON_ENV", "")
 WORKSPACE = Path("/workspace/project")
 SKIP_NAMES = {".git", "__pycache__", ".pytest_cache", ".mypy_cache", "build", "dist"}
+
+UNITTEST_DISCOVERY = textwrap.dedent(
+    """
+    import argparse
+    import json
+    import traceback
+    import unittest
+
+    def flatten(suite):
+        for item in suite:
+            if isinstance(item, unittest.TestSuite):
+                yield from flatten(item)
+            else:
+                yield item
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--start-dir", required=True)
+    parser.add_argument("--pattern", required=True)
+    parser.add_argument("--top-level-dir", default="")
+    args = parser.parse_args()
+    loader = unittest.TestLoader()
+    kwargs = {"start_dir": args.start_dir, "pattern": args.pattern}
+    if args.top_level_dir:
+        kwargs["top_level_dir"] = args.top_level_dir
+    try:
+        suite = loader.discover(**kwargs)
+        tests = []
+        errors = []
+        for test in flatten(suite):
+            test_id = test.id()
+            if test_id.startswith("unittest.loader._FailedTest"):
+                error = getattr(test, "_exception", None)
+                errors.append({
+                    "test_id": test_id,
+                    "error_type": type(error).__name__ if error is not None else "UnittestFailedImport",
+                    "message": str(error) if error is not None else test_id,
+                    "traceback_excerpt": "".join(traceback.format_exception(error))[-2000:] if error is not None else test_id,
+                })
+            else:
+                tests.append(test_id)
+        print(json.dumps({"tests": sorted(set(tests)), "errors": errors}, sort_keys=True))
+    except Exception as error:
+        print(json.dumps({
+            "tests": [],
+            "errors": [{
+                "test_id": args.start_dir,
+                "error_type": type(error).__name__,
+                "message": str(error),
+                "traceback_excerpt": traceback.format_exc()[-2000:],
+            }],
+        }, sort_keys=True))
+        raise
+    """
+)
 
 
 def sha256_bytes(value: bytes) -> str:
@@ -61,8 +116,10 @@ def prepare_reference() -> dict[str, Any]:
     shutil.copytree(TASK_ROOT / "buggy_source", WORKSPACE)
     copied_tests = copy_fixed_tests()
     patch = TASK_ROOT / "metadata" / "bug_patch.txt"
+    normalized_patch = WORKSPACE.parent / "reference_validation.patch"
+    normalized_patch.write_bytes(patch.read_bytes().replace(b"\r\n", b"\n"))
     check = subprocess.run(
-        ["git", "apply", "--check", str(patch)],
+        ["git", "apply", "--check", str(normalized_patch)],
         cwd=WORKSPACE,
         capture_output=True,
         text=True,
@@ -72,7 +129,7 @@ def prepare_reference() -> dict[str, Any]:
     if check.returncode != 0:
         raise RuntimeError(f"reference patch check failed: {check.stderr[-2000:]}")
     apply = subprocess.run(
-        ["git", "apply", str(patch)],
+        ["git", "apply", str(normalized_patch)],
         cwd=WORKSPACE,
         capture_output=True,
         text=True,
@@ -190,19 +247,45 @@ def run_command(command: list[str], timeout: int) -> dict[str, Any]:
     }
 
 
-def collect_nodes(test_root: str, timeout: int) -> dict[str, Any]:
+def collect_nodes(
+    test_framework: str,
+    test_root: str,
+    unittest_pattern: str,
+    unittest_top_level_dir: str,
+    timeout: int,
+) -> dict[str, Any]:
     preparation = prepare_reference()
-    result = run_command(
-        [str(env_bin("python")), "-m", "pytest", "--collect-only", "-q", test_root],
-        timeout,
-    )
+    if test_framework == "unittest":
+        command = [
+            str(env_bin("python")), "-c", UNITTEST_DISCOVERY,
+            "--start-dir", test_root,
+            "--pattern", unittest_pattern,
+            "--top-level-dir", unittest_top_level_dir,
+        ]
+    else:
+        command = [str(env_bin("python")), "-m", "pytest", "--collect-only", "-q", test_root]
+    result = run_command(command, timeout)
     nodes: list[str] = []
-    for line in result["_normalized_output"].splitlines():
-        stripped = line.strip()
-        if "::" in stripped and not stripped.startswith(("<", "=")):
-            nodes.append(stripped)
+    collection_errors: list[dict[str, Any]] = []
+    if test_framework == "unittest":
+        output_lines = [line for line in result["_normalized_output"].splitlines() if line.strip()]
+        if output_lines:
+            try:
+                payload = json.loads(output_lines[-1])
+                nodes = [str(item) for item in payload.get("tests", [])]
+                collection_errors = [item for item in payload.get("errors", []) if isinstance(item, dict)]
+            except json.JSONDecodeError:
+                collection_errors = [{"error_type": "DiscoveryOutputParseError", "message": output_lines[-1][-1000:]}]
+    else:
+        for line in result["_normalized_output"].splitlines():
+            stripped = line.strip()
+            if "::" in stripped and not stripped.startswith(("<", "=")):
+                nodes.append(stripped)
     result["collected_nodeids"] = sorted(set(nodes))
     result["collected_node_count"] = len(result["collected_nodeids"])
+    result["test_framework"] = test_framework
+    result["collection_errors"] = collection_errors
+    result["collection_error_count"] = len(collection_errors)
     result.pop("_normalized_output", None)
     return {"preparation": preparation, "collection": result}
 
@@ -222,14 +305,16 @@ def official_f2p(timeout: int) -> dict[str, Any]:
     return {"preparation": preparation, "checks": checks}
 
 
-def run_nodes(nodeids: list[str], timeout: int) -> dict[str, Any]:
+def run_nodes(nodeids: list[str], test_framework: str, timeout: int) -> dict[str, Any]:
     preparation = prepare_reference()
     checks = []
     for nodeid in nodeids:
-        result = run_command(
-            [str(env_bin("python")), "-m", "pytest", "-q", nodeid],
-            timeout,
+        command = (
+            [str(env_bin("python")), "-m", "unittest", "-q", nodeid]
+            if test_framework == "unittest"
+            else [str(env_bin("python")), "-m", "pytest", "-q", nodeid]
         )
+        result = run_command(command, timeout)
         result.pop("_normalized_output", None)
         result["nodeid"] = nodeid
         checks.append(result)
@@ -277,10 +362,12 @@ def candidate_run(args: argparse.Namespace) -> dict[str, Any]:
         )
     visible_checks = []
     for index, nodeid in enumerate(args.visible_node, start=1):
-        result = run_command(
-            [str(env_bin("python")), "-m", "pytest", "-q", nodeid],
-            args.timeout,
+        command = (
+            [str(env_bin("python")), "-m", "unittest", "-q", nodeid]
+            if args.test_framework == "unittest"
+            else [str(env_bin("python")), "-m", "pytest", "-q", nodeid]
         )
+        result = run_command(command, args.timeout)
         visible_checks.append(
             evidence_result(
                 result,
@@ -290,10 +377,12 @@ def candidate_run(args: argparse.Namespace) -> dict[str, Any]:
         )
     hidden_checks = []
     for index, nodeid in enumerate(args.hidden_node, start=1):
-        result = run_command(
-            [str(env_bin("python")), "-m", "pytest", "-q", nodeid],
-            args.timeout,
+        command = (
+            [str(env_bin("python")), "-m", "unittest", "-q", nodeid]
+            if args.test_framework == "unittest"
+            else [str(env_bin("python")), "-m", "pytest", "-q", nodeid]
         )
+        result = run_command(command, args.timeout)
         hidden_checks.append(
             evidence_result(
                 result,
@@ -333,9 +422,13 @@ def main() -> None:
     f2p.add_argument("--timeout", type=int, default=300)
     collect = subparsers.add_parser("collect")
     collect.add_argument("--test-root", required=True)
+    collect.add_argument("--test-framework", choices=("pytest", "unittest"), default="pytest")
+    collect.add_argument("--unittest-pattern", default="*_test.py")
+    collect.add_argument("--unittest-top-level-dir", default=".")
     collect.add_argument("--timeout", type=int, default=1800)
     nodes = subparsers.add_parser("run-nodes")
     nodes.add_argument("--node", action="append", required=True)
+    nodes.add_argument("--test-framework", choices=("pytest", "unittest"), default="pytest")
     nodes.add_argument("--timeout", type=int, default=300)
     candidate = subparsers.add_parser("candidate-run")
     candidate.add_argument("--candidate-patch", required=True)
@@ -345,6 +438,7 @@ def main() -> None:
     candidate.add_argument("--f2p-command", action="append", required=True)
     candidate.add_argument("--visible-node", action="append", required=True)
     candidate.add_argument("--hidden-node", action="append", required=True)
+    candidate.add_argument("--test-framework", choices=("pytest", "unittest"), default="pytest")
     candidate.add_argument("--timeout", type=int, default=300)
     args = parser.parse_args()
     if args.command == "environment-audit":
@@ -352,9 +446,15 @@ def main() -> None:
     elif args.command == "official-f2p":
         value = official_f2p(args.timeout)
     elif args.command == "collect":
-        value = collect_nodes(args.test_root, args.timeout)
+        value = collect_nodes(
+            args.test_framework,
+            args.test_root,
+            args.unittest_pattern,
+            args.unittest_top_level_dir,
+            args.timeout,
+        )
     elif args.command == "run-nodes":
-        value = run_nodes(args.node, args.timeout)
+        value = run_nodes(args.node, args.test_framework, args.timeout)
     else:
         value = candidate_run(args)
     print(json.dumps(value, ensure_ascii=False, sort_keys=True))

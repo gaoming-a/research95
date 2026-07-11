@@ -9,6 +9,23 @@
 model-visible/hidden manifests。本轮不调用模型 API、不进入 P5、不生成 rendered prompt、
 不修改论文结果或任何 P2/P3 冻结语义。
 
+当前 `bugsinpy_tornado_10` pre-outcome Goal（2026-07-11）：
+
+- 只从 private-synced commit `1c8f276` 和 cursor SHA-256
+  `24f37f3f2eefe99c9346b4b141965cb137e8f7dfb87e6e11eaa0ac909b0fbf2e`
+  处理唯一 next task primary #4 `bugsinpy_tornado_10`；
+- 开始前重新验证 P2/P3 immutable hashes、P4 preflight、cursor、official catalog
+  metadata/commands、buggy/fixed commits 和此前 activity=0；
+- 从 frozen official source 构造 task context，使用 Python 3.7.0 explicit lock 构建
+  task-specific image，冻结 image/environment/dependency hashes；
+- official reference F2P 必须在两个 fresh、network=none、mounts=0 containers 中一致
+  通过；随后在任何 transformed candidate activity 前，按既定 source-token/tie-hash
+  规则冻结最多40个 regression nodes；
+- frozen pool 再由两个新的 fresh containers 逐节点验证，只从稳定通过集合按 tie hash
+  固定前3个 visible P2P和随后最多20个 held-out nodes；不足容量则 pre-candidate discard；
+- 本 Goal 严禁物化或运行 T1 candidate；完成 oracle/environment 证据、文档、private Git
+  闭环后停止，不进入下一 task、P5、rendered prompt、paper result 或 model API。
+
 当前 replacement-cursor Goal（2026-07-11）：
 
 - 只从 private-synced commit `bd38523` 复算 P4 primary/reserve cursor，不构建或运行

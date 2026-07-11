@@ -48,11 +48,15 @@ def run_fresh_container(
     run_id: str,
     image: str,
     nodeids: list[str],
+    test_framework: str,
     node_timeout: int,
     total_timeout: int,
 ) -> dict[str, Any]:
     name = f"dsa-p4-{task_id.removeprefix('bugsinpy_').replace('_', '-')}-{run_id.lower()}-{uuid.uuid4().hex[:8]}"
-    command = ["run-nodes", "--timeout", str(node_timeout)]
+    command = [
+        "run-nodes", "--test-framework", test_framework,
+        "--timeout", str(node_timeout),
+    ]
     for nodeid in nodeids:
         command.extend(["--node", nodeid])
     container_id = subprocess.check_output(
@@ -111,6 +115,7 @@ def load_or_run(
                     run_id,
                     record["task_image"],
                     nodeids,
+                    record.get("test_framework", "pytest"),
                     args.node_timeout,
                     args.total_timeout,
                 )
