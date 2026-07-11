@@ -47,7 +47,9 @@
   前物化并哈希，materialization SHA-256 为
   `41bbfc2319f9f5aa336cb772e5db5f098211cf7d3253120df6b577648d0445bb`；
   candidate worker/runner 已独立实现并通过静态与 namespace audit；下一门是两候选各
-  两个 fresh containers 的冻结 checks，当前仍未观察 candidate outcome 或 admission。
+  两个 fresh containers 的冻结 checks。首次启动在任何测试前被 CRLF patch-apply
+  integrity gate 阻断；当前仍未观察 candidate test outcome 或 admission，同一 T4 edit
+  正在只修复 patch bytes 后重新冻结。
 
 ### 2026-07-10 DSA 路线计划基线（已由上方 P2 状态覆盖）
 

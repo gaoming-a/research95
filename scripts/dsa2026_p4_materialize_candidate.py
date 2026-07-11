@@ -142,6 +142,11 @@ def write_text_exact(path: Path, value: str) -> None:
     path.write_bytes(value.encode("utf-8"))
 
 
+def patch_newlines(value: str, crlf: bool) -> str:
+    normalized = value.replace("\r\n", "\n").replace("\r", "\n")
+    return normalized.replace("\n", "\r\n") if crlf else normalized
+
+
 def unified_diff_for_paths(
     baseline: Path,
     candidate: Path,
@@ -270,11 +275,13 @@ def build_materialization(
     official_patch_bytes = official_patch_path.read_bytes()
     if sha256_bytes(official_patch_bytes) != task["metadata_sha256"]["reference_patch"]:
         raise ValueError("official patch hash drift")
+    official_patch_raw = official_patch_bytes.decode("utf-8")
     official_patch = (
-        official_patch_bytes.decode("utf-8")
+        official_patch_raw
         .replace("\r\n", "\n")
         .replace("\r", "\n")
     )
+    patch_uses_crlf = b"\r\n" in official_patch_bytes
     source_paths = list(task["reference_source_paths"])
     patch_files = [item.path for item in PatchSet(official_patch.splitlines(keepends=True))]
     if any(is_test_path(path) for path in patch_files):
@@ -302,14 +309,19 @@ def build_materialization(
         candidate_lines = read_lines_exact(selected_path)
         index = selected["target_index"]
         value = selected["value"]
+        file_uses_crlf = any(line.endswith("\r\n") for line in candidate_lines)
+        restored_value = patch_newlines(value, file_uses_crlf)
         if selected["kind"] == "added":
             if index >= len(candidate_lines) or candidate_lines[index].replace("\r\n", "\n").replace("\r", "\n") != value:
                 raise ValueError("selected added line does not match the reference-fixed file")
             del candidate_lines[index]
         else:
-            candidate_lines.insert(index, value)
+            candidate_lines.insert(index, restored_value)
         write_text_exact(selected_path, "".join(candidate_lines))
-        negative_patch = unified_diff_for_paths(baseline, negative_root, source_paths)
+        negative_patch = patch_newlines(
+            unified_diff_for_paths(baseline, negative_root, source_paths),
+            patch_uses_crlf,
+        )
         if not negative_patch:
             raise ValueError("T4 produced the buggy baseline")
         if negative_patch.replace("\r\n", "\n") == official_patch.replace("\r\n", "\n"):
@@ -330,7 +342,7 @@ def build_materialization(
         candidates = [
             candidate_record(
                 "oracle_positive",
-                official_patch,
+                official_patch_raw,
                 positive_root,
                 baseline,
                 official_patch,

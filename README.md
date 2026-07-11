@@ -36,7 +36,9 @@ run. The official positive and frozen T4 partial-reversion candidate are now
 materialized and hash-bound in a hidden registry before any candidate outcome;
 the task is still not an admitted pair until both candidates complete two fresh
 container runs. The candidate worker/runner is now separately frozen and
-audited, but has not yet executed those four containers.
+audited. Its first start was stopped by a pre-test CRLF patch-apply integrity
+failure; no candidate test outcome or task Gate was produced, and the same T4
+edit is being re-frozen with byte-correct patch serialization before execution.
 
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,

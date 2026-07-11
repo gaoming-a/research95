@@ -28,6 +28,11 @@ model-visible/hidden manifests。本轮不调用模型 API、不进入 P5、不�
   每个容器独立复制已提交的 worker 与同 hash patch，完整运行 patch-apply、py_compile、
   frozen F2P、3 个 visible P2P 和 20 个 held-out checks，不因早期 visible failure
   跳过后续证据；raw container JSON 只写 ignored runtime，聚合 evidence 才进入 tracked tree；
+- 首次四容器启动在任何 F2P/P2P/held-out outcome 前被 patch-apply integrity gate
+  统一阻断：task image 保留 CRLF source，而 materializer 错把 patch bytes 统一为 LF。
+  允许的唯一 repair 是保留同一 T4 selected edit/hash，只让 positive 使用 official raw
+  CRLF bytes、negative 按 official newline style 序列化并重新冻结 hashes；禁止据此更换
+  transform/edit，repair commit 后才重新启动正式四容器 runs；
 - 验收条件为证据无 placeholder/not_run、两环境一致、leakage=0、P2/P3 hashes 不变；
   完成文档、相关文件提交与 private remote 同步尝试后停止，不进入 P5/API。
 

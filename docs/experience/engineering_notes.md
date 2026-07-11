@@ -17,6 +17,13 @@
   committed worker and hash-bound patch into its private filesystem, inspect
   mounts/image/network, and only then start it. Use a distinct patch path per
   concurrent run so two fresh runs cannot race while writing one host file.
+- A host-side `git apply` success does not prove a patch serialized with LF will
+  apply inside a Linux container when the Docker context preserved CRLF source.
+  The first candidate start failed at the integrity check before any test
+  outcome. Preserve the official raw patch bytes for the positive, serialize
+  the transformed patch with the official newline style, and restore a removed
+  T4 line using the target file's newline style. Keep the same selected edit
+  hash; this is an execution repair, not outcome-dependent candidate selection.
 - A stopped reproduction container can contain fresh official Git objects even
   when its environment build failed. Export a Git bundle from committed refs
   only; never carry its dirty worktree, copied benchmark index, logs, or prior

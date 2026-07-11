@@ -14,25 +14,25 @@
               "neutral_description": "Update optional credential handling when the supplied authorization scheme does not match the expected scheme."
             }
           },
-          "opaque_id": "cand_b4162818ab0effd8",
-          "patch_sha256": "b4162818ab0effd813ea6c95afc415906a960fff3a0df21ea8f95404c2043374",
-          "patch_text": "diff --git a/fastapi/security/http.py b/fastapi/security/http.py\nindex f41d8d9..362390b 100644\n--- a/fastapi/security/http.py\n+++ b/fastapi/security/http.py\n@@ -112,10 +112,13 @@ class HTTPBearer(HTTPBase):\n             else:\n                 return None\n         if scheme.lower() != \"bearer\":\n-            raise HTTPException(\n-                status_code=HTTP_403_FORBIDDEN,\n-                detail=\"Invalid authentication credentials\",\n-            )\n+            if self.auto_error:\n+                raise HTTPException(\n+                    status_code=HTTP_403_FORBIDDEN,\n+                    detail=\"Invalid authentication credentials\",\n+                )\n+            else:\n+                return None\n         return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\n \n \n",
-          "patch_utf8_bytes": 801,
+          "opaque_id": "cand_586ed616d3a17fde",
+          "patch_sha256": "586ed616d3a17fdec4139892a3e47e4fa158e874d6b6fa672ddd5f7dbbf85a52",
+          "patch_text": "diff --git a/fastapi/security/http.py b/fastapi/security/http.py\r\nindex f41d8d9..362390b 100644\r\n--- a/fastapi/security/http.py\r\n+++ b/fastapi/security/http.py\r\n@@ -112,10 +112,13 @@ class HTTPBearer(HTTPBase):\r\n             else:\r\n                 return None\r\n         if scheme.lower() != \"bearer\":\r\n-            raise HTTPException(\r\n-                status_code=HTTP_403_FORBIDDEN,\r\n-                detail=\"Invalid authentication credentials\",\r\n-            )\r\n+            if self.auto_error:\r\n+                raise HTTPException(\r\n+                    status_code=HTTP_403_FORBIDDEN,\r\n+                    detail=\"Invalid authentication credentials\",\r\n+                )\r\n+            else:\r\n+                return None\r\n         return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\r\n \r\n \r\n",
+          "patch_utf8_bytes": 823,
           "role": "oracle_positive"
         },
         {
-          "candidate_tree_sha256": "33ddff888801aa3812fa1b4fc819f86204a776ab5482c4e7f1baf7aab70870b5",
+          "candidate_tree_sha256": "7a5089ef69b63ded2a36410a7251263aa9b44f1c2742131a84013602f60b5447",
           "neutral_payload": {
             "change_request": {
-              "candidate_diff": "--- a/module_001.py\n+++ b/module_001.py\n@@ -112,10 +112,14 @@\n             else:\n                 return None\n         if scheme.lower() != \"bearer\":\n-            raise HTTPException(\n-                status_code=HTTP_403_FORBIDDEN,\n-                detail=\"Invalid authentication credentials\",\n-            )\n+                status_code=HTTP_403_FORBIDDEN,\n+            if self.auto_error:\n+                raise HTTPException(\n+                    status_code=HTTP_403_FORBIDDEN,\n+                    detail=\"Invalid authentication credentials\",\n+                )\n+            else:\n+                return None\n         return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\n \n \n",
+              "candidate_diff": "--- a/module_001.py\n+++ b/module_001.py\n@@ -112,10 +112,14 @@\n             else:\n                 return None\n         if scheme.lower() != \"bearer\":\n-            raise HTTPException(\n                 status_code=HTTP_403_FORBIDDEN,\n-                detail=\"Invalid authentication credentials\",\n-            )\n+            if self.auto_error:\n+                raise HTTPException(\n+                    status_code=HTTP_403_FORBIDDEN,\n+                    detail=\"Invalid authentication credentials\",\n+                )\n+            else:\n+                return None\n         return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\n \n \n",
               "code_context": "File: module_001.py\nBefore lines 100-137:\n        self.auto_error = auto_error\n\n    async def __call__(\n        self, request: Request\n    ) -> Optional[HTTPAuthorizationCredentials]:\n        authorization: str = request.headers.get(\"Authorization\")\n        scheme, credentials = get_authorization_scheme_param(authorization)\n        if not (authorization and scheme and credentials):\n            if self.auto_error:\n                raise HTTPException(\n                    status_code=HTTP_403_FORBIDDEN, detail=\"Not authenticated\"\n                )\n            else:\n                return None\n        if scheme.lower() != \"bearer\":\n            raise HTTPException(\n                status_code=HTTP_403_FORBIDDEN,\n                detail=\"Invalid authentication credentials\",\n            )\n        return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\n\n\nclass HTTPDigest(HTTPBase):\n    def __init__(self, *, scheme_name: str = None, auto_error: bool = True):\n        self.model = HTTPBaseModel(scheme=\"digest\")\n        self.scheme_name = scheme_name or self.__class__.__name__\n        self.auto_error = auto_error\n\n    async def __call__(\n        self, request: Request\n    ) -> Optional[HTTPAuthorizationCredentials]:\n        authorization: str = request.headers.get(\"Authorization\")\n        scheme, credentials = get_authorization_scheme_param(authorization)\n        if not (authorization and scheme and credentials):\n            if self.auto_error:\n                raise HTTPException(\n                    status_code=HTTP_403_FORBIDDEN, detail=\"Not authenticated\"\n                )\nCandidate lines 100-137:\n        self.auto_error = auto_error\n\n    async def __call__(\n        self, request: Request\n    ) -> Optional[HTTPAuthorizationCredentials]:\n        authorization: str = request.headers.get(\"Authorization\")\n        scheme, credentials = get_authorization_scheme_param(authorization)\n        if not (authorization and scheme and credentials):\n            if self.auto_error:\n                raise HTTPException(\n                    status_code=HTTP_403_FORBIDDEN, detail=\"Not authenticated\"\n                )\n            else:\n                return None\n        if scheme.lower() != \"bearer\":\n                status_code=HTTP_403_FORBIDDEN,\n            if self.auto_error:\n                raise HTTPException(\n                    status_code=HTTP_403_FORBIDDEN,\n                    detail=\"Invalid authentication credentials\",\n                )\n            else:\n                return None\n        return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\n\n\nclass HTTPDigest(HTTPBase):\n    def __init__(self, *, scheme_name: str = None, auto_error: bool = True):\n        self.model = HTTPBaseModel(scheme=\"digest\")\n        self.scheme_name = scheme_name or self.__class__.__name__\n        self.auto_error = auto_error\n\n    async def __call__(\n        self, request: Request\n    ) -> Optional[HTTPAuthorizationCredentials]:\n        authorization: str = request.headers.get(\"Authorization\")\n        scheme, credentials = get_authorization_scheme_param(authorization)\n        if not (authorization and scheme and credentials):\n",
               "neutral_description": "Update optional credential handling when the supplied authorization scheme does not match the expected scheme."
             }
           },
-          "opaque_id": "cand_bde8cefbe5760e60",
-          "patch_sha256": "bde8cefbe5760e6032e71ba17af3256a232da33ae5fd62a5d0bdc536fb6117b5",
-          "patch_text": "--- a/fastapi/security/http.py\n+++ b/fastapi/security/http.py\n@@ -112,10 +112,14 @@\n             else:\r\n                 return None\r\n         if scheme.lower() != \"bearer\":\r\n-            raise HTTPException(\r\n-                status_code=HTTP_403_FORBIDDEN,\r\n-                detail=\"Invalid authentication credentials\",\r\n-            )\r\n+                status_code=HTTP_403_FORBIDDEN,\n+            if self.auto_error:\r\n+                raise HTTPException(\r\n+                    status_code=HTTP_403_FORBIDDEN,\r\n+                    detail=\"Invalid authentication credentials\",\r\n+                )\r\n+            else:\r\n+                return None\r\n         return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\r\n \r\n \r\n",
-          "patch_utf8_bytes": 744,
+          "opaque_id": "cand_5b6f8a50979b5a8b",
+          "patch_sha256": "5b6f8a50979b5a8b48bcd7bfbbbd2b4bf11b0fcbe2ac631b5d00ffbfaff86e03",
+          "patch_text": "--- a/fastapi/security/http.py\r\n+++ b/fastapi/security/http.py\r\n@@ -112,10 +112,14 @@\r\n             else:\r\n                 return None\r\n         if scheme.lower() != \"bearer\":\r\n-            raise HTTPException(\r\n                 status_code=HTTP_403_FORBIDDEN,\r\n-                detail=\"Invalid authentication credentials\",\r\n-            )\r\n+            if self.auto_error:\r\n+                raise HTTPException(\r\n+                    status_code=HTTP_403_FORBIDDEN,\r\n+                    detail=\"Invalid authentication credentials\",\r\n+                )\r\n+            else:\r\n+                return None\r\n         return HTTPAuthorizationCredentials(scheme=scheme, credentials=credentials)\r\n \r\n \r\n",
+          "patch_utf8_bytes": 698,
           "role": "hard_negative"
         }
       ],
@@ -70,15 +70,15 @@
         ],
         "visible_p2p_sha256": "0a3bdea4f54502f22dea00f854981effb4175e72bc8284b5adab07bf2d635e8c"
       },
-      "materialization_sha256": "41bbfc2319f9f5aa336cb772e5db5f098211cf7d3253120df6b577648d0445bb",
+      "materialization_sha256": "2cd71a77407a96169fb8988fb914666dab372ab6e4663452d148ae670b67bbb3",
       "normalized_path_map": {
         "fastapi/security/http.py": "module_001.py"
       },
       "project": "fastapi",
       "reference_patch_sha256": "586ed616d3a17fdec4139892a3e47e4fa158e874d6b6fa672ddd5f7dbbf85a52",
       "role_by_opaque_id": {
-        "cand_b4162818ab0effd8": "oracle_positive",
-        "cand_bde8cefbe5760e60": "hard_negative"
+        "cand_586ed616d3a17fde": "oracle_positive",
+        "cand_5b6f8a50979b5a8b": "hard_negative"
       },
       "source_paths": [
         "fastapi/security/http.py"

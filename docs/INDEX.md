@@ -42,7 +42,7 @@
 - `../data/hidden/dsa_p4_candidate_registry_v0_1.json`: pre-outcome private
   mapping for the first P4 candidate pair. It binds the opaque candidate IDs,
   official-positive and T4 roles, canonical edit-order rule, selected edit,
-  candidate patch/tree hashes, neutral payload source, frozen checks, and
+  raw newline-preserving candidate patch/tree hashes, neutral payload source, frozen checks, and
   `candidate_outcome_observed=false`. The deterministic materializer and replay
   check are `../scripts/dsa2026_p4_materialize_candidate.py`.
 - `../scripts/dsa2026_p4_run_candidate_pair.py`: pending task-level P4 executor.
