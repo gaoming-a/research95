@@ -292,6 +292,7 @@ def collect_nodes(
 
 def official_f2p(timeout: int) -> dict[str, Any]:
     preparation = prepare_reference()
+    environment = environment_audit()
     commands = [
         line.strip()
         for line in (TASK_ROOT / "metadata" / "run_test.sh").read_text(encoding="utf-8").replace("\r", "").splitlines()
@@ -302,7 +303,7 @@ def official_f2p(timeout: int) -> dict[str, Any]:
         result = run_command(["/bin/bash", "-c", command], timeout)
         result.pop("_normalized_output", None)
         checks.append(result)
-    return {"preparation": preparation, "checks": checks}
+    return {"preparation": preparation, "environment": environment, "checks": checks}
 
 
 def run_nodes(nodeids: list[str], test_framework: str, timeout: int) -> dict[str, Any]:

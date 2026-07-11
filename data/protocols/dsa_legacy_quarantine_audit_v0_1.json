@@ -27,6 +27,7 @@
       "scripts/dsa2026_p4_record_pre_candidate_discard.py",
       "scripts/dsa2026_p4_replacement_cursor_audit.py",
       "scripts/dsa2026_p4_run_candidate_pair.py",
+      "scripts/dsa2026_p4_run_reference_f2p.py",
       "scripts/dsa2026_p4_run_reference_pool.py",
       "scripts/dsa2026_simulate_p2_precision.py"
     ],

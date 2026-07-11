@@ -40,6 +40,11 @@
   source-frame buggy/fixed logs as provenance, not proof that a fresh P4 image
   has those undeclared dependencies. A P4 task must use its isolated explicit
   lock and frozen metadata without importing the shared environment state.
+- Dual-environment equality must compare stable environment evidence, not wall
+  time. Keep command, exit/timeout/outcome, normalized output hashes, and every
+  build-artifact hash in the fingerprint; retain durations as provenance but do
+  not make two otherwise identical fresh runs disagree because they took
+  different milliseconds.
 - A hash-ordered transform is not reproducible until its edit identity and
   serialization are explicit. Before any candidate outcome, encode each T4
   source-diff line as canonical JSON over path, hunk index, line index, kind,

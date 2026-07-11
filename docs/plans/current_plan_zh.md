@@ -37,6 +37,11 @@ Matplotlib pre-outcome source freeze：
   record SHA-256=`b1e09a00c57d8adfcfb65a71f5c3028c873f988b56d4f9f573c52a797cfd6660`；
 - 归档获取阶段 candidate/image/test/model API activity 均为 0；下一动作只能在该
   pre-outcome commit 后构建冻结 `py381` task image。
+- 双 F2P executor 在 outcome 前冻结：两个并行 fresh containers 必须
+  `network=none`、`mounts=[]`、同一 image ID；worker 同时记录 environment build
+  artifacts、reference tree/patch 与 exact official commands。比较环境时排除运行时长，
+  只比较命令/outcome/output hashes和 build-artifact hashes；失败则机械写入
+  pre-candidate discard，成功才允许进入 pool freeze。
 
 当前 post-Tornado replacement-cursor Goal（2026-07-11）：
 

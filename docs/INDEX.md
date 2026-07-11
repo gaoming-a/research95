@@ -54,6 +54,10 @@
   stable-node decisions, and frozen visible/hidden split hashes. The executor
   and deterministic replay check are
   `../scripts/dsa2026_p4_run_reference_pool.py`.
+- `../scripts/dsa2026_p4_run_reference_f2p.py`: pre-pool dual-fresh official
+  reference F2P runner. It freezes image/label/environment/reference/isolation
+  evidence before any regression pool or transformed candidate, and writes a
+  pre-candidate discard when either fresh run fails or disagrees.
 - `../data/hidden/dsa_p4_candidate_registry_v0_1.json`: private materialization
   and terminal task mapping for the first P4 candidate pair. It binds the opaque
   candidate IDs,
