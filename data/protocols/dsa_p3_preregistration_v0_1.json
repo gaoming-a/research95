@@ -166,7 +166,22 @@
     "author_name": null,
     "signed_at": null,
     "scientific_responsibility_confirmed": false,
-    "items_confirmed": []
+    "required_item_ids": [
+      "research_questions_claim_boundary",
+      "estimands_scientific_unit",
+      "cumulative_evidence_contract",
+      "p2_regular_source_and_transform_freeze",
+      "outcome_classification",
+      "conditional_interval_and_stability",
+      "exclusion_stop_and_no_rerun",
+      "model_routes_parameters_order_and_repeats",
+      "new_prompt_and_output_schema",
+      "unfavorable_result_reporting",
+      "scientific_ai_and_authorship_responsibility"
+    ],
+    "items_confirmed": [],
+    "declaration_source": null,
+    "declaration_sha256": null
   },
   "execution_authorization": {
     "p4_candidate_materialization": false,

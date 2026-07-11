@@ -17,6 +17,10 @@ irreversibly frozen as a Regular paper with 30 primary tasks, 10 reserves,
 a post-result fallback. P3 preregistration, model routes, the new DSA prompt,
 schema, synthetic render audit, and hash manifest now pass their mechanical
 checks; explicit author scientific-responsibility sign-off remains pending.
+The Gate requires a non-placeholder author name, timezone-qualified timestamp,
+all 11 frozen item IDs in order, scientific-responsibility confirmation, and a
+hash of the actual Codex user declaration; changing only a status flag cannot
+make P3 pass.
 P4--P5 are not started, so no smoke, full run, or model API is authorized.
 
 P0/D0 is now in progress. The official pages and template have been hashed;

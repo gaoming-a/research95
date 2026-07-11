@@ -22,6 +22,11 @@
   Keep the manifest mutable and P3 pending until the named author explicitly
   accepts the scientific design, AI-policy duty, and responsibility for every
   result and claim.
+- Do not implement author sign-off as a single boolean. Require a real author
+  name, timezone-qualified timestamp, the exact ordered set of preregistered
+  item IDs, scientific-responsibility confirmation, and a hash tied to the
+  actual user declaration. Negative tests must show that status-only, partial,
+  or declaration-free records cannot pass.
 - Conditional repeat-block intervals describe response stochasticity for
   frozen tasks/models. Pair C3 and C0 within repeat, keep task as the only
   scientific unit, and label project reweighting/deletion ranges as stability

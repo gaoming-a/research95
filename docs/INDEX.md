@@ -37,7 +37,9 @@
   boundary. The machine preregistration, evidence/model/schema freezes,
   prompt-boundary audit, Gate audit, and hash manifest are under
   `../data/protocols/dsa_p3_*_v0_1.json`; the deterministic auditor is
-  `../scripts/dsa2026_audit_p3_freeze.py`.
+  `../scripts/dsa2026_audit_p3_freeze.py`. Its author Gate requires identity,
+  timezone-qualified signing time, all 11 exact item IDs, scientific
+  responsibility, and a user-declaration hash; status-only bypass tests fail.
 - [dsa_p2_source_feasibility_and_protocol_decision_v0_1.md](experiments/dsa_p2_source_feasibility_and_protocol_decision_v0_1.md):
   consolidated 18-check P2 audit and Regular freeze. It records the 59-task
   development exclusion, 304-task/9-project source frame, 30+10 selection,

@@ -1,6 +1,12 @@
 {
   "aggregate_algorithm": "SHA-256 over ordered UTF-8 path, NUL, lowercase file hash, LF records",
-  "aggregate_sha256": "3fcfce943b2458b5600a6e9ca00214b52c02f442e9a6718510b2d6a81376db4d",
+  "aggregate_sha256": "b9ff9dd1add252f60d26caffaf78b1f4dda3fdaea1b59e2d9f73e528666011d0",
+  "excluded_derived_paths": [
+    "data/protocols/dsa_p3_prompt_boundary_audit_v0_1.json",
+    "data/protocols/dsa_p3_gate_audit_v0_1.json",
+    "data/protocols/dsa_p3_hash_manifest_v0_1.json"
+  ],
+  "exclusion_reason": "Derived audits and the manifest itself are reproducibly checked against their generators and are excluded to avoid recursive self-hashing.",
   "files": [
     {
       "bytes": 1138,
@@ -23,9 +29,9 @@
       "sha256": "7e8be772ac1b7fd70fcdaae1a038940916920cbf182d55fadf36717a2dcbba38"
     },
     {
-      "bytes": 11467,
+      "bytes": 12021,
       "path": "data/protocols/dsa_p3_preregistration_v0_1.json",
-      "sha256": "bd9b5c0784c8448bfb3ad5196b53ff0e722580f912ee383924417f99d934525b"
+      "sha256": "ca9eb60faf758bf5dc25dac0f9fbd765f0ac47a3111b2de8471d70b0773e58c5"
     },
     {
       "bytes": 4303,
@@ -63,24 +69,25 @@
       "sha256": "1b5da1960eb6751e1a449554e153666f73033609f771bddee55247794a06137c"
     },
     {
-      "bytes": 2279,
+      "bytes": 2322,
       "path": "docs/experiments/dsa_p3_prompt_change_record_v0_1.md",
-      "sha256": "4733ee3f501870b4b800b40778a7c2ea52899004d92c31cda82cfa7bf4bf11e2"
+      "sha256": "6174c9ac1c021122f015c0bccea4c28f5abec3fe70a5fe0ce60482588d2fa399"
     },
     {
-      "bytes": 2863,
+      "bytes": 3254,
       "path": "docs/experiments/dsa_p3_author_signoff_v0_1.md",
-      "sha256": "0acab1b7c3539ba3527c9b87087275a4887f3a1675be7ad2fd1354d3d8b6bb8c"
+      "sha256": "01a92c5ba15fe6ee801c388583d65453fc76cac1f3ad8034070304347d973332"
     },
     {
-      "bytes": 20954,
+      "bytes": 24626,
       "path": "scripts/dsa2026_audit_p3_freeze.py",
-      "sha256": "2c33c27fe031c5e08356011bc9c5ec4dc8a8e4ca4f20e7b4f8f37eb9397a6885"
+      "sha256": "01a77c87a8ddcb27497d4e00626f8dd49334936a049a8602cf7d9624decd2f11"
     }
   ],
   "hash_algorithm": "SHA-256",
   "immutability_condition": "Explicit author sign-off followed by regeneration and a passing P3 gate before P4 or any model output.",
   "immutable": false,
   "manifest_id": "dsa_p3_hash_manifest_v0_1",
+  "scope": "All authoritative P2 freeze anchors and P3 design, model, prompt, schema, change, sign-off, and auditor-source inputs.",
   "status": "candidate_freeze_pending_author_signoff"
 }

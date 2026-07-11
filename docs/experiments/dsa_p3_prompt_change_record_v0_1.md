@@ -43,6 +43,6 @@ fields.
 
 The P3 auditor must verify one and only one packet placeholder, no unresolved
 placeholder after rendering, exact output-schema fields, absence of prohibited
-instructions, recursive packet-key/value leakage count zero, cumulative
+instructions, no duplicated normalized instruction line, recursive packet-key/value leakage count zero, cumulative
 synthetic C0--C3 canonical diff, and new-hash inequality with every retired
 prompt hash. A passing mechanical audit does not replace author sign-off.

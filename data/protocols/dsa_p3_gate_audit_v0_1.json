@@ -3,6 +3,9 @@
   "audit_id": "dsa_p3_gate_audit_v0_1",
   "author_gate_pass": false,
   "checks": {
+    "author_declaration_recorded": false,
+    "author_identity_recorded": false,
+    "author_items_all_confirmed": false,
     "author_scientific_responsibility_signed": false,
     "evidence_contract_complete": true,
     "freeze_status_consistent": true,

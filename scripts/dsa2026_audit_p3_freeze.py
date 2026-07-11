@@ -23,6 +23,19 @@ BOUNDARY_OUT = ROOT / "data/protocols/dsa_p3_prompt_boundary_audit_v0_1.json"
 MANIFEST_OUT = ROOT / "data/protocols/dsa_p3_hash_manifest_v0_1.json"
 GATE_OUT = ROOT / "data/protocols/dsa_p3_gate_audit_v0_1.json"
 PLACEHOLDER = "{{EVIDENCE_PACKET_JSON}}"
+AUTHOR_ITEM_IDS = [
+    "research_questions_claim_boundary",
+    "estimands_scientific_unit",
+    "cumulative_evidence_contract",
+    "p2_regular_source_and_transform_freeze",
+    "outcome_classification",
+    "conditional_interval_and_stability",
+    "exclusion_stop_and_no_rerun",
+    "model_routes_parameters_order_and_repeats",
+    "new_prompt_and_output_schema",
+    "unfavorable_result_reporting",
+    "scientific_ai_and_authorship_responsibility",
+]
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -149,9 +162,19 @@ def packet_violations(packet: dict[str, Any], contract: dict[str, Any]) -> list[
         "placeholder",
         "unknown",
     }
-    hidden_value_markers = {
+    hidden_exact_values = {
+        "positive",
+        "negative",
+        "correct",
+        "incorrect",
         "oracle_positive",
+        "oracle-positive",
         "hard_negative",
+        "hard-negative",
+        "correct_patch",
+        "incorrect_patch",
+    }
+    hidden_substring_markers = {
         "source_decision",
         "rule_decision",
         "hidden_label",
@@ -168,7 +191,9 @@ def packet_violations(packet: dict[str, Any], contract: dict[str, Any]) -> list[
             lowered = raw.strip().lower()
             if lowered in placeholder_values:
                 violations.append({"path": path, "type": "placeholder_value", "value": lowered})
-            for marker in hidden_value_markers:
+            if lowered in hidden_exact_values:
+                violations.append({"path": path, "type": "hidden_exact_value", "value": lowered})
+            for marker in hidden_substring_markers:
                 if marker in lowered:
                     violations.append({"path": path, "type": "hidden_value_marker", "marker": marker})
         elif raw is None:
@@ -231,6 +256,16 @@ def build_boundary_audit() -> dict[str, Any]:
         name: bool(re.search(pattern, prompt_text, flags=re.IGNORECASE | re.DOTALL))
         for name, pattern in prompt_conflict_patterns.items()
     }
+    normalized_instruction_lines = [
+        re.sub(r"\s+", " ", line.strip().lower())
+        for line in prompt_text.splitlines()
+        if len(line.strip()) >= 20
+        and PLACEHOLDER not in line
+        and not line.strip().startswith(("<evidence_packet_json>", "</evidence_packet_json>"))
+    ]
+    duplicate_instruction_lines = sorted({
+        line for line in normalized_instruction_lines if normalized_instruction_lines.count(line) > 1
+    })
 
     cumulative_expected = {
         "C0": ["change_request"],
@@ -312,6 +347,7 @@ def build_boundary_audit() -> dict[str, Any]:
         "schema_decision_enum_exact": schema.get("properties", {}).get("decision", {}).get("enum")
         == ["accept", "reject", "escalate"],
         "prompt_conflict_patterns_absent": not any(prompt_conflicts.values()),
+        "prompt_duplicate_instruction_lines_absent": not duplicate_instruction_lines,
         "synthetic_cumulative_contract_passed": all(item["passed"] for item in cumulative_checks.values()),
         "synthetic_rendered_prompt_passed": all(item["passed"] for item in rendered_checks.values()),
         "active_prompt_set_exact": active_templates
@@ -334,6 +370,7 @@ def build_boundary_audit() -> dict[str, Any]:
         "scope": "Synthetic no-API prompt/schema/evidence-contract audit; no P4 candidate materialization.",
         "checks": checks,
         "prompt_conflict_matches": prompt_conflicts,
+        "prompt_duplicate_instruction_lines": duplicate_instruction_lines,
         "synthetic_packets": cumulative_checks,
         "synthetic_rendered_prompts": rendered_checks,
         "prompt_sha256": prompt_hash,
@@ -342,12 +379,30 @@ def build_boundary_audit() -> dict[str, Any]:
     }
 
 
+def author_signoff_complete(prereg: dict[str, Any]) -> bool:
+    signoff = prereg.get("author_signoff", {})
+    author_name = signoff.get("author_name")
+    signed_at = signoff.get("signed_at")
+    declaration_sha256 = signoff.get("declaration_sha256")
+    return (
+        signoff.get("status") == "signed"
+        and isinstance(author_name, str)
+        and bool(author_name.strip())
+        and author_name.strip() not in {"【姓名】", "[name]"}
+        and isinstance(signed_at, str)
+        and re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}", signed_at) is not None
+        and signoff.get("scientific_responsibility_confirmed") is True
+        and signoff.get("required_item_ids") == AUTHOR_ITEM_IDS
+        and signoff.get("items_confirmed") == AUTHOR_ITEM_IDS
+        and signoff.get("declaration_source") == "codex_user_message"
+        and isinstance(declaration_sha256, str)
+        and re.fullmatch(r"[0-9a-f]{64}", declaration_sha256) is not None
+    )
+
+
 def build_manifest() -> dict[str, Any]:
     prereg = load_json(PREREG)
-    author_signed = (
-        prereg.get("author_signoff", {}).get("status") == "signed"
-        and prereg.get("author_signoff", {}).get("scientific_responsibility_confirmed") is True
-    )
+    author_signed = author_signoff_complete(prereg)
     frozen_paths = [
         "data/protocols/dsa_p2_protocol_decision_v0_1.json",
         "data/protocols/dsa_p2_source_selection_v0_1.json",
@@ -375,6 +430,13 @@ def build_manifest() -> dict[str, Any]:
         "status": "immutable_author_signed" if author_signed else "candidate_freeze_pending_author_signoff",
         "hash_algorithm": "SHA-256",
         "aggregate_algorithm": "SHA-256 over ordered UTF-8 path, NUL, lowercase file hash, LF records",
+        "scope": "All authoritative P2 freeze anchors and P3 design, model, prompt, schema, change, sign-off, and auditor-source inputs.",
+        "excluded_derived_paths": [
+            "data/protocols/dsa_p3_prompt_boundary_audit_v0_1.json",
+            "data/protocols/dsa_p3_gate_audit_v0_1.json",
+            "data/protocols/dsa_p3_hash_manifest_v0_1.json"
+        ],
+        "exclusion_reason": "Derived audits and the manifest itself are reproducibly checked against their generators and are excluded to avoid recursive self-hashing.",
         "files": files,
         "aggregate_sha256": sha256_bytes(aggregate_source.encode("utf-8")),
         "immutable": author_signed,
@@ -386,10 +448,23 @@ def build_gate(boundary: dict[str, Any], manifest: dict[str, Any]) -> dict[str, 
     prereg = load_json(PREREG)
     contract = load_json(CONTRACT)
     model_freeze = load_json(MODEL_FREEZE)
-    author_signed = (
-        prereg.get("author_signoff", {}).get("status") == "signed"
-        and prereg.get("author_signoff", {}).get("scientific_responsibility_confirmed") is True
+    signoff = prereg.get("author_signoff", {})
+    author_identity_recorded = (
+        isinstance(signoff.get("author_name"), str)
+        and bool(signoff["author_name"].strip())
+        and isinstance(signoff.get("signed_at"), str)
+        and re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}", signoff["signed_at"]) is not None
     )
+    author_items_all_confirmed = (
+        signoff.get("required_item_ids") == AUTHOR_ITEM_IDS
+        and signoff.get("items_confirmed") == AUTHOR_ITEM_IDS
+    )
+    author_declaration_recorded = (
+        signoff.get("declaration_source") == "codex_user_message"
+        and isinstance(signoff.get("declaration_sha256"), str)
+        and re.fullmatch(r"[0-9a-f]{64}", signoff["declaration_sha256"]) is not None
+    )
+    author_signed = author_signoff_complete(prereg)
     expected_freeze_status = "frozen_after_author_signoff" if author_signed else "candidate_freeze_pending_author_signoff"
     checks = {
         "p2_regular_unchanged": load_json(ROOT / "data/protocols/dsa_p2_protocol_decision_v0_1.json").get("selected_protocol") == "Regular",
@@ -415,6 +490,9 @@ def build_gate(boundary: dict[str, Any], manifest: dict[str, Any]) -> dict[str, 
         and contract.get("status") == expected_freeze_status
         and model_freeze.get("status") == expected_freeze_status
         and manifest.get("immutable") is author_signed,
+        "author_identity_recorded": author_identity_recorded,
+        "author_items_all_confirmed": author_items_all_confirmed,
+        "author_declaration_recorded": author_declaration_recorded,
         "author_scientific_responsibility_signed": author_signed,
         "model_api_called": False,
         "p4_candidate_constructed_or_run": False,

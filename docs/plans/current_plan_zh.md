@@ -60,6 +60,12 @@ Gate：
 - P3 candidate-freeze 证据包已提交为 `d7178b3`。向 private remote 的首次 push 在
   64 秒内无响应并超时；按用户既有指示记录后继续，不改推 public `origin`。作者
   签核后的最终 P3 commit 将再次尝试 private sync。
+- continuation completion audit 发现原 Gate 只检查 `status+responsibility`，理论上可
+  跳过 11 项逐项确认；已修为必须同时具备非占位作者名、带时区时间、11 个冻结 item
+  ID 精确有序全集、科学责任、`codex_user_message` 来源和 declaration SHA-256。
+  status-only、缺 identity/items/declaration 三类负向测试均不能通过；manifest 也只有
+  在同一完整条件下才能 `immutable=true`。prompt 另增 normalized instruction
+  duplication=0 检查，derived audit/self-hash 排除范围已在 manifest 中明示。
 
 ## 0.51 2026-07-11 DSA P2 source feasibility、precision 与稿型冻结
 

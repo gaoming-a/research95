@@ -12,6 +12,7 @@
     "p4_candidate_constructed_or_run": false,
     "placeholder_exactly_once": true,
     "prompt_conflict_patterns_absent": true,
+    "prompt_duplicate_instruction_lines_absent": true,
     "retired_prompt_paths_absent": true,
     "schema_decision_enum_exact": true,
     "schema_exact_fields": true,
@@ -27,6 +28,7 @@
     "sparse_implies_escalate": false,
     "tool_or_rule_verdict": false
   },
+  "prompt_duplicate_instruction_lines": [],
   "prompt_sha256": "08a485635924a6813a2d646518c02dacf9fa108b6a5271efb88fe35d79d4809e",
   "scope": "Synthetic no-API prompt/schema/evidence-contract audit; no P4 candidate materialization.",
   "status": "passed",
