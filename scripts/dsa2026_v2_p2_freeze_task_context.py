@@ -114,7 +114,14 @@ def build_context(
     fixed_test_hashes = copy_fixed_tests(
         fixed_source, task["declared_test_file"], context / "fixed_tests"
     )
-    metadata_hashes = copy_metadata(catalog_root, task, context / "metadata")
+    metadata_task = dict(task)
+    metadata_task["metadata_sha256"] = dict(task["metadata_sha256"])
+    metadata_task["metadata_sha256"]["setup"] = task["metadata_sha256"][
+        "setup_provenance_only"
+    ]
+    metadata_hashes = copy_metadata(
+        catalog_root, metadata_task, context / "metadata"
+    )
     reference = apply_reference(context)
     value = {
         "task_id": TASK_ID,

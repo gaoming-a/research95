@@ -53,6 +53,10 @@ Source-freezer repair（真实 outcome 前）：首次 archive freeze 被旧 P4 
 order=1 record 与 signed amendment 直接构造新 V2 registry；不再读取任何 P4 cursor 或
 P4 task list。该执行链修复必须先提交，才允许重试同一 archive freeze。
 
+第二次 source-freeze check 在 metadata copy/hash 阶段发现 P4 helper 的 `setup` key 与
+V2-P1 的 `setup_provenance_only` key 不同；仍未构建环境或运行测试。修复只在纯 copy/hash
+helper 边界建立一对一 alias，不改变 V2 record，不执行 setup，提交后再重试。
+
 ## 0.56 2026-07-12 DSA v0.2 V2-P2 executor synthetic check-only
 
 本轮 Goal：只实现并审计消费 synthetic metadata 的 V2-P2 纯状态机，证明它严格读取

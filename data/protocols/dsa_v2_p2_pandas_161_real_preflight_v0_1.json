@@ -36,7 +36,7 @@
     "dockerfile": "30a205dc9201c86a6c8490258e7b503850bd36b24d6f49533dd05603e3dbcbcc",
     "image_builder": "77e204e1a3a60ef7b07e528422b8d150eb3e2e4539b71acaff077994fd2c421d",
     "oracle_runner": "af4affcdcfe43c05ec560257a4ccd67ae2f8cdd10639798df3a42fc659fb745a",
-    "source_freezer": "8cb1167044b5b5c86c8e570c8bd06658885021c5ec9897209c0c519a529db725",
+    "source_freezer": "6863b5c31b90ab3a87e212bcb40c478acb8be3235cd62cc5aa4ce4abed4feee7",
     "worker": "59907573a42496a494709c7f0ff24d17056e11b70969079f65ee39871304c9e5"
   },
   "created_date": "2026-07-12",

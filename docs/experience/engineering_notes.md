@@ -22,6 +22,10 @@
   required membership in the terminated P4 task list. Reuse only its pure
   archive/copy/apply primitives; construct V2 records directly from the signed
   V2 source order and never make a historical cursor an active dependency.
+- Schema names can encode a scientific boundary. V2 renames the setup hash to
+  `setup_provenance_only`; a pure copy/hash helper still expected `setup`.
+  Adapt that name explicitly only at the helper boundary. Do not rename the V2
+  record and do not let the alias make `setup.sh` executable authority.
 
 ## 2026-07-12 Signed prose must match executable recipe fields
 
