@@ -2,7 +2,20 @@
 
 日期：2026-07-12
 
-## 2026-07-12 V2-P2 order-1 real preflight PASS
+## 2026-07-12 V2-P2 order-1 terminal / cursor continues
+
+- 当前状态：`V2_P2_ORDER_1_MATERIALIZATION_FAILED_ENVIRONMENT /
+  ORDER_2_READY_NOT_STARTED / NO_API / V0_SUBMISSION_GATE_PENDING`；
+- pandas_161 official source/context 已冻结；唯一 no-cache py383 build 在 dependency-build
+  aggregate exit=1，未生成 task image；没有 container/project-test/oracle/candidate outcome；
+- order=1 terminal reason=`environment-build-failure`；未执行 setup、未修依赖、未重跑；
+  checkout/build/container/test/API=1/1/0/0/0；
+- exact failed subcommand 因子日志只存在于 discarded failed layer 而不可恢复；这是证据
+  局限，不授权重跑；
+- V2-P2 并未整体 hard stop。next cursor 是 order=2 `bugsinpy_fastapi_11`，started=false；
+  当前 Goal 完成封存后，按作者自动授权另设 order-2 Goal 继续。
+
+## 2026-07-12 V2-P2 order-1 real preflight PASS（已被上方覆盖）
 
 - 作者高明已签核 SHA-bound V2-P1 清单并授权自动执行 V2-P1 至 V2-P2；test-scope
   amendment 状态为 `author_signed_immutable`；

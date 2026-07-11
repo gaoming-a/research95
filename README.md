@@ -52,6 +52,15 @@ real preflight passes, while actual checkout, environment, container, test, and
 API activity remain zero until the pre-outcome implementation commit. The
 original V2-P1 aggregate remains unchanged; V2-P3 and model API remain forbidden.
 
+The first real V2-P2 task, `bugsinpy_pandas_161`, has now reached a frozen
+environment-build terminal. Its official source/context was hash-frozen, but
+the no-cache py383 dependency-build aggregate exited 1 before a final image was
+created. No setup script, repair, rerun, qualification container, project test,
+oracle/candidate outcome, prompt, credential, or model API was used. This is a
+task-level materialization failure, not the cohort hard stop: the cursor now
+identifies order 2 `bugsinpy_fastapi_11`, which was not started in the order-1
+Goal.
+
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,
 and 250 dpi visual checks. The DSA-specific AI policy, institutional Compendex

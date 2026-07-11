@@ -26,6 +26,15 @@
   `setup_provenance_only`; a pure copy/hash helper still expected `setup`.
   Adapt that name explicitly only at the helper boundary. Do not rename the V2
   record and do not let the alias make `setup.sh` executable authority.
+- Failure provenance must escape the layer that can be discarded. The order-1
+  Docker build redirected requirements/editable/pip-check logs into the image
+  filesystem, so a failed `RUN` exposed only the aggregate exit and message.
+  The outer build hash proves the terminal event but not its exact subcommand.
+  Do not rerun the terminal task to improve logging; fix a future, pre-outcome
+  runner version before another task if the signed protocol permits it.
+- A task terminal is not automatically a cohort hard stop. Environment failure
+  advances the frozen source cursor exactly once; only target completion or
+  source exhaustion applies the V2-P2 global stop rule.
 
 ## 2026-07-12 Signed prose must match executable recipe fields
 

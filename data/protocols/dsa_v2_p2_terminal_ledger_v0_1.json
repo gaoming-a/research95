@@ -1,0 +1,19 @@
+{
+  "created_date": "2026-07-12",
+  "ledger_id": "dsa_v2_p2_terminal_ledger_v0_1",
+  "model_api_calls": 0,
+  "next_order": 2,
+  "next_task_id": "bugsinpy_fastapi_11",
+  "next_task_started": false,
+  "records": [
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "5f9ac606ec4670e31960c0785986c023c567763e8d7e0c6021467c62a85fe09a",
+      "order": 1,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_pandas_161"
+    }
+  ],
+  "status": "order_1_terminal"
+}

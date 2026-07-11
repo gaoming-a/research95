@@ -61,6 +61,15 @@
   `../scripts/dsa2026_v2_p2_materialize_candidates.py`, and
   `../scripts/dsa2026_v2_p2_run_candidates.py`. It does not authorize V2-P3,
   prompt changes, credential reads, or model API calls.
+- [dsa_v2_p2_pandas_161_terminal_gate_v0_1.md](experiments/dsa_v2_p2_pandas_161_terminal_gate_v0_1.md):
+  passing order-1 terminal audit. Machine evidence is
+  `../data/protocols/dsa_v2_p2_task_source_registry_v0_1.json`,
+  `../data/protocols/dsa_v2_p2_pandas_161_environment_v0_1.json`,
+  `../data/protocols/dsa_v2_p2_terminal_ledger_v0_1.json`, and
+  `../data/protocols/dsa_v2_p2_order1_gate_audit_v0_1.json`; replay is
+  `../scripts/dsa2026_v2_p2_audit_order1.py`. The environment failure is
+  terminal for pandas_161 but advances the V2-P2 cursor to the unstarted order-2
+  task; container/test/oracle/candidate/model API activity is zero.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
   venue/submission master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is

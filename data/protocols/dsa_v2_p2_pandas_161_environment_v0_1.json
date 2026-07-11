@@ -1,0 +1,38 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "boundary": "An environment failure is terminal for order 1; success permits only the frozen dual-fresh oracle stage.",
+  "build_command": [
+    "docker",
+    "build",
+    "--progress",
+    "plain",
+    "--no-cache",
+    "-f",
+    "<DOCKERFILE>",
+    "-t",
+    "dsa2026-v2-p2-task:bugsinpy_pandas_161",
+    "<ROOT>"
+  ],
+  "build_exit_code": 1,
+  "build_output_bytes": 22283,
+  "build_output_sha256": "9a85193faea5a49f1ec67699f43367cd39c197f4775e810d50e5564453d6e347",
+  "created_date": "2026-07-12",
+  "dockerfile_sha256": "30a205dc9201c86a6c8490258e7b503850bd36b24d6f49533dd05603e3dbcbcc",
+  "environment_id": "dsa_v2_p2_pandas_161_environment_v0_1",
+  "failure_reason": "environment-build-failure",
+  "image": null,
+  "official_setup_executed": false,
+  "order": 1,
+  "source_record_sha256": "8e2e4786ae2e374b5e2c1fc5b9081727b36e366a6fa66feea4ecfe6a10205380",
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_pandas_161",
+  "task_specific_repair_attempted": false
+}

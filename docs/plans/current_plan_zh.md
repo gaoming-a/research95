@@ -62,6 +62,19 @@ Source/context Gate 随后 write/check PASS：buggy/fixed official archive SHA-2
 `15278f3b…2204b`，record=`8e2e4786…05380`。真实 checkout count=1，但 environment/
 container/test/API 仍为0；该 registry 必须先提交才允许 image build。
 
+Order=1 Environment Terminal：
+
+- pre-outcome source commit=`cf41c39` 后执行唯一 no-cache build；py383 explicit lock、
+  source/fixed-test/metadata COPY 完成，冻结 dependency-build aggregate 在668.2秒返回 exit=1；
+- build output SHA-256=`9a85193faea5a49f1ec67699f43367cd39c197f4775e810d50e5564453d6e347`，
+  最终 task image 未生成；official setup 未执行，task-specific repair=false；
+- Docker failed layer 内的 requirements/editable/pip-check 子日志没有进入外层输出，因此不能
+  在不重跑的情况下进一步区分子命令；按 no-rerun 不修改 logging recipe、不重试 order=1；
+- 唯一 terminal=`materialization-failed/environment-build-failure`；checkout/build/container/
+  project-test/prompt/key/API=1/1/0/0/0/0/0；oracle/candidate outputs 均不存在；
+- 这不是 V2-P2 整体 hard stop。冻结 cursor 已到 order=2 `bugsinpy_fastapi_11`，但本
+  bounded Goal 不启动它；作者自动授权允许下一独立 Goal 继续。
+
 ## 0.56 2026-07-12 DSA v0.2 V2-P2 executor synthetic check-only
 
 本轮 Goal：只实现并审计消费 synthetic metadata 的 V2-P2 纯状态机，证明它严格读取
