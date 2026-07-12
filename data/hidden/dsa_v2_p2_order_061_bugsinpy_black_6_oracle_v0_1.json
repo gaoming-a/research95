@@ -1,0 +1,263 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 2,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 4,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "created_date": "2026-07-12",
+  "failure_reason": "oracle-positive-f2p-failure-or-dual-disagreement",
+  "model_api_calls": 0,
+  "official_f2p": {
+    "dual_pass": false,
+    "run_a": {
+      "container_exit_code": 0,
+      "container_id": "c2bbfa50594142a688364e5f0f4130d111fa04720c7e36bb416aad5bdbb5a2fe",
+      "container_name": "dsa-v2-p2-official-f2p-a-1293b30f42",
+      "image_id": "sha256:2e4f52edd63392fb2751ed3f7718b964ae1247f0a8e4a421f55420818ef2fa19",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 3974,
+      "output_sha256": "96136bcec783fa9d4041e751e785a5c0af4edb418aafd534c0fa0a55f3259b46",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "python -m unittest -q tests.test_black.BlackTestCase.test_async_as_identifier"
+            ],
+            "duration_seconds": 0.121,
+            "exit_code": 1,
+            "outcome": "failed",
+            "output_excerpt": "======================================================================\nERROR: test_black (unittest.loader._FailedTest)\n----------------------------------------------------------------------\nImportError: Failed to import test module: test_black\nTraceback (most recent call last):\n  File \"/opt/conda/envs/py383/lib/python3.8/unittest/loader.py\", line 154, in loadTestsFromName\n    module = __import__(module_name)\nModuleNotFoundError: No module named 'tests.test_black'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+            "output_sha256": "83779cbc2d5fe203ef3f517c0d5cb9d2cf2f896666dc4fb64abec60b086c1b97",
+            "timed_out": false
+          },
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "python -m unittest -q tests.test_black.BlackTestCase.test_python37"
+            ],
+            "duration_seconds": 0.079,
+            "exit_code": 1,
+            "outcome": "failed",
+            "output_excerpt": "======================================================================\nERROR: test_black (unittest.loader._FailedTest)\n----------------------------------------------------------------------\nImportError: Failed to import test module: test_black\nTraceback (most recent call last):\n  File \"/opt/conda/envs/py383/lib/python3.8/unittest/loader.py\", line 154, in loadTestsFromName\n    module = __import__(module_name)\nModuleNotFoundError: No module named 'tests.test_black'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+            "output_sha256": "83779cbc2d5fe203ef3f517c0d5cb9d2cf2f896666dc4fb64abec60b086c1b97",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 3738,
+              "sha256": "6a25cb9316d222d0bf8b53b516268668cb23b3bebc1cf3ede3d6d33dbc872144"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 1242,
+              "sha256": "3714fb390c4f0ccf179a1b28f4c008fa2da89c35764cb6cf8f7d6bc724086d45"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "fa8a57633d64798c187b142fc580d47290e9916e7cb58543581cd05eef181890"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 1725,
+              "sha256": "9fd7b4898c77376e387193949d2ef63e8ab254953982a066a5b9f777620cb0fb"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 11743,
+              "sha256": "85a7b1690ecff2a06b8c1143d7e0b0f2aeaea7f1edfeb95c57c1ac414403f68d"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.003,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.8.3\n",
+            "output_sha256": "60fef34dbc516d503fe94c8608f92d770d05f82a55c7b8f08fb397ccd25345cd",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "d344f4f132a91fad520bae9258b816a6c1b8ac43531250dd82e5bbbae044c48b",
+          "fixed_test_paths": [
+            "tests/data/comment_after_escaped_newline.py",
+            "tests/test_black.py"
+          ],
+          "reference_patch_sha256": "8379d5398b396c9b7fc40cb18d4ec9f813a41fa7c098ca237bff607330d11e4f"
+        }
+      }
+    },
+    "run_b": {
+      "container_exit_code": 0,
+      "container_id": "47a9a59e0761ebb8275377ce813e3085a12ad449e7550d4ab4a2bf379ced6ba6",
+      "container_name": "dsa-v2-p2-official-f2p-b-5c7760dfdd",
+      "image_id": "sha256:2e4f52edd63392fb2751ed3f7718b964ae1247f0a8e4a421f55420818ef2fa19",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 3974,
+      "output_sha256": "109cbb262cfc1b94f80009d6f338d25db8fe72d5a17137d2b6e9408c00e99b85",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "python -m unittest -q tests.test_black.BlackTestCase.test_async_as_identifier"
+            ],
+            "duration_seconds": 0.108,
+            "exit_code": 1,
+            "outcome": "failed",
+            "output_excerpt": "======================================================================\nERROR: test_black (unittest.loader._FailedTest)\n----------------------------------------------------------------------\nImportError: Failed to import test module: test_black\nTraceback (most recent call last):\n  File \"/opt/conda/envs/py383/lib/python3.8/unittest/loader.py\", line 154, in loadTestsFromName\n    module = __import__(module_name)\nModuleNotFoundError: No module named 'tests.test_black'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+            "output_sha256": "83779cbc2d5fe203ef3f517c0d5cb9d2cf2f896666dc4fb64abec60b086c1b97",
+            "timed_out": false
+          },
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "python -m unittest -q tests.test_black.BlackTestCase.test_python37"
+            ],
+            "duration_seconds": 0.082,
+            "exit_code": 1,
+            "outcome": "failed",
+            "output_excerpt": "======================================================================\nERROR: test_black (unittest.loader._FailedTest)\n----------------------------------------------------------------------\nImportError: Failed to import test module: test_black\nTraceback (most recent call last):\n  File \"/opt/conda/envs/py383/lib/python3.8/unittest/loader.py\", line 154, in loadTestsFromName\n    module = __import__(module_name)\nModuleNotFoundError: No module named 'tests.test_black'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+            "output_sha256": "83779cbc2d5fe203ef3f517c0d5cb9d2cf2f896666dc4fb64abec60b086c1b97",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 3738,
+              "sha256": "6a25cb9316d222d0bf8b53b516268668cb23b3bebc1cf3ede3d6d33dbc872144"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 1242,
+              "sha256": "3714fb390c4f0ccf179a1b28f4c008fa2da89c35764cb6cf8f7d6bc724086d45"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "fa8a57633d64798c187b142fc580d47290e9916e7cb58543581cd05eef181890"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 1725,
+              "sha256": "9fd7b4898c77376e387193949d2ef63e8ab254953982a066a5b9f777620cb0fb"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 11743,
+              "sha256": "85a7b1690ecff2a06b8c1143d7e0b0f2aeaea7f1edfeb95c57c1ac414403f68d"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.003,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.8.3\n",
+            "output_sha256": "60fef34dbc516d503fe94c8608f92d770d05f82a55c7b8f08fb397ccd25345cd",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "d344f4f132a91fad520bae9258b816a6c1b8ac43531250dd82e5bbbae044c48b",
+          "fixed_test_paths": [
+            "tests/data/comment_after_escaped_newline.py",
+            "tests/test_black.py"
+          ],
+          "reference_patch_sha256": "8379d5398b396c9b7fc40cb18d4ec9f813a41fa7c098ca237bff607330d11e4f"
+        }
+      }
+    }
+  },
+  "oracle_id": "dsa_v2_p2_order_061_bugsinpy_black_6_oracle_v0_1",
+  "order": 61,
+  "source_paths": [
+    "black.py",
+    "blib2to3/pgen2/driver.py",
+    "blib2to3/pgen2/tokenize.py",
+    "tests/data/python37.py"
+  ],
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_black_6",
+  "task_image_id": "sha256:2e4f52edd63392fb2751ed3f7718b964ae1247f0a8e4a421f55420818ef2fa19",
+  "task_specific_repair_attempted": false
+}

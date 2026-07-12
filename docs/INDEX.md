@@ -366,6 +366,11 @@
   not editable-install the pyproject-only checkout; no pip upgrade, setup.py
   synthesis, or rerun occurred. Ledger v0.60 advances to
   `bugsinpy_black_6`, API=0.
+- [dsa_v2_p2_order_061_bugsinpy_black_6_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_061_bugsinpy_black_6_terminal_gate_v0_1.md):
+  order61 oracle terminal after source/build and independent dangling-doc
+  manifests passed. All four frozen F2P checks failed on the unimportable test
+  module; no command repair or rerun occurred. Ledger v0.61 advances to
+  `bugsinpy_keras_25`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

@@ -382,6 +382,11 @@ install 时，因 checkout 仅有 `pyproject.toml`、无 `setup.py` 而失败；
 不补 setup.py、不重跑。ledger v0.60 attempted=60、qualified=0、API=0；cursor 为
 order61 `bugsinpy_black_6`、started=false。
 
+Black_6 source freeze/check 与 build PASS，两个 archive 的 dangling-doc manifests 通过
+通用 predicates。两次运行中的两条 frozen F2P 均因 `tests.test_black` 不可导入而失败；
+不修改命令、不重跑。ledger v0.61 attempted=61、qualified=0、API=0；cursor 为 order62
+`bugsinpy_keras_25`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
