@@ -336,6 +336,11 @@ FastAPI_9 source freeze/check PASS。唯一 py383 build 使用冻结旧 pip 执�
 不重跑。ledger v0.52 attempted=52、qualified=0、API=0；cursor 为 order53
 `bugsinpy_black_12`、started=false。
 
+Black_12 source freeze/check 与 build PASS，两个 archive 的 dangling-doc manifests 通过
+通用 predicates。两次 frozen F2P 均因 `tests.test_black` 不可导入而失败；不修改命令、
+不重跑。ledger v0.53 attempted=53、qualified=0、API=0；cursor 为 order54
+`bugsinpy_keras_29`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
