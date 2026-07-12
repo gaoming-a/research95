@@ -53,6 +53,9 @@
 - A missing build executable discovered by editable-install hooks (for example
   `cython`) is also an environment terminal when it is absent from the frozen
   dependency recipe. Installing it after observation is task-specific repair.
+- PEP517 can also request a build dependency whose current release line no
+  longer supports the frozen Python (for example `cython>=3.1` on Python 3.7).
+  Changing either side after observation is dependency repair.
 - Platform-incompatible pins such as `pywin32` on Linux remain part of the frozen
   recipe. Removing them after a failed build is dependency repair, even when the
   incompatibility looks obvious.

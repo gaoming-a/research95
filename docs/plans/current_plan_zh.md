@@ -140,6 +140,11 @@ Matplotlib_7 source freeze/check 与 build PASS。两次 F2P 均通过，但 pyt
 不归一化、不重跑。ledger v0.16 attempted=16、qualified=0、API=0；cursor 为 order17
 `bugsinpy_spacy_3`、started=false。
 
+spaCy_3 canonical-root source freeze/check PASS。py377 build 的 PEP517 dependency 要求
+`cython>=3.1`，对冻结 Python3.7.7 无匹配 distribution；不升级 Python、不降 Cython、
+不重跑。ledger v0.17 attempted=17、qualified=0、API=0；cursor 为 order18
+`bugsinpy_sanic_3`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

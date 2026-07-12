@@ -1,0 +1,130 @@
+{
+  "created_date": "2026-07-12",
+  "cursor_config_sha256": "8c7b31aea8c14267281a1079cb561456a8e032db7d065a2376654e5f1204243a",
+  "model_api_calls": 0,
+  "previous_ledger_sha256": "0e7991db66e5dbe3261a8af78d03b58cdb7ab996485dc6b0bd3d5b76727b18e5",
+  "records": [
+    {
+      "context": {
+        "buggy_archive": {
+          "archive_bytes": 4890974,
+          "archive_root": "spaCy-dac70f29eb3b1f21ae9e2c6346666bf6a46307b6",
+          "archive_sha256": "60c81ea8fcd207514d401e368d09b4e6c42aedefdfe42c01b14f087c036fe9f8",
+          "extracted_file_count": 1323,
+          "extracted_tree_sha256": "695d9637b376baacce1e0b0c88f5019b952af168f419ba22fd4c022019d0f6d1",
+          "materialized_symlink_count": 0
+        },
+        "buggy_commit_id": "dac70f29eb3b1f21ae9e2c6346666bf6a46307b6",
+        "buggy_source_tree_sha256": "695d9637b376baacce1e0b0c88f5019b952af168f419ba22fd4c022019d0f6d1",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "context_tree_sha256": "ff4ad43a0034d09e925f38e4bee896335a8da14b8dc48d772a1281a1ac9435c9",
+        "fixed_archive": {
+          "archive_bytes": 4891418,
+          "archive_root": "spaCy-663333c3b2bad90915d1a48a626ca1275b7ef077",
+          "archive_sha256": "356914ad1fdc25810a3ba5e3ad94ac535839f019b2f320f9cbf7bb8ee2bd468c",
+          "extracted_file_count": 1325,
+          "extracted_tree_sha256": "48419bee902e522e9e84b917f500b4f18704ffdefd191b4d82bfd9649776fe57",
+          "materialized_symlink_count": 0
+        },
+        "fixed_commit_id": "663333c3b2bad90915d1a48a626ca1275b7ef077",
+        "fixed_test_sha256": {
+          "spacy/tests/regression/test_issue5314.py": "e66d17bbfe0ebedf2f3e0d8d68bb8f5f7a05e2d8e340d857ecfc291f7788c468"
+        },
+        "metadata_sha256": {
+          "bug.info": "6743d3fac9d16e2df8e404ebf0ec540436308af19c0f3b7ed1daf31c3af23fc3",
+          "bug_patch.txt": "eee7a3f1455ab3ae172e3a97535970765fb242fe3fb0c5bc55381aff1d68faee",
+          "requirements.txt": "6903de773ac8df57fafa2df197bb003d9810b32f76906a7c1e67c7b9672f84b8",
+          "run_test.sh": "1d8837e1c41035d021ca55c15a3c2ac7b701b39b3a1ee2a0664400a85ec49095",
+          "setup.sh": "00293ccdff169f1ec9384222eea57c351deb8cf694d68f0e0e937867c214a6c2"
+        },
+        "model_api_calls": 0,
+        "order": 17,
+        "project": "spacy",
+        "record_sha256": "2b7aee592e017d5ba9faca39e02af200ac1563cfc91f21914d5a159f71021e52",
+        "reference_validation": {
+          "normalized_patch_sha256": "95464842a55bc9e65829e2042b6d2b32863303392c5569a72262865c259548bb",
+          "patch_apply_exit_code": 0,
+          "patch_check_exit_code": 0,
+          "patch_line_endings_normalized": true,
+          "reference_tree_sha256": "cf2f3b8068b2efa98dae3bd4729c6ace89fdb87800e360958589ea544a189792"
+        },
+        "source_acquisition": "official GitHub codeload commit tarballs",
+        "source_materialization_manifests": [],
+        "source_repository": "https://github.com/explosion/spaCy",
+        "status": "v2_p2_source_context_frozen_no_candidate",
+        "task_id": "bugsinpy_spacy_3"
+      },
+      "order": 17,
+      "project_test_scope": {
+        "collection_command": [
+          "python",
+          "-m",
+          "pytest",
+          "--collect-only",
+          "-q",
+          "spacy/tests"
+        ],
+        "derived_from_declared_file_count": 9,
+        "framework": "pytest",
+        "project": "spacy",
+        "project_test_root": "spacy/tests",
+        "unittest_pattern": null,
+        "unittest_top_level_dir": null
+      },
+      "real_activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 1
+      },
+      "record_sha256": "a319944369b8ecfa14d0599e9cae29437857c8e9853d152dd2d38e1aacd25a27",
+      "source_record": {
+        "bug_id": 3,
+        "buggy_commit_id": "dac70f29eb3b1f21ae9e2c6346666bf6a46307b6",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "catalog_f2p_commands": [
+          "py.test spacy/tests/regression/test_issue5314.py::test_issue5314"
+        ],
+        "declared_f2p_commands": [
+          "py.test spacy/tests/regression/test_issue5314.py::test_issue5314"
+        ],
+        "declared_test_file": "spacy/tests/regression/test_issue5314.py",
+        "environment_risk_tags": [
+          "native_extension_build"
+        ],
+        "f2p_command_match": true,
+        "fixed_commit_id": "663333c3b2bad90915d1a48a626ca1275b7ef077",
+        "metadata_sha256": {
+          "bug_info": "6743d3fac9d16e2df8e404ebf0ec540436308af19c0f3b7ed1daf31c3af23fc3",
+          "reference_patch": "eee7a3f1455ab3ae172e3a97535970765fb242fe3fb0c5bc55381aff1d68faee",
+          "requirements": "6903de773ac8df57fafa2df197bb003d9810b32f76906a7c1e67c7b9672f84b8",
+          "run_test": "1d8837e1c41035d021ca55c15a3c2ac7b701b39b3a1ee2a0664400a85ec49095",
+          "setup_provenance_only": "00293ccdff169f1ec9384222eea57c351deb8cf694d68f0e0e937867c214a6c2"
+        },
+        "model_outcome_observed": false,
+        "official_setup_executable_authority": false,
+        "order": 17,
+        "project": "spacy",
+        "project_order_sha256": "ce8cb78493419b28d634a190561d30be5903e032a246dc725683b3685c846cac",
+        "project_position": 8,
+        "python_version": "3.7.7",
+        "requirements_metadata": {
+          "nonempty": true,
+          "present": true
+        },
+        "round": 2,
+        "task_id": "bugsinpy_spacy_3",
+        "task_order_sha256": "1e5f3360dc3c58ea93c91b675de5f68b899008c0aa94384dd3b75b47532be391",
+        "test_framework": "pytest"
+      },
+      "task_id": "bugsinpy_spacy_3"
+    }
+  ],
+  "registry_id": "dsa_v2_p2_order_017_bugsinpy_spacy_3_source_v0_1",
+  "status": "cursor_task_source_frozen"
+}
