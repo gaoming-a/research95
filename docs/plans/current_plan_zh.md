@@ -366,6 +366,11 @@ FreeType compile check 失败，报告系统 FreeType 不满足/头文件宏不�
 attempted=57、qualified=0、API=0；cursor 为 order58 `bugsinpy_spacy_1`、
 started=false。
 
+spaCy_1 canonical-root source freeze/check PASS。唯一 py377 build 的 recursive native
+dependency 要求当前 Python3.7 无可用 distribution 的 `cython>=3.1`；不更换 Python/
+Cython、不修改依赖、不重跑。ledger v0.58 attempted=58、qualified=0、API=0；cursor 为
+order59 `bugsinpy_pandas_110`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

@@ -1,0 +1,18 @@
+{
+  "created_date": "2026-07-12",
+  "draft_id": "dsa_v2_p2_order_058_bugsinpy_spacy_1_terminal_draft_v0_1",
+  "model_api_calls": 0,
+  "next_order": 59,
+  "next_task_id": "bugsinpy_pandas_110",
+  "next_task_started": false,
+  "records": [
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "836777ca22886319b30d2167916c43f20138a4ca6983d1f66122bda9a1ae1d0b",
+      "order": 58,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_spacy_1"
+    }
+  ]
+}
