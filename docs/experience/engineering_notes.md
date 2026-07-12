@@ -204,6 +204,11 @@
   evidence are already intact. Do not repair the shared adapter for one task or
   rerun the oracle after observing the outcome.
 
+- Native-extension projects can pass source integrity yet fail before tests
+  because the frozen generic image lacks a system development header. Record
+  the compiler error as environment materialization evidence; adding an OS
+  package after seeing it would be task-specific dependency repair.
+
 ## 2026-07-12 V2-P1 metadata and base-lock freeze
 
 - Source-frame eligibility does not imply that every official task directory
