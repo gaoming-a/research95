@@ -1,0 +1,233 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 2,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 2,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "created_date": "2026-07-12",
+  "failure_reason": "oracle-positive-f2p-failure-or-dual-disagreement",
+  "model_api_calls": 0,
+  "official_f2p": {
+    "dual_pass": false,
+    "run_a": {
+      "container_exit_code": 0,
+      "container_id": "ad76f351c5a31bb053b5354a587762c2bedc1d3b9008c096591fc443a52e4557",
+      "container_name": "dsa-v2-p2-official-f2p-a-c3dbf09079",
+      "image_id": "sha256:6b995d1456974627b21b817dd844b2f600bc975f0978872832d1a088d660d99b",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 2912,
+      "output_sha256": "175659c33bfaa84a124b5d336d7113c4d45e7a8354fab65f8a8d05232cf0b0fa",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "pytest lib/matplotlib/tests/test_axes.py::test_vlines_default"
+            ],
+            "duration_seconds": 1.926,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "============================= test session starts ==============================\nplatform linux -- Python 3.8.1, pytest-5.4.3, py-1.11.0, pluggy-0.13.1\nrootdir: <PROJECT>, inifile: pytest.ini\ncollected 1 item\n\nlib/matplotlib/tests/test_axes.py .                                      [100%]\n\n============================== 1 passed in 0.54s ===============================\n<PROJECT>/lib/matplotlib/widgets.py:1911: DeprecationWarning: invalid escape sequence \\s\n  \"\"\"\n",
+            "output_sha256": "b08c0d021a0169fda213672f210c983ede12d2459ce2fdd9dc17f8b1c34526a0",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 3846,
+              "sha256": "df1e425eedcb0d3806b5bf10c55e369648621d93f46f5754cdc85f8435cf21f8"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 1161,
+              "sha256": "236fefcfe76f0d7de9c4cca7fae1dfc7e975f3ee2eae732a0efc1130761bf8ae"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "3b1dc2bbc3cff0751e6bbf8d3cda2b91cdc3c8ccb60b7220d643eee87bac30f1"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 761,
+              "sha256": "a0beaab3e80d5e8620453e46e004ea88b8ebe9d3a656bbda1b970954800f5ab9"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py381/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.003,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.8.1\n",
+            "output_sha256": "91a3a5d83d5640b02e465696e524316a49de4b6da26732db04fc640ef12412d4",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "03588c8a8f5e405351ff28b7888102cc0dc0c7a19cc1e66bcabc8e068e660c3b",
+          "fixed_test_paths": [
+            "lib/matplotlib/tests/test_axes.py"
+          ],
+          "reference_patch_sha256": "f09a14bd0f5a297b986af32d22c559381912db45c20429e8036b08aae5dbcf19"
+        }
+      }
+    },
+    "run_b": {
+      "container_exit_code": 0,
+      "container_id": "64cc778bd2e804d1badd33a2fdf9d49b125f501bd10b2bc0a8b1fc22e408ff4f",
+      "container_name": "dsa-v2-p2-official-f2p-b-51bb13f9d2",
+      "image_id": "sha256:6b995d1456974627b21b817dd844b2f600bc975f0978872832d1a088d660d99b",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 2912,
+      "output_sha256": "655cc3d07bc5e50fb62fc55e12f04c2bd9c99b23d09260f46bc4db14a9d3f6e1",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "pytest lib/matplotlib/tests/test_axes.py::test_vlines_default"
+            ],
+            "duration_seconds": 1.922,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "============================= test session starts ==============================\nplatform linux -- Python 3.8.1, pytest-5.4.3, py-1.11.0, pluggy-0.13.1\nrootdir: <PROJECT>, inifile: pytest.ini\ncollected 1 item\n\nlib/matplotlib/tests/test_axes.py .                                      [100%]\n\n============================== 1 passed in 0.51s ===============================\n<PROJECT>/lib/matplotlib/widgets.py:1911: DeprecationWarning: invalid escape sequence \\s\n  \"\"\"\n",
+            "output_sha256": "ed5b1ba4f8e9016200b96a61113c47d40fc6461ba64a3768865bedb59ca3268e",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 3846,
+              "sha256": "df1e425eedcb0d3806b5bf10c55e369648621d93f46f5754cdc85f8435cf21f8"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 1161,
+              "sha256": "236fefcfe76f0d7de9c4cca7fae1dfc7e975f3ee2eae732a0efc1130761bf8ae"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "3b1dc2bbc3cff0751e6bbf8d3cda2b91cdc3c8ccb60b7220d643eee87bac30f1"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 761,
+              "sha256": "a0beaab3e80d5e8620453e46e004ea88b8ebe9d3a656bbda1b970954800f5ab9"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py381/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.002,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.8.1\n",
+            "output_sha256": "91a3a5d83d5640b02e465696e524316a49de4b6da26732db04fc640ef12412d4",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "03588c8a8f5e405351ff28b7888102cc0dc0c7a19cc1e66bcabc8e068e660c3b",
+          "fixed_test_paths": [
+            "lib/matplotlib/tests/test_axes.py"
+          ],
+          "reference_patch_sha256": "f09a14bd0f5a297b986af32d22c559381912db45c20429e8036b08aae5dbcf19"
+        }
+      }
+    }
+  },
+  "oracle_id": "dsa_v2_p2_order_007_bugsinpy_matplotlib_4_oracle_v0_1",
+  "order": 7,
+  "source_paths": [
+    "lib/matplotlib/axes/_axes.py",
+    "lib/matplotlib/pyplot.py"
+  ],
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_matplotlib_4",
+  "task_image_id": "sha256:6b995d1456974627b21b817dd844b2f600bc975f0978872832d1a088d660d99b",
+  "task_specific_repair_attempted": false
+}

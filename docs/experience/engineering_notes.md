@@ -33,6 +33,9 @@
   gate when their complete output hashes differ. Do not replace the registered
   fingerprint with the human-readable excerpt after observing this outcome;
   record a dual-disagreement terminal and continue.
+- Pytest elapsed-time text is a concrete source of full-output hash instability.
+  If the fingerprint was frozen before observation, normalizing that duration
+  afterward is a protocol change, not an execution repair.
 
 ## 2026-07-12 Treat unavailable frozen prereleases as environment terminals
 

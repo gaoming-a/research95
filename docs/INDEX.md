@@ -128,6 +128,10 @@
   order6 oracle terminal. Both reference F2P checks passed, but their frozen
   full-output hashes disagreed, so the dual-stability Gate failed without a
   rerun. Ledger v0.6 advances to `bugsinpy_matplotlib_4`, API=0.
+- [dsa_v2_p2_order_007_bugsinpy_matplotlib_4_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_007_bugsinpy_matplotlib_4_terminal_gate_v0_1.md):
+  order7 oracle terminal. Both F2P runs passed, but elapsed-time text made the
+  frozen full-output hashes differ; no post-outcome normalization or rerun was
+  allowed. Ledger v0.7 advances to `bugsinpy_spacy_8`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

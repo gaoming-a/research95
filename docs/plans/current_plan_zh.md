@@ -85,6 +85,11 @@ Tornado_3 source freeze/check 与 environment build PASS。两次 fresh referenc
 terminal，不放宽 fingerprint、不重跑、不进入 candidate。ledger v0.6 attempted=6、
 qualified=0、API=0；cursor 为 order7 `bugsinpy_matplotlib_4`、started=false。
 
+Matplotlib_4 source freeze/check 与 py381 build PASS。两次 fresh F2P 均通过，但 pytest
+完整输出含 `0.54s`/`0.51s` duration，导致冻结 `output_sha256` 不同；按 dual disagreement
+terminal，不事后归一化时间、不重跑。ledger v0.7 attempted=7、qualified=0、API=0；
+cursor 为 order8 `bugsinpy_spacy_8`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
