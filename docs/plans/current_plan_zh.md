@@ -300,6 +300,11 @@ Black_15 source freeze/check 与 build PASS，两个 archive 的 dangling-doc ma
 不重跑。ledger v0.45 attempted=45、qualified=0、API=0；cursor 为 order46
 `bugsinpy_keras_24`、started=false。
 
+Keras_24 source freeze/check PASS。唯一 py373 build 因冻结 requirements 中
+`numpy==1.19.0rc2` 在当前 index 无匹配 distribution 而 terminal；不替换为 final、
+不重跑。ledger v0.46 attempted=46、qualified=0、API=0；cursor 为 order47
+`bugsinpy_ansible_5`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

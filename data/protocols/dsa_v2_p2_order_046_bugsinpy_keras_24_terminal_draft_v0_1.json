@@ -1,0 +1,18 @@
+{
+  "created_date": "2026-07-12",
+  "draft_id": "dsa_v2_p2_order_046_bugsinpy_keras_24_terminal_draft_v0_1",
+  "model_api_calls": 0,
+  "next_order": 47,
+  "next_task_id": "bugsinpy_ansible_5",
+  "next_task_started": false,
+  "records": [
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "9008560d124347dd12dd30720d1e647be5eb65b767cdf782bbb4935cc99cdd27",
+      "order": 46,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_keras_24"
+    }
+  ]
+}
