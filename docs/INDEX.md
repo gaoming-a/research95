@@ -75,6 +75,13 @@
   runner is `../scripts/dsa2026_v2_p2_order2.py`; its image recipe is
   `../containers/dsa2026_v2_p2/Dockerfile.order2`. It binds but never overwrites
   the order-1 terminal ledger and does not authorize order 3, V2-P3, prompt, or API.
+- [dsa_v2_p2_fastapi_11_terminal_gate_v0_1.md](experiments/dsa_v2_p2_fastapi_11_terminal_gate_v0_1.md):
+  passing order-2 environment terminal audit. Machine evidence is
+  `../data/protocols/dsa_v2_p2_fastapi_11_environment_v0_1.json`,
+  `../data/protocols/dsa_v2_p2_order2_terminal_draft_v0_1.json`,
+  `../data/protocols/dsa_v2_p2_order2_gate_audit_v0_1.json`, and cumulative
+  `../data/protocols/dsa_v2_p2_terminal_ledger_v0_2.json`; replay is
+  `../scripts/dsa2026_v2_p2_audit_order2.py`. Order3 is selected but not started.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
   venue/submission master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is

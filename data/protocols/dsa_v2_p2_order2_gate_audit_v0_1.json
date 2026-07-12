@@ -1,0 +1,49 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "audit_id": "dsa_v2_p2_order2_gate_audit_v0_1",
+  "boundary": "No order-2 oracle/candidate/model outcome and no order-3 runtime activity occurred.",
+  "checks": {
+    "activity_exact": true,
+    "build_log_hash_matches": true,
+    "cursor_advances_once_to_order3_not_started": true,
+    "environment_failure_terminal": true,
+    "exact_failure_evidence_present": true,
+    "model_api_zero": true,
+    "no_final_image_or_containers": true,
+    "no_setup_repair_or_rerun": true,
+    "only_order2_source_added": true,
+    "oracle_candidate_outputs_absent": true,
+    "order1_ledger_byte_semantics_unchanged": true,
+    "order1_record_preserved_exactly": true,
+    "order2_draft_binds_environment": true,
+    "order2_unique_terminal": true,
+    "v2_p1_manifest_unchanged": true
+  },
+  "created_date": "2026-07-12",
+  "diagnosis": {
+    "editable_project": "pip 20.1.1 cannot install this pyproject-only checkout in editable mode because setup.py is absent",
+    "pip_check": "requirements installed fastapi 0.55.1 requiring starlette 0.13.2 while the frozen requirements contain starlette 0.12.8",
+    "repair_or_rerun": "forbidden for terminal order 2"
+  },
+  "environment_record_sha256": "77f1349c15e1092d1a6241ce2fae3fb34c4afffb7d602e600b5587391eb0a6c2",
+  "order": 2,
+  "source_record_sha256": "2cb131b0b02c25e4d9fb1f703eb1679b9915d5ec83e6097db52870cf73893aed",
+  "status": "passed_terminal_continue_cursor",
+  "task_id": "bugsinpy_fastapi_11",
+  "terminal_record": {
+    "disposition": "materialization-failed",
+    "environment_record_sha256": "77f1349c15e1092d1a6241ce2fae3fb34c4afffb7d602e600b5587391eb0a6c2",
+    "order": 2,
+    "reason": "environment-build-failure",
+    "selected_candidate_sha256": null,
+    "task_id": "bugsinpy_fastapi_11"
+  }
+}

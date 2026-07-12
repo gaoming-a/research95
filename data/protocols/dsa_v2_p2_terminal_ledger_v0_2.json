@@ -1,0 +1,31 @@
+{
+  "attempted_tasks": 2,
+  "created_date": "2026-07-12",
+  "ledger_id": "dsa_v2_p2_terminal_ledger_v0_2",
+  "model_api_calls": 0,
+  "next_order": 3,
+  "next_task_id": "bugsinpy_black_4",
+  "next_task_started": false,
+  "qualified_pairs": 0,
+  "records": [
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "5f9ac606ec4670e31960c0785986c023c567763e8d7e0c6021467c62a85fe09a",
+      "order": 1,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_pandas_161"
+    },
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "77f1349c15e1092d1a6241ce2fae3fb34c4afffb7d602e600b5587391eb0a6c2",
+      "order": 2,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_fastapi_11"
+    }
+  ],
+  "status": "orders_1_2_terminal",
+  "superseded_ledger_sha256": "d244f194627819e47eb50dc8936759f37ad66f31e29db95b0232442a70d81794",
+  "supersedes": "data/protocols/dsa_v2_p2_terminal_ledger_v0_1.json"
+}

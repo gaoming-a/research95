@@ -68,6 +68,14 @@ collection, dual-fresh qualification, and T1--T4 ordering. Order-2 results use
 separate namespaces and cannot overwrite the pandas terminal; V2-P3 and model
 API remain forbidden.
 
+Order 2 `bugsinpy_fastapi_11` has also reached an environment terminal without
+a rerun. The frozen pip 20.1.1 cannot editable-install its pyproject-only
+checkout without `setup.py`, and `pip check` reports the frozen Starlette 0.12.8
+conflicts with FastAPI 0.55.1's exact 0.13.2 requirement. Ledger v0.2 preserves
+the order-1 record and appends order 2; no final image, container, project test,
+oracle/candidate outcome, prompt, credential, or API call exists. The cursor is
+order 3 `bugsinpy_black_4`, explicitly not started.
+
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,
 and 250 dpi visual checks. The DSA-specific AI policy, institutional Compendex

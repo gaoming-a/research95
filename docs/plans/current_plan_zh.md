@@ -23,6 +23,20 @@ Pre-outcome implementation：
 下一动作：提交完整 order2 runner 后获取 official codeload archives，冻结 source/context；
 GitHub 频繁失败可记录并重试，但不得更换未冻结来源。
 
+Order2 terminal 结果：
+
+- FastAPI_11 official source/context 已冻结，record=`2cb131b0…93aed`；唯一 no-cache
+  build output SHA-256=`0eb9b772…da21`，environment record=`77f1349c…a6c2`；
+- frozen requirements 安装后，editable project 明确失败：checkout 只有 `pyproject.toml`，
+  pip20.1.1 的 editable mode 要求 `setup.py`；随后 `pip check` 明确发现 FastAPI0.55.1
+  要求 Starlette0.13.2，但冻结 requirements 为0.12.8；
+- 按 no-task-specific-repair/no-rerun，未升级 pip、未改 Starlette、未补 setup.py、未重跑；
+- order2 terminal=`materialization-failed/environment-build-failure`；order1 ledger v0.1
+  保持不变，新 ledger v0.2 仅追加 order2 record；
+- order2 checkout/build/container/test/oracle/candidate/API=1/1/0/0/0/0/0；最终 image
+  不存在；cursor 指向 order3 `bugsinpy_black_4`，started=false；
+- 用户明确要求本轮停在该未启动 cursor，不创建或执行 order3 Goal。
+
 首次 order2 source freeze 在 metadata copy 前发现 FastAPI_11 无 `setup.sh`，V2 record
 因而也无 `setup_provenance_only`。修复只在 order2 helper input 为缺失文件提供不可使用的
 空 adapter 值；copy helper 会继续跳过 setup，未发生 environment/test outcome。修复必须

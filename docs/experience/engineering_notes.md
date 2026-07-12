@@ -13,6 +13,11 @@
   V2 alias expected `setup_provenance_only`, but FastAPI_11 has neither the file
   nor the field. Supply an unused empty adapter value only because the helper
   mechanically skips absent setup files; never synthesize or execute setup.
+- FastAPI_11 demonstrates why both editable installation and `pip check` are
+  environment Gates. Frozen pip20.1.1 cannot editable-install a pyproject-only
+  tree without setup.py, while the frozen requirements simultaneously install
+  Starlette0.12.8 against FastAPI0.55.1's exact0.13.2 constraint. Both are
+  terminal evidence, not permission to upgrade tooling or change dependencies.
 
 ## 2026-07-12 Freeze the whole real runner before the first outcome
 

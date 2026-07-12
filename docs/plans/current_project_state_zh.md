@@ -2,7 +2,17 @@
 
 日期：2026-07-12
 
-## 2026-07-12 V2-P2 order-2 preflight PASS
+## 2026-07-12 V2-P2 order-2 terminal / STOP BEFORE ORDER3
+
+- 当前状态：`V2_P2_ORDERS_1_2_ENVIRONMENT_TERMINAL / ORDER_3_NOT_STARTED /
+  NO_API / V0_SUBMISSION_GATE_PENDING`；
+- order2 FastAPI_11 environment build exit=1：pip20.1.1 无法 editable-install pyproject-only
+  checkout，且 frozen requirements 的 Starlette0.12.8 与 FastAPI0.55.1 所需0.13.2冲突；
+- 未修依赖、未重跑；image/container/test/oracle/candidate/API=0；
+- terminal ledger v0.2 精确保留 order1 record 并追加 order2；next=`bugsinpy_black_4`、
+  started=false；按用户要求不创建或执行 order3 Goal。
+
+## 2026-07-12 V2-P2 order-2 preflight PASS（已被上方覆盖）
 
 - 当前状态：`V2_P2_ORDER_1_TERMINAL / ORDER_2_REAL_PREFLIGHT_PASS /
   FASTAPI_11_NOT_STARTED / NO_API`；
