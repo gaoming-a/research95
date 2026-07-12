@@ -341,6 +341,11 @@ Black_12 source freeze/check 与 build PASS，两个 archive 的 dangling-doc ma
 不重跑。ledger v0.53 attempted=53、qualified=0、API=0；cursor 为 order54
 `bugsinpy_keras_29`、started=false。
 
+Keras_29 source freeze/check 与 build PASS。两次 F2P 均通过，但 pytest slowest duration
+与总 duration 分别为 `5.07s/8.30s`、`5.08s/8.19s`，冻结 full-output hashes 不同；
+按 dual disagreement terminal，不归一化、不重跑。ledger v0.54 attempted=54、
+qualified=0、API=0；cursor 为 order55 `bugsinpy_ansible_14`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

@@ -1,0 +1,47 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "build_exit_code": 0,
+  "build_output_bytes": 22642,
+  "build_output_sha256": "ccb6583c4472e6f940bbe0532125d6be73b66236946976d04c03784f10740d2a",
+  "created_date": "2026-07-12",
+  "dockerfile_sha256": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
+  "environment_id": "dsa_v2_p2_order_054_bugsinpy_keras_29_environment_v0_1",
+  "failure_reason": null,
+  "image": {
+    "image": "dsa2026-v2-p2-task:bugsinpy_keras_29",
+    "image_id": "sha256:223dd1b0a254480b88c9cfe078de5ba3fdb2b119b19e367d38219317e1220e66",
+    "labels": {
+      "dsa2026.v2_p2.buggy_commit": "a341c014412cbfc86a9dd9816ae228e398dff3a2",
+      "dsa2026.v2_p2.fixed_commit": "adc321b4d7a4e22f6bdb00b404dfe5e23d4887aa",
+      "dsa2026.v2_p2.model_api_called": "false",
+      "dsa2026.v2_p2.official_setup_executed": "false",
+      "dsa2026.v2_p2.order": "54",
+      "dsa2026.v2_p2.project": "keras",
+      "dsa2026.v2_p2.python_env": "py373",
+      "dsa2026.v2_p2.task_id": "bugsinpy_keras_29",
+      "maintainer": "Anaconda, Inc",
+      "org.opencontainers.image.created": "2023-05-02T19:14:07.639Z",
+      "org.opencontainers.image.description": "Repository of Docker images created by Anaconda",
+      "org.opencontainers.image.licenses": "",
+      "org.opencontainers.image.revision": "60eb8fe8f841c7d64a2439920562edc8e409c80f",
+      "org.opencontainers.image.source": "https://github.com/ContinuumIO/docker-images",
+      "org.opencontainers.image.title": "DSA v0.2 V2-P2 cursor task environment",
+      "org.opencontainers.image.url": "https://github.com/ContinuumIO/docker-images",
+      "org.opencontainers.image.version": "23.3.1-0"
+    }
+  },
+  "official_setup_executed": false,
+  "order": 54,
+  "source_record_sha256": "829f08d77d7baa74fef2d37545e431ce0e445e2122a0b15b26f2f3c63703e1ed",
+  "status": "environment-built-oracle-not-started",
+  "task_id": "bugsinpy_keras_29",
+  "task_specific_repair_attempted": false
+}

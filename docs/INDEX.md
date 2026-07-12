@@ -332,6 +332,10 @@
   manifests passed. Both F2P runs failed on the unimportable test module; no
   command repair or rerun occurred. Ledger v0.53 advances to
   `bugsinpy_keras_29`, API=0.
+- [dsa_v2_p2_order_054_bugsinpy_keras_29_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_054_bugsinpy_keras_29_terminal_gate_v0_1.md):
+  order54 oracle terminal after source/build passed. Both F2P runs passed, but
+  pytest duration fields changed the frozen full-output hashes; no normalization
+  or rerun occurred. Ledger v0.54 advances to `bugsinpy_ansible_14`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

@@ -1,0 +1,232 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 2,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 2,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "created_date": "2026-07-12",
+  "failure_reason": "oracle-positive-f2p-failure-or-dual-disagreement",
+  "model_api_calls": 0,
+  "official_f2p": {
+    "dual_pass": false,
+    "run_a": {
+      "container_exit_code": 0,
+      "container_id": "3da706f08a59a3303cf9582fbf5aba8bf28c3ce4c1cf105d73fd7c3fa9a6e7d5",
+      "container_name": "dsa-v2-p2-official-f2p-a-e0cc0baad5",
+      "image_id": "sha256:223dd1b0a254480b88c9cfe078de5ba3fdb2b119b19e367d38219317e1220e66",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 6481,
+      "output_sha256": "a7ec7b05a05d567ddc6aff1857d6dc5afb7c7ca1643e06bdb9ffaeb4e7c176de",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "pytest tests/keras/metrics_test.py::test_stateful_metrics[dict]"
+            ],
+            "duration_seconds": 8.685,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "thon3.7/site-packages/tensorflow/python/framework/dtypes.py:535\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:535\n  /opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:535: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.\n    np_resource = np.dtype([(\"resource\", np.ubyte, 1)])\n\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/util/nest.py:823\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/util/nest.py:823\n  /opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/util/nest.py:823: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated, and in 3.8 it will stop working\n    _pywrap_tensorflow.RegisterType(\"Mapping\", _collections.Mapping)\n\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/util/nest.py:824\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/util/nest.py:824\n  /opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/util/nest.py:824: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated, and in 3.8 it will stop working\n    _pywrap_tensorflow.RegisterType(\"Sequence\", _collections.Sequence)\n\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/data_structures.py:312\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/data_structures.py:312\n  /opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/data_structures.py:312: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated, and in 3.8 it will stop working\n    class _ListWrapper(List, collections.MutableSequence,\n\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/data_structures.py:546\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/data_structures.py:546\n  /opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/data_structures.py:546: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated, and in 3.8 it will stop working\n    class _DictWrapper(Mapping, collections.MutableMapping):\n\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/util.py:448\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/util.py:448\n  /opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/util.py:448: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated, and in 3.8 it will stop working\n    class _ObjectIdentitySet(collections.MutableSet):\n\nkeras/callbacks.py:18\nkeras/callbacks.py:18\n  <PROJECT>/keras/callbacks.py:18: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated, and in 3.8 it will stop working\n    from collections import Iterable\n\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/framework/tensor_util.py:573\n  /opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/framework/tensor_util.py:573: DeprecationWarning: np.asscalar(a) is deprecated since NumPy v1.16, use a.item() instead\n    append_fn(tensor_proto, proto_values)\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n========================== slowest 10 test durations ===========================\n5.07s call     tests/keras/metrics_test.py::test_stateful_metrics[dict]\n\n(0.00 durations hidden.  Use -vv to show these durations.)\n======================== 1 passed, 27 warnings in 8.30s ========================\n",
+            "output_sha256": "974f6b23a08c6e5ff926d4405e0ba5234d7ed0ac1912d561145f0df41020a6a1",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 4262,
+              "sha256": "f5f36238a1b97f435d93a9ff7b23c5fa12b075fc616ee05e66bd2c6e72552fd5"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 911,
+              "sha256": "2000648145abdb44bfa473f78597d04e4a0378e79a8e97d2006e7ef7a8439190"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "3bfe8efe2557fd88b5ebe4a674602e9362fa2ab497accb04ee661cb87ba75d9b"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 1000,
+              "sha256": "1ad52d97e4bf08020ad8736e5f66cebc87e0f8fada6e342019ed018d763024d4"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 7689,
+              "sha256": "b8c41bbf97db3198e2e8d431b49874554ef61ffe3f64122798df64ae4a781939"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py373/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.005,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.7.3\n",
+            "output_sha256": "465636df1ee7eb5c6c8bb165e284d30bd09b25d5465fe616815b796ecc78312b",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "b7575dcfd37072746c65d54c78664a19076807d230a2127cb147ec881f66f78c",
+          "fixed_test_paths": [
+            "tests/keras/metrics_test.py"
+          ],
+          "reference_patch_sha256": "3270e8d669a2f1a5319b88eaa28ab3e4be683e8d140f6c8a35e605d3b6b76fdd"
+        }
+      }
+    },
+    "run_b": {
+      "container_exit_code": 0,
+      "container_id": "c1f52ecd32be168c10a153abfbb5035c61f551f6705ec84affcec5bfd3f90dbb",
+      "container_name": "dsa-v2-p2-official-f2p-b-ad6762e9b4",
+      "image_id": "sha256:223dd1b0a254480b88c9cfe078de5ba3fdb2b119b19e367d38219317e1220e66",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 6481,
+      "output_sha256": "6539e8f333c522d54b171a7787ac5eb1d4e48aa0683eb88bc3c1ab86062d7634",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "pytest tests/keras/metrics_test.py::test_stateful_metrics[dict]"
+            ],
+            "duration_seconds": 8.559,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "thon3.7/site-packages/tensorflow/python/framework/dtypes.py:535\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:535\n  /opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:535: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.\n    np_resource = np.dtype([(\"resource\", np.ubyte, 1)])\n\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/util/nest.py:823\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/util/nest.py:823\n  /opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/util/nest.py:823: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated, and in 3.8 it will stop working\n    _pywrap_tensorflow.RegisterType(\"Mapping\", _collections.Mapping)\n\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/util/nest.py:824\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/util/nest.py:824\n  /opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/util/nest.py:824: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated, and in 3.8 it will stop working\n    _pywrap_tensorflow.RegisterType(\"Sequence\", _collections.Sequence)\n\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/data_structures.py:312\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/data_structures.py:312\n  /opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/data_structures.py:312: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated, and in 3.8 it will stop working\n    class _ListWrapper(List, collections.MutableSequence,\n\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/data_structures.py:546\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/data_structures.py:546\n  /opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/data_structures.py:546: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated, and in 3.8 it will stop working\n    class _DictWrapper(Mapping, collections.MutableMapping):\n\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/util.py:448\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/util.py:448\n  /opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/training/checkpointable/util.py:448: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated, and in 3.8 it will stop working\n    class _ObjectIdentitySet(collections.MutableSet):\n\nkeras/callbacks.py:18\nkeras/callbacks.py:18\n  <PROJECT>/keras/callbacks.py:18: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated, and in 3.8 it will stop working\n    from collections import Iterable\n\n/opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/framework/tensor_util.py:573\n  /opt/conda/envs/py373/lib/python3.7/site-packages/tensorflow/python/framework/tensor_util.py:573: DeprecationWarning: np.asscalar(a) is deprecated since NumPy v1.16, use a.item() instead\n    append_fn(tensor_proto, proto_values)\n\n-- Docs: https://docs.pytest.org/en/latest/warnings.html\n========================== slowest 10 test durations ===========================\n5.08s call     tests/keras/metrics_test.py::test_stateful_metrics[dict]\n\n(0.00 durations hidden.  Use -vv to show these durations.)\n======================== 1 passed, 27 warnings in 8.19s ========================\n",
+            "output_sha256": "9ae3930cca99692cb9e508c7af98835ce06834b59148ec940d0ba1d0e3e89d88",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 4262,
+              "sha256": "f5f36238a1b97f435d93a9ff7b23c5fa12b075fc616ee05e66bd2c6e72552fd5"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 911,
+              "sha256": "2000648145abdb44bfa473f78597d04e4a0378e79a8e97d2006e7ef7a8439190"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "3bfe8efe2557fd88b5ebe4a674602e9362fa2ab497accb04ee661cb87ba75d9b"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 1000,
+              "sha256": "1ad52d97e4bf08020ad8736e5f66cebc87e0f8fada6e342019ed018d763024d4"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 7689,
+              "sha256": "b8c41bbf97db3198e2e8d431b49874554ef61ffe3f64122798df64ae4a781939"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py373/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.008,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.7.3\n",
+            "output_sha256": "465636df1ee7eb5c6c8bb165e284d30bd09b25d5465fe616815b796ecc78312b",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "b7575dcfd37072746c65d54c78664a19076807d230a2127cb147ec881f66f78c",
+          "fixed_test_paths": [
+            "tests/keras/metrics_test.py"
+          ],
+          "reference_patch_sha256": "3270e8d669a2f1a5319b88eaa28ab3e4be683e8d140f6c8a35e605d3b6b76fdd"
+        }
+      }
+    }
+  },
+  "oracle_id": "dsa_v2_p2_order_054_bugsinpy_keras_29_oracle_v0_1",
+  "order": 54,
+  "source_paths": [
+    "keras/engine/training.py"
+  ],
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_keras_29",
+  "task_image_id": "sha256:223dd1b0a254480b88c9cfe078de5ba3fdb2b119b19e367d38219317e1220e66",
+  "task_specific_repair_attempted": false
+}
