@@ -221,6 +221,12 @@ Ansible_16 source freeze/check 分别约11/13分钟并 PASS。唯一 py369 build
 attempted=31、qualified=0、API=0；cursor 为 order32 `bugsinpy_tornado_14`、
 started=false。
 
+Tornado_14 source freeze/check 与 build PASS。两次 fresh official F2P 均以相同输出通过；
+随后通用 regression-pool discovery 在冻结 Python3.7 环境中因异常格式化接口不兼容产生
+`DiscoveryOutputParseError`，pool capacity=0。按普通 oracle materialization failure
+terminal，不修 collection adapter、不重跑。ledger v0.32 attempted=32、qualified=0、
+API=0；cursor 为 order33 `bugsinpy_matplotlib_29`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

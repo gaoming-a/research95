@@ -194,6 +194,16 @@
   pending cursor separately and keep checkout, environment, container, test,
   prompt, credential, and API activity counters explicitly at zero.
 
+## 2026-07-12 Frozen-runtime collection compatibility
+
+- A passing dual official F2P establishes the reference behavior but does not
+  guarantee regression-pool capacity. The generic discovery worker can still
+  fail inside an older frozen Python runtime before producing candidates.
+- Treat a discovery parse failure with zero pool capacity as an ordinary
+  pre-model materialization terminal when source, environment, and dual F2P
+  evidence are already intact. Do not repair the shared adapter for one task or
+  rerun the oracle after observing the outcome.
+
 ## 2026-07-12 V2-P1 metadata and base-lock freeze
 
 - Source-frame eligibility does not imply that every official task directory
