@@ -22,7 +22,7 @@
   },
   "component_sha256": {
     "dockerfile": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
-    "executor": "e122ff6ae506ee174026a012f3055571a8f6e8d6e46f82338bc456fbddd2509d"
+    "executor": "1e416e81947de07a2a7ae54d32a2756273ada60b18fb623134a58abacd214de1"
   },
   "created_date": "2026-07-12",
   "cursor_config_sha256": "da23de2e49157cb2144dc7d3a97838064e7b01c542b0185835d2cd2b5fbffc61",

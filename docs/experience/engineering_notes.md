@@ -11,6 +11,9 @@
 - Bind the first observed manifest and the author's exact declaration before
   extraction. Any failed predicate remains a hard stop; this keeps the exception
   from becoming task-specific dependency or source repair.
+- Keep the shared extractor fail-closed by default. Pass an exact omission set
+  only from the V2-P2 cursor after the signed rule and task-local manifest pass;
+  this avoids silently changing older P4/V2-P2 source semantics.
 
 ## 2026-07-12 Archive symlink fidelity is a frozen-content decision
 

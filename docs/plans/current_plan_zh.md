@@ -39,6 +39,12 @@ orders 的通用 source-materialization rule：每个未来任务必须独立生
 metadata 的全部机械 predicates 均通过才可自动省略 Windows 不可创建 link；否则 hard
 stop。下一步先冻结并审计该签核，再恢复 Black_4 source extraction；API 仍为0。
 
+Black_4 source checkpoint：共享 archive extractor 默认仍 hard-stop dangling link；cursor
+只有在独立 manifest 的全部 predicates 通过后才传入精确 `(path,target)` omission set。
+两个 official archive 的独立 manifest 均为上述签核 SHA-256、各13项，archive hashes
+与签核记录一致；source `--write/--check` PASS。activity 为 checkout=1，environment/
+container/test/prompt/API 全为0。下一步仅允许执行冻结 environment build。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

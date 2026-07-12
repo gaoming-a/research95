@@ -57,11 +57,18 @@ def tree_sha256(root: Path) -> str:
     return digest.hexdigest()
 
 
-def extract_commit_archive(archive: Path, destination: Path, expected_root: str) -> dict[str, Any]:
+def extract_commit_archive(
+    archive: Path,
+    destination: Path,
+    expected_root: str,
+    omittable_dangling_symlinks: set[tuple[str, str]] | None = None,
+) -> dict[str, Any]:
     destination.mkdir(parents=True, exist_ok=False)
     file_count = 0
     symlink_members: list[tarfile.TarInfo] = []
     roots: set[str] = set()
+    omitted_dangling_symlinks: list[dict[str, str]] = []
+    allowed_omissions = omittable_dangling_symlinks or set()
     with tarfile.open(archive, "r:gz") as tar:
         members = tar.getmembers()
         for member in members:
@@ -110,6 +117,14 @@ def extract_commit_archive(archive: Path, destination: Path, expected_root: str)
             source_path = destination.joinpath(*target_parts)
             target_path = destination.joinpath(*relative_link.parts)
             if not source_path.exists():
+                relative_name = relative_link.as_posix()
+                if (relative_name, member.linkname) in allowed_omissions:
+                    omitted_dangling_symlinks.append({
+                        "kind": "symbolic",
+                        "path": relative_name,
+                        "target": member.linkname,
+                    })
+                    continue
                 raise ValueError(f"symlink target missing: {member.name} -> {member.linkname}")
             target_path.parent.mkdir(parents=True, exist_ok=True)
             if source_path.is_dir():
@@ -118,14 +133,20 @@ def extract_commit_archive(archive: Path, destination: Path, expected_root: str)
                 shutil.copy2(source_path, target_path)
     if roots != {expected_root}:
         raise ValueError(f"archive roots drifted: {sorted(roots)}")
-    return {
+    record = {
         "archive_sha256": sha256_file(archive),
         "archive_bytes": archive.stat().st_size,
         "archive_root": expected_root,
         "extracted_file_count": file_count,
-        "materialized_symlink_count": len(symlink_members),
+        "materialized_symlink_count": len(symlink_members) - len(omitted_dangling_symlinks),
         "extracted_tree_sha256": tree_sha256(destination),
     }
+    if omitted_dangling_symlinks:
+        record["omitted_dangling_symlink_count"] = len(omitted_dangling_symlinks)
+        record["omitted_dangling_symlinks"] = sorted(
+            omitted_dangling_symlinks, key=lambda item: (item["path"], item["target"])
+        )
+    return record
 
 
 def copy_metadata(catalog_root: Path, task: dict[str, Any], destination: Path) -> dict[str, str]:

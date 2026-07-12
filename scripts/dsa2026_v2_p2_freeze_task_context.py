@@ -101,14 +101,15 @@ def build_context(
     fixed_archive: Path,
     catalog_root: Path,
     temporary_root: Path,
+    archive_extractor=extract_commit_archive,
 ) -> tuple[Path, dict[str, Any]]:
     context = temporary_root / TASK_ID
     buggy_source = context / "buggy_source"
     fixed_source = temporary_root / "fixed_source"
-    buggy_archive_record = extract_commit_archive(
+    buggy_archive_record = archive_extractor(
         buggy_archive, buggy_source, f"{task['project']}-{task['buggy_commit_id']}"
     )
-    fixed_archive_record = extract_commit_archive(
+    fixed_archive_record = archive_extractor(
         fixed_archive, fixed_source, f"{task['project']}-{task['fixed_commit_id']}"
     )
     fixed_test_hashes = copy_fixed_tests(

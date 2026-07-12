@@ -8,8 +8,11 @@ import hashlib
 import json
 import shutil
 import subprocess
+import tarfile
 import tempfile
+import posixpath
 from pathlib import Path
+from pathlib import PurePosixPath
 from typing import Any
 
 import dsa2026_v2_p2_freeze_task_context as source_lib
@@ -21,6 +24,7 @@ import dsa2026_v2_p2_run_oracle as oracle_runner
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "data/protocols/dsa_v2_p2_cursor_task_config_v0_1.json"
 DOCKERFILE = ROOT / "containers/dsa2026_v2_p2/Dockerfile.cursor"
+DANGLING_AMENDMENT = ROOT / "data/protocols/dsa_v2_p2_dangling_docs_symlink_amendment_v0_1.json"
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -33,6 +37,125 @@ def canonical_sha(value: Any) -> str:
             value, ensure_ascii=False, separators=(",", ":"), sort_keys=True
         ).encode("utf-8")
     ).hexdigest()
+
+
+def changed_source_paths(catalog_root: Path, task: dict[str, Any]) -> set[str]:
+    patch = (
+        catalog_root
+        / "projects"
+        / task["project"]
+        / "bugs"
+        / str(task["bug_id"])
+        / "bug_patch.txt"
+    ).read_text(encoding="utf-8", errors="replace")
+    paths: set[str] = set()
+    for line in patch.splitlines():
+        if not line.startswith(("--- ", "+++ ")):
+            continue
+        value = line[4:].split("\t", 1)[0]
+        if value == "/dev/null":
+            continue
+        if value.startswith(("a/", "b/")):
+            value = value[2:]
+        normalized = PurePosixPath(posixpath.normpath(value)).as_posix()
+        if normalized and not normalized.startswith("../"):
+            paths.add(normalized)
+    if not paths:
+        raise ValueError("changed-source path derivation is empty")
+    return paths
+
+
+def inspect_dangling_symlinks(archive: Path, expected_root: str) -> list[dict[str, str]]:
+    with tarfile.open(archive, "r:gz") as tar:
+        members = tar.getmembers()
+    present = {PurePosixPath(member.name).as_posix() for member in members}
+    manifest: list[dict[str, str]] = []
+    for member in members:
+        if not member.issym():
+            continue
+        parts = PurePosixPath(member.name).parts
+        if not parts or parts[0] != expected_root:
+            raise ValueError("archive root drift during dangling inspection")
+        relative = PurePosixPath(*parts[1:])
+        if PurePosixPath(member.linkname).is_absolute():
+            raise ValueError("absolute symlink target is a hard stop")
+        normalized = PurePosixPath(
+            posixpath.normpath(str(relative.parent / PurePosixPath(member.linkname)))
+        )
+        if not normalized.parts or normalized.parts[0] == "..":
+            raise ValueError("archive-escaping symlink is a hard stop")
+        resolved = PurePosixPath(expected_root, *normalized.parts).as_posix()
+        if resolved not in present:
+            manifest.append({
+                "kind": "symbolic",
+                "path": relative.as_posix(),
+                "target": member.linkname,
+            })
+    return sorted(manifest, key=lambda item: (item["path"], item["target"]))
+
+
+def authorized_archive_extractor(
+    s: dict[str, Any], catalog_root: Path, manifests: list[dict[str, Any]]
+):
+    amendment = read_json(DANGLING_AMENDMENT)
+    if amendment.get("status") != "author_signed_immutable":
+        raise PermissionError("dangling-docs amendment is not author-signed immutable")
+    authorization = amendment.get("authorization", {})
+    if authorization.get("general_v2_p2_source_materialization_rule") is not True:
+        raise PermissionError("general dangling-docs rule is not authorized")
+    changed = changed_source_paths(catalog_root, s["task"])
+    declared = {
+        PurePosixPath(item).as_posix()
+        for item in s["task"]["declared_test_file"].split(";")
+        if item
+    }
+    test_root = PurePosixPath(s["config"]["project_test_scope"]["project_test_root"]).as_posix().rstrip("/")
+    package_metadata = {
+        "setup.py", "setup.cfg", "pyproject.toml", "tox.ini", "Pipfile",
+        "Pipfile.lock", "poetry.lock", "MANIFEST.in", "requirements.txt",
+    }
+
+    def extract(archive: Path, destination: Path, expected_root: str) -> dict[str, Any]:
+        dangling = inspect_dangling_symlinks(archive, expected_root)
+        if not dangling:
+            return source_lib.extract_commit_archive(archive, destination, expected_root)
+        paths = {item["path"] for item in dangling}
+        predicates = {
+            "all_symbolic": all(item["kind"] == "symbolic" for item in dangling),
+            "all_normalized_paths_strictly_under_docs": all(
+                PurePosixPath(path).parts[:1] == ("docs",) and len(PurePosixPath(path).parts) > 1
+                for path in paths
+            ),
+            "no_changed_source_intersection": paths.isdisjoint(changed),
+            "no_declared_test_intersection": paths.isdisjoint(declared),
+            "no_project_test_root_intersection": all(
+                path != test_root and not path.startswith(test_root + "/") for path in paths
+            ),
+            "no_package_build_metadata_intersection": paths.isdisjoint(package_metadata),
+        }
+        manifest_sha = canonical_sha(dangling)
+        archive_sha = hashlib.sha256(archive.read_bytes()).hexdigest()
+        manifest_record = {
+            "archive_sha256": archive_sha,
+            "archive_root": expected_root,
+            "dangling_manifest": dangling,
+            "dangling_manifest_sha256": manifest_sha,
+            "predicates": predicates,
+        }
+        if not all(predicates.values()):
+            raise ValueError(f"dangling symlink hard stop: {manifest_record}")
+        if s["task_id"] == "bugsinpy_black_4":
+            if archive_sha not in amendment["black_4_archive_sha256s"]:
+                raise ValueError("Black_4 archive hash drift")
+            if manifest_sha != amendment["black_4_manifest_sha256"]:
+                raise ValueError("Black_4 dangling manifest hash drift")
+        manifests.append(manifest_record)
+        allowed = {(item["path"], item["target"]) for item in dangling}
+        return source_lib.extract_commit_archive(
+            archive, destination, expected_root, omittable_dangling_symlinks=allowed
+        )
+
+    return extract
 
 
 def state() -> dict[str, Any]:
@@ -109,14 +232,22 @@ def freeze_source(s: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]
     task["metadata_sha256"].setdefault("setup_provenance_only", "")
     source_lib.TASK_ID = s["task_id"]
     source_lib.SOURCE_REPOSITORY = s["config"]["repository"]
+    catalog_root = Path(args.catalog_root).resolve()
+    materialization_manifests: list[dict[str, Any]] = []
+    extractor = authorized_archive_extractor(s, catalog_root, materialization_manifests)
     with tempfile.TemporaryDirectory(prefix="dsa_v2_p2_cursor_source_") as raw:
         generated, context_record = source_lib.build_context(
             task,
             Path(args.buggy_archive).resolve(),
             Path(args.fixed_archive).resolve(),
-            Path(args.catalog_root).resolve(),
+            catalog_root,
             Path(raw),
+            archive_extractor=extractor,
         )
+        context_record["source_materialization_manifests"] = materialization_manifests
+        context_record["record_sha256"] = canonical_sha({
+            key: value for key, value in context_record.items() if key != "record_sha256"
+        })
         value = {
             "registry_id": f"dsa_v2_p2_{s['namespace']}_source_v0_1",
             "created_date": "2026-07-12",
