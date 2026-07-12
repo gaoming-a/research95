@@ -53,6 +53,10 @@
 - Platform-incompatible pins such as `pywin32` on Linux remain part of the frozen
   recipe. Removing them after a failed build is dependency repair, even when the
   incompatibility looks obvious.
+- A successful editable install can still fail the frozen environment gate when
+  package version provenance becomes `0+unknown` and violates another installed
+  package's requirement. Do not patch version metadata or bypass `pip check`
+  after observing the conflict.
 
 ## 2026-07-12 Keep Windows archive staging paths deliberately short
 

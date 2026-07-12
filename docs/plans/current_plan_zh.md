@@ -105,6 +105,11 @@ Sanic_4 source freeze/check PASS。唯一 py383 build 的冻结 requirements 含
 不删平台依赖、不换版本、不重跑。ledger v0.9 attempted=9、qualified=0、API=0；cursor
 为 order10 `bugsinpy_pandas_167`、started=false。
 
+Pandas_167 source freeze/check PASS。唯一 build 完成 requirements/editable 安装后，冻结
+`pip check` 发现 editable pandas version=`0+unknown`，不满足 fastparquet 的
+`pandas>=0.19`；不改版本元数据、不跳过 pip check、不重跑。ledger v0.10 attempted=10、
+qualified=0、API=0；cursor 为 order11 `bugsinpy_fastapi_5`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
