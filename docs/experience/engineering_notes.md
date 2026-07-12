@@ -29,6 +29,10 @@
 - Cursor preflight assertions must bind `order == attempted_tasks + 1`, not a
   historical literal order. Otherwise a correct terminal ledger advancement
   makes the next task appear invalid.
+- Two reference checks can both report `OK` yet fail the frozen dual-stability
+  gate when their complete output hashes differ. Do not replace the registered
+  fingerprint with the human-readable excerpt after observing this outcome;
+  record a dual-disagreement terminal and continue.
 
 ## 2026-07-12 Treat unavailable frozen prereleases as environment terminals
 

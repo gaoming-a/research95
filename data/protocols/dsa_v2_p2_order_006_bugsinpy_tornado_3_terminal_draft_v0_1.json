@@ -1,0 +1,18 @@
+{
+  "created_date": "2026-07-12",
+  "draft_id": "dsa_v2_p2_order_006_bugsinpy_tornado_3_terminal_draft_v0_1",
+  "model_api_calls": 0,
+  "next_order": 7,
+  "next_task_id": "bugsinpy_matplotlib_4",
+  "next_task_started": false,
+  "records": [
+    {
+      "disposition": "materialization-failed",
+      "oracle_record_sha256": "5bcf5aeee5ef60380bc4dd73e199c1a73fa3cedf871beccb7475a73da5073cf5",
+      "order": 6,
+      "reason": "oracle-positive-f2p-failure-or-dual-disagreement",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_tornado_3"
+    }
+  ]
+}

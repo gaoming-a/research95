@@ -1,0 +1,232 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 2,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 2,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "created_date": "2026-07-12",
+  "failure_reason": "oracle-positive-f2p-failure-or-dual-disagreement",
+  "model_api_calls": 0,
+  "official_f2p": {
+    "dual_pass": false,
+    "run_a": {
+      "container_exit_code": 0,
+      "container_id": "db37d95c806ca599730e2bce76f0fbe82e9a89d4b2cadb131183ab95e440369a",
+      "container_name": "dsa-v2-p2-official-f2p-a-2b9959e5f0",
+      "image_id": "sha256:04517a02dc43133facca743543226a930285614525fa45dc859fadac34bed95f",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 2548,
+      "output_sha256": "2c44215e029800ec24cbe8f343d57f226a2b0ce6a3bea7fca5513cf646e77b90",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "python -m unittest -q tornado.test.httpclient_test.SyncHTTPClientSubprocessTest"
+            ],
+            "duration_seconds": 0.349,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "----------------------------------------------------------------------\nRan 1 test in 0.127s\n\nOK\n",
+            "output_sha256": "94380032c5ef025439cdc1e3582ba0c878c5b5cc2788ee7f3228d7bda6d8f53f",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 4262,
+              "sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 314,
+              "sha256": "1b4fd08b666fef397d3092ab0f64d4a45032fccfeda9264cd3c417ca200090c3"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "499933e6f5e6fd762bb88f49880033c9659d4b6445b6e459fbe9753a1be12b54"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 977,
+              "sha256": "a84a40ff92abe6a8b1789cff17dc9594a4b4446a96008abb8b0fb37f7255ff51"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 611,
+              "sha256": "f7c1a107e3634d6d8dcaa71f86e7c42bc2595d4d1fff9ba28556748774f41288"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py370/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.004,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.7.0\n",
+            "output_sha256": "95fdbb1639ae37c7909261984de9c15fbaae93eb7328a50463803a91d1fdee76",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "00b4283f7ee1c2d6611826210182d833644ea37a172797b6ee1ac02015ad7cda",
+          "fixed_test_paths": [
+            "tornado/test/httpclient_test.py"
+          ],
+          "reference_patch_sha256": "847f8ced710b9fc137103b24f95410e2268dba3abdf301eb6d6126bd44f94620"
+        }
+      }
+    },
+    "run_b": {
+      "container_exit_code": 0,
+      "container_id": "a207f9650207da3e7bd03c0cd67e58ff025f0ae8d439f71177405f17b04235ab",
+      "container_name": "dsa-v2-p2-official-f2p-b-02e3af0c86",
+      "image_id": "sha256:04517a02dc43133facca743543226a930285614525fa45dc859fadac34bed95f",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 2548,
+      "output_sha256": "446c999c840140808cd383593c64caf81f9a11a99393af53ba0cc77a1e8a402c",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "python -m unittest -q tornado.test.httpclient_test.SyncHTTPClientSubprocessTest"
+            ],
+            "duration_seconds": 0.324,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "----------------------------------------------------------------------\nRan 1 test in 0.109s\n\nOK\n",
+            "output_sha256": "71caa3d91086d7f939986a4465c3a030ec0adba7a69410d8a6d4275303015013",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 4262,
+              "sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 314,
+              "sha256": "1b4fd08b666fef397d3092ab0f64d4a45032fccfeda9264cd3c417ca200090c3"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "499933e6f5e6fd762bb88f49880033c9659d4b6445b6e459fbe9753a1be12b54"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 977,
+              "sha256": "a84a40ff92abe6a8b1789cff17dc9594a4b4446a96008abb8b0fb37f7255ff51"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 611,
+              "sha256": "f7c1a107e3634d6d8dcaa71f86e7c42bc2595d4d1fff9ba28556748774f41288"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py370/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.005,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.7.0\n",
+            "output_sha256": "95fdbb1639ae37c7909261984de9c15fbaae93eb7328a50463803a91d1fdee76",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "00b4283f7ee1c2d6611826210182d833644ea37a172797b6ee1ac02015ad7cda",
+          "fixed_test_paths": [
+            "tornado/test/httpclient_test.py"
+          ],
+          "reference_patch_sha256": "847f8ced710b9fc137103b24f95410e2268dba3abdf301eb6d6126bd44f94620"
+        }
+      }
+    }
+  },
+  "oracle_id": "dsa_v2_p2_order_006_bugsinpy_tornado_3_oracle_v0_1",
+  "order": 6,
+  "source_paths": [
+    "tornado/httpclient.py"
+  ],
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_tornado_3",
+  "task_image_id": "sha256:04517a02dc43133facca743543226a930285614525fa45dc859fadac34bed95f",
+  "task_specific_repair_attempted": false
+}

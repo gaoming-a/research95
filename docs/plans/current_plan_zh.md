@@ -79,6 +79,12 @@ Ansible_8 source 在 short staging/short runtime 下成功，并经独立 source
 beta/rc/final、未重跑、未进入 oracle。ledger v0.5 attempted=5、qualified=0、API=0；
 cursor 为 order6 `bugsinpy_tornado_3`、started=false。
 
+Tornado_3 source freeze/check 与 environment build PASS。两次 fresh reference F2P
+均 exit=0/OK，environment、preparation 与 tree hashes 一致，但冻结 stable fingerprint
+中的完整 test `output_sha256` 不同，因此 dual_pass=false；按预注册 dual disagreement
+terminal，不放宽 fingerprint、不重跑、不进入 candidate。ledger v0.6 attempted=6、
+qualified=0、API=0；cursor 为 order7 `bugsinpy_matplotlib_4`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

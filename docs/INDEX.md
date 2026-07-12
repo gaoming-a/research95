@@ -124,6 +124,10 @@
   order5 environment terminal after independently checked full-tree source
   materialization. The frozen unavailable `ansible-base==2.10.0.dev0` pin was
   not substituted; ledger v0.5 advances to `bugsinpy_tornado_3`, API=0.
+- [dsa_v2_p2_order_006_bugsinpy_tornado_3_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_006_bugsinpy_tornado_3_terminal_gate_v0_1.md):
+  order6 oracle terminal. Both reference F2P checks passed, but their frozen
+  full-output hashes disagreed, so the dual-stability Gate failed without a
+  rerun. Ledger v0.6 advances to `bugsinpy_matplotlib_4`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
