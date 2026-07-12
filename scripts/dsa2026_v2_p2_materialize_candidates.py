@@ -27,6 +27,8 @@ from dsa2026_v2_p2_freeze_task_context import signed_amendment
 
 ROOT = Path(__file__).resolve().parents[1]
 TASK_ID = "bugsinpy_pandas_161"
+ORDER = 1
+REGISTRY_ID = "dsa_v2_p2_pandas_161_candidate_registry_v0_1"
 CONTEXT = ROOT / f"tmp/dsa2026_v2_p2_runtime/task_contexts/{TASK_ID}"
 ORACLE = ROOT / "data/hidden/dsa_v2_p2_pandas_161_oracle_v0_1.json"
 OUT = ROOT / "data/hidden/dsa_v2_p2_pandas_161_candidate_registry_v0_1.json"
@@ -252,10 +254,10 @@ def build_registry(context: Path, oracle: dict[str, Any], destination: Path) -> 
             "outcome_observed": False,
         })
     registry = {
-        "registry_id": "dsa_v2_p2_pandas_161_candidate_registry_v0_1",
+        "registry_id": REGISTRY_ID,
         "created_date": "2026-07-12",
         "task_id": TASK_ID,
-        "order": 1,
+        "order": ORDER,
         "status": "candidates-materialized-outcomes-not-observed",
         "task_image_id": oracle["task_image_id"],
         "oracle_positive_patch_runtime_path": positive_patch.relative_to(ROOT).as_posix(),

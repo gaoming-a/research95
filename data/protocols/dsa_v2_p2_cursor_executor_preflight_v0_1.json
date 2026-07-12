@@ -17,15 +17,15 @@
     "failure_writes_terminal_without_rerun": true,
     "no_model_or_prompt_surface": true,
     "real_activity_zero": true,
-    "unique_order3_cursor_unstarted": true,
+    "unique_cursor_unstarted": true,
     "versioned_task_namespaces": true
   },
   "component_sha256": {
     "dockerfile": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
-    "executor": "1e416e81947de07a2a7ae54d32a2756273ada60b18fb623134a58abacd214de1"
+    "executor": "3fb7c0f71fa46c39cc5abc897153c2c044984a8d044437bb604a12e36c49362b"
   },
   "created_date": "2026-07-12",
-  "cursor_config_sha256": "da23de2e49157cb2144dc7d3a97838064e7b01c542b0185835d2cd2b5fbffc61",
+  "cursor_config_sha256": "27c8d1ea556b12317b071cefb5085b4e93719973c19cd12a1ed183bcc164e574",
   "preflight_id": "dsa_v2_p2_cursor_executor_preflight_v0_1",
-  "status": "ready_for_order3_source"
+  "status": "ready_for_cursor_source"
 }

@@ -1,0 +1,47 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "build_exit_code": 0,
+  "build_output_bytes": 22073,
+  "build_output_sha256": "7dbcbf6b6c0c6217bdc6919a9b1b52d2b1754dea04ba28abe14be0f361265a80",
+  "created_date": "2026-07-12",
+  "dockerfile_sha256": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
+  "environment_id": "dsa_v2_p2_order_003_bugsinpy_black_4_environment_v0_1",
+  "failure_reason": null,
+  "image": {
+    "image": "dsa2026-v2-p2-task:bugsinpy_black_4",
+    "image_id": "sha256:c1aab81e3a218a68134b575f5d0443a6e868fc720586d9bbce8325787e94570e",
+    "labels": {
+      "dsa2026.v2_p2.buggy_commit": "65ea568e3301951f26e0e3b98f6d5dc80132e917",
+      "dsa2026.v2_p2.fixed_commit": "c7495b9aa098ef7a358fc74556359d21c6a4ba11",
+      "dsa2026.v2_p2.model_api_called": "false",
+      "dsa2026.v2_p2.official_setup_executed": "false",
+      "dsa2026.v2_p2.order": "3",
+      "dsa2026.v2_p2.project": "black",
+      "dsa2026.v2_p2.python_env": "py383",
+      "dsa2026.v2_p2.task_id": "bugsinpy_black_4",
+      "maintainer": "Anaconda, Inc",
+      "org.opencontainers.image.created": "2023-05-02T19:14:07.639Z",
+      "org.opencontainers.image.description": "Repository of Docker images created by Anaconda",
+      "org.opencontainers.image.licenses": "",
+      "org.opencontainers.image.revision": "60eb8fe8f841c7d64a2439920562edc8e409c80f",
+      "org.opencontainers.image.source": "https://github.com/ContinuumIO/docker-images",
+      "org.opencontainers.image.title": "DSA v0.2 V2-P2 cursor task environment",
+      "org.opencontainers.image.url": "https://github.com/ContinuumIO/docker-images",
+      "org.opencontainers.image.version": "23.3.1-0"
+    }
+  },
+  "official_setup_executed": false,
+  "order": 3,
+  "source_record_sha256": "8716d454d7b72e9aba5d361c7f476e41b1c8b50e5c70cbfff35eb2c304db8910",
+  "status": "environment-built-oracle-not-started",
+  "task_id": "bugsinpy_black_4",
+  "task_specific_repair_attempted": false
+}

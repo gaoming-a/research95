@@ -15,6 +15,21 @@
   only from the V2-P2 cursor after the signed rule and task-local manifest pass;
   this avoids silently changing older P4/V2-P2 source semantics.
 
+## 2026-07-12 Rebind every order-specific identity in a generic executor
+
+- Repointing only file paths and `TASK_ID` is insufficient when reused modules
+  also embed `ORDER`, record IDs, or replay assertions. A run can be scientifically
+  valid while its ledger metadata still names order 1.
+- When this is detected after a terminal oracle run, preserve container IDs and
+  output hashes and repair only deterministic identity fields plus the dependent
+  terminal digest. Do not rerun the observed tests.
+- Finalize must take activity from the latest evidence layer (candidate results,
+  then oracle, then environment); using environment unconditionally erases real
+  container/test counts from oracle-terminal tasks.
+- Cursor preflight assertions must bind `order == attempted_tasks + 1`, not a
+  historical literal order. Otherwise a correct terminal ledger advancement
+  makes the next task appear invalid.
+
 ## 2026-07-12 Archive symlink fidelity is a frozen-content decision
 
 - Normalize symlink targets before classifying them: Black's

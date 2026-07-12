@@ -21,6 +21,8 @@ from dsa2026_v2_p2_freeze_task_context import signed_amendment
 
 ROOT = Path(__file__).resolve().parents[1]
 TASK_ID = "bugsinpy_pandas_161"
+ORDER = 1
+ORACLE_ID = "dsa_v2_p2_pandas_161_oracle_v0_1"
 ENVIRONMENT = ROOT / "data/protocols/dsa_v2_p2_pandas_161_environment_v0_1.json"
 SOURCE = ROOT / "data/protocols/dsa_v2_p2_task_source_registry_v0_1.json"
 PROTOCOL = ROOT / "data/protocols/dsa_v2_p1_construction_protocol_v0_1.json"
@@ -201,7 +203,7 @@ def write_terminal(reason: str, oracle: dict[str, Any]) -> None:
         "created_date": "2026-07-12",
         "status": "order_1_terminal",
         "records": [{
-            "order": 1,
+            "order": ORDER,
             "task_id": TASK_ID,
             "disposition": "materialization-failed",
             "reason": reason,
@@ -234,10 +236,10 @@ def execute(timeout: int, collection_timeout: int) -> dict[str, Any]:
         and worker_fingerprint(f2p_a["worker"]) == worker_fingerprint(f2p_b["worker"])
     )
     payload: dict[str, Any] = {
-        "oracle_id": "dsa_v2_p2_pandas_161_oracle_v0_1",
+        "oracle_id": ORACLE_ID,
         "created_date": "2026-07-12",
         "task_id": TASK_ID,
-        "order": 1,
+        "order": ORDER,
         "task_image_id": image_id,
         "source_paths": paths,
         "official_f2p": {"run_a": f2p_a, "run_b": f2p_b, "dual_pass": f2p_ok},
@@ -346,7 +348,7 @@ def execute(timeout: int, collection_timeout: int) -> dict[str, Any]:
 def replay() -> dict[str, Any]:
     signed_amendment()
     payload = read_json(OUT)
-    if payload.get("task_id") != TASK_ID or payload.get("order") != 1 or payload.get("model_api_calls") != 0:
+    if payload.get("task_id") != TASK_ID or payload.get("order") != ORDER or payload.get("model_api_calls") != 0:
         raise ValueError("oracle record boundary drift")
     if payload["status"] == "materialization-failed":
         if not TERMINAL.is_file() or read_json(TERMINAL)["records"][0]["reason"] != payload["failure_reason"]:

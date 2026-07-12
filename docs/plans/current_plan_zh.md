@@ -45,6 +45,15 @@ Black_4 source checkpoint：共享 archive extractor 默认仍 hard-stop danglin
 与签核记录一致；source `--write/--check` PASS。activity 为 checkout=1，environment/
 container/test/prompt/API 全为0。下一步仅允许执行冻结 environment build。
 
+Black_4 terminal checkpoint：environment build PASS，image/commit/order labels 与 source
+binding 通过，未执行 official setup 或 task-specific repair。冻结 official F2P 命令在
+两个 fresh、network-none containers 中均以相同 `ModuleNotFoundError: tests.test_black`
+失败，因此 reference oracle-positive 未成立，按普通 materialization failure terminal，
+不改命令、不重跑、不生成 candidates。通用 executor 的 oracle/order ID 绑定遗漏已仅用
+现有 run hashes 修复，未重跑容器；final audit 记录 checkout/build/container/test=
+1/1/2/2，attempted=3、qualified=0、API=0。cursor 已刷新为 order4
+`bugsinpy_keras_40`、started=false；下一步从其 source freeze 开始。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

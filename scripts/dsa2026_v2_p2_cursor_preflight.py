@@ -29,8 +29,8 @@ def build() -> dict:
     checks = {
         "continuous_authorization_active": auth["status"] == "author_signed_active"
         and auth["authorization"]["continuous_v2_p2"],
-        "unique_order3_cursor_unstarted": config["task"]["order"] == 3
-        and config["task"]["task_id"] == "bugsinpy_black_4"
+        "unique_cursor_unstarted": config["task"]["order"] == config["attempted_tasks"] + 1
+        and config["task"]["task_id"]
         and not config["next_task_started"],
         "all_scientific_phases_present": all(
             f'"{phase}"' in executor
@@ -85,7 +85,7 @@ def build() -> dict:
     return {
         "preflight_id": "dsa_v2_p2_cursor_executor_preflight_v0_1",
         "created_date": "2026-07-12",
-        "status": "ready_for_order3_source" if all(checks.values()) else "failed",
+        "status": "ready_for_cursor_source" if all(checks.values()) else "failed",
         "checks": checks,
         "cursor_config_sha256": config["config_sha256"],
         "component_sha256": {
@@ -111,18 +111,19 @@ def main() -> None:
     mode.add_argument("--check", action="store_true")
     args = parser.parse_args()
     value = build()
+    config = read_json(CONFIG)
     content = json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
     if args.write:
         OUT.write_text(content, encoding="utf-8", newline="\n")
     elif not OUT.is_file() or OUT.read_text(encoding="utf-8") != content:
         raise SystemExit("stale cursor executor preflight")
-    if value["status"] != "ready_for_order3_source":
+    if value["status"] != "ready_for_cursor_source":
         raise SystemExit("cursor executor preflight failed")
     print(
         json.dumps(
             {
                 "status": value["status"],
-                "order": 3,
+                "order": config["task"]["order"],
                 "real_activity": 0,
                 "model_api_calls": 0,
             },

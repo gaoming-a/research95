@@ -111,6 +111,11 @@
   immutable Black_4 source checkpoint with both official archive hashes, two
   independently verified 13-link manifests, extracted context/tree hashes, and
   zero environment/test/prompt/API activity.
+- [dsa_v2_p2_order_003_bugsinpy_black_4_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_003_bugsinpy_black_4_terminal_gate_v0_1.md):
+  order3 terminal report. The environment built, but the frozen official F2P
+  command failed identically in two fresh containers because `tests.test_black`
+  was not importable; no command repair, rerun, candidate, prompt, or API followed.
+  Ledger v0.3 advances the unstarted cursor to `bugsinpy_keras_40`.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

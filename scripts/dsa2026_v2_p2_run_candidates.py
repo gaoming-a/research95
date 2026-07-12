@@ -15,6 +15,8 @@ from dsa2026_v2_p2_run_oracle import candidate_pass, dual_run, worker_fingerprin
 
 ROOT = Path(__file__).resolve().parents[1]
 TASK_ID = "bugsinpy_pandas_161"
+ORDER = 1
+RESULTS_ID = "dsa_v2_p2_pandas_161_candidate_results_v0_1"
 SOURCE = ROOT / "data/protocols/dsa_v2_p2_task_source_registry_v0_1.json"
 ORACLE = ROOT / "data/hidden/dsa_v2_p2_pandas_161_oracle_v0_1.json"
 CANDIDATES = ROOT / "data/hidden/dsa_v2_p2_pandas_161_candidate_registry_v0_1.json"
@@ -64,7 +66,7 @@ def terminal_record(disposition: str, reason: str, selected: dict[str, Any] | No
         "created_date": "2026-07-12",
         "status": "order_1_terminal",
         "records": [{
-            "order": 1,
+            "order": ORDER,
             "task_id": TASK_ID,
             "disposition": disposition,
             "reason": reason,
@@ -133,10 +135,10 @@ def execute(timeout: int) -> dict[str, Any]:
             selected = candidate
             break
     payload = {
-        "results_id": "dsa_v2_p2_pandas_161_candidate_results_v0_1",
+        "results_id": RESULTS_ID,
         "created_date": "2026-07-12",
         "task_id": TASK_ID,
-        "order": 1,
+        "order": ORDER,
         "status": "pair-qualified" if selected else "materialization-failed",
         "failure_reason": None if selected else "no-qualifying-hard-negative",
         "task_image_id": oracle["task_image_id"],
@@ -181,7 +183,7 @@ def replay() -> dict[str, Any]:
     payload = read_json(OUT)
     ledger = read_json(TERMINAL)
     terminal = ledger["records"][0]
-    if payload.get("task_id") != TASK_ID or payload.get("order") != 1:
+    if payload.get("task_id") != TASK_ID or payload.get("order") != ORDER:
         raise ValueError("candidate result cursor drift")
     if payload["status"] != terminal["disposition"]:
         raise ValueError("candidate result/terminal disposition drift")

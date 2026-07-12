@@ -397,6 +397,8 @@ def build_environment(s: dict[str, Any], timeout: int) -> dict[str, Any]:
 
 def configure_science(s: dict[str, Any]) -> None:
     oracle_runner.TASK_ID = s["task_id"]
+    oracle_runner.ORDER = s["order"]
+    oracle_runner.ORACLE_ID = f"dsa_v2_p2_{s['namespace']}_oracle_v0_1"
     oracle_runner.ENVIRONMENT = s["environment"]
     oracle_runner.SOURCE = s["source"]
     oracle_runner.CONTEXT = s["context"]
@@ -422,11 +424,15 @@ def configure_science(s: dict[str, Any]) -> None:
         newline="\n",
     )
     materializer.TASK_ID = s["task_id"]
+    materializer.ORDER = s["order"]
+    materializer.REGISTRY_ID = f"dsa_v2_p2_{s['namespace']}_candidate_registry_v0_1"
     materializer.CONTEXT = s["context"]
     materializer.ORACLE = s["oracle"]
     materializer.OUT = s["candidate_registry"]
     materializer.PATCH_ROOT = s["patch_root"]
     candidate_runner.TASK_ID = s["task_id"]
+    candidate_runner.ORDER = s["order"]
+    candidate_runner.RESULTS_ID = f"dsa_v2_p2_{s['namespace']}_candidate_results_v0_1"
     candidate_runner.SOURCE = s["source"]
     candidate_runner.ORACLE = s["oracle"]
     candidate_runner.CANDIDATES = s["candidate_registry"]
@@ -442,6 +448,31 @@ def configure_science(s: dict[str, Any]) -> None:
             canonical_sha(results),
         )
     )
+
+
+def repair_oracle_metadata(s: dict[str, Any]) -> dict[str, Any]:
+    """Repair generic binding fields without re-running an observed oracle."""
+    configure_science(s)
+    payload = read_json(s["oracle"])
+    if payload.get("task_id") != s["task_id"] or payload.get("model_api_calls") != 0:
+        raise ValueError("existing oracle identity or API boundary drift")
+    if payload.get("order") not in (1, s["order"]):
+        raise ValueError("existing oracle order cannot be mechanically rebound")
+    if payload.get("oracle_id") not in (
+        "dsa_v2_p2_pandas_161_oracle_v0_1",
+        oracle_runner.ORACLE_ID,
+    ):
+        raise ValueError("existing oracle id cannot be mechanically rebound")
+    payload["order"] = s["order"]
+    payload["oracle_id"] = oracle_runner.ORACLE_ID
+    s["oracle"].write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    if payload["status"] == "materialization-failed":
+        oracle_runner.write_terminal(payload["failure_reason"], payload)
+    return payload
 
 
 def materialize(s: dict[str, Any], write: bool) -> dict[str, Any]:
@@ -491,6 +522,11 @@ def finalize(s: dict[str, Any], write: bool) -> dict[str, Any]:
         "model_api_calls": 0,
     }
     environment = read_json(s["environment"])
+    latest_evidence = environment
+    if s["oracle"].is_file():
+        latest_evidence = read_json(s["oracle"])
+    if s["candidate_results"].is_file():
+        latest_evidence = read_json(s["candidate_results"])
     checks = {
         "previous_ledger_hash_unchanged": canonical_sha(previous)
         == s["config"]["ledger_sha256"],
@@ -498,7 +534,7 @@ def finalize(s: dict[str, Any], write: bool) -> dict[str, Any]:
         "counts_correct": ledger["attempted_tasks"] == len(ledger["records"])
         and qualified
         == sum(item["disposition"] == "pair-qualified" for item in ledger["records"]),
-        "no_task_specific_repair": not environment["task_specific_repair_attempted"],
+        "no_task_specific_repair": not latest_evidence["task_specific_repair_attempted"],
         "next_not_started": not ledger["next_task_started"],
         "model_api_zero": ledger["model_api_calls"] == 0,
     }
@@ -512,7 +548,7 @@ def finalize(s: dict[str, Any], write: bool) -> dict[str, Any]:
         "order": s["order"],
         "checks": checks,
         "terminal_record": record,
-        "activity": environment["activity"],
+        "activity": latest_evidence["activity"],
         "qualified_pairs_after": qualified,
         "next_task_id": ledger["next_task_id"],
         "model_api_calls": 0,
@@ -561,7 +597,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "phase",
-        choices=("source", "build", "oracle", "materialize", "candidates", "finalize"),
+        choices=("source", "build", "oracle", "oracle-metadata", "materialize", "candidates", "finalize"),
     )
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
@@ -587,6 +623,10 @@ def main() -> None:
             parser.error("oracle requires --write")
         configure_science(s)
         value = oracle_runner.execute(args.timeout, args.collection_timeout)
+    elif args.phase == "oracle-metadata":
+        if not args.write:
+            parser.error("oracle-metadata requires --write")
+        value = repair_oracle_metadata(s)
     elif args.phase == "materialize":
         if args.write == args.check:
             parser.error("materialize requires one mode")
