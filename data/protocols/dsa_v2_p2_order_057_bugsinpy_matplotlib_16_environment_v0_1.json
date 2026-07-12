@@ -1,0 +1,25 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "build_exit_code": 1,
+  "build_output_bytes": 28658,
+  "build_output_sha256": "adcfbc2a9d55a3dea5150c25ce9657b52bc91fdb7ef14160af85cd724e4d9c3c",
+  "created_date": "2026-07-12",
+  "dockerfile_sha256": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
+  "environment_id": "dsa_v2_p2_order_057_bugsinpy_matplotlib_16_environment_v0_1",
+  "failure_reason": "environment-build-failure",
+  "image": null,
+  "official_setup_executed": false,
+  "order": 57,
+  "source_record_sha256": "814a5770493b896e5a10e3dcf1f87bb2a80ea9d3e4ad56386cc7a8be41c8371e",
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_matplotlib_16",
+  "task_specific_repair_attempted": false
+}

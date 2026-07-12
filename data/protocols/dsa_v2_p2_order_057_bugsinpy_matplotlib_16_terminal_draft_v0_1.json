@@ -1,0 +1,18 @@
+{
+  "created_date": "2026-07-12",
+  "draft_id": "dsa_v2_p2_order_057_bugsinpy_matplotlib_16_terminal_draft_v0_1",
+  "model_api_calls": 0,
+  "next_order": 58,
+  "next_task_id": "bugsinpy_spacy_1",
+  "next_task_started": false,
+  "records": [
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "3291695ea045e5775ef534ac19e7be8c07508a47bb4b7deac0f414e10df6d40c",
+      "order": 57,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_matplotlib_16"
+    }
+  ]
+}

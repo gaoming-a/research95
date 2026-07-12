@@ -346,6 +346,11 @@
   passed; Python 3.7 discovery parsing yielded zero regression capacity. No
   adapter repair or rerun occurred. Ledger v0.56 advances to
   `bugsinpy_matplotlib_16`, API=0.
+- [dsa_v2_p2_order_057_bugsinpy_matplotlib_16_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_057_bugsinpy_matplotlib_16_terminal_gate_v0_1.md):
+  order57 environment terminal after full source freeze/check. The native
+  FreeType compile check failed; no local FreeType download, system dependency
+  repair, or rerun occurred. Ledger v0.57 advances to `bugsinpy_spacy_1`,
+  API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

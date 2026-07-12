@@ -1,6 +1,6 @@
 # 当前计划：AI 生成补丁的可验证审查
 
-最后更新：2026-07-12
+最后更新：2026-07-13
 
 ## 0.59 2026-07-12 V2-P2 continuous execution authorization
 
@@ -359,6 +359,12 @@ source freeze/check、build 与相同双 F2P 均 PASS；随后 Python3.7 collect
 `format_exception` 接口不兼容产生 `DiscoveryOutputParseError`，pool=0，按普通 oracle
 materialization terminal，不修 adapter、不重跑。ledger v0.56 attempted=56、qualified=0、
 API=0；cursor 为 order57 `bugsinpy_matplotlib_16`、started=false。
+
+Matplotlib_16 source freeze/check PASS。唯一 py381 editable native-extension build 的
+FreeType compile check 失败，报告系统 FreeType 不满足/头文件宏不可用；不设置
+`MPLLOCALFREETYPE=1` 下载本地副本、不安装系统依赖、不重跑。ledger v0.57
+attempted=57、qualified=0、API=0；cursor 为 order58 `bugsinpy_spacy_1`、
+started=false。
 
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
