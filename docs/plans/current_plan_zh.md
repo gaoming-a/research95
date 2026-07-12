@@ -315,6 +315,11 @@ Tornado_8 source freeze/check 与 build PASS。两次 F2P 均通过且 unittest 
 不同；按 dual disagreement terminal，不归一化日志、不重跑。ledger v0.48 attempted=48、
 qualified=0、API=0；cursor 为 order49 `bugsinpy_matplotlib_30`、started=false。
 
+Matplotlib_30 source freeze/check PASS。唯一 py381 build 在 editable native-extension
+compilation 中因系统缺少 `ft2build.h` 而失败；不安装 FreeType headers、不修改环境、
+不重跑。ledger v0.49 attempted=49、qualified=0、API=0；cursor 为 order50
+`bugsinpy_spacy_10`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

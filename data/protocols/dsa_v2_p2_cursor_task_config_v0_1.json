@@ -1,10 +1,10 @@
 {
-  "attempted_tasks": 48,
+  "attempted_tasks": 49,
   "config_id": "dsa_v2_p2_cursor_task_config_v0_1",
-  "config_sha256": "61cfecec124045c2ba126a2fdad9486ebec978d064af7b462f521d080cac9752",
+  "config_sha256": "9da747dde234aed2accbb836ca2d9cac0b224066aae5d7dccc8438889b81cb10",
   "created_date": "2026-07-12",
-  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_48.json",
-  "ledger_sha256": "80090c0f31c561dcdc749928910fdce0e80a97c6d15e7b341ff54fa98afb5d95",
+  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_49.json",
+  "ledger_sha256": "7f0daf6dcc1ca4de79cb38bab81151238f5ab66f328b23354df0e64b6eeeb95c",
   "model_api_calls": 0,
   "next_task_started": false,
   "project_test_scope": {
@@ -14,61 +14,64 @@
       "pytest",
       "--collect-only",
       "-q",
-      "lib/matplotlib/tests"
+      "spacy/tests"
     ],
-    "derived_from_declared_file_count": 8,
+    "derived_from_declared_file_count": 9,
     "framework": "pytest",
-    "project": "matplotlib",
-    "project_test_root": "lib/matplotlib/tests",
+    "project": "spacy",
+    "project_test_root": "spacy/tests",
     "unittest_pattern": null,
     "unittest_top_level_dir": null
   },
   "python_lock": {
-    "actual_sha256": "df1e425eedcb0d3806b5bf10c55e369648621d93f46f5754cdc85f8435cf21f8",
-    "environment_name": "py381",
-    "expected_sha256": "df1e425eedcb0d3806b5bf10c55e369648621d93f46f5754cdc85f8435cf21f8",
-    "path": "data/environment_locks/dsa2026_p4_bootstrap/py381-linux-64.txt",
-    "python_version": "3.8.1"
+    "actual_sha256": "8fd9517e7b4a6a22002488faa14b752e4de41bad6e37211a81ec8f67fe11adb7",
+    "environment_name": "py377",
+    "expected_sha256": "8fd9517e7b4a6a22002488faa14b752e4de41bad6e37211a81ec8f67fe11adb7",
+    "path": "data/environment_locks/dsa2026_p4_bootstrap/py377-linux-64.txt",
+    "python_version": "3.7.7"
   },
   "qualified_pairs": 0,
-  "repository": "https://github.com/matplotlib/matplotlib",
-  "runtime_namespace": "order_049_bugsinpy_matplotlib_30",
+  "repository": "https://github.com/explosion/spaCy",
+  "runtime_namespace": "order_050_bugsinpy_spacy_10",
   "status": "unique_next_task_resolved",
   "task": {
-    "bug_id": 30,
-    "buggy_commit_id": "3b26ee6f6b31bc0cca4be0407dbb40f44756030d",
+    "bug_id": 10,
+    "buggy_commit_id": "38de08c7a99d5d8c490223126071afe7dd4f4b67",
     "candidate_materialized": false,
     "candidate_outcome_observed": false,
     "catalog_f2p_commands": [
-      "pytest lib/matplotlib/tests/test_colors.py::test_makeMappingArray"
+      "py.test spacy/tests/matcher/test_matcher_api.py::test_matcher_valid_callback"
     ],
     "declared_f2p_commands": [
-      "pytest lib/matplotlib/tests/test_colors.py::test_makeMappingArray"
+      "py.test spacy/tests/matcher/test_matcher_api.py::test_matcher_valid_callback"
     ],
-    "declared_test_file": "lib/matplotlib/tests/test_colors.py",
-    "environment_risk_tags": [],
+    "declared_test_file": "spacy/tests/matcher/test_matcher_api.py",
+    "environment_risk_tags": [
+      "native_extension_build"
+    ],
     "f2p_command_match": true,
-    "fixed_commit_id": "d4de838fe7b38abb02f061540fd93962cc063fc4",
+    "fixed_commit_id": "52904b72700a3f301a26563d3f94493bad96a446",
     "metadata_sha256": {
-      "bug_info": "deed0b3b528dd7d3468d69f74d2ed731cf02ed5bd94cd941604285266230f6c7",
-      "reference_patch": "09a9028fd7da3d555c973a3c2a38ea9983eaf2c676e2f568857030bed567d1de",
-      "requirements": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "run_test": "0fc926d165cb8d40bd3a8ef78f6bfdf31452e38788b53d5160711690547c8599"
+      "bug_info": "7b1c0d43cf8066cd5ea2aa69284a2a5277322c9a4028be921d074eda73b450a4",
+      "reference_patch": "b92b12d7175b7aec8fa31910b0cf79d73320ab07bc9f43ec77bf289987dfb9d3",
+      "requirements": "8952958ea146849ac029184aa1618795bc0e5752f921e2a83c959430c95b1124",
+      "run_test": "cd653176e621510258d493da5adfeaf8603f2a3cbf0ef40809228fb8024e38c5",
+      "setup_provenance_only": "4684d8e8af3cf0720b49a9d379e6479d53caf607652c29e7b03470fdb8426fcf"
     },
     "model_outcome_observed": false,
     "official_setup_executable_authority": false,
-    "order": 49,
-    "project": "matplotlib",
-    "project_order_sha256": "b7243a408f3c16750015755b815be3102ceea4d257734b52ae78526e83672f85",
-    "project_position": 7,
-    "python_version": "3.8.1",
+    "order": 50,
+    "project": "spacy",
+    "project_order_sha256": "ce8cb78493419b28d634a190561d30be5903e032a246dc725683b3685c846cac",
+    "project_position": 8,
+    "python_version": "3.7.7",
     "requirements_metadata": {
-      "nonempty": false,
+      "nonempty": true,
       "present": true
     },
     "round": 6,
-    "task_id": "bugsinpy_matplotlib_30",
-    "task_order_sha256": "2dc2d3785587f543ec7e6b433dd631edfe01ee0b7bcb5b2cae1ca8359acb9157",
+    "task_id": "bugsinpy_spacy_10",
+    "task_order_sha256": "68ca35d8f987e0dc4e4d6621e99f26e4ca454a6cb4c01cc071230ff47d032999",
     "test_framework": "pytest"
   }
 }
