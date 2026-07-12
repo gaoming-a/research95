@@ -1,0 +1,283 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 3,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 3,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "collection": {
+    "container_exit_code": 0,
+    "container_id": "80e36436754a111b7d76d8cef79d2a0129a6bb2ef3c0c160dd0f16d038378887",
+    "container_name": "dsa-v2-p2-collect-229b6e7f59",
+    "image_id": "sha256:785d9fca3e4b9a33e8b5f81f428b262d2d4d7c9aca05f7e2b4047aade033b798",
+    "mounts": [],
+    "network_mode": "none",
+    "output_bytes": 3261,
+    "output_sha256": "ecc1f661ced081e7a55577ba967b97b15410b7dea70cf4d93ce126c34000c2c9",
+    "worker": {
+      "collection": {
+        "collected_node_count": 0,
+        "collected_nodeids": [],
+        "collection_error_count": 1,
+        "collection_errors": [
+          {
+            "error_type": "DiscoveryOutputParseError",
+            "message": "TypeError: format_exception() missing 2 required positional arguments: 'value' and 'tb'"
+          }
+        ],
+        "command": [
+          "/opt/conda/envs/py370/bin/python",
+          "-c",
+          "\nimport argparse\nimport json\nimport traceback\nimport unittest\n\ndef flatten(suite):\n    for item in suite:\n        if isinstance(item, unittest.TestSuite):\n            yield from flatten(item)\n        else:\n            yield item\n\nparser = argparse.ArgumentParser()\nparser.add_argument(\"--start-dir\", required=True)\nparser.add_argument(\"--pattern\", required=True)\nparser.add_argument(\"--top-level-dir\", default=\"\")\nargs = parser.parse_args()\nloader = unittest.TestLoader()\nkwargs = {\"start_dir\": args.start_dir, \"pattern\": args.pattern}\nif args.top_level_dir:\n    kwargs[\"top_level_dir\"] = args.top_level_dir\ntry:\n    suite = loader.discover(**kwargs)\n    tests = []\n    errors = []\n    for test in flatten(suite):\n        test_id = test.id()\n        if test_id.startswith(\"unittest.loader._FailedTest\"):\n            error = getattr(test, \"_exception\", None)\n            errors.append({\n                \"test_id\": test_id,\n                \"error_type\": type(error).__name__ if error is not None else \"UnittestFailedImport\",\n                \"message\": str(error) if error is not None else test_id,\n                \"traceback_excerpt\": \"\".join(traceback.format_exception(error))[-2000:] if error is not None else test_id,\n            })\n        else:\n            tests.append(test_id)\n    print(json.dumps({\"tests\": sorted(set(tests)), \"errors\": errors}, sort_keys=True))\nexcept Exception as error:\n    print(json.dumps({\n        \"tests\": [],\n        \"errors\": [{\n            \"test_id\": args.start_dir,\n            \"error_type\": type(error).__name__,\n            \"message\": str(error),\n            \"traceback_excerpt\": traceback.format_exc()[-2000:],\n        }],\n    }, sort_keys=True))\n    raise\n",
+          "--start-dir",
+          "tornado/test",
+          "--pattern",
+          "*_test.py",
+          "--top-level-dir",
+          "."
+        ],
+        "duration_seconds": 0.384,
+        "exit_code": 1,
+        "outcome": "failed",
+        "output_excerpt": "{\"errors\": [{\"error_type\": \"TypeError\", \"message\": \"format_exception() missing 2 required positional arguments: 'value' and 'tb'\", \"test_id\": \"tornado/test\", \"traceback_excerpt\": \"Traceback (most recent call last):\\n  File \\\"<string>\\\", line 35, in <module>\\nTypeError: format_exception() missing 2 required positional arguments: 'value' and 'tb'\\n\"}], \"tests\": []}\nTraceback (most recent call last):\n  File \"<string>\", line 35, in <module>\nTypeError: format_exception() missing 2 required positional arguments: 'value' and 'tb'\n",
+        "output_sha256": "72c9525d01af8ef25f9fc56243eea7f5ee12552720ff9dff1ea13503835dd875",
+        "test_framework": "unittest",
+        "timed_out": false
+      },
+      "preparation": {
+        "candidate": "reference",
+        "candidate_tree_sha256": "39fc62c9e8391bfa338e3f6556d5e513c6f4caf0abdef80f197898addec9e92d",
+        "fixed_test_paths": [
+          "tornado/test/gen_test.py"
+        ],
+        "reference_patch_sha256": "f78e188343d6d1dc5fb74b4d2a5d364819f035bf1179e3c6355ebf6a83c24228"
+      }
+    }
+  },
+  "created_date": "2026-07-12",
+  "failure_reason": "regression-pool-collection-failure-or-insufficient-capacity",
+  "model_api_calls": 0,
+  "official_f2p": {
+    "dual_pass": true,
+    "run_a": {
+      "container_exit_code": 0,
+      "container_id": "25b3b8af27954004da8d122858e0d3a3d845aa62e2cbc60631aea6c4501da23b",
+      "container_name": "dsa-v2-p2-official-f2p-a-558715f13c",
+      "image_id": "sha256:785d9fca3e4b9a33e8b5f81f428b262d2d4d7c9aca05f7e2b4047aade033b798",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 2532,
+      "output_sha256": "be21dde9a60064943d930dae7c993132535aa11838f0cee810cabea8afb106b7",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "python -m unittest -q tornado.test.gen_test.WaitIteratorTest.test_no_ref"
+            ],
+            "duration_seconds": 0.24,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n",
+            "output_sha256": "5f4da3a10467ed523d52edf10edfcd360269e31f5319fbb2e3c0632fb4663431",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 4262,
+              "sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 158,
+              "sha256": "e84fb959f22b8374b625452a60b668ed76394ff6310ae25e721b4a639cf23bf2"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "499933e6f5e6fd762bb88f49880033c9659d4b6445b6e459fbe9753a1be12b54"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 977,
+              "sha256": "9766e7ae6c715fbf3cb7bf75a1ac18aaf3e96a3c8a76a751a344f44bb6f32a2d"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 63,
+              "sha256": "a09a074a2306d7b976ac1c52a49da289af3159611a652b1fa2070faace8b5b03"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py370/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.004,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.7.0\n",
+            "output_sha256": "95fdbb1639ae37c7909261984de9c15fbaae93eb7328a50463803a91d1fdee76",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "39fc62c9e8391bfa338e3f6556d5e513c6f4caf0abdef80f197898addec9e92d",
+          "fixed_test_paths": [
+            "tornado/test/gen_test.py"
+          ],
+          "reference_patch_sha256": "f78e188343d6d1dc5fb74b4d2a5d364819f035bf1179e3c6355ebf6a83c24228"
+        }
+      }
+    },
+    "run_b": {
+      "container_exit_code": 0,
+      "container_id": "0ee8f5b9e2ab62c909340df7c65f7d61534fb45f41a64aa54a9921b8fafa5e5b",
+      "container_name": "dsa-v2-p2-official-f2p-b-f7eb725cb3",
+      "image_id": "sha256:785d9fca3e4b9a33e8b5f81f428b262d2d4d7c9aca05f7e2b4047aade033b798",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 2533,
+      "output_sha256": "be2f6018139f890a449b0c8ca43d5e778f17fd3974d2ea2c767589438264f414",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "python -m unittest -q tornado.test.gen_test.WaitIteratorTest.test_no_ref"
+            ],
+            "duration_seconds": 0.303,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n",
+            "output_sha256": "5f4da3a10467ed523d52edf10edfcd360269e31f5319fbb2e3c0632fb4663431",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 4262,
+              "sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 158,
+              "sha256": "e84fb959f22b8374b625452a60b668ed76394ff6310ae25e721b4a639cf23bf2"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "499933e6f5e6fd762bb88f49880033c9659d4b6445b6e459fbe9753a1be12b54"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 977,
+              "sha256": "9766e7ae6c715fbf3cb7bf75a1ac18aaf3e96a3c8a76a751a344f44bb6f32a2d"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 63,
+              "sha256": "a09a074a2306d7b976ac1c52a49da289af3159611a652b1fa2070faace8b5b03"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py370/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.004,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.7.0\n",
+            "output_sha256": "95fdbb1639ae37c7909261984de9c15fbaae93eb7328a50463803a91d1fdee76",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "39fc62c9e8391bfa338e3f6556d5e513c6f4caf0abdef80f197898addec9e92d",
+          "fixed_test_paths": [
+            "tornado/test/gen_test.py"
+          ],
+          "reference_patch_sha256": "f78e188343d6d1dc5fb74b4d2a5d364819f035bf1179e3c6355ebf6a83c24228"
+        }
+      }
+    }
+  },
+  "oracle_id": "dsa_v2_p2_order_056_bugsinpy_tornado_16_oracle_v0_1",
+  "order": 56,
+  "pool": [],
+  "pool_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "source_paths": [
+    "tornado/gen.py"
+  ],
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_tornado_16",
+  "task_image_id": "sha256:785d9fca3e4b9a33e8b5f81f428b262d2d4d7c9aca05f7e2b4047aade033b798",
+  "task_specific_repair_attempted": false
+}

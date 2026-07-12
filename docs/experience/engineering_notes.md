@@ -226,6 +226,11 @@
   tar before source materialization; an unexpected EOF must leave the task
   unstarted and may only retry the identical official object. Never let a
   partial codeload file become a source record.
+- An explicitly frozen `requirements_metadata.present=false` is not an error
+  and must not be converted into a synthetic empty requirements file. The V2
+  metadata copier should preserve absence, while the generic build records a
+  deterministic no-install requirements step and continues to editable install
+  and pip-check. Missing files remain errors whenever the frozen flag is true.
 
 ## 2026-07-12 V2-P1 metadata and base-lock freeze
 

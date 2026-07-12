@@ -14,7 +14,6 @@ from typing import Any
 from dsa2026_p4_prepare_task_context import (
     apply_reference,
     copy_fixed_tests,
-    copy_metadata,
     extract_commit_archive,
     tree_sha256,
 )
@@ -39,6 +38,38 @@ def read_json(path: Path) -> dict[str, Any]:
 
 def canonical_bytes(value: Any) -> bytes:
     return json.dumps(value, ensure_ascii=False, separators=(",", ":"), sort_keys=True).encode("utf-8")
+
+
+def copy_v2_metadata(catalog_root: Path, task: dict[str, Any], destination: Path) -> dict[str, str]:
+    """Copy frozen metadata while preserving an explicitly absent requirements file."""
+    source = catalog_root / "projects" / task["project"] / "bugs" / str(task["bug_id"])
+    names = ["bug.info", "bug_patch.txt", "run_test.sh"]
+    requirements_present = task["requirements_metadata"]["present"]
+    requirements = source / "requirements.txt"
+    if requirements_present:
+        names.append("requirements.txt")
+    elif requirements.exists() or "requirements" in task["metadata_sha256"]:
+        raise ValueError("requirements absence drift")
+    if (source / "setup.sh").is_file():
+        names.append("setup.sh")
+    key_by_name = {
+        "bug.info": "bug_info", "bug_patch.txt": "reference_patch",
+        "requirements.txt": "requirements", "run_test.sh": "run_test",
+        "setup.sh": "setup",
+    }
+    destination.mkdir(parents=True, exist_ok=False)
+    hashes: dict[str, str] = {}
+    for name in names:
+        source_path = source / name
+        if not source_path.is_file():
+            raise FileNotFoundError(source_path)
+        target = destination / name
+        shutil.copy2(source_path, target)
+        actual = hashlib.sha256(target.read_bytes()).hexdigest()
+        if actual != task["metadata_sha256"][key_by_name[name]]:
+            raise ValueError(f"metadata hash drift: {name}")
+        hashes[name] = actual
+    return hashes
 
 
 def signed_amendment() -> dict[str, Any]:
@@ -122,7 +153,7 @@ def build_context(
     metadata_task["metadata_sha256"]["setup"] = task["metadata_sha256"][
         "setup_provenance_only"
     ]
-    metadata_hashes = copy_metadata(
+    metadata_hashes = copy_v2_metadata(
         catalog_root, metadata_task, context / "metadata"
     )
     reference = apply_reference(context)

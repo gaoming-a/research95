@@ -22,7 +22,12 @@ run_logged() {
 }
 
 requirements_status=0
-run_logged requirements conda run -n "$env_name" python -m pip install -r "$metadata/requirements.txt" || requirements_status=$?
+if [ -f "$metadata/requirements.txt" ]; then
+    run_logged requirements conda run -n "$env_name" python -m pip install -r "$metadata/requirements.txt" || requirements_status=$?
+else
+    printf '%s\n' "requirements metadata absent; no requirements install executed" >"$log_dir/requirements.log"
+    printf '%s\n' "0" >"$log_dir/requirements.exit_code"
+fi
 editable_status=0
 run_logged editable_project conda run -n "$env_name" /bin/bash -c "cd '$project' && python -m pip install -e ." || editable_status=$?
 pip_check_status=0

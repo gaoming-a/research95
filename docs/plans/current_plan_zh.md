@@ -351,6 +351,15 @@ Ansible_14 full-tree source freeze/check PASS。唯一 py369 build 因冻结
 alpha/beta/rc/final、不重跑。ledger v0.55 attempted=55、qualified=0、API=0；cursor 为
 order56 `bugsinpy_tornado_16`、started=false。
 
+Tornado_16 pre-source 发现 V2-P1 已冻结 `requirements_metadata.present=false`，而旧 P4
+copier/build script 仍假设文件存在。通用 V2-P2 路径已最短修复：仅对明确 absent 的
+requirements 记录 absence、绝不合成文件，build 记录 no-install；其他 metadata 缺失仍
+hard stop。present/absent synthetic、compile、shell syntax、preflight 均 PASS 后才重试。
+source freeze/check、build 与相同双 F2P 均 PASS；随后 Python3.7 collection worker 因
+`format_exception` 接口不兼容产生 `DiscoveryOutputParseError`，pool=0，按普通 oracle
+materialization terminal，不修 adapter、不重跑。ledger v0.56 attempted=56、qualified=0、
+API=0；cursor 为 order57 `bugsinpy_matplotlib_16`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
