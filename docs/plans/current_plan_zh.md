@@ -193,6 +193,11 @@ Cythonizing `pandas/_libs/algos.pyx` 时 compiler crash；不改 build dependenc
 不重跑。ledger v0.27 attempted=27、qualified=0、API=0；cursor 为 order28
 `bugsinpy_fastapi_8`、started=false。
 
+FastAPI_8 source freeze/check PASS。唯一 build 中旧 pip editable-install 失败，且冻结
+Starlette0.12.8 与 FastAPI0.55.1 所需0.13.2冲突；不升级/替换、不重跑。ledger v0.28
+attempted=28、qualified=0、API=0；cursor 为 order29 `bugsinpy_black_17`、
+started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
