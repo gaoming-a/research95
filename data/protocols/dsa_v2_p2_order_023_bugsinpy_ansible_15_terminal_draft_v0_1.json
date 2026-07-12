@@ -1,0 +1,18 @@
+{
+  "created_date": "2026-07-12",
+  "draft_id": "dsa_v2_p2_order_023_bugsinpy_ansible_15_terminal_draft_v0_1",
+  "model_api_calls": 0,
+  "next_order": 24,
+  "next_task_id": "bugsinpy_tornado_11",
+  "next_task_started": false,
+  "records": [
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "a54a32d8e6a412eaf0517bca041fa01abe0fc7c47a91388e9cca9383aa3707b5",
+      "order": 23,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_ansible_15"
+    }
+  ]
+}

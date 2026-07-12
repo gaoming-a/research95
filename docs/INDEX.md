@@ -192,6 +192,10 @@
   order22 environment terminal on independently frozen unavailable
   `numpy==1.19.0rc2`; no replacement/rerun occurred. Ledger v0.22 advances to
   `bugsinpy_ansible_15`, API=0.
+- [dsa_v2_p2_order_023_bugsinpy_ansible_15_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_023_bugsinpy_ansible_15_terminal_gate_v0_1.md):
+  order23 environment terminal after full-tree source freeze/check. Frozen
+  `ansible==2.10.0.dev0` was unavailable and not substituted; ledger v0.23
+  advances to `bugsinpy_tornado_11`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
