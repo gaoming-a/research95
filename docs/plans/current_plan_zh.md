@@ -320,6 +320,11 @@ compilation 中因系统缺少 `ft2build.h` 而失败；不安装 FreeType heade
 不重跑。ledger v0.49 attempted=49、qualified=0、API=0；cursor 为 order50
 `bugsinpy_spacy_10`、started=false。
 
+spaCy_10 canonical-root source freeze/check PASS。唯一 py377 build 的 recursive native
+dependency 要求当前 Python3.7 无可用 distribution 的 `cython>=3.1`；不更换 Python/
+Cython、不修改依赖、不重跑。ledger v0.50 attempted=50、qualified=0、API=0；cursor 为
+order51 `bugsinpy_pandas_61`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
