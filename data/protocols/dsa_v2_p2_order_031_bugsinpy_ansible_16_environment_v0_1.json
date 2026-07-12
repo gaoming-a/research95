@@ -1,0 +1,25 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "build_exit_code": 1,
+  "build_output_bytes": 27510,
+  "build_output_sha256": "0695a26c9f292d4df8e7a778060e40143e4bcf548403d42fb07b42c425bbf7de",
+  "created_date": "2026-07-12",
+  "dockerfile_sha256": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
+  "environment_id": "dsa_v2_p2_order_031_bugsinpy_ansible_16_environment_v0_1",
+  "failure_reason": "environment-build-failure",
+  "image": null,
+  "official_setup_executed": false,
+  "order": 31,
+  "source_record_sha256": "90d0ddcae0f5b1d57d4250eaeb934dcdca05665a37764e87c01733ede53cc0bd",
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_ansible_16",
+  "task_specific_repair_attempted": false
+}
