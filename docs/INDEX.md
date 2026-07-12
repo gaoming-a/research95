@@ -204,6 +204,10 @@
   order25 oracle terminal. Both F2P runs passed but elapsed-time output changed
   frozen hashes; no normalization/rerun occurred. Ledger v0.25 advances to
   `bugsinpy_spacy_5`, API=0.
+- [dsa_v2_p2_order_026_bugsinpy_spacy_5_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_026_bugsinpy_spacy_5_terminal_gate_v0_1.md):
+  order26 environment terminal. Frozen Python3.7.7 could not satisfy
+  `cython>=3.1`, and editable build lacked the executable; no repair/rerun
+  occurred. Ledger v0.26 advances to `bugsinpy_pandas_7`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
