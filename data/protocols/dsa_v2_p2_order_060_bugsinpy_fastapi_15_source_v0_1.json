@@ -1,0 +1,128 @@
+{
+  "created_date": "2026-07-12",
+  "cursor_config_sha256": "3ab6860e6f6749c917169aaabc4a88e9b97154bcaa54aefb426be21eb0739116",
+  "model_api_calls": 0,
+  "previous_ledger_sha256": "4783139c8e3e0752c6523eedb6d2286c90442db167a07eb5884b8de8bac66925",
+  "records": [
+    {
+      "context": {
+        "buggy_archive": {
+          "archive_bytes": 3799999,
+          "archive_root": "fastapi-b16ca54c30644667ab9f65a712704850666a039c",
+          "archive_sha256": "c7088ebd47c1d5752675675065b713c487614c2a674234c53beb3a0933c42525",
+          "extracted_file_count": 367,
+          "extracted_tree_sha256": "29f21722b9635fa7c39e027faeda5c3a7769c097f5bdc2ba1e42680553cba611",
+          "materialized_symlink_count": 0
+        },
+        "buggy_commit_id": "b16ca54c30644667ab9f65a712704850666a039c",
+        "buggy_source_tree_sha256": "29f21722b9635fa7c39e027faeda5c3a7769c097f5bdc2ba1e42680553cba611",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "context_tree_sha256": "cd4df880acaf99cc998dc9ee64dc1208cbdfae564821b425fa2aa0f28eb1e2fd",
+        "fixed_archive": {
+          "archive_bytes": 3800233,
+          "archive_root": "fastapi-6d77e2ac5f2cadc63424f2d85d8d8cded2975922",
+          "archive_sha256": "4b3da7d74f2d8a7f59f238cc062340484f79ce27ef6f49d91d94270f67e4abd0",
+          "extracted_file_count": 368,
+          "extracted_tree_sha256": "ec3883f4842a94d15650bfa0a687c378fcbc253a175df1c564761385633cb2b4",
+          "materialized_symlink_count": 0
+        },
+        "fixed_commit_id": "6d77e2ac5f2cadc63424f2d85d8d8cded2975922",
+        "fixed_test_sha256": {
+          "tests/test_ws_router.py": "f2635617787ccb7f17d11e86a500b6153b50bbdd892d377128ccdd8a1367ac42"
+        },
+        "metadata_sha256": {
+          "bug.info": "c8980116ddde973869462b6e93b446df3c60966de3931a80859ff4217f4f2995",
+          "bug_patch.txt": "01e94593e028011ed24ac0701f13f8484936a214adea94b137cbda033f459154",
+          "requirements.txt": "5d485919c9dc15c3da11945b5ef1ab8ab0b8dbd8b20b4f75ef2e0d2943a37c42",
+          "run_test.sh": "17b5d2d5176fcdb784f10e7266c08e0f336c744e4cea15b6681316fad2f7b07a"
+        },
+        "model_api_calls": 0,
+        "order": 60,
+        "project": "fastapi",
+        "record_sha256": "376e7408b5efe890aaa2775a62ca4696bf4403f29f5fc18a20ca3a270ba76a64",
+        "reference_validation": {
+          "normalized_patch_sha256": "fa708ce93ee9242a47973ced1b791b1c524e01841c40cc754320e102d5ee8e51",
+          "patch_apply_exit_code": 0,
+          "patch_check_exit_code": 0,
+          "patch_line_endings_normalized": true,
+          "reference_tree_sha256": "beefc5f34bce8e3970aab79a77776739bc93711f716ee63c48c18f863e4790f2"
+        },
+        "source_acquisition": "official GitHub codeload commit tarballs",
+        "source_materialization_manifests": [],
+        "source_repository": "https://github.com/tiangolo/fastapi",
+        "status": "v2_p2_source_context_frozen_no_candidate",
+        "task_id": "bugsinpy_fastapi_15"
+      },
+      "order": 60,
+      "project_test_scope": {
+        "collection_command": [
+          "python",
+          "-m",
+          "pytest",
+          "--collect-only",
+          "-q",
+          "tests"
+        ],
+        "derived_from_declared_file_count": 14,
+        "framework": "pytest",
+        "project": "fastapi",
+        "project_test_root": "tests",
+        "unittest_pattern": null,
+        "unittest_top_level_dir": null
+      },
+      "real_activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 1
+      },
+      "record_sha256": "a593b6fe5c041a86dd05948bfb41eafceefeadd458d36c27182f81361b65e253",
+      "source_record": {
+        "bug_id": 15,
+        "buggy_commit_id": "b16ca54c30644667ab9f65a712704850666a039c",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "catalog_f2p_commands": [
+          "pytest tests/test_ws_router.py::test_router",
+          "pytest tests/test_ws_router.py::test_prefix_router"
+        ],
+        "declared_f2p_commands": [
+          "pytest tests/test_ws_router.py::test_router",
+          "pytest tests/test_ws_router.py::test_prefix_router"
+        ],
+        "declared_test_file": "tests/test_ws_router.py",
+        "environment_risk_tags": [],
+        "f2p_command_match": true,
+        "fixed_commit_id": "6d77e2ac5f2cadc63424f2d85d8d8cded2975922",
+        "metadata_sha256": {
+          "bug_info": "c8980116ddde973869462b6e93b446df3c60966de3931a80859ff4217f4f2995",
+          "reference_patch": "01e94593e028011ed24ac0701f13f8484936a214adea94b137cbda033f459154",
+          "requirements": "5d485919c9dc15c3da11945b5ef1ab8ab0b8dbd8b20b4f75ef2e0d2943a37c42",
+          "run_test": "17b5d2d5176fcdb784f10e7266c08e0f336c744e4cea15b6681316fad2f7b07a"
+        },
+        "model_outcome_observed": false,
+        "official_setup_executable_authority": false,
+        "order": 60,
+        "project": "fastapi",
+        "project_order_sha256": "5485690149323032350b0fceba9d0e54932e1800f95277c16762379fe81e8776",
+        "project_position": 2,
+        "python_version": "3.8.3",
+        "requirements_metadata": {
+          "nonempty": true,
+          "present": true
+        },
+        "round": 8,
+        "task_id": "bugsinpy_fastapi_15",
+        "task_order_sha256": "bb434b59bd8541ac3fe5d345fb017fa2d4f1ff0a30d4604c2a36c648151f1111",
+        "test_framework": "pytest"
+      },
+      "task_id": "bugsinpy_fastapi_15"
+    }
+  ],
+  "registry_id": "dsa_v2_p2_order_060_bugsinpy_fastapi_15_source_v0_1",
+  "status": "cursor_task_source_frozen"
+}
