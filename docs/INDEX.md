@@ -132,6 +132,10 @@
   order7 oracle terminal. Both F2P runs passed, but elapsed-time text made the
   frozen full-output hashes differ; no post-outcome normalization or rerun was
   allowed. Ledger v0.7 advances to `bugsinpy_spacy_8`, API=0.
+- [dsa_v2_p2_order_008_bugsinpy_spacy_8_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_008_bugsinpy_spacy_8_terminal_gate_v0_1.md):
+  order8 environment terminal. Canonical `spaCy` archive roots were preserved;
+  editable installation then failed because the frozen environment lacked the
+  `cython` executable. No repair/rerun occurred; ledger advances to Sanic_4.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

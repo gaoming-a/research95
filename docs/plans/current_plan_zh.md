@@ -90,6 +90,16 @@ Matplotlib_4 source freeze/check 与 py381 build PASS。两次 fresh F2P 均通�
 terminal，不事后归一化时间、不重跑。ledger v0.7 attempted=7、qualified=0、API=0；
 cursor 为 order8 `bugsinpy_spacy_8`、started=false。
 
+Order8 official archive pre-inspection 发现根目录为 canonical repo basename
+`spaCy-<sha>`，而 catalog project key 为 `spacy`。在 extraction/outcome 前诊断为通用
+archive-root binding bug：cursor 改从冻结 repository URL basename 推导 expected root，
+不更改 archive、project key 或内容；默认非 cursor 调用仍保持原行为。
+
+spaCy_8 canonical-root source freeze/check PASS。唯一 py377 build 在 editable project
+PEP517 get-build-requirements 阶段因 `cython` executable 缺失而失败；不安装/补充 Cython、
+不重跑、未进入 oracle。ledger v0.8 attempted=8、qualified=0、API=0；cursor 为 order9
+`bugsinpy_sanic_4`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

@@ -22,10 +22,10 @@
   },
   "component_sha256": {
     "dockerfile": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
-    "executor": "a627df21248c0f8605f5e38236eeebf2e382b4518f0e04bf99a17a4c493fd847"
+    "executor": "82b13552d038bba4d65fc419a2b86ce015efba035b7725e825d6a5d4eccc9ca5"
   },
   "created_date": "2026-07-12",
-  "cursor_config_sha256": "aafd14ff60e682ad0c85ba4d3002973649cef759e046f0e1a3985190fe73b6ff",
+  "cursor_config_sha256": "4278e9007b898503c75b71e575ddcb87f30bab7a5f296235d1b21bf9a1ee4505",
   "preflight_id": "dsa_v2_p2_cursor_executor_preflight_v0_1",
   "status": "ready_for_cursor_source"
 }

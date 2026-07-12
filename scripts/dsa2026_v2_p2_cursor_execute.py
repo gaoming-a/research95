@@ -245,6 +245,7 @@ def freeze_source(s: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]
             catalog_root,
             Path(raw),
             archive_extractor=extractor,
+            archive_root_prefix=s["config"]["repository"].rstrip("/").rsplit("/", 1)[-1],
         )
         context_record["source_materialization_manifests"] = materialization_manifests
         context_record["record_sha256"] = canonical_sha({

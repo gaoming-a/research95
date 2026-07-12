@@ -47,6 +47,9 @@
 - The same rule applies to development pins such as `ansible-base==2.10.0.dev0`;
   a nearby beta, release candidate, or final release is not an equivalent frozen
   dependency.
+- A missing build executable discovered by editable-install hooks (for example
+  `cython`) is also an environment terminal when it is absent from the frozen
+  dependency recipe. Installing it after observation is task-specific repair.
 
 ## 2026-07-12 Keep Windows archive staging paths deliberately short
 
@@ -62,6 +65,10 @@
   runtime directories to `tmp/dsa_r/oNNN`. Short staging alone is insufficient
   if the final context copy or Docker `COPY` target still reintroduces a long
   workspace path.
+- Derive the official codeload archive root from the frozen repository URL
+  basename, not the normalized catalog project key. Case-sensitive names such
+  as `spaCy` are valid archive identity and must not be lowercased or treated as
+  a source-content exception.
 
 ## 2026-07-12 Archive symlink fidelity is a frozen-content decision
 

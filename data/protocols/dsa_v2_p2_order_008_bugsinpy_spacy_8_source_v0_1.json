@@ -1,0 +1,130 @@
+{
+  "created_date": "2026-07-12",
+  "cursor_config_sha256": "aafd14ff60e682ad0c85ba4d3002973649cef759e046f0e1a3985190fe73b6ff",
+  "model_api_calls": 0,
+  "previous_ledger_sha256": "ceec9f9ba47abe247aef83e82fa700a27a070105a486060dbfc1ab87e5630515",
+  "records": [
+    {
+      "context": {
+        "buggy_archive": {
+          "archive_bytes": 4806423,
+          "archive_root": "spaCy-fa95c030a511337935d1a2e930cb954c7a4cd376",
+          "archive_sha256": "e6478efb7a3214cfb9afa3e571a67dc39af72fd9ff1afbeebf752eb4907f9319",
+          "extracted_file_count": 1201,
+          "extracted_tree_sha256": "182e7a1bf3e7dbb8071cc152fa840c4c541559fa7b89c6c86d5de3d8a0ce5c07",
+          "materialized_symlink_count": 0
+        },
+        "buggy_commit_id": "fa95c030a511337935d1a2e930cb954c7a4cd376",
+        "buggy_source_tree_sha256": "182e7a1bf3e7dbb8071cc152fa840c4c541559fa7b89c6c86d5de3d8a0ce5c07",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "context_tree_sha256": "ec9921662dacaecd7f50ecb5c8a04f2613a6ac7956a729469f53e3239d07acfd",
+        "fixed_archive": {
+          "archive_bytes": 4808232,
+          "archive_root": "spaCy-5efae495f18f37316bd641a05ca26e62cb78e242",
+          "archive_sha256": "fc911778fcd1df1878082678f6efa6cd6ba4c7dd4b4e8e0cc939f4d54a2051df",
+          "extracted_file_count": 1201,
+          "extracted_tree_sha256": "f79ac044b63257e7e7af43675c9fa60fda9450fed20d248912e6bff703865f92",
+          "materialized_symlink_count": 0
+        },
+        "fixed_commit_id": "5efae495f18f37316bd641a05ca26e62cb78e242",
+        "fixed_test_sha256": {
+          "spacy/tests/matcher/test_matcher_logic.py": "4b76d9c9a7fe4239b87d42d457671ff1a9c7f050ff8d257d4c78d259dff30a49"
+        },
+        "metadata_sha256": {
+          "bug.info": "feaebb961b510f909933fa6f0079579e9c252a605df9543173649ed994998fa7",
+          "bug_patch.txt": "d9d3e798cee256b939523ebf8368218206915df481e81472afa36d92814d0aa1",
+          "requirements.txt": "be0788a8393788b0374b0f6373f187da0ff2af308f0d9127e9bbb7bcedc6c10c",
+          "run_test.sh": "6530460a0d92acd18acb9fd0cc147ba08ab24181f6e82b9784f8e15205815927",
+          "setup.sh": "00293ccdff169f1ec9384222eea57c351deb8cf694d68f0e0e937867c214a6c2"
+        },
+        "model_api_calls": 0,
+        "order": 8,
+        "project": "spacy",
+        "record_sha256": "897cee58c2e9aefe5a803a92c724ed27e6f0f3be84f0e4ed2d0eaaa90aba0f47",
+        "reference_validation": {
+          "normalized_patch_sha256": "0333c37fa225f9ccd1ec4bc160f3254209f70cd1702d8fbd2074db6e2d7c7863",
+          "patch_apply_exit_code": 0,
+          "patch_check_exit_code": 0,
+          "patch_line_endings_normalized": true,
+          "reference_tree_sha256": "1d568835e35d00dd6e5d128493693c935a7473dbe7c06c6d629e4a9a337833ce"
+        },
+        "source_acquisition": "official GitHub codeload commit tarballs",
+        "source_materialization_manifests": [],
+        "source_repository": "https://github.com/explosion/spaCy",
+        "status": "v2_p2_source_context_frozen_no_candidate",
+        "task_id": "bugsinpy_spacy_8"
+      },
+      "order": 8,
+      "project_test_scope": {
+        "collection_command": [
+          "python",
+          "-m",
+          "pytest",
+          "--collect-only",
+          "-q",
+          "spacy/tests"
+        ],
+        "derived_from_declared_file_count": 9,
+        "framework": "pytest",
+        "project": "spacy",
+        "project_test_root": "spacy/tests",
+        "unittest_pattern": null,
+        "unittest_top_level_dir": null
+      },
+      "real_activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 1
+      },
+      "record_sha256": "574df2cbd6590cfdd970587a4f6bf542a444f819353d5d6d3812b18c13536651",
+      "source_record": {
+        "bug_id": 8,
+        "buggy_commit_id": "fa95c030a511337935d1a2e930cb954c7a4cd376",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "catalog_f2p_commands": [
+          "py.test spacy/tests/matcher/test_matcher_logic.py::test_matcher_remove"
+        ],
+        "declared_f2p_commands": [
+          "py.test spacy/tests/matcher/test_matcher_logic.py::test_matcher_remove"
+        ],
+        "declared_test_file": "spacy/tests/matcher/test_matcher_logic.py",
+        "environment_risk_tags": [
+          "native_extension_build"
+        ],
+        "f2p_command_match": true,
+        "fixed_commit_id": "5efae495f18f37316bd641a05ca26e62cb78e242",
+        "metadata_sha256": {
+          "bug_info": "feaebb961b510f909933fa6f0079579e9c252a605df9543173649ed994998fa7",
+          "reference_patch": "d9d3e798cee256b939523ebf8368218206915df481e81472afa36d92814d0aa1",
+          "requirements": "be0788a8393788b0374b0f6373f187da0ff2af308f0d9127e9bbb7bcedc6c10c",
+          "run_test": "6530460a0d92acd18acb9fd0cc147ba08ab24181f6e82b9784f8e15205815927",
+          "setup_provenance_only": "00293ccdff169f1ec9384222eea57c351deb8cf694d68f0e0e937867c214a6c2"
+        },
+        "model_outcome_observed": false,
+        "official_setup_executable_authority": false,
+        "order": 8,
+        "project": "spacy",
+        "project_order_sha256": "ce8cb78493419b28d634a190561d30be5903e032a246dc725683b3685c846cac",
+        "project_position": 8,
+        "python_version": "3.7.7",
+        "requirements_metadata": {
+          "nonempty": true,
+          "present": true
+        },
+        "round": 1,
+        "task_id": "bugsinpy_spacy_8",
+        "task_order_sha256": "0a20f2f2a1fce0efc46429acb7c93ddc9f27a545d9cee0b1db34b67099a0bcfc",
+        "test_framework": "pytest"
+      },
+      "task_id": "bugsinpy_spacy_8"
+    }
+  ],
+  "registry_id": "dsa_v2_p2_order_008_bugsinpy_spacy_8_source_v0_1",
+  "status": "cursor_task_source_frozen"
+}
