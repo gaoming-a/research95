@@ -110,6 +110,11 @@ Pandas_167 source freeze/check PASS。唯一 build 完成 requirements/editable 
 `pandas>=0.19`；不改版本元数据、不跳过 pip check、不重跑。ledger v0.10 attempted=10、
 qualified=0、API=0；cursor 为 order11 `bugsinpy_fastapi_5`、started=false。
 
+FastAPI_5 source freeze/check PASS。唯一 build 中旧 pip 无法 editable-install
+pyproject-only checkout，且冻结 Starlette0.12.9 与 FastAPI0.55.1 所需0.13.2冲突；
+不升级 pip、不改依赖、不重跑。ledger v0.11 attempted=11、qualified=0、API=0；cursor
+为 order12 `bugsinpy_black_5`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

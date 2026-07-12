@@ -144,6 +144,10 @@
   order10 environment terminal. Frozen `pip check` rejected editable pandas
   `0+unknown` against fastparquet's `pandas>=0.19`; version metadata and the Gate
   were not altered. Ledger v0.10 advances to `bugsinpy_fastapi_5`, API=0.
+- [dsa_v2_p2_order_011_bugsinpy_fastapi_5_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_011_bugsinpy_fastapi_5_terminal_gate_v0_1.md):
+  order11 environment terminal: old-pip editable-install failure plus frozen
+  FastAPI/Starlette conflict. It is independent of terminal FastAPI_11; no
+  dependency repair/rerun occurred. Ledger advances to Black_5, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

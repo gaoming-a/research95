@@ -1,0 +1,103 @@
+{
+  "attempted_tasks": 11,
+  "created_date": "2026-07-12",
+  "ledger_id": "dsa_v2_p2_terminal_ledger_v0_11",
+  "model_api_calls": 0,
+  "next_order": 12,
+  "next_task_id": "bugsinpy_black_5",
+  "next_task_started": false,
+  "qualified_pairs": 0,
+  "records": [
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "5f9ac606ec4670e31960c0785986c023c567763e8d7e0c6021467c62a85fe09a",
+      "order": 1,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_pandas_161"
+    },
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "77f1349c15e1092d1a6241ce2fae3fb34c4afffb7d602e600b5587391eb0a6c2",
+      "order": 2,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_fastapi_11"
+    },
+    {
+      "disposition": "materialization-failed",
+      "oracle_record_sha256": "e373c10602a2986b5555a4e8672a22e85539971ea992c101876f36e53362a273",
+      "order": 3,
+      "reason": "oracle-positive-f2p-failure-or-dual-disagreement",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_black_4"
+    },
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "0eeccd54932f001c13af79254d53ce5ad4f6aad2e7cac95fc90dcdebed9073b8",
+      "order": 4,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_keras_40"
+    },
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "0e9b292f5d6d146a93eb7ed9456ce6268c38c5b906df6903ef4f9af0e1d1f3ec",
+      "order": 5,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_ansible_8"
+    },
+    {
+      "disposition": "materialization-failed",
+      "oracle_record_sha256": "5bcf5aeee5ef60380bc4dd73e199c1a73fa3cedf871beccb7475a73da5073cf5",
+      "order": 6,
+      "reason": "oracle-positive-f2p-failure-or-dual-disagreement",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_tornado_3"
+    },
+    {
+      "disposition": "materialization-failed",
+      "oracle_record_sha256": "f2cc8f09ec6e3eb005c8beb9283f222f1687de4cff86b1dd66a96e3b2b890454",
+      "order": 7,
+      "reason": "oracle-positive-f2p-failure-or-dual-disagreement",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_matplotlib_4"
+    },
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "0ddadf9d45eaf7ab5ecf16fc75a1af6dcd21a8ad72e45c5faa048a12ce1c2c5a",
+      "order": 8,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_spacy_8"
+    },
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "58f746f06122dd45aaef171ad2ca7ce1b69db23f562b9b2ba4e5aaae955d6a5d",
+      "order": 9,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_sanic_4"
+    },
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "edbf2a80284ef5a251637db8f7791c08ba68136206f50074c8405993ca32ee18",
+      "order": 10,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_pandas_167"
+    },
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "ccb8cac3922fafea6f1036c2acafe863817d1c54ee793be28d5b576dd7405d62",
+      "order": 11,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_fastapi_5"
+    }
+  ],
+  "status": "orders_1_11_terminal",
+  "superseded_ledger_sha256": "72f12ef0af8b0af6c5aeb3e574a7edddfcd5f7fccdfc20df8fcfffb28f46abd3",
+  "supersedes": "data/protocols/dsa_v2_p2_terminal_ledger_v0_10.json"
+}
