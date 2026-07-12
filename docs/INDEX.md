@@ -208,6 +208,10 @@
   order26 environment terminal. Frozen Python3.7.7 could not satisfy
   `cython>=3.1`, and editable build lacked the executable; no repair/rerun
   occurred. Ledger v0.26 advances to `bugsinpy_pandas_7`, API=0.
+- [dsa_v2_p2_order_027_bugsinpy_pandas_7_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_027_bugsinpy_pandas_7_terminal_gate_v0_1.md):
+  order27 environment terminal. Editable PEP517 materialization crashed while
+  Cythonizing `pandas/_libs/algos.pyx`; build dependencies were not changed.
+  Ledger v0.27 advances to `bugsinpy_fastapi_8`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

@@ -63,6 +63,9 @@
   package version provenance becomes `0+unknown` and violates another installed
   package's requirement. Do not patch version metadata or bypass `pip check`
   after observing the conflict.
+- A Cython compiler crash inside an editable PEP517 hook is an environment
+  materialization terminal under the frozen recipe. Changing Cython/setuptools
+  after the observed crash is task-specific repair.
 
 ## 2026-07-12 Keep Windows archive staging paths deliberately short
 

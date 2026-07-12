@@ -1,0 +1,130 @@
+{
+  "created_date": "2026-07-12",
+  "cursor_config_sha256": "066a6f24e355f67cf8e910f543eaf70737c75d94ac8fa632ad031630ebf5da7a",
+  "model_api_calls": 0,
+  "previous_ledger_sha256": "a542d15384abc96cae30b5ef4ce41435a22bbb0b613bc19b609280f49270a6cc",
+  "records": [
+    {
+      "context": {
+        "buggy_archive": {
+          "archive_bytes": 8043263,
+          "archive_root": "pandas-27f365d",
+          "archive_sha256": "c166d9d7f8b88a193cd7ab0ebd53d050b265311d97e37ad42a9c913042858b0a",
+          "extracted_file_count": 1679,
+          "extracted_tree_sha256": "abe93f50ee345ce8135386c44c249ce61345079e5baaa0548042329a901eb3a9",
+          "materialized_symlink_count": 0
+        },
+        "buggy_commit_id": "27f365d",
+        "buggy_source_tree_sha256": "abe93f50ee345ce8135386c44c249ce61345079e5baaa0548042329a901eb3a9",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "context_tree_sha256": "eded9c7deb1d1bee4ed448b5ab5462fcd69636c08d2459f890f6d96b5b8d95d3",
+        "fixed_archive": {
+          "archive_bytes": 8050277,
+          "archive_root": "pandas-64336ff8414f8977ff94adb9a5bc000a3a4ef454",
+          "archive_sha256": "4473acae6623df32c8071ab594c644b88a44a0685e9cc4f57e879e28adcba20a",
+          "extracted_file_count": 1679,
+          "extracted_tree_sha256": "09b3d61f827ecdb6813d290c0b23e8252223f5d370eb95ab347efe68d7675ff5",
+          "materialized_symlink_count": 0
+        },
+        "fixed_commit_id": "64336ff8414f8977ff94adb9a5bc000a3a4ef454",
+        "fixed_test_sha256": {
+          "pandas/tests/frame/indexing/test_indexing.py": "b697f6425a1ceab82b9ed7397f8f8fac90277461ec36dd8963013d0f1b2934cc"
+        },
+        "metadata_sha256": {
+          "bug.info": "9d1e019b76b02ffe1d4837929b69ffb59dd2e73727fc7e93727d1bd1431e3da8",
+          "bug_patch.txt": "7650460dcd585aa50f940fd2164c8c405f71c261146116d1216f17e5332d7a5a",
+          "requirements.txt": "0a0399f0e83216ac02f47348fb390967bd6a4dab0c4ed5feb08ad4a58e89ed1e",
+          "run_test.sh": "85b1b80f6353b43f8df203082886432647fe15f6261832076ba5705eeacb49a4",
+          "setup.sh": "fff3ab9f74619b05cbe5eea2a563d8185d513b5305565b880e002d238bfdbe93"
+        },
+        "model_api_calls": 0,
+        "order": 27,
+        "project": "pandas",
+        "record_sha256": "1cd2d4eda5727be8c564da27f8827d17351155e7b623ab1b4a7a9c9797b2368d",
+        "reference_validation": {
+          "normalized_patch_sha256": "4da42cbd4ca34a857de6e5a9820a06d0811ef3d8cf19d897070ead7bbef95965",
+          "patch_apply_exit_code": 0,
+          "patch_check_exit_code": 0,
+          "patch_line_endings_normalized": true,
+          "reference_tree_sha256": "6176e317433735353917e6b7060213bb4c16abc3a597c26a6e0d229b895b4916"
+        },
+        "source_acquisition": "official GitHub codeload commit tarballs",
+        "source_materialization_manifests": [],
+        "source_repository": "https://github.com/pandas-dev/pandas",
+        "status": "v2_p2_source_context_frozen_no_candidate",
+        "task_id": "bugsinpy_pandas_7"
+      },
+      "order": 27,
+      "project_test_scope": {
+        "collection_command": [
+          "python",
+          "-m",
+          "pytest",
+          "--collect-only",
+          "-q",
+          "pandas/tests"
+        ],
+        "derived_from_declared_file_count": 119,
+        "framework": "pytest",
+        "project": "pandas",
+        "project_test_root": "pandas/tests",
+        "unittest_pattern": null,
+        "unittest_top_level_dir": null
+      },
+      "real_activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 1
+      },
+      "record_sha256": "80d758293e741021b751447c32b2c40fd1c4262f930180319b2ce37b5c36ff79",
+      "source_record": {
+        "bug_id": 7,
+        "buggy_commit_id": "27f365d",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "catalog_f2p_commands": [
+          "pytest pandas/tests/frame/indexing/test_indexing.py::TestDataFrameIndexing::test_reindex_nearest_tz"
+        ],
+        "declared_f2p_commands": [
+          "pytest pandas/tests/frame/indexing/test_indexing.py::TestDataFrameIndexing::test_reindex_nearest_tz"
+        ],
+        "declared_test_file": "pandas/tests/frame/indexing/test_indexing.py",
+        "environment_risk_tags": [
+          "native_extension_build"
+        ],
+        "f2p_command_match": true,
+        "fixed_commit_id": "64336ff8414f8977ff94adb9a5bc000a3a4ef454",
+        "metadata_sha256": {
+          "bug_info": "9d1e019b76b02ffe1d4837929b69ffb59dd2e73727fc7e93727d1bd1431e3da8",
+          "reference_patch": "7650460dcd585aa50f940fd2164c8c405f71c261146116d1216f17e5332d7a5a",
+          "requirements": "0a0399f0e83216ac02f47348fb390967bd6a4dab0c4ed5feb08ad4a58e89ed1e",
+          "run_test": "85b1b80f6353b43f8df203082886432647fe15f6261832076ba5705eeacb49a4",
+          "setup_provenance_only": "fff3ab9f74619b05cbe5eea2a563d8185d513b5305565b880e002d238bfdbe93"
+        },
+        "model_outcome_observed": false,
+        "official_setup_executable_authority": false,
+        "order": 27,
+        "project": "pandas",
+        "project_order_sha256": "41103a71feed7a79ab78d79e684d033ffd4d65c422392e1c77b43f2c5c525130",
+        "project_position": 1,
+        "python_version": "3.8.3",
+        "requirements_metadata": {
+          "nonempty": true,
+          "present": true
+        },
+        "round": 4,
+        "task_id": "bugsinpy_pandas_7",
+        "task_order_sha256": "03c439d3f3ec01fb1ee2daa3426ac16d5eeccec2d5daac002f88f37f851c5099",
+        "test_framework": "pytest"
+      },
+      "task_id": "bugsinpy_pandas_7"
+    }
+  ],
+  "registry_id": "dsa_v2_p2_order_027_bugsinpy_pandas_7_source_v0_1",
+  "status": "cursor_task_source_frozen"
+}

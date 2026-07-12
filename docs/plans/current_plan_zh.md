@@ -188,6 +188,11 @@ spaCy_5 canonical-root source freeze/check PASS。py377 build 中 PEP517 要求
 Python/依赖、不重跑。ledger v0.26 attempted=26、qualified=0、API=0；cursor 为 order27
 `bugsinpy_pandas_7`、started=false。
 
+Pandas_7 source freeze/check PASS。唯一 py383 build 的 editable PEP517 hook 在
+Cythonizing `pandas/_libs/algos.pyx` 时 compiler crash；不改 build dependencies、
+不重跑。ledger v0.27 attempted=27、qualified=0、API=0；cursor 为 order28
+`bugsinpy_fastapi_8`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
