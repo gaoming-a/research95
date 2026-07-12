@@ -1,0 +1,234 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 2,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 2,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "created_date": "2026-07-12",
+  "failure_reason": "oracle-positive-f2p-failure-or-dual-disagreement",
+  "model_api_calls": 0,
+  "official_f2p": {
+    "dual_pass": false,
+    "run_a": {
+      "container_exit_code": 0,
+      "container_id": "0866cc4343fc43003ce41ef8ca641185051decc9a91f16e5ca48a3797b502e40",
+      "container_name": "dsa-v2-p2-official-f2p-a-5c6fb3e699",
+      "image_id": "sha256:4817ee28abe57bab54eb4e04e6a410272dc97b4c37e6e8c3e7b712d2891d8ca2",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 3052,
+      "output_sha256": "4deb408d084ff5ed220a3a200dbd496f62530bf23cb18211aca12f8d23faef85",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "python -m unittest -q tests.test_black.BlackTestCase.test_fmtonoff2"
+            ],
+            "duration_seconds": 0.265,
+            "exit_code": 1,
+            "outcome": "failed",
+            "output_excerpt": "======================================================================\nERROR: test_black (unittest.loader._FailedTest)\n----------------------------------------------------------------------\nImportError: Failed to import test module: test_black\nTraceback (most recent call last):\n  File \"/opt/conda/envs/py383/lib/python3.8/unittest/loader.py\", line 154, in loadTestsFromName\n    module = __import__(module_name)\nModuleNotFoundError: No module named 'tests.test_black'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+            "output_sha256": "83779cbc2d5fe203ef3f517c0d5cb9d2cf2f896666dc4fb64abec60b086c1b97",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 3738,
+              "sha256": "6a25cb9316d222d0bf8b53b516268668cb23b3bebc1cf3ede3d6d33dbc872144"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 1112,
+              "sha256": "b68a063e0af22cae219f8d2c3c37c5faa9d4111ff32e8e81e52848422fe4bbf6"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "fa8a57633d64798c187b142fc580d47290e9916e7cb58543581cd05eef181890"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 1725,
+              "sha256": "83c32de7835306ecc2b64c5a783fcf38d6fdc4bafea6ab3810dd1788b6ea0402"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 11743,
+              "sha256": "054f30308bc0e544364975c3774dafc7bffbe8cb5661eb53296566d953699686"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.004,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.8.3\n",
+            "output_sha256": "60fef34dbc516d503fe94c8608f92d770d05f82a55c7b8f08fb397ccd25345cd",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "2268a1b4a7c3759a2139e3aca56cf99e1f42d090c89c244742baf81cbb77c488",
+          "fixed_test_paths": [
+            "tests/data/fmtonoff2.py",
+            "tests/test_black.py"
+          ],
+          "reference_patch_sha256": "6cadceb8996bc8dab725f38be00ab7fc00b4748fed1a349c2139739bb3f0b58a"
+        }
+      }
+    },
+    "run_b": {
+      "container_exit_code": 0,
+      "container_id": "602785343bb81f34f50ec835ae1c58f2d58a569719966ff9a306fa5700da623c",
+      "container_name": "dsa-v2-p2-official-f2p-b-c57bf91581",
+      "image_id": "sha256:4817ee28abe57bab54eb4e04e6a410272dc97b4c37e6e8c3e7b712d2891d8ca2",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 3052,
+      "output_sha256": "bb0bee38b88dd10a1584a47722d7f5f476cb61f40ba7a133e424f168c32ee765",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "python -m unittest -q tests.test_black.BlackTestCase.test_fmtonoff2"
+            ],
+            "duration_seconds": 0.245,
+            "exit_code": 1,
+            "outcome": "failed",
+            "output_excerpt": "======================================================================\nERROR: test_black (unittest.loader._FailedTest)\n----------------------------------------------------------------------\nImportError: Failed to import test module: test_black\nTraceback (most recent call last):\n  File \"/opt/conda/envs/py383/lib/python3.8/unittest/loader.py\", line 154, in loadTestsFromName\n    module = __import__(module_name)\nModuleNotFoundError: No module named 'tests.test_black'\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (errors=1)\n",
+            "output_sha256": "83779cbc2d5fe203ef3f517c0d5cb9d2cf2f896666dc4fb64abec60b086c1b97",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 3738,
+              "sha256": "6a25cb9316d222d0bf8b53b516268668cb23b3bebc1cf3ede3d6d33dbc872144"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 1112,
+              "sha256": "b68a063e0af22cae219f8d2c3c37c5faa9d4111ff32e8e81e52848422fe4bbf6"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "fa8a57633d64798c187b142fc580d47290e9916e7cb58543581cd05eef181890"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 1725,
+              "sha256": "83c32de7835306ecc2b64c5a783fcf38d6fdc4bafea6ab3810dd1788b6ea0402"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 11743,
+              "sha256": "054f30308bc0e544364975c3774dafc7bffbe8cb5661eb53296566d953699686"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py383/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.003,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.8.3\n",
+            "output_sha256": "60fef34dbc516d503fe94c8608f92d770d05f82a55c7b8f08fb397ccd25345cd",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "2268a1b4a7c3759a2139e3aca56cf99e1f42d090c89c244742baf81cbb77c488",
+          "fixed_test_paths": [
+            "tests/data/fmtonoff2.py",
+            "tests/test_black.py"
+          ],
+          "reference_patch_sha256": "6cadceb8996bc8dab725f38be00ab7fc00b4748fed1a349c2139739bb3f0b58a"
+        }
+      }
+    }
+  },
+  "oracle_id": "dsa_v2_p2_order_045_bugsinpy_black_15_oracle_v0_1",
+  "order": 45,
+  "source_paths": [
+    "black.py"
+  ],
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_black_15",
+  "task_image_id": "sha256:4817ee28abe57bab54eb4e04e6a410272dc97b4c37e6e8c3e7b712d2891d8ca2",
+  "task_specific_repair_attempted": false
+}

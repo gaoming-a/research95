@@ -1,0 +1,18 @@
+{
+  "created_date": "2026-07-12",
+  "draft_id": "dsa_v2_p2_order_045_bugsinpy_black_15_terminal_draft_v0_1",
+  "model_api_calls": 0,
+  "next_order": 46,
+  "next_task_id": "bugsinpy_keras_24",
+  "next_task_started": false,
+  "records": [
+    {
+      "disposition": "materialization-failed",
+      "oracle_record_sha256": "689ff7caaf388a55e8fa7c651ee0bdd704200e819159da57e2d2acaa63a70eb2",
+      "order": 45,
+      "reason": "oracle-positive-f2p-failure-or-dual-disagreement",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_black_15"
+    }
+  ]
+}
