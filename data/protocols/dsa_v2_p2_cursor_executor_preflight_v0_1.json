@@ -1,0 +1,31 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 0,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 0
+  },
+  "checks": {
+    "all_scientific_phases_present": true,
+    "continuous_authorization_active": true,
+    "docker_binds_dynamic_task": true,
+    "dual_fresh_and_t1_t4_reused": true,
+    "dynamic_v2_p1_inputs": true,
+    "failure_writes_terminal_without_rerun": true,
+    "no_model_or_prompt_surface": true,
+    "real_activity_zero": true,
+    "unique_order3_cursor_unstarted": true,
+    "versioned_task_namespaces": true
+  },
+  "component_sha256": {
+    "dockerfile": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
+    "executor": "e122ff6ae506ee174026a012f3055571a8f6e8d6e46f82338bc456fbddd2509d"
+  },
+  "created_date": "2026-07-12",
+  "cursor_config_sha256": "da23de2e49157cb2144dc7d3a97838064e7b01c542b0185835d2cd2b5fbffc61",
+  "preflight_id": "dsa_v2_p2_cursor_executor_preflight_v0_1",
+  "status": "ready_for_order3_source"
+}

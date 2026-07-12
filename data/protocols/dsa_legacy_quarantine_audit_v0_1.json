@@ -41,6 +41,8 @@
       "scripts/dsa2026_v2_p2_check_only.py",
       "scripts/dsa2026_v2_p2_container_worker.py",
       "scripts/dsa2026_v2_p2_cursor_config.py",
+      "scripts/dsa2026_v2_p2_cursor_execute.py",
+      "scripts/dsa2026_v2_p2_cursor_preflight.py",
       "scripts/dsa2026_v2_p2_executor.py",
       "scripts/dsa2026_v2_p2_freeze_task_context.py",
       "scripts/dsa2026_v2_p2_materialize_candidates.py",

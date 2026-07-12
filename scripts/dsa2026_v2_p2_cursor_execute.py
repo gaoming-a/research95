@@ -1,0 +1,487 @@
+#!/usr/bin/env python3
+"""Generic phased executor for the unique frozen V2-P2 cursor task."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import shutil
+import subprocess
+import tempfile
+from pathlib import Path
+from typing import Any
+
+import dsa2026_v2_p2_freeze_task_context as source_lib
+import dsa2026_v2_p2_materialize_candidates as materializer
+import dsa2026_v2_p2_run_candidates as candidate_runner
+import dsa2026_v2_p2_run_oracle as oracle_runner
+
+
+ROOT = Path(__file__).resolve().parents[1]
+CONFIG = ROOT / "data/protocols/dsa_v2_p2_cursor_task_config_v0_1.json"
+DOCKERFILE = ROOT / "containers/dsa2026_v2_p2/Dockerfile.cursor"
+
+
+def read_json(path: Path) -> dict[str, Any]:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def canonical_sha(value: Any) -> str:
+    return hashlib.sha256(
+        json.dumps(
+            value, ensure_ascii=False, separators=(",", ":"), sort_keys=True
+        ).encode("utf-8")
+    ).hexdigest()
+
+
+def state() -> dict[str, Any]:
+    config = read_json(CONFIG)
+    task = config["task"]
+    namespace = config["runtime_namespace"]
+    protocol_root = ROOT / "data/protocols"
+    hidden_root = ROOT / "data/hidden"
+    runtime = ROOT / f"tmp/dsa2026_v2_p2_runtime/{namespace}"
+    return {
+        "config": config,
+        "task": task,
+        "order": task["order"],
+        "task_id": task["task_id"],
+        "namespace": namespace,
+        "runtime": runtime,
+        "context": runtime / "context",
+        "patch_root": runtime / "candidates",
+        "source": protocol_root / f"dsa_v2_p2_{namespace}_source_v0_1.json",
+        "environment": protocol_root / f"dsa_v2_p2_{namespace}_environment_v0_1.json",
+        "oracle": hidden_root / f"dsa_v2_p2_{namespace}_oracle_v0_1.json",
+        "candidate_registry": hidden_root
+        / f"dsa_v2_p2_{namespace}_candidate_registry_v0_1.json",
+        "candidate_results": hidden_root
+        / f"dsa_v2_p2_{namespace}_candidate_results_v0_1.json",
+        "terminal_draft": protocol_root
+        / f"dsa_v2_p2_{namespace}_terminal_draft_v0_1.json",
+        "audit": protocol_root / f"dsa_v2_p2_{namespace}_gate_audit_v0_1.json",
+        "report": ROOT
+        / f"docs/experiments/dsa_v2_p2_{namespace}_terminal_gate_v0_1.md",
+        "image": f"dsa2026-v2-p2-task:{task['task_id']}",
+    }
+
+
+def next_task(order: int) -> str | None:
+    records = read_json(ROOT / "data/protocols/dsa_v2_p1_source_order_v0_1.json")[
+        "records"
+    ]
+    return records[order]["task_id"] if order < len(records) else None
+
+
+def terminal_draft(
+    s: dict[str, Any],
+    disposition: str,
+    reason: str,
+    selected: str | None,
+    evidence_key: str,
+    evidence_sha: str,
+) -> dict[str, Any]:
+    return {
+        "draft_id": f"dsa_v2_p2_{s['namespace']}_terminal_draft_v0_1",
+        "created_date": "2026-07-12",
+        "records": [
+            {
+                "order": s["order"],
+                "task_id": s["task_id"],
+                "disposition": disposition,
+                "reason": reason,
+                "selected_candidate_sha256": selected,
+                evidence_key: evidence_sha,
+            }
+        ],
+        "next_order": s["order"] + 1,
+        "next_task_id": next_task(s["order"]),
+        "next_task_started": False,
+        "model_api_calls": 0,
+    }
+
+
+def freeze_source(s: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]:
+    source_lib.signed_amendment()
+    task = dict(s["task"])
+    task["metadata_sha256"] = dict(task["metadata_sha256"])
+    task["metadata_sha256"].setdefault("setup_provenance_only", "")
+    source_lib.TASK_ID = s["task_id"]
+    source_lib.SOURCE_REPOSITORY = s["config"]["repository"]
+    with tempfile.TemporaryDirectory(prefix="dsa_v2_p2_cursor_source_") as raw:
+        generated, context_record = source_lib.build_context(
+            task,
+            Path(args.buggy_archive).resolve(),
+            Path(args.fixed_archive).resolve(),
+            Path(args.catalog_root).resolve(),
+            Path(raw),
+        )
+        value = {
+            "registry_id": f"dsa_v2_p2_{s['namespace']}_source_v0_1",
+            "created_date": "2026-07-12",
+            "status": "cursor_task_source_frozen",
+            "cursor_config_sha256": s["config"]["config_sha256"],
+            "previous_ledger_sha256": s["config"]["ledger_sha256"],
+            "records": [
+                {
+                    "task_id": s["task_id"],
+                    "order": s["order"],
+                    "source_record": s["task"],
+                    "project_test_scope": s["config"]["project_test_scope"],
+                    "context": context_record,
+                    "real_activity": {
+                        "real_task_checkouts": 1,
+                        "environment_builds": 0,
+                        "containers_started": 0,
+                        "project_tests_run": 0,
+                        "prompt_renders": 0,
+                        "api_keys_read": 0,
+                        "model_api_calls": 0,
+                    },
+                }
+            ],
+            "model_api_calls": 0,
+        }
+        value["records"][0]["record_sha256"] = canonical_sha(value["records"][0])
+        content = json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        if args.write:
+            if s["context"].exists():
+                shutil.rmtree(s["context"])
+            s["context"].parent.mkdir(parents=True, exist_ok=True)
+            shutil.copytree(generated, s["context"])
+            s["source"].write_text(content, encoding="utf-8", newline="\n")
+        elif (
+            not s["source"].is_file()
+            or s["source"].read_text(encoding="utf-8") != content
+            or source_lib.tree_sha256(s["context"])
+            != context_record["context_tree_sha256"]
+        ):
+            raise SystemExit("stale cursor source")
+    return value
+
+
+def build_environment(s: dict[str, Any], timeout: int) -> dict[str, Any]:
+    source = read_json(s["source"])["records"][0]
+    lock = s["config"]["python_lock"]
+    s["runtime"].mkdir(parents=True, exist_ok=True)
+    args = {
+        "TASK_CONTEXT": s["context"].relative_to(ROOT).as_posix(),
+        "TASK_ID": s["task_id"],
+        "ORDER": str(s["order"]),
+        "PROJECT": s["task"]["project"],
+        "PYTHON_ENV": lock["environment_name"],
+        "PYTHON_VERSION": s["task"]["python_version"],
+        "LOCK_PATH": lock["path"],
+        "BUGGY_COMMIT": s["task"]["buggy_commit_id"],
+        "FIXED_COMMIT": s["task"]["fixed_commit_id"],
+    }
+    command = [
+        "docker",
+        "build",
+        "--progress",
+        "plain",
+        "--no-cache",
+        "-f",
+        str(DOCKERFILE),
+        "-t",
+        s["image"],
+    ]
+    for key, value in args.items():
+        command += ["--build-arg", f"{key}={value}"]
+    command.append(str(ROOT))
+    result = subprocess.run(command, cwd=ROOT, capture_output=True, timeout=timeout)
+    output = result.stdout + result.stderr
+    (s["runtime"] / "docker_build.log").write_bytes(output)
+    image = None
+    if result.returncode == 0:
+        inspected = json.loads(
+            subprocess.check_output(
+                ["docker", "image", "inspect", s["image"]], text=True, encoding="utf-8"
+            )
+        )[0]
+        image = {
+            "image": s["image"],
+            "image_id": inspected["Id"],
+            "labels": inspected["Config"].get("Labels", {}),
+        }
+        expected = {
+            "dsa2026.v2_p2.task_id": s["task_id"],
+            "dsa2026.v2_p2.order": str(s["order"]),
+            "dsa2026.v2_p2.model_api_called": "false",
+            "dsa2026.v2_p2.official_setup_executed": "false",
+        }
+        if not all(image["labels"].get(k) == v for k, v in expected.items()):
+            raise RuntimeError("cursor image label drift")
+    value = {
+        "environment_id": f"dsa_v2_p2_{s['namespace']}_environment_v0_1",
+        "created_date": "2026-07-12",
+        "task_id": s["task_id"],
+        "order": s["order"],
+        "status": "environment-built-oracle-not-started"
+        if result.returncode == 0
+        else "materialization-failed",
+        "failure_reason": None
+        if result.returncode == 0
+        else "environment-build-failure",
+        "source_record_sha256": source["record_sha256"],
+        "build_exit_code": result.returncode,
+        "build_output_sha256": hashlib.sha256(output).hexdigest(),
+        "build_output_bytes": len(output),
+        "dockerfile_sha256": hashlib.sha256(DOCKERFILE.read_bytes()).hexdigest(),
+        "image": image,
+        "official_setup_executed": False,
+        "task_specific_repair_attempted": False,
+        "activity": {
+            "real_task_checkouts": 1,
+            "environment_builds": 1,
+            "containers_started": 0,
+            "project_tests_run": 0,
+            "prompt_renders": 0,
+            "api_keys_read": 0,
+            "model_api_calls": 0,
+        },
+    }
+    s["environment"].write_text(
+        json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    if result.returncode:
+        draft = terminal_draft(
+            s,
+            "materialization-failed",
+            "environment-build-failure",
+            None,
+            "environment_record_sha256",
+            canonical_sha(value),
+        )
+        s["terminal_draft"].write_text(
+            json.dumps(draft, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+            newline="\n",
+        )
+    return value
+
+
+def configure_science(s: dict[str, Any]) -> None:
+    oracle_runner.TASK_ID = s["task_id"]
+    oracle_runner.ENVIRONMENT = s["environment"]
+    oracle_runner.SOURCE = s["source"]
+    oracle_runner.CONTEXT = s["context"]
+    oracle_runner.RUNTIME = s["runtime"] / "oracle"
+    oracle_runner.OUT = s["oracle"]
+    oracle_runner.TERMINAL = s["terminal_draft"]
+    oracle_runner.write_terminal = lambda reason, value: s["terminal_draft"].write_text(
+        json.dumps(
+            terminal_draft(
+                s,
+                "materialization-failed",
+                reason,
+                None,
+                "oracle_record_sha256",
+                canonical_sha(value),
+            ),
+            ensure_ascii=False,
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    materializer.TASK_ID = s["task_id"]
+    materializer.CONTEXT = s["context"]
+    materializer.ORACLE = s["oracle"]
+    materializer.OUT = s["candidate_registry"]
+    materializer.PATCH_ROOT = s["patch_root"]
+    candidate_runner.TASK_ID = s["task_id"]
+    candidate_runner.SOURCE = s["source"]
+    candidate_runner.ORACLE = s["oracle"]
+    candidate_runner.CANDIDATES = s["candidate_registry"]
+    candidate_runner.OUT = s["candidate_results"]
+    candidate_runner.TERMINAL = s["terminal_draft"]
+    candidate_runner.terminal_record = lambda disposition, reason, selected, results: (
+        terminal_draft(
+            s,
+            disposition,
+            reason,
+            selected["order_sha256"] if selected else None,
+            "candidate_results_sha256",
+            canonical_sha(results),
+        )
+    )
+
+
+def materialize(s: dict[str, Any], write: bool) -> dict[str, Any]:
+    configure_science(s)
+    with tempfile.TemporaryDirectory(prefix="dsa_v2_p2_cursor_candidates_") as raw:
+        registry, generated = materializer.build_registry(
+            s["context"], read_json(s["oracle"]), Path(raw) / s["task_id"]
+        )
+        content = (
+            json.dumps(registry, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+        )
+        if write:
+            if s["patch_root"].exists():
+                shutil.rmtree(s["patch_root"])
+            s["patch_root"].parent.mkdir(parents=True, exist_ok=True)
+            shutil.copytree(generated, s["patch_root"])
+            s["candidate_registry"].write_text(content, encoding="utf-8", newline="\n")
+        elif (
+            not s["candidate_registry"].is_file()
+            or s["candidate_registry"].read_text(encoding="utf-8") != content
+        ):
+            raise SystemExit("stale cursor candidates")
+    return registry
+
+
+def finalize(s: dict[str, Any], write: bool) -> dict[str, Any]:
+    previous = read_json(ROOT / s["config"]["ledger_path"])
+    draft = read_json(s["terminal_draft"])
+    record = draft["records"][0]
+    if record["order"] != s["order"] or record["task_id"] != s["task_id"]:
+        raise ValueError("terminal draft cursor drift")
+    qualified = previous["qualified_pairs"] + int(
+        record["disposition"] == "pair-qualified"
+    )
+    ledger = {
+        "ledger_id": f"dsa_v2_p2_terminal_ledger_v0_{s['order']}",
+        "created_date": "2026-07-12",
+        "status": f"orders_1_{s['order']}_terminal",
+        "supersedes": s["config"]["ledger_path"],
+        "superseded_ledger_sha256": s["config"]["ledger_sha256"],
+        "records": [*previous["records"], record],
+        "attempted_tasks": s["order"],
+        "qualified_pairs": qualified,
+        "next_order": draft["next_order"],
+        "next_task_id": draft["next_task_id"],
+        "next_task_started": False,
+        "model_api_calls": 0,
+    }
+    environment = read_json(s["environment"])
+    checks = {
+        "previous_ledger_hash_unchanged": canonical_sha(previous)
+        == s["config"]["ledger_sha256"],
+        "records_append_exactly_once": ledger["records"][:-1] == previous["records"],
+        "counts_correct": ledger["attempted_tasks"] == len(ledger["records"])
+        and qualified
+        == sum(item["disposition"] == "pair-qualified" for item in ledger["records"]),
+        "no_task_specific_repair": not environment["task_specific_repair_attempted"],
+        "next_not_started": not ledger["next_task_started"],
+        "model_api_zero": ledger["model_api_calls"] == 0,
+    }
+    audit = {
+        "audit_id": f"dsa_v2_p2_{s['namespace']}_gate_audit_v0_1",
+        "created_date": "2026-07-12",
+        "status": "passed_terminal_continue_cursor"
+        if all(checks.values())
+        else "failed",
+        "task_id": s["task_id"],
+        "order": s["order"],
+        "checks": checks,
+        "terminal_record": record,
+        "activity": environment["activity"],
+        "qualified_pairs_after": qualified,
+        "next_task_id": ledger["next_task_id"],
+        "model_api_calls": 0,
+    }
+    report = "\n".join(
+        [
+            f"# DSA v0.2 V2-P2 {s['task_id']} Terminal Gate",
+            "",
+            f"- order: {s['order']}",
+            f"- disposition: `{record['disposition']}`",
+            f"- reason: `{record['reason']}`",
+            f"- qualified pairs after: {qualified}",
+            f"- next task: `{ledger['next_task_id']}`; started=false",
+            "- model API calls: 0",
+            "",
+        ]
+    )
+    outputs = {
+        ROOT
+        / f"data/protocols/dsa_v2_p2_terminal_ledger_v0_{s['order']}.json": json.dumps(
+            ledger, ensure_ascii=False, indent=2, sort_keys=True
+        )
+        + "\n",
+        s["audit"]: json.dumps(audit, ensure_ascii=False, indent=2, sort_keys=True)
+        + "\n",
+        s["report"]: report,
+    }
+    if write:
+        for path, content in outputs.items():
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(content, encoding="utf-8", newline="\n")
+    else:
+        stale = [
+            str(path)
+            for path, content in outputs.items()
+            if not path.is_file() or path.read_text(encoding="utf-8") != content
+        ]
+        if stale:
+            raise SystemExit(f"stale cursor finalize outputs: {stale}")
+    if audit["status"] != "passed_terminal_continue_cursor":
+        raise SystemExit("cursor finalize audit failed")
+    return audit
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "phase",
+        choices=("source", "build", "oracle", "materialize", "candidates", "finalize"),
+    )
+    parser.add_argument("--write", action="store_true")
+    parser.add_argument("--check", action="store_true")
+    parser.add_argument("--catalog-root")
+    parser.add_argument("--buggy-archive")
+    parser.add_argument("--fixed-archive")
+    parser.add_argument("--timeout", type=int, default=600)
+    parser.add_argument("--collection-timeout", type=int, default=3600)
+    args = parser.parse_args()
+    s = state()
+    if args.phase == "source":
+        if args.write == args.check or not all(
+            (args.catalog_root, args.buggy_archive, args.fixed_archive)
+        ):
+            parser.error("source requires archives/catalog and one mode")
+        value = freeze_source(s, args)
+    elif args.phase == "build":
+        if not args.write:
+            parser.error("build requires --write")
+        value = build_environment(s, max(args.timeout, 7200))
+    elif args.phase == "oracle":
+        if not args.write:
+            parser.error("oracle requires --write")
+        configure_science(s)
+        value = oracle_runner.execute(args.timeout, args.collection_timeout)
+    elif args.phase == "materialize":
+        if args.write == args.check:
+            parser.error("materialize requires one mode")
+        value = materialize(s, args.write)
+    elif args.phase == "candidates":
+        if not args.write:
+            parser.error("candidates requires --write")
+        configure_science(s)
+        value = candidate_runner.execute(args.timeout)
+    else:
+        if args.write == args.check:
+            parser.error("finalize requires one mode")
+        value = finalize(s, args.write)
+    print(
+        json.dumps(
+            {
+                "phase": args.phase,
+                "status": value["status"],
+                "order": s["order"],
+                "task_id": s["task_id"],
+                "model_api_calls": 0,
+            },
+            sort_keys=True,
+        )
+    )
+
+
+if __name__ == "__main__":
+    main()

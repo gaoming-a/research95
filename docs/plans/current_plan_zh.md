@@ -21,6 +21,11 @@ source order/source frame、Python locks、test-scope amendment 和 continuous a
 started=false、API=0；新增 `Dockerfile.cursor` 以 build args 绑定任意冻结 task。真实通用
 phase executor 仍在 outcome 前实现中，Black_4 尚未下载或启动。
 
+通用 phased executor 现已覆盖 source/build/oracle/materialize/candidates/finalize 六阶段；
+finalize 只追加 latest immutable ledger、重算 attempted/qualified 并生成 task audit/report。
+static preflight 与 T1--T4 synthetic patch/tree replay 全部 PASS，状态=
+`ready_for_order3_source`，order3 真实 activity仍为0。提交该实现后才允许下载 Black_4。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
