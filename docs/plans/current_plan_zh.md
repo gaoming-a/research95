@@ -265,6 +265,11 @@ Ansible_18 source freeze/check 分别经完整大树重建并 PASS。唯一 py36
 alpha/beta/rc/final、不重跑。ledger v0.39 attempted=39、qualified=0、API=0；cursor 为
 order40 `bugsinpy_tornado_12`、started=false。
 
+Tornado_12 source freeze/check 与 build PASS。两次 F2P 均通过，但完整输出 elapsed time
+分别为 `0.011s`/`0.015s`，冻结 output hashes 不同；按 dual disagreement terminal，
+不归一化、不重跑。ledger v0.40 attempted=40、qualified=0、API=0；cursor 为 order41
+`bugsinpy_matplotlib_17`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

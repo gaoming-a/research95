@@ -1,0 +1,131 @@
+{
+  "created_date": "2026-07-12",
+  "cursor_config_sha256": "1b992b9db1e9909f49f857d97f36809887d4be2d5991d117b184ca0c67c364f0",
+  "model_api_calls": 0,
+  "previous_ledger_sha256": "ba8adfc9f5352a11e73d146f6531bb9ecfcdd68e3f8e904ee924d630b5dab0bb",
+  "records": [
+    {
+      "context": {
+        "buggy_archive": {
+          "archive_bytes": 472970,
+          "archive_root": "tornado-4ee9ba94de11aaa4f932560fa2b3d8ceb8c61d2a",
+          "archive_sha256": "f4f2c4f87d0e490b5bb754c5627768f97db2fe3479e03032d07af14c32c639f6",
+          "extracted_file_count": 288,
+          "extracted_tree_sha256": "e644687173059d547c31f7a8b999d50700164fc6c87afcc9c4e195c7327447aa",
+          "materialized_symlink_count": 3
+        },
+        "buggy_commit_id": "4ee9ba94de11aaa4f932560fa2b3d8ceb8c61d2a",
+        "buggy_source_tree_sha256": "e644687173059d547c31f7a8b999d50700164fc6c87afcc9c4e195c7327447aa",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "context_tree_sha256": "04fc868ac1499503c0217c663c7eb6f75b7bd7a8f73b5247a3ef4ec5e45f2864",
+        "fixed_archive": {
+          "archive_bytes": 473329,
+          "archive_root": "tornado-301f52b532c071a0d2fec1eb7c23f2714bb38567",
+          "archive_sha256": "ee831fbbcd98b970737faaebd895dad740ae6962f83521ef50ab6bd5e29bd2fa",
+          "extracted_file_count": 288,
+          "extracted_tree_sha256": "9de783252f53ed447fb2eea00e099a47ce9dc065b72d032443d778696ffc7a59",
+          "materialized_symlink_count": 3
+        },
+        "fixed_commit_id": "301f52b532c071a0d2fec1eb7c23f2714bb38567",
+        "fixed_test_sha256": {
+          "tornado/test/auth_test.py": "0c5f193660035f5870a6db692e285aa3a25d14cd9530d6bd2c539560f813140c"
+        },
+        "metadata_sha256": {
+          "bug.info": "e966543e43cd03b0bdc87bd22745c7d749d90a3944fa0a7de0762b7f2e57eed4",
+          "bug_patch.txt": "1f7c9d4f7fd70eeb6551cf6517f65b30a570e0a6e5e203f83061a669b7c0d437",
+          "requirements.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "run_test.sh": "24c2328e9afcd8481cfad8ba729abe838e329e837834b9045ac6ee73c0772d7a",
+          "setup.sh": "d3a4076796d738e69fdc78f14825c1f2e48cd317367ac3812b2e9df6ff8b580b"
+        },
+        "model_api_calls": 0,
+        "order": 40,
+        "project": "tornado",
+        "record_sha256": "73df9201c3dd0c7b95892c316389eea431cb20346654db7c7227d08c6d716ad2",
+        "reference_validation": {
+          "normalized_patch_sha256": "7cd3eb4b944419793b59a61f05c80a70fca7ba39d6ef27ab827fc6a7b36abade",
+          "patch_apply_exit_code": 0,
+          "patch_check_exit_code": 0,
+          "patch_line_endings_normalized": true,
+          "reference_tree_sha256": "ce7c62075a18fcc5a4645446314be315c439ec7685af0c09744a68deb997799c"
+        },
+        "source_acquisition": "official GitHub codeload commit tarballs",
+        "source_materialization_manifests": [],
+        "source_repository": "https://github.com/tornadoweb/tornado",
+        "status": "v2_p2_source_context_frozen_no_candidate",
+        "task_id": "bugsinpy_tornado_12"
+      },
+      "order": 40,
+      "project_test_scope": {
+        "collection_command": [
+          "python",
+          "-m",
+          "unittest-discover",
+          "--start-dir",
+          "tornado/test",
+          "--pattern",
+          "*_test.py",
+          "--top-level-dir",
+          "."
+        ],
+        "derived_from_declared_file_count": 9,
+        "framework": "unittest",
+        "project": "tornado",
+        "project_test_root": "tornado/test",
+        "unittest_pattern": "*_test.py",
+        "unittest_top_level_dir": "."
+      },
+      "real_activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 1
+      },
+      "record_sha256": "708a8a603f5561c80bc1021cf8ab9ddcfb3d0213470cc359c75dfb5f9b340b30",
+      "source_record": {
+        "bug_id": 12,
+        "buggy_commit_id": "4ee9ba94de11aaa4f932560fa2b3d8ceb8c61d2a",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "catalog_f2p_commands": [
+          "python -m unittest -q tornado.test.auth_test.AuthTest.test_facebook_login"
+        ],
+        "declared_f2p_commands": [
+          "python -m unittest -q tornado.test.auth_test.AuthTest.test_facebook_login"
+        ],
+        "declared_test_file": "tornado/test/auth_test.py",
+        "environment_risk_tags": [],
+        "f2p_command_match": true,
+        "fixed_commit_id": "301f52b532c071a0d2fec1eb7c23f2714bb38567",
+        "metadata_sha256": {
+          "bug_info": "e966543e43cd03b0bdc87bd22745c7d749d90a3944fa0a7de0762b7f2e57eed4",
+          "reference_patch": "1f7c9d4f7fd70eeb6551cf6517f65b30a570e0a6e5e203f83061a669b7c0d437",
+          "requirements": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "run_test": "24c2328e9afcd8481cfad8ba729abe838e329e837834b9045ac6ee73c0772d7a",
+          "setup_provenance_only": "d3a4076796d738e69fdc78f14825c1f2e48cd317367ac3812b2e9df6ff8b580b"
+        },
+        "model_outcome_observed": false,
+        "official_setup_executable_authority": false,
+        "order": 40,
+        "project": "tornado",
+        "project_order_sha256": "b419cbd7e83f909e3075d2dca42f95b255cf0dd192e84ff605bff9a90ba904c8",
+        "project_position": 6,
+        "python_version": "3.7.0",
+        "requirements_metadata": {
+          "nonempty": false,
+          "present": true
+        },
+        "round": 5,
+        "task_id": "bugsinpy_tornado_12",
+        "task_order_sha256": "3f50e35381c6df2dec200663e3d2d756ba2821ca316f397a8e78c5dc330b5c0e",
+        "test_framework": "unittest"
+      },
+      "task_id": "bugsinpy_tornado_12"
+    }
+  ],
+  "registry_id": "dsa_v2_p2_order_040_bugsinpy_tornado_12_source_v0_1",
+  "status": "cursor_task_source_frozen"
+}

@@ -1,78 +1,74 @@
 {
-  "attempted_tasks": 39,
+  "attempted_tasks": 40,
   "config_id": "dsa_v2_p2_cursor_task_config_v0_1",
-  "config_sha256": "1b992b9db1e9909f49f857d97f36809887d4be2d5991d117b184ca0c67c364f0",
+  "config_sha256": "71e6594e271e31e58068fa7f220e1bf10cffeaba5a19a69e6838817fc0d3408e",
   "created_date": "2026-07-12",
-  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_39.json",
-  "ledger_sha256": "ba8adfc9f5352a11e73d146f6531bb9ecfcdd68e3f8e904ee924d630b5dab0bb",
+  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_40.json",
+  "ledger_sha256": "7b5e7b53614eb15f4025cf158a36c12c6fe142a3e2cac66f4b4cb640a92a6b41",
   "model_api_calls": 0,
   "next_task_started": false,
   "project_test_scope": {
     "collection_command": [
       "python",
       "-m",
-      "unittest-discover",
-      "--start-dir",
-      "tornado/test",
-      "--pattern",
-      "*_test.py",
-      "--top-level-dir",
-      "."
+      "pytest",
+      "--collect-only",
+      "-q",
+      "lib/matplotlib/tests"
     ],
-    "derived_from_declared_file_count": 9,
-    "framework": "unittest",
-    "project": "tornado",
-    "project_test_root": "tornado/test",
-    "unittest_pattern": "*_test.py",
-    "unittest_top_level_dir": "."
+    "derived_from_declared_file_count": 8,
+    "framework": "pytest",
+    "project": "matplotlib",
+    "project_test_root": "lib/matplotlib/tests",
+    "unittest_pattern": null,
+    "unittest_top_level_dir": null
   },
   "python_lock": {
-    "actual_sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82",
-    "environment_name": "py370",
-    "expected_sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82",
-    "path": "data/environment_locks/dsa2026_p4_bootstrap/py370-linux-64.txt",
-    "python_version": "3.7.0"
+    "actual_sha256": "df1e425eedcb0d3806b5bf10c55e369648621d93f46f5754cdc85f8435cf21f8",
+    "environment_name": "py381",
+    "expected_sha256": "df1e425eedcb0d3806b5bf10c55e369648621d93f46f5754cdc85f8435cf21f8",
+    "path": "data/environment_locks/dsa2026_p4_bootstrap/py381-linux-64.txt",
+    "python_version": "3.8.1"
   },
   "qualified_pairs": 0,
-  "repository": "https://github.com/tornadoweb/tornado",
-  "runtime_namespace": "order_040_bugsinpy_tornado_12",
+  "repository": "https://github.com/matplotlib/matplotlib",
+  "runtime_namespace": "order_041_bugsinpy_matplotlib_17",
   "status": "unique_next_task_resolved",
   "task": {
-    "bug_id": 12,
-    "buggy_commit_id": "4ee9ba94de11aaa4f932560fa2b3d8ceb8c61d2a",
+    "bug_id": 17,
+    "buggy_commit_id": "58c66982d98851c56b045137ced803fd62c6c5e8",
     "candidate_materialized": false,
     "candidate_outcome_observed": false,
     "catalog_f2p_commands": [
-      "python -m unittest -q tornado.test.auth_test.AuthTest.test_facebook_login"
+      "pytest lib/matplotlib/tests/test_colorbar.py::test_colorbar_int"
     ],
     "declared_f2p_commands": [
-      "python -m unittest -q tornado.test.auth_test.AuthTest.test_facebook_login"
+      "pytest lib/matplotlib/tests/test_colorbar.py::test_colorbar_int"
     ],
-    "declared_test_file": "tornado/test/auth_test.py",
+    "declared_test_file": "lib/matplotlib/tests/test_colorbar.py",
     "environment_risk_tags": [],
     "f2p_command_match": true,
-    "fixed_commit_id": "301f52b532c071a0d2fec1eb7c23f2714bb38567",
+    "fixed_commit_id": "05a5db0fec2eced55076736f0b9520641b279ad6",
     "metadata_sha256": {
-      "bug_info": "e966543e43cd03b0bdc87bd22745c7d749d90a3944fa0a7de0762b7f2e57eed4",
-      "reference_patch": "1f7c9d4f7fd70eeb6551cf6517f65b30a570e0a6e5e203f83061a669b7c0d437",
+      "bug_info": "2339e974081717e85a1bd0e715d436df4b3198dadb086af8bed26efe47383039",
+      "reference_patch": "e91df1bd5998f938a6d91c5a06deccf3777b41c8fa3c27da08a0ca96835acefc",
       "requirements": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "run_test": "24c2328e9afcd8481cfad8ba729abe838e329e837834b9045ac6ee73c0772d7a",
-      "setup_provenance_only": "d3a4076796d738e69fdc78f14825c1f2e48cd317367ac3812b2e9df6ff8b580b"
+      "run_test": "7d78227a4ef61e85d20f8d85fd1ccbef5ae10f1bed8e40a7d32e9a4b3fc7a4bf"
     },
     "model_outcome_observed": false,
     "official_setup_executable_authority": false,
-    "order": 40,
-    "project": "tornado",
-    "project_order_sha256": "b419cbd7e83f909e3075d2dca42f95b255cf0dd192e84ff605bff9a90ba904c8",
-    "project_position": 6,
-    "python_version": "3.7.0",
+    "order": 41,
+    "project": "matplotlib",
+    "project_order_sha256": "b7243a408f3c16750015755b815be3102ceea4d257734b52ae78526e83672f85",
+    "project_position": 7,
+    "python_version": "3.8.1",
     "requirements_metadata": {
       "nonempty": false,
       "present": true
     },
     "round": 5,
-    "task_id": "bugsinpy_tornado_12",
-    "task_order_sha256": "3f50e35381c6df2dec200663e3d2d756ba2821ca316f397a8e78c5dc330b5c0e",
-    "test_framework": "unittest"
+    "task_id": "bugsinpy_matplotlib_17",
+    "task_order_sha256": "2cbac12321c47d539370f19ca0d4d0e928b510213d35378febee5e03cbb96d91",
+    "test_framework": "pytest"
   }
 }
