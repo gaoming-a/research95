@@ -116,6 +116,10 @@
   command failed identically in two fresh containers because `tests.test_black`
   was not importable; no command repair, rerun, candidate, prompt, or API followed.
   Ledger v0.3 advances the unstarted cursor to `bugsinpy_keras_40`.
+- [dsa_v2_p2_order_004_bugsinpy_keras_40_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_004_bugsinpy_keras_40_terminal_gate_v0_1.md):
+  order4 environment terminal. The frozen requirements request unavailable
+  `numpy==1.19.0rc2`; no dependency replacement or rerun was performed. Ledger
+  v0.4 advances the unstarted cursor to `bugsinpy_ansible_8`, with API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

@@ -30,6 +30,14 @@
   historical literal order. Otherwise a correct terminal ledger advancement
   makes the next task appear invalid.
 
+## 2026-07-12 Treat unavailable frozen prereleases as environment terminals
+
+- If an exact frozen requirement names a prerelease that the configured index
+  cannot supply, replacing it with the final release would be task-specific
+  dependency repair and would change the materialized environment.
+- Preserve the single build log/hash, record an environment-build terminal, and
+  advance the source-order cursor without an oracle or candidate run.
+
 ## 2026-07-12 Archive symlink fidelity is a frozen-content decision
 
 - Normalize symlink targets before classifying them: Black's

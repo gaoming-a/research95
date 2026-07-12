@@ -54,6 +54,13 @@ binding 通过，未执行 official setup 或 task-specific repair。冻结 offi
 1/1/2/2，attempted=3、qualified=0、API=0。cursor 已刷新为 order4
 `bugsinpy_keras_40`、started=false；下一步从其 source freeze 开始。
 
+Keras_40 terminal checkpoint：两个 official archives 已冻结并通过 source `--check`，
+无 dangling omission；唯一 no-cache py373 environment build 因冻结 requirements 中
+`numpy==1.19.0rc2` 在当前 index 无匹配 distribution 而失败。按 no dependency repair/
+no rerun 直接 terminal，未生成 image、未启动 container/test/oracle/candidate。ledger v0.4
+为 attempted=4、qualified=0、API=0；cursor 为 order5 `bugsinpy_ansible_8`、
+started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
