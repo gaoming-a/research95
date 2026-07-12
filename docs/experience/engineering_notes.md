@@ -1,5 +1,15 @@
 # Engineering Notes
 
+## 2026-07-12 Archive symlink fidelity is a frozen-content decision
+
+- Normalize symlink targets before classifying them: Black's
+  `docs/contributing.md -> ../CONTRIBUTING.md` resolves inside the archive,
+  while thirteen generated-document links are genuinely dangling.
+- On a host without symlink privilege, do not silently skip or replace dangling
+  links. Freeze their path/target/kind and archive hashes, prove zero overlap
+  with source/tests/build metadata, and require an author-signed extraction rule
+  before materializing the tree.
+
 ## 2026-07-12 Advance cursor without mutating prior terminal evidence
 
 - Each V2-P2 task needs a new result namespace and terminal draft. Treat the

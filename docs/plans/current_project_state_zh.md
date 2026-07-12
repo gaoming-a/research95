@@ -8,6 +8,8 @@
 - 作者已授权连续自动执行 V2-P2、普通 task failure 自动继续和本地 checkpoint commits；
 - 30 pairs 后只在 V2-P3 hash-bound 作者签核暂停；签核前 model API=0；
 - hard stop、冻结漂移、公开发布和投稿仍必须暂停；当前未启动 order3。
+- order3 official archives 暴露13个相同 dangling docs symlinks；unsigned omission/manifest
+  amendment 已生成，SHA=`6d072620…74847`。作者签核前不提取、不构建、不测试。
 
 ## 2026-07-12 V2-P2 order-2 terminal / STOP BEFORE ORDER3（已被上方覆盖）
 

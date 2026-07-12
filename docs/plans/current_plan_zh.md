@@ -26,6 +26,13 @@ finalize 只追加 latest immutable ledger、重算 attempted/qualified 并生�
 static preflight 与 T1--T4 synthetic patch/tree replay 全部 PASS，状态=
 `ready_for_order3_source`，order3 真实 activity仍为0。提交该实现后才允许下载 Black_4。
 
+Order3 source extraction drift：两个 official Black_4 archives 均含相同13个真正 dangling
+docs symlinks，Windows 当前权限不能创建；`docs/contributing.md -> ../CONTRIBUTING.md`
+经规范化可解析，不计入。unsigned amendment proposal 已验证13项与 changed source
+`black.py`、declared tests、`tests/` root、package/build metadata 零交集，manifest
+SHA-256=`6d07262076da1d29f9fdc4edb7e837ca35d38094f8ab1a90082a2a2be2674847`。
+作者签核前 source extraction/environment/test/API=0，连续执行在 frozen-content drift 门暂停。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

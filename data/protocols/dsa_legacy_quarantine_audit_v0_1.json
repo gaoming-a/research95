@@ -34,6 +34,7 @@
       "scripts/dsa2026_p4_run_reference_f2p.py",
       "scripts/dsa2026_p4_run_reference_pool.py",
       "scripts/dsa2026_propose_v2_p1_test_scope_amendment.py",
+      "scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py",
       "scripts/dsa2026_simulate_p2_precision.py",
       "scripts/dsa2026_v2_p2_audit_order1.py",
       "scripts/dsa2026_v2_p2_audit_order2.py",

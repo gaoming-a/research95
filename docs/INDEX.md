@@ -98,6 +98,12 @@
   `../scripts/dsa2026_v2_p2_cursor_execute.py`. It covers source, build, oracle,
   T1--T4 materialization, candidates, and versioned-ledger finalize; order3 real
   activity remains zero until this pre-outcome implementation is committed.
+- [dsa_v2_p2_dangling_docs_symlink_amendment_signoff_v0_1.md](experiments/dsa_v2_p2_dangling_docs_symlink_amendment_signoff_v0_1.md):
+  unsigned frozen-content-drift proposal for 13 identical dangling docs symlinks
+  in both Black_4 archives. Machine proposal and replay are
+  `../data/protocols/dsa_v2_p2_dangling_docs_symlink_amendment_proposal_v0_1.json`
+  and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
+  extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
   venue/submission master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is
