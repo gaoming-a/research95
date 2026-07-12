@@ -277,6 +277,11 @@ full-qualification rule terminal；不修 patch/worker、不重跑。activity=ch
 containers/tests 1/1/7/111，API=0。ledger v0.41 attempted=41、qualified=0；cursor 为
 order42 `bugsinpy_spacy_9`、started=false。
 
+spaCy_9 canonical-root source freeze/check PASS。唯一 py377 build 的 PEP517 hook 在
+Cythonizing sources 时同时缺少 Python `Cython` module 与 `cython` executable；不补充
+build dependency、不重跑。ledger v0.42 attempted=42、qualified=0、API=0；cursor 为
+order43 `bugsinpy_pandas_37`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
