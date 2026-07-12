@@ -2,6 +2,19 @@
 
 最后更新：2026-07-12
 
+## 0.59 2026-07-12 V2-P2 continuous execution authorization
+
+作者高明授权从 ledger v0.2 的唯一 cursor order=3 `bugsinpy_black_4` 起连续自动执行
+全部 V2-P2 orders；普通 task terminal 自动记录、提交本地 checkpoint 并继续，不逐项
+确认。达到30个 qualified pairs时生成 V2-P3 最终冻结包并暂停作者 hash-bound 签核；
+source exhaustion不足30或其他预注册 hard stop则生成 stop audit。V2-P3签核前 API=0。
+
+原始声明与机器记录为 `data/protocols/dsa_v2_p2_continuous_authorization_v0_1.txt/json`；
+授权不允许自动公开发布、push或投稿，也不允许在 V2-P3签核前进入V2-P4/P5/API。
+
+下一执行步骤：把 order-specific runner 收敛为通用 cursor executor，并在 order3 outcome
+前冻结/审计；随后从 Black_4 自动推进，普通失败不再暂停。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

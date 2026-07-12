@@ -1,0 +1,7 @@
+我授权 Codex 在现有 V2-P1 冻结规则下连续自动执行全部 V2-P2 orders，
+普通 task failure 自动记录并继续，不再逐项向我确认；允许自动提交本地 checkpoint。
+
+达到30个 qualified pairs 后，自动生成 V2-P3 最终冻结包并只暂停一次供我核验。
+我完成该冻结包的 hash-bound 作者签核后，Codex 可自动执行 V2-P4、V2-P5 模型
+API实验、V2-P6分析和论文更新；仅在预注册 hard stop、冻结内容漂移、公开发布或
+投稿前暂停。

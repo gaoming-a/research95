@@ -22,6 +22,7 @@
       "scripts/dsa2026_build_p2_transform_registry.py",
       "scripts/dsa2026_freeze_v2_p1_construction.py",
       "scripts/dsa2026_freeze_v2_p1_test_scope_amendment.py",
+      "scripts/dsa2026_freeze_v2_p2_continuous_authorization.py",
       "scripts/dsa2026_p4_container_worker.py",
       "scripts/dsa2026_p4_materialize_candidate.py",
       "scripts/dsa2026_p4_oracle_freeze.py",

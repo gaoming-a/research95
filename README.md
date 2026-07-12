@@ -76,6 +76,13 @@ the order-1 record and appends order 2; no final image, container, project test,
 oracle/candidate outcome, prompt, credential, or API call exists. The cursor is
 order 3 `bugsinpy_black_4`, explicitly not started.
 
+Author 高明 has now authorized continuous automatic V2-P2 execution from that
+order-3 cursor. Ordinary task terminals will be recorded and locally committed
+without per-task confirmation. The process stops at 30 qualified pairs to
+generate a V2-P3 freeze package for one hash-bound author sign-off, or earlier
+at a preregistered hard stop. Model API access remains disabled until that V2-P3
+sign-off; public release, push, and submission still require confirmation.
+
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,
 and 250 dpi visual checks. The DSA-specific AI policy, institutional Compendex

@@ -1,0 +1,29 @@
+{
+  "author": "高明",
+  "authorization": {
+    "continuous_v2_p2": true,
+    "generate_v2_p3_at_30_pairs": true,
+    "local_checkpoint_commits": true,
+    "model_api_before_v2_p3_signoff": false,
+    "ordinary_task_failure_continue": true,
+    "pause_for_v2_p3_author_hash_signoff": true,
+    "public_release_without_confirmation": false,
+    "submission_without_confirmation": false,
+    "v2_p4_to_v2_p6_after_v2_p3_signoff": true
+  },
+  "authorization_id": "dsa_v2_p2_continuous_authorization_v0_1",
+  "boundary": "This record authorizes local V2-P2 continuation only until the V2-P3 author-signoff gate; it does not itself authorize a model API call.",
+  "created_date": "2026-07-12",
+  "cursor_ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_2.json",
+  "cursor_ledger_sha256": "53b5c6096e2a6333b78be5809213bfaa5796270385577bca317382e355655abf",
+  "declaration_path": "data/protocols/dsa_v2_p2_continuous_authorization_v0_1.txt",
+  "declaration_sha256": "d3a75e3708bd16ae9b218e4b5e478e42cbb973de3602fc407f4f9e231efdda5f",
+  "hard_stops": [
+    "source-exhaustion-before-30-pairs",
+    "frozen-content-drift",
+    "other-preregistered-hard-stop"
+  ],
+  "start_order": 3,
+  "start_task_id": "bugsinpy_black_4",
+  "status": "author_signed_active"
+}

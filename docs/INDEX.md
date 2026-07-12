@@ -82,6 +82,12 @@
   `../data/protocols/dsa_v2_p2_order2_gate_audit_v0_1.json`, and cumulative
   `../data/protocols/dsa_v2_p2_terminal_ledger_v0_2.json`; replay is
   `../scripts/dsa2026_v2_p2_audit_order2.py`. Order3 is selected but not started.
+- `../data/protocols/dsa_v2_p2_continuous_authorization_v0_1.txt` and `.json`:
+  author-signed continuous V2-P2 authorization anchored to ledger v0.2/order3.
+  Deterministic freeze is
+  `../scripts/dsa2026_freeze_v2_p2_continuous_authorization.py`. It permits
+  ordinary task continuation and local commits, but model API remains disabled
+  until the V2-P3 freeze package receives hash-bound author sign-off.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
   venue/submission master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is
