@@ -322,6 +322,11 @@
   freeze/check. Editable PEP517 failed while Cythonizing
   `pandas/_libs/algos.pyx`; no build-dependency repair or rerun occurred.
   Ledger v0.51 advances to `bugsinpy_fastapi_9`, API=0.
+- [dsa_v2_p2_order_052_bugsinpy_fastapi_9_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_052_bugsinpy_fastapi_9_terminal_gate_v0_1.md):
+  order52 environment terminal after source freeze/check. Frozen old pip could
+  not editable-install the pyproject-only checkout; no pip upgrade, setup.py
+  synthesis, or rerun occurred. Ledger v0.52 advances to
+  `bugsinpy_black_12`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

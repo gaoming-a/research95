@@ -1,0 +1,35 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "audit_id": "dsa_v2_p2_order_052_bugsinpy_fastapi_9_gate_audit_v0_1",
+  "checks": {
+    "counts_correct": true,
+    "model_api_zero": true,
+    "next_not_started": true,
+    "no_task_specific_repair": true,
+    "previous_ledger_hash_unchanged": true,
+    "records_append_exactly_once": true
+  },
+  "created_date": "2026-07-12",
+  "model_api_calls": 0,
+  "next_task_id": "bugsinpy_black_12",
+  "order": 52,
+  "qualified_pairs_after": 0,
+  "status": "passed_terminal_continue_cursor",
+  "task_id": "bugsinpy_fastapi_9",
+  "terminal_record": {
+    "disposition": "materialization-failed",
+    "environment_record_sha256": "47dccea3060e86248adea1770d0fbf07c5b8491718037957e120a3e133f51bfd",
+    "order": 52,
+    "reason": "environment-build-failure",
+    "selected_candidate_sha256": null,
+    "task_id": "bugsinpy_fastapi_9"
+  }
+}
