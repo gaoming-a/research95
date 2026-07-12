@@ -1,0 +1,18 @@
+{
+  "created_date": "2026-07-12",
+  "draft_id": "dsa_v2_p2_order_020_bugsinpy_fastapi_16_terminal_draft_v0_1",
+  "model_api_calls": 0,
+  "next_order": 21,
+  "next_task_id": "bugsinpy_black_14",
+  "next_task_started": false,
+  "records": [
+    {
+      "disposition": "materialization-failed",
+      "environment_record_sha256": "7c02d99760da197fe17c299ff1d54f49d63ef1b97ba84d5b752de7c2663de1ef",
+      "order": 20,
+      "reason": "environment-build-failure",
+      "selected_candidate_sha256": null,
+      "task_id": "bugsinpy_fastapi_16"
+    }
+  ]
+}

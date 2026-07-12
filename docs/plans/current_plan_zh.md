@@ -154,6 +154,11 @@ version=`0+unknown` 不满足 fastparquet `pandas>=0.19` 而 terminal；不改�
 不跳 Gate、不重跑。ledger v0.19 attempted=19、qualified=0、API=0；cursor 为 order20
 `bugsinpy_fastapi_16`、started=false。
 
+FastAPI_16 source freeze/check PASS。唯一 build 中旧 pip 无法 editable-install
+pyproject-only checkout，且冻结 Pydantic0.18.2/Starlette0.10.1 与 FastAPI0.55.1 要求
+冲突；不升级/替换、不重跑。ledger v0.20 attempted=20、qualified=0、API=0；cursor 为
+order21 `bugsinpy_black_14`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
