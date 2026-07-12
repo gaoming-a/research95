@@ -145,6 +145,10 @@ spaCy_3 canonical-root source freeze/check PASS。py377 build 的 PEP517 depende
 不重跑。ledger v0.17 attempted=17、qualified=0、API=0；cursor 为 order18
 `bugsinpy_sanic_3`、started=false。
 
+Sanic_3 source freeze/check PASS；唯一 py383 build 因冻结 `pywin32==227` 在 Linux 无
+匹配 distribution 而 terminal，不删除依赖、不重跑。ledger v0.18 attempted=18、
+qualified=0、API=0；cursor 为 order19 `bugsinpy_pandas_159`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

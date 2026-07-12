@@ -172,6 +172,10 @@
   order17 environment terminal. PEP517 required `cython>=3.1`, unavailable for
   frozen Python3.7.7; neither Python nor dependency constraints were changed.
   Ledger v0.17 advances to `bugsinpy_sanic_3`, API=0.
+- [dsa_v2_p2_order_018_bugsinpy_sanic_3_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_018_bugsinpy_sanic_3_terminal_gate_v0_1.md):
+  order18 environment terminal on independently frozen `pywin32==227` under
+  Linux. The platform dependency was not removed; ledger v0.18 advances to
+  `bugsinpy_pandas_159`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

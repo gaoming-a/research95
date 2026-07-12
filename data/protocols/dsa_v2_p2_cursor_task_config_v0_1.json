@@ -1,10 +1,10 @@
 {
-  "attempted_tasks": 17,
+  "attempted_tasks": 18,
   "config_id": "dsa_v2_p2_cursor_task_config_v0_1",
-  "config_sha256": "8ba9990d2996038b5b1e5a27c45e05e0712d5d43a2ff57ec31f3ba020c56196b",
+  "config_sha256": "bc7434bea98a362b06e7bc44b962f9cd4dfaf77178f832d032ed8a51f99570a1",
   "created_date": "2026-07-12",
-  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_17.json",
-  "ledger_sha256": "b57079689e8d99d96b641278a45e4aa825abc5da10a1ca68a811b6690c061c0a",
+  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_18.json",
+  "ledger_sha256": "d5acf3ec8029a2eaa06dd634d934362561776defeb8b2076be6bc5e91750762e",
   "model_api_calls": 0,
   "next_task_started": false,
   "project_test_scope": {
@@ -14,12 +14,12 @@
       "pytest",
       "--collect-only",
       "-q",
-      "tests"
+      "pandas/tests"
     ],
-    "derived_from_declared_file_count": 2,
+    "derived_from_declared_file_count": 119,
     "framework": "pytest",
-    "project": "sanic",
-    "project_test_root": "tests",
+    "project": "pandas",
+    "project_test_root": "pandas/tests",
     "unittest_pattern": null,
     "unittest_top_level_dir": null
   },
@@ -31,45 +31,49 @@
     "python_version": "3.8.3"
   },
   "qualified_pairs": 0,
-  "repository": "https://github.com/huge-success/sanic",
-  "runtime_namespace": "order_018_bugsinpy_sanic_3",
+  "repository": "https://github.com/pandas-dev/pandas",
+  "runtime_namespace": "order_019_bugsinpy_pandas_159",
   "status": "unique_next_task_resolved",
   "task": {
-    "bug_id": 3,
-    "buggy_commit_id": "91f6abaa81248189fbcbdf685e8bdcbb7846609f",
+    "bug_id": 159,
+    "buggy_commit_id": "e55b698",
     "candidate_materialized": false,
     "candidate_outcome_observed": false,
     "catalog_f2p_commands": [
-      "pytest tests/test_url_for.py::test_routes_with_host"
+      "pytest pandas/tests/arithmetic/test_numeric.py::test_fill_value_inf_masking",
+      "pytest pandas/tests/arithmetic/test_numeric.py::test_dataframe_div_silenced"
     ],
     "declared_f2p_commands": [
-      "pytest tests/test_url_for.py::test_routes_with_host"
+      "pytest pandas/tests/arithmetic/test_numeric.py::test_fill_value_inf_masking",
+      "pytest pandas/tests/arithmetic/test_numeric.py::test_dataframe_div_silenced"
     ],
-    "declared_test_file": "tests/test_url_for.py",
-    "environment_risk_tags": [],
+    "declared_test_file": "pandas/tests/arithmetic/test_numeric.py",
+    "environment_risk_tags": [
+      "native_extension_build"
+    ],
     "f2p_command_match": true,
-    "fixed_commit_id": "861e87347a2d373d6ffa387965a6887c83af632c",
+    "fixed_commit_id": "62ab439b168d972546e06d329916c6be7ddd1288",
     "metadata_sha256": {
-      "bug_info": "85171fe4eae544e3cd530c52fb66d1d255a6e8aad758aa7e4b16ce212839ed4e",
-      "reference_patch": "55d080c99c727b204eccf2f16a7628c6e49e9714c14ca7fc37c94c0385143591",
-      "requirements": "bc75613889e071411573f715fbd4121dff29c074d2af38d246a48ae501c7de38",
-      "run_test": "4ae67771f8558183efe6a0f50243098c621752d8006c4242f42af82f893704f4",
-      "setup_provenance_only": "28c76c4d388d78fd7e3bda08d447f92ab8aa1cd85652afabcdd99afafa1c7a6c"
+      "bug_info": "6c5c810bc0923db84ffe7a02942ba7947ee429495ac4cf93a5414a087af0ca04",
+      "reference_patch": "87c10155c1c95c3b907add6d0b1a7842eac21236c81b23a2ab70d4b02a32b54a",
+      "requirements": "ff9aa0d3292324d0749484a1a58c4b82df2af21b200b1eb70d3877b0db7b9876",
+      "run_test": "20626d1120ab2485fa8b65dedea61282cc927e9e9c24da631a6e7ecf13d17a32",
+      "setup_provenance_only": "fff3ab9f74619b05cbe5eea2a563d8185d513b5305565b880e002d238bfdbe93"
     },
     "model_outcome_observed": false,
     "official_setup_executable_authority": false,
-    "order": 18,
-    "project": "sanic",
-    "project_order_sha256": "f8471c05131ea7b724ab13f0f31e01445c81bc8eb453fa32c16a7258e56841d3",
-    "project_position": 9,
+    "order": 19,
+    "project": "pandas",
+    "project_order_sha256": "41103a71feed7a79ab78d79e684d033ffd4d65c422392e1c77b43f2c5c525130",
+    "project_position": 1,
     "python_version": "3.8.3",
     "requirements_metadata": {
       "nonempty": true,
       "present": true
     },
-    "round": 2,
-    "task_id": "bugsinpy_sanic_3",
-    "task_order_sha256": "b6848388ab2562aa99d6bdea9018b2c20c9bc5ed1fbfcdb489bdddc623b955b3",
+    "round": 3,
+    "task_id": "bugsinpy_pandas_159",
+    "task_order_sha256": "0324be5a88eaa335c0f9b012ae67d728916a5df23ed8fcc5bbfe33b3065ac2b3",
     "test_framework": "pytest"
   }
 }
