@@ -371,6 +371,12 @@ dependency 要求当前 Python3.7 无可用 distribution 的 `cython>=3.1`；不
 Cython、不修改依赖、不重跑。ledger v0.58 attempted=58、qualified=0、API=0；cursor 为
 order59 `bugsinpy_pandas_110`、started=false。
 
+Pandas_110 short SHA 由 official GitHub commit endpoint 唯一解析为严格前缀匹配的
+40字符 SHA；source freeze/check PASS。唯一 py383 editable PEP517 build 在 Cythonizing
+`pandas/_libs/algos.pyx` 时触发 `ErrorType.rank` compiler failure；不改 build
+dependencies、不重跑。ledger v0.59 attempted=59、qualified=0、API=0；cursor 为
+order60 `bugsinpy_fastapi_15`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

@@ -1,0 +1,25 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "build_exit_code": 1,
+  "build_output_bytes": 32778,
+  "build_output_sha256": "a680b03f811ca1c3b9d6d3dc37e9819bce4e8ccb8ea15e184b655f4af6f4bc50",
+  "created_date": "2026-07-12",
+  "dockerfile_sha256": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
+  "environment_id": "dsa_v2_p2_order_059_bugsinpy_pandas_110_environment_v0_1",
+  "failure_reason": "environment-build-failure",
+  "image": null,
+  "official_setup_executed": false,
+  "order": 59,
+  "source_record_sha256": "08c06eb1600c2cb3de8d1b33b4c4a6e30bc95414014514a564d89932d287875a",
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_pandas_110",
+  "task_specific_repair_attempted": false
+}
