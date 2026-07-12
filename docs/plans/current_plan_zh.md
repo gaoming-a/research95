@@ -15,6 +15,12 @@ source exhaustion不足30或其他预注册 hard stop则生成 stop audit。V2-P
 下一执行步骤：把 order-specific runner 收敛为通用 cursor executor，并在 order3 outcome
 前冻结/审计；随后从 Black_4 自动推进，普通失败不再暂停。
 
+通用化 checkpoint：新增 cursor config resolver，从最高版本 immutable ledger、V2-P1
+source order/source frame、Python locks、test-scope amendment 和 continuous authorization
+机械解析唯一 next task。当前 write/check 得到 order3 `bugsinpy_black_4`、qualified=0、
+started=false、API=0；新增 `Dockerfile.cursor` 以 build args 绑定任意冻结 task。真实通用
+phase executor 仍在 outcome 前实现中，Black_4 尚未下载或启动。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

@@ -1,0 +1,78 @@
+{
+  "attempted_tasks": 2,
+  "config_id": "dsa_v2_p2_cursor_task_config_v0_1",
+  "config_sha256": "da23de2e49157cb2144dc7d3a97838064e7b01c542b0185835d2cd2b5fbffc61",
+  "created_date": "2026-07-12",
+  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_2.json",
+  "ledger_sha256": "53b5c6096e2a6333b78be5809213bfaa5796270385577bca317382e355655abf",
+  "model_api_calls": 0,
+  "next_task_started": false,
+  "project_test_scope": {
+    "collection_command": [
+      "python",
+      "-m",
+      "unittest-discover",
+      "--start-dir",
+      "tests",
+      "--pattern",
+      "test*.py",
+      "--top-level-dir",
+      "."
+    ],
+    "derived_from_declared_file_count": 13,
+    "framework": "unittest",
+    "project": "black",
+    "project_test_root": "tests",
+    "unittest_pattern": "test*.py",
+    "unittest_top_level_dir": "."
+  },
+  "python_lock": {
+    "actual_sha256": "6a25cb9316d222d0bf8b53b516268668cb23b3bebc1cf3ede3d6d33dbc872144",
+    "environment_name": "py383",
+    "expected_sha256": "6a25cb9316d222d0bf8b53b516268668cb23b3bebc1cf3ede3d6d33dbc872144",
+    "path": "data/environment_locks/dsa2026_p4_bootstrap/py383-linux-64.txt",
+    "python_version": "3.8.3"
+  },
+  "qualified_pairs": 0,
+  "repository": "https://github.com/psf/black",
+  "runtime_namespace": "order_003_bugsinpy_black_4",
+  "status": "unique_next_task_resolved",
+  "task": {
+    "bug_id": 4,
+    "buggy_commit_id": "65ea568e3301951f26e0e3b98f6d5dc80132e917",
+    "candidate_materialized": false,
+    "candidate_outcome_observed": false,
+    "catalog_f2p_commands": [
+      "python -m unittest -q tests.test_black.BlackTestCase.test_beginning_backslash"
+    ],
+    "declared_f2p_commands": [
+      "python -m unittest -q tests.test_black.BlackTestCase.test_beginning_backslash"
+    ],
+    "declared_test_file": "tests/test_black.py;tests/data/beginning_backslash.py",
+    "environment_risk_tags": [],
+    "f2p_command_match": true,
+    "fixed_commit_id": "c7495b9aa098ef7a358fc74556359d21c6a4ba11",
+    "metadata_sha256": {
+      "bug_info": "1ac72c5d8895bcce63471775827f60560ca82dae5db6d98bc82bc76d8e4e6a15",
+      "reference_patch": "40a897d38400f62087e0a84499e9a37abd40cb2486dd4656ec31aa81195902a6",
+      "requirements": "2fdb8f4e1cded9c90678d86271ae3d7eb1789754217eee53403e39016b224b15",
+      "run_test": "2e1dd0725ca9e6b35a4bee6b3af6daf79b2509c1ff33e1ec74ef21380fd4e110",
+      "setup_provenance_only": "5ebfe240917e30d1dcb9c5d19ad85af36a29ae5c33d6d4a768863069b0a3329b"
+    },
+    "model_outcome_observed": false,
+    "official_setup_executable_authority": false,
+    "order": 3,
+    "project": "black",
+    "project_order_sha256": "7c4fad6524092f27b7eeff8fd8b2d26a61b92e68a40c703ae7a0ff743d3ec103",
+    "project_position": 3,
+    "python_version": "3.8.3",
+    "requirements_metadata": {
+      "nonempty": true,
+      "present": true
+    },
+    "round": 1,
+    "task_id": "bugsinpy_black_4",
+    "task_order_sha256": "03c2e83b5c69789bd359139b095d951bf4417d32abb344895a5a06e4a23d1362",
+    "test_framework": "unittest"
+  }
+}

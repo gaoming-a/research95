@@ -88,6 +88,11 @@
   `../scripts/dsa2026_freeze_v2_p2_continuous_authorization.py`. It permits
   ordinary task continuation and local commits, but model API remains disabled
   until the V2-P3 freeze package receives hash-bound author sign-off.
+- `../data/protocols/dsa_v2_p2_cursor_task_config_v0_1.json`: deterministic
+  unique-next-task resolution from the latest immutable ledger and V2-P1 inputs;
+  `../scripts/dsa2026_v2_p2_cursor_config.py` replays it. The generic image
+  template is `../containers/dsa2026_v2_p2/Dockerfile.cursor`. Current resolved
+  task is unstarted order3 `bugsinpy_black_4`.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
   venue/submission master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is
