@@ -28,6 +28,11 @@ GitHub 频繁失败可记录并重试，但不得更换未冻结来源。
 空 adapter 值；copy helper 会继续跳过 setup，未发生 environment/test outcome。修复必须
 先提交，再重试同一 archives。
 
+Order2 source/context Gate PASS：buggy/fixed archives=`8c18fa5a…760d4`/
+`e30b4ad3…ec60`，context tree=`d4072ff1…5b81b`，reference tree=`c9ce6940…70b1`，
+source record=`2cb131b0…93aed`；previous order1 ledger hash=`d244f194…81794`。
+checkout=1，environment/container/test/API=0；该 registry 先提交才允许 build。
+
 ## 0.57 2026-07-12 V2-P2 首任务授权与 test-scope amendment Gate
 
 用户已明确授权下一 Goal 真实处理唯一 order=1 `bugsinpy_pandas_161`，边界为完成该

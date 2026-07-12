@@ -11,6 +11,9 @@
 - order2 failure logging 已在结果前改为把具体失败子命令输出到 outer build log；不改变
   dependency authority，也不授权修复或重跑；
 - 当前 order2 checkout/environment/container/test/API=0；下一步只冻结 official source。
+- official FastAPI_11 source/context 现已 write/check PASS，context tree=
+  `d4072ff1925bb925d6367f253ad6a18fc5f5a14b8cc51c1c53cb20aadcc5b81b`；
+  checkout=1，environment/container/test/API仍为0；下一步是唯一 no-cache image build。
 
 ## 2026-07-12 V2-P2 order-1 terminal / cursor continues（已被上方覆盖）
 
