@@ -121,6 +121,10 @@ PASS；两次 frozen F2P 均因 `tests.test_black` 不可导入而一致失败�
 ledger v0.12 attempted=12、qualified=0、API=0；cursor 为 order13
 `bugsinpy_keras_45`、started=false。
 
+Keras_45 source freeze/check PASS；唯一 py373 build 因冻结 `numpy==1.19.0rc2` 无匹配
+distribution 而 terminal，不替换为 final、不重跑。ledger v0.13 attempted=13、
+qualified=0、API=0；cursor 为 order14 `bugsinpy_ansible_7`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
