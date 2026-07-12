@@ -160,6 +160,10 @@
   order14 environment terminal after full-tree source freeze/check. The
   independently frozen unavailable `ansible-base==2.10.0.dev0` pin was not
   substituted; ledger v0.14 advances to `bugsinpy_tornado_4`, API=0.
+- [dsa_v2_p2_order_015_bugsinpy_tornado_4_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_015_bugsinpy_tornado_4_terminal_gate_v0_1.md):
+  order15 oracle terminal. Both F2P runs passed but elapsed-time text changed
+  their frozen full-output hashes; no normalization/rerun occurred. Ledger v0.15
+  advances to `bugsinpy_matplotlib_7`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

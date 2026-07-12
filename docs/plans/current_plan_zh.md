@@ -130,6 +130,11 @@ Ansible_7 source freeze/check 分别约13.6/16分钟并 PASS。唯一 py369 buil
 不重跑。ledger v0.14 attempted=14、qualified=0、API=0；cursor 为 order15
 `bugsinpy_tornado_4`、started=false。
 
+Tornado_4 source freeze/check 与 build PASS。两次 F2P 均通过，但输出中的 elapsed time
+为 `0.013s`/`0.008s`，冻结 full-output hashes 不同；按 dual disagreement terminal，
+不归一化、不重跑。ledger v0.15 attempted=15、qualified=0、API=0；cursor 为 order16
+`bugsinpy_matplotlib_7`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
