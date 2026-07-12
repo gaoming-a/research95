@@ -61,6 +61,24 @@ no rerun 直接 terminal，未生成 image、未启动 container/test/oracle/can
 为 attempted=4、qualified=0、API=0；cursor 为 order5 `bugsinpy_ansible_8`、
 started=false。
 
+Order5 Ansible_8 source 的首次 staging 在写 registry/context 前因系统 temp 前缀叠加
+归档深路径触发 Windows `MAX_PATH`。诊断为 executor path bug，不记 task terminal；通用
+source staging 首先改为仓库内短根仍不足；最终改为当前盘根临时目录 `D:/dsa_s/`，
+由 TemporaryDirectory 自动清理，最终 context 仍在 ignored workspace runtime。
+不省略/重命名成员、不改来源；修复通过 preflight 后从未完成 source phase 重试。
+
+第三次 extraction 在 drive-root staging 完成后，final workspace copy 仍因原 verbose
+runtime path 留下 partial context、未写 registry。该 ignored partial artifact 保留但不作
+证据。版本化 namespace 继续用于 tracked 文件名，ignored runtime 通用映射改为短路径
+`tmp/dsa_r/oNNN`，同时缩短 final context 与 Docker COPY；order5 仍处于未启动/未 terminal
+source phase，可从 checkpoint 后重试。
+
+Ansible_8 source 在 short staging/short runtime 下成功，并经独立 source `--check`
+重建验证；大树 freeze/check 分别约13.5/20.9分钟。唯一 py369 build 因冻结 requirements
+的 `ansible-base==2.10.0.dev0` 在当前 index 无匹配 distribution 而 terminal；未替换为
+beta/rc/final、未重跑、未进入 oracle。ledger v0.5 attempted=5、qualified=0、API=0；
+cursor 为 order6 `bugsinpy_tornado_3`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

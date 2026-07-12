@@ -37,6 +37,24 @@
   dependency repair and would change the materialized environment.
 - Preserve the single build log/hash, record an environment-build terminal, and
   advance the source-order cursor without an oracle or candidate run.
+- The same rule applies to development pins such as `ansible-base==2.10.0.dev0`;
+  a nearby beta, release candidate, or final release is not an equivalent frozen
+  dependency.
+
+## 2026-07-12 Keep Windows archive staging paths deliberately short
+
+- Large repositories can contain valid paths that exceed Windows `MAX_PATH`
+  only after a long system-temporary prefix is added. That is an executor path
+  bug, not a source-materialization outcome.
+- Stage generic archive extraction under a fixed short drive-root directory and retry
+  only when the failed attempt wrote no source registry or terminal evidence.
+  Do not omit or rename archive members to work around the path length. The
+  temporary directory must self-clean, while the final context remains in the
+  ignored workspace runtime.
+- Keep verbose versioned namespaces for tracked records, but map ignored task
+  runtime directories to `tmp/dsa_r/oNNN`. Short staging alone is insufficient
+  if the final context copy or Docker `COPY` target still reintroduces a long
+  workspace path.
 
 ## 2026-07-12 Archive symlink fidelity is a frozen-content decision
 

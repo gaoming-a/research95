@@ -120,6 +120,10 @@
   order4 environment terminal. The frozen requirements request unavailable
   `numpy==1.19.0rc2`; no dependency replacement or rerun was performed. Ledger
   v0.4 advances the unstarted cursor to `bugsinpy_ansible_8`, with API=0.
+- [dsa_v2_p2_order_005_bugsinpy_ansible_8_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_005_bugsinpy_ansible_8_terminal_gate_v0_1.md):
+  order5 environment terminal after independently checked full-tree source
+  materialization. The frozen unavailable `ansible-base==2.10.0.dev0` pin was
+  not substituted; ledger v0.5 advances to `bugsinpy_tornado_3`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

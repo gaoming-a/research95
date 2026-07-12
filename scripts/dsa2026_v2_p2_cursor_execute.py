@@ -164,7 +164,7 @@ def state() -> dict[str, Any]:
     namespace = config["runtime_namespace"]
     protocol_root = ROOT / "data/protocols"
     hidden_root = ROOT / "data/hidden"
-    runtime = ROOT / f"tmp/dsa2026_v2_p2_runtime/{namespace}"
+    runtime = ROOT / f"tmp/dsa_r/o{task['order']:03d}"
     return {
         "config": config,
         "task": task,
@@ -235,7 +235,9 @@ def freeze_source(s: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]
     catalog_root = Path(args.catalog_root).resolve()
     materialization_manifests: list[dict[str, Any]] = []
     extractor = authorized_archive_extractor(s, catalog_root, materialization_manifests)
-    with tempfile.TemporaryDirectory(prefix="dsa_v2_p2_cursor_source_") as raw:
+    short_temp_root = Path(ROOT.anchor) / "dsa_s"
+    short_temp_root.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix="s_", dir=short_temp_root) as raw:
         generated, context_record = source_lib.build_context(
             task,
             Path(args.buggy_archive).resolve(),
