@@ -1,0 +1,131 @@
+{
+  "created_date": "2026-07-12",
+  "cursor_config_sha256": "7b2559e3b48a096fa05f4ea1a6bcc98914c518f8c693bff164577b0195b62aa3",
+  "model_api_calls": 0,
+  "previous_ledger_sha256": "7cf74d63a65bb45f003e7d5ab02080477a60f98ff1ee4bb8de34ee64d5da08db",
+  "records": [
+    {
+      "context": {
+        "buggy_archive": {
+          "archive_bytes": 481563,
+          "archive_root": "tornado-79ef301eb05cac82c075198e502d94dad296f6aa",
+          "archive_sha256": "c312e383f2fd8f165be42106cde2d7471d5ab3e03a7dcf238ef8e7f662fe1fca",
+          "extracted_file_count": 295,
+          "extracted_tree_sha256": "db5fdb0f7c072968939e044e9195d4787d0ec07e56f1b2fe309d4da7c4744b93",
+          "materialized_symlink_count": 3
+        },
+        "buggy_commit_id": "79ef301eb05cac82c075198e502d94dad296f6aa",
+        "buggy_source_tree_sha256": "db5fdb0f7c072968939e044e9195d4787d0ec07e56f1b2fe309d4da7c4744b93",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "context_tree_sha256": "32c8edf08e1a486da43eb8836dfab5461b9b7bfb1d4beb28f8f15a71ffc55fbd",
+        "fixed_archive": {
+          "archive_bytes": 481624,
+          "archive_root": "tornado-1131c9b50a6a4c0868d0d6fa5e0be077cf8fd1ca",
+          "archive_sha256": "d51f9bf128752bbb6944bf36c43177f45938daa6a1f7df28909e8320f42586f4",
+          "extracted_file_count": 295,
+          "extracted_tree_sha256": "0da36ad5c993b669e43a9ea9865a2ac56dbea14dc295cb41a65865ed694adc6f",
+          "materialized_symlink_count": 3
+        },
+        "fixed_commit_id": "1131c9b50a6a4c0868d0d6fa5e0be077cf8fd1ca",
+        "fixed_test_sha256": {
+          "tornado/test/httpserver_test.py": "7c63000a0f77ab7b5a5bac3510af05ee8db2f6695ab29249b93424bf44f66140"
+        },
+        "metadata_sha256": {
+          "bug.info": "0a638040f6a1e62c9a967cf24fdfa34c575123bb5670aba9a16e273e852261dc",
+          "bug_patch.txt": "ca87185682b9fdeec54096fe96606269714a28bfcd66c799f03265a946c0df7b",
+          "requirements.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "run_test.sh": "408f0abe1b1c0b6fa29cb631bd774d8d288e19590989602d7ae33f1dd84eb1e7",
+          "setup.sh": "d3a4076796d738e69fdc78f14825c1f2e48cd317367ac3812b2e9df6ff8b580b"
+        },
+        "model_api_calls": 0,
+        "order": 24,
+        "project": "tornado",
+        "record_sha256": "1ce809bb22a090a1761b3a4faf8e841f60b8ac253ba42a037a24e79db7af5c93",
+        "reference_validation": {
+          "normalized_patch_sha256": "5266eb28f2f7bddb2e7541fe01296417073ca68badf95c148d513eea62ad8cc7",
+          "patch_apply_exit_code": 0,
+          "patch_check_exit_code": 0,
+          "patch_line_endings_normalized": true,
+          "reference_tree_sha256": "c3857e451f2c6ec26d0c8d9a335303654bc4850fbf22601e96b7445ff14a0565"
+        },
+        "source_acquisition": "official GitHub codeload commit tarballs",
+        "source_materialization_manifests": [],
+        "source_repository": "https://github.com/tornadoweb/tornado",
+        "status": "v2_p2_source_context_frozen_no_candidate",
+        "task_id": "bugsinpy_tornado_11"
+      },
+      "order": 24,
+      "project_test_scope": {
+        "collection_command": [
+          "python",
+          "-m",
+          "unittest-discover",
+          "--start-dir",
+          "tornado/test",
+          "--pattern",
+          "*_test.py",
+          "--top-level-dir",
+          "."
+        ],
+        "derived_from_declared_file_count": 9,
+        "framework": "unittest",
+        "project": "tornado",
+        "project_test_root": "tornado/test",
+        "unittest_pattern": "*_test.py",
+        "unittest_top_level_dir": "."
+      },
+      "real_activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 1
+      },
+      "record_sha256": "38c123ad3187f49fad47e0c0524c89a6a1fa469b7fcb94ae4b71355856e1ece8",
+      "source_record": {
+        "bug_id": 11,
+        "buggy_commit_id": "79ef301eb05cac82c075198e502d94dad296f6aa",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "catalog_f2p_commands": [
+          "python -m unittest -q tornado.test.httpserver_test.HTTPServerRawTest.test_chunked_request_uppercase"
+        ],
+        "declared_f2p_commands": [
+          "python -m unittest -q tornado.test.httpserver_test.HTTPServerRawTest.test_chunked_request_uppercase"
+        ],
+        "declared_test_file": "tornado/test/httpserver_test.py",
+        "environment_risk_tags": [],
+        "f2p_command_match": true,
+        "fixed_commit_id": "1131c9b50a6a4c0868d0d6fa5e0be077cf8fd1ca",
+        "metadata_sha256": {
+          "bug_info": "0a638040f6a1e62c9a967cf24fdfa34c575123bb5670aba9a16e273e852261dc",
+          "reference_patch": "ca87185682b9fdeec54096fe96606269714a28bfcd66c799f03265a946c0df7b",
+          "requirements": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "run_test": "408f0abe1b1c0b6fa29cb631bd774d8d288e19590989602d7ae33f1dd84eb1e7",
+          "setup_provenance_only": "d3a4076796d738e69fdc78f14825c1f2e48cd317367ac3812b2e9df6ff8b580b"
+        },
+        "model_outcome_observed": false,
+        "official_setup_executable_authority": false,
+        "order": 24,
+        "project": "tornado",
+        "project_order_sha256": "b419cbd7e83f909e3075d2dca42f95b255cf0dd192e84ff605bff9a90ba904c8",
+        "project_position": 6,
+        "python_version": "3.7.0",
+        "requirements_metadata": {
+          "nonempty": false,
+          "present": true
+        },
+        "round": 3,
+        "task_id": "bugsinpy_tornado_11",
+        "task_order_sha256": "2d78792e3f6b44d6defcc5bc4a80431ab17e89eacb980e2bb6d2708de2903289",
+        "test_framework": "unittest"
+      },
+      "task_id": "bugsinpy_tornado_11"
+    }
+  ],
+  "registry_id": "dsa_v2_p2_order_024_bugsinpy_tornado_11_source_v0_1",
+  "status": "cursor_task_source_frozen"
+}

@@ -25,7 +25,7 @@
     "executor": "82b13552d038bba4d65fc419a2b86ce015efba035b7725e825d6a5d4eccc9ca5"
   },
   "created_date": "2026-07-12",
-  "cursor_config_sha256": "7b2559e3b48a096fa05f4ea1a6bcc98914c518f8c693bff164577b0195b62aa3",
+  "cursor_config_sha256": "01524b6f349cc33907265189da005433bf432d36d34127b0db502d8e64c111dc",
   "preflight_id": "dsa_v2_p2_cursor_executor_preflight_v0_1",
   "status": "ready_for_cursor_source"
 }
