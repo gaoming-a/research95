@@ -371,6 +371,10 @@
   manifests passed. All four frozen F2P checks failed on the unimportable test
   module; no command repair or rerun occurred. Ledger v0.61 advances to
   `bugsinpy_keras_25`, API=0.
+- [dsa_v2_p2_order_062_bugsinpy_keras_25_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_062_bugsinpy_keras_25_terminal_gate_v0_1.md):
+  order62 environment terminal after source freeze/check. Frozen
+  `numpy==1.19.0rc2` was unavailable and not substituted; no rerun occurred.
+  Ledger v0.62 advances to `bugsinpy_ansible_9`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
