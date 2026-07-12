@@ -159,6 +159,11 @@ pyproject-only checkout，且冻结 Pydantic0.18.2/Starlette0.10.1 与 FastAPI0.
 冲突；不升级/替换、不重跑。ledger v0.20 attempted=20、qualified=0、API=0；cursor 为
 order21 `bugsinpy_black_14`、started=false。
 
+Black_14 source freeze/check 与 build PASS；通用 dangling-docs rule 在独立 archive
+manifests 上通过。两次 frozen F2P 均因 `tests.test_black` 不可导入而一致失败；不改
+命令、不重跑。ledger v0.21 attempted=21、qualified=0、API=0；cursor 为 order22
+`bugsinpy_keras_7`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
