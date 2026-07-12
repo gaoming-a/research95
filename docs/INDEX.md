@@ -220,6 +220,10 @@
   order29 oracle terminal after independent dangling-doc manifests passed. Both
   F2P runs failed on the unimportable test module; no command repair/rerun
   occurred. Ledger v0.29 advances to `bugsinpy_keras_12`, API=0.
+- [dsa_v2_p2_order_030_bugsinpy_keras_12_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_030_bugsinpy_keras_12_terminal_gate_v0_1.md):
+  order30 source terminal. Immutable metadata had identical commits and an empty
+  reference patch; the narrowly classified reference-validation failure was
+  recorded without environment/test activity. Ledger advances to Ansible_16.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

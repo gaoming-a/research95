@@ -103,7 +103,6 @@ def authorized_archive_extractor(
     authorization = amendment.get("authorization", {})
     if authorization.get("general_v2_p2_source_materialization_rule") is not True:
         raise PermissionError("general dangling-docs rule is not authorized")
-    changed = changed_source_paths(catalog_root, s["task"])
     declared = {
         PurePosixPath(item).as_posix()
         for item in s["task"]["declared_test_file"].split(";")
@@ -119,6 +118,7 @@ def authorized_archive_extractor(
         dangling = inspect_dangling_symlinks(archive, expected_root)
         if not dangling:
             return source_lib.extract_commit_archive(archive, destination, expected_root)
+        changed = changed_source_paths(catalog_root, s["task"])
         paths = {item["path"] for item in dangling}
         predicates = {
             "all_symbolic": all(item["kind"] == "symbolic" for item in dangling),
@@ -237,16 +237,83 @@ def freeze_source(s: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]
     extractor = authorized_archive_extractor(s, catalog_root, materialization_manifests)
     short_temp_root = Path(ROOT.anchor) / "dsa_s"
     short_temp_root.mkdir(parents=True, exist_ok=True)
+    buggy_archive = Path(args.buggy_archive).resolve()
+    fixed_archive = Path(args.fixed_archive).resolve()
     with tempfile.TemporaryDirectory(prefix="s_", dir=short_temp_root) as raw:
-        generated, context_record = source_lib.build_context(
-            task,
-            Path(args.buggy_archive).resolve(),
-            Path(args.fixed_archive).resolve(),
-            catalog_root,
-            Path(raw),
-            archive_extractor=extractor,
-            archive_root_prefix=s["config"]["repository"].rstrip("/").rsplit("/", 1)[-1],
-        )
+        try:
+            generated, context_record = source_lib.build_context(
+                task,
+                buggy_archive,
+                fixed_archive,
+                catalog_root,
+                Path(raw),
+                archive_extractor=extractor,
+                archive_root_prefix=s["config"]["repository"].rstrip("/").rsplit("/", 1)[-1],
+            )
+        except RuntimeError as error:
+            message = str(error)
+            if not message.startswith((
+                "reference patch check failed:",
+                "reference patch apply failed:",
+            )):
+                raise
+            value = {
+                "registry_id": f"dsa_v2_p2_{s['namespace']}_source_v0_1",
+                "created_date": "2026-07-12",
+                "status": "materialization-failed",
+                "failure_reason": "reference-patch-validation-failure",
+                "cursor_config_sha256": s["config"]["config_sha256"],
+                "previous_ledger_sha256": s["config"]["ledger_sha256"],
+                "records": [{
+                    "task_id": s["task_id"],
+                    "order": s["order"],
+                    "source_record": s["task"],
+                    "project_test_scope": s["config"]["project_test_scope"],
+                    "buggy_archive_sha256": hashlib.sha256(buggy_archive.read_bytes()).hexdigest(),
+                    "fixed_archive_sha256": hashlib.sha256(fixed_archive.read_bytes()).hexdigest(),
+                    "source_materialization_manifests": materialization_manifests,
+                    "validation_error_type": type(error).__name__,
+                    "validation_error_sha256": hashlib.sha256(message.encode("utf-8")).hexdigest(),
+                    "real_activity": {
+                        "real_task_checkouts": 1,
+                        "environment_builds": 0,
+                        "containers_started": 0,
+                        "project_tests_run": 0,
+                        "prompt_renders": 0,
+                        "api_keys_read": 0,
+                        "model_api_calls": 0,
+                    },
+                    "task_specific_repair_attempted": False,
+                }],
+                "model_api_calls": 0,
+            }
+            value["records"][0]["record_sha256"] = canonical_sha(value["records"][0])
+            if args.write:
+                s["source"].write_text(
+                    json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+                    encoding="utf-8",
+                    newline="\n",
+                )
+                draft = terminal_draft(
+                    s,
+                    "materialization-failed",
+                    "reference-patch-validation-failure",
+                    None,
+                    "source_record_sha256",
+                    canonical_sha(value),
+                )
+                s["terminal_draft"].write_text(
+                    json.dumps(draft, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+                    encoding="utf-8",
+                    newline="\n",
+                )
+            elif (
+                not s["source"].is_file()
+                or read_json(s["source"]) != value
+                or not s["terminal_draft"].is_file()
+            ):
+                raise SystemExit("stale cursor source-failure record")
+            return value
         context_record["source_materialization_manifests"] = materialization_manifests
         context_record["record_sha256"] = canonical_sha({
             key: value for key, value in context_record.items() if key != "record_sha256"
@@ -524,8 +591,15 @@ def finalize(s: dict[str, Any], write: bool) -> dict[str, Any]:
         "next_task_started": False,
         "model_api_calls": 0,
     }
-    environment = read_json(s["environment"])
-    latest_evidence = environment
+    if s["environment"].is_file():
+        environment = read_json(s["environment"])
+        latest_evidence = environment
+    else:
+        source_record = read_json(s["source"])["records"][0]
+        latest_evidence = {
+            "activity": source_record["real_activity"],
+            "task_specific_repair_attempted": source_record["task_specific_repair_attempted"],
+        }
     if s["oracle"].is_file():
         latest_evidence = read_json(s["oracle"])
     if s["candidate_results"].is_file():

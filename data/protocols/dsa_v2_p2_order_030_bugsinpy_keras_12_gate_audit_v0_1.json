@@ -1,0 +1,35 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 0,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "audit_id": "dsa_v2_p2_order_030_bugsinpy_keras_12_gate_audit_v0_1",
+  "checks": {
+    "counts_correct": true,
+    "model_api_zero": true,
+    "next_not_started": true,
+    "no_task_specific_repair": true,
+    "previous_ledger_hash_unchanged": true,
+    "records_append_exactly_once": true
+  },
+  "created_date": "2026-07-12",
+  "model_api_calls": 0,
+  "next_task_id": "bugsinpy_ansible_16",
+  "order": 30,
+  "qualified_pairs_after": 0,
+  "status": "passed_terminal_continue_cursor",
+  "task_id": "bugsinpy_keras_12",
+  "terminal_record": {
+    "disposition": "materialization-failed",
+    "order": 30,
+    "reason": "reference-patch-validation-failure",
+    "selected_candidate_sha256": null,
+    "source_record_sha256": "5ad9dcaa8332846aebb07d6e6f1e3684b231f91b9466bc25efcb278f2e78f51d",
+    "task_id": "bugsinpy_keras_12"
+  }
+}

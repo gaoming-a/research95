@@ -1,0 +1,88 @@
+{
+  "created_date": "2026-07-12",
+  "cursor_config_sha256": "de485fe8519143dbbbb023351b2638d93d25660edd427fee6f91f347710827eb",
+  "failure_reason": "reference-patch-validation-failure",
+  "model_api_calls": 0,
+  "previous_ledger_sha256": "94c7710011443c570affe5f6ce29309e35a0805b33ca2622a5dba59ddd8e0862",
+  "records": [
+    {
+      "buggy_archive_sha256": "f91c7ccf813cb568642e9b50ce5b00623a5d7b39c1c999942aebf781934dd83d",
+      "fixed_archive_sha256": "f91c7ccf813cb568642e9b50ce5b00623a5d7b39c1c999942aebf781934dd83d",
+      "order": 30,
+      "project_test_scope": {
+        "collection_command": [
+          "python",
+          "-m",
+          "pytest",
+          "--collect-only",
+          "-q",
+          "tests"
+        ],
+        "derived_from_declared_file_count": 23,
+        "framework": "pytest",
+        "project": "keras",
+        "project_test_root": "tests",
+        "unittest_pattern": null,
+        "unittest_top_level_dir": null
+      },
+      "real_activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 1
+      },
+      "record_sha256": "55524d3fc7146b88f78db514dd4c20f507733ba9401f885d7395cc4bd01dc1d0",
+      "source_materialization_manifests": [],
+      "source_record": {
+        "bug_id": 12,
+        "buggy_commit_id": "6dff721a3a8755356b2e89d02ef63ad8ab38ec95",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "catalog_f2p_commands": [
+          "pytest tests/keras/metrics_test.py::test_sparse_categorical_accuracy_correctness[shape1]",
+          "pytest tests/keras/metrics_test.py::test_sparse_categorical_accuracy_correctness[shape2]"
+        ],
+        "declared_f2p_commands": [
+          "pytest tests/keras/metrics_test.py::test_sparse_categorical_accuracy_correctness[shape1]",
+          "pytest tests/keras/metrics_test.py::test_sparse_categorical_accuracy_correctness[shape2]"
+        ],
+        "declared_test_file": "tests/keras/metrics_test.py",
+        "environment_risk_tags": [
+          "heavy_tensorflow_stack"
+        ],
+        "f2p_command_match": true,
+        "fixed_commit_id": "6dff721a3a8755356b2e89d02ef63ad8ab38ec95",
+        "metadata_sha256": {
+          "bug_info": "abd71406275446afe05ce1f1c9007ea3db20b878840799b3a7f5d808bc791a72",
+          "reference_patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "requirements": "a740c7f6f4ec429286993fe6cfa984d43d8f432f0fddc72aa1efd82f7f4f5203",
+          "run_test": "135a0404112b9a4c3a7a22d8dd674c5c3015a32fd495d202fd66ea1024fe9a38"
+        },
+        "model_outcome_observed": false,
+        "official_setup_executable_authority": false,
+        "order": 30,
+        "project": "keras",
+        "project_order_sha256": "86275bf699d90e96bfd9ecb0df4e68b0faac0f01cca31e3de7cfd50bd2a2aad3",
+        "project_position": 4,
+        "python_version": "3.7.3",
+        "requirements_metadata": {
+          "nonempty": true,
+          "present": true
+        },
+        "round": 4,
+        "task_id": "bugsinpy_keras_12",
+        "task_order_sha256": "205da16183463c1a8104f56a88bc0840070d9a8c581c6d8dbeede9c2a8ba1463",
+        "test_framework": "pytest"
+      },
+      "task_id": "bugsinpy_keras_12",
+      "task_specific_repair_attempted": false,
+      "validation_error_sha256": "0172dd568a29125d6b9f26b33caae92d7ceeab10f41785074f40f82f17fcab04",
+      "validation_error_type": "RuntimeError"
+    }
+  ],
+  "registry_id": "dsa_v2_p2_order_030_bugsinpy_keras_12_source_v0_1",
+  "status": "materialization-failed"
+}

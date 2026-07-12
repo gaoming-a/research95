@@ -203,6 +203,19 @@ manifests 上通过。两次 frozen F2P 均因 `tests.test_black` 不可导入�
 命令、不重跑。ledger v0.29 attempted=29、qualified=0、API=0；cursor 为 order30
 `bugsinpy_keras_12`、started=false。
 
+Order30 Keras_12 pre-source audit：冻结 buggy/fixed commit 相同，reference patch 为空文件
+SHA-256。该值与 immutable source order/catalog hashes 一致，故不是 drift；但无法形成
+reference oracle transform。通用 executor 新增窄 source terminal path：仅在 archives、
+fixed tests、metadata hashes 验证后捕获 reference patch check/apply failure，记录 archive/
+error hashes并继续；其他 source integrity failure 仍 hard stop。修复 preflight PASS 后才
+下载/执行 order30，API=0。
+
+Keras_12 official archive/metadata hashes 验证后，空 reference patch 在 `git apply
+--check` 触发窄 `reference-patch-validation-failure` source terminal；source write/check
+PASS，未构造 environment/container/test。ledger v0.30 attempted=30、qualified=0、API=0；
+cursor 为 order31 `bugsinpy_ansible_16`、started=false。该 source failure 不等于达到
+30 qualified pairs，故继续冻结 source order。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

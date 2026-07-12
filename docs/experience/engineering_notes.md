@@ -32,6 +32,18 @@
 - Cursor preflight assertions must bind `order == attempted_tasks + 1`, not a
   historical literal order. Otherwise a correct terminal ledger advancement
   makes the next task appear invalid.
+
+## 2026-07-13 Terminalize only narrowly classified source failures
+
+- A frozen task may have matching buggy/fixed commits and an empty reference
+  patch. That is not hash drift when the immutable source record itself contains
+  those values, but `git apply --check` cannot validate an oracle transform.
+- Catch only reference-patch check/apply failures after archive and metadata
+  verification, record archive/error hashes, and write a source terminal. Keep
+  archive-root, metadata-hash, and dangling-predicate failures as hard stops.
+- Derive changed-source paths lazily only when a dangling-link manifest exists.
+  An empty reference patch on an archive without dangling links must reach the
+  reference-validation terminal, not fail inside an unused omission rule.
 - Two reference checks can both report `OK` yet fail the frozen dual-stability
   gate when their complete output hashes differ. Do not replace the registered
   fingerprint with the human-readable excerpt after observing this outcome;
