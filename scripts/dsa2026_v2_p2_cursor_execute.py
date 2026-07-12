@@ -39,6 +39,33 @@ def canonical_sha(value: Any) -> str:
     ).hexdigest()
 
 
+def resolve_archive_root(archive: Path, expected_root: str) -> str:
+    """Accept only the canonical full-SHA expansion of a frozen short SHA."""
+    with tarfile.open(archive, "r:gz") as tar:
+        roots = {PurePosixPath(member.name).parts[0] for member in tar.getmembers()
+                 if PurePosixPath(member.name).parts}
+    if len(roots) != 1:
+        raise ValueError(f"archive must have exactly one root: {sorted(roots)}")
+    actual_root = next(iter(roots))
+    if actual_root == expected_root:
+        return actual_root
+    if "-" not in expected_root:
+        raise ValueError(f"archive root drift: {actual_root} != {expected_root}")
+    repository_name, frozen_commit = expected_root.rsplit("-", 1)
+    actual_prefix = repository_name + "-"
+    actual_commit = actual_root[len(actual_prefix):] if actual_root.startswith(actual_prefix) else ""
+    is_canonical_expansion = (
+        7 <= len(frozen_commit) < 40
+        and len(actual_commit) == 40
+        and all(char in "0123456789abcdef" for char in frozen_commit.lower())
+        and all(char in "0123456789abcdef" for char in actual_commit.lower())
+        and actual_commit.lower().startswith(frozen_commit.lower())
+    )
+    if not is_canonical_expansion:
+        raise ValueError(f"archive root drift: {actual_root} != {expected_root}")
+    return actual_root
+
+
 def changed_source_paths(catalog_root: Path, task: dict[str, Any]) -> set[str]:
     patch = (
         catalog_root
@@ -115,9 +142,10 @@ def authorized_archive_extractor(
     }
 
     def extract(archive: Path, destination: Path, expected_root: str) -> dict[str, Any]:
-        dangling = inspect_dangling_symlinks(archive, expected_root)
+        actual_root = resolve_archive_root(archive, expected_root)
+        dangling = inspect_dangling_symlinks(archive, actual_root)
         if not dangling:
-            return source_lib.extract_commit_archive(archive, destination, expected_root)
+            return source_lib.extract_commit_archive(archive, destination, actual_root)
         changed = changed_source_paths(catalog_root, s["task"])
         paths = {item["path"] for item in dangling}
         predicates = {
@@ -137,7 +165,7 @@ def authorized_archive_extractor(
         archive_sha = hashlib.sha256(archive.read_bytes()).hexdigest()
         manifest_record = {
             "archive_sha256": archive_sha,
-            "archive_root": expected_root,
+            "archive_root": actual_root,
             "dangling_manifest": dangling,
             "dangling_manifest_sha256": manifest_sha,
             "predicates": predicates,
@@ -152,7 +180,7 @@ def authorized_archive_extractor(
         manifests.append(manifest_record)
         allowed = {(item["path"], item["target"]) for item in dangling}
         return source_lib.extract_commit_archive(
-            archive, destination, expected_root, omittable_dangling_symlinks=allowed
+            archive, destination, actual_root, omittable_dangling_symlinks=allowed
         )
 
     return extract

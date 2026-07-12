@@ -237,6 +237,14 @@ spaCy_2 canonical-root source freeze/check PASS。唯一 py377 build 在递归�
 Python/Cython、不修改依赖、不重跑。ledger v0.34 attempted=34、qualified=0、API=0；
 cursor 为 order35 `bugsinpy_pandas_74`、started=false。
 
+Pandas_74 catalog 使用合法7字符 buggy commit；official codeload 只接受并返回其完整
+40字符对象。cursor extractor 已增加窄绑定：仅接受同一 canonical repository root 且
+full SHA 严格以前缀 frozen short SHA 开头，exact/positive/negative gates PASS；其他 root
+差异仍 hard stop。source write/check PASS。唯一 py383 build 在 Cythonizing
+`pandas/_libs/algos.pyx` 时 compiler failure；不改 build dependencies、不重跑。
+ledger v0.35 attempted=35、qualified=0、API=0；cursor 为 order36
+`bugsinpy_fastapi_3`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

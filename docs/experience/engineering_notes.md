@@ -212,6 +212,11 @@
   built native dependency introduces a newer Python-incompatible Cython floor.
   Preserve the complete nested resolver trace and classify it as the frozen
   environment outcome; do not pin the transitive build dependency post hoc.
+- Official catalogs may freeze an unambiguous abbreviated Git SHA while
+  codeload names the archive root with the full SHA. Accept this only as a
+  mechanical expansion: one canonical repository root, a 40-hex suffix, and a
+  strict match to the frozen 7--39 hex prefix. Never accept a different root,
+  non-hex suffix, or prefix mismatch.
 
 ## 2026-07-12 V2-P1 metadata and base-lock freeze
 
