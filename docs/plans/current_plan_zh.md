@@ -305,6 +305,11 @@ Keras_24 source freeze/check PASS。唯一 py373 build 因冻结 requirements �
 不重跑。ledger v0.46 attempted=46、qualified=0、API=0；cursor 为 order47
 `bugsinpy_ansible_5`、started=false。
 
+Ansible_5 full-tree source freeze/check PASS。唯一 py369 build 因冻结
+`ansible-base==2.10.0.dev0` 在当前 index 无匹配 distribution 而 terminal；不替换为
+beta/rc/final、不重跑。ledger v0.47 attempted=47、qualified=0、API=0；cursor 为
+order48 `bugsinpy_tornado_8`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

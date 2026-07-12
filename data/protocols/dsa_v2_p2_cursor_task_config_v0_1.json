@@ -1,75 +1,78 @@
 {
-  "attempted_tasks": 46,
+  "attempted_tasks": 47,
   "config_id": "dsa_v2_p2_cursor_task_config_v0_1",
-  "config_sha256": "ebc3753b738058832f8ba2042583c4e6befea6aa070aacd0f5f35f39f204a1f6",
+  "config_sha256": "8587ed0dcac4f08240c809516a9055e52bfc77d763f2285225617805b01e4b7c",
   "created_date": "2026-07-12",
-  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_46.json",
-  "ledger_sha256": "90b2d44cb969ff9812ee9f6131c8e73b2a564d20e58170f1b158126d768972bc",
+  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_47.json",
+  "ledger_sha256": "8298f555ac2891bb6fe7648bd9732cc2624370b39f75f87e431674ca2dd89f7e",
   "model_api_calls": 0,
   "next_task_started": false,
   "project_test_scope": {
     "collection_command": [
       "python",
       "-m",
-      "pytest",
-      "--collect-only",
-      "-q",
-      "test/units"
+      "unittest-discover",
+      "--start-dir",
+      "tornado/test",
+      "--pattern",
+      "*_test.py",
+      "--top-level-dir",
+      "."
     ],
-    "derived_from_declared_file_count": 15,
-    "framework": "pytest",
-    "project": "ansible",
-    "project_test_root": "test/units",
-    "unittest_pattern": null,
-    "unittest_top_level_dir": null
+    "derived_from_declared_file_count": 9,
+    "framework": "unittest",
+    "project": "tornado",
+    "project_test_root": "tornado/test",
+    "unittest_pattern": "*_test.py",
+    "unittest_top_level_dir": "."
   },
   "python_lock": {
-    "actual_sha256": "127d75b0d841583a2250c48b0a833de078b5ae45e0e606888f6928eb621c7a4e",
-    "environment_name": "py369",
-    "expected_sha256": "127d75b0d841583a2250c48b0a833de078b5ae45e0e606888f6928eb621c7a4e",
-    "path": "data/environment_locks/dsa2026_p4_bootstrap/py369-linux-64.txt",
-    "python_version": "3.6.9"
+    "actual_sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82",
+    "environment_name": "py370",
+    "expected_sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82",
+    "path": "data/environment_locks/dsa2026_p4_bootstrap/py370-linux-64.txt",
+    "python_version": "3.7.0"
   },
   "qualified_pairs": 0,
-  "repository": "https://github.com/ansible/ansible",
-  "runtime_namespace": "order_047_bugsinpy_ansible_5",
+  "repository": "https://github.com/tornadoweb/tornado",
+  "runtime_namespace": "order_048_bugsinpy_tornado_8",
   "status": "unique_next_task_resolved",
   "task": {
-    "bug_id": 5,
-    "buggy_commit_id": "2af76f16be8cf2239daaec4c2f31c3dcb4e3469e",
+    "bug_id": 8,
+    "buggy_commit_id": "34c43f4775971ab9b2b8ed43356f218add6387b2",
     "candidate_materialized": false,
     "candidate_outcome_observed": false,
     "catalog_f2p_commands": [
-      "pytest test/units/module_utils/common/validation/test_check_required_arguments.py::test_check_required_arguments_missing_multiple"
+      "python -m unittest -q tornado.test.websocket_test.WebSocketTest.test_missing_websocket_key"
     ],
     "declared_f2p_commands": [
-      "pytest test/units/module_utils/common/validation/test_check_required_arguments.py::test_check_required_arguments_missing_multiple"
+      "python -m unittest -q tornado.test.websocket_test.WebSocketTest.test_missing_websocket_key"
     ],
-    "declared_test_file": "test/units/module_utils/common/validation/test_check_required_arguments.py",
+    "declared_test_file": "tornado/test/websocket_test.py",
     "environment_risk_tags": [],
     "f2p_command_match": true,
-    "fixed_commit_id": "3c3ffc09c203d1b2262f6a319cceadd727749761",
+    "fixed_commit_id": "5d4a9ab26372efd255bbb29fde55c41395ed17b1",
     "metadata_sha256": {
-      "bug_info": "c608b46356716de1b9d8dfbc109756d93b10c7df3206cd321da85bf301b765e8",
-      "reference_patch": "f97002e8df0bd8e96cc7a893dcc181dd8d61a4bd6d7f30781424b7ec02f8e74d",
-      "requirements": "0c260efd21646c472796270e1df9c0348c007edffd6b5ac67c2f00d7c0310659",
-      "run_test": "4d0681f80427de5a5b23f452ff0767275e0c8afbd8ce82cadddc048164b9afc1",
-      "setup_provenance_only": "baba8276fe95fc71a9298ce3b31cdf8f0011576312ebbb7a26cea5cccde514f7"
+      "bug_info": "475e9718d325e87c45d1e1ebdb3808779a3e7da44058000434929a6a5eb40b49",
+      "reference_patch": "56bf2416608021a7fa2ce727513f7884ad77f3ba6fcf141e5ebf0238bc9280a2",
+      "requirements": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "run_test": "2ba2d838cb3b16e44f604489798f2aabdbe2b73d43b8b3d5a2a0f70103fb5787",
+      "setup_provenance_only": "d3a4076796d738e69fdc78f14825c1f2e48cd317367ac3812b2e9df6ff8b580b"
     },
     "model_outcome_observed": false,
     "official_setup_executable_authority": false,
-    "order": 47,
-    "project": "ansible",
-    "project_order_sha256": "971ac1e4689df7ada04427087a39e0e84b3963a78b9fbb63b66405353726c658",
-    "project_position": 5,
-    "python_version": "3.6.9",
+    "order": 48,
+    "project": "tornado",
+    "project_order_sha256": "b419cbd7e83f909e3075d2dca42f95b255cf0dd192e84ff605bff9a90ba904c8",
+    "project_position": 6,
+    "python_version": "3.7.0",
     "requirements_metadata": {
-      "nonempty": true,
+      "nonempty": false,
       "present": true
     },
     "round": 6,
-    "task_id": "bugsinpy_ansible_5",
-    "task_order_sha256": "54fc579d50bc65e1637b9c039ef66114f07d92466cbbc47fb4e449b821463ffd",
-    "test_framework": "pytest"
+    "task_id": "bugsinpy_tornado_8",
+    "task_order_sha256": "57a23cc4cb9ecf9abd7968a167b295e28b4015c9e383b80c33184d542649140b",
+    "test_framework": "unittest"
   }
 }
