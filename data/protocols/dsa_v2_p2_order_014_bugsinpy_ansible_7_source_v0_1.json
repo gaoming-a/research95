@@ -1,0 +1,128 @@
+{
+  "created_date": "2026-07-12",
+  "cursor_config_sha256": "b36167452e13de68866a243c93172ac3c2481190f210d549ec3b59fdc7abf51e",
+  "model_api_calls": 0,
+  "previous_ledger_sha256": "ddfb7323ae78ceaf9e78a90f639b4236abfde37834da4b81f1d646540de9a33e",
+  "records": [
+    {
+      "context": {
+        "buggy_archive": {
+          "archive_bytes": 15116457,
+          "archive_root": "ansible-cd146b836e032df785ecd9eb711c6ef23c2228b8",
+          "archive_sha256": "01c1c82109a6e2029c8c583ff6f44af4b03d1b967d9f3d21f7888f02b177aa22",
+          "extracted_file_count": 18143,
+          "extracted_tree_sha256": "8cd86adfbc51dec7bd3556fb984b7eb22622b123f69d3d3f89c30dcdc5dc5961",
+          "materialized_symlink_count": 357
+        },
+        "buggy_commit_id": "cd146b836e032df785ecd9eb711c6ef23c2228b8",
+        "buggy_source_tree_sha256": "8cd86adfbc51dec7bd3556fb984b7eb22622b123f69d3d3f89c30dcdc5dc5961",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "context_tree_sha256": "be662ccdd7b65f00547e0a510f9007403fc024f08a1933aaa8bb4d762613f6d4",
+        "fixed_archive": {
+          "archive_bytes": 15113250,
+          "archive_root": "ansible-4ec1437212b2fb3c313e44ed5a76b105f2151622",
+          "archive_sha256": "64a90db5fd121b5f6fa4107cf90ccb1b2d8b11ae8f50f1bcbdc992854f6b7e29",
+          "extracted_file_count": 18143,
+          "extracted_tree_sha256": "87d8b59760603566dcfe6862332b69cdcbb3c3fc6e23c46ec9f770e072fcd384",
+          "materialized_symlink_count": 357
+        },
+        "fixed_commit_id": "4ec1437212b2fb3c313e44ed5a76b105f2151622",
+        "fixed_test_sha256": {
+          "test/units/modules/network/eos/test_eos_vlans.py": "8c9a3413fb4421c3fe8a634badd829df3c41977c3b77667beb5a39c0c460e9d2"
+        },
+        "metadata_sha256": {
+          "bug.info": "c3b3d2d0bb0da4c79ab08656fcc744d0bd2839d40352915ccac4f6e6632ed4eb",
+          "bug_patch.txt": "af7177119a56ffe6554d1648d9f917c3ec8b5addd78f56e36c1c4ea87083f383",
+          "requirements.txt": "0c260efd21646c472796270e1df9c0348c007edffd6b5ac67c2f00d7c0310659",
+          "run_test.sh": "e8d059bf971c9467d50cdfcdc730d20535a077131080aadaf1bbac5e2ded00cf",
+          "setup.sh": "baba8276fe95fc71a9298ce3b31cdf8f0011576312ebbb7a26cea5cccde514f7"
+        },
+        "model_api_calls": 0,
+        "order": 14,
+        "project": "ansible",
+        "record_sha256": "3669290149371087d8ff3d133b0dc95c46d81440dac52636e0912c6509888fb9",
+        "reference_validation": {
+          "normalized_patch_sha256": "55dfeb28a9e0a43ab69be3913e0c41c7243b2ac87d80b1b9a68480f33278eb1a",
+          "patch_apply_exit_code": 0,
+          "patch_check_exit_code": 0,
+          "patch_line_endings_normalized": true,
+          "reference_tree_sha256": "35015f44d73e0925267bf8f5e08c05d8a4d53a3a2a49cf72f20c8daecdd1265a"
+        },
+        "source_acquisition": "official GitHub codeload commit tarballs",
+        "source_materialization_manifests": [],
+        "source_repository": "https://github.com/ansible/ansible",
+        "status": "v2_p2_source_context_frozen_no_candidate",
+        "task_id": "bugsinpy_ansible_7"
+      },
+      "order": 14,
+      "project_test_scope": {
+        "collection_command": [
+          "python",
+          "-m",
+          "pytest",
+          "--collect-only",
+          "-q",
+          "test/units"
+        ],
+        "derived_from_declared_file_count": 15,
+        "framework": "pytest",
+        "project": "ansible",
+        "project_test_root": "test/units",
+        "unittest_pattern": null,
+        "unittest_top_level_dir": null
+      },
+      "real_activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 1
+      },
+      "record_sha256": "24cdd8fde6d2259f6bb194fa23998dd829e8ecfc8a6f5337771e1a489ce13b0d",
+      "source_record": {
+        "bug_id": 7,
+        "buggy_commit_id": "cd146b836e032df785ecd9eb711c6ef23c2228b8",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "catalog_f2p_commands": [
+          "pytest test/units/modules/network/eos/test_eos_vlans.py::TestEosVlansModule::test_eos_vlan_replaced"
+        ],
+        "declared_f2p_commands": [
+          "pytest test/units/modules/network/eos/test_eos_vlans.py::TestEosVlansModule::test_eos_vlan_replaced"
+        ],
+        "declared_test_file": "test/units/modules/network/eos/test_eos_vlans.py",
+        "environment_risk_tags": [],
+        "f2p_command_match": true,
+        "fixed_commit_id": "4ec1437212b2fb3c313e44ed5a76b105f2151622",
+        "metadata_sha256": {
+          "bug_info": "c3b3d2d0bb0da4c79ab08656fcc744d0bd2839d40352915ccac4f6e6632ed4eb",
+          "reference_patch": "af7177119a56ffe6554d1648d9f917c3ec8b5addd78f56e36c1c4ea87083f383",
+          "requirements": "0c260efd21646c472796270e1df9c0348c007edffd6b5ac67c2f00d7c0310659",
+          "run_test": "e8d059bf971c9467d50cdfcdc730d20535a077131080aadaf1bbac5e2ded00cf",
+          "setup_provenance_only": "baba8276fe95fc71a9298ce3b31cdf8f0011576312ebbb7a26cea5cccde514f7"
+        },
+        "model_outcome_observed": false,
+        "official_setup_executable_authority": false,
+        "order": 14,
+        "project": "ansible",
+        "project_order_sha256": "971ac1e4689df7ada04427087a39e0e84b3963a78b9fbb63b66405353726c658",
+        "project_position": 5,
+        "python_version": "3.6.9",
+        "requirements_metadata": {
+          "nonempty": true,
+          "present": true
+        },
+        "round": 2,
+        "task_id": "bugsinpy_ansible_7",
+        "task_order_sha256": "2a7ec9e02b4872a6a344a281cde322e54a988380e37a8ac8c779560de9be973c",
+        "test_framework": "pytest"
+      },
+      "task_id": "bugsinpy_ansible_7"
+    }
+  ],
+  "registry_id": "dsa_v2_p2_order_014_bugsinpy_ansible_7_source_v0_1",
+  "status": "cursor_task_source_frozen"
+}
