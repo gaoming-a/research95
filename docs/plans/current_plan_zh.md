@@ -290,6 +290,11 @@ codeload transport EOF 产生截断 archive，extractor 在 tracked record 前�
 attempted=43、qualified=0、API=0；cursor 为 order44 `bugsinpy_fastapi_7`、
 started=false。
 
+FastAPI_7 source freeze/check PASS。唯一 py383 build 使用冻结旧 pip 执行 editable install
+时，因 checkout 仅有 `pyproject.toml`、无 `setup.py` 而失败；不升级 pip、不补 setup.py、
+不重跑。ledger v0.44 attempted=44、qualified=0、API=0；cursor 为 order45
+`bugsinpy_black_15`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

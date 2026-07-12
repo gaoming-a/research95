@@ -1,0 +1,25 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "build_exit_code": 1,
+  "build_output_bytes": 23010,
+  "build_output_sha256": "35d445d2ac7365f5e0b7d2cb0ae8193d2fb8643e6f19e0e2f3b962cdba35a4b8",
+  "created_date": "2026-07-12",
+  "dockerfile_sha256": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
+  "environment_id": "dsa_v2_p2_order_044_bugsinpy_fastapi_7_environment_v0_1",
+  "failure_reason": "environment-build-failure",
+  "image": null,
+  "official_setup_executed": false,
+  "order": 44,
+  "source_record_sha256": "1cf41ad6de5213b5d6efbc2fe59f7d9d65a52f3aea81e91ad9904af2a53a3e6f",
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_fastapi_7",
+  "task_specific_repair_attempted": false
+}
