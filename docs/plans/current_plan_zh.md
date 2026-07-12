@@ -282,6 +282,14 @@ Cythonizing sources 时同时缺少 Python `Cython` module 与 `cython` executab
 build dependency、不重跑。ledger v0.42 attempted=42、qualified=0、API=0；cursor 为
 order43 `bugsinpy_pandas_37`、started=false。
 
+Pandas_37 frozen metadata 的 short SHA 由同一 requirements 精确绑定 full SHA；首次
+codeload transport EOF 产生截断 archive，extractor 在 tracked record 前拒绝，随后仅对
+同一 official object 重试并验证完整 tar。source freeze/check PASS。唯一 py383 build
+在 requirements/editable PEP517 的 `pandas/_libs/algos.pyx` Cythonization 中均触发
+`ErrorType.rank` compiler failure；不改 build dependencies、不重跑。ledger v0.43
+attempted=43、qualified=0、API=0；cursor 为 order44 `bugsinpy_fastapi_7`、
+started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

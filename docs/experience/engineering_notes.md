@@ -222,6 +222,10 @@
   because the official patch no longer applies inside the built image. Under a
   frozen no-rerun protocol, preserve both the earlier valid source evidence and
   the later built-image failure; do not post hoc repair the worker or patch.
+- A transport-success exit is not archive integrity. Parse the complete gzip
+  tar before source materialization; an unexpected EOF must leave the task
+  unstarted and may only retry the identical official object. Never let a
+  partial codeload file become a source record.
 
 ## 2026-07-12 V2-P1 metadata and base-lock freeze
 

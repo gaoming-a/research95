@@ -1,10 +1,10 @@
 {
-  "attempted_tasks": 42,
+  "attempted_tasks": 43,
   "config_id": "dsa_v2_p2_cursor_task_config_v0_1",
-  "config_sha256": "f7247ee5fe6cae7cf4a5101327af679d55db85944253e6f3a3bdad60b8267302",
+  "config_sha256": "55dd56306bdc4044ffb726a5f280d70ae00318fd683729f1db769e29d72e90f3",
   "created_date": "2026-07-12",
-  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_42.json",
-  "ledger_sha256": "36fa5ca2c2d294396dacba32e8e9f0b0138f05671fe294221130c2f318b8e93d",
+  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_43.json",
+  "ledger_sha256": "f246ef5d0dfc66bb8c505b81c593de48c991a2ca52b3fe5aa9087b7e92687ce2",
   "model_api_calls": 0,
   "next_task_started": false,
   "project_test_scope": {
@@ -14,12 +14,12 @@
       "pytest",
       "--collect-only",
       "-q",
-      "pandas/tests"
+      "tests"
     ],
-    "derived_from_declared_file_count": 119,
+    "derived_from_declared_file_count": 14,
     "framework": "pytest",
-    "project": "pandas",
-    "project_test_root": "pandas/tests",
+    "project": "fastapi",
+    "project_test_root": "tests",
     "unittest_pattern": null,
     "unittest_top_level_dir": null
   },
@@ -31,47 +31,44 @@
     "python_version": "3.8.3"
   },
   "qualified_pairs": 0,
-  "repository": "https://github.com/pandas-dev/pandas",
-  "runtime_namespace": "order_043_bugsinpy_pandas_37",
+  "repository": "https://github.com/tiangolo/fastapi",
+  "runtime_namespace": "order_044_bugsinpy_fastapi_7",
   "status": "unique_next_task_resolved",
   "task": {
-    "bug_id": 37,
-    "buggy_commit_id": "c69f7d8",
+    "bug_id": 7,
+    "buggy_commit_id": "cc4c13e4ae3f65fc76c23962b316df4a60e0c7e0",
     "candidate_materialized": false,
     "candidate_outcome_observed": false,
     "catalog_f2p_commands": [
-      "pytest pandas/tests/arrays/string_/test_string.py::test_astype_int"
+      "pytest tests/test_multi_body_errors.py::test_jsonable_encoder_requiring_error"
     ],
     "declared_f2p_commands": [
-      "pytest pandas/tests/arrays/string_/test_string.py::test_astype_int"
+      "pytest tests/test_multi_body_errors.py::test_jsonable_encoder_requiring_error"
     ],
-    "declared_test_file": "pandas/tests/arrays/string_/test_string.py",
-    "environment_risk_tags": [
-      "native_extension_build"
-    ],
+    "declared_test_file": "tests/test_multi_body_errors.py",
+    "environment_risk_tags": [],
     "f2p_command_match": true,
-    "fixed_commit_id": "845c50c9e2ce611c773422ae9db7097fc3e5fba5",
+    "fixed_commit_id": "19c77e35bdde33aeec1eb2cfa680f95016492b69",
     "metadata_sha256": {
-      "bug_info": "35ede1bc665279b812b4410600201deaed69fd0e67cd8c1f3bf938b96782072a",
-      "reference_patch": "1d0449b29aa23e4f996e83e8c0f76d8f853c6d7ac1671c7bed48575fd219e821",
-      "requirements": "fe71313e60f7f2c291d29452613bbeb5e3baf641c828f53e8fbff8457d579632",
-      "run_test": "869b88da13d64d3884bb5ab1430c59c698b7d3b9c361f943f5156c4f026bef72",
-      "setup_provenance_only": "fff3ab9f74619b05cbe5eea2a563d8185d513b5305565b880e002d238bfdbe93"
+      "bug_info": "2e6735609d8d039424a0806a60fb98cc6389dc7be111cb24f2106c4765e40b2e",
+      "reference_patch": "2e0c69ecbc9dfef6d314156ce89aae8cc1c800f8330739bd2075db633e436236",
+      "requirements": "b8b1f9c1c7ad13441d7972b6b866d0e1ea367c9cfc3b38aa6e65aeb7eb613e80",
+      "run_test": "f0ab52af4bf4b60228c15761bf6dadb15ade0b239ab5e2b4774bc81e1667bab3"
     },
     "model_outcome_observed": false,
     "official_setup_executable_authority": false,
-    "order": 43,
-    "project": "pandas",
-    "project_order_sha256": "41103a71feed7a79ab78d79e684d033ffd4d65c422392e1c77b43f2c5c525130",
-    "project_position": 1,
+    "order": 44,
+    "project": "fastapi",
+    "project_order_sha256": "5485690149323032350b0fceba9d0e54932e1800f95277c16762379fe81e8776",
+    "project_position": 2,
     "python_version": "3.8.3",
     "requirements_metadata": {
       "nonempty": true,
       "present": true
     },
     "round": 6,
-    "task_id": "bugsinpy_pandas_37",
-    "task_order_sha256": "04f569eef2b827b1f39e4d01bb23446331e7727937d0221dc94ba112f441be98",
+    "task_id": "bugsinpy_fastapi_7",
+    "task_order_sha256": "b415e3ba60dfb193533b667e428bb17f549d0e9b4d1c388a7525c9c3f560fc8c",
     "test_framework": "pytest"
   }
 }

@@ -279,6 +279,12 @@
   PEP517 hook lacked both the Cython module and executable; no build-dependency
   repair or rerun occurred. Ledger v0.42 advances to `bugsinpy_pandas_37`,
   API=0.
+- [dsa_v2_p2_order_043_bugsinpy_pandas_37_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_043_bugsinpy_pandas_37_terminal_gate_v0_1.md):
+  order43 environment terminal after strict short/full-SHA source binding and
+  source freeze/check. A truncated transport download was rejected and retried
+  against the same official object; build then failed while Cythonizing
+  `pandas/_libs/algos.pyx`. Ledger v0.43 advances to `bugsinpy_fastapi_7`,
+  API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
