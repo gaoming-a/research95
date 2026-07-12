@@ -136,6 +136,10 @@
   order8 environment terminal. Canonical `spaCy` archive roots were preserved;
   editable installation then failed because the frozen environment lacked the
   `cython` executable. No repair/rerun occurred; ledger advances to Sanic_4.
+- [dsa_v2_p2_order_009_bugsinpy_sanic_4_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_009_bugsinpy_sanic_4_terminal_gate_v0_1.md):
+  order9 environment terminal. Frozen `pywin32==227` and unavailable
+  `requests-async==0.5.0` prevented Linux materialization; neither dependency
+  was removed/replaced. Ledger v0.9 advances to `bugsinpy_pandas_167`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

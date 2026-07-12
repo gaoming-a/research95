@@ -1,10 +1,10 @@
 {
-  "attempted_tasks": 8,
+  "attempted_tasks": 9,
   "config_id": "dsa_v2_p2_cursor_task_config_v0_1",
-  "config_sha256": "4278e9007b898503c75b71e575ddcb87f30bab7a5f296235d1b21bf9a1ee4505",
+  "config_sha256": "21a91633814f0b6299913a994820ed2cd2d5ca2cda983067185f362c397ccb30",
   "created_date": "2026-07-12",
-  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_8.json",
-  "ledger_sha256": "bb7dcfac90ac27c0e044cdef356383d7756b5c6a2aa3cb44eec86d4c8f4ec93b",
+  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_9.json",
+  "ledger_sha256": "7d838c9992cf818801cbee5333aa9ea0c3f2674c962bec3486c29d5af5ea1518",
   "model_api_calls": 0,
   "next_task_started": false,
   "project_test_scope": {
@@ -14,12 +14,12 @@
       "pytest",
       "--collect-only",
       "-q",
-      "tests"
+      "pandas/tests"
     ],
-    "derived_from_declared_file_count": 2,
+    "derived_from_declared_file_count": 119,
     "framework": "pytest",
-    "project": "sanic",
-    "project_test_root": "tests",
+    "project": "pandas",
+    "project_test_root": "pandas/tests",
     "unittest_pattern": null,
     "unittest_top_level_dir": null
   },
@@ -31,45 +31,47 @@
     "python_version": "3.8.3"
   },
   "qualified_pairs": 0,
-  "repository": "https://github.com/huge-success/sanic",
-  "runtime_namespace": "order_009_bugsinpy_sanic_4",
+  "repository": "https://github.com/pandas-dev/pandas",
+  "runtime_namespace": "order_010_bugsinpy_pandas_167",
   "status": "unique_next_task_resolved",
   "task": {
-    "bug_id": 4,
-    "buggy_commit_id": "e506c89304948bba593e8603ecace1c495b06fd5",
+    "bug_id": 167,
+    "buggy_commit_id": "6af6d51",
     "candidate_materialized": false,
     "candidate_outcome_observed": false,
     "catalog_f2p_commands": [
-      "pytest tests/test_requests.py::test_url_for_without_server_name"
+      "pytest pandas/tests/indexes/datetimes/test_partial_slicing.py::TestSlicing::test_slice_reduce_to_series"
     ],
     "declared_f2p_commands": [
-      "pytest tests/test_requests.py::test_url_for_without_server_name"
+      "pytest pandas/tests/indexes/datetimes/test_partial_slicing.py::TestSlicing::test_slice_reduce_to_series"
     ],
-    "declared_test_file": "tests/test_requests.py",
-    "environment_risk_tags": [],
+    "declared_test_file": "pandas/tests/indexes/datetimes/test_partial_slicing.py",
+    "environment_risk_tags": [
+      "native_extension_build"
+    ],
     "f2p_command_match": true,
-    "fixed_commit_id": "e81a8ce07329e95d3d0899b1d774f21759c28e0e",
+    "fixed_commit_id": "226398224d260d908a1f3d0f23c16fa9ffc8f9b0",
     "metadata_sha256": {
-      "bug_info": "83c8a5e87e02bd1515a16e8b5c20b95fe52a1e1dc575a2f18462ee4f460219e5",
-      "reference_patch": "3fb4bd0b812ccb9497a9396807589e9e3f1b25ae29efb900f77fdbb2fb96326c",
-      "requirements": "2b9cdc736f4b71f18d39e352b451b8abb708c59eb7d2982490455032466d975c",
-      "run_test": "c22fc917206caac8a19620121019b8914fd9f26d458387ebd2e9c74174b094b5",
-      "setup_provenance_only": "28c76c4d388d78fd7e3bda08d447f92ab8aa1cd85652afabcdd99afafa1c7a6c"
+      "bug_info": "b0935c2a5b718b2b315865bcb6b780aba7d85cae8a0bf73a4322a7f857c8edd0",
+      "reference_patch": "de25ad8142242b8eb41b846990ce7bfcb28d3117f8ff64ab3836f6c3d500d3d2",
+      "requirements": "ba70c1128d8aa7900bb1ec0bdeae4e3eea90bb6bcb5fbcce4a72a5d106e2f7e5",
+      "run_test": "7f769b271a915b243e426114b504fa16afdba3b457a4dee4e3bcf1aae449b8d0",
+      "setup_provenance_only": "fff3ab9f74619b05cbe5eea2a563d8185d513b5305565b880e002d238bfdbe93"
     },
     "model_outcome_observed": false,
     "official_setup_executable_authority": false,
-    "order": 9,
-    "project": "sanic",
-    "project_order_sha256": "f8471c05131ea7b724ab13f0f31e01445c81bc8eb453fa32c16a7258e56841d3",
-    "project_position": 9,
+    "order": 10,
+    "project": "pandas",
+    "project_order_sha256": "41103a71feed7a79ab78d79e684d033ffd4d65c422392e1c77b43f2c5c525130",
+    "project_position": 1,
     "python_version": "3.8.3",
     "requirements_metadata": {
       "nonempty": true,
       "present": true
     },
-    "round": 1,
-    "task_id": "bugsinpy_sanic_4",
-    "task_order_sha256": "51ac232dd189b56116f244299fce9fc7eade4df1791fc7b3099736100c37b9e6",
+    "round": 2,
+    "task_id": "bugsinpy_pandas_167",
+    "task_order_sha256": "00c66c6eb36791090e9a4e0a0816820473c7152a772e55e5c7213f2b9c7844fd",
     "test_framework": "pytest"
   }
 }

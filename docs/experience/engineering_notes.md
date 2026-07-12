@@ -50,6 +50,9 @@
 - A missing build executable discovered by editable-install hooks (for example
   `cython`) is also an environment terminal when it is absent from the frozen
   dependency recipe. Installing it after observation is task-specific repair.
+- Platform-incompatible pins such as `pywin32` on Linux remain part of the frozen
+  recipe. Removing them after a failed build is dependency repair, even when the
+  incompatibility looks obvious.
 
 ## 2026-07-12 Keep Windows archive staging paths deliberately short
 

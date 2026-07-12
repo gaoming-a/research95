@@ -1,0 +1,128 @@
+{
+  "created_date": "2026-07-12",
+  "cursor_config_sha256": "4278e9007b898503c75b71e575ddcb87f30bab7a5f296235d1b21bf9a1ee4505",
+  "model_api_calls": 0,
+  "previous_ledger_sha256": "bb7dcfac90ac27c0e044cdef356383d7756b5c6a2aa3cb44eec86d4c8f4ec93b",
+  "records": [
+    {
+      "context": {
+        "buggy_archive": {
+          "archive_bytes": 191053,
+          "archive_root": "sanic-e506c89304948bba593e8603ecace1c495b06fd5",
+          "archive_sha256": "00e2cf2dbff6ae55426eca1db6183b0815fb4e9064ae8ef8e6b38f2ee1b7be37",
+          "extracted_file_count": 185,
+          "extracted_tree_sha256": "cc0f4f9135263f3639bfe2619dada9cbebfb18f1a8c722cd799766869c02c119",
+          "materialized_symlink_count": 0
+        },
+        "buggy_commit_id": "e506c89304948bba593e8603ecace1c495b06fd5",
+        "buggy_source_tree_sha256": "cc0f4f9135263f3639bfe2619dada9cbebfb18f1a8c722cd799766869c02c119",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "context_tree_sha256": "f0ea38f136f71de0a0590529966a259e4f73f3a65ebc037d4084719d99f6bb20",
+        "fixed_archive": {
+          "archive_bytes": 191275,
+          "archive_root": "sanic-e81a8ce07329e95d3d0899b1d774f21759c28e0e",
+          "archive_sha256": "28eac7fdbec6da7f3a63aaa0c2a3946b11ebcdbc0bdac7592593ebc70597d513",
+          "extracted_file_count": 187,
+          "extracted_tree_sha256": "d39bcca17f355720d4179187945cfd950c7547ae8798f21b0118491968da51de",
+          "materialized_symlink_count": 0
+        },
+        "fixed_commit_id": "e81a8ce07329e95d3d0899b1d774f21759c28e0e",
+        "fixed_test_sha256": {
+          "tests/test_requests.py": "8ed90b9ff4fe2fe2cdd6980124379e0464e9b7e49ab542aafcf8566bcc025aba"
+        },
+        "metadata_sha256": {
+          "bug.info": "83c8a5e87e02bd1515a16e8b5c20b95fe52a1e1dc575a2f18462ee4f460219e5",
+          "bug_patch.txt": "3fb4bd0b812ccb9497a9396807589e9e3f1b25ae29efb900f77fdbb2fb96326c",
+          "requirements.txt": "2b9cdc736f4b71f18d39e352b451b8abb708c59eb7d2982490455032466d975c",
+          "run_test.sh": "c22fc917206caac8a19620121019b8914fd9f26d458387ebd2e9c74174b094b5",
+          "setup.sh": "28c76c4d388d78fd7e3bda08d447f92ab8aa1cd85652afabcdd99afafa1c7a6c"
+        },
+        "model_api_calls": 0,
+        "order": 9,
+        "project": "sanic",
+        "record_sha256": "4b080307509ace04a7bbbaff36996c674bd2dfc40fd69577520f041d89f0dbcf",
+        "reference_validation": {
+          "normalized_patch_sha256": "1cc7af7a96349bb6299af25edcd0b815d4cda68479808e6ba972bdd4e0d1f4cb",
+          "patch_apply_exit_code": 0,
+          "patch_check_exit_code": 0,
+          "patch_line_endings_normalized": true,
+          "reference_tree_sha256": "efbcbe2b10a9066ea6a66fc0a885a6a1dedc6954ec454177370f3e63b16ce496"
+        },
+        "source_acquisition": "official GitHub codeload commit tarballs",
+        "source_materialization_manifests": [],
+        "source_repository": "https://github.com/huge-success/sanic",
+        "status": "v2_p2_source_context_frozen_no_candidate",
+        "task_id": "bugsinpy_sanic_4"
+      },
+      "order": 9,
+      "project_test_scope": {
+        "collection_command": [
+          "python",
+          "-m",
+          "pytest",
+          "--collect-only",
+          "-q",
+          "tests"
+        ],
+        "derived_from_declared_file_count": 2,
+        "framework": "pytest",
+        "project": "sanic",
+        "project_test_root": "tests",
+        "unittest_pattern": null,
+        "unittest_top_level_dir": null
+      },
+      "real_activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 1
+      },
+      "record_sha256": "27107a838216b63458adc2a99670000d194cc960e3dcf1423ff3ccc64e50abcb",
+      "source_record": {
+        "bug_id": 4,
+        "buggy_commit_id": "e506c89304948bba593e8603ecace1c495b06fd5",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "catalog_f2p_commands": [
+          "pytest tests/test_requests.py::test_url_for_without_server_name"
+        ],
+        "declared_f2p_commands": [
+          "pytest tests/test_requests.py::test_url_for_without_server_name"
+        ],
+        "declared_test_file": "tests/test_requests.py",
+        "environment_risk_tags": [],
+        "f2p_command_match": true,
+        "fixed_commit_id": "e81a8ce07329e95d3d0899b1d774f21759c28e0e",
+        "metadata_sha256": {
+          "bug_info": "83c8a5e87e02bd1515a16e8b5c20b95fe52a1e1dc575a2f18462ee4f460219e5",
+          "reference_patch": "3fb4bd0b812ccb9497a9396807589e9e3f1b25ae29efb900f77fdbb2fb96326c",
+          "requirements": "2b9cdc736f4b71f18d39e352b451b8abb708c59eb7d2982490455032466d975c",
+          "run_test": "c22fc917206caac8a19620121019b8914fd9f26d458387ebd2e9c74174b094b5",
+          "setup_provenance_only": "28c76c4d388d78fd7e3bda08d447f92ab8aa1cd85652afabcdd99afafa1c7a6c"
+        },
+        "model_outcome_observed": false,
+        "official_setup_executable_authority": false,
+        "order": 9,
+        "project": "sanic",
+        "project_order_sha256": "f8471c05131ea7b724ab13f0f31e01445c81bc8eb453fa32c16a7258e56841d3",
+        "project_position": 9,
+        "python_version": "3.8.3",
+        "requirements_metadata": {
+          "nonempty": true,
+          "present": true
+        },
+        "round": 1,
+        "task_id": "bugsinpy_sanic_4",
+        "task_order_sha256": "51ac232dd189b56116f244299fce9fc7eade4df1791fc7b3099736100c37b9e6",
+        "test_framework": "pytest"
+      },
+      "task_id": "bugsinpy_sanic_4"
+    }
+  ],
+  "registry_id": "dsa_v2_p2_order_009_bugsinpy_sanic_4_source_v0_1",
+  "status": "cursor_task_source_frozen"
+}

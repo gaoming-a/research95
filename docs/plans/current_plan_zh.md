@@ -100,6 +100,11 @@ PEP517 get-build-requirements 阶段因 `cython` executable 缺失而失败；�
 不重跑、未进入 oracle。ledger v0.8 attempted=8、qualified=0、API=0；cursor 为 order9
 `bugsinpy_sanic_4`、started=false。
 
+Sanic_4 source freeze/check PASS。唯一 py383 build 的冻结 requirements 含 Linux 无分发的
+`pywin32==227`，editable project 又要求当前 index 不存在的 `requests-async==0.5.0`；
+不删平台依赖、不换版本、不重跑。ledger v0.9 attempted=9、qualified=0、API=0；cursor
+为 order10 `bugsinpy_pandas_167`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

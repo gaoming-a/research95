@@ -1,0 +1,25 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "build_exit_code": 1,
+  "build_output_bytes": 32087,
+  "build_output_sha256": "d8693c48a839f253b14830e3bad36a7178000430e01b4dead4b909f1533fad94",
+  "created_date": "2026-07-12",
+  "dockerfile_sha256": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
+  "environment_id": "dsa_v2_p2_order_009_bugsinpy_sanic_4_environment_v0_1",
+  "failure_reason": "environment-build-failure",
+  "image": null,
+  "official_setup_executed": false,
+  "order": 9,
+  "source_record_sha256": "27107a838216b63458adc2a99670000d194cc960e3dcf1423ff3ccc64e50abcb",
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_sanic_4",
+  "task_specific_repair_attempted": false
+}
