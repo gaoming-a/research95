@@ -1,0 +1,126 @@
+{
+  "created_date": "2026-07-12",
+  "cursor_config_sha256": "01524b6f349cc33907265189da005433bf432d36d34127b0db502d8e64c111dc",
+  "model_api_calls": 0,
+  "previous_ledger_sha256": "16994b17c018c30397b7dbed8e1c43a133d87425fae18d2e68699e9be04bdaaa",
+  "records": [
+    {
+      "context": {
+        "buggy_archive": {
+          "archive_bytes": 38904700,
+          "archive_root": "matplotlib-2c845db9d961ddea6e072c3e6dbb0bec823ac25e",
+          "archive_sha256": "9256de880be99c6ae95665499f0ac947e13ea3b4f192c91f3a902b092c28db5b",
+          "extracted_file_count": 4210,
+          "extracted_tree_sha256": "5ad8e9eb4635d0a12edf2ebd72773e28940330427c73397630def32f2a03032f",
+          "materialized_symlink_count": 0
+        },
+        "buggy_commit_id": "2c845db9d961ddea6e072c3e6dbb0bec823ac25e",
+        "buggy_source_tree_sha256": "5ad8e9eb4635d0a12edf2ebd72773e28940330427c73397630def32f2a03032f",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "context_tree_sha256": "5eeb7da838396fca9a60600e21d0253122f1c709ced2d8e84414b915cb31da71",
+        "fixed_archive": {
+          "archive_bytes": 38903086,
+          "archive_root": "matplotlib-eb4b15b47a4d019f0e9edb2fb0587aebc2dbd8e8",
+          "archive_sha256": "e1ac229b1d97bff5a3a8810e350a3b6bee5c64aad75c029547cf0e031362870b",
+          "extracted_file_count": 4210,
+          "extracted_tree_sha256": "4c73b26b46b68122f245a9d2cbf7969a68186cfe97a5ee6f18694f616e16b707",
+          "materialized_symlink_count": 0
+        },
+        "fixed_commit_id": "eb4b15b47a4d019f0e9edb2fb0587aebc2dbd8e8",
+        "fixed_test_sha256": {
+          "lib/matplotlib/tests/test_path.py": "fe2e9f86b6557f486f139b89efe030738615e2ab09cc2c23c200eb690e6f4aa4"
+        },
+        "metadata_sha256": {
+          "bug.info": "abb2b87c639622545427891e2b521bcec0eb356cb12f516d47106bc27e0ee0d2",
+          "bug_patch.txt": "8b89c9d6ef68c76c46aa902206fda89a3190c4d1542fb3eafb0ceeaec5e78e47",
+          "requirements.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "run_test.sh": "2fdecf2f10b81694ea57abd5889a106cd7e66ccd3b64a79bbfcf99a0112b068e"
+        },
+        "model_api_calls": 0,
+        "order": 25,
+        "project": "matplotlib",
+        "record_sha256": "6ca3412fdfdf7de2be667659f8414690bbc0e43193472a8c8cb37d3f8e97eab1",
+        "reference_validation": {
+          "normalized_patch_sha256": "9d1b04b6d185f94dffb40f6378cdbe49a74ba2a0838fd8427551269a09327ff7",
+          "patch_apply_exit_code": 0,
+          "patch_check_exit_code": 0,
+          "patch_line_endings_normalized": true,
+          "reference_tree_sha256": "a10a92bf99c161b54f731d3c06970bd932b44d4a6b330d9e72d74b5c23d88ecc"
+        },
+        "source_acquisition": "official GitHub codeload commit tarballs",
+        "source_materialization_manifests": [],
+        "source_repository": "https://github.com/matplotlib/matplotlib",
+        "status": "v2_p2_source_context_frozen_no_candidate",
+        "task_id": "bugsinpy_matplotlib_13"
+      },
+      "order": 25,
+      "project_test_scope": {
+        "collection_command": [
+          "python",
+          "-m",
+          "pytest",
+          "--collect-only",
+          "-q",
+          "lib/matplotlib/tests"
+        ],
+        "derived_from_declared_file_count": 8,
+        "framework": "pytest",
+        "project": "matplotlib",
+        "project_test_root": "lib/matplotlib/tests",
+        "unittest_pattern": null,
+        "unittest_top_level_dir": null
+      },
+      "real_activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 1
+      },
+      "record_sha256": "9f20da1d1ccd5f7c35354724456f09b75aeaccde58b3d605f5348fe897f10532",
+      "source_record": {
+        "bug_id": 13,
+        "buggy_commit_id": "2c845db9d961ddea6e072c3e6dbb0bec823ac25e",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "catalog_f2p_commands": [
+          "pytest lib/matplotlib/tests/test_path.py::test_make_compound_path_stops"
+        ],
+        "declared_f2p_commands": [
+          "pytest lib/matplotlib/tests/test_path.py::test_make_compound_path_stops"
+        ],
+        "declared_test_file": "lib/matplotlib/tests/test_path.py",
+        "environment_risk_tags": [],
+        "f2p_command_match": true,
+        "fixed_commit_id": "eb4b15b47a4d019f0e9edb2fb0587aebc2dbd8e8",
+        "metadata_sha256": {
+          "bug_info": "abb2b87c639622545427891e2b521bcec0eb356cb12f516d47106bc27e0ee0d2",
+          "reference_patch": "8b89c9d6ef68c76c46aa902206fda89a3190c4d1542fb3eafb0ceeaec5e78e47",
+          "requirements": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "run_test": "2fdecf2f10b81694ea57abd5889a106cd7e66ccd3b64a79bbfcf99a0112b068e"
+        },
+        "model_outcome_observed": false,
+        "official_setup_executable_authority": false,
+        "order": 25,
+        "project": "matplotlib",
+        "project_order_sha256": "b7243a408f3c16750015755b815be3102ceea4d257734b52ae78526e83672f85",
+        "project_position": 7,
+        "python_version": "3.8.1",
+        "requirements_metadata": {
+          "nonempty": false,
+          "present": true
+        },
+        "round": 3,
+        "task_id": "bugsinpy_matplotlib_13",
+        "task_order_sha256": "2501281540a8d9b9a7d94d4c61d06d518a59123171eb5d6b2d0b21690eb9d9a0",
+        "test_framework": "pytest"
+      },
+      "task_id": "bugsinpy_matplotlib_13"
+    }
+  ],
+  "registry_id": "dsa_v2_p2_order_025_bugsinpy_matplotlib_13_source_v0_1",
+  "status": "cursor_task_source_frozen"
+}

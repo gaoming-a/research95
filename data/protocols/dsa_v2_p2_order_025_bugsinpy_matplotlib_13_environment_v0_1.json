@@ -1,0 +1,47 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "build_exit_code": 0,
+  "build_output_bytes": 22169,
+  "build_output_sha256": "9c6f2b58e3a51eb6fc99ce09382decf9cd4c6c9a28f86ed1938d5e71f6cdc56f",
+  "created_date": "2026-07-12",
+  "dockerfile_sha256": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
+  "environment_id": "dsa_v2_p2_order_025_bugsinpy_matplotlib_13_environment_v0_1",
+  "failure_reason": null,
+  "image": {
+    "image": "dsa2026-v2-p2-task:bugsinpy_matplotlib_13",
+    "image_id": "sha256:4f10d0adb735a02f8c9524165e1b1662de4a499f50c998d61d038927eff4ae9c",
+    "labels": {
+      "dsa2026.v2_p2.buggy_commit": "2c845db9d961ddea6e072c3e6dbb0bec823ac25e",
+      "dsa2026.v2_p2.fixed_commit": "eb4b15b47a4d019f0e9edb2fb0587aebc2dbd8e8",
+      "dsa2026.v2_p2.model_api_called": "false",
+      "dsa2026.v2_p2.official_setup_executed": "false",
+      "dsa2026.v2_p2.order": "25",
+      "dsa2026.v2_p2.project": "matplotlib",
+      "dsa2026.v2_p2.python_env": "py381",
+      "dsa2026.v2_p2.task_id": "bugsinpy_matplotlib_13",
+      "maintainer": "Anaconda, Inc",
+      "org.opencontainers.image.created": "2023-05-02T19:14:07.639Z",
+      "org.opencontainers.image.description": "Repository of Docker images created by Anaconda",
+      "org.opencontainers.image.licenses": "",
+      "org.opencontainers.image.revision": "60eb8fe8f841c7d64a2439920562edc8e409c80f",
+      "org.opencontainers.image.source": "https://github.com/ContinuumIO/docker-images",
+      "org.opencontainers.image.title": "DSA v0.2 V2-P2 cursor task environment",
+      "org.opencontainers.image.url": "https://github.com/ContinuumIO/docker-images",
+      "org.opencontainers.image.version": "23.3.1-0"
+    }
+  },
+  "official_setup_executed": false,
+  "order": 25,
+  "source_record_sha256": "9f20da1d1ccd5f7c35354724456f09b75aeaccde58b3d605f5348fe897f10532",
+  "status": "environment-built-oracle-not-started",
+  "task_id": "bugsinpy_matplotlib_13",
+  "task_specific_repair_attempted": false
+}

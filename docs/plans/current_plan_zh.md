@@ -178,6 +178,11 @@ Tornado_11 source freeze/check 与 build PASS。两次 F2P 均通过，但 elaps
 不归一化、不重跑。ledger v0.24 attempted=24、qualified=0、API=0；cursor 为 order25
 `bugsinpy_matplotlib_13`、started=false。
 
+Matplotlib_13 source freeze/check 与 build PASS。两次 F2P 均通过，但 elapsed time
+`0.07s`/`0.09s` 导致冻结 full-output hashes 不同；按 dual disagreement terminal，
+不归一化、不重跑。ledger v0.25 attempted=25、qualified=0、API=0；cursor 为 order26
+`bugsinpy_spacy_5`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

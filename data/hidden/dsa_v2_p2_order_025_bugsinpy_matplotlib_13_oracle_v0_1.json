@@ -1,0 +1,232 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 2,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 2,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "created_date": "2026-07-12",
+  "failure_reason": "oracle-positive-f2p-failure-or-dual-disagreement",
+  "model_api_calls": 0,
+  "official_f2p": {
+    "dual_pass": false,
+    "run_a": {
+      "container_exit_code": 0,
+      "container_id": "e6a28dad9df929a28fd1089f23ecc6b6f2c2a063937a93ecfa09a5a2c743bb4a",
+      "container_name": "dsa-v2-p2-official-f2p-a-b6584e9ea4",
+      "image_id": "sha256:4f10d0adb735a02f8c9524165e1b1662de4a499f50c998d61d038927eff4ae9c",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 2821,
+      "output_sha256": "4c9385cc1af8dd45171f332d2f4766de507675fbd372a7a18877c04f27746e12",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "pytest lib/matplotlib/tests/test_path.py::test_make_compound_path_stops"
+            ],
+            "duration_seconds": 1.549,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "============================= test session starts ==============================\nplatform linux -- Python 3.8.1, pytest-5.4.3, py-1.11.0, pluggy-0.13.1\nrootdir: <PROJECT>, inifile: pytest.ini\ncollected 1 item\n\nlib/matplotlib/tests/test_path.py .                                      [100%]\n\n============================== 1 passed in 0.07s ===============================\n",
+            "output_sha256": "97d091199ddf6671b4655e988b2a4e71a21d69e10050351f5754f813035ba5a5",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 3846,
+              "sha256": "df1e425eedcb0d3806b5bf10c55e369648621d93f46f5754cdc85f8435cf21f8"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 1161,
+              "sha256": "236fefcfe76f0d7de9c4cca7fae1dfc7e975f3ee2eae732a0efc1130761bf8ae"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "3b1dc2bbc3cff0751e6bbf8d3cda2b91cdc3c8ccb60b7220d643eee87bac30f1"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 761,
+              "sha256": "a0beaab3e80d5e8620453e46e004ea88b8ebe9d3a656bbda1b970954800f5ab9"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py381/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.003,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.8.1\n",
+            "output_sha256": "91a3a5d83d5640b02e465696e524316a49de4b6da26732db04fc640ef12412d4",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "3f50229db6d3b2a434d595c172df6f2908741c68146454c338b92805b04efac2",
+          "fixed_test_paths": [
+            "lib/matplotlib/tests/test_path.py"
+          ],
+          "reference_patch_sha256": "8b89c9d6ef68c76c46aa902206fda89a3190c4d1542fb3eafb0ceeaec5e78e47"
+        }
+      }
+    },
+    "run_b": {
+      "container_exit_code": 0,
+      "container_id": "53e02077dec7e9745a4cf327a406756083cf31384fe1cf26e3413cd2993803c2",
+      "container_name": "dsa-v2-p2-official-f2p-b-3b1c2e6ae8",
+      "image_id": "sha256:4f10d0adb735a02f8c9524165e1b1662de4a499f50c998d61d038927eff4ae9c",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 2821,
+      "output_sha256": "325bdcc9ad4c5a3aa588ff010fabfeb67362cdb520ae8b5e1a74bbd2de9e7929",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "pytest lib/matplotlib/tests/test_path.py::test_make_compound_path_stops"
+            ],
+            "duration_seconds": 1.673,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "============================= test session starts ==============================\nplatform linux -- Python 3.8.1, pytest-5.4.3, py-1.11.0, pluggy-0.13.1\nrootdir: <PROJECT>, inifile: pytest.ini\ncollected 1 item\n\nlib/matplotlib/tests/test_path.py .                                      [100%]\n\n============================== 1 passed in 0.09s ===============================\n",
+            "output_sha256": "911e1f8248a7649838e965f7ee8bd1fafa01e8c658d221b653ff59d29d716796",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 3846,
+              "sha256": "df1e425eedcb0d3806b5bf10c55e369648621d93f46f5754cdc85f8435cf21f8"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 1161,
+              "sha256": "236fefcfe76f0d7de9c4cca7fae1dfc7e975f3ee2eae732a0efc1130761bf8ae"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "3b1dc2bbc3cff0751e6bbf8d3cda2b91cdc3c8ccb60b7220d643eee87bac30f1"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 761,
+              "sha256": "a0beaab3e80d5e8620453e46e004ea88b8ebe9d3a656bbda1b970954800f5ab9"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py381/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.004,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.8.1\n",
+            "output_sha256": "91a3a5d83d5640b02e465696e524316a49de4b6da26732db04fc640ef12412d4",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "3f50229db6d3b2a434d595c172df6f2908741c68146454c338b92805b04efac2",
+          "fixed_test_paths": [
+            "lib/matplotlib/tests/test_path.py"
+          ],
+          "reference_patch_sha256": "8b89c9d6ef68c76c46aa902206fda89a3190c4d1542fb3eafb0ceeaec5e78e47"
+        }
+      }
+    }
+  },
+  "oracle_id": "dsa_v2_p2_order_025_bugsinpy_matplotlib_13_oracle_v0_1",
+  "order": 25,
+  "source_paths": [
+    "lib/matplotlib/path.py"
+  ],
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_matplotlib_13",
+  "task_image_id": "sha256:4f10d0adb735a02f8c9524165e1b1662de4a499f50c998d61d038927eff4ae9c",
+  "task_specific_repair_attempted": false
+}
