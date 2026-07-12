@@ -1,0 +1,128 @@
+{
+  "created_date": "2026-07-12",
+  "cursor_config_sha256": "23484e40afac3724f9951f5ae47ec52707991161da30a282853a2ae92e3b0558",
+  "model_api_calls": 0,
+  "previous_ledger_sha256": "76b09dffcacbb4205375a472c8cc1f6bdcb1feec601a36c255f8b28edd4e9e0f",
+  "records": [
+    {
+      "context": {
+        "buggy_archive": {
+          "archive_bytes": 488413,
+          "archive_root": "keras-9400be98783135a1d42dd238f4e6c3aa048eceea",
+          "archive_sha256": "444abee4fefdf6b001dc4cfff9f1891def3ca22535d662363797e3dd20c3e4b6",
+          "extracted_file_count": 224,
+          "extracted_tree_sha256": "156149c196697a928e46b131d667307385b36fbd163806e4ef0a63feb00c8124",
+          "materialized_symlink_count": 0
+        },
+        "buggy_commit_id": "9400be98783135a1d42dd238f4e6c3aa048eceea",
+        "buggy_source_tree_sha256": "156149c196697a928e46b131d667307385b36fbd163806e4ef0a63feb00c8124",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "context_tree_sha256": "3fc8b5d7a45ebf01c67689fce6140fd61c6bbed6259820ad6b7ef07147b1d0b7",
+        "fixed_archive": {
+          "archive_bytes": 488796,
+          "archive_root": "keras-244546c2fe5165b6770eb456afd5fac8878473c5",
+          "archive_sha256": "fc679d318adcb4a38f34f4f040ccdce6c6dbc7ef7193f5f2b9b50c1cfd2180f3",
+          "extracted_file_count": 224,
+          "extracted_tree_sha256": "5906472dcc6f250e959e0541700df84c76e0d487e0b39acc588a22ff9c7f0f92",
+          "materialized_symlink_count": 0
+        },
+        "fixed_commit_id": "244546c2fe5165b6770eb456afd5fac8878473c5",
+        "fixed_test_sha256": {
+          "tests/keras/backend/backend_test.py": "e9c0b0e2f46c3833aec50f98418b9fb9314323cc5a3b89bcc7dca8a13a9ac702"
+        },
+        "metadata_sha256": {
+          "bug.info": "02a9e14a2fff40a28b88fdd3cc8eb27914bfab24ef963863336855f65cd7272b",
+          "bug_patch.txt": "3536e465f1132f75689035c66c727958ca9b88a15da6254d455dc944828ace72",
+          "requirements.txt": "df780403a9b34b8a67ae99988f7c2c62b4704e8c08d82e1d9afd71e30f2b6424",
+          "run_test.sh": "a414e90c25bde3ee0f4c848182f6ad5af518fc0ca340704d58568a43321d52e0"
+        },
+        "model_api_calls": 0,
+        "order": 38,
+        "project": "keras",
+        "record_sha256": "def2b4695255d26dcf79d6acfc0be930a8bf03402ed73e9636f74c345a330aa7",
+        "reference_validation": {
+          "normalized_patch_sha256": "a7f14666c5bcb9c140be0a75a149c85c65338129cf64068536e5db7d52ac74c8",
+          "patch_apply_exit_code": 0,
+          "patch_check_exit_code": 0,
+          "patch_line_endings_normalized": true,
+          "reference_tree_sha256": "058d69280b6797631192f0ed98afb2c51998344ef890fcda4c44953bbc281c4c"
+        },
+        "source_acquisition": "official GitHub codeload commit tarballs",
+        "source_materialization_manifests": [],
+        "source_repository": "https://github.com/keras-team/keras",
+        "status": "v2_p2_source_context_frozen_no_candidate",
+        "task_id": "bugsinpy_keras_18"
+      },
+      "order": 38,
+      "project_test_scope": {
+        "collection_command": [
+          "python",
+          "-m",
+          "pytest",
+          "--collect-only",
+          "-q",
+          "tests"
+        ],
+        "derived_from_declared_file_count": 23,
+        "framework": "pytest",
+        "project": "keras",
+        "project_test_root": "tests",
+        "unittest_pattern": null,
+        "unittest_top_level_dir": null
+      },
+      "real_activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 1
+      },
+      "record_sha256": "1dcaa598ccbaaab4bc9177142ca5803fde653e6ddac7462185ab5a9114fcfa0a",
+      "source_record": {
+        "bug_id": 18,
+        "buggy_commit_id": "9400be98783135a1d42dd238f4e6c3aa048eceea",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "catalog_f2p_commands": [
+          "pytest tests/keras/backend/backend_test.py::TestBackend::test_function_tf_run_options_with_run_metadata"
+        ],
+        "declared_f2p_commands": [
+          "pytest tests/keras/backend/backend_test.py::TestBackend::test_function_tf_run_options_with_run_metadata"
+        ],
+        "declared_test_file": "tests/keras/backend/backend_test.py",
+        "environment_risk_tags": [
+          "heavy_tensorflow_stack"
+        ],
+        "f2p_command_match": true,
+        "fixed_commit_id": "244546c2fe5165b6770eb456afd5fac8878473c5",
+        "metadata_sha256": {
+          "bug_info": "02a9e14a2fff40a28b88fdd3cc8eb27914bfab24ef963863336855f65cd7272b",
+          "reference_patch": "3536e465f1132f75689035c66c727958ca9b88a15da6254d455dc944828ace72",
+          "requirements": "df780403a9b34b8a67ae99988f7c2c62b4704e8c08d82e1d9afd71e30f2b6424",
+          "run_test": "a414e90c25bde3ee0f4c848182f6ad5af518fc0ca340704d58568a43321d52e0"
+        },
+        "model_outcome_observed": false,
+        "official_setup_executable_authority": false,
+        "order": 38,
+        "project": "keras",
+        "project_order_sha256": "86275bf699d90e96bfd9ecb0df4e68b0faac0f01cca31e3de7cfd50bd2a2aad3",
+        "project_position": 4,
+        "python_version": "3.7.3",
+        "requirements_metadata": {
+          "nonempty": true,
+          "present": true
+        },
+        "round": 5,
+        "task_id": "bugsinpy_keras_18",
+        "task_order_sha256": "2065851f5af81b3fbcaf0686c4b88ad3472de09806eb9eb31d451bd898c18974",
+        "test_framework": "pytest"
+      },
+      "task_id": "bugsinpy_keras_18"
+    }
+  ],
+  "registry_id": "dsa_v2_p2_order_038_bugsinpy_keras_18_source_v0_1",
+  "status": "cursor_task_source_frozen"
+}
