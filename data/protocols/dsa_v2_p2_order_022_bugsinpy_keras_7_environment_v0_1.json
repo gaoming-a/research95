@@ -1,0 +1,25 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "build_exit_code": 1,
+  "build_output_bytes": 25670,
+  "build_output_sha256": "1406ffe03d2f32920cc9b384de2eee054b083d7840f2f56fc289a2e456faa086",
+  "created_date": "2026-07-12",
+  "dockerfile_sha256": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
+  "environment_id": "dsa_v2_p2_order_022_bugsinpy_keras_7_environment_v0_1",
+  "failure_reason": "environment-build-failure",
+  "image": null,
+  "official_setup_executed": false,
+  "order": 22,
+  "source_record_sha256": "765f407ed1fc8f5171cfe517dd1766bf73a423cb012e1c846e061b6694de39e3",
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_keras_7",
+  "task_specific_repair_attempted": false
+}

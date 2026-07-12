@@ -1,10 +1,10 @@
 {
-  "attempted_tasks": 21,
+  "attempted_tasks": 22,
   "config_id": "dsa_v2_p2_cursor_task_config_v0_1",
-  "config_sha256": "2827125af850e66a137aaea90f4806af34bec47fab7591880a2bb1f35b86976d",
+  "config_sha256": "f52e13faf19c613a4c88c0bc14097b3260f48ec26e8991b87601e254926d5c95",
   "created_date": "2026-07-12",
-  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_21.json",
-  "ledger_sha256": "e3872a7809978dc02bf8683ad8d7bfbf4f8956fce48df707ae485b1b90ebceab",
+  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_22.json",
+  "ledger_sha256": "bef118a0e88615240bc4ea9918e2f3b96db4231df65533416ae0d9a2fb8d58b0",
   "model_api_calls": 0,
   "next_task_started": false,
   "project_test_scope": {
@@ -14,63 +14,62 @@
       "pytest",
       "--collect-only",
       "-q",
-      "tests"
+      "test/units"
     ],
-    "derived_from_declared_file_count": 23,
+    "derived_from_declared_file_count": 15,
     "framework": "pytest",
-    "project": "keras",
-    "project_test_root": "tests",
+    "project": "ansible",
+    "project_test_root": "test/units",
     "unittest_pattern": null,
     "unittest_top_level_dir": null
   },
   "python_lock": {
-    "actual_sha256": "f5f36238a1b97f435d93a9ff7b23c5fa12b075fc616ee05e66bd2c6e72552fd5",
-    "environment_name": "py373",
-    "expected_sha256": "f5f36238a1b97f435d93a9ff7b23c5fa12b075fc616ee05e66bd2c6e72552fd5",
-    "path": "data/environment_locks/dsa2026_p4_bootstrap/py373-linux-64.txt",
-    "python_version": "3.7.3"
+    "actual_sha256": "127d75b0d841583a2250c48b0a833de078b5ae45e0e606888f6928eb621c7a4e",
+    "environment_name": "py369",
+    "expected_sha256": "127d75b0d841583a2250c48b0a833de078b5ae45e0e606888f6928eb621c7a4e",
+    "path": "data/environment_locks/dsa2026_p4_bootstrap/py369-linux-64.txt",
+    "python_version": "3.6.9"
   },
   "qualified_pairs": 0,
-  "repository": "https://github.com/keras-team/keras",
-  "runtime_namespace": "order_022_bugsinpy_keras_7",
+  "repository": "https://github.com/ansible/ansible",
+  "runtime_namespace": "order_023_bugsinpy_ansible_15",
   "status": "unique_next_task_resolved",
   "task": {
-    "bug_id": 7,
-    "buggy_commit_id": "26b620fb37c885d60183f83abc744f43775ce75a",
+    "bug_id": 15,
+    "buggy_commit_id": "b1e8a6c1cbd2a668b462995487b819ef7dd8ba4b",
     "candidate_materialized": false,
     "candidate_outcome_observed": false,
     "catalog_f2p_commands": [
-      "pytest tests/keras/wrappers/scikit_learn_test.py::test_regression_predict_shape_correct_num_test_1"
+      "pytest test/units/modules/network/eos/test_eos_eapi.py::TestEosEapiModule::test_eos_eapi_vrf"
     ],
     "declared_f2p_commands": [
-      "pytest tests/keras/wrappers/scikit_learn_test.py::test_regression_predict_shape_correct_num_test_1"
+      "pytest test/units/modules/network/eos/test_eos_eapi.py::TestEosEapiModule::test_eos_eapi_vrf"
     ],
-    "declared_test_file": "tests/keras/wrappers/scikit_learn_test.py",
-    "environment_risk_tags": [
-      "heavy_tensorflow_stack"
-    ],
+    "declared_test_file": "test/units/modules/network/eos/test_eos_eapi.py",
+    "environment_risk_tags": [],
     "f2p_command_match": true,
-    "fixed_commit_id": "c05ef1fd95a6024155ab59656fef8dac5a45c335",
+    "fixed_commit_id": "68de182555b185737353e780882159a3d213908c",
     "metadata_sha256": {
-      "bug_info": "03f08af5fb7cb22a7a1c0b76a92c68aaf65e288a5089169b68aef42faf0b33f3",
-      "reference_patch": "92be36b189cc9f75800c200e1526b592452efdbf52945534f09b0b301d6a9d79",
-      "requirements": "a740c7f6f4ec429286993fe6cfa984d43d8f432f0fddc72aa1efd82f7f4f5203",
-      "run_test": "713b5721ce75e9b09d7c88855d4561b582a155c33d190748f152114b4cc77f59"
+      "bug_info": "cb6a3d29a0023faa6c94ebf674a8488e1c5ec2f9d5f0e1a974b1bfc5e4a59827",
+      "reference_patch": "a0b24a71ab141a5a458688aba210af58195e8711e0ad3f18b3854daaf6b4ae83",
+      "requirements": "66c7389ad30c5c441a026536c3af3fd75cb44627b8de50465841622abad04c00",
+      "run_test": "e1ebcf346c35b51694685ce34ebb43cc682e082eb3fd1ddf5e8175e46dab3c6f",
+      "setup_provenance_only": "baba8276fe95fc71a9298ce3b31cdf8f0011576312ebbb7a26cea5cccde514f7"
     },
     "model_outcome_observed": false,
     "official_setup_executable_authority": false,
-    "order": 22,
-    "project": "keras",
-    "project_order_sha256": "86275bf699d90e96bfd9ecb0df4e68b0faac0f01cca31e3de7cfd50bd2a2aad3",
-    "project_position": 4,
-    "python_version": "3.7.3",
+    "order": 23,
+    "project": "ansible",
+    "project_order_sha256": "971ac1e4689df7ada04427087a39e0e84b3963a78b9fbb63b66405353726c658",
+    "project_position": 5,
+    "python_version": "3.6.9",
     "requirements_metadata": {
       "nonempty": true,
       "present": true
     },
     "round": 3,
-    "task_id": "bugsinpy_keras_7",
-    "task_order_sha256": "1e187666ac9b2688ee6dc1fcdd4eefdcbbc41161a93a5547e644ca2e1ac6da88",
+    "task_id": "bugsinpy_ansible_15",
+    "task_order_sha256": "37913d7c8b9d27a740f39c9ec5bac7a2333f723e73fd7d3d7b639cc1c2fd45dd",
     "test_framework": "pytest"
   }
 }
