@@ -149,6 +149,11 @@ Sanic_3 source freeze/check PASS；唯一 py383 build 因冻结 `pywin32==227` �
 匹配 distribution 而 terminal，不删除依赖、不重跑。ledger v0.18 attempted=18、
 qualified=0、API=0；cursor 为 order19 `bugsinpy_pandas_159`、started=false。
 
+Pandas_159 source freeze/check PASS。唯一 build 在冻结 `pip check` 因 editable pandas
+version=`0+unknown` 不满足 fastparquet `pandas>=0.19` 而 terminal；不改版本元数据、
+不跳 Gate、不重跑。ledger v0.19 attempted=19、qualified=0、API=0；cursor 为 order20
+`bugsinpy_fastapi_16`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

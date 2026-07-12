@@ -1,10 +1,10 @@
 {
-  "attempted_tasks": 18,
+  "attempted_tasks": 19,
   "config_id": "dsa_v2_p2_cursor_task_config_v0_1",
-  "config_sha256": "bc7434bea98a362b06e7bc44b962f9cd4dfaf77178f832d032ed8a51f99570a1",
+  "config_sha256": "235861f0e616a0a0db374226413410dd6806a656112898c86e46a87c12e2243b",
   "created_date": "2026-07-12",
-  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_18.json",
-  "ledger_sha256": "d5acf3ec8029a2eaa06dd634d934362561776defeb8b2076be6bc5e91750762e",
+  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_19.json",
+  "ledger_sha256": "5474283fd01c59b8341092b43a90830f112220377a0f4a15a158536ff5989fc4",
   "model_api_calls": 0,
   "next_task_started": false,
   "project_test_scope": {
@@ -14,12 +14,12 @@
       "pytest",
       "--collect-only",
       "-q",
-      "pandas/tests"
+      "tests"
     ],
-    "derived_from_declared_file_count": 119,
+    "derived_from_declared_file_count": 14,
     "framework": "pytest",
-    "project": "pandas",
-    "project_test_root": "pandas/tests",
+    "project": "fastapi",
+    "project_test_root": "tests",
     "unittest_pattern": null,
     "unittest_top_level_dir": null
   },
@@ -31,49 +31,44 @@
     "python_version": "3.8.3"
   },
   "qualified_pairs": 0,
-  "repository": "https://github.com/pandas-dev/pandas",
-  "runtime_namespace": "order_019_bugsinpy_pandas_159",
+  "repository": "https://github.com/tiangolo/fastapi",
+  "runtime_namespace": "order_020_bugsinpy_fastapi_16",
   "status": "unique_next_task_resolved",
   "task": {
-    "bug_id": 159,
-    "buggy_commit_id": "e55b698",
+    "bug_id": 16,
+    "buggy_commit_id": "92c825be6a7362099400c9c3fe8b01ea13add3dc",
     "candidate_materialized": false,
     "candidate_outcome_observed": false,
     "catalog_f2p_commands": [
-      "pytest pandas/tests/arithmetic/test_numeric.py::test_fill_value_inf_masking",
-      "pytest pandas/tests/arithmetic/test_numeric.py::test_dataframe_div_silenced"
+      "pytest tests/test_jsonable_encoder.py::test_encode_model_with_config"
     ],
     "declared_f2p_commands": [
-      "pytest pandas/tests/arithmetic/test_numeric.py::test_fill_value_inf_masking",
-      "pytest pandas/tests/arithmetic/test_numeric.py::test_dataframe_div_silenced"
+      "pytest tests/test_jsonable_encoder.py::test_encode_model_with_config"
     ],
-    "declared_test_file": "pandas/tests/arithmetic/test_numeric.py",
-    "environment_risk_tags": [
-      "native_extension_build"
-    ],
+    "declared_test_file": "tests/test_datetime_custom_encoder.py;tests/test_jsonable_encoder.py",
+    "environment_risk_tags": [],
     "f2p_command_match": true,
-    "fixed_commit_id": "62ab439b168d972546e06d329916c6be7ddd1288",
+    "fixed_commit_id": "9745a5d1ae86a7fefacf79bdde8e5dd2d59fa2f4",
     "metadata_sha256": {
-      "bug_info": "6c5c810bc0923db84ffe7a02942ba7947ee429495ac4cf93a5414a087af0ca04",
-      "reference_patch": "87c10155c1c95c3b907add6d0b1a7842eac21236c81b23a2ab70d4b02a32b54a",
-      "requirements": "ff9aa0d3292324d0749484a1a58c4b82df2af21b200b1eb70d3877b0db7b9876",
-      "run_test": "20626d1120ab2485fa8b65dedea61282cc927e9e9c24da631a6e7ecf13d17a32",
-      "setup_provenance_only": "fff3ab9f74619b05cbe5eea2a563d8185d513b5305565b880e002d238bfdbe93"
+      "bug_info": "4f91658658a32936057369e4d8c2c04d43c194c3d5b1cc9cf33c2805e2bbc940",
+      "reference_patch": "643808a7f5315905e4b97938acd1c96c0f64f8c466f585054877a92b0b7519d4",
+      "requirements": "71ac62678b4db0f58f64efd3e8dd6ba543c64ba3d4d84769456ffd9ef47c4244",
+      "run_test": "c9a81e50704a2fb1e6c4c38d03612fae141e24a79860c763a36880c7b99adce5"
     },
     "model_outcome_observed": false,
     "official_setup_executable_authority": false,
-    "order": 19,
-    "project": "pandas",
-    "project_order_sha256": "41103a71feed7a79ab78d79e684d033ffd4d65c422392e1c77b43f2c5c525130",
-    "project_position": 1,
+    "order": 20,
+    "project": "fastapi",
+    "project_order_sha256": "5485690149323032350b0fceba9d0e54932e1800f95277c16762379fe81e8776",
+    "project_position": 2,
     "python_version": "3.8.3",
     "requirements_metadata": {
       "nonempty": true,
       "present": true
     },
     "round": 3,
-    "task_id": "bugsinpy_pandas_159",
-    "task_order_sha256": "0324be5a88eaa335c0f9b012ae67d728916a5df23ed8fcc5bbfe33b3065ac2b3",
+    "task_id": "bugsinpy_fastapi_16",
+    "task_order_sha256": "6084b525e79a9e81f79ec526960938ea4fc696d2efd4b883e642061d123deae9",
     "test_framework": "pytest"
   }
 }

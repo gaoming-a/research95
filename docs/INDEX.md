@@ -176,6 +176,10 @@
   order18 environment terminal on independently frozen `pywin32==227` under
   Linux. The platform dependency was not removed; ledger v0.18 advances to
   `bugsinpy_pandas_159`, API=0.
+- [dsa_v2_p2_order_019_bugsinpy_pandas_159_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_019_bugsinpy_pandas_159_terminal_gate_v0_1.md):
+  order19 environment terminal after full source freeze/check. Frozen `pip check`
+  rejected editable pandas `0+unknown`; metadata and Gate were unchanged. Ledger
+  v0.19 advances to `bugsinpy_fastapi_16`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

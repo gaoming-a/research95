@@ -1,0 +1,132 @@
+{
+  "created_date": "2026-07-12",
+  "cursor_config_sha256": "bc7434bea98a362b06e7bc44b962f9cd4dfaf77178f832d032ed8a51f99570a1",
+  "model_api_calls": 0,
+  "previous_ledger_sha256": "d5acf3ec8029a2eaa06dd634d934362561776defeb8b2076be6bc5e91750762e",
+  "records": [
+    {
+      "context": {
+        "buggy_archive": {
+          "archive_bytes": 7597435,
+          "archive_root": "pandas-e55b698",
+          "archive_sha256": "a074166ec4c84a703b760b4a3e2b8c8dd29baa816c0c898c9409dc74e407a086",
+          "extracted_file_count": 1535,
+          "extracted_tree_sha256": "0e1012e165047961718f4d831dd5c32b81abd4a080ccf63cf01851b3bd34f3b6",
+          "materialized_symlink_count": 0
+        },
+        "buggy_commit_id": "e55b698",
+        "buggy_source_tree_sha256": "0e1012e165047961718f4d831dd5c32b81abd4a080ccf63cf01851b3bd34f3b6",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "context_tree_sha256": "b33247bc0c0765ce3db93f618e3a5853a38776b2b1f94321dbc575c5fabb472a",
+        "fixed_archive": {
+          "archive_bytes": 7604805,
+          "archive_root": "pandas-62ab439b168d972546e06d329916c6be7ddd1288",
+          "archive_sha256": "17614c43b4e3f5d06a9c739253c0a9f7b4ccdbce4a4c720750552aca7e94f69c",
+          "extracted_file_count": 1535,
+          "extracted_tree_sha256": "9418875a16f04b216fc511ea8284d4dc72117fd75316ec613a6f53928ff6004a",
+          "materialized_symlink_count": 0
+        },
+        "fixed_commit_id": "62ab439b168d972546e06d329916c6be7ddd1288",
+        "fixed_test_sha256": {
+          "pandas/tests/arithmetic/test_numeric.py": "e01596b08e6b7325911914c7d530efab8736c89bcacb3414abb6ab4afcabfa88"
+        },
+        "metadata_sha256": {
+          "bug.info": "6c5c810bc0923db84ffe7a02942ba7947ee429495ac4cf93a5414a087af0ca04",
+          "bug_patch.txt": "87c10155c1c95c3b907add6d0b1a7842eac21236c81b23a2ab70d4b02a32b54a",
+          "requirements.txt": "ff9aa0d3292324d0749484a1a58c4b82df2af21b200b1eb70d3877b0db7b9876",
+          "run_test.sh": "20626d1120ab2485fa8b65dedea61282cc927e9e9c24da631a6e7ecf13d17a32",
+          "setup.sh": "fff3ab9f74619b05cbe5eea2a563d8185d513b5305565b880e002d238bfdbe93"
+        },
+        "model_api_calls": 0,
+        "order": 19,
+        "project": "pandas",
+        "record_sha256": "b5706969ff35729880e10c7ab04f9a0907b56edd5c262d4dbf30d10cc12cb8a2",
+        "reference_validation": {
+          "normalized_patch_sha256": "ed5987569cf78b02ba7f39ddba9a462b114cd3f9a225b3291db8d3423ffc6a2c",
+          "patch_apply_exit_code": 0,
+          "patch_check_exit_code": 0,
+          "patch_line_endings_normalized": true,
+          "reference_tree_sha256": "aa72efb6c2ebc50e5d8ab80b4984d028a735bfc79a487c9792692d7704e564bd"
+        },
+        "source_acquisition": "official GitHub codeload commit tarballs",
+        "source_materialization_manifests": [],
+        "source_repository": "https://github.com/pandas-dev/pandas",
+        "status": "v2_p2_source_context_frozen_no_candidate",
+        "task_id": "bugsinpy_pandas_159"
+      },
+      "order": 19,
+      "project_test_scope": {
+        "collection_command": [
+          "python",
+          "-m",
+          "pytest",
+          "--collect-only",
+          "-q",
+          "pandas/tests"
+        ],
+        "derived_from_declared_file_count": 119,
+        "framework": "pytest",
+        "project": "pandas",
+        "project_test_root": "pandas/tests",
+        "unittest_pattern": null,
+        "unittest_top_level_dir": null
+      },
+      "real_activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 1
+      },
+      "record_sha256": "1b0d5c0671cb39731ff77cb771b28835ec4cf9c9add9a7f08f8014923e7e361c",
+      "source_record": {
+        "bug_id": 159,
+        "buggy_commit_id": "e55b698",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "catalog_f2p_commands": [
+          "pytest pandas/tests/arithmetic/test_numeric.py::test_fill_value_inf_masking",
+          "pytest pandas/tests/arithmetic/test_numeric.py::test_dataframe_div_silenced"
+        ],
+        "declared_f2p_commands": [
+          "pytest pandas/tests/arithmetic/test_numeric.py::test_fill_value_inf_masking",
+          "pytest pandas/tests/arithmetic/test_numeric.py::test_dataframe_div_silenced"
+        ],
+        "declared_test_file": "pandas/tests/arithmetic/test_numeric.py",
+        "environment_risk_tags": [
+          "native_extension_build"
+        ],
+        "f2p_command_match": true,
+        "fixed_commit_id": "62ab439b168d972546e06d329916c6be7ddd1288",
+        "metadata_sha256": {
+          "bug_info": "6c5c810bc0923db84ffe7a02942ba7947ee429495ac4cf93a5414a087af0ca04",
+          "reference_patch": "87c10155c1c95c3b907add6d0b1a7842eac21236c81b23a2ab70d4b02a32b54a",
+          "requirements": "ff9aa0d3292324d0749484a1a58c4b82df2af21b200b1eb70d3877b0db7b9876",
+          "run_test": "20626d1120ab2485fa8b65dedea61282cc927e9e9c24da631a6e7ecf13d17a32",
+          "setup_provenance_only": "fff3ab9f74619b05cbe5eea2a563d8185d513b5305565b880e002d238bfdbe93"
+        },
+        "model_outcome_observed": false,
+        "official_setup_executable_authority": false,
+        "order": 19,
+        "project": "pandas",
+        "project_order_sha256": "41103a71feed7a79ab78d79e684d033ffd4d65c422392e1c77b43f2c5c525130",
+        "project_position": 1,
+        "python_version": "3.8.3",
+        "requirements_metadata": {
+          "nonempty": true,
+          "present": true
+        },
+        "round": 3,
+        "task_id": "bugsinpy_pandas_159",
+        "task_order_sha256": "0324be5a88eaa335c0f9b012ae67d728916a5df23ed8fcc5bbfe33b3065ac2b3",
+        "test_framework": "pytest"
+      },
+      "task_id": "bugsinpy_pandas_159"
+    }
+  ],
+  "registry_id": "dsa_v2_p2_order_019_bugsinpy_pandas_159_source_v0_1",
+  "status": "cursor_task_source_frozen"
+}
