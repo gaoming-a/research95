@@ -245,6 +245,11 @@ full SHA 严格以前缀 frozen short SHA 开头，exact/positive/negative gates
 ledger v0.35 attempted=35、qualified=0、API=0；cursor 为 order36
 `bugsinpy_fastapi_3`、started=false。
 
+FastAPI_3 source freeze/check PASS。唯一 py383 build 使用冻结旧 pip 执行 editable install
+时，因 checkout 仅有 `pyproject.toml`、无 `setup.py` 而失败；不升级 pip、不补 setup.py、
+不重跑。ledger v0.36 attempted=36、qualified=0、API=0；cursor 为 order37
+`bugsinpy_black_11`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

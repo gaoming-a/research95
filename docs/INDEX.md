@@ -247,6 +247,11 @@
   its official full-SHA archive root before source freeze/check; editable PEP517
   then failed while Cythonizing `pandas/_libs/algos.pyx`. Ledger v0.35 advances
   to `bugsinpy_fastapi_3`, API=0.
+- [dsa_v2_p2_order_036_bugsinpy_fastapi_3_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_036_bugsinpy_fastapi_3_terminal_gate_v0_1.md):
+  order36 environment terminal after source freeze/check. Frozen old pip could
+  not editable-install the pyproject-only checkout; no pip upgrade, setup.py
+  synthesis, or rerun occurred. Ledger v0.36 advances to
+  `bugsinpy_black_11`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
