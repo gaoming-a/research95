@@ -208,6 +208,10 @@
   because the frozen generic image lacks a system development header. Record
   the compiler error as environment materialization evidence; adding an OS
   package after seeing it would be task-specific dependency repair.
+- A top-level Cython requirement may appear satisfiable while a recursively
+  built native dependency introduces a newer Python-incompatible Cython floor.
+  Preserve the complete nested resolver trace and classify it as the frozen
+  environment outcome; do not pin the transitive build dependency post hoc.
 
 ## 2026-07-12 V2-P1 metadata and base-lock freeze
 

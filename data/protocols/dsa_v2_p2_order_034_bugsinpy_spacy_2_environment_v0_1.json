@@ -1,0 +1,25 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "build_exit_code": 1,
+  "build_output_bytes": 30754,
+  "build_output_sha256": "17fc91e1f80b263a7d10cabcb50bbc728568599dee1674fab1cade6efa369229",
+  "created_date": "2026-07-12",
+  "dockerfile_sha256": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
+  "environment_id": "dsa_v2_p2_order_034_bugsinpy_spacy_2_environment_v0_1",
+  "failure_reason": "environment-build-failure",
+  "image": null,
+  "official_setup_executed": false,
+  "order": 34,
+  "source_record_sha256": "4736e653dc981b4197de30c532cb172fbd8a14d21fe2e6c8d4de24c6f6c3d357",
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_spacy_2",
+  "task_specific_repair_attempted": false
+}

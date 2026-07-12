@@ -237,6 +237,11 @@
   order33 environment terminal after source freeze/check. Editable extension
   compilation could not find `ft2build.h`; no system-package repair or rerun
   occurred. Ledger v0.33 advances to `bugsinpy_spacy_2`, API=0.
+- [dsa_v2_p2_order_034_bugsinpy_spacy_2_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_034_bugsinpy_spacy_2_terminal_gate_v0_1.md):
+  order34 environment terminal after canonical-root source freeze/check.
+  Recursive native dependency build required unavailable `cython>=3.1` on
+  Python 3.7; no dependency repair or rerun occurred. Ledger v0.34 advances to
+  `bugsinpy_pandas_74`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
