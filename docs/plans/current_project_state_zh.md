@@ -2,7 +2,17 @@
 
 日期：2026-07-12
 
-## 2026-07-12 V2-P2 order-1 terminal / cursor continues
+## 2026-07-12 V2-P2 order-2 preflight PASS
+
+- 当前状态：`V2_P2_ORDER_1_TERMINAL / ORDER_2_REAL_PREFLIGHT_PASS /
+  FASTAPI_11_NOT_STARTED / NO_API`；
+- order2 runner 完整绑定 previous ledger、FastAPI_11 metadata、py383、tests scope、dual-fresh
+  oracle、T1--T4 与独立 terminal draft；order1 文件不会被执行器覆盖；
+- order2 failure logging 已在结果前改为把具体失败子命令输出到 outer build log；不改变
+  dependency authority，也不授权修复或重跑；
+- 当前 order2 checkout/environment/container/test/API=0；下一步只冻结 official source。
+
+## 2026-07-12 V2-P2 order-1 terminal / cursor continues（已被上方覆盖）
 
 - 当前状态：`V2_P2_ORDER_1_MATERIALIZATION_FAILED_ENVIRONMENT /
   ORDER_2_READY_NOT_STARTED / NO_API / V0_SUBMISSION_GATE_PENDING`；

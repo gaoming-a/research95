@@ -2,4 +2,5 @@ data/environment_locks/dsa2026_p4_bootstrap/*.txt text eol=lf
 containers/dsa2026_p4/*.sh text eol=lf
 containers/dsa2026_v2_p2/*.sh text eol=lf
 containers/dsa2026_v2_p2/Dockerfile.task text eol=lf
+containers/dsa2026_v2_p2/Dockerfile.order2 text eol=lf
 scripts/dsa2026_v2_p2_container_worker.py text eol=lf

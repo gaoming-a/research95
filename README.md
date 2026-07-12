@@ -61,6 +61,13 @@ task-level materialization failure, not the cohort hard stop: the cursor now
 identifies order 2 `bugsinpy_fastapi_11`, which was not started in the order-1
 Goal.
 
+The frozen cursor has advanced to order 2 `bugsinpy_fastapi_11`. Its separate
+pre-outcome runner and static preflight pass with zero real activity: it binds
+the immutable order-1 ledger, py383, six official F2P commands, project-root
+collection, dual-fresh qualification, and T1--T4 ordering. Order-2 results use
+separate namespaces and cannot overwrite the pandas terminal; V2-P3 and model
+API remain forbidden.
+
 P0/D0 is now in progress. The official pages and template have been hashed;
 the `IEEEconf.cls` skeleton clean-build passes US Letter, embedded-font, log,
 and 250 dpi visual checks. The DSA-specific AI policy, institutional Compendex

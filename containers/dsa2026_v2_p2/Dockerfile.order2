@@ -1,0 +1,40 @@
+ARG BASE_IMAGE=dsa2026-p4-base:conda23.3.1-r1
+FROM ${BASE_IMAGE}
+
+ARG TASK_CONTEXT=tmp/dsa2026_v2_p2_runtime/task_contexts/bugsinpy_fastapi_11
+ARG TASK_ID=bugsinpy_fastapi_11
+ARG PROJECT=fastapi
+ARG PYTHON_ENV=py383
+ARG BUGGY_COMMIT=bf229ad5d830eb5320f966d51a55e590e8d57008
+ARG FIXED_COMMIT=06eb4219345a77d23484528c9d164eb8d2097fec
+
+COPY data/environment_locks/dsa2026_p4_bootstrap/py383-linux-64.txt /opt/dsa2026/lock.txt
+RUN conda create -n "${PYTHON_ENV}" --file /opt/dsa2026/lock.txt \
+    && conda run -n "${PYTHON_ENV}" python -c "import sys; assert sys.version.split()[0] == '3.8.3'"
+
+COPY ${TASK_CONTEXT}/buggy_source/ /opt/dsa2026/task/buggy_source/
+COPY ${TASK_CONTEXT}/fixed_tests/ /opt/dsa2026/task/fixed_tests/
+COPY ${TASK_CONTEXT}/metadata/ /opt/dsa2026/task/metadata/
+COPY containers/dsa2026_v2_p2/build_task_environment_order2.sh /opt/dsa2026/bin/build_task_environment.sh
+RUN chmod 0755 /opt/dsa2026/bin/build_task_environment.sh \
+    && /opt/dsa2026/bin/build_task_environment.sh "${PYTHON_ENV}"
+
+COPY scripts/dsa2026_p4_container_worker.py /opt/dsa2026/bin/dsa2026_p4_container_worker.py
+COPY scripts/dsa2026_v2_p2_container_worker.py /opt/dsa2026/bin/dsa2026_v2_p2_container_worker.py
+RUN chmod 0755 /opt/dsa2026/bin/dsa2026_v2_p2_container_worker.py
+
+ENV DSA_P4_TASK_ROOT=/opt/dsa2026/task
+ENV DSA_P4_PYTHON_ENV=${PYTHON_ENV}
+ENV PYTHONHASHSEED=0 TZ=UTC LANG=C.UTF-8 LC_ALL=C.UTF-8
+
+LABEL org.opencontainers.image.title="DSA v0.2 V2-P2 order-2 task environment"
+LABEL dsa2026.v2_p2.task_id="${TASK_ID}"
+LABEL dsa2026.v2_p2.order="2"
+LABEL dsa2026.v2_p2.project="${PROJECT}"
+LABEL dsa2026.v2_p2.python_env="${PYTHON_ENV}"
+LABEL dsa2026.v2_p2.buggy_commit="${BUGGY_COMMIT}"
+LABEL dsa2026.v2_p2.fixed_commit="${FIXED_COMMIT}"
+LABEL dsa2026.v2_p2.official_setup_executed="false"
+LABEL dsa2026.v2_p2.model_api_called="false"
+
+ENTRYPOINT ["/opt/dsa2026/bin/dsa2026_v2_p2_container_worker.py"]

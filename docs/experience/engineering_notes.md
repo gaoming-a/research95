@@ -1,5 +1,15 @@
 # Engineering Notes
 
+## 2026-07-12 Advance cursor without mutating prior terminal evidence
+
+- Each V2-P2 task needs a new result namespace and terminal draft. Treat the
+  prior terminal ledger as a read-only cursor authority; append the new record
+  only in the final audit after proving the prior record is byte-stable.
+- Improving failure observability for a future task is allowed only before that
+  task's outcome and must not alter dependency authority. Echoing the failing
+  subcommand name and tail to the outer Docker log improves provenance without
+  adding packages, changing tests, or reopening the previous terminal task.
+
 ## 2026-07-12 Freeze the whole real runner before the first outcome
 
 - A construction protocol is not protected from outcome-driven repair if only

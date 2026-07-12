@@ -2,6 +2,27 @@
 
 最后更新：2026-07-12
 
+## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
+
+Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
+order=2 `bugsinpy_fastapi_11` 且 started=false。作者已授权自动继续 V2-P2；本 Goal
+只处理 order=2，不启动 order=3/V2-P3/prompt/API。
+
+Pre-outcome implementation：
+
+- 新 runner 使用独立 order2 source/environment/oracle/candidate/terminal-draft namespace，
+  只读绑定 order1 ledger SHA；最终审计才把 order2 terminal 追加到主 ledger；
+- FastAPI_11 冻结 Python 3.8.3、6条 official F2P、project test root=`tests`；环境仍只用
+  explicit lock、official requirements、editable project 与 `pip check`，setup 不执行；
+- 针对 pandas terminal 的证据局限，order2 build 在任何 outcome 前冻结为：失败时把具体
+  subcommand 名、exit 与最后160行输出写入 outer Docker log；这不修改依赖或 qualification；
+- oracle 与 T1--T4 复用已审计的 V2 pure primitives，但 task/order/tie hash、paths、image
+  labels 与 terminal cursor 均切换为 FastAPI_11/order2；
+- static preflight=`ready_for_order2_source`，所有真实 activity=0，model API=0。
+
+下一动作：提交完整 order2 runner 后获取 official codeload archives，冻结 source/context；
+GitHub 频繁失败可记录并重试，但不得更换未冻结来源。
+
 ## 0.57 2026-07-12 V2-P2 首任务授权与 test-scope amendment Gate
 
 用户已明确授权下一 Goal 真实处理唯一 order=1 `bugsinpy_pandas_161`，边界为完成该

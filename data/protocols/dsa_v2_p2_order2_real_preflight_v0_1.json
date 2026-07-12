@@ -1,0 +1,34 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 0,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 0
+  },
+  "checks": {
+    "author_all_v2_p2_authorization_active": true,
+    "docker_binds_order2_fastapi_py383": true,
+    "failure_sublogs_escape_failed_layer": true,
+    "no_prompt_key_or_model_surface": true,
+    "official_setup_not_executed": true,
+    "order1_terminal_immutable_cursor_to_order2": true,
+    "order3_not_started": true,
+    "runner_has_all_bounded_phases": true,
+    "runner_never_writes_order1_ledger": true,
+    "runner_uses_separate_order2_namespaces": true,
+    "source_order_record_is_unique_order2": true
+  },
+  "component_sha256": {
+    "build_script": "095560b13922d446e350e95e3cce3e8f7f7a7b3abf54702d1f0d37805fe1f421",
+    "dockerfile": "b5989bed8d8e7e566dc2b3317b632f061c4b251212a89c217143a53eb7b879ce",
+    "runner": "9a008b9401b74b2c53ea6ce02adc0aea161a43260e655394e9d09a6f62392e13"
+  },
+  "created_date": "2026-07-12",
+  "order": 2,
+  "preflight_id": "dsa_v2_p2_order2_real_preflight_v0_1",
+  "status": "ready_for_order2_source",
+  "task_id": "bugsinpy_fastapi_11"
+}

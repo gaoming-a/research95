@@ -41,6 +41,8 @@
       "scripts/dsa2026_v2_p2_executor.py",
       "scripts/dsa2026_v2_p2_freeze_task_context.py",
       "scripts/dsa2026_v2_p2_materialize_candidates.py",
+      "scripts/dsa2026_v2_p2_order2.py",
+      "scripts/dsa2026_v2_p2_order2_preflight.py",
       "scripts/dsa2026_v2_p2_real_preflight.py",
       "scripts/dsa2026_v2_p2_run_candidates.py",
       "scripts/dsa2026_v2_p2_run_oracle.py"

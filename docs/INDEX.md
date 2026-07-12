@@ -70,6 +70,11 @@
   `../scripts/dsa2026_v2_p2_audit_order1.py`. The environment failure is
   terminal for pandas_161 but advances the V2-P2 cursor to the unstarted order-2
   task; container/test/oracle/candidate/model API activity is zero.
+- `../data/protocols/dsa_v2_p2_order2_real_preflight_v0_1.json`: passing
+  no-outcome preflight for order-2 `bugsinpy_fastapi_11`. The bounded phased
+  runner is `../scripts/dsa2026_v2_p2_order2.py`; its image recipe is
+  `../containers/dsa2026_v2_p2/Dockerfile.order2`. It binds but never overwrites
+  the order-1 terminal ledger and does not authorize order 3, V2-P3, prompt, or API.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
   venue/submission master plan as of 2026-07-11. The only target is DSA 2026 Regular;
   Short is a distinct pre-API protocol, not a post-result fallback, and ACAI is
