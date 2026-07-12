@@ -1,0 +1,35 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 7,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 111,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "audit_id": "dsa_v2_p2_order_041_bugsinpy_matplotlib_17_gate_audit_v0_1",
+  "checks": {
+    "counts_correct": true,
+    "model_api_zero": true,
+    "next_not_started": true,
+    "no_task_specific_repair": true,
+    "previous_ledger_hash_unchanged": true,
+    "records_append_exactly_once": true
+  },
+  "created_date": "2026-07-12",
+  "model_api_calls": 0,
+  "next_task_id": "bugsinpy_spacy_9",
+  "order": 41,
+  "qualified_pairs_after": 0,
+  "status": "passed_terminal_continue_cursor",
+  "task_id": "bugsinpy_matplotlib_17",
+  "terminal_record": {
+    "disposition": "materialization-failed",
+    "oracle_record_sha256": "1c03132dd780b902920f231bb220140aa5692a891232eaa55bb167b3613c7ae8",
+    "order": 41,
+    "reason": "oracle-positive-full-qualification-failure-or-dual-disagreement",
+    "selected_candidate_sha256": null,
+    "task_id": "bugsinpy_matplotlib_17"
+  }
+}

@@ -269,6 +269,11 @@
   order40 oracle terminal after source/build passed. Both F2P runs passed, but
   elapsed-time output changed the frozen hashes; no normalization or rerun
   occurred. Ledger v0.40 advances to `bugsinpy_matplotlib_17`, API=0.
+- [dsa_v2_p2_order_041_bugsinpy_matplotlib_17_terminal_gate_v0_1.md](experiments/dsa_v2_p2_order_041_bugsinpy_matplotlib_17_terminal_gate_v0_1.md):
+  order41 full-qualification terminal after source/build, identical dual F2P,
+  and a stable regression split succeeded. Dual oracle-positive application of
+  the official patch failed in the built image; no worker/patch repair or rerun
+  occurred. Ledger v0.41 advances to `bugsinpy_spacy_9`, API=0.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):

@@ -217,6 +217,11 @@
   mechanical expansion: one canonical repository root, a 40-hex suffix, and a
   strict match to the frozen 7--39 hex prefix. Never accept a different root,
   non-hex suffix, or prefix mismatch.
+- A task can pass source-time reference validation, environment build, dual
+  F2P, and regression-pool stability yet fail the final oracle-positive replay
+  because the official patch no longer applies inside the built image. Under a
+  frozen no-rerun protocol, preserve both the earlier valid source evidence and
+  the later built-image failure; do not post hoc repair the worker or patch.
 
 ## 2026-07-12 V2-P1 metadata and base-lock freeze
 

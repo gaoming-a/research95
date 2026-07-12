@@ -270,6 +270,13 @@ Tornado_12 source freeze/check 与 build PASS。两次 F2P 均通过，但完整
 不归一化、不重跑。ledger v0.40 attempted=40、qualified=0、API=0；cursor 为 order41
 `bugsinpy_matplotlib_17`、started=false。
 
+Matplotlib_17 source freeze/check、build、双 F2P 与40项 regression-pool collection 均
+通过；稳定池生成 visible=3、hidden=9。随后双 oracle-positive 在 built image 中均因
+official reference patch 无法重新 apply 到 `lib/matplotlib/transforms.py` 而失败，按冻结
+full-qualification rule terminal；不修 patch/worker、不重跑。activity=checkout/build/
+containers/tests 1/1/7/111，API=0。ledger v0.41 attempted=41、qualified=0；cursor 为
+order42 `bugsinpy_spacy_9`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
