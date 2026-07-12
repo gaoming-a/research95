@@ -1,7 +1,7 @@
 # V2-P2 Dangling Documentation Symlink Amendment Sign-off
 
 日期：2026-07-12
-状态：`AUTHOR_SIGNOFF_REQUIRED / NO_REAL_ACTIVITY / NO_API`
+状态：`AUTHOR_SIGNED_IMMUTABLE / SOURCE_EXTRACTION_AUTHORIZED / NO_API`
 
 Black_4 的两个 official archives 含相同的 dangling documentation symlinks。Windows 当前权限不能原样创建。
 
@@ -25,4 +25,11 @@ manifest SHA-256：`6d07262076da1d29f9fdc4edb7e837ca35d38094f8ab1a90082a2a2be267
 - `docs/the_black_code_style.md` -> `_build/generated/the_black_code_style.md`
 - `docs/version_control_integration.md` -> `_build/generated/version_control_integration.md`
 
-作者尚未签核；source extraction/environment/test/API 均为0。
+作者高明已签核上述 manifest SHA-256，并授权该机械规则作为后续全部 V2-P2
+orders 的通用 source-materialization rule。未来每个任务必须生成独立 hash manifest，
+且全部 predicates 通过后才可自动省略对应 Windows 不可创建的 docs symlink；任一
+predicate 不通过即 hard stop。
+
+签核只授权恢复 Black_4 source extraction 和继续 V2-P2；不修改 environment policy、
+candidate qualification、hidden oracle、prompt/schema/statistics，不进入 V2-P3，
+不读取 API key，不调用模型 API。

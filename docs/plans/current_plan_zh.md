@@ -33,6 +33,12 @@ docs symlinks，Windows 当前权限不能创建；`docs/contributing.md -> ../C
 SHA-256=`6d07262076da1d29f9fdc4edb7e837ca35d38094f8ab1a90082a2a2be2674847`。
 作者签核前 source extraction/environment/test/API=0，连续执行在 frozen-content drift 门暂停。
 
+作者高明现已绑定上述 manifest SHA-256 完成签核，并将同一规则授权为后续全部 V2-P2
+orders 的通用 source-materialization rule：每个未来任务必须独立生成 hash manifest，
+且 docs-only symbolic、changed source、declared tests、project test root、package/build
+metadata 的全部机械 predicates 均通过才可自动省略 Windows 不可创建 link；否则 hard
+stop。下一步先冻结并审计该签核，再恢复 Black_4 source extraction；API 仍为0。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

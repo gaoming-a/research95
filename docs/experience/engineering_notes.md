@@ -1,5 +1,17 @@
 # Engineering Notes
 
+## 2026-07-12 Generalize only a hash-bound source-materialization exception
+
+- A Windows-incompatible archive symlink is frozen source content, not an ordinary
+  environment failure. Do not silently dereference, replace, or omit it.
+- A reusable exception is safe only when every future task independently records
+  path, target, kind, archive hashes and mechanically proves docs-only scope plus
+  zero intersection with changed source, declared tests, project test roots, and
+  package/build metadata.
+- Bind the first observed manifest and the author's exact declaration before
+  extraction. Any failed predicate remains a hard stop; this keeps the exception
+  from becoming task-specific dependency or source repair.
+
 ## 2026-07-12 Archive symlink fidelity is a frozen-content decision
 
 - Normalize symlink targets before classifying them: Black's

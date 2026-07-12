@@ -1,0 +1,22 @@
+我作为作者【高明】签核 DSA v0.2 V2-P2 dangling documentation symlink amendment，
+并确认 manifest SHA-256 为：
+
+6d07262076da1d29f9fdc4edb7e837ca35d38094f8ab1a90082a2a2be2674847
+
+我已审查 Black_4 两个 official archives 中完全一致的13个 dangling documentation
+symlinks，以及它们与 changed source、declared tests、project test root 和
+package/build metadata 零交集的机械证据。
+
+我授权采用以下规则：仅当 dangling symbolic link 的规范化路径严格位于 docs/，
+并且与 changed source、declared tests、project test root 和 package/build metadata
+全部零交集时，记录其 path、target、kind 和 archive hashes，并仅从 Windows
+materialized build/test tree 中省略该不可创建 link；任何其他 dangling link
+必须触发 hard stop。
+
+我同时授权该规则作为后续全部 V2-P2 orders 的通用 source-materialization rule：
+未来任务只有在上述全部机械 predicates 通过并生成独立 hash manifest 时才可自动应用，
+无需再次逐项要求作者签核；任一 predicate 不通过即 hard stop。
+
+该签核授权恢复当前 Goal、执行 Black_4 source extraction 并按已冻结顺序继续 V2-P2。
+它不授权修改 environment policy、candidate qualification、hidden oracle、prompt、
+schema 或统计，不授权进入 V2-P3，也不授权读取 API key 或调用模型 API。

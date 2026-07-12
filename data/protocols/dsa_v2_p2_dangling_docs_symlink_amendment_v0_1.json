@@ -1,0 +1,107 @@
+{
+  "amendment_id": "dsa_v2_p2_dangling_docs_symlink_amendment_v0_1",
+  "amendment_record_sha256": "fd35f2309ecfdedec4d5876fab0721c024ba34da3ff7253cee8d22efdf9ac25a",
+  "author": "高明",
+  "author_declaration_path": "data/protocols/dsa_v2_p2_dangling_docs_symlink_amendment_author_declaration_v0_1.txt",
+  "author_declaration_sha256": "43c4f5303ce8d9718d2806d7fd8dd0c56c5b426deee3bf1dc41b2934a2a3930d",
+  "authorization": {
+    "api_key_access": false,
+    "automatic_application_only_when_all_predicates_pass": true,
+    "black_4_source_extraction": true,
+    "candidate_qualification_change": false,
+    "environment_policy_change": false,
+    "general_v2_p2_source_materialization_rule": true,
+    "hard_stop_when_any_predicate_fails": true,
+    "hidden_oracle_change": false,
+    "model_api": false,
+    "prompt_or_schema_or_statistics_change": false,
+    "v2_p3": false
+  },
+  "black_4_archive_sha256s": [
+    "97851d6083d2fe72e7910637c71d342e436f5e460faadd3597e435482f67169c",
+    "0b7649fdc0c31ab6d18717f560505c49727e4d091db848ef2b6fa03f16bfe800"
+  ],
+  "black_4_dangling_manifest": [
+    {
+      "kind": "symbolic",
+      "path": "docs/authors.md",
+      "target": "_build/generated/authors.md"
+    },
+    {
+      "kind": "symbolic",
+      "path": "docs/blackd.md",
+      "target": "_build/generated/blackd.md"
+    },
+    {
+      "kind": "symbolic",
+      "path": "docs/change_log.md",
+      "target": "_build/generated/change_log.md"
+    },
+    {
+      "kind": "symbolic",
+      "path": "docs/contributing_to_black.md",
+      "target": "_build/generated/contributing_to_black.md"
+    },
+    {
+      "kind": "symbolic",
+      "path": "docs/editor_integration.md",
+      "target": "_build/generated/editor_integration.md"
+    },
+    {
+      "kind": "symbolic",
+      "path": "docs/ignoring_unmodified_files.md",
+      "target": "_build/generated/ignoring_unmodified_files.md"
+    },
+    {
+      "kind": "symbolic",
+      "path": "docs/installation_and_usage.md",
+      "target": "_build/generated/installation_and_usage.md"
+    },
+    {
+      "kind": "symbolic",
+      "path": "docs/license.md",
+      "target": "_build/generated/license.md"
+    },
+    {
+      "kind": "symbolic",
+      "path": "docs/pyproject_toml.md",
+      "target": "_build/generated/pyproject_toml.md"
+    },
+    {
+      "kind": "symbolic",
+      "path": "docs/show_your_style.md",
+      "target": "_build/generated/show_your_style.md"
+    },
+    {
+      "kind": "symbolic",
+      "path": "docs/testimonials.md",
+      "target": "_build/generated/testimonials.md"
+    },
+    {
+      "kind": "symbolic",
+      "path": "docs/the_black_code_style.md",
+      "target": "_build/generated/the_black_code_style.md"
+    },
+    {
+      "kind": "symbolic",
+      "path": "docs/version_control_integration.md",
+      "target": "_build/generated/version_control_integration.md"
+    }
+  ],
+  "black_4_manifest_sha256": "6d07262076da1d29f9fdc4edb7e837ca35d38094f8ab1a90082a2a2be2674847",
+  "boundary": "Only unmaterializable dangling documentation symlinks satisfying every frozen mechanical predicate may be omitted from a Windows build/test tree; all other cases hard-stop.",
+  "created_date": "2026-07-12",
+  "mechanical_predicates": {
+    "independent_hash_manifest_required_per_future_task": true,
+    "no_changed_source_intersection": true,
+    "no_declared_test_intersection": true,
+    "no_package_build_metadata_intersection": true,
+    "no_project_test_root_intersection": true,
+    "normalized_path_strictly_under_docs": true,
+    "symbolic_link": true
+  },
+  "proposal_path": "data/protocols/dsa_v2_p2_dangling_docs_symlink_amendment_proposal_v0_1.json",
+  "proposal_sha256": "64aabc26e1f4192573c06e6411b6dd69ef124b9a2ac797829425d82b80bf9702",
+  "rule": "For a dangling symbolic link whose normalized path is strictly under docs/ and outside declared tests, project test root, changed source, and package/build metadata, preserve path/target/kind and archive hashes in a manifest and omit only the unmaterializable link from the Windows build/test tree. Any other dangling link is a frozen-content hard stop.",
+  "status": "author_signed_immutable"
+}

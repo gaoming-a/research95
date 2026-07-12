@@ -102,6 +102,11 @@
   unsigned frozen-content-drift proposal for 13 identical dangling docs symlinks
   in both Black_4 archives. Machine proposal and replay are
   `../data/protocols/dsa_v2_p2_dangling_docs_symlink_amendment_proposal_v0_1.json`
+  and the author-signed immutable amendment
+  `../data/protocols/dsa_v2_p2_dangling_docs_symlink_amendment_v0_1.json`, frozen by
+  `../scripts/dsa2026_freeze_v2_p2_dangling_docs_symlink_amendment.py`. The signed
+  rule permits only mechanically qualified dangling docs symlinks to be omitted
+  from Windows materialized trees; every future task requires its own hash manifest.
   and `../scripts/dsa2026_propose_v2_p2_dangling_docs_symlinks.py`. Source
   extraction remains unauthorized until the manifest hash is author-signed.
 - [dsa_2026_submission_execution_plan_zh.md](plans/dsa_2026_submission_execution_plan_zh.md):
