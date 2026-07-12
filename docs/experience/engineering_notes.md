@@ -9,6 +9,10 @@
   task's outcome and must not alter dependency authority. Echoing the failing
   subcommand name and tail to the outer Docker log improves provenance without
   adding packages, changing tests, or reopening the previous terminal task.
+- An absent setup file has no provenance hash. The shared source-copy helper's
+  V2 alias expected `setup_provenance_only`, but FastAPI_11 has neither the file
+  nor the field. Supply an unused empty adapter value only because the helper
+  mechanically skips absent setup files; never synthesize or execute setup.
 
 ## 2026-07-12 Freeze the whole real runner before the first outcome
 

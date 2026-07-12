@@ -23,6 +23,11 @@ Pre-outcome implementation：
 下一动作：提交完整 order2 runner 后获取 official codeload archives，冻结 source/context；
 GitHub 频繁失败可记录并重试，但不得更换未冻结来源。
 
+首次 order2 source freeze 在 metadata copy 前发现 FastAPI_11 无 `setup.sh`，V2 record
+因而也无 `setup_provenance_only`。修复只在 order2 helper input 为缺失文件提供不可使用的
+空 adapter 值；copy helper 会继续跳过 setup，未发生 environment/test outcome。修复必须
+先提交，再重试同一 archives。
+
 ## 0.57 2026-07-12 V2-P2 首任务授权与 test-scope amendment Gate
 
 用户已明确授权下一 Goal 真实处理唯一 order=1 `bugsinpy_pandas_161`，边界为完成该

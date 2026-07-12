@@ -24,7 +24,7 @@
   "component_sha256": {
     "build_script": "095560b13922d446e350e95e3cce3e8f7f7a7b3abf54702d1f0d37805fe1f421",
     "dockerfile": "b5989bed8d8e7e566dc2b3317b632f061c4b251212a89c217143a53eb7b879ce",
-    "runner": "9a008b9401b74b2c53ea6ce02adc0aea161a43260e655394e9d09a6f62392e13"
+    "runner": "abab74cbca729a1c8a9b1732091fa8d2b355f466cfa7b9ce2b4dc0703ea66984"
   },
   "created_date": "2026-07-12",
   "order": 2,

@@ -82,11 +82,14 @@ def terminal_draft(disposition: str, reason: str, selected: str | None, evidence
 def freeze_source(args: argparse.Namespace) -> dict[str, Any]:
     amendment = source_lib.signed_amendment()
     record = task_record()
+    context_input = dict(record)
+    context_input["metadata_sha256"] = dict(record["metadata_sha256"])
+    context_input["metadata_sha256"].setdefault("setup_provenance_only", "")
     source_lib.TASK_ID = TASK_ID
     source_lib.SOURCE_REPOSITORY = REPOSITORY
     with tempfile.TemporaryDirectory(prefix="dsa_v2_p2_order2_source_") as raw:
         generated, context_record = source_lib.build_context(
-            record,
+            context_input,
             Path(args.buggy_archive).resolve(),
             Path(args.fixed_archive).resolve(),
             Path(args.catalog_root).resolve(),
