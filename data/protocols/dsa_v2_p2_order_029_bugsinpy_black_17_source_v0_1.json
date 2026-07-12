@@ -1,0 +1,388 @@
+{
+  "created_date": "2026-07-12",
+  "cursor_config_sha256": "b4eeaf1e23210ae9b876cd00339905ba8aa83f7fbf6111cf9dedffb08f9309bb",
+  "model_api_calls": 0,
+  "previous_ledger_sha256": "ef95e5e0ee5dbf3f91130e684bc27a7e7eca0e21380c88ff9aea9fb98a2b1d57",
+  "records": [
+    {
+      "context": {
+        "buggy_archive": {
+          "archive_bytes": 334383,
+          "archive_root": "black-bbc09a4f013f2a584f143f3f5e3f76f6082367d4",
+          "archive_sha256": "30fc0c2955b363543b1511c7ef1a10ec544cdb52fa93741ba81aeef451e303c3",
+          "extracted_file_count": 99,
+          "extracted_tree_sha256": "cc582c1cffa9839a8520091574f70522be468b90d85cc6dbea941a894ff9a054",
+          "materialized_symlink_count": 1,
+          "omitted_dangling_symlink_count": 11,
+          "omitted_dangling_symlinks": [
+            {
+              "kind": "symbolic",
+              "path": "docs/authors.md",
+              "target": "_build/generated/authors.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/change_log.md",
+              "target": "_build/generated/change_log.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/contributing_to_black.md",
+              "target": "_build/generated/contributing_to_black.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/editor_integration.md",
+              "target": "_build/generated/editor_integration.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/ignoring_unmodified_files.md",
+              "target": "_build/generated/ignoring_unmodified_files.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/installation_and_usage.md",
+              "target": "_build/generated/installation_and_usage.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/license.md",
+              "target": "_build/generated/license.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/show_your_style.md",
+              "target": "_build/generated/show_your_style.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/testimonials.md",
+              "target": "_build/generated/testimonials.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/the_black_code_style.md",
+              "target": "_build/generated/the_black_code_style.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/version_control_integration.md",
+              "target": "_build/generated/version_control_integration.md"
+            }
+          ]
+        },
+        "buggy_commit_id": "bbc09a4f013f2a584f143f3f5e3f76f6082367d4",
+        "buggy_source_tree_sha256": "cc582c1cffa9839a8520091574f70522be468b90d85cc6dbea941a894ff9a054",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "context_tree_sha256": "211dc5b94bfde7b1b66ed8b6343133d85e925df581648464953274b4cee83913",
+        "fixed_archive": {
+          "archive_bytes": 334438,
+          "archive_root": "black-7fc6ce990669464f5172b63fafa3724f5f308be3",
+          "archive_sha256": "1310e77baa074388367519c8706851dd71338fb8f48bbe802f86e4ce01023c28",
+          "extracted_file_count": 99,
+          "extracted_tree_sha256": "7c99eb7aed353e1c3307e9163cfc65f010833691c6d7de20f55fe755a74a24bb",
+          "materialized_symlink_count": 1,
+          "omitted_dangling_symlink_count": 11,
+          "omitted_dangling_symlinks": [
+            {
+              "kind": "symbolic",
+              "path": "docs/authors.md",
+              "target": "_build/generated/authors.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/change_log.md",
+              "target": "_build/generated/change_log.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/contributing_to_black.md",
+              "target": "_build/generated/contributing_to_black.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/editor_integration.md",
+              "target": "_build/generated/editor_integration.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/ignoring_unmodified_files.md",
+              "target": "_build/generated/ignoring_unmodified_files.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/installation_and_usage.md",
+              "target": "_build/generated/installation_and_usage.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/license.md",
+              "target": "_build/generated/license.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/show_your_style.md",
+              "target": "_build/generated/show_your_style.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/testimonials.md",
+              "target": "_build/generated/testimonials.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/the_black_code_style.md",
+              "target": "_build/generated/the_black_code_style.md"
+            },
+            {
+              "kind": "symbolic",
+              "path": "docs/version_control_integration.md",
+              "target": "_build/generated/version_control_integration.md"
+            }
+          ]
+        },
+        "fixed_commit_id": "7fc6ce990669464f5172b63fafa3724f5f308be3",
+        "fixed_test_sha256": {
+          "tests/test_black.py": "01914e8cdbcac87d02880e2e816d5cf960463c95ef8a751d60fafb6885b5007d"
+        },
+        "metadata_sha256": {
+          "bug.info": "3b69d7489cad3225a610edfd824a66f449555117f73d6b55055480bb0d72eeae",
+          "bug_patch.txt": "95b8be45189f9b54a838182a748ca647cb9ce964c37a62fa6cd3760036cb3427",
+          "requirements.txt": "df25c7b60c8950115e8d03ff4c647659371536f28d99e8fcb5b3683c6ea1e2c7",
+          "run_test.sh": "09607b3b20887977a50e9f91100df899adea48b682cde6189aa23ccacd9836f2",
+          "setup.sh": "5ebfe240917e30d1dcb9c5d19ad85af36a29ae5c33d6d4a768863069b0a3329b"
+        },
+        "model_api_calls": 0,
+        "order": 29,
+        "project": "black",
+        "record_sha256": "d59410df317824035d5a3b4b66bd0473c403cad5a2aebc8f4d65e140004ceadd",
+        "reference_validation": {
+          "normalized_patch_sha256": "459b38dd1adaf6bbdd48ddbb502e89be199228f53d76cf5335140a251df1f1e4",
+          "patch_apply_exit_code": 0,
+          "patch_check_exit_code": 0,
+          "patch_line_endings_normalized": true,
+          "reference_tree_sha256": "6bc900e3816d1e21dab040d6cb5a6031b79f0853961531c0a384f75353c3ca03"
+        },
+        "source_acquisition": "official GitHub codeload commit tarballs",
+        "source_materialization_manifests": [
+          {
+            "archive_root": "black-bbc09a4f013f2a584f143f3f5e3f76f6082367d4",
+            "archive_sha256": "30fc0c2955b363543b1511c7ef1a10ec544cdb52fa93741ba81aeef451e303c3",
+            "dangling_manifest": [
+              {
+                "kind": "symbolic",
+                "path": "docs/authors.md",
+                "target": "_build/generated/authors.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/change_log.md",
+                "target": "_build/generated/change_log.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/contributing_to_black.md",
+                "target": "_build/generated/contributing_to_black.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/editor_integration.md",
+                "target": "_build/generated/editor_integration.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/ignoring_unmodified_files.md",
+                "target": "_build/generated/ignoring_unmodified_files.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/installation_and_usage.md",
+                "target": "_build/generated/installation_and_usage.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/license.md",
+                "target": "_build/generated/license.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/show_your_style.md",
+                "target": "_build/generated/show_your_style.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/testimonials.md",
+                "target": "_build/generated/testimonials.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/the_black_code_style.md",
+                "target": "_build/generated/the_black_code_style.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/version_control_integration.md",
+                "target": "_build/generated/version_control_integration.md"
+              }
+            ],
+            "dangling_manifest_sha256": "d02faaa0933353cff129b75157e78068d89f334252af1f2bc41df83de41b73e6",
+            "predicates": {
+              "all_normalized_paths_strictly_under_docs": true,
+              "all_symbolic": true,
+              "no_changed_source_intersection": true,
+              "no_declared_test_intersection": true,
+              "no_package_build_metadata_intersection": true,
+              "no_project_test_root_intersection": true
+            }
+          },
+          {
+            "archive_root": "black-7fc6ce990669464f5172b63fafa3724f5f308be3",
+            "archive_sha256": "1310e77baa074388367519c8706851dd71338fb8f48bbe802f86e4ce01023c28",
+            "dangling_manifest": [
+              {
+                "kind": "symbolic",
+                "path": "docs/authors.md",
+                "target": "_build/generated/authors.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/change_log.md",
+                "target": "_build/generated/change_log.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/contributing_to_black.md",
+                "target": "_build/generated/contributing_to_black.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/editor_integration.md",
+                "target": "_build/generated/editor_integration.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/ignoring_unmodified_files.md",
+                "target": "_build/generated/ignoring_unmodified_files.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/installation_and_usage.md",
+                "target": "_build/generated/installation_and_usage.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/license.md",
+                "target": "_build/generated/license.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/show_your_style.md",
+                "target": "_build/generated/show_your_style.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/testimonials.md",
+                "target": "_build/generated/testimonials.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/the_black_code_style.md",
+                "target": "_build/generated/the_black_code_style.md"
+              },
+              {
+                "kind": "symbolic",
+                "path": "docs/version_control_integration.md",
+                "target": "_build/generated/version_control_integration.md"
+              }
+            ],
+            "dangling_manifest_sha256": "d02faaa0933353cff129b75157e78068d89f334252af1f2bc41df83de41b73e6",
+            "predicates": {
+              "all_normalized_paths_strictly_under_docs": true,
+              "all_symbolic": true,
+              "no_changed_source_intersection": true,
+              "no_declared_test_intersection": true,
+              "no_package_build_metadata_intersection": true,
+              "no_project_test_root_intersection": true
+            }
+          }
+        ],
+        "source_repository": "https://github.com/psf/black",
+        "status": "v2_p2_source_context_frozen_no_candidate",
+        "task_id": "bugsinpy_black_17"
+      },
+      "order": 29,
+      "project_test_scope": {
+        "collection_command": [
+          "python",
+          "-m",
+          "unittest-discover",
+          "--start-dir",
+          "tests",
+          "--pattern",
+          "test*.py",
+          "--top-level-dir",
+          "."
+        ],
+        "derived_from_declared_file_count": 13,
+        "framework": "unittest",
+        "project": "black",
+        "project_test_root": "tests",
+        "unittest_pattern": "test*.py",
+        "unittest_top_level_dir": "."
+      },
+      "real_activity": {
+        "api_keys_read": 0,
+        "containers_started": 0,
+        "environment_builds": 0,
+        "model_api_calls": 0,
+        "project_tests_run": 0,
+        "prompt_renders": 0,
+        "real_task_checkouts": 1
+      },
+      "record_sha256": "9ae1774c039bb76ae5eb39981f09b39bb8a29f126d1650f8375254c61a500151",
+      "source_record": {
+        "bug_id": 17,
+        "buggy_commit_id": "bbc09a4f013f2a584f143f3f5e3f76f6082367d4",
+        "candidate_materialized": false,
+        "candidate_outcome_observed": false,
+        "catalog_f2p_commands": [
+          "python -m unittest -q tests.test_black.BlackTestCase.test_empty"
+        ],
+        "declared_f2p_commands": [
+          "python -m unittest -q tests.test_black.BlackTestCase.test_empty"
+        ],
+        "declared_test_file": "tests/test_black.py",
+        "environment_risk_tags": [],
+        "f2p_command_match": true,
+        "fixed_commit_id": "7fc6ce990669464f5172b63fafa3724f5f308be3",
+        "metadata_sha256": {
+          "bug_info": "3b69d7489cad3225a610edfd824a66f449555117f73d6b55055480bb0d72eeae",
+          "reference_patch": "95b8be45189f9b54a838182a748ca647cb9ce964c37a62fa6cd3760036cb3427",
+          "requirements": "df25c7b60c8950115e8d03ff4c647659371536f28d99e8fcb5b3683c6ea1e2c7",
+          "run_test": "09607b3b20887977a50e9f91100df899adea48b682cde6189aa23ccacd9836f2",
+          "setup_provenance_only": "5ebfe240917e30d1dcb9c5d19ad85af36a29ae5c33d6d4a768863069b0a3329b"
+        },
+        "model_outcome_observed": false,
+        "official_setup_executable_authority": false,
+        "order": 29,
+        "project": "black",
+        "project_order_sha256": "7c4fad6524092f27b7eeff8fd8b2d26a61b92e68a40c703ae7a0ff743d3ec103",
+        "project_position": 3,
+        "python_version": "3.8.3",
+        "requirements_metadata": {
+          "nonempty": true,
+          "present": true
+        },
+        "round": 4,
+        "task_id": "bugsinpy_black_17",
+        "task_order_sha256": "26ef7c7338ad8a4db698939159fc7e4b4db575f6ac25b11d40d33676a4b2da1f",
+        "test_framework": "unittest"
+      },
+      "task_id": "bugsinpy_black_17"
+    }
+  ],
+  "registry_id": "dsa_v2_p2_order_029_bugsinpy_black_17_source_v0_1",
+  "status": "cursor_task_source_frozen"
+}
