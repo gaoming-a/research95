@@ -115,6 +115,12 @@ pyproject-only checkout，且冻结 Starlette0.12.9 与 FastAPI0.55.1 所需0.13
 不升级 pip、不改依赖、不重跑。ledger v0.11 attempted=11、qualified=0、API=0；cursor
 为 order12 `bugsinpy_black_5`、started=false。
 
+Black_5 两个 official archives 均生成独立13-link manifest，SHA 与签核 manifest 一致，
+六个通用 predicates 全部通过，自动 omission rule 经 source check 验证。environment build
+PASS；两次 frozen F2P 均因 `tests.test_black` 不可导入而一致失败，不改命令、不重跑。
+ledger v0.12 attempted=12、qualified=0、API=0；cursor 为 order13
+`bugsinpy_keras_45`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向

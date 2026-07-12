@@ -1,78 +1,76 @@
 {
-  "attempted_tasks": 11,
+  "attempted_tasks": 12,
   "config_id": "dsa_v2_p2_cursor_task_config_v0_1",
-  "config_sha256": "c7f4708ca3b5630113fd7ef71b11a7e4094bc99d1d2af6af1279a9344568733b",
+  "config_sha256": "068c83b15aad50b2afbceee5fd4c34ac707f18e530c3cb5e1f6b4fd9de1c43e0",
   "created_date": "2026-07-12",
-  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_11.json",
-  "ledger_sha256": "07593e0f730584b9ff1ef5fe8b1bac48f74c7419ade28aa5b995e8bee28945ec",
+  "ledger_path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_12.json",
+  "ledger_sha256": "2101f5e215fcccbd2e2bf56f4002c22335d0b1404a3a15a2da78420fee4c92c1",
   "model_api_calls": 0,
   "next_task_started": false,
   "project_test_scope": {
     "collection_command": [
       "python",
       "-m",
-      "unittest-discover",
-      "--start-dir",
-      "tests",
-      "--pattern",
-      "test*.py",
-      "--top-level-dir",
-      "."
+      "pytest",
+      "--collect-only",
+      "-q",
+      "tests"
     ],
-    "derived_from_declared_file_count": 13,
-    "framework": "unittest",
-    "project": "black",
+    "derived_from_declared_file_count": 23,
+    "framework": "pytest",
+    "project": "keras",
     "project_test_root": "tests",
-    "unittest_pattern": "test*.py",
-    "unittest_top_level_dir": "."
+    "unittest_pattern": null,
+    "unittest_top_level_dir": null
   },
   "python_lock": {
-    "actual_sha256": "6a25cb9316d222d0bf8b53b516268668cb23b3bebc1cf3ede3d6d33dbc872144",
-    "environment_name": "py383",
-    "expected_sha256": "6a25cb9316d222d0bf8b53b516268668cb23b3bebc1cf3ede3d6d33dbc872144",
-    "path": "data/environment_locks/dsa2026_p4_bootstrap/py383-linux-64.txt",
-    "python_version": "3.8.3"
+    "actual_sha256": "f5f36238a1b97f435d93a9ff7b23c5fa12b075fc616ee05e66bd2c6e72552fd5",
+    "environment_name": "py373",
+    "expected_sha256": "f5f36238a1b97f435d93a9ff7b23c5fa12b075fc616ee05e66bd2c6e72552fd5",
+    "path": "data/environment_locks/dsa2026_p4_bootstrap/py373-linux-64.txt",
+    "python_version": "3.7.3"
   },
   "qualified_pairs": 0,
-  "repository": "https://github.com/psf/black",
-  "runtime_namespace": "order_012_bugsinpy_black_5",
+  "repository": "https://github.com/keras-team/keras",
+  "runtime_namespace": "order_013_bugsinpy_keras_45",
   "status": "unique_next_task_resolved",
   "task": {
-    "bug_id": 5,
-    "buggy_commit_id": "1bbb01b854d168d76ebe4bf78961c2152ae075d9",
+    "bug_id": 45,
+    "buggy_commit_id": "d368dc870bfd8fdd4ca0ff82bd5b61aa549291c5",
     "candidate_materialized": false,
     "candidate_outcome_observed": false,
     "catalog_f2p_commands": [
-      "python -m unittest -q tests.test_black.BlackTestCase.test_function_trailing_comma"
+      "pytest tests/keras/layers/recurrent_test.py::test_implementation_mode[LSTM]"
     ],
     "declared_f2p_commands": [
-      "python -m unittest -q tests.test_black.BlackTestCase.test_function_trailing_comma"
+      "pytest tests/keras/layers/recurrent_test.py::test_implementation_mode[LSTM]"
     ],
-    "declared_test_file": "tests/test_black.py",
-    "environment_risk_tags": [],
+    "declared_test_file": "tests/keras/layers/recurrent_test.py",
+    "environment_risk_tags": [
+      "heavy_tensorflow_stack"
+    ],
     "f2p_command_match": true,
-    "fixed_commit_id": "9394de150ebf0adc426523f46dc08e8b2b2b0b63",
+    "fixed_commit_id": "159bb1aac17a8de0f96997d35703b8f26926a848",
     "metadata_sha256": {
-      "bug_info": "c54dd01daf53829acc93f3bd98cf99734e1dcb1c1ed070324f3a6c34c07ffb9f",
-      "reference_patch": "5d0282358c5e4f8ac6aa04b5cb7b95758a052a2c2bae817227e54f4ac432a383",
-      "requirements": "350f607591e678cfcbfd0116b3b2056ca5646e9a7fdf2c1092b933f2e67ec8d5",
-      "run_test": "f62855bcc4294ddbf4ad7326b09d1f33171e6eecbf752c8048e60e69f19899f0",
-      "setup_provenance_only": "5ebfe240917e30d1dcb9c5d19ad85af36a29ae5c33d6d4a768863069b0a3329b"
+      "bug_info": "51a9bbd683e081bd70cc45a7b7711f46cfd6992e42a3f13d55a31c62db6b01f2",
+      "reference_patch": "158e4498a16060d988cb4bdf07826969e213ada9d972f0a2ff1903a18a4c6b30",
+      "requirements": "3584fcb9c612cb3faa764dec6e6231aab1a9cc473bb4c664c4ddb9fd862237f2",
+      "run_test": "e4c6db3e2963793f5551ec666e6b5b0bc19d01120c4b31b2aca3037565e7936a"
     },
     "model_outcome_observed": false,
     "official_setup_executable_authority": false,
-    "order": 12,
-    "project": "black",
-    "project_order_sha256": "7c4fad6524092f27b7eeff8fd8b2d26a61b92e68a40c703ae7a0ff743d3ec103",
-    "project_position": 3,
-    "python_version": "3.8.3",
+    "order": 13,
+    "project": "keras",
+    "project_order_sha256": "86275bf699d90e96bfd9ecb0df4e68b0faac0f01cca31e3de7cfd50bd2a2aad3",
+    "project_position": 4,
+    "python_version": "3.7.3",
     "requirements_metadata": {
       "nonempty": true,
       "present": true
     },
     "round": 2,
-    "task_id": "bugsinpy_black_5",
-    "task_order_sha256": "0d5332afcae1a7b0509f2f5fce9acf7acd239681a0176f247209b5908dc9f992",
-    "test_framework": "unittest"
+    "task_id": "bugsinpy_keras_45",
+    "task_order_sha256": "0e3a6d11c533d5cfd644c8ff3b05c0b980ea38100d928483f200e594f51ee8eb",
+    "test_framework": "pytest"
   }
 }

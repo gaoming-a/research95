@@ -14,6 +14,9 @@
 - Keep the shared extractor fail-closed by default. Pass an exact omission set
   only from the V2-P2 cursor after the signed rule and task-local manifest pass;
   this avoids silently changing older P4/V2-P2 source semantics.
+- A later Black task reproduced the same 13-link manifest under different
+  archive hashes. Requiring a fresh per-archive manifest plus all predicates
+  allowed automatic application without weakening the signed rule.
 
 ## 2026-07-12 Rebind every order-specific identity in a generic executor
 
