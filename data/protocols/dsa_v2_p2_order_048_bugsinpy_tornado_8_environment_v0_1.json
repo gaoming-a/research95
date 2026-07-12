@@ -1,0 +1,47 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 0,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 0,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "build_exit_code": 0,
+  "build_output_bytes": 23021,
+  "build_output_sha256": "f6581a1f0704b23737263b2228495442dd3d8a911e26ecb86aeb00148dc362f5",
+  "created_date": "2026-07-12",
+  "dockerfile_sha256": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
+  "environment_id": "dsa_v2_p2_order_048_bugsinpy_tornado_8_environment_v0_1",
+  "failure_reason": null,
+  "image": {
+    "image": "dsa2026-v2-p2-task:bugsinpy_tornado_8",
+    "image_id": "sha256:66356ae24cf62ba0226d404d748ccb8082fa7973eb53c0ae198ffa765f2988f5",
+    "labels": {
+      "dsa2026.v2_p2.buggy_commit": "34c43f4775971ab9b2b8ed43356f218add6387b2",
+      "dsa2026.v2_p2.fixed_commit": "5d4a9ab26372efd255bbb29fde55c41395ed17b1",
+      "dsa2026.v2_p2.model_api_called": "false",
+      "dsa2026.v2_p2.official_setup_executed": "false",
+      "dsa2026.v2_p2.order": "48",
+      "dsa2026.v2_p2.project": "tornado",
+      "dsa2026.v2_p2.python_env": "py370",
+      "dsa2026.v2_p2.task_id": "bugsinpy_tornado_8",
+      "maintainer": "Anaconda, Inc",
+      "org.opencontainers.image.created": "2023-05-02T19:14:07.639Z",
+      "org.opencontainers.image.description": "Repository of Docker images created by Anaconda",
+      "org.opencontainers.image.licenses": "",
+      "org.opencontainers.image.revision": "60eb8fe8f841c7d64a2439920562edc8e409c80f",
+      "org.opencontainers.image.source": "https://github.com/ContinuumIO/docker-images",
+      "org.opencontainers.image.title": "DSA v0.2 V2-P2 cursor task environment",
+      "org.opencontainers.image.url": "https://github.com/ContinuumIO/docker-images",
+      "org.opencontainers.image.version": "23.3.1-0"
+    }
+  },
+  "official_setup_executed": false,
+  "order": 48,
+  "source_record_sha256": "6146e59373b02f2f0faa74f9801b05218a15599c96f73037cb3cc94f862ff760",
+  "status": "environment-built-oracle-not-started",
+  "task_id": "bugsinpy_tornado_8",
+  "task_specific_repair_attempted": false
+}

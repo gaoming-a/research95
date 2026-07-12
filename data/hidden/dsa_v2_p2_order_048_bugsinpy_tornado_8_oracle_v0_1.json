@@ -1,0 +1,232 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 2,
+    "environment_builds": 1,
+    "model_api_calls": 0,
+    "project_tests_run": 2,
+    "prompt_renders": 0,
+    "real_task_checkouts": 1
+  },
+  "created_date": "2026-07-12",
+  "failure_reason": "oracle-positive-f2p-failure-or-dual-disagreement",
+  "model_api_calls": 0,
+  "official_f2p": {
+    "dual_pass": false,
+    "run_a": {
+      "container_exit_code": 0,
+      "container_id": "15e310b1a1e57b636723bf99fef71e37dcd268c0cb6fde64314d915d3ed06c3e",
+      "container_name": "dsa-v2-p2-official-f2p-a-ed67f7bded",
+      "image_id": "sha256:66356ae24cf62ba0226d404d748ccb8082fa7973eb53c0ae198ffa765f2988f5",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 2613,
+      "output_sha256": "17d34624fdf47e8ecca0797e7900e5cfd8501d03ff1ae8b9c182d5961188d6b1",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "python -m unittest -q tornado.test.websocket_test.WebSocketTest.test_missing_websocket_key"
+            ],
+            "duration_seconds": 0.255,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "WARNING:tornado.access:400 GET /echo (127.0.0.1) 0.29ms\n----------------------------------------------------------------------\nRan 1 test in 0.005s\n\nOK\n",
+            "output_sha256": "fa05ae3f179bab6cdf2c32cef455008239ebf595ee80f69a13853eadb3f6c0d5",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 4262,
+              "sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 158,
+              "sha256": "e84fb959f22b8374b625452a60b668ed76394ff6310ae25e721b4a639cf23bf2"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "499933e6f5e6fd762bb88f49880033c9659d4b6445b6e459fbe9753a1be12b54"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 977,
+              "sha256": "5746228bad2c297403bd6c3a8c4621a8712f3263f808cb595bf48dca47aa03b9"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py370/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.004,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.7.0\n",
+            "output_sha256": "95fdbb1639ae37c7909261984de9c15fbaae93eb7328a50463803a91d1fdee76",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "7bd687fcb8a87b3bdb26340be7482e16eba5c703b3cbcb78c6d7d5139c27a80b",
+          "fixed_test_paths": [
+            "tornado/test/websocket_test.py"
+          ],
+          "reference_patch_sha256": "56bf2416608021a7fa2ce727513f7884ad77f3ba6fcf141e5ebf0238bc9280a2"
+        }
+      }
+    },
+    "run_b": {
+      "container_exit_code": 0,
+      "container_id": "f8d78fcd4086385691e227ac7bbf3f9636187c71c620ec19ff69470b07ff6f9a",
+      "container_name": "dsa-v2-p2-official-f2p-b-8e20cb1078",
+      "image_id": "sha256:66356ae24cf62ba0226d404d748ccb8082fa7973eb53c0ae198ffa765f2988f5",
+      "mounts": [],
+      "network_mode": "none",
+      "output_bytes": 2612,
+      "output_sha256": "287026df24aedaf43b8245dea045e5dae6a87f5e42e57f32f289b81161d2ff07",
+      "worker": {
+        "checks": [
+          {
+            "command": [
+              "/bin/bash",
+              "-c",
+              "python -m unittest -q tornado.test.websocket_test.WebSocketTest.test_missing_websocket_key"
+            ],
+            "duration_seconds": 0.31,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "WARNING:tornado.access:400 GET /echo (127.0.0.1) 0.23ms\n----------------------------------------------------------------------\nRan 1 test in 0.005s\n\nOK\n",
+            "output_sha256": "fa183863ff4df42bffb1ecd452e0a0a5e6941c1d9d9ecf3db14fae71d9cae197",
+            "timed_out": false
+          }
+        ],
+        "environment": {
+          "build_artifacts": {
+            "conda-explicit.txt": {
+              "bytes": 4262,
+              "sha256": "2b79c03af7d1cffa7d8a91b0830da6ddc27e353f7ec482434173671824825b82"
+            },
+            "editable_project.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "editable_project.log": {
+              "bytes": 158,
+              "sha256": "e84fb959f22b8374b625452a60b668ed76394ff6310ae25e721b4a639cf23bf2"
+            },
+            "editable_project_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "environment_name.txt": {
+              "bytes": 6,
+              "sha256": "499933e6f5e6fd762bb88f49880033c9659d4b6445b6e459fbe9753a1be12b54"
+            },
+            "official_setup_executed.txt": {
+              "bytes": 6,
+              "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+            },
+            "pip-freeze.txt": {
+              "bytes": 977,
+              "sha256": "5746228bad2c297403bd6c3a8c4621a8712f3263f808cb595bf48dca47aa03b9"
+            },
+            "pip_check.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "pip_check.log": {
+              "bytes": 31,
+              "sha256": "a10f75b992f2f250449978aa5040718b580021919b995d4757300e84e5c3a219"
+            },
+            "pip_check_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.exit_code": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            },
+            "requirements.log": {
+              "bytes": 0,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            "requirements_status.txt": {
+              "bytes": 2,
+              "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+            }
+          },
+          "python": {
+            "command": [
+              "/opt/conda/envs/py370/bin/python",
+              "--version"
+            ],
+            "duration_seconds": 0.003,
+            "exit_code": 0,
+            "outcome": "passed",
+            "output_excerpt": "Python 3.7.0\n",
+            "output_sha256": "95fdbb1639ae37c7909261984de9c15fbaae93eb7328a50463803a91d1fdee76",
+            "timed_out": false
+          }
+        },
+        "preparation": {
+          "candidate": "reference",
+          "candidate_tree_sha256": "7bd687fcb8a87b3bdb26340be7482e16eba5c703b3cbcb78c6d7d5139c27a80b",
+          "fixed_test_paths": [
+            "tornado/test/websocket_test.py"
+          ],
+          "reference_patch_sha256": "56bf2416608021a7fa2ce727513f7884ad77f3ba6fcf141e5ebf0238bc9280a2"
+        }
+      }
+    }
+  },
+  "oracle_id": "dsa_v2_p2_order_048_bugsinpy_tornado_8_oracle_v0_1",
+  "order": 48,
+  "source_paths": [
+    "tornado/websocket.py"
+  ],
+  "status": "materialization-failed",
+  "task_id": "bugsinpy_tornado_8",
+  "task_image_id": "sha256:66356ae24cf62ba0226d404d748ccb8082fa7973eb53c0ae198ffa765f2988f5",
+  "task_specific_repair_attempted": false
+}

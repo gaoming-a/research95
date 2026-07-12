@@ -310,6 +310,11 @@ Ansible_5 full-tree source freeze/check PASS。唯一 py369 build 因冻结
 beta/rc/final、不重跑。ledger v0.47 attempted=47、qualified=0、API=0；cursor 为
 order48 `bugsinpy_tornado_8`、started=false。
 
+Tornado_8 source freeze/check 与 build PASS。两次 F2P 均通过且 unittest elapsed 均为
+`0.005s`，但 access log request timing 为 `0.29ms`/`0.23ms`，导致冻结 output hashes
+不同；按 dual disagreement terminal，不归一化日志、不重跑。ledger v0.48 attempted=48、
+qualified=0、API=0；cursor 为 order49 `bugsinpy_matplotlib_30`、started=false。
+
 ## 0.58 2026-07-12 V2-P2 order=2 FastAPI_11 pre-outcome freeze
 
 Order=1 pandas_161 已形成 immutable environment terminal，ledger 唯一 cursor 指向
