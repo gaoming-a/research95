@@ -1,7 +1,7 @@
 # DSA reviewer-agent 证据条件实验计划 v0.2
 
 日期：2026-07-13
-状态：`V2-P2_PAUSED_AT_LEDGER_V0_62 / QUALIFIED_0 / DEVELOPMENT_PILOT_V0_2_TERMINAL_NO_OUTPUT / V0_3_FROZEN_UNSIGNED / NO_V0_3_API`
+状态：`V2-P2_PAUSED_AT_LEDGER_V0_62 / QUALIFIED_0 / DEVELOPMENT_PILOT_V0_2_TERMINAL_NO_OUTPUT / STANDING_EXECUTION_PROTOCOL_UNSIGNED / NO_V0_3_API`
 
 ## 0. 2026-07-13 development-only 真实 API pilot 边界
 
@@ -34,6 +34,13 @@ prompt/schema、routes、repeats 和72-request factorial 不变，只修复哨�
 record immediate hard-stop，并使用新 request domain/output path。新 aggregate 为
 `90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38`；当前 unsigned，
 不得读取 key 或调用 v0.3 endpoint。v0.1/v0.2 均没有有效模型输出，不能据此评价模型或 prompt。
+
+为避免以后纯执行链修复反复签核，v0.3 单 aggregate 签核入口由 standing execution
+protocol v0.1 取代。协议 SHA-256 为
+`7ceb704a0d0310f60c86ee46356bacd0b4793fc772e3e1ac7b241ef68462d899`：作者签署一次后，
+只有机械证明 scientific surface 完全不变的执行实现版本可自动派生 aggregate-specific
+authorization。任何科学表面变化、已有有效输出重跑、完整性 hard stop、公开发布或投稿
+仍须暂停；该 standing authorization 不改变 pilot 的 development-only exclusion。
 
 ## 1. 一句话论点
 

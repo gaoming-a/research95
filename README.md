@@ -19,9 +19,14 @@ three repeats, and 72-request structure unchanged; it only omits documentation
 sentinels from request bodies and hard-stops on the first non-valid terminal
 record under a new request domain and output path. Its aggregate SHA-256 is
 `90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38`.
-All v0.3 no-API gates pass; v0.3 author sign-off is pending and no v0.3 API request
-has been made. The pilot remains excluded from confirmatory estimates and
-paper-facing claims.
+All v0.3 no-API gates pass and no v0.3 API request has been made. Repeated
+per-aggregate signatures are now replaced by an unsigned standing-execution
+proposal that locks the scientific surface and permits only mechanically audited
+execution-chain repairs. Its protocol SHA-256 is
+`7ceb704a0d0310f60c86ee46356bacd0b4793fc772e3e1ac7b241ef68462d899`.
+One author signature is pending; after activation, conforming implementation-only
+versions derive aggregate-specific authorization without another signature. The
+pilot remains excluded from confirmatory estimates and paper-facing claims.
 
 As of 2026-07-13, the sole active route is
 [the DSA 2026 execution plan](docs/plans/dsa_2026_submission_execution_plan_zh.md).

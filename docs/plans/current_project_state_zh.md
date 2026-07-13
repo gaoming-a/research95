@@ -2,6 +2,17 @@
 
 日期：2026-07-13
 
+## 2026-07-13 DSA development pilot standing authorization / unsigned
+
+- v0.3 逐 aggregate 签核入口已被一次性 standing-execution proposal 取代；
+- protocol SHA=`7ceb704a0d0310f60c86ee46356bacd0b4793fc772e3e1ac7b241ef68462d899`，
+  当前首个派生候选仍为 v0.3 aggregate `90e1eebc…49d38`；
+- scientific surface 锁定 pair、packets、prompt/schema、exact routes、72项调度、repeats、
+  development exclusion 与 no-outcome-rerun；执行链修复必须逐版本通过 conformance；
+- 作者只需签署 standing protocol 一次；以后合规的纯执行修复自动派生 authorization；
+- 科学表面变化、已有有效输出重跑、leakage、完整性失败、公开发布或投稿仍暂停；
+- 当前 unsigned，standing/v0.3 active authorization 均不存在，v0.3 API=0、output absent。
+
 ## 2026-07-13 DSA 72-call pilot v0.2 terminal / v0.3 unsigned repair freeze
 
 - v0.2 canary 已发出8次 Qwen endpoint HTTP 请求，全部因字符串

@@ -1,0 +1,79 @@
+{
+  "protocol_id": "dsa_v2_api_pilot_standing_execution_protocol_v0_1",
+  "created_date": "2026-07-13",
+  "status": "immutable_candidate_pending_author_signature",
+  "purpose": "Replace repeated implementation-aggregate signatures with one author-signed scientific-surface lock and mechanically audited standing execution authority.",
+  "baseline": {
+    "current_candidate_version": "v0.3",
+    "current_candidate_aggregate_sha256": "90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38",
+    "selection_sha256": "12174ce222ced4433d88512c77922c75357fa49d8cd9b5f951b8f64eed27e8e6",
+    "evidence_revalidation_path": "data/protocols/dsa_v2_api_pilot_evidence_revalidation_v0_1.json",
+    "evidence_revalidation_sha256": "3cbcf442109cd374719df9f03badfe25cf87494c63df265ecda52f14ac9a53da",
+    "model_visible_packets_path": "data/protocols/dsa_v2_api_pilot_model_visible_packets_v0_3.jsonl",
+    "model_visible_packets_sha256": "12bc85e7acc8ee941da1d1bedf7cce5a040663a765354874b0508db4a3411374",
+    "prompt_path": "prompts/dsa2026_evidence_conditioned_patch_gate_v0_1.md",
+    "prompt_sha256": "08a485635924a6813a2d646518c02dacf9fa108b6a5271efb88fe35d79d4809e",
+    "schema_path": "data/protocols/dsa_p3_output_schema_v0_1.json",
+    "schema_sha256": "622212864170cbe6bb0677f230b5008947b9bf1a95f665f82cded1f44b91dbf9",
+    "routes_canonical_sha256": "cd0803b68bd4efa164d8d7e61b2cb00f74ab411eb079b5eead91588513eebb17",
+    "schedule_canonical_sha256": "20d0d83552e412d4ef8899167f830da79b6f8699c640e33e4a3255161ea5a2c1",
+    "routes": [
+      "Alibaba Cloud Model Studio/qwen3.7-plus-2026-05-26",
+      "DeepSeek API/deepseek-v4-flash",
+      "OpenRouter/google/gemini-3.5-flash/google-ai-studio/priority"
+    ],
+    "request_count": 72,
+    "canary_count": 8,
+    "repeat_count": 3,
+    "development_only": true,
+    "confirmatory_exclusion": true
+  },
+  "standing_authorization_after_signature": {
+    "execute_current_v0_3": true,
+    "read_named_api_credentials_from_environment": true,
+    "run_eight_call_canary_then_remaining_sixty_four_after_integrity_gate": true,
+    "create_aggregate_specific_derived_authorization_records": true,
+    "version_execution_only_repairs_without_new_author_signature": true,
+    "rerun_no_valid_model_answer_after_proven_pre_inference_rejection": true,
+    "offline_reparse_preserved_raw_response_without_api_call": true,
+    "update_audits_plans_reports_and_local_checkpoints": true,
+    "sync_non_secret_non_raw_files_to_configured_github_repository": true
+  },
+  "execution_only_repairs": [
+    "request parameter serialization and provider request-envelope construction",
+    "credential environment injection without changing provider or route",
+    "HTTP transport handling within the frozen retry rule",
+    "append-only raw-response and ledger persistence",
+    "deterministic parsing, schema validation, identity validation, and error classification",
+    "check-only, conformance, integrity, and sensitive-information audit implementation"
+  ],
+  "mandatory_conformance_before_each_derived_authorization": [
+    "baseline evidence selection and revalidation hashes match",
+    "model-visible packet bytes and hashes match",
+    "prompt and schema bytes and hashes match",
+    "three exact provider/model routes and route parameters match",
+    "normalized 72-request schedule, eight-call canary, and three repeats match",
+    "development-only and confirmatory-exclusion boundaries match",
+    "new implementation uses a new request domain and output path when prior version is terminal",
+    "prior raw responses and ledgers remain append-only and hash-bound",
+    "no valid model answer is requested again",
+    "no model-answer direction contributes to repair, rerun, or stopping decisions",
+    "no API credential is read and no endpoint is called before conformance passes and a derived authorization is materialized"
+  ],
+  "automatic_resume_rules": {
+    "pre_inference_provider_rejection": "A request with mechanically proven zero valid model output may be reissued only under a new version/domain after an execution-only repair and passing conformance audit.",
+    "transport_failure": "Only the frozen transport retry policy applies; outcome direction never authorizes retry.",
+    "preserved_http_200_raw_response": "Reparse offline first; never call the model again merely because local parsing code failed.",
+    "valid_model_output": "Terminal and never rerun, even if its decision is unfavorable.",
+    "partial_schedule": "Carry forward every valid terminal record and execute only requests with no valid model answer."
+  },
+  "requires_new_author_decision": [
+    "any change to evidence pair, model-visible packets, prompt, schema, route, provider, model identity, parameters, request factorial, repeats, metrics, statistical analysis, exclusions, or stopping rule",
+    "any proposed rerun of a request that already has a valid model output",
+    "hidden-label or hidden-oracle leakage",
+    "hash mismatch, append-only ledger violation, raw-response loss, or scientific-surface conformance failure",
+    "an execution failure that cannot be classified within the signed execution-only repair list",
+    "public release, repository visibility change, paper submission, or paper-facing effectiveness claim"
+  ],
+  "terminal_boundary": "This standing protocol does not authorize scientific-design drift, outcome-conditioned reruns, confirmatory use, public release, or submission. It remains valid only while every derived package passes the mandatory conformance audit."
+}

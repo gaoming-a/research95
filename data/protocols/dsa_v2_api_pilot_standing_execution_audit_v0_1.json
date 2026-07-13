@@ -1,0 +1,33 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "model_api_calls": 0,
+    "network_requests": 0
+  },
+  "audit_id": "dsa_v2_api_pilot_standing_execution_audit_v0_1",
+  "checks": {
+    "active_records_absent_before_signature": true,
+    "allowed_repairs_are_bounded": true,
+    "conformance_and_pause_rules_present": true,
+    "current_v0_3_aggregate_bound": true,
+    "development_boundary_bound": true,
+    "evidence_revalidation_hash_bound": true,
+    "factorial_bound": true,
+    "packets_hash_bound": true,
+    "prompt_hash_bound": true,
+    "protocol_is_unsigned_immutable_candidate": true,
+    "routes_canonical_hash_bound": true,
+    "schedule_canonical_hash_bound": true,
+    "schema_hash_bound": true,
+    "selection_rule_bound": true,
+    "v0_2_terminal_preserved": true,
+    "v0_3_api_not_authorized": true,
+    "v0_3_output_absent": true
+  },
+  "created_date": "2026-07-13",
+  "current_candidate_aggregate_sha256": "90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38",
+  "next_action": "Obtain one hash-bound author signature; then activate standing authority and derive the v0.3 execution record without another aggregate signature.",
+  "protocol_path": "data/protocols/dsa_v2_api_pilot_standing_execution_protocol_v0_1.json",
+  "protocol_sha256": "7ceb704a0d0310f60c86ee46356bacd0b4793fc772e3e1ac7b241ef68462d899",
+  "status": "passed_pending_single_author_signature"
+}

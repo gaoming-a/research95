@@ -1,5 +1,24 @@
 # Engineering Notes
 
+## 2026-07-13 Bind standing authority to the scientific surface, not runner bytes
+
+- Requiring a new author signature whenever implementation bytes change confuses
+  scientific governance with engineering versioning. Freeze one immutable
+  scientific-surface protocol and let each conforming runner aggregate derive a
+  local execution record from the signed protocol.
+- The surface lock must cover evidence selection/revalidation, model-visible
+  packet bytes, prompt/schema, exact routes and parameters, normalized request
+  schedule, repeats, exclusions, retry semantics, and no-outcome-rerun. Merely
+  saying that a repair is "implementation only" is not a conformance proof.
+- Preserve asymmetric resume semantics: pre-inference rejection with zero valid
+  output can be reissued after a versioned repair; an HTTP 200 raw response is
+  reparsed offline first; a valid model output is terminal and never requested
+  again. Partial runs carry valid records forward and execute only unobserved work.
+- Standing authority still stops on scientific-surface drift, hidden leakage,
+  append-only/hash/raw-output failure, unclassified repairs, public release, and
+  submission. Reducing signatures must not eliminate the author's scientific or
+  publication decision points.
+
 ## 2026-07-13 Never serialize documentation sentinels into provider requests
 
 - A frozen route can contain human-readable values such as `"omitted"` to document

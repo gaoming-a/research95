@@ -2,6 +2,27 @@
 
 最后更新：2026-07-13
 
+## 0.64 2026-07-13 development pilot 一次性持续执行授权提案
+
+为避免每次纯执行实现修复都要求作者重签 aggregate，本轮把授权锚点从易变化的 runner
+aggregate 提升为不变的 scientific-surface protocol。协议机械绑定 selection、evidence
+revalidation、8个 model-visible packets、prompt/schema bytes、三条 exact routes、规范化
+72-request schedule、8-call canary、3 repeats、development-only exclusion 和
+no-outcome-rerun；当前 v0.3 aggregate `90e1eebc…49d38` 是首个派生执行候选。
+
+签署一次后，只有 request serialization、同 route credential injection、冻结 retry 内的
+transport、append-only persistence、deterministic parsing/schema/identity validation 和
+audit 实现允许版本化修复。每个新版本仍必须生成新 aggregate、request domain/output path、
+conformance audit 和 aggregate-specific derived authorization；但不再逐版本要求作者签核。
+推理前且0个有效输出的请求可在修复后重发；HTTP 200 raw response 优先离线重解析；已有
+有效模型输出永久不得重跑。模型答案方向不能参与修复或停止决定。
+
+科学表面任何变化、已有有效输出的重跑、hidden leakage、hash/ledger/raw-output 完整性
+失败、无法归类的执行故障、公开发布或投稿仍暂停作者决定。proposal write/check、v0.3
+surface hash、v0.2 terminal preservation、active-record absence 和无输出 Gate 全部 PASS。
+协议 SHA-256=`7ceb704a0d0310f60c86ee46356bacd0b4793fc772e3e1ac7b241ef68462d899`；
+当前 `SINGLE AUTHOR SIGNATURE PENDING / API KEY READS=0 / V0_3 API=0 / OUTPUT=ABSENT`。
+
 ## 0.63 2026-07-13 v0.2 canary 终止审计 / v0.3 最小修复重新冻结
 
 作者签核并授权 aggregate `2ee6c3f0…12ebc3` 后，v0.2 canary 向 Qwen endpoint 发出
