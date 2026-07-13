@@ -1,0 +1,20 @@
+{
+  "aggregate_sha256": "90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38",
+  "authorization_id": "dsa_v2_api_pilot_execution_authorization_v0_3",
+  "authorized_request_count": 72,
+  "development_only": true,
+  "scope": {
+    "authorizes_api_key_read": true,
+    "authorizes_exact_frozen_routes": true,
+    "authorizes_transport_only_retry": true,
+    "forbids_confirmatory_use": true,
+    "forbids_order63_start": true,
+    "forbids_outcome_rerun": true,
+    "forbids_prompt_schema_or_route_change": true,
+    "forbids_public_release_or_submission": true
+  },
+  "signed_by": "高明",
+  "standing_authorization_id": "dsa_v2_api_pilot_standing_authorization_v0_1",
+  "standing_protocol_sha256": "7ceb704a0d0310f60c86ee46356bacd0b4793fc772e3e1ac7b241ef68462d899",
+  "status": "author_signed_execute_authorized"
+}

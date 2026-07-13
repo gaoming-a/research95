@@ -1,7 +1,7 @@
 # DSA reviewer-agent 证据条件实验计划 v0.2
 
 日期：2026-07-13
-状态：`V2-P2_PAUSED_AT_LEDGER_V0_62 / QUALIFIED_0 / DEVELOPMENT_PILOT_V0_2_TERMINAL_NO_OUTPUT / STANDING_EXECUTION_PROTOCOL_UNSIGNED / NO_V0_3_API`
+状态：`V2-P2_PAUSED_AT_LEDGER_V0_62 / QUALIFIED_0 / DEVELOPMENT_PILOT_V0_2_TERMINAL_NO_OUTPUT / STANDING_EXECUTION_ACTIVE / V0_3_EXECUTION_AUTHORIZED_PRE_API`
 
 ## 0. 2026-07-13 development-only 真实 API pilot 边界
 
@@ -41,6 +41,11 @@ protocol v0.1 取代。协议 SHA-256 为
 只有机械证明 scientific surface 完全不变的执行实现版本可自动派生 aggregate-specific
 authorization。任何科学表面变化、已有有效输出重跑、完整性 hard stop、公开发布或投稿
 仍须暂停；该 standing authorization 不改变 pilot 的 development-only exclusion。
+
+作者高明现已签署上述 standing protocol；active record 已为 v0.3 aggregate
+`90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38` 自动派生72-request
+执行授权。激活阶段没有读取 key 或调用 API。下一执行步骤是8-call canary，且只有执行
+完整性可以决定是否继续剩余64次。
 
 ## 1. 一句话论点
 

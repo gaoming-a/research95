@@ -2,6 +2,16 @@
 
 日期：2026-07-13
 
+## 2026-07-13 DSA standing authorization active / v0.3 pre-API
+
+- 作者高明已签署 standing protocol SHA `7ceb704a…62d899`；声明 SHA=`e176fa69…736d7`；
+- active standing record 和 aggregate `90e1eebc…49d38` 的 v0.3 derived authorization
+  已生成，authorized requests=72；
+- 激活未读取 API key、未调用 endpoint、未创建 v0.3 output；
+- 下一步固定为8-call canary，通过 execution-integrity Gate 后继续剩余64次；
+- 后续合规执行链修复无需逐 aggregate 签核；科学表面变化和完整性 hard stop 仍暂停；
+- V2-P2 仍 attempted=62、qualified=0、order63 `started=false`。
+
 ## 2026-07-13 DSA development pilot standing authorization / unsigned
 
 - v0.3 逐 aggregate 签核入口已被一次性 standing-execution proposal 取代；

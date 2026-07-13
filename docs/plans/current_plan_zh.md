@@ -2,6 +2,22 @@
 
 最后更新：2026-07-13
 
+## 0.65 2026-07-13 standing authorization 已签核激活 / v0.3 pre-API
+
+作者高明已签署 protocol SHA-256
+`7ceb704a0d0310f60c86ee46356bacd0b4793fc772e3e1ac7b241ef68462d899` 的一次性持续执行
+授权。原文保存为 declaration，SHA-256=
+`e176fa6921097920d150200e0c862ca4cc5dbd8c87260ffbe911dbb9c7e736d7`；activation
+mechanically 验证协议、声明和 v0.3 aggregate，生成 standing active record 与
+aggregate-specific v0.3 authorization。授权请求=72，执行顺序固定为8-call canary，
+执行完整性 Gate 通过后剩余64次。
+
+activation 阶段 API key reads=0、model API calls=0、network requests=0、output absent；
+prompt/schema/routes/packets/schedule 未修改，order63 未启动。下一步只从本地 `.env` 注入
+`DASHSCOPE_API_KEY`、`DEEPSEEK_API_KEY`、`OPENROUTER_API_KEY`，运行 v0.3 canary；答案
+方向不能影响 Gate。执行链问题按 standing protocol 自动版本化修复，科学表面或完整性
+hard stop 才暂停。
+
 ## 0.64 2026-07-13 development pilot 一次性持续执行授权提案
 
 为避免每次纯执行实现修复都要求作者重签 aggregate，本轮把授权锚点从易变化的 runner

@@ -1,0 +1,13 @@
+{
+  "activation_script_sha256": "f2aee031c966a2f67404c346717d225539eda46ee64859a323dde279124c1baa",
+  "author": "高明",
+  "authorization_id": "dsa_v2_api_pilot_standing_authorization_v0_1",
+  "boundary": "Active only for packages that pass the signed protocol's scientific-surface conformance gate.",
+  "created_date": "2026-07-13",
+  "current_candidate_aggregate_sha256": "90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38",
+  "declaration_path": "data/protocols/dsa_v2_api_pilot_standing_authorization_declaration_v0_1.txt",
+  "declaration_sha256": "e176fa6921097920d150200e0c862ca4cc5dbd8c87260ffbe911dbb9c7e736d7",
+  "protocol_path": "data/protocols/dsa_v2_api_pilot_standing_execution_protocol_v0_1.json",
+  "protocol_sha256": "7ceb704a0d0310f60c86ee46356bacd0b4793fc772e3e1ac7b241ef68462d899",
+  "status": "author_signed_active"
+}

@@ -8,17 +8,23 @@
 
 ## Active Plan
 
-- [dsa_v2_api_pilot_standing_authorization_signoff_v0_1.md](experiments/dsa_v2_api_pilot_standing_authorization_signoff_v0_1.md):
-  unsigned one-signature standing-execution proposal. Protocol SHA-256 is
+- [dsa_v2_api_pilot_standing_authorization_activation_v0_1.md](experiments/dsa_v2_api_pilot_standing_authorization_activation_v0_1.md):
+  author-signed active one-signature standing-execution record. Protocol SHA-256 is
   `7ceb704a0d0310f60c86ee46356bacd0b4793fc772e3e1ac7b241ef68462d899`.
   It locks the selected pair, packet bytes, prompt/schema, three exact routes,
   normalized 72-request schedule, repeats, development-only exclusion, and
   no-outcome-rerun rule. After one author signature, only mechanically conforming
   execution-chain repairs may derive new aggregate-specific authorization without
-  another signature. Machine protocol/audit are
+  another signature. The historical unsigned proposal is
+  [dsa_v2_api_pilot_standing_authorization_signoff_v0_1.md](experiments/dsa_v2_api_pilot_standing_authorization_signoff_v0_1.md).
+  Machine protocol/audit are
   `../data/protocols/dsa_v2_api_pilot_standing_execution_protocol_v0_1.json` and
-  `../data/protocols/dsa_v2_api_pilot_standing_execution_audit_v0_1.json`; proposal
-  replay and later activation are
+  `../data/protocols/dsa_v2_api_pilot_standing_execution_audit_v0_1.json`; signed
+  declaration, active record, and derived v0.3 execution record are
+  `../data/protocols/dsa_v2_api_pilot_standing_authorization_declaration_v0_1.txt`,
+  `../data/protocols/dsa_v2_api_pilot_standing_authorization_v0_1.json`, and
+  `../data/protocols/dsa_v2_api_pilot_execution_authorization_v0_3.json`.
+  Proposal replay and activation are
   `../scripts/dsa2026_prepare_api_pilot_standing_authorization_v0_1.py`.
 
 - [dsa_v2_api_pilot_freeze_v0_3.md](experiments/dsa_v2_api_pilot_freeze_v0_3.md):
@@ -33,9 +39,9 @@
   Preparation is `../scripts/dsa2026_prepare_api_pilot_v0_3.py`; the default-deny
   runner is `../scripts/dsa2026_run_api_pilot_v0_3.py`. Aggregate SHA-256 is
   `90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38`;
-  v0.3 is the first candidate package under the unsigned standing-execution
-  proposal; its older per-aggregate signoff path is superseded. v0.3 model API
-  activity remains zero.
+  v0.3 is the first derived package under the active standing authorization; its
+  older per-aggregate signoff path is superseded. v0.3 is authorized for 72
+  requests but model API activity remains zero at the activation checkpoint.
 
 - [dsa_agent_evidence_experiment_v0_2_zh.md](plans/dsa_agent_evidence_experiment_v0_2_zh.md):
   sole active experimental execution plan. P3/P4 v0.1 terminated before model
@@ -43,7 +49,7 @@
   pre-model pool, then freezes the first 30 qualified task pairs before any
   reviewer-agent request. Status: `V2-P2_PAUSED_AT_LEDGER_V0_62 /
   QUALIFIED_0 / DEVELOPMENT_PILOT_V0_2_TERMINAL_NO_OUTPUT /
-  V0_3_FROZEN_UNSIGNED / NO_V0_3_API`.
+  STANDING_EXECUTION_ACTIVE / V0_3_EXECUTION_AUTHORIZED / PRE_API`.
   Machine design and transition audit are
   `../data/protocols/dsa_v0_1_termination_and_v0_2_redesign_v0_1.json` and
   `../scripts/dsa2026_audit_v0_2_redesign.py`.
