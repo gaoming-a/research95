@@ -2,6 +2,16 @@
 
 日期：2026-07-13
 
+## 2026-07-13 DSA v0.3 development pilot complete / 72 valid
+
+- 8-call canary integrity PASS 后自动完成剩余64次；总计72 records/72 valid outputs；
+- HTTP 200=72、endpoint attempts=72、transport retries=0；三路线各24条；
+- ledger SHA=`bbafdf8…abf5b`，全部 raw hashes、prompt/body hashes、schema、identity、
+  manifest binding 和 OpenRouter Google AI Studio runtime route 均 PASS；
+- Qwen/DeepSeek/Gemini 对单 pair 的方向异质，negative 并未随证据一致降低 accept；
+- 结果仅验证 end-to-end setting 可运行，不进入确认性估计或论文效果 claim；
+- prompt/schema/routes 未改，order63 未启动，standing authorization 保持 active。
+
 ## 2026-07-13 DSA standing authorization active / v0.3 pre-API
 
 - 作者高明已签署 standing protocol SHA `7ceb704a…62d899`；声明 SHA=`e176fa69…736d7`；

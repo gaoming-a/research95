@@ -1,5 +1,23 @@
 # Engineering Notes
 
+## 2026-07-13 Separate execution validation from favorable scientific outcome
+
+- A pilot validates deployment only when every frozen route produces identity-
+  valid, schema-valid, hash-bound records under the real transport path. A clean
+  dry run or successful canary alone is insufficient; complete the frozen pilot
+  unless an execution-integrity gate fails.
+- Do not interpret an unfavorable direction as an execution failure. In this
+  pilot, all 72 requests were operationally valid, while the hard-negative was
+  still frequently accepted. Preserve that result and diagnose the research
+  implication without rerunning, prompt editing, or route substitution.
+- Keep two explicit conclusions: the end-to-end setting is executable; the
+  one-pair development outcome does not establish effectiveness or generalize to
+  a task population. This prevents engineering success from being promoted into
+  a scientific claim.
+- A tracked post-run audit should contain hashes, integrity counters, and
+  aggregate decisions only. Provider payloads and rationales remain private raw
+  evidence, while deterministic write/check preserves reproducibility locally.
+
 ## 2026-07-13 Bind standing authority to the scientific surface, not runner bytes
 
 - Requiring a new author signature whenever implementation bytes change confuses

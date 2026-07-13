@@ -1,0 +1,51 @@
+{
+  "activity": {
+    "endpoint_attempts": 72,
+    "http_status_counts": {
+      "200": 72
+    },
+    "planned_requests": 72,
+    "requests_with_transport_retry": 0,
+    "terminal_records": 72,
+    "valid_model_outputs": 72
+  },
+  "aggregate_sha256": "90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38",
+  "audit_id": "dsa_v2_api_pilot_postrun_audit_v0_3",
+  "checks": {
+    "all_manifest_bindings_match": true,
+    "all_raw_hashes_match": true,
+    "all_records_valid": true,
+    "all_response_identities_allowed": true,
+    "all_schema_fields_exact": true,
+    "all_single_attempt_http_200": true,
+    "authorization_matches_aggregate": true,
+    "manifest_request_set_exact": true,
+    "openrouter_runtime_route_exact": true,
+    "packet_balance_9_each": true,
+    "raw_paths_unique": true,
+    "records_exactly_72": true,
+    "rendered_prompt_and_request_body_hashes_match": true,
+    "repeat_balance_24_each": true,
+    "request_ids_unique": true,
+    "request_orders_exact": true,
+    "route_balance_24_each": true,
+    "standing_authorization_active": true
+  },
+  "created_date": "2026-07-13",
+  "raw_output_policy": "Raw provider responses and rationales remain ignored under outputs/; this tracked audit contains only hashes and aggregate counts.",
+  "request_ledger_path": "outputs/dsa_v2_api_pilot_v0_3/request_ledger.jsonl",
+  "request_ledger_sha256": "bbafdf8ed402a1e107cddab7b9237af16ce2872eeec461543df002f069dabf5b",
+  "response_identity_counts": {
+    "deepseek-v4-flash": 24,
+    "google/gemini-3.5-flash": 24,
+    "qwen3.7-plus-2026-05-26": 24
+  },
+  "route_counts": {
+    "1": 24,
+    "2": 24,
+    "3": 24
+  },
+  "scientific_boundary": "One mechanically selected legacy pair; development-only and excluded from confirmatory estimates, effect sizes, and paper-facing effectiveness claims.",
+  "standing_protocol_sha256": "7ceb704a0d0310f60c86ee46356bacd0b4793fc772e3e1ac7b241ef68462d899",
+  "status": "passed_complete_development_only"
+}

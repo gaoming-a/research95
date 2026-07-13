@@ -2,6 +2,26 @@
 
 最后更新：2026-07-13
 
+## 0.66 2026-07-13 v0.3 72-call development pilot 完成
+
+按 standing authorization 先运行8-call canary；8/8 均单次 HTTP 200、schema valid、
+identity exact、raw hash 与 manifest binding 一致，执行完整性 Gate PASS。随后 runner
+跳过 canary 并完成剩余64次。最终 terminal records=72、valid outputs=72、endpoint
+attempts=72、transport retries=0；三条 route 各24条、三个 repeat 各24条、8个 packets
+各9条。ledger SHA-256=
+`bbafdf8ed402a1e107cddab7b9237af16ce2872eeec461543df002f069dabf5b`。
+
+raw-output-free 描述显示结果并不迎合预期：Qwen negative 在 C1 全 escalate，但 C2/C3
+全 accept；DeepSeek 对 positive/negative 的 C0--C3 均全 accept；Gemini positive 随证据
+趋向 accept，但 negative 在 C2/C3 仍出现 accept。24个 route×role×condition 单元中19个
+三重复完全一致。结果方向没有触发重跑、改 prompt/schema、换 route 或 fallback。
+
+结论分两层：执行层已证明新 runner、prompt/schema rendering、三条 route 与完整性链路可
+真实运行；科学层的单旧 pair 只显示异质性，不能支持“更多证据稳定减少错误接受”。该 pilot
+永久排除于确认性 cohort、`Delta_minus`/`Delta_plus`、样本量和 paper-facing claim；当前
+不据此修改论文效果结论。下一步必须基于现有材料可行性与目标 EI 最低线重新决定正式
+cohort 路径，不自动启动 order63 或确认性 API。
+
 ## 0.65 2026-07-13 standing authorization 已签核激活 / v0.3 pre-API
 
 作者高明已签署 protocol SHA-256

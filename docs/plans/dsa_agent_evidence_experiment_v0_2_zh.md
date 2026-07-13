@@ -1,7 +1,7 @@
 # DSA reviewer-agent 证据条件实验计划 v0.2
 
 日期：2026-07-13
-状态：`V2-P2_PAUSED_AT_LEDGER_V0_62 / QUALIFIED_0 / DEVELOPMENT_PILOT_V0_2_TERMINAL_NO_OUTPUT / STANDING_EXECUTION_ACTIVE / V0_3_EXECUTION_AUTHORIZED_PRE_API`
+状态：`V2-P2_PAUSED_AT_LEDGER_V0_62 / QUALIFIED_0 / DEVELOPMENT_PILOT_V0_2_TERMINAL_NO_OUTPUT / STANDING_EXECUTION_ACTIVE / V0_3_PILOT_COMPLETE_72_VALID_DEVELOPMENT_ONLY`
 
 ## 0. 2026-07-13 development-only 真实 API pilot 边界
 
@@ -46,6 +46,12 @@ authorization。任何科学表面变化、已有有效输出重跑、完整性 
 `90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38` 自动派生72-request
 执行授权。激活阶段没有读取 key 或调用 API。下一执行步骤是8-call canary，且只有执行
 完整性可以决定是否继续剩余64次。
+
+v0.3 现已完成：72/72 valid、72次 HTTP 200、0 retry，三条 route 各24条；ledger SHA-256
+为 `bbafdf8ed402a1e107cddab7b9237af16ce2872eeec461543df002f069dabf5b`。单 pair 描述结果
+没有显示 negative acceptance 随 C0→C3 一致下降，因此只证明新实验设置和真实调用链路
+可执行，不能证明 effectiveness。结果永久 development-only，不触发 outcome rerun 或
+prompt/schema/route 修改，也不自动授权 order63 或确认性阶段。
 
 ## 1. 一句话论点
 

@@ -24,11 +24,16 @@ per-aggregate signatures are now replaced by an author-signed standing-execution
 protocol that locks the scientific surface and permits only mechanically audited
 execution-chain repairs. Its protocol SHA-256 is
 `7ceb704a0d0310f60c86ee46356bacd0b4793fc772e3e1ac7b241ef68462d899`.
-The standing record is active and has derived the aggregate-specific v0.3
-72-request authorization; activation itself read no key, made no request, and
-created no output. Conforming implementation-only versions can derive future
-authorization without another signature. The pilot remains excluded from
-confirmatory estimates and paper-facing claims.
+The standing record derived the aggregate-specific v0.3 authorization, and the
+full pilot is now complete: 72/72 requests returned HTTP 200 and schema-valid,
+identity-valid outputs, with 24 records per route and no transport retry. The
+ledger SHA-256 is
+`bbafdf8ed402a1e107cddab7b9237af16ce2872eeec461543df002f069dabf5b`.
+The single-pair descriptive result is heterogeneous and does not show that more
+visible evidence uniformly suppresses hard-negative acceptance. Conforming
+implementation-only versions can derive future authorization without another
+signature. The pilot remains excluded from confirmatory estimates and
+paper-facing claims.
 
 As of 2026-07-13, the sole active route is
 [the DSA 2026 execution plan](docs/plans/dsa_2026_submission_execution_plan_zh.md).

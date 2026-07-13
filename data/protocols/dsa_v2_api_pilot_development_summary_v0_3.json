@@ -1,0 +1,458 @@
+{
+  "c0_c3_development_contrasts": [
+    {
+      "c0_accept_rate": 1.0,
+      "c3_accept_rate": 1.0,
+      "candidate_role": "negative",
+      "development_delta_c3_minus_c0": 0.0,
+      "model_id": "qwen3.7-plus-2026-05-26",
+      "route_order": 1
+    },
+    {
+      "c0_accept_rate": 0.0,
+      "c3_accept_rate": 1.0,
+      "candidate_role": "positive",
+      "development_delta_c3_minus_c0": 1.0,
+      "model_id": "qwen3.7-plus-2026-05-26",
+      "route_order": 1
+    },
+    {
+      "c0_accept_rate": 1.0,
+      "c3_accept_rate": 1.0,
+      "candidate_role": "negative",
+      "development_delta_c3_minus_c0": 0.0,
+      "model_id": "deepseek-v4-flash",
+      "route_order": 2
+    },
+    {
+      "c0_accept_rate": 1.0,
+      "c3_accept_rate": 1.0,
+      "candidate_role": "positive",
+      "development_delta_c3_minus_c0": 0.0,
+      "model_id": "deepseek-v4-flash",
+      "route_order": 2
+    },
+    {
+      "c0_accept_rate": 0.0,
+      "c3_accept_rate": 0.6666666666666666,
+      "candidate_role": "negative",
+      "development_delta_c3_minus_c0": 0.6666666666666666,
+      "model_id": "google/gemini-3.5-flash",
+      "route_order": 3
+    },
+    {
+      "c0_accept_rate": 0.0,
+      "c3_accept_rate": 1.0,
+      "candidate_role": "positive",
+      "development_delta_c3_minus_c0": 1.0,
+      "model_id": "google/gemini-3.5-flash",
+      "route_order": 3
+    }
+  ],
+  "cells": [
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "negative",
+      "condition": "C0",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.9,
+      "model_id": "qwen3.7-plus-2026-05-26",
+      "provider": "Alibaba Cloud Model Studio",
+      "repeats": 3,
+      "route_order": 1,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 0.0,
+      "candidate_role": "negative",
+      "condition": "C1",
+      "decision_counts": {
+        "accept": 0,
+        "escalate": 3,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.6,
+      "model_id": "qwen3.7-plus-2026-05-26",
+      "provider": "Alibaba Cloud Model Studio",
+      "repeats": 3,
+      "route_order": 1,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "negative",
+      "condition": "C2",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.85,
+      "model_id": "qwen3.7-plus-2026-05-26",
+      "provider": "Alibaba Cloud Model Studio",
+      "repeats": 3,
+      "route_order": 1,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "negative",
+      "condition": "C3",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.85,
+      "model_id": "qwen3.7-plus-2026-05-26",
+      "provider": "Alibaba Cloud Model Studio",
+      "repeats": 3,
+      "route_order": 1,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 0.0,
+      "candidate_role": "positive",
+      "condition": "C0",
+      "decision_counts": {
+        "accept": 0,
+        "escalate": 0,
+        "reject": 3
+      },
+      "mean_reported_confidence": 0.9,
+      "model_id": "qwen3.7-plus-2026-05-26",
+      "provider": "Alibaba Cloud Model Studio",
+      "repeats": 3,
+      "route_order": 1,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "positive",
+      "condition": "C1",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.8666666666666667,
+      "model_id": "qwen3.7-plus-2026-05-26",
+      "provider": "Alibaba Cloud Model Studio",
+      "repeats": 3,
+      "route_order": 1,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "positive",
+      "condition": "C2",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.8666666666666667,
+      "model_id": "qwen3.7-plus-2026-05-26",
+      "provider": "Alibaba Cloud Model Studio",
+      "repeats": 3,
+      "route_order": 1,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "positive",
+      "condition": "C3",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.8833333333333333,
+      "model_id": "qwen3.7-plus-2026-05-26",
+      "provider": "Alibaba Cloud Model Studio",
+      "repeats": 3,
+      "route_order": 1,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "negative",
+      "condition": "C0",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.8833333333333333,
+      "model_id": "deepseek-v4-flash",
+      "provider": "DeepSeek API",
+      "repeats": 3,
+      "route_order": 2,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "negative",
+      "condition": "C1",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.8833333333333333,
+      "model_id": "deepseek-v4-flash",
+      "provider": "DeepSeek API",
+      "repeats": 3,
+      "route_order": 2,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "negative",
+      "condition": "C2",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.9,
+      "model_id": "deepseek-v4-flash",
+      "provider": "DeepSeek API",
+      "repeats": 3,
+      "route_order": 2,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "negative",
+      "condition": "C3",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.85,
+      "model_id": "deepseek-v4-flash",
+      "provider": "DeepSeek API",
+      "repeats": 3,
+      "route_order": 2,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "positive",
+      "condition": "C0",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.9,
+      "model_id": "deepseek-v4-flash",
+      "provider": "DeepSeek API",
+      "repeats": 3,
+      "route_order": 2,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "positive",
+      "condition": "C1",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.9,
+      "model_id": "deepseek-v4-flash",
+      "provider": "DeepSeek API",
+      "repeats": 3,
+      "route_order": 2,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "positive",
+      "condition": "C2",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.8666666666666667,
+      "model_id": "deepseek-v4-flash",
+      "provider": "DeepSeek API",
+      "repeats": 3,
+      "route_order": 2,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "positive",
+      "condition": "C3",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.8666666666666667,
+      "model_id": "deepseek-v4-flash",
+      "provider": "DeepSeek API",
+      "repeats": 3,
+      "route_order": 2,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 0.0,
+      "candidate_role": "negative",
+      "condition": "C0",
+      "decision_counts": {
+        "accept": 0,
+        "escalate": 0,
+        "reject": 3
+      },
+      "mean_reported_confidence": 0.9166666666666666,
+      "model_id": "google/gemini-3.5-flash",
+      "provider": "OpenRouter",
+      "repeats": 3,
+      "route_order": 3,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 0.0,
+      "candidate_role": "negative",
+      "condition": "C1",
+      "decision_counts": {
+        "accept": 0,
+        "escalate": 2,
+        "reject": 1
+      },
+      "mean_reported_confidence": 0.8833333333333333,
+      "model_id": "google/gemini-3.5-flash",
+      "provider": "OpenRouter",
+      "repeats": 3,
+      "route_order": 3,
+      "unanimous_decision": false
+    },
+    {
+      "accept_rate": 0.6666666666666666,
+      "candidate_role": "negative",
+      "condition": "C2",
+      "decision_counts": {
+        "accept": 2,
+        "escalate": 1,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.9166666666666666,
+      "model_id": "google/gemini-3.5-flash",
+      "provider": "OpenRouter",
+      "repeats": 3,
+      "route_order": 3,
+      "unanimous_decision": false
+    },
+    {
+      "accept_rate": 0.6666666666666666,
+      "candidate_role": "negative",
+      "condition": "C3",
+      "decision_counts": {
+        "accept": 2,
+        "escalate": 0,
+        "reject": 1
+      },
+      "mean_reported_confidence": 0.9666666666666667,
+      "model_id": "google/gemini-3.5-flash",
+      "provider": "OpenRouter",
+      "repeats": 3,
+      "route_order": 3,
+      "unanimous_decision": false
+    },
+    {
+      "accept_rate": 0.0,
+      "candidate_role": "positive",
+      "condition": "C0",
+      "decision_counts": {
+        "accept": 0,
+        "escalate": 2,
+        "reject": 1
+      },
+      "mean_reported_confidence": 0.9499999999999998,
+      "model_id": "google/gemini-3.5-flash",
+      "provider": "OpenRouter",
+      "repeats": 3,
+      "route_order": 3,
+      "unanimous_decision": false
+    },
+    {
+      "accept_rate": 0.6666666666666666,
+      "candidate_role": "positive",
+      "condition": "C1",
+      "decision_counts": {
+        "accept": 2,
+        "escalate": 1,
+        "reject": 0
+      },
+      "mean_reported_confidence": 0.9,
+      "model_id": "google/gemini-3.5-flash",
+      "provider": "OpenRouter",
+      "repeats": 3,
+      "route_order": 3,
+      "unanimous_decision": false
+    },
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "positive",
+      "condition": "C2",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 1.0,
+      "model_id": "google/gemini-3.5-flash",
+      "provider": "OpenRouter",
+      "repeats": 3,
+      "route_order": 3,
+      "unanimous_decision": true
+    },
+    {
+      "accept_rate": 1.0,
+      "candidate_role": "positive",
+      "condition": "C3",
+      "decision_counts": {
+        "accept": 3,
+        "escalate": 0,
+        "reject": 0
+      },
+      "mean_reported_confidence": 1.0,
+      "model_id": "google/gemini-3.5-flash",
+      "provider": "OpenRouter",
+      "repeats": 3,
+      "route_order": 3,
+      "unanimous_decision": true
+    }
+  ],
+  "created_date": "2026-07-13",
+  "interpretation": [
+    "The end-to-end setting is operational across all three frozen routes: all 72 requests produced schema-valid, identity-valid outputs without retry.",
+    "The single legacy pair shows outcome heterogeneity: additional visible evidence does not uniformly suppress acceptance of the hard-negative candidate.",
+    "The sample is intentionally development-only and cannot support population effectiveness, confirmatory effect sizes, or paper-facing claims."
+  ],
+  "overall_decision_counts": {
+    "accept": 54,
+    "escalate": 9,
+    "reject": 9
+  },
+  "repeat_agreement": {
+    "total_route_role_condition_cells": 24,
+    "unanimous_cells": 19
+  },
+  "source_audit_status": "passed_complete_development_only",
+  "status": "descriptive_development_only",
+  "summary_id": "dsa_v2_api_pilot_development_summary_v0_3",
+  "task_count": 1,
+  "valid_response_count": 72
+}

@@ -8,6 +8,18 @@
 
 ## Active Plan
 
+- [dsa_v2_api_pilot_results_v0_3.md](experiments/dsa_v2_api_pilot_results_v0_3.md):
+  completed development-only 72-call pilot. All 72 requests are HTTP 200,
+  schema-valid, identity-valid, raw-hash verified, and balanced 24 per route;
+  transport retries are zero. The tracked machine evidence is
+  `../data/protocols/dsa_v2_api_pilot_postrun_audit_v0_3.json`, and the raw-
+  output-free descriptive aggregate is
+  `../data/protocols/dsa_v2_api_pilot_development_summary_v0_3.json`; deterministic
+  write/check is `../scripts/dsa2026_audit_api_pilot_results_v0_3.py`. Ledger
+  SHA-256 is `bbafdf8ed402a1e107cddab7b9237af16ce2872eeec461543df002f069dabf5b`.
+  This one legacy pair shows heterogeneous behavior and remains excluded from
+  confirmatory estimates, effect sizes, and paper-facing claims.
+
 - [dsa_v2_api_pilot_standing_authorization_activation_v0_1.md](experiments/dsa_v2_api_pilot_standing_authorization_activation_v0_1.md):
   author-signed active one-signature standing-execution record. Protocol SHA-256 is
   `7ceb704a0d0310f60c86ee46356bacd0b4793fc772e3e1ac7b241ef68462d899`.
@@ -49,7 +61,7 @@
   pre-model pool, then freezes the first 30 qualified task pairs before any
   reviewer-agent request. Status: `V2-P2_PAUSED_AT_LEDGER_V0_62 /
   QUALIFIED_0 / DEVELOPMENT_PILOT_V0_2_TERMINAL_NO_OUTPUT /
-  STANDING_EXECUTION_ACTIVE / V0_3_EXECUTION_AUTHORIZED / PRE_API`.
+  STANDING_EXECUTION_ACTIVE / V0_3_PILOT_COMPLETE_72_VALID / DEVELOPMENT_ONLY`.
   Machine design and transition audit are
   `../data/protocols/dsa_v0_1_termination_and_v0_2_redesign_v0_1.json` and
   `../scripts/dsa2026_audit_v0_2_redesign.py`.
