@@ -2,6 +2,29 @@
 
 最后更新：2026-07-13
 
+## 0.60 2026-07-13 72-call development API pilot 无 API 冻结
+
+对抗性审查确认 V2-P2 在 ledger v0.62 已尝试62项但 qualified=0；当前有效证据是
+materialization feasibility，而不是 reviewer-agent 模型结果。order63
+`bugsinpy_ansible_9` 保持 `started=false`，连续 V2-P2 暂不继续。
+
+为验证下游新实验设置而不污染确认性 cohort，本轮从旧完整证据中按 domain-separated
+pair SHA-256 最小值机械选择一个 development-only pair；4个 eligible pairs 中选中
+selection SHA-256=`12174ce222ced4433d88512c77922c75357fa49d8cd9b5f951b8f64eed27e8e6`。
+该 pair 在固定 `dsa2026-api-pilot:v0_1` 镜像中重新通过 positive/negative 各2项 basic、
+1项 F2P、3项 hash-ranked P2P 检查；network=none、API/key=0。
+
+生成8个匿名 C0--C3 model-visible packets，并冻结
+`1 task × 2 candidates × 4 conditions × 3 routes × 3 repeats = 72` 项请求；首8项为
+canary，但 verdict 方向不得触发停止、prompt修改或重跑。runner 默认 check-only，严格
+只渲染嵌套 `model_visible_packet`，拒绝额外 schema 字段、provider fallback、identity
+mismatch 和无签核执行；append-only raw output 保留在 ignored `outputs/`。
+
+freeze/check、runner check-only、无授权 execute-negative gate 均 PASS。最终 aggregate
+SHA-256=`f8992839f6b47c507ab4bf8e0f49d2e63d6238998a2ff666d674b8eee4cfebeb`。
+当前状态为 `AUTHOR SIGN-OFF PENDING / API=0`；作者 hash-bound 签核前不得创建 execution
+authorization、读取 API key、调用 endpoint、启动 order63 或把 pilot 接入确认性统计。
+
 ## 0.59 2026-07-12 V2-P2 continuous execution authorization
 
 作者高明授权从 ledger v0.2 的唯一 cursor order=3 `bugsinpy_black_4` 起连续自动执行

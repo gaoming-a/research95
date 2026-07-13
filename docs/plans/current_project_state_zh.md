@@ -1,6 +1,19 @@
 # 当前项目状态与文件地图
 
-日期：2026-07-12
+日期：2026-07-13
+
+## 2026-07-13 DSA 72-call development pilot frozen / unsigned / no API
+
+- V2-P2 ledger v0.62：attempted=62、qualified=0、next order63
+  `bugsinpy_ansible_9`、started=false、API=0；order63 暂停未启动；
+- 旧证据中4个 eligible pairs 按冻结 pair-hash 规则机械选择 selection SHA
+  `12174ce2…e8e6`，不是按模型预期表现人工挑选；
+- positive/negative 在 digest-frozen、network-none 镜像中各通过2 basic + 1 F2P +
+  3 P2P；8个匿名 C0--C3 packets 与72项三路线/三重复调度已冻结；
+- prompt/schema 静态和对抗性 schema checks、hidden separation、LF byte-hash、runner
+  check-only 与无签核 execute block 全部 PASS；
+- aggregate SHA=`f8992839f6b47c507ab4bf8e0f49d2e63d6238998a2ff666d674b8eee4cfebeb`；
+  当前 unsigned，API key read/model calls/network requests=0。
 
 ## 2026-07-12 Continuous V2-P2 authorization active
 

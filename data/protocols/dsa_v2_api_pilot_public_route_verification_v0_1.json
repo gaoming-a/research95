@@ -1,0 +1,48 @@
+{
+  "created_date": "2026-07-13",
+  "model_api_calls": 0,
+  "routes": [
+    {
+      "endpoint_style_confirmed": true,
+      "exact_model_id": "qwen3.7-plus-2026-05-26",
+      "exact_model_id_confirmed": true,
+      "json_mode_confirmed": true,
+      "official_sources": [
+        "https://help.aliyun.com/en/model-studio/models",
+        "https://help.aliyun.com/en/model-studio/qwen-api-via-openai-chat-completions",
+        "https://help.aliyun.com/en/model-studio/qwen-structured-output"
+      ],
+      "provider": "Alibaba Cloud Model Studio",
+      "route_order": 1
+    },
+    {
+      "endpoint_style_confirmed": true,
+      "exact_model_id": "deepseek-v4-flash",
+      "exact_model_id_confirmed": true,
+      "json_mode_confirmed": true,
+      "official_sources": [
+        "https://api-docs.deepseek.com/api/create-chat-completion",
+        "https://api-docs.deepseek.com/quick_start/pricing",
+        "https://api-docs.deepseek.com/updates/"
+      ],
+      "provider": "DeepSeek API",
+      "route_order": 2
+    },
+    {
+      "endpoint_style_confirmed": true,
+      "exact_model_id": "gemini-3.5-flash",
+      "exact_model_id_confirmed": true,
+      "json_mode_confirmed": true,
+      "official_sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash",
+        "https://ai.google.dev/api/models",
+        "https://ai.google.dev/gemini-api/docs/generate-content/whats-new-gemini-3.5"
+      ],
+      "provider": "Google Gemini Developer API",
+      "route_order": 3
+    }
+  ],
+  "runtime_identity_gate": "Public documentation confirms the three configured IDs and API capabilities. The first authenticated response must still return the exact frozen identity; missing identity, alias drift, fallback, or substitution is a hard stop.",
+  "status": "public_documentation_confirmed_runtime_identity_pending",
+  "verification_scope": "Public official documentation only; no credential read, catalog request, or inference request."
+}

@@ -1,7 +1,20 @@
 # DSA reviewer-agent 证据条件实验计划 v0.2
 
-日期：2026-07-12
-状态：`V2-P1_PASS_AUTHOR_SIGNED / RULES_FROZEN / V2-P2_NOT_AUTHORIZED / NO_API`
+日期：2026-07-13
+状态：`V2-P2_PAUSED_AT_LEDGER_V0_62 / QUALIFIED_0 / DEVELOPMENT_PILOT_FROZEN_UNSIGNED / NO_API`
+
+## 0. 2026-07-13 development-only 真实 API pilot 边界
+
+V2-P2 前62项均 terminal 且没有 qualified pair。为区分“下游 prompt/model runner 是否
+可运行”与“新 cohort materialization 是否可行”，新增一个不进入确认性估计的72-call
+development pilot：从旧证据按 pair SHA-256 最小值机械选择一对，补齐同镜像 basic/F2P/
+P2P checks，冻结8个 C0--C3 packets、三条 route 和三次 repeat。
+
+该 pilot 永久排除于最终30-task cohort、`Delta_minus`/`Delta_plus`、论文效果 claim 和
+任何 confirmatory sample-size 计算。aggregate SHA-256 为
+`f8992839f6b47c507ab4bf8e0f49d2e63d6238998a2ff666d674b8eee4cfebeb`；当前 unsigned，
+不授权 API、order63 或 V2-P3/P5。pilot 的可执行性结果不能反向修改 V2-P2 terminal
+记录，也不能把旧材料重新标记为 v0.2 确认性材料。
 
 ## 1. 一句话论点
 

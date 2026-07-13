@@ -1,5 +1,26 @@
 # Engineering Notes
 
+## 2026-07-13 Freeze bytes and execution surfaces before an API pilot
+
+- A prompt file, schema, and historical PASS audit do not mean a new experiment is
+  deployed. Require real packets, an explicit request schedule, a guarded runner,
+  exact route checks, append-only outputs, and a hash-bound author gate.
+- Reuse old evidence only as development material. Select it mechanically before
+  new model output, bind the selection preimage/hash, and permanently exclude it
+  from confirmatory estimates and paper-facing effects.
+- Historical summaries cannot be promoted into a stricter evidence contract.
+  Re-run only the missing local checks in an isolated, network-disabled image and
+  preserve command, exit code, output hashes, and image digest.
+- On Windows, hashing an LF string before `write_text` can disagree with the CRLF
+  bytes on disk. Write generated frozen artifacts as explicit UTF-8/LF bytes and
+  make the execution runner verify byte hashes before reading credentials.
+- A default check-only runner must fail closed when the author authorization file
+  is absent. The negative execute test is part of the Gate; a successful dry run
+  alone does not prove that credential or network boundaries work.
+- Freeze all 72 requests before the eight-call canary. Canary verdict direction is
+  never an execution criterion; only leakage, identity, schema, transport, hash,
+  or append-only integrity failures may stop execution.
+
 ## 2026-07-12 Generalize only a hash-bound source-materialization exception
 
 - A Windows-incompatible archive symlink is frozen source content, not an ordinary

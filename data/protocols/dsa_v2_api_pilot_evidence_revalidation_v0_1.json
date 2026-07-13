@@ -1,0 +1,190 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "containers_started": 17,
+    "model_api_calls": 0,
+    "prompt_renders": 0
+  },
+  "created_date": "2026-07-13",
+  "created_date_semantics": "artifact protocol date; executed_at_utc is the actual run timestamp",
+  "environment": {
+    "dockerfile_sha256": "f5ccbd8a0abc6f08a94923918a486ddcc173fbe723b17f8f0ae26dc6f160365f",
+    "environment_image_sha256": "986ab2ab1390b7e0d4ad58b5f247d986f90ecbf579422fbcac5085f55e0f5307",
+    "network_mode": "none",
+    "runtime": "Python 3.11.15"
+  },
+  "executed_at_utc": "2026-07-13T08:22:16+00:00",
+  "p2p_selection": {
+    "nodeids": [
+      "test.test_netrc.TestNetRc.test_netrc_present",
+      "test.test_jsinterp.TestJSInterpreter.test_morespace",
+      "test.test_aes.TestAES.test_cbc_decrypt"
+    ],
+    "rule": "first three SHA-256 ranks under dsa72-p2p-v0.1 domain"
+  },
+  "purpose": "Development-only evidence revalidation; excluded from confirmatory estimates.",
+  "revalidation_id": "dsa_v2_api_pilot_evidence_revalidation_v0_1",
+  "roles": {
+    "negative": {
+      "all_checks_passed": true,
+      "basic_checks": [
+        {
+          "check_code": "basic_01",
+          "check_kind": "patch_apply",
+          "command": "sh -lc git apply --ignore-space-change --check .candidate.patch && printf patch_check_passed",
+          "exit_code": 0,
+          "outcome": "passed",
+          "output_excerpt": "patch_check_passed",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "669125e18c4841b1af04d44500ec841ee3761afdb206f23d9b014a0c608a9d9f"
+        },
+        {
+          "check_code": "basic_02",
+          "check_kind": "syntax_or_import_or_static",
+          "command": "python -c import ast,pathlib; ast.parse(pathlib.Path('youtube_dl/utils.py').read_text()); print('syntax_passed')",
+          "exit_code": 0,
+          "outcome": "passed",
+          "output_excerpt": "syntax_passed",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "e9d042d4b83b127f7206e37ad86a65dd6c834052aaae0c0528dd0164e437e487"
+        }
+      ],
+      "dependency_lock_sha256": "9b4575ad79979cf6be4aa2fceaeea6ce6990d1a17d3e506fe3c51e9428073dbd",
+      "legacy_candidate_id": "evp7_candidate_0082",
+      "patch_sha256": "5ae1999739859e5aa71661d9599d9665efdd1d0829e17e2725812c92f121bbd3",
+      "source_model_candidate_id": "candidate_0004",
+      "visible_f2p_checks": [
+        {
+          "check_code": "f2p_01",
+          "check_kind": "visible_f2p",
+          "command": "python -W ignore::SyntaxWarning -m unittest test.test_utils.TestUtil.test_get_element_by_attribute",
+          "exit_code": 0,
+          "outcome": "passed",
+          "output_excerpt": "OK",
+          "stderr_sha256": "24cefc2bc38a1c71e18591075993695fc72546b32ff6b5baab3d98032ce96fb5",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "test_name": "test.test_utils.TestUtil.test_get_element_by_attribute"
+        }
+      ],
+      "visible_p2p_checks": [
+        {
+          "check_code": "p2p_01",
+          "check_kind": "visible_p2p",
+          "command": "python -W ignore::SyntaxWarning -m unittest test.test_netrc.TestNetRc.test_netrc_present",
+          "exit_code": 0,
+          "outcome": "passed",
+          "output_excerpt": "OK",
+          "stderr_sha256": "c346f1228fe88f4ab3cb336ffa610dc3a34ec7c7bb7d05df7a1c222f2d928881",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "test_name": "test.test_netrc.TestNetRc.test_netrc_present"
+        },
+        {
+          "check_code": "p2p_02",
+          "check_kind": "visible_p2p",
+          "command": "python -W ignore::SyntaxWarning -m unittest test.test_jsinterp.TestJSInterpreter.test_morespace",
+          "exit_code": 0,
+          "outcome": "passed",
+          "output_excerpt": "OK",
+          "stderr_sha256": "24cefc2bc38a1c71e18591075993695fc72546b32ff6b5baab3d98032ce96fb5",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "test_name": "test.test_jsinterp.TestJSInterpreter.test_morespace"
+        },
+        {
+          "check_code": "p2p_03",
+          "check_kind": "visible_p2p",
+          "command": "python -W ignore::SyntaxWarning -m unittest test.test_aes.TestAES.test_cbc_decrypt",
+          "exit_code": 0,
+          "outcome": "passed",
+          "output_excerpt": "OK",
+          "stderr_sha256": "d10ffbd9f0faa72cd6837063279524e199b59fbc3d035051302a1e8dbc4b36ad",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "test_name": "test.test_aes.TestAES.test_cbc_decrypt"
+        }
+      ]
+    },
+    "positive": {
+      "all_checks_passed": true,
+      "basic_checks": [
+        {
+          "check_code": "basic_01",
+          "check_kind": "patch_apply",
+          "command": "sh -lc git apply --ignore-space-change --check .candidate.patch && printf patch_check_passed",
+          "exit_code": 0,
+          "outcome": "passed",
+          "output_excerpt": "patch_check_passed",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "669125e18c4841b1af04d44500ec841ee3761afdb206f23d9b014a0c608a9d9f"
+        },
+        {
+          "check_code": "basic_02",
+          "check_kind": "syntax_or_import_or_static",
+          "command": "python -c import ast,pathlib; ast.parse(pathlib.Path('youtube_dl/utils.py').read_text()); print('syntax_passed')",
+          "exit_code": 0,
+          "outcome": "passed",
+          "output_excerpt": "syntax_passed",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "e9d042d4b83b127f7206e37ad86a65dd6c834052aaae0c0528dd0164e437e487"
+        }
+      ],
+      "dependency_lock_sha256": "9b4575ad79979cf6be4aa2fceaeea6ce6990d1a17d3e506fe3c51e9428073dbd",
+      "legacy_candidate_id": "evp7_candidate_0079",
+      "patch_sha256": "746bd5974bf6b3ed7ff7a329bb905ff880d58d208a51206c5ea4d3bc8f2a1b52",
+      "source_model_candidate_id": "candidate_0001",
+      "visible_f2p_checks": [
+        {
+          "check_code": "f2p_01",
+          "check_kind": "visible_f2p",
+          "command": "python -W ignore::SyntaxWarning -m unittest test.test_utils.TestUtil.test_get_element_by_attribute",
+          "exit_code": 0,
+          "outcome": "passed",
+          "output_excerpt": "OK",
+          "stderr_sha256": "d10ffbd9f0faa72cd6837063279524e199b59fbc3d035051302a1e8dbc4b36ad",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "test_name": "test.test_utils.TestUtil.test_get_element_by_attribute"
+        }
+      ],
+      "visible_p2p_checks": [
+        {
+          "check_code": "p2p_01",
+          "check_kind": "visible_p2p",
+          "command": "python -W ignore::SyntaxWarning -m unittest test.test_netrc.TestNetRc.test_netrc_present",
+          "exit_code": 0,
+          "outcome": "passed",
+          "output_excerpt": "OK",
+          "stderr_sha256": "c346f1228fe88f4ab3cb336ffa610dc3a34ec7c7bb7d05df7a1c222f2d928881",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "test_name": "test.test_netrc.TestNetRc.test_netrc_present"
+        },
+        {
+          "check_code": "p2p_02",
+          "check_kind": "visible_p2p",
+          "command": "python -W ignore::SyntaxWarning -m unittest test.test_jsinterp.TestJSInterpreter.test_morespace",
+          "exit_code": 0,
+          "outcome": "passed",
+          "output_excerpt": "OK",
+          "stderr_sha256": "2299339565fdc7c4fedeb54e99b181ba53b821f77194926422cc7df3301ba0ee",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "test_name": "test.test_jsinterp.TestJSInterpreter.test_morespace"
+        },
+        {
+          "check_code": "p2p_03",
+          "check_kind": "visible_p2p",
+          "command": "python -W ignore::SyntaxWarning -m unittest test.test_aes.TestAES.test_cbc_decrypt",
+          "exit_code": 0,
+          "outcome": "passed",
+          "output_excerpt": "OK",
+          "stderr_sha256": "fb184ea57734512b1f088f9181209901b9cd46df3eb7eaa2500ea9e48dde20b5",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "test_name": "test.test_aes.TestAES.test_cbc_decrypt"
+        }
+      ]
+    }
+  },
+  "selection": {
+    "eligible_pair_count": 4,
+    "rule": "minimum SHA-256 over domain, task id, positive patch hash, and negative patch hash",
+    "selection_sha256": "12174ce222ced4433d88512c77922c75357fa49d8cd9b5f951b8f64eed27e8e6",
+    "task_id": "bugsinpy_youtube-dl_20"
+  },
+  "status": "passed"
+}
