@@ -2,6 +2,27 @@
 
 最后更新：2026-07-13
 
+## 0.62 2026-07-13 OpenRouter route 最小重新冻结 / 新签核待定
+
+作者明确撤销 aggregate `f8992839…cfebeb` 的 v0.1 执行授权，并要求第三路线改为
+OpenRouter `google/gemini-3.5-flash` 后重新冻结；新 hash 签核前 API=0。旧 active
+authorization 文件已移除，revocation record 绑定其 SHA、旧 aggregate、作者声明和
+model calls=0；v0.1 runner 因授权文件缺失 fail closed。
+
+v0.2 保留机械选择 pair、8 packets、prompt/schema、Qwen/DeepSeek route、3 repeats、
+72-request schedule、transport-only retry 和 development-only exclusion。只替换 route3：
+OpenRouter Chat Completions、stable slug `google/gemini-3.5-flash`、catalog canonical slug
+`google/gemini-3.5-flash-20260519`、provider tag `google-ai-studio/priority`、
+`allow_fallbacks=false`、`require_parameters=true`、minimal/excluded reasoning、strict
+`json_schema`。runtime 必须返回 router metadata；model/provider drift、attempt>1、多个
+selected endpoints 或任意 pipeline transformation 均 hard stop。
+
+freeze/check、runner check-only、schema-core equality、OpenRouter adversarial metadata
+fixtures、v0.1/v0.2 unsigned execute-negative gates 均 PASS。新 aggregate SHA-256=
+`2ee6c3f03e14f64723b5ddb52187c63ed83cb4f2d5bb2dfea5d16a7c2412ebc3`。当前状态
+`V0_2 AUTHOR SIGN-OFF PENDING / API KEY READS=0 / MODEL CALLS=0 / OUTPUT=ABSENT`；不得
+创建 v0.2 authorization、读取 key、执行 canary、启动 order63 或修改 prompt/schema。
+
 ## 0.61 2026-07-13 development pilot 已签核 / credential injection blocked
 
 作者高明已签核 aggregate

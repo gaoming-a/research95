@@ -1,0 +1,49 @@
+{
+  "snapshot_id": "dsa_v2_api_pilot_openrouter_catalog_snapshot_v0_2",
+  "retrieved_at": "2026-07-13T18:54:06.4012813+08:00",
+  "catalog_url": "https://openrouter.ai/api/v1/models/google/gemini-3.5-flash/endpoints",
+  "http_status": 200,
+  "raw_content_length": 6314,
+  "raw_sha256": "a248627758923e5af19ffe3cf962e743d264891640f878a9555276ebfa243a36",
+  "requested_model_id": "google/gemini-3.5-flash",
+  "canonical_model_id": "google/gemini-3.5-flash-20260519",
+  "sanitized_endpoints": [
+    {
+      "tag": "google-vertex/global",
+      "provider_name": "Google",
+      "supported_parameters": ["reasoning", "include_reasoning", "max_tokens", "temperature", "top_p", "seed", "response_format", "stop", "structured_outputs", "tools", "tool_choice", "reasoning_effort"]
+    },
+    {
+      "tag": "google-vertex/global/flex",
+      "provider_name": "Google",
+      "supported_parameters": ["reasoning", "include_reasoning", "max_tokens", "temperature", "top_p", "seed", "response_format", "stop", "structured_outputs", "tools", "tool_choice", "reasoning_effort"]
+    },
+    {
+      "tag": "google-vertex/global/priority",
+      "provider_name": "Google",
+      "supported_parameters": ["reasoning", "include_reasoning", "max_tokens", "temperature", "top_p", "seed", "response_format", "stop", "structured_outputs", "tools", "tool_choice", "reasoning_effort"]
+    },
+    {
+      "tag": "google-ai-studio",
+      "provider_name": "Google AI Studio",
+      "supported_parameters": ["reasoning", "include_reasoning", "max_tokens", "temperature", "top_p", "seed", "response_format", "structured_outputs", "tool_choice", "tools", "reasoning_effort"]
+    },
+    {
+      "tag": "google-ai-studio/flex",
+      "provider_name": "Google AI Studio",
+      "supported_parameters": ["reasoning", "include_reasoning", "max_tokens", "temperature", "top_p", "seed", "response_format", "structured_outputs", "tool_choice", "tools", "reasoning_effort"]
+    },
+    {
+      "tag": "google-ai-studio/priority",
+      "provider_name": "Google AI Studio",
+      "supported_parameters": ["reasoning", "include_reasoning", "max_tokens", "temperature", "top_p", "seed", "response_format", "structured_outputs", "tool_choice", "tools", "reasoning_effort"]
+    }
+  ],
+  "selected_provider_tag": "google-ai-studio/priority",
+  "selected_provider_supports_required_parameters": true,
+  "activity": {
+    "credential_reads": 0,
+    "model_api_calls": 0,
+    "inference_requests": 0
+  }
+}

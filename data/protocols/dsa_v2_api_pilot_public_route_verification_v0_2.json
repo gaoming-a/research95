@@ -1,0 +1,59 @@
+{
+  "created_date": "2026-07-13",
+  "model_api_calls": 0,
+  "routes": [
+    {
+      "route_order": 1,
+      "provider": "Alibaba Cloud Model Studio",
+      "exact_model_id": "qwen3.7-plus-2026-05-26",
+      "exact_model_id_confirmed": true,
+      "endpoint_style_confirmed": true,
+      "json_mode_confirmed": true,
+      "official_sources": [
+        "https://help.aliyun.com/en/model-studio/models",
+        "https://help.aliyun.com/en/model-studio/qwen-api-via-openai-chat-completions",
+        "https://help.aliyun.com/en/model-studio/qwen-structured-output"
+      ]
+    },
+    {
+      "route_order": 2,
+      "provider": "DeepSeek API",
+      "exact_model_id": "deepseek-v4-flash",
+      "exact_model_id_confirmed": true,
+      "endpoint_style_confirmed": true,
+      "json_mode_confirmed": true,
+      "official_sources": [
+        "https://api-docs.deepseek.com/api/create-chat-completion",
+        "https://api-docs.deepseek.com/quick_start/pricing",
+        "https://api-docs.deepseek.com/updates/"
+      ]
+    },
+    {
+      "route_order": 3,
+      "provider": "OpenRouter",
+      "exact_model_id": "google/gemini-3.5-flash",
+      "canonical_model_id": "google/gemini-3.5-flash-20260519",
+      "exact_model_id_confirmed": true,
+      "endpoint_style_confirmed": true,
+      "json_mode_confirmed": true,
+      "provider_tag_confirmed": "google-ai-studio/priority",
+      "provider_parameters_confirmed": [
+        "reasoning",
+        "max_tokens",
+        "response_format",
+        "structured_outputs",
+        "reasoning_effort"
+      ],
+      "official_catalog_endpoint": "https://openrouter.ai/api/v1/models/google/gemini-3.5-flash/endpoints",
+      "official_sources": [
+        "https://openrouter.ai/google/gemini-3.5-flash/providers",
+        "https://openrouter.ai/docs/guides/routing/provider-selection",
+        "https://openrouter.ai/docs/guides/features/structured-outputs",
+        "https://openrouter.ai/docs/guides/features/router-metadata"
+      ]
+    }
+  ],
+  "runtime_identity_gate": "The OpenRouter request pins google-ai-studio/priority, disables fallbacks, requires all parameters, and opts into router metadata. Runtime model identity, selected provider, attempt count, and absence of pipeline transformations must all match the freeze.",
+  "status": "public_documentation_confirmed_runtime_identity_pending",
+  "verification_scope": "Public official documentation and unauthenticated model/endpoint catalogs only; no credential read and no inference request."
+}

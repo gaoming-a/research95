@@ -1,5 +1,22 @@
 # Engineering Notes
 
+## 2026-07-13 Refreeze a provider change instead of treating it as a credential alias
+
+- Moving Gemini from its native endpoint to OpenRouter changes provider, endpoint,
+  request shape, credentials, identity semantics, and routing behavior. Revoke the
+  old active authorization and create a new versioned freeze; never place an
+  OpenRouter key in a native-provider credential slot.
+- Preserve unchanged evidence, packets, prompt/schema, other model routes, and the
+  request factorial. A route-only amendment should not trigger materialization or
+  prompt redesign.
+- OpenRouter defaults can select among providers and permit fallback. Freeze one
+  exact provider tag, disable fallbacks, require parameter support, and opt into
+  router metadata. Reject provider/model drift, multiple attempts, ambiguous
+  selection, and pipeline transformations before accepting a response record.
+- Bind the old authorization SHA and zero-call state in a revocation record, remove
+  its active path so the old runner fails closed, and include that revocation in
+  the new aggregate.
+
 ## 2026-07-13 Separate signed authorization from credential injection
 
 - A valid hash-bound author signature does not imply that the runner process has

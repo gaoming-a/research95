@@ -1,0 +1,10 @@
+{
+  "authorization_record": "data/protocols/dsa_v2_api_pilot_execution_authorization_v0_2.json",
+  "credential_env": {
+    "1": "DASHSCOPE_API_KEY",
+    "2": "DEEPSEEK_API_KEY",
+    "3": "OPENROUTER_API_KEY"
+  },
+  "output_dir": "outputs/dsa_v2_api_pilot_v0_2",
+  "request_timeout_seconds": 180
+}

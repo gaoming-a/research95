@@ -1,0 +1,46 @@
+{
+  "activity": {
+    "api_keys_read": 0,
+    "model_api_calls": 0,
+    "prompt_renders": 8
+  },
+  "audit_id": "dsa_v2_api_pilot_gate_audit_v0_2",
+  "checks": {
+    "api_not_authorized": true,
+    "c0_c3_strictly_cumulative": true,
+    "canary_count_is_8": true,
+    "development_only_boundary": true,
+    "ledger_v0_62_bound": true,
+    "model_visible_forbidden_markers_absent": true,
+    "openrouter_catalog_snapshot_supports_frozen_route": true,
+    "openrouter_route_exactly_frozen": true,
+    "order63_not_started": true,
+    "packet_count_is_8": true,
+    "packet_hashes_unique": true,
+    "prompt_placeholder_exactly_once": true,
+    "render_count_is_8": true,
+    "request_count_is_72": true,
+    "request_ids_unique": true,
+    "revalidation_api_zero": true,
+    "revalidation_passed": true,
+    "selected_pair_hash_rule_bound": true,
+    "three_routes_public_docs_confirmed": true,
+    "three_routes_three_repeats": true,
+    "v0_1_authorization_revoked_before_api": true
+  },
+  "created_date": "2026-07-13",
+  "hash_manifest_aggregate_sha256": "2ee6c3f03e14f64723b5ddb52187c63ed83cb4f2d5bb2dfea5d16a7c2412ebc3",
+  "leakage_findings": [],
+  "next_action": "Obtain hash-bound author sign-off; do not execute an API request in this phase.",
+  "rendered_prompt_sha256": {
+    "candidate_01_c0": "ffae9fd0177e146d4a4ea02fd42e14aa7067f5ef119fc96b178cb1c2aa87fb2c",
+    "candidate_01_c1": "9cbdab5698907ba84332ffe92501e764c68850196aeda60651a807bfda78e520",
+    "candidate_01_c2": "a4210ca3ed23f2027c3b13608f46f97a9171e47736e15c5243ee599e951dd65b",
+    "candidate_01_c3": "c1398b4fade672bc8fbd7b10252d88f79719011bd8a1bd80b7655abb321f8378",
+    "candidate_02_c0": "32cf344b4041de30bc36087543f255d732bae86a7c70ebaf0514febbd8d6257c",
+    "candidate_02_c1": "5be55545294bd438b0e9e472adbe7590e7299313c61a03355a716cd1f9974152",
+    "candidate_02_c2": "c03aea93526b434f862821ce00bbb90fb8e1f98094ecb88847806b796bb72c6c",
+    "candidate_02_c3": "bb0677e2e95d7b82aae3c6d5bd65c54c2835f44267d65f8030c64ec60558c595"
+  },
+  "status": "passed_pending_author_signoff"
+}

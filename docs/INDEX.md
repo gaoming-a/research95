@@ -8,25 +8,24 @@
 
 ## Active Plan
 
-- [dsa_v2_api_pilot_freeze_v0_1.md](experiments/dsa_v2_api_pilot_freeze_v0_1.md):
-  signed development-only freeze for one mechanically selected legacy pair.
+- [dsa_v2_api_pilot_freeze_v0_2.md](experiments/dsa_v2_api_pilot_freeze_v0_2.md):
+  unsigned no-API refreeze for one mechanically selected development-only pair.
   Eight anonymous C0--C3 packets expand to 72 frozen requests across three exact
-  routes and three repeats; the first eight are execution canaries. Machine inputs
-  are `../data/protocols/dsa_v2_api_pilot_*_v0_1.json/jsonl`, preparation is
-  `../scripts/dsa2026_prepare_api_pilot_v0_1.py`, and the default-deny runner is
-  `../scripts/dsa2026_run_api_pilot_v0_1.py`. Aggregate SHA-256 is
-  `f8992839f6b47c507ab4bf8e0f49d2e63d6238998a2ff666d674b8eee4cfebeb`.
-  The hash-bound execution authorization is
-  `../data/protocols/dsa_v2_api_pilot_execution_authorization_v0_1.json`;
-  canary execution is blocked before network activity until all three exact
-  credential environment variables are injected.
+  routes and three repeats; route 3 is OpenRouter `google/gemini-3.5-flash`
+  pinned to `google-ai-studio/priority` with fallbacks disabled. Preparation is
+  `../scripts/dsa2026_prepare_api_pilot_v0_2.py`, and the default-deny runner is
+  `../scripts/dsa2026_run_api_pilot_v0_2.py`. Aggregate SHA-256 is
+  `2ee6c3f03e14f64723b5ddb52187c63ed83cb4f2d5bb2dfea5d16a7c2412ebc3`;
+  v0.2 author sign-off is pending and model API activity is zero. The revoked v0.1
+  authorization is preserved by a separate revocation record and its active path
+  is absent.
 
 - [dsa_agent_evidence_experiment_v0_2_zh.md](plans/dsa_agent_evidence_experiment_v0_2_zh.md):
   sole active experimental execution plan. P3/P4 v0.1 terminated before model
   output; v0.2 freezes construction rules before qualification, materializes a
   pre-model pool, then freezes the first 30 qualified task pairs before any
   reviewer-agent request. Status: `V2-P2_PAUSED_AT_LEDGER_V0_62 /
-  QUALIFIED_0 / DEVELOPMENT_PILOT_SIGNED_CREDENTIAL_BLOCKED / NO_API`.
+  QUALIFIED_0 / DEVELOPMENT_PILOT_V0_2_FROZEN_UNSIGNED / NO_API`.
   Machine design and transition audit are
   `../data/protocols/dsa_v0_1_termination_and_v0_2_redesign_v0_1.json` and
   `../scripts/dsa2026_audit_v0_2_redesign.py`.

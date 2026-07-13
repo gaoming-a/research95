@@ -1,7 +1,7 @@
 # DSA reviewer-agent 证据条件实验计划 v0.2
 
 日期：2026-07-13
-状态：`V2-P2_PAUSED_AT_LEDGER_V0_62 / QUALIFIED_0 / DEVELOPMENT_PILOT_SIGNED_CREDENTIAL_BLOCKED / NO_API`
+状态：`V2-P2_PAUSED_AT_LEDGER_V0_62 / QUALIFIED_0 / DEVELOPMENT_PILOT_V0_2_FROZEN_UNSIGNED / NO_API`
 
 ## 0. 2026-07-13 development-only 真实 API pilot 边界
 
@@ -20,6 +20,13 @@ P2P checks，冻结8个 C0--C3 packets、三条 route 和三次 repeat。
 因冻结 credential environment names 未注入而阻断；没有模型输出，不能据此评价 prompt
 或模型。恢复只允许注入 `DASHSCOPE_API_KEY`、`DEEPSEEK_API_KEY`、`GEMINI_API_KEY`，
 不得修改冻结 runner、route、prompt/schema 或用 provider fallback。
+
+作者随后在 API=0 时撤销 v0.1 authorization，并明确要求 route3 改为 OpenRouter。
+v0.2 只替换 route3，固定 `google/gemini-3.5-flash`、canonical dated slug 和
+`google-ai-studio/priority`，同时禁用 provider/model fallback、要求 strict schema 与
+router metadata。新 aggregate 为
+`2ee6c3f03e14f64723b5ddb52187c63ed83cb4f2d5bb2dfea5d16a7c2412ebc3`；当前 unsigned，
+不得读取 key 或调用模型。v0.1/v0.2 均没有模型输出，不能据此评价模型或 prompt。
 
 ## 1. 一句话论点
 

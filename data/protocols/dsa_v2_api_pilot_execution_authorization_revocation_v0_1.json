@@ -1,0 +1,16 @@
+{
+  "revocation_id": "dsa_v2_api_pilot_execution_authorization_revocation_v0_1",
+  "status": "author_revoked_before_model_call",
+  "revoked_by": "高明",
+  "revoked_at": "2026-07-13T18:49:05.4296501+08:00",
+  "revoked_authorization_path": "data/protocols/dsa_v2_api_pilot_execution_authorization_v0_1.json",
+  "revoked_authorization_sha256": "9ecf7ed471055e5131f947f634ce63a50a6c9e73d2a5fb220a88d7b2919ca922",
+  "revoked_aggregate_sha256": "f8992839f6b47c507ab4bf8e0f49d2e63d6238998a2ff666d674b8eee4cfebeb",
+  "reason": "Author replaced the native Gemini route with OpenRouter google/gemini-3.5-flash and required a new hash-bound freeze before any model API call.",
+  "activity_at_revocation": {
+    "model_api_calls": 0,
+    "pilot_output_directory_created": false,
+    "model_outputs_created": false
+  },
+  "effect": "The v0.1 runner fails closed because its active authorization record is absent. This revocation does not authorize v0.2 execution."
+}

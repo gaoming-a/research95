@@ -9,17 +9,16 @@ accepted, rejected, or escalated in real software projects.
 
 The latest checkpoint supersedes the older execution narrative below. V2-P2 is
 paused at terminal ledger v0.62 with 62 attempted tasks, zero qualified pairs,
-order 63 not started, and zero model calls. A separate development-only pilot
-now freezes one mechanically hash-selected legacy pair, eight anonymous C0--C3
-packets, and 72 requests across three routes and three repeats. Its aggregate
-SHA-256 is
-`f8992839f6b47c507ab4bf8e0f49d2e63d6238998a2ff666d674b8eee4cfebeb`.
-The local evidence revalidation, freeze/check, adversarial schema checks, and
-default-deny runner check-only pass. The author signed the hash-bound execution
-authorization on 2026-07-13. The first canary attempt stopped before any network
-request because the three frozen credential environment variables were not all
-injected; no model output exists. The pilot remains excluded from every
-confirmatory estimate and paper-facing effectiveness claim.
+order 63 not started, and zero model calls. The signed v0.1 development-pilot
+authorization was revoked before any model call because its native Gemini route
+was replaced by OpenRouter. The v0.2 no-API package preserves the selected pair,
+eight anonymous C0--C3 packets, prompt/schema, Qwen/DeepSeek routes, three repeats,
+and 72-request structure. Route 3 is now pinned to OpenRouter
+`google/gemini-3.5-flash` through `google-ai-studio/priority`, with provider/model
+fallback disabled and runtime router metadata required. Its aggregate SHA-256 is
+`2ee6c3f03e14f64723b5ddb52187c63ed83cb4f2d5bb2dfea5d16a7c2412ebc3`.
+All no-API gates pass; v0.2 author sign-off is pending, no output exists, and the
+pilot remains excluded from confirmatory estimates and paper-facing claims.
 
 As of 2026-07-13, the sole active route is
 [the DSA 2026 execution plan](docs/plans/dsa_2026_submission_execution_plan_zh.md).

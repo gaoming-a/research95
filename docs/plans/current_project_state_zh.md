@@ -2,6 +2,18 @@
 
 日期：2026-07-13
 
+## 2026-07-13 DSA 72-call pilot v0.2 OpenRouter refreeze / unsigned / no API
+
+- v0.1 authorization 已在 model calls=0、output absent 时撤销，active 文件不存在；
+- pair、packets、prompt/schema、Qwen/DeepSeek 和 72-request 结构未变；
+- route3 改为 OpenRouter `google/gemini-3.5-flash`，canonical
+  `google/gemini-3.5-flash-20260519`，只允许 `google-ai-studio/priority`，禁止 fallback；
+- strict schema、minimal reasoning、router metadata 和 provider/model/attempt/pipeline
+  runtime hard stops 已冻结并通过对抗性 fixtures；
+- aggregate SHA=`2ee6c3f03e14f64723b5ddb52187c63ed83cb4f2d5bb2dfea5d16a7c2412ebc3`；
+  v0.2 unsigned，API key reads/model calls=0，两个 pilot output 目录均不存在；
+- V2-P2 仍 attempted=62、qualified=0、order63 `started=false`。
+
 ## 2026-07-13 DSA 72-call pilot signed / credential-blocked before network
 
 - 作者签核与 authorization record 已绑定 aggregate `f8992839…cfebeb`；
