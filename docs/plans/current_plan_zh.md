@@ -2,6 +2,29 @@
 
 最后更新：2026-07-13
 
+## 0.63 2026-07-13 v0.2 canary 终止审计 / v0.3 最小修复重新冻结
+
+作者签核并授权 aggregate `2ee6c3f0…12ebc3` 后，v0.2 canary 向 Qwen endpoint 发出
+8次请求；8次均在推理前返回 HTTP 400，错误为 `max_tokens must be Integer`。有效模型
+输出=0、科学决策=0、transport retry=0，剩余64次未启动。根因是 runner 将冻结 route
+中的文档哨兵 `max_tokens="omitted"` 序列化进 request body；次要执行链 bug 是首个不可重试
+HTTP 400 未立即 hard-stop。该结果不是 prompt、证据或模型答案失败，不能用于模型效果判断。
+
+v0.2 active authorization 已按原字节归档，terminal audit 绑定 authorization、ledger 和8条
+raw error hashes；v0.2 不得恢复、覆盖或 outcome-rerun。v0.3 保持机械选择 pair、8 packets、
+prompt/schema、三条 exact routes、3 repeats、72-request schedule、hidden separation、
+transport-only retry 和 development-only exclusion 不变，仅做两项 runner 修复：发送前删除
+所有 `omitted*` 文档哨兵；任何 non-valid terminal record 写入 ledger 后立即 hard-stop。
+v0.3 使用新 request domain 和独立 output path，check-only 额外验证三条 route 的 token
+参数均为整数且 Qwen body 不含 `max_tokens`。
+
+prepare write/check、runner check-only、schema/route/adversarial metadata、v0.2 terminal binding
+和无 v0.3 授权 execute-negative Gate 均 PASS。新 aggregate SHA-256=
+`90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38`。当前状态
+`V0_2 TERMINAL: HTTP REQUESTS=8 / VALID OUTPUTS=0 / V0_3 AUTHOR SIGN-OFF PENDING /
+V0_3 API=0 / OUTPUT=ABSENT`；新 hash 签核及 execution authorization 前不得读取 key、
+执行 v0.3 canary、启动 order63 或修改 prompt/schema/routes。
+
 ## 0.62 2026-07-13 OpenRouter route 最小重新冻结 / 新签核待定
 
 作者明确撤销 aggregate `f8992839…cfebeb` 的 v0.1 执行授权，并要求第三路线改为

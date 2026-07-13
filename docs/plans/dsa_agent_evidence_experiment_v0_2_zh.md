@@ -1,7 +1,7 @@
 # DSA reviewer-agent 证据条件实验计划 v0.2
 
 日期：2026-07-13
-状态：`V2-P2_PAUSED_AT_LEDGER_V0_62 / QUALIFIED_0 / DEVELOPMENT_PILOT_V0_2_FROZEN_UNSIGNED / NO_API`
+状态：`V2-P2_PAUSED_AT_LEDGER_V0_62 / QUALIFIED_0 / DEVELOPMENT_PILOT_V0_2_TERMINAL_NO_OUTPUT / V0_3_FROZEN_UNSIGNED / NO_V0_3_API`
 
 ## 0. 2026-07-13 development-only 真实 API pilot 边界
 
@@ -25,8 +25,15 @@ P2P checks，冻结8个 C0--C3 packets、三条 route 和三次 repeat。
 v0.2 只替换 route3，固定 `google/gemini-3.5-flash`、canonical dated slug 和
 `google-ai-studio/priority`，同时禁用 provider/model fallback、要求 strict schema 与
 router metadata。新 aggregate 为
-`2ee6c3f03e14f64723b5ddb52187c63ed83cb4f2d5bb2dfea5d16a7c2412ebc3`；当前 unsigned，
-不得读取 key 或调用模型。v0.1/v0.2 均没有模型输出，不能据此评价模型或 prompt。
+`2ee6c3f03e14f64723b5ddb52187c63ed83cb4f2d5bb2dfea5d16a7c2412ebc3`。
+
+作者签核并授权后，v0.2 canary 发出8次 Qwen HTTP 请求，但 runner 错把文档哨兵
+`max_tokens="omitted"` 序列化进请求；8次均在推理前返回400，有效模型输出=0、科学决策=0，
+剩余64次未启动。v0.2 已 terminal 化，不得恢复或覆盖。v0.3 保持 pair、packets、
+prompt/schema、routes、repeats 和72-request factorial 不变，只修复哨兵删除和任意 non-valid
+record immediate hard-stop，并使用新 request domain/output path。新 aggregate 为
+`90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38`；当前 unsigned，
+不得读取 key 或调用 v0.3 endpoint。v0.1/v0.2 均没有有效模型输出，不能据此评价模型或 prompt。
 
 ## 1. 一句话论点
 

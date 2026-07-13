@@ -2,6 +2,20 @@
 
 日期：2026-07-13
 
+## 2026-07-13 DSA 72-call pilot v0.2 terminal / v0.3 unsigned repair freeze
+
+- v0.2 canary 已发出8次 Qwen endpoint HTTP 请求，全部因字符串
+  `max_tokens="omitted"` 在推理前返回400；有效模型输出=0、科学决策=0、retry=0；
+- 剩余64次未启动；v0.2 authorization、request ledger 和8条 raw error hash 已由
+  terminal audit 绑定，v0.2 禁止恢复或覆盖；
+- v0.3 不改 pair、packets、prompt/schema、三条 routes、repeats 或 factorial，只删除
+  request body 中的文档哨兵，并在第一条 non-valid terminal record 后立即停止；
+- v0.3 使用新 request domain/output path；prepare/check、runner check-only、token 整数
+  类型、route metadata、hidden separation 和无授权执行阻断均 PASS；
+- aggregate SHA=`90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38`；
+  v0.3 unsigned，v0.3 API requests=0、output absent；
+- V2-P2 仍 attempted=62、qualified=0、order63 `started=false`。
+
 ## 2026-07-13 DSA 72-call pilot v0.2 OpenRouter refreeze / unsigned / no API
 
 - v0.1 authorization 已在 model calls=0、output absent 时撤销，active 文件不存在；

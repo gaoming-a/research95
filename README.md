@@ -9,16 +9,19 @@ accepted, rejected, or escalated in real software projects.
 
 The latest checkpoint supersedes the older execution narrative below. V2-P2 is
 paused at terminal ledger v0.62 with 62 attempted tasks, zero qualified pairs,
-order 63 not started, and zero model calls. The signed v0.1 development-pilot
-authorization was revoked before any model call because its native Gemini route
-was replaced by OpenRouter. The v0.2 no-API package preserves the selected pair,
-eight anonymous C0--C3 packets, prompt/schema, Qwen/DeepSeek routes, three repeats,
-and 72-request structure. Route 3 is now pinned to OpenRouter
-`google/gemini-3.5-flash` through `google-ai-studio/priority`, with provider/model
-fallback disabled and runtime router metadata required. Its aggregate SHA-256 is
-`2ee6c3f03e14f64723b5ddb52187c63ed83cb4f2d5bb2dfea5d16a7c2412ebc3`.
-All no-API gates pass; v0.2 author sign-off is pending, no output exists, and the
-pilot remains excluded from confirmatory estimates and paper-facing claims.
+and order 63 not started. The signed v0.2 development-pilot canary sent eight
+Qwen endpoint requests, all of which returned pre-inference HTTP 400 because the
+runner serialized the documentation sentinel `max_tokens="omitted"`. It produced
+zero valid model outputs and zero scientific decisions; the remaining 64 requests
+were not started. v0.2 is terminal and append-only evidence is preserved. The
+v0.3 no-API repair keeps the selected pair, packets, prompt/schema, three routes,
+three repeats, and 72-request structure unchanged; it only omits documentation
+sentinels from request bodies and hard-stops on the first non-valid terminal
+record under a new request domain and output path. Its aggregate SHA-256 is
+`90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38`.
+All v0.3 no-API gates pass; v0.3 author sign-off is pending and no v0.3 API request
+has been made. The pilot remains excluded from confirmatory estimates and
+paper-facing claims.
 
 As of 2026-07-13, the sole active route is
 [the DSA 2026 execution plan](docs/plans/dsa_2026_submission_execution_plan_zh.md).

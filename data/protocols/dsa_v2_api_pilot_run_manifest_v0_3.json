@@ -1,0 +1,876 @@
+{
+  "api_call_authorized": false,
+  "created_date": "2026-07-13",
+  "execution_gate": {
+    "continue_condition": "all canary requests are execution-valid; verdict direction is irrelevant",
+    "first_stage": "execute eight canary requests",
+    "stop_conditions": [
+      "hidden/model-visible separation failure",
+      "packet, prompt, schema, route, or runner hash drift",
+      "exact model identity failure or provider fallback",
+      "credential leakage",
+      "append-only ledger continuity failure"
+    ]
+  },
+  "factorial": {
+    "canary_request_count": 8,
+    "candidates": 2,
+    "conditions": 4,
+    "model_routes": 3,
+    "request_count": 72,
+    "stateless_repeats": 3,
+    "tasks": 1
+  },
+  "model_api_calls": 0,
+  "pilot_id": "dsa_v2_api_pilot_v0_3",
+  "prompt": {
+    "path": "prompts/dsa2026_evidence_conditioned_patch_gate_v0_1.md",
+    "sha256": "08a485635924a6813a2d646518c02dacf9fa108b6a5271efb88fe35d79d4809e"
+  },
+  "requests": [
+    {
+      "canary": true,
+      "packet_id": "candidate_01_c0",
+      "packet_sha256": "ada839b21bf793e153fc981040280f88d1dbc3ad1e20b069230ea84e79a188f8",
+      "repeat_index": 1,
+      "request_id": "5d0d8ad00f2e105c76a1cae0",
+      "request_order": 1,
+      "route_order": 1
+    },
+    {
+      "canary": true,
+      "packet_id": "candidate_01_c1",
+      "packet_sha256": "9f0cd48c207526c8c1efec052772da0cca4abd61535db8977660e450ce95e67e",
+      "repeat_index": 1,
+      "request_id": "72079a1d01a88af3cd4420ce",
+      "request_order": 2,
+      "route_order": 1
+    },
+    {
+      "canary": true,
+      "packet_id": "candidate_01_c2",
+      "packet_sha256": "91d23f54276ef89d5f08f638377defecc7e74323943a4139b1dd6229f00b2d72",
+      "repeat_index": 1,
+      "request_id": "a8f56f9687edcbe81aa9d894",
+      "request_order": 3,
+      "route_order": 1
+    },
+    {
+      "canary": true,
+      "packet_id": "candidate_01_c3",
+      "packet_sha256": "ba797a3e6cd5a5ac722edba761f8e45a8e8a88a96d487c9281ea118e245bf313",
+      "repeat_index": 1,
+      "request_id": "1655b1323d2a6ebf8eac152b",
+      "request_order": 4,
+      "route_order": 1
+    },
+    {
+      "canary": true,
+      "packet_id": "candidate_02_c0",
+      "packet_sha256": "45959112213b4bdad2f842707f0375e414c211384dcbdebb873e68057fe8d050",
+      "repeat_index": 1,
+      "request_id": "9a040b3d4e372a28938e7ee7",
+      "request_order": 5,
+      "route_order": 1
+    },
+    {
+      "canary": true,
+      "packet_id": "candidate_02_c1",
+      "packet_sha256": "d284e37be374269edc45476984191e06f8c732dd823cf7130dcb59edb715121c",
+      "repeat_index": 1,
+      "request_id": "4ca3f0a266611f719b195865",
+      "request_order": 6,
+      "route_order": 1
+    },
+    {
+      "canary": true,
+      "packet_id": "candidate_02_c2",
+      "packet_sha256": "054159f2bb4cb13864997e5d8ee34e06393564e9064b8a0a5d43d759ba3789d9",
+      "repeat_index": 1,
+      "request_id": "b5342fe1fd0655765294d8a4",
+      "request_order": 7,
+      "route_order": 1
+    },
+    {
+      "canary": true,
+      "packet_id": "candidate_02_c3",
+      "packet_sha256": "fe97347b876f4441039980c80e6444416e38c60fee024785cd068a7dcd8a4def",
+      "repeat_index": 1,
+      "request_id": "3ea47089ba5876642d6db513",
+      "request_order": 8,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c0",
+      "packet_sha256": "ada839b21bf793e153fc981040280f88d1dbc3ad1e20b069230ea84e79a188f8",
+      "repeat_index": 2,
+      "request_id": "f155f0f121bf264fc3ac08a1",
+      "request_order": 9,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c1",
+      "packet_sha256": "9f0cd48c207526c8c1efec052772da0cca4abd61535db8977660e450ce95e67e",
+      "repeat_index": 2,
+      "request_id": "0912642b8ba73e65ea043986",
+      "request_order": 10,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c2",
+      "packet_sha256": "91d23f54276ef89d5f08f638377defecc7e74323943a4139b1dd6229f00b2d72",
+      "repeat_index": 2,
+      "request_id": "bf63272ebc0cd7d1d2ec7c29",
+      "request_order": 11,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c3",
+      "packet_sha256": "ba797a3e6cd5a5ac722edba761f8e45a8e8a88a96d487c9281ea118e245bf313",
+      "repeat_index": 2,
+      "request_id": "59042299e08b607e7c096be5",
+      "request_order": 12,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c0",
+      "packet_sha256": "45959112213b4bdad2f842707f0375e414c211384dcbdebb873e68057fe8d050",
+      "repeat_index": 2,
+      "request_id": "49a32cc46fb42c6466e46c66",
+      "request_order": 13,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c1",
+      "packet_sha256": "d284e37be374269edc45476984191e06f8c732dd823cf7130dcb59edb715121c",
+      "repeat_index": 2,
+      "request_id": "62cc9a894597c2a5d68ffa06",
+      "request_order": 14,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c2",
+      "packet_sha256": "054159f2bb4cb13864997e5d8ee34e06393564e9064b8a0a5d43d759ba3789d9",
+      "repeat_index": 2,
+      "request_id": "c5f085b9e6445616ee046ca8",
+      "request_order": 15,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c3",
+      "packet_sha256": "fe97347b876f4441039980c80e6444416e38c60fee024785cd068a7dcd8a4def",
+      "repeat_index": 2,
+      "request_id": "016cc622d667bfcbe0106c05",
+      "request_order": 16,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c0",
+      "packet_sha256": "ada839b21bf793e153fc981040280f88d1dbc3ad1e20b069230ea84e79a188f8",
+      "repeat_index": 3,
+      "request_id": "d908040f834688e341a93086",
+      "request_order": 17,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c1",
+      "packet_sha256": "9f0cd48c207526c8c1efec052772da0cca4abd61535db8977660e450ce95e67e",
+      "repeat_index": 3,
+      "request_id": "59547df621d26b3f894c5bd5",
+      "request_order": 18,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c2",
+      "packet_sha256": "91d23f54276ef89d5f08f638377defecc7e74323943a4139b1dd6229f00b2d72",
+      "repeat_index": 3,
+      "request_id": "64a0d97702b17d08904fdb76",
+      "request_order": 19,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c3",
+      "packet_sha256": "ba797a3e6cd5a5ac722edba761f8e45a8e8a88a96d487c9281ea118e245bf313",
+      "repeat_index": 3,
+      "request_id": "4f305b4efa3124ba5c3ab84e",
+      "request_order": 20,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c0",
+      "packet_sha256": "45959112213b4bdad2f842707f0375e414c211384dcbdebb873e68057fe8d050",
+      "repeat_index": 3,
+      "request_id": "b75daa0a87cb5341e6e71f21",
+      "request_order": 21,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c1",
+      "packet_sha256": "d284e37be374269edc45476984191e06f8c732dd823cf7130dcb59edb715121c",
+      "repeat_index": 3,
+      "request_id": "33b39c29fc75a42dd6c9c0df",
+      "request_order": 22,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c2",
+      "packet_sha256": "054159f2bb4cb13864997e5d8ee34e06393564e9064b8a0a5d43d759ba3789d9",
+      "repeat_index": 3,
+      "request_id": "32dcf6bdf0c02c22cae93812",
+      "request_order": 23,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c3",
+      "packet_sha256": "fe97347b876f4441039980c80e6444416e38c60fee024785cd068a7dcd8a4def",
+      "repeat_index": 3,
+      "request_id": "c4f0c9c3defcc4fe03266c47",
+      "request_order": 24,
+      "route_order": 1
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c0",
+      "packet_sha256": "ada839b21bf793e153fc981040280f88d1dbc3ad1e20b069230ea84e79a188f8",
+      "repeat_index": 1,
+      "request_id": "4d1f3b31b1778d31a5cb1e83",
+      "request_order": 25,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c1",
+      "packet_sha256": "9f0cd48c207526c8c1efec052772da0cca4abd61535db8977660e450ce95e67e",
+      "repeat_index": 1,
+      "request_id": "b4df44913d00433f4608c381",
+      "request_order": 26,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c2",
+      "packet_sha256": "91d23f54276ef89d5f08f638377defecc7e74323943a4139b1dd6229f00b2d72",
+      "repeat_index": 1,
+      "request_id": "fe7a735aa9900a69da7c0364",
+      "request_order": 27,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c3",
+      "packet_sha256": "ba797a3e6cd5a5ac722edba761f8e45a8e8a88a96d487c9281ea118e245bf313",
+      "repeat_index": 1,
+      "request_id": "8652ed0f5a0d9be7d6379576",
+      "request_order": 28,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c0",
+      "packet_sha256": "45959112213b4bdad2f842707f0375e414c211384dcbdebb873e68057fe8d050",
+      "repeat_index": 1,
+      "request_id": "b506d9f795f1d79ced9d311f",
+      "request_order": 29,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c1",
+      "packet_sha256": "d284e37be374269edc45476984191e06f8c732dd823cf7130dcb59edb715121c",
+      "repeat_index": 1,
+      "request_id": "012f9a42e9b2bb178b09868c",
+      "request_order": 30,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c2",
+      "packet_sha256": "054159f2bb4cb13864997e5d8ee34e06393564e9064b8a0a5d43d759ba3789d9",
+      "repeat_index": 1,
+      "request_id": "0049da4443dc0e661d7d3ef3",
+      "request_order": 31,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c3",
+      "packet_sha256": "fe97347b876f4441039980c80e6444416e38c60fee024785cd068a7dcd8a4def",
+      "repeat_index": 1,
+      "request_id": "d001de4cbb349c178a504712",
+      "request_order": 32,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c0",
+      "packet_sha256": "ada839b21bf793e153fc981040280f88d1dbc3ad1e20b069230ea84e79a188f8",
+      "repeat_index": 2,
+      "request_id": "5860104f0bb1d0fcbd9014e4",
+      "request_order": 33,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c1",
+      "packet_sha256": "9f0cd48c207526c8c1efec052772da0cca4abd61535db8977660e450ce95e67e",
+      "repeat_index": 2,
+      "request_id": "df39365029e7733383ce072c",
+      "request_order": 34,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c2",
+      "packet_sha256": "91d23f54276ef89d5f08f638377defecc7e74323943a4139b1dd6229f00b2d72",
+      "repeat_index": 2,
+      "request_id": "313680c982dd438d3d7b8a6c",
+      "request_order": 35,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c3",
+      "packet_sha256": "ba797a3e6cd5a5ac722edba761f8e45a8e8a88a96d487c9281ea118e245bf313",
+      "repeat_index": 2,
+      "request_id": "56ffe0af731d34ea2931f960",
+      "request_order": 36,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c0",
+      "packet_sha256": "45959112213b4bdad2f842707f0375e414c211384dcbdebb873e68057fe8d050",
+      "repeat_index": 2,
+      "request_id": "b6c354fcbfebb09e4423b6e5",
+      "request_order": 37,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c1",
+      "packet_sha256": "d284e37be374269edc45476984191e06f8c732dd823cf7130dcb59edb715121c",
+      "repeat_index": 2,
+      "request_id": "e7259ac081e9a3c6dec6f700",
+      "request_order": 38,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c2",
+      "packet_sha256": "054159f2bb4cb13864997e5d8ee34e06393564e9064b8a0a5d43d759ba3789d9",
+      "repeat_index": 2,
+      "request_id": "d1ec860cc5538e1d723eeadf",
+      "request_order": 39,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c3",
+      "packet_sha256": "fe97347b876f4441039980c80e6444416e38c60fee024785cd068a7dcd8a4def",
+      "repeat_index": 2,
+      "request_id": "a4015d8664d7fde82e9829a5",
+      "request_order": 40,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c0",
+      "packet_sha256": "ada839b21bf793e153fc981040280f88d1dbc3ad1e20b069230ea84e79a188f8",
+      "repeat_index": 3,
+      "request_id": "d65ce6436ba7b5b9f2e39c08",
+      "request_order": 41,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c1",
+      "packet_sha256": "9f0cd48c207526c8c1efec052772da0cca4abd61535db8977660e450ce95e67e",
+      "repeat_index": 3,
+      "request_id": "88fb53f0f64e5e0d84f65b95",
+      "request_order": 42,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c2",
+      "packet_sha256": "91d23f54276ef89d5f08f638377defecc7e74323943a4139b1dd6229f00b2d72",
+      "repeat_index": 3,
+      "request_id": "3de49aead39b808ff2533788",
+      "request_order": 43,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c3",
+      "packet_sha256": "ba797a3e6cd5a5ac722edba761f8e45a8e8a88a96d487c9281ea118e245bf313",
+      "repeat_index": 3,
+      "request_id": "4d3251ea0c8233b506b9ca69",
+      "request_order": 44,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c0",
+      "packet_sha256": "45959112213b4bdad2f842707f0375e414c211384dcbdebb873e68057fe8d050",
+      "repeat_index": 3,
+      "request_id": "1ffdc1fe054b17780f6e0eb9",
+      "request_order": 45,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c1",
+      "packet_sha256": "d284e37be374269edc45476984191e06f8c732dd823cf7130dcb59edb715121c",
+      "repeat_index": 3,
+      "request_id": "83ea0aee28fcae18ff690436",
+      "request_order": 46,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c2",
+      "packet_sha256": "054159f2bb4cb13864997e5d8ee34e06393564e9064b8a0a5d43d759ba3789d9",
+      "repeat_index": 3,
+      "request_id": "becdc6595c257d02fbc06588",
+      "request_order": 47,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c3",
+      "packet_sha256": "fe97347b876f4441039980c80e6444416e38c60fee024785cd068a7dcd8a4def",
+      "repeat_index": 3,
+      "request_id": "e4fc4695a7040f6e758a08d8",
+      "request_order": 48,
+      "route_order": 2
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c0",
+      "packet_sha256": "ada839b21bf793e153fc981040280f88d1dbc3ad1e20b069230ea84e79a188f8",
+      "repeat_index": 1,
+      "request_id": "23289fe3efad601a439fb3ff",
+      "request_order": 49,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c1",
+      "packet_sha256": "9f0cd48c207526c8c1efec052772da0cca4abd61535db8977660e450ce95e67e",
+      "repeat_index": 1,
+      "request_id": "ab3a9b766f4656ed6c3610e4",
+      "request_order": 50,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c2",
+      "packet_sha256": "91d23f54276ef89d5f08f638377defecc7e74323943a4139b1dd6229f00b2d72",
+      "repeat_index": 1,
+      "request_id": "82a3cd5f56e3f0d07dd13c66",
+      "request_order": 51,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c3",
+      "packet_sha256": "ba797a3e6cd5a5ac722edba761f8e45a8e8a88a96d487c9281ea118e245bf313",
+      "repeat_index": 1,
+      "request_id": "125de58e6fd12647a0e1b0df",
+      "request_order": 52,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c0",
+      "packet_sha256": "45959112213b4bdad2f842707f0375e414c211384dcbdebb873e68057fe8d050",
+      "repeat_index": 1,
+      "request_id": "8aedc4d88a457f480cdba6d8",
+      "request_order": 53,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c1",
+      "packet_sha256": "d284e37be374269edc45476984191e06f8c732dd823cf7130dcb59edb715121c",
+      "repeat_index": 1,
+      "request_id": "eb1cd8e9b06bc957674b357f",
+      "request_order": 54,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c2",
+      "packet_sha256": "054159f2bb4cb13864997e5d8ee34e06393564e9064b8a0a5d43d759ba3789d9",
+      "repeat_index": 1,
+      "request_id": "72a58d23fe602e5c71685730",
+      "request_order": 55,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c3",
+      "packet_sha256": "fe97347b876f4441039980c80e6444416e38c60fee024785cd068a7dcd8a4def",
+      "repeat_index": 1,
+      "request_id": "f7d833c440d37b19cdb3e380",
+      "request_order": 56,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c0",
+      "packet_sha256": "ada839b21bf793e153fc981040280f88d1dbc3ad1e20b069230ea84e79a188f8",
+      "repeat_index": 2,
+      "request_id": "4a5cae57419a24f19468612d",
+      "request_order": 57,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c1",
+      "packet_sha256": "9f0cd48c207526c8c1efec052772da0cca4abd61535db8977660e450ce95e67e",
+      "repeat_index": 2,
+      "request_id": "bc8c54f552103e898ebec544",
+      "request_order": 58,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c2",
+      "packet_sha256": "91d23f54276ef89d5f08f638377defecc7e74323943a4139b1dd6229f00b2d72",
+      "repeat_index": 2,
+      "request_id": "205f992c961734a4040f97af",
+      "request_order": 59,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c3",
+      "packet_sha256": "ba797a3e6cd5a5ac722edba761f8e45a8e8a88a96d487c9281ea118e245bf313",
+      "repeat_index": 2,
+      "request_id": "41e7e120b77ec07c000c20f0",
+      "request_order": 60,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c0",
+      "packet_sha256": "45959112213b4bdad2f842707f0375e414c211384dcbdebb873e68057fe8d050",
+      "repeat_index": 2,
+      "request_id": "76f3574869b97e7a72964918",
+      "request_order": 61,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c1",
+      "packet_sha256": "d284e37be374269edc45476984191e06f8c732dd823cf7130dcb59edb715121c",
+      "repeat_index": 2,
+      "request_id": "c33e02dec5b4a66b07df7513",
+      "request_order": 62,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c2",
+      "packet_sha256": "054159f2bb4cb13864997e5d8ee34e06393564e9064b8a0a5d43d759ba3789d9",
+      "repeat_index": 2,
+      "request_id": "56c5410056ab688c6f15496d",
+      "request_order": 63,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c3",
+      "packet_sha256": "fe97347b876f4441039980c80e6444416e38c60fee024785cd068a7dcd8a4def",
+      "repeat_index": 2,
+      "request_id": "ec626dded4f38f7131de4f91",
+      "request_order": 64,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c0",
+      "packet_sha256": "ada839b21bf793e153fc981040280f88d1dbc3ad1e20b069230ea84e79a188f8",
+      "repeat_index": 3,
+      "request_id": "0d7650a00fe7654c51b8022d",
+      "request_order": 65,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c1",
+      "packet_sha256": "9f0cd48c207526c8c1efec052772da0cca4abd61535db8977660e450ce95e67e",
+      "repeat_index": 3,
+      "request_id": "2dde3b5bad7a6e37b2184fce",
+      "request_order": 66,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c2",
+      "packet_sha256": "91d23f54276ef89d5f08f638377defecc7e74323943a4139b1dd6229f00b2d72",
+      "repeat_index": 3,
+      "request_id": "58f57c92dbd9a3c3cfb8a5b6",
+      "request_order": 67,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_01_c3",
+      "packet_sha256": "ba797a3e6cd5a5ac722edba761f8e45a8e8a88a96d487c9281ea118e245bf313",
+      "repeat_index": 3,
+      "request_id": "bea5140f6a8e5a1baf7022e4",
+      "request_order": 68,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c0",
+      "packet_sha256": "45959112213b4bdad2f842707f0375e414c211384dcbdebb873e68057fe8d050",
+      "repeat_index": 3,
+      "request_id": "a7c1ccac105bbcc58ace1e3d",
+      "request_order": 69,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c1",
+      "packet_sha256": "d284e37be374269edc45476984191e06f8c732dd823cf7130dcb59edb715121c",
+      "repeat_index": 3,
+      "request_id": "e6dd1026fe4ff9f4e499aace",
+      "request_order": 70,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c2",
+      "packet_sha256": "054159f2bb4cb13864997e5d8ee34e06393564e9064b8a0a5d43d759ba3789d9",
+      "repeat_index": 3,
+      "request_id": "433bd7eae76331d221fc06d0",
+      "request_order": 71,
+      "route_order": 3
+    },
+    {
+      "canary": false,
+      "packet_id": "candidate_02_c3",
+      "packet_sha256": "fe97347b876f4441039980c80e6444416e38c60fee024785cd068a7dcd8a4def",
+      "repeat_index": 3,
+      "request_id": "940ffc01956dca06a295ef18",
+      "request_order": 72,
+      "route_order": 3
+    }
+  ],
+  "retry_policy": {
+    "non_retryable": [
+      "parse-invalid non-empty response",
+      "valid model decision",
+      "identity mismatch"
+    ],
+    "retryable": [
+      "HTTP 429",
+      "HTTP 5xx",
+      "timeout",
+      "empty transport body"
+    ],
+    "scientific_outcome_retry": 0,
+    "transport_retry_limit": 2,
+    "transport_retry_only": true
+  },
+  "route_runtime_gate": "Immediately before execution, verify exact endpoint/model identity. Missing identity, alias drift, fallback, provider-tag drift, or substitution stops that route without replacement.",
+  "routes": [
+    {
+      "api_style": "OpenAI-compatible Chat Completions",
+      "endpoint": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+      "id_type": "dated_snapshot",
+      "model_id": "qwen3.7-plus-2026-05-26",
+      "official_sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model",
+        "https://help.aliyun.com/en/model-studio/qwen-structured-output",
+        "https://help.aliyun.com/zh/model-studio/model-pricing",
+        "https://help.aliyun.com/en/model-studio/deep-thinking"
+      ],
+      "parameters": {
+        "enable_thinking": false,
+        "max_completion_tokens": 1024,
+        "max_tokens": "omitted",
+        "response_format": {
+          "type": "json_object"
+        },
+        "stream": false,
+        "temperature": 0.2
+      },
+      "price_snapshot": {
+        "cap_basis": "At most 766 attempts, 32768 input tokens and 1024 output tokens per attempt; the exact arithmetic ceiling is CNY 56.475648.",
+        "currency": "CNY",
+        "input_per_million": 2.0,
+        "output_per_million": 8.0,
+        "per_route_study_cost_hard_cap": 60.0,
+        "service_region": "China (Beijing)",
+        "tier": "0 < input tokens <= 256K, pay-as-you-go list price"
+      },
+      "provider": "Alibaba Cloud Model Studio",
+      "route_order": 1,
+      "structured_output_note": "Official documentation supports JSON object output for the Qwen3.7 Plus series in non-thinking mode. max_completion_tokens, not max_tokens, freezes the output cap."
+    },
+    {
+      "api_style": "OpenAI-compatible Chat Completions",
+      "endpoint": "https://api.deepseek.com/chat/completions",
+      "id_type": "official_exact_model_id",
+      "model_id": "deepseek-v4-flash",
+      "official_sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing",
+        "https://api-docs.deepseek.com/api/create-chat-completion",
+        "https://api-docs.deepseek.com/guides/thinking_mode",
+        "https://api-docs.deepseek.com/updates/"
+      ],
+      "parameters": {
+        "max_tokens": 1024,
+        "response_format": {
+          "type": "json_object"
+        },
+        "stream": false,
+        "temperature": 0.2,
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "price_snapshot": {
+        "cap_basis": "At most 766 attempts, 32768 cache-miss input tokens and 1024 output tokens per attempt; the exact arithmetic ceiling is USD 3.73366784.",
+        "currency": "USD",
+        "input_cache_assumption": "cache miss",
+        "input_per_million": 0.14,
+        "output_per_million": 0.28,
+        "per_route_study_cost_hard_cap": 4.0
+      },
+      "provider": "DeepSeek API",
+      "route_order": 2,
+      "structured_output_note": "Official V4 Flash documentation lists JSON Output and an explicit non-thinking toggle."
+    },
+    {
+      "accepted_response_model_ids": [
+        "google/gemini-3.5-flash",
+        "google/gemini-3.5-flash-20260519"
+      ],
+      "api_style": "OpenRouter Chat Completions",
+      "canonical_model_id": "google/gemini-3.5-flash-20260519",
+      "endpoint": "https://openrouter.ai/api/v1/chat/completions",
+      "expected_provider_name": "Google AI Studio",
+      "expected_provider_tag": "google-ai-studio/priority",
+      "id_type": "openrouter_stable_slug_bound_to_catalog_canonical_slug",
+      "model_id": "google/gemini-3.5-flash",
+      "official_sources": [
+        "https://openrouter.ai/google/gemini-3.5-flash/providers",
+        "https://openrouter.ai/docs/guides/routing/provider-selection",
+        "https://openrouter.ai/docs/guides/features/structured-outputs",
+        "https://openrouter.ai/docs/guides/features/router-metadata"
+      ],
+      "parameters": {
+        "max_tokens": 1024,
+        "provider": {
+          "allow_fallbacks": false,
+          "only": [
+            "google-ai-studio/priority"
+          ],
+          "require_parameters": true
+        },
+        "reasoning": {
+          "effort": "minimal",
+          "exclude": true
+        },
+        "response_format": {
+          "json_schema": {
+            "name": "dsa_patch_gate_response",
+            "schema": {
+              "additionalProperties": false,
+              "properties": {
+                "concise_rationale": {
+                  "maxLength": 1200,
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "confidence": {
+                  "maximum": 1,
+                  "minimum": 0,
+                  "type": "number"
+                },
+                "decision": {
+                  "enum": [
+                    "accept",
+                    "reject",
+                    "escalate"
+                  ],
+                  "type": "string"
+                },
+                "evidence_used": {
+                  "items": {
+                    "maxLength": 240,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "maxItems": 12,
+                  "minItems": 1,
+                  "type": "array"
+                },
+                "uncertainty": {
+                  "maxLength": 600,
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "decision",
+                "confidence",
+                "concise_rationale",
+                "evidence_used",
+                "uncertainty"
+              ],
+              "type": "object"
+            },
+            "strict": true
+          },
+          "type": "json_schema"
+        },
+        "stream": false
+      },
+      "price_snapshot": {
+        "cap_basis": "At most 72 attempts for route 3, with 32768 input tokens and 1024 billed output tokens per attempt; arithmetic ceiling USD 4.202496.",
+        "currency": "USD",
+        "input_per_million": 1.5,
+        "output_including_reasoning_per_million": 9.0,
+        "per_route_pilot_cost_hard_cap": 5.0
+      },
+      "provider": "OpenRouter",
+      "route_order": 3,
+      "structured_output_note": "OpenRouter strict json_schema output is frozen with require_parameters=true. Router metadata is required at runtime; any model/provider drift, fallback attempt, or pipeline transformation is a hard stop."
+    }
+  ],
+  "run_manifest_id": "dsa_v2_api_pilot_run_manifest_v0_3",
+  "schema": {
+    "path": "data/protocols/dsa_p3_output_schema_v0_1.json",
+    "sha256": "622212864170cbe6bb0677f230b5008947b9bf1a95f665f82cded1f44b91dbf9"
+  },
+  "scientific_boundary": {
+    "confirmatory_exclusion": true,
+    "development_only": true,
+    "effect_estimates_authorized": false,
+    "paper_facing_effect_claim_authorized": false
+  },
+  "status": "frozen_pending_author_signoff_no_api"
+}

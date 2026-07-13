@@ -1,5 +1,24 @@
 # Engineering Notes
 
+## 2026-07-13 Never serialize documentation sentinels into provider requests
+
+- A frozen route can contain human-readable values such as `"omitted"` to document
+  that a mutually exclusive parameter must not be sent. Treat these as manifest
+  metadata, not executable values; strip them before request serialization and
+  assert the final provider body contains only correctly typed token limits.
+- Check concrete request bodies for every route. For Qwen, omit `max_tokens` and
+  send integer `max_completion_tokens`; for DeepSeek/OpenRouter, send integer
+  `max_tokens`. A valid manifest alone does not establish request-contract validity.
+- Any HTTP error, parse error, schema failure, or identity mismatch is a non-valid
+  terminal record and must hard-stop immediately after append-only recording.
+  Transport retry policy must never turn an HTTP 400 into repeated canary traffic.
+- Report endpoint requests separately from valid model outputs and scientific
+  decisions. Eight pre-inference HTTP 400 responses mean eight API requests but
+  zero model outputs; describing either count as the other corrupts the audit.
+- A runner repair changes the execution surface. Preserve the failed ledger,
+  archive its authorization, allocate a new request domain/output directory, and
+  require a new aggregate-bound author signature before any repaired execution.
+
 ## 2026-07-13 Refreeze a provider change instead of treating it as a credential alias
 
 - Moving Gemini from its native endpoint to OpenRouter changes provider, endpoint,

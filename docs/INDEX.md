@@ -8,24 +8,27 @@
 
 ## Active Plan
 
-- [dsa_v2_api_pilot_freeze_v0_2.md](experiments/dsa_v2_api_pilot_freeze_v0_2.md):
-  unsigned no-API refreeze for one mechanically selected development-only pair.
-  Eight anonymous C0--C3 packets expand to 72 frozen requests across three exact
-  routes and three repeats; route 3 is OpenRouter `google/gemini-3.5-flash`
-  pinned to `google-ai-studio/priority` with fallbacks disabled. Preparation is
-  `../scripts/dsa2026_prepare_api_pilot_v0_2.py`, and the default-deny runner is
-  `../scripts/dsa2026_run_api_pilot_v0_2.py`. Aggregate SHA-256 is
-  `2ee6c3f03e14f64723b5ddb52187c63ed83cb4f2d5bb2dfea5d16a7c2412ebc3`;
-  v0.2 author sign-off is pending and model API activity is zero. The revoked v0.1
-  authorization is preserved by a separate revocation record and its active path
-  is absent.
+- [dsa_v2_api_pilot_freeze_v0_3.md](experiments/dsa_v2_api_pilot_freeze_v0_3.md):
+  unsigned no-API repair freeze for one mechanically selected development-only
+  pair. v0.2 terminalized after eight pre-inference HTTP 400 responses, zero
+  valid model outputs, and zero scientific decisions; its raw ledger is preserved
+  and the remaining 64 requests were not started. The terminal evidence is
+  [dsa_v2_api_pilot_v0_2_terminal_audit.md](experiments/dsa_v2_api_pilot_v0_2_terminal_audit.md).
+  v0.3 preserves the packets, prompt/schema, exact routes, repeats, and 72-request
+  factorial, but uses a new request domain/output path and fixes only omitted-
+  sentinel serialization plus immediate hard-stop for every non-valid record.
+  Preparation is `../scripts/dsa2026_prepare_api_pilot_v0_3.py`; the default-deny
+  runner is `../scripts/dsa2026_run_api_pilot_v0_3.py`. Aggregate SHA-256 is
+  `90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38`;
+  v0.3 author sign-off is pending and v0.3 model API activity is zero.
 
 - [dsa_agent_evidence_experiment_v0_2_zh.md](plans/dsa_agent_evidence_experiment_v0_2_zh.md):
   sole active experimental execution plan. P3/P4 v0.1 terminated before model
   output; v0.2 freezes construction rules before qualification, materializes a
   pre-model pool, then freezes the first 30 qualified task pairs before any
   reviewer-agent request. Status: `V2-P2_PAUSED_AT_LEDGER_V0_62 /
-  QUALIFIED_0 / DEVELOPMENT_PILOT_V0_2_FROZEN_UNSIGNED / NO_API`.
+  QUALIFIED_0 / DEVELOPMENT_PILOT_V0_2_TERMINAL_NO_OUTPUT /
+  V0_3_FROZEN_UNSIGNED / NO_V0_3_API`.
   Machine design and transition audit are
   `../data/protocols/dsa_v0_1_termination_and_v0_2_redesign_v0_1.json` and
   `../scripts/dsa2026_audit_v0_2_redesign.py`.

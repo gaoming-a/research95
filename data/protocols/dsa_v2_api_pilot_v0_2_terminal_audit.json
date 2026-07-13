@@ -1,0 +1,46 @@
+{
+  "audit_id": "dsa_v2_api_pilot_v0_2_terminal_audit",
+  "created_date": "2026-07-13",
+  "status": "terminal_failed_request_contract_no_model_output",
+  "aggregate_sha256": "2ee6c3f03e14f64723b5ddb52187c63ed83cb4f2d5bb2dfea5d16a7c2412ebc3",
+  "authorization_archive_path": "data/protocols/dsa_v2_api_pilot_execution_authorization_archive_v0_2.json",
+  "authorization_sha256": "24bd17710af6da85a72d2c2f5da1d6372b299fa135c1b178e4df8a704c78d4e3",
+  "request_ledger_path": "outputs/dsa_v2_api_pilot_v0_2/request_ledger.jsonl",
+  "request_ledger_sha256": "ca36b6da2186e14dab7c5d9ef7bd4ac8caef0ef4d6623f9c29511d28b4185616",
+  "execution": {
+    "authorized_requests": 72,
+    "canary_requests_attempted": 8,
+    "remaining_requests_started": 0,
+    "http_requests": 8,
+    "http_status_counts": {"400": 8},
+    "parse_status_counts": {"transport_failure": 8},
+    "valid_model_outputs": 0,
+    "model_inference_responses": 0,
+    "scientific_decisions_observed": 0,
+    "transport_retries": 0
+  },
+  "provider_error": {
+    "provider": "Alibaba Cloud Model Studio",
+    "route_model": "qwen3.7-plus-2026-05-26",
+    "code": "invalid_parameter_error",
+    "type": "invalid_request_error",
+    "message": "'max_tokens' must be Integer"
+  },
+  "diagnosis": {
+    "class": "execution_chain_bug",
+    "root_cause": "The historical route freeze used the string sentinel max_tokens='omitted' alongside integer max_completion_tokens=1024. The runner removed stream but did not remove documentation-only omitted sentinels before serializing the request body.",
+    "secondary_bug": "A non-retryable HTTP 400 was recorded as transport_failure but did not hard-stop the canary after the first request.",
+    "not_a_prompt_or_model_result": true
+  },
+  "raw_response_records": [
+    {"request_order": 1, "request_id": "7499190d224e426c56062009", "http_status": 400, "raw_sha256": "2f767fb6b6e5c1998404cd2acf988eb38df5a1071bacc9cca7833817ea215831"},
+    {"request_order": 2, "request_id": "f275f2f11f5d4a7bd98cdb68", "http_status": 400, "raw_sha256": "1ba80f69ed19994052dcbbbc6199987d471f39cec4cf81f9379a8e57dc0b452e"},
+    {"request_order": 3, "request_id": "8f7e019ed43d1b3907f386cf", "http_status": 400, "raw_sha256": "0b32e2707ed0038616c62260eea5f55af92dc6496f59df0cdc497b5f1d6fa845"},
+    {"request_order": 4, "request_id": "17132e4ec3b30b9676cd531e", "http_status": 400, "raw_sha256": "50f257774bf87c165722f8b87d5b9ffe7be51b40462e286fce0b893ba59226f7"},
+    {"request_order": 5, "request_id": "24cd5c4da431ff0b3909adc0", "http_status": 400, "raw_sha256": "90b9fe4f1c7705fe2d2effc5eb26562d21b5cf1bc1ed930d3364804ed1f9b445"},
+    {"request_order": 6, "request_id": "0872a717f3da68ad06b1fdf0", "http_status": 400, "raw_sha256": "11c528f9fb471a770a1db8583285103acee7f9448171680dc5dde1485724ecd5"},
+    {"request_order": 7, "request_id": "5d2fc137b4fd2c50f3440639", "http_status": 400, "raw_sha256": "ebf8517996c95bb5fe118fe03fdefb405b78bc2b70828cd57cd08d9248a6ccd0"},
+    {"request_order": 8, "request_id": "a6f95401a550586298a40a91", "http_status": 400, "raw_sha256": "89cd4627067d45aa2020d327734ac856a30513a97f6da839c5efda747419d7d0"}
+  ],
+  "boundary": "v0.2 is terminal and must not be resumed or overwritten. A repaired runner requires a new request domain, aggregate, author sign-off, authorization, and output directory."
+}

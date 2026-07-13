@@ -1,0 +1,29 @@
+{
+  "authorization_id": "dsa_v2_api_pilot_execution_authorization_v0_2",
+  "status": "author_signed_execute_authorized",
+  "signed_by": "高明",
+  "signed_at": "2026-07-13T19:07:32.8326047+08:00",
+  "aggregate_sha256": "2ee6c3f03e14f64723b5ddb52187c63ed83cb4f2d5bb2dfea5d16a7c2412ebc3",
+  "authorized_request_count": 72,
+  "development_only": true,
+  "execution_order": {
+    "first": "8-call canary",
+    "then": "remaining 64 calls after execution-integrity Gate passes"
+  },
+  "credential_env_authorized": [
+    "DASHSCOPE_API_KEY",
+    "DEEPSEEK_API_KEY",
+    "OPENROUTER_API_KEY"
+  ],
+  "scope": {
+    "authorizes_api_key_read": true,
+    "authorizes_exact_frozen_routes": true,
+    "authorizes_transport_only_retry": true,
+    "forbids_outcome_rerun": true,
+    "forbids_prompt_or_schema_change": true,
+    "forbids_route_change": true,
+    "forbids_order63_start": true,
+    "forbids_confirmatory_use": true,
+    "forbids_public_release_or_submission": true
+  }
+}
