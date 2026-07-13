@@ -15,9 +15,11 @@ packets, and 72 requests across three routes and three repeats. Its aggregate
 SHA-256 is
 `f8992839f6b47c507ab4bf8e0f49d2e63d6238998a2ff666d674b8eee4cfebeb`.
 The local evidence revalidation, freeze/check, adversarial schema checks, and
-default-deny runner check-only pass, but author sign-off is still pending. No
-credential has been read and no endpoint has been called; the pilot is excluded
-from every confirmatory estimate and paper-facing effectiveness claim.
+default-deny runner check-only pass. The author signed the hash-bound execution
+authorization on 2026-07-13. The first canary attempt stopped before any network
+request because the three frozen credential environment variables were not all
+injected; no model output exists. The pilot remains excluded from every
+confirmatory estimate and paper-facing effectiveness claim.
 
 As of 2026-07-13, the sole active route is
 [the DSA 2026 execution plan](docs/plans/dsa_2026_submission_execution_plan_zh.md).

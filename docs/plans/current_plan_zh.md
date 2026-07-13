@@ -2,6 +2,21 @@
 
 最后更新：2026-07-13
 
+## 0.61 2026-07-13 development pilot 已签核 / credential injection blocked
+
+作者高明已签核 aggregate
+SHA-256=`f8992839f6b47c507ab4bf8e0f49d2e63d6238998a2ff666d674b8eee4cfebeb`，授权记录为
+`data/protocols/dsa_v2_api_pilot_execution_authorization_v0_1.json`。签核前重新执行
+freeze/check 与 runner check-only 均 PASS。
+
+首次 `--execute-canary` 在任何网络请求和输出目录创建前 fail closed：当前进程没有
+`DASHSCOPE_API_KEY`。后续只读诊断确认 `.env` 有 `QWEN_API_KEY` 与
+`DEEPSEEK_API_KEY`，但没有冻结名称 `DASHSCOPE_API_KEY` 或 `GEMINI_API_KEY`；Windows
+process/user/machine 环境也没有三个冻结名称。问题类型为 credential injection，不是
+prompt、schema、证据或模型结果失败。不得修改冻结 runner、伪造 key、替换 route 或
+启动 order63。恢复条件是把真实凭证以三个冻结名称注入同一执行进程，再从未产生请求的
+canary 起点继续。
+
 ## 0.60 2026-07-13 72-call development API pilot 无 API 冻结
 
 对抗性审查确认 V2-P2 在 ledger v0.62 已尝试62项但 qualified=0；当前有效证据是

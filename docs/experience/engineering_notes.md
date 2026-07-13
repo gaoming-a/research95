@@ -1,5 +1,17 @@
 # Engineering Notes
 
+## 2026-07-13 Separate signed authorization from credential injection
+
+- A valid hash-bound author signature does not imply that the runner process has
+  credentials. Check exact frozen environment-variable names without printing
+  values, and fail before creating outputs or making a request when one is absent.
+- Historical aliases such as `QWEN_API_KEY` must not silently mutate a frozen
+  credential contract. Inject the same real credential under the frozen name or
+  stop; never alter the signed runner, invent a dummy key, or substitute a route.
+- Treat a missing credential as an execution-boundary failure, not a prompt,
+  evidence, schema, or model-quality result. Preserve zero-call state and resume
+  from the same canary only after the missing external input exists.
+
 ## 2026-07-13 Freeze bytes and execution surfaces before an API pilot
 
 - A prompt file, schema, and historical PASS audit do not mean a new experiment is

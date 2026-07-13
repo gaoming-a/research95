@@ -1,0 +1,19 @@
+{
+  "authorization_id": "dsa_v2_api_pilot_execution_authorization_v0_1",
+  "status": "author_signed_execute_authorized",
+  "signed_by": "高明",
+  "signed_at": "2026-07-13T18:23:08.5634003+08:00",
+  "aggregate_sha256": "f8992839f6b47c507ab4bf8e0f49d2e63d6238998a2ff666d674b8eee4cfebeb",
+  "authorized_request_count": 72,
+  "development_only": true,
+  "scope": {
+    "authorizes_api_key_read": true,
+    "authorizes_exact_frozen_routes": true,
+    "authorizes_transport_only_retry": true,
+    "forbids_outcome_rerun": true,
+    "forbids_prompt_or_schema_change": true,
+    "forbids_order63_start": true,
+    "forbids_confirmatory_use": true,
+    "forbids_public_release_or_submission": true
+  }
+}

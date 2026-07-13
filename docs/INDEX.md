@@ -9,21 +9,24 @@
 ## Active Plan
 
 - [dsa_v2_api_pilot_freeze_v0_1.md](experiments/dsa_v2_api_pilot_freeze_v0_1.md):
-  unsigned, no-API freeze for one mechanically selected development-only pair.
+  signed development-only freeze for one mechanically selected legacy pair.
   Eight anonymous C0--C3 packets expand to 72 frozen requests across three exact
   routes and three repeats; the first eight are execution canaries. Machine inputs
   are `../data/protocols/dsa_v2_api_pilot_*_v0_1.json/jsonl`, preparation is
   `../scripts/dsa2026_prepare_api_pilot_v0_1.py`, and the default-deny runner is
   `../scripts/dsa2026_run_api_pilot_v0_1.py`. Aggregate SHA-256 is
-  `f8992839f6b47c507ab4bf8e0f49d2e63d6238998a2ff666d674b8eee4cfebeb`;
-  author sign-off is pending and API/key/network activity is zero.
+  `f8992839f6b47c507ab4bf8e0f49d2e63d6238998a2ff666d674b8eee4cfebeb`.
+  The hash-bound execution authorization is
+  `../data/protocols/dsa_v2_api_pilot_execution_authorization_v0_1.json`;
+  canary execution is blocked before network activity until all three exact
+  credential environment variables are injected.
 
 - [dsa_agent_evidence_experiment_v0_2_zh.md](plans/dsa_agent_evidence_experiment_v0_2_zh.md):
   sole active experimental execution plan. P3/P4 v0.1 terminated before model
   output; v0.2 freezes construction rules before qualification, materializes a
   pre-model pool, then freezes the first 30 qualified task pairs before any
   reviewer-agent request. Status: `V2-P2_PAUSED_AT_LEDGER_V0_62 /
-  QUALIFIED_0 / DEVELOPMENT_PILOT_FROZEN_UNSIGNED / NO_API`.
+  QUALIFIED_0 / DEVELOPMENT_PILOT_SIGNED_CREDENTIAL_BLOCKED / NO_API`.
   Machine design and transition audit are
   `../data/protocols/dsa_v0_1_termination_and_v0_2_redesign_v0_1.json` and
   `../scripts/dsa2026_audit_v0_2_redesign.py`.

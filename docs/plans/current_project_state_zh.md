@@ -2,6 +2,15 @@
 
 日期：2026-07-13
 
+## 2026-07-13 DSA 72-call pilot signed / credential-blocked before network
+
+- 作者签核与 authorization record 已绑定 aggregate `f8992839…cfebeb`；
+- 签核前 freeze/check、runner check-only PASS；
+- 首次 canary 在读取不到 `DASHSCOPE_API_KEY` 时 fail closed，未创建 output、未发出请求；
+- `.env` 仅声明 `QWEN_API_KEY`、`DEEPSEEK_API_KEY`，没有 `DASHSCOPE_API_KEY`、
+  `GEMINI_API_KEY`；Windows process/user/machine 也没有三个冻结变量；
+- 当前仍为 model calls=0，order63 未启动；等待精确凭证注入，不修改冻结 surface。
+
 ## 2026-07-13 DSA 72-call development pilot frozen / unsigned / no API
 
 - V2-P2 ledger v0.62：attempted=62、qualified=0、next order63

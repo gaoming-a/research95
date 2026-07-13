@@ -1,7 +1,7 @@
 # DSA reviewer-agent 证据条件实验计划 v0.2
 
 日期：2026-07-13
-状态：`V2-P2_PAUSED_AT_LEDGER_V0_62 / QUALIFIED_0 / DEVELOPMENT_PILOT_FROZEN_UNSIGNED / NO_API`
+状态：`V2-P2_PAUSED_AT_LEDGER_V0_62 / QUALIFIED_0 / DEVELOPMENT_PILOT_SIGNED_CREDENTIAL_BLOCKED / NO_API`
 
 ## 0. 2026-07-13 development-only 真实 API pilot 边界
 
@@ -15,6 +15,11 @@ P2P checks，冻结8个 C0--C3 packets、三条 route 和三次 repeat。
 `f8992839f6b47c507ab4bf8e0f49d2e63d6238998a2ff666d674b8eee4cfebeb`；当前 unsigned，
 不授权 API、order63 或 V2-P3/P5。pilot 的可执行性结果不能反向修改 V2-P2 terminal
 记录，也不能把旧材料重新标记为 v0.2 确认性材料。
+
+作者随后签核上述 aggregate 并生成独立 authorization record。首次 canary 在网络调用前
+因冻结 credential environment names 未注入而阻断；没有模型输出，不能据此评价 prompt
+或模型。恢复只允许注入 `DASHSCOPE_API_KEY`、`DEEPSEEK_API_KEY`、`GEMINI_API_KEY`，
+不得修改冻结 runner、route、prompt/schema 或用 provider fallback。
 
 ## 1. 一句话论点
 
