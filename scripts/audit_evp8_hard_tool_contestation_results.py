@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Raw-output-free audit wrapper for EVP-8-HARD tool-contestation results."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/audit_evp8_hard_tool_contestation_results.py")
 
 import argparse
 import json

@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Build paper-ready Phase A analysis for EVP-8.
 
 This no-API script adds confidence intervals, opportunity-case analysis, and
@@ -6,6 +7,10 @@ It reads only tracked summaries and writes raw-output-free aggregate reports.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/analyze_evp8_phase_a_paper_ready.py")
 
 import argparse
 import json

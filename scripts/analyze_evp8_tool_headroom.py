@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Analyze deterministic tool-only headroom for EVP-8.
 
 This is a no-API audit. It joins the frozen EVP-8 candidate set with
@@ -7,6 +8,10 @@ LLM-added-value ablation.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/analyze_evp8_tool_headroom.py")
 
 import argparse
 import json

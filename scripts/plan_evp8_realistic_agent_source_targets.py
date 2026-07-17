@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Plan no-API generation targets for the realistic/agent-patch cohort.
 
 This script does not call model APIs and does not generate patches. It reads
@@ -7,6 +8,10 @@ future agent-like patch generation.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/plan_evp8_realistic_agent_source_targets.py")
 
 import argparse
 import ast

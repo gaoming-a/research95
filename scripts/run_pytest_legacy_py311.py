@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Run legacy pytest nodes under the current Python runtime.
 
 The EVP-8-HARD visible-test gate uses old project test suites as visible
@@ -7,6 +8,10 @@ not inspect evaluator labels, hidden oracles, or candidate metadata.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/run_pytest_legacy_py311.py")
 
 import builtins
 import collections

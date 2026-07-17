@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Build EVP-8 cost-observability and deterministic-baseline dry-run summaries.
 
 This Phase 0 check validates the planned model-call accounting surface and the
@@ -6,6 +7,10 @@ credentials, generating raw outputs, or calling model APIs.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/build_evp8_cost_baseline_dry_run.py")
 
 import argparse
 import json

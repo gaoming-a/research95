@@ -6,7 +6,55 @@
   loop, including verification, diagnosis, documentation sync, and GitHub sync
   rules for future agent runs.
 
-## Active Plan
+## Research-Lineage Isolation Authority (2026-07-18)
+
+- [research_lineage_isolation_v0_1.md](experiments/research_lineage_isolation_v0_1.md):
+  current fail-closed authority for every future study. Historical paths and
+  bytes remain intact, while 501 touched tasks, 17 projects, 522 exact patch
+  payload hashes, a conservative 3,420-identifier metadata blocking set, old
+  result paths, and seven frozen study lineages are excluded from future
+  training, development, validation, model/prompt selection, confirmation,
+  effect estimation, and paper-facing claims. All 280 old Python entrypoints
+  fail closed.
+- `../data/protocols/research_lineage_quarantine_v0_1.json`: machine policy,
+  frozen lineage families, source hashes, revoked authorization IDs, blocked
+  entrypoints, path globs, and future-study contract.
+- `../data/protocols/research_lineage_payload_exclusion_registry_v0_1.json`:
+  immutable-cutoff extraction of 522 exact patch payloads and 3,420 conservative
+  metadata content identifiers.
+- `../data/protocols/research_lineage_blocked_content_fingerprints_v0_1.json`:
+  1,515 cutoff-HEAD paths / 1,509 blobs, 3,232 reachable-history blobs and raw
+  hashes, plus 273,918 cutoff-worktree files / 57,172 unique hashes /
+  4,415,259,787 bytes / zero reparse paths.
+- `../data/protocols/research_lineage_isolation_audit_v0_1.json`: derived
+  task/project/content projections plus four authorization revocations,
+  terminal-ledger, old-P1 recomputation, and adversarial manifest checks.
+- `../data/protocols/future_research_input_manifest_v0_1.json`: canonical empty
+  `not_started` manifest. It authorizes no data use, training, evaluation, API,
+  or paper claim.
+- `../src/cross_review/future_study_loader.py`: sanctioned input loader; it
+  revalidates the canonical manifest and the full isolation baseline on every
+  read.
+- `../future_studies/README.md`: required namespace and code boundary for a
+  separately preregistered future study.
+- `../scripts/audit_research_lineage_isolation.py`: deterministic `--write` /
+  `--check` Gate and strict future nonempty-manifest validator. It is included
+  in `../scripts/run_local_quality_gate.py`.
+- `../data/protocols/dsa_v2_p2_cursor_executor_preflight_v0_1.json`: order63
+  preflight now reports `blocked_by_research_lineage_isolation`; old signed
+  continuous, standing, archived-v0.2, and v0.3 authorization files remain
+  unchanged as provenance and are revoked for execution.
+
+This Gate governs the sanctioned repository workflow; it does not install an
+operating-system ACL. Programs running as the same OS user can still read the
+preserved bytes outside the sanctioned loader.
+
+The old P1 quarantine snapshot is not a current Gate. Recomputing it against the
+current script set fails because the later development pilot reads EVP-7
+candidate/evidence metadata. The global Gate records and contains that lineage
+instead of adding an exception. Every entry below is a historical record.
+
+## Historical DSA Plan And Records
 
 - [dsa_v2_api_pilot_results_v0_3.md](experiments/dsa_v2_api_pilot_results_v0_3.md):
   completed development-only 72-call pilot. All 72 requests are HTTP 200,
@@ -21,13 +69,15 @@
   confirmatory estimates, effect sizes, and paper-facing claims.
 
 - [dsa_v2_api_pilot_standing_authorization_activation_v0_1.md](experiments/dsa_v2_api_pilot_standing_authorization_activation_v0_1.md):
-  author-signed active one-signature standing-execution record. Protocol SHA-256 is
+  historically author-signed one-signature standing-execution record, active at
+  its 2026-07-13 checkpoint and revoked on 2026-07-18. Protocol SHA-256 is
   `7ceb704a0d0310f60c86ee46356bacd0b4793fc772e3e1ac7b241ef68462d899`.
   It locks the selected pair, packet bytes, prompt/schema, three exact routes,
   normalized 72-request schedule, repeats, development-only exclusion, and
-  no-outcome-rerun rule. After one author signature, only mechanically conforming
-  execution-chain repairs may derive new aggregate-specific authorization without
-  another signature. The historical unsigned proposal is
+  no-outcome-rerun rule. At that historical checkpoint, mechanically conforming
+  execution-chain repairs could derive aggregate-specific authorization without
+  another signature; the global registry now revokes that derivation mechanism.
+  The historical unsigned proposal is
   [dsa_v2_api_pilot_standing_authorization_signoff_v0_1.md](experiments/dsa_v2_api_pilot_standing_authorization_signoff_v0_1.md).
   Machine protocol/audit are
   `../data/protocols/dsa_v2_api_pilot_standing_execution_protocol_v0_1.json` and
@@ -51,12 +101,14 @@
   Preparation is `../scripts/dsa2026_prepare_api_pilot_v0_3.py`; the default-deny
   runner is `../scripts/dsa2026_run_api_pilot_v0_3.py`. Aggregate SHA-256 is
   `90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38`;
-  v0.3 is the first derived package under the active standing authorization; its
-  older per-aggregate signoff path is superseded. v0.3 is authorized for 72
-  requests but model API activity remains zero at the activation checkpoint.
+  v0.3 was the first derived package under that historical standing authorization;
+  its older per-aggregate signoff path was superseded. It was historically
+  authorized for 72 requests and is now revoked; model API activity was zero at
+  the activation checkpoint.
 
 - [dsa_agent_evidence_experiment_v0_2_zh.md](plans/dsa_agent_evidence_experiment_v0_2_zh.md):
-  sole active experimental execution plan. P3/P4 v0.1 terminated before model
+  historically sole active experimental execution plan; it is now quarantined.
+  P3/P4 v0.1 terminated before model
   output; v0.2 freezes construction rules before qualification, materializes a
   pre-model pool, then freezes the first 30 qualified task pairs before any
   reviewer-agent request. Status: `V2-P2_PAUSED_AT_LEDGER_V0_62 /
@@ -131,21 +183,24 @@
   `../data/protocols/dsa_v2_p2_terminal_ledger_v0_2.json`; replay is
   `../scripts/dsa2026_v2_p2_audit_order2.py`. Order3 is selected but not started.
 - `../data/protocols/dsa_v2_p2_continuous_authorization_v0_1.txt` and `.json`:
-  author-signed continuous V2-P2 authorization anchored to ledger v0.2/order3.
+  historical author-signed continuous V2-P2 authorization anchored to ledger
+  v0.2/order3 and revoked for future execution on 2026-07-18.
   Deterministic freeze is
-  `../scripts/dsa2026_freeze_v2_p2_continuous_authorization.py`. It permits
-  ordinary task continuation and local commits, but model API remains disabled
-  until the V2-P3 freeze package receives hash-bound author sign-off.
+  `../scripts/dsa2026_freeze_v2_p2_continuous_authorization.py`. It historically
+  permitted ordinary task continuation and local commits; the global quarantine
+  registry now forbids that continuation.
 - `../data/protocols/dsa_v2_p2_cursor_task_config_v0_1.json`: deterministic
   unique-next-task resolution from the latest immutable ledger and V2-P1 inputs;
   `../scripts/dsa2026_v2_p2_cursor_config.py` replays it. The generic image
   template is `../containers/dsa2026_v2_p2/Dockerfile.cursor`. Current resolved
   task is unstarted order3 `bugsinpy_black_4`.
-- `../data/protocols/dsa_v2_p2_cursor_executor_preflight_v0_1.json`: passing
-  no-outcome audit for the generic six-phase executor
+- `../data/protocols/dsa_v2_p2_cursor_executor_preflight_v0_1.json`: current
+  status is `blocked_by_research_lineage_isolation`; the earlier passing
+  no-outcome audit is retained only as provenance for the generic six-phase executor
   `../scripts/dsa2026_v2_p2_cursor_execute.py`. It covers source, build, oracle,
-  T1--T4 materialization, candidates, and versioned-ledger finalize; order3 real
-  activity remains zero until this pre-outcome implementation is committed.
+  T1--T4 materialization, candidates, and versioned-ledger finalize. That older
+  audit awaited an implementation commit; the current global Gate blocks order3
+  regardless of commit state.
 - [dsa_v2_p2_dangling_docs_symlink_amendment_signoff_v0_1.md](experiments/dsa_v2_p2_dangling_docs_symlink_amendment_signoff_v0_1.md):
   unsigned frozen-content-drift proposal for 13 identical dangling docs symlinks
   in both Black_4 archives. Machine proposal and replay are

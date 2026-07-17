@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Run visible tests for the no-API EVP-8-HARD candidate draft.
 
 The runner uses candidate execution sandboxes only as patched workdirs. It does
@@ -6,6 +7,10 @@ raw model responses.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/run_evp8_hard_visible_tests.py")
 
 import argparse
 import json

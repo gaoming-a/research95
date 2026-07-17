@@ -90,6 +90,7 @@ def build_markdown(summary: dict[str, Any]) -> str:
         f"- credential boundary passed: {bool_mark(summary['credential_boundary']['passed'])}",
         f"- bootstrap safety passed: {bool_mark(summary['bootstrap_safety']['passed'])}",
         f"- workflow guard passed: {bool_mark(summary['workflow_guard']['passed'])}",
+        f"- research-lineage isolation passed: {bool_mark(summary['research_lineage_isolation']['passed'])}",
         f"- API failure handling passed: {bool_mark(summary['api_failure_handling']['passed'])}",
         f"- command templates passed: {bool_mark(summary['command_templates']['passed'])}",
         f"- experiment run records passed: {bool_mark(summary['experiment_run_records']['passed'])}",
@@ -132,6 +133,7 @@ def build_markdown(summary: dict[str, Any]) -> str:
             "credential_boundary",
             "bootstrap_safety",
             "workflow_guard",
+            "research_lineage_isolation",
             "api_failure_handling",
             "command_templates",
             "experiment_run_records",
@@ -198,6 +200,15 @@ def main() -> None:
         ],
         allow_exit_codes={1},
     )
+    research_lineage_isolation = run_command(
+        [
+            sys.executable,
+            "scripts/audit_research_lineage_isolation.py",
+            "--check",
+        ]
+    )
+    if not research_lineage_isolation["passed"]:
+        raise SystemExit("research-lineage isolation failed; legacy quality checks were not run")
     credential_boundary = run_command(
         [
             sys.executable,
@@ -516,6 +527,7 @@ def main() -> None:
             and credential_boundary["passed"]
             and bootstrap_safety["passed"]
             and workflow_guard["passed"]
+            and research_lineage_isolation["passed"]
             and api_failure_handling["passed"]
             and command_templates["passed"]
             and experiment_run_records["passed"]
@@ -545,6 +557,7 @@ def main() -> None:
         "credential_boundary": credential_boundary,
         "bootstrap_safety": bootstrap_safety,
         "workflow_guard": workflow_guard,
+        "research_lineage_isolation": research_lineage_isolation,
         "api_failure_handling": api_failure_handling,
         "command_templates": command_templates,
         "experiment_run_records": experiment_run_records,

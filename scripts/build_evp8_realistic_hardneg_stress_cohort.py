@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Build the separated EVP-8 realistic hard-negative stress cohort.
 
 This is a no-API step. Patch-bearing model-visible packets are written only to
@@ -5,6 +6,10 @@ ignored outputs; tracked artifacts contain aggregate and hash metadata only.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/build_evp8_realistic_hardneg_stress_cohort.py")
 
 import argparse
 import hashlib

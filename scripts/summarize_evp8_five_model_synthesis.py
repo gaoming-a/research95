@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Build the EVP-8 five-model synthesis scaffold without reading raw outputs."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/summarize_evp8_five_model_synthesis.py")
 
 import argparse
 import json

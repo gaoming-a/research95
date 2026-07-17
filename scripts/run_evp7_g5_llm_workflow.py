@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Guarded EVP-7 G5 LLM workflow.
 
 This workflow provides check-only and mock validation for the G5 LLM
@@ -7,6 +8,10 @@ API-ready.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/run_evp7_g5_llm_workflow.py")
 
 import argparse
 import hashlib

@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Run deterministic tool-only baselines over EVP-7 evidence packets.
 
 Decision records are generated only from model-visible evidence packets.
@@ -5,6 +6,10 @@ Evaluator labels are joined only for aggregate metrics.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/run_evp7_tool_only_baselines.py")
 
 import argparse
 import json

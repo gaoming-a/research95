@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Build EVP-8 packet and schema dry-run summaries without API calls.
 
 The dry-run validates planned packet structure for the frozen EVP-8 candidate
@@ -6,6 +7,10 @@ JSONL records and does not call model APIs.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/build_evp8_packet_schema_dry_run.py")
 
 import argparse
 import json

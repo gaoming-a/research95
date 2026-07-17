@@ -1,7 +1,12 @@
+# ruff: noqa: E402
 #!/usr/bin/env python3
 """Discover and freeze a pre-transform P4 regression-node pool."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_p4_oracle_freeze.py")
 
 import argparse
 import hashlib

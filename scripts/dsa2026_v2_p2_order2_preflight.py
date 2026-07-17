@@ -1,7 +1,12 @@
+# ruff: noqa: E402
 #!/usr/bin/env python3
 """Static/no-outcome preflight for V2-P2 order 2."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_v2_p2_order2_preflight.py")
 
 import argparse
 import hashlib

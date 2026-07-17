@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Audit final experiment-setting validity for the CCF-C paper route.
 
 This script is no-API and raw-output-free. It reads tracked aggregate audits
@@ -6,6 +7,10 @@ results, setting artifacts, and remaining threats.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/audit_final_experiment_setting_validity.py")
 
 import argparse
 import json

@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Reproduce legacy validity failures and enforce the DSA quarantine boundary.
 
 This P1 audit is deterministic and never calls a model API.  It uses synthetic
@@ -6,6 +7,10 @@ legacy patch text, prompt text, raw response, or credential is read.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/audit_dsa_legacy_quarantine.py")
 
 import argparse
 import json

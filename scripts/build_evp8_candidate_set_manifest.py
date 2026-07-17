@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Build the EVP-8 Phase 0 smoke candidate-set manifest.
 
 This is a no-API bridge from the tracked EVP-7 structural cohort to the new
@@ -8,6 +9,10 @@ outputs into per-candidate records.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/build_evp8_candidate_set_manifest.py")
 
 import argparse
 import json

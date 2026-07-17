@@ -1,6 +1,73 @@
-# 当前计划：AI 生成补丁的可验证审查
+# 当前计划：既有研究谱系隔离 / 新研究尚未启动
 
-最后更新：2026-07-13
+最后更新：2026-07-18
+
+## 0.67 2026-07-18 既有数据与结果的研究谱系隔离（Gate PASS）
+
+本轮目标不是删除或搬移历史证据，而是建立可审计、默认拒绝的用途边界：既有 EVP
+实验、已终止的 DSA v0.1、DSA v0.2 materialization 以及 DSA v0.3 development pilot
+继续保留为 provenance、失败复盘与去重排除依据，但不得进入后续研究的训练输入/目标、
+开发集或验证集、prompt/model/hyperparameter 选择、样本量或效果量设计、确认性测试，
+也不得进入 paper-facing 数字、表格、图或 claim。未尝试的上游任务若将来使用，必须从
+原始来源独立重选，不能沿用旧 source order、旧候选或旧结果形成的选择链。
+
+本轮只做本地、无 API 的隔离实现。最短路径为：新增一份全局研究谱系
+隔离注册表、一份默认空且未授权的未来研究输入清单，以及一个确定性 `--write/--check`
+审计器；审计器必须机械汇总旧任务/patch 标识，拒绝禁用角色、旧路径、旧任务和旧 patch，
+并通过内存中的正反例验证 fail-closed 行为。历史文件保持原路径和原字节，不创建兼容层，
+不修改 prompt，不启动 order63 或任何模型请求。
+
+验收条件：新隔离审计 `--write` 与 `--check` 均 PASS；P2 development exclusion 复核
+仍 PASS；未来研究清单为空且状态为 `not_started`；旧 cursor/order63 与旧 pilot 执行入口
+均在机器层 fail closed；计划、README、索引和工程经验同步更新；本轮相关 diff 无敏感
+信息并通过直接覆盖隔离边界的本地 Gates 后，单独提交并同步到当前 private GitHub 分支。
+
+Inspect 阶段确认原 P1 `audit_dsa_legacy_quarantine.py --check` 已经 stale 且按当前脚本集合
+重算为 FAIL：三个后来新增的 `dsa2026_prepare_api_pilot_v0_{1,2,3}.py` 直接引用 EVP-7
+候选/证据，违反其原 namespace 规则。这不是本轮制造的回归，也不能通过给旧 pilot 增加
+例外来“修绿”。本轮把旧 P1 标记为历史局部 Gate，把整个 DSA v0.2/v0.3 pilot 谱系纳入
+新全局隔离；新 Gate 取代它作为未来研究入口，并保留该失败事实作为 contamination audit。
+
+Execute 已完成：新增全局 quarantine registry、空的未来研究 manifest、确定性审计器、
+受控 future-study loader 和人读报告；从完整 source frame 与 immutable-cutoff metadata
+重算出501个硬排除任务、17个默认阻断项目、522个精确 patch payload SHA-256，以及包含
+前述 payload 的3420个保守 metadata 内容标识。旧 continuous、standing、归档 v0.2 与
+v0.3 execution authorization 原文件未改，但新 registry 明确撤销其未来执行效力。全部
+280个旧研究 Python 入口按精确路径投影在其他执行逻辑前 fail closed；cursor preflight
+已从 `ready_for_cursor_source` 改为 `blocked_by_research_lineage_isolation`。
+
+内容地址隔离覆盖 cutoff HEAD 1515个路径/1509个唯一 blob、全部可达 Git refs 中3232个
+blob/3232个 raw SHA-256，以及 cutoff 工作树273918个文件、4415259787 bytes、57172个
+唯一 SHA-256 和0个 reparse/nonregular 路径。它同时阻断复制、重命名和 Git 历史恢复；
+未来 namespace 拒绝 hardlink、symlink、junction 与其他 reparse 链。
+
+Verify/Gate：隔离审计 `--write`、`--check`、23项精确 violation-code 对抗自测、自身投影
+hash、四项旧授权撤销、ledger v0.62/order63 未启动和72-output development-only 边界全部
+PASS；静态/路径投影覆盖280/280入口，另对 DSA executor、EVP runner、oracle、归档 v0.2
+runner 与 package CLI 做了5个真实 negative tests，均在 checkout/container/credential/API
+前按预期 exit 1。旧 cursor preflight 按设计被隔离并 exit 1；只有保留的 P2 development
+exclusion `--check` PASS。相关 Python lint/编译 PASS。隔离冻结为内容哈希读取了
+4415259787 bytes，但没有语义解释或输出旧 raw response、rationale、prompt、patch 文本或
+凭证值；执行凭证加载=0、model API=0、containers=0、历史文件移动或删除=0。
+
+最终复核发现部分既有 JSON 的工作树 CRLF 与 Git-index LF 不同；若用文件字节绑定会在
+跨平台 checkout 后产生假漂移。隔离 policy、projection source 和旧 authorization 已改用
+canonical-JSON SHA-256，真实 dataset/patch/response/signoff 仍使用原始字节 SHA-256；修订后
+`--write/--check` 再次 PASS。
+
+全量历史 `run_local_quality_gate.py` 另行运行时在124.6秒外层上限超时；诊断显示其预存
+SQJ Springer template live fetch 遭远端断连，随后仍有旧 workflow-guard 子进程运行，已
+只终止本轮启动的进程。该尝试没有模型 API/key 读取，也未形成新的 tracked diff；但它
+不是本轮隔离 Gate 的 PASS，不能据此声称全量历史 Gate 通过。修订后总脚本先检查隔离并
+在失败时立即停止；本轮以直接、可重算的 isolation/P2/CLI/static Gates 作为覆盖性验收。
+
+当前状态为 `PASSED_ARMED_NO_NEW_STUDY`，不是新方向已获授权。下一步只能先定义新的科学
+问题、独立数据来源和预注册协议；在非空、hash-bound、作者签核的 manifest 通过前，不得
+开始训练、验证、确认性测试、模型 API 或论文效果结论。只接受规范路径
+`data/protocols/future_research_input_manifest_v0_1.json`；每次科学输入读取都必须由
+`src/cross_review/future_study_loader.py` 重验完整隔离基线。签核身份和时间是可审计的作者
+自我声明，不是密码学身份或可信时间戳。本轮没有擅自设置 Windows ACL，因此该 Gate 约束
+受认可的仓库流水线，不能阻止同一 OS 用户用任意程序物理读取保留字节。
 
 ## 0.66 2026-07-13 v0.3 72-call development pilot 完成
 

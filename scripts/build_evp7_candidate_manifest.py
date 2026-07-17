@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Promote validated EVP-7 candidate outputs into a tracked schema.
 
 Inputs are the existing ignored candidate/validation outputs. The tracked output
@@ -6,6 +7,10 @@ packet builders.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/build_evp7_candidate_manifest.py")
 
 import argparse
 import hashlib

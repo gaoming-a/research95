@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Pure V2-P2 construction state machine for synthetic check-only validation.
 
 The module has no filesystem, process, network, container, test-runner, prompt,
@@ -6,6 +7,10 @@ validates the frozen V2-P1 JSON before constructing ``FrozenSpec``.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_v2_p2_executor.py")
 
 import hashlib
 import json

@@ -1,7 +1,12 @@
+# ruff: noqa: E402
 #!/usr/bin/env python3
 """Build and verify the no-API DSA P3 mechanical freeze artifacts."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_audit_p3_freeze.py")
 
 import argparse
 import copy

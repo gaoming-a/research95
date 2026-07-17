@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Write an APSEC-style technical-track manuscript rewrite.
 
 This script is no-API and raw-output-free. It reuses the tracked final claim
@@ -6,6 +7,10 @@ preserving the existing stable CCF-C manuscript.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/write_apsec_manuscript_rewrite.py")
 
 import argparse
 import json

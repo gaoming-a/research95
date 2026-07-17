@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Guarded EVP-8 DeepSeek/Qwen smoke/full runner.
 
 The default path is check-only and does not call model APIs. Real calls require
@@ -6,6 +7,10 @@ configured model id.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/run_evp8_deepseek_qwen_smoke.py")
 
 import argparse
 import hashlib

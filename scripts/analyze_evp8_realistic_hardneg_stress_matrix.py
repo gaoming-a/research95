@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Analyze raw-free EVP-8 hard-negative stress matrix reviews."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/analyze_evp8_realistic_hardneg_stress_matrix.py")
 
 import argparse
 import json

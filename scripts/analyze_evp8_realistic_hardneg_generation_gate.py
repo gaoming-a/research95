@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Analyze the fresh realistic hard-negative generation gate.
 
 This joins local validation records with model-visible visible-test outcomes
@@ -6,6 +7,10 @@ oracles. It writes aggregate artifacts without patch text or raw responses.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/analyze_evp8_realistic_hardneg_generation_gate.py")
 
 import argparse
 import json

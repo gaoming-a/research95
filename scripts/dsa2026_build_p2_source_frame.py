@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Build the no-API DSA P2 source frame from an official BugsInPy snapshot."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_build_p2_source_frame.py")
 
 import argparse
 import csv

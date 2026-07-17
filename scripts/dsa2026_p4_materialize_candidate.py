@@ -1,7 +1,12 @@
+# ruff: noqa: E402
 #!/usr/bin/env python3
 """Materialize one frozen P4 candidate pair before observing candidate outcomes."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_p4_materialize_candidate.py")
 
 import argparse
 import difflib

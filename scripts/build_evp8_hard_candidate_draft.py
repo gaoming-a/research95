@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Build the no-API EVP-8-HARD candidate draft and baseline gate.
 
 This script constructs a separate hard-case draft from previously inventoried
@@ -6,6 +7,10 @@ responses, or mutate the old 98-candidate controlled cohort.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/build_evp8_hard_candidate_draft.py")
 
 import argparse
 import hashlib

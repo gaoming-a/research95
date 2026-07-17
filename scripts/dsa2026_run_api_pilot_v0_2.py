@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Guarded runner for the DSA 72-call development pilot.
 
 Default and ``--check-only`` modes never read credentials or contact a model.
@@ -7,6 +8,10 @@ not exist in the unsigned freeze package. Raw responses remain under ignored
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_run_api_pilot_v0_2.py")
 
 import argparse
 import copy

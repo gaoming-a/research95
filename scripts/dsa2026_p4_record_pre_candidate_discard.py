@@ -1,7 +1,12 @@
+# ruff: noqa: E402
 #!/usr/bin/env python3
 """Record and replay-audit a P4 task discarded at the environment gate."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_p4_record_pre_candidate_discard.py")
 
 import argparse
 import hashlib

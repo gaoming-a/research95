@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 #!/usr/bin/env python3
 """Audit and summarize the completed DSA v0.3 development pilot.
 
@@ -7,6 +8,10 @@ decisions. Provider payloads and response rationales remain under ignored
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_audit_api_pilot_results_v0_3.py")
 
 import argparse
 import collections

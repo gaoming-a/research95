@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Generate an APSEC-oriented IEEEtran draft package from the Markdown rewrite.
 
 The conversion is intentionally conservative: it preserves the current claims,
@@ -7,6 +8,10 @@ resulting source is a final submission PDF.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/write_apsec_ieeetran_package.py")
 
 import argparse
 import json

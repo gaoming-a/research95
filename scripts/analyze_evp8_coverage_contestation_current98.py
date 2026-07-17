@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Analyze current-98 coverage-contestation prompt-sensitivity results.
 
 Inputs are tracked normalized review JSONL files plus evaluator-only labels.
@@ -7,6 +8,10 @@ or credentials.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/analyze_evp8_coverage_contestation_current98.py")
 
 import argparse
 import json

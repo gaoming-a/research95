@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Create or dry-run an ignored EVP-7 G5 LLM local config.
 
 Dry-run mode is safe for tracked handoff artifacts: it does not write the local
@@ -6,6 +7,10 @@ Write mode requires every execution parameter explicitly.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/create_evp7_g5_llm_local_config.py")
 
 import argparse
 import json

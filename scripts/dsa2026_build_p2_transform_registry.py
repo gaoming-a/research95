@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Freeze and validate P2 transform families on excluded development tasks."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_build_p2_transform_registry.py")
 
 import argparse
 import hashlib

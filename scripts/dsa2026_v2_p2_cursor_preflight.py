@@ -1,12 +1,19 @@
+# ruff: noqa: E402
 #!/usr/bin/env python3
 """No-outcome audit for the generic V2-P2 cursor executor."""
 
 from __future__ import annotations
 
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_v2_p2_cursor_preflight.py")
+
 import argparse
 import hashlib
 import json
 from pathlib import Path
+
+from audit_research_lineage_isolation import prior_execution_block_status
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -14,6 +21,7 @@ EXECUTOR = ROOT / "scripts/dsa2026_v2_p2_cursor_execute.py"
 DOCKERFILE = ROOT / "containers/dsa2026_v2_p2/Dockerfile.cursor"
 CONFIG = ROOT / "data/protocols/dsa_v2_p2_cursor_task_config_v0_1.json"
 AUTH = ROOT / "data/protocols/dsa_v2_p2_continuous_authorization_v0_1.json"
+ISOLATION = ROOT / "data/protocols/research_lineage_quarantine_v0_1.json"
 OUT = ROOT / "data/protocols/dsa_v2_p2_cursor_executor_preflight_v0_1.json"
 
 
@@ -26,9 +34,19 @@ def build() -> dict:
     docker = DOCKERFILE.read_text(encoding="utf-8")
     config = read_json(CONFIG)
     auth = read_json(AUTH)
+    isolation = read_json(ISOLATION)
+    block = prior_execution_block_status("scripts/dsa2026_v2_p2_cursor_preflight.py")
+    revoked = {
+        item["authorization_id"]
+        for item in isolation["old_execution_termination"]["revoked_authorizations"]
+    }
     checks = {
-        "continuous_authorization_active": auth["status"] == "author_signed_active"
-        and auth["authorization"]["continuous_v2_p2"],
+        "research_lineage_isolation_active": block["blocked"] and block["configured"],
+        "continuous_authorization_preserved_but_superseded": (
+            auth["status"] == "author_signed_active"
+            and auth["authorization"]["continuous_v2_p2"]
+            and auth["authorization_id"] in revoked
+        ),
         "unique_cursor_unstarted": config["task"]["order"] == config["attempted_tasks"] + 1
         and config["task"]["task_id"]
         and not config["next_task_started"],
@@ -84,8 +102,8 @@ def build() -> dict:
     }
     return {
         "preflight_id": "dsa_v2_p2_cursor_executor_preflight_v0_1",
-        "created_date": "2026-07-12",
-        "status": "ready_for_cursor_source" if all(checks.values()) else "failed",
+        "created_date": "2026-07-18",
+        "status": "blocked_by_research_lineage_isolation" if all(checks.values()) else "failed",
         "checks": checks,
         "cursor_config_sha256": config["config_sha256"],
         "component_sha256": {
@@ -117,8 +135,8 @@ def main() -> None:
         OUT.write_text(content, encoding="utf-8", newline="\n")
     elif not OUT.is_file() or OUT.read_text(encoding="utf-8") != content:
         raise SystemExit("stale cursor executor preflight")
-    if value["status"] != "ready_for_cursor_source":
-        raise SystemExit("cursor executor preflight failed")
+    if value["status"] != "blocked_by_research_lineage_isolation":
+        raise SystemExit("cursor executor isolation preflight failed")
     print(
         json.dumps(
             {

@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Analyze Qwen verifier output on the EVP-8 realistic agent-patch cohort."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/analyze_evp8_realistic_agent_qwen.py")
 
 import argparse
 import json

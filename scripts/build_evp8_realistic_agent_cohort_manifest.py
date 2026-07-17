@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Build the separated EVP-8 realistic agent-patch cohort manifest.
 
 This script is no-API. It reads validated/relabelled local agent-patch outputs,
@@ -6,6 +7,10 @@ model-visible seeds, and a conservative rule-only baseline.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/build_evp8_realistic_agent_cohort_manifest.py")
 
 import argparse
 import hashlib

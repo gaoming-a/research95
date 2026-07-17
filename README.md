@@ -1,11 +1,56 @@
-# Research95: Evidence Visibility for Candidate Patch Verification
+# Research95: Historical Evidence-Visibility Workspace
 
-This workspace is a clean continuation of the previous LLM code-review project.
-It keeps only the assets that are useful for a stronger research direction:
-studying how evidence visibility affects whether candidate patches should be
-accepted, rejected, or escalated in real software projects.
+This workspace preserves the previous LLM code-review and evidence-visibility
+research as historical provenance. No scientific direction in the repository is
+currently active: every prior line is quarantined, and a future study must start
+from an independently selected, preregistered input lineage.
 
-## Current Validity And Submission Status
+## 2026-07-18 Research-Lineage Isolation Override
+
+All experiment lines described below are now historical and quarantined. The
+author-directed, fail-closed authority is
+[`research_lineage_quarantine_v0_1.json`](data/protocols/research_lineage_quarantine_v0_1.json),
+with the reproducible human audit in
+[`research_lineage_isolation_v0_1.md`](docs/experiments/research_lineage_isolation_v0_1.md).
+It preserves historical paths and bytes, but forbids prior data/results from
+training, development/validation, prompt or model selection, sampling or effect
+planning, confirmatory evaluation, pooling, and paper-facing numbers or claims.
+
+The exact exclusion projection contains 501 previously touched tasks, 17
+projects, 522 patch-payload SHA-256 values, and a conservative blocking set of
+3,420 metadata content identifiers. Content-addressed isolation covers 1,515
+cutoff-HEAD paths / 1,509 unique blobs, 3,232 blobs and 3,232 raw SHA-256 values
+reachable from Git history, and 273,918 cutoff-worktree files totaling
+4,415,259,787 bytes / 57,172 unique SHA-256 values, with zero reparse or
+nonregular paths. All 280 prior-research Python entrypoints fail closed.
+
+The old V2-P2 continuous authorization, pilot standing authorization, archived
+v0.2 execution authorization, and v0.3 execution authorization remain unchanged
+as provenance but are revoked by the newer authority. Order 63, old pilot reruns,
+and standing-authorization reactivation now fail before any checkout, container,
+execution credential load, or API request. The canonical future-study manifest
+is empty and `not_started`; therefore no new training, evaluation, API, or paper
+claim is currently authorized.
+
+Run the local gate with:
+
+```text
+python scripts/audit_research_lineage_isolation.py --check
+```
+
+This is repository-workflow isolation enforced by the canonical manifest and
+sanctioned loader, not a Windows ACL boundary. Historical bytes remain physically
+readable to arbitrary programs running as the same operating-system user. Future
+scientific code must live under `future_studies/<study_id>/`, and its declared
+inputs must be read through `src/cross_review/future_study_loader.py`.
+
+The older P1 quarantine snapshot is also historical: recomputation against the
+current scripts finds the later EVP-7-derived pilot and fails its old namespace
+rule. The new global gate records that contamination instead of adding an
+exception. All status and authorization language below this override describes
+past checkpoints only.
+
+## Historical Validity And Submission Record
 
 The latest checkpoint supersedes the older execution narrative below. V2-P2 is
 paused at terminal ledger v0.62 with 62 attempted tasks, zero qualified pairs,
@@ -19,8 +64,9 @@ three repeats, and 72-request structure unchanged; it only omits documentation
 sentinels from request bodies and hard-stops on the first non-valid terminal
 record under a new request domain and output path. Its aggregate SHA-256 is
 `90e1eebc6ce182ccb5a5f8cf4efef1eca14ed2d9dc68ded55adf1efec3849d38`.
-All v0.3 no-API gates pass and no v0.3 API request has been made. Repeated
-per-aggregate signatures are now replaced by an author-signed standing-execution
+At the 2026-07-13 checkpoint, all v0.3 no-API gates passed and no v0.3 API
+request had been made. Repeated per-aggregate signatures were replaced by an
+author-signed standing-execution
 protocol that locks the scientific surface and permits only mechanically audited
 execution-chain repairs. Its protocol SHA-256 is
 `7ceb704a0d0310f60c86ee46356bacd0b4793fc772e3e1ac7b241ef68462d899`.
@@ -30,12 +76,13 @@ identity-valid outputs, with 24 records per route and no transport retry. The
 ledger SHA-256 is
 `bbafdf8ed402a1e107cddab7b9237af16ce2872eeec461543df002f069dabf5b`.
 The single-pair descriptive result is heterogeneous and does not show that more
-visible evidence uniformly suppresses hard-negative acceptance. Conforming
-implementation-only versions can derive future authorization without another
-signature. The pilot remains excluded from confirmatory estimates and
-paper-facing claims.
+visible evidence uniformly suppresses hard-negative acceptance. At that
+historical checkpoint, conforming implementation-only versions could derive
+another authorization without a signature. The 2026-07-18 global registry now
+revokes that mechanism. The pilot remains excluded from confirmatory estimates
+and paper-facing claims.
 
-As of 2026-07-13, the sole active route is
+At the historical 2026-07-13 checkpoint, the sole active route was
 [the DSA 2026 execution plan](docs/plans/dsa_2026_submission_execution_plan_zh.md).
 The single target is a DSA 2026 Regular paper. A Short paper may be selected
 only as a separately frozen protocol before any model call; ACAI is inactive.

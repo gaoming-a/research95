@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Revalidate EVP-8 realistic agent labels with task-specific Python envs.
 
 This is evaluator-side only. It reads hidden oracle paths from the evaluator
@@ -6,6 +7,10 @@ used by visible tests where available, and writes corrected evaluator labels.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/revalidate_evp8_realistic_agent_oracles.py")
 
 import argparse
 import json

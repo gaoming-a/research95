@@ -1,4 +1,9 @@
+# ruff: noqa: E402
 from __future__ import annotations
+
+from cross_review.research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("src/cross_review/cli.py")
 
 import argparse
 import json

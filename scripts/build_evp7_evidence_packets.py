@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Build leakage-audited EVP-7 evidence packet records.
 
 The packets are model-visible inputs for verifier runs. They intentionally do
@@ -6,6 +7,10 @@ or candidate construction taxonomy from the candidate manifest.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/build_evp7_evidence_packets.py")
 
 import argparse
 import json

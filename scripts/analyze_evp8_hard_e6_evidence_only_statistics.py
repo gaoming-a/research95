@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Statistical boundary for EVP-8-HARD E6 evidence-only results.
 
 This script reads only tracked raw-output-free summaries. It adds interval
@@ -6,6 +7,10 @@ rest on point estimates alone.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/analyze_evp8_hard_e6_evidence_only_statistics.py")
 
 import argparse
 import json

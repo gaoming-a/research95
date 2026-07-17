@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Consolidate the no-API P2 gate and freeze the DSA Regular protocol."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_audit_p2_gate.py")
 
 import argparse
 import json

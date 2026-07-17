@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Build merge-correct labels for the EVP-8 realistic agent cohort.
 
 The merge label requires both hidden oracle success and declared visible-test
@@ -6,6 +7,10 @@ candidate still fails the declared visible fail-to-pass tests.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/build_evp8_realistic_agent_merge_labels.py")
 
 import argparse
 import json

@@ -1,7 +1,12 @@
+# ruff: noqa: E402
 #!/usr/bin/env python3
 """Freeze the author-signed general V2-P2 dangling-docs symlink rule."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_freeze_v2_p2_dangling_docs_symlink_amendment.py")
 
 import argparse
 import hashlib

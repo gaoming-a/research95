@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Summarize ignored EVP-7 G5 full-run outputs into tracked artifacts."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/summarize_evp7_g5_llm_full_run.py")
 
 import argparse
 import json

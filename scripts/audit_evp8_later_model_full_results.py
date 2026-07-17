@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Audit EVP-8 later-model full-run summaries without reading raw outputs."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/audit_evp8_later_model_full_results.py")
 
 import argparse
 import json

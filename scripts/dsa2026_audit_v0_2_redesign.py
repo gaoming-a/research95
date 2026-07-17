@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Audit the v0.1 pre-model termination and the bounded v0.2 design draft.
 
 This check is read-only. It does not run a task, container, test, prompt render,
@@ -5,6 +6,10 @@ or model request, and it never reads an API credential.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_audit_v0_2_redesign.py")
 
 import argparse
 import hashlib

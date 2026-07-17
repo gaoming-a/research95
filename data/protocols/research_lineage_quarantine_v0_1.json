@@ -1,0 +1,401 @@
+{
+  "registry_id": "research_lineage_quarantine_v0_1",
+  "effective_date": "2026-07-18",
+  "status": "author_directed_active_fail_closed",
+  "author_direction": "Isolate all prior-study data and results so that they cannot influence future research.",
+  "preservation_policy": {
+    "delete_or_move_historical_artifacts": false,
+    "preserve_original_paths_and_bytes": true,
+    "quarantine_is_a_use_and_lineage_boundary": true
+  },
+  "permitted_prior_study_uses": [
+    "provenance",
+    "contamination_audit",
+    "failure_analysis",
+    "task_project_and_payload_exclusion",
+    "development_only_hypothesis_motivation"
+  ],
+  "forbidden_prior_study_uses": [
+    "training_input_or_target",
+    "sft_rl_or_reward_data",
+    "development_or_validation_data",
+    "prompt_model_or_hyperparameter_selection",
+    "sampling_stopping_rule_rq_or_estimand_adaptation",
+    "sample_size_or_effect_size_planning",
+    "confirmatory_test_or_benchmark",
+    "effect_estimation_or_pooling_with_new_results",
+    "paper_numeric_claim_table_figure_or_claim_map",
+    "future_pipeline_read_of_old_raw_response_or_rationale"
+  ],
+  "frozen_study_ids": [
+    "legacy_patch_verify_v1",
+    "legacy_evp7",
+    "legacy_evp8",
+    "legacy_sqj_evp8_derivative",
+    "legacy_dsa_p3p4_v0_1_terminated",
+    "legacy_dsa_v2_materialization_v0_1",
+    "legacy_dsa_v2_api_pilot_v0_3"
+  ],
+  "blocked_path_globs": [
+    "data/reviews/**",
+    "data/patch_verification/**",
+    "data/evidence/**",
+    "data/patches/**",
+    "data/cohorts/**",
+    "data/hidden/**",
+    "data/baselines/**",
+    "data/p2p_scopes/**",
+    "data/environment_locks/**",
+    "data/**/evp7*",
+    "data/**/evp8*",
+    "data/**/sqj*",
+    "data/protocols/dsa_*",
+    "data/cohorts/dsa_*",
+    "data/hidden/dsa_*",
+    "data/environment_locks/dsa*",
+    "configs/api_pilot*",
+    "configs/api_redesign_smoke*",
+    "configs/api_tool_augmented_full*",
+    "configs/evp7*",
+    "configs/evp8*",
+    "configs/dsa_v2_api_pilot*",
+    "configs/experiment*",
+    "configs/model_selection*",
+    "configs/models*",
+    "docs/experiments/dsa_*",
+    "docs/**/evp7*",
+    "docs/**/evp8*",
+    "docs/**/sqj*",
+    "docs/paper/apsec_*",
+    "docs/paper/ccfc_*",
+    "docs/paper/generated_tables.*",
+    "docs/plans/dsa_*",
+    "docs/submission/dsa_2026/**",
+    "prompts/**",
+    "containers/dsa2026_*/**",
+    "scripts/*.py",
+    "src/cross_review/**",
+    "examples/**",
+    "outputs/**",
+    "outputs/api_pilot*",
+    "outputs/api_workflow*",
+    "outputs/patch_verification*",
+    "outputs/tool_augmented*",
+    "outputs/redesign_smoke_workflow/**",
+    "outputs/evp7*",
+    "outputs/evp8*",
+    "outputs/dsa*",
+    "outputs/sqj*",
+    "tmp/dsa*/**"
+  ],
+  "projection_sources": [
+    {
+      "path": "data/protocols/dsa_legacy_analysis_denylist_v0_1.json",
+      "canonical_json_sha256": "4be71d21ae60df057983f6b6bb3a5bae6cb2503fea26578a9635705d90e1605a",
+      "projected_fields": [
+        "policy",
+        "forbidden_input_globs"
+      ]
+    },
+    {
+      "path": "data/protocols/dsa_legacy_task_exclusion_registry_v0_1.json",
+      "canonical_json_sha256": "aadbf8a86c2522f10b675a4830d679c3b8a94ab9460a29537266bb79fd6ab009",
+      "projected_fields": [
+        "excluded_task_ids",
+        "excluded_projects"
+      ]
+    },
+    {
+      "path": "data/protocols/dsa_p2_development_exclusion_registry_v0_1.json",
+      "canonical_json_sha256": "dc245e57c8a515d31df7b666d4f8914549d6ee637a42b73bf97549b6790bb6fd",
+      "projected_fields": [
+        "excluded_task_ids"
+      ]
+    },
+    {
+      "path": "data/protocols/dsa_v0_1_termination_and_v0_2_redesign_v0_1.json",
+      "canonical_json_sha256": "590c4673ae57dc89d4e8d8711296775cde49592b1c688d853f60a4e34b45e3f7",
+      "projected_fields": [
+        "v0_1_termination.v0_2_development_exclusion_task_ids"
+      ]
+    },
+    {
+      "path": "data/protocols/dsa_v2_p2_terminal_ledger_v0_62.json",
+      "canonical_json_sha256": "644e234a9fae6632c24e3961896262559de7437f0f8b5fe511c57c70eea91bef",
+      "projected_fields": [
+        "records[].task_id",
+        "records[].selected_candidate_sha256"
+      ]
+    },
+    {
+      "path": "data/protocols/dsa_v2_api_pilot_evidence_revalidation_v0_1.json",
+      "canonical_json_sha256": "0febb18a958e4098c3886d5c15c5093a6e3f70cd83c5b32a244a26147867e0a8",
+      "projected_fields": [
+        "selection.task_id",
+        "roles.*.patch_sha256"
+      ]
+    },
+    {
+      "path": "data/protocols/dsa_v2_api_pilot_postrun_audit_v0_3.json",
+      "canonical_json_sha256": "49ab91a737068598c4f19085042060ad2113250d49a2fb0d8883225fef3f1f2e",
+      "projected_fields": [
+        "status",
+        "scientific_boundary",
+        "activity"
+      ]
+    },
+    {
+      "path": "data/protocols/evp8_candidate_set_v0_1.json",
+      "canonical_json_sha256": "f5452b4bc2679ee2934c9563b00d0c09d279e4c1622926f1df4cda84b7637af9",
+      "projected_fields": [
+        "records[].task_id",
+        "records[].project",
+        "records[].patch_sha256"
+      ]
+    },
+    {
+      "path": "data/protocols/evp8_realistic_hardneg_stress_cohort_v0_1.json",
+      "canonical_json_sha256": "25a71e959a06041ec042adef033898a579e3e89fc80a9ceecccba53003a485b1",
+      "projected_fields": [
+        "case_records[].task_id",
+        "case_records[].project",
+        "case_records[].patch_sha256"
+      ]
+    },
+    {
+      "path": "data/protocols/dsa_p2_source_frame_v0_1.json",
+      "canonical_json_sha256": "d64007974fc9de037ba71aa126ef4a9416b545658cc68a383fba6ba474d8f3b4",
+      "projected_fields": [
+        "records[].task_id",
+        "records[].project"
+      ]
+    }
+  ],
+  "content_fingerprint_registry": {
+    "path": "data/protocols/research_lineage_blocked_content_fingerprints_v0_1.json",
+    "canonical_json_sha256": "287cae1bc5ddb405258555ab3f35a1fee6f1b0e3511b9cf72fa995f2c1e2f789",
+    "included_path_globs": [
+      ".env.example",
+      "README.md",
+      "pyproject.toml",
+      "artifacts/**",
+      "configs/**",
+      "containers/**",
+      "data/**",
+      "docker/**",
+      "docs/**",
+      "examples/**",
+      "output/**",
+      "outputs/**",
+      "prompts/**",
+      "scripts/**",
+      "src/**",
+      "tmp/dsa*/**"
+    ],
+    "excluded_path_globs": [
+      "**/.cache/**",
+      "**/.git/**",
+      "**/.tox/**",
+      "**/.venv/**",
+      "**/__pycache__/**",
+      "**/node_modules/**",
+      "**/venv/**",
+      "**/*.pyc",
+      "data/future_studies/**",
+      "data/protocols/future_research_input_manifest_v0_1.json",
+      "data/protocols/research_lineage_blocked_content_fingerprints_v0_1.json",
+      "data/protocols/research_lineage_isolation_audit_v0_1.json",
+      "data/protocols/research_lineage_payload_exclusion_registry_v0_1.json",
+      "data/protocols/research_lineage_quarantine_v0_1.json",
+      "README.md",
+      "docs/INDEX.md",
+      "docs/experience/engineering_notes.md",
+      "docs/experiments/research_lineage_isolation_v0_1.md",
+      "docs/plans/current_plan_zh.md",
+      "docs/plans/current_project_state_zh.md",
+      "scripts/audit_research_lineage_isolation.py",
+      "src/cross_review/future_study_loader.py",
+      "src/cross_review/research_lineage_isolation.py",
+      "future_studies/**"
+    ],
+    "tracked_head_path_count": 1515,
+    "tracked_unique_blob_oid_count": 1509,
+    "reachable_history_matched_object_path_count": 3232,
+    "reachable_history_unique_blob_oid_count": 3232,
+    "reachable_history_unique_raw_sha256_count": 3232,
+    "cutoff_worktree_matched_path_count": 273918,
+    "cutoff_worktree_file_count": 273918,
+    "cutoff_worktree_unique_sha256_count": 57172,
+    "cutoff_worktree_bytes_hashed": 4415259787,
+    "reparse_or_nonregular_count": 0
+  },
+  "payload_exclusion_registry": {
+    "path": "data/protocols/research_lineage_payload_exclusion_registry_v0_1.json",
+    "canonical_json_sha256": "05de204ec76a1926ec3d2d654a5e575eef15920bc42116a9969247fce99eb824",
+    "source_git_pathspecs": [
+      ":(glob)data/**/*.json",
+      ":(glob)data/**/*.jsonl"
+    ],
+    "source_count": 415,
+    "patch_payload_sha256_count": 522,
+    "patch_payload_projection_sha256": "df10a8f2bc0bac0ac0ef1ec7b2be653bd8811a5d298e8252b9a8833db560049a",
+    "metadata_content_identifier_sha256_count": 3420,
+    "metadata_content_identifier_projection_sha256": "501f6502b8fa35e93a9b354d3954afd3bf05db959cf33bee0c0c3f7ef434e7d3"
+  },
+  "expected_projections": {
+    "blocked_task_count": 501,
+    "blocked_task_projection_sha256": "9d6020b92c91d5443ff13a3dd1c7e5d40c7ebc60054d986044756adac3f7a7ba",
+    "blocked_project_count": 17,
+    "blocked_project_projection_sha256": "a326ada8099fd2c62bcea453576a69367b66d1bfe11a02a831d80b6a752d0a4d",
+    "blocked_payload_sha256_count": 3420,
+    "blocked_payload_projection_sha256": "501f6502b8fa35e93a9b354d3954afd3bf05db959cf33bee0c0c3f7ef434e7d3",
+    "project_overlap_policy": "blocked_until_a_new_study_protocol_versions_this_registry_before_data_access"
+  },
+  "old_execution_termination": {
+    "status": "terminated_and_revoked_for_future_execution",
+    "revoked_authorizations": [
+      {
+        "authorization_id": "dsa_v2_p2_continuous_authorization_v0_1",
+        "path": "data/protocols/dsa_v2_p2_continuous_authorization_v0_1.json",
+        "canonical_json_sha256": "e748f8a56e30fb8ca2f1c4c8a2c60d8e11eed27b996f0ad2e02a68870bbbf414"
+      },
+      {
+        "authorization_id": "dsa_v2_api_pilot_standing_authorization_v0_1",
+        "path": "data/protocols/dsa_v2_api_pilot_standing_authorization_v0_1.json",
+        "canonical_json_sha256": "171f83f2fec53b3152824678ff559602e405a2abd526642df0c153c7c446e3fc"
+      },
+      {
+        "authorization_id": "dsa_v2_api_pilot_execution_authorization_v0_2",
+        "path": "data/protocols/dsa_v2_api_pilot_execution_authorization_archive_v0_2.json",
+        "canonical_json_sha256": "f3b5f798242db8ec81f8a814f95681540175d2bbf833bf5bc9eea1feb917f88c"
+      },
+      {
+        "authorization_id": "dsa_v2_api_pilot_execution_authorization_v0_3",
+        "path": "data/protocols/dsa_v2_api_pilot_execution_authorization_v0_3.json",
+        "canonical_json_sha256": "d596afcb9f5f9e15a2aceb7619bdffbfa1a9188285419586bf291692f8d2b2cd"
+      }
+    ],
+    "blocked_entrypoint_globs": [
+      "scripts/dsa2026_*.py",
+      "scripts/*evp7*.py",
+      "scripts/*evp8*.py",
+      "scripts/*sqj*.py",
+      "scripts/*apsec*.py",
+      "scripts/*ccfc*.py",
+      "scripts/*patch_verification*.py",
+      "scripts/oracles/*.py",
+      "scripts/analyze_claim_labels.py",
+      "scripts/analyze_real_bug_false_positives.py",
+      "scripts/analyze_review_policies.py",
+      "scripts/analyze_review_thresholds.py",
+      "scripts/analyze_tool_gated_reviews.py",
+      "scripts/audit_ai_plan_progress.py",
+      "scripts/audit_anonymous_artifact.py",
+      "scripts/audit_api_failure_handling.py",
+      "scripts/audit_api_run_completeness.py",
+      "scripts/audit_bootstrap_safety.py",
+      "scripts/audit_command_templates.py",
+      "scripts/audit_dsa_legacy_quarantine.py",
+      "scripts/audit_execution_readiness.py",
+      "scripts/audit_final_experiment_setting_validity.py",
+      "scripts/audit_goal_completion.py",
+      "scripts/audit_paper_claim_boundary.py",
+      "scripts/audit_paper_readiness.py",
+      "scripts/audit_submission_freeze_candidate.py",
+      "scripts/audit_submission_handoff.py",
+      "scripts/audit_workflow_guard.py",
+      "scripts/audit_youtubedl_p2p_decision.py",
+      "scripts/bootstrap_api_prereqs.py",
+      "scripts/build_claim_evidence_packets.py",
+      "scripts/build_claim_labeling_batch.py",
+      "scripts/build_pass_to_pass_scope.py",
+      "scripts/build_qualitative_case_report.py",
+      "scripts/build_real_bug_review_dataset.py",
+      "scripts/build_redesign_smoke_inputs.py",
+      "scripts/build_task_generation_accounting.py",
+      "scripts/build_thefuck1_candidates.py",
+      "scripts/build_youtubedl11_candidates.py",
+      "scripts/build_youtubedl16_candidates.py",
+      "scripts/build_youtubedl17_candidates.py",
+      "scripts/build_youtubedl2_candidates.py",
+      "scripts/build_youtubedl20_candidates.py",
+      "scripts/build_youtubedl21_candidates.py",
+      "scripts/build_youtubedl23_candidates.py",
+      "scripts/build_youtubedl37_candidates.py",
+      "scripts/build_youtubedl4_candidates.py",
+      "scripts/build_youtubedl43_candidates.py",
+      "scripts/build_youtubedl5_candidates.py",
+      "scripts/build_youtubedl6_candidates.py",
+      "scripts/build_youtubedl7_candidates.py",
+      "scripts/claim_label_worksheet.py",
+      "scripts/create_api_pilot_local_config.py",
+      "scripts/create_model_selection_local.py",
+      "scripts/evaluate_api_pilot_gate.py",
+      "scripts/extract_api_failure_examples.py",
+      "scripts/generate_agent_full_file_candidates.py",
+      "scripts/generate_agent_patch_candidates.py",
+      "scripts/generate_ai_patch_candidates.py",
+      "scripts/generate_paper_figures.py",
+      "scripts/postprocess_api_pilot_run.py",
+      "scripts/preflight_api_pilot.py",
+      "scripts/prepare_anonymous_artifact.py",
+      "scripts/prepare_bugsinpy_candidates.py",
+      "scripts/relabel_ai_patch_candidates.py",
+      "scripts/run_api_pilot_workflow.py",
+      "scripts/run_no_api_patch_pipeline.py",
+      "scripts/run_pytest_legacy_py311.py",
+      "scripts/run_redesign_smoke_workflow.py",
+      "scripts/run_tool_only_baseline.py",
+      "scripts/run_unittest_legacy_py311.py",
+      "scripts/screen_bugsinpy_candidate_pool.py",
+      "scripts/screen_bugsinpy_expansion.py",
+      "scripts/static_unittest_p2p_preflight.py",
+      "scripts/summarize_api_pilot_results.py",
+      "scripts/summarize_run.py",
+      "scripts/validate_candidates_with_p2p.py",
+      "scripts/validate_model_selection.py",
+      "scripts/validate_patch_candidates.py",
+      "scripts/validate_real_bug_dataset.py",
+      "scripts/write_experiment_run_records.py",
+      "scripts/write_final_manuscript_claim_map.py",
+      "scripts/write_human_input_packet.py",
+      "scripts/write_ieee_latex_draft.py",
+      "scripts/write_paper_tables.py",
+      "scripts/write_pre_api_handoff.py",
+      "scripts/write_reproducibility_manifest.py",
+      "src/cross_review/cli.py"
+    ],
+    "expected_blocked_entrypoint_count": 280,
+    "blocked_entrypoint_path_projection_sha256": "c3817dcdf6b38cde3e48a982397c86aa75436e486ed5101e0e4d4498ff6869a9",
+    "forbids_order63_start": true,
+    "forbids_old_api_rerun": true,
+    "model_api_calls_during_isolation": 0
+  },
+  "future_study_contract": {
+    "canonical_manifest": "data/protocols/future_research_input_manifest_v0_1.json",
+    "current_data_use_authorized": false,
+    "required_new_namespace_prefix": "data/future_studies/",
+    "required_new_code_namespace_prefix": "future_studies/",
+    "default_without_nonempty_valid_manifest": "deny",
+    "selection_must_be_independent_of_prior_results": true,
+    "unknown_or_unclassified_lineage": "deny",
+    "new_study_requires_preuse_author_signoff": true,
+    "study_id_must_not_equal_frozen_lineage": true,
+    "record_identifiers_must_be_trimmed_printable_strings": true,
+    "manifest_created_date_window": "registry_effective_date_through_asia_shanghai_validation_date",
+    "signoff_asia_shanghai_date_must_not_precede_manifest_created_date": true,
+    "signoff_utc_timestamp_must_not_be_future": true,
+    "signoff_identity_and_time_are_self_attested_not_cryptographic": true,
+    "core_isolation_integrity_rechecked_on_every_activation_and_loader_read": true,
+    "required_scientific_input_loader": "src/cross_review/future_study_loader.py",
+    "operating_system_acl_isolation_applied": false,
+    "same_user_arbitrary_file_reads_technically_prevented": false,
+    "not_started_boundary_statement": "No future-study data, training, validation, testing, model selection, or API execution is authorized by this empty manifest.",
+    "activation_boundary_statement": "This manifest authorizes only the exact independently sourced records and files listed here for the named frozen-preuse study; no quarantined lineage is authorized."
+  },
+  "supersedes_for_future_research": [
+    "data/protocols/dsa_legacy_analysis_denylist_v0_1.json",
+    "data/protocols/dsa_legacy_quarantine_audit_v0_1.json"
+  ],
+  "supersession_boundary": "The prior records remain historical evidence. This registry replaces them only as the authority for any future study, data use, model training, or execution."
+}

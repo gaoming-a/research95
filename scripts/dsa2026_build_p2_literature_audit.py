@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Build the P2 nearest-neighbor matrix, search log, HTML, and final RIS."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_build_p2_literature_audit.py")
 
 import argparse
 import html

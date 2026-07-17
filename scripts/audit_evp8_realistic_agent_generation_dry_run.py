@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Audit the no-API realistic agent-patch generation dry-run.
 
 The dry-run output directory is ignored. This script reads only the prompt
@@ -6,6 +7,10 @@ without prompt text, patch diffs, raw responses, or provider response objects.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/audit_evp8_realistic_agent_generation_dry_run.py")
 
 import argparse
 import json

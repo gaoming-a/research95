@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """No-API check-only gate for EVP-8 current-98 coverage-contestation packets.
 
 This script freezes the current prompt-sensitivity condition without calling
@@ -7,6 +8,10 @@ prompt, and validates schema/leakage boundaries.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/check_evp8_coverage_contestation_current98.py")
 
 import argparse
 import json

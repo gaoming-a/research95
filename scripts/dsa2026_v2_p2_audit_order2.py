@@ -1,7 +1,12 @@
+# ruff: noqa: E402
 #!/usr/bin/env python3
 """Audit order-2 terminal and extend the immutable V2-P2 ledger."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_v2_p2_audit_order2.py")
 
 import argparse
 import hashlib

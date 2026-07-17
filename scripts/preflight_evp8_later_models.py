@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Preflight EVP-8 later-model OpenRouter local config without model calls.
 
 The checker reads the ignored local config and `.env` only to determine whether
@@ -6,6 +7,10 @@ calls a model API, and never generates raw outputs.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/preflight_evp8_later_models.py")
 
 import argparse
 import json

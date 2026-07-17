@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Write the no-API execution packet for realistic agent-patch generation."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/write_evp8_realistic_agent_generation_execution_packet.py")
 
 import argparse
 import json

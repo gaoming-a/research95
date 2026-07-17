@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Build raw-output-free APSEC false-accept case analysis for repaired E6 runs."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/analyze_apsec_false_accept_cases.py")
 
 import argparse
 import json

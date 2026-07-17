@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Guarded Qwen verifier runner for the EVP-8 realistic agent-patch cohort."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/run_evp8_realistic_agent_qwen.py")
 
 import argparse
 import json

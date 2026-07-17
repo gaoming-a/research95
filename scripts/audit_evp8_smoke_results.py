@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Audit EVP-8 DeepSeek/Qwen smoke summaries without reading raw outputs.
 
 Before real smoke execution this audit reports ``waiting_for_execution``. After
@@ -6,6 +7,10 @@ gates, usage/cost gates, and ignored raw-output paths.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/audit_evp8_smoke_results.py")
 
 import argparse
 import json

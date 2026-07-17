@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Audit realistic agent-patch validation/relabel outputs without storing patch text."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/audit_evp8_realistic_agent_validation_relabel.py")
 
 import argparse
 import json

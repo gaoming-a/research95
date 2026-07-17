@@ -10,22 +10,23 @@
   },
   "checks": {
     "all_scientific_phases_present": true,
-    "continuous_authorization_active": true,
+    "continuous_authorization_preserved_but_superseded": true,
     "docker_binds_dynamic_task": true,
     "dual_fresh_and_t1_t4_reused": true,
     "dynamic_v2_p1_inputs": true,
     "failure_writes_terminal_without_rerun": true,
     "no_model_or_prompt_surface": true,
     "real_activity_zero": true,
+    "research_lineage_isolation_active": true,
     "unique_cursor_unstarted": true,
     "versioned_task_namespaces": true
   },
   "component_sha256": {
     "dockerfile": "bb69fa1b0f3747f71b5bf7256b85cfe2cfb53290ef66b7e539809d87901832d8",
-    "executor": "b9f9b831fbf9af816f9eb3c1917daa1485814639164cd559a3e9a2eefafe7b75"
+    "executor": "ca03113b2f63d500cac9d93bb5d676b77cb47998f40904331773b3594bb66731"
   },
-  "created_date": "2026-07-12",
+  "created_date": "2026-07-18",
   "cursor_config_sha256": "86e9fc2486d68740d62f0b6630cb0d07cfb875ba7c2f7d04519e45d571202b6a",
   "preflight_id": "dsa_v2_p2_cursor_executor_preflight_v0_1",
-  "status": "ready_for_cursor_source"
+  "status": "blocked_by_research_lineage_isolation"
 }

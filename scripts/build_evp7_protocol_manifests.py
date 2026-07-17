@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Build tracked manifests for the frozen EVP-7 protocol pilot.
 
 The script intentionally reads only tracked registry/scope files. Candidate
@@ -6,6 +7,10 @@ EVP-7 records are a later protocol step.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/build_evp7_protocol_manifests.py")
 
 import argparse
 import json

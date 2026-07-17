@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Combine fresh realistic hard-negative gate analyses."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/combine_evp8_realistic_hardneg_generation_gates.py")
 
 import argparse
 import json

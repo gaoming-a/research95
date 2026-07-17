@@ -1,5 +1,76 @@
 # Engineering Notes
 
+## 2026-07-18 Isolate research roles, not historical files
+
+- Deleting or moving old data does not remove researcher knowledge and damages
+  provenance. Preserve historical bytes, then enforce what roles those artifacts
+  may play: provenance, failure analysis, contamination audit, and exclusion only.
+- A quarantine scoped to one analysis namespace is not a global lineage boundary.
+  The old P1 snapshot passed before later DSA pilot scripts directly consumed
+  EVP-7 metadata; recomputing it now fails. Never trust a stored audit status when
+  the governed script set has changed.
+- An `active` historical authorization remains executable unless a newer machine
+  authority supersedes it at every entrypoint. Registry prose alone was
+  insufficient: cursor configuration, stale cursor execution, pilot execution,
+  and standing reactivation all needed guards before checkout, containers,
+  credentials, or network access.
+- Empty input is not evidence that a future dataset is clean. Report the current
+  state as `armed_no_new_study` with data use explicitly false; require a nonempty,
+  independently sourced, hash-bound manifest and pre-use author signoff before
+  training or evaluation can become authorized.
+- Use exact task and payload collisions as hard exclusions. Project overlap is a
+  design decision with clustering and researcher-knowledge consequences, so the
+  safe default is blocked; any future reuse must be decided in a new preregistration
+  before data access rather than silently inherited from the old study.
+- A repository-wide historical quality gate may itself execute obsolete audits or
+  live network fetches. Here the aggregate gate exceeded 124 seconds after the
+  legacy Springer-template fetch disconnected and left child audit processes
+  running. Terminate only the processes started by the current run, record the
+  diagnosis, and use the direct lineage/entrypoint/static Gates for the isolation
+  claim; never relabel a timeout or stale prior output as a pass.
+- Bind JSON policy and authorization metadata with canonical-JSON SHA-256 rather
+  than worktree bytes. Windows CRLF and Git-index LF produced different byte
+  hashes for unchanged JSON; canonical hashing removes that false drift. Continue
+  to use raw-byte hashes for actual datasets, patches, responses, and signoffs.
+- Derive exclusions from the complete source frame, not a convenient historical
+  subset. The old 126-task projection missed touched records; the complete freeze
+  contains 501 tasks and 17 projects. Compare task, project, source, and lineage
+  identifiers case-insensitively after requiring trimmed, printable input, or a
+  trailing space becomes an exclusion bypass.
+- Keep exact patch payloads and conservative metadata identifiers distinct. Here
+  522 hashes are exact patch payloads, while 3,420 hashes are the actual broader
+  blocking set; reporting either count as the other overstates or understates the
+  scientific exclusion boundary.
+- A path denylist cannot stop a copied file, renamed file, or content restored
+  from Git history. Bind cutoff HEAD blobs, all reachable-history blob IDs and raw
+  SHA-256 values, plus cutoff-worktree raw SHA-256 values. The current freeze
+  covers 1,515 HEAD paths, 3,232 history blobs, and 273,918 worktree files.
+- Define the one-time fingerprint scope separately from runtime blocked paths.
+  The former inventories old bytes wherever they existed at cutoff; the latter
+  rejects known old locations in a future manifest. Conflating them can leave
+  ignored outputs or root-level literal files outside one layer of the proof.
+- A new-looking path is not independent data. Reject symlink, junction, and other
+  reparse ancestors, reject hardlinks, resolve every file beneath the exact new
+  namespace, and then compare both raw SHA-256 and Git blob identity.
+- Lock execution coverage by an exact path count and projection hash. Broad globs
+  initially missed `scripts/oracles/*.py` and the package CLI; the final boundary
+  is 280/280 old research entrypoints guarded before any unsafe import or action.
+- Validate only the canonical future manifest. Bind an exact study-specific
+  signoff ID, signer identifier, UTC time not predating the manifest's
+  Asia/Shanghai date or exceeding the current instant, registry hash, and pre-use
+  manifest hash. Reject frozen study IDs and out-of-window manifest dates. These
+  fields are auditable author attestations, not cryptographic identity or trusted
+  timestamps.
+- A sanctioned loader must recheck the entire isolation baseline on every read,
+  not only validate file paths. Source hashes, task/project/payload projections,
+  content registries, cutoff commit equality, and revoked authorizations all fail
+  closed if changed. Hashing necessarily reads file bytes; the accurate claim is
+  that credential values and research text were not interpreted or emitted.
+- Repository governance is not an operating-system security boundary. Without a
+  separate account or ACL, arbitrary programs running as the same user can read
+  preserved historical bytes. State that limitation explicitly instead of
+  claiming physical inaccessibility.
+
 ## 2026-07-13 Separate execution validation from favorable scientific outcome
 
 - A pilot validates deployment only when every frozen route produces identity-

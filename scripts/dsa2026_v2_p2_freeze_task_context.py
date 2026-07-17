@@ -1,7 +1,12 @@
+# ruff: noqa: E402
 #!/usr/bin/env python3
 """Freeze one authorized V2-P2 task context from official commit archives."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_v2_p2_freeze_task_context.py")
 
 import argparse
 import hashlib

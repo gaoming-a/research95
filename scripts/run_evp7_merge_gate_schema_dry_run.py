@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Generate EVP-7 merge-gate schema dry-run outputs.
 
 This is a no-API schema stability check. It renders deterministic
@@ -7,6 +8,10 @@ would do.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/run_evp7_merge_gate_schema_dry_run.py")
 
 import argparse
 import json

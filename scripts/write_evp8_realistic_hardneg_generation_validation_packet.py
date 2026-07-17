@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Write a no-API packet for fresh realistic hard-negative generation.
 
 The packet freezes a future Qwen generation command and the mandatory
@@ -6,6 +7,10 @@ does not authorize or call any model API.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/write_evp8_realistic_hardneg_generation_validation_packet.py")
 
 import argparse
 import json

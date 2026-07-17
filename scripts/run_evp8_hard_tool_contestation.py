@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Guarded EVP-8-HARD tool-contestation runner.
 
 The default mode is check-only and does not call model APIs. Real API calls
@@ -5,6 +6,10 @@ require an ignored local config, --execute, and a single configured model id.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/run_evp8_hard_tool_contestation.py")
 
 import argparse
 import json

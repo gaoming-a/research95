@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Write the no-API EVP-8-HARD E6 evidence-only execution packet."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/write_evp8_hard_e6_evidence_only_execution_packet.py")
 
 import argparse
 import json

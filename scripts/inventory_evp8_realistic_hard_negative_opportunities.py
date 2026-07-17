@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Inventory hard-negative opportunities after corrected realistic labels.
 
 This is a no-API planning audit. It compares the corrected realistic agent
@@ -7,6 +8,10 @@ raw model responses, rendered prompts, or patch diffs.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/inventory_evp8_realistic_hard_negative_opportunities.py")
 
 import argparse
 import json

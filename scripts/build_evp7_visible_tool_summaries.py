@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Build deterministic EVP-7 visible tool summaries.
 
 These summaries aggregate only model-visible tool evidence: patch-apply/static
@@ -6,6 +7,10 @@ outcomes. They do not read evaluator labels or hidden validation outcomes.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/build_evp7_visible_tool_summaries.py")
 
 import argparse
 import json

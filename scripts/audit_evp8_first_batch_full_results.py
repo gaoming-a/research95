@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Audit EVP-8 DeepSeek/Qwen first-batch full-run summaries without raw outputs."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/audit_evp8_first_batch_full_results.py")
 
 import argparse
 import json

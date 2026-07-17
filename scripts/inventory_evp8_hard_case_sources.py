@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Inventory local sources for the EVP-8 hard-case extension.
 
 This no-API script is intentionally a source inventory, not a candidate-set
@@ -6,6 +7,10 @@ then writes aggregate reports without patch diffs, prompts, or raw responses.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/inventory_evp8_hard_case_sources.py")
 
 import argparse
 import json

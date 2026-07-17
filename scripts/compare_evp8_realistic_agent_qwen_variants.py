@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Compare Qwen full-with-verdict and no-verdict realistic cohort variants."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/compare_evp8_realistic_agent_qwen_variants.py")
 
 import argparse
 import json

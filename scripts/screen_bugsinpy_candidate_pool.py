@@ -1,4 +1,9 @@
+# ruff: noqa: E402
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/screen_bugsinpy_candidate_pool.py")
 
 import argparse
 import json

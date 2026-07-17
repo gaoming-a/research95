@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Build the EVP-7 G5 LLM prompt manifest without calling model APIs.
 
 The manifest records prompt hashes, lengths, prompt version, and leakage checks
@@ -6,6 +7,10 @@ store full prompt text and does not read credentials or local API configs.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/build_evp7_g5_llm_prompt_manifest.py")
 
 import argparse
 import hashlib

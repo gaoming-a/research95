@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Summarize EVP-8 DeepSeek/Qwen smoke results without reading raw outputs.
 
 This is the G4 smoke-synthesis scaffold. Before real smoke execution it reports
@@ -6,6 +7,10 @@ raw-output-free summaries via the post-smoke audit path.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/summarize_evp8_smoke_synthesis.py")
 
 import argparse
 import json

@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Run predeclared EVP-7 visible tests as an independent evidence source.
 
 This runner does not read or emit evaluator labels. It uses the existing
@@ -6,6 +7,10 @@ outcomes for E4 evidence packets.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/run_evp7_visible_tests.py")
 
 import argparse
 import json

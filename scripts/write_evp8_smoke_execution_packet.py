@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Write the no-API EVP-8 DeepSeek/Qwen smoke execution packet.
 
 The packet records exact guard and execute commands for a future user-confirmed
@@ -6,6 +7,10 @@ generate raw outputs.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/write_evp8_smoke_execution_packet.py")
 
 import argparse
 import json

@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Audit the EVP-8 realistic agent-patch generation output without storing raw content."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/audit_evp8_realistic_agent_generation_results.py")
 
 import argparse
 import hashlib

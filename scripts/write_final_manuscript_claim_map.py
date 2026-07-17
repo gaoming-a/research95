@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Write the final manuscript claim map and stable CCF-C manuscript draft.
 
 This script is no-API and raw-output-free. It uses tracked aggregate audits and
@@ -6,6 +7,10 @@ map plus a rewritten manuscript source for the stable CCF-C route.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/write_final_manuscript_claim_map.py")
 
 import argparse
 import json

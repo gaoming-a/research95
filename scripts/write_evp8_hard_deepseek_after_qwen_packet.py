@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Write the no-API EVP-8-HARD DeepSeek-after-Qwen execution packet."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/write_evp8_hard_deepseek_after_qwen_packet.py")
 
 import argparse
 import json

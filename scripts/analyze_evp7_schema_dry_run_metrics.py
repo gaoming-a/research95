@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Analyze EVP-7 merge-gate review decisions with G5 metrics.
 
 The default input remains the deterministic schema dry-run. The same metric
@@ -7,6 +8,10 @@ metrics can support.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/analyze_evp7_schema_dry_run_metrics.py")
 
 import argparse
 import json

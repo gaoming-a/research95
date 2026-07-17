@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Simulate conditional repeat-window precision for DSA Regular and Short."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_simulate_p2_precision.py")
 
 import argparse
 import hashlib

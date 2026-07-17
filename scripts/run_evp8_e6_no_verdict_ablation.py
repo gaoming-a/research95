@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Run EVP-8 E6-no-verdict ablation for DeepSeek and Qwen.
 
 This runner reuses the existing EVP-8 visible-evidence packet construction,
@@ -9,6 +10,10 @@ configured model id.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/run_evp8_e6_no_verdict_ablation.py")
 
 import argparse
 import copy

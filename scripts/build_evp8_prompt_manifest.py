@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Build and audit the frozen EVP-8 prompt template without API calls."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/build_evp8_prompt_manifest.py")
 
 import argparse
 import hashlib

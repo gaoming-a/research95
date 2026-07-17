@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """No-API preflight for the EVP-8 hard-negative stress verifier matrix.
 
 The stress cohort's model-visible packets contain patch diffs and therefore
@@ -7,6 +8,10 @@ or credentials.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/check_evp8_realistic_hardneg_stress_matrix_preflight.py")
 
 import argparse
 import copy

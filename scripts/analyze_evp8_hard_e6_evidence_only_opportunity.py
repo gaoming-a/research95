@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Analyze EVP-8-HARD evidence-only results on the nine false-accept opportunities."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/analyze_evp8_hard_e6_evidence_only_opportunity.py")
 
 import argparse
 import json

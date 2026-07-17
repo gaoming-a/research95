@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Write a raw-output-free run packet for DeepSeek repaired EVP-8 v0.3.
 
 The packet links the readiness, dry-run, API-run, label-conditioned analysis,
@@ -6,6 +7,10 @@ It never reads ignored raw responses.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/write_evp8_deepseek_repaired_v0_3_run_packet.py")
 
 import argparse
 import json

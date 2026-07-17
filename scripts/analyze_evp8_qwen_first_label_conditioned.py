@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Build label-conditioned EVP-8 v0.3 Qwen-first statistics.
 
 This script reads ignored raw model output only to parse the final JSON
@@ -6,6 +7,10 @@ labels locally and writes aggregate, raw-output-free summaries.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/analyze_evp8_qwen_first_label_conditioned.py")
 
 import argparse
 import json

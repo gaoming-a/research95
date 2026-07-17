@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Write the no-API uplift packet for the realistic hard-negative gate.
 
 This script reads tracked aggregate gate files only. It does not call model
@@ -5,6 +6,10 @@ APIs, read raw model responses, read prompt text, or read patch text.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/write_evp8_realistic_hardneg_uplift_packet.py")
 
 import argparse
 import json

@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Audit the tracked EVP-7 G5 full-run summary without reading raw outputs."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/audit_evp7_g5_full_run_quality.py")
 
 import argparse
 import json

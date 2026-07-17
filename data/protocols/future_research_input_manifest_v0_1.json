@@ -1,0 +1,16 @@
+{
+  "manifest_id": "future_research_input_manifest_v0_1",
+  "created_date": "2026-07-18",
+  "status": "not_started",
+  "study_id": null,
+  "quarantine_registry_canonical_sha256": "8d64b5f9c996c41d855fe2ae159dee51b2337f8c71cf0cd843d424d0e27b0453",
+  "namespace": null,
+  "selection_inputs": [],
+  "records": [],
+  "authorization": {
+    "data_use_authorized": false,
+    "author_signoff_path": null,
+    "author_signoff_sha256": null
+  },
+  "boundary": "No future-study data, training, validation, testing, model selection, or API execution is authorized by this empty manifest."
+}

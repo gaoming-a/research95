@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Compare EVP-8 rule-only, E6-full, and E6-no-verdict results.
 
 This analysis reads ignored raw model responses only to parse final JSON
@@ -6,6 +7,10 @@ raw response text or prompt text.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/analyze_evp8_e6_no_verdict_ablation.py")
 
 import argparse
 import json

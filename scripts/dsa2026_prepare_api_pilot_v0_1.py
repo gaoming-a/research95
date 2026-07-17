@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Prepare and audit the no-API DSA 72-call development pilot.
 
 The script has three explicit modes:
@@ -12,6 +13,10 @@ No mode reads an API key or calls a model endpoint.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/dsa2026_prepare_api_pilot_v0_1.py")
 
 import argparse
 import copy

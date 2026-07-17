@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Run the ready EVP-8 hard-negative stress verifier matrix.
 
 Raw provider responses are written only under ignored outputs. Tracked review
@@ -6,6 +7,10 @@ patch diffs, raw response text, or credentials.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/run_evp8_realistic_hardneg_stress_matrix.py")
 
 import argparse
 import json

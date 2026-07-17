@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Preflight the EVP-7 G5 LLM run configuration without API calls.
 
 This checker validates structural readiness for the G5 LLM verifier run.
@@ -7,6 +8,10 @@ smoke scope, and full-run permission in an ignored local config.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/preflight_evp7_g5_llm_run.py")
 
 import argparse
 import json

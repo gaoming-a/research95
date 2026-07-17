@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Create or dry-run the ignored EVP-8 DeepSeek/Qwen local config.
 
 The config contains model routes, expected call counts, and output boundaries.
@@ -6,6 +7,10 @@ It contains no API keys. Write mode copies the tracked example into
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/create_evp8_deepseek_qwen_local_config.py")
 
 import argparse
 import json

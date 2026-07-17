@@ -1,6 +1,38 @@
 # 当前项目状态与文件地图
 
-日期：2026-07-13
+日期：2026-07-18
+
+## 2026-07-18 当前权威：既有研究谱系已隔离 / 新研究尚未启动
+
+- 当前唯一跨研究权威是
+  `data/protocols/research_lineage_quarantine_v0_1.json`；以下所有 DSA/EVP/SQJ
+  状态、计划和授权均为历史记录，不再是执行入口；
+- 历史文件不删除、不搬移，只允许 provenance、失败复盘、污染审计、排除和明确标注的
+  development-only 假设动机；禁止进入未来训练、开发/验证、模型或 prompt 选择、样本量/
+  效果量设计、确认性测试、结果合并和论文数字/表/图/claim；
+- 机器投影硬排除501个已接触任务、17个项目、522个精确 patch payload SHA-256，以及
+  包含前述 payload 的3420个保守 metadata 内容标识；全部280个旧研究 Python 入口在
+  其他执行逻辑前 fail closed；
+- 内容地址隔离覆盖 cutoff HEAD 1515个路径/1509个唯一 blob、全部可达 Git refs 中3232个
+  blob/3232个 raw SHA-256，以及 cutoff 工作树273918个文件、4415259787 bytes、57172个
+  唯一 SHA-256、0个 reparse/nonregular 路径；复制、重命名、历史恢复、hardlink 和
+  reparse alias 均不能进入规范未来研究输入；
+- 旧 V2-P2 continuous、pilot standing、归档 v0.2 和 v0.3 execution authorization 原字节
+  保留但已被新权威撤销；order63 cursor、旧 pilot 执行、standing reactivation 均在
+  checkout、container、execution credential/API 前 fail closed；
+- `future_research_input_manifest_v0_1.json` 当前为空、`not_started`、data use=false；因此
+  新训练、新评估、新 API 和新论文效果 claim 均未授权；
+- `python scripts/audit_research_lineage_isolation.py --check` 当前 PASS，状态为
+  `passed_armed_no_new_study`。原 P1 stored PASS 已过期；按当前脚本重算会因后来的
+  EVP-7-derived pilot 违反旧 namespace 规则而 FAIL，本 Gate 将整条 pilot 谱系封存而
+  不给它添加例外。
+- 未来只接受规范 manifest 和 `src/cross_review/future_study_loader.py`；每次读取都会重验
+  source hashes、任务/项目/payload 投影、内容指纹和授权撤销。签核是作者自证，不是
+  密码学身份/可信时间戳。本轮未设置 Windows ACL，同一 OS 用户仍可绕过仓库入口直接
+  读取保留字节，因此不得声称物理不可访问。
+
+以下章节仅保存时间顺序和审计来历，不得据其中的 `active`、`authorized` 或 `下一步`
+措辞恢复任何旧执行链。
 
 ## 2026-07-13 DSA v0.3 development pilot complete / 72 valid
 
@@ -10,9 +42,10 @@
   manifest binding 和 OpenRouter Google AI Studio runtime route 均 PASS；
 - Qwen/DeepSeek/Gemini 对单 pair 的方向异质，negative 并未随证据一致降低 accept；
 - 结果仅验证 end-to-end setting 可运行，不进入确认性估计或论文效果 claim；
-- prompt/schema/routes 未改，order63 未启动，standing authorization 保持 active。
+- prompt/schema/routes 未改，order63 未启动；standing authorization 仅在当时 checkpoint
+  为 active，现已由2026-07-18全局权威撤销。
 
-## 2026-07-13 DSA standing authorization active / v0.3 pre-API
+## 2026-07-13 DSA standing authorization historically active / v0.3 pre-API
 
 - 作者高明已签署 standing protocol SHA `7ceb704a…62d899`；声明 SHA=`e176fa69…736d7`；
 - active standing record 和 aggregate `90e1eebc…49d38` 的 v0.3 derived authorization

@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Run legacy unittest nodes under the current Python runtime."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/run_unittest_legacy_py311.py")
 
 import inspect
 import os

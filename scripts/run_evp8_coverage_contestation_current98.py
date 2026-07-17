@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Run EVP-8 current-98 coverage-contestation prompt-sensitivity condition.
 
 This runner executes the independent E6/no-verdict coverage-contestation
@@ -7,6 +8,10 @@ fields, never rendered prompts or raw response text.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/run_evp8_coverage_contestation_current98.py")
 
 import argparse
 import json

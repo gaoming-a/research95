@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Audit the compiled APSEC IEEEtran PDF rendering and submission boundaries."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/audit_apsec_pdf_layout.py")
 
 import argparse
 import json

@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Write the no-API third-project source-selection packet for EVP-8 realistic hard negatives.
 
 The packet does not authorize generation or verifier API calls. It selects the
@@ -6,6 +7,10 @@ records why already-tried projects should not be reused as successful evidence.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/write_evp8_realistic_hardneg_third_project_source_selection_packet.py")
 
 import argparse
 import ast

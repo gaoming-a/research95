@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Summarize readiness for post-EVP-7 controlled expansion."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/summarize_evp7_expansion_readiness.py")
 
 import argparse
 import json

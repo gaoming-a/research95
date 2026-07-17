@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Run the no-API EVP-8 DeepSeek/Qwen G0 guard sequence.
 
 This script is a convenience gate for the commands that must pass immediately
@@ -6,6 +7,10 @@ model APIs, read raw responses, or store rendered prompts.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/check_evp8_deepseek_qwen_g0.py")
 
 import argparse
 import json

@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Audit the EVP-8 no-API protocol specification.
 
 This script validates the machine-readable protocol boundary before any EVP-8
@@ -6,6 +7,10 @@ not read credentials, local API configs, raw model outputs, or ignored outputs.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/audit_evp8_protocol_spec.py")
 
 import argparse
 import json

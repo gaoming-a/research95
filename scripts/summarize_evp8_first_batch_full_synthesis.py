@@ -1,6 +1,11 @@
+# ruff: noqa: E402
 """Summarize EVP-8 first-batch full-run audit results without raw outputs."""
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/summarize_evp8_first_batch_full_synthesis.py")
 
 import argparse
 import json

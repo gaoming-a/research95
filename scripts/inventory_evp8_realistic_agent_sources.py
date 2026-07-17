@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Inventory sources for a realistic/agent-patch EVP-8 follow-up cohort.
 
 This is a no-API source inventory. It scans tracked manifests and non-raw local
@@ -6,6 +7,10 @@ prompts, raw model responses, or provider response objects.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/inventory_evp8_realistic_agent_sources.py")
 
 import argparse
 import json

@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Raw-output-free audit for EVP-8-HARD Qwen/DeepSeek results.
 
 The audit can run before model execution. In that state it writes a waiting
@@ -6,6 +7,10 @@ any API call.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/audit_evp8_hard_qwen_deepseek_results.py")
 
 import argparse
 import json

@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 #!/usr/bin/env python3
 """Generate EVP-8-HARD paper claim traceability and final table scaffold.
 
@@ -6,6 +7,10 @@ aggregate audits and analysis JSON files.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/audit_evp8_hard_paper_claims.py")
 
 import argparse
 import json

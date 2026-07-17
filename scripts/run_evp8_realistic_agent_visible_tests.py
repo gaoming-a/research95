@@ -1,3 +1,4 @@
+# ruff: noqa: E402
 """Run visible tests for the EVP-8 realistic agent-patch cohort.
 
 This is a no-API execution step. It reads only model-visible patch packets,
@@ -6,6 +7,10 @@ tests, and writes visible-tool evidence without hidden labels or oracle fields.
 """
 
 from __future__ import annotations
+
+from audit_research_lineage_isolation import assert_prior_research_execution_blocked
+
+assert_prior_research_execution_blocked("scripts/run_evp8_realistic_agent_visible_tests.py")
 
 import argparse
 import json
