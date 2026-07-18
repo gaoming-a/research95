@@ -2,7 +2,24 @@
 
 日期：2026-07-18
 
-## 2026-07-18 当前权威：既有研究谱系已隔离 / 新研究尚未启动
+## 2026-07-18 当前权威：方向已选定 / novelty pending / 数据与训练尚未启动
+
+- 新方向规范为 `docs/plans/future_research_direction_v0_1_zh.md`：小论文研究
+  “面向代码补丁验证的反事实证据一致性训练与风险可控决策”，毕业论文扩展到多源证据
+  可靠性、不确定性控制和成本感知主动获取；
+- 作者约束为通信工程硕士、大模型方向、小论文最低 EI；本地 4×A6000、3×RTX 3090
+  足以支持两个 7B--8B backbone 的 LoRA 主实验、三随机种子和消融，但模型、数据、
+  超参数与样本量均尚未选择；
+- 这只是 `DIRECTION_SELECTED / NOVELTY_PENDING`，不是 empirical study activation。
+  规范 future manifest 仍为空、`not_started`、data use=false；训练、验证、容器、模型/API
+  和论文效果 claim 均未授权；
+- 下一步只允许 G0 系统性 novelty 检索与 G1 source-feasibility 纯协议设计；G1 不枚举、
+  下载或读取项目/任务内容。现有规范 manifest 需要既存文件及其哈希，因此任何来源访问前
+  必须先单独实现、审计并签核 acquisition-only Gate（G2）；它只允许确定性机械采集到
+  隔离 staging。之后再由既存文件生成非空、hash-bound 规范 manifest 并二次签核（G3）；
+  实际 source frame 与环境/标签检查只能在 G3 通过后开始。
+
+## 2026-07-18 隔离权威：既有研究谱系已隔离
 
 - 当前唯一跨研究权威是
   `data/protocols/research_lineage_quarantine_v0_1.json`；以下所有 DSA/EVP/SQJ

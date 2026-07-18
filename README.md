@@ -1,9 +1,29 @@
-# Research95: Historical Evidence-Visibility Workspace
+# Research95: Quarantined History And Future-Study Planning
 
 This workspace preserves the previous LLM code-review and evidence-visibility
-research as historical provenance. No scientific direction in the repository is
-currently active: every prior line is quarantined, and a future study must start
-from an independently selected, preregistered input lineage.
+research as historical provenance. A future scientific direction is now selected,
+but no empirical study is active: every prior line remains quarantined, and new
+data or training must start from an independently selected, preregistered input
+lineage.
+
+## 2026-07-18 Future Research Direction (No Data / No Training)
+
+The author constraints are a Communication Engineering master's thesis focused
+on large language models, an EI-indexed small-paper minimum, and local access to
+four A6000 plus three RTX 3090 GPUs. The selected provisional direction is
+counterfactual evidence-consistent training and risk-aware decision-making for
+LLM patch verification. The small paper studies static evidence fusion; the thesis extends
+it to uncertainty control and cost-aware active evidence acquisition.
+
+The authoritative direction plan is
+[`future_research_direction_v0_1_zh.md`](docs/plans/future_research_direction_v0_1_zh.md).
+It selects the problem spine and records the preliminary literature boundary,
+minimal LoRA method, fresh-data rules, project/time splits, baselines, metrics,
+sample-size procedure, and paper-to-thesis ladder. Exact novelty remains pending
+the systematic G0 review. It does not choose a model, project, task, hyperparameter,
+or sample size, and it does not authorize data use, training, evaluation,
+containers, APIs, or paper-facing results. The canonical future-study manifest
+therefore remains empty and `not_started`.
 
 ## 2026-07-18 Research-Lineage Isolation Override
 

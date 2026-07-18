@@ -1,5 +1,42 @@
 # Engineering Notes
 
+## 2026-07-18 Select a research direction without activating a study
+
+- A publication-to-thesis plan needs one scientific spine, not two adjacent
+  topics. Here the small paper selects static counterfactual evidence-consistency
+  training, while the thesis adds uncertainty control and sequential evidence
+  acquisition. Merely adding models or samples would not be a thesis extension.
+- Degree label, publication floor, and compute constrain different layers. A
+  Communication Engineering master's framing requires a real multi-source
+  reliability and decision formulation; EI is a publication floor rather than a
+  scientific claim; four A6000 and three 3090 GPUs justify controlled 7B--8B LoRA
+  experiments but do not make model scale an innovation.
+- Search the nearest methods before naming an algorithm. Generic contrastive APCA,
+  GRPO patch classification, post-hoc code calibration, abstention, and noisy-RAG
+  fusion already exist. The remaining candidate contribution is the controlled
+  relation between evidence diagnosticity and fixed-coverage false-accept risk,
+  not LoRA, contrastive learning, or reliability weighting by itself.
+- Keep the first method minimal. One binary correctness loss plus one counterfactual
+  ranking loss can be isolated against ordinary SFT and calibration. Adding active tools,
+  test generation, multi-agent planning, and RL in the same paper would make the
+  causal source of any gain unidentifiable.
+- Do not choose a sample count from convenience or quarantined effects. Define the
+  source-frame protocol first. Because a canonical manifest cannot name hashes for
+  bytes that do not yet exist, use a separately audited and signed acquisition-only
+  authority for deterministic staging and hashing; then authorize the nonempty
+  hash-bound scientific-use manifest before establishing the frame. Estimate
+  qualification and clustering only in a separate feasibility cohort, define a
+  practically meaningful risk reduction, and run a cluster-aware power simulation
+  before confirmatory training.
+- Direction selection is not novelty confirmation or data authorization. A plan may
+  select a scientific spine and define provisional RQs, non-goals, model-selection
+  rules, metrics, and Gates while exact novelty awaits systematic review and the
+  canonical input manifest remains empty. This prevents planning language from
+  silently becoming permission to read data, tune a model, or produce a paper claim.
+- Do not force heterogeneous GPUs into one synchronized job. Use homogeneous
+  A6000 workers for training and 3090 workers for validation, containers, and
+  baseline inference; this keeps reproducibility and failure diagnosis simpler.
+
 ## 2026-07-18 Isolate research roles, not historical files
 
 - Deleting or moving old data does not remove researcher knowledge and damages
