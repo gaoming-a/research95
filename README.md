@@ -19,10 +19,23 @@ safe recovery after an ambiguous outcome from a side-effecting tool. It studies
 whether an LLM agent reconciles the set of still-possible world states before
 retrying, compensating, terminating, or escalating. The proposed oracle is a
 self-authored finite-state tool DSL plus belief-state planning and model checking;
-no existing research samples are required. This is not yet a locked topic.
+no existing research samples are required. The author has accepted this research
+vehicle, but the topic is still only a conditional Go.
+
+The full-text boundary audit rules out a generic recovery benchmark and ordinary
+fine-tuning as the default paper. ReliabilityBench and FAILING TOOLS already cover
+runtime faults, verification, retry/fallback, and residual uncertainty, while
+Atomix directly covers post-effect/pre-return failure and ambiguous retries.
+Classical strong planning also owns belief-space policy search and all-branch model
+checking. The surviving contribution is therefore narrower: a finite-state
+measurement base plus a training-free guard for already externalized effects that
+cannot be staged transactionally, with safety defined over every world consistent
+with the visible history. The next author decision is whether to accept this
+benchmark-plus-guard paper structure; training remains a thesis-only conditional
+extension after a residual headroom gate.
 
 The authoritative status is [`current_plan_zh.md`](docs/plans/current_plan_zh.md)
-section 0.72. The active candidate-only audit, direct-neighbor boundaries,
+section 0.73. The active candidate-only audit, direct-neighbor boundaries,
 mechanical-oracle design, baselines, and No-Go rules are in
 [`llm_native_candidate_audit_v0_1_zh.md`](docs/plans/llm_native_candidate_audit_v0_1_zh.md).
 The retired communication-scoped label, split, baseline, and hard-stop protocol is
@@ -32,8 +45,7 @@ It does not lock either topic or authorize research actions. The older
 is historical only and cannot authorize acquisition, research-input access,
 model selection, training, evaluation, APIs, or claims. The canonical
 future-study manifest remains empty and `not_started` while the author confirms
-whether a general tool-using LLM agent and a synthetic finite-state tool
-environment are acceptable as the research vehicle.
+the benchmark-as-measurement plus training-free-guard contribution structure.
 
 ## 2026-07-18 Research-Lineage Isolation Override
 

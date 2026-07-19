@@ -1,5 +1,32 @@
 # Engineering Notes
 
+## 2026-07-19 Separate the LLM contribution from classical recovery machinery
+
+- A recent benchmark can invalidate a contribution form without invalidating the
+  underlying problem. FAILING TOOLS already covers runtime failures,
+  postcondition checks, retry/fallback, and residual uncertainty, so a generic
+  recovery benchmark is no longer enough. Atomix additionally covers
+  post-effect/pre-return faults and ambiguous retries.
+- Belief-space strong planning, contingent policies, and all-branch model
+  checking are classical algorithms. Use them as a mechanical oracle and say so;
+  do not present their application to tool agents as an algorithmic invention.
+- The remaining LLM-specific question is at the semantic boundary: can the model
+  interpret natural-language goals, contracts, and history well enough to propose
+  a recovery action that a belief-safe guard can certify across indistinguishable
+  applied/unapplied worlds?
+- Keep the offline oracle and online guard epistemically separate. The oracle may
+  enumerate the complete finite transition system; the guard may use only public
+  contracts and visible history. If the guard sees hidden commit state or
+  injector metadata, the evaluation merely reproduces its own labels.
+- Test the shortest distributed-systems rule first. If “query when available,
+  otherwise idempotent same-key retry, otherwise safe compensation, otherwise
+  escalate” is sound and complete, stop the topic. A more elaborate benchmark
+  would only disguise a deterministic lookup table.
+- Training is not automatically the richer contribution. When a verifier can
+  calculate hard safety exactly, ordinary SFT weakens the guarantee. Training is
+  justified only later, inside the verified safe action set, if symbolic cost
+  rules leave stable OOD decision residuals.
+
 ## 2026-07-19 Let the scientific oracle choose the domain, not the degree label
 
 - A degree title is not evidence of domain competence and should not silently

@@ -2,7 +2,7 @@
 
 日期：2026-07-19
 
-## 2026-07-19 当前权威：通用大模型智能体条件首选 / 研究载体待确认 / 尚未定题
+## 2026-07-19 当前权威：研究载体已接受 / 贡献形态待确认 / 尚未定题
 
 - 作者明确研究方向是大模型，通信工程只是培养专业且通信内容基本未系统学习；选题不再
   要求通信场景，原 NIKA/ns-3 协议只保留为通信特定档案；
@@ -11,19 +11,26 @@
   的安全恢复”：有副作用工具返回歧义结果后，模型必须在所有仍可能的世界状态上选择
   核对、幂等重试、补偿、可靠终止或升级；
 - 候选拟使用完全自建有限状态工具 DSL、自有模板、belief-state planner 和模型检查器，
-  不依赖通信知识或现成研究样本；但它仍需与 Atomix、Cordon、ToolGate、Fission-GRPO、
-  Near-Miss、Mnemosyne、EvoC2F 等做全文级边界复核；
+  不依赖通信知识或现成研究样本；与 Atomix、Cordon、ToolGate、Fission-GRPO、
+  Near-Miss、Mnemosyne、EvoC2F、ReliabilityBench、FAILING TOOLS 等的近期边界审计已
+  完成，宽泛故障恢复与 benchmark-only 贡献不再成立；
 - 后备“可认证的组合式工具契约迁移”与 ToolEVO/RoTBench 更接近，创新风险更高；“部分
   执行后的最终报告忠实性”可能被模板报告器解决，只保留为首选候选的一个指标；
 - `AgentAbstain` 数据集卡曾在许可元数据检索时自动渲染少量样例行；没有下载、复述或
   使用，但该来源已从未来数据、许可依据和候选设计中排除；
 - 2026-07-18 的补丁研究、通信候选和既有数据/结果都不能进入新研究；历史文件不删除，
   但只用于 provenance、隔离和失败复盘；
-- 当前只待作者确认是否接受“通用工具型大模型智能体 + 自建有限状态工具环境”作为
-  研究载体。没有最终题目、数据、模型、方法、样本量或实验授权，`PLAN.md` 与
-  `PLAN-REVIEW-LOG.md` 尚不应生成；
+- 作者已接受“通用工具型大模型智能体 + 自建有限状态工具环境”作为研究载体；该确认
+  不锁定题目、数据或方法。全文审计后，benchmark-only 偏 No-Go，普通 LoRA/SFT 与
+  method-first training 当前 No-Go；默认条件 Go 为“有限状态 benchmark + training-free
+  belief-safe recovery guard”；
+- 最小存活边界只处理已外部化且不能被 Atomix/Cordon 风格事务暂存消除的副作用：响应
+  丢失形成 applied/unapplied belief，guard 只放行对全部相容世界安全且仍可获胜的恢复
+  动作。belief planning/model checking 是经典 oracle 基础，不是算法创新；
+- 当前只待作者确认是否接受上述贡献结构。没有最终题目、数据、模型、样本量或实验授权，
+  `PLAN.md` 与 `PLAN-REVIEW-LOG.md` 尚不应生成；
 - future manifest 继续为空、`not_started`、data use=false；模型/API、容器、数据生成、
-  训练、评估和论文效果 claim 均为0。当前权威细节见 `current_plan_zh.md` 0.72。
+  训练、评估和论文效果 claim 均为0。当前权威细节见 `current_plan_zh.md` 0.73。
 
 ## 2026-07-18 当前权威：方向已选定 / novelty pending / 数据与训练尚未启动
 

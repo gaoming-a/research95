@@ -261,3 +261,117 @@ compensated / unverified / not-attempted` 声明，不使用 LLM judge。
 智能体 + 自建有限状态工具环境”作为实验对象。若不接受，应撤销本排序并重新筛选纯文本、
 训练机制或模型系统方向；若接受，下一轮才逐问确认贡献偏好，并对首选做全文级 novelty
 复核、无模型生成器协议和 feasibility Gate。`PLAN.md` 在这些问题解决前不得创建。
+
+## 9. 研究载体接受后的全文边界与贡献形态审计
+
+作者已经接受“通用工具型大模型智能体 + 自建有限状态工具环境”作为研究载体。第8节的
+载体确认 Gate 因此已经通过，但这不等于题目已经锁定。新一轮审计进一步缩小了可发表
+边界。
+
+### 9.1 直接碰撞与不能再使用的创新表述
+
+- [`ReliabilityBench`](https://arxiv.org/abs/2601.06112) 已覆盖 timeout、rate limit、
+  partial response、schema drift、故障恢复统计和确定性最终状态 oracle；
+- [`FAILING TOOLS`](https://openreview.net/pdf?id=j7YsSnA64D) 已覆盖状态化多域工具中的
+  运行时故障、确认调用、retry/fallback、postcondition verification、禁止调用和残余
+  不确定性报告；
+- [`Atomix`](https://arxiv.org/html/2602.14849) 已直接定义 post-effect/pre-return 故障、
+  timeout、duplicate delivery 与 ambiguous retry，并用事务运行时做去重、补偿和
+  irreversible-effect gating；
+- [`Cordon`](https://arxiv.org/html/2606.17573) 已用 semantic transaction、shadow state、
+  effect outbox、idempotency key 和 recovery manifest 延迟或协调外部效果；
+- [`ACRFence`](https://arxiv.org/abs/2603.20625) 已处理 checkpoint restore 后重新合成请求
+  导致的重复副作用，并提出 replay-or-fork；
+- [`ToolGate`](https://aclanthology.org/2026.findings-acl.470/) 已用 Hoare 风格契约验证
+  单一 trusted symbolic state 上的工具前置/后置条件；
+- [`Fission-GRPO`](https://aclanthology.org/2026.acl-long.1880/) 已训练模型从执行错误中恢复；
+- [`Agent-BRACE`](https://arxiv.org/abs/2605.11436) 已做显式 belief 表示与 policy 联合训练；
+- [`Tactile`](https://arxiv.org/abs/2607.14443) 已提出 observe--ground--act--verify，并承认
+  缺乏可靠反馈时动作可能处于 succeeded/failed/pending 不可确认状态；
+- [`Strong planning under partial observability`](https://www.sciencedirect.com/science/article/pii/S0004370206000075)、
+  contingent policy graph 和 strong/strong-cyclic model checking 是经典规划问题，
+  不是本候选的新算法。
+
+`FAILING TOOLS` 与 `EvoC2F` 的 OpenReview 普通页面受 challenge 限制；本轮边界依据公开
+可检索 PDF 正文片段与官方论文元数据，未访问数据页或样例。因而锁题前仍要复核其后续
+版本，但该访问限制不恢复已被其他一手工作直接覆盖的宽泛创新表述。
+
+因此不得再声称：首次研究超时后操作可能已生效、首次提出先核对再重试、首次提出
+retry/compensate/escalate 动作空间、首次让 LLM 生成恢复方案，或首次使用 belief state
+与全分支检查。
+
+### 9.2 最小存活主张
+
+当前只允许保留以下组合主张：
+
+> 对已经外部化、不能被运行时预先暂存或可靠回滚的副作用，响应丢失会形成可见历史相同
+> 但 applied/unapplied 隐藏状态不同的 belief set。研究 LLM 能否从自然语言目标、声明
+> 工具契约和执行历史提出恢复动作，并用一个免训练 guard 只放行在所有相容世界上保持
+> 安全不变量且仍属于获胜策略的动作。
+
+该主张与近邻的边界是：`FAILING TOOLS` 测量一般恢复行为，本候选评价集合世界上的动作
+安全；`ToolGate` 维护单一可信状态，本候选在不可信或缺失结果后保留多个可能状态；
+`Atomix/Cordon` 通过事务边界尽量在提交前消除风险，本候选只研究已越过该边界或第三方
+服务不能纳入事务层的情形；`Agent-BRACE` 学习近似 belief，本候选使用精确有限 belief
+提供硬约束。规划与模型检查只作为经典基础，不作为 novelty。
+
+### 9.3 贡献形态决定
+
+| 形态 | 当前判断 | 原因 |
+|---|---|---|
+| 仅 benchmark/measurement | 偏 No-Go | 与近期通用故障恢复 benchmark 太近，且容易退化为窄 timeout 子集 |
+| benchmark + 免训练 verifier/guard | **默认条件 Go** | 同时形成新评价单元、机械真值、可部署安全层和安全—完成权衡 |
+| benchmark + 普通 LoRA/SFT | 当前 No-Go | oracle 可精确计算安全动作，普通训练既无保证也没有独立创新 |
+| method-first training/RL | No-Go | benchmark 与现象未冻结前先优化方法，且直接近邻过密 |
+
+默认小论文不是“纯 benchmark”，而是 benchmark 提供测量基础，training-free guard 提供主
+方法贡献。训练只有在 guard 已经通过、存在多个安全动作、符号成本规则不能选出最优动作、
+且两个基础模型在严格 OOD 上留下稳定次优残差时，才可能成为硕士论文扩展；训练模型永远
+不得绕过 guard。
+
+### 9.4 最小机械协议
+
+核心环境只需三个接口：`submit(request_id, operation, arguments)`、
+`inspect(request_id | resource)`、`finish()`。一次调用可以产生：
+
+- `OK`：动作提交且明确返回；
+- `UNKNOWN_BEFORE`：动作未执行但返回 `UNKNOWN`；
+- `UNKNOWN_AFTER`：动作已执行但同样返回 `UNKNOWN`。
+
+后两者必须对模型完全同观测。在线 belief 更新只使用可见历史和公开契约。机械 oracle
+输出集合标签，而不是唯一轨迹：`unsafe`、`safe_losing`、`winning`、`optimal`。核心只
+纳入存在有界 strong policy 的实例；strong-cyclic 依赖弱公平性，必须单列为扩展。
+可靠终止要求 belief 中所有可能状态及 pending-effect 闭包都满足安全不变量和目标。
+
+为阻止 `always-inspect`，核心 episode 必须让有限诊断预算在至少两个模糊点之间竞争：
+一个动作可用同键重试或后续收敛安全解决，另一个必须保留查询预算。至少30%的决策点应
+具有相同最后观测与局部契约、但因历史 belief、未来目标或剩余预算而需要不同最优动作。
+
+### 9.5 第一生死 Gate 与停止条件
+
+任何模型调用前，先验证固定规则：
+
+```text
+有可靠 status query -> reconcile
+否则操作幂等或有有效同键去重 -> retry_same_key
+否则已确认生效且补偿安全 -> compensate
+否则 -> escalate
+```
+
+以下任一情况成立即 No-Go：
+
+1. 上述固定规则已经 sound and complete；
+2. `always-inspect`、`always-retry` 或 `always-escalate` 位于同一安全—完成 Pareto 前沿；
+3. 手写 parser + belief planner 在词汇/组合 OOD 上达到95%以上且成本接近 oracle；
+4. 在线 guard 需要读取隐藏提交状态、注入器字段或完整离线 oracle 信息；
+5. 所有副作用都能被 Atomix/Cordon 风格预提交暂存消除；
+6. 同键重试即可解决全部实例；
+7. 工具名、描述长度、预算或 `UNKNOWN` 次数等浅层特征可预测动作；
+8. 同一状态图、反事实配对、模板改写或轨迹前缀被拆到不同 split；
+9. 穷举重放出现任一安全违规或不可终止分支；
+10. 新近工作直接覆盖“模糊完成 + belief set + 全世界安全恢复”。
+
+当前研究问题因此是**条件 Go**，不是无条件锁题。下一道作者 Gate 只确认是否接受
+“benchmark 作为测量基础 + training-free guard 作为小论文主贡献；训练仅作通过残差
+Gate 后的硕士扩展”。确认前不得创建锁定 `PLAN.md`，不得生成 DSL 实例、读取研究样本、
+运行模型/API/训练或开展真实实验。

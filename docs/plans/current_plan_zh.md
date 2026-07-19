@@ -1,6 +1,57 @@
-# 当前计划：大模型原生候选已条件收敛 / 研究载体待作者对齐 / 新研究数据尚未启动
+# 当前计划：研究载体已接受 / 贡献形态待作者确认 / 新研究数据尚未启动
 
 最后更新：2026-07-19
+
+## 0.73 2026-07-19 研究载体已接受 / 最小创新边界与贡献形态收敛（条件 Go / 未定题 / 未授权）
+
+作者已接受“通用工具型大模型智能体 + 自建有限状态工具环境”作为研究载体。该确认只
+锁定实验对象，不锁定题目、方法、数据或训练。随后完成的全文级近邻、形式 oracle 和
+贡献形态三路只读审计表明：宽泛的“工具故障恢复 benchmark”已经不再具有足够创新性。
+`ReliabilityBench` 已覆盖生产式超时、部分响应和状态 oracle；`FAILING TOOLS` 已覆盖
+运行时故障、确认调用、重试/回退和残余不确定性；`Atomix` 已直接评测
+post-effect/pre-return 故障、timeout 与 ambiguous retry；`Cordon`、`ACRFence`、
+`ToolGate`、`Fission-GRPO`、`Mnemosyne`、`EvoC2F`、`Tactile` 等也分别覆盖事务暂存、
+重复副作用防护、契约验证、错误恢复训练、受约束修复和 observe--verify。belief-space
+strong/strong-cyclic planning 与全分支模型检查本身属于经典部分可观测规划，不能写成
+算法首创。
+
+当前唯一仍条件存活的边界为：**副作用已经越过工具边界，外部服务又不能被假定支持
+事务暂存或可靠回滚；响应丢失使动作处于 applied/unapplied 的不可区分世界集合；在线
+安全层只能依据可见历史和声明契约，对所有相容世界均安全且仍可完成任务的恢复动作进行
+放行。** 研究对象是 LLM 能否理解自然语言目标、工具契约和历史并提出正确恢复决策；
+精确 belief planner 和模型检查器只作为机械 oracle 与安全层基础，不构成新规划算法。
+
+四种贡献形态已经收敛：
+
+1. `benchmark-only` 与 `FAILING TOOLS`/`ReliabilityBench` 距离过近，只能作为方法论文的
+   测量基础，默认偏 No-Go；
+2. **有限状态 benchmark + training-free belief-safe recovery guard** 形成最短且完整的
+   问题—方法—验证闭环，当前为默认条件 Go；
+3. `benchmark + 3B/7B LoRA/SFT` 目前没有训练必要性，且受 `Agent-BRACE`、
+   `Fission-GRPO` 等直接邻居挤压，当前 No-Go；
+4. method-first training 在 benchmark、oracle 和现象尚未通过 Gate 前属于科学顺序倒置，
+   当前 No-Go。
+
+默认小论文科学问题暂写为：当副作用工具调用因响应丢失而具有多个可能完成状态时，一个
+只依赖可见历史和声明工具契约的免训练 belief guard，能否保证放行的恢复动作对全部相容
+世界安全，并在有界诊断预算下比 `always-escalate` 保留更多安全任务完成能力？小论文只
+承担 DSL、配对不可区分世界、集合型机械 oracle、免训练 guard 以及安全—完成—成本评测。
+硕士论文才扩展多副作用长程 belief、陈旧查询、幂等键过期、部分补偿、不完备契约和混合
+事务能力；只有 guard 内仍存在稳定且不可被动态规划/成本规则消除的策略选择残差时，才
+允许讨论在安全动作集合内做 3B/7B 训练。
+
+第一生死 Gate 是完全无模型的“符号规则可平凡替代性 Gate”：固定规则“有可靠查询则
+查询；否则幂等则同键重试；否则已确认生效且可逆则补偿；否则升级”若已经 sound and
+complete，或手写 parser + belief planner 在词汇/组合 OOD 上达到 95% 且成本近似 oracle，
+本方向立即 No-Go。要通过 Gate，至少必须存在 applied/unapplied 真歧义、有界且竞争的
+诊断预算、依赖历史或后续目标的多步决策、集合型获胜动作，以及 Atomix/Cordon 不能通过
+预提交暂存消除、ACRFence 同键重试也不能单独解决的外部副作用。核心主实验只允许有界
+故障下的 strong policy；依赖公平性的 strong-cyclic 场景只能作为分开报告的扩展。
+
+当前下一道作者 Gate 只确认是否接受上述“benchmark 是测量基础，training-free guard 是
+小论文主贡献，训练仅作通过残差 Gate 后的硕士扩展”这一贡献结构。确认前不创建锁定版
+`PLAN.md` 或 `PLAN-REVIEW-LOG.md`，不生成 DSL 实例，不读取研究样本，不运行模型、API、
+训练、容器或真实实验。future manifest 继续为空、`not_started`、data use=false。
 
 ## 0.72 2026-07-19 大模型原生候选审计收敛（条件首选 / 未定题 / 未授权）
 

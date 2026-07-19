@@ -13,8 +13,11 @@
   It conditionally prioritizes belief-safe recovery after ambiguous outcomes from
   side-effecting tools, compares two fallbacks, records direct 2024--2026
   neighbors, defines a self-authored finite-state oracle, strict baselines,
-  paper-to-thesis progression, and hard No-Go conditions. It does not lock a
-  topic or authorize data, models, training, APIs, or experiments.
+  paper-to-thesis progression, and hard No-Go conditions. Its post-acceptance
+  audit records that benchmark-only and ordinary training are not the default;
+  the conditional surviving form is a finite-state measurement base plus a
+  training-free belief-safe guard for already externalized effects. It does not
+  lock a topic or authorize data, models, training, APIs, or experiments.
 - [future_research_candidate_gates_v0_1_zh.md](plans/future_research_candidate_gates_v0_1_zh.md):
   retired communication-scoped comparison and no-model feasibility protocol for
   the NIKA diagnostic-commitment and ns-3 relational-semantic-validation axes.
@@ -29,12 +32,13 @@
   identifiability, data, and discipline audit. It is not an acquisition,
   training, evaluation, or claim authority.
 - [current_plan_zh.md](plans/current_plan_zh.md): current closed-loop plan. Its
-  latest section records the conditional LLM-native priority candidate, its
-  novelty boundary, the excluded broad topics, the accidental data-card render
-  response, and the single unresolved research-vehicle decision.
+  latest section records the accepted research vehicle, the narrowed novelty
+  boundary, the benchmark-plus-guard recommendation, the first symbolic
+  triviality Gate, and the single unresolved contribution-structure decision.
 - [current_project_state_zh.md](plans/current_project_state_zh.md): current
-  authority map. No topic is locked; the future manifest remains empty and no
-  data, model, training, simulation, API, or paper-facing claim is authorized.
+  authority map. The vehicle is accepted but no topic is locked; the future
+  manifest remains empty and no data, model, training, simulation, API, or
+  paper-facing claim is authorized.
 
 ## Research-Lineage Isolation Authority (2026-07-18)
 
