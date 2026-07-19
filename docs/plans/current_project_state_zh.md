@@ -2,7 +2,7 @@
 
 日期：2026-07-19
 
-## 2026-07-19 当前权威：研究载体已接受 / 贡献形态待确认 / 尚未定题
+## 2026-07-19 当前权威：旧 guard 主张已否决 / B′ 待确认 / 尚未定题
 
 - 作者明确研究方向是大模型，通信工程只是培养专业且通信内容基本未系统学习；选题不再
   要求通信场景，原 NIKA/ns-3 协议只保留为通信特定档案；
@@ -21,16 +21,21 @@
 - 2026-07-18 的补丁研究、通信候选和既有数据/结果都不能进入新研究；历史文件不删除，
   但只用于 provenance、隔离和失败复盘；
 - 作者已接受“通用工具型大模型智能体 + 自建有限状态工具环境”作为研究载体；该确认
-  不锁定题目、数据或方法。全文审计后，benchmark-only 偏 No-Go，普通 LoRA/SFT 与
-  method-first training 当前 No-Go；默认条件 Go 为“有限状态 benchmark + training-free
-  belief-safe recovery guard”；
-- 最小存活边界只处理已外部化且不能被 Atomix/Cordon 风格事务暂存消除的副作用：响应
-  丢失形成 applied/unapplied belief，guard 只放行对全部相容世界安全且仍可获胜的恢复
-  动作。belief planning/model checking 是经典 oracle 基础，不是算法创新；
-- 当前只待作者确认是否接受上述贡献结构。没有最终题目、数据、模型、样本量或实验授权，
-  `PLAN.md` 与 `PLAN-REVIEW-LOG.md` 尚不应生成；
+  不锁定题目、数据或方法。后续反证表明，若 online guard 掌握完整模型、目标、belief 与
+  winning region，它本身就是经典 contingent planner/shield，LLM 冗余；因此 0.73 的
+  “training-free winning-action guard 为主方法”已经 No-Go；
+- 新近 `AgentSpec`、`VIGIL` 与 `ToolGate` 也使“DSL + 免训练运行时 guard”不能单独作为
+  创新。唯一条件存活的 B′ 把主贡献改为“动作后歧义副作用的 epistemic contract
+  semantics 与编译器”：online monitor 只见安全契约投影、公开历史和候选动作，只做
+  allow/block；不得见任务目标、成本、winning region 或隐藏状态，也不得推荐动作；
+- LLM 只见自然语言目标/工具说明与历史并提出动作；完整形式模型和集合型标签只属于离线
+  evaluator。小论文以契约语义、编译器、soundness 边界和非冗余评测协议为主，benchmark
+  只是载体；训练只在硕士阶段通过残差 Gate 后考虑；
+- 当前只待作者确认是否接受 B′。没有最终题目、数据、模型、样本量或实验授权，`PLAN.md`
+  与 `PLAN-REVIEW-LOG.md` 尚不应生成；
 - future manifest 继续为空、`not_started`、data use=false；模型/API、容器、数据生成、
-  训练、评估和论文效果 claim 均为0。当前权威细节见 `current_plan_zh.md` 0.73。
+  训练、评估和论文效果 claim 均为0。当前权威细节见 `current_plan_zh.md` 0.74 与候选审计
+  第10节。
 
 ## 2026-07-18 当前权威：方向已选定 / novelty pending / 数据与训练尚未启动
 

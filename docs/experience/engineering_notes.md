@@ -1,5 +1,37 @@
 # Engineering Notes
 
+## 2026-07-19 A safety wrapper can erase the LLM research question
+
+- If an online guard receives the full transition model, task goal, exact belief,
+  and winning region, it is not merely checking an LLM. It can synthesize the
+  contingent controller itself. The LLM is then redundant when correct and harmful
+  when wrong. This is a structural No-Go that does not require an experiment.
+- Recent runtime-enforcement systems narrow the claim further. AgentSpec already
+  supplies a DSL and lightweight runtime constraints; VIGIL compiles natural-language
+  skill policies into SMT-checked finite-trace enforcement; ToolGate enforces tool
+  contracts. “DSL plus training-free guard” is therefore not a novelty statement.
+- Preserve a real LLM question through information separation. Let the LLM alone see
+  the natural-language task goal; let the monitor see only a trusted safety projection,
+  public trace, and proposed action; let the complete formal model remain in an
+  offline evaluator. The monitor may allow or block, but must not select, repair, or
+  reveal the safe action set.
+- The defensible conditional contribution moves down one layer: define contracts for
+  acknowledgement-versus-commit ambiguity, idempotency scope and expiry, query
+  freshness, partial effects, and compensation preconditions, then compile them into
+  a safety-only epistemic monitor. Belief planning and shielding remain cited
+  foundations, not inventions.
+- Separate safety from liveness in every claim. A goal-blind monitor can guarantee
+  only contract-relative invariant preservation. Task completion, escalation, and
+  cost remain empirical properties of the untrusted LLM policy.
+- Synthetic formal environments need independent implementations. Cross-check the
+  environment/oracle with an enumerator and a separately implemented symbolic
+  checker; otherwise a shared DSL bug can make generation, labels, and enforcement
+  agree while all three are wrong.
+- Use goal-counterfactual pairs to prove non-redundancy: hold the public trace and
+  safety projection fixed, vary only the natural-language goal, and require different
+  choices among multiple safe actions. If a deterministic parser plus planner solves
+  this under strict OOD, stop the topic instead of adding fine-tuning.
+
 ## 2026-07-19 Separate the LLM contribution from classical recovery machinery
 
 - A recent benchmark can invalidate a contribution form without invalidating the

@@ -23,19 +23,24 @@ no existing research samples are required. The author has accepted this research
 vehicle, but the topic is still only a conditional Go.
 
 The full-text boundary audit rules out a generic recovery benchmark and ordinary
-fine-tuning as the default paper. ReliabilityBench and FAILING TOOLS already cover
-runtime faults, verification, retry/fallback, and residual uncertainty, while
-Atomix directly covers post-effect/pre-return failure and ambiguous retries.
-Classical strong planning also owns belief-space policy search and all-branch model
-checking. The surviving contribution is therefore narrower: a finite-state
-measurement base plus a training-free guard for already externalized effects that
-cannot be staged transactionally, with safety defined over every world consistent
-with the visible history. The next author decision is whether to accept this
-benchmark-plus-guard paper structure; training remains a thesis-only conditional
-extension after a residual headroom gate.
+fine-tuning as the default paper. A subsequent redundancy proof also rejects the
+previous winning-action guard as the main method: with the complete model, goal,
+belief, and winning region, that guard is already a classical contingent planner or
+shield and makes the LLM redundant. AgentSpec, VIGIL, and ToolGate further show that
+a DSL plus training-free runtime enforcement is not independently novel.
+
+The only surviving conditional form, B-prime, separates information strictly. The
+LLM sees the natural-language goal, tool documentation, and public history and
+proposes actions. An online monitor sees only a trusted safety projection, public
+trace, and candidate action; it can allow or block but cannot see the task goal,
+cost, winning region, hidden state, or recommend a replacement. The paper's proposed
+main contribution is now post-action ambiguous-side-effect contract semantics and a
+compiler to a safety-only epistemic monitor. The finite-state benchmark is an
+evaluation vehicle, not the novelty claim. Training remains a thesis-only option
+after a residual headroom gate.
 
 The authoritative status is [`current_plan_zh.md`](docs/plans/current_plan_zh.md)
-section 0.73. The active candidate-only audit, direct-neighbor boundaries,
+section 0.74. The active candidate-only audit, direct-neighbor boundaries,
 mechanical-oracle design, baselines, and No-Go rules are in
 [`llm_native_candidate_audit_v0_1_zh.md`](docs/plans/llm_native_candidate_audit_v0_1_zh.md).
 The retired communication-scoped label, split, baseline, and hard-stop protocol is
@@ -44,8 +49,8 @@ It does not lock either topic or authorize research actions. The older
 [`future_research_direction_v0_1_zh.md`](docs/plans/future_research_direction_v0_1_zh.md)
 is historical only and cannot authorize acquisition, research-input access,
 model selection, training, evaluation, APIs, or claims. The canonical
-future-study manifest remains empty and `not_started` while the author confirms
-the benchmark-as-measurement plus training-free-guard contribution structure.
+future-study manifest remains empty and `not_started` while the author decides
+whether to accept the B-prime contract-semantics-and-compiler contribution structure.
 
 ## 2026-07-18 Research-Lineage Isolation Override
 

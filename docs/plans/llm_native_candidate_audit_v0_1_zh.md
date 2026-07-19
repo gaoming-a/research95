@@ -375,3 +375,78 @@ retry/compensate/escalate 动作空间、首次让 LLM 生成恢复方案，或�
 “benchmark 作为测量基础 + training-free guard 作为小论文主贡献；训练仅作通过残差
 Gate 后的硕士扩展”。确认前不得创建锁定 `PLAN.md`，不得生成 DSL 实例、读取研究样本、
 运行模型/API/训练或开展真实实验。
+
+## 10. guard 冗余反证与 B′ 贡献重构
+
+本节由 9.2--9.5 之后的独立只读反证审计触发，并在贡献形态上取代第9节的默认推荐。
+
+### 10.1 新近邻与结构性 No-Go
+
+- [`AgentSpec`](https://arxiv.org/abs/2503.18666) 已提供 LLM agent 的 DSL 与免训练运行时
+  约束执行；
+- [`VIGIL`](https://arxiv.org/abs/2606.26524) 已把自然语言 skill specification 编译为
+  有限 typed trace 上的策略，并用 SMT reference monitor 阻断违规调用；
+- [`ToolGate`](https://aclanthology.org/2026.findings-acl.470/) 已做工具契约 pre/post 条件
+  与运行时 gate；
+- 经典的[`部分可观测 strong planning`](https://doi.org/10.1016/j.artint.2006.01.004)、
+  [`runtime shield synthesis`](https://chaowang-vt.github.io/pubDOC/BloemKKW15.pdf) 和
+  [`partial-observation shielding`](https://doi.org/10.1609/aaai.v37i12.26723) 已经覆盖
+  belief/support 到安全或获胜动作集合的核心机械问题。
+
+若 guard 获得完整 `M,G,B` 与 winning region，它能直接合成安全 contingent controller；
+LLM 不再提供保证所需的信息。因此“benchmark + winning-action belief guard”作为新方法
+为 No-Go，不得再作为作者确认项，也不得以“LLM 外挂 verifier”的措辞恢复这一 claim。
+
+### 10.2 B′ 的非冗余信息边界
+
+| 组件 | 可见信息 | 禁止信息与输出 |
+|---|---|---|
+| 环境 | 真实隐藏状态、故障分支、完整 DSL | 只向外返回定义好的观测 |
+| LLM | 自然语言目标/工具说明、动作 schema、可见历史 | 不见 gold DSL、精确 belief、oracle 标签或安全动作集 |
+| online monitor | 安全契约投影、安全不变量、公开 trace、候选动作 | 不见目标、成本、winning region、隐藏状态；只 allow/block，不推荐动作 |
+| offline oracle/evaluator | 完整 `M,G,Φ,c` 与观测关系 | 只离线评分，不向 LLM/monitor 反馈 |
+
+必须设计目标反事实配对：monitor 的安全投影与公开历史完全相同，只有 LLM 可见的自然
+语言目标不同，且多个安全动作中任务正确动作互斥。若目标也形式化后交给 monitor，经典
+planner 仍可完整求解，LLM 科学问题再次消失。
+
+### 10.3 最小存活贡献与保证范围
+
+主贡献改为**动作后确认丢失的副作用契约语义及其编译器**：明确 ack/commit、幂等键
+作用域/有效期、查询新鲜度/完备性、部分提交和补偿前提，并编译成 safety-only、最大许可
+的 epistemic monitor。相较 VIGIL 对一个已观测 finite trace 的约束，本候选必须研究一个
+可见 history 同时代表多个可能 effect traces/worlds 时的全称安全判定；该差异仍只是待
+全文检索验证的条件创新边界，不是已确认的“首次”。
+
+形式 soundness 只相对于忠实、正确且完备的契约和安全不变量成立。monitor 不知道任务
+目标，因而不能保证任务完成；LLM 的进展、完成、升级率与成本只能作为经验结果。benchmark
+是语义与测量载体，不是独立创新；belief planning、model checking 和 shielding 是经典
+实现基础，不得作算法 claim。
+
+### 10.4 小论文、硕士论文与发表路线
+
+- 小论文：契约语义、编译器与 soundness 边界、目标反事实配对、集合型 oracle、独立
+  枚举器/符号检查器交叉验证、固定规则与 parser+planner 基线、安全—完成—升级—成本—
+  开销评测；不承诺训练；
+- 硕士论文：不完备或不确定契约、多个相互依赖外部副作用、组合抽象、反例引导契约修订
+  与独立现实语义案例；只有通过残差 Gate 后才研究安全动作集内的策略学习；
+- 小论文现实路线是未来一届 IEEE AITest regular，QRS regular 为备选；投稿当年必须按
+  官方 CFP 重新核验 EI/Compendex 状态。STVR 类期刊留给具有新组合方法和现实验证的硕士
+  扩展，不能把当前合成 wrapper 直接包装成期刊稿。
+
+### 10.5 修订后的硬停止条件与作者 Gate
+
+在第9节停止条件之外，以下任一项成立即 No-Go：
+
+1. online monitor 获得完整 `M,G,B`、winning set/controller 或等价信息；
+2. 不存在只对 LLM 可见、会改变多个安全动作间任务选择的自然语言目标；
+3. 确定性 parser + planner 在严格 graph/contract/template OOD 上近饱和；
+4. safety-only monitor 只能通过接近 `always-escalate` 的拒绝率取得零违规；
+5. 环境、标签与 monitor 只由同一 DSL/实现自证，独立枚举器与符号检查器不能交叉一致；
+6. 找不到至少两个与正式 API 文档语义相符、又不能被标准事务或同键重试平凡消除的案例族；
+7. 新近工作直接覆盖动作后歧义世界集合上的副作用契约编译和最大许可 monitor。
+
+修订后的唯一作者 Gate 是：是否接受“小论文以歧义副作用契约语义与编译器为主贡献，
+benchmark 为评测载体，online monitor 只保安全，训练只作通过残差 Gate 后的硕士扩展”。
+建议在目标为 EI 最低线时接受；若要求小论文必须训练，应停止本候选并重开选题。作者确认
+前不得创建 `PLAN.md`、生成实例、访问研究数据、运行模型/API/训练或开展实验。

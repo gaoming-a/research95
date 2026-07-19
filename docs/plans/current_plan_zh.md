@@ -1,6 +1,71 @@
-# 当前计划：研究载体已接受 / 贡献形态待作者确认 / 新研究数据尚未启动
+# 当前计划：旧 guard 主张已否决 / B′ 贡献形态待作者确认 / 新研究数据尚未启动
 
 最后更新：2026-07-19
+
+## 0.74 2026-07-19 guard 冗余反证 / B′ 贡献重构（旧 B No-Go / B′ 条件 Go / 未授权）
+
+0.73 的下一道作者 Gate 尚未得到确认，后续只读反证审计又发现了更强的结构性问题，
+因此本节在贡献形态上取代 0.73：[`AgentSpec`](https://arxiv.org/abs/2503.18666) 已经用
+DSL 对 LLM agent 做免训练运行时约束；[`VIGIL`](https://arxiv.org/abs/2606.26524) 已将
+自然语言 skill specification 编译为有限 trace 上的策略并由 SMT reference monitor
+执行；[`ToolGate`](https://aclanthology.org/2026.findings-acl.470/) 已做契约化工具验证。
+更根本的是，部分可观测 strong planning 和 belief-support shielding 早已解决“从 belief
+到安全/获胜动作集合”的经典问题。因此，**0.73 中以完整 belief 与 winning strategy 为
+依据的 training-free belief-safe guard 不能作为新的主方法，原 B 现判 No-Go。**
+
+结构性反证不依赖实验：若在线 guard 同时获得完整形式模型 `M`、任务目标 `G`、精确
+belief `B` 和 winning region，它可以直接计算 `A_win(B)` 并按成本选动作，已经是一个
+contingent controller。LLM 提议正确时只是重复该控制器，提议错误时只会降低完成率；即使
+guard 只拒绝不代选，安全与活性判定仍来自经典 planner/shield。把它套在 LLM 外面不会
+产生新的 LLM 算法贡献。
+
+唯一仍可进入条件 Gate 的 B′ 必须采用严格信息分权：
+
+1. **环境与离线 evaluator/oracle** 可见完整 `M,G,Φ,c`、隐藏状态、故障分支和观测关系，
+   以独立枚举器与独立符号检查器计算 `unsafe / safe_losing / winning / optimal` 集合标签；
+   这些标签和策略不得反馈给在线过程；
+2. **LLM** 只见自然语言用户目标、自然语言工具说明、动作 schema 和可见历史，负责提出
+   或修订候选动作；不得见 gold DSL、隐藏状态、精确 belief 或 oracle 动作集；
+3. **在线 monitor** 只见可信的副作用/观测安全投影、安全不变量、公开 trace 与当前候选
+   动作；不得见任务目标、成本、winning region、隐藏状态或故障注入字段；它只返回
+   `allow/block + 粗粒度违规类`，不得推荐、替换动作或暴露完整安全动作集；
+4. benchmark 必须包含安全投影与公开历史完全相同、但自然语言目标不同且任务正确动作
+   互斥的配对实例；这样 monitor 无法替代目标理解，LLM 才拥有不可替代的信息。
+
+B′ 的最小可发表主张不再是“发明 belief guard”，而是：**为动作已可能提交但确认响应
+丢失的外部副作用定义 epistemic contract semantics，形式化 ack/commit 关系、幂等键的
+作用域与有效期、状态查询的新鲜度/完备性、部分提交与补偿前提，并把该契约编译成
+safety-only、最大许可的运行时 monitor。** benchmark 是验证语义和测量 LLM 行为的载体；
+belief update、planner、model checker 和 shielding 均明确作为经典基础，不作 novelty。
+形式保证只能相对于正确且完备的声明契约成立，只保证被放行动作不违反指定安全不变量，
+不能声称端到端现实安全或保证任务完成；完成能力由 LLM 在不获知 oracle 的条件下实证。
+
+对应的小论文科学问题改为：在响应丢失使 applied/unapplied 世界不可区分时，现有 LLM
+agent 的恢复提议是否满足跨全部相容世界的一致安全性；将副作用契约编译为 safety-only
+monitor 后，能否在零形式安全违规的前提下，相比 `always-block/escalate` 保留有实质差异
+的安全完成率和可接受的工具成本？小论文贡献限定为契约语义、编译器及 soundness 边界、
+非冗余配对协议、集合型机械 oracle 与评测，不含普通微调。硕士论文才允许研究不完备/
+不确定契约、多个相互依赖副作用、反例引导的契约修订或组合抽象；只有安全动作集合内还
+存在稳定且不能由确定性规则消除的 OOD 选择残差时，训练才可作为第三层扩展。
+
+第一生死 Gate 仍在任何模型调用之前，但增加一票结构性停止条件：在线 monitor 若获得
+完整 `M,G,B`、winning controller 或等价信息，且不存在只对 LLM 可见的目标语义，立即
+停止，无需实验。其余 No-Go 包括：固定 `query → same-key retry → compensate → escalate`
+规则 sound and complete；确定性自然语言 parser + 经典 planner 在严格 OOD 上近饱和；
+唯一共同安全动作长期只是升级；标准事务/幂等机制消除全部歧义；独立 oracle 交叉核对不
+一致；或近期工作直接覆盖“动作后歧义副作用契约语义 + epistemic monitor 编译”。
+
+现实投稿类型应定位为 LLM agent 测试、验证与软件可靠性，而不是 NLP 训练算法。当前
+只读路线审计将未来一届 IEEE AITest regular 作为优先候选、QRS regular 作为备选；两者
+均不能预先保证未来届次 EI 收录，投稿当年必须按官方 CFP 再核验。STVR 类期刊需要不完备
+契约、组合算法和现实语义案例等硕士扩展，当前小论文完整度不足。
+
+当前唯一作者 Gate 改为：是否接受 B′——“小论文以歧义副作用契约语义与编译器为主贡献，
+benchmark 只作评测载体，online monitor 只保安全、不负责任务完成，训练只在硕士阶段通过
+残差 Gate 后考虑”。建议在目标只是达到 EI 最低线的前提下接受；若要求小论文必须以训练
+算法为主要创新，应否决本候选并重新选题。确认前不得创建 `PLAN.md` 或
+`PLAN-REVIEW-LOG.md`，不得生成 DSL 实例、读取研究样本、运行模型/API/训练或真实实验；
+future manifest 继续为空、`not_started`、data use=false。
 
 ## 0.73 2026-07-19 研究载体已接受 / 最小创新边界与贡献形态收敛（条件 Go / 未定题 / 未授权）
 
