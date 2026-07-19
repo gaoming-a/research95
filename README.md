@@ -1,29 +1,30 @@
 # Research95: Quarantined History And Future-Study Planning
 
 This workspace preserves the previous LLM code-review and evidence-visibility
-research as historical provenance. A future scientific direction is now selected,
-but no empirical study is active: every prior line remains quarantined, and new
-data or training must start from an independently selected, preregistered input
-lineage.
+research as historical provenance. The previously selected future direction was
+withdrawn after a newer novelty and feasibility audit; no replacement topic is
+locked and no empirical study is active. Every prior line remains quarantined,
+and any future data or training must start from an independently selected,
+preregistered input lineage.
 
-## 2026-07-18 Future Research Direction (No Data / No Training)
+## 2026-07-19 Future Research Direction Audit (No Locked Topic / No Data / No Training)
 
 The author constraints are a Communication Engineering master's thesis focused
 on large language models, an EI-indexed small-paper minimum, and local access to
-four A6000 plus three RTX 3090 GPUs. The selected provisional direction is
-counterfactual evidence-consistent training and risk-aware decision-making for
-LLM patch verification. The small paper studies static evidence fusion; the thesis extends
-it to uncertainty control and cost-aware active evidence acquisition.
+four A6000 plus three RTX 3090 GPUs. A read-only audit withdrew the former generic
+patch-verification direction. Two conditional candidates remain: state-level
+diagnostic commitment under a fixed network-fault tool contract, and
+counterfactual semantic validation of generated ns-3 simulation code. The first
+must pass a no-model distinguishability and shortcut audit; the second must pass
+an advisor discipline gate and a deterministic semantic-oracle gate.
 
-The authoritative direction plan is
-[`future_research_direction_v0_1_zh.md`](docs/plans/future_research_direction_v0_1_zh.md).
-It selects the problem spine and records the preliminary literature boundary,
-minimal LoRA method, fresh-data rules, project/time splits, baselines, metrics,
-sample-size procedure, and paper-to-thesis ladder. Exact novelty remains pending
-the systematic G0 review. It does not choose a model, project, task, hyperparameter,
-or sample size, and it does not authorize data use, training, evaluation,
-containers, APIs, or paper-facing results. The canonical future-study manifest
-therefore remains empty and `not_started`.
+The authoritative status is [`current_plan_zh.md`](docs/plans/current_plan_zh.md)
+section 0.69. The older
+[`future_research_direction_v0_1_zh.md`](docs/plans/future_research_direction_v0_1_zh.md)
+is historical only and cannot authorize acquisition, research-input access,
+model selection, training, evaluation, APIs, or claims. The canonical
+future-study manifest remains empty and `not_started` while the author confirms
+whether model training is a mandatory small-paper requirement.
 
 ## 2026-07-18 Research-Lineage Isolation Override
 

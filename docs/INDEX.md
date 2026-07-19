@@ -6,23 +6,21 @@
   loop, including verification, diagnosis, documentation sync, and GitHub sync
   rules for future agent runs.
 
-## Future Research Direction (2026-07-18, No Data / No Training)
+## Future Research Direction Audit (2026-07-19, No Locked Topic / No Data / No Training)
 
 - [future_research_direction_v0_1_zh.md](plans/future_research_direction_v0_1_zh.md):
-  authoritative paper-to-thesis direction for a Communication Engineering
-  master's project focused on LLMs. The small paper studies counterfactual
-  evidence-consistent training and fixed-coverage risk control for patch
-  verification; the thesis extends this to uncertainty control and cost-aware
-  active evidence acquisition. It also records the nearest-work boundary,
-  fresh-data and project/time split rules, minimal LoRA method, baselines,
-  metrics, cluster-aware sample-size procedure, GPU allocation, execution Gates,
-  and hard stops. Status is `DIRECTION_SELECTED / NOVELTY_PENDING /
-  DATA_NOT_AUTHORIZED / TRAINING_NOT_STARTED`.
+  superseded historical candidate for patch-verification research. Its former
+  `DIRECTION_SELECTED` status was revoked by the 2026-07-19 novelty,
+  identifiability, data, and discipline audit. It is not an acquisition,
+  training, evaluation, or claim authority.
 - [current_plan_zh.md](plans/current_plan_zh.md): current closed-loop plan. Its
-  latest section records the direction decision while preserving the empty
-  future manifest and zero training/model/API activity.
+  latest section records the withdrawal of the old patch direction, conditional
+  candidate A (tool-contract-relative network fault identifiability), conditional
+  candidate B (counterfactual semantic validation of ns-3 simulation code), the
+  rejected alternatives, hard stops, and the single unresolved author decision.
 - [current_project_state_zh.md](plans/current_project_state_zh.md): current
-  authority map separating direction selection from empirical-study activation.
+  authority map. No topic is locked; the future manifest remains empty and no
+  data, model, training, simulation, API, or paper-facing claim is authorized.
 
 ## Research-Lineage Isolation Authority (2026-07-18)
 

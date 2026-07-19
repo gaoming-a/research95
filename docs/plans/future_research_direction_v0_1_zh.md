@@ -1,9 +1,16 @@
-# 未来研究方向 v0.1：反事实证据一致性训练与风险可控补丁验证
+# 未来研究方向 v0.1：反事实证据一致性训练与风险可控补丁验证（历史候选）
 
 日期：2026-07-18
 
-状态：`DIRECTION_SELECTED / NOVELTY_PENDING / DATA_NOT_AUTHORIZED /
-TRAINING_NOT_STARTED`
+状态：`SUPERSEDED_BY_2026-07-19_DIRECTION_AUDIT / HISTORICAL_ONLY /
+DO_NOT_EXECUTE`
+
+> **权威状态更正（2026-07-19）：** 后续近期创新边界、数据可得性、标签可识别性和
+> 通信工程契合度审计已撤销本文件的 `DIRECTION_SELECTED` 结论。本文件只保存 2026-07-18
+> 的候选设计与决策来历，不再是未来研究方向或执行权威。不得据此枚举/采集数据、读取
+> 研究输入、选择模型或 prompt、运行训练/评估/API，或形成论文效果 claim。当前状态、
+> 两个条件候选和下一项作者决策以 `docs/plans/current_plan_zh.md` 的 0.69 节为准；逐问
+> 对齐与独立对抗审查完成前没有锁定题目。
 
 ## 1. 决策结论
 

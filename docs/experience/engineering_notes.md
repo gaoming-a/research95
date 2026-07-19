@@ -5762,3 +5762,25 @@ This file starts fresh for the patch-verification project.
   designed comparison.
 - If the main table only shows E0/E3/E6, keep E4/E5 behavior as an artifact
   boundary rather than a prominent main-text claim.
+
+## 2026-07-19 Direction selection must remain revocable until novelty and identifiability pass
+
+- A document labeled `DIRECTION_SELECTED / NOVELTY_PENDING` can become a stale
+  execution hazard when later literature and label audits reject the direction.
+  Preserve the old design as provenance, but add an explicit superseding status
+  at every authority entry instead of silently rewriting its historical logic.
+- GPU availability and an easy LoRA path do not establish a scientific problem.
+  Training is allowed only after a no-model audit shows that deterministic
+  canonicalization, lookup, decision trees, information gain, or ordinary hidden
+  tests do not already solve the task.
+- A benchmark's public row count is not evidence of an admissible train/test
+  split. Provenance IDs, source-run grouping, derived-sample closure, target-field
+  isolation, and a mechanically checkable label contract are separate Gates.
+- Closely related 2026 work can invalidate a broad candidate while leaving a
+  narrower intersection open. Record both the prohibited broad claim and the
+  exact conditional remainder; do not turn a narrow remainder into a locked
+  topic before the author resolves discipline and training requirements.
+- Correcting project status is not the same as writing a locked implementation
+  plan. During Act 1, `current_plan_zh.md` may record a withdrawal and conditional
+  candidates, while `PLAN.md` must wait until the one-question-at-a-time decision
+  tree is resolved with the author.
