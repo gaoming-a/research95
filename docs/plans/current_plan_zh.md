@@ -1,6 +1,64 @@
-# 当前计划：B‴ 通用覆盖方法已否决 / C 契约合法性翻转训练待作者确认 / 新研究数据尚未启动
+# 当前计划：C′ benchmark-first 已锁定并通过计划审查 / 数据与实验仍未授权
 
 最后更新：2026-07-19
+
+## 0.78 2026-07-19 C 方法 No-Go / C′ benchmark-first 锁定 / 四轮计划审查通过（未授权执行）
+
+作者确认停止把 counterfactual pair training 当作创新，接受 **C′ / Same API, Changed
+Contract: Paired Executable Evaluation of LLM Tool-Agent Compliance** 作为唯一锁题方向。
+这次确认锁定研究设计，不授权数据生成、外部数据获取、模型、API、训练或实验。锁定计划见
+仓库根目录 `PLAN.md`，完整四轮独立审查记录见 `PLAN-REVIEW-LOG.md`。
+
+### 最终科学问题与贡献形态
+
+实际问题是：工具名称与参数 schema 没变、当前契约已经呈现给 agent，但幂等、原子提交或
+部分提交语义改变后，agent 仍可能沿用旧动作，从而重复副作用、漏查状态或错误补偿。科学
+问题严格限定为：固定任务、工具 identity/schema、初始状态与除契约外的历史，只改变一个
+可见 executable contract atom，模型能否正确改变动作，并在等价改写下保持稳定。
+
+CounterComp 与 PairCFR 已占据反事实配对、contrastive/triplet 目标及 composition OOD，故 C
+作为训练方法 No-Go；GuideBench 已占据规则更新，Inverse IFEval 已占据训练惯性；
+ContractBench 与 Skill Drift 又分别占据确定性契约 benchmark、executable contract drift
+pairs、hard negatives 和真实版本维护。C′ 只保留“稳定工具表面＋单原子语义差分＋固定
+witness 机械翻转＋闭环 paired execution＋严格 lineage/现实迁移”这一待实证合取单位。
+
+EI 小论文是 benchmark/protocol/empirical study：generator、独立 oracle、paired metrics、
+多模型与强基线、现实文档语义变化迁移。SFT/LoRA、DPO、PairCFR/CounterComp 类目标只作
+适应基线。硕士论文只有在小论文证明 parser/planner 未近饱和、普通适应仍存在稳定 OOD 和
+held-out 现实迁移缺口后，才扩展契约组合、持续更新或结构化适应。
+
+### 自生成数据可靠性的五层硬 Gate
+
+1. **R1 构造有效性**：DSL 类型、可达性、终止性、状态不变量和目标可达性全部通过；flip
+   pair 的语义 AST diff 严格为 1，非契约输入哈希一致；执行对还必须有可复算的策略分离证明。
+2. **R2 标签独立性**：generator 不产生最终标签；冻结人工推导 gold suite，用显式枚举和
+   独立 SMT/模型检查后端复算，三者必须 100% 一致；声明内 mutants 必须全部被杀死。
+3. **R3 文本忠实性**：renderer 只能从验证后的 AST 生成；两名独立审阅者核对全部现实 roots
+   和至少 10%/不少于 100 个合成 roots，合成审计 `κ≥0.80`，现实项实质分歧必须全部解决。
+4. **R4 泄漏与 shortcut**：所有派生继承 `root_id` 并留在同一 split；关键词、位置、长度、
+   工具名、bag-of-words 等浅层基线若在严格 OOD 达到 95%，修复或停题。NL parser+planner
+   近饱和是有效解，只否决训练必要性，不伪装成 shortcut。
+5. **R5 外部有效性**：现实项必须保存旧版、新版和官方迁移声明三方证据，使用
+   `source_change_event_id` 聚类；最低为 30 个独立变化事件、5 个工具族、两个核心契约族。
+   只有供应方测试/官方规范测试/独立可执行 artifact 才能升级为行为证据；自建 mock 只能
+   支持内部一致性，不能证明真实 API 行为。
+
+诊断层固定 witness 的 `permitted↔prohibited`；执行层还冻结 contract-erasure projection、
+history/event 对齐和 action normalizer，并机械证明两侧成功的 contract-agnostic 策略集合
+交为空。这样避免 always-query/always-escalate 在两侧都完成却被误判为契约服从。
+
+### 四轮独立计划审查与当前 Gate
+
+独立只读审查第1轮发现共同 oracle 错误、现实映射过度声称、事件依赖、统计层级、相邻工作
+拼接、parser 解释、硕士迁移和权威冲突；第2轮要求精确定义策略分离、禁止 mock 升级现实
+证据并修正统计主目标；第3轮删除残留的 power/method-primary 冲突；第4轮
+`VERDICT: APPROVED`。当前主要 estimand 是每个预注册模型的 Paired Compliant Completion
+及 root-cluster 95% 区间精度，所有方法差异均为校正后的次要分析。
+
+在进入任何数据阶段前，仍必须另过两道作者 Gate：先确认是否实施**仅代码/规范、无数据、
+无模型**的验证脚手架；以后再单独决定是否授权研究输入构造并修改 canonical manifest。
+当前 `PLAN.md` 的批准不代替任何执行授权，manifest 继续保持
+`not_started / data use=false / 0 inputs / 0 records`。
 
 ## 0.77 2026-07-19 B‴ 条件归约 / 候选 C 契约合法性翻转训练（B‴ 方法 No-Go / C 前置 Gate / 未授权）
 

@@ -6,23 +6,22 @@
   loop, including verification, diagnosis, documentation sync, and GitHub sync
   rules for future agent runs.
 
-## Future Research Direction Audit (2026-07-19, No Locked Topic / No Data / No Training)
+## Future Research Direction Audit (2026-07-19, C-prime Locked / No Data / No Training)
 
 - [llm_native_candidate_audit_v0_1_zh.md](plans/llm_native_candidate_audit_v0_1_zh.md):
   active candidate-only audit after removing the communication-scene constraint.
-  Sections 10--12 preserve the candidate evolution: they reject a winning-action
+  Sections 10--13 preserve the candidate evolution: they reject a winning-action
   guard, B-prime's possible-world monitor, and B-double-prime, while section 12 still
   retained B-triple-prime conditionally. Section 13 replaces that judgment: it records
   B-triple-prime's conditional reduction targets in classical FSM/ioco,
   partial-observation and contract-mutation testing, their applicability limits, and
-  the single-history-oracle redundancy that drives the project No-Go. It introduces
-  only one pre-Gate candidate: stable tool identity/schema, a single contract-atom
-  intervention, and a mechanically flipping permission label for the same normalized
-  witness action. CounterComp, PairCFR and Inverse IFEval further prevent claiming
-  counterfactual pairing, contrastive objectives or composition OOD as the novelty;
-  only a tool-contract-specific executable-oracle and real-version-transfer hypothesis
-  remains to be falsified. It does not lock a topic or
-  authorize data, models, training, APIs, or experiments.
+  the single-history-oracle redundancy that drives the project No-Go. Section 14
+  records the author's C-prime decision: counterfactual pair training is No-Go as a
+  method, while the locked benchmark-first topic requires a stable tool surface,
+  single executable contract delta, independent witness oracle, closed-loop
+  policy-separation certificate, root/event-closed OOD, and real-document transfer.
+  It also freezes the five generated-data reliability Gates and four-round plan
+  review boundary. It authorizes no data, models, training, APIs, or experiments.
 - [future_research_candidate_gates_v0_1_zh.md](plans/future_research_candidate_gates_v0_1_zh.md):
   retired communication-scoped comparison and no-model feasibility protocol for
   the NIKA diagnostic-commitment and ns-3 relational-semantic-validation axes.
@@ -37,10 +36,15 @@
   identifiability, data, and discipline audit. It is not an acquisition,
   training, evaluation, or claim authority.
 - [current_plan_zh.md](plans/current_plan_zh.md): current closed-loop plan. Its
-  latest section records the accepted research vehicle; B-triple-prime's conditional
-  classical-testing reduction and project No-Go; candidate C's exact legality-flip semantics, nearest
-  neighbors, no-model shortcuts, training baselines, OOD gates, paper-to-thesis
-  progression, and the single unresolved author Gate.
+  latest section records locked benchmark-first C-prime, the method No-Go, five data
+  reliability Gates, policy separation, external evidence levels, EI-to-thesis
+  progression, four review rounds, and the remaining execution/data authorization
+  boundaries.
+- `../PLAN.md`: author-locked C-prime research plan. It freezes the scientific
+  question, reliability and novelty Gates, baselines, statistics, stop rules, and
+  paper-to-thesis progression; it is not an execution authorization.
+- `../PLAN-REVIEW-LOG.md`: append-only adversarial plan transcript. Rounds 1--3
+  required revisions; round 4 ends in `VERDICT: APPROVED`.
 - [current_project_state_zh.md](plans/current_project_state_zh.md): current
   authority map. The vehicle is accepted but no topic is locked; the future
   manifest remains empty and no data, model, training, simulation, API, or

@@ -7,7 +7,7 @@ locked and no empirical study is active. Every prior line remains quarantined,
 and any future data or training must start from an independently selected,
 preregistered input lineage.
 
-## 2026-07-19 Future Research Direction Audit (No Locked Topic / No Data / No Training)
+## 2026-07-19 Future Research Direction Audit (C-prime Locked / No Data / No Training)
 
 The author clarified that Communication Engineering is the degree label, while
 the actual research direction is large language models and communication-domain
@@ -15,7 +15,27 @@ coursework is limited. Topic selection is therefore no longer constrained to
 telecommunications. The prior NIKA and ns-3 protocols remain as audited,
 communication-scoped archives, but they have been removed from the active global
 shortlist. The author has accepted only the research vehicle—general LLM tool
-agents plus a self-authored finite-state tool environment—not a final topic.
+agents plus a self-authored finite-state tool environment—and has now locked the
+benchmark-first C-prime topic described below. No data or experiment is authorized.
+
+The locked topic is **Same API, Changed Contract**: paired executable evaluation of
+whether an LLM tool agent changes its actual action when one visible contract atom
+changes behind a stable tool identity and parameter schema. CounterComp and PairCFR
+rule out pairwise/contrastive training as the method novelty; GuideBench and Inverse
+IFEval rule out broad rule-update or training-inertia claims; the 2026 arXiv
+preprints ContractBench and Skill Drift further occupy deterministic contract
+benchmarks, executable drift pairs, hard negatives, and real-version maintenance.
+The remaining contribution is therefore the exact conjunction of a single semantic
+delta, independent witness oracle, closed-loop policy-separation certificate,
+lineage-closed paired metrics, and independent real-document transfer.
+
+Generated data is not trusted by provenance alone. `PLAN.md` freezes five Gates:
+formal construction validity; a generator that never labels plus a hand-derived
+gold suite and two independent solver backends; dual-review rendering fidelity;
+root/event-closed splits and shortcut baselines; and old/new/migration provenance
+for at least 30 independent real change events across at least five tool families.
+Self-authored mocks cannot support real-API behavior claims. The four-round
+adversarial transcript in `PLAN-REVIEW-LOG.md` ends in `VERDICT: APPROVED`.
 
 The full-text boundary audit rules out a generic recovery benchmark and ordinary
 fine-tuning as the default paper. A subsequent redundancy proof also rejects the
@@ -78,7 +98,7 @@ legality oracle with transfer to independent real versioned contract changes. It
 No-Go if full-text comparison shows no domain-specific increment.
 
 The authoritative status is [`current_plan_zh.md`](docs/plans/current_plan_zh.md)
-section 0.77. The active candidate-only audit, direct-neighbor boundaries,
+section 0.78. The active candidate-only audit, direct-neighbor boundaries,
 mechanical-oracle design, baselines, and No-Go rules are in
 [`llm_native_candidate_audit_v0_1_zh.md`](docs/plans/llm_native_candidate_audit_v0_1_zh.md).
 The retired communication-scoped label, split, baseline, and hard-stop protocol is
@@ -87,9 +107,11 @@ It does not lock either topic or authorize research actions. The older
 [`future_research_direction_v0_1_zh.md`](docs/plans/future_research_direction_v0_1_zh.md)
 is historical only and cannot authorize acquisition, research-input access,
 model selection, training, evaluation, APIs, or claims. The canonical
-future-study manifest remains empty and `not_started` while the author decides
-whether to accept candidate C and its mandatory shortcut, OOD, incremental-training,
-and capability-retention No-Go rules.
+future-study manifest remains empty and `not_started`. Topic and plan approval do
+not authorize input construction, model selection, training, evaluation, APIs, or
+paper-facing claims. The next author Gate concerns only whether to implement a
+no-data/no-model specification and validation scaffold; data use remains a later,
+separate authorization.
 
 ## 2026-07-18 Research-Lineage Isolation Override
 

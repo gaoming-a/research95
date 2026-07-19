@@ -5997,3 +5997,34 @@ This file starts fresh for the patch-verification project.
   restore only the mistaken ref with an expected-hash lease; verify both remotes
   independently. Rewriting the ref does not prove immediate backend object
   erasure, so report the exposure boundary explicitly.
+
+## 2026-07-19 Generated benchmark reliability needs independent evidence layers
+
+- Synthetic labels are reliable only relative to a frozen formal semantics. A
+  generator and checker that agree can share the same misconception; require a
+  hand-derived semantic gold suite and a second solver backend that shares no
+  guard, transition, goal, or legality logic.
+- Mechanical labels validate the encoded DSL, not the fidelity of real source
+  documents. Preserve old-version, new-version, and migration-statement evidence;
+  use dual independent source review. Only provider tests, official conformance
+  tests, or independently archived executable artifacts can upgrade a document
+  mapping to real-behavior evidence. Self-authored mocks cannot.
+- Count the highest dependency unit. Variants from the same root stay in one
+  `root_id`; real cases caused by one upstream change share one
+  `source_change_event_id`. Paraphrases, endpoints, repeated inference, or DSL
+  renderings do not create new independent evidence.
+- A witness legality flip does not prove that a closed-loop agent must condition on
+  the contract. Freeze a contract-erasure projection, history/event alignment, and
+  action normalization; require the two sides' successful contract-agnostic policy
+  sets to have an independently certified empty intersection.
+- For a benchmark-first paper, the primary estimand should be each preregistered
+  model's paired score with a cluster-level precision target. Do not invent a
+  primary method contrast before a novel method exists; keep adaptation
+  comparisons corrected and secondary.
+- A semantic NL parser plus exact planner can be the correct solution, not a
+  shortcut. Shallow non-semantic baselines near saturation invalidate the data;
+  a strong parser invalidates the necessity of parameter training but may remain a
+  valuable benchmark result.
+- Topic acceptance, plan approval, data-use authorization, and experiment execution
+  are four separate authorities. Keep the manifest empty until the corresponding
+  author Gate explicitly changes it.

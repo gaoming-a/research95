@@ -2,7 +2,28 @@
 
 日期：2026-07-19
 
-## 2026-07-19 当前权威：B‴ 通用覆盖方法已否决 / C 契约合法性翻转训练待确认 / 尚未定题
+## 2026-07-19 当前权威：C′ benchmark-first 已锁定 / 四轮计划审查通过 / 尚未授权执行
+
+- 作者已确认 C 的训练方法 claim No-Go，并锁定 **C′ / Same API, Changed Contract**；小论文
+  以 executable contract-delta benchmark、独立机械 oracle、witness/闭环 paired metrics、
+  lineage OOD 与现实文档语义变化迁移为主，训练只作基线；
+- `PLAN.md` 已创建，`PLAN-REVIEW-LOG.md` 记录四轮独立只读审查。前三轮依次修复了 generator/
+  oracle 共同错误、现实证据等级、`source_change_event_id`、统计 estimand、相邻工作拼接、
+  policy-separation 可复算性和残留 power 口径；第4轮 `VERDICT: APPROVED`；
+- 自生成数据可靠性不是由数据量保证，而由 R1--R5：形式构造全通过、generator 不产标签、
+  gold suite＋两种独立求解器、双人文本/来源复核、root/event lineage closure、浅层 shortcut
+  检查，以及旧版/新版/迁移声明三方现实证据；
+- 执行对必须冻结 contract-erasure projection、history/event alignment 与 action normalizer，
+  并证明两侧成功的 contract-agnostic 策略集合交为空，排除共同保守策略伪装成契约服从；
+- 现实迁移最低 Gate 为 30 个独立变更事件、5 个工具族、两个核心契约族；自建 mock 不能
+  升级为真实 API 行为证据。若现实事件不足或相邻工作组合可完整复现研究单位，重新过选题 Gate；
+- EI 小论文不预设新方法，主要 estimand 是每个预注册模型的 Paired Compliant Completion 与
+  root-cluster 95% 区间精度；方法差异都是校正后的次要分析；
+- 计划批准仍不授权数据/模型/API/训练/实验。隔离审计为 `passed_armed_no_new_study`，future
+  manifest 仍为 `not_started / data use=false / 0 inputs / 0 records`。下一道作者 Gate 只决定
+  是否实施无数据、无模型的规范/验证脚手架；数据构造以后另行授权。
+
+## 2026-07-19 上一轮权威：B‴ 通用覆盖方法已否决 / C 契约合法性翻转训练待确认（已被上方覆盖）
 
 - 作者接受 0.76 的停止条件后，三路只读审查发现 B‴ 的 atomic obligation 与“信息状态、
   输入、允许输出集合”存在直接结构近邻；complete requirements-based FSM testing、

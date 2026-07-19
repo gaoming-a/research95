@@ -2,7 +2,7 @@
 
 日期：2026-07-19
 
-状态：`CANDIDATE_AUDIT_ONLY / TOPIC_NOT_LOCKED / DATA_NOT_AUTHORIZED /
+状态：`C_PRIME_TOPIC_LOCKED / PLAN_REVIEW_APPROVED / DATA_NOT_AUTHORIZED /
 NO_MODEL_OR_EXPERIMENT`
 
 ## 1. 本轮纠正与边界
@@ -760,3 +760,65 @@ GuideBench、Inverse IFEval、AgentAssay/TSCG/PA-Tool 等全文重合；或方�
 固定 witness 动作合法性机械翻转 + 可观察服从/OOD 作为待反证候选”。本次题目确认也不构成
 数据或生成授权。确认前不锁题、不创建 `PLAN.md` 或 `PLAN-REVIEW-LOG.md`，不生成实例，
 不访问研究输入，不选择模型，不运行 API、训练或实验。
+
+## 14. C 方法 No-Go 与 C′ benchmark-first 锁定（取代第13节当前判断）
+
+作者已确认停止把 counterfactual pair training 作为创新，并接受 **C′ / Same API, Changed
+Contract: Paired Executable Evaluation of LLM Tool-Agent Compliance**。两路全文审查的合并
+判定是：**训练方法 No-Go；精确定义的 benchmark/protocol Conditional Go。**
+
+### 14.1 方法与 benchmark 边界
+
+[CounterComp](https://aclanthology.org/2023.acl-long.834/) 已覆盖反事实组件、triplet/metric
+learning 与 unseen composition；[PairCFR](https://aclanthology.org/2024.acl-long.646/) 已覆盖
+最小标签翻转、original/CFE 配对、CE+InfoNCE 和 pair/shuffle 消融。因此 CE、margin、
+InfoNCE、DPO 或 consistency 形式的 witness flip 都不能作为新方法。
+
+[GuideBench](https://aclanthology.org/2025.acl-long.557/) 已覆盖动态 guideline update 与
+same-input output change；[Inverse IFEval](https://openreview.net/forum?id=sTwMHXReLc) 已覆盖
+模型克服训练惯性。2026 arXiv 预印本
+[ContractBench](https://arxiv.org/html/2605.17281) 已做可程序验证的 observation contracts；
+[Skill Drift Is Contract Violation](https://arxiv.org/html/2605.10990) 已发布 executable
+environment contracts、880 个 drift pairs、真实变化与 hard negatives。故 C′ 不能声称首次
+规则更新、契约 benchmark、可执行契约、反事实 pairs 或真实版本 drift。
+
+唯一剩余合取单位是：固定工具 identity/schema、任务、状态和除契约外的历史，只改变一个
+executable contract atom；独立 oracle 证明固定 witness 合法性翻转；闭环 episode 又证明
+不存在忽略契约变化而能在两侧都成功的共同策略；在 root/tool/event-closed OOD 和独立现实
+变化上评估。若全文维度矩阵不能证明 paired design 比独立实例 aggregate accuracy 新识别
+contract sensitivity、equivalent invariance 与 paired compliant completion，数据构造前停题。
+
+### 14.2 数据可靠性不是“生成正确”，而是五类独立证据
+
+1. **构造证据**：DSL 类型/可达/终止/不变量、语义 AST diff=1、非契约输入哈希一致、目标
+   可达和 policy separation 全部机械通过；
+2. **标签证据**：generator 不输出标签；人工推导 gold suite、显式枚举和独立 SMT/模型检查
+   两个后端必须 100% 一致，并杀死声明内 guard/scope/expiry/partial-commit 等 mutants；
+3. **表达证据**：renderer 从 AST 生成，两名审阅者核对全部现实 roots 及至少 10%/100 个
+   合成 roots；合成 `κ≥0.80`，现实映射的实质分歧全部解决；
+4. **独立性证据**：所有派生继承 `root_id`，现实同一上游变化共享
+   `source_change_event_id`；split 和统计都在最高依赖 cluster 闭合；浅层基线饱和即 shortcut；
+5. **外部证据**：每项保存旧版、新版和官方迁移声明三方 provenance。只有供应方测试、官方
+   规范测试或独立可执行 artifact 能支持真实行为；自建 mock 只能证明内部一致性。外部集最低
+   30 个独立变化事件、5 个工具族、两个核心契约族，否则重新过选题 Gate。
+
+执行层使用冻结的 contract-erasure projection `E`、event/transition 对齐和 action normalizer。
+在有限 horizon/cost 下，`Π_i^ok` 是只读取 `E(history)` 且能在第 i 侧合规完成的确定性历史
+策略集合；主 pair 要求 `Π_0^ok∩Π_1^ok=∅`，并由独立后端给出空交证明或共同策略反例。
+
+### 14.3 论文递进、统计与审查结果
+
+EI 小论文贡献固定为 generator/protocol/oracle/paired metrics/empirical findings。唯一主要
+estimand 是每个预注册模型在目标 root population 上的 Paired Compliant Completion，样本量
+以 root-cluster 95% 区间半宽不超过 5 个百分点为目标；方法差异均为 Holm 校正的次要分析。
+SFT/LoRA、DPO、PairCFR/CounterComp 类目标只作基线。
+
+硕士方法扩展还必须在 held-out `source_change_event_id` 上取得预注册的实际改进并保持基础
+tool-calling；否则不能由合成 OOD 结果外推现实适应。具体模型与 EI venue 在执行/投稿时用
+官方来源重新核验。
+
+锁定 `PLAN.md` 经四轮独立只读审查：前三轮修复 oracle 共同错误、现实证据等级、事件聚类、
+统计主目标、创新拼接风险、parser 解释、policy separation 和文内 power 冲突；第4轮为
+`VERDICT: APPROVED`。批准只说明计划可执行，不授权生成数据、访问研究输入、选择模型、运行
+API、训练或实验。下一道 Gate 仅问是否实施无数据/无模型的规范与验证脚手架；研究输入构造
+仍需以后单独签字并修改 canonical manifest。
