@@ -15,8 +15,9 @@
   接受网络仿真代码作为通信工程主场景，且隐藏语义关系具有稳定机械 oracle 时才可立项；
 - TelecomTS 尺度微调、3GPP 跨 Release RAG、普通配置修复、通用 Telecom RCA 微调和
   无线端边路由不再是当前候选主线；
-- 作者尚未回答导师是否强制小论文包含模型训练，所以没有最终题目、数据、模型、方法、
-  样本量或实验授权。`PLAN.md` 与 `PLAN-REVIEW-LOG.md` 尚不应生成；
+- 作者已确认小论文不强制模型训练，只要求能够发表，因此候选 A 暂列第一顺位；当前仍
+  待确认是否接受评测协议、机械标签和基准构建为主要贡献，所以没有最终题目、数据、
+  模型、方法、样本量或实验授权。`PLAN.md` 与 `PLAN-REVIEW-LOG.md` 尚不应生成；
 - future manifest 继续为空、`not_started`、data use=false；模型/API、容器、仿真、训练、
   评估和论文效果 claim 均为0。当前权威细节见 `current_plan_zh.md` 0.69--0.70。
 
