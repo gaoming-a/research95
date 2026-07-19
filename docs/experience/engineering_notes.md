@@ -5919,3 +5919,10 @@ This file starts fresh for the patch-verification project.
   `selection_inputs`, and `records`, with authorization nested under
   `authorization.data_use_authorized`; the deterministic isolation audit remains
   the authoritative Gate.
+- A remote named `origin` is not necessarily the branch's authorized destination.
+  Before every research-plan push, inspect the branch's configured remote,
+  pushRemote, repository visibility, and exact target ref. If a new commit is sent
+  to the wrong remote, first preserve the intended private synchronization, then
+  restore only the mistaken ref with an expected-hash lease; verify both remotes
+  independently. Rewriting the ref does not prove immediate backend object
+  erasure, so report the exposure boundary explicitly.

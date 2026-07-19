@@ -115,6 +115,15 @@ Act 1 仍未结束，不创建 `PLAN.md` 或 `PLAN-REVIEW-LOG.md`，也不生成
 修正为 `status`、`selection_inputs` 与 `authorization.data_use_authorized`；复核结果为
 `not_started / false / 0 inputs / 0 records`。该检查错误没有改变 manifest 或研究状态。
 
+Git 同步发生一次执行链路错误并已定点修复：当前分支实际跟踪私有 remote `private`，首次
+命令却显式指定了公开 remote `origin`，使六文档提交短暂成为公开分支最新提交。确认两个
+仓库的可见性后，先将同一提交同步至私有跟踪分支，再仅在公开分支仍精确指向该误推提交时，
+使用带 expected-hash lease 的定点更新恢复到误推前提交 `fb82a89`；最终逐远端查询确认公开
+分支恢复、私有分支同步，工作区 clean。提交内容的敏感信息与禁提路径命中均为零，且不含
+数据、结果、凭证或模型产物；但分支引用恢复不等于 GitHub 后端对象的可证明物理擦除，故
+不得声称零时长暴露或彻底删除。后续推送必须先核对 `branch.*.remote/pushRemote` 与仓库
+visibility，并使用跟踪 remote 或明确的 `private`，不能凭 remote 名称猜测。
+
 ## 0.74 2026-07-19 guard 冗余反证 / B′ 贡献重构（旧 B No-Go / B′ 条件 Go / 未授权）
 
 0.73 的下一道作者 Gate 尚未得到确认，后续只读反证审计又发现了更强的结构性问题，
