@@ -2,29 +2,45 @@
 
 日期：2026-07-19
 
-## 2026-07-19 当前权威：B″ 变形测试已否决 / B‴ 语义义务覆盖待确认 / 尚未定题
+## 2026-07-19 当前权威：B‴ 通用覆盖方法已否决 / C 契约合法性翻转训练待确认 / 尚未定题
 
-- 0.75 的 B″ 已由组件级碰撞与内部冗余共同否决：Rainmaker 已测试 effect 后的 response-
-  path timeout、重试副作用和 call-site coverage；未经同行评审的 AgentAssay 技术报告已
-  提出 agent contracts、coverage、mutation 与 MRs 的组合；SGVEF-LOOP 已对 MCP agents
-  做 coverage-guided metamorphic evaluation；没有声称某一篇先例完整覆盖 B″；
-- B″ 还有内部增量问题：精确 `Safe(K)` 单例 oracle 已能检查 agent 动作，安全集 inclusion
-  不会自动变成两个单选输出之间的 MR。MR 若不比单例 oracle 多检出或多定位问题，就没有
-  agent-testing 增量；
-- 当前只保留 B‴ 条件候选：从副作用与恢复契约生成原子 semantic obligation——一个
-  具体动作、同观测的一对 safe/unsafe 隐藏世界、recovery capability、相关多步前缀与
-  显式 action probe；obligation universe 不含另行冻结的 defects，避免 coverage/kill 循环
-  定义；以有限 criterion、固定前缀重复采样和完整轨迹 rollout 检查 LLM tool-agent policy；
-- B‴ 必须在等案例预算下严格增加对 Rainmaker P1--P4/call-site、ReliabilityBench Action
-  MRs、AgentAssay、SGVEF/StateGen transition coverage、单世界 oracle 与随机对照的缺陷/
-  mutant kill；否则立即 No-Go；
-- AITest 2026 三篇近邻已确认为 Full Papers，但截至 2026-07-19 无公开全文/摘要/DOI。
-  NetAgentBench 是同作者团队的独立 ICCCN 论文，只能证明 FSM/trajectory/idempotent replay
-  已被占据。全文若覆盖 B‴ 的精确边界，立即换题；
-- 当前只待作者确认是否接受“B″ No-Go / B‴ 条件候选 / 增量失败或全文碰撞即换题”。确认前
-  不锁题，不创建 `PLAN.md`，不生成数据、运行模型/API/训练或实验；future manifest 继续为
+- 作者接受 0.76 的停止条件后，三路只读审查发现 B‴ 的 atomic obligation 与“信息状态、
+  输入、允许输出集合”存在直接结构近邻；complete requirements-based FSM testing、
+  n-complete ioco、partial-observation testing 与 contract mutation 是必须比较的条件性
+  归约目标。它们各有确定性、有限/状态有界、公平执行、test-purpose 或 modeled-fault
+  假设，文献本身不直接证明随机 LLM policy 被完整 subsume；
+- Rainmaker 已直接注入 effect 后 response timeout，RIFL 已处理 lost reply、唯一请求 ID、
+  持久结果与 lease/GC；Near-Miss 已识别 mutating trajectories 中最终状态正确但未获取
+  必要信息的 latent failures。B‴ 不能再声称新隐藏世界语义、新 coverage theory 或新
+  mutation adequacy；
+- B‴ 还有决定性内部 No-Go：若 `A_all(h)` 可精确计算，单历史 oracle 已能判断 agent 动作；
+  safe/unsafe world pair 往往只增加解释而不增加检出。它只剩很窄的 acknowledgement-loss
+  benchmark 空隙，不再作为首选课题；
+- 当前唯一前置 Gate 候选 C 是 **Same Tool, Changed Contract**：固定任务、工具身份/schema、
+  状态与完整可见历史，只显式改变一个可执行契约原子，并由独立机械 oracle 证明同一规范化
+  witness action 的 `permitted/prohibited` 标签翻转；这不把它称为唯一最优动作，完整 policy
+  评价必须另行冻结目标、时域、成本、fallback 与动作等价关系；
+- C 的科学问题只限模型对当前契约的可观察 behavioral compliance，以及训练能否提高固定
+  动作合法性翻转、等价改写判断稳定性、unseen-tool-family 与 unseen-contract-composition
+  OOD；不能由 token/输出变化推断模型内部的因果机制；
+- GuideBench、RoTBench、ToolEVO、ACL 2026 policy internalization、ToolAnchor、TicToc、
+  Guidelines as Environments、Contract2Tool、ContractBench、CounterComp、PairCFR 与 Inverse
+  IFEval 已占据相邻组件；pair flip、contrastive/invariance objective 和 composition OOD 均
+  不是创新。C 只剩“工具契约可执行干预 + 固定动作合法性机械 oracle + 独立真实版本变化
+  迁移”的待全文反证领域假设；
+- 当前只待作者确认是否接受“B‴ 方法 No-Go / C 前置 Gate 候选及其硬停止规则”。本次题目
+  确认也不授权生成或数据使用；只有以后另行 author sign-off 且 manifest 明确授权后，才可
+  执行无模型 feasibility。确认前不锁题，不创建 `PLAN.md`，不生成数据，不选择模型，不运行 API/训练/实验；future manifest 保持
   `not_started / data use=false / 0 inputs / 0 records`。权威细节见 `current_plan_zh.md`
-  0.76 与候选审计第12节。
+  0.77 与候选审计第13节。
+
+## 2026-07-19 上一轮权威：B″ 变形测试已否决 / B‴ 语义义务覆盖待确认（已被上方覆盖）
+
+- B″ 已由 Rainmaker、AgentAssay、SGVEF-LOOP 等组件级碰撞和精确 `Safe(K)` 单实例 oracle
+  的内部冗余否决；
+- B‴ 曾被保留为契约派生的 atomic ambiguity-obligation coverage 条件候选，并要求相对
+  call-site、transition、Action-MR 和 single-world oracle 严格新增 mutant kill；
+- 后续 0.77 的经典测试理论与近期 agent-testing 反证已经触发该候选的停止条件。
 
 ## 2026-07-19 上一轮权威：B′ 形式方法已否决 / B″ 测试路线待确认（已被上方覆盖）
 

@@ -14,13 +14,8 @@ the actual research direction is large language models and communication-domain
 coursework is limited. Topic selection is therefore no longer constrained to
 telecommunications. The prior NIKA and ns-3 protocols remain as audited,
 communication-scoped archives, but they have been removed from the active global
-shortlist. The LLM-native audit now has one conditional priority candidate:
-safe recovery after an ambiguous outcome from a side-effecting tool. It studies
-whether an LLM agent reconciles the set of still-possible world states before
-retrying, compensating, terminating, or escalating. The proposed oracle is a
-self-authored finite-state tool DSL plus belief-state planning and model checking;
-no existing research samples are required. The author has accepted this research
-vehicle, but the topic is still only a conditional Go.
+shortlist. The author has accepted only the research vehicle—general LLM tool
+agents plus a self-authored finite-state tool environment—not a final topic.
 
 The full-text boundary audit rules out a generic recovery benchmark and ordinary
 fine-tuning as the default paper. A subsequent redundancy proof also rejects the
@@ -51,23 +46,39 @@ Rainmaker is limited to one REST interaction and its SDK retries and does not de
 recovery contracts or world-uniform oracles; SGVEF-LOOP does not define ambiguous
 side effects or recovery-contract adequacy.
 
-The only remaining conditional form, B-triple-prime, is narrower: a
-contract-derived semantic adequacy criterion for observation-equivalent hidden
-effect worlds. Each atomic obligation records a visible history, one concrete action,
-one world where that action is safe, one observation-equivalent world where it is
-unsafe, a recovery-capability profile, and a dependent prefix. The obligation universe
-is independent of the separately frozen defect universe; defect-to-witness-to-kill
-must be proved and executed afterward. The scientific test is whether this
-criterion detects additional agent-policy defects at an equal case budget beyond
-Rainmaker-style fault policies, ordinary call-site/transition/final-state coverage,
-Action MRs, and single-world oracles. Metamorphic relations, finite-state machinery,
-monitors, and mutation analysis are diagnostics or validation devices rather than the
-claimed novelty. Stochastic policies are sampled at every bounded reachable prefix;
-finite trials estimate violation probabilities rather than prove the complete policy.
-Training remains thesis-only after a deterministic-baseline residual gate.
+The latest audit also rejects B-triple-prime as a new general coverage method.
+Complete requirements-based FSM testing, n-complete ioco, partial-observation
+testing, and contract mutation provide its closest mandatory formal baselines,
+subject to their deterministic, finite/state-bounded, fairness, test-purpose, and
+modeled-fault assumptions. They do not by themselves prove that stochastic LLM
+policies are fully subsumed. Rainmaker directly injects a lost
+response after a remote effect, RIFL handles lost replies with request identity and
+persistent results, and Near-Miss already detects mutating trajectories that reach a
+correct state without gathering policy-required information. More importantly, once
+the exact allowed-action set is available, a single-history oracle can detect the
+agent error; paired hidden worlds may add explanation without additional detection.
+B-triple-prime therefore remains only a historical narrow benchmark possibility,
+not the preferred topic.
+
+The new sole pre-Gate candidate is **Same Tool, Changed Contract**. It keeps the
+tool identity and schema, task, state, and visible history stable, changes exactly
+one visible executable contract atom, and requires an independent oracle to prove
+that the permission label of the same normalized witness action flips. This does not
+claim that the witness is the unique optimal action; full-policy evaluation would
+first need frozen goals, horizons, costs, fallback rules, and action equivalence.
+Semantics-preserving contract rewrites form matched legality-judgment controls. The
+LLM-specific question is observable contract-conditioned compliance, not a claim
+about the model's internal causal mechanism. GuideBench, RoTBench,
+ToolEVO, ACL 2026 policy internalization, ToolAnchor, TicToc, Contract2Tool,
+ContractBench, Guidelines as Environments, CounterComp, PairCFR, and Inverse IFEval
+bound the claim: ordinary tool drift, policy updates, counterfactual pairing,
+contrastive objectives, SFT/DPO, and compositional OOD are not novel. The remaining
+hypothesis is only a tool-contract-specific executable intervention and mechanical
+legality oracle with transfer to independent real versioned contract changes. It is
+No-Go if full-text comparison shows no domain-specific increment.
 
 The authoritative status is [`current_plan_zh.md`](docs/plans/current_plan_zh.md)
-section 0.76. The active candidate-only audit, direct-neighbor boundaries,
+section 0.77. The active candidate-only audit, direct-neighbor boundaries,
 mechanical-oracle design, baselines, and No-Go rules are in
 [`llm_native_candidate_audit_v0_1_zh.md`](docs/plans/llm_native_candidate_audit_v0_1_zh.md).
 The retired communication-scoped label, split, baseline, and hard-stop protocol is
@@ -77,9 +88,8 @@ It does not lock either topic or authorize research actions. The older
 is historical only and cannot authorize acquisition, research-input access,
 model selection, training, evaluation, APIs, or claims. The canonical
 future-study manifest remains empty and `not_started` while the author decides
-whether to accept B-triple-prime and its mandatory No-Go rules: no strict coverage
-increment over the strongest baselines, or direct overlap with the three pending
-AITest 2026 full texts.
+whether to accept candidate C and its mandatory shortcut, OOD, incremental-training,
+and capability-retention No-Go rules.
 
 ## 2026-07-18 Research-Lineage Isolation Override
 

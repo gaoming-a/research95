@@ -630,3 +630,133 @@ checking 与相对 coverage 增量，立即换题。
 
 当前 Gate 只问作者是否接受“B″ No-Go / B‴ 条件候选 / 严格增量失败或全文重合即换题”。
 确认前不锁题、不创建计划终稿、不生成研究实例、不访问研究输入、不运行模型或实验。
+
+## 13. B‴ 方法 No-Go 与候选 C 契约合法性翻转训练（取代第12节当前候选判断）
+
+作者接受第12节的停止条件后，继续完成了经典测试理论、分布式故障恢复和近期 agent
+evaluation 的三路只读反证。结论是：**B‴ 不能作为新的通用 coverage/adequacy 方法。**
+
+### 13.1 B‴ 的条件性归约与适用边界
+
+[Complete Requirements-based Testing with Finite State Machines](https://arxiv.org/abs/2105.11786)
+在确定性 FSM 中把原子需求表示为参考状态、输入和允许输出集合；[n-Complete Test Suites for IOCO](https://link.springer.com/article/10.1007/s11219-018-9422-x)
+在实现状态数有界、公平执行等条件下，对含 I/O、quiescence 与 compatible states 的
+suspension automata 给出 n-complete ioco test suites；[Timed Testing under Partial Observability](https://vbn.aau.dk/da/publications/timed-testing-under-partial-observability/)
+在其 test-purpose/conformance 设定中使用隐藏状态集合和 observation-based strategies；
+[Require, Test, and Trace IT](https://link.springer.com/article/10.1007/s10009-016-0444-z)
+从需求契约生成 mutants，并只对能导致可控 forbidden behavior 的可区分 modeled faults
+寻找 witness。它也会遇到 equivalent/unproductive mutants，保证受确定性 SUT 与冻结
+fault model 限定，不能外推为一般缺陷缺失。
+
+这些文献本身没有无条件证明 B‴ 被完整包含。它们给出结构最接近、必须比较的形式基线：
+只有另证 belief/information-state 的忠实有限编译并满足各自假设，B‴ 的结构部分才可视为
+“信息状态、输入、允许输出”的领域实例；`A_all=∩Safe(w)` 也只能先视为有直接部分可观测
+基线的候选 oracle。故 B‴ 不能把该结构、有限 fault model 或 mutant kill 本身声明为新一般
+理论，但 No-Go 不是“既有文献已经严格 subsume 随机 LLM policy”的无条件定理。
+
+动作后歧义本身也有直接先例。[Rainmaker](https://www.usenix.org/system/files/nsdi23-chen-yinfang.pdf)
+注入请求生效后响应延迟至客户端 timeout；[RIFL](https://sigops.org/s/conferences/sosp/2015/current/2015-Monterey/126-lee-online.pdf)
+用唯一 RPC identity、持久 completion record 与 lease/GC 处理 lost reply 和 retry dedup；
+这为 request identity 与 completion-record lifetime 提供具体先例，但不等同于一般 API
+idempotency-key 的全部 scope/expiry 契约。Chain Replication、FATE/DESTINI、
+Filibuster、Flux 与 ExoFlow 已覆盖 readback-before-retry、恢复规范、多 RPC 相关故障、幂等
+与补偿。[Near-Miss](https://aclanthology.org/2026.gem-main.30/) 又已识别 mutating trajectory
+中“最终结果正确但未做必要检查”的 latent policy failure。
+
+即使没有这些外部碰撞，B‴ 仍有内部 No-Go：只要 `A_all(h)` 可精确计算，单历史成员检查
+就能判定 agent 动作；safe/unsafe world pair 可能增加解释，却不增加检测。故第12节要求的
+“相对单实例 oracle 严格新增 kill”没有方法层先验支撑；上述 formal testing 是在各自有限/
+状态有界假设下必须面对的归约目标。B‴ 只剩一个窄的 acknowledgement-loss empirical
+benchmark 空隙，不能
+再称新 coverage theory。本审计按已接受停止规则结束 B‴ 的首选资格。
+
+### 13.2 候选 C 的可识别最小科学问题
+
+候选 C 暂名 **Same Tool, Changed Contract: Counterfactual Pair Training for
+Contract-Conditioned LLM Tool Agents**。它不再研究隐藏世界覆盖，而研究一个直接可观察、
+可训练和可证伪的行为问题：当前工具契约已改变时，模型是否仍输出只符合旧契约的判断。
+工具身份与 schema 保持稳定，契约字段是唯一受控变化；契约 token 必然变化，因此输出差异
+只能证明 observable contract-conditioned compliance，不能识别模型内部是否“真正依赖”
+某个因素或给出因果机制结论。
+
+决定性最小 pair 改为：
+
+`(x,c0,a_w,L0)` 与 `(x,c1,a_w,L1)`，且 `L0≠L1`。
+
+`x` 固定任务、工具身份、参数 schema、环境状态和完整可见历史；`c0/c1` 只改变一个明确
+呈现给模型的契约原子；`a_w` 是冻结规范化动作类中的同一 witness action；
+`L∈{permitted,prohibited}` 只表示它在冻结的一步决策边界内是否被可执行契约许可。独立
+checker 必须证明标签翻转。这不把 `a_w` 称为唯一最优动作，也不排除 query、escalate、no-op
+在两边共同合法。若以后评价完整 policy，必须先另行冻结目标、时域、进度/成本、fallback
+规则和动作等价关系。等价 controls 只改变同义措辞、字段顺序或无关条款，并要求同一规范化
+动作的合法性判断稳定，而非原始文本行为完全相同。研究问题是训练能否提高这种决定性更新
+与等价变化稳定性，并进入 tool-family 与 contract-composition OOD。
+
+### 13.3 已占据边界与待反证的领域创新假设
+
+- [GuideBench](https://aclanthology.org/2025.acl-long.557/) 已评测频繁更新的领域 guidelines；
+- [RoTBench](https://aclanthology.org/2024.emnlp-main.19/) 与 ToolEVO 已覆盖工具名、参数、
+  response format、弃用和噪声下的工具适应；
+- [Analyzing and Internalizing Complex Policy Documents for LLM Agents](https://aclanthology.org/2026.acl-long.767/)
+  已提供可控 policy 环境生成、合成数据与 policy continued pretraining；
+- [ToolAnchor](https://arxiv.org/abs/2607.14145) 已用 counterfactual anchor contexts 和
+  post-training 缓解扩展工具集时的 behavioral inertia；
+- [TicToc](https://arxiv.org/abs/2510.23853) 已测并训练时间新鲜度下的调用决策；
+- Guidelines as Environments、Contract2Tool 与 ContractBench 分别占据因果规则世界规划、
+  契约学习和 observation-contract 检查；
+- [CounterComp](https://aclanthology.org/2023.acl-long.834/) 已把 counterfactual compositional
+  contrast、metric learning 和 unseen-domain/composition OOD 结合；
+  [PairCFR](https://aclanthology.org/2024.acl-long.646/) 已用成对最小标签翻转数据和 contrastive
+  learning 提高 OOD；[Inverse IFEval](https://openreview.net/forum?id=sTwMHXReLc) 已直接测量
+  模型克服训练惯性、服从与既有模式冲突的当前指令。
+
+因此“tool drift benchmark”“规则更新”“counterfactual data”“普通 SFT/DPO”、pair flip、
+invariance/contrastive objective 与 compositional OOD 均不能单独作创新。C 目前只剩待全文
+反证的工具契约领域假设：**稳定工具身份/schema 与历史，单一可执行契约原子干预，同一
+规范化 witness action 的机械合法性翻转，以及向独立真实版本化契约变化的迁移。** 若它
+相对上述方法、GuideBench 和 AgentAssay/TSCG/PA-Tool 等 agent 近邻没有工具契约特有增量，
+就只是既有反事实训练的领域实例。
+
+### 13.4 数据、机械标签、基线与递进
+
+当前只设计协议，不授权生成。题目确认本身也不授权任何生成或数据使用。未来只有作者另行
+签署 acquisition/data-use 授权且 canonical manifest 明确改为 authorized 后，数据才可由
+完全自建有限状态 contract DSL 产生；现实 API 文档只可在许可与 manifest 单独批准后用作
+mutation taxonomy 和外部迁移来源，不替代机械标签。
+
+首篇只保留两类主干：
+
+1. idempotency：结果不明后可同 key 重试，或必须先 query/reconcile；
+2. atomicity/partial commit：可整体重试，或必须核对已提交部分并补偿。
+
+freshness 只作迁移轴。建议 8--12 个工具族；按基础语义模板、工具族和契约组合封闭划分，
+所有改名、措辞、排序和随机派生留在同一 split。生成器与枚举/符号 checker 独立实现。
+测试必须含 unseen tool family、unseen wording 和 unseen two-clause composition；多个自建
+领域包装不能充当现实性证据，还必须预注册一个与合成模板 lineage 独立的真实、版本化契约
+变化迁移集，其获取另需授权。
+
+强基线为 prompt-only、契约显式重读、关键词/位置规则、deterministic parser+exact planner、
+等样本等 token ordinary SFT、standard DPO、CounterComp/PairCFR 类目标、shuffled-pair
+SFT/DPO、oracle 上界，以及标准 tool-calling 保持集。主要指标先限定为 witness-legality
+flip accuracy、equivalent-contract judgment consistency、两类 OOD 和基础能力保持率；完整
+agent 动作指标要等目标/时域/成本被另行冻结。
+
+EI 小论文若 Gate 通过，暂定贡献只能是可执行工具契约干预生成器、固定动作合法性机械
+oracle、pair-level protocol 与真实版本变化迁移证据。训练目标只有在相对 CounterComp、
+PairCFR、普通 SFT/DPO 和 shuffled pairs 的严格增量成立后才能成为方法贡献。LoRA 只是
+实现手段。硕士论文再做契约代数、多条款组合、隐式漂移检测、持续/在线适应及参数训练与
+runtime enforcement 的比较。
+
+### 13.5 C 的硬停止条件与当前 Gate
+
+以下任一项成立即 No-Go：同一 witness action 的合法性不能由契约机械翻转；关键词/动作
+位置或规则 parser 在严格 OOD 上近饱和且训练无额外组合泛化；候选方法不优于等预算
+ordinary SFT/DPO、CounterComp/PairCFR 类目标或 shuffled pairs；收益只在 IID；只有
+freshness 产生效果；标准工具能力明显下降；不能在独立真实版本化契约变化上迁移；与
+GuideBench、Inverse IFEval、AgentAssay/TSCG/PA-Tool 等全文重合；或方法只是已有反事实
+训练的工具契约包装。
+
+当前唯一作者 Gate 是是否接受“B‴ 方法路线正式退出，C 仅以稳定工具身份/schema、单条款、
+固定 witness 动作合法性机械翻转 + 可观察服从/OOD 作为待反证候选”。本次题目确认也不构成
+数据或生成授权。确认前不锁题、不创建 `PLAN.md` 或 `PLAN-REVIEW-LOG.md`，不生成实例，
+不访问研究输入，不选择模型，不运行 API、训练或实验。

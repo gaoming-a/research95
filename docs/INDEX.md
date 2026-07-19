@@ -10,20 +10,19 @@
 
 - [llm_native_candidate_audit_v0_1_zh.md](plans/llm_native_candidate_audit_v0_1_zh.md):
   active candidate-only audit after removing the communication-scene constraint.
-  It conditionally prioritizes belief-safe recovery after ambiguous outcomes from
-  side-effecting tools, compares two fallbacks, records direct 2024--2026
-  neighbors, defines a self-authored finite-state oracle, strict baselines,
-  paper-to-thesis progression, and hard No-Go conditions. Its post-acceptance
-  audit records that benchmark-only, ordinary training, a winning-action guard,
-  and B-prime's possible-world monitor compiler are not valid main contributions.
-  Section 12 records that component-level overlap with Rainmaker, the non-peer-reviewed
-  AgentAssay technical report, SGVEF-LOOP and related work, together with an internal
-  oracle/MR redundancy, makes B-double-prime No-Go. It retains only B-triple-prime:
-  contract-derived atomic semantic-obligation coverage over observation-equivalent
-  safe/unsafe effect-world pairs, evaluated by strict incremental defect detection beyond call-site,
-  transition, Action-MR and single-world baselines. It also records the unresolved
-  AITest 2026 full-text collision gate. It does not lock a topic or authorize data,
-  models, training, APIs, or experiments.
+  Sections 10--12 preserve the candidate evolution: they reject a winning-action
+  guard, B-prime's possible-world monitor, and B-double-prime, while section 12 still
+  retained B-triple-prime conditionally. Section 13 replaces that judgment: it records
+  B-triple-prime's conditional reduction targets in classical FSM/ioco,
+  partial-observation and contract-mutation testing, their applicability limits, and
+  the single-history-oracle redundancy that drives the project No-Go. It introduces
+  only one pre-Gate candidate: stable tool identity/schema, a single contract-atom
+  intervention, and a mechanically flipping permission label for the same normalized
+  witness action. CounterComp, PairCFR and Inverse IFEval further prevent claiming
+  counterfactual pairing, contrastive objectives or composition OOD as the novelty;
+  only a tool-contract-specific executable-oracle and real-version-transfer hypothesis
+  remains to be falsified. It does not lock a topic or
+  authorize data, models, training, APIs, or experiments.
 - [future_research_candidate_gates_v0_1_zh.md](plans/future_research_candidate_gates_v0_1_zh.md):
   retired communication-scoped comparison and no-model feasibility protocol for
   the NIKA diagnostic-commitment and ns-3 relational-semantic-validation axes.
@@ -38,10 +37,10 @@
   identifiability, data, and discipline audit. It is not an acquisition,
   training, evaluation, or claim authority.
 - [current_plan_zh.md](plans/current_plan_zh.md): current closed-loop plan. Its
-  latest section records the accepted research vehicle; rejection of the old guard,
-  B-prime formal method, and B-double-prime metamorphic-testing framing; the
-  conditional B-triple-prime semantic-coverage package; its strongest baselines and
-  stop rules; and the single unresolved author Gate.
+  latest section records the accepted research vehicle; B-triple-prime's conditional
+  classical-testing reduction and project No-Go; candidate C's exact legality-flip semantics, nearest
+  neighbors, no-model shortcuts, training baselines, OOD gates, paper-to-thesis
+  progression, and the single unresolved author Gate.
 - [current_project_state_zh.md](plans/current_project_state_zh.md): current
   authority map. The vehicle is accepted but no topic is locked; the future
   manifest remains empty and no data, model, training, simulation, API, or

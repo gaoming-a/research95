@@ -1,6 +1,140 @@
-# 当前计划：B″ 变形测试已否决 / B‴ 语义义务覆盖待作者确认 / 新研究数据尚未启动
+# 当前计划：B‴ 通用覆盖方法已否决 / C 契约合法性翻转训练待作者确认 / 新研究数据尚未启动
 
 最后更新：2026-07-19
+
+## 0.77 2026-07-19 B‴ 条件归约 / 候选 C 契约合法性翻转训练（B‴ 方法 No-Go / C 前置 Gate / 未授权）
+
+作者已接受 0.76 的停止规则并要求继续。本轮先执行该规则，而不是把“接受”解释为必须
+保住 B‴。在不读取研究数据、不生成样本、不运行模型/API/训练/实验的边界内，三路只读
+审查与一手全文核对得出一致结论：**B‴ 不能作为新的通用覆盖理论或形式方法继续。**
+
+### B‴ 为什么必须停止
+
+B‴ 的原子义务可写成“信息状态/历史、输入、允许输出集合”。下列工作没有无条件证明
+B‴ 被完整包含，但分别给出结构最接近、必须比较的形式基线：
+
+- [Complete Requirements-based Testing with Finite State Machines](https://arxiv.org/abs/2105.11786)
+  把 elementary requirement 定义为参考状态、输入和允许输出集合，并在确定性有限状态
+  假设下构造 requirements-complete test suites；B‴ 只有另证 belief-state 的忠实有限编译
+  并满足其假设后，结构部分才可视为领域实例；
+- [n-Complete Test Suites for IOCO](https://link.springer.com/article/10.1007/s11219-018-9422-x)
+  在实现状态数有界、公平执行等条件下，对含输入/输出、quiescence 与 compatible states
+  的 suspension automata 构造 n-complete ioco 测试；它不直接覆盖同观测 hidden-world pair
+  或随机 LLM policy，而是 B‴ 必须面对的条件性归约目标；
+- [Timed Testing under Partial Observability](https://vbn.aau.dk/da/publications/timed-testing-under-partial-observability/)
+  已在其 test-purpose/conformance 设定中使用观测谓词、隐藏状态集合和 observation-based
+  strategy；它说明 `A_all=∩Safe(w)` 有直接的部分可观测形式基线，但不替代 B‴ 自身的
+  adequacy 证明；
+- [Require, Test, and Trace IT](https://link.springer.com/article/10.1007/s10009-016-0444-z)
+  从需求契约生成 mutants，并对能够导致可控 forbidden behavior 的 modeled mutants 寻找
+  witness；其中会存在 equivalent/unproductive mutants，passing tests 只在相应确定性模型
+  和 fault model 内排除可区分故障，不是一般缺陷缺失保证；
+- [Rainmaker](https://www.usenix.org/system/files/nsdi23-chen-yinfang.pdf) 已直接注入请求生效
+  后响应被延迟至客户端超时的情况；[RIFL](https://sigops.org/s/conferences/sosp/2015/current/2015-Monterey/126-lee-online.pdf)
+  已用唯一 RPC identity、持久 completion record 与 lease/GC 处理 lost reply 和 retry
+  dedup。这为 request identity 与 completion-record lifetime 提供了具体先例，但不等同于
+  一般 API idempotency-key 的全部 scope/expiry 契约；
+- 同行评审的 [Near-Miss](https://aclanthology.org/2026.gem-main.30/) 已基于 ToolGuard 生成的
+  executable guards 识别“最终状态正确、但 agent 未获取必要信息”的 latent failures；近期
+  PhantomPolicy、Trust No Tool、ToolSandbox 与 SGVEF-LOOP 又覆盖隐藏状态 matched controls、
+  stateful trajectory 与 coverage-guided agent testing。
+
+更致命的是内部增量：若 `A_all(h)` 已可精确计算，检查 agent 的单次动作是否属于该集合
+就能判错；再执行一对隐藏世界通常只解释“为什么错”，并不新增缺陷检出。B‴ 仍可被写成
+很窄的 post-effect acknowledgement-loss benchmark，但必须和 Rainmaker+、单历史精确
+oracle、effect×capability pairwise/MC/DC 与 FATE/DESTINI 式生成比较。它的贡献会退化为
+领域测评与缺陷分类，且离作者希望的清晰大模型研究/训练路线更远。因此本计划不再把它列为
+首选，也不以换术语继续维护其方法 claim；0.76 的严格增量停止条件已经触发。
+
+### 待作者确认的候选 C：稳定工具身份、单条款、固定动作合法性翻转
+
+暂定题名为 **Same Tool, Changed Contract: Counterfactual Pair Training for
+Contract-Conditioned LLM Tool Agents**。实际问题是：工具身份与 schema 稳定，但幂等性、
+原子性或部分提交语义已经更新时，模型是否仍输出只符合旧契约的判断；相反，无关措辞变化
+又是否使判断无故改变。这里只研究可观察的 contract-conditioned behavioral compliance，
+不从输出变化推断模型内部是否“真正条件化”或识别某种因果机制。科学问题收缩为：
+
+> 在任务、工具身份、参数 schema、环境状态和可见历史完全相同的条件下，只改变一个明确
+> 可见的契约原子并使同一固定动作的许可状态机械翻转；配对训练能否提高模型对当前契约的
+> 可观察服从，并泛化到未见工具族与未见契约组合？
+
+每个决定性 pair 改为 `(x,c0,a_w,L0)` 与 `(x,c1,a_w,L1)`：`a_w` 是冻结规范化动作类中的
+同一个 witness action，`L∈{permitted,prohibited}` 是该动作在冻结的一步决策边界内是否被
+可执行契约许可，且独立 checker 必须证明 `L0≠L1`。这不声称 `a_w` 是唯一最优动作；query、
+escalate 或 no-op 可以在两边共同合法。若未来评价完整 agent policy，必须先另行冻结目标、
+时域、进度/成本、fallback 与动作等价关系，不能再用未定义的 `A0*∩A1*=∅` 造标签。语义
+等价 controls 只要求同一规范化动作的合法性判断稳定，不要求原始生成文本完全相同。契约
+变化若没有显式提供给模型，问题不可识别，直接 No-Go。
+
+候选 C 不是“首次研究 tool evolution”“普通 DPO”或“微调提高准确率”。已占据边界包括：
+
+- [GuideBench](https://aclanthology.org/2025.acl-long.557/) 已评测领域规则更新；
+- [RoTBench](https://aclanthology.org/2024.emnlp-main.19/) 与
+  [ToolEVO](https://proceedings.iclr.cc/paper_files/paper/2025/hash/d8d1d325f822e07d16866780cc23deb2-Abstract-Conference.html)
+  已覆盖工具名称、参数、响应格式、
+  弃用和噪声下的适应；
+- [Analyzing and Internalizing Complex Policy Documents for LLM Agents](https://aclanthology.org/2026.acl-long.767/)
+  已做可控 policy 环境生成、合成数据与 policy internalization；
+- [ToolAnchor](https://arxiv.org/abs/2607.14145) 已用 counterfactual anchor context 和
+  post-training 缓解新工具加入时的 behavioral inertia；
+- [TicToc](https://arxiv.org/abs/2510.23853) 已对时间新鲜度下“复用旧信息/重新调用工具”
+  做后训练，因此 freshness 只能作迁移轴；Contract2Tool、ContractBench 与 Guidelines as
+  Environments 又分别占据契约学习、observation-contract 检查与因果规则世界规划；
+- [CounterComp](https://aclanthology.org/2023.acl-long.834/) 已将 counterfactual compositional
+  contrast、metric learning 和 unseen-domain/composition OOD 结合；
+  [PairCFR](https://aclanthology.org/2024.acl-long.646/) 已用成对最小标签翻转数据和 contrastive
+  learning 提高 OOD；[Inverse IFEval](https://openreview.net/forum?id=sTwMHXReLc) 已直接测量
+  模型克服训练惯性、服从与既有模式冲突的当前指令。
+
+因此 pair flip、invariance objective、counterfactual/contrastive training 与 compositional
+OOD 本身均不能主张创新。C 目前只剩一个**待全文反证的领域创新假设**：稳定工具身份和
+schema，只干预一个可执行工具契约原子，用独立执行 oracle 使同一规范化 witness action 的
+合法性翻转，并验证这种训练能否迁移到真实、版本化工具契约变化。它若不能相对上述方法及
+GuideBench 的 rule-update protocol 证明工具契约特有增量，就不是新方法，只是领域实例。
+
+### C 的无模型 Gate、最短论文和停止条件
+
+作者确认前只允许继续设计，不允许生成实例。题目确认本身仍不授权任何生成或数据使用；
+只有作者以后另行签署 acquisition/data-use 授权，且 canonical manifest 明确改为 authorized，
+首个可执行阶段才是以下无模型 Gate：
+
+1. 只保留幂等性与原子性/部分提交两个核心契约族；freshness 只作迁移测试；
+2. 用自建有限状态 DSL、独立枚举器和独立 checker 证明 pair 可达、同一 witness action 的
+   `permitted/prohibited` 标签翻转；生成器与评测 oracle 不共享判定实现；
+3. 按基础语义模板、工具族与契约组合做 lineage-closed split；同一模板的改名、措辞与随机
+   实例不能跨 split；测试必须包含未见工具族、未见措辞和未见二契约组合；
+4. 先验证关键词、动作位置、工具名、检索重读与 deterministic parser+planner 等无模型
+   shortcut；若其在严格 OOD 上近饱和，则停止训练题；
+5. power analysis 必须能区分候选方法与等样本/等 token 普通 SFT、标准 DPO、CounterComp/
+   PairCFR 类目标和 shuffled-pair 控制的预注册最小差值，否则不启动训练；
+6. 自建领域包装不能充当现实性证据；训练前必须预注册一个与合成模板 lineage 独立的真实、
+   版本化契约变化迁移集，其获取仍需单独授权。
+
+EI 小论文若通过 Gate，暂只能把贡献限定为：可执行的工具契约最小干预生成器、固定动作
+合法性机械 oracle、pair-level 评价协议和真实版本变化迁移证据。训练目标只有在相对
+CounterComp、PairCFR、普通 SFT/DPO 与 shuffled-pair 的严格增量成立后才能列为方法贡献。
+指标至少包括 witness-legality flip accuracy、等价改写判断一致率、tool-family OOD、
+contract-composition OOD 和标准工具调用能力保持率；完整 agent 动作指标要等目标/时域/成本
+被另行冻结。prompt-only、契约重读、规则 parser/planner 与 oracle 上界也都是必需基线。
+
+硕士论文才扩展到契约代数、多条款组合、隐式漂移识别、持续/在线适应，以及参数训练与
+运行时契约执行的比较。4×A6000 与 3×3090 足以支持后续开放权重 7B/14B 级 LoRA、多随机
+种子和消融，但它们不构成现在启动训练或选择具体模型的理由。
+
+C 出现任一情况立即 No-Go：同一 witness action 的合法性不能被契约机械翻转；候选方法不
+优于等预算普通 SFT/DPO、CounterComp/PairCFR 类目标或 shuffled-pair；提升只在 IID；关键词/
+动作位置可解；规则 parser+planner 近饱和且训练无额外组合泛化；只有 freshness 有效；标准
+工具能力显著下降；不能在独立真实版本化契约变化上迁移；与 GuideBench、Inverse IFEval、
+AgentAssay/TSCG/PA-Tool 等直接近邻全文重合；或最终只是已有反事实训练的工具契约包装。
+
+### 当前唯一作者 Gate
+
+是否接受：**B‴ 的通用方法路线按已接受的停止条件正式退出；候选 C 仅以“稳定工具身份/
+schema、单契约原子、固定 witness 动作合法性机械翻转 + 可观察服从/OOD”作为待反证候选**？
+这次题目确认也不构成数据或生成授权。作者确认前不创建
+`PLAN.md`/`PLAN-REVIEW-LOG.md`，不生成 DSL/实例，不访问研究输入，不选择模型，不运行
+API、训练、容器或实验；future manifest 继续保持
+`not_started / data use=false / 0 inputs / 0 records`。
 
 ## 0.76 2026-07-19 B″ 组件碰撞与内部增量反证 / B‴ 语义义务覆盖（B″ No-Go / B‴ 条件 Go / 未授权）
 

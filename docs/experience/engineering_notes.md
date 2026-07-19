@@ -1,6 +1,41 @@
 # Engineering Notes
 
-## 2026-07-19 A testing contribution needs incremental detection, not a new combination of familiar parts
+## 2026-07-19 Do not relabel classical complete testing as an LLM-agent coverage theory
+
+- An obligation of the form `(information state, input, admissible outputs)` is
+  structurally close to the elementary requirements used in deterministic FSM
+  testing. Complete FSM/ioco and partial-observation testing are mandatory formal
+  reduction targets under their finite/state-bounded, fairness and test-purpose
+  assumptions; they do not automatically subsume a stochastic LLM policy. A new
+  adequacy claim would first need a faithful compilation and an incremental theorem.
+- A frozen finite fault domain, one witness per non-equivalent fault, and actual
+  mutant killing are classical fault-based model testing. Keeping the obligation
+  universe syntactically separate from mutants avoids one circularity but does not
+  itself create novelty.
+- Test whether a paired construction adds detection beyond the direct oracle. If
+  `A_all(h)` is exact, membership of the agent's action already exposes the policy
+  error. Two hidden-world executions may improve diagnosis while adding zero new
+  kills; explanation is not adequacy.
+- Lost acknowledgements, post-effect response timeouts, request identity, durable
+  result replay, idempotency leases, readback, and compensation are established
+  distributed-systems concepts. Their use in an LLM environment needs a distinct
+  model-behavior question, not a renamed recovery mechanism.
+- A cleaner training question uses identifiable visible interventions. Hold the
+  task, tool identity/schema, state, and history fixed; change one visible contract
+  atom; require an independent checker to flip the permission label of the same
+  normalized witness action. This avoids falsely demanding disjoint full action sets
+  when query, escalation, or no-op may remain legal in both contexts.
+- Counterfactual pairs are data structure, not automatically a method. CounterComp
+  and PairCFR already combine paired/counterfactual contrast with OOD objectives;
+  compare against them as well as equal-token SFT, standard DPO, shuffled pairs,
+  contract rereading, keyword/position rules, and a deterministic parser/planner.
+  Require unseen-tool-family and unseen-contract-composition gains, plus retention
+  of ordinary tool-calling ability.
+- Treat training compute as capacity, not motivation. If a rule parser is near
+  ceiling, the pair-aware objective does not beat equal-budget training, or gains
+  disappear outside IID templates, stop the topic.
+
+## 2026-07-19 A testing contribution needs incremental detection, not a new combination of familiar parts (historical; superseded above)
 
 - Rainmaker already injects a response timeout after a remote request has taken
   effect and covers retry-induced duplicate effects, semantic violations, state
@@ -15,11 +50,12 @@
   independent single-case checks expose every failure attributed to an MR, the MR
   is redundant. Set inclusion between oracle outputs also does not constrain two
   single actions chosen by an agent without adding a separate preference oracle.
-- The narrow remaining object is an atomic semantic test obligation, not a fault or
+- The narrow object retained at that historical stage was an atomic semantic test obligation, not a fault or
   an MR: one visible history and concrete action, a pair of observation-equivalent
   worlds where that action is respectively safe and unsafe, available recovery
   capabilities, and a dependent prefix. Keep the obligation universe independent of
-  defects; prove and execute defect-to-witness-to-kill only afterward.
+  defects; prove and execute defect-to-witness-to-kill only afterward. The later
+  classical-baseline and direct-oracle audit above rejected it as the active method.
 - Prefix and trajectory risks require different samples. Independent restarts at one
   visible prefix estimate that prefix's violation probability; only coherent complete
   rollouts estimate the probability of any violation along a trajectory.
