@@ -36,20 +36,38 @@ post-effect/pre-return fault model already cover its main technical arrows. A
 possible-world safety compiler would therefore be a classical oracle or baseline,
 not the paper's novelty.
 
-The only surviving conditional form, B-double-prime, is a software-testing method:
-derive metamorphic relations from side-effect contracts and test whether LLM tool
-agents respond consistently to changed idempotency guarantees, query evidence,
-goals, and semantics-preserving rewrites while remaining safe in every compatible
-hidden world. Identical visible inputs with applied/unapplied hidden outcomes define
-a set-valued oracle, not a metamorphic relation; each real relation must transform
-visible input and impose a mechanically justified equality or inclusion on
-normalized action sets. The candidate paper would contribute the relation generator,
-a world-uniform oracle, and mutation-adequacy results. Monitor/compiler machinery is
-only an implementation or classical comparison. Training remains thesis-only after
-a deterministic-baseline residual gate.
+The subsequent full-text collision audit rejects B-double-prime as well. Rainmaker
+already injects response-path timeouts after remote effects and systematizes retry,
+duplicate-effect, state-divergence, and call-site coverage. The non-peer-reviewed
+AgentAssay technical report already proposes combining agent behavioral contracts,
+multidimensional coverage, agent mutation adequacy, and metamorphic relations;
+SGVEF-LOOP already performs coverage-guided metamorphic
+evaluation of MCP agents. Specification-to-MR generation, Action MRs, state-machine
+test generation, and mutation-based MR validation are also occupied. Moreover, an
+exact per-case `Safe(K)` oracle can often detect the same agent error without an MR.
+These are component-level collisions plus an internal redundancy argument, not a
+claim that one prior paper implements the complete B-double-prime combination.
+Rainmaker is limited to one REST interaction and its SDK retries and does not derive
+recovery contracts or world-uniform oracles; SGVEF-LOOP does not define ambiguous
+side effects or recovery-contract adequacy.
+
+The only remaining conditional form, B-triple-prime, is narrower: a
+contract-derived semantic adequacy criterion for observation-equivalent hidden
+effect worlds. Each atomic obligation records a visible history, one concrete action,
+one world where that action is safe, one observation-equivalent world where it is
+unsafe, a recovery-capability profile, and a dependent prefix. The obligation universe
+is independent of the separately frozen defect universe; defect-to-witness-to-kill
+must be proved and executed afterward. The scientific test is whether this
+criterion detects additional agent-policy defects at an equal case budget beyond
+Rainmaker-style fault policies, ordinary call-site/transition/final-state coverage,
+Action MRs, and single-world oracles. Metamorphic relations, finite-state machinery,
+monitors, and mutation analysis are diagnostics or validation devices rather than the
+claimed novelty. Stochastic policies are sampled at every bounded reachable prefix;
+finite trials estimate violation probabilities rather than prove the complete policy.
+Training remains thesis-only after a deterministic-baseline residual gate.
 
 The authoritative status is [`current_plan_zh.md`](docs/plans/current_plan_zh.md)
-section 0.75. The active candidate-only audit, direct-neighbor boundaries,
+section 0.76. The active candidate-only audit, direct-neighbor boundaries,
 mechanical-oracle design, baselines, and No-Go rules are in
 [`llm_native_candidate_audit_v0_1_zh.md`](docs/plans/llm_native_candidate_audit_v0_1_zh.md).
 The retired communication-scoped label, split, baseline, and hard-stop protocol is
@@ -59,9 +77,9 @@ It does not lock either topic or authorize research actions. The older
 is historical only and cannot authorize acquisition, research-input access,
 model selection, training, evaluation, APIs, or claims. The canonical
 future-study manifest remains empty and `not_started` while the author decides
-whether to accept B-double-prime and its mandatory switch-topic rule if the three
-title-level AITest 2026 neighbors prove to cover the same method when their full
-texts become available.
+whether to accept B-triple-prime and its mandatory No-Go rules: no strict coverage
+increment over the strongest baselines, or direct overlap with the three pending
+AITest 2026 full texts.
 
 ## 2026-07-18 Research-Lineage Isolation Override
 

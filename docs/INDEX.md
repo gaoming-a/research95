@@ -16,11 +16,14 @@
   paper-to-thesis progression, and hard No-Go conditions. Its post-acceptance
   audit records that benchmark-only, ordinary training, a winning-action guard,
   and B-prime's possible-world monitor compiler are not valid main contributions.
-  Section 11 retains B-double-prime as a conditional software-testing candidate:
-  contract-derived metamorphic relations, a world-uniform oracle, and mutation
-  adequacy for ambiguous post-action outcomes. It also records the unresolved
-  title-level AITest 2026 collision gate. It does not lock a topic or authorize
-  data, models, training, APIs, or experiments.
+  Section 12 records that component-level overlap with Rainmaker, the non-peer-reviewed
+  AgentAssay technical report, SGVEF-LOOP and related work, together with an internal
+  oracle/MR redundancy, makes B-double-prime No-Go. It retains only B-triple-prime:
+  contract-derived atomic semantic-obligation coverage over observation-equivalent
+  safe/unsafe effect-world pairs, evaluated by strict incremental defect detection beyond call-site,
+  transition, Action-MR and single-world baselines. It also records the unresolved
+  AITest 2026 full-text collision gate. It does not lock a topic or authorize data,
+  models, training, APIs, or experiments.
 - [future_research_candidate_gates_v0_1_zh.md](plans/future_research_candidate_gates_v0_1_zh.md):
   retired communication-scoped comparison and no-model feasibility protocol for
   the NIKA diagnostic-commitment and ns-3 relational-semantic-validation axes.
@@ -35,10 +38,10 @@
   identifiability, data, and discipline audit. It is not an acquisition,
   training, evaluation, or claim authority.
 - [current_plan_zh.md](plans/current_plan_zh.md): current closed-loop plan. Its
-  latest section records the accepted research vehicle, the rejection of both the
-  old winning-action guard and B-prime formal-method framing, the conditional
-  B-double-prime metamorphic-testing package, its baselines and stop rules, and the
-  single unresolved author Gate.
+  latest section records the accepted research vehicle; rejection of the old guard,
+  B-prime formal method, and B-double-prime metamorphic-testing framing; the
+  conditional B-triple-prime semantic-coverage package; its strongest baselines and
+  stop rules; and the single unresolved author Gate.
 - [current_project_state_zh.md](plans/current_project_state_zh.md): current
   authority map. The vehicle is accepted but no topic is locked; the future
   manifest remains empty and no data, model, training, simulation, API, or

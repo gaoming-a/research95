@@ -538,3 +538,95 @@ mutant；MR 没有可见变换与非平凡输出关系；always-escalate 无安�
 当前作者 Gate 是是否接受 B″ 及其“近邻全文直接重合即换题”条件。确认前不锁题、不创建
 `PLAN.md`/`PLAN-REVIEW-LOG.md`，不生成研究实例，不访问研究输入，不运行模型、API、训练、
 容器或真实实验。
+
+## 12. B″ No-Go 与 B‴ 契约语义义务覆盖（取代第11节当前候选判断）
+
+第11节之后的全文审计发现三组决定性的组件级碰撞，故 B″ 不再是条件候选：
+
+1. [Rainmaker](https://www.usenix.org/conference/nsdi23/presentation/chen-yinfang) 的
+   P1/P2/P4 已在请求生效后延迟/抑制响应使客户端超时，并以 bug taxonomy、四种 injection
+   policies 和 call-site metrics 覆盖重试、重复副作用与 state divergence；它仅处理单个
+   REST interaction 及 SDK retries，不编码恢复契约或 world-uniform oracle；
+2. 未经同行评审的技术报告 [AgentAssay](https://arxiv.org/html/2603.02601) 已提出统一
+   agent behavioral contracts、state/boundary coverage、agent mutation score/adequacy 与
+   四类 agent MRs；其 coupling/adequacy 效力仍须独立复现；
+3. [SGVEF-LOOP](https://aclanthology.org/2026.acl-long.1224/) 已对 MCP agents 自动合成
+   静态知识约束的同意图/预期轨迹语义改写 pairs 并做 coverage-guided topology exploration；
+   其公开贡献未定义副作用歧义、恢复契约或 mutation adequacy。
+
+ReliabilityBench、StateGen/StateEval、Executable MRs、ARMeta 与 MR-Coupler 又分别覆盖
+Action MRs + fault injection、FSM 顺序 API 测试 + 状态 oracle、specification-to-MR、
+OpenAPI-to-MR 与 MR mutation validation。因而“动作后歧义 MR 生成、agent mutation
+adequacy 或 response-loss coverage”都不能作为主创新。
+
+这些是组件级重合，不代表单篇先例完整实现 B″；B″ 的否决还依赖下一段的内部 oracle/MR
+冗余，不能把组合碰撞夸写为精确全文重合。
+
+更关键的是，若每个输入已有精确 `Safe(K)` oracle，单个动作成员检查通常已能发现安全
+错误；两个安全集合之间的 inclusion 不自动约束两个单选 agent 输出。若 MR 不比两个单例
+oracle 多检出或多定位问题，它只是在重复 oracle。因此 B″ 判 No-Go，MR 降为可选诊断工具。
+
+### 12.1 B‴ 的可证伪科学问题
+
+B‴ 暂定为“契约派生的 atomic ambiguity-obligation coverage + sampled world-uniform
+policy checking”。它问：现有 call-site、transition、final-state 与 Action-MR criteria
+即使达到各自的高 coverage，是否仍会漏掉“同一观测对应不同隐藏副作用、不同世界诱导
+冲突恢复动作”的缺陷；若会，一个契约语义 criterion 能否在等预算下稳定增加检出率？
+
+生成前冻结有限 contract/state/action 与可达深度 `B`；独立 defect universe `D` 另行冻结，
+在全部有界可见历史上规范化动作分布相同的 defects 视为等价并删除。`D` 与 generator
+必须分开实现。对 `W_C(h)` 中所有观测等价世界，定义 `A_all=∩ Safe(w)`；再对具体动作 `a` 选择
+`w_safe,w_unsafe`，使 `a` 在前者安全而在后者不安全。原子 obligation 为：
+
+`<前缀ρ, 可见历史h, 动作a, w_safe, w_unsafe, capabilityγ>`。
+
+`covers(t,o)` 要求 `t` 精确实例化 `ρ/h/γ` 与两个世界，并以显式 candidate-action probe
+将 `a` 交给独立 oracle 验证安全/不安全分裂；每个 `(t,a)` 是原子 probe，一个动作不能替
+其他动作增加 coverage。`AO-Cov(T)` 是与 defects 无关的有限 `Ω(C,B)` 中已覆盖 obligations
+比例；目标模型质量与 `D` 的 kill 另算。
+
+capability profile 必须区分 key 的 identity/scope/expiry、readback 的
+sound/complete/fresh/correlated，以及 compensation 前置条件。主 universe 每个 obligation
+必须有 `A_all≠∅` 且至少一个经独立进展 oracle 证明的非 escalation 安全推进动作；只能升级
+的类单独报告，不进入主 coverage/kill 分母。安全、进展与成本保持三个 oracle。
+
+随机 LLM 从固定前缀独立重启，只估计该前缀违规率；轨迹违规率必须用完整连贯 rollout
+估计，不能拼接各前缀样本。二者均报告 95% 区间，采样量由预注册效应与错误上限决定。
+因此方法是 sampled multi-step policy checking，不是完整 policy verification。
+
+### 12.2 最低定理、artifact 与实验增量
+
+最低方法包是：有限 scenario/oracle label soundness；定义 defect 等价并给出非循环的
+相对 adequacy——obligation/covers 不含 `d`，另证每个 `d` 会在某个已覆盖 `h` 选择对应
+不安全动作并被实际运行杀死；证明
+Rainmaker `P1--P4 × call-site` 与普通 transition coverage 不蕴含 B‴ coverage 的严格
+counterexample；contract/interpreter、场景生成器、coverage calculator、独立枚举 oracle、
+独立符号 checker、fault injector 与 policy mutants。
+
+主实验必须在相同 agent executions 与归一化 token 上限下比较 Rainmaker-style policies、
+ReliabilityBench Action MRs、AgentAssay-style prioritization（不宣称其经验 state score 存在
+固定满覆盖分母）、SGVEF/StateGen transition coverage、单世界/终态 oracle、随机语义对和
+确定性 recovery cascade；oracle/world replay 成本另报。主 Gate 是相对最强基线新增至少
+一个独立 defect class、kill 绝对提升至少10个百分点，且 contract/defect-cluster paired
+bootstrap 95% 区间下界大于0。无模型 power analysis 若不能识别该阈值，先停题。实际模型
+的前缀/轨迹违规率、safe completion、escalation、false positive 与成本均单独报告。
+
+### 12.3 小论文、硕士扩展与停止条件
+
+小论文只做 criterion、边界定理、可复现工具与跨至少三类现实契约的增量验证。硕士论文
+扩展多个同时未决效果、契约不完整、组合 coverage、partial-order reduction 与 test
+selection。只有无模型 cascade/parser/exact planner 后仍有稳定模型语义残差，才允许用
+coverage witnesses 做 curriculum、LoRA 或 verifier-guided preference training。
+
+No-Go 包括：退化为 response-timeout/call-site 注入；相同预算无新增 kill；只测试 oracle/
+compiler；相关多调用没有新缺陷；现实契约不足三类；找不到足量原子 safe/unsafe split；
+`Ω_progress` 不能保证非 escalation 安全推进；双 oracle 不一致；或共享实现循环自证。
+
+AITest 2026 三篇高风险近邻已由官方录用页和日程确认为 Full Papers，但截至 2026-07-19
+仍没有可核验全文/摘要/DOI。NetAgentBench 是 Twabi--Ding--Kondo 团队独立的 ICCCN 论文，
+可证明 FSM/stateful trajectory/idempotent replay 已被占据，却不能替代 AITest 全文。
+全文若覆盖 B‴ 的 observation-equivalent effect-world obligations、sampled world-uniform policy
+checking 与相对 coverage 增量，立即换题。
+
+当前 Gate 只问作者是否接受“B″ No-Go / B‴ 条件候选 / 严格增量失败或全文重合即换题”。
+确认前不锁题、不创建计划终稿、不生成研究实例、不访问研究输入、不运行模型或实验。

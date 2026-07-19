@@ -1,5 +1,40 @@
 # Engineering Notes
 
+## 2026-07-19 A testing contribution needs incremental detection, not a new combination of familiar parts
+
+- Rainmaker already injects a response timeout after a remote request has taken
+  effect and covers retry-induced duplicate effects, semantic violations, state
+  divergence, and REST call sites. A post-effect/pre-reply injector is a baseline,
+  not an LLM-agent testing novelty.
+- The non-peer-reviewed AgentAssay technical report already proposes joining agent
+  behavioral contracts, state/boundary coverage, mutation adequacy, and metamorphic
+  relations, although its coupling claims still require replication. SGVEF-LOOP synthesizes
+  metamorphic pairs while exploring MCP-agent topology. Combining contract, MR,
+  mutation score, and agent traces no longer defines a contribution boundary.
+- An exact `Safe(K)` oracle creates a stringent incremental-value test. If two
+  independent single-case checks expose every failure attributed to an MR, the MR
+  is redundant. Set inclusion between oracle outputs also does not constrain two
+  single actions chosen by an agent without adding a separate preference oracle.
+- The narrow remaining object is an atomic semantic test obligation, not a fault or
+  an MR: one visible history and concrete action, a pair of observation-equivalent
+  worlds where that action is respectively safe and unsafe, available recovery
+  capabilities, and a dependent prefix. Keep the obligation universe independent of
+  defects; prove and execute defect-to-witness-to-kill only afterward.
+- Prefix and trajectory risks require different samples. Independent restarts at one
+  visible prefix estimate that prefix's violation probability; only coherent complete
+  rollouts estimate the probability of any violation along a trajectory.
+- Compare coverage criteria at the same test-case budget. A new criterion is useful
+  only if it kills defects missed by response-timeout/call-site, state-transition,
+  final-state, Action-MR, and single-world baselines. More generated cases alone are
+  not evidence of stronger adequacy.
+- Keep safety, progress, and cost as separate oracles. World-uniform safety is an
+  intersection over compatible worlds; choosing a preferred query, retry,
+  compensation, or escalation requires additional liveness or cost assumptions.
+- Pending-paper titles are a novelty gate, not evidence of contents. Record official
+  authors, paper type, schedule, and missing full-text status; use a sibling paper
+  such as NetAgentBench only to bound already occupied concepts, never as a proxy
+  for an unavailable AITest paper.
+
 ## 2026-07-19 A safety wrapper can erase the LLM research question
 
 - If an online guard receives the full transition model, task goal, exact belief,

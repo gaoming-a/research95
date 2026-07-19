@@ -2,7 +2,31 @@
 
 日期：2026-07-19
 
-## 2026-07-19 当前权威：B′ 形式方法已否决 / B″ 测试路线待确认 / 尚未定题
+## 2026-07-19 当前权威：B″ 变形测试已否决 / B‴ 语义义务覆盖待确认 / 尚未定题
+
+- 0.75 的 B″ 已由组件级碰撞与内部冗余共同否决：Rainmaker 已测试 effect 后的 response-
+  path timeout、重试副作用和 call-site coverage；未经同行评审的 AgentAssay 技术报告已
+  提出 agent contracts、coverage、mutation 与 MRs 的组合；SGVEF-LOOP 已对 MCP agents
+  做 coverage-guided metamorphic evaluation；没有声称某一篇先例完整覆盖 B″；
+- B″ 还有内部增量问题：精确 `Safe(K)` 单例 oracle 已能检查 agent 动作，安全集 inclusion
+  不会自动变成两个单选输出之间的 MR。MR 若不比单例 oracle 多检出或多定位问题，就没有
+  agent-testing 增量；
+- 当前只保留 B‴ 条件候选：从副作用与恢复契约生成原子 semantic obligation——一个
+  具体动作、同观测的一对 safe/unsafe 隐藏世界、recovery capability、相关多步前缀与
+  显式 action probe；obligation universe 不含另行冻结的 defects，避免 coverage/kill 循环
+  定义；以有限 criterion、固定前缀重复采样和完整轨迹 rollout 检查 LLM tool-agent policy；
+- B‴ 必须在等案例预算下严格增加对 Rainmaker P1--P4/call-site、ReliabilityBench Action
+  MRs、AgentAssay、SGVEF/StateGen transition coverage、单世界 oracle 与随机对照的缺陷/
+  mutant kill；否则立即 No-Go；
+- AITest 2026 三篇近邻已确认为 Full Papers，但截至 2026-07-19 无公开全文/摘要/DOI。
+  NetAgentBench 是同作者团队的独立 ICCCN 论文，只能证明 FSM/trajectory/idempotent replay
+  已被占据。全文若覆盖 B‴ 的精确边界，立即换题；
+- 当前只待作者确认是否接受“B″ No-Go / B‴ 条件候选 / 增量失败或全文碰撞即换题”。确认前
+  不锁题，不创建 `PLAN.md`，不生成数据、运行模型/API/训练或实验；future manifest 继续为
+  `not_started / data use=false / 0 inputs / 0 records`。权威细节见 `current_plan_zh.md`
+  0.76 与候选审计第12节。
+
+## 2026-07-19 上一轮权威：B′ 形式方法已否决 / B″ 测试路线待确认（已被上方覆盖）
 
 - 作者明确研究方向是大模型，通信工程只是培养专业且通信内容基本未系统学习；选题不再
   要求通信场景，原 NIKA/ns-3 协议只保留为通信特定档案；
