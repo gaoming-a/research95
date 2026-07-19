@@ -29,18 +29,27 @@ belief, and winning region, that guard is already a classical contingent planner
 shield and makes the LLM redundant. AgentSpec, VIGIL, and ToolGate further show that
 a DSL plus training-free runtime enforcement is not independently novel.
 
-The only surviving conditional form, B-prime, separates information strictly. The
-LLM sees the natural-language goal, tool documentation, and public history and
-proposes actions. An online monitor sees only a trusted safety projection, public
-trace, and candidate action; it can allow or block but cannot see the task goal,
-cost, winning region, hidden state, or recommend a replacement. The paper's proposed
-main contribution is now post-action ambiguous-side-effect contract semantics and a
-compiler to a safety-only epistemic monitor. The finite-state benchmark is an
-evaluation vehicle, not the novelty claim. Training remains a thesis-only option
-after a residual headroom gate.
+The subsequent exact-neighbor audit also rejects B-prime as a formal-method
+contribution. Multi-trace monitoring under uncertainty, partial-observation
+permissive supervision/shielding, distributed idempotence and recovery, and Atomix's
+post-effect/pre-return fault model already cover its main technical arrows. A
+possible-world safety compiler would therefore be a classical oracle or baseline,
+not the paper's novelty.
+
+The only surviving conditional form, B-double-prime, is a software-testing method:
+derive metamorphic relations from side-effect contracts and test whether LLM tool
+agents respond consistently to changed idempotency guarantees, query evidence,
+goals, and semantics-preserving rewrites while remaining safe in every compatible
+hidden world. Identical visible inputs with applied/unapplied hidden outcomes define
+a set-valued oracle, not a metamorphic relation; each real relation must transform
+visible input and impose a mechanically justified equality or inclusion on
+normalized action sets. The candidate paper would contribute the relation generator,
+a world-uniform oracle, and mutation-adequacy results. Monitor/compiler machinery is
+only an implementation or classical comparison. Training remains thesis-only after
+a deterministic-baseline residual gate.
 
 The authoritative status is [`current_plan_zh.md`](docs/plans/current_plan_zh.md)
-section 0.74. The active candidate-only audit, direct-neighbor boundaries,
+section 0.75. The active candidate-only audit, direct-neighbor boundaries,
 mechanical-oracle design, baselines, and No-Go rules are in
 [`llm_native_candidate_audit_v0_1_zh.md`](docs/plans/llm_native_candidate_audit_v0_1_zh.md).
 The retired communication-scoped label, split, baseline, and hard-stop protocol is
@@ -50,7 +59,9 @@ It does not lock either topic or authorize research actions. The older
 is historical only and cannot authorize acquisition, research-input access,
 model selection, training, evaluation, APIs, or claims. The canonical
 future-study manifest remains empty and `not_started` while the author decides
-whether to accept the B-prime contract-semantics-and-compiler contribution structure.
+whether to accept B-double-prime and its mandatory switch-topic rule if the three
+title-level AITest 2026 neighbors prove to cover the same method when their full
+texts become available.
 
 ## 2026-07-18 Research-Lineage Isolation Override
 

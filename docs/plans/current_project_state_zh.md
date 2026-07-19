@@ -2,7 +2,7 @@
 
 日期：2026-07-19
 
-## 2026-07-19 当前权威：旧 guard 主张已否决 / B′ 待确认 / 尚未定题
+## 2026-07-19 当前权威：B′ 形式方法已否决 / B″ 测试路线待确认 / 尚未定题
 
 - 作者明确研究方向是大模型，通信工程只是培养专业且通信内容基本未系统学习；选题不再
   要求通信场景，原 NIKA/ns-3 协议只保留为通信特定档案；
@@ -24,18 +24,24 @@
   不锁定题目、数据或方法。后续反证表明，若 online guard 掌握完整模型、目标、belief 与
   winning region，它本身就是经典 contingent planner/shield，LLM 冗余；因此 0.73 的
   “training-free winning-action guard 为主方法”已经 No-Go；
-- 新近 `AgentSpec`、`VIGIL` 与 `ToolGate` 也使“DSL + 免训练运行时 guard”不能单独作为
-  创新。唯一条件存活的 B′ 把主贡献改为“动作后歧义副作用的 epistemic contract
-  semantics 与编译器”：online monitor 只见安全契约投影、公开历史和候选动作，只做
-  allow/block；不得见任务目标、成本、winning region 或隐藏状态，也不得推荐动作；
-- LLM 只见自然语言目标/工具说明与历史并提出动作；完整形式模型和集合型标签只属于离线
-  evaluator。小论文以契约语义、编译器、soundness 边界和非冗余评测协议为主，benchmark
-  只是载体；训练只在硕士阶段通过残差 Gate 后考虑；
-- 当前只待作者确认是否接受 B′。没有最终题目、数据、模型、样本量或实验授权，`PLAN.md`
-  与 `PLAN-REVIEW-LOG.md` 尚不应生成；
+- 后续精确反证进一步表明 B′ 也不能作为形式方法创新：Taleb multi-trace monitoring、
+  Abstract TeSSLa/ABRV、部分观测 permissive supervisor/shield，以及幂等恢复、Flux、
+  Rainmaker 和 Atomix 已覆盖“相容世界全称安全＋响应丢失副作用”的关键技术箭头。所谓
+  epistemic compiler 只是经典 belief-product safety monitor；B′ 现判 No-Go；
+- 唯一条件存活的 B″ 改为测试方法：从副作用契约自动生成动作后结果歧义的 metamorphic
+  relations，以 world-uniform oracle 和 mutation-adequate MR suite 检测 LLM agent 的
+  契约敏感性、证据单调性、语义不变性和安全恢复行为。monitor/compiler 仅作生成器、
+  oracle 实现或经典基线，不列为贡献；
+- 完全相同可见输入下的 applied/unapplied 隐藏世界只定义集合型 oracle，不是 MR；真正
+  MR 必须改变可见契约/证据/目标/语义表述，并机械规定规范化动作集的等式或包含关系；
+- AITest 2026 已有三篇“LLM multi-agent metamorphic testing / behavioral contract testing /
+  formal trajectory analysis”标题级近邻；截至 2026-07-19 尚未取得全文，B″ 不能宣称完成
+  全文创新边界。全文若直接覆盖该特定组合，立即换题；
+- 当前只待作者确认是否接受 B″ 及上述换题条件。没有最终题目、数据、模型、样本量或实验
+  授权，`PLAN.md` 与 `PLAN-REVIEW-LOG.md` 尚不应生成；
 - future manifest 继续为空、`not_started`、data use=false；模型/API、容器、数据生成、
-  训练、评估和论文效果 claim 均为0。当前权威细节见 `current_plan_zh.md` 0.74 与候选审计
-  第10节。
+  训练、评估和论文效果 claim 均为0。当前权威细节见 `current_plan_zh.md` 0.75 与候选审计
+  第11节。
 
 ## 2026-07-18 当前权威：方向已选定 / novelty pending / 数据与训练尚未启动
 

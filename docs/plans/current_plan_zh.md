@@ -1,6 +1,119 @@
-# 当前计划：旧 guard 主张已否决 / B′ 贡献形态待作者确认 / 新研究数据尚未启动
+# 当前计划：B′ 形式方法已否决 / B″ 测试路线待作者确认 / 新研究数据尚未启动
 
 最后更新：2026-07-19
+
+## 0.75 2026-07-19 B′ 精确重合反证 / B″ 测试路线重构（B′ No-Go / B″ 条件 Go / 未授权）
+
+作者回复“接受，你继续”，允许继续收敛研究方案，但不改变无数据、无模型、无实验和
+Act 1 逐问确认边界。接受后完成的三路只读反证一致推翻了 0.74 的 B′ 方法主张，因此
+本节在当前贡献判断上取代 0.74：**不能把动作后歧义的 possible-world semantics、全称
+安全判定或最大许可 monitor 编译作为新形式化方法。**
+
+结构性归约为：对可见历史 `h`，令 `K(h)` 是与之相容的全部隐藏状态；动作 `a` 只有在
+每个 `s∈K(h)` 的全部后继都不进入坏状态时才允许。若要求持续安全，再在 belief/support
+空间求安全不动点。该计算就是不确定轨迹的 concretization、部分观测 belief construction
+与 permissive supervisor/shield synthesis 的直接组合；`UNKNOWN_BEFORE/UNKNOWN_AFTER`
+只是隐藏非确定性与观测混叠，不能构成新理论对象。
+
+精确先例已经覆盖 B′ 的各条技术箭头：
+
+- [Taleb 2024 multi-trace thesis](https://constellation.uqac.ca/id/eprint/9890/) 与
+  [FORMALISE 2021](https://constellation.uqac.ca/id/eprint/7361/1/paper.pdf) 将一个不确定
+  事件展开为多条可能 trace，并在全部 concrete projections 上提升 monitor；
+- [Abstract TeSSLa](https://arxiv.org/abs/1907.07761)、
+  [Assumption-Based Runtime Verification](https://link.springer.com/article/10.1007/s10703-023-00416-z)
+  与 [Symbolic Runtime Verification under uncertainty](https://arxiv.org/abs/2207.05678)
+  已处理部分信息下的全体相容行为与 sound monitoring；
+- [Yin--Lafortune](https://doi.org/10.1109/TAC.2016.2644867)、
+  [Goorden--Reniers 2024](https://pure.tue.nl/ws/portalfiles/portal/335700236/1-s2.0-S2405896324000983-main.pdf)
+  与 [partial-observation permissive shielding](https://link.springer.com/chapter/10.1007/978-3-030-81688-9_28)
+  已覆盖部分观测下的安全、非阻塞与许可动作综合；一般条件下还不能不加限定地声称存在
+  唯一 supremal/maximally-permissive monitor；
+- [Fault Tolerance via Idempotence](https://www.microsoft.com/en-us/research/publication/fault-tolerance-via-idempotence/)、
+  [Flux](https://www.usenix.org/system/files/osdi23-ding.pdf) 与
+  [Rainmaker](https://www.usenix.org/system/files/nsdi23-chen-yinfang.pdf) 已分别形式化或测试
+  “远端副作用已发生但响应丢失”下的重复请求、幂等修复与响应路径故障；RFC 9110、
+  Idempotency-Key、FoundationDB `commit_unknown_result`、RIFL、Saga/LRA 也已经定义
+  key 作用域/期限、完成记录、状态未知、补偿与人工恢复边界；
+- LLM agent 侧的 [Atomix](https://arxiv.org/html/2602.14849) 已直接评测
+  `post-effect/pre-return` 故障并使用幂等、补偿和 gating；AgentSpec、VIGIL 与 ToolGate
+  已覆盖 DSL/契约到运行时约束。
+
+因此以下表述全部退出：首次定义 post-action ambiguity；首次以可能世界全称判安全；
+首次编译最大许可 epistemic monitor；首次统一幂等键、查询新鲜度、部分提交与补偿字段。
+monitor/compiler 只可作为实例生成、机械 oracle 或经典保护上界，不能进入贡献列表。
+
+### B″ 的唯一条件存活主张
+
+小论文改成软件测试问题，暂定工作题名为 **When the Reply Is Missing: Contract-Aware
+Testing of LLM Tool Agents under Ambiguous Side Effects**。候选主贡献是：
+
+> 从副作用契约自动合成动作后结果歧义的 metamorphic relations（MR），测试工具型 LLM
+> agent 是否具有契约敏感性、证据单调性、语义表述不变性和 world-uniform safety。
+
+必须区分两个对象。`applied/unapplied` 隐藏世界若给 agent 的可见输入完全相同，只定义
+集合型 world-uniform oracle；它不是有检测力的 MR，因为确定性 agent 对同一输入本来就
+输出相同结果。真正的 MR 必须改变可见输入，并机械规定规范化动作集合的等式或包含关系：
+
+1. `definite-not-applied → unknown` 扩大 belief，安全动作集不得增加；
+2. 加入有效、同 scope、同 key 的幂等保证，可使同键重试由 unsafe 变 safe；删除或使其
+   过期时关系反向；
+3. 加入 sound、complete、fresh 且与原调用相关的状态查询，信息获取及后续可恢复集合可按
+   规定扩展；加入可靠证据缩小 belief 时，纯安全允许集单调不减；
+4. 语义保持的契约改写、工具重命名和状态图同构，应保持规范化动作类不变；
+5. 只改变用户目标时，安全动作集保持不变，任务最优动作集按独立 oracle 改变。
+
+真正可能形成测试方法创新的不是前述经典 oracle，而是：对明确定义的一阶契约缺陷类，
+自动生成的 MR suite 是否具有可证明的 mutation adequacy/completeness，并且相对单实例
+oracle、随机配对和普通 trace checking 能新增杀死错误实现。最小 mutant library 包括：
+把 unknown 当 failure、忽略 key 期限、重试时换 key、信任陈旧/不完整查询、无条件补偿、
+以及在结果未知时虚报成功。
+
+### 无模型 Gate、最小论文包与硕士递进
+
+任何模型调用前必须先完成：契约 DSL/解释器、观测等价世界生成器、MR 生成器、
+`post-effect/pre-return` fault injector、相互独立的显式枚举 oracle 与符号 checker、
+mutant library，以及全部有界可达历史上的 oracle/MR 零假阳性核对。最强无模型基线固定为
+`query → valid same-key retry → verified compensation → escalate` cascade、确定性
+`NL→DSL` parser + exact planner、结构化契约 + exact shield，以及 always-escalate/query/
+retry。后续只有单独获得研究输入和模型授权后，才可比较至少两个开放模型家族与一个不同
+来源的模型，并报告 world-uniform violation、safe completion、escalation、unnecessary
+block、tool cost、MR consistency 与 mutation score；这些是未来协议要求，不是现有结果。
+
+EI 小论文只承担：契约派生 MR 方法、集合型 oracle、变异充分性边界、可复现实验工具和
+跨基线评测。硕士论文才允许扩展多副作用组合、不完备契约、反例引导的测试生成/优先级
+排序；只有严格语义 OOD 下还存在无法由 parser/cascade/exact planner 解释的稳定残差，才
+允许研究 MR 数据增强、LoRA 或一致性训练。4×A6000 与 3×3090 是可用资源，不是训练必要性
+或创新性的证据。
+
+B″ 出现任一情况立即 No-Go：cascade 或确定性 parser+planner 在严格语义 OOD 上近似
+oracle；MR 相比单实例 oracle/随机配对/普通 trace check 不增加 mutant kill；所谓 MR 只是
+重复相同输入；always-escalate 已近最优；找不到至少三类现实合理且不能被标准事务/幂等/
+可靠查询平凡消除的效果契约；两套 oracle 不一致；错误几乎全是一轮 `NL→DSL` 解析错误；
+或重新把 compiler/monitor 包装为创新。
+
+另有一个尚不能越过的外部 novelty Gate：AITest 2026 官方录用列表已有
+“Metamorphic testing of multi-agent LLM systems: A trace-based behavioral oracle
+framework”、“Deterministic behavioral contract testing for AI features at the browser
+layer”和“Formal trajectory analysis for testing agentic AI in stateful environments”三篇
+标题级近邻。当前日期早于 2026-07-27--30 会议，官方列表与日程能确认标题，但公开检索
+尚未取得三篇全文，故**不能声称 B″ 已完成全文创新边界**。全文公开后若覆盖“状态型
+agent + formal trajectory oracle + 自动契约 MR”及上述特定歧义关系，立即换题。AITest/
+QRS 只作未来投稿类型参考，投稿届次须重新核验正式 CFP 与 EI/Compendex 状态。
+
+当前唯一作者 Gate 改为：是否接受 B″——“小论文主贡献为契约派生的动作后歧义
+metamorphic testing（world-uniform oracle + mutation-adequate MR suite），monitor/compiler
+只作经典基线；并接受 AITest 三篇近邻全文若直接重合就立即换题”。在作者明确确认前，
+Act 1 仍未结束，不创建 `PLAN.md` 或 `PLAN-REVIEW-LOG.md`，也不生成 DSL/样本，不读取研究
+输入，不运行模型、API、训练、容器或真实实验；future manifest 必须继续为空、
+`not_started`、data use=false。
+
+本轮只读执行与 Gate：三路独立审查均未修改文件或访问研究数据；只更新计划、候选审计、
+短状态、README、索引和经验记录六个文档。`git diff --check` 通过，敏感信息与禁提路径扫描
+为零，`PLAN.md`/`PLAN-REVIEW-LOG.md` 均不存在；研究谱系隔离审计返回
+`passed_armed_no_new_study`。辅助 manifest 探针最初误用了不存在的顶层字段，已按真实 schema
+修正为 `status`、`selection_inputs` 与 `authorization.data_use_authorized`；复核结果为
+`not_started / false / 0 inputs / 0 records`。该检查错误没有改变 manifest 或研究状态。
 
 ## 0.74 2026-07-19 guard 冗余反证 / B′ 贡献重构（旧 B No-Go / B′ 条件 Go / 未授权）
 

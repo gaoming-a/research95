@@ -5889,3 +5889,33 @@ This file starts fresh for the patch-verification project.
 - Relational tests are useful only if they beat ordinary hidden tests at equal
   execution budget. Otherwise an ns-3-specific metamorphic labeler adds domain
   terminology without adding a scientific problem.
+
+## 2026-07-19 Possible worlds are an oracle; visible transformations make a metamorphic test
+
+- A formal concept is not novel merely because it is moved into an LLM-agent
+  setting. Lifting a safety monitor over every trace compatible with partial
+  observations, or computing safe actions over a belief support, must first be
+  reduced against runtime verification, supervisory control, shielding, and
+  distributed-recovery literature.
+- Two hidden applied/unapplied worlds with exactly the same agent-visible input
+  define a set-valued world-uniform oracle. They are not by themselves a useful
+  metamorphic pair: a deterministic system already returns the same output for
+  the same input.
+- A valid metamorphic relation changes a visible contract, observation, goal, or
+  semantics-preserving representation and specifies a nontrivial output-set
+  equality or inclusion. Its testing value should be measured by additional
+  mutant kills over single-instance oracles, random pairs, and ordinary trace
+  checks.
+- For a testing-method paper, oracle soundness mainly establishes implementation
+  correctness. The more defensible contribution is a mechanically generated MR
+  suite with mutation adequacy or completeness for a declared defect class.
+- An official accepted-paper list can reveal a serious collision before the full
+  papers are public. Record this as a temporary novelty blocker: do not infer
+  content from titles, but do not declare the boundary complete until the texts
+  can be audited. A direct full-text collision is a switch-topic condition, not a
+  reason to preserve a weakened claim.
+- Auxiliary manifest probes must read the committed schema instead of guessing
+  field names. Here the canonical fields are top-level `status`,
+  `selection_inputs`, and `records`, with authorization nested under
+  `authorization.data_use_authorized`; the deterministic isolation audit remains
+  the authoritative Gate.

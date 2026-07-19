@@ -450,3 +450,91 @@ planner 仍可完整求解，LLM 科学问题再次消失。
 benchmark 为评测载体，online monitor 只保安全，训练只作通过残差 Gate 后的硕士扩展”。
 建议在目标为 EI 最低线时接受；若要求小论文必须训练，应停止本候选并重开选题。作者确认
 前不得创建 `PLAN.md`、生成实例、访问研究数据、运行模型/API/训练或开展实验。
+
+## 11. B′ 精确重合反证与 B″ 契约派生变形测试（取代第10节当前判断）
+
+第10节完成后，三路独立只读审查继续检查 runtime verification、部分观测监督控制、
+distributed idempotence 与 LLM-agent testing。结论一致：**B′ 作为“新歧义契约语义＋
+最大许可 monitor 编译器”的方法论文 No-Go；只保留 B″ 测试路线作为尚未锁定的条件
+候选。** 本节取代第10节的当前贡献判断，但保留其信息隔离分析作为审计来历。
+
+### 11.1 为什么 B′ 不是新形式方法
+
+令 `K(h)={s | s 与可见历史 h 相容}`。一步安全许可条件
+`Allow(K,a) ⇔ ∀s∈K,∀s′∈Post(s,a):s′∉Bad`，持续安全则在 belief/support 空间求最大
+安全不动点。它等价于不确定 trace concretization、部分观测 observer construction 与
+permissive supervisor/shield synthesis，不能因使用 `epistemic`、`UNKNOWN_AFTER` 或
+LLM 工具术语而变成新方法。
+
+最直接的已有基础包括：Taleb 2024 multi-trace runtime verification、Abstract TeSSLa、
+Assumption-Based Runtime Verification、Yin--Lafortune 与 Goorden--Reniers 的部分观测
+最大许可监督、POMDP permissive shielding；分布式系统侧的 Fault Tolerance via
+Idempotence、Flux、Rainmaker、FoundationDB `commit_unknown_result`、RIFL、Saga/LRA
+已经覆盖响应丢失、重复执行、幂等键期限、完成记录、补偿与恢复；Atomix 又把
+`post-effect/pre-return` 明确带入 LLM agent。因而 contract compiler 与 monitor 只能是
+oracle、生成器或经典基线，不能作为 novelty。
+
+### 11.2 B″ 的科学问题与真正的 metamorphic relations
+
+B″ 不研究“怎样再发明一个 planner/guard”，而研究：
+
+> 能否从有副作用工具的形式契约机械合成 metamorphic relations，以检测 LLM agent 在
+> 回包丢失后对幂等保证、查询证据、补偿前提、目标变化与语义保持改写是否作出符合
+> world-uniform safety 的关系型反应？
+
+不可见的 applied/unapplied 两世界对 agent 输入完全相同时，只构成集合型 oracle，不构成
+MR。有效 MR 必须改变可见输入并给出可证的动作集关系：belief 扩大时安全集不增；可靠证据
+缩小 belief 时安全集不减；加入/删除有效同键幂等保证时同键重试的安全性按方向改变；加入
+sound/complete/fresh readback 时可恢复集合扩展；语义保持改写与图同构保持规范化动作类；
+仅改变用户目标时安全集不变、任务最优集改变。
+
+### 11.3 最小定理、artifact 与对照
+
+最低论文包必须同时包含：
+
+1. 集合型 oracle soundness，以及每类 MR 的 equality/inclusion soundness；
+2. 对预先定义的一阶契约缺陷类，MR suite 的 mutation adequacy/completeness；
+3. 自建 DSL/解释器、观测等价世界与 MR 生成器、F2 fault injector、独立显式枚举器和
+   独立符号 checker；
+4. 覆盖 unknown-as-failure、key expiry、wrong key、stale/incomplete query、unconditional
+   compensation、false success report 的 mutant library；
+5. 在全部有界可达历史上验证 oracle/MR 零假阳性，并比较单实例 oracle、随机配对、普通
+   trace check 的 mutation score；
+6. cascade rule、确定性 parser+planner、结构化契约+exact shield、always-escalate/query/
+   retry 基线；后续经单独授权才可加入多模型 paired evaluation。
+
+主要指标是 world-uniform violation、safe completion、escalation、unnecessary block、
+tool cost、MR consistency 与 mutation score。monitor 可作为防护对照，但“拦截后形式违规
+归零”是定义结果，不是论文创新。
+
+### 11.4 小论文到硕士论文
+
+小论文按未来 AITest/QRS regular 所需的测试方法完整度设计，主贡献限定为契约派生 MR、
+变异充分性边界、机械 oracle 和可复现工具。不能预先保证未来届次 EI 检索，投稿时必须
+核验官方出版与索引状态。硕士论文再扩展多副作用组合、不完备契约、反例引导生成与测试
+优先级；只有严格语义 OOD 下仍有不能由确定性 parser/cascade/exact planner 消除的稳定
+残差，训练才有科学必要性。
+
+### 11.5 外部全文 Gate 与硬停止条件
+
+[AITest 2026 官方录用页](https://cisose.fit.ac.jp/aitest/index.php/accepted-papers-2/) 已列出
+三篇标题级高危近邻：
+
+- *Metamorphic testing of multi-agent LLM systems: A trace-based behavioral oracle framework*；
+- *Deterministic behavioral contract testing for AI features at the browser layer*；
+- *Formal trajectory analysis for testing agentic AI in stateful environments*。
+
+[官方日程](https://cisose.fit.ac.jp/aitest/wp-content/uploads/2026/07/AITest_tentative_program17_07_2026.pdf)
+确认它们在 2026-07-27--28 报告；本审计日期为 2026-07-19，尚未检索到全文。因此这只是
+标题级碰撞风险，不能推断其具体方法，也不能宣称 B″ 的全文创新边界已经完成。全文公开后
+若直接覆盖本节的状态型 agent、自动契约 MR、world-uniform oracle 与 mutation adequacy，
+立即换题。
+
+其他 No-Go：cascade/parser+planner 近似 oracle；MR 不比单实例/随机/trace check 多杀
+mutant；MR 没有可见变换与非平凡输出关系；always-escalate 无安全进展 headroom；找不到
+至少三类现实契约族；两套 oracle 不一致；错误仅是一轮 NL→DSL 解析；或 compiler/monitor
+主张重新出现。
+
+当前作者 Gate 是是否接受 B″ 及其“近邻全文直接重合即换题”条件。确认前不锁题、不创建
+`PLAN.md`/`PLAN-REVIEW-LOG.md`，不生成研究实例，不访问研究输入，不运行模型、API、训练、
+容器或真实实验。

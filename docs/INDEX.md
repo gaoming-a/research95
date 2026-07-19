@@ -14,12 +14,13 @@
   side-effecting tools, compares two fallbacks, records direct 2024--2026
   neighbors, defines a self-authored finite-state oracle, strict baselines,
   paper-to-thesis progression, and hard No-Go conditions. Its post-acceptance
-  audit records that benchmark-only, ordinary training, and a winning-action
-  belief guard are not valid main contributions. Its B-prime candidate uses strict
-  information separation and makes ambiguous-side-effect contract semantics plus
-  compilation to a safety-only epistemic monitor the conditional main contribution;
-  the finite-state benchmark is only the evaluation vehicle. It does not lock a
-  topic or authorize data, models, training, APIs, or experiments.
+  audit records that benchmark-only, ordinary training, a winning-action guard,
+  and B-prime's possible-world monitor compiler are not valid main contributions.
+  Section 11 retains B-double-prime as a conditional software-testing candidate:
+  contract-derived metamorphic relations, a world-uniform oracle, and mutation
+  adequacy for ambiguous post-action outcomes. It also records the unresolved
+  title-level AITest 2026 collision gate. It does not lock a topic or authorize
+  data, models, training, APIs, or experiments.
 - [future_research_candidate_gates_v0_1_zh.md](plans/future_research_candidate_gates_v0_1_zh.md):
   retired communication-scoped comparison and no-model feasibility protocol for
   the NIKA diagnostic-commitment and ns-3 relational-semantic-validation axes.
@@ -34,10 +35,10 @@
   identifiability, data, and discipline audit. It is not an acquisition,
   training, evaluation, or claim authority.
 - [current_plan_zh.md](plans/current_plan_zh.md): current closed-loop plan. Its
-  latest section records the accepted research vehicle, the structural rejection
-  of the old winning-action guard, the strict LLM/monitor/oracle information
-  boundary, the B-prime contract-semantics proposal, and the single unresolved
-  contribution-structure decision.
+  latest section records the accepted research vehicle, the rejection of both the
+  old winning-action guard and B-prime formal-method framing, the conditional
+  B-double-prime metamorphic-testing package, its baselines and stop rules, and the
+  single unresolved author Gate.
 - [current_project_state_zh.md](plans/current_project_state_zh.md): current
   authority map. The vehicle is accepted but no topic is locked; the future
   manifest remains empty and no data, model, training, simulation, API, or
