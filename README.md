@@ -9,25 +9,31 @@ preregistered input lineage.
 
 ## 2026-07-19 Future Research Direction Audit (No Locked Topic / No Data / No Training)
 
-The author constraints are a Communication Engineering master's thesis focused
-on large language models, an EI-indexed small-paper minimum, and local access to
-four A6000 plus three RTX 3090 GPUs. A read-only audit withdrew the former generic
-patch-verification direction. Two conditional candidates remain: state-level
-diagnostic commitment under a fixed network-fault tool contract, and
-counterfactual semantic validation of generated ns-3 simulation code. The first
-must pass a no-model distinguishability and shortcut audit; the second must pass
-an advisor discipline gate and a deterministic semantic-oracle gate.
+The author clarified that Communication Engineering is the degree label, while
+the actual research direction is large language models and communication-domain
+coursework is limited. Topic selection is therefore no longer constrained to
+telecommunications. The prior NIKA and ns-3 protocols remain as audited,
+communication-scoped archives, but they have been removed from the active global
+shortlist. The LLM-native audit now has one conditional priority candidate:
+safe recovery after an ambiguous outcome from a side-effecting tool. It studies
+whether an LLM agent reconciles the set of still-possible world states before
+retrying, compensating, terminating, or escalating. The proposed oracle is a
+self-authored finite-state tool DSL plus belief-state planning and model checking;
+no existing research samples are required. This is not yet a locked topic.
 
 The authoritative status is [`current_plan_zh.md`](docs/plans/current_plan_zh.md)
-sections 0.69--0.70. The candidate-only label, split, baseline, and hard-stop
-protocol is
+section 0.72. The active candidate-only audit, direct-neighbor boundaries,
+mechanical-oracle design, baselines, and No-Go rules are in
+[`llm_native_candidate_audit_v0_1_zh.md`](docs/plans/llm_native_candidate_audit_v0_1_zh.md).
+The retired communication-scoped label, split, baseline, and hard-stop protocol is
 [`future_research_candidate_gates_v0_1_zh.md`](docs/plans/future_research_candidate_gates_v0_1_zh.md).
 It does not lock either topic or authorize research actions. The older
 [`future_research_direction_v0_1_zh.md`](docs/plans/future_research_direction_v0_1_zh.md)
 is historical only and cannot authorize acquisition, research-input access,
 model selection, training, evaluation, APIs, or claims. The canonical
 future-study manifest remains empty and `not_started` while the author confirms
-whether model training is a mandatory small-paper requirement.
+whether a general tool-using LLM agent and a synthetic finite-state tool
+environment are acceptable as the research vehicle.
 
 ## 2026-07-18 Research-Lineage Isolation Override
 

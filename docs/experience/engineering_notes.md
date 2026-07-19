@@ -1,5 +1,35 @@
 # Engineering Notes
 
+## 2026-07-19 Let the scientific oracle choose the domain, not the degree label
+
+- A degree title is not evidence of domain competence and should not silently
+  become an application constraint. Once the author clarified that Communication
+  Engineering is administrative context rather than trained subject matter, the
+  NIKA/ns-3 shortlist had to be retired instead of cosmetically reframed.
+- A broad LLM-native search can still be mostly negative. Structured output,
+  instruction self-correction, generic tool recovery, RAG reliability, code
+  evolution, LoRA retention, quantization, and heterogeneous serving all have
+  dense 2025--2026 direct neighbors. A clean experimental setup is not a novelty
+  claim.
+- Post-action outcome ambiguity is scientifically different from pre-action user
+  ambiguity or an observed execution error. The same timeout can be compatible
+  with both committed and uncommitted external state, so an extra retry can reduce
+  safety. Labels must be defined over the whole belief set, not the hidden state
+  known to the generator.
+- A formal planner and model checker make an excellent oracle but can also destroy
+  the LLM claim. The only possible model contribution is mapping natural-language
+  goals and contracts to recovery decisions that generalize across held-out tool
+  families. If a deterministic parser plus planner does that, stop the topic.
+- Do not turn every reliability component into a thesis branch. Faithful final
+  reporting can remain a reliable-termination metric; contract migration remains
+  a fallback. The small paper and thesis should share one partial-observability
+  spine.
+- Metadata pages can auto-render research samples. When the AgentAbstain dataset
+  card did so, stop access, do not reproduce or use the content, exclude the source
+  from future data/design evidence, record the exposure, and keep the canonical
+  future manifest empty. “No download” does not justify silently ignoring an
+  unplanned display.
+
 ## 2026-07-18 Select a research direction without activating a study
 
 - A publication-to-thesis plan needs one scientific spine, not two adjacent

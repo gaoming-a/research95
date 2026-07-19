@@ -2,8 +2,12 @@
 
 日期：2026-07-19
 
-状态：`CANDIDATE_PROTOCOL_ONLY / TOPIC_NOT_LOCKED / DATA_NOT_AUTHORIZED /
-NO_MODEL_OR_EXPERIMENT`
+状态：`COMMUNICATION_SCOPED_ARCHIVE / RETIRED_FROM_ACTIVE_SHORTLIST /
+TOPIC_NOT_LOCKED / DATA_NOT_AUTHORIZED / NO_MODEL_OR_EXPERIMENT`
+
+> 2026-07-19 后续范围纠正：作者研究方向是大模型，且不要求选题落在通信场景。本文的
+> NIKA/ns-3 协议因此退出当前全局候选优先级，只保留为已审计的通信特定候选档案；不得
+> 据此锁题、采集数据或启动实验。当前权威见 `current_plan_zh.md` 0.72。
 
 ## 1. 目的与边界
 

@@ -8,22 +8,30 @@
 
 ## Future Research Direction Audit (2026-07-19, No Locked Topic / No Data / No Training)
 
+- [llm_native_candidate_audit_v0_1_zh.md](plans/llm_native_candidate_audit_v0_1_zh.md):
+  active candidate-only audit after removing the communication-scene constraint.
+  It conditionally prioritizes belief-safe recovery after ambiguous outcomes from
+  side-effecting tools, compares two fallbacks, records direct 2024--2026
+  neighbors, defines a self-authored finite-state oracle, strict baselines,
+  paper-to-thesis progression, and hard No-Go conditions. It does not lock a
+  topic or authorize data, models, training, APIs, or experiments.
 - [future_research_candidate_gates_v0_1_zh.md](plans/future_research_candidate_gates_v0_1_zh.md):
-  authoritative candidate-only comparison and no-model feasibility protocol for
+  retired communication-scoped comparison and no-model feasibility protocol for
   the NIKA diagnostic-commitment and ns-3 relational-semantic-validation axes.
   It freezes label semantics, contract boundaries, lineage-closure splits,
   shortcut baselines, suggested Go/No-Go thresholds, conditional selection, and
-  paper-to-thesis ladders. It does not lock a topic or authorize data/model work.
+  paper-to-thesis ladders. After the author removed the communication-domain
+  constraint, it is no longer the active global shortlist and does not lock a
+  topic or authorize data/model work.
 - [future_research_direction_v0_1_zh.md](plans/future_research_direction_v0_1_zh.md):
   superseded historical candidate for patch-verification research. Its former
   `DIRECTION_SELECTED` status was revoked by the 2026-07-19 novelty,
   identifiability, data, and discipline audit. It is not an acquisition,
   training, evaluation, or claim authority.
 - [current_plan_zh.md](plans/current_plan_zh.md): current closed-loop plan. Its
-  latest section records the withdrawal of the old patch direction, conditional
-  candidate A (tool-contract-relative network fault identifiability), conditional
-  candidate B (counterfactual semantic validation of ns-3 simulation code), the
-  rejected alternatives, hard stops, and the single unresolved author decision.
+  latest section records the conditional LLM-native priority candidate, its
+  novelty boundary, the excluded broad topics, the accidental data-card render
+  response, and the single unresolved research-vehicle decision.
 - [current_project_state_zh.md](plans/current_project_state_zh.md): current
   authority map. No topic is locked; the future manifest remains empty and no
   data, model, training, simulation, API, or paper-facing claim is authorized.
