@@ -2,6 +2,27 @@
 
 最后更新：2026-07-19
 
+## 0.70 2026-07-19 两候选无模型 Gate 协议冻结（仍未定题 / 未授权）
+
+候选 A/B 的标签定义、只读/执行契约、派生闭包分组、泄漏审计、简单基线、建议
+Go/No-Go 门槛和 EI 小论文到硕士论文递进已整理为
+`docs/plans/future_research_candidate_gates_v0_1_zh.md`。该文件是候选比较与未来
+feasibility 的协议，不是锁定题目、数据授权或实验计划。
+
+候选 A 的 `commit` 只能由剩余候选映射出的答案集合唯一决定，不能由故障假设唯一决定；
+工具失败必须保持候选集合不变。候选 B 的首篇可行协议只保留同一生成代码在 prompt 已
+声明参数范围内的隐藏网络关系验证；双 prompt 重新生成两份代码混合生成随机性且与已有
+metamorphic prompt testing 过近，不进入第一篇。独立审稿仍给出条件排序：不强制训练且
+接受 benchmark/protocol 贡献时 A 优先；明确强制训练且接受 ns-3 场景时 B 优先；其他
+组合下当前 A/B 均不得硬选。
+
+本轮只读元数据确认 NIKA README 当前列出56类问题、15个场景、702个事件、MIT许可且无
+release，同时暴露任意 shell、文件读取和服务操作工具；SIMCODE论文/仓库存在400/401计数
+差异、无release且为CC BY-NC 4.0。GitHub `ls-remote` 元数据查询曾在30秒上限内无返回，
+已停止而未重试；精确commit只能在未来受权 acquisition Gate 当场绑定。没有下载/读取
+研究样本，没有运行 NIKA、ns-3、模型、训练、容器或真实实验；future manifest 仍为空、
+`not_started` 且 `data_use_authorized=false`。
+
 ## 0.69 2026-07-19 旧补丁主线撤销 / 两个条件候选保留（无数据 / 无训练）
 
 本轮依据通信工程硕士、大模型方向、EI 小论文最低要求和本地算力约束，完成近期一手

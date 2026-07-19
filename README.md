@@ -19,7 +19,10 @@ must pass a no-model distinguishability and shortcut audit; the second must pass
 an advisor discipline gate and a deterministic semantic-oracle gate.
 
 The authoritative status is [`current_plan_zh.md`](docs/plans/current_plan_zh.md)
-section 0.69. The older
+sections 0.69--0.70. The candidate-only label, split, baseline, and hard-stop
+protocol is
+[`future_research_candidate_gates_v0_1_zh.md`](docs/plans/future_research_candidate_gates_v0_1_zh.md).
+It does not lock either topic or authorize research actions. The older
 [`future_research_direction_v0_1_zh.md`](docs/plans/future_research_direction_v0_1_zh.md)
 is historical only and cannot authorize acquisition, research-input access,
 model selection, training, evaluation, APIs, or claims. The canonical

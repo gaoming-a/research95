@@ -8,6 +8,12 @@
 
 ## Future Research Direction Audit (2026-07-19, No Locked Topic / No Data / No Training)
 
+- [future_research_candidate_gates_v0_1_zh.md](plans/future_research_candidate_gates_v0_1_zh.md):
+  authoritative candidate-only comparison and no-model feasibility protocol for
+  the NIKA diagnostic-commitment and ns-3 relational-semantic-validation axes.
+  It freezes label semantics, contract boundaries, lineage-closure splits,
+  shortcut baselines, suggested Go/No-Go thresholds, conditional selection, and
+  paper-to-thesis ladders. It does not lock a topic or authorize data/model work.
 - [future_research_direction_v0_1_zh.md](plans/future_research_direction_v0_1_zh.md):
   superseded historical candidate for patch-verification research. Its former
   `DIRECTION_SELECTED` status was revoked by the 2026-07-19 novelty,

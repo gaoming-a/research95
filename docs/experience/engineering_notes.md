@@ -5784,3 +5784,19 @@ This file starts fresh for the patch-verification project.
   plan. During Act 1, `current_plan_zh.md` may record a withdrawal and conditional
   candidates, while `PLAN.md` must wait until the one-question-at-a-time decision
   tree is resolved with the author.
+
+## 2026-07-19 Candidate labels must follow the decision answer, not hidden state uniqueness
+
+- In fault diagnosis, multiple physical hypotheses can imply the same actionable
+  diagnosis. Commit labels must therefore use the remaining answer-equivalence
+  set, not require a singleton physical-fault set.
+- A failed or timed-out diagnostic tool is zero information. It must preserve the
+  candidate set; treating failure as negative evidence creates artificial
+  identifiability and rewards brittle agents.
+- For generated simulators, re-generating code from two transformed prompts mixes
+  semantic fidelity with sampling variance. The smaller mechanically testable
+  question is one generated parameterized program evaluated over hidden values
+  already declared in the prompt.
+- Relational tests are useful only if they beat ordinary hidden tests at equal
+  execution budget. Otherwise an ns-3-specific metamorphic labeler adds domain
+  terminology without adding a scientific problem.
