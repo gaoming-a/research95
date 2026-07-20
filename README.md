@@ -1,11 +1,10 @@
 # Research95: Quarantined History And Future-Study Planning
 
 This workspace preserves the previous LLM code-review and evidence-visibility
-research as historical provenance. The previously selected future direction was
-withdrawn after a newer novelty and feasibility audit; no replacement topic is
-locked and no empirical study is active. Every prior line remains quarantined,
-and any future data or training must start from an independently selected,
-preregistered input lineage.
+research as historical provenance. The replacement topic **Same API, Changed
+Contract** is now locked at the research-design level, but no empirical study is
+active. Every prior line remains quarantined, and any future data or training must
+start from an independently selected, preregistered input lineage.
 
 ## 2026-07-19 Future Research Direction Audit (C-prime Locked / No Data / No Training)
 
@@ -80,7 +79,7 @@ agent error; paired hidden worlds may add explanation without additional detecti
 B-triple-prime therefore remains only a historical narrow benchmark possibility,
 not the preferred topic.
 
-The new sole pre-Gate candidate is **Same Tool, Changed Contract**. It keeps the
+The now-locked C-prime topic is **Same API, Changed Contract**. It keeps the
 tool identity and schema, task, state, and visible history stable, changes exactly
 one visible executable contract atom, and requires an independent oracle to prove
 that the permission label of the same normalized witness action flips. This does not
@@ -98,7 +97,7 @@ legality oracle with transfer to independent real versioned contract changes. It
 No-Go if full-text comparison shows no domain-specific increment.
 
 The authoritative status is [`current_plan_zh.md`](docs/plans/current_plan_zh.md)
-section 0.78. The active candidate-only audit, direct-neighbor boundaries,
+section 0.79. The active candidate-only audit, direct-neighbor boundaries,
 mechanical-oracle design, baselines, and No-Go rules are in
 [`llm_native_candidate_audit_v0_1_zh.md`](docs/plans/llm_native_candidate_audit_v0_1_zh.md).
 The retired communication-scoped label, split, baseline, and hard-stop protocol is
@@ -112,6 +111,17 @@ not authorize input construction, model selection, training, evaluation, APIs, o
 paper-facing claims. The next author Gate concerns only whether to implement a
 no-data/no-model specification and validation scaffold; data use remains a later,
 separate authorization.
+
+A concise Chinese research overview is available in
+[`same_api_changed_contract_overview_zh.md`](docs/plans/same_api_changed_contract_overview_zh.md).
+It covers the background, scientific questions, practical problem, evidence chain,
+data sources, reliability Gates, EI-paper-to-thesis progression, and the workspace
+decision. Because this repository physically contains extensive historical prompts,
+results, scripts, and manuscripts, formal implementation should start in a new
+sibling directory and an independent private GitHub repository. The current
+manifest/loader boundary remains useful for archival auditing, but it is not a
+substitute for physical repository separation. No new directory or repository has
+yet been authorized or created.
 
 ## 2026-07-18 Research-Lineage Isolation Override
 

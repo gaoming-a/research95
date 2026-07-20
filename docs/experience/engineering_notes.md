@@ -1,5 +1,25 @@
 # Engineering Notes
 
+## 2026-07-20 Logical research isolation does not make a physically clean workspace
+
+- A canonical manifest, sanctioned loader, hash registry, and fail-closed audit can
+  define which historical bytes are scientifically admissible. They cannot prevent
+  arbitrary same-user code, full-text search, manual browsing, or an accidental Git
+  staging operation from seeing physically co-located historical files.
+- When a repository contains several terminated research lines, old prompts, raw or
+  derived results, execution scripts, and multiple manuscript drafts, adding one more
+  namespace reduces code collision but leaves provenance and packaging risk. The
+  cleanest next-study boundary is a sibling working directory with an independent
+  private Git history.
+- Do not copy the old repository into the new one and then delete files: Git history
+  would still carry the old material and the deletion list could encode outcome-driven
+  selection. Start empty and migrate only an explicit human-reviewed whitelist of
+  normative specifications, empty schemas, authorization templates, and newly
+  implemented minimal audit rules.
+- Repository separation is governance, not evidence validity. The new study still
+  needs independent source selection, root/event-closed splits, independent oracles,
+  rendering review, shortcut tests, preregistration, and explicit author Gates.
+
 ## 2026-07-19 Do not relabel classical complete testing as an LLM-agent coverage theory
 
 - An obligation of the form `(information state, input, admissible outputs)` is

@@ -6,7 +6,16 @@
   loop, including verification, diagnosis, documentation sync, and GitHub sync
   rules for future agent runs.
 
-## Future Research Direction Audit (2026-07-19, C-prime Locked / No Data / No Training)
+## Future Research Direction Audit (2026-07-20, C-prime Locked / Physical Split Recommended / No Data)
+
+- [same_api_changed_contract_overview_zh.md](plans/same_api_changed_contract_overview_zh.md):
+  concise Chinese topic overview for advisor and proposal discussions. It states the
+  background, practical problem, four research questions, falsifiable hypotheses,
+  bounded contribution, synthetic/real data sources, five reliability Gates,
+  experiment phases, EI-paper-to-thesis progression, hard-stop conditions, and the
+  recommendation to start formal implementation in a clean sibling directory and
+  independent private GitHub repository. It authorizes neither repository creation
+  nor data/model/API/training/experiment work.
 
 - [llm_native_candidate_audit_v0_1_zh.md](plans/llm_native_candidate_audit_v0_1_zh.md):
   active candidate-only audit after removing the communication-scene constraint.
@@ -36,19 +45,21 @@
   identifiability, data, and discipline audit. It is not an acquisition,
   training, evaluation, or claim authority.
 - [current_plan_zh.md](plans/current_plan_zh.md): current closed-loop plan. Its
-  latest section records locked benchmark-first C-prime, the method No-Go, five data
-  reliability Gates, policy separation, external evidence levels, EI-to-thesis
-  progression, four review rounds, and the remaining execution/data authorization
-  boundaries.
+  latest section records the high-level overview task, physical repository-split
+  recommendation, and unchanged no-data boundary; earlier active sections lock
+  benchmark-first C-prime, the method No-Go, five reliability Gates, policy
+  separation, external evidence levels, EI-to-thesis progression, four review
+  rounds, and the remaining execution/data authorization boundaries.
 - `../PLAN.md`: author-locked C-prime research plan. It freezes the scientific
   question, reliability and novelty Gates, baselines, statistics, stop rules, and
   paper-to-thesis progression; it is not an execution authorization.
 - `../PLAN-REVIEW-LOG.md`: append-only adversarial plan transcript. Rounds 1--3
   required revisions; round 4 ends in `VERDICT: APPROVED`.
 - [current_project_state_zh.md](plans/current_project_state_zh.md): current
-  authority map. The vehicle is accepted but no topic is locked; the future
-  manifest remains empty and no data, model, training, simulation, API, or
-  paper-facing claim is authorized.
+  authority map. C-prime is locked at the research-design level, physical repository
+  separation is recommended but not yet authorized, and the future manifest remains
+  empty; no data, model, training, simulation, API, or paper-facing empirical claim
+  is authorized.
 
 ## Research-Lineage Isolation Authority (2026-07-18)
 
