@@ -6,7 +6,14 @@
   loop, including verification, diagnosis, documentation sync, and GitHub sync
   rules for future agent runs.
 
-## Future Research Direction Audit (2026-07-20, C-prime Locked / Physical Split Recommended / No Data)
+## Future Research Direction Audit (2026-07-20, C-prime Locked / Physical Split Complete / No Data)
+
+- [gaoming-a/same-api-changed-contract](https://github.com/gaoming-a/same-api-changed-contract):
+  the independent private implementation repository, initialized at root commit
+  `1f4a539f1ae0a579fbfc45acfda5c2ef31fd4e6b` with nine whitelisted documentation and
+  governance files. It has no inherited Git history, code, research data, model
+  configuration, or experiment output. Only repository bootstrap is authorized;
+  Phase 0 and all empirical work remain disabled.
 
 - [same_api_changed_contract_overview_zh.md](plans/same_api_changed_contract_overview_zh.md):
   concise Chinese topic overview for advisor and proposal discussions. It states the

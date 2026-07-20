@@ -2,6 +2,45 @@
 
 最后更新：2026-07-20
 
+## 0.80 2026-07-20 C′ 独立私有仓库初始化（已授权物理分仓 / 未授权 Phase 0）
+
+作者已确认执行 0.79 的“新建同级目录＋独立私有 GitHub 仓库＋白名单初始化”。本轮采用与
+锁定题目一致的 slug `same-api-changed-contract`，目标本地目录为
+`D:\mgao\code\same-api-changed-contract`，目标远程为
+`gaoming-a/same-api-changed-contract`，且必须设置为 private。Inspect 已确认目标本地目录和
+远程仓库均不存在，GitHub 当前登录账户为 `gaoming-a`。
+
+本轮白名单仅允许新建或迁移以下规范性内容：仓库 README、已批准研究计划 `PLAN.md`、课题
+总览、研究边界、文档索引、空且默认拒绝的授权清单、`.gitignore`，以及用于约束后续 agent
+行为的最小 `AGENTS.md` 和对应 prompt 变更记录。禁止迁移旧数据、旧结果、旧 prompt、旧模型
+输出、旧实验脚本、旧论文稿、历史 Git 对象或任何由旧结果驱动的选择顺序。`PLAN-REVIEW-LOG`
+和候选淘汰档案也不迁移，只在历史仓库保留。
+
+新 `AGENTS.md` 只固化已经批准的边界：逐阶段作者授权、默认拒绝的数据/模型/API/训练/实验
+状态、禁止跨仓库读取历史研究材料、文档与私有 Git 同步。它不得授权 Phase 0 或扩大研究
+范围；创建前必须检查与 `PLAN.md`、研究边界和授权清单是否冲突或重复，并在 prompt 变更记录
+中说明取舍。
+
+验收条件：新仓库 Git 历史只有本轮白名单文件；远程 visibility 为 private；授权清单保持
+`not_started` 且所有授权为 false；仓库内不存在代码、研究数据、模型配置、API 凭证、实验
+输出或旧研究标识；本地与远程首次提交一致。完成后回写当前状态、README、索引和经验记录，
+旧仓库隔离审计仍为 `passed_armed_no_new_study`，旧 manifest 保持空且公共远程不变。
+
+### 执行结果
+
+新目录与独立仓库已按白名单完成：本地为
+`D:\mgao\code\same-api-changed-contract`，私有远程为
+[gaoming-a/same-api-changed-contract](https://github.com/gaoming-a/same-api-changed-contract)，
+默认分支 `main`，根提交 `1f4a539f1ae0a579fbfc45acfda5c2ef31fd4e6b`。远程 visibility 已机械
+复核为 `PRIVATE`，本地/远程提交一致，Git 历史计数为 1，tracked 文件计数为 9。
+
+新授权清单为 `not_started`；只有 `repository_bootstrap=true`，Phase 0、来源采集、研究数据
+构造/使用、模型选择、模型/API 执行、训练、评估和论文实证 claim 均为 false，输入与研究
+records 都为 0。新仓库没有代码、数据、模型配置、实验输出或旧研究 lineage 标识。首次暂存
+被 `git diff --check` 拦下 8 个文件末尾空白行，修复后通过；首次提交又因新仓库无作者身份被
+Git 拒绝，随后只读取当前历史仓库已使用的 `gaoming-a` noreply 身份并写入新仓库 local config，
+未修改全局配置。两次失败都发生在远程创建前，没有形成错误提交。
+
 ## 0.79 2026-07-20 课题总览与物理工作区隔离决策（仅文档 / 未创建新仓库）
 
 本轮目标是把已锁定的 C′ 研究设计压缩成一份可用于导师沟通、开题准备和后续执行分期的

@@ -120,8 +120,17 @@ decision. Because this repository physically contains extensive historical promp
 results, scripts, and manuscripts, formal implementation should start in a new
 sibling directory and an independent private GitHub repository. The current
 manifest/loader boundary remains useful for archival auditing, but it is not a
-substitute for physical repository separation. No new directory or repository has
-yet been authorized or created.
+substitute for physical repository separation. The clean bootstrap was subsequently
+authorized and completed as recorded below.
+
+Update: the author subsequently authorized the clean bootstrap. The new local
+workspace is `D:\mgao\code\same-api-changed-contract`, and the independent remote is
+[gaoming-a/same-api-changed-contract](https://github.com/gaoming-a/same-api-changed-contract).
+The remote is private and contains one root commit with nine documentation/governance
+files only. Its manifest authorizes repository bootstrap and nothing else: Phase 0,
+source acquisition, data, models/APIs, training, evaluation, and empirical claims
+remain disabled. This `research95` repository remains the historical archive and
+isolation-audit record, not the implementation workspace for C-prime.
 
 ## 2026-07-18 Research-Lineage Isolation Override
 

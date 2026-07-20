@@ -1,5 +1,25 @@
 # Engineering Notes
 
+## 2026-07-20 Bootstrap a clean study repository without importing research history
+
+- Start with `git init` in an actually empty sibling directory. Copying an old
+  repository and deleting files would retain old Git objects and make the clean-lineage
+  claim false.
+- Keep the first commit auditable: this bootstrap used exactly nine whitelisted
+  documentation/governance files, one root commit, an empty research-input list, and
+  no source code, data, model configuration, or experiment output.
+- Run `git diff --cached --check` before the first commit. It caught trailing blank
+  lines in eight newly created text files; the commit was stopped until those lines
+  were removed and the Gate rerun.
+- A new repository may not inherit author identity when the old repository stored it
+  locally rather than globally. The first commit correctly failed with “Author
+  identity unknown”. Read the established name/noreply address from the archived
+  repository and set it only in the new repository's local Git config; do not change
+  global identity as a side effect.
+- Create the remote only after local file, JSON, link, legacy-token, secret, and staged
+  diff checks pass. Then mechanically verify `visibility=PRIVATE`, one remote branch,
+  and equality of local and remote commit hashes.
+
 ## 2026-07-20 Logical research isolation does not make a physically clean workspace
 
 - A canonical manifest, sanctioned loader, hash registry, and fail-closed audit can

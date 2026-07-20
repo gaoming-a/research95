@@ -2,6 +2,19 @@
 
 日期：2026-07-20
 
+## 2026-07-20 当前权威：C′ 独立私有仓库已建立 / Phase 0 仍未授权
+
+- 干净工作目录已建立于 `D:\mgao\code\same-api-changed-contract`，独立远程为
+  [gaoming-a/same-api-changed-contract](https://github.com/gaoming-a/same-api-changed-contract)，
+  visibility 已复核为 `PRIVATE`；
+- 新仓库只有一个根提交 `1f4a539f1ae0a579fbfc45acfda5c2ef31fd4e6b` 和 9 个白名单文件：
+  README、PLAN、AGENTS、课题总览、研究边界、索引、prompt 变更记录、空授权清单和
+  `.gitignore`；没有继承旧 Git 历史，也没有代码、数据、模型配置或实验输出；
+- 新 manifest 为 `not_started`，只授权 `repository_bootstrap`；Phase 0、来源采集、数据、
+  模型/API、训练、评估与论文实证结论全部未授权，inputs/records 均为 0；
+- 当前 `research95` 继续作为历史归档与隔离审计来源，不再作为 C′ 的正式实施目录。下一步
+  必须由作者单独授权 Phase 0，不能把本次仓库创建解释为代码或实验授权。
+
 ## 2026-07-20 当前权威：课题总览已形成 / 建议物理分仓 / 尚未创建新仓库
 
 - 新增 `same_api_changed_contract_overview_zh.md`，把已锁定 C′ 课题整理为课题介绍、研究
