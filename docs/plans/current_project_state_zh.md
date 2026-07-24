@@ -2,6 +2,19 @@
 
 日期：2026-07-25
 
+## 2026-07-25 当前权威：EviRepair 独立私有仓库创建已授权 / 尚未执行
+
+- 作者已授权从空目录创建 `D:\mgao\code\evirepair` 和私有远程
+  `gaoming-a/evirepair`，不使用当前受历史实验污染的分支作为 EviRepair 实施目录；
+- 本轮首次提交白名单严格为 10 个治理/规划文件：`.gitignore`、AGENTS、README、PLAN、
+  当前计划、当前状态、索引、经验记录、prompt 变更记录和默认拒绝的授权 manifest；
+- 禁止迁移 `research95` 或其他仓库中的代码、数据、prompt、结果、模型输出、实验脚本、
+  论文稿、任务标识、结果驱动顺序和 Git 历史；
+- 只授权 `repository_bootstrap`。EviRepair 仍未锁题；会场核验、文献审查、pilot 设计、
+  来源、数据、模型/API、训练、评估和论文实证 claim 均未授权；
+- 目标本地目录和 GitHub 仓库已只读核验为不存在。执行完成前，本节只代表创建授权，不代表
+  仓库已经建立。
+
 ## 2026-07-25 当前权威：毕业课题画像已归档 / EviRepair 为首选候选但尚未锁题
 
 - 已把作者的硬约束写入 `current_plan_zh.md` 0.81：只做大模型 Agent、不结合通信；小论文

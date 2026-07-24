@@ -1,6 +1,58 @@
-# 当前计划：既有 C′ 状态不变 / Agent 毕业课题画像与 EviRepair 候选已归档
+# 当前计划：EviRepair 独立私有仓库创建已授权 / 仅迁移治理文档
 
 最后更新：2026-07-25
+
+## 0.82 2026-07-25 EviRepair 独立私有仓库初始化授权（仅 bootstrap / 未锁题 / 未授权实验）
+
+作者已明确授权执行 0.81 之后提出的物理隔离方案：从空目录为 EviRepair 建立独立私有
+GitHub 仓库，不在当前 `research95` 仓库中新建分支。只允许迁移人工确认的研究画像、候选
+Gate、授权边界和治理规则；不得复制任何旧代码、数据、prompt、结果、模型输出、实验脚本、
+论文稿、任务标识、结果驱动的选择顺序或 Git 对象。
+
+Inspect 已确认以下目标均不存在，名称当前可用：
+
+- 本地目录：`D:\mgao\code\evirepair`；
+- GitHub 私有仓库目标：`gaoming-a/evirepair`；
+- 默认分支：`main`。
+
+### 本轮白名单
+
+新仓库首次提交只允许包含以下 10 个文件：
+
+1. `.gitignore`；
+2. `AGENTS.md`；
+3. `README.md`；
+4. `PLAN.md`；
+5. `docs/INDEX.md`；
+6. `docs/current_plan_zh.md`；
+7. `docs/current_state_zh.md`；
+8. `docs/engineering_notes.md`；
+9. `docs/prompt_change_log.md`；
+10. `governance/authorization_manifest_v0_1.json`。
+
+`PLAN.md` 只能保存 0.81 已确认的毕业约束、EviRepair 名称对应关系、候选科学问题、三项
+前置 Gate、小论文到硕士论文的条件扩展和停止边界，不能把 EviRepair 写成已锁定创新。
+`AGENTS.md` 只负责固化空仓库、独立来源、逐阶段作者授权、默认拒绝和文档同步规则；创建
+该文件属于仓库治理 prompt，必须在 `docs/prompt_change_log.md` 中记录其目的和无冲突检查。
+
+授权清单必须默认为：
+
+- `repository_bootstrap=true`；
+- `topic_lock=false`；
+- 会场行政核验、文献新颖性审查、pilot 设计、来源获取、研究数据构造/使用、模型选择、
+  模型/API 执行、训练、评估和论文实证 claim 全部为 `false`；
+- `source_inputs=[]`、`research_records=[]`。
+
+### 验收条件
+
+1. 新本地仓库从空目录 `git init`，只有一个根提交，不继承 `research95` 或其他仓库历史；
+2. tracked 文件集合与上述 10 文件白名单完全一致，不存在代码、数据、测试、配置、模型、
+   prompt 内容、实验输出或论文稿；
+3. 授权清单为默认拒绝，研究输入和记录均为 0；
+4. GitHub 远程 visibility 机械复核为 `PRIVATE`；
+5. 本地 `main` 与远程 `main` 提交哈希一致；
+6. 初始提交前通过 staged diff、空白、路径、敏感信息和旧研究标识检查；
+7. 完成后只在 `research95` 回写初始化结果，不把新仓库建立解释为选题锁定或实验授权。
 
 ## 0.81 2026-07-25 Agent 毕业课题画像与 EviRepair 候选决策包（仅规划 / 未锁题 / 未授权实验）
 
