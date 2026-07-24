@@ -8,14 +8,17 @@ preferred new Agent-topic candidate, not as a locked replacement or an execution
 authorization. Every prior line remains quarantined, and any future data or training
 must start from an independently selected, preregistered input lineage.
 
-Update: the author has now authorized only the clean bootstrap of a sibling
-`D:\mgao\code\evirepair` directory and private `gaoming-a/evirepair` repository.
-The bootstrap whitelist contains ten planning/governance files and excludes all
-historical code, data, prompts, results, model outputs, experiment scripts,
-manuscripts, task identifiers, and Git objects. This authorization does not lock the
-topic or permit literature acquisition, research data, models/APIs, training,
-evaluation, or empirical claims. The exact pre-execution boundary is in
-[`current_plan_zh.md`](docs/plans/current_plan_zh.md) section 0.82.
+Update: the clean bootstrap has been completed in the sibling
+`D:\mgao\code\evirepair` directory and private
+[gaoming-a/evirepair](https://github.com/gaoming-a/evirepair) repository. It has one
+independent root, ten tracked planning/governance files, zero research inputs, zero
+research records, and no inherited Git history. Historical code, data, prompts,
+results, model outputs, experiment scripts, manuscripts, task identifiers, and Git
+objects were not migrated. Only repository bootstrap is authorized and complete;
+this does not lock the topic or permit literature acquisition, research data,
+models/APIs, training, evaluation, or empirical claims. The execution evidence and
+remaining boundary are in [`current_plan_zh.md`](docs/plans/current_plan_zh.md)
+section 0.82.
 
 ## 2026-07-25 Agent Graduation Topic Snapshot (EviRepair Candidate / No Experiment)
 

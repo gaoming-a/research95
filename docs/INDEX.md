@@ -9,10 +9,16 @@
 ## Agent Graduation Topic Decision Snapshot (2026-07-25, Candidate Only / No Experiment)
 
 - [current_plan_zh.md](plans/current_plan_zh.md): section 0.82 is the active
-  bootstrap authority for a clean sibling `evirepair` repository. It freezes the
-  ten-file whitelist, default-deny manifest, prohibited historical material, and
-  local/private-remote verification conditions. It does not lock EviRepair or
-  authorize literature, data, models, APIs, training, evaluation, or experiments.
+  bootstrap authority and completion record for the clean sibling `evirepair`
+  repository. It freezes and verifies the ten-file whitelist, one independent root,
+  default-deny manifest, zero research inputs/records, prohibited historical
+  material, private visibility, and local/remote equality. It does not lock
+  EviRepair or authorize literature, data, models, APIs, training, evaluation, or
+  experiments.
+- [gaoming-a/evirepair](https://github.com/gaoming-a/evirepair): independent private
+  candidate repository initialized from an empty directory. Its root commit is
+  `a3f7bae5759448862e0d9a24ff854a85daf8ce1b`; it contains only the ten whitelisted
+  planning/governance files and inherits no old Git history.
 - [current_plan_zh.md](plans/current_plan_zh.md): section 0.81 is the current
   conversation-preservation authority. It records the no-communications-domain
   boundary, EI and thesis deadlines, author capability/resource profile, excluded

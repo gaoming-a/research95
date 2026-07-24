@@ -1,8 +1,8 @@
-# 当前计划：EviRepair 独立私有仓库创建已授权 / 仅迁移治理文档
+# 当前计划：EviRepair 独立私有仓库已建立 / 候选尚未锁题
 
 最后更新：2026-07-25
 
-## 0.82 2026-07-25 EviRepair 独立私有仓库初始化授权（仅 bootstrap / 未锁题 / 未授权实验）
+## 0.82 2026-07-25 EviRepair 独立私有仓库初始化（已完成 / 未锁题 / 未授权实验）
 
 作者已明确授权执行 0.81 之后提出的物理隔离方案：从空目录为 EviRepair 建立独立私有
 GitHub 仓库，不在当前 `research95` 仓库中新建分支。只允许迁移人工确认的研究画像、候选
@@ -53,6 +53,26 @@ Inspect 已确认以下目标均不存在，名称当前可用：
 5. 本地 `main` 与远程 `main` 提交哈希一致；
 6. 初始提交前通过 staged diff、空白、路径、敏感信息和旧研究标识检查；
 7. 完成后只在 `research95` 回写初始化结果，不把新仓库建立解释为选题锁定或实验授权。
+
+### 执行结果
+
+EviRepair 已按白名单在 `D:\mgao\code\evirepair` 从空目录初始化，独立私有远程为
+[gaoming-a/evirepair](https://github.com/gaoming-a/evirepair)，默认分支为 `main`。
+
+- 初始化根提交：`a3f7bae5759448862e0d9a24ff854a85daf8ce1b`；
+- 状态回写后的当前提交：`637d44d`；
+- Git 历史：2 个提交、1 个根提交，不继承任何旧仓库历史；
+- tracked 文件：始终为10个白名单治理/规划文件；
+- GitHub visibility：`PRIVATE`；
+- 当前本地与远程 `main`：一致；
+- source inputs：0；
+- research records：0；
+- 唯一为 true 的授权：`repository_bootstrap`。
+
+首次 staged diff 检查发现 Markdown 行尾空格和多余 EOF 空行，因此在创建远程前暂停并修复；
+重新检查后，白名单、JSON、内部链接、默认拒绝授权、旧研究标识和敏感信息扫描均通过。新
+仓库没有代码、数据、测试、模型配置、研究 prompt、实验输出或论文稿。bootstrap 完成后
+Gate 关闭；会场核验、新颖性反证和 pilot 设计审查仍需作者逐项授权。
 
 ## 0.81 2026-07-25 Agent 毕业课题画像与 EviRepair 候选决策包（仅规划 / 未锁题 / 未授权实验）
 

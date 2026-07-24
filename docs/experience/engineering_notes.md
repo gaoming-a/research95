@@ -1,5 +1,25 @@
 # Engineering Notes
 
+## 2026-07-25 Bootstrap EviRepair without inheriting the experimental branch
+
+- A clean working tree on `evp8-v03-qwen-main-exp` did not make that branch suitable
+  for a new study: its reflog showed creation from the historical main line on
+  2026-06-26, and its ancestry and tracked tree included extensive prior experiments.
+- Creating another branch in the same repository would retain those Git objects and
+  physically co-located files. The authorized fix was an empty sibling directory,
+  a fresh `git init`, a ten-file planning/governance whitelist, and a new private
+  remote.
+- The first staged whitespace check found trailing Markdown spaces and extra EOF
+  blank lines. Remote creation was paused, the files were repaired, and the complete
+  whitelist/default-deny/JSON/link/legacy-token/sensitive scan was rerun.
+- The resulting private repository is `gaoming-a/evirepair`. Its independent root is
+  `a3f7bae5759448862e0d9a24ff854a85daf8ce1b`; after the required completion-state
+  update it has two commits, one root, ten tracked files, zero research inputs, zero
+  research records, and only `repository_bootstrap=true`.
+- Physical isolation prevents accidental import but does not establish scientific
+  novelty. Venue verification, literature review, pilot design, data, models, APIs,
+  training, evaluation, and claims remain separately gated.
+
 ## 2026-07-25 Separate user constraints, candidate designs, and execution authority
 
 - A long topic-selection conversation contains different evidence levels. Preserve
