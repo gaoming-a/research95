@@ -6,6 +6,25 @@
   loop, including verification, diagnosis, documentation sync, and GitHub sync
   rules for future agent runs.
 
+## Agent Graduation Topic Decision Snapshot (2026-07-25, Candidate Only / No Experiment)
+
+- [current_plan_zh.md](plans/current_plan_zh.md): section 0.81 is the current
+  conversation-preservation authority. It records the no-communications-domain
+  boundary, EI and thesis deadlines, author capability/resource profile, excluded
+  negative-result and platform-context-bias routes, the relationship between the
+  existing C-prime line and the new EviRepair candidate, the minimum
+  paper-to-thesis contribution ladder, the time-sensitive venue shortlist, and the
+  three pre-experiment decision Gates. EviRepair is a preferred candidate, not a
+  locked topic or an execution authorization.
+- [current_project_state_zh.md](plans/current_project_state_zh.md): the top
+  2026-07-25 section is the concise state handoff. It preserves that C-prime remains
+  unchanged in its independent repository, the old CEC confirmation set must not be
+  called without new authorization, and no EviRepair code, data, model, API,
+  training, or experiment work is authorized.
+- `../README.md`: its top 2026-07-25 snapshot points new sessions to plan section
+  0.81 and prevents the older C-prime overview from being mistaken for the only
+  current topic-selection context.
+
 ## Future Research Direction Audit (2026-07-20, C-prime Locked / Physical Split Complete / No Data)
 
 - [gaoming-a/same-api-changed-contract](https://github.com/gaoming-a/same-api-changed-contract):
@@ -52,21 +71,20 @@
   identifiability, data, and discipline audit. It is not an acquisition,
   training, evaluation, or claim authority.
 - [current_plan_zh.md](plans/current_plan_zh.md): current closed-loop plan. Its
-  latest section records the high-level overview task, physical repository-split
-  recommendation, and unchanged no-data boundary; earlier active sections lock
-  benchmark-first C-prime, the method No-Go, five reliability Gates, policy
-  separation, external evidence levels, EI-to-thesis progression, four review
-  rounds, and the remaining execution/data authorization boundaries.
+  latest section records the 2026-07-25 Agent graduation constraints and EviRepair
+  candidate Gate without revoking C-prime or authorizing new work; earlier active
+  sections lock benchmark-first C-prime, the method No-Go, five reliability Gates,
+  policy separation, external evidence levels, EI-to-thesis progression, four
+  review rounds, and the remaining execution/data authorization boundaries.
 - `../PLAN.md`: author-locked C-prime research plan. It freezes the scientific
   question, reliability and novelty Gates, baselines, statistics, stop rules, and
   paper-to-thesis progression; it is not an execution authorization.
 - `../PLAN-REVIEW-LOG.md`: append-only adversarial plan transcript. Rounds 1--3
   required revisions; round 4 ends in `VERDICT: APPROVED`.
 - [current_project_state_zh.md](plans/current_project_state_zh.md): current
-  authority map. C-prime is locked at the research-design level, physical repository
-  separation is recommended but not yet authorized, and the future manifest remains
-  empty; no data, model, training, simulation, API, or paper-facing empirical claim
-  is authorized.
+  authority map. Its latest section separates the EviRepair candidate from the
+  unchanged C-prime line; no EviRepair or C-prime data, model, training, simulation,
+  API, or paper-facing empirical claim is newly authorized by the topic discussion.
 
 ## Research-Lineage Isolation Authority (2026-07-18)
 

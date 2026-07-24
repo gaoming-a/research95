@@ -3,8 +3,32 @@
 This workspace preserves the previous LLM code-review and evidence-visibility
 research as historical provenance. The replacement topic **Same API, Changed
 Contract** is now locked at the research-design level, but no empirical study is
-active. Every prior line remains quarantined, and any future data or training must
-start from an independently selected, preregistered input lineage.
+active. A later graduation-oriented discussion has added **EviRepair** as the
+preferred new Agent-topic candidate, not as a locked replacement or an execution
+authorization. Every prior line remains quarantined, and any future data or training
+must start from an independently selected, preregistered input lineage.
+
+## 2026-07-25 Agent Graduation Topic Snapshot (EviRepair Candidate / No Experiment)
+
+The current conversation-preservation authority is
+[`current_plan_zh.md`](docs/plans/current_plan_zh.md) section 0.81. It records the
+author's no-communications-domain boundary, EI and thesis deadlines, Agent and
+training capabilities, compute/team resources, excluded high-inconclusive-risk
+directions, and the paper-to-thesis workload requirement.
+
+`EviRepair` is the working name for the preferred candidate. Its Chinese
+thesis-level description is a failure-type-aware, self-evolving multi-agent
+collaboration and verified-repair framework; the small-paper core is provisionally
+limited to failure-type routing, executable-evidence verification, and targeted
+repair. “Self-evolving” is not yet an authorized claim and must be removed unless
+the implemented system persistently learns or changes its policy, roles, routing, or
+model parameters. Literature novelty, venue timing, and a minimal separable pilot
+design have not yet passed their Gates.
+
+This snapshot does not revoke the locked C-prime plan or authorize either research
+line. No old CEC confirmation call, new data construction, model/API execution,
+training, or paper-facing empirical claim is allowed without a later explicit author
+choice and authorization.
 
 ## 2026-07-19 Future Research Direction Audit (C-prime Locked / No Data / No Training)
 
@@ -96,8 +120,9 @@ hypothesis is only a tool-contract-specific executable intervention and mechanic
 legality oracle with transfer to independent real versioned contract changes. It is
 No-Go if full-text comparison shows no domain-specific increment.
 
-The authoritative status is [`current_plan_zh.md`](docs/plans/current_plan_zh.md)
-section 0.79. The active candidate-only audit, direct-neighbor boundaries,
+The authoritative status for the C-prime decision is preserved in
+[`current_plan_zh.md`](docs/plans/current_plan_zh.md) sections 0.78--0.80; its latest
+cross-topic authority is section 0.81. The active candidate-only audit, direct-neighbor boundaries,
 mechanical-oracle design, baselines, and No-Go rules are in
 [`llm_native_candidate_audit_v0_1_zh.md`](docs/plans/llm_native_candidate_audit_v0_1_zh.md).
 The retired communication-scoped label, split, baseline, and hard-stop protocol is

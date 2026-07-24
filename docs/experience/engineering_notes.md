@@ -1,5 +1,29 @@
 # Engineering Notes
 
+## 2026-07-25 Separate user constraints, candidate designs, and execution authority
+
+- A long topic-selection conversation contains different evidence levels. Preserve
+  confirmed graduation deadlines, excluded domains, available skills/resources, and
+  the user's risk preference separately from proposed method names and untested
+  novelty claims.
+- A memorable project name is not a locked topic. Here, `EviRepair` is only the
+  working name for the candidate whose Chinese thesis-level expansion is
+  “failure-type-aware self-evolving multi-agent collaboration and verified repair”.
+  The core paper mechanism, self-evolution claim, and novelty remain conditional on
+  explicit literature, design, and pilot Gates.
+- When another topic is already locked in a physically separate repository, recording
+  a new candidate must not silently revoke or authorize either line. State the
+  relationship explicitly and require an author choice before code, data, API,
+  training, or experiment work.
+- Conference deadlines, publisher claims, and EI status are time-varying operational
+  facts. A conversation snapshot can preserve the shortlist, but it cannot become
+  submission authority; recheck the official site, past indexing record, conference
+  organizer, and the university's latest graduation rule before submission.
+- “Easy to obtain a positive result” should be translated into an executable oracle,
+  a demonstrable repair opportunity, cost-matched strong baselines, prespecified
+  component metrics, and a cheap stop rule. It cannot be translated into a promise
+  of a positive finding or into hiding overall failures behind recoverable subsets.
+
 ## 2026-07-20 Bootstrap a clean study repository without importing research history
 
 - Start with `git init` in an actually empty sibling directory. Copying an old
