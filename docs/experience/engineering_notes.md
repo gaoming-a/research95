@@ -6112,3 +6112,15 @@ This file starts fresh for the patch-verification project.
 - Topic acceptance, plan approval, data-use authorization, and experiment execution
   are four separate authorities. Keep the manifest empty until the corresponding
   author Gate explicitly changes it.
+# 2026-07-25 Reverse novelty screening must precede topic recommendation
+
+- A topic name is not evidence of novelty. Decompose each candidate into input,
+  controlled or learned variable, update mechanism, and output before searching.
+- Search semantic equivalents and public code before presenting a candidate; a
+  late collision after implementation is a screening-process failure.
+- A combination can be non-novel even when no single paper uses the same name.
+  Test whether two direct neighbors already compose the full mechanism.
+- Do not lower the novelty threshold to fill a requested candidate count. Report
+  the actual survivor count and preserve killed candidates with collision sources.
+- EviRepair is now a hard negative example: a newly released end-to-end toolkit
+  occupied its core chain before any experiment, so the correct action was No-Go.

@@ -1,5 +1,14 @@
 # Research95 Index
 
+## Active Agent Topic Reverse Screening (2026-07-25)
+
+- [Agent topic reverse-screening protocol](plans/agent_topic_reverse_screening_20260725.md):
+  requires semantic-isomorphism search, code search, combination prior-art
+  analysis, and reviewer-style novelty attacks before a topic can be shortlisted.
+- [current_plan_zh.md](plans/current_plan_zh.md): section 0.83 records the
+  EviRepair No-Go and authorizes public-source screening only; no data, model/API,
+  training, pilot, or empirical claim is authorized.
+
 ## Project Execution Rules
 
 - `../AGENTS.md`: project-level requirements for the plan-execute-audit-revise

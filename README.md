@@ -1,12 +1,12 @@
 # Research95: Quarantined History And Future-Study Planning
 
 This workspace preserves the previous LLM code-review and evidence-visibility
-research as historical provenance. The replacement topic **Same API, Changed
-Contract** is now locked at the research-design level, but no empirical study is
-active. A later graduation-oriented discussion has added **EviRepair** as the
-preferred new Agent-topic candidate, not as a locked replacement or an execution
-authorization. Every prior line remains quarantined, and any future data or training
-must start from an independently selected, preregistered input lineage.
+research as historical provenance. **Same API, Changed Contract** and **EviRepair**
+are both closed as current graduation-topic routes. EviRepair failed its independent
+2026-07-25 prior-art Gate because its core chain is directly covered by recent
+failure-attribution, typed-routing, evidence-guided repair, and controlled-rerun
+work. Every prior line remains quarantined, and any future data or training must
+start from an independently selected, preregistered input lineage.
 
 Update: the clean bootstrap has been completed in the sibling
 `D:\mgao\code\evirepair` directory and private
@@ -14,13 +14,17 @@ Update: the clean bootstrap has been completed in the sibling
 independent root, ten tracked planning/governance files, zero research inputs, zero
 research records, and no inherited Git history. Historical code, data, prompts,
 results, model outputs, experiment scripts, manuscripts, task identifiers, and Git
-objects were not migrated. Only repository bootstrap is authorized and complete;
-this does not lock the topic or permit literature acquisition, research data,
-models/APIs, training, evaluation, or empirical claims. The execution evidence and
-remaining boundary are in [`current_plan_zh.md`](docs/plans/current_plan_zh.md)
-section 0.82.
+objects were not migrated. Its later topic-decision audit records
+`NO_GO_ABANDON_EVIREPAIR`; no research data, models/APIs, training, evaluation, or
+empirical work was performed.
 
-## 2026-07-25 Agent Graduation Topic Snapshot (EviRepair Candidate / No Experiment)
+The active task is now the
+[Agent topic reverse-screening protocol](docs/plans/agent_topic_reverse_screening_20260725.md):
+semantic-isomorphism, code, combination, and reviewer-style prior-art attacks must
+all occur before a candidate may be shown as a recommendation. Only public-source
+screening is active; no experiment is authorized.
+
+## 2026-07-25 Agent Graduation Topic Snapshot (Historical Candidate / No Experiment)
 
 The current conversation-preservation authority is
 [`current_plan_zh.md`](docs/plans/current_plan_zh.md) section 0.81. It records the

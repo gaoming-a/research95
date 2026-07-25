@@ -2,6 +2,15 @@
 
 日期：2026-07-25
 
+## 2026-07-25 当前权威：EviRepair 已 No-Go / 新 Agent 课题反向筛选中
+
+- EviRepair 独立仓库的锁题审计结论为 `NO_GO_ABANDON_EVIREPAIR`，不得再作为首选候选；
+- 当前只允许公开来源检索、机制拆解、代码同构审查、组合反证和纸面 pilot 设计；
+- 候选必须先通过语义同构、公开代码和 reviewer 式攻击，之后才能向作者推荐；
+- 不调用旧确认集，不构造数据，不选择或调用模型/API，不训练，不运行 pilot；
+- 当前协议见
+  [agent_topic_reverse_screening_20260725.md](agent_topic_reverse_screening_20260725.md)。
+
 ## 2026-07-25 当前权威：EviRepair 独立私有仓库已建立 / 候选尚未锁题
 
 - 已从空目录创建 `D:\mgao\code\evirepair` 和私有远程
