@@ -2,6 +2,59 @@
 
 最后更新：2026-07-25
 
+## 0.84 2026-07-25 第一轮反向筛选结果（1 个黄色候选 / 0 个绿色候选 / 未锁题）
+
+本轮严格执行 0.83 的公开来源反向筛选，没有调用模型/API、训练、构造研究数据或运行
+paper-facing pilot。第一轮没有为了满足数量要求输出五个题目；实际结果是 **1 个黄色候选、
+0 个绿色候选**。
+
+### 已淘汰
+
+- SheetScope：Spreadsheet-RL 任务已给目标 sheet/range，原拟创新前提不成立；
+- requirement-to-tests、规格歧义回写和 traceability：ClarifyGPT、TiCoder、TDFlow、
+  Kiro/spec-driven workflow、TraceDev 等已覆盖；
+- PPT 来源归因和增量更新：DynaSlide、SlideAgent、Adobe attribution、LayerProof 等已覆盖；
+- 通用失败类型路由/验证修复、PR 覆盖感知修复：近期 Agent debugging/APR 工作已直接占据；
+- PDB 精确修复训练：QiMeng-PRepair 已用 edit-aware GRPO 直接针对 PDB precision 缺口；
+- 普通“约定 hard negatives + SFT/DPO”：AP2O-Coder 已做 error-type progressive
+  preference optimization，普通换域训练不构成新方法。
+
+### Imaging-101 资产纠错
+
+初始命中的 `AI4ImagingLab/imaging-101-release` 是不完整旧入口；正式代码仓库是
+[`starpacker/inverse-101`](https://github.com/starpacker/inverse-101)。只读 sparse checkout
+复核得到 57 个任务、56 个含测试任务、245 个测试文件、314 个 `src/` Python 文件和 41 个
+精确命名的 fixture generator。公开仓库当前只有 `main` 分支、无公开 issue；代码搜索没有
+发现 convention repair、residual diagnosis 或 adapter synthesis。基准资产可用，不应因
+旧仓库缺文件而误杀。
+
+### 唯一黄色候选
+
+暂用描述名为“面向科学 coding agent 的残差结构约束数值约定诊断与最小边界修复”。它不能
+使用“数值约定枚举与适配器合成”作为创新：
+
+- FACC 已公开实现 FFT I/O adapter synthesis，DSL 直接含 bit reversal、normalize 和
+  denormalize；
+- LearnSy 已解决 OGIS/CEGIS 的高效 question selection；
+- Oracle-Free Repair Synthesis 已做浮点误差结构驱动修复；
+- AutoMR 已自动发现 numerical metamorphic relations；
+- GPD 已实现声明式 convention lock；
+- 通用 APR 已覆盖执行反馈、模板、动态上下文、最小补丁和过拟合检测。
+
+候选只有保留完整的
+“residual signature → typed ambiguity set → convention-specific code-boundary localization →
+one minimal edit → hidden-fixture validation/abstention”
+才可能形成 EI 级最小创新。若可被简化为“FACC 换域，再接一个 coding agent”，必须淘汰。
+
+### 当前 Gate
+
+- `topic_lock=false`；
+- 不创建新课题仓库，不选择数据或模型，不调用 API，不训练，不运行 pilot；
+- 下一轮继续从 2026 新发布、低基线、有完整 executable oracle 的 Agent benchmark 扩候选；
+- 新候选必须同时检查论文、代码、公开 issue/branch、商业/开源产品工作流及两篇近邻组合；
+- 完整碰撞矩阵、不能声称的内容和未来纸面实验 Gate 见
+  [agent_topic_reverse_screening_20260725.md](agent_topic_reverse_screening_20260725.md)。
+
 ## 0.83 2026-07-25 Agent 新课题反向新颖性筛选（已授权 / 只读来源 / 禁止实验）
 
 EviRepair 已在独立仓库完成锁题审计，唯一结论为

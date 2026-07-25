@@ -1,5 +1,38 @@
 # Engineering Notes
 
+## 2026-07-25 A complete benchmark gap is not yet a novel repair mechanism
+
+- Follow repository pointers before declaring public assets incomplete. The old
+  `AI4ImagingLab/imaging-101-release` checkout lacks the task tests, while the
+  canonical `starpacker/inverse-101` repository contains 57 tasks and 245 test
+  files. A stale release repository would have caused a false No-Go.
+- Search the operation vocabulary inside prior-art code, not just paper titles.
+  FACC's public DSL explicitly implements bit reversal, normalization, half
+  normalization, denormalization, and half denormalization. This invalidates a
+  broad claim such as "first convention adapter synthesis" even though FACC was
+  built for FFT accelerators rather than LLM agents.
+- A benchmark paper can leave an implementation gap while already naming the
+  failure and obvious remedy. Imaging-101 establishes convention drift and
+  suggests verified skills; the remaining contribution must therefore be a
+  separable diagnostic/repair mechanism, not rediscovery or a skill library.
+- Active diagnostic input selection is an OGIS question-selection problem.
+  LearnSy and earlier distinguishing-example work make information gain or
+  question selection a baseline, not novelty.
+- Domain-specific training does not rescue a generic objective. AP2O-Coder already
+  performs error-type progressive preference optimization, while InferFix and
+  CodeUltraFeedback cover bug-type and preference-pair training. A scientific
+  convention dataset may be useful, but ordinary SFT/DPO on it is a data/domain
+  contribution rather than a new method.
+- Separate "no direct end-to-end implementation found" from "green topic." A
+  proposal may still be yellow when two or three neighboring systems naturally
+  compose most of its arrows. Do not authorize experiments until the minimal
+  residual mechanism survives that combination attack.
+- GitHub branch, issue, and code searches are part of novelty review for newly
+  released benchmarks. For `starpacker/inverse-101`, the public state checked on
+  2026-07-25 had only `main`, no public issue, and no convention-repair,
+  residual-diagnosis, or adapter-synthesis implementation. This bounds public
+  evidence at the check date; it does not guarantee future priority.
+
 ## 2026-07-25 Bootstrap EviRepair without inheriting the experimental branch
 
 - A clean working tree on `evp8-v03-qwen-main-exp` did not make that branch suitable
