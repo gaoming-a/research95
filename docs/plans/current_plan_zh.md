@@ -2,6 +2,66 @@
 
 最后更新：2026-07-25
 
+## 0.85 2026-07-25 第二轮反向筛选结果（新增 0 个绿色候选 / 未锁题）
+
+本轮继续执行公开来源、实现优先的反向筛选，没有调用模型/API、训练、构造研究数据或运行
+pilot。筛选对象优先满足“2026 年新发布、公开资产、可执行 oracle、当前低基线”，但低基线
+只代表存在能力缺口，不代表方法空间尚未被占据。
+
+### 本轮重点反证
+
+- **CausalDS**：公开 generator、runner 和确定性 grader 完整，但基准本身已经包含
+  identifiability、非可识别时 abstain、匹配 verbalization 和 observation variants；
+  数据卡还明确禁止把发布文件用于微调、偏好优化、合成数据、检索或其他训练管线。
+  “成对 SCM 不变性训练＋拒答”可由 CausalDS、Semantic Invariance、GCCPO 和
+  AgentAbstain 自然拼出，因此淘汰。
+- **FeatureBench**：200 个复杂 feature task、完整 Docker/harness 和约 11%--12.5%
+  resolved headroom 均属优点；但最直接的“测试—代码依赖图、受影响测试前沿、增量
+  test-driven repair”已经由 TDAD 和 TDDev 实现并报告正向提升，因此淘汰。
+- **ICAE-Bench**：480 个任务、12 种语言、隐藏约束 User Agent 和黑盒测试均已公开；
+  但 clarification selection、规格追踪、结构化共享状态和澄清后约束落地均有直接近邻。
+  仓库发布不足两天且 GitHub 未识别到许可证文件，也增加 8 月投稿的资产稳定性风险，
+  因此淘汰。
+- **SlopCodeBench / SWE-CI**：多轮功能演化和结构退化是真问题，但 CodeTaste、
+  SWE-CI、静态质量传感器和自动重构已经覆盖最短改进链；若进一步训练“未来可扩展性”
+  模型，数据与工程周期又超过当前一个月窗口，因此淘汰。
+- **DocOps、MM-IssueLoc、MCPEvol-Bench、EvoGUI、ArbiGraph、AppWorld-UL、
+  Long-Horizon-Terminal-Bench、MalSkillBench、IssueTrojanBench、BenchCAD**：
+  分别在 verifier induction、多模态 issue localization、动态 tool schema、GUI
+  transition memory、依赖图上下文、交互澄清、长程进度控制、skill/agent 安全和 CAD
+  几何验证方向发现直接论文、代码或产品实现，均不入围。
+- **BioSecBench-Surveillance、PHITSBench、CLOSER-Bench 等专业域基准**：
+  即便存在 headroom，仍需要病原组学、粒子输运或硬件设计专业判断；在 2026-08-31
+  截止前无法可靠建立独立 oracle 审计和可信错误分类，按时间风险淘汰。
+
+### 当前比较结论
+
+- 第二轮新增：`0 green / 0 yellow`；
+- 两轮合计：`0 green / 1 yellow`；
+- 唯一黄色候选仍为“残差结构约束的数值约定诊断与最小边界修复”；
+- 该候选未因相对排名自动升级，仍须证明其完整机制不能约化为
+  `FACC adapter synthesis + 通用 APR/coding agent`；
+- `topic_lock=false`，不得创建实施仓库、选择数据/模型、调用 API、训练或运行 pilot。
+
+完整候选碰撞表、官方仓库检查和组合反证见
+[agent_topic_reverse_screening_20260725.md](agent_topic_reverse_screening_20260725.md)。下一轮
+不再泛搜“低基线 benchmark”，而应先对唯一黄色候选做实现级最后攻击：全局代码检索、
+FACC/Inverse-101 局部代码审计、最小算法伪代码和 reviewer reduction。若仍不能形成一个
+不可约的新增算法步骤，应停止该候选并重新扩域；不得仅因投稿临近降低标准。
+
+### Verify / Diagnose
+
+- `git diff --check` 通过；
+- 四份本轮文档的状态、第二轮 Gate、索引入口和经验条目机械检索通过；
+- 全仓库 `run_local_quality_gate.py` 返回失败。诊断结果不是本轮文档错误：当前
+  `research_lineage_quarantine_v0_1` 正在按设计拒绝已撤销的历史 execution、submission
+  和 artifact 脚本；`research_lineage_isolation` 自身通过；
+- 全仓库 sensitive scan 命中的是提交前已存在的本机路径和作者姓名记录，不是本轮新增
+  credential；
+- 不修改或绕过 fail-closed 隔离器，也不为本轮只读选题审计重启旧实验管线。提交 Gate
+  改为只检查本轮四份文档：Markdown/local-link、空白、状态一致性、staged diff 和
+  staged-sensitive scan。
+
 ## 0.84 2026-07-25 第一轮反向筛选结果（1 个黄色候选 / 0 个绿色候选 / 未锁题）
 
 本轮严格执行 0.83 的公开来源反向筛选，没有调用模型/API、训练、构造研究数据或运行

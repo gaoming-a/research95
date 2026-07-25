@@ -3,13 +3,17 @@
 ## Active Agent Topic Reverse Screening (2026-07-25)
 
 - [Agent topic reverse-screening protocol](plans/agent_topic_reverse_screening_20260725.md):
-  now includes the first-round elimination ledger, the canonical Inverse-101
-  repository audit, FACC/GPD/OGIS/numerical-APR collision matrix, the only yellow
-  candidate's minimum distinguishable mechanism, prohibited claims, strong
-  baselines, and future stop gates. The current count is one yellow candidate and
-  zero green candidates; no topic is locked.
-- [current_plan_zh.md](plans/current_plan_zh.md): section 0.84 records the
-  first-round result and corrects the stale Imaging-101 repository pointer;
+  now includes two reverse-screening rounds, the canonical Inverse-101 repository
+  audit, FACC/GPD/OGIS/numerical-APR collision matrix, and second-round
+  implementation-level attacks on CausalDS, FeatureBench, ICAE-Bench,
+  SlopCodeBench, DocOps, MM-IssueLoc, MCP/GUI/long-horizon/security/CAD directions.
+  The current count remains one yellow candidate and zero green candidates; no
+  topic is locked.
+- [current_plan_zh.md](plans/current_plan_zh.md): section 0.85 records the
+  second-round result, the dataset-license and code-asset checks, and the final
+  implementation-level attack required before the yellow candidate can be judged;
+  section 0.84 records the first-round result and corrects the stale
+  Imaging-101 repository pointer;
   section 0.83 remains the authority for public-source screening only. No data,
   model/API, training, pilot, or empirical claim is authorized.
 

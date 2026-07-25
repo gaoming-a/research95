@@ -6157,3 +6157,34 @@ This file starts fresh for the patch-verification project.
   the actual survivor count and preserve killed candidates with collision sources.
 - EviRepair is now a hard negative example: a newly released end-to-end toolkit
   occupied its core chain before any experiment, so the correct action was No-Go.
+
+# 2026-07-25 Low benchmark scores are not evidence of method novelty
+
+- Separate asset feasibility, empirical headroom, and mechanism novelty. A complete
+  executable benchmark with an 11% solve rate can still have no clean method gap.
+- Before converting a benchmark failure analysis into a topic, search the exact
+  intervention that a reviewer would propose. FeatureBench's dependency-driven
+  implementation idea collided with TDAD's code-test impact graph and TDDev's
+  incremental test-driven protocol.
+- Read dataset-use restrictions independently from repository licenses. CausalDS
+  code is Apache-2.0 and data is CC0, but its data card explicitly excludes every
+  released file from training, preference optimization, retrieval, and synthetic
+  data generation.
+- A new benchmark can already contain the intended method ingredients. CausalDS
+  includes identifiability-gated abstention and matched variants; ICAE-Bench
+  already measures clarification coverage and traces hidden constraints.
+- Freshness is a risk as well as an opportunity. ICAE-EVAL was published less than
+  two days before the audit and GitHub did not detect a license file; do not base
+  an August submission on unverified asset stability.
+- Preserve composition attacks in the elimination ledger. Semantic invariance,
+  counterfactual group reward, and paired abstention collectively eliminate a
+  CausalDS invariance-training topic even though no paper uses that exact title.
+- Relative ranking does not promote a yellow topic to green. The surviving
+  numerical-convention candidate still needs an irreducible algorithmic step
+  beyond FACC adapter synthesis plus generic APR.
+- A repository-wide legacy quality gate may be intentionally incompatible with a
+  quarantined research lineage. If the isolation audit passes while revoked
+  execution, submission, and artifact entrypoints fail closed, do not weaken the
+  quarantine to validate a documentation-only topic audit. Record the diagnosis
+  and use a scoped documentation, diff, link, and staged-sensitive-information
+  gate instead.
