@@ -1,5 +1,31 @@
 # Engineering Notes
 
+## 2026-07-25 An agent application of a classical stopping estimator is not automatically a new method
+
+- Reduce a proposal to its non-LLM state, update, decision, and output before
+  comparing titles. The numerical-convention candidate disappeared under this
+  reduction: FACC supplied candidate synthesis and validation, OGIS supplied
+  distinguishing queries, scientific APR supplied localization, and ordinary APR
+  supplied minimal edits and held-out validation.
+- Treat a paper combination as prior art when it naturally supplies every arrow.
+  No single paper needed to implement the complete numerical-repair pitch for the
+  reviewer to reduce it to `FACC + OGIS + localization + APR`.
+- A benchmark's stated open problem is not an unoccupied method claim. DeepSearchQA
+  exposes exhaustive-answer stopping failures, while RVR already improves
+  multi-answer coverage, capture-recapture/Chao already estimates missed search
+  items, and MiCP/MiRD already control multi-turn or open-answer sampling risk.
+- Moving Chao or Good--Turing into a DeepResearch loop is an application, not yet a
+  core innovation. A surviving method must define and validate a genuinely
+  different estimand or control objective for adaptive, dependent query channels;
+  otherwise the correct decision is No-Go.
+- Search adjacent statistical fields as well as Agent papers. Systematic review,
+  technology-assisted review, multiple-systems estimation, missing-mass theory,
+  and species-discovery bandits are direct novelty evidence for exhaustive search
+  agents even when none uses the phrase "DeepResearch."
+- Keep "no direct implementation found" at Yellow. It becomes Green only after the
+  pseudocode survives equivalence attacks against both direct Agent systems and
+  the classical method family, and after public code/product searches remain empty.
+
 ## 2026-07-25 A complete benchmark gap is not yet a novel repair mechanism
 
 - Follow repository pointers before declaring public assets incomplete. The old

@@ -3,15 +3,21 @@
 ## Active Agent Topic Reverse Screening (2026-07-25)
 
 - [Agent topic reverse-screening protocol](plans/agent_topic_reverse_screening_20260725.md):
-  now includes two reverse-screening rounds, the canonical Inverse-101 repository
-  audit, FACC/GPD/OGIS/numerical-APR collision matrix, and second-round
-  implementation-level attacks on CausalDS, FeatureBench, ICAE-Bench,
-  SlopCodeBench, DocOps, MM-IssueLoc, MCP/GUI/long-horizon/security/CAD directions.
-  The current count remains one yellow candidate and zero green candidates; no
-  topic is locked.
-- [current_plan_zh.md](plans/current_plan_zh.md): section 0.85 records the
-  second-round result, the dataset-license and code-asset checks, and the final
-  implementation-level attack required before the yellow candidate can be judged;
+  now includes three reverse-screening rounds. Section 17 completes the
+  FACC/OGIS/scientific-APR reduction and changes the numerical-convention candidate
+  from Yellow to No-Go; section 18 records the third-round collisions across
+  long-horizon stopping, DeepResearch coverage, constraint ledgers, multi-agent
+  routing, transactions, novelty checking, claim state, mutation testing, parallel
+  coding, PPT and flaky tests; sections 19--20 preserve the only new Yellow
+  candidate, its closest statistical/Agent neighbors, forbidden claims and final
+  pseudocode-equivalence Gate. The current count is still one Yellow and zero
+  Green, but the Yellow candidate is now "unseen-answer estimation and
+  risk-controlled stopping for exhaustive DeepResearch." No topic is locked.
+- [current_plan_zh.md](plans/current_plan_zh.md): section 0.86 records the old
+  Yellow candidate's final No-Go, the third-round expansion, the new Yellow
+  candidate and its reduction risk against capture-recapture, species-discovery
+  bandits, RVR, MiCP and MiRD; section 0.85 records the second-round result,
+  dataset-license and code-asset checks;
   section 0.84 records the first-round result and corrects the stale
   Imaging-101 repository pointer;
   section 0.83 remains the authority for public-source screening only. No data,

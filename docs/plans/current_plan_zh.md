@@ -2,6 +2,98 @@
 
 最后更新：2026-07-25
 
+## 0.86 2026-07-25 第三轮反向筛选（旧黄色淘汰 / 新黄色待最终归约）
+
+本轮继续只使用公开论文、代码和产品资料，没有调用模型/API、训练、构造研究数据或运行
+pilot。目标不是寻找“看起来新”的标题，而是先把候选还原为最小非 LLM 算法，再检查单篇
+直接实现和多篇近邻的自然组合。
+
+### 旧黄色候选正式淘汰
+
+“面向科学 coding agent 的残差结构约束数值约定诊断与最小边界修复”已经完成函数级和
+算法级归约：
+
+- FACC 已枚举 FFT sketch/adapter，并对全部 I/O 对执行验证，返回通过候选；
+- 所谓 typed ambiguity set 只是保留 FACC 已验证候选，而不是新增推断算法；
+- 主动分离候选是 LearnSy/OGIS 的 distinguishing-question selection；
+- residual semantics 到 sketch family、代码边界定位和最小补丁分别已有 S3-Repair、
+  Tensfa2/DSrepair、FACC 和通用 APR；
+- hidden validation 与无法区分时 abstain 是常规过拟合控制，不构成独有机制。
+
+因此该方案可被完整描述为
+`FACC-style candidate synthesis + OGIS query selection + scientific-code localization + APR`，
+没有剩余的不可约算法步骤。它从 Yellow 降为 **No-Go**，不得以后通过“换成 Python、
+增加一个 Agent 或改用 Inverse-101”重新入池。
+
+### 第三轮扩域结果
+
+本轮又反向检索了长程停滞检测、DeepResearch 覆盖证明、约束账本、多 Agent
+调度/专业化、事务回滚与授权、研究新颖性检查、科学 claim 状态机、Agent mutation
+testing、并行 coding/merge、PPT 增量保真和 flaky-test 处理。每条线均发现直接论文、
+代码或可自然拼接的现有机制，全部为 No-Go。代表性碰撞包括 IAL-Scan、Zombie Agents、
+ProjectGuard、AgentRx、Cordon、SagaLLM、Commit-time Authorization、InnoEval、
+ClaimGarden、AgentAssay、CoAgent、PPT-Eval/PPTArena 和 FlakyGuard。
+
+### 当前唯一黄色候选
+
+暂用题名：
+
+> **面向穷举型 DeepResearch 的未见答案量估计与风险受控检索停止**
+>
+> *Know What You Haven't Found: Unseen-Answer Estimation for Exhaustive Deep
+> Research Agents*
+
+DeepSearchQA 提供 900 个开放网络任务，并明确评估穷举答案集、实体去重和停止判断。
+RVR 已实现面向多答案覆盖的 retrieve-verify-retrieve，并在固定轮数下出现后期增益平台；
+因此“继续补全检索”不是本候选的创新。经典 systematic-review/TAR 工作早已使用
+capture-recapture 或 Chao 估计未检出文献并决定停止；MiCP、ToolChain-CRC 和 MiRD
+又分别覆盖多轮停止、轨迹风险和开放答案采样风险。因此“给 DeepResearch 接一个
+Chao/Good--Turing 阈值”同样是 No-Go。
+
+当前只保留以下更窄的待证最小机制：
+
+1. 对穷举任务预先冻结语义正交的 query-family，并同时形成
+   `答案实体 × query-family` 与 `答案实体 × 独立来源` 两张 incidence 表；
+2. 显式估计 LLM 自适应查询导致的通道依赖、异质可发现性和实体归并误差，输出“仍未发现
+   的正确答案量/质量”的保守上界，而不是把查询结果当作独立同分布捕获；
+3. 只有该上界达到校准风险阈值才停止，否则选择预计最大幅度降低 singleton tail 或估计
+   不确定性的下一 query-family；
+4. 在独立任务上验证停止时的漏答风险和成本--召回 Pareto，而不是声称开放网络上的
+   绝对 completeness certificate。
+
+该机制仍可能被 reviewer 归约为
+`multiple-list capture-recapture + species-discovery bandit + RVR + MiCP/MiRD`。
+在证明“相关自适应检索通道下的未见正确答案估计”存在不可由上述组合直接给出的更新量、
+损失或校准目标前，评级只能是 **Yellow**。
+
+### 当前计数与下一 Gate
+
+- 第三轮新增：`0 green / 1 yellow`；
+- 旧 Yellow 淘汰后总计仍为：`0 green / 1 yellow`；
+- 唯一 Yellow 已更换为“未见答案量估计与风险受控检索停止”；
+- `topic_lock=false`；
+- 不创建实施仓库，不下载研究数据，不选择模型，不调用 API，不训练，不运行 pilot；
+- 下一轮先写出不调用 LLM 的估计器/控制器伪代码，逐项与 multiple-list
+  capture-recapture、adaptive species discovery、RVR、MiCP 和 MiRD 做等价性攻击；
+- 若全部步骤仍可由现有模块直接拼出，立即 No-Go；只有出现可检验的不可约目标且公开
+  paper/code/product 检索仍无直接实现，才允许请求作者授权 Phase 0 资产审计。
+
+完整第三轮碰撞矩阵和 claim 边界见
+[agent_topic_reverse_screening_20260725.md](agent_topic_reverse_screening_20260725.md)。
+
+### Verify / Diagnose
+
+- `git diff --check`、四份变更文档的本地 Markdown 链接和状态/计数机械检索通过；
+- `audit_research_lineage_isolation.py --check` 通过，状态仍为
+  `passed_armed_no_new_study`，确认本轮没有获得新研究数据或实验授权；
+- 全仓库 `run_local_quality_gate.py` 仍失败。失败项与上一轮一致：已撤销的旧 execution、
+  submission 和 artifact 脚本被 `research_lineage_quarantine_v0_1` 主动拒绝；隔离审计、
+  Python compile 和本轮文档检查通过；
+- 全仓库 sensitive scan 命中提交前已存在的本机路径与作者姓名记录，本轮新增内容没有
+  credential、token 或本机绝对路径；
+- 不修改 fail-closed 隔离器，也不把旧研究管线重新启用。提交 Gate 继续限定为本轮四份
+  文档的 diff、链接、空白、状态一致性和 staged-sensitive scan。
+
 ## 0.85 2026-07-25 第二轮反向筛选结果（新增 0 个绿色候选 / 未锁题）
 
 本轮继续执行公开来源、实现优先的反向筛选，没有调用模型/API、训练、构造研究数据或运行

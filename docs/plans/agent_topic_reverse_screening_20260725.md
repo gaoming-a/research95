@@ -342,3 +342,133 @@ submission 和 artifact entrypoint 已撤销，不能为一次只读选题审计
 通过。本轮只采用范围化文档 Gate：四个预期文件、Markdown 本地链接、状态/计数一致性、
 `git diff --check`、staged diff 和 staged-sensitive scan。该范围化 Gate 不替代未来新课题
 仓库自己的测试与实验 Gate。
+
+## 17. 原黄色候选的最终算法归约
+
+对 FACC 的局部实现和相关 repair/synthesis 工作逐步还原后，原候选不再保留：
+
+| 原候选步骤 | 已有实现或理论 | 独有剩余 |
+|---|---|---|
+| 生成数值约定 adapter/sketch | [FACC](https://github.com/FourierACceleratorCompiler/FACC) 的 FFT sketch synthesizer 与 adapter DSL | 无 |
+| 用 I/O fixture 判定候选 | FACC 对所有 I/O pairs 执行候选并保留通过程序 | 无 |
+| 构造 ambiguity set | 不丢弃 FACC 已通过候选即可得到 | 无新增算法 |
+| 选择区分性输入 | LearnSy、OGIS/CEGIS distinguishing question | 无 |
+| residual 到 repair family | [S3-Repair](https://ieeexplore.ieee.org/document/11582271) 的 error semantics、faulty region、sketch family 和 symbolic synthesis | 无 |
+| 科学代码边界定位 | Tensfa2 的 tensor-shape repair、[DSrepair](https://arxiv.org/abs/2502.09771) 的 data-science API/AST localization | 无 |
+| 最小编辑 | FACC adapter 与通用 APR/minimal patch search | 无 |
+| hidden validation/abstention | 常规 repair-overfitting control | 无 |
+
+因此原候选的最短描述就是
+`FACC + OGIS + scientific-code fault localization + APR`。把这些组件交给 coding agent
+不会产生新的核心算法。结论从 Yellow 改为 **No-Go**。
+
+## 18. 第三轮扩域碰撞矩阵
+
+| 扩展方向 | 评级 | 直接实现或最短组合攻击 |
+|---|---|---|
+| 长程 Agent 停滞/平台期检测 | No-Go | IAL-Scan 已评估“不停止”；browser-use 已有 action/page stagnation loop detector；Zombie Agents 做 semantic livelock/convergence monitoring；Budget-Aware Agents 做 early stop |
+| DeepResearch 覆盖/负结论证明 | No-Go | [DeepSearchQA](https://arxiv.org/abs/2601.20975) 直接评估 exhaustive set 与 stopping；AAR、Don't Stop Early、MAP-Law 已做 claim/evidence coverage 和 evidence-aware termination |
+| 长程约束账本 | No-Go | ProjectGuard 已恢复 spec faithfulness；AgentRx 合成并逐步检查 invariants；constraint-drift 工作已直接研究约束漂移 |
+| 多 Agent 专长调度与动态路由 | No-Go | OSDAG、REDEREF、AgentNet、AggAgent、AgentAuditor 和 uncertainty-aware expert weighting 已覆盖 DAG 调度、路由、聚合、分歧审计和不确定性加权 |
+| 事务、rollback、approval freshness | No-Go | Cordon semantic transactions、Revision Absorber、SagaLLM、Commit-time Authorization、Consent Integrity、CXI 和 State Witness 已覆盖 |
+| 自动研究新颖性反证 Agent | No-Go | RINoBench、Idea Novelty Checker、FiNE-Patents、[InnoEval](https://github.com/zjunlp/InnoEval) 和知识图谱 novelty evaluation 已覆盖论文/代码/专利/网络证据 |
+| 科学 claim/evidence 状态机 | No-Go | preregistration agents、Agentic Abstention/AgentAbstain、ClaimGarden、HEP 和 FirstResearch 已覆盖 |
+| Agent testing/mutation | No-Go | Structural Testing、SafeAudit、TDAD、AgentAssay 和 TAI3 已覆盖结构、语义 mutation、metamorphic 和 API-intent stress |
+| 并行 coding 与 merge | No-Go | CoAgent 已做多 Agent concurrency control；Clash 和 Merge-Bench 已实现/评测并行修改合并 |
+| PPT 增量编辑保真 | No-Go | PPT-Eval 惩罚不必要编辑；PPTArena/PPTPilot 和 DynaSlide/SlideAgent 已做结构化编辑与布局/风格保持 |
+| flaky-test 感知 coding agent | No-Go | LLM test flakiness 研究与 FlakyGuard 已分别检测和修复 flaky tests |
+
+上述淘汰不依赖候选标题完全相同。只要最近邻已经给出输入表示、更新规则和输出动作，换
+benchmark 或再加一个 planner/critic 仍是组合实现。
+
+## 19. 新黄色候选：未见答案量估计与风险受控检索停止
+
+### 19.1 可执行问题与资产
+
+[DeepSearchQA](https://arxiv.org/abs/2601.20975) 含 900 个跨 17 领域任务，主要考查
+穷举答案集、实体去重和开放空间中的停止判断。其
+[公开数据](https://huggingface.co/datasets/google/deepsearchqa) 与评分协议可作为
+任务级 gold oracle；论文同时记录 premature stopping 和为提高 recall 而加入低置信答案
+的 hedging failure。它提供真实 headroom，但 headroom 本身不证明候选方法新颖。
+
+工作题名为：
+
+> 面向穷举型 DeepResearch 的未见答案量估计与风险受控检索停止。
+
+目标不是让 LLM 自评“信息够不够”，而是根据多种检索通道对已验证答案实体的重复发现
+结构，估计仍未发现的正确答案，并在预设漏答风险与检索成本之间做控制。
+
+### 19.2 最近邻和不能声称的内容
+
+1. [RVR](https://arxiv.org/abs/2602.18425) 已用 retrieve-verify-retrieve 寻找尚未覆盖的
+   多答案文档，并报告多轮增益；不能声称首次做 multi-answer iterative retrieval、
+   verifier-guided completion 或 missing-answer targeting。
+2. systematic review 早在
+   [2009 年](https://pubmed.ncbi.nlm.nih.gov/18722088/) 就用 capture-mark-recapture
+   估计遗漏文献并讨论停止；TAR 又用
+   [Chao estimator](https://arxiv.org/abs/2404.01176) 做 stopping criterion。不能声称
+   首次用 population-size estimation、capture-recapture、Chao 或 Good--Turing 决定搜索
+   何时停止。
+3. [MiCP](https://arxiv.org/abs/2604.01413) 已给多轮 LLM 的 conformal stopping；
+   [ToolChain-CRC](https://arxiv.org/abs/2606.18467) 已做轨迹级风险控制；
+   [MiRD](https://arxiv.org/abs/2605.27091) 已分解开放答案有限采样和条件选择的
+   miscoverage。不能声称首次风险受控停止、首次开放答案 sampling-risk decomposition
+   或首次 conformal agent stopping。
+4. multiple-list capture-recapture 已能处理列表依赖和异质捕获概率；species-discovery
+   bandit 已能在多个 population/channel 间主动采样。不能把“相关通道修正”或“选择下一
+   搜索臂”只写成一句泛化模块后当作创新。
+
+### 19.3 当前唯一可能的最小差分
+
+候选只有在同时满足以下条件时才可能继续：
+
+- 捕获对象是经过 source-grounded verifier 和 entity resolution 的**正确答案实体**，
+  不是文档、LLM 输出样本或任意网页；
+- 查询不是 i.i.d. 抽样。协议先冻结语义正交 query-family，并同时维护
+  `entity × query-family` 与 `entity × independent-source` incidence；
+- 新估计量必须显式处理自适应 query dependence、答案可发现性异质性和实体归并噪声，
+  输出剩余正确答案量或 missing mass 的保守上界；
+- 控制器的下一动作不是一般 query refinement，而是针对 singleton tail、cross-channel
+  overlap 和上界不确定性的预注册降低目标；
+- 停止 claim 只是在 DeepSearchQA 类任务分布上的校准漏答风险，不是开放网络
+  completeness guarantee。
+
+如果伪代码最终只是“算 Chao2，再用 conformal threshold，未达阈值就让 RVR/Agent
+继续搜索”，则本候选必须淘汰。
+
+### 19.4 若通过纸面 Gate 的最短论文证据链
+
+本节不是实验授权，只冻结未来比较要求：
+
+- 强基线：固定 tool/search budget、LLM self-stop、连续若干轮无新实体、marginal-gain
+  stop、classical Chao/Good--Turing、RVR、MiCP 风格校准停止，以及 cost-matched
+  multi-query；
+- 主指标：相同检索成本下的 set F1/完全正确率、匹配 F1/recall 下的 tool calls/tokens、
+  停止时遗漏 gold entity 的经验风险、上界 calibration/coverage；
+- 必要消融：去除 query-family 冻结、去除 source incidence、去除 dependency correction、
+  去除主动下一通道选择、用普通 Chao/MiCP 替代；
+- 小论文最小贡献：一个相关通道下的未见答案估计/控制方法，加 DeepSearchQA 上的
+  cost--coverage 正向结果；
+- 硕士扩展：学习 query-family router、跨模型/搜索引擎的异质捕获模型、第二个穷举型
+  benchmark 或专业检索域，以及开源搜索模型的 SFT/RL 训练。
+
+### 19.5 实验前的低成本止损
+
+1. 写出完全不调用 LLM 的状态、估计量、更新式和停止式；每一行分别与
+   multiple-list capture-recapture、adaptive species discovery、RVR、MiCP/MiRD 做
+   等价性检查。
+2. 检索论文全文、GitHub 默认/开发分支、issue 和产品说明中的 `capture-recapture`、
+   `unseen mass/species`、`answer coverage estimator`、`remaining answers`、
+   `DeepSearchQA stopping` 同构实现。
+3. 只做公开数据卡/代码资产审计，确认 DeepSearchQA 的 split、gold 可用边界、评分器、
+   答案基数和防 benchmark-answer leakage 条件；在这三项通过前不下载数据或运行样本。
+
+## 20. 第三轮 Gate
+
+- 原数值约定诊断 Yellow 已改为 **No-Go**；
+- 第三轮新增 **0 Green / 1 Yellow**；
+- 当前总计 **0 Green / 1 Yellow**，唯一 Yellow 为未见答案量估计候选；
+- `topic_lock=false`；
+- 本轮没有实验、API、模型选择、训练、数据构造或正向实证 claim；
+- 下一步只能继续最小算法归约和实现级查重。若现有统计估计、active discovery 与
+  DeepResearch/RAG stopping 的组合覆盖全部步骤，立即淘汰，不因 8 月投稿期限降级标准。
